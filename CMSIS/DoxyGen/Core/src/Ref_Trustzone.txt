@@ -1,0 +1,432 @@
+/**
+\defgroup trustzone_functions TrustZone for ARMv8-M
+\brief Functions that related to optional ARMv8-M security extension
+\details
+The ARMv8-M architecture has optional ARMv8-M security extension based on ARM TrustZone technology.
+To access ARM TrustZone extensions for ARMv8-M additional CMSIS functions are provided:
+ - \ref nvic_trustzone_functions
+ - \ref systick_trustzone_functions
+ - \ref sau_trustzone_functions
+ - \ref coreregister_trustzone_functions
+
+@{
+*/
+
+/**
+  \defgroup nvic_trustzone_functions NVIC Functions
+  \brief Nested Vector Interrupt Controller (NVIC) functions related to TrustZone for ARMv8-M 
+  @{
+*/
+
+/**
+  \brief   Set Priority Grouping (non-secure)
+  \details Sets the non-secure priority grouping field when in secure state using the required unlock sequence.
+           The parameter PriorityGroup is assigned to the field SCB->AIRCR [10:8] PRIGROUP field.
+           Only values from 0..7 are used.
+           In case of a conflict between priority grouping and available
+           priority bits (__NVIC_PRIO_BITS), the smallest possible priority group is set.
+  \param [in]      PriorityGroup  Priority grouping field.
+  \note    Only available for ARMv8-M Mainline. 
+  \sa     
+    - \ref NVIC_SetPriorityGrouping
+ */
+void TZ_NVIC_SetPriorityGrouping_NS(uint32_t PriorityGroup);
+
+/**
+  \brief   Get Priority Grouping (non-secure)
+  \details Reads the priority grouping field from the non-secure NVIC when in secure state.
+  \return                Priority grouping field (SCB->AIRCR [10:8] PRIGROUP field).
+  \note    Only available for ARMv8-M Mainline. 
+  \sa     
+    - \ref NVIC_GetPriorityGrouping
+ */
+uint32_t TZ_NVIC_GetPriorityGrouping_NS(void);
+
+/**
+  \brief   Enable External Interrupt (non-secure)
+  \details Enables a device-specific interrupt in the non-secure NVIC when in secure state.
+  \param [in]      IRQn  External interrupt number. Value cannot be negative.
+  \sa     
+    - \ref NVIC_EnableIRQ
+ */
+void TZ_NVIC_EnableIRQ_NS(IRQn_Type IRQn);
+
+/**
+  \brief   Disable External Interrupt (non-secure)
+  \details Disables a device-specific interrupt in the non-secure NVIC when in secure state.
+  \param [in]      IRQn  External interrupt number. Value cannot be negative.
+  \sa     
+    - \ref NVIC_DisableIRQ
+ */
+void TZ_NVIC_DisableIRQ_NS(IRQn_Type IRQn);
+
+/**
+  \brief   Get Pending Interrupt (non-secure)
+  \details Reads the pending register in the non-secure NVIC when in secure state and returns the pending bit for the specified interrupt.
+  \param [in]      IRQn  Interrupt number.
+  \return             0  Interrupt status is not pending.
+  \return             1  Interrupt status is pending.
+  \sa     
+    - \ref NVIC_GetPendingIRQ
+ */
+uint32_t TZ_NVIC_GetPendingIRQ_NS(IRQn_Type IRQn);
+
+/**
+  \brief   Set Pending Interrupt (non-secure)
+  \details Sets the pending bit of an non-secure external interrupt when in secure state.
+  \param [in]      IRQn  Interrupt number. Value cannot be negative.
+  \sa     
+    - \ref NVIC_SetPendingIRQ
+ */
+void TZ_NVIC_SetPendingIRQ_NS(IRQn_Type IRQn);
+
+/**
+  \brief   Clear Pending Interrupt (non-secure)
+  \details Clears the pending bit of an non-secure external interrupt when in secure state.
+  \param [in]      IRQn  External interrupt number. Value cannot be negative.
+  \sa     
+    - \ref NVIC_ClearPendingIRQ
+ */
+void TZ_NVIC_ClearPendingIRQ_NS(IRQn_Type IRQn);
+
+/**
+  \brief   Get Active Interrupt (non-secure)
+  \details Reads the active register in non-secure NVIC when in secure state and returns the active bit.
+  \param [in]      IRQn  Interrupt number.
+  \return             0  Interrupt status is not active.
+  \return             1  Interrupt status is active.
+  \sa     
+    - \ref NVIC_GetActive
+ */
+uint32_t TZ_NVIC_GetActive_NS(IRQn_Type IRQn);
+
+/**
+  \brief   Get Interrupt Target State (non-secure)
+  \details Reads the interrupt target field from the non-secure NVIC when in secure state.
+  \param [in]      IRQn  External interrupt number. Value cannot be negative.
+  \return             0  if interrupt is assigned to Secure
+  \return             1  if interrupt is assigned to Non Secure
+ */
+uint32_t TZ_NVIC_GetTargetState_NS(IRQn_Type IRQn);
+
+/**
+  \brief   Set Interrupt Target State (non-secure)
+  \details Sets the interrupt target field in the non-secure NVIC when in secure state.
+  \param [in]      IRQn  External interrupt number. Value cannot be negative.
+  \return             0  if interrupt is assigned to Secure
+  \return             1  if interrupt is assigned to Non Secure
+ */
+uint32_t TZ_NVIC_SetTargetState_NS(IRQn_Type IRQn);
+
+/**
+  \brief   Clear Interrupt Target State (non-secure)
+  \details Clears the interrupt target field in the non-secure NVIC when in secure state.
+  \param [in]      IRQn  External interrupt number. Value cannot be negative.
+  \return             0  if interrupt is assigned to Secure
+  \return             1  if interrupt is assigned to Non Secure
+ */
+uint32_t TZ_NVIC_ClearTargetState_NS(IRQn_Type IRQn);
+
+/**
+  \brief   Set Interrupt Priority (non-secure)
+  \details Sets the priority of an non-secure interrupt when in secure state.
+  \note    The priority cannot be set for every core interrupt.
+  \param [in]      IRQn  Interrupt number.
+  \param [in]  priority  Priority to set.
+  \sa     
+    - \ref NVIC_SetPriority
+ */
+void TZ_NVIC_SetPriority_NS(IRQn_Type IRQn, uint32_t priority);
+
+/**
+  \brief   Get Interrupt Priority (non-secure)
+  \details Reads the priority of an non-secure interrupt when in secure state.
+           The interrupt number can be positive to specify an external (device specific) interrupt,
+           or negative to specify an internal (core) interrupt.
+  \param [in]   IRQn  Interrupt number.
+  \return             Interrupt Priority. Value is aligned automatically to the implemented priority bits of the microcontroller.
+  \sa     
+    - \ref NVIC_GetPriority
+ */
+uint32_t TZ_NVIC_GetPriority_NS(IRQn_Type IRQn);
+
+/** close nvic_trustzone_functions
+  @}
+*/
+
+
+/**
+  \defgroup systick_trustzone_functions SysTick Functions
+  \brief SysTick functions related to TrustZone for ARMv8-M.
+  @{
+*/
+
+/**
+  \brief   System Tick Configuration (non-secure)
+  \details Initializes the non-secure System Timer and its interrupt when in secure state, and starts the System Tick Timer.
+           Counter is in free running mode to generate periodic interrupts.
+  \param [in]  ticks  Number of ticks between two interrupts.
+  \return          0  Function succeeded.
+  \return          1  Function failed.
+  \note    When the variable <b>__Vendor_SysTickConfig</b> is set to 1, then the
+           function <b>TZ_SysTick_Config_NS</b> is not included. In this case, the file <b><i>device</i>.h</b>
+           must contain a vendor-specific implementation of this function.
+  \sa     
+    - \ref SysTick_Config
+ */
+uint32_t TZ_SysTick_Config_NS(uint32_t ticks);
+
+/** close systick_trustzone_functions
+  @}
+*/
+
+
+/**
+  \defgroup sau_trustzone_functions SAU Functions
+  \brief Secure Attribution Unit (SAU) functions related to TrustZone for ARMv8-M.
+  @{
+\details
+The Secure Attribution Unit (SAU) functions SAU 
+
+\note
+TZ_SAU_* functions are only available if macro __SAU_PRESENT is set to 1.
+
+ */
+
+/**
+\brief   Setup Secure Attribute Unit (SAU) and non-secure interrupts
+\details 
+The function \ref TZ_SAU_Setup uses the settings in the \ref partition_h_pg to initialize
+the Secure Attribute Unit (SAU) and define non-secure interrupts.  It is called from
+the function \ref SystemInit.
+ */
+void TZ_SAU_Setup (void);
+
+/**
+  \brief   Enable Security Attribution Unit (SAU)
+  \details Enables the Security Attribution Unit (SAU).
+ */
+void TZ_SAU_Enable(void);
+
+/**
+  \brief   Disable Security Attribution Unit (SAU)
+  \details Disables the Security Attribution Unit (SAU).
+ */
+void TZ_SAU_Disable(void);
+
+/** close sau_trustzone_functions
+  @}
+*/
+
+
+/**
+  \defgroup coreregister_trustzone_functions Core Register Access Functions
+  \brief Core register Access functions related to TrustZone for ARMv8-M .
+  @{
+*/
+
+/**
+  \brief   Get Control register (non-secure)
+  \details Returns the content of the non-secure Control register when in secure mode.
+  \return               non-secure Control register value
+  \sa     
+    - \ref __get_CONTROL; CONTROL_Type 
+ */
+uint32_t __TZ_get_CONTROL_NS(void);
+
+/**
+  \brief   Set Control register (non-secure)
+  \details Writes the given value to the non-secure Control register when in secure state.
+  \param [in]    control  Control register value to set
+  \sa     
+    - \ref __set_CONTROL; CONTROL_Type 
+ */
+void __TZ_set_CONTROL_NS(uint32_t control);
+
+/**
+  \brief   Get IPSR register (non-secure)
+  \details Returns the content of the non-secure IPSR register when in secure state.
+  \return               IPSR register value
+  \sa     
+    - \ref __get_IPSR; IPSR_Type 
+ */
+uint32_t __TZ_get_IPSR_NS(void);
+
+/**
+  \brief   Get APSR register (non-secure)
+  \details Returns the content of the non-secure APSR register when in secure state.
+  \return               APSR register value
+  \sa     
+    - \ref __get_APSR; APSR_Type 
+ */
+uint32_t __TZ_get_APSR_NS(void);
+
+/**
+  \brief   Get xPSR register (non-secure)
+  \details Returns the content of the non-secure xPSR register when in secure state.
+  \return               xPSR register value
+  \sa     
+    - \ref __get_xPSR; xPSR_Type 
+ */
+uint32_t __TZ_get_xPSR_NS(void);
+
+/**
+  \brief   Get Process Stack Pointer (non-secure)
+  \details Returns the current value of the non-secure Process Stack Pointer (PSP) when in secure state.
+  \return               PSP register value
+  \sa     
+    - \ref __get_PSP
+ */
+uint32_t __TZ_get_PSP_NS(void);
+
+/**
+  \brief   Set Process Stack Pointer (non-secure)
+  \details Assigns the given value to the non-secure Process Stack Pointer (PSP) when in secure state.
+  \param [in]    topOfProcStack  Process Stack Pointer value to set
+  \sa     
+    - \ref __set_PSP
+ */
+void __TZ_set_PSP_NS(uint32_t topOfProcStack);
+
+/**
+  \brief   Get Main Stack Pointer (non-secure)
+  \details Returns the current value of the non-secure Main Stack Pointer (MSP) when in secure state.
+  \return               MSP register value
+  \sa     
+    - \ref __get_MSP
+ */
+uint32_t __TZ_get_MSP_NS(void);
+
+/**
+  \brief   Set Main Stack Pointer (non-secure)
+  \details Assigns the given value to the non-secure Main Stack Pointer (MSP) when in secure state.
+  \param [in]    topOfMainStack  Main Stack Pointer value to set
+  \sa     
+    - \ref __set_MSP
+ */
+void __TZ_set_MSP_NS(uint32_t topOfMainStack);
+
+/**
+  \brief   Get Priority Mask (non-secure)
+  \details Returns the current state of the non-secure priority mask bit from the Priority Mask register when in secure state.
+  \return               Priority Mask value
+  \sa     
+    - \ref __get_PRIMASK
+ */
+uint32_t __TZ_get_PRIMASK_NS(void);
+
+/**
+  \brief   Set Priority Mask (non-secure)
+  \details Assigns the given value to the non-secure Priority Mask register when in secure state.
+  \param [in]    priMask  Priority Mask
+  \sa     
+    - \ref __set_PRIMASK
+ */
+void __TZ_set_PRIMASK_NS(uint32_t priMask);
+
+/**
+  \brief   Get Base Priority (non-secure)
+  \details Returns the current value of the non-secure Base Priority register when in secure state.
+  \return               Base Priority register value
+  \sa     
+    - \ref __get_BASEPRI
+ */
+uint32_t __TZ_get_BASEPRI_NS(void);
+
+/**
+  \brief   Set Base Priority (non-secure)
+  \details Assigns the given value to the non-secure Base Priority register when in secure state.
+  \param [in]    basePri  Base Priority value to set
+  \sa     
+    - \ref __set_BASEPRI
+ */
+void __TZ_set_BASEPRI_NS(uint32_t basePri);
+
+/**
+  \brief   Set Base Priority with condition (non_secure)
+  \details Assigns the given value to the non-secure Base Priority register when in secure state only if BASEPRI masking is disabled,
+	       or the new value increases the BASEPRI priority level.
+  \param [in]    basePri  Base Priority value to set
+  \sa     
+    - \ref __set_BASEPRI_MAX
+ */
+void __TZ_set_BASEPRI_MAX_NS(uint32_t basePri);
+
+/**
+  \brief   Get Fault Mask (non-secure)
+  \details Returns the current value of the non-secure Fault Mask register when in secure state.
+  \return               Fault Mask register value
+  \sa     
+    - \ref __get_FAULTMASK
+ */
+uint32_t __TZ_get_FAULTMASK_NS(void);
+
+/**
+  \brief   Set Fault Mask (non-secure)
+  \details Assigns the given value to the non-secure Fault Mask register when in secure state.
+  \param [in]    faultMask  Fault Mask value to set
+  \sa     
+    - \ref __set_FAULTMASK
+ */
+void __TZ_set_FAULTMASK_NS(uint32_t faultMask);
+
+/**
+  \brief   Get Process Stack Pointer Limit (non-secure)
+  \details Returns the current value of the non-secure Process Stack Pointer Limit (PSPLIM) when in secure state.
+  \return               PSPLIM register value
+  \note    Only available for ARMv8-M Mainline. 
+ */
+uint32_t __TZ_get_PSPLIM_NS(void);
+
+/**
+  \brief   Set Process Stack Pointer (non-secure)
+  \details Assigns the given value to the non-secure Process Stack Pointer Limit (PSPLIM) when in secure state.
+  \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
+  \note    Only available for ARMv8-M Mainline. 
+ */
+void __TZ_set_PSPLIM_NS(uint32_t ProcStackPtrLimit);
+
+/**
+  \brief   Get Main Stack Pointer Limit (non-secure)
+  \details Returns the current value of the non-secure Main Stack Pointer Limit(MSPLIM) when in secure state.
+  \return               MSPLIM register value
+  \note    Only available for ARMv8-M Mainline. 
+ */
+uint32_t __TZ_get_MSPLIM_NS(void);
+
+/**
+  \brief   Set Main Stack Pointer Limit (non-secure)
+  \details Assigns the given value to the non-secure Main Stack Pointer Limit (MSPLIM) when in secure state.
+  \param [in]    MainStackPtrLimit  Main Stack Pointer value to set
+  \note    Only available for ARMv8-M Mainline. 
+ */
+void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit);
+
+/**
+  \brief   Get FPSCR (non-secure)
+  \details Returns the current value of the non-secure Floating Point Status/Control register when in secure state.
+  \return               Floating Point Status/Control register value
+  \note    Only available for ARMv8-M Mainline. 
+  \sa     
+    - \ref __get_FPSCR
+ */
+uint32_t __TZ_get_FPSCR_NS(void);
+
+/**
+  \brief   Set FPSCR (non-secure)
+  \details Assigns the given value to the non-secure Floating Point Status/Control register when in secure state.
+  \param [in]    fpscr  Floating Point Status/Control value to set
+  \note    Only available for ARMv8-M Mainline. 
+  \sa     
+    - \ref __set_FPSCR
+ */
+void __TZ_set_FPSCR_NS(uint32_t fpscr);
+
+/** close coreregister_trustzone_functions
+  @}
+*/
+
+
+/** close trustzone_functions
+@}
+*/

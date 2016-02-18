@@ -1,0 +1,112 @@
+/** 
+\page Using_TrustZone_pg  Using TrustZone for ARMv8-M
+
+
+\details 
+The optional ARMv8-M security extension is similar to ARM TrustZone technology used in Cortex-A processors, but is 
+optimized for ultra-low power embedded applications. TrustZone for ARMv8-M enables of multiple software security 
+domains that restrict access to secure memory and I/O only for trusted software.
+
+TrustZone for ARMv8-M:
+  - preserves low interrupt latencies for both Secure and Non-secure domains.
+  - does not impose code overhead, cycle overhead or the complexity of a virtualization based solution.
+  - introduces the Secure Gateway (SG) processor instruction for calls to the secure domain.
+
+\b Notations
+
+This manual uses the following notations to identify functions and hardware resources that are related to TrustZone for ARMv8-M:
+
+ - prefix \b TZ or \b __TZ indicates a function that is available only in ARMv8-M TrustZone enabled devices.
+ - postfix \b _NS indicates a hardware resource that belongs to the Non-secure state.
+ - postfix \b _S indicates a hardware resource that belongs to the Secure state.
+ 
+  
+\section UseCase_TrustZone Simplified Use Case with TrustZone
+
+An ARMv8-M TrustZone enabled device has restricted access for data, code, and I/O access to trusted 
+software that runs in the Secure state. Typical applications are secure IoT nodes, firmware IP protection, 
+or multi-party embedded software deployments.
+
+The figure <b>Simplified Use Case</b> shows and embedded application that is split into a <b>User Project</b> 
+(executed in Non-secure state) and a <b>Firmware Project</b> (executed in Secure state). 
+
+ - <b>System Start:</b> after power on or reset, an ARMv8-M system starts code execution in the <b>Secure state</b>. The access rights for the <b>Non-secure state</b> is configured.
+
+ - <b>User Application:</b> control can be transferred to <b>Non-secure state</b> to execute user code. This code can only call functions in the <b>secure state</b> that are marked for execution with the <b>SG</b> (secure gate) instruction and memory attributes. Any attempt to access memory or peripherals that are assigned to the <b>Secure state</b> triggers a security exception.
+
+ - <b>Firmware callbacks:</b> code executed in the <b>Secure state</b> can executed code in the <b>Non-secure state</b> using call-back function pointers. For example, a communication stack (protected firmware) could use a I/O driver that is configured in user space.
+ 
+\image html "SimpleUseCase.png" "Simplified Use Case"
+
+Program execution in the <b>Secure state</b> is further protected by TrustZone hardware from software failures.
+For example, an ARMv8-M system may implement two independent SYSTICK timers which allows to stop code execution 
+in <b>Non-secure state</b> in case of timing violations. Also function pointer callbacks from <b>Secure state</b> 
+to <b>Non-secure state</b> protected by a special CPU instruction and the address bit 0 which prevents anciently 
+executing code in <b>Non-secure state</b>.
+
+\subsection Example_TrustZone Program Example
+
+A sample application that reflects this <b>Simplified Use Case</b> is the <b>ARMv8MBL Secure/Non-Secure example</b> that is available in 
+the Software Pack <b>Keil - ARM V2M-MPS2 Board Support PACK for Cortex-M System Design Kit Devices</b> 
+(Keil:V2M-MPS2_CMx_BSP.1.2.0.pack or higher).
+
+
+\section Model_TrustZone Programmers Model with TrustZone
+
+The figure <b>Secure Memory Map</b> shows the memory view for the Secure state.  In the Secure state all
+memory and peripherals can be accessed. The <b>System Control and Debug</b> area provides access to secure peripherals
+and non-secure peripherals that are mirrored at a memory alias.  
+
+The secure peripherals only accessible during program execution in <b>Secure state</b>. The Secure Attribute Unit (SAU)
+configures the non-secure memory, peripheral, and interrupt access. Also available are a secure MPU (memory protection 
+unit), secure SCB (system control block), and secure SysTick timer.
+
+The system supports two separate interrupt vector tables for secure and non-secure code execution. 
+This interrupt assignment is controlled during <b>Secure state</b> code execution via the NVIC 
+(nested vector interrupt controller).
+
+\image html "MemoryMap_S.png" "Secure Memory Map"
+
+The figure <b>Non-Secure Memory Map</b> shows the memory view for the Non-secure state. This memory view is identical
+to the traditional Cortex-M memory map. Access to any secure memory or peripheral space triggers the secure exception
+that executes a handler in <b>Secure state</b>.
+
+The \ref partition_h_pg defines the initial setup of the <b>Non-Secure Memory Map</b> during system start in the Secure state
+(refer to functions \ref SystemInit and \ref TZ_SAU_Setup).
+
+\image html "MemoryMap_NS.png" "Non-Secure Memory Map"
+
+The figure <b>Registers</b> shows the register view of the ARMv8-M system with TrustZone. As the general purpose registers
+are can be accessed from any state (secure or non-secure), function calls between the states use these registers for parameter
+and return values.
+
+The register R13 is the stack pointer alias and the actual stack pointer (PSP_NS, MSP_NS, PSP_S, MSP_S)  
+accessed depends on a) state (Secure or Non-secure) and b) mode (handler=exception/interrupt execution or
+thread=normal code execution). 
+
+In ARMv8-M Mainline, each stack pointer has an limit register (PSPLIM_NS, MSPLIM_NS, PSPLIM_S, MSPLIM_S)
+that traps stack overflows with the \b UsageFault exception (register UFSR bit STKOF=1).
+
+An ARMv8-M system with TrustZone has for each state (Secure or Non-secure) an independent \b CONTROL register.
+The interrupt/exception control registers (PRIMASK, FAULTMASK, BASEPRI) are banked between the states (Secure or Non-secure),
+however the interrupt priority for the Non-Secure state can be lowered (SCB_AIRCR register bit PRIS) so that 
+secure interrupts have always higher priority.
+
+The core registers of the current state (Secure or Non-secure) are accessed using the standard \ref Core_Register_gr
+functions. In Secure state all non-secure registers are accessible using the \ref coreregister_trustzone_functions 
+related to TrustZone for ARMv8-M.
+
+\image html "Registers.png" "Registers"
+
+\section CMSIS_Files_TrustZone CMSIS Files for TrustZone
+
+The CMSIS-Core files are extended by the \ref partition_h_pg which defines the initial system configuration and 
+during \ref SystemInit in Secure state. 
+
+\image html "CMSIS_TZ_files.png" "CMSIS with extensions for TrustZone"
+
+\note
+Refer to \ref Using_pg for a general description of the CMSIS-CORE files.
+
+
+*/
