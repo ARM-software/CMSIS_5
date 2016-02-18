@@ -96,12 +96,8 @@ Doxygen	comment example:
 
 \section License Licence
 
-The CMSIS is provided free of charge by ARM and can be used for all Cortex-M based devices. 
-
-The software portions that are deployed in the application program are under a BSD license
-which allows usage of CMSIS in any commercial or open source projects.
-
-View the <a href="CMSIS_END_USER_LICENCE_AGREEMENT.pdf">LICENCE AGREEMENT for CMSIS</a> in detail.
+The CMSIS is provided free of charge by ARM under Apache 2.0 license. 
+View the <a href="LICENSE">Apache 2.0 License</a>.
 
 
 \section CM_Pack_Content ARM::CMSIS Pack
