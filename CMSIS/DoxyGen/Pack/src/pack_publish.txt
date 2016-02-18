@@ -1,0 +1,70 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page CreatePackPublish Publish a Pack
+There are multiple ways to distribute a Software Pack:
+
+\section CP_LocalInstallation Local Installation
+The easiest way to distribute a Software Pack is attaching it to an email or using other means of electronic distribution
+(for example using a company internal file server). The installation of a Software Pack is usually triggered by
+double-clicking the PACK file. The Pack management tool is invoked and the Pack is installed on the local machine. After
+installation, the Pack will be shown in the list of installed Packs (tool dependent). If the PDSC file does not contain a
+valid \c \<url\> element, a manual installation is required to update a Software Pack. Otherwise, Pack management tools can
+check for updates on the server or the local machine that is specified by \c \<url\>.
+
+\image html LocalInstallation.png "Local installation and update from URL"
+
+\note For automatic updates on a local machine, specify the \c \<url\> using the
+<a href="https://en.wikipedia.org/wiki/File_URI_scheme" target="_blank">file URI scheme</a>.
+
+
+\section CP_WebDownload Web Download
+
+Any web server can be used to host a Software Pack (specified by the \c \<url\> element in the PDSC file). At this location,
+at least two files need to be present (refer to \ref PackFilenames):
+-# \elem{vendor}.\elem{name}.pdsc
+-# \elem{vendor}.\elem{name}.\elem{version}.pack, where \elem{version} refers to the latest version specified in the PDSC file.
+
+All previous versions listed in the \elem{releases} section of the PDSC file should be present in that folder as well. This
+will enable customers to revert updates or to be able to download a specific version of a Software Pack (for code
+maintenance purposes for example).
+
+Depending on the Pack management tool, a Pack Index Server might be in place that gathers information about published Packs
+in an index file. This information is then used in the management tool to retrieve version information and to trigger
+updates of Packs within the development environment.
+ 
+\note
+- It is important to understand how the \<url\> element works. If you specify a URL, for example
+  <a href="http://www.keil.com/pack/" target="_blank">http://www.keil.com/pack</a>,
+  then you have to make the PDSC file and the corresponding PACK file(s) available for download at that exact location.
+  The naming of the files follow the standard naming rules. For example, the ARM::CMSIS PDSC and Pack files are available
+  here:\n
+  <a href="http://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">http://www.keil.com/pack/ARM.CMSIS.pdsc</a> and \n
+  <a href="http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack</a> and \n
+  <a href="http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack</a> and ... \n
+  At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned PACK files,
+  but at least the latest one.
+- If the URL or the PDSC/PACK files become unavailable (temporarily or permanently), users will not be able to retrieve
+  updates.
+- Do not replace PDSC/PACK files without updating the version number because the Pack management tools will not recognize
+  the update unless the version has been changed.
+- Older PACKs should remain available.
+
+\image html WebInstallation.png "Web installation and update"
+
+
+\section CP_KeilComPack Publishing on www.keil.com/pack
+
+ARM tries to maintain a list of all available Software Packs. If a Software Pack is intended to be on that list, its PDSC
+file needs to be sent to to the following email address: cmsis@arm.com. The PDSC file will be manually XML validated. The
+following content will be processed in order to generate the web site and index file
+(<a class=el href="www.keil.com/pack/index.idx" target="_blank">www.keil.com/pack/index.idx</a>):
+- Version
+- Release Notes
+- Devices
+- Boards
+- Examples
+- Software Components
+
+Please allow up to seven working days for the process. If the file contains any errors, you will be notified. Otherwise, it
+will be uploaded to <a class=el href="www.keil.com/pack" target="_blank">www.keil.com/pack</a>.
+*/

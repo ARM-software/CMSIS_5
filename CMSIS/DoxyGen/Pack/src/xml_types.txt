@@ -1,0 +1,448 @@
+/******************************************************************************************************************/
+/**
+\page pdsc_SequenceNameEnum_pg Debug Access Sequences
+\brief Operations executed by tools for debugging and flash programming.<br>
+<br>
+
+Debug Access Sequences define the activities of development tools to connect to a device using the debug channel for debugging, tracing, or flash programming.
+
+Several Debug Access Sequences are pre-defined and executed in specific context.  Refer to \ref element_sequences for a details.
+
+The development tools should implement \ref default_sequences for these Pre-defined Debug Access Sequences.
+These \ref default_sequences can be overwritten by Debug Access Sequences specified with the \ref element_sequence "sequence" element in the PDSC file.
+Additionally, a PDSC file can contain user-defined sequences, for example to reuse access sequence fragments.
+
+\section usage_of_sequences Usage of Debug Access Sequences
+
+Pre-defined Debug Access Sequences are used in the following context:
+ - <b>Connect Debugger to Device</b> is executed when debugging or flash programming with the target starts.
+ - <b>Reset Device</b> is executed to reset the target.
+ - <b>Verify Code</b> is executed to verify the content after flash programming.
+ - <b>Disconnect Debugger</b> is executed when debugging or flash programming with the target stops.
+
+The following diagrams show how the Debug Access Sequences are executed by a development tool.
+
+<b>Connect Debugger to Device</b> is executed when debugging or flash programming with the target starts.
+
+\image html DebugConnect.png 
+
+<b>Reset Device</b> is executed to reset the target.
+
+\image html Reset.png 
+
+<b>Verify Code</b> is executed to verify the content after flash programming.
+
+\image html CodeVerify.png 
+
+<b>Disconnect Debugger</b> is executed when debugging or flash programming with the target stops.
+
+\image html DebugDisconnect.png 
+
+\section default_sequences Default Debug Access Sequences
+
+Debug Access Sequences get defined in the \ref element_sequence "sequence" element. A list of all available
+pre-defined sequence names is provided in the table \ref sequences_names "Pre-defined Debug Access Sequences".
+The following default sequences should be implemented in a tool. They are executed when no sequence definition exists in the PDSC file.
+
+\note Default Debug Access Sequences read the System Control Space (SCS) of the processor and assume that the SCS offset is implemented
+as defined in the ARMv6-M/ARMv7-M architecture reference manual.
+
+The following  Default Debug Access Sequences are implemented:
+
+- \ref DebugPortSetup : Prepare the target debug port for connection.
+- \ref DebugPortStart : Connect to the target debug port and power it up.
+- \ref DebugPortStop : Power down and disconnect from target debug port.
+- \ref DebugCoreStart : Initialize core debug system.
+- \ref DebugCoreStop : Uninitialize core debug system.
+- \ref ResetSystem : Execute a system-wide reset via software mechanisms.
+- \ref ResetProcessor : Execute a processor reset via software mechanisms.
+- \ref ResetHardware : Execute a system-wide reset via the dedicated debugger reset line nRST.
+- \ref ResetHardwareAssert : Assert a system-wide reset line nRST.
+- \ref ResetHardwareDeassert : De-Assert a system-wide reset line nRST.
+- \ref ResetCatchSet : Configure the target to stop code execution after a reset.
+- \ref ResetCatchClear : Free hardware resources allocated by ResetCatchSet.
+
+<b>DebugPortSetup</b> \anchor DebugPortSetup
+
+\verbatim  
+  <sequence name="DebugPortSetup">
+    <block>
+      __var isSWJ    = ((__protocol &amp; 0x00010000) != 0);
+      __var protType = __protocol &amp; 0x0000FFFF;
+    </block>
+  
+    <!-- JTAG Protocol -->
+    <control if="protType == 1">
+    
+      <control if="isSWJ">
+      
+        <block atomic="1">
+          // Ensure current debug interface is in reset state
+          DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);
+          
+          // Execute SWJ-DP Switch Sequence SWD to JTAG (0xE73C)
+          // Change if SWJ-DP uses deprecated switch code (0xAEAE)
+          DAP_SWJ_Sequence(16, 0xE73C);
+          
+          // Ensure JTAG interface is reset
+          DAP_SWJ_Sequence(6, 0x3F);
+        </block>
+        
+      </control>
+    
+      <block atomic="1">
+        // JTAG "Soft" Reset
+        DAP_JTAG_Sequence(6, 1, 0x3F);
+        DAP_JTAG_Sequence(1, 0, 0x01);
+      </block>
+
+    </control>
+    
+    <!-- SWD Protocol -->
+    <control if="protType == 2">
+    
+      <control if="isSWJ">
+        
+        <block atomic="1">
+          // Ensure current debug interface is in reset state
+          DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);
+          
+          // Execute SWJ-DP Switch Sequence JTAG to SWD (0xE79E)
+          // Change if SWJ-DP uses deprecated switch code (0xEDB6)
+          DAP_SWJ_Sequence(16, 0xE79E);
+          
+          // Enter SWD Line Reset State
+          DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  // &gt; 50 cycles SWDIO/TMS High
+          DAP_SWJ_Sequence(3,  0x00);                // At least 2 idle cycles (SWDIO/TMS Low)
+      </block>
+      
+      </control>
+    
+      <control if="!isSWJ">
+      
+        <block>
+          // Enter SWD Line Reset State
+          DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  // &gt; 50 cycles SWDIO/TMS High
+          DAP_SWJ_Sequence(3,  0x00);                // At least 2 idle cycles (SWDIO/TMS Low)
+        </block>
+        
+      </control>
+      
+      <block>
+        // Read DPIDR to enable SWD interface (SW-DPv1 and SW-DPv2)
+        ReadDP(0x0);
+      </block>
+
+    </control>
+    
+  </sequence>
+\endverbatim
+
+
+<b>DebugPortStart</b> \anchor DebugPortStart
+
+\verbatim
+  <sequence name="DebugPortStart">
+    
+    <block>
+      __var SW_DP_ABORT  = 0x0;
+      __var DP_CTRL_STAT = 0x4;
+      __var DP_SELECT    = 0x8;
+      __var powered_down = 0;
+
+      // Switch to DP Register Bank 0
+      WriteDP(DP_SELECT, 0x00000000);
+    
+      // Read DP CTRL/STAT Register and check if CSYSPWRUPACK and CDBGPWRUPACK bits are set
+      powered_down = ((ReadDP(DP_CTRL_STAT) &amp; 0xA0000000) != 0xA0000000);
+    </block>
+    
+    <control if="powered_down">
+    
+      <block>
+        // Request Debug/System Power-Up
+        WriteDP(DP_CTRL_STAT, 0x50000000);
+      </block>
+      
+      <!-- Wait for Power-Up Request to be acknowledged -->
+      <control while="(ReadDP(DP_CTRL_STAT) &amp; 0xA0000000) != 0xA0000000" timeout="1000000"/>
+      
+      <block>
+        // Request Debug Reset
+        WriteDP(DP_CTRL_STAT, 0x54000000);
+      </block>
+      
+      <!-- Wait for Debug Reset to be acknowledged, don't issue error on timeout to deal with improperly connected Debug Reset -->
+      <control while="(ReadDP(DP_CTRL_STAT) &amp; 0xA8000000) != 0xA8000000" timeout="300000"/>
+      
+      <!-- JTAG Specific Part of sequence -->
+      <control if="__protocol == 1">
+      
+        <block>
+          // Init AP Transfer Mode, Transaction Counter, and Lane Mask (Normal Transfer Mode, Include all Byte Lanes)
+          // Additionally clear STICKYORUN, STICKYCMP, and STICKYERR bits by writing '1'
+          WriteDP(DP_CTRL_STAT, 0x50000F32);
+        </block>
+        
+      </control>
+      
+      <!-- SWD Specific Part of sequence -->
+      <control if="__protocol == 2">
+      
+        <block>
+          // Init AP Transfer Mode, Transaction Counter, and Lane Mask (Normal Transfer Mode, Include all Byte Lanes)
+          WriteDP(DP_CTRL_STAT, 0x50000F00);
+          
+          // Clear WDATAERR, STICKYORUN, STICKYCMP, and STICKYERR bits of CTRL/STAT Register by write to ABORT register
+          WriteDP(SW_DP_ABORT, 0x0000001E);
+        </block>
+
+      </control>
+      
+    </control>
+    
+  </sequence>
+\endverbatim
+
+
+<b>DebugPortStop</b> \anchor DebugPortStop
+
+\verbatim  
+  <sequence name="DebugPortStop">
+  
+    <block>
+      __var DP_CTRL_STAT = 0x4;
+      __var DP_SELECT    = 0x8;
+      
+      // Switch to DP Register Bank 0
+      WriteDP(DP_SELECT, 0x00000000);
+      
+      // Power Down Debug port
+      WriteDP(DP_CTRL_STAT, 0x00000000);
+    </block>
+  
+  </sequence>
+\endverbatim
+
+
+<b>DebugCoreStart</b> \anchor DebugCoreStart
+
+\verbatim
+  <sequence name="DebugCoreStart">
+  
+    <block>
+      // System Control Space (SCS) offset as defined in ARMv6-M/ARMv7-M.
+    
+      __var SCS_Addr   = 0xE000E000;
+      __var DHCSR_Addr = SCS_Addr + 0xDF0;
+
+      // Enable Core Debug via DHCSR
+      Write32(DHCSR_Addr, 0xA05F0001);
+    </block>
+    
+  </sequence>
+\endverbatim
+
+
+<b>DebugCoreStop</b> \anchor DebugCoreStop
+
+\verbatim
+  <sequence name="DebugCoreStop">
+  
+    <block>
+      // System Control Space (SCS) offset as defined in ARMv6-M/ARMv7-M.
+      
+      __var SCS_Addr   = 0xE000E000;
+      __var DHCSR_Addr = SCS_Addr + 0xDF0;
+      __var DEMCR_Addr = SCS_Addr + 0xDFC;
+      
+      // Disable Core Debug via DHCSR
+      Write32(DHCSR_Addr, 0xA05F0000);
+      
+      // Disable DWT and ITM blocks, DebugMonitor handler,
+      // halting debug traps, and Reset Vector Catch.
+      Write32(DEMCR_Addr, 0x00000000);
+    </block>
+    
+  </sequence>
+\endverbatim
+
+
+<b>ResetSystem</b> \anchor ResetSystem
+
+\verbatim
+  <sequence name="ResetSystem">
+  
+    <block>
+      // System Control Space (SCS) offset as defined in ARMv6-M/ARMv7-M.
+
+      __var SCS_Addr   = 0xE000E000;
+      __var AIRCR_Addr = SCS_Addr + 0xD0C;
+      __var DHCSR_Addr = SCS_Addr + 0xDF0;
+    
+      // Execute SYSRESETREQ via AIRCR
+      Write32(AIRCR_Addr, 0xA05F0004);
+    </block>
+
+    <!-- Reset Recovery: Wait for DHCSR.S_RESET_ST bit to clear on read -->
+    <control while="(Read32(DHCSR_Addr) &amp; 0x02000000) == 0" timeout="500000"/>
+    
+  </sequence>
+\endverbatim
+
+
+<b>ResetProcessor</b> \anchor ResetProcessor
+
+\note This Default Debug Access Sequence is empty for ARMv6-M based processors.
+
+\verbatim
+  <sequence name="ResetProcessor">
+  
+    <block>
+      // System Control Space (SCS) offset as defined in ARMv7-M.
+
+      __var SCS_Addr   = 0xE000E000;
+      __var AIRCR_Addr = SCS_Addr + 0xD0C;
+      __var DHCSR_Addr = SCS_Addr + 0xDF0;
+    
+      // Execute VECTRESET via AIRCR
+      Write32(AIRCR_Addr, 0xA05F0001);
+    </block>
+    
+    <!-- Reset Recovery: Wait for DHCSR.S_RESET_ST bit to clear on read -->
+    <control while="(Read32(DHCSR_Addr) &amp; 0x02000000) == 0" timeout="500000"/>
+
+  </sequence>
+\endverbatim
+
+
+
+<b>ResetHardware</b> \anchor ResetHardware
+
+\verbatim
+  <sequence name="ResetHardware">
+    
+    <block>
+      __var nReset      = 0x80;
+      __var canReadPins = 0;
+    
+      // Deassert nRESET line
+      canReadPins = (DAP_SWJ_Pins(0x00, nReset, 0) != 0xFFFFFFFF);
+    </block>
+    
+    <!-- Keep reset active for 50 ms -->
+    <control while="1" timeout="50000"/>
+
+    <control if="canReadPins">
+    
+      <!-- Assert nRESET line and wait for recovery -->
+      <control while="(DAP_SWJ_Pins(nReset, nReset, 0) &amp; nReset) == 0" timeout="1000000"/>
+      
+    </control>
+    
+    <control if="!canReadPins">
+    
+      <block>
+        // Assert nRESET line
+        DAP_SWJ_Pins(nReset, nReset, 0);
+      </block>
+      
+      <!-- Wait 100ms for recovery if nRESET not readable -->
+      <control while="1" timeout="1000000"/>
+      
+    </control>
+    
+  </sequence>
+\endverbatim
+
+
+<b>ResetHardwareAssert</b> \anchor ResetHardwareAssert
+
+\verbatim
+  <sequence name="ResetHardwareAssert">
+
+    <block>
+        __var nReset = 0x80;
+      
+        // Deassert nRESET line to activate the hardware reset
+        DAP_SWJ_Pins(0, nReset, 0);
+    </block>
+    
+  </sequence>
+\endverbatim
+
+
+<b>ResetHardwareDeassert</b> \anchor ResetHardwareDeassert
+
+\verbatim
+  <sequence name="ResetHardwareDeassert">
+
+    <block>
+      __var nReset      = 0x80;
+      __var canReadPins = 0;
+      
+      // Assert nRESET line and check if nRESET is readable
+      canReadPins = (DAP_SWJ_Pins(nReset, nReset, 0) != 0xFFFFFFFF);
+    </block>
+
+    <!-- Wait for nRESET to recover from reset if readable-->
+    <control if="canReadPins" while="(DAP_SWJ_Pins(nReset, nReset, 0) &amp; nReset) == 0" timeout="1000000"/>
+    
+    <!-- Wait 100ms for recovery if nRESET not readable -->
+    <control if="!canReadPins" while="1" timeout="1000000"/>
+  
+  </sequence>
+        
+\endverbatim
+
+
+<b>ResetCatchSet</b> \anchor ResetCatchSet
+
+\verbatim
+  <sequence name="ResetCatchSet">
+  
+    <block>
+      // System Control Space (SCS) offset as defined
+      // in ARMv6-M/ARMv7-M. Reimplement this sequence
+      // if the SCS is located at a different offset.
+
+      __var SCS_Addr   = 0xE000E000;
+      __var DHCSR_Addr = SCS_Addr + 0xDF0;
+      __var DEMCR_Addr = SCS_Addr + 0xDFC;
+      __var value      = 0;
+    
+      // Enable Reset Vector Catch in DEMCR
+      value = Read32(DEMCR_Addr);
+      Write32(DEMCR_Addr, (value | 0x00000001));
+
+      // Read DHCSR to clear potentially set DHCSR.S_RESET_ST bit
+      Read32(DHCSR_Addr);
+    </block>
+  
+  </sequence>
+\endverbatim
+
+
+<b>ResetCatchClear</b> \anchor ResetCatchClear
+
+\verbatim  
+  <sequence name="ResetCatchClear">
+  
+    <block>
+      // System Control Space (SCS) offset as defined
+      // in ARMv6-M/ARMv7-M. Reimplement this sequence
+      // if the SCS is located at a different offset.
+      
+      __var SCS_Addr   = 0xE000E000;
+      __var DEMCR_Addr = SCS_Addr + 0xDFC;
+      __var value      = 0;
+      
+      // Disable Reset Vector Catch in DEMCR
+      value = Read32(DEMCR_Addr);
+      Write32(DEMCR_Addr, (value &amp; (~0x00000001)));
+    </block>
+    
+  </sequence>
+\endverbatim
+*/
+

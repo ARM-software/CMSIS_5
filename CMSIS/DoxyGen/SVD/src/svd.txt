@@ -1,0 +1,2659 @@
+/**
+\mainpage System View Description
+
+Introduction
+------------
+The CMSIS System View Description format(CMSIS-SVD) formalizes the description of the system
+contained in ARM Cortex-M processor-based microcontrollers, in particular, the memory mapped
+registers of peripherals.
+The detail contained in system view descriptions is comparable to the data in device 
+reference manuals. The information ranges from high level functional 
+descriptions of a peripheral all the way down to the definition and purpose of an individual bit
+field in a memory mapped register. 
+
+CMSIS-SVD files are developed and maintained by silicon vendors.
+Silicon vendors manage their descriptions in a central, web-based Device Database. The CMSIS-SVD
+files are down-loadable via a public web interface once they have been released by the silicon
+vendor. Tool vendors use CMSIS-SVD files for providing device-specific debug views of peripherals in 
+their debugger. Last but not least, CMSIS-compliant device header files are generated from CMSIS-SVD
+files.
+
+CMSIS-SVD Benefits
+------------------
+- For Software Developers:
+  - Consistency between device header file and what is being displayed by the debugger.
+  - Detailed information about peripherals, registers, fields, and bit values from within the debugger,
+  without the need to reference device documentation.
+  - Public access via a web interface to new and updated descriptions as they become available from silicon vendors.
+  - Improved software development efficiency.
+
+- For Silicon Vendors:
+  - A tool vendor independent file format enables early device support by a wide range of toolchains with limited effort.
+  - The XML-based format helps ease the integration into in-house design flows.
+  - Automated generation of CMSIS compliant device header files.
+  - Full control throughout the life cycle of the CMSIS-SVD files from creation to maintenance via the web-based Device Database.
+
+- For Tool Vendors:
+  - Unified file format across silicon vendors helps the efficiency of supporting a wide range of new devices in a timely manner.
+  - Silicon vendors provide early review access to individuals ahead of the publishing date.
+  - Updated descriptions are available over the web simplifying the maintenance of device support.
+
+The Web Infrastructure
+----------------------
+
+\image html "CMSIS_SVD_WEB_DATABASE.png" "CMSIS-SVD Management Processes"
+
+The diagram illustrates the management process steps for uploading, validating, reviewing, publishing, and downloading 
+CMSIS-SVD files. 
+
+- <b>Managing Files:</b>
+A CMSIS-SVD file is uploaded by a silicon vendor via the web interface (<a href="https://cmsis.arm.com/user/index.php" target="_blank">
+<b>Device Database</b></a>). The system performs a check against the CMSIS-SVD Schema and runs the SVDConv consistency checker. 
+Only if both checks were successful the file will be stored in the SVD Storage. Files can be added, replaced, and deleted. 
+
+- <b>Managing Devices:</b> 
+The silicon vendor creates an entry for each of his devices in the database by defining a name and associating it with a 
+CMSIS-SVD file from the SVD Storage. The publishing date set forth for a device is used by the system to determine
+when this device becomes visible in the public device database. Prior to the publishing date, the silicon vendor can
+grant review access to individuals for an individual device. Reviewers get notified by e-mail about a device being made
+available for review.
+
+- <b>Public Download:</b>
+Public access to the silicon vendor specific CMSIS-SVD download pages is provided from <a href="http://cmsis.arm.com" target="_blank">cmsis.arm.com</a> or
+ <a href="http://www.arm.com/cmsis" target="_blank">www.arm.com/cmsis</a>. Select the CMSIS-SVD tab and select the Silicon Vendor of interest from the list.
+For the public download of the CMSIS-SVD files of published devices it is mandatory to:
+  - Be logged in on the ARM web site.
+  - Have accepted a silicon vendor specific End Users License Agreement (EULA).
+
+More information about the web infrastructure can be found in the \subpage svd_web_pg
+
+Language Outline
+----------------
+- \subpage svd_Outline_pg
+
+Language Specification
+----------------------
+- \subpage svd_Format_gr
+- \subpage svd_Format_1_1_gr
+
+CMSIS-SVD in ARM::CMSIS Pack
+----------------------------
+
+The following files relevant to CMSIS-SVD are present in the <b>ARM::CMSIS</b> Pack directories:
+
+|File/Folder                   |Content                                                                
+|------------------------------|-----------------------------------------------------------------------
+|\b CMSIS\\Documentation\\SVD  | This documentation                                                    
+|\b CMSIS\\SVD                 | Exemplary SVD file (\ref svd_Example_pg "ARM_Example.svd") and generated header file (ARM_Example.h).
+
+<p>&nbsp;</p>
+<hr>
+*/
+
+
+/**************************************************************************************************/
+/**
+\page svd_revisionHistory Revision History of CMSIS-SVD
+
+Version   |  Description
+:---------|:----------------------
+V1.3.2    | Extended commandline of SVDConv.exe for partition.h file generation
+V1.3.1    | Added protection element - Fixed peripheral name type to allow array format - Added Cortex A class CPUs to enumeration
+V1.3      | Added array of peripherals and nesting of clusters
+V1.2      | Added optional tags for Cortex-M7 in \ref cpuSection_gr
+V1.1      | Added extensions as documented under \ref svd_Format_1_1_gr
+V1.0      | Initial revision
+
+<p>&nbsp;</p>
+<hr>
+*/
+
+
+/**************************************************************************************************/
+/**
+\page svd_Outline_pg SVD File Format
+
+The CMSIS-SVD format is based on XML and was influenced by IP-XACT.
+Due to the much wider scope and complexity of IP-XACT, it was decided to specify a separate 
+format focused and tailored towards the description of the programmer's view of a device.
+
+<strong>CMSIS-SVD XML Hierarchy</strong>
+
+   \image html CMSIS_SVD_Schema_Gen.png "CMSIS-SVD Hierarchy Levels"
+
+One CMSIS-SVD file contains the description of a single device. A device consists of a processor and at least
+one peripheral. Each peripheral contains at least one register. A register may consist of one or more fields.
+The range of values for a field may be further described with enumerated values.
+
+- <b>Device Level:</b>
+The top level of a System View Description is the device. On this level, information is captured that 
+is specific to the device as a whole. For example, the device name, description, or version. The minimal 
+addressable unit as well as the bit-width of the data bus are required by the debugger to perform the
+correct target accesses.<br>
+<br>Default values for register attributes like register size, reset value, and access permissions can be set for the 
+whole device on this level and are implicitly inherited by the lower levels of the description. If however specified
+on a lower level, the default setting from a higher level will get overruled.
+
+- <b>Peripherals Level:</b>
+A peripheral is a named collection of registers. A peripheral is mapped to a defined <em>base address</em> within the 
+device's address space. A peripheral allocates one or more exclusive address blocks relative to its base address, 
+such that all described registers fit into the allocated address blocks. Allocated addresses without an associated
+register description are automatically considered reserved. The peripheral can be assigned to a group of
+peripherals and may be associated with one or more interrupts.</p>
+
+- <b>Registers Level:</b>
+A register is a named, programmable resource that belongs to a peripheral. Registers are mapped to a defined address in
+the address space of the device. An address is specified relative to the peripheral base address. 
+The description of a register documents the purpose and function of the resource. A debugger requires information
+about the permitted access to a resource as well as side effects triggered by read and write accesses respectively.
+
+- <b>Fields Level:</b>
+Registers may be partitioned into chunks of bits of distinct functionality. A chunk
+is referred to as <em>field</em>. The field names within a single register must be unique.
+Only architecturally defined fields shall be described. Any bits not being explicitly described are treated as reserved.
+They are not displayed in the System Viewer and are padded in the bit fields of the device header file.
+The case-insensitive field named <b>&quot;reserved&quot;</b> is treated as a keyword and each field with this name
+is ignored.
+
+- <b>Enumerated Values Level:</b>
+An enumeration maps an unsigned integer constant to a descriptive identifier and, optionally, to a description string.
+Enumerations are used in C to enhance the readability of source code. Similarly, it can be used by debuggers to
+provide more instructive information to the programmer, avoiding a lookup in the device documentation.
+
+- <b>Vendor Extensions:</b>
+The CMSIS-SVD format includes a section named \em vendorExtensions positioned after 
+the closing tag \em peripherals.
+This allows silicon vendors and tool partners to innovate and expand the description beyond
+the current specification.
+
+
+<b>Multiple Instantiation</b>
+
+CMSIS-SVD supports the reuse of whole sections of the description. The attribute <em>derivedFrom</em> for
+the peripheral-, register-, and field-section specifies the source of the section to be copied from.
+Individual tags can be used to redefine specific elements within a copied section. 
+In case the name of the description source is not unique, the name needs to be qualified hierarchically
+until the element composite name becomes unique. Hierarchies 
+are separated by a dot. For example, <em>\<peripheral name\>.\<register name\>.\<field name\></em>.
+
+<b>Array of Elements</b>
+
+A powerfull construct in data structures of the C programming language is the <em>array</em>. An 
+array is a series of data elements of the same type selected via an index. CMSIS-SVD supports arrays
+of <em>\<peripherals\></em>, <em>\<cluster\></em> and <em>\<register\></em>.
+
+<b>Peripheral Grouping</b>
+
+Peripherals that provide similar functionality (Simple Timer, Complex Timer) can be grouped with the element <em>groupName</em>. 
+All peripherals associated with the same group name are collectively listed under this group 
+in the order they have been specified in the file. Collecting similar or related peripherals into 
+peripheral groups helps structuring the list of peripherals in the debugger.
+
+<b>Descriptions</b>
+
+On each level, the tag <em>description</em> provides verbose information about 
+the respective element. The description field plays an important part in improving the software 
+development productivity as it gives instant access to information that otherwise would need to be looked up
+in the device documentation.
+*/
+
+
+/**************************************************************************************************/
+/**
+\page svd_validate_file_pg SVD File Validation and Usage
+
+The description quality is key to success of the CMSIS-SVD format. Aspects of
+quality are:
+  - Syntactical and structural compliance with the specified CMSIS-SVD format.
+  - Consistency and correctness.
+  - Completeness.
+  - Level of detail.
+
+Automated validations are done on two levels:
+
+-# <b>The CMSIS-SVD Schema File</b>: The schema file specifies the syntax and structure of an XML-based format.
+XML tools use the schema file for checking the syntactical and structural correctness of an XML file that
+claims compliance with a certain format. The schema file <em>CMSIS-SVD.xsd</em> can be found in 
+the folder <b>.\\CMSIS\\Utilities</b> of the \b ARM::CMSIS Pack. 
+\n\n
+-# <b>SVD Conversion Utility:</b> ARM provides the conversion utility \ref svd_SVDConv_pg to 
+check the semantics and consistency of the data contained in a CMSIS-SVD file. 
+\b SVDConv.exe is included in the CMSIS distribution. 
+
+CMSIS-SVD files can be used to generate:
+ -# CMSIS-compliant device header files from a CMSIS-SVD description. Refer to the conversion tool \ref svd_SVDConv_pg for details.
+  CMSIS device header files are developed and maintained by the silicon vendors. Therefore, the expectation is that this conversion is only of interest to
+  these parties.
+ -# Debug dialogs that communicate with a debugger. See below.
+ 
+<b>System Views</b>
+\n\n A number of tool vendors support the CMSIS-SVD format with their products.
+  Refer to the tools documentation to find out how to use CMSIS-SVD descriptions with the debugger of your choice.
+  You can download the latest versions of available CMSIS-SVD files from the  \ref svd_web_public_pg on the ARM web.
+  \n \n
+  <b>Generated Debug Dialog:</b>
+  \image html "SystemViewer_Generated.png" "uVision Debug Window generated from ARM_Example.svd"
+\n 
+
+*/
+
+
+
+/**************************************************************************************************/
+/**
+\page svd_Example_pg SVD File Example
+\verbinclude "ARM_Example.svd"
+*/
+
+
+/**************************************************************************************************/
+/**
+\page svd_SVDConv_pg SVDConv.exe
+
+\b SVDConv.exe is a command-line utility to validate CMSIS-SVD files and to generate CMSIS-compliant device header files.
+\b SVDConv.exe is distributed with the \b ARM::CMSIS Pack (in the CMSIS\\Utilities directory) together with the CMSIS-SVD schema file. 
+
+\b SVDConv.exe performs the following operations:
+  - Checks the syntactical and structural compliance with the specified CMSIS-SVD format.
+  - Checks the consistency, correctness, and completeness of the CMSIS-SVD file against the CMSIS-SVD schema file.
+  - Generates CMSIS-compliant device header files, which can be used for software development.
+
+
+Operation
+---------
+\b SVDConv.exe is invoked form the command line. The general command format is:
+\code
+SVDConv.exe <SVD_file> <options>
+\endcode
+
+<p>&nbsp;</p>
+
+<table class="cmtable" summary="SVDConv Args">
+  <tr>
+    <th>\<options></th>
+    <th>Short Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td> <i>none</i> </td>
+    <td>Validation</td>
+    <td>Perform a validation check of the SVD file. Errors and warnings are printed on screen.
+  </td>
+  </tr>
+  <tr>
+    <td> -b </td>
+    <td>Log File</td>
+    <td>Specify the log file name for writing messages. Default: screen.
+    </td>
+  </tr>
+  <tr>
+    <td> -o </td>
+    <td>Output Path</td>
+    <td>Specify an output path for the generated device header file or log file. Default: current directory.
+    </td>
+  </tr>
+  <tr>
+    <td> ---generate=header </td>
+    <td>Generate Device Header File</td>
+    <td>Generates the device header file. The name of the generated file is derived from the value of the tag \<device\<name> in the CMSIS-SVD file. 
+    Refer to \ref svd_xml_device_gr.
+    </td>
+  </tr>
+  <tr>
+    <td> ---fields=struct </td>
+    <td>Bit-field Structs</td>
+    <td>Generates bit fields for each field description contained in the CMSIS-SVD input file. 
+ Must be used in combination with <i>---generate=header</i>. 
+    </td>
+  </tr>
+  <tr>
+    <td> ---fields=macro </td>
+    <td>Bit-field Macros</td>
+    <td>Generates position and mask C-Macros for each field description contained in the CMSIS-SVD input file. 
+    Must be used in combination with <i>---generate=header</i>. 
+    </td>
+  </tr>
+  <tr>
+    <td> ---fields=struct-ansic </td>
+    <td>ANSI Bit-field Structs</td>
+    <td>Generates MISRA-compliant structures for each bitfield. The generated code <b>is not CMSIS-compliant</b>!
+    Must be used in combination with <i>---generate=header</i>. 
+    </td>
+  </tr>
+  <tr>
+    <td> ---generate=partition </td>
+    <td>Generate Partition file for Cortex-M Security Extensions (ARMv8M)</td>
+    <td>Generates the device partition file. The name of the generated file is composed of <em>partition_</em> and the value of the tag <em>\<name></em>
+    on the device level in the CMSIS-SVD file (e.g. <em>partition_CMSDK_ARMv8MBL.h</em>).
+    Refer to \ref svd_xml_device_gr. The content of the file is derived from the SAU specific information from the \ref cpuSection_gr and the interrupts specified
+    in the \<peripheral> section of the SVD file and uses Configuration Wizard annotations for easing the editing.
+    
+    </td>
+  </tr>
+</table>
+
+Return Codes
+-------------
+
+\b SVDConv.exe returns the following codes:
+\n
+Code | Description             | Action
+:---:|:------------------------|:--------------------
+  0  | OK                      | No action required. Validation and conversion performed without errors.
+  1  | WARNINGS                | Warnings should be checked an possibly removed. The header file is created and could be used.
+  2  | ERRORS                  | Errors in the SVD description file. Important elements are missing and must be corrected.
+  3  | Error in command line   | Check and correct the command line arguments.
+
+<b>Examples</b> \n
+-# Retrieve help information on screen.
+   \code 
+     SVDConv.exe 
+   \endcode
+   \n
+-# Perform a consistency check by passing only the SVD file name. Errors and warnings are printed on screen. 
+   \code 
+     SVDConv.exe ARM_Example.svd 
+   \endcode
+   \n
+   The result is printed on screen:
+   \verbatim
+   MVCM3110.svd(1688) : info
+   <description> missing for value '2 : MODE2'
+   MVCM3110.svd(1692) : info
+   <description> missing for value '3 : MODE3'
+   MVCM3110.svd(1696) : info
+   <description> missing for value '4 : MODE4'
+   Area of improvements:
+   * Description contains 267 <fields> defined without associated <enumeratedValues>
+   Found 0 Errors and 1 Warnings
+   Return Code: 1 (WARNINGS)
+   \endverbatim
+   \n
+-# Generate the header file. Performs a consistency check. Errors and warnings are printed on screen. 
+   \code 
+     SVDConv.exe ARM_Example.svd --generate=header
+   \endcode
+   \n
+   Code snippet from the generated header file showing the structure for \b TIMER0.
+   \n
+   \include "ARM_ExampleT0.h"
+   \n
+-# Generate the header file containing bit fields. Performs a consistency check. Errors and warnings are printed on screen. 
+   \code 
+     SVDConv.exe ARM_Example.svd --generate=header --fields=struct
+   \endcode
+   \n
+   Code snippet from the generated header file showing the structure for \b TIMER0.
+   \n Compare to the code snippet above.
+   \include "ARM_ExampleT0Struct.h"
+
+*/
+
+
+
+/**************************************************************************************************/
+/**
+\page svd_web_pg CMSIS-SVD Web Interface User Guide
+
+The CMSIS Web Interface provides functionalities for downloading and managing the CMSIS-SVD files.
+    - \subpage svd_web_public_pg - Users can download CMSIS-SVD files.
+    - \subpage svd_web_restricted_pg - Silicon Vendors can manage their devices and associated CMSIS-SVD files.
+    
+In any case, the ARM web page requires login credentials to grant access to the content. 
+    - Registration starts here: <a href="https://login.arm.com/register.php" target="_blank"><b>ARM Registration</b></a>.
+*/
+
+
+/**************************************************************************************************/
+/**
+\page svd_web_public_pg Public Download Area
+
+Public access to the Device Database is provided from <a href="http://cmsis.arm.com" target="_blank">cmsis.arm.com</a>. For the public download of the CMSIS-SVD files of published devices it is mandatory to:
+    - Be logged in on the ARM web site.
+    - Have accepted a silicon vendor specific End Users License Agreement (EULA).
+
+\section login_downl_sec Logging in
+   - Use your credentials to <a href="https://login.arm.com/login.php" target="_blank"><b>Login</b></a>.
+
+\section  open_downl_sec Opening the CMSIS-SVD Download page
+
+   \image html Access_SVD_Vendor.png "Access Silicon Vendor Device Database"
+
+   - Access the CMSIS webpage at <a href="http://cmsis.arm.com" target="_blank"><b>cmsis.arm.com</b></a>.
+   - Select the "CMSIS-SVD" tab.
+   - Click on a Silicon Vendor's name for getting redirected to the respective vendor device database.
+ 
+ 
+\section accept_EULA_sec Accepting the Silicon Vendor's License terms
+   On your first visit to a vendor database page you will be asked to review and accept the 
+   vendor-specific "End User License Agreement" (EULA).
+   If you do not accept the EULA, you will see the list of devices and associated CMSIS-SVD files,
+   but you will not be able to download any of the files.
+   Note, in case the EULA has changed, you will be asked to review and accept the EULA again.
+
+\section  downl_downl_sec Downloading CMSIS-SVD files
+
+   \image html CMSIS_SVD_Vendor_DD.png "Download Device Database Files"
+
+   - Select one, multiple, or all devices from the table.
+   - Click the "download" button.
+
+   You will be asked to open or save the zip archive file containing the files.
+   If you have selected multiple devices, the file \em contents.txt included in the archive will list the
+   mapping between devices and CMSIS-SVD files. Multiple devices can share the same CMSIS-SVD file.
+*/
+
+
+/**************************************************************************************************/
+/**
+\page svd_web_restricted_pg Restricted Management Area
+
+  Access to the CMSIS-SVD device database management system is restricted to:
+    - Silicon Vendors.
+    - Companies who have signed an agreement with ARM about using the CMSIS-SVD device database.
+    - ARM Cortex-M based microcontroller devices.
+
+\section sign_agreement_sec   Signing the agreement
+   - The Silicon Vendor contacts the ARM sales representative or sends an email to cmsis@arm.com requesting 
+   to contribute to the CMSIS-SVD Database. 
+   - An agreement needs to be signed between the Silicon Vendor and ARM
+   defining the terms of use and specifying the representatives authorized for managing the files and devices.
+   - The login e-mail addresses for www.arm.com get listed in the contract. The representatives need to ensure that
+   their login already exists. 
+   - As part of exercising the contract the representatives will be given CMSIS-SVD Upload
+   permissions in the system.
+
+\section  login_mgmnt_dd_sec  Logging in
+   - Use your credentials to <a href="https://login.arm.com/login.php" target="_blank"><b>Login</b></a>.
+
+\section open_mgmnt_ss_sec Opening the CMSIS-SVD Device Database page
+
+   \image html Access_SVD_DD_Manage.png "Management Access to Device Database"
+
+   - Access the CMSIS web page at <a href="http://cmsis.arm.com" target="_blank"><b>cmsis.arm.com</b></a>.
+   - Click the button "Device Database"
+   \note  If you do not see this button, you are either not logged in or you have not been granted CMSIS-SVD Upload
+   permissions.
+
+   
+\section manage_dd_entries_sec Managing the Device Database
+   The database lists microcontroller devices and their associated CMSIS-SVD files and, optionally, resource files.
+   Multiple devices may share the same CMSIS-SVD and the optional resource file. For this reason, files and devices are 
+   managed separately. Files need to be uploaded and have to pass the check against the CMSIS-SVD Schema as well as the
+   plausibility and consistency check by the SVDConv utility before they can be used to define a device. The SVDConv
+   checking is scheduled. Therefore, it can take up to 15 minutes before the file status gets updated.
+
+   \image html Manage_SVD_DD.png "Manage Device Database Entries"
+
+    - a) Manage Files
+      - Add file: Select the CMSIS-SVD file and start the upload process. The schema check will run immediately
+        after the file upload is complete. If the check fails the file will not be stored and you are asked to  
+        upload a corrected file. The SVDConv check for this file is automatically scheduled and will take place
+        within 15 minutes. The status of the file will be updated and reports errors and warnings in a text file
+        that can be downloaded (click on error/warning respectively).
+      - Delete file: Files can only be deleted if they are not associated with a device otherwise the system will
+        list the devices the file is still associated with.
+      - Replace file: Replace files allows you to update a file without the need to edit the device definition.
+
+    - b) Manage Devices
+      \n New devices can be added or existing devices can be edited.
+      A device defines:
+       - Name of device
+       - Filename CMSIS-SVD
+       - Filename Resource zip archive
+       - Reviewer List
+       - Publishing Date <br>
+      A checkbox is in front of each device to enable and disable a device. A disabled device will not 
+      show in the vendor-specific download area.
+   
+    - c) Review Devices
+       \n Ask you reviewer for the login email address being used for the login on the ARM web. Add this email address
+       into the field, one email address per line.
+       You can add some text to the e-mail body however the email template already contains all relevant information
+       like the device name as well as a link to the device database.
+
+*/
+
+
+/**************************************************************************************************/
+/**
+\defgroup svd_Format_gr SVD File Schema Levels
+
+  This section specifies the <b>SVD file format</b> Version 1.0. Each subsection 
+  defines one level of hierarchy and lists all mandatory and optional language elements as well as their type.
+  A brief example description snippet demonstrates the usage of the elements. 
+\note 
+    - The sequence of elements in CMSIS-SVD is mandatory. 
+    - <span class="opt">Optional elements</span> are highlighted in green.
+    - <span class="mand">Mandatory elements</span> are highlighted in blue. Optional sections
+    can contain mandatory elements, which must be specified when the optional section is used.
+    In this case the mandatory elements are also highlighted in blue.
+
+    \section Names
+    All <b>name</b> tags must comply with the ANSI C identifier naming restrictions (identifierType). In particular they
+    must not contain any spaces or special characters. This is necessary to support the generation of device header files
+    thus providing consistency between the names being shown by the debugger and the symbols being used in the CMSIS
+    compliant target software.
+
+    \section Constants
+    Number constants shall be entered in hexadecimal, decimal, or binary format.
+        \li The Hexadecimal format is indicated by a leading <b>&quot;0x&quot;</b>. 
+        \li The Binary format is indicated by a leading <b>&quot;#&quot;</b>.
+        \li All other formats are interpreted as decimal numbers.
+        \li The value tag in \em enumeratedValue accepts <em>'do not care'</em> bits represented by <b>&quot;x&quot;</b>.
+        
+    \section Comments 
+    Comments have the standard XML format. 
+        \li Start a comment with <b>&quot;\<!--&quot;</b>.
+        \li End a comment with <b>&quot;--\>&quot;</b>.
+
+    \section _ Empty Tags
+      - Single tags are not supported (for example, \<name\>).
+      - The tag content must not consist of an empty string (instead, omit optional tags).
+
+    \remarks
+        The latest \ref schema_1_2_gr is provided alongside this document.
+
+*/
+
+
+/**************************************************************************************************/
+/** 
+\defgroup svd_xml_device_gr Device Level
+\ingroup svd_Format_gr
+\details
+The element <b>device</b> provides the outermost frame of the description. 
+    - Only one device section is allowed per file. All other elements like peripherals, registers, 
+    fields, enumerated values, and vendor extensions are described within this scope. 
+    - A device contains one or more peripherals. 
+    - Optional elements like size, access, resetValue, and resetMask defined on this level are used 
+    as default values throughout the device description, unless they get redefined at a lower level.
+     
+
+<hr>
+
+<pre>
+<span class="mand"><b><device schemaVersion=<em>"xs:decimal"</em> xmlns:xs=<em>"http://www.w3.org/2001/XMLSchema-instance"</em> xs:noNamespaceSchemaLocation=<em>"CMSIS-SVD.xsd"</em>></b>
+
+    \<name><em>identifierType</em>\</name>
+    \<version><em>xs:string</em>\</version>
+    \<description><em>xs:string</em>\</description>
+    \<addressUnitBits><em>scaledNonNegativeInteger</em>\</addressUnitBits>
+    \<width><em>scaledNonNegativeInteger</em>\</width>
+<span class="opt">
+    <em>\<!-- registerPropertiesGroup --></em>
+    \<size><em>scaledNonNegativeInteger</em>\</size>
+    \<access><em>accessType</em>\</access>
+    \<resetValue><em>scaledNonNegativeInteger</em>\</resetValue>
+    \<resetMask><em>scaledNonNegativeInteger</em>\</resetMask>
+    <em>\<!-- end of registerPropertiesGroup --></em>
+</span>
+    \<peripherals>
+        ...
+    \</peripherals>
+<span class="opt">
+    \<vendorExtensions>
+        ...
+    \</vendorExtensions></span>
+
+<b>\</device></b>
+</span>
+</pre>
+
+<table class="cmtable" summary="Device Level Schema">
+          <tr>
+            <th>Attribute Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Occurrence</th>
+          </tr>
+          <tr>
+            <td>xmlns:xs</td>
+            <td>Specifies the underlying XML schema to which the CMSIS-SVD schema is compliant. 
+            Has to be set to: <span class="XML-Token">"http://www.w3.org/2001/XMLSchema-instance"</span>.</td>
+            <td>xs:decimal</td>
+            <td>1..1</td>
+          </tr>
+          <tr>
+            <td>xmlns:xs</td>
+            <td>Specifies the file path and file name of the CMSIS-SVD Schema. For example, <span class="XML-Token">CMSIS-SVD.xsd</span>.</td>
+            <td>xs:string</td>
+            <td>1..1</td>
+          </tr>
+          <tr>
+            <td>schemaVersion</td>
+            <td>Specifies the CMSIS-SVD schema version the description is compliant to (for example, 1.1). </td>
+            <td>xs:decimal</td>
+            <td>1..1</td>
+          </tr>
+          <tr>
+            <th>Element Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Occurrence</th>
+          </tr>
+          <tr>
+            <td>name</td>
+            <td>The name string is used to identify the device or device series. Device names 
+            are required to be unique.</td>
+            <td>xs:string </td>
+            <td>1..1 </td>
+          </tr>
+          <tr>
+            <td>version </td>
+            <td>The string defines the version of the file. Silicon vendors maintain the description 
+            throughout the life-cycle of the device and ensure that all updated and released copies 
+            have a unique version string. Higher numbers indicate a more recent version. </td>
+          </tr>
+            <td>xs:string </td>
+            <td>1..1 </td>
+          <tr>
+            <td>description </td>
+            <td>String for describing main features of a device (for example CPU, clock frequency, peripheral overview).</td>
+            <td>xs:string </td>
+            <td>1..1 </td>
+          </tr>
+          <tr>
+            <td>addressUnitBits </td>
+            <td>Defines the number of data bits uniquely selected by each address. 
+            The value for Cortex-M based devices is  8 (byte-addressable).
+            </td>
+            <td>scaledNonNegativeInteger </td>
+            <td>1..1 </td>
+          </tr>
+          <tr>
+            <td>width </td>
+            <td>Defines the number of data bit-width of the maximum single data transfer supported 
+            by the bus infrastructure. This information is relevant for debuggers when accessing 
+            registers, because it might be required to issue multiple accesses for accessing a 
+            resource of a bigger size. The expected value for Cortex-M based devices is 32.</td>
+            <td>scaledNonNegativeInteger </td>
+            <td>1..1 </td>
+          </tr>
+          <tr class="group1">
+          <td colspan="4">See \ref registerPropertiesGroup_gr for details.</td>
+          </tr>
+          <tr class="group1">
+            <td align="right">size</td>
+            <td>Defines the default bit-width of any register contained in the device (implicit inheritance).
+            </td>
+            <td>scaledNonNegativeInteger</td>
+            <td>0..1</td>
+          </tr>
+          <tr class="group1">
+            <td align="right">access</td>
+            <td>Defines the default access rights for all registers.</td>
+            <td>accessType</td>
+            <td>0..1 </td>
+          </tr>
+          <tr class="group1">
+            <td align="right">protection</td>
+            <td>Defines extended access protection for all registers.</td>
+            <td>protectionStringType</td>
+            <td>0..1 </td>
+          </tr>
+          <tr class="group1">
+            <td align="right">resetValue </td>
+            <td>Defines the default value for all registers at RESET.</td>
+            <td>scaledNonNegativeInteger </td>
+            <td>0..1 </td>
+          </tr>
+          <tr class="group1">
+            <td align="right">resetMask</td>
+            <td>Identifies which register bits have a defined reset value.</td>
+            <td>scaledNonNegativeInteger</td>
+            <td>0..1</td>
+          </tr>
+          <tr>
+            <td>peripherals
+            </td>
+            <td>Next level of description. see \ref svd_xml_peripherals_gr	for details.</td>
+            <td>&nbsp;</td>
+            <td>1..1 </td>
+          </tr>
+          <tr>
+            <td>vendorExtensions </td>
+            <td>The content and format of this section of the description is unspecified. 
+            Silicon vendors may choose to provide additional information. By default, this section 
+            is ignored for constructing the CMSIS files. It is up to the silicon vendor to specify 
+            a schema for this section.
+            </td>
+            <td>xs:anyType (restriction) </td>
+            <td>0..1 </td>
+          </tr>
+</table>
+
+\section dev_ex Example:
+\code
+<device schemaVersion="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD.xsd">
+  <name>ARM_Cortex_M3</name>
+  <version>0.1</version>
+  <description>ARM Cortex-M3 based Microcontroller demonstration device</description>
+  <addressUnitBits>8</addressUnitBits>
+  <width>32</width>
+  <size>32</size>
+  <access>read-write</access>
+  <resetValue>0</resetValue>
+  <resetMask>0xffffffff</resetMask>
+
+  <peripherals>
+    ...
+  </peripherals>
+</device>
+\endcode
+
+The device description above is at version 0.1 and uniquely identifies the 
+device by the name "ARM_Cortex_M3". The peripherals are memory mapped in a 
+byte-addressable address space with a bus width of 32 bits. The default size of 
+the registers contained in the peripherals is set to 32 bits. Unless redefined 
+for specific peripherals, all registers or fields are read-write 
+accessible. A reset value of 0, valid for all 32 bits as specified by the reset 
+mask, is set for all registers unless redefined at a lower level.
+*/
+
+
+/**************************************************************************************************/
+/**
+\defgroup svd_xml_peripherals_gr Peripherals Level
+\ingroup svd_Format_gr
+\details
+All peripherals of a device are enclosed within the tag \b \<peripherals>. At least one peripheral has 
+to be defined. Each peripheral is enclosed in the tag \b \<peripheral>. 
+- Each peripheral describes all registers belonging to that peripheral. 
+- The address range allocated by a peripheral is defined through one or more address blocks. 
+- An address block and register addresses are specified relative to the base address of a peripheral. 
+The address block information can be used for constructing a memory map for the device peripherals.
+
+Starting version 1.3 of the SVD specification arrays of peripherals can be specified. 
+The single peripheral description gets duplicated automatically into an array. 
+The number of array elements is specified by the \<dim\> element. The peripheral name needs to be of
+the format <em>myPeripheral[%s]</em>. The <em>\<dimIncrement\></em> specifies the address offset between two 
+peripherals. The \<dimIndex\> is ignored. If you want to create copies of a peripheral using different
+names, please use the derivedFrom attribute.
+
+\remarks  The memory map does not contain any information about physical memory. The memories of a
+device are described as part of the CMSIS-PACK device description.
+
+<hr>
+
+<pre>
+<span class="mand"> \b \<peripherals>
+
+    <strong>\<peripheral <span class="opt">derivedFrom=<em>identifierType</em></span>\></strong>
+    
+        \<name><em>identifierType</em>\</name>
+        \<version><em>xs:string</em>\</version>
+        \<description><em>xs:string</em>\</description>
+    <span class="opt">
+        \<groupName><em>identifierType</em>\</groupName>
+        \<prependToName><em>identifierType</em>\</prependToName>
+        \<appendToName><em>identifierType</em>\</appendToName>
+        \<disableCondition><em>xs:string</em>\</disableCondition>
+    </span>
+        \<baseAddress><em>scaledNonNegativeInteger</em>\</baseAddress>
+    <span class="opt">
+        <em> \<!-- registerPropertiesGroup --></em>
+        \<size><em>scaledNonNegativeInteger</em>\</size>
+        \<access><em>accessType</em>\</access>
+        \<resetValue><em>scaledNonNegativeInteger</em>\</resetValue>
+        \<resetMask><em>scaledNonNegativeInteger</em>\</resetMask>
+        <em> \<!-- end of registerPropertiesGroup --></em>
+    </span>
+        \<addressBlock>
+            \<offset><em>scaledNonNegativeInteger</em>\</offset>
+            \<size><em>scaledNonNegativeInteger</em>\</size>
+            \<usage><em>usageType</em>\</usage>
+            \<protection><em>protectionStringType</em>\</protection>
+        \</addressBlock><span class="opt">
+        ...
+        \<addressBlock><span class="mand">
+            \<offset><em>scaledNonNegativeInteger</em>\</offset>
+            \<size><em>scaledNonNegativeInteger</em>\</size>
+            \<usage><em>usageType</em>\</usage></span><span class="opt">
+            \<protection><em>protectionStringType</em>\</protection>
+        \</addressBlock></span>
+    <span class="opt">
+        \<interrupt></span><span class="mand">
+            \<name><em>identifierType</em>\</name>
+            \<value><em>scaledNonNegativeInteger</em>\</value></span>
+        \</interrupt>
+    
+        \<registers>
+            ...
+        \</registers></span>
+
+    <strong>\</peripheral\></strong>
+    <span class="opt">...
+    \<peripheral>
+       ...
+    \</peripheral>
+    </span>
+<strong>\</peripherals\></strong>
+</span>
+</pre>
+
+<table class="cmtable" summary="Peripheral Level Schema">
+          <tr>
+            <th nowrap="nowrap">Attribute Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Occurrence</th>
+          </tr>
+          <tr>
+            <td>derivedFrom</td>
+            <td>Specifies the name of a peripheral from which this peripheral will be derived. 
+            Values are inherit. Elements specified underneath will override inherited values. 
+            </td>
+            <td>xs:Name </td>
+            <td>0..1</td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap">Element Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Occurrence</th>
+          </tr>
+          <tr>
+            <td>name </td>
+            <td>The name string is used to identify the peripheral. Peripheral names are required 
+            to be unique for a device. The name needs to be an ANSI C identifier to allow header 
+            file generation. </td>
+            <td>xs:Name </td>
+            <td>1..1 </td>
+          </tr>
+          <tr>
+            <td>version </td>
+            <td>The string specifies the version of this peripheral description. </td>
+            <td>xs:string </td>
+            <td>0..1 </td>
+          </tr>
+          <tr>
+            <td>description </td>
+            <td>The string provides an overview of the purpose and functionality of the peripheral.</td>
+            <td>xs:string </td>
+            <td>0..1 </td>
+          </tr>
+          <tr>
+            <td>groupName </td>
+            <td></td>
+            <td>xs:string </td>
+            <td>0..1 </td>
+          </tr>
+          <tr>
+            <td>prependToName </td>
+            <td>All register names of this peripheral have their names prefixed with this string.</td>
+            <td>xs:string </td>
+            <td>0..1 </td>
+          </tr>
+          <tr>
+            <td>appendToName </td>
+            <td>All register names of this peripheral have their names suffixed with this string.</td>
+            <td>xs:string </td>
+            <td>0..1 </td>
+          </tr>
+          <tr>
+            <td>disableCondition </td>
+            <td>Is a C-language compliant logical expression returning a TRUE or FALSE result. 
+            If TRUE, refreshing the display for this peripheral is disabled and related 
+            accesses by the debugger are suppressed. 
+            \n \n Only constants and references to other 
+            registers contained in the description are allowed:  
+            <em>\<peripheral>->\<register>->\<field></em>, for example, (System->ClockControl->apbEnable == 0). 
+            The following operators are allowed in the expression [&&,||, ==, !=, >>, <<, &, |].
+            \attention
+            Use this feature only in cases where accesses from the debugger to registers of 
+            un-clocked peripherals result in severe debugging failures. SVD is intended to provide 
+            static information and does not include any run-time computation or functions. 
+            Such capabilities can be added by the tools, and is beyond the scope of this 
+            description language.</td>
+            <td>xs:string </td>
+            <td>0..1 </td>
+          </tr>
+          <tr>
+            <td>baseAddress </td>
+            <td>Lowest address reserved or used by the peripheral.</td>
+            <td>scaledNonNegativeInteger </td>
+            <td>1..1 </td>
+          </tr>
+          <tr class="group1">
+          <td colspan="4">See \ref registerPropertiesGroup_gr for details.</td>
+          </tr>
+          <tr class="group1">
+            <td align="right">size</td>
+            <td>Defines the default bit-width of any register contained in the device (implicit inheritance).
+            </td>
+            <td>scaledNonNegativeInteger</td>
+            <td>0..1</td>
+          </tr>
+          <tr class="group1">
+            <td align="right">access</td>
+            <td>Defines the default access rights for all registers.</td>
+            <td>accessType</td>
+            <td>0..1</td>
+          <tr class="group1">
+            <td align="right">protection</td>
+            <td>Defines the protection rights for all registers.</td>
+            <td>protectionStringType</td>
+            <td>0..1 </td>
+          </tr>
+          </tr>
+          <tr class="group1">
+            <td align="right">resetValue </td>
+            <td>Defines the default value for all registers at RESET.</td>
+            <td>scaledNonNegativeInteger </td>
+            <td>0..1 </td>
+          </tr>
+          <tr class="group1">
+            <td align="right">resetMask</td>
+            <td>Identifies which register bits have a defined reset value.</td>
+            <td>scaledNonNegativeInteger</td>
+            <td>0..1</td>
+          </tr>
+          <tr class="group2">
+            <td>addressBlock</td>
+            <td>Specifies an address range uniquely mapped to this peripheral. A peripheral must 
+            have at least one address block, but may allocate multiple distinct address ranges. 
+            If a peripheral is derived form another peripheral, the addressBlock is not mandatory.
+            </td>
+            <td>addressBlockType</td>
+            <td>1..*</td>
+          </tr>
+          <tr class="group2">
+            <td align="right">offset</td>
+            <td>Specifies the start address of an address block relative to the peripheral \em baseAddress.
+            </td>
+            <td>scaledNonNegativeInteger </td>
+            <td>1..1</td>
+          </tr>
+          <tr class="group2">
+            <td align="right">size</td>
+            <td>Specifies the number of addressUnitBits being covered by this address block. 
+            The end address of an address block results from the sum of baseAddress, offset, and (size - 1).
+            </td>
+            <td>scaledNonNegativeInteger </td>
+            <td>1..1</td>
+          </tr>
+          <tr class="group2">
+            <td align="right">usage</td>
+            <td>The following predefined values can be used: <span class="XML-Token">registers<em>,
+            </em> buffer<em>, or</em> reserved</span>. 
+            </td>
+            <td>scaledNonNegativeInteger </td>
+            <td>1..1</td>
+          </tr>
+          <tr class="group1">
+            <td>interrupt </td>
+            <td>A peripheral can have multiple associated interrupts. This entry allows the debugger 
+            to show interrupt names instead of interrupt numbers.</td>
+            <td>interruptType </td>
+            <td>0..* </td>
+          </tr>
+          <tr class="group1">
+            <td align="right">name </td>
+            <td>The string represents the interrupt name.</td>
+            <td>XS:string </td>
+            <td>1..1 </td>
+          </tr>
+          <tr class="group1">
+            <td align="right">value </td>
+            <td>Is the enumeration index value associated to the interrupt.</td>
+            <td>xs:integer </td>
+            <td>1..1 </td>
+          </tr>
+          <tr>
+            <td>registers </td>
+            <td>See \ref svd_xml_registers_gr for details. </td>
+            <td>&nbsp;</td>
+            <td>0..1 </td>
+          </tr>
+</table>
+
+\section periph_ex Example:
+\code
+...
+<peripheral>
+  <name>Timer0</name>
+  <version>1.0.32</version>
+  <description>Timer 0 is a simple 16 bit timer counting down ... </description>
+  <baseAddress>0x40000000</baseAddress>
+  <addressBlock>
+    <offset>0x0</offset>
+    <size>0x400</size>
+    <usage>registers</usage>
+    <protection>s</protection>
+  </addressBlock>
+  <interrupt><name>TIM0_INT</name><value>34</value></interrupt>
+  <registers>
+    ...
+  </registers>
+</peripheral>
+
+<peripheral derivedFrom="Timer0">
+  <name>Timer1</name>
+  <baseAddress>0x40000400</baseAddress>
+</peripheral>
+...
+\endcode
+
+*/
+
+
+/**************************************************************************************************/
+/**
+\defgroup svd_xml_registers_gr Registers Level
+\ingroup svd_Format_gr
+\details
+All registers of a peripheral are enclosed between the \b \<registers\> opening and closing tags.
+
+The description of registers is the most essential part of the SVD description. The register's name, detailed description, and
+the address-offset relative to the peripheral base address are the mandatory elements. If the size, access, reset value, and reset mask
+have not been specified on the device or peripheral level, or if the default values need to be redefined locally, these fields
+become mandatory. 
+
+A register can represent a single value or can be subdivided into individual bit-fields of specific functionality and semantics.
+In schema-terms the \em fields section is optional, however, from a specification perspective, fields are mandatory when they are
+described in the device documentation.
+
+The SVD specification supports the array-of-registers concept. The single register description gets duplicated automatically into
+an array. The size of the array is specified by the \<dim\> element. The register names can be composed by the register name and
+an index specific substring define in \<dimIndex>. The \<dimIncrement\> specifies the address offset between two registers.
+
+<hr>
+
+<pre>
+<span class="mand">\b \<registers>
+ 
+    <strong>\<register <span class="opt">derivedFrom=<em>identifierType</em></span>\></strong>
+    <span class="opt">
+        <em>\<!-- dimElementGroup --> </em>
+        \<dim\><em>scaledNonNegativeInteger</em>\</dim\>
+        \<dimIncrement\><em>scaledNonNegativeInteger</em>\</dimIncrement\>
+        \<dimIndex\><em>xs:string</em>\</dimIndex\>
+        <em>\<!-- end of dimElementGroup --> </em>
+   </span>
+        \<name\><em>identifierType</em>\</name\>
+    <span class="opt">
+        \<displayName\><em>xs:string</em>\</displayName\>
+    </span>
+        \<description\><em>xs:string</em>\</description\>
+    <span class="opt">
+        \<alternateGroup\><em>xs:Name</em>\</alternateGroup\>
+    </span>
+        \<addressOffset\><em>scaledNonNegativeInteger</em>\</addressOffset\>
+    <span class="opt">
+        <em>\<!-- registerPropertiesGroup --> </em>
+        \<size\><em>scaledNonNegativeInteger</em>\</size\>
+        \<access\><em>accessType</em>\</access\>
+        \<resetValue\><em>scaledNonNegativeInteger</em>\</resetValue\>
+        \<resetMask\><em>scaledNonNegativeInteger</em>\</resetMask\>
+        <em>\<!-- end of registerPropertiesGroup --> </em>
+    </span><span class="opt">
+        \<modifiedWriteValues\><em>writeValueType</em>\</modifiedWriteValues\>
+        \<writeConstraint\><em>writeConstraintType</em>\</writeConstraint\>
+        \<readAction\><em>readActionType</em>\</readAction\>
+
+        \<fields\>
+            ...
+        \</fields\>
+    </span>
+    <strong>\</register\></strong>
+    <span class="opt">...
+    \<register\>
+        ...
+    \</register\>
+    </span>
+\b \<registers></span>
+</pre>
+
+
+<table class="cmtable" summary="Register Level Schema">
+    <tr>
+        <th>Attribute Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+    <tr>
+        <td>derivedFrom</td>
+        <td>Specifies the name of the register from which to inherit the data. Elements being specified 
+        underneath will override the inherited values.
+        <br><b>Remarks:</b> When deriving a register, it is mandatory to specify at least the name, the description, and the addressOffset.</td>
+        <td>xs:Name</td>
+        <td>0..1</td>
+    </tr>
+    <tr>
+        <th>Element Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+        <tr class="group1">
+            <td colspan="4">See \ref dimElementGroup_gr for details.</td>
+          </tr>
+        <tr class="group1">
+            <td align="right">dim</td>
+            <td>The value defines the number of elements in an array of registers. </td>
+            <td>scaledNonNegativeInteger </td>
+            <td>1..1 </td>
+          </tr>
+        <tr class="group1">
+            <td align="right">dimIncrement</td>
+            <td>If \em dim is specified, this element becomes mandatory. The element specifies the 
+            address increment in between two neighboring registers of the register array in the 
+            address map.</td>
+            <td>scaledNonNegativeInteger </td>
+            <td>1..1 </td>
+          </tr>
+        <tr class="group1">
+            <td align="right">dimIndex</td>
+            <td>Specifies the substrings that replaces the <em>%%s</em> placeholder within the register name. 
+            By default, the index is a decimal value starting with 0 for the first register. </td>
+            <td>dimIndexType </td>
+            <td>0..1 </td>
+          </tr>
+          <tr>
+            <td>name</td>
+            <td>Name string used to identify the register. Register names are required to be unique 
+            within the scope of a peripheral. </td>
+            <td>registerNameType</a> </td>
+            <td>1..1 </td>
+          </tr>
+          <tr>
+            <td>displayName</td>
+            <td>When specified, the string is being used by a graphical frontend to visualize the register. 
+            Otherwise the name element is displayed. The \em displayName may contain special characters and white spaces. 
+            The place holder <b>%s</b> can be used and is replaced by the \em dimIndex substring. </td>
+            <td>xs:string </td>
+            <td>0..1 </td>
+          </tr>
+          <tr>
+            <td>description</td>
+            <td>String describing the details of the register.</td>
+            <td>xs:string </td>
+            <td>0..1 </td>
+          </tr>
+          <tr>
+            <td>alternateGroup </td>
+            <td>Specifies a group name associated with all alternate register that have the same name. 
+            At the same time, it indicates that there is a register definition allocating the same absolute 
+            address in the address space.</td>
+            <td>xs:Name </td>
+            <td>0..1 </td>
+          </tr>
+          <tr>
+            <td>addressOffset</td>
+            <td>Value defining the address of the register relative to the \em baseAddress defined by 
+            the peripheral of the register.</td>
+            <td>scaledNonNegativeInteger</td>
+            <td>1..1 </td>
+          </tr>
+          <tr class="group1">
+          <td colspan="4">See \ref registerPropertiesGroup_gr for details.</td>
+          </tr>
+          <tr class="group1">
+            <td align="right">size</td>
+            <td>Defines the default bit-width of any register contained in the device (implicit inheritance).
+            </td>
+            <td>scaledNonNegativeInteger</td>
+            <td>0..1</td>
+          </tr>
+          <tr class="group1">
+            <td align="right">access</td>
+            <td>Defines the default access rights for all registers.</td>
+            <td>accessType</td>
+            <td>0..1 </td>
+          </tr>
+          <tr class="group1">
+            <td align="right">protection</td>
+            <td>Defines the protection rights for all registers.</td>
+            <td>protectionStringType</td>
+            <td>0..1 </td>
+          </tr>
+
+          <tr class="group1">
+            <td align="right">resetValue </td>
+            <td>Defines the default value for all registers at RESET.</td>
+            <td>scaledNonNegativeInteger </td>
+            <td>0..1 </td>
+          </tr>
+          <tr class="group1">
+            <td align="right">resetMask</td>
+            <td>Identifies which register bits have a defined reset value.</td>
+            <td>scaledNonNegativeInteger</td>
+            <td>0..1</td>
+          </tr>
+          <tr>
+            <td>modifiedWriteValues</td>
+            <td>Element to describe the manipulation of data written to a register. If not specified,
+            the value written to the field is the value stored in the field. The other options define bitwise operations:
+            \li <span class="XML-Token">oneToClear</span>: write data bits of one shall clear (set to zero) 
+            the corresponding bit in the register.
+            \li <span class="XML-Token">oneToSet</span>: write data bits of one shall set (set to one) 
+            the corresponding bit in the register.
+            \li <span class="XML-Token">oneToToggle</span>: write data bits of one shall toggle (invert) 
+            the corresponding bit in the register.
+            \li <span class="XML-Token">zeroToClear</span>: write data bits of zero shall clear (set to zero)
+            the corresponding bit in the register.
+            \li <span class="XML-Token">zeroToSet</span>: write data bits of zero shall set (set to one) 
+            the corresponding bit in the register.
+            \li <span class="XML-Token">zeroToToggle</span>: write data bits of zero shall toggle (invert) 
+            the corresponding bit in the register.
+            \li <span class="XML-Token">clear</span>: after a write operation all bits in the field are cleared (set to zero).
+            \li <span class="XML-Token">set</span>: after a write operation all bits in the field are set (set to one).
+            \li <span class="XML-Token">modify</span>: after a write operation all bit in the field may be modified (default). </td>
+            <td>modifiedWriteValuesType</td>
+            <td>0..1 </td>
+          </tr>
+    <tr class="choice">
+        <td><em>writeConstraint</em></td>
+        <td colspan="2">Three options exist to set write-constraints:</td>
+        <td>0..1</td>
+    </tr>    
+    <tr class="choice">
+        <td><em>1. writeAsRead</em></td>
+        <td>If TRUE, only the last read value can be written.</td>
+        <td>xs:boolean</td>
+        <td>0..1</td>
+    </tr>    
+    <tr class="choice">
+        <td nowrap="nowrap"><em>2. useEnumeratedValues</em></td>
+        <td>If TRUE, only the values listed in the \em enumeratedValues list are considered valid write values.
+        <td>xs:boolean</td>
+        <td>0..1</td>
+    </tr>    
+    <tr class="choice">
+        <td><em>3. range</em></td>
+        <td>Consists of the following two elements:</td>
+        <td>&nbsp;</td>
+        <td>0..1</td>
+    </tr>    
+    <tr class="choice">
+        <td align="right">minimum</td>
+        <td>Specifies the smallest number to be written to the field.</td>
+        <td>scaledNonNegativeInteger</td>
+        <td>1..1</td>
+    </tr>    
+    <tr class="choice">
+        <td align="right">maximum</td>
+        <td>Specifies the largest number to be written to the field.</td>
+        <td>scaledNonNegativeInteger</td>
+        <td>1..1</td>
+    </tr>    
+    <tr>
+            <td>readAction </td>
+            <td>If set, it specifies the side effect following a read operation. If not set, the register 
+            is not modified. The defined side effects are:
+  \li <span class="XML-Token">clear</span>: The register is cleared (set to zero) following a read operation.
+  \li <span class="XML-Token">set</span>: The register is set (set to ones) following a read operation.
+  \li <span class="XML-Token">modify</span>: The register is modified in some way after a read operation.
+  \li <span class="XML-Token">modifyExternal</span>: One or more dependent resources 
+  other than the current register are immediately affected by a read operation (it is recommended that the register 
+  description specifies these dependencies).
+
+
+  Debuggers are not expected to read this register location unless explicitly instructed by the user.</td>
+            <td>readActionType</td>
+            <td>0..1 </td>
+          </tr>
+
+          <tr>
+            <td>fields </td>
+            <td>Next lower level of description (see \ref svd_xml_fields_gr for details). Not all registers 
+            are further divided into fields, therefore, this level is optional. In case a register is 
+            subdivided into bit fields, it should be reflected in the description. 
+            The device header file can only contain bit access macros and bit-field structures
+            if this information is contained in the description.</td>
+            <td>&nbsp;</td>
+            <td>0..1 </td>
+          </tr>
+</table>
+
+
+\section reg_ex Example:
+\code
+...
+<register>
+  <name>TimerCtrl0</name>
+  <description>Timer Control Register</description>
+  <addressOffset>0x0</addressOffset>
+  <access>read-write</access>
+  <resetValue>0x00008001</resetValue>
+  <resetMask>0x0000ffff</resetMask>
+  <size>32</size>
+  <fields>
+    ...
+  </fields>
+</register>
+
+<register derivedFrom="TimerCtrl0">
+  <name>TimerCtrl1</name>
+  <description>Derived Timer</description>
+  <addressOffset>0x4</addressOffset>
+</register>
+...
+\endcode
+
+*/
+
+
+/**************************************************************************************************/
+/**
+\defgroup svd_xml_fields_gr Fields Level
+\ingroup svd_Format_gr
+\details
+All fields of a register are enclosed between the \<fields> opening and closing tags
+	
+A bit-field has a name that is unique within the register. The 
+position and size within the register is either described by the combination of 
+the least significant bit's position (lsb) and the most significant bit's 
+position (msb), or the lsb and the bit-width of the field. A field may define an \em enumeratedValue 
+in order to make the display more intuitive to read. 
+<hr>
+<pre><span class="mand">
+<strong>\<fields>
+
+    \<field <span class="opt">derivedFrom=<em>"identifierType"</em></span>\></strong>
+
+        \<name\><em>xs:Name</em>\</name\>
+        \<description\><em>xs:string</em>\</description\>
+        
+        \<choice>
+            <em> \<!-- bitRangeLsbMsbStyle --> </em>
+            \<bitOffset\><em>scaledNonNegativeInteger</em>\<bitOffset\>
+            \<bitWidth\><em>scaledNonNegativeInteger</em>\</bitWidth\>
+            <em>or</em>
+            <em> \<!-- bitRangeOffsetWidthStyle --> </em>
+            \<lsb\><em>scaledNonNegativeInteger</em>\</lsb\> 
+            \<msb\><em>scaledNonNegativeInteger</em>\</msb>
+            <em>or</em>
+            <em> \<!-- bitRangePattern --> </em>
+            \<bitRange\><em>pattern</em>\</bitRange\>
+        \</choice>
+        <span class="opt">
+        \<access\><em>accessType</em>\</access\>
+        \<modifiedWriteValues\><em>writeValueType</em>\</modifiedWriteValues\>
+        \<writeConstraint\><em>writeConstraintType</em>\</writeConstraint\>
+        \<readAction\><em>readActionType</em>\</readAction\>
+
+        \<enumeratedValues\>
+            ...
+        \</enumeratedValues\></span>
+        
+    <strong>\</field\>
+    <span class="opt">...
+    \<field>
+       ...
+    \</field>
+    </span>
+\<fields>
+</strong></span>
+</pre>
+
+<table class="cmtable" summary="Field Level Schema">
+    <tr>
+        <th>Attribute Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+    <tr>
+        <td>derivedFrom</td>
+        <td>The field is cloned from a previously defined field with a unique name.</td>
+        <td>xs:Name</td>
+        <td>0..1</td>
+    </tr>
+    <tr>
+        <th>Element Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>Name string used to identify the field. Field names must be unique within a register.</td>
+        <td>xs:string </td>
+        <td>1..1 </td>
+    </tr>
+    <tr>
+        <td>description</td>
+        <td>String describing the details of the register. </td>
+        <td>xs:string </td>
+        <td>0..1 </td>
+    </tr>
+    <tr  class="choice">
+        <td><em>Choice of</em></td>
+        <td colspan="2">Three options exist to describe the field's bit-range. The options are to be used mutually exclusive:</td>
+        <td>1..1</td>
+    </tr>
+    <tr  class="choice">
+        <td colspan="4"><em>1. bitRangeLsbMsbStyle</em> </td>
+    </tr>
+    <tr  class="choice">
+        <td align="right">bitOffset</td>
+        <td>Value defining the position of the least significant bit of the field within the register it belongs to.</td>
+        <td>scaledNonNegativeInteger</td>
+        <td>1..1 </td>
+    </tr>
+    <tr  class="choice">
+        <td align="right">bitWidth </td>
+        <td>Value defining the bit-width of the bitfield within the register it belongs to. </td>
+        <td>scaledNonNegativeInteger</td>
+        <td>0..1 </td>
+    </tr>
+    <tr  class="choice">
+        <td colspan="4"><em>2. bitRangeOffsetWidthStyle</em></td>
+    </tr>
+    <tr  class="choice">
+        <td align="right">lsb </td>
+        <td>Value defining the bit position of the least significant bit within the register it belongs to.</td>
+        <td>scaledNonNegativeInteger</td>
+        <td>1..1 </td>
+    </tr>
+    <tr  class="choice">
+        <td align="right">msb </td>
+        <td>Value defining the bit position of the most significant bit within the register it belongs to. </td>
+        <td>scaledNonNegativeInteger</td>
+        <td>1..1</td>
+    </tr>
+    <tr class="choice">
+        <td colspan="4"><em>3. bitRangePattern</em></td>
+    </tr>
+    <tr  class="choice">
+        <td align="right">bitRange </td>
+        <td>A string in the format: "[<msb>:<lsb>]"</td>
+        <td>bitRangeType </td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>access</td>
+        <td>Predefined strings can be used to define the allowed access types for this field: 
+        <span class="XML-Token">read-only<em>,</em> write-only<em>,</em> read-write<em>,
+        </em> writeOnce<em>, and</em> read-writeOnce</span>. Can be omitted if it 
+        matches the access permission set for the parent register. </td>
+        <td>accessType</td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>modifiedWriteValues</td>
+        <td>Describe the manipulation of data written to a field. If not specified, the value 
+        written to the field is the value stored in the field. The other options are bitwise operations:
+  \li <span class="XML-Token">oneToClear</span>: write data bit of one shall clear (set to zero) the corresponding bit in the field.
+  \li <span class="XML-Token">oneToSet</span>: write data bit of one shall set (set to one) the corresponding bit in the field.
+  \li <span class="XML-Token">oneToToggle</span>: write data bit of one shall toggle (invert) the corresponding bit in the field.
+  \li <span class="XML-Token">zeroToClear</span>: write data bit of zero shall clear (set to zero) the corresponding bit in the field.
+  \li <span class="XML-Token">zeroToSet</span>: write data bit of zero shall set (set to one) the corresponding bit in the field.
+  \li <span class="XML-Token">zeroToToggle</span>: write data bit of zero shall toggle (invert) the corresponding bit in the field.
+  \li <span class="XML-Token">clear</span>: after a write operation all bits in the field are cleared (set to zero).
+  \li <span class="XML-Token">set</span>: after a write operation all bits in the field are set (set to one).
+  \li <span class="XML-Token">modify</span>: after a write operation all bit in the field may be modified (default). </td>
+        <td>modifiedWriteValuesType</td>
+        <td>0..1 </td>
+    </tr>
+    <tr class="choice">
+        <td><em>writeConstraint</em></td>
+        <td colspan="2">Three options exist to set write-constraints:</td>
+        <td>0..1</td>
+    </tr>    
+    <tr class="choice">
+        <td><em>1. writeAsRead</em></td>
+        <td>If TRUE, only the last read value can be written.</td>
+        <td>xs:boolean</td>
+        <td>0..1</td>
+    </tr>    
+    <tr class="choice">
+        <td nowrap="nowrap"><em>2. useEnumeratedValues</em></td>
+        <td>If TRUE, only the values listed in the \em enumeratedValues list are considered valid write values.
+        <td>xs:boolean</td>
+        <td>0..1</td>
+    </tr>    
+    <tr class="choice">
+        <td><em>3. range</em></td>
+        <td>Consists of the following two elements:</td>
+        <td>&nbsp;</td>
+        <td>0..1</td>
+    </tr>    
+    <tr class="choice">
+        <td align="right">minimum</td>
+        <td>Specifies the smallest number to be written to the field.</td>
+        <td>scaledNonNegativeInteger</td>
+        <td>1..1</td>
+    </tr>    
+    <tr class="choice">
+        <td align="right">maximum</td>
+        <td>Specifies the largest number to be written to the field.</td>
+        <td>scaledNonNegativeInteger</td>
+        <td>1..1</td>
+    </tr>    
+    <tr>
+        <td>readAction</td>
+        <td>If set, it specifies the side effect following a read operation. If not set, the field 
+        is not modified after a read. The defined side effects are:
+  \li <span class="XML-Token">clear</span>: The field is cleared (set to zero) following a read operation.
+  \li <span class="XML-Token">set</span>: The field is set (set to ones) following a read operation.
+  \li <span class="XML-Token">modify</span>: The field is modified in some way after a read operation.
+  \li <span class="XML-Token">modifyExternal</span>: One or more dependent resources 
+  other than the current field are immediately affected by a read operation (it is recommended that the field 
+  description specifies these dependencies). 
+
+  Debuggers are not expected to read this field location unless explicitly instructed by the user.</td>
+        <td>readActionType</td>
+        <td>0..1 </td>register
+    </tr>
+    <tr>
+        <td>enumeratedValues</td>
+        <td>Next lower level of description. See section \ref svd_xml_enum_gr for details.</td>
+        <td>&nbsp;</td>
+    <td>0..2</td>
+    </tr>
+</table>
+
+    
+\section field_ex   Example:
+\code
+...
+<field>
+  <name>TimerCtrl0_IntSel</name>
+  <description>Select interrupt line that is triggered by timer overflow.</description>
+  <bitOffset>1</bitOffset>
+  <bitWidth>3</bitWidth>
+  <access>read-write</access>
+  <resetValue>0x0</resetValue>
+  <modifiedWriteValues>oneToSet</modifiedWriteValues>
+  <writeConstraint>
+    <range>
+      <minimum>0</minimum>
+      <maximum>5</maximum>
+    </range>
+  </writeConstraint>
+  <readAction>clear</readAction>
+ 
+  <enumeratedValues>
+    ...
+  </enumeratedValues>
+</field>
+...
+\endcode
+
+*/
+
+
+/**************************************************************************************************/
+/**
+\defgroup svd_xml_enum_gr Enumerated Values Level
+\ingroup svd_Format_gr    
+
+\details
+<div class="title">Enumerated Values</div>
+    The concept of enumerated values creates a map between unsigned integers and an identifier string.
+    In addition, a description string can be associated with each entry in the map.
+
+    <pre>
+        0 <-> disabled -> "the clock source clk0 is turned off"
+        1 <-> enabled  -> "the clock source clk1 is running"
+    </pre>
+    This information is used for generating an <em>enum</em> in the device header file. The debugger may use 
+    this information to display the identifier string as well as the description. Just like symbolic constants
+    making source code more readable, the system view in the debugger becomes more instructive. The detailed description 
+    can provide reference manual level details within the debugger.
+
+<hr>
+
+<pre>
+<span class="mand">
+<b>\<enumeratedValues <span class="opt">derivedFrom</span>=<em>"xs:Name"</em>\></b>
+<span class="opt">
+    \<name\><em>enumerationNameType</em>\</name\>
+    \<usage\><em>usageType</em>\</usage\>
+</span>
+    \<enumeratedValue\>
+        ...
+    \</enumeratedValue\>
+<span class="opt">
+    ...
+    \<enumeratedValue\>
+        ...
+    \</enumeratedValue\>
+</span>
+<b>\</enumeratedValues\></b>
+</span>
+</pre>
+
+
+<table class="cmtable" summary="Enumerated Values Level Schema">
+    <tr>
+        <th>Attribute Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+    <tr>
+        <td>derivedFrom</td>
+        <td>Makes a copy from a previously defined \em enumeratedValues section. 
+        No modifications are allowed. An \em enumeratedValues entry is referenced by its name. 
+        If the name is not unique throughout the description, it needs to be further qualified 
+        by specifying the associated field, register, and peripheral as required. For example:
+<pre>
+    field:                           clk.dis_en_enum
+    register + field:                ctrl.clk.dis_en_enum
+    peripheral + register + field:   timer0.ctrl.clk.dis_en_enum
+</pre>
+        </td>
+        <td>xs:Name</td>
+        <td>0..1</td>
+    </tr>
+    <tr>
+        <th>Element Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>Identifier for the whole enumeration section.</td>
+        <td>xs:Name</td>
+        <td>0..1</td>
+    </tr>
+    <tr>
+        <td>usage</td>
+        <td>Possible values are <span class="XML-Token">read<em>,</em> write<em>, or</em> read-write</span>. 
+        This allows specifying two different enumerated values depending whether it is to be used 
+        for a read or a write access. If not specified, the default value <span class="XML-Token">read-write</span> is used.</td>
+        <td>enumUsageType</td>
+        <td>0..1</td>
+    </tr>
+    <tr>
+        <td>enumeratedValue</td>
+        <td>Describes a single entry in the enumeration. The number of required items depends on the 
+        bit width of the associated field. See section below for details.</td>
+        <td nowrap="nowrap">&nbsp;</td>
+        <td>1..*</td>
+    </tr>
+</table>
+
+
+<div class="title">Enumerated Value</div>
+<p>An \em enumeratedValue defines a map between an unsigned integer and a human readable string.</p>
+<hr>
+<pre>
+<span class="mand">
+<strong>\<enumeratedValue\></strong>
+
+    \<name\><em>identifierType</em>\</name\>
+    <span class="opt">\<description\><em>xs:string</em>\</description\></span>
+
+    \<choice\>
+        \<value\><em>scaledNonNegativeInteger</em>\</value\>
+        \<isDefault\><em>xs:boolean</em>\</isDefault\>
+    \</choice\>
+    
+<strong>\</enumeratedValue></strong>
+</span>
+</pre>
+
+
+<table class="cmtable" summary="Enumerated Value">
+    <tr>
+        <th>Element Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>String describing the semantics of the value. Can be displayed instead of the value.</td>
+        <td>identifierType</td>
+        <td>0..1</td>
+    </tr>
+    <tr>
+        <td>description</td>
+        <td>Extended string describing the value.</td>
+        <td>xs:string</td>
+        <td>0..1</td>
+    </tr>
+    <tr class="choice">
+        <td colspan="3"><em>choice of</em></td>
+        <td>1..1</td>
+    </tr>
+    <tr class="choice">
+        <td align="right">value</td>
+        <td>Defines the constant of the bit-field that the name corresponds to.</td>
+        <td nowrap="nowrap">scaledNonNegativeInteger</td>
+        <td>0..1</td>
+    </tr>
+    <tr class="choice">
+        <td align="right">isDefault</td>
+        <td>Defines the name and description for all other values that are not listed explicitly.</td>
+        <td>xs:boolean</td>
+        <td>0..1</td>
+    </tr>
+</table>
+
+
+\section enum_ex2 Example:
+\code
+<enumeratedValues>
+
+    <name>TimerIntSelect</name>
+    <usage>read-write</usage>
+
+    <enumeratedValue>
+        <name>disabled</name>
+        <description>The clock source clk0 is turned off.</description>
+        <value>0</value>
+    </enumeratedValue>
+
+    <enumeratedValue>
+        <name>reserved</name>
+        <description>Reserved values. Do not use.</description>
+        <isDefault>true</isDefault>
+    </enumeratedValue>
+
+</enumeratedValues>
+\endcode
+\code
+<enumeratedValues>
+
+    <name>TimerIntSelect</name>
+    <usage>read-write</usage>
+
+    <enumeratedValue>
+        <name>disabled</name>
+        <description>Timer does not generate interrupts.</description>
+        <value>0</value>
+    </enumeratedValue>
+
+    <enumeratedValue>
+        <name>enabled</name>
+        <description>Timer generates interrupts.</description>
+        <isDefault>true</isDefault>
+    </enumeratedValue>
+
+</enumeratedValues>
+
+\endcode
+*/
+
+
+/**************************************************************************************************/
+/**
+\defgroup elem_type_gr Element Groups
+*/
+
+/**************************************************************************************************/
+/**
+\defgroup dimElementGroup_gr dimElementGroup
+\ingroup elem_type_gr
+\details
+The SVD specification supports the array-of-registers concept. The single register description gets duplicated automatically into
+an array. The size of the array is specified by the \<dim> element. The register names can be composed by the register name and
+an index-specific substring defined in \<dimIndex>. The \<dimIncrement> specifies the address offset between two registers.
+The elements below can be used to generate an array of registers.
+
+  <table class="cmtable" summary="dimElementGroup Description">
+    <tr>
+      <th nowrap="nowrap">Element Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+      </tr>
+      <tr>
+        <td>dim</td>
+        <td>The value defines the number of elements in an array of registers.</td>
+        <td>scaledNonNegativeInteger</td>
+        <td>1..1 </td>
+      </tr>
+      <tr>
+        <td>dimIncrement</td>
+        <td>If dim is specified, this element becomes mandatory. The element specifies the address increment 
+        in between two neighboring registers of the register array in the address map.</td>
+        <td>scaledNonNegativeInteger</td>
+        <td>1..1 </td>
+      </tr>
+      <tr>
+        <td>dimIndex</td>
+        <td>Specifies the substrings that replaces the <em>%%s</em> placeholder
+        within the register name. By default, the index is a decimal value starting with 0 for 
+        the first register.</td>
+        <td>dimIndexType</td>
+        <td>0..1 </td>
+      </tr>
+  </table>
+
+  
+\section dimElementGroup_ex Examples:
+\code
+...
+<register>
+    <dim>6</dim> 
+    <dimIncrement>4</dimIncrement> 
+    <dimIndex>A,B,C,D,E,Z</dimIndex> 
+    <name>GPIO_%s_CTRL</name> 
+...
+</register>
+\endcode
+
+The code above generates:
+=> GPIO_A_CTRL, GPIO_B_CTRL, GPIO_C_CTRL, GPIO_D_CTRL, GPIO_E_CTRL, GPIO_Z_CTRL
+
+\code
+...
+<register>
+    <dim>4</dim> 
+    <dimIncrement>4</dimIncrement> 
+    <dimIndex>3-6</dimIndex> 
+    <name>IRQ%s</name> 
+...
+</register>
+\endcode
+
+The example above generates:
+=> IRQ3, IRQ4, IRQ5, IRQ6 
+*/
+
+
+/**************************************************************************************************/
+/**
+\defgroup registerPropertiesGroup_gr registerPropertiesGroup
+\ingroup elem_type_gr
+\details
+Register properties can be set on device, peripheral, and register level.
+Element values defined on a lower level overwrite element values defined on a more general level.
+For example, the <em>register-level.\<size></em> will overwrite <em>peripheral-level.\<size></em>.
+Elements that have not been defined on a more general level, must be defined at register level at the latest.
+
+<table class="cmtable" summary="Register Properties Group Elements">
+    <tr>
+        <th nowrap="nowrap">Element Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+    <tr>
+        <td>size</td>
+        <td>Defines the default bit-width of any register contained in the device (implicit inheritance). 
+        This element can be redefined on any lower level of the description using the size element there.
+        </td>
+        <td>scaledNonNegativeInteger </td>
+        <td>0..1 </td>
+    </tr> 
+    <tr>
+        <td>access 
+        </td>
+        <td>Defines the default access rights for all registers. Access rights can be redefined 
+        on any lower level of the description using the \em access element there. 
+        \n \n The predefined tokens are:
+        - <span class="XML-Token">read-only</span>: read access is permitted. Write operations 
+                                                have an undefined result.
+        - <span class="XML-Token">write-only</span>: write access is permitted. Read operations have an undefined result.
+        - <span class="XML-Token">read-write</span>: both read and write accesses are permitted. Writes affect the state of the register and reads return a value related to the register.
+        - <span class="XML-Token">writeOnce</span>:  only the first write after reset has an effect on the register. Read operations 
+                                                 deliver undefined results.
+        - <span class="XML-Token">read-writeOnce</span>:  
+                   Read operations deliver a result related to the register content. Only the 
+                   first write access to this register after a reset will have an effect on the register content.
+        </td>
+        <td>accessType</td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+      <td>protection</td>
+      <td>Defines the protection settings for a register. A device can have registers protected from
+          access by the programmer and debugger.</td>
+      <td>\ref protectionStringType_gr "protectionStringType"</td>
+      <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>resetValue </td>
+        <td>Defines the default value for all registers at RESET.
+        The default register value can be redefined on any lower level using the \em resetValue 
+        element there. The actual reset value is calculated from the \em resetValue and the 
+        \em resetMask. The mask is used to specify bits with an undefined reset value.</td>
+        <td>scaledNonNegativeInteger </td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>resetMask</td>
+        <td>Identifies which register bits have a defined reset value. These bit positions are 
+            set to one. Bit positions with an undefined reset value are set to zero.</td>
+        <td>scaledNonNegativeInteger</td>
+        <td>0..1 </td>
+    </tr>
+</table>
+*/
+
+/**************************************************************************************************/
+/**
+\defgroup protectionStringType_gr protectionStringType_gr
+\ingroup elem_type_gr
+\details
+
+The protection element specify security priviliges for a successfull access to an address block, 
+individual register or all registers within the given scope (Version 1.3). This information is relevant for both the
+programmer as well as the debugger if it is not granted universal access permissions. 
+If no specific information is provided a register is accessible in any mode non-secure and secure mode.
+
+
+\section protection_ex Example:
+\code
+<device schemaVersion="1.3" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD.xsd">
+  <name>ARM_Cortex_M3</name>
+  <version>0.1</version>
+  <description>ARM Cortex-M3 based Microcontroller demonstration device</description>
+  <addressUnitBits>8</addressUnitBits>
+  <width>32</width>
+  <size>32</size>
+  <access>read-write</access>
+  <protection>s</protection>
+  ...
+  <peripherals>
+    ...
+  </peripherals>
+</device>
+\endcode
+
+In the example above the read and write accesses to all registers of the device require to be secure mode accesses.
+Note that this default can be refined on subsequent levels of the description.
+
+<table class="cmtable" summary="ProtectionType Elements">
+    <tr>
+        <th nowrap="nowrap">Element Name</th>
+        <th>Description</th>
+        <th>Access Type</th>
+        <th>Occurrence</th>
+    </tr>
+    <tr>
+        <td>secure</td>
+        <td>Specifies the access type that requires "secure" mode access for a successful access to the register(s). </td>        
+        <td> 
+        - "s" = secure permission required for access
+        - "n" = non-secure or secure permission required for access
+        </td>
+        <td>0..1 </td>
+    </tr> 
+</table>
+
+*/
+
+/**************************************************************************************************/
+/** 
+\defgroup svd_Format_1_1_gr SVD Extensions
+From a schema perspective, CMSIS-SVD Version 1.1,1.2 and 1.3 are fully backward compatible to
+version 1.0. 
+
+Many of the features added in version 1.1 are required for generating CMSIS-Core
+device header files from a CMSIS SVD description. It is expected that today all CMSIS-SVD
+descriptions will comply with version 1.1.
+
+In version 1.2 Cortex-M7 related extensions have been added to the cpu section exclusively used for 
+device header file generation. These extensions are only mandatory for Cortex-M7 based devices.
+
+In version 1.3 introduces the ability to describe an arrays of a peripheral as well as nesting
+clusters. Furthermore the cpu section as well as the register properties have been extended to reflect
+security extensions optional in future devices. Only those accesses originating from a <em>secure</em>
+state, have the permission to access resources attributed as <em>secure</em>.
+*/
+
+/**************************************************************************************************/
+/**
+\defgroup deviceSectionExtensions_gr Extensions to the Device Section
+\ingroup svd_Format_1_1_gr
+\details
+A number of elements have been added to the device section. These elements are optional but are highly recommended
+to enable the generation of consistent and CMSIS-compliant device header files from SVD descriptions.
+
+<pre>
+<span class="mand"><b><device schemaVersion=<em>"xs:decimal"</em> xmlns:xs=<em>"http://www.w3.org/2001/XMLSchema-instance"</em> xs:noNamespaceSchemaLocation=<em>"CMSIS-SVD_Schema_1_1.xsd"</em>></b>
+    <span class="opt">\<vendor><em>stringType</em>\</vendor>
+    \<vendorID><em>stringType</em>\</vendorID></span>
+    \<name><em>identifierType</em>\</name><span class="opt">
+    \<series><em>stringType</em>\</series></span>
+    \<version><em>xs:string</em>\</version>
+    \<description><em>xs:string</em>\</description><span class="opt">
+    \<licenseText><em>xs:string</em>\</licenseText>
+    \<cpu><em>cpuType</em>\</cpu>
+    \<headerSystemFilename><em>identifierType</em>\</headerSystemFilename>
+    \<headerDefinitionsPrefix><em>identifierType</em>\</headerDefinitionsPrefix>
+</span>
+    ...
+<b>\</device></b>
+</span>
+</pre>
+
+<table class="cmtable" summary="Device Section Extension Elements">
+    <tr>
+        <th nowrap="nowrap">Element Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+	<tr>
+        <td>vendor</td>
+        <td>This specifies the vendor of the device using the full name.</td>
+        <td>stringType </td>
+        <td>0..1 </td>
+    </tr>
+	<tr>
+        <td>vendorID</td>
+        <td>This specifies the vendor of the device using the vendor abbreviation that does not contain any spaces or special characters.
+			This information shall be used for defining the directory.</td>
+        <td>stringType </td>
+        <td>0..1 </td>
+    </tr> 
+	<tr>
+        <td>series</td>
+        <td>This element specifies the name of the device series.</td>
+        <td>stringType </td>
+        <td>0..1 </td>
+    </tr>
+		<tr>
+        <td>licenseText</td>
+        <td>The content of this tag will be copied into the header section of the generated device header file and shall contain
+		    the legal disclaimer. New lines can be inserted by using "\n". This section is mandatory if the SVD file shall be used
+			for generating the device header file.</td>
+        <td>stringType </td>
+        <td>0..1 </td>
+    </tr> 
+    </tr>
+    <tr>
+        <td>headerSystemFilename</td>
+        <td>This tag specifies the file name (without extension) of the device-specific system include file (<kbd>system_<device>.h</kbd>; See CMSIS-Core description).
+             This tag is used by the header file generator for customizing the include statement referencing the
+             CMSIS system file within the CMSIS device header file. By default, the filename is "<kbd>system_<i>device:name</i>.h".
+             In cases where a device series shares a single system header file, the name of the series shall be used 
+             instead of the individual device name.</td>
+        <td>identifierType </td>
+        <td>0..1 </td>
+    </tr> 
+    <tr>
+        <td>headerDefinitionsPrefix</td>
+        <td>The element specifies the string being prepended to all type definition names generated in the CMSIS-Core device header file.
+            This is used if the silicon vendor's software requires vendor-specific types in order to avoid name clashes with other
+            definied types.</td>
+        <td>identifierType </td>
+        <td>0..1 </td>
+    </tr>
+</table>
+\section deviceSectionExtensions_ex Example:
+\code
+...
+<device schemaVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD.xsd">
+    <vendor>Advanced RISC Machines</vendor>
+    <vendorID>ARM</vendorID>
+    ...
+    <series>ARMCM3</series>
+    ...
+    <licenseText>
+    ARM Limited (ARM) is supplying this software for use with Cortex-M \n
+    processor based microcontrollers.  This file can be freely distributed \n
+    within development tools that are supporting such ARM based processors. \n
+    \n
+    THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED \n
+    OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF \n
+    MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. \n
+    ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR \n
+    CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+    </licenseText>
+    ...
+    <headerSystemFilename>system_ARMCM4</headeSystemFilename>
+    <headerDefinitionsPrefix>ARM_</headerDefinitionsPrefix>
+    ...
+</device>	
+...
+\endcode
+
+This example describes a device from the vendor <strong>Advanced RISC Machines</strong> using <strong>ARM</strong> as short name. 
+The device belongs to the device family identified by <strong>ARMCM4</strong>. The legal disclaimer in the header files generated from
+this description is captured and formatted in accordance to the standard ARM CMSIS disclaimer. The CMSIS system file included by the
+generated device header file is named <b>system_ARMCM4.h</b> and all type definitions will be prepended with <strong>ARM_</strong>.
+
+*/
+
+
+/**************************************************************************************************/
+/**
+\defgroup cpuSection_gr CPU Section
+\ingroup svd_Format_1_1_gr
+\details
+The CPU section describes the processor included in the microcontroller device.
+This section is mandatory if the SVD file shall be used for the device header file generation.
+
+<pre>
+<span class="opt">\<cpu></span>
+    <span class="mand">\<name><em>cpuNameType</em>\</name>
+    \<revision><em>revisionType</em>\</revision>
+    \<endian><em>endianType</em>\</endian>
+    \<mpuPresent><em>xs:boolean</em>\</mpuPresent>
+    \<fpuPresent><em>xs:boolean</em>\</fpuPresent>
+    \<fpuDP><em>xs:boolean</em>\</fpuDP>
+    \<icachePresent><em>xs:boolean</em>\</icachePresent>
+    \<dcachePresent><em>xs:boolean</em>\</dcachePresent>
+    \<itcmPresent><em>xs:boolean</em>\</itcmPresent>
+    \<dtcmPresent><em>xs:boolean</em>\</dtcmPresent>
+    \<vtorPresent><em>xs:boolean</em>\</vtorPresent>
+    \<nvicPrioBits><em>scaledNonNegativeInteger</em>\</nvicPrioBits>
+    \<vendorSystickConfig><em>xs:boolean</em>\</vendorSystickConfig>
+    \<deviceNumInterrupts><em>scaledNonNegativeInteger</em>\<deviceNumInterrupts>
+    \<sauNumRegions><em>scaledNonNegativeInteger</em>\</sauRegions>
+    \<sauRegionsConfig><em>sauRegionsConfigType</em>\</sauRegionsConfig>
+    </span>
+<span class="opt">\</cpu></span>
+</pre>
+
+<table class="cmtable" summary="CPU Section Elements">
+    <tr>
+        <th nowrap="nowrap">Element Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>The predefined tokens are:
+        - <span class="XML-Token">CM0</span>: ARM Cortex-M0 
+        - <span class="XML-Token">CM0PLUS</span>: ARM Cortex-M0+
+        - <span class="XML-Token">CM3</span>: ARM Cortex-M3
+        - <span class="XML-Token">CM4</span>: ARM Cortex-M4
+        - <span class="XML-Token">CM7</span>: ARM Cortex-M7
+        - <span class="XML-Token">SC000</span>: ARM Secure Core SC000
+        - <span class="XML-Token">SC300</span>: ARM Secure Core SC300
+        - <span class="XML-Token">other</span>: other processor architectures
+        </td>
+        <td>cpuNameType </td>
+        <td>1..1 </td>
+    </tr> 
+    <tr>
+        <td>revisionType </td>
+        <td>Defines the HW revision of the processor. The defined version format is <span class="XML-Token">r<em>N</em>p<em>M</em></span> (N,M = [0 - 9]). </td>
+        <td>revisionType</td>
+        <td>1..1 </td>
+    </tr>
+    <tr>
+        <td>endian </td>
+        <td>Defines the endianess of the processor being one of:
+         - <span class="XML-Token">little</span>: little endian memory (least significant byte gets allocated at the lowest address).
+         - <span class="XML-Token">big</span>: byte invariant big endian data organization (most significant byte gets allocated at the lowest address).
+         - <span class="XML-Token">selectable</span>: little and big endian are configurable for the device and become active after the next reset.
+         - <span class="XML-Token">other</span>: the endianess is neither little nor big endian.
+        </td>
+        <td>endianType </td>
+        <td>1..1 </td>
+    </tr>
+    <tr>
+        <td>mpuPresent </td>
+        <td>Indicates that the processor is equipped with a memory protection unit (MPU). This tag is either set to <span class="XML-Token">true</span> or <span class="XML-Token">false</span>, <span class="XML-Token">1</span> or <span class="XML-Token">0</span>.</td>
+        <td>boolean </td>
+        <td>1..1 </td>
+    </tr>
+    <tr>
+        <td>fpuPresent </td>
+        <td>Indicates that the processor is equipped with a hardware floating point unit (FPU). Cortex-M4 and Cortex-M7 are the only available Cortex-M processor
+        with an optional FPU. This tag is either set to <span class="XML-Token">true</span> or <span class="XML-Token">false</span>, <span class="XML-Token">1</span> or <span class="XML-Token">0</span>.</td>
+        <td>boolean </td>
+        <td>1..1 </td>
+    </tr>
+    <tr>
+        <td>fpuDP </td>
+        <td>Indicates that the processor is equipped with a double precision floating point unit. Flag is only valid if fpuPresent is set true.
+            Cortex-M7 is currently the only Cortex-M processor available with a double precision floating point unit.</td>
+        <td>boolean</td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>icachePresent</td>
+        <td>Indicates that the processor has an instruction cache. Note: only an option for Cortex-M7 based devices. </td>
+        <td>boolean </td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>dcachePresent</td>
+        <td>Indicates that the processor has an data cache. Note: only an option for Cortex-M7 based devices. </td>
+        <td>boolean </td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>itcmPresent</td>
+        <td>Indicates that the processor has an instruction tightly coupled memory. Note: only an option for Cortex-M7 based devices. </td>
+        <td>boolean </td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>dtcmPresent</td>
+        <td>Indicates that the processor has an data tightly coupled memory. Note: only an option for Cortex-M7 based devices. </td>
+        <td>boolean </td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>vtorPresent </td>
+        <td>This is an optional flag used for the Cortex-M0+ based devices only. It indicates whether the Vector Table Offset
+                 Register (VTOR) is implemented in the Cortex-M0+ device or not. This tag is either set to <span class="XML-Token">true</span> or
+                 <span class="XML-Token">false</span>, <span class="XML-Token">1</span> or <span class="XML-Token">0</span>. 
+                 If it is not specified VTOR is assumed to be present.</td>
+        <td>boolean </td>
+        <td>1..1 </td>
+    </tr>
+    <tr>
+        <td>nvicPrioBits </td>
+        <td>Defines the number of bits that are available in the Nested Vectored Interrupt Controller (NVIC) for configuring the priority.</td>
+        <td>scaledNonNegativeInteger </td>
+        <td>1..1 </td>
+    </tr>
+    <tr>
+        <td>vendorSystickConfig</td>
+        <td>Indicates whether the processor implements a vendor-specific System Tick Timer. If <span class="XML-Token">false</span>, then the ARM defined System Tick Timer
+        is available. If <span class="XML-Token">true</span>, then a vendor-specific System Tick Timer must be implemented. This tag is either set to <span class="XML-Token">true</span> or <span class="XML-Token">false</span>, <span class="XML-Token">1</span> or <span class="XML-Token">0</span>.</td>
+        <td>boolean </td>
+        <td>1..1 </td>
+    </tr>
+    <tr>
+        <td>deviceNumInterrupts</td>
+        <td>Specifies the total number of interrupts implemented by the device. This value can be used to validate the number of described interrupts</td>
+        <td>scaledNonNegativeInteger</td>
+        <td>0..1 </td>
+   </tr>        
+    <tr>
+        <td>sauNumRegions</td>
+        <td>If set and not zero this flag indicates that the device is equipped with a Security 
+        Attribution Unit (SAU) and the maximum number of available address regions.
+        </td>
+        <td>scaledNonNegativeInteger </td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>sauRegionsConfig</td>
+        <td>If the Secure Attribution Unit is preconfigured by HW or Firmware, the settings are described here.
+        
+           <span class="XML-Token">\<sauRegionsConfig</span> enabled=true protectionWhenDisabled="s"<span class="XML-Token">\></span>
+           <span class="XML-Token">\<region class="XML-Token">\></span>
+           - <span class="XML-Token">\<base\><em>adddress</em>\</base\></span>: SAU Region base adddress (type=scaledNonNegativeInteger) [1..1]
+           - <span class="XML-Token">\<limit\><em>address</em>\</limit\></span>: SAU Region limit adddress (type=scaledNonNegativeInteger) [1..1]
+           - <span class="XML-Token">\<access\><em>flag</em>\</access\></span>: one of "n" = non-secure or "c" = secure callable (type=string) [1..1]
+           - attribute: <span class="XML-Token">enabled =</span> [true|false]: SAU Region is active (type=boolean) [0..1]
+           - attribute: <span class="XML-Token">name =</span> [string]: brief name for identifying the SAU Region(type=string) [0..1]
+           <span class="XML-Token">\</region class="XML-Token">\></span>
+           <span class="XML-Token">\</sauRegionsConfig\></span>
+           - attribute: <span class="XML-Token">enabled =</span> [true|false]: enable/disable the complete SAU (type=boolean) [0..1]
+           - attribute: <span class="XML-Token">protectionWhenDisabled =</span> [s|n]: if the complete SAU is disabled the whole memory
+           is treated either "s" = secure or "n" non-secure - [0..1] (default="s")
+        </td>
+        <td>SauRegionsConfigType</td>
+        <td>0..1 </td>
+    </tr>        
+    
+</table>
+
+\section cpuSection_ex Example:
+\code
+...
+<cpu>
+    <name>CM7</name> 
+    <revision>r0p0</revision>
+    <endian>little</endian>
+    <mpuPresent>true</mpuPresent>
+    <!-- has double precision FPU -->
+    <fpuPresent>true</fpuPresent>
+    <fpuDP>true</fpuDP>
+    <!-- has instruction and data cache -->
+    <icachePresent>true</icachePresent>
+    <dcachePresent>true</dcachePresent>
+    <!-- has no instruction nor data tighly coupled memory -->
+    <itcmPresent>false</itcmPresent>
+    <dtcmPresent>false</dtcmPresent>
+    <nvicPrioBits>4</nvicPrioBits>
+    <vendorSystickConfig>false</vendorSystickConfig> 
+</cpu>
+...
+\endcode
+
+This example describes a device based on a Cortex-M7 core of HW revision r0p0, with fixed little endian memory scheme, including Memory Protection Unit and double precision hardware
+Floating Point Unit. It has and instruction and a data cache but no Tightly Coupled Memories. The Nested Vectored Interrupt Controller uses 4 bits for configuring the priority of an interrupt. It is equipped with the standard
+System Tick Timer as defined by ARM.
+*/
+
+/**************************************************************************************************/
+/**
+\defgroup peripheralSectionExtensions_gr Extensions to the Peripheral Section
+\ingroup svd_Format_1_1_gr
+\details
+The following elements have been added to the peripheral section. All new elements are optional but are highly recommended
+to enable the generation of consistent and CMSIS-compliant device header files from SVD descriptions.
+
+<table class="cmtable" summary="Peripheral Section Extension Elements">
+    <tr>
+        <th nowrap="nowrap">Element Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+	<tr>
+        <td>alternatePeripheral</td>
+        <td>All address blocks in the memory space of a device are assigned to a unique peripheral by default. If there are multiple
+		peripherals describing the same address blocks, this needs to be specified explicitly. A peripheral redefining an address block needs to
+		specify the name of the peripheral that is listed first in the description. If no alternate peripheral is specified, then the <i>SVDConv</i> utility will 
+		generate errors.</td>
+        <td>identifierType </td>
+        <td>0..1 </td>
+	</tr>
+	<tr>
+        <td>headerStructName</td>
+        <td>The header file generator uses the name of a peripheral as the base name for the C structure type. If this element is specfied,
+		then this string is used instead of the peripheral name. This is particularly useful when multiple peripherals get derived from a peripheral description
+		and a generic type name shall be used.</td>
+        <td>identifierType </td>
+        <td>0..1 </td>
+	</tr>	
+</table>
+
+\section periperalSectionExtensions_ex Example:
+\code
+<peripheral>
+  <name>Timer1</name>
+  <version>1.0</version>
+  <description>Timer 1 is a standard timer ... </description>
+  <baseAddress>0x40002000</baseAddress>
+  ...
+</peripheral>
+<peripheral>
+  <name>Timer1_Alt</name>
+  <version>1.0</version>
+  <description>Alternate Timer 1 is a special timer execution mode ... </description>
+  <baseAddress>0x40002000</baseAddress>
+  <alternatePeripheral>Timer1</alternatePeripheral>
+  ...
+</peripheral>
+\endcode
+
+Two timer peripheral descriptions are specified for the same memory block. No redefined addresses will be reported for both peripherals.
+
+*/
+
+/**************************************************************************************************/
+/**
+\defgroup clusterLevel_gr Cluster Level
+\ingroup svd_Format_1_1_gr
+\details
+<b>Cluster</b> adds an optional sub-level within the CMSIS SVD <i>registers</i> level.
+A cluster describes a sequence of neighboring registers within a peripheral. A cluster specifies
+the <i>addressOffset</i> relative to the <i>baseAddress</i> of the peripheral. All <i>register</i>
+elements within a cluster specify their <i>addressOffset</i> relative to the cluster base address
+(<i>peripheral:baseAddress + cluster:addressOffset</i>).
+Multiple <em>\<register/></em> and <em>\<cluster\></em> sections may occur in any order.
+Since version 1.3 of the specification the nesting of <em>\<cluster\></em> elements is supported. 
+This means, that within a <em>\<cluster\></em> section any number of <em>\<register\></em> and 
+<em>\<cluster\></em> sections may occur. 
+Nested cluster express hierarchical structures of registers. It is predominantely targeted
+at the generation of device header files where it allows to create C data structure within the
+peripheral structure type instead of a flat list of registers.
+Note that you can also specify an array of a cluster using the <em>\<dim\></em> element.
+
+<hr>
+
+<pre>
+<span class="mand">\b \<registers>
+ 
+    <strong>\<cluster<span class="opt">derivedFrom=<em>identifierType</em></span>\></strong>
+    <span class="opt">
+        <em>\<!-- dimElementGroup --> </em>
+        \<dim\><em>scaledNonNegativeInteger</em>\</dim\>
+        \<dimIncrement\><em>scaledNonNegativeInteger</em>\</dimIncrement\>
+        \<dimIndex\><em>dimIndexType</em>\</dimIndex\>
+        <em>\<!-- end of dimElementGroup --> </em>
+    </span>
+        \<name\><em>identifierType</em>\</name\>
+        \<description\><em>xs:string</em>\</description\>
+    <span class="opt">
+        \<headerStructName\><em>identifierType</em>\</headerStructName\>
+        \<alternateCluster\><em>identifierType</em>\</alternateCluster\>
+    </span>
+        \<addressOffset\><em>scaledNonNegativeInteger</em>\</addressOffset\>
+    
+        \<cluster\> ... \</cluster\>
+        \<register\> ... \</register\>
+            ...
+    <strong>\</cluster\></strong>
+    <span class="opt">...
+    \<register\>
+        ...
+    \</register\>
+    \<cluster\>
+        ...
+    \</cluster\>
+     </span>
+\b \<registers></span>
+</pre>
+
+
+<table class="cmtable" summary="Cluster Level Schema">
+    <tr>
+        <th>Attribute Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+    <tr>
+        <td>derivedFrom</td>
+        <td>Specifies the name of the cluster from which to inherit the data. Elements being specified 
+        underneath will override the inherited values.
+        <br><b>Remarks:</b> When deriving a cluster, it is mandatory to specify at least the name, the description, and the addressOffset.</td>
+        <td>registerType</td>
+        <td>0..1</td>
+    </tr>
+    <tr>
+        <th>Element Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+    <tr class="group1">
+        <td colspan="4">See \ref dimElementGroup_gr for details.</td>
+    </tr>
+    <tr class="group1">
+        <td align="left">dim</td>
+        <td>The value defines the number of elements in an array of clusters. </td>
+        <td>scaledNonNegativeInteger </td>
+        <td>1..1 </td>
+    </tr>
+    <tr class="group1">
+        <td align="left">dimIncrement</td>
+        <td>If \em dim is specified, this element becomes mandatory. The element specifies the 
+            address increment in between two neighboring clusters of the cluster array in the 
+            address map.</td>
+        <td>scaledNonNegativeInteger </td>
+        <td>1..1 </td>
+    </tr>
+    <tr class="group1">
+        <td align="left">dimIndex</td>
+        <td>Specifies the substrings that replaces the <em>[%%s]</em> placeholder within the cluster name. 
+            By default, the index is a decimal value starting with 0 for the first cluster element. </td>
+        <td>dimIndexType </td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>String that identifies the cluster. Register names are required to be unique 
+            within the scope of a peripheral. Specify <em>[%%s]</em> for generating an array in the device header file.</td>
+        <td>identifierType</a> </td>
+        <td>1..1 </td>
+    </tr>
+    <tr>
+        <td>description</td>
+        <td>String describing the details of the register.</td>
+        <td>xs:string </td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>alternateCluster </td>
+        <td>This tag needs to specify the name of the original description of the register sequence if this cluster provides an 
+			alternative description. Otherwise the SVDConv will issue errors.</td>
+        <td>identifierType</td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>headerStructName </td>
+        <td>This tag specifies the struct type name in the device header file. If not specified, then the name of the cluster will be 
+			used.</td>
+        <td>identifierType</td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>addressOffset</td>
+        <td>Value defining the cluster address relative to the \em baseAddress defined by 
+            the peripheral of the register.</td>
+        <td>scaledNonNegativeInteger</td>
+        <td>1..1 </td>
+    </tr>
+    <tr>
+        <td>register</td>
+        <td>register description</td>
+        <td>registerType</td>
+        <td>0..* </td>
+    </tr>
+    <tr>
+        <td>cluster</td>
+        <td>cluster description</td>
+        <td>clusterType</td>
+        <td>0..* </td>
+    </tr>
+</table>
+
+\section clusterSection_ex Example:
+\code
+<cluster>
+    <dim>4</dim>
+    <dimIncrement>8</dimIncrement>
+    <dimIndex>0-3</dimIndex>
+    <name>TX[%s]</name>
+    <description>Grouping of Transfer data and address</description>
+    <addressOffset>0x40</addressOffset>
+    <register>
+       <name>TX_DATA</name>
+        ...
+       <addressOffset>0x0</addressOffset>
+        ...
+    </register>
+    <register>
+        <name>TX_ADDR</name>
+        ...
+        <addressOffset>0x4</addressOffset>
+        ...
+    </register>
+</cluster>
+\endcode
+
+The example above describes an array of type TX with 4 elements. TX is a cluster of two
+consecutive registers with 4 elements. The device header file looks like this:
+
+\code
+typedef struct {
+    ...
+    struct {
+       __IO uint32_t  TX_DATA;
+       __IO uint32_t  TX_ADDR;
+    } TX[4];
+    ...
+} ..._Type;
+
+\endcode
+
+*/
+
+/**************************************************************************************************/
+/**
+\defgroup registerSectionExtensions_gr Extensions to the Register Section
+\ingroup svd_Format_1_1_gr
+\details
+The following elements have been added to the register section. All new elements are optional.
+
+<table class="cmtable" summary="Register Section Extension Elements">
+    <tr>
+        <th nowrap="nowrap">Element Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Occurrence</th>
+    </tr>
+    <tr>
+        <td>alternateRegister</td>
+        <td>
+        This tag can reference a register that has been defined above to current location in the description and that  describes 
+        the memory location already. This tells the SVDConv's address checker that the redefinition of this particular register is
+        intentional. The register name needs to be unique within the scope of the current peripheral. 
+        A register description is defined either for a unique address location or could be a redefinition of an already described address. 
+        In the latter case, the register can be either marked <em>alternateRegister</em>
+        and needs to have a unique name, or it can have the same register name but is assigned to a register subgroup through 
+        the tag <em>alternateGroup</em> (specified in version 1.0).</td>
+        <td>identifierType </td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>dataType</td>
+        <td>
+        It can be useful to assign a specific native C datatype to a register. This helps avoiding
+        type casts. For example, if a 32 bit register shall act as a pointer to a 32 bit unsigned data item, then <i>dataType</i> can be set to "uint32_t *".
+        The following simple data types are predefined:
+        - <span class="XML-Token">uint8_t</span>: unsigned byte
+        - <span class="XML-Token">uint16_t</span>: unsigned half word
+        - <span class="XML-Token">uint32_t</span>: unsigned word
+        - <span class="XML-Token">uint64_t</span>: unsigned double word
+        - <span class="XML-Token">int8_t</span>: signed byte
+        - <span class="XML-Token">int16_t</span>: signed half word
+        - <span class="XML-Token">int32_t</span>: signed world
+        - <span class="XML-Token">int64_t</span>: signed double word
+        - <span class="XML-Token">uint8_t *</span>: pointer to unsigned byte
+        - <span class="XML-Token">uint16_t *</span>: pointer to unsigned half word
+        - <span class="XML-Token">uint32_t *</span>: pointer to unsigned word
+        - <span class="XML-Token">uint64_t *</span>: pointer to unsigned double word
+        - <span class="XML-Token">int8_t *</span>: pointer to signed byte
+        - <span class="XML-Token">int16_t *</span>: pointer to signed half word
+        - <span class="XML-Token">int32_t *</span>: pointer to signed world
+        - <span class="XML-Token">int64_t *</span>: pointer to signed double word
+        <td>dataTypeType </td>
+        <td>0..1 </td>
+    </tr>
+</table>
+
+\section registerSection_ex Example:
+\code
+...
+<register>
+    <name>TIM_MODEA</name>
+    <description>In mode A this register acts as a reload value</description>
+    <addressOffset>0xC</addressOffset>
+</register>
+<register>
+    <name>TIM_MODEB</name>
+    <description>In mode B this register acts as the compare value</description>
+    <alternateRegister>TIM_MODEA</alternateRegister>
+    <addressOffset>0xC</addressOffset>
+</register>
+<register>
+    <name>DMA_DATA</name>
+    <description>This register contains the address of the data being transferred</description>
+    <dataType>uint32_t *</dataType>
+    <addressOffset>0xf0</addressOffset>
+</register>
+...
+\endcode
+
+This example describes two registers, TIM_MODEA and TIM_MODEB. Both have the same address offset. Based on the configured operation
+model being A or B, the register acts as reload or compare value. The register DMA_DATA is specified as a pointer to unsigned word data. 
+The code generated for the device header file is:
+
+\code
+typedef struct {
+  union {
+    __IO   uint32_t TIM_MODEA;
+    __IO   uint32_t TIM_MODEB;
+    };
+  __IO uint32_t * DMA_DATA; 
+  ...
+} <peripheral:name>_Type;
+
+\endcode
+
+*/
+
+/**************************************************************************************************/
+/**
+\defgroup schema_1_2_gr CMSIS-SVD Schema File
+\verbinclude "CMSIS-SVD.xsd"
+
+*/
