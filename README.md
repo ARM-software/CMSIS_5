@@ -12,12 +12,12 @@ Please use GitHub to discuss and track issues or create pull requests for contri
  - Improvements for Cortex-A / M hybrid devices (focus on Cortex-M interaction)
 
  - CMSIS-RTOS API and RTX reference implementation with several enhancements:
-     -- Dynamic object creation, Flag events, C and C++ API, additional thread and timer functions
-     -- Secure and Non-Secure support, multi-processor support
+     - Dynamic object creation, Flag events, C and C++ API, additional thread and timer functions
+     - Secure and Non-Secure support, multi-processor support
 
  - CMSIS-Pack 
-     -- Additions for generic example, project templates, multiple download portals
-     -- Adoption of IAR Flash Loader technology
+     - Additions for generic example, project templates, multiple download portals
+     - Adoption of IAR Flash Loader technology
 
 
 ## Directory Structure
@@ -35,11 +35,11 @@ Please use GitHub to discuss and track issues or create pull requests for contri
 ## Generate Documentation
 
 The following tools are required to generate the documentation:
- - *doxygen.exe*  Version: 1.8.2 (Documentation Generator)
- - *mscgen.exe*   Version: 0.20  (Message Sequence Chart Converter)
+ - **doxygen.exe**  Version: 1.8.2 (Documentation Generator)
+ - **mscgen.exe**   Version: 0.20  (Message Sequence Chart Converter)
 
 Using these tools, documentation can be generated under Windows
-with the batch file *genDoc.bat* in directory CMSIS/DoxyGen/.
+with the batch file **genDoc.bat** in directory CMSIS/DoxyGen/.
 
 The file CMSIS/DoxyGen/How2Doc.txt describes the rules for creating API
 documentation.
