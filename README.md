@@ -1,8 +1,28 @@
-# CMSIS_5
-CMSIS Version 5 Development Repository for public review and feedback.
+# CMSIS Version 5 Development Repository
+
+CMSIS Version 5.0.0 is scheduled for release in June 2016.
+
+This development repository gives our users and partners contiguous access
+to the CMSIS components. It allows you to review the work and provide feedback.
+Please use GitHub to discuss and track issues or create pull requests for contributions.
+
+## Planned Enhancements
+ - Add support for ARMv8-M Architecture (Mainline and Baseline)
+
+ - Improvements for Cortex-A / M hybrid devices (focus on Cortex-M interaction)
+
+ - CMSIS-RTOS API and RTX reference implementation with several enhancements:
+     -- Dynamic object creation, Flag events, C and C++ API, additional thread and timer functions
+     -- Secure and Non-Secure support, multi-processor support
+
+ - CMSIS-Pack 
+     -- Additions for generic example, project templates, multiple download portals
+     -- Adoption of IAR Flash Loader technology
 
 
 ## Directory Structure
+
+*All CMSIS components will be available by end of March 2016*
 
 | Directory       | Content                                        |                
 | --------------- | ---------------------------------------------- |
@@ -23,3 +43,7 @@ with the batch file *genDoc.bat* in directory CMSIS/DoxyGen/.
 
 The file CMSIS/DoxyGen/How2Doc.txt describes the rules for creating API
 documentation.
+
+## Generate CMSIS Software Pack
+
+*coming soon*
