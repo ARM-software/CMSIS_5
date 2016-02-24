@@ -19,6 +19,7 @@ Please use GitHub to discuss and track issues or create pull requests for contri
      - Additions for generic example, project templates, multiple download portals
      - Adoption of IAR Flash Loader technology
 
+For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/CMSIS_EW2016.pdf).
 
 ## Directory Structure
 
