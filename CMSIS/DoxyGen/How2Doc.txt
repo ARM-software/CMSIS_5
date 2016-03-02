@@ -38,7 +38,7 @@ API Documentation in .\Include\*.h files
 
 Example:
 
-The follwoing sniplet shows a sample documentation (correct).  In general functions are grouped and
+The following snippet shows a sample documentation (correct).  In general functions are grouped and
 a short descriptive line is added before a group of functions.  In case that functions are only 
 relevant for the documentation (i.e. available in multiple instances), they are included in 
 #ifdef __DOXYGEN__  /  #endif sections.
@@ -206,7 +206,7 @@ A *.txt file that relates to a *.h contains:
 
 IMPORTANT: 
 Text *.txt files that document the user API of a component are located in .\MW\Doc\component.
-Only for *.h files that provide user API, there is exaclty one text file with the same name.
+Only for *.h files that provide user API, there is exactly one text file with the same name.
 Defines/Functions that are internally used by a Component have no *.txt file.
 
 Example:
