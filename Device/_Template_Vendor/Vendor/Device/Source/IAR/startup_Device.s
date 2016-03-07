@@ -105,7 +105,7 @@ __Vectors_Size  EQU   __Vectors_End - __Vectors
         THUMB
 
         PUBWEAK Reset_Handler
-        SECTION .text:CODE:REORDER(2)
+        SECTION .text:CODE:REORDER:NOROOT(2)
 Reset_Handler
         LDR     R0, =SystemInit
         BLX     R0
@@ -113,54 +113,54 @@ Reset_Handler
         BX      R0
 
         PUBWEAK NMI_Handler
-        SECTION .text:CODE:REORDER(1)
+        SECTION .text:CODE:REORDER:NOROOT(1)
 NMI_Handler
         B NMI_Handler
 
         PUBWEAK HardFault_Handler
-        SECTION .text:CODE:REORDER(1)
+        SECTION .text:CODE:REORDER:NOROOT(1)
 HardFault_Handler
         B HardFault_Handler
 
         PUBWEAK MemManage_Handler
-        SECTION .text:CODE:REORDER(1)
+        SECTION .text:CODE:REORDER:NOROOT(1)
 MemManage_Handler
         B MemManage_Handler
 
         PUBWEAK BusFault_Handler
-        SECTION .text:CODE:REORDER(1)
+        SECTION .text:CODE:REORDER:NOROOT(1)
 BusFault_Handler
         B BusFault_Handler
 
         PUBWEAK UsageFault_Handler
-        SECTION .text:CODE:REORDER(1)
+        SECTION .text:CODE:REORDER:NOROOT(1)
 UsageFault_Handler
         B UsageFault_Handler
 
         PUBWEAK SVC_Handler
-        SECTION .text:CODE:REORDER(1)
+        SECTION .text:CODE:REORDER:NOROOT(1)
 SVC_Handler
         B SVC_Handler
 
         PUBWEAK DebugMon_Handler
-        SECTION .text:CODE:REORDER(1)
+        SECTION .text:CODE:REORDER:NOROOT(1)
 DebugMon_Handler
         B DebugMon_Handler
 
         PUBWEAK PendSV_Handler
-        SECTION .text:CODE:REORDER(1)
+        SECTION .text:CODE:REORDER:NOROOT(1)
 PendSV_Handler
         B PendSV_Handler
 
         PUBWEAK SysTick_Handler
-        SECTION .text:CODE:REORDER(1)
+        SECTION .text:CODE:REORDER:NOROOT(1)
 SysTick_Handler
         B SysTick_Handler
 
 ; ToDo:  Add here the export definition for the device specific external interrupts handler
 ; ToDo:  Add here the names for the device specific external interrupts handler
         PUBWEAK <DeviceInterrupt>_IRQHandler
-        SECTION .text:CODE:REORDER(1)
+        SECTION .text:CODE:REORDER:NOROOT(1)
 <DeviceInterrupt>_IRQHandler
         B <DeviceInterrupt>_IRQHandler
 
