@@ -1,7 +1,7 @@
-Rules for CMSIS API Funcction documentation
+Rules for CMSIS API Function documentation
 ===========================================
 
-This document describes how to generate Doxygen-style documentation for middlware "Components".
+This document describes how to generate Doxygen-style documentation for middleware "Components".
 It explains how the Doxygen documentation under "Reference" is provided in header (*.h), 
 text (*.txt), template (*.c), and config files.
 
@@ -21,7 +21,7 @@ Files: Middleware components have the following files that are used to generate 
     file with the same name, i.e. rl_usb.h => rl_usb.txt; a exception is permitted when a template is used to explain 
 	API functions.
  
-  - *.c templates: show the usage of some middleware functionality and may be included in the Doxygen documenation.
+  - *.c templates: show the usage of some middleware functionality and may be included in the Doxygen documentation.
     *.c templates with '%Instance%' are copied to .\MW\Doc\component and '%Instance%' is replaced with 'n', otherwise
 	Doxygen uses the *.c templates in folder .\MW\component\Template. If a template is used in documentation 
 	the related *.txt file has the same name as the template, i.e. USBD_User_HID.c => USBD_User_HID.txt.
@@ -38,13 +38,13 @@ API Documentation in .\Include\*.h files
 
 Example:
 
-The follwoing sniplet shows a sample documentation (correct).  In general functions are grouped and
+The following snippet shows a sample documentation (correct).  In general functions are grouped and
 a short descriptive line is added before a group of functions.  In case that functions are only 
-relevant for the documentation (i.e. available in muplitiple instances), they are included in 
+relevant for the documentation (i.e. available in multiple instances), they are included in 
 #ifdef __DOXYGEN__  /  #endif sections.
 
 {code}
-/// \brief Called during \ref USBD_Initialize to initialze the USB Device class.
+/// \brief Called during \ref USBD_Initialize to initialize the USB Device class.
 /// \return     none
 extern void USBD_HIDn_Initialize (void);
 
@@ -200,13 +200,13 @@ API Documentation in *.txt files
 
 A *.txt file that relates to a *.h contains:
  - Functional group assignments using \defgroup along with \brief description
- - Under \details an overview descrption for each functional group (should contain a useful code example)
+ - Under \details an overview description for each functional group (should contain a useful code example)
  - For each function in the header file a detailed description
 
 
 IMPORTANT: 
 Text *.txt files that document the user API of a component are located in .\MW\Doc\component.
-Only for *.h files that provide user API, there is exaclty one text file with the same name.
+Only for *.h files that provide user API, there is exactly one text file with the same name.
 Defines/Functions that are internally used by a Component have no *.txt file.
 
 Example:
@@ -215,7 +215,7 @@ Example:
 The file documents each function that is exposed in *.h header file (and only those functions).
 In case that functions are described in other files (i.e. USB Class Templates) there is a reference.
 
-Functional Group assignemts uses this syntax:
+Functional Group assignements uses this syntax:
 ---------------------------
 /**
 \defgroup           a group definition 
@@ -230,7 +230,7 @@ description
 @{
 */
 
-Below \addtogroup the documentation for releated functions is provided. This section
+Below \addtogroup the documentation for related functions is provided. This section
 ends with @}
 
 Function documentation uses this syntax:
