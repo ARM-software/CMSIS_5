@@ -2,7 +2,7 @@
  * @file     core_cmfunc.h
  * @brief    CMSIS Cortex-M Core Function Access Header File
  * @version  V5.00
- * @date     21. December 2015
+ * @date     02. March 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.

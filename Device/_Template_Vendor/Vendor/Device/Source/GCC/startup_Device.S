@@ -2,42 +2,30 @@
  * @file     startup_<Device>.S
  * @brief    CMSIS Cortex-M# Core Device Startup File for
  *           Device <Device>
- * @version  V2.0
- * @date     16. August 2013
- *
- * @note     GCC for ARM Embedded Processors
- *
+ * @version  V5.00
+ * @date     02. March 2016
  ******************************************************************************/
-/* Copyright (c) 2013 ARM LIMITED
-
-   All rights reserved.
-   Redistribution and use in source and binary forms, with or without
-   modification, are permitted provided that the following conditions are met:
-   - Redistributions of source code must retain the above copyright
-     notice, this list of conditions and the following disclaimer.
-   - Redistributions in binary form must reproduce the above copyright
-     notice, this list of conditions and the following disclaimer in the
-     documentation and/or other materials provided with the distribution.
-   - Neither the name of ARM nor the names of its contributors may be used
-     to endorse or promote products derived from this software without
-     specific prior written permission.
-   *
-   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-   ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
-   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-   POSSIBILITY OF SUCH DAMAGE.
-   ---------------------------------------------------------------------------*/
+/*
+ * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 
 	.syntax	unified
-	.arch	armv6-m
+	.arch	armv7-m
 
 	.section .stack
 	.align	3
@@ -71,23 +59,23 @@ __HeapBase:
 __HeapLimit:
 	.size	__HeapLimit, . - __HeapLimit
 
-	.section .isr_vector
-	.align 2
-	.globl	__isr_vector
-__isr_vector:
+	.section .vectors
+	.align	2
+	.globl	__Vectors
+__Vectors:
 	.long	__StackTop            /* Top of Stack */
 	.long	Reset_Handler         /* Reset Handler */
 	.long	NMI_Handler           /* NMI Handler */
 	.long	HardFault_Handler     /* Hard Fault Handler */
-	.long	0                     /* Reserved */
-	.long	0                     /* Reserved */
-	.long	0                     /* Reserved */
+	.long	MemManage_Handler     /* MPU Fault Handler */
+	.long	BusFault_Handler      /* Bus Fault Handler */
+	.long	UsageFault_Handler    /* Usage Fault Handler */
 	.long	0                     /* Reserved */
 	.long	0                     /* Reserved */
 	.long	0                     /* Reserved */
 	.long	0                     /* Reserved */
 	.long	SVC_Handler           /* SVCall Handler */
-	.long	0                     /* Reserved */
+	.long	DebugMon_Handler      /* Debug Monitor Handler */
 	.long	0                     /* Reserved */
 	.long	PendSV_Handler        /* PendSV Handler */
 	.long	SysTick_Handler       /* SysTick Handler */
@@ -96,12 +84,12 @@ __isr_vector:
 /* ToDo:  Add here the vectors for the device specific external interrupts handler */
 	.long	<DeviceInterrupt>_IRQHandler              /*  0: Default                  */
 
-	.size	__isr_vector, . - __isr_vector
+	.size	__Vectors, . - __Vectors
 
 	.text
 	.thumb
 	.thumb_func
-	.align	1
+	.align	2
 	.globl	Reset_Handler
 	.type	Reset_Handler, %function
 Reset_Handler:
@@ -134,12 +122,11 @@ Reset_Handler:
 
 .L_loop0_0:
 	subs	r3, #4
-	blt	.L_loop0_0_done
-	ldr	r0, [r1, r3]
-	str	r0, [r2, r3]
-	b	.L_loop0_0
+	ittt	ge
+	ldrge	r0, [r1, r3]
+	strge	r0, [r2, r3]
+	bge	.L_loop0_0
 
-.L_loop0_0_done:
 	adds	r4, #12
 	b	.L_loop0
 
@@ -158,16 +145,12 @@ Reset_Handler:
 	ldr	r2, =__data_start__
 	ldr	r3, =__data_end__
 
-	subs	r3, r2
-	ble	.L_loop1_done
-
 .L_loop1:
-	subs	r3, #4
-	ldr	r0, [r1,r3]
-	str	r0, [r2,r3]
-	bgt	.L_loop1
-
-.L_loop1_done:
+	cmp	r2, r3
+	ittt	lt
+	ldrlt	r0, [r1], #4
+	strlt	r0, [r2], #4
+	blt	.L_loop1
 #endif /*__STARTUP_COPY_MULTIPLE */
 
 /*  This part of work usually is done in C library startup code. Otherwise,
@@ -200,10 +183,9 @@ Reset_Handler:
 
 .L_loop2_0:
 	subs	r2, #4
-	blt	.L_loop2_0_done
-	str	r0, [r1, r2]
-	b	.L_loop2_0
-.L_loop2_0_done:
+	itt	ge
+	strge	r0, [r1, r2]
+	bge	.L_loop2_0
 
 	adds	r3, #8
 	b	.L_loop2
@@ -221,15 +203,11 @@ Reset_Handler:
 	ldr	r2, =__bss_end__
 
 	movs	r0, 0
-
-	subs	r2, r1
-	ble	.L_loop3_done
-
 .L_loop3:
-	subs	r2, #4
-	str	r0, [r1, r2]
-	bgt	.L_loop3
-.L_loop3_done:
+	cmp	r1, r2
+	itt	lt
+	strlt	r0, [r1], #4
+	blt	.L_loop3
 #endif /* __STARTUP_CLEAR_BSS_MULTIPLE || __STARTUP_CLEAR_BSS */
 
 #ifndef __NO_SYSTEM_INIT
@@ -262,7 +240,11 @@ Default_Handler:
 
 	def_irq_handler	NMI_Handler
 	def_irq_handler	HardFault_Handler
+	def_irq_handler	MemManage_Handler
+	def_irq_handler	BusFault_Handler
+	def_irq_handler	UsageFault_Handler
 	def_irq_handler	SVC_Handler
+	def_irq_handler	DebugMon_Handler
 	def_irq_handler	PendSV_Handler
 	def_irq_handler	SysTick_Handler
 
