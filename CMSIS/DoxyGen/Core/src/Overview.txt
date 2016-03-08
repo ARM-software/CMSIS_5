@@ -78,7 +78,8 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
       <td>
          Changed: license under Apache-2.0. \n
          Added: check if macro is defined before use. \n
-         Corrected: function \ref SCB_DisableDCache.
+         Corrected: function \ref SCB_DisableDCache. \n
+         Corrected: macros \ref _VAL2FLD, \ref _FLD2VAL.
       </td>
     </tr>
     <tr>
