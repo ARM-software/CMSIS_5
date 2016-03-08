@@ -1,3 +1,9 @@
+/**************************************************************************//**
+ * @file     core_cm3.h
+ * @brief    CMSIS Cortex-M3 Core Peripheral Access Layer Header File
+ * @version  V5.00
+ * @date     02. March 2016
+ ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
  *
