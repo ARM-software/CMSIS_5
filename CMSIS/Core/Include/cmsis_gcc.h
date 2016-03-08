@@ -2,7 +2,7 @@
  * @file     cmsis_gcc.h
  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
  * @version  V5.00
- * @date     21. January 2016
+ * @date     02. March 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -204,7 +204,8 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_PRIMASK(uint32_t priMa
 }
 
 
-#if (defined (__CORTEX_M) && (__CORTEX_M >= 0x03U) || (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U)))
+#if ((defined (__CORTEX_M ) && (__CORTEX_M  >=   3U)) || \
+     (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))     )
 
 /**
   \brief   Enable FIQ
@@ -289,10 +290,11 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_FAULTMASK(uint32_t fau
   __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) : "memory");
 }
 
-#endif /* (defined (__CORTEX_M) && (__CORTEX_M >= 0x03U) || (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))) */
+#endif /* ((defined (__CORTEX_M ) && (__CORTEX_M  >=   3U)) || \
+           (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))     ) */
 
 
-#if       (defined (__CORTEX_M) && ((__CORTEX_M == 0x04U) || (__CORTEX_SC == 0x07U)))
+#if (defined (__CORTEX_M) && (__CORTEX_M >= 4U))
 
 /**
   \brief   Get FPSCR
@@ -301,7 +303,8 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_FAULTMASK(uint32_t fau
  */
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
 {
-#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && (defined (__FPU_USED) && (__FPU_USED == 1U)))
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
   uint32_t result;
 
   __ASM volatile ("");                                 /* Empty asm statement works as a scheduling barrier */
@@ -309,7 +312,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
   __ASM volatile ("");
   return(result);
 #else
-   return(0);
+   return(0U);
 #endif
 }
 
@@ -321,14 +324,15 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
  */
 __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 {
-#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && (defined (__FPU_USED) && (__FPU_USED == 1U)))
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
   __ASM volatile ("");                                           /* Empty asm statement works as a scheduling barrier */
   __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc");
   __ASM volatile ("");
 #endif
 }
 
-#endif /* (defined (__CORTEX_M) && ((__CORTEX_M == 0x04U) || (__CORTEX_SC == 0x07U))) */
+#endif /* (defined (__CORTEX_M) && (__CORTEX_M >= 4U)) */
 
 
 
@@ -513,7 +517,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 {
   uint32_t result;
 
-#if (defined (__CORTEX_M) && (__CORTEX_M >= 0x03U) || (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U)))
+#if ((defined (__CORTEX_M ) && (__CORTEX_M  >=   3U)) || \
+     (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))     )
    __ASM volatile ("rbit %0, %1" : "=r" (result) : "r" (value) );
 #else
   int32_t s = 4 /*sizeof(v)*/ * 8 - 1; /* extra shift needed at end */
@@ -540,7 +545,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 #define __CLZ             __builtin_clz
 
 
-#if (defined (__CORTEX_M) && (__CORTEX_M >= 0x03U) || (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U)))
+#if ((defined (__CORTEX_M ) && (__CORTEX_M  >=   3U)) || \
+     (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))     )
 
 /**
   \brief   LDR Exclusive (8 bit)
@@ -802,7 +808,8 @@ __attribute__((always_inline)) __STATIC_INLINE void __STRT(uint32_t value, volat
    __ASM volatile ("strt %1, %0" : "=Q" (*ptr) : "r" (value) );
 }
 
-#endif /* (defined (__CORTEX_M) && (__CORTEX_M >= 0x03U) || (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))) */
+#endif /* ((defined (__CORTEX_M ) && (__CORTEX_M >=    3U)) || \
+           (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))     ) */
 
 /*@}*/ /* end of group CMSIS_Core_InstructionInterface */
 
@@ -813,7 +820,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __STRT(uint32_t value, volat
   @{
 */
 
-#if (defined (__CORTEX_M) && (__CORTEX_M >= 0x04U))  /* only for Cortex-M4 and above */
+#if (defined (__CORTEX_M) && (__CORTEX_M >= 4U))
 
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __SADD8(uint32_t op1, uint32_t op2)
 {
@@ -1348,7 +1355,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __SMMLA (int32_t op1, in
  return(result);
 }
 
-#endif /* (defined (__CORTEX_M) && (__CORTEX_M >= 0x04U)) */
+#endif /* (defined (__CORTEX_M) && (__CORTEX_M >= 4U)) */
 /*@} end of group CMSIS_SIMD_intrinsics */
 
 
