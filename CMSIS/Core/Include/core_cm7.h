@@ -2,7 +2,7 @@
  * @file     core_cm7.h
  * @brief    CMSIS Cortex-M7 Core Peripheral Access Layer Header File
  * @version  V5.00
- * @date     22. January 2015
+ * @date     07. March 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -1747,18 +1747,18 @@ typedef struct
 /**
   \brief   Mask and shift a bit field value for use in a register bit range.
   \param[in] field  Name of the register bit field.
-  \param[in] value  Value of the bit field.
+  \param[in] value  Value of the bit field. This parameter is interpreted as an uint32_t type.
   \return           Masked and shifted value.
 */
-#define _VAL2FLD(field, value)    ((value << field ## _Pos) & field ## _Msk)
+#define _VAL2FLD(field, value)    (((uint32_t)(value) << field ## _Pos) & field ## _Msk)
 
 /**
   \brief     Mask and shift a register value to extract a bit filed value.
   \param[in] field  Name of the register bit field.
-  \param[in] value  Value of register.
+  \param[in] value  Value of register. This parameter is interpreted as an uint32_t type.
   \return           Masked and shifted bit field value.
 */
-#define _FLD2VAL(field, value)    ((value & field ## _Msk) >> field ## _Pos)
+#define _FLD2VAL(field, value)    (((uint32_t)(value) & field ## _Msk) >> field ## _Pos)
 
 /*@} end of group CMSIS_core_bitfield */
 
@@ -2192,16 +2192,17 @@ __STATIC_INLINE void SCB_EnableDCache (void)
 __STATIC_INLINE void SCB_DisableDCache (void)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    uint32_t ccsidr;
-    uint32_t sets;
-    uint32_t ways;
+    register uint32_t ccsidr;
+    register uint32_t sets;
+    register uint32_t ways;
 
     SCB->CSSELR = (0U << 1U) | 0U;          /* Level 1 data cache */
     __DSB();
 
-    ccsidr = SCB->CCSIDR;
-
     SCB->CCR &= ~(uint32_t)SCB_CCR_DC_Msk;  /* disable D-Cache */
+    __DSB();
+
+    ccsidr = SCB->CCSIDR;
 
                                             /* clean & invalidate D-Cache */
     sets = (uint32_t)(CCSIDR_SETS(ccsidr));

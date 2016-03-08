@@ -2,7 +2,7 @@
  * @file     cmsis_armcc.h
  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
  * @version  V5.00
- * @date     21. January 2016
+ * @date     02. March 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -29,6 +29,7 @@
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 400677)
   #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 #endif
+
 
 /* ###########################  Core Function Access  ########################### */
 /** \ingroup  CMSIS_Core_FunctionInterface
@@ -171,7 +172,8 @@ __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
 }
 
 
-#if (defined (__CORTEX_M) && (__CORTEX_M >= 0x03U) || (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U)))
+#if ((defined (__CORTEX_M ) && (__CORTEX_M  >=   3U)) || \
+     (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))     )
 
 /**
   \brief   Enable FIQ
@@ -249,10 +251,11 @@ __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
   __regFaultMask = (faultMask & (uint32_t)1);
 }
 
-#endif /* (defined (__CORTEX_M) && (__CORTEX_M >= 0x03U) || (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))) */
+#endif /* ((defined (__CORTEX_M ) && (__CORTEX_M  >=   3U)) || \
+           (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))     ) */
 
 
-#if       (defined (__CORTEX_M) && ((__CORTEX_M == 0x04U) || (__CORTEX_SC == 0x07U)))
+#if (defined (__CORTEX_M) && (__CORTEX_M >= 4U))
 
 /**
   \brief   Get FPSCR
@@ -261,7 +264,8 @@ __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
  */
 __STATIC_INLINE uint32_t __get_FPSCR(void)
 {
-#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && (defined (__FPU_USED) && (__FPU_USED == 1U)))
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
   register uint32_t __regfpscr         __ASM("fpscr");
   return(__regfpscr);
 #else
@@ -277,13 +281,14 @@ __STATIC_INLINE uint32_t __get_FPSCR(void)
  */
 __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 {
-#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && (defined (__FPU_USED) && (__FPU_USED == 1U)))
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
   register uint32_t __regfpscr         __ASM("fpscr");
   __regfpscr = (fpscr);
 #endif
 }
 
-#endif /* (defined (__CORTEX_M) && ((__CORTEX_M == 0x04U) || (__CORTEX_SC == 0x07U))) */
+#endif /* (defined (__CORTEX_M) && (__CORTEX_M >= 4U)) */
 
 
 
@@ -423,7 +428,8 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#if (defined (__CORTEX_M) && (__CORTEX_M >= 0x03U) || (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U)))
+#if ((defined (__CORTEX_M ) && (__CORTEX_M  >=   3U)) || \
+     (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))     )
   #define __RBIT                          __rbit
 #else
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
@@ -453,7 +459,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 #define __CLZ                             __clz
 
 
-#if (defined (__CORTEX_M) && (__CORTEX_M >= 0x03U) || (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U)))
+#if ((defined (__CORTEX_M ) && (__CORTEX_M  >=   3U)) || \
+     (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))     )
 
 /**
   \brief   LDR Exclusive (8 bit)
@@ -635,7 +642,8 @@ __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint3
  */
 #define __STRT(value, ptr)                __strt(value, ptr)
 
-#endif /* (defined (__CORTEX_M) && (__CORTEX_M >= 0x03U) || (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))) */
+#endif /* ((defined (__CORTEX_M ) && (__CORTEX_M >=    3U)) || \
+           (defined (__CORTEX_SC) && (__CORTEX_SC >= 300U))     ) */
 
 /*@}*/ /* end of group CMSIS_Core_InstructionInterface */
 
@@ -646,7 +654,7 @@ __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint3
   @{
 */
 
-#if (defined (__CORTEX_M) && (__CORTEX_M >= 0x04U))  /* only for Cortex-M4 and above */
+#if (defined (__CORTEX_M) && (__CORTEX_M >= 4U))
 
 
 #define __SADD8                           __sadd8
@@ -718,7 +726,7 @@ __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint3
 #define __SMMLA(ARG1,ARG2,ARG3)          ( (int32_t)((((int64_t)(ARG1) * (ARG2)) + \
                                                       ((int64_t)(ARG3) << 32U)     ) >> 32U))
 
-#endif /* (defined (__CORTEX_M) && (__CORTEX_M >= 0x04U)) */
+#endif /* (defined (__CORTEX_M) && (__CORTEX_M >= 4U)) */
 /*@} end of group CMSIS_SIMD_intrinsics */
 
 

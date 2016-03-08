@@ -2,7 +2,7 @@
  * @file     cmsis_armclang.h
  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
  * @version  V5.00
- * @date     29. December 2015
+ * @date     02. March 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -360,7 +360,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PRIMASK_NS(uint32_t
 #endif
 
 
-#if ((__ARM_ARCH_7M__ == 1U) || (__ARM_ARCH_7EM__ == 1U) || (__ARM_ARCH_8M__ == 1U))  /* ToDo:  ARMCC_V6: check if this is ok for cortex >=3 */
+#if ((__ARM_ARCH_7M__ == 1U) || (__ARM_ARCH_7EM__ == 1U) || (__ARM_ARCH_8M__ == 1U))
 
 /**
   \brief   Enable FIQ
@@ -518,7 +518,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_FAULTMASK_NS(uint32
 #endif
 
 
-#endif /* ((__ARM_ARCH_7M__ == 1U) || (__ARM_ARCH_8M__ == 1U)) */
+#endif /* ((__ARM_ARCH_7M__ == 1U) || (__ARM_ARCH_7EM__ == 1U) || (__ARM_ARCH_8M__ == 1U)) */
 
 
 #if (__ARM_ARCH_8M__ == 1U)
@@ -537,7 +537,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PSPLIM(void)
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U) && (__ARM_ARCH_PROFILE == 'M')     /* ToDo:  ARMCC_V6: check predefined macro for mainline */
+#if  (__ARM_FEATURE_CMSE == 3U) && (__ARM_ARCH_PROFILE == 'M')
 /**
   \brief   Get Process Stack Pointer Limit (non-secure)
   \details Returns the current value of the non-secure Process Stack Pointer Limit (PSPLIM) when in secure state.
@@ -564,7 +564,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_PSPLIM(uint32_t ProcSt
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U) && (__ARM_ARCH_PROFILE == 'M')     /* ToDo:  ARMCC_V6: check predefined macro for mainline */
+#if  (__ARM_FEATURE_CMSE == 3U) && (__ARM_ARCH_PROFILE == 'M')
 /**
   \brief   Set Process Stack Pointer (non-secure)
   \details Assigns the given value to the non-secure Process Stack Pointer Limit (PSPLIM) when in secure state.
@@ -592,7 +592,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_MSPLIM(void)
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U) && (__ARM_ARCH_PROFILE == 'M')     /* ToDo:  ARMCC_V6: check predefined macro for mainline */
+#if  (__ARM_FEATURE_CMSE == 3U) && (__ARM_ARCH_PROFILE == 'M')
 /**
   \brief   Get Main Stack Pointer Limit (non-secure)
   \details Returns the current value of the non-secure Main Stack Pointer Limit(MSPLIM) when in secure state.
@@ -619,7 +619,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_MSPLIM(uint32_t MainSt
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U) && (__ARM_ARCH_PROFILE == 'M')     /* ToDo:  ARMCC_V6: check predefined macro for mainline */
+#if  (__ARM_FEATURE_CMSE == 3U) && (__ARM_ARCH_PROFILE == 'M')
 /**
   \brief   Set Main Stack Pointer Limit (non-secure)
   \details Assigns the given value to the non-secure Main Stack Pointer Limit (MSPLIM) when in secure state.
@@ -634,7 +634,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t 
 #endif /* (__ARM_ARCH_8M__ == 1U) */
 
 
-#if ((__ARM_ARCH_7EM__ == 1U) || (__ARM_ARCH_8M__ == 1U))  /* ToDo:  ARMCC_V6: check if this is ok for cortex >=4 */
+#if ((__ARM_ARCH_7EM__ == 1U) || (__ARM_ARCH_8M__ == 1U))
 
 /**
   \brief   Get FPSCR
@@ -644,7 +644,8 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t 
 /* #define __get_FPSCR      __builtin_arm_get_fpscr */
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
 {
-#if (__FPU_PRESENT == 1U) && (__FPU_USED == 1U)
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
   uint32_t result;
 
   __ASM volatile ("");                                 /* Empty asm statement works as a scheduling barrier */
@@ -652,7 +653,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
   __ASM volatile ("");
   return(result);
 #else
-   return(0);
+   return(0U);
 #endif
 }
 
@@ -664,7 +665,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
  */
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_FPSCR_NS(void)
 {
-#if (__FPU_PRESENT == 1U) && (__FPU_USED == 1U)
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
   uint32_t result;
 
   __ASM volatile ("");                                 /* Empty asm statement works as a scheduling barrier */
@@ -672,7 +674,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_FPSCR_NS(void)
   __ASM volatile ("");
   return(result);
 #else
-   return(0);
+   return(0U);
 #endif
 }
 #endif
@@ -686,7 +688,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_FPSCR_NS(void)
 /* #define __set_FPSCR      __builtin_arm_set_fpscr */
 __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 {
-#if (__FPU_PRESENT == 1U) && (__FPU_USED == 1U)
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
   __ASM volatile ("");                                 /* Empty asm statement works as a scheduling barrier */
 /*  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc"); */
   __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) :);
@@ -702,7 +705,8 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
  */
 __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_FPSCR_NS(uint32_t fpscr)
 {
-#if (__FPU_PRESENT == 1U) && (__FPU_USED == 1U)
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
   __ASM volatile ("");                                 /* Empty asm statement works as a scheduling barrier */
 /*  __ASM volatile ("VMSR fpscr_ns, %0" : : "r" (fpscr) : "vfpcc"); */
   __ASM volatile ("VMSR fpscr_ns, %0" : : "r" (fpscr) : );
@@ -802,7 +806,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_FPSCR_NS(uint32_t f
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#define __REV16          __builtin_bswap16                           /* ToDo:  ARMCC_V6: check if __builtin_bswap16 could be used */
+#define __REV16          __builtin_bswap16                /* ToDo ARMCLANG: check if __builtin_bswap16 could be used */
 #if 0
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __REV16(uint32_t value)
 {
@@ -820,7 +824,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __REV16(uint32_t value)
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-                                                          /* ToDo:  ARMCC_V6: check if __builtin_bswap16 could be used */
+                                                          /* ToDo ARMCLANG: check if __builtin_bswap16 could be used */
 __attribute__((always_inline)) __STATIC_INLINE int32_t __REVSH(int32_t value)
 {
   int32_t result;
@@ -859,7 +863,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-                                                          /* ToDo:  ARMCC_V6: check if __builtin_arm_rbit is supported */
+                                                          /* ToDo ARMCLANG: check if __builtin_arm_rbit is supported */
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 {
   uint32_t result;
@@ -891,7 +895,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 #define __CLZ             __builtin_clz
 
 
-#if ((__ARM_ARCH_7M__ == 1U) || (__ARM_ARCH_7EM__ == 1U) || (__ARM_ARCH_8M__ == 1U))  /* ToDo:  ARMCC_V6: check if this is ok for cortex >=3 */
+#if ((__ARM_ARCH_7M__ == 1U) || (__ARM_ARCH_7EM__ == 1U) || (__ARM_ARCH_8M__ == 1U))
 
 /**
   \brief   LDR Exclusive (8 bit)
@@ -1246,7 +1250,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __STL(uint32_t value, volati
   @{
 */
 
-#if (__ARM_FEATURE_DSP == 1U)        /* ToDo:  ARMCC_V6: This should be ARCH >= ARMv7-M + SIMD */
+#if (__ARM_FEATURE_DSP == 1U)                             /* ToDo ARMCLANG: This should be ARCH >= ARMv7-M + SIMD */
 
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __SADD8(uint32_t op1, uint32_t op2)
 {
