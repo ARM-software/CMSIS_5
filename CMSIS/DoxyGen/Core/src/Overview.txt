@@ -74,13 +74,19 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.00</td>
+      <td>
+         Changed: license under Apache-2.0.
+      </td>
+    </tr>
+    <tr>
       <td>V5.00 - Beta</td>
       <td>
          Renamed: cmsis_armcc_V6.h to cmsis_armclang.h.\n
          Renamed: core_*.h to lower case.\n
-         Added: function \ref SCB_GetFPUType to all CMSIS cores.
+         Added: function \ref SCB_GetFPUType to all CMSIS cores.\n
          Added: ARMv8-M support.
-	  </td>
+       </td>
     </tr>
     <tr>
       <td>V4.30</td>
@@ -89,7 +95,7 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
          Corrected: IAR toolchain: removed for \ref NVIC_SystemReset the attribute(noreturn).\n
          Corrected: GCC toolchain: supressed irrelevant compiler warnings.\n
          Added: Support files for ARM Compiler v6 (cmsis_armcc_v6.h).
-	  </td>
+      </td>
     </tr>
     <tr>
       <td>V4.20</td>
@@ -142,7 +148,7 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
           Added: \ref __SMMLA instruction intrinsic for Cortex-M4.\n
           Corrected: \ref ITM_SendChar.\n	  
           Corrected: \ref __enable_irq, \ref __disable_irq and inline assembly for GCC Compiler.\n	  
-          Corrected: \ref NVIC_GetPriority and VTOR_TBLOFF for Cortex-M0/M0+, SC000.
+          Corrected: \ref NVIC_GetPriority and VTOR_TBLOFF for Cortex-M0/M0+, SC000. \n
           Corrected: rework of in-line assembly functions to remove potential compiler warnings.\n	  
       </td>
     </tr>
