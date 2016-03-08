@@ -77,7 +77,8 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
       <td>V5.00</td>
       <td>
          Changed: license under Apache-2.0. \n
-         Added: check if macro is defined before use.
+         Added: check if macro is defined before use. \n
+         Corrected: function \ref SCB_DisableDCache.
       </td>
     </tr>
     <tr>

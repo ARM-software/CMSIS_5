@@ -2192,16 +2192,17 @@ __STATIC_INLINE void SCB_EnableDCache (void)
 __STATIC_INLINE void SCB_DisableDCache (void)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    uint32_t ccsidr;
-    uint32_t sets;
-    uint32_t ways;
+    register uint32_t ccsidr;
+    register uint32_t sets;
+    register uint32_t ways;
 
     SCB->CSSELR = (0U << 1U) | 0U;          /* Level 1 data cache */
     __DSB();
 
-    ccsidr = SCB->CCSIDR;
-
     SCB->CCR &= ~(uint32_t)SCB_CCR_DC_Msk;  /* disable D-Cache */
+    __DSB();
+
+    ccsidr = SCB->CCSIDR;
 
                                             /* clean & invalidate D-Cache */
     sets = (uint32_t)(CCSIDR_SETS(ccsidr));
