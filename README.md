@@ -48,3 +48,11 @@ documentation.
 ## Generate CMSIS Software Pack
 
 *coming soon*
+
+## License
+
+ARM CMSIS is licensed under Apache-2.0.
+
+## Contributions and Pull Requests
+
+Contributions are accepted under Apache-2.0. Only submit contributions where you have authored all of the code.
