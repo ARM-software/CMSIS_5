@@ -1,0 +1,373 @@
+/**
+\page ChangeLog_pg  Change Log
+
+<hr>
+<b>Version 1.4.8 (no source code change [still labeled 1.4.5]) 2015/12/18</b>
+
+Modified arm_math.h, arm_bitreversal2.S
+- corrected arm_sin_f32() for very small negative input values.
+
+Modified arm_sin_f32.c
+- Updated Texas Instruments ARM compiler support.
+
+Updated documentation
+- function \ref arm_rfft_fast_f32.
+
+
+<hr>
+<b>Version 1.4.7 (no source code change [still labeled 1.4.5]) 2015/10/20</b>
+
+Modified arm_math.h
+- Added explicit type casts to remove compiler warnings.
+- Supressed irrelevant warnings for toolchain GCC.
+
+Updated documentation
+- functions \ref arm_cos_f32, \ref arm_sin_f32 use table lookup combined with linear interpolation (since V1.4.2). This is now documented.
+
+
+<hr>
+<b>Version 1.4.6 (no source code change [still labeled 1.4.5]) 2015/08/26</b>
+
+Modified arm_math.h
+- Updated function \ref arm_sqrt_f32 for use with IAR.
+
+
+<hr>
+<b>Version 1.4.5 2015/03/19</b>
+
+   Added support for the Cortex-M7 processor
+
+   Fixed bug in arm_mat_inverse_f32.c and arm_mat_inverse_f64.c.
+   They weren't properly handling diagonal matrices.
+
+   arm_cfft_f32.c - help documentation updated
+
+   Updated documentation to show deprecated functions
+
+
+<hr>
+<b>Version 1.4.4 2014/07/31</b>
+
+Added the following new files:
+- arm_biquad_cascade_stereo_df2T_f32.c
+- arm_biquad_cascade_stereo_df2T_init_f32.c
+- arm_biquad_cascade_df2T_f64.c
+- arm_biquad_cascade_df2T_init_f64.c
+- arm_mat_inverse_f64.c
+- arm_cfft_q15.c
+- arm_cfft_q31.c
+
+Optimizations to the following files:
+- arm_biquad_cascade_df2T_f32.c
+- arm_fir_f32.c
+- arm_fir_fast_q31.c
+- arm_fir_q7.c
+- arm_cfft_f32.c
+- arm_cfft_radix4_q31.c
+- arm_cfft_radix4_q15.c
+- arm_rfft_q31.c
+- arm_rfft_q15.c
+
+
+<hr>
+<b>Version 1.4.3 2014/03/12</b>
+
+   Undid changes to arm_biquad_cascade_df1_q31.c
+
+   Added support for COSMIC
+
+   Changed 'short' to 'q15_t' where appropriate
+
+   Fixed arm_conv_partial_fast_q15.c for UNALIGNED_SUPPORT_DISABLE
+
+   Fixed arm_mat_cmplx_mult_q15.c for UNALIGNED_SUPPORT_DISABLE
+
+   Fixed arm_conv_partial_opt_q7.c for UNALIGNED_SUPPORT_DISABLE
+
+   Restored the internal fftlen of 16 to arm_rfft_fast_init_f32.c
+
+   Updated core_xxx.h files to newer versions from ARM
+
+<hr>
+<b>Version 1.4.2 2013/10/16</b>
+
+   Moved const structures from arm_const_structs.h to arm_const_structs.c
+
+   Rfft_fast_f32 no longer allows fft length of 16 as it wouldn't have worked anyways
+
+   Partial convolution was producing the wrong results in some cases
+
+   arm_lms_q31 and q15 now saturate the results in the M0 code to match the M3 & M4 code
+
+   Rfft_q15 and q31 had potential overflow issues resolved
+
+   arm_biquad_cascade_df1_q31.c had a typo which resulted in incorrect outputs
+
+   fast math sine and cosine now use linear interpolation
+
+   controller sin/cos now uses a more accurate interpolation algorithm
+
+   arm_mat_inverse was reading outside its input array
+
+   arm_cmplx_dot_prod was incorrect
+
+   switched some incorrect usages of __ssat to clip_q63_to_q31
+
+   changed var & std q31 to downshift input data by 8
+
+   var q31 & q15 no longer output larger data types
+
+   arm_mat_cmplx_mult_q15.c was done incorrectly for big vs little endian
+
+   arm_mat_mult_q31.c was inconsistent with the other multiplies, so added saturation
+
+   arm_conv_partial_q15 had an incorrect comparison between signed & unsigned values
+
+<hr>
+<b>Version 1.4.1 2013/02/20</b>
+
+   Updated licenses in headers to 2013
+
+   Fixed ALIGN4 macro in arm_math.h
+
+   Added files to Cortex-M0 projects so that all projects have same file list
+
+   Fixed bugs in
+     - arm_biquad_cascade_d2fT_f32.c
+     - arm_cfft_radix2_q31
+     - arm_cfft_radix2_f32
+     - arm_math.h (arm_pid functions)
+     - arm_iir_lattice_q31.c
+
+<hr>
+<b>Version 1.4.0 2013/01/09</b>
+
+   Updated with more optimizations, bug fixes and new license information in headers
+
+   Optimized functions:
+     - arm_biquad_cascade_df2T_f32
+     - arm_biquad_cascade_df1_q31
+     - arm_fir_f32
+     - arm_fir_fast_q31
+     - arm_cfft_f32
+     - arm_cfft_radix2_q31
+     - arm_rfft_fast_f32 (new function)
+
+   Fixed compiler warnings in arm_math.h for comparing signed and unsigned ints
+
+   Fixed a saturation bug in arm_rms_q15
+
+   Simplified the code in arm_sin_cos_q31
+
+   Added a preprocessor directive to treat the Cortex M0+ just like the Cortex M0
+
+   The following functions were deprecated and will be removed in a future version
+     - arm_cfft_radix2_f32
+     - arm_cfft_radix2_init_f32
+     - arm_cfft_radix4_f32
+     - arm_cfft_radix4_init_f32
+
+<hr>
+<b>Version 1.3.0</b>
+
+   Added CMSIS DSP Software Library
+
+   The CMSIS DSP Software Library is a suite of common signal processing functions targeted to Cortex-M processor based microcontrollers.
+   Even though the code has been specifically optimized towards using the extended DSP instruction set of the Cortex-M4 processor,
+   the library can be compiled for any Cortex-M processor.
+
+   For more information please see CMSIS DSP Library documentation.
+   Added Cortex-M4 Core Support
+
+   Additional folder CM4, containing the Cortex-M4 core support files, has been added.
+       CM0
+       CM3
+       CM4
+           CoreSupport
+           DeviceSupport
+
+   New naming for Core Support Files
+
+   The new Core Support Files are:
+      - core_cm#.h (# = 0, 3, 4)
+      - core_cmFunc.h (Cortex-M Core Register access functions)
+      - core_cmInstr.h (Cortex-M Core instructions)
+      - core_cm4_simd.h (Cortex-M4 SIMD instructions)
+
+<hr>
+<b>Version 1.2.0</b>
+
+   Removed CMSIS Middelware packages
+
+   CMSIS Middleware is on hold from ARM side until a agreement between all CMSIS partners is found.
+   SystemFrequency renamed to SystemCoreClock
+
+   The variable name SystemCoreClock is more precise than SystemFrequency because the variable holds the clock value at which the core is running.
+   Changed startup concept
+
+   The old startup concept (calling SystemInit_ExtMemCtl from startup file and calling SystemInit from main)
+   has the weakness that it does not work for controllers which need a already configuerd clock system to configure
+   the external memory controller.
+
+   Changed startup concept
+      - SystemInit() is called from startup file before premain.
+      - SystemInit() configures the clock system and also configures an existing external memory controller.
+      - SystemInit() must not use global variables.
+      - SystemCoreClock is initialized with a correct predefined value.
+      - Additional function void SystemCoreClockUpdate (void) is provided.
+      - SystemCoreClockUpdate() updates the variable SystemCoreClock and must be called whenever the core clock is changed.
+      - SystemCoreClockUpdate() evaluates the clock register settings and calculates the current core clock.
+
+   Advanced Debug Functions
+
+   ITM communication channel is only capable for OUT direction.
+   To allow also communication for IN direction a simple concept is provided.
+      - Global variable volatile int ITM_RxBuffer used for IN data.
+      - Function int ITM_CheckChar (void) checks if a new character is available.
+      - Function int ITM_ReceiveChar (void) retrieves the new character.
+
+   For detailed explanation see file CMSIS debug support.htm.
+
+   Core Register Bit Definitions
+
+   Files core_cm3.h and core_cm0.h contain now bit definitions for Core Registers. The name for the defines
+   correspond with the Cortex-M Technical Reference Manual.
+
+   e.g. SysTick structure with bit definitions
+
+\code
+   /** @addtogroup CMSIS_CM3_SysTick CMSIS CM3 SysTick
+     memory mapped structure for SysTick
+     @{
+    */
+   typedef struct
+   {
+     __IO uint32_t CTRL;                         /*!< Offset: 0x00  SysTick Control and Status Register */
+     __IO uint32_t LOAD;                         /*!< Offset: 0x04  SysTick Reload Value Register       */
+     __IO uint32_t VAL;                          /*!< Offset: 0x08  SysTick Current Value Register      */
+     __I  uint32_t CALIB;                        /*!< Offset: 0x0C  SysTick Calibration Register        */
+   } SysTick_Type;
+
+   /* SysTick Control / Status Register Definitions */
+   #define SysTick_CTRL_COUNTFLAG_Pos     16                                      /*!< SysTick CTRL: COUNTFLAG Position */
+   #define SysTick_CTRL_COUNTFLAG_Msk    (1ul << SysTick_CTRL_COUNTFLAG_Pos)      /*!< SysTick CTRL: COUNTFLAG Mask */
+
+   #define SysTick_CTRL_CLKSOURCE_Pos      2                                      /*!< SysTick CTRL: CLKSOURCE Position */
+   #define SysTick_CTRL_CLKSOURCE_Msk     (1ul << SysTick_CTRL_CLKSOURCE_Pos)     /*!< SysTick CTRL: CLKSOURCE Mask */
+
+   #define SysTick_CTRL_TICKINT_Pos        1                                      /*!< SysTick CTRL: TICKINT Position */
+   #define SysTick_CTRL_TICKINT_Msk       (1ul << SysTick_CTRL_TICKINT_Pos)       /*!< SysTick CTRL: TICKINT Mask */
+
+   #define SysTick_CTRL_ENABLE_Pos         0                                      /*!< SysTick CTRL: ENABLE Position */
+   #define SysTick_CTRL_ENABLE_Msk        (1ul << SysTick_CTRL_ENABLE_Pos)        /*!< SysTick CTRL: ENABLE Mask */
+
+   /* SysTick Reload Register Definitions */
+   #define SysTick_LOAD_RELOAD_Pos         0                                      /*!< SysTick LOAD: RELOAD Position */
+   #define SysTick_LOAD_RELOAD_Msk        (0xFFFFFFul << SysTick_LOAD_RELOAD_Pos) /*!< SysTick LOAD: RELOAD Mask */
+
+   /* SysTick Current Register Definitions */
+   #define SysTick_VAL_CURRENT_Pos         0                                      /*!< SysTick VAL: CURRENT Position */
+   #define SysTick_VAL_CURRENT_Msk        (0xFFFFFFul << SysTick_VAL_CURRENT_Pos) /*!< SysTick VAL: CURRENT Mask */
+
+   /* SysTick Calibration Register Definitions */
+   #define SysTick_CALIB_NOREF_Pos        31                                      /*!< SysTick CALIB: NOREF Position */
+   #define SysTick_CALIB_NOREF_Msk       (1ul << SysTick_CALIB_NOREF_Pos)         /*!< SysTick CALIB: NOREF Mask */
+
+   #define SysTick_CALIB_SKEW_Pos         30                                      /*!< SysTick CALIB: SKEW Position */
+   #define SysTick_CALIB_SKEW_Msk        (1ul << SysTick_CALIB_SKEW_Pos)          /*!< SysTick CALIB: SKEW Mask */
+
+   #define SysTick_CALIB_TENMS_Pos         0                                      /*!< SysTick CALIB: TENMS Position */
+   #define SysTick_CALIB_TENMS_Msk        (0xFFFFFFul << SysTick_VAL_CURRENT_Pos) /*!< SysTick CALIB: TENMS Mask */
+   /*@}*/ /* end of group CMSIS_CM3_SysTick */
+\endcode
+
+   DoxyGen Tags
+
+   DoxyGen tags in files core_cm3.[c,h] and core_cm0.[c,h] are reworked to create proper documentation using DoxyGen.
+   Folder Structure
+
+   The folder structure is changed to differentiate the single support packages.
+
+       CM0
+       CM3
+           CoreSupport
+           DeviceSupport
+               Vendor
+                   Device
+                       Startup
+                           Toolchain
+                           Toolchain
+                           ...
+                   Device
+                   ...
+               Vendor
+               ...
+           Example (optional)
+               Toolchain
+                   Device
+                   Device
+                   ...
+               Toolchain
+               ...
+       Documentation
+
+<hr>
+<b>Version 1.1.0 2012/02/15</b>
+
+   Updated with more optimizations, bug fixes and minor API changes.
+
+<hr>
+<b>Version 1.0.11 2011/10/18</b>
+
+   Bug Fix in conv, correlation, partial convolution.
+
+<hr>
+<b>Version 1.0.10 2011/7/15</b>
+
+   Big Endian support added and Merged M0 and M3/M4 Source code.
+
+<hr>
+<b>Version 1.0.3 2010/11/29</b>
+
+   Re-organized the CMSIS folders and updated documentation.
+
+<hr>
+<b>Version 1.0.2 2010/11/11</b>
+
+   Documentation updated.
+
+<hr>
+<b>Version 1.0.1 2010/10/05</b>
+
+   Production release and review comments incorporated.
+
+<hr>
+<b>Version 1.0.0 2010/09/20</b>
+
+   Production release and review comments incorporated.
+
+<hr>
+<b>Version 0.0.9  2010/08/27</b>
+
+   Added files:
+      arm_biquad_cascade_df1_fast_q15.c
+      arm_biquad_cascade_df1_fast_q31.c
+      arm_fir_fast_q31.c
+      arm_fir_fast_q15.c
+
+<hr>
+<b>Version 0.0.7  2010/06/10</b>
+
+   Misra-C changes done
+
+<hr>
+<b>Version 0.0.5  2010/04/26</b>
+
+   incorporated review comments and updated with latest CMSIS layer
+
+<hr>
+<b>Version 0.0.3  2010/03/10 DP</b>
+
+   Initial version
+
+*/
