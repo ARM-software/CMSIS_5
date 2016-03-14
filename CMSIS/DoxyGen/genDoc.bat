@@ -38,6 +38,9 @@ IF EXIST ..\Documentation\SVD\html (
 IF EXIST ..\Documentation\DSP\html (
   rmdir /S /Q ..\Documentation\DSP\html
 )
+IF EXIST ..\Documentation\DAP\html (
+  rmdir /S /Q ..\Documentation\DAP\html
+)
 
 REM -- Generate New HTML Files ---------------------
   ECHO.
@@ -67,6 +70,10 @@ pushd DSP
 CALL doxygen_dsp.bat
 popd
 
+pushd DAP
+CALL doxygen_dap.bat
+popd
+
 REM -- Copy search style sheet ---------------------
 ECHO Copy search style sheets
 copy /Y Doxygen_Templates\search.css ..\Documentation\CORE\html\search\. 
@@ -75,6 +82,7 @@ REM copy /Y Doxygen_Templates\search.css ..\Documentation\General\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\Pack\html\search\.
 REM copy /Y Doxygen_Templates\search.css ..\Documentation\SVD\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\DSP\html\search\.
+copy /Y Doxygen_Templates\search.css ..\Documentation\DAP\html\search\.
   
 :END
   ECHO.
