@@ -28,7 +28,9 @@ For further details see also the [Slides of the Embedded World CMSIS Partner Mee
 | Directory       | Content                                        |                
 | --------------- | ---------------------------------------------- |
 | CMSIS/Core      | CMSIS-Core related files (for release)         |
+| CMSIS/DAP       | CMSIS-DAP related files and examples           |
 | CMSIS/Driver    | CMSIS-Driver API headers and template files    |
+| CMSIS/DSP       | CMSIS-DSP related files                        |
 | CMSIS/RTOS      | RTOS related files (template + include)        |
 | CMSIS/DoxyGen   | Source of the documentation                    |
 | CMSIS/Utilities | Utility programs                               |
