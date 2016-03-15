@@ -185,8 +185,8 @@ The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enabl
 
 \def _VAL2FLD(field, value)
 \param         field        name of bit field.
-\param         value        value for the bit field.
-\brief Mask and shift a bit field value for assigning to result to a peripheral register.
+\param         value        value for the bit field. This parameter is interpreted as an uint32_t type.
+\brief Mask and shift a bit field value for assigning the result to a peripheral register.
 \details
 The macro \ref _VAL2FLD uses the \#define's <i>_Pos</i> and <i>_Msk</i> of the related bit field to shift bit-field values for
 assigning to a register.
@@ -203,14 +203,14 @@ assigning to a register.
  
 \def _FLD2VAL(field, value)
 \param         field        name of bit field.
-\param         value        value of the register
+\param         value        value of the register. This parameter is interpreted as an uint32_t type.
 \brief Extract from a peripheral register value the a bit field value.
 \details
 The macro \ref _FLD2VAL uses the \#define's <i>_Pos</i> and <i>_Msk</i> of the related bit field to extract the value of a bit field from a register.
  
 <b>Example:</b>
 \code
-  id = = _FLD2VAL(SCB_CPUID_REVISION, SCB->CPUID);
+  id = _FLD2VAL(SCB_CPUID_REVISION, SCB->CPUID);
 \endcode
 
 */

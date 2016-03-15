@@ -28,7 +28,9 @@ For further details see also the [Slides of the Embedded World CMSIS Partner Mee
 | Directory       | Content                                        |                
 | --------------- | ---------------------------------------------- |
 | CMSIS/Core      | CMSIS-Core related files (for release)         |
+| CMSIS/DAP       | CMSIS-DAP related files and examples           |
 | CMSIS/Driver    | CMSIS-Driver API headers and template files    |
+| CMSIS/DSP       | CMSIS-DSP related files                        |
 | CMSIS/RTOS      | RTOS related files (template + include)        |
 | CMSIS/DoxyGen   | Source of the documentation                    |
 | CMSIS/Utilities | Utility programs                               |
@@ -48,3 +50,11 @@ documentation.
 ## Generate CMSIS Software Pack
 
 *coming soon*
+
+## License
+
+ARM CMSIS is licensed under Apache-2.0.
+
+## Contributions and Pull Requests
+
+Contributions are accepted under Apache-2.0. Only submit contributions where you have authored all of the code.
