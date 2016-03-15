@@ -130,28 +130,28 @@ typedef enum  {
  
 /// Flag attributes
 /// \note MUST REMAIN UNCHANGED: \b osFlagWaitForAll and \b osFlagAutoClear shall be consistent in every CMSIS-RTOS.
-#define osFlagWaitForAll  0x00000001U    ///< wait for all bits
-#define osFlagAutoClear   0x00000002U    ///< clear active bits which have been specified to wait for
+#define osFlagWaitForAll  0x00000001U    ///< Wait for all bits
+#define osFlagAutoClear   0x00000002U    ///< Clear active bits which have been specified to wait for
  
 /// Status code values returned by CMSIS-RTOS functions.
 /// \note MUST REMAIN UNCHANGED: \b osStatus shall be consistent in every CMSIS-RTOS.
 typedef enum  {
-  osOK                    =     0,       ///< function completed; no error or event occurred.
-  osEventFlag             =  0x04,       ///< function completed; flag event occurred.
-  osEventSignal           =  0x08,       ///< function completed; signal event occurred.
-  osEventMessage          =  0x10,       ///< function completed; message event occurred.
-  osEventMail             =  0x20,       ///< function completed; mail event occurred.
-  osEventTimeout          =  0x40,       ///< function completed; timeout occurred.
-  osErrorParameter        =  0x80,       ///< parameter error: a mandatory parameter was missing or specified an incorrect object.
-  osErrorResource         =  0x81,       ///< resource not available: a specified resource was not available.
-  osErrorTimeoutResource  =  0xC1,       ///< resource not available within given time: a specified resource was not available within the timeout period.
-  osErrorISR              =  0x82,       ///< not allowed in ISR context: the function cannot be called from interrupt service routines.
-  osErrorISRRecursive     =  0x83,       ///< function called multiple times from ISR with same object.
-  osErrorPriority         =  0x84,       ///< system cannot determine priority or thread has illegal priority.
-  osErrorNoMemory         =  0x85,       ///< system is out of memory: it was impossible to allocate or reserve memory for the operation.
-  osErrorValue            =  0x86,       ///< value of a parameter is out of range.
-  osErrorOS               =  0xFF,       ///< unspecified RTOS error: run-time error but no other error message fits.
-  os_status_reserved      =  0x7FFFFFFF  ///< prevent from enum down-size compiler optimization.
+  osOK                    =     0,       ///< Function completed; no error or event occurred.
+  osEventFlag             =  0x04,       ///< Function completed; flag event occurred.
+  osEventSignal           =  0x08,       ///< Function completed; signal event occurred.
+  osEventMessage          =  0x10,       ///< Function completed; message event occurred.
+  osEventMail             =  0x20,       ///< Function completed; mail event occurred.
+  osEventTimeout          =  0x40,       ///< Function completed; timeout occurred.
+  osErrorParameter        =  0x80,       ///< Parameter error: a mandatory parameter was missing or specified an incorrect object.
+  osErrorResource         =  0x81,       ///< Resource not available: a specified resource was not available.
+  osErrorTimeoutResource  =  0xC1,       ///< Resource not available within given time: a specified resource was not available within the timeout period.
+  osErrorISR              =  0x82,       ///< Not allowed in ISR context: the function cannot be called from interrupt service routines.
+  osErrorISRRecursive     =  0x83,       ///< Function called multiple times from ISR with same object.
+  osErrorPriority         =  0x84,       ///< System cannot determine priority or thread has illegal priority.
+  osErrorNoMemory         =  0x85,       ///< System is out of memory: it was impossible to allocate or reserve memory for the operation.
+  osErrorValue            =  0x86,       ///< Value of a parameter is out of range.
+  osErrorOS               =  0xFF,       ///< Unspecified RTOS error: run-time error but no other error message fits.
+  os_status_reserved      =  0x7FFFFFFF  ///< Prevent from enum down-size compiler optimization.
 } osStatus;
  
  
@@ -180,8 +180,8 @@ typedef enum {
 /// Timer type value for the timer definition.
 /// \note MUST REMAIN UNCHANGED: \b os_timer_type shall be consistent in every CMSIS-RTOS.
 typedef enum  {
-  osTimerOnce             =     0,       ///< one-shot timer
-  osTimerPeriodic         =     1        ///< repeating timer
+  osTimerOnce             =     0,       ///< One-shot timer
+  osTimerPeriodic         =     1        ///< Repeating timer
 } os_timer_type;
  
 /// Entry point of a thread.
@@ -194,35 +194,35 @@ typedef void (*os_ptimer) (void const *argument);
  
 // >>> the following data type definitions may shall adapted towards a specific RTOS
  
-/// Thread ID identifies the thread (pointer to a thread control block).
+/// \details Thread ID identifies the thread (pointer to a thread control block).
 /// \note CAN BE CHANGED: \b os_thread_cb is implementation specific in every CMSIS-RTOS.
 typedef struct os_thread_cb *osThreadId;
  
-/// Timer ID identifies the timer (pointer to a timer control block).
+/// \details Timer ID identifies the timer (pointer to a timer control block).
 /// \note CAN BE CHANGED: \b os_timer_cb is implementation specific in every CMSIS-RTOS.
 typedef struct os_timer_cb *osTimerId;
  
-/// Flag ID identifies the flag (pointer to a flag control block).
+/// \details Flag ID identifies the flag (pointer to a flag control block).
 /// \note CAN BE CHANGED: \b os_flag_cb is implementation specific in every CMSIS-RTOS.
 typedef struct os_flag_cb *osFlagId;
  
-/// Mutex ID identifies the mutex (pointer to a mutex control block).
+/// \details Mutex ID identifies the mutex (pointer to a mutex control block).
 /// \note CAN BE CHANGED: \b os_mutex_cb is implementation specific in every CMSIS-RTOS.
 typedef struct os_mutex_cb *osMutexId;
  
-/// Semaphore ID identifies the semaphore (pointer to a semaphore control block).
+/// \details Semaphore ID identifies the semaphore (pointer to a semaphore control block).
 /// \note CAN BE CHANGED: \b os_semaphore_cb is implementation specific in every CMSIS-RTOS.
 typedef struct os_semaphore_cb *osSemaphoreId;
  
-/// Pool ID identifies the memory pool (pointer to a memory pool control block).
+/// \details Pool ID identifies the memory pool (pointer to a memory pool control block).
 /// \note CAN BE CHANGED: \b os_pool_cb is implementation specific in every CMSIS-RTOS.
 typedef struct os_pool_cb *osPoolId;
  
-/// Message ID identifies the message queue (pointer to a message queue control block).
+/// \details Message ID identifies the message queue (pointer to a message queue control block).
 /// \note CAN BE CHANGED: \b os_messageQ_cb is implementation specific in every CMSIS-RTOS.
 typedef struct os_messageQ_cb *osMessageQId;
  
-/// Mail ID identifies the mail queue (pointer to a mail queue control block).
+/// \details Mail ID identifies the mail queue (pointer to a mail queue control block).
 /// \note CAN BE CHANGED: \b os_mailQ_cb is implementation specific in every CMSIS-RTOS.
 typedef struct os_mailQ_cb *osMailQId;
  
