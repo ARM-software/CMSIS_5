@@ -91,6 +91,17 @@ In addition ARM provides the following core header files that do not need any mo
     </tr>
 </table>
 
+The \c core_<cpu>.h files contain a few common \c \#defines that are mapped to compiler specific constructs:
+
+|\#define               | Description                                     |
+|-----------------------|-------------------------------------------------|
+| \c __ASM              | Compiler keyword for asm                        |
+| \c __INLINE           | Compiler keyword for inline                     |
+| \c __STATIC_INLINE    | Compiler keyword for static inline              |
+| \c __NO_RETURN        | function that never returns                     |
+| \c __USED             | function or variable that is not optimized away |
+| \c __WEAK             | weak function or variable                       |
+| \c __UNALIGNED_UINT32 | pointer to unaligned uint32_t variable          |
 
 \section adapt_template_files_sec Adaption of Template Files to Devices
 
