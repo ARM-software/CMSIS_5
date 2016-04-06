@@ -2,7 +2,7 @@
  * @file     core_armv8mml.h
  * @brief    CMSIS ARMv8MML Core Peripheral Access Layer Header File
  * @version  V5.00
- * @date     02. March 2016
+ * @date     30. March 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -2275,77 +2275,6 @@ __STATIC_INLINE uint32_t SCB_GetFPUType(void)
  */
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-/*
-    max 128 SAU regions.
-    SAU regions are defined in partition.h
- */
-
-#define SAU_INIT_REGION(n) \
-    SAU->RNR  =  (n                                     & SAU_RNR_REGION_Msk); \
-    SAU->RBAR =  (SAU_INIT_START##n                     & SAU_RBAR_BADDR_Msk); \
-    SAU->RLAR =  (SAU_INIT_END##n                       & SAU_RLAR_LADDR_Msk) | \
-                ((SAU_INIT_NSC##n << SAU_RLAR_NSC_Pos)  & SAU_RLAR_NSC_Msk)   | 1U
-
-/**
-  \brief   Setup a SAU Region
-  \details Writes the region information contained in SAU_Region to the
-           registers SAU_RNR, SAU_RBAR, and SAU_RLAR
- */
-__STATIC_INLINE void TZ_SAU_Setup (void)
-{
-
-#if defined (__SAU_PRESENT) && (__SAU_PRESENT == 1U)
-
-  #if defined (SAU_INIT_REGION0) && (SAU_INIT_REGION0 == 1U)
-    SAU_INIT_REGION(0);
-  #endif
-
-  #if defined (SAU_INIT_REGION1) && (SAU_INIT_REGION1 == 1U)
-    SAU_INIT_REGION(1);
-  #endif
-
-  #if defined (SAU_INIT_REGION2) && (SAU_INIT_REGION2 == 1U)
-    SAU_INIT_REGION(2);
-  #endif
-
-  #if defined (SAU_INIT_REGION3) && (SAU_INIT_REGION3 == 1U)
-    SAU_INIT_REGION(3);
-  #endif
-
-  /* repeat this for all possible SAU regions */
-
-
-  #if defined (SAU_INIT_CTRL) && (SAU_INIT_CTRL == 1U)
-    SAU->CTRL = ((SAU_INIT_CTRL_ENABLE << SAU_CTRL_ENABLE_Pos) & SAU_CTRL_ENABLE_Msk) |
-                ((SAU_INIT_CTRL_ALLNS  << SAU_CTRL_ALLNS_Pos)  & SAU_CTRL_ALLNS_Msk)   ;
-  #endif
-
-#endif /* defined (__SAU_PRESENT) && (__SAU_PRESENT == 1U) */
-
-  #if defined (CSR_INIT_DEEPSLEEPS)
-    SCB->SCR   = (SCB->SCR   & ~(SCB_SCR_SLEEPDEEPS_Msk)                                                  )   |
-                   ((CSR_INIT_DEEPSLEEPS     << SCB_SCR_SLEEPDEEPS_Pos)     & SCB_SCR_SLEEPDEEPS_Msk);
-  #endif
-
-  #if defined (AIRCR_INIT_SYSRESETREQS) && defined (AIRCR_INIT_PRIS) && defined (AIRCR_INIT_BFHFNMINS)
-    SCB->AIRCR = (SCB->AIRCR & ~(SCB_AIRCR_SYSRESETREQS_Msk | SCB_AIRCR_BFHFNMINS_Pos |  SCB_AIRCR_PRIS_Msk)) |
-                   ((AIRCR_INIT_SYSRESETREQS << SCB_AIRCR_SYSRESETREQS_Pos) & SCB_AIRCR_SYSRESETREQS_Msk) |
-                   ((AIRCR_INIT_PRIS         << SCB_AIRCR_BFHFNMINS_Pos)    & SCB_AIRCR_BFHFNMINS_Msk)    |
-                   ((AIRCR_INIT_BFHFNMINS    << SCB_AIRCR_PRIS_Pos)         & SCB_AIRCR_PRIS_Msk);
-  #endif
-
-  #if defined (NVIC_INIT_ITNS0)
-    NVIC->ITNS[0] = NVIC_INIT_ITNS0;
-  #endif
-
-  #if defined (NVIC_INIT_ITNS1)
-    NVIC->ITNS[1] = NVIC_INIT_ITNS1;
-  #endif
-
-  /* repeat this for all possible ITNS elements */
-
-}
-
 
 /**
   \brief   Enable SAU
@@ -2354,7 +2283,7 @@ __STATIC_INLINE void TZ_SAU_Setup (void)
 __STATIC_INLINE void TZ_SAU_Enable(void)
 {
 #if defined (__SAU_PRESENT) && (__SAU_PRESENT == 1U)
-    SAU->CTRL |= (SAU_CTRL_ENABLE_Msk);
+    SAU->CTRL |=  (SAU_CTRL_ENABLE_Msk);
 #endif
 }
 
@@ -2367,7 +2296,7 @@ __STATIC_INLINE void TZ_SAU_Enable(void)
 __STATIC_INLINE void TZ_SAU_Disable(void)
 {
 #if defined (__SAU_PRESENT) && (__SAU_PRESENT == 1U)
-    SAU->CTRL |= (SAU_CTRL_ENABLE_Msk);
+    SAU->CTRL &= ~(SAU_CTRL_ENABLE_Msk);
 #endif
 }
 
