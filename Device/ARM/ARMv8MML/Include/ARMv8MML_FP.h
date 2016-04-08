@@ -3,7 +3,7 @@
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMv8MML Device Series (configured for CM4 with FPU)
  * @version  V5.00
- * @date     02. March 2016
+ * @date     08. March 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -105,9 +105,10 @@ typedef enum IRQn
 #define __ARMv8MML_REV            0x0001U   /* Core revision r0p1 */
 #define __SAU_PRESENT             1         /* SAU present or not */
 #define __MPU_PRESENT             1         /* MPU present or not */
+#define __VTOR_PRESENT            1         /* VTOR present */
 #define __NVIC_PRIO_BITS          3         /* Number of Bits used for Priority Levels */
 #define __Vendor_SysTickConfig    0         /* Set to 1 if different SysTick Config is used */
-#define __FPU_PRESENT             1         /*!< FPU present */
+#define __FPU_PRESENT             1         /* FPU present */
 
 #include "core_armv8mml.h"                  /* Processor and core peripherals */
 #include "system_ARMv8MML.h"                /* System Header */
