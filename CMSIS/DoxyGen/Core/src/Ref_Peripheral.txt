@@ -182,7 +182,9 @@ Bit field definitions for register CPUID in SCB (System Control Block).
 
 The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enable access to bit fields.
 @{
+*/
 
+/**
 \def _VAL2FLD(field, value)
 \param         field        name of bit field.
 \param         value        value for the bit field. This parameter is interpreted as an uint32_t type.
