@@ -18,7 +18,7 @@ var arr = [];
  arr.push( new tabElement( "DRV",    "/Driver/html/",      "Driver")    );
  arr.push( new tabElement( "DSP",    "/DSP/html/",         "DSP")       );
  arr.push( new tabElement( "RTOS",   "/RTOS/html/",        "RTOS API")  );
- arr.push( new tabElement( "RTX",    "/RTX/html/",         "RTX")       );
+// arr.push( new tabElement( "RTX",    "/RTX/html/",         "RTX")       );
  arr.push( new tabElement( "PACK",   "/Pack/html/",        "Pack")      );
  arr.push( new tabElement( "SVD",    "/SVD/html/",         "SVD")       );
  arr.push( new tabElement( "DAP",    "/DAP/html/",         "DAP")       );

@@ -4,7 +4,7 @@ REM ============================================================================
 REM Batch file for generating
 REM
 REM Author  : 
-REM Date    :  17th February 2016
+REM Date    :  7th April 2016
 REM Version : 1.0
 REM Company : ARM 
 REM
@@ -20,27 +20,10 @@ REM -- Delete previous generated HTML files ---------------------
   ECHO.
   ECHO Delete previous generated HTML files
 
-IF EXIST ..\Documentation\Core\html (
-  rmdir /S /Q ..\Documentation\Core\html
-)
-IF EXIST ..\Documentation\Driver\html (
-  rmdir /S /Q ..\Documentation\Driver\html
-)
-IF EXIST ..\Documentation\General\html (
-  rmdir /S /Q ..\Documentation\General\html
-)
-IF EXIST ..\Documentation\Pack\html (
-  rmdir /S /Q ..\Documentation\Pack\html
-)
-IF EXIST ..\Documentation\SVD\html (
-  rmdir /S /Q ..\Documentation\SVD\html
-)
-IF EXIST ..\Documentation\DSP\html (
-  rmdir /S /Q ..\Documentation\DSP\html
-)
-IF EXIST ..\Documentation\DAP\html (
-  rmdir /S /Q ..\Documentation\DAP\html
-)
+REM -- Remove generated doxygen files ---------------------
+PUSHD ..\Documentation
+FOR %%A IN (Core, DAP, Driver, DSP, General, Pack, RTOS, RTX, SVD) DO IF EXIST %%A (RMDIR /S /Q %%A)
+POPD
 
 REM -- Generate New HTML Files ---------------------
   ECHO.
@@ -50,8 +33,16 @@ pushd Core
 CALL doxygen_core.bat
 popd
 
+pushd DAP
+CALL doxygen_dap.bat
+popd
+
 pushd Driver
 CALL doxygen_driver.bat
+popd
+
+pushd DSP
+CALL doxygen_dsp.bat
 popd
 
 pushd General
@@ -62,20 +53,17 @@ pushd Pack
 CALL doxygen_pack.bat
 popd
 
+pushd RTOS
+CALL doxygen_rtos.bat
+popd
+
 pushd SVD
 CALL doxygen_svd.bat
 popd
 
-pushd DSP
-CALL doxygen_dsp.bat
-popd
-
-pushd DAP
-CALL doxygen_dap.bat
-popd
-
 REM -- Copy search style sheet ---------------------
-ECHO Copy search style sheets
+  ECHO.
+  ECHO Copy search style sheets
 copy /Y Doxygen_Templates\search.css ..\Documentation\CORE\html\search\. 
 copy /Y Doxygen_Templates\search.css ..\Documentation\Driver\html\search\.
 REM copy /Y Doxygen_Templates\search.css ..\Documentation\General\html\search\. 
