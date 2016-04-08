@@ -680,6 +680,7 @@ INPUT                  = src/Overview.txt \
                          src/UsingTrustZone.txt \
                          src/Template.txt \
                          src/MISRA.txt \
+                         src/Ref_CompilerControl.txt \
                          src/Ref_Peripheral.txt \
                          src/Ref_SystemAndClock.txt \
                          src/Ref_NVIC.txt \
