@@ -57,6 +57,10 @@ pushd RTOS
 CALL doxygen_rtos.bat
 popd
 
+pushd RTOS2
+CALL doxygen_rtos.bat
+popd
+
 pushd SVD
 CALL doxygen_svd.bat
 popd
