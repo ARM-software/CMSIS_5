@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------  
-* Copyright (C) 2013 ARM Limited. All rights reserved.  
+* Copyright (C) 2016 ARM Limited. All rights reserved.  
 *  
-* $Date:        15. March 2013
+* $Date:        14. April 2016
 * $Revision:    1.02
 *  
 * Project:      CMSIS-RTOS API
@@ -15,69 +15,38 @@
 *    Rework as described in Hist.txt
 * Version 1.02
 *    Rework as described in Hist.txt
+* Version 1.03
+*    Documentation rework for CMSIS 5
 * -------------------------------------------------------------------- */ 
 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\mainpage Overview
+\mainpage
 
-The CMSIS-RTOS API is a generic RTOS interface for ARM&reg; Cortex&reg;-M processor-based devices. CMSIS-RTOS provides a
-standardized API for software components that require RTOS functionality and gives therefore serious benefits to the users
-and the software industry.
- - CMSIS-RTOS provides basic features that are required in many applications or technologies such as UML or Java (JVM).
- - The unified feature set of the CMSIS-RTOS API simplifies sharing of software components and reduces learning efforts.
- - Middleware components that use the CMSIS-RTOS API are RTOS agnostic. CMSIS-RTOS compliant middleware is easier to adapt.
- - Standard project templates (such as motor control) of the CMSIS-RTOS API may be shipped with freely available CMSIS-RTOS
-   implementations.
+This manual describes the \b CMSIS-RTOS \b API \b Version \b 1 and the reference implementation
+\ref RTXImplmentation "CMSIS-RTOS RTX" which is designed for Cortex-M processor-based devices. The RTOS kernel can be used
+for creating applications that perform multiple tasks simultaneously. These tasks are executed by threads that operate in a
+quasi-parallel fashion.
 
+While it is certainly possible to create real-time applications without an RTOS (by executing one or more tasks in a loop),
+there are numerous scheduling, maintenance, and timing issues that can be solved better with an RTOS. For example, an RTOS
+enables flexible scheduling of system resources like CPU and memory, and offers methods to communicate between threads.
 
-\note The CMSIS-RTOS API defines a minimum feature set. Implementations with extended features may be provided by RTOS
-      vendors.
+CMSIS-RTOS API programs are written using standard C/C++ constructs and are compiled with the ARMCC, GCC, or IAR Compiler.
+The \ref cmsis_os_h "cmsis_os.h header file" defines functions and macros that allow declaring tasks and accessing all RTOS
+features easily.
 
-\image html "API_Structure.png" "CMSIS-RTOS API Structure"
+This manual contains the following sections:
+ - \subpage rtos_revisionHistory : Documents changes made in each version for CMSIS-RTOS API and RTX.
+ - \subpage GenRTOSIF : Provides an overview about the CMSIS-RTOS API.
+ - \subpage UsingOS : Provides generic instructions for using a CMSIS-RTOS API compliant implementation. 
+ - \subpage FunctionOverview : Lists the CMSIS-RTOS API functions including RTX-specific extensions.
+ - \subpage RtosValidation : Describes the Software Pack that can be used to validate a CMSIS-RTOS implementation.
+ - \subpage RTXImplmentation : Documents the open-source implementation CMSIS-RTOS RTX.
 
-A typical CMSIS-RTOS API implementation interfaces to an existing real-time Kernel. The CMSIS-RTOS API provides the following
-attributes and functionalities:
- - Function names, identifiers, and parameters are descriptive and easy to understand. The functions are powerful and
-   flexible which reduces the number of functions exposed to the user. 
- - \ref CMSIS_RTOS_ThreadMgmt allows you to define, create, and control threads.
- - Interrupt Service Routines (ISR) can \ref CMSIS_RTOS_ISR_Calls "call some CMSIS-RTOS functions". When a CMSIS-RTOS function cannot be
-   called from ISR context, it rejects the invocation.
- - Three different thread event types support communication between multiple threads and/or ISR:
-   - \b Signal: is a flag that may be used to indicate specific conditions to a thread. Signals can be modified in an ISR or
-     set from other threads. 
-   - \b Message: is a 32-bit value that can be sent to a thread or an ISR. Messages are buffered in a queue. The message type
-     and queue size is defined in a descriptor.
-   - \b Mail: is a fixed-size memory block that can be sent to a thread or an ISR. Mails are buffered in a queue and memory
-     allocation is provided. The mail type and queue size is defined in a descriptor.
- - \ref CMSIS_RTOS_MutexMgmt and \ref CMSIS_RTOS_SemaphoreMgmt are incorporated.
- - CPU time can be schedule with the following functionalities:
-   - A \a timeout parameter is incorporated in many CMSIS-RTOS functions to avoid system lockup. When a timeout is specified,
-     the system waits until a resource is available or an event occurs. While waiting, other threads are scheduled.
-   - The \ref osDelay function puts a thread into the state \b WAITING for a specified period of time.
-   - The generic \ref osWait function waits for events that are assigned to a thread.
-   - The \ref osThreadYield provides co-operative thread switching and passes execution to another thread of the same
-     priority.
-
-The CMSIS-RTOS API is designed to optionally incorporate multi-processor systems and/or access protection via the Cortex-M
-Memory Protection Unit (MPU).
-
-In some RTOS implementations threads may execute on different processors and \b Mail and \b Message queues can therefore
-reside in shared memory resources.
-
-The CMSIS-RTOS API encourages the software industry to evolve existing RTOS implementations. Kernel objects are defined and
-accessed using macros. This allows differentiation. RTOS implementations can be different and optimized in various aspects
-towards the Cortex-M processors. Optional features may be for example
- - Generic \b wait function; i.e. with support of time intervals.
- - Support of the Cortex-M Memory Protection Unit (MPU).
- - Zero-copy mail queue.
- - Support of multi-processor systems.
- - Support of a DMA controller.
- - Deterministic context switching.
- - Round-robin context switching.
- - Deadlock avoidance, for example with priority inversion.
- - Zero interrupt latency by using the Cortex-M3/M4 instructions LDEX and STEX.
+\note An updated version of the API can be found in the
+<a class="el" href="../../RTOS2/html/index.html">CMSIS-RTOS API Version 2</a> documentation.
 
 <hr>
 
@@ -85,22 +54,30 @@ CMSIS-RTOS in ARM::CMSIS Pack
 -----------------------------
 
 The following files relevant to CMSIS-RTOS are present in the <b>ARM::CMSIS</b> Pack directories:
-|File/Folder                   |Content                                                                 |
-|------------------------------|------------------------------------------------------------------------|
-|\b CMSIS\\Documentation\\RTOS | This documentation                                                     |
-|\b CMSIS\\RTOS\\Template      | \ref cmsis_os_h                                                        |
-
-<hr>
+|File/Folder                  | Content                                                                |
+|-----------------------------|------------------------------------------------------------------------|
+|\b CMSIS/Documentation/RTOS  | This documentation                                                     |
+|\b CMSIS/Documentation/RTOS2 | CMSIS-RTOS API Version 2 documentation                                 |
+|\b CMSIS/RTOS/Template       | \ref cmsis_os_h                                                        |
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page rtos_revisionHistory Revision History
 
+
+\section GenRTOSRev CMSIS-RTOS API
+
 <table class="cmtable" summary="Revision History">
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>V1.03 - only documentation changes</td>
+      <td>
+      Incorporated documentation for reference implementation CMSIS-RTOS RTX.
+     </td>
     </tr>
     <tr>
       <td>V1.02 - only documentation changes</td>
@@ -136,6 +113,123 @@ The following files relevant to CMSIS-RTOS are present in the <b>ARM::CMSIS</b> 
     <tr>
       <td>V0.02</td>
       <td>Preview Release.</td>
+    </tr>
+</table>
+
+
+\section RTXRevisionHistory CMSIS-RTOS RTX
+
+<table class="cmtable" summary="Revision History">
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>V4.81</td>
+      <td>
+       Added provisions for ARM Compiler 6.\n
+       Corrected: Message Queue behavior when osMessagePut timed out due to full queue and osMessageGet was called from ISR.\n
+      </td>
+    </tr>
+    <tr>
+      <td>V4.80</td>
+      <td>
+       Restored time delay parameter 'millisec' old behavior (before V4.79) for software compatibility.\n
+       Corrected: implicit mutex release when mutex owner thread is terminated.\n
+      </td>
+    </tr>
+    <tr>
+      <td>V4.79</td>
+      <td>
+       Corrected: time delay parameter ‘millisec’ in all functions (osDelay, osSignalWait, …) is now treated as lower bound – wait for at least time given (before it could have been up to 1ms less).\n
+       Corrected: Lazy Context switching for Cortex-M4 with FPU could lead to a crash when thread which used FPU was terminated.\n
+       Corrected: osMailCAlloc only cleared the allocated memory block if it was available without waiting.\n
+       Corrected: osThreadCreate function returns NULL when trying to create more concurrent threads than defined in the configuration.\n
+       Improved source code MISRA compliance.\n
+      </td>
+    </tr>
+    <tr>
+      <td>V4.78</td>
+      <td>       
+       Corrected: osTimerStart function accepts full 32-bit range for time delay value in milisec.\n
+       Added: User Timer Callback Queue overflow reported through os_error(OS_ERROR_TIMER_OVF).\n
+      </td>
+    </tr>
+    <tr>
+      <td>V4.77</td>
+      <td>       
+       Added: Stack usage watermark.\n
+      </td>
+    </tr>
+    <tr>
+      <td>V4.76</td>
+      <td>       
+       Optimized Service calls in GCC libraries.\n
+       Corrected: Stack/Heap regions can be used with scatter loading.\n
+      </td>
+    </tr>
+    <tr>
+      <td>V4.75</td>
+      <td>       
+       Corrected: Service calls for Cortex-M4 with Floating Point for GCC.\n
+       Corrected: \ref osSignalClear returns 0x80000000 when called from interrupt service routines.\n
+       Corrected: C standard library memory functions (malloc, free, ...) can be called between calls to \ref osKernelInitialize and \ref osKernelStart.\n
+       Corrected: Interrupt Priority Group can be configured between calls to \ref osKernelInitialize and \ref osKernelStart.\n
+      </td>
+    </tr>
+    <tr>
+      <td>V4.74</td>
+      <td>       
+       Corrected: \ref osKernelInitialize and \ref osKernelStart when called from main which is already a thread.\n
+      </td>
+    </tr>
+    <tr>
+      <td>V4.73</td>
+      <td>       
+       Corrected: mutex priority inversion when thread owns more than one mutex.\n
+       Added: RTX extensions os_suspend and os_resume.\n
+       Added: RTX os_error template.
+      </td>
+    </tr>
+    <tr>
+      <td>V4.72</td>
+      <td>Corrected: object initialization when defined inside function (allocated on stack and not as static memory).</td>
+    </tr>
+    <tr>
+      <td>V4.71</td>
+      <td>Corrected: osMailFree behaviour when osMailAlloc timed out.</td>
+    </tr>
+    <tr>
+      <td>V4.70</td>
+      <td>Added: New control functions for short timeouts in microsecond resolution \ref osKernelSysTick, \ref osKernelSysTickFrequency, \ref osKernelSysTickMicroSec.\n
+      Removed: osSignalGet.
+      </td>
+    </tr>
+    <tr>
+      <td>V4.61</td>
+      <td>Enhanced: \ref osTimerCreate can now be called after \ref osKernelInitialize (before only after \ref osKernelStart).\n
+       Corrected: Initialization of alternative kernel timer for Cortex-M0/M0+/M1 (when SysTick timer is not used).\n
+       Corrected: Message/Mail Queue behavior when timeout expires.
+      </td>
+    </tr>
+    <tr>
+      <td>V4.51</td>
+      <td>Corrected: problem with \ref osKernelInitialize when after the call high priority threads are defined.</td>
+    </tr>
+    <tr>
+      <td>V4.50</td>
+      <td>Based on CMSIS-RTOS API Version 1.01 and the classic RTX V4.50 Kernel.\n
+          Added: \ref osTimerDelete, \ref osMutexDelete, \ref osSemaphoreDelete.\n
+          Added: \ref osKernelInitialize that prepares the Kernel for object creation.\n
+          Added: support for Low Power Cortex-M applications based on new configuration functions: \b os_suspend, \b os_resume.\n
+          Added: support for peripheral timer to be used as OS tick timer instead of Core SysTick timer.\n
+          Corrected: stack checking did not work for os_tsk_delete_self function Preview Release.
+      </td>
+    </tr>
+    <tr>
+      <td>V4.20</td>
+      <td>Initial CMSIS-RTOS adaption of the RTX Kernel.
+      </td>
     </tr>
 </table>
 */
@@ -198,112 +292,8 @@ int main (void) {                                // program execution starts her
   osKernelStart ();                              // start kernel with job2 execution
 }
 \endcode
-*/
 
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page FunctionOverview Function Overview
-
-The following list provides a brief overview of all CMSIS-RTOS functions.  Functions marked with $ are optional.
-A specific CMSIS-RTOS implementation may not provide all functions, but this is clearly indicated with \b osFeatureXXXX
-defines.
-
- - \ref CMSIS_RTOS_KernelCtrl
-   - \ref osKernelInitialize : Initialize the RTOS kernel.
-   - \ref osKernelStart : Start the RTOS kernel.
-   - \ref osKernelRunning : Query if the RTOS kernel is running.
-   - \ref osKernelSysTick : Get RTOS kernel system timer counter.
-   - \ref osKernelSysTickFrequency : RTOS kernel system timer frequency in Hz.
-   - \ref osKernelSysTickMicroSec : Convert microseconds value to RTOS kernel system timer value.
-
- - \ref CMSIS_RTOS_ThreadMgmt
-   - \ref osThreadCreate : Start execution of a thread function.
-   - \ref osThreadTerminate : Stop execution of a thread function.
-   - \ref osThreadYield : Pass execution to next ready thread function.
-   - \ref osThreadGetId : Get the thread identifier to reference this thread.
-   - \ref osThreadSetPriority : Change the execution priority of a thread function.
-   - \ref osThreadGetPriority : Obtain the current execution priority of a thread function.
-
- - \ref CMSIS_RTOS_Wait
-   - \ref osDelay : Wait for a specified time.
-   - \ref osWait : Wait for any event of the type Signal, Message, or Mail.
-
- - \ref CMSIS_RTOS_TimerMgmt 
-   - \ref osTimerCreate : Define attributes of the timer callback function.
-   - \ref osTimerStart : Start or restart the timer with a time value.
-   - \ref osTimerStop : Stop the timer.
-   - \ref osTimerDelete : Delete a timer.
-
- - \ref CMSIS_RTOS_SignalMgmt
-   - \ref osSignalSet : Set signal flags of a thread.
-   - \ref osSignalClear : Reset signal flags of a thread.
-   - \ref osSignalWait : Suspend execution until specific signal flags are set.
-
- - \ref CMSIS_RTOS_MutexMgmt
-   - \ref osMutexCreate : Define and initialize a mutex.
-   - \ref osMutexWait : Obtain a mutex or Wait until it becomes available.
-   - \ref osMutexRelease : Release a mutex.
-   - \ref osMutexDelete : Delete a mutex.
-
- - \ref CMSIS_RTOS_SemaphoreMgmt
-   - \ref osSemaphoreCreate : Define and initialize a semaphore.
-   - \ref osSemaphoreWait : Obtain a semaphore token or Wait until it becomes available.
-   - \ref osSemaphoreRelease : Release a semaphore token.
-   - \ref osSemaphoreDelete : Delete a semaphore.
-
- - \ref CMSIS_RTOS_PoolMgmt
-   - \ref osPoolCreate : Define and initialize a fix-size memory pool. 
-   - \ref osPoolAlloc : Allocate a memory block.
-   - \ref osPoolCAlloc : Allocate a memory block and zero-set this block.
-   - \ref osPoolFree : Return a memory block to the memory pool.
-
- - \ref CMSIS_RTOS_Message
-   - \ref osMessageCreate : Define and initialize a message queue.
-   - \ref osMessagePut : Put a message into a message queue.
-   - \ref osMessageGet : Get a message or suspend thread execution until message arrives.
-
- - \ref CMSIS_RTOS_Mail
-   - \ref osMailCreate : Define and initialize a mail queue with fix-size memory blocks.
-   - \ref osMailAlloc : Allocate a memory block.
-   - \ref osMailCAlloc : Allocate a memory block and zero-set this block.
-   - \ref osMailPut : Put a memory block into a mail queue.
-   - \ref osMailGet : Get a mail or suspend thread execution until mail arrives.
-   - \ref osMailFree : Return a memory block to the mail queue.
-
-\section CMSIS_RTOS_TimeOutValue Timout Value   
-
-The timeout value specifies the number of timer ticks until a timeout or time delay elapses. The value is an upper bound and 
-depends on the actual time elapsed since the last timer tick. 
-
-For a value of \b 1 the system waits until the next timer tick occurs. That means that the actual timeout value can be one timer tick 
-less than the specified timeout value. 
-
-\image html TimerValues.png "Timer Values"
-
-\section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
-
-The following CMSIS-RTOS functions can be called from threads and Interrupt Service Routines (ISR):
-  - \ref osKernelRunning
-  - \ref osSignalSet
-  - \ref osSemaphoreRelease
-  - \ref osPoolAlloc, \ref osPoolCAlloc, \ref osPoolFree
-  - \ref osMessagePut, \ref osMessageGet
-  - \ref osMailAlloc, \ref osMailCAlloc, \ref osMailGet, \ref osMailPut, \ref osMailFree
-
-Functions that cannot be called from an ISR are verifying the interrupt status and return, in case they are called
-from an ISR context, the status code \b osErrorISR. In some implementations, this condition might be caught using the HARD
-FAULT vector.
-
-Some CMSIS-RTOS implementations support CMSIS-RTOS function calls from multiple ISRs at the same time.
-If this is impossible, the CMSIS-RTOS rejects calls by nested ISR functions with the status code \b osErrorISRRecursive.
-   
-*/
-
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page cmsis_os_h Header File Template: cmsis_os.h
+\section cmsis_os_h Header File Template: cmsis_os.h
 
 The file \b cmsis_os.h is a template header file for a CMSIS-RTOS compliant Real-Time Operating System (RTOS).
 Each RTOS that is compliant with CMSIS-RTOS shall provide a specific \b cmsis_os.h header file that represents
@@ -366,6 +356,182 @@ used throughout the whole project.
 \include Template/cmsis_os.h
 */
 
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page FunctionOverview Function Overview
+
+The following list provides a brief overview of all CMSIS-RTOS functions.  Functions marked with $ are optional.
+A specific CMSIS-RTOS implementation may not provide all functions, but this is clearly indicated with \b osFeatureXXXX
+defines.
+
+\note Functions that are not supported by the \ref RTXImplmentation, are marked with a (*).
+
+ - \ref CMSIS_RTOS_KernelCtrl
+   - \ref osKernelInitialize : Initialize the RTOS kernel.
+   - \ref osKernelStart : Start the RTOS kernel.
+   - \ref osKernelRunning : Query if the RTOS kernel is running.
+   - \ref osKernelSysTick : Get RTOS kernel system timer counter.
+   - \ref osKernelSysTickFrequency : RTOS kernel system timer frequency in Hz.(*)
+   - \ref osKernelSysTickMicroSec : Convert microseconds value to RTOS kernel system timer value.(*)
+
+ - \ref CMSIS_RTOS_ThreadMgmt
+   - \ref osThreadCreate : Start execution of a thread function.
+   - \ref osThreadTerminate : Stop execution of a thread function.
+   - \ref osThreadYield : Pass execution to next ready thread function.
+   - \ref osThreadGetId : Get the thread identifier to reference this thread.
+   - \ref osThreadSetPriority : Change the execution priority of a thread function.
+   - \ref osThreadGetPriority : Obtain the current execution priority of a thread function.
+
+ - \ref CMSIS_RTOS_Wait
+   - \ref osDelay : Wait for a specified time.
+   - \ref osWait : Wait for any event of the type Signal, Message, or Mail.(*)
+
+ - \ref CMSIS_RTOS_TimerMgmt 
+   - \ref osTimerCreate : Define attributes of the timer callback function.
+   - \ref osTimerStart : Start or restart the timer with a time value.
+   - \ref osTimerStop : Stop the timer.
+   - \ref osTimerDelete : Delete a timer.
+
+ - \ref CMSIS_RTOS_SignalMgmt
+   - \ref osSignalSet : Set signal flags of a thread.
+   - \ref osSignalClear : Reset signal flags of a thread.
+   - \ref osSignalWait : Suspend execution until specific signal flags are set.
+
+ - \ref CMSIS_RTOS_MutexMgmt
+   - \ref osMutexCreate : Define and initialize a mutex.
+   - \ref osMutexWait : Obtain a mutex or Wait until it becomes available.
+   - \ref osMutexRelease : Release a mutex.
+   - \ref osMutexDelete : Delete a mutex.
+
+ - \ref CMSIS_RTOS_SemaphoreMgmt
+   - \ref osSemaphoreCreate : Define and initialize a semaphore.
+   - \ref osSemaphoreWait : Obtain a semaphore token or Wait until it becomes available.
+   - \ref osSemaphoreRelease : Release a semaphore token.
+   - \ref osSemaphoreDelete : Delete a semaphore.
+
+ - \ref CMSIS_RTOS_PoolMgmt
+   - \ref osPoolCreate : Define and initialize a fix-size memory pool. 
+   - \ref osPoolAlloc : Allocate a memory block.
+   - \ref osPoolCAlloc : Allocate a memory block and zero-set this block.
+   - \ref osPoolFree : Return a memory block to the memory pool.
+
+ - \ref CMSIS_RTOS_Message
+   - \ref osMessageCreate : Define and initialize a message queue.
+   - \ref osMessagePut : Put a message into a message queue.
+   - \ref osMessageGet : Get a message or suspend thread execution until message arrives.
+
+ - \ref CMSIS_RTOS_Mail
+   - \ref osMailCreate : Define and initialize a mail queue with fix-size memory blocks.
+   - \ref osMailAlloc : Allocate a memory block.
+   - \ref osMailCAlloc : Allocate a memory block and zero-set this block.
+   - \ref osMailPut : Put a memory block into a mail queue.
+   - \ref osMailGet : Get a mail or suspend thread execution until mail arrives.
+   - \ref osMailFree : Return a memory block to the mail queue.
+
+ - \ref RTX_Global_Functions "RTX-specific Global Functions"
+   - \ref os_idle_demon : System thread running when no other thread is ready to run.
+   - \ref os_suspend : Suspend the RTX task scheduler.
+   - \ref os_resume : Resume the RTX task scheduler.
+   - \ref os_tick_init : Initialize an alternative hardware timer as RTX kernel timer.
+   - \ref os_tick_val : Get alternative hardware timer's current value.
+   - \ref os_tick_ovf : Get alternative hardware timer's  overflow flag.
+   - \ref os_tick_irqack : Acknowledge alternative hardware timer interrupt.
+   - \ref os_error : Called when a runtime error is detected.
+
+\section CMSIS_RTOS_TimeOutValue Timout Value   
+
+The timeout value specifies the number of timer ticks until a timeout or time delay elapses. The value is an upper bound and 
+depends on the actual time elapsed since the last timer tick. 
+
+For a value of \b 1 the system waits until the next timer tick occurs. That means that the actual timeout value can be one
+timer tick less than the specified timeout value. 
+
+\image html TimerValues.png "Timer Values"
+
+\section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
+
+The following CMSIS-RTOS functions can be called from threads and Interrupt Service Routines (ISR):
+  - \ref osKernelRunning
+  - \ref osSignalSet
+  - \ref osSemaphoreRelease
+  - \ref osPoolAlloc, \ref osPoolCAlloc, \ref osPoolFree
+  - \ref osMessagePut, \ref osMessageGet
+  - \ref osMailAlloc, \ref osMailCAlloc, \ref osMailGet, \ref osMailPut, \ref osMailFree
+
+Functions that cannot be called from an ISR are verifying the interrupt status and return, in case they are called
+from an ISR context, the status code \b osErrorISR. In some implementations, this condition might be caught using the HARD
+FAULT vector.
+
+Some CMSIS-RTOS implementations support CMSIS-RTOS function calls from multiple ISRs at the same time.
+If this is impossible, the CMSIS-RTOS rejects calls by nested ISR functions with the status code \b osErrorISRRecursive.
+   
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page GenRTOSIF Generic RTOS Interface
+
+The CMSIS-RTOS API is a generic RTOS interface for ARM&reg; Cortex&reg;-M processor-based devices. CMSIS-RTOS provides a
+standardized API for software components that require RTOS functionality and gives therefore serious benefits to the users
+and the software industry.
+ - CMSIS-RTOS provides basic features that are required in many applications or technologies such as UML or Java (JVM).
+ - The unified feature set of the CMSIS-RTOS API simplifies sharing of software components and reduces learning efforts.
+ - Middleware components that use the CMSIS-RTOS API are RTOS agnostic. CMSIS-RTOS compliant middleware is easier to adapt.
+ - Standard project templates (such as motor control) of the CMSIS-RTOS API may be shipped with freely available CMSIS-RTOS
+   implementations.
+
+
+\note The CMSIS-RTOS API defines a minimum feature set. Implementations with extended features may be provided by RTOS
+      vendors.
+
+\image html "API_Structure.png" "CMSIS-RTOS API Structure"
+
+A typical CMSIS-RTOS API implementation interfaces to an existing real-time Kernel. The CMSIS-RTOS API provides the following
+attributes and functionalities:
+ - Function names, identifiers, and parameters are descriptive and easy to understand. The functions are powerful and
+   flexible which reduces the number of functions exposed to the user. 
+ - \ref CMSIS_RTOS_ThreadMgmt allows you to define, create, and control threads.
+ - Interrupt Service Routines (ISR) can \ref CMSIS_RTOS_ISR_Calls "call some CMSIS-RTOS functions". When a CMSIS-RTOS function cannot be
+   called from ISR context, it rejects the invocation.
+ - Three different thread event types support communication between multiple threads and/or ISR:
+   - \b Signal: is a flag that may be used to indicate specific conditions to a thread. Signals can be modified in an ISR or
+     set from other threads. 
+   - \b Message: is a 32-bit value that can be sent to a thread or an ISR. Messages are buffered in a queue. The message type
+     and queue size is defined in a descriptor.
+   - \b Mail: is a fixed-size memory block that can be sent to a thread or an ISR. Mails are buffered in a queue and memory
+     allocation is provided. The mail type and queue size is defined in a descriptor.
+ - \ref CMSIS_RTOS_MutexMgmt and \ref CMSIS_RTOS_SemaphoreMgmt are incorporated.
+ - CPU time can be schedule with the following functionalities:
+   - A \a timeout parameter is incorporated in many CMSIS-RTOS functions to avoid system lockup. When a timeout is specified,
+     the system waits until a resource is available or an event occurs. While waiting, other threads are scheduled.
+   - The \ref osDelay function puts a thread into the state \b WAITING for a specified period of time.
+   - The generic \ref osWait function waits for events that are assigned to a thread.
+   - The \ref osThreadYield provides co-operative thread switching and passes execution to another thread of the same
+     priority.
+
+The CMSIS-RTOS API is designed to optionally incorporate multi-processor systems and/or access protection via the Cortex-M
+Memory Protection Unit (MPU).
+
+In some RTOS implementations threads may execute on different processors and \b Mail and \b Message queues can therefore
+reside in shared memory resources.
+
+The CMSIS-RTOS API encourages the software industry to evolve existing RTOS implementations. Kernel objects are defined and
+accessed using macros. This allows differentiation. RTOS implementations can be different and optimized in various aspects
+towards the Cortex-M processors. Optional features may be for example
+ - Generic \b wait function; i.e. with support of time intervals.
+ - Support of the Cortex-M Memory Protection Unit (MPU).
+ - Zero-copy mail queue.
+ - Support of multi-processor systems.
+ - Support of a DMA controller.
+ - Deterministic context switching.
+ - Round-robin context switching.
+ - Deadlock avoidance, for example with priority inversion.
+ - Zero interrupt latency by using the Cortex-M3/M4 instructions LDEX and STEX.
+*/
+
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page RtosValidation RTOS Validation
@@ -416,6 +582,1038 @@ TEST 60: TC_MailFromISRToThread           PASSED
 Test Summary: 60 Tests, 59 Executed, 59 Passed, 0 Failed, 0 Warnings.
 Test Result: PASSED
 \endverbatim
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page RTXImplmentation RTX Implementation
+
+This version of RTX implements the CMSIS-RTOS API, which is a generic RTOS interface for Cortex-M processor-based devices.
+The CMSIS-RTOS API provides a standardized interface for software components that require RTOS functionality.
+This RTX implementation gives therefore serious benefits to the users and the software industry.
+
+ - The unified feature set of the CMSIS-RTOS API simplifies sharing of software components and reduces learning efforts.
+ - Middleware components that use the CMSIS-RTOS API are RTOS agnostic and CMSIS-RTOS compliant middleware is easier to
+   adapt.
+ - This RTX implementation is available under the BSD license and can be freely distributed with project templates.
+ 
+The CMSIS-RTOS RTX manages the resources of the microcontroller system and implements the concept of parallel threads that
+run concurrently. There are many advantages of using the CMSIS-RTOS RTX kernel.
+
+Applications frequently require several concurrent activities. RTX can manage multiple concurrent activities at the time when 
+they are needed. Each activity gets a separate thread which executes a specific task and this simplifies the overall 
+program structure. The CMSIS-RTOS RTX system is scalable and additional threads can be added easily at a later time. 
+Threads have a priority allowing faster execution of time-critical parts of an user application.
+
+The CMSIS-RTOS RTX offers services needed in many real-time applications, for example, periodical activation of timer
+functions, memory management, and message exchange between threads with time limits.
+
+\image html "RTX_Structure.png" "CMSIS-RTOS RTX Structure"
+
+Compared to the classic Keil RTX version, the CMSIS-RTOS RTX library is extended with the CMSIS API interface module (source
+file rt_cmsis.c) which implements the function translation. The header file cmsis_os.h provides the API to the CMSIS-RTOS RTX
+for the user application. Refer to \ref Using for more information.
+
+CMSIS-RTOS RTX has several options that are configured with the \ref RTX_Conf_CM "RTX_Conf_CM.c" file. Refer to
+\ref Configure for more information.
+
+Attributes of the CMSIS-RTOS RTX implementation:
+ - Provides the complete functions specified for a CMSIS-RTOS with the exception of the function \ref osWait.
+ - Interrupt Service Routines (ISR) \ref isr_function_calls "may call some CMSIS-RTOS RTX functions".
+ - Configurations options for Thread Stack. Refer to \ref ThreadConfig for more information.
+ - Fully deterministic context switching and deadlock avoidance. Refer to \ref PriorityInversion for more information.
+ - Optional Round-Robin Thread switching with configurable time-slices. Refer to \ref ThreadConfig for more information.
+
+
+The following sections provide further details:
+ - \subpage Theory : provides general information about the operation of CMSIS-RTOS RTX.
+ - \subpage Files : explains the directories and files that are supplied as part of CMSIS-RTOS RTX.
+ - \subpage TechnicalData : lists hardware requirements and limitations such as number of concurrent threads.
+ - \subpage MISRACompliance : describes the violations to the MISRA standard.
+ - \subpage Using : Provides instructions for writing and debugging applications with CMSIS-RTOS RTX. 
+ - \subpage Configure : Describes configuration parameters of CMSIS-RTOS RTX. 
+ - \subpage ExampleRTX_Tutorial : Is an in-depth tutorial that can be used with any hardware to get a better understanding of
+   the concepts and use cases of a real-time operating system.
+ - \subpage Creating_RTX_LIB : Describes how to build your own CMSIS-RTOS RTX library.
+*/
+
+
+/* ========================================================================================================================== */
+/** 
+\page Theory Theory of Operation
+
+This section describes how CMSIS-RTOS RTX manages the resources of the target system. Many aspects of the CMSIS-RTOS RTX
+kernel can be configured. Information about configuration options is mentioned where applicable.
+
+\section KernelTimer RTX Kernel Timer Tick and Thread Management
+
+By default, CMSIS-RTOS RTX uses the Cortex-M
+<a href="http://www.keil.com/support/man/docs/gsac/GSAC_SYSTICKtimer.htm" target="_blank">SysTick</a> timer to generate
+periodic interrupts for the RTX kernel timer tick. CMSIS-RTOS provides \ref CMSIS_RTOS_TimerMgmt functions and several
+CMSIS-RTOS functions have a timeout parameter. This periodic RTX kernel timer tick interrupt is used to derive the required
+time interval. CMSIS-RTOS RTX also provides configuration options for a alternative timer and tick-less operation. Refer to
+\ref TimerTick for more information.
+
+To handle timeout and time delays for threads, the CMSIS-RTOS RTX thread management is controlled by the RTX kernel timer
+tick interrupt. The thread context switch itself is implemented in the HAL_CMx.x hardware abstraction layer source files. The
+thread context contains all CPU registers (R0 - R12), the return address (LR), the program counter (PC), and the processor
+status register (xPSR). For the Cortex-M4 FPU and Cortex-M7 FPU the floating point status and registers (S0 - S32, FPSCR) are
+also part of the thread context.
+
+When a thread switch occurs:
+ - the thread context of the current running thread is stored on the local stack of this thread.
+ - the stack pointer is switched to the next running thread.
+ - the thread context of this next running thread is restored and this thread starts to run.
+
+\note 
+- For Cortex-M0, Cortex-M3, Cortex-M4, and Cortex-M7 the thread context requires 64 bytes on the local stack.
+- For Cortex-M4 FPU and Cortex-M7 FPU the thread context requires 200 bytes on the local stack. For devices with Cortex-M4
+  FPU and Cortex-M7 FPU the default stack space should be increased to a minimum of 300 bytes.
+
+Each thread is provided with an separate stack that holds the thread context and stack space for automatic variables and
+return addresses for function call nesting. The stack sizes of the RTX threads are flexible configurable as explained in the
+section \ref ThreadConfig. RTX even offers a configurable checking for stack overflows. Refer to \ref StackCheck for more
+information.
+
+\section RTX_Threads CMSIS-RTOS RTX Threads
+
+At startup time, the CMSIS-RTOS RTX creates the following threads:
+ - \b main : the 'main' function of the application code is started as thread with the \ref osPriorityNormal.
+ - \b os_idle_demon : this thread executes when no other thread is in \b RUNNING state. The code of that thread is provided
+   in the \ref RTX_Conf_CM "RTX_Conf_CM.c" file and is typically used to put the system into a power-saving mode.
+ - \b osTimerThread : this thread executes the \ref CMSIS_RTOS_TimerMgmt callback functions. This thread can be disabled;
+   refer to \ref UserTimer for configuration options.
+
+\section PriorityInversion Priority Inversion on Resource Sharing
+
+The CMSIS-RTOS RTX employs a priority-based preemptive scheduler which ensures that from all the threads that are in the
+\b READY state, the thread with the highest priority gets executed and becomes the \b RUNNING thread. Because threads share
+resources, events that are outside of the control of the RTX scheduler can prevent the highest priority thread from running
+when it should. If this happens, a critical deadline could be missed, causing the system to fail. Priority inversion is the
+term of a scenario in which the highest-priority ready task fails to run when it should.
+
+Threads typically share resources to communicate and process data by using the CMSIS-RTOS \ref CMSIS_RTOS_MutexMgmt. At any
+time, two or more threads share a resource, such as a memory buffer or a serial port, one of them may have a higher priority.
+It is expected that the higher-priority thread runs as soon as it is in the \b READY state. However, if the lower-priority
+thread is using a shared resource of a higher-priority thread, this higher-priority thread must wait until the lower-priority
+thread releases the shared resource.
+
+To prevent priority inversions, the CMSIS-RTOS RTX implements a <b>priority inheritance</b> method for the
+\ref CMSIS_RTOS_MutexMgmt. A lower-priority thread inherit the priority of any higher-priority thread that is waiting with
+\ref osMutexWait on a shared resource. During the time the higher-priority thread is in \b WAITING state, the lower-priority
+thread runs at the same priority of a higher-priority pending thread. When the lower-priority thread stops to share a
+resource with \ref osMutexRelease, the original priority is assigned to this thread again.
+
+\section isr_function_calls Function calls from Interrupt Service Routines (ISR)
+
+The following CMSIS-RTOS functions can be called from threads <i>and</i> Interrupt Service Routines (ISR):
+  - \ref osKernelRunning
+  - \ref osSignalSet
+  - \ref osSemaphoreRelease
+  - \ref osPoolAlloc, \ref osPoolCAlloc, \ref osPoolFree
+  - \ref osMessagePut, \ref osMessageGet
+  - \ref osMailAlloc, \ref osMailCAlloc, \ref osMailGet, \ref osMailPut, \ref osMailFree
+
+Functions that cannot be called from an ISR are verifying the interrupt status and return the status code \b osErrorISR in
+case that they are called from an ISR context.
+*/
+
+
+/* ========================================================================================================================== */
+/** 
+\page Files Directory Structure and File Overview
+
+The following section provides an overview of the directory structure and the files that are relevant for the user's for
+CMSIS-RTOS RTX.
+
+\section Folders CMSIS-RTOS RTX Directory Structure
+
+The CMSIS-RTOS RTX is delivered in source code and several examples are provided. 
+
+<table class="cmtable" summary="CMSIS-RTOS RTX Library Files">
+    <tr>
+      <th>Directory</th>
+      <th>Content</th>
+    </tr>
+    <tr>
+      <td>INC</td>
+      <td>The include files for CMSIS-RTOS RTX. cmsis_os.h is the central include file for user applications.</td>
+    </tr>
+    <tr>
+      <td>LIB</td>
+      <td>CMSIS-RTOS RTX library files for ARMCC, GCC, and IAR Compiler.</td>
+    </tr>
+    <tr>
+      <td>SRC</td>
+      <td>Source code of CMSIS-RTOS RTX library along with project files for ARMCC, GCC, and IAR Compiler.</td>
+    </tr>
+    <tr>
+      <td>Templates</td>
+      <td>CMSIS-RTOS RTX configuration file (\ref RTX_Conf_CM "RTX_Conf_CM.c").</td>
+    </tr>
+    <tr>
+      <td>UserCode Templates</td>
+      <td>Template files for creating application projects with CMSIS-RTOS RTX.</td>
+    </tr>
+</table>
+
+\section LibFiles CMSIS-RTOS RTX Library Files
+
+The CMSIS-RTOS RTX Library is available pre-compiled for ARMCC, GCC, and IAR C/C++ Compilers and supports all Cortex-M
+processor variants in every configuration.
+
+<table class="cmtable" summary="CMSIS-RTOS RTX Library Files">
+    <tr>
+      <th>Library File</th>
+      <th>Processor Configuration</th>
+    </tr>
+    <tr>
+      <td>LIB/ARM/RTX_CM0.lib</td>
+      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M0 and M1, little-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/ARM/RTX_CM0_B.lib</td>
+      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M0 and M1, big-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/ARM/RTX_CM3.lib</td>
+      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M3, M4, and M7 without FPU, little-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/ARM/RTX_CM3_B.lib</td>
+      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M3, M4, and M7 without FPU, big-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/ARM/RTX_CM4.lib</td>
+      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M4 and M7 with FPU, little-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/ARM/RTX_CM4_B.lib</td>
+      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M4 and M7 with FPU, big-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/GCC/libRTX_CM0.a</td>
+      <td>CMSIS-RTOS RTX Library for GCC Compiler, Cortex-M0 and M1, little-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/GCC/libRTX_CM0_B.a</td>
+      <td>CMSIS-RTOS RTX Library for GCC Compiler, Cortex-M0 and M1, big-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/GCC/libRTX_CM3.a</td>
+      <td>CMSIS-RTOS RTX Library for GCC Compiler, Cortex-M3, M4, and M7 without FPU, little-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/GCC/libRTX_CM3_B.a</td>
+      <td>CMSIS-RTOS RTX Library for GCC Compiler, Cortex-M3, M4, and M7 without FPU, big-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/GCC/libRTX_CM4.a</td>
+      <td>CMSIS-RTOS RTX Library for GCC Compiler, Cortex-M4 and M7 with FPU, little-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/GCC/libRTX_CM4_B.a</td>
+      <td>CMSIS-RTOS RTX Library for GCC Compiler, Cortex-M4 and M7 with FPU, big-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/IAR/RTX_CM0.lib</td>
+      <td>CMSIS-RTOS RTX Library for IAR Compiler, Cortex-M0 and M1, little-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/IAR/RTX_CM0_B.lib</td>
+      <td>CMSIS-RTOS RTX Library for IAR Compiler, Cortex-M0 and M1, big-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/IAR/RTX_CM3.lib</td>
+      <td>CMSIS-RTOS RTX Library for IAR Compiler, Cortex-M3, M4, and M7 without FPU, little-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/IAR/RTX_CM3_B.lib</td>
+      <td>CMSIS-RTOS RTX Library for IAR Compiler, Cortex-M3, M4, and M7 without FPU, big-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/IAR/RTX_CM4.lib</td>
+      <td>CMSIS-RTOS RTX Library for IAR Compiler, Cortex-M4 and M7 with FPU, little-endian.</td>
+    </tr>
+    <tr>
+      <td>LIB/IAR/RTX_CM4_B.lib</td>
+      <td>CMSIS-RTOS RTX Library for IAR Compiler, Cortex-M4 and M7 with FPU, big-endian.</td>
+    </tr>
+</table>
+
+\section RTX_Conf_CM Configuration File RTX_Conf_CM.c
+
+\include RTX/Templates/RTX_Conf_CM.c
+*/
+
+
+/* ========================================================================================================================== */
+/** 
+\page TechnicalData Technical Data
+
+This section lists the technical data of CMSIS-RTOS RTX.
+
+<table class="cmtable">
+    <tr>
+      <th>Description</th>
+      <th>Limitations</th>
+    </tr>
+
+    <tr>
+      <td>Defined Tasks</td>
+      <td>Unlimited</td>
+    </tr>
+
+    <tr>
+      <td>Active Threads</td>
+      <td>250 max</td>
+    </tr>
+
+    <tr>
+      <td>Mailboxes</td>
+      <td>Unlimited</td>
+    </tr>
+
+    <tr>
+      <td>Semaphores</td>
+      <td>Unlimited</td>
+    </tr>
+
+    <tr>
+      <td>Mutexes</td>
+      <td>Unlimited</td>
+    </tr>
+
+    <tr>
+      <td>Signals</td>
+      <td>16 per thread</td>
+    </tr>
+
+    <tr>
+      <td>Timer Callbacks</td>
+      <td>Unlimited</td>
+    </tr>
+
+    <tr>
+      <td>Code Space</td>
+      <td>< 5.0 Kbytes</td>
+    </tr>
+
+    <tr>
+      <td>RAM Space for Kernel</td>
+      <td>300 bytes + 128 bytes Main Stack</td>
+    </tr>
+
+    <tr>
+      <td>RAM Space for a Thread</td>
+      <td>StackSize + 52 bytes</td>
+    </tr>
+
+    <tr>
+      <td>RAM Space for a Mailbox</td>
+      <td>MaxMessages * 4 + 16 bytes</td>
+    </tr>
+
+    <tr>
+      <td>RAM Space for a Semaphore</td>
+      <td>8 bytes</td>
+    </tr>
+
+    <tr>
+      <td>RAM Space for a Mutex</td>
+      <td>12 bytes</td>
+    </tr>
+
+    <tr>
+      <td>RAM Space for a User Timer</td>
+      <td>24 bytes</td>
+    </tr>
+
+    <tr>
+      <td>Hardware Requirements</td>
+      <td>SysTick timer or other hardware timer</td>
+    </tr>
+
+    <tr>
+      <td>Thread context switch time</td>
+      <td>< 2.6 usec @ 72 MHz</td>
+    </tr>
+
+    <tr>
+      <td>Interrupt lockout time</td>
+      <td>Not disabled</td>
+    </tr>
+</table>
+
+\note
+- Unlimited means that the RTX kernel does not impose any limitations on the number. However, the available system memory
+  resources limit the number of items you can create.
+- RAM requirements depend on the number of concurrently running threads.  
+- The code and RAM size is calculated for ARMCC Compiler when using the <b>MicroLib</b> runtime library.
+
+\section osWait
+The generic wait function \b osWait is currently not supported by CMSIS-RTOS RTX.
+*/
+
+
+/* ========================================================================================================================== */
+/** 
+\page MISRACompliance MISRA-C:2004 Compliance Exceptions
+CMSIS-RTOS RTX tries to be MISRA-C compliant as much as possible. However, there are some violations in order to simplify
+the overall code logic and to generate more efficient code.
+
+CMSIS-RTOS RTX generates the following notes, warnings and infos for MISRA-C:2004 rules:
+- Rule 1.1, required, Rule 2.2, required: Non-ANSI reserved word or construct: '//'
+- Rule 1.2, required: Both sides have side effects
+- Rule 1.2, required: Unusual pointer cast (incompatible indirect types)
+- Rule 8.1, required: Function defined without a prototype in scope
+- Rule 11.1, required, Rule 11.3, advisory: cast from pointer to unsigned int
+- Rule 11.1, required, Rule 11.3, advisory: cast from unsigned int to pointer
+- Rule 11.4, advisory: cast from pointer to pointer
+- Rule 12.11, advisory: Overflow in computing constant for operation: 'unsigned shift left'
+- Rule 13.7, required, Rule 14.1, required: Constant value Boolean
+- Rule 14.4, required: Use of goto is deprecated
+- Rule 14.7, required: Return statement before end of function
+- Rule 16.10, required: Ignoring return value of function
+- Rule 17.2, required, Rule 17.3, required: Relational or subtract operator applied to pointers
+- Rule 19.4, required, Rule 19.10, required: Expression-like macro not parenthesized
+- Rule 19.15, required: Repeated include file
+
+CMSIS-RTOS RTX violates the following MISRA-C:2004 rules:
+- Required Rule 8.5: object/function definition in header file 
+- Required Rule 10.1: Prohibited Implicit Conversion: Non-constant argument to function
+- Required Rule 10.1: Implicit conversion of complex integer expression
+- Required Rule 10.3: Cast of complex integer expression to larger type
+- Required Rule 10.3: Cast of complex expression changes signedness
+- Required Rule 11.5: attempt to cast away const/volatile from a pointer or reference
+- Required Rule 12.4: side effects on right hand of logical operator: '&&'
+- Required Rule 12.4: side effects on right hand of logical operator: '||'
+- Required Rule 12.5: non-primary expression used with logical operator
+- Required Rule 14.3: null statement not in line by itself
+- Required Rule 14.8: left brace expected for while, do...while and for
+- Required Rule 14.9: left brace expected for if and else
+- Required Rule 15.3: default missing from switch statement
+- Required Rule 16.9: function identifier used without '&' or parenthesized parameter list 
+- Required Rule 17.4: pointer arithmetic other than array indexing used
+- Required Rule 18.4: declaration of union type or object of union type: '{...}' 
+- Required Rule 19.12: Multiple use of '#/##' operators in definition of macro 
+- Required Rule 20.2: Re-use of C90 identifier pattern
+- Advisory Rule 12.1: dependence placed on C's operator precedence; operators: '+' and '-'
+- Advisory Rule 12.13: increment or decrement combined with another operator
+- Advisory Rule 19.13: '#/##' operator used in macro
+- Advisory Rule 19.7: Function-like macro defined
+*/
+
+
+/* ========================================================================================================================== */
+/** 
+\page Using Create an RTX Project
+
+Example projects using CMSIS-RTOS RTX are available for various development boards. To make use of these examples, you need
+to install a Device Family Pack in µVision and use Pack Installer to open a CMSIS-RTOS Blinky project. If you wish to start a
+CMSIS-RTOS RTX from scratch, follow these steps:
+- Create a new project and select a device.
+- In the Manage Run-Time Environment window that opens, select <b>CMSIS\::CORE</b> and <b>CMSIS\::RTOS (API)\::Keil RTX</b>.
+  If the <b>Validation Output</b> requires other components to be present, try to use the \b Resolve button:
+
+   \image html manage_rte_output.png
+
+- Click \b OK. In the \b Project window, you will see the files that have been automatically added to you project, such as
+  \b %RTX_Conf_CM.c and the system and startup files:
+
+   \image html project_window.png
+   
+- You can add template files to the project by right-clicking on <b>Source Group 1</b> and selecting
+  <b>Add New Item to 'Source Group 1'</b>. In the new window, click on <b>User Code Template</b>. On the right-hand side
+  you will see all available template files for CMSIS-RTOS RTX:
+  
+   \image html add_item.png
+
+- Finally, \ref Configure "configure" RTX to the application's needs using the \b %RTX_Conf_CM.c file.
+
+\section DefRefObj Define and Reference Object Definitions
+
+With \c \#define \c osObjectsExternal objects are defined as external symbols. This allows to create a consistent header file
+that is used throughout a project. If you are using the \b CMSIS-RTOS \b 'main' \b function user code template, such a header
+file (called \c osObjects.h) will be added automatically to the project:
+
+\b Code \b Example
+\code
+/*----------------------------------------------------------------------------
+ * osObjects.h: CMSIS-RTOS global object definitions for an application
+ *----------------------------------------------------------------------------
+ *
+ * This header file defines global RTOS objects used throughout a project
+ *
+ * #define osObjectsPublic indicates that objects are defined; without that
+ * definition the objects are defined as external symbols.
+ *
+ *--------------------------------------------------------------------------*/
+ 
+#ifndef __osObjects
+#define __osObjects
+ 
+#if (!defined (osObjectsPublic))
+#define osObjectsExternal          // define RTOS objects with extern attribute
+#endif
+ 
+#include <cmsis_os.h>              // CMSIS RTOS header file
+ 
+// global 'thread' functions -------------------------------------------------
+extern void  thread_sample (void const *argument);       // function prototype
+osThreadDef (thread_sample, osPriorityBelowNormal, 1, 100);
+ 
+// global 'memory pools' -----------------------------------------------------
+osPoolDef(MyPool, 10, long);
+ 
+#endif  // __osObjects
+\endcode
+
+This header file defines all objects when included in a C/C++ source file. When \c \#define \c osObjectsExternal is present
+before the header file, the objects are defined as external symbols. A single consistent header file can therefore be used
+throughout the whole project.
+
+\b Code \b Example
+\code
+#include "osObjects.h"   // Definition of the CMSIS-RTOS objects
+\endcode
+
+
+\section UsingIRQs Using IRQ Interrupts
+
+The CMSIS-RTOS RTX kernel uses the following interrupts:
+- Timer interrupt (SysTick or alternative peripheral timer) to generate periodic timer ticks
+- SVC (Supervisor Call) when calling the majority of RTX functions from \b Thread mode
+- PendSV (request for system-level service) when calling certain RTX functions from \b Handler mode
+
+Interrupts can be used without limitation. Interrupt priority grouping can be used with some restrictions:
+- IRQ interrupts are never disabled by RTX Kernel for ARMv7-M architectures (Cortex-M3/M4/M7).
+- Software interrupt 0 is used by RTX and cannot be used in an application.
+- RTX uses its own SVC Handler which is automatically linked from the library. \ref SVCFunctions explains how to use a custom
+  SVC table.
+- When interrupt \b priority \b grouping is used, the PRIGROUP must be set before the \ref osKernelInitialize() function is
+  called (usually in the SystemInit() function in the system_<i>device</i>.c file). The kernel reads the value of PRIGROUP to
+  correctly set internal interrupt pre-emption priorities.
+- Allowed values for \b PRIGROUP are from 0 to 6. The PRIGROUP value 7 will cause RTX to fail.
+- The lowest two pre-emption priorities are reserved for RTX kernel, all remaining pre-emption priorities are available to
+  be used in an application.
+- Do not change the priority used by the RTX kernel. If this cannot be avoided, ensure that the preempt priority of
+  SysTick/PendSV is lower than SVC.
+- Check the <b>main stack size</b> configured from the device startup file if you see sporadic crashes of your application.
+  Supervisor Calls (SVCs) are used when calling RTX functions from Thread mode. All SVC calls use the main stack.
+*/
+
+
+/* ========================================================================================================================== */
+/**
+\page Configure Configure RTX
+
+The file \ref RTX_Conf_CM "RTX_Conf_CM.c" is used to define the configuration parameters of CMSIS-RTOS RTX. This file must be
+part of every project that is using the CMSIS-RTOS RTX kernel.
+
+The configuration file uses
+<a class="el" href="http://www.keil.com/pack/doc/CMSIS/Pack/html/_config_wizard.html" target="_blank">Configuration Wizard Annotations</a>.
+Depending on the development tool that is used, this might lead to a more user friendly graphical representation of the
+settings. The following is a screenshot of the same configuration file using µVision's Configuration Wizard view:
+
+\image html config_wizard.png "RTX_Conf_CM.c in Configuration Wizard View"
+
+The configuration options are explained on these pages:
+- \subpage ThreadConfig
+- \subpage TimerTick
+- \subpage SystemConfig
+
+Other configuration options not covered by the Configuration Wizard are explained here:
+- \subpage LowPower
+- \subpage SVCFunctions
+*/
+
+/* ========================================================================================================================== */
+/**
+\page ThreadConfig Thread Configuration
+
+The CMSIS-RTOS RTX provides several parameters for the thread configuration.
+ - \ref StackConfig
+ - \ref StackCheck
+ - \ref ProcessorMode
+
+\section StackConfig Configuration of Thread count and Stack Space
+
+\ref osThreadDef defines a thread function. The parameter \a stacksz specifies thereby the stack requirements of this
+thread function. CMSIS-RTOS RTX defines two methods for defining the stack requirements:
+ - when \a stacksz is 0, a fixed-size memory pool is used to for the thread stack.  In this case \b OS_STKSIZE specifies the
+   stack size for the thread function.
+ - when \a stacksz is not 0, the thread stack is allocated from a user space. The size of this user space is specified with
+   \b OS_PRIVSTKSIZE.
+
+The CMSIS-RTOS RTX kernel uses a separate stack for each thread it creates. However, before the kernel is started by the
+\ref osKernelInitialize() function, the main stack size that is configured in the file startup_<i>device</i>.s is used.
+
+Main stack is also used when:
+- the user application calls the majority of RTX functions from Thread mode (ending up in an SVC call)
+- running from handlers (user interrupt of exception handlers like SVCm PendSV, Faults, etc.)
+
+|Name                                                               |\#define         |Description|
+|-------------------------------------------------------------------|-----------------|-----------|
+|Number of concurrent running user threads                          |\c OS_TASKCNT    |Indicates the maximum number of threads that will run at the same time (including main).|
+|Default Thread stack size [bytes]                                  |\c OS_STKSIZE    |Specifies the default stack size (in words) for threads that are defined with osThreadDef \a stacksz = 0.|
+|Main Thread stack size [bytes]                                     |\c OS_MAINSTKSIZE|Is the stack requirement (in words) for the main function that is started by default as an RTOS thread.|
+|Number of threads with user-provided stack size                    |\c OS_PRIVCNT    |Indicates the number of threads that are defined with \ref osThreadDef \a stacksz != 0 (excluding main). \a stacksz specifies the stack size requirement of that thread.|
+|Total stack size [bytes] for threads with user-provided stack size |\c OS_PRIVSTKSIZE|Is the combined stack requirement (in words) of all threads that are defined with with \ref osThreadDef \a stacksz != 0 (excluding main).|
+|\ref StackCheck                                            |\c OS_STKCHECK   |If a stack overflow is detected at a thread switch, the function \b os_error with error code = 1 is called.  By default, this function is implemented as endless loop and will practically stop code execution.|
+|\ref StackUsage                                              |\c OS_STKINIT    |Initializes the thread stack with a watermark pattern that can be used to determine the maximum stack usage within each thread.|
+|\ref ProcessorMode                                |\c OS_RUNPRIV    |Controls the processor mode (privileged/unprivileged)|
+
+\section StackCheck Stack Overflow Checking
+
+CMSIS-RTOS RTX implements a software stack overflow checking that traps stack overruns. Stack is used for return addresses
+and automatic variables and extensive usage or incorrect stack configuration may cause a stack overflow. Software stack
+overflow checking is controlled with the <b>\#define OS_STKCHECK</b>.
+
+If a stack overflow is detected, the function \b os_error with error code = 1 is called.  By default, this function is
+implemented as endless loop and will practically stop code execution.
+
+\section StackUsage Stack Usage Watermark
+
+The total stack size of an application needs to be as small as possible in a memory restricted embedded system. To be able to
+set the smallest stack size for every thread, the developer needs to know the maximum stack usage over the runtime of the
+application.
+
+The \b Stack \b Usage \b Watermark feature support this by initializing the thread stack with a watermark pattern (0xCC) when
+a thread is created. This allows the debugger to determine the maximum stack usage for each thread.
+
+\image html stack_usage_watermark.png "System and Thread Viewer showing current and maximum stack usage"
+
+Stack usage watermark is controlled with the <b>\#define OS_STKINIT</b>. Setting this \c \#define increases significantly the
+execution time of \ref osThreadCreate (depending on thread stack size).
+
+\section ProcessorMode Processor Mode for Thread Execution
+
+CMSIS-RTOS RTX allows to execute threads in unprivileged or privileged processor mode. The processor mode is controlled with
+the <b>\#define OS_RUNPRIV</b>.
+
+In unprivileged processor mode, the software:
+ - has limited access to the MSR and MRS instructions, and cannot use the CPS instruction.
+ - cannot access the system timer, NVIC, or system control block.
+ - might have restricted access to memory or peripherals.
+
+In privileged processor mode the software can use all the instructions and has access to all resources.
+
+\note It is recommended to use the privileged processor mode.
+*/
+
+/* ========================================================================================================================== */
+/**
+\page TimerTick RTX Kernel Tick Timer Configuration
+
+The CMSIS-RTOS RTX functions provide delays in units of milliseconds that are derived from the RTX Timer Tick.
+It is therefore recommended to configure the RTX Timer Tick to generate a 1 millisecond interval. 
+Configuring a longer RTX Timer Tick may reduce energy consumption, but has impacts on the granularity of the timeouts.
+
+|Name                                            |\#define         |Description|
+|------------------------------------------------|-----------------|-----------|
+| Use Cortex-M SysTick timer as RTX Kernel Timer |\c OS_SYSTICK    | Selects the Cortex-M SysTick timer as RTX kernel timer. In this case, the RTX kernel configures the SysTick timer clock source as processor clock. Therefore the value <b>OS_CLOCK</b> should be identical with the value of the CMSIS variable <b>SystemCoreClock</b>.|
+| RTOS Kernel Timer input clock frequency [Hz]   |\c OS_CLOCK      |Specifies the Cortex-M processor clock frequency in Hz. This value is used to calculate the RTX kernel timer reload value.|
+| RTX Timer tick interval value [us]             |\c OS_TICK       |Specifies the RTX Timer Tick interval in microseconds (us). This value is used to calculate timeout values. When the SysTick core timer is enabled the value is also used to configure the SysTick timer. It is recommended to configure the RTX Timer tick to 1000 us which results in a timeout granularity of 1 millisecond.|
+
+\section AltTimer Usage of an Alternate Timer as RTX Kernel Timer
+
+With <b>\#define OS_SYSTICK 0</b> an alternative timer is selected as RTX kernel timer.
+
+Four functions in the \ref RTX_Conf_CM "RTX_Conf_CM.c" file need to be adapted for using an alternative hardware timer.
+
+ - \ref os_tick_init provides the initialization function for the alternative hardware timer.
+ - \ref os_tick_val returns the current value of the alternative hardware timer.
+ - \ref os_tick_ovf returns the overflow flag of the alternative hardware timer.
+ - \ref os_tick_irqack is an interrupt acknowledge function that is called to confirm the alternative hardware timer
+   interrupt.
+ - \ref OS_Tick_Handler needs to be called as the hardware timer interrupt function; the startup code should be modified to
+   this function.
+
+<b>Configuration Code:</b>
+\code
+#if (OS_SYSTICK == 0)   // Functions for alternative timer as RTX kernel timer
+ 
+/*--------------------------- os_tick_init ----------------------------------*/
+ 
+/// \brief Initializes an alternative hardware timer as RTX kernel timer
+/// \return                             IRQ number of the alternative hardware timer
+int os_tick_init (void) {
+  return (-1);  /* Return IRQ number of timer (0..239) */
+}
+ 
+/*--------------------------- os_tick_val -----------------------------------*/
+ 
+/// \brief Get alternative hardware timer's current value (0 .. OS_TRV)
+/// \return                             Current value of the alternative hardware timer
+uint32_t os_tick_val (void) {
+  return (0);
+}
+ 
+/*--------------------------- os_tick_ovf -----------------------------------*/
+ 
+/// \brief Get alternative hardware timer's  overflow flag
+/// \return                             Overflow flag\n
+///                                     - 1 : overflow
+///                                     - 0 : no overflow
+uint32_t os_tick_ovf (void) {
+  return (0);
+}
+ 
+/*--------------------------- os_tick_irqack --------------------------------*/
+ 
+/// \brief Acknowledge alternative hardware timer interrupt
+void os_tick_irqack (void) {
+  /* ... */
+}
+ 
+#endif   // (OS_SYSTICK == 0)
+\endcode
+
+\anchor OS_Tick_Handler
+OS_Tick_Handler
+---------------
+The function \b OS_Tick_Handler handles the RTX tick interval interrupts. It is used if you are using an alternate timer as
+the RTX tick timer.
+
+The \b OS_Tick_Handler is an interrupt handler function, which runs the OS task scheduler. It is called by the Nested
+Vectored Interrupt Controller (NVIC) on the alternate timer's interrupt, and cannot be called as a regular C-function. It
+must be entered into the Interrupt Table in startup file. The default Cortex-M interrupt vector must be replaced by
+\b OS_Tick_Handler.
+
+\code
+; Vector Table Mapped to Address 0 at Reset
+ 
+                AREA    RESET, DATA, READONLY
+                EXPORT  __Vectors
+ 
+                IMPORT  OS_Tick_Handler
+ 
+__Vectors       DCD     __initial_sp              ; Top of Stack
+                DCD     Reset_Handler             ; Reset Handler
+                DCD     NMI_Handler               ; NMI Handler
+                DCD     HardFault_Handler         ; Hard Fault Handler
+                DCD     MemManage_Handler         ; MPU Fault Handler
+                DCD     BusFault_Handler          ; Bus Fault Handler
+                DCD     UsageFault_Handler        ; Usage Fault Handler
+                DCD     0                         ; Reserved
+                DCD     0                         ; Reserved
+                DCD     0                         ; Reserved
+                DCD     0                         ; Reserved
+                DCD     SVC_Handler               ; SVCall Handler
+                DCD     DebugMon_Handler          ; Debug Monitor Handler
+                DCD     0                         ; Reserved
+                DCD     PendSV_Handler            ; PendSV Handler
+                DCD     SysTick_Handler           ; SysTick Handler
+ 
+                ; External Interrupts
+                DCD     WDT_IRQHandler            ; 16: Watchdog Timer
+                DCD     TIMER0_IRQHandler         ; 17: Timer0
+                ...
+                DCD     I2S_IRQHandler            ; 43: I2S
+                DCD     ENET_IRQHandler           ; 44: Ethernet
+                DCD     OS_Tick_Handler           ; 45: Repetitive Interrupt Timer
+                DCD     MCPWM_IRQHandler          ; 46: Motor Control PWM
+                ...
+\endcode
+*/
+
+/* ========================================================================================================================== */
+/**
+\page SystemConfig System Configuration
+
+The CMSIS-RTOS RTX provides system-wide settings for:
+ - \ref RoundRobin
+ - \ref UserTimer
+ 
+\section RoundRobin Settings for Round-Robin Thread Switching
+
+CMSIS-RTOS RTX may be configured to use Round-Robin Multitasking thread switching. Round-Robin allows quasi-parallel
+execution of several threads. Threads are not really executed concurrently but are time-sliced where the available CPU time
+is divided into time slices and CMSIS-RTOS RTX assigns a time slice to each thread. Because the time slice is typically short
+(only a few milliseconds) it appears as though threads execute simultaneously.
+
+Threads execute for the duration of their time-slice (unless the thread's time slice is given up). Then, CMSIS-RTOS RTX
+switches to the next thread that is ready to run and has the same priority. If no other task with the same priority is ready
+to run, the current running task resumes it execution.
+
+Round-Robin Multitasking is controlled with the <b>\#define OS_ROBIN</b>. The time-slice period is configured (in RTX Timer
+ticks) with the <b>\#define OS_ROBINTOUT</b>.
+
+<b>Code Example:</b>
+
+The following example shows a simple CMSIS-RTOS RTX program that uses Round-Robin Multitasking. 
+The two threads in this program are counter loops. RTX starts executing job 1, which is the function named job1.
+This function creates another task called job2. After job1 executes for its time slice, RTX switches to job2. 
+After job2 executes for its time slice, RTX switches back to job1. This process repeats indefinitely.
+
+\code
+#include "cmsis_os.h"                      // CMSIS-RTOS header file
+ 
+int counter1;
+int counter2;
+ 
+void job1 (void const *arg) {
+  while (1) {                              // loop forever
+    counter1++;                            // update the counter
+  }
+}
+ 
+void job2 (void const *arg) {
+  while (1) {                              // loop forever
+    counter2++;                            // update the counter
+  }
+}
+ 
+osThreadDef (job1, osPriorityAboveNormal, 1, 0);
+osThreadDef (job2, osPriorityAboveNormal, 1, 0);
+ 
+int main (void) {
+  osKernelInitialize ();                   // setup kernel
+  osThreadCreate (osThread(job1), NULL);   // create threads
+  osThreadCreate (osThread(job2), NULL); 
+  osKernelStart ();                        // start kernel
+}
+\endcode
+
+\note
+Rather than waiting for a thread time slice to expire, use CMSIS-RTOS functions to signal to the RTX kernel that it can
+switch to another task. The function \ref osThreadYield passes control to other threads without Round-Robin Multitasking.
+
+
+\section UserTimer User Timer Management
+
+CMSIS-RTOS RTX supports \ref CMSIS_RTOS_TimerMgmt which provides timer callback functions. The \ref CMSIS_RTOS_TimerMgmt is
+configured with the following \a \#defines:
+
+|Name                            |\#define        |Description|
+|--------------------------------|----------------|-----------|
+|User Timers                     |\c OS_TIMERS    | Enables the \ref CMSIS_RTOS_TimerMgmt.  When disabled, the \b osTimerThread is not created.|
+|Timer Thread Priority           |\c OS_TIMERPRIO | Specifies the priority of the osTimerThread that executes the timer callback functions.|
+|Timer Thread stack size [bytes] |\c OS_TIMERSTKSZ| Specifies the stack size (in words) for the the \b osTimerThread.|
+|Timer Callback Queue size       |\c OS_TIMERCBQS | Specifies the maximum number of concurrent timer callbacks.|
+
+ \note
+ Refer to \ref RTX_Threads for more information about the \b osTimerThread.
+ 
+\section ISRFIFO ISR FIFO Queue size
+ISR functions store requests to this buffer, when they are called from the interrupt handler. The default value for
+<b>\#define OS_FIFOSZ</b> is 16.
+*/
+
+/* ========================================================================================================================== */
+/**
+\page LowPower Configuration for Low-Power Modes
+
+The system thread \b os_idle_demon can be use to switch the system into a low-power mode.  The easiest form to enter a
+low-power mode is the execution of the \c __WFE function that puts the processor into a sleep mode where it waits for an
+event.
+
+<b>Configuration Example:</b>
+
+\code
+#include "device.h"                     /* Device definitions                 */
+ 
+void os_idle_demon (void) {
+  /* The idle demon is a system thread, running when no other thread is       */
+  /* ready to run.                                                            */
+ 
+  for (;;) {
+    __WFE();                            /* Enter sleep mode                   */
+  }
+}
+\endcode
+
+\note
+\c __WFE() is not available at every Cortex-M implementation. Check device manuals for availability.
+
+\section TickLess Tick-less operation
+
+CMSIS-RTOS RTX provides extension for tick-less operation which is useful for applications that use extensively low-power
+modes where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to
+derive timer intervals. The RTX functions \ref os_suspend and \ref os_resume control the tick-less operation.
+
+Using this functions allows the RTX thread scheduler to stop the periodic kernel tick interrupt. When all active threads
+are suspended, the system enters power-down and calculates how long it can stay in this power-down mode. In the power-down
+mode the processor and potentially peripherals can be switched off. Only a wake-up timer must remain powered, because this
+timer is responsible to wake-up the system after the power-down period expires.
+
+The tick-less operation is controlled from the \ref os_idle_demon thread. The wake-up timeout value is set before the system
+enters the power-down mode. The function \ref os_suspend calculates the wake-up timeout measured in RTX Timer Ticks; this
+value is used to setup the wake-up timer that runs during the power-down mode of the system.
+
+Once the system resumes operation (either by a wake-up time out or other interrupts) the RTX thread scheduler is started with
+the function \ref os_resume. The parameter \a sleep_time specifies the time (in RTX Timer Ticks) that the system was in
+power-down mode.
+
+\b Code \b Example
+\code
+#include "LPC11Uxx.h"                   /* LPC11Uxx definitions               */
+ 
+void os_idle_demon (void) {
+  /* The idle demon is a system thread, running when no other thread is       */
+  /* ready to run.                                                            */
+  unsigned int sleep;
+  unsigned int tc;
+ 
+  LPC_SYSCON->SYSAHBCLKCTRL |=  (1UL << 15) |  /* Enable clock for WWDT       */
+                                (1UL << 19);   /* Enable clock for Pin IRQ    */
+ 
+  LPC_SYSCON->PINTSEL[0]     =   1;            /* P0.1 selected as INT0 IRQ   */
+  LPC_SYSCON->STARTERP0     |=  (1UL <<  0);   /* Enable INT0 wake-up         */
+  LPC_SYSCON->STARTERP1     |=  (1UL << 12);   /* Enable WWDT wake-up         */
+ 
+  LPC_SYSCON->WDTOSCCTRL     =  (3   <<  0) |  /* WDOSC DIVSEL=3              */
+                                (2   <<  5);   /* WDOSC FREQ=0.8MHz           */
+  LPC_SYSCON->PDRUNCFG      &= ~(1UL <<  6);   /* Power-up WDT Oscillator     */
+  LPC_SYSCON->PDSLEEPCFG    &= ~(1UL <<  6);   /* Power WDT Oscillator in PD  */
+ 
+  LPC_WWDT->CLKSEL           =  (1UL <<  0) |  /* Select WDOSC as Clock       */
+                                (1UL << 31);   /* Lock selection              */
+  LPC_WWDT->WARNINT          =   1000;         /* WDT Warning IRQ value       */
+  LPC_WWDT->MOD              =  (1UL <<  0);   /* Enable WDT                  */
+ 
+  NVIC_EnableIRQ(FLEX_INT0_IRQn);              /* Enable INT0 IRQ (wake-up)   */
+  NVIC_EnableIRQ(WDT_IRQn);                    /* Enable WWDT IRQ (wake-up)   */
+ 
+  for (;;) {
+  /* HERE: include optional user code to be executed when no task runs.*/
+    sleep = os_suspend();                      /* Suspend RTX thread scheduler */
+ 
+    if (sleep) {                               /* How long can we sleep?       */
+      /* "sleep" is in RTX Timer Ticks which is 10ms in this configuration     */
+       
+      /* Setup WDT wake-up: WDT ticks @25kHz (FREQ/2/(DIVSEL+1)/4) */
+      tc = (sleep * 250) + 1000;
+      LPC_WWDT->TC   = tc;
+      LPC_WWDT->FEED = 0xAA;
+      LPC_WWDT->FEED = 0x55;
+ 
+      /* Enter Power-down mode */
+      LPC_SYSCON->PDAWAKECFG = LPC_SYSCON->PDRUNCFG;  /* Power after wake-up   */
+      LPC_PMU->PCON = 0x02;                    /* Select Power-down mode       */
+      SCB->SCR = (1UL << 2);                   /* Set SLEEPDEEP                */
+      __WFE();                                 /* Enter Power-down mode        */
+      
+      /* After Wake-up */
+      sleep = (tc - LPC_WWDT->TV) / 250;
+    }
+ 
+    os_resume(sleep);                          /* Resume RTX thread scheduler  */
+  }
+}
+\endcode
+
+\note
+\c __WFE() is not available at every Cortex-M implementation. Check device manuals for availability.
+*/
+
+/* ========================================================================================================================== */
+/**
+\page SVCFunctions SVC Functions
+Supervisor Calls (SVC) are exceptions targeted at software and operating systems for generating system function calls. They
+are sometimes called software interrupts. For example, instead of allowing user programs to directly access hardware, an
+operating system may provide access to hardware through an SVC. So when a user program wants to use certain hardware, it
+generates the SVC exception using SVC instructions, and then the software exception handler in the operating system is
+executed and provides the requested service to the user application. In this way, access to hardware is under the control of
+the OS, which can provide a more robust system by preventing the user applications from directly accessing the hardware.
+
+SVC can also make software more portable because the user application does not need to know the programming details of the
+underlying hardware. The user program will only need to know the application programming interface (API) function ID and
+parameters; the actual hardware-level programming is handled by device drivers.
+
+SVCs run in \b Privileged \b Handler mode of the \b Cortex-M core. SVC functions accept arguments and can return values.
+The functions are used in the same way as other functions; however, differences are hidden to the user. The ARMCC handles the
+differences and generates code instructions to call SVC functions. SVC functions are called by executing the SVC instruction.
+When executing SVC instructions, the controller changes to the Privileged Handler Mode.
+
+Interrupts are <b>not disabled</b> in this mode. To protect SVC function from interrupts, you need to include the
+disable/enable intrinsic functions \b __disable_irq() and \b __enable_irq() in your code.
+
+You can use SVC functions to access \b protected \b peripherals, for example, to configure NVIC and interrupts. 
+This is required if you run tasks in unprivileged (protected) mode and you need to change interrupts from the task.
+
+To implement SVC functions in your CMSIS-RTOS RTX kernel project, you need to:
+-#  Copy the file \b SVC_Table.s to your project folder and include it into your project. This file is available as a source
+    code template. 
+-#  Declare a function with a \b __svc(x) attribute. Use the first SVC number, starting from 1, that is free.
+    \code
+    void __svc(1)  inc_5bit (U32 *cp);
+    \endcode
+-#  Write a function implementation and convert the function name into a \b __SVC_x function name. 
+    Later, this name is referenced by the linker from the \b SVC_Table.s module.
+    You also need to disable/enable interrupts.
+    \code
+    void __SVC_1            (U32 *cp) {
+      // A protected function to increment a 5-bit counter. 
+      __disable_irq();
+      *cp = (*cp + 1) & 0x1F;
+      __enable_irq();
+    }
+    \endcode
+-#  Add the function \b __SVC_x to the SVC function table in the \b SVC_Table.s module.
+    First import it from other modules:
+    \code
+    ; Import user SVC functions here.
+                   IMPORT  __SVC_1
+    \endcode
+    Then, add a reference to it into the table:
+    \code
+    ; Insert user SVC functions here. SVC 0 used by RTL Kernel.
+                DCD     __SVC_1                 ; user SVC function
+    \endcode
+-#  Your \b SVC function should now look like this:
+    \code
+    void __svc(1)  inc_5bit (U32 *cp);
+    void __SVC_1            (U32 *cp) {
+      // A protected function to increment a 5-bit counter. 
+      __disable_irq();
+      *cp = (*cp + 1) & 0x1F;
+      __enable_irq();
+    }
+    \endcode
+    
+\note
+- SVC function \b 0 is \b reserved for the CMSIS-RTOS RTX kernel.
+- Do not leave gaps when numbering SVC functions. They must occupy a \b continuous range of numbers starting from 1.
+- SVC functions can still be interrupted.
+- CMSIS-RTOS RTX must not be called before the main() function.
+*/
+
+/* ========================================================================================================================== */
+/** 
+\page ExampleRTX_Tutorial RTX Tutorial
+
+The tutorial is an excerpt of Trevor Martin's book
+<a href="http://store.elsevier.com/product.jsp?isbn=9780080982960&pagename=search" target="_blank">The Designer's Guide to the Cortex-M Processor Family</a>.
+It is accompanied by a Pack file that contains the example projects that are discussed in the tutorial.
+
+The tutorial is available as a Software Pack from
+<a href="http://www.keil.com/dd2/pack" target="_blank">http://www.keil.com/dd2/pack</a>. On the page, browse to \b Hitex and
+select the Pack described as "An Introduction to using CMSIS RTOS for Cortex-M Microcontrollers". Download and install the
+Pack which contains all example projects referenced in the
+<a class="el" href="../CMSIS_RTOS_Tutorial.pdf">CMSIS_RTOS_Tutorial.pdf</a>.
+*/
+
+
+/* ========================================================================================================================== */
+/** 
+\page Creating_RTX_LIB Building the RTX Library
+
+The CMSIS Pack contains a µVision project for building the set of CMSIS-RTOS RTX libraries. This project can also be used as
+a reference for building the CMSIS-RTOS RTX libraries using a tool-chain of your choice.
+
+-# Open the project \b RTX_Lib_CM.uvproj from the pack folder <b>CMSIS/RTOS/RTX/SRC/ARM/</b> in uVision.
+-# Select the project target that matches your device's processor core. 
+   \n The project provides target configuration for all supported Cortex-M targets supported by RTX. 
+\n Note: The targets <b>CMF4_LE</b> (Little Endian) and <b>CMF4_BE</b> (Big Endian) shall be used for Cortex-M4 as well as
+   Cortex-M7 based devices with FPU.
+-# You can find out about the required preprocessor defines in the dialogs <b>Options for Target - C/C++</b> and
+   <b>Options for Target - Asm</b>.
+-# From the <b>Project</b> window you find the list of source files required for a complete library build.
+
+\image html own_lib_projwin.png "Project with files for Cortex-M4 cores"
 */
 
 
@@ -684,8 +1882,37 @@ states change as follows:
 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \def osThreadDef(name, priority, stacksz)
-Define the attributes of a thread functions that can be created by the function \ref osThreadCreate using \ref osThread.
+/** \def osThreadDef(name, priority, instances, stacksz)
+Define the attributes of a thread functions that can be created by the function \ref osThreadCreate using \ref osThread. The
+argument \a instances defines the number of times that \ref osThreadCreate can be called for the same \b osThreadDef.
+
+\b Code \b Example
+\code
+#include "cmsis_os.h"
+ 
+void Thread (void const *arg);                             // function prototype for a Thread
+osThreadDef (Thread, osPriorityNormal, 3, 0);              // define Thread and specify to allow three instances
+ 
+void ThreadCreate_example (void) {
+  osThreadId id1, id2, id3;
+  
+  id1 = osThreadCreate (osThread (Thread), NULL);          // create the thread with id1
+  id2 = osThreadCreate (osThread (Thread), NULL);          // create the thread with id2
+  id3 = osThreadCreate (osThread (Thread), NULL);          // create the thread with id3
+  if (id1 == NULL) {                                       // handle thread creation for id1
+    // Failed to create the thread with id1
+  }
+  if (id2 == NULL) {                                       // handle thread creation for id2
+    // Failed to create the thread with id2
+  }
+  if (id3 == NULL) {                                       // handle thread creation for id3
+    // Failed to create the thread with id3
+  }
+  :
+  osThreadTerminate (id1);                                  // stop the thread with id1
+  osThreadTerminate (id2);                                  // stop the thread with id2
+  osThreadTerminate (id3);                                  // stop the thread with id3
+}\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -695,16 +1922,18 @@ Access to the thread definition for the function \ref osThreadCreate.
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\note MUST REMAIN UNCHANGED: \b osPriority shall be consistent in every CMSIS-RTOS.
+\typedef osPriority
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 The \ref osPriority value specifies the priority for a thread. The default thread priority should be \a osPriorityNormal.
-If a Thread is active that has a higher priority than the currently executing thread, then a thread switch occurs immediately to execute the new task.
+If a Thread is active that has a higher priority than the currently executing thread, then a thread switch occurs immediately
+to execute the new task.
 
 To prevent from a priority inversion, a CMSIS-RTOS compliant OS may optionally implement a <b>priority inheritance</b> method.
-A priority inversion occurs when a high priority thread is waiting for a resource or event that is controlled by a thread with a lower priority. 
+A priority inversion occurs when a high priority thread is waiting for a resource or event that is controlled by a thread
+with a lower priority. 
 */
-typedef enum {} osPriority;
+
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \fn osThreadId osThreadCreate (const osThreadDef_t *thread_def, void *argument)
@@ -1464,12 +2693,8 @@ A CMSIS-RTOS implementation may support message queues.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \def osMessageQDef(name, queue_sz, type, thread)
+/** \def osMessageQDef(name, queue_sz, type)
 Define the attributes of a message queue created by the function \ref osMessageCreate using \ref osMessageQ.
-
-\note
-The parameter \em thread registers the receiving thread for a message and is 
-needed for the general \ref osWait function to deliver the message. 
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -1479,7 +2704,8 @@ Access to the message queue definition for the function \ref osMessageCreate.
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \fn osMessageQId osMessageCreate (const osMessageQDef_t *queue_def, osThreadId thread_id);
-Create and initialize a message queue.
+Create and initialize a message queue. The parameter \em thread_id registers the receiving thread for a message and is 
+needed for the general \ref osWait function to deliver the message. 
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -1498,7 +2724,7 @@ typedef struct {                                 // Message object structure
  
 osPoolDef(mpool, 16, T_MEAS);                    // Define memory pool
 osPoolId  mpool;
-osMessageQDef(MsgBox, 16, T_MEAS);               // Define message queue
+osMessageQDef(MsgBox, 16, &T_MEAS);              // Define message queue
 osMessageQId  MsgBox;
  
 void send_thread (void const *argument);         // forward reference
@@ -2089,6 +3315,8 @@ mutex acquires/releases can be nested.
 \note
 - Mutex management functions cannot be called from interrupt service routines (ISR), unlike a binary semaphore that can be
   released from an ISR.
+- CMSIS-RTOS uses <a href="https://en.wikipedia.org/wiki/Reentrant_mutex" target="_blank">reentrant/recursive mutexes</a>
+  only.
 
 Working with Mutexes
 --------------------
@@ -2458,6 +3686,260 @@ used. The Semaphore may be created again using the function \ref osSemaphoreCrea
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /// @}
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== RTX Global Functions ====
+/** 
+\addtogroup RTX_Global_Functions RTX Global Functions
+\ingroup CMSIS_RTOS
+\brief Global functions that are specific for CMSIS-RTOS RTX.
+\details 
+The RTX kernel can be customized for different application requirements:
+- If you are depending on the \ref LowPower "lowest power consumption" possible, you need to adapt the function
+  \ref os_idle_demon to send the system to sleep mode as often as possible. In addition, use the
+  \ref TickLess "low power RTX extensions" \ref os_suspend and \ref os_resume to suspend the RTX scheduler and to stop the
+  SysTick timer.
+- If you need to specify an \ref AltTimer "alternate hardware timer" as the system tick timer, you need to
+  -# implement the functions \ref os_tick_init, \ref os_tick_ovf, \ref os_tick_val, and optionally the function
+     \ref os_tick_irqack.
+  -# replace the alternate timer interrupt vector with the \ref OS_Tick_Handler in the Interrupt Vector Table in startup
+     file.
+- If you try to find a \b runtime \b error, use the function \ref os_error to debug the error.
+
+
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn void os_idle_demon (void)
+The function \b os_idle_demon is executed by the RTX kernel, when no other threads are ready to run. By default, this task
+is an empty end-less loop that does nothing. It only waits until another task becomes ready to run. You may change the code
+of the \b os_idle_demon function to put the CPU into a power-saving or idle mode.
+
+The default stack size for this task is defined in the file \b \#RTX_Conf_CM.c. Refer to \ref ThreadConfig entry <b>Default Thread stack size [bytes]</b>.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+void os_idle_demon (void) {
+ 
+  for (;;) {
+  __WFI(); // wait for interrupt
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int os_tick_init (void)
+The function \b os_tick_init initializes an alternate hardware timer as the system tick timer and starts it. If you setup
+OS_SYSTICK to 0, this function will be available for adding the alternate timer. It returns the interrupt number of the
+alternative hardware timer.
+
+\note - When using an alternate timer, you must enter the \ref OS_Tick_Handler in the interrupt vector table in the startup
+file.
+
+\note - Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+#include "LPC43xx.h"                    // Device header
+ 
+int os_tick_init (void) {
+  // Initialize hardware timer as system tick timer. 
+ 
+  LPC_CCU1->CLK_M4_RITIMER_CFG = (1UL << 0);
+ 
+  LPC_RITIMER->COMPVAL = OS_TRV;     // Set match value
+  LPC_RITIMER->COUNTER = 0;          // Set count value to 0
+  LPC_RITIMER->CTRL    = (1UL << 3) |    // Timer enable
+                         (1UL << 2) |    // Timer enable for debug
+                         (1UL << 1) |    // Timer enable clear on match
+                         (1UL << 0);     // Clear interrupt flag
+  
+  return (M0_RITIMER_OR_WWDT_IRQn);  // Return IRQ number of timer (0..239) 
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn uint32_t os_tick_val (void)
+The function \b os_tick_val returns the current value of the alternate hardware timer specified by os_tick_init.
+
+\note - When using an alternate timer, you must enter the \ref OS_Tick_Handler in the interrupt vector table in the startup
+file.
+\note - Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+#include "LPC43xx.h"                    // Device header
+ 
+uint32_t os_tick_val (void) {
+ 
+  return (LPC_RITIMER->COUNTER);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn uint32_t os_tick_ovf (void)
+The function \b os_tick_ovf returns the overflow flag of the alternate hardware timer specified by os_tick_init.
+
+\note - When using an alternate timer, you must enter the \ref OS_Tick_Handler in the interrupt vector table in the startup
+file.
+\note - Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+#include "LPC43xx.h"                    // Device header
+ 
+uint32_t os_tick_ovf (void) {
+ 
+  return (LPC_RITIMER->CTRL);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn void os_tick_irqack (void)
+The function \b os_tick_irqack acknowledges the peripheral timer interrupt.
+
+\note - When using an alternate timer, you must enter the \ref OS_Tick_Handler in the interrupt vector table in the startup
+file.
+\note - Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+#include "LPC43xx.h"                    // Device header
+ 
+void os_tick_irqack (void) {
+ 
+  LPC_RITIMER->CTRL |= (1UL << 0);    // Clear interrupt flag
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn void os_error (uint32_t error_code)
+Some system error conditions can be detected during runtime. If the RTX kernel detects a runtime error, it calls the runtime
+error function \b os_error.
+
+The argument \a error_code passes the actual error code to this function:
+
+|Error Code        |Description|
+|------------------|-----------|
+|OS_ERROR_STACK_OVF|The stack checking has detected a stack overflow for the currently running thread.|
+|OS_ERROR_FIFO_OVF |The ISR FIFO Queue buffer overflow is detected.|
+|OS_ERROR_MBX_OVF  |A mailbox overflow is detected for the function \ref osMessagePut or \ref osMailPut.|
+|OS_ERROR_TIMER_OVF|The User Timer Callback Queue overflow is detected.|
+
+The function \b os_error must contain an infinite loop to prevent further program execution. You can use an emulator to step
+over infinite loop and trace into the code introducing a runtime error. For the overflow errors this means you need to
+increase the size of the object causing an overflow.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+void os_error (uint32_t error_code) {
+ 
+  // HERE: include optional code to be executed on runtime error. 
+  switch (error_code) {
+ 
+    case OS_ERROR_STACK_OVF:
+      // Stack overflow detected for the currently running task. 
+      // Thread can be identified by calling svcThreadGetId().   
+      break;
+ 
+    case OS_ERROR_FIFO_OVF:
+      // ISR FIFO Queue buffer overflow detected. 
+      break;
+ 
+    case OS_ERROR_MBX_OVF:
+      // Mailbox overflow detected. 
+      break;
+ 
+    case OS_ERROR_TIMER_OVF:
+      // User Timer Callback Queue overflow detected. 
+      break;
+  }
+  for (;;);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn uint32_t os_suspend (void)
+The function \b os_suspend suspends the RTX task scheduler. The function calculates the time, for how long the system is
+allowed to power-down, and locks the task scheduler. When the function returns, the task switches are disabled. For normal
+RTX operation, after calling \b os_suspend, you must call the \ref os_resume function to re-enable the OS task scheduler.
+
+\note
+- You can call this function from the idle task only.
+- When the system is in power-down, the system tick timer is not running.
+- Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+
+The low power RTX is controlled from the \ref os_idle_demon. The peripheral wake-up timer must be initialized before the
+system enters an endless loop. \b os_suspend calculates the timeout until the first suspended task becomes ready, and returns
+the timeout to the user:
+
+\code
+  for (;;) {
+  sleep = os_suspend();
+\endcode
+
+The user sets-up a peripheral timer to sleep timeout and starts the timer. The timeout is measured in system ticks.
+
+\code
+if (sleep) {
+  // Setup the wake-up timer ... 
+\endcode
+
+When the wake-up timer is set-up and running, the user puts the system in power-down mode. The wake-up timer must run also in
+power-down mode. All other peripherals and the CPU may power-down to reduce power.
+
+\code
+  // Power-down the system ... 
+  SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+  __WFE();
+\endcode
+
+The wake-up timer, when expired, generates the interrupt and wakes-up the system. Hence, it must run also in power-down mode.
+The system resumes operation and needs to call the function \ref os_resume. This function restores the RTX and re-enables the
+scheduler.
+
+\code
+  // After Wake-up 
+  sleep = (tc - LPC_WWDT->TV) / 250;
+}
+os_resume(sleep);
+\endcode
+
+If, for any reason, the system does not wake up immediately after the wake-up interrupt, the actual sleep time is checked and
+adjusted.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn void os_resume (uint32_t sleep_time)
+The function \b os_resume resumes the RTX task scheduler. You must call this function after you have called \ref os_suspend
+to re-enable the task scheduler.
+
+The argument \a sleep_time specifies how long the system was in sleep or power-down mode. It is measured in number of system
+intervals.
+
+\note
+- You can call this function from the idle task only.
+- When the system is in power-down, the system tick timer is not running.
+- Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+See \ref os_suspend for a \b Code \b Example.
+*/
+/// @}
+
 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

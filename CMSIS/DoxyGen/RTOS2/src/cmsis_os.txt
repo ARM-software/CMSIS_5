@@ -1,64 +1,25 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\mainpage Overview
+\mainpage
 
-The CMSIS-RTOS API is a generic RTOS interface for ARM&reg; Cortex&reg;-M processor-based devices. CMSIS-RTOS provides a
-standardized API for software components that require RTOS functionality and gives therefore serious benefits to the users
-and the software industry.
- - CMSIS-RTOS provides basic features that are required in many applications or technologies such as UML or Java (JVM).
- - The unified feature set of the CMSIS-RTOS API simplifies sharing of software components and reduces learning efforts.
- - Middleware components that use the CMSIS-RTOS API are RTOS agnostic. CMSIS-RTOS compliant middleware is easier to adapt.
- - Standard project templates (such as motor control) of the CMSIS-RTOS API may be shipped with freely available CMSIS-RTOS
-   implementations.
+The <b>CMSIS-RTOS API Version 2</b> addresses the following new requirements:
+ - Dynamic object creation no longer requires static memory, static memory buffers are now optional.
+ - Support for ARMv8-M architecture that provides a Secure and Non-Secure state of code execution.
+ - Provisions for message passing in multi-core systems.
+ - Full support of C++ run-time environments.
+ - C interface which is binary compatible across ABI
+   <http://infocenter.arm.com/help/topic/com.arm.doc.subset.swdev.abi/index.html> compatible compilers.
 
+As a consequence of these requirements the CMSIS-RTOS API v2 has the following fundamental modifications:
+ - The functions osXxxxNew replace osXxxxCreate functions; osXxxxNew and osXxxxDelete create and destroy objects.
+ - The C function main is not longer started as a thread (this was an optional feature in CMSIS-RTOS v1).
+ - Functions that return osEvent have been replaced.
 
-\note The CMSIS-RTOS API defines a minimum feature set. Implementations with extended features may be provided by RTOS
-      vendors.
+CMSIS-RTOS API v2 provides an translation layer for the
+<a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API Version 1</a> that simplifies migration.
 
-\image html "API_Structure.png" "CMSIS-RTOS API Structure"
-
-A typical CMSIS-RTOS API implementation interfaces to an existing real-time Kernel. The CMSIS-RTOS API provides the following
-attributes and functionalities:
- - Function names, identifiers, and parameters are descriptive and easy to understand. The functions are powerful and
-   flexible which reduces the number of functions exposed to the user. 
- - \ref CMSIS_RTOS_ThreadMgmt allows you to define, create, and control threads.
- - Interrupt Service Routines (ISR) can \ref CMSIS_RTOS_ISR_Calls "call some CMSIS-RTOS functions". When a CMSIS-RTOS
-   function cannot be called from ISR context, it rejects the invocation.
- - Different thread event types support communication between multiple threads and/or ISR:
-   - \ref CMSIS_RTOS_ThreadFlagsMgmt "Thread Flags": is a flag that may be used to indicate specific conditions to a thread.
-     Thread flags can be modified in an ISR or set from other threads. 
-   - \ref CMSIS_RTOS_Message "Message": is a 32-bit value that can be sent to a thread or an ISR. Messages are buffered in a
-     queue. The message type and queue size is defined in a descriptor.
-   - \ref CMSIS_RTOS_Mail "Mail": is a fixed-size memory block that can be sent to a thread or an ISR. Mails are buffered in
-     a queue and memory allocation is provided. The mail type and queue size is defined in a descriptor.
- - \ref CMSIS_RTOS_MutexMgmt and \ref CMSIS_RTOS_SemaphoreMgmt are incorporated.
- - CPU time can be scheduled with the following functionalities:
-   - A \ref CMSIS_RTOS_TimeOutValue "timeout" parameter is incorporated in many CMSIS-RTOS functions to avoid system lockup.
-     When a timeout is specified, the system waits until a resource is available or an event occurs. While waiting, other
-     threads are scheduled.
-   - The \ref osDelay function puts a thread into the state \b WAITING for a specified period of time.
-   - The generic \ref osEventWait function waits for events that are assigned to a thread.
-   - The \ref osThreadYield provides co-operative thread switching and passes execution to another thread of the same
-     priority.
-
-The CMSIS-RTOS API is designed to optionally incorporate multi-processor systems and/or access protection via the
-ARM&nbsp;Cortex-M Memory Protection Unit (MPU).
-
-In some RTOS implementations threads may execute on different processors and \b Mail and \b Message queues can therefore
-reside in shared memory resources.
-
-The CMSIS-RTOS API encourages the software industry to evolve existing RTOS implementations. Kernel objects are defined and
-accessed using macros. This allows differentiation. RTOS implementations can be different and optimized in various aspects
-towards the Cortex-M processors. Optional features may be for example
- - Generic \b wait function; i.e. with support of time intervals.
- - Support of the Cortex-M Memory Protection Unit (MPU).
- - Zero-copy mail queue.
- - Support of multi-processor systems.
- - Support of a DMA controller.
- - Deterministic context switching.
- - Round-robin context switching.
- - Deadlock avoidance, for example with priority inversion.
- - Zero interrupt latency by using the ARMv7-M instructions LDREX and STREX.
+CMSIS-RTOS API v2 is not POSIX compliant, but has provisions to enable a POSIX translation layer and a C++ interface.
+\todo Investigate into a flexible C++ interface and potential POSIX translation
 
 <hr>
 
@@ -66,12 +27,11 @@ CMSIS-RTOS in ARM::CMSIS Pack
 -----------------------------
 
 The following files relevant to CMSIS-RTOS are present in the <b>ARM::CMSIS</b> Pack directories:
-|File/Folder                 |Content                                                                 |
-|----------------------------|------------------------------------------------------------------------|
-|\b CMSIS/Documentation/RTOS | This documentation                                                     |
-|\b CMSIS/RTOS/Template      | \ref cmsis_os_h                                                        |
-
-<hr>
+|File/Folder                  | Content                                                                |
+|-----------------------------|------------------------------------------------------------------------|
+|\b CMSIS/Documentation/RTOS2 | This documentation                                                     |
+|\b CMSIS/Documentation/RTOS  | CMSIS-RTOS API Version 1 documentation                                 |
+|\b CMSIS/RTOS/Template       | \ref cmsis_os_h                                                        |
 */
 
 

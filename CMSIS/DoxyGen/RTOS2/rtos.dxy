@@ -38,7 +38,7 @@ PROJECT_NUMBER         = "Version 2.00"
 # for a project that appears at the top of each page and should give viewer 
 # a quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = "CMSIS-RTOS API: Generic RTOS interface for Cortex-M processor-based devices."
+PROJECT_BRIEF          = "Real-Time Operating System: API and RTX Reference Implementation"
 
 # With the PROJECT_LOGO tag one can specify an logo or icon that is 
 # included in the documentation. The maximum height of the logo should not 
@@ -52,7 +52,7 @@ PROJECT_LOGO           = ../Doxygen_Templates/CMSIS_Logo_Final.png
 # If a relative path is entered, it will be relative to the location 
 # where doxygen was started. If left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = ../../Documentation/RTOS
+OUTPUT_DIRECTORY       = ../../Documentation/RTOS2
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 
 # 4096 sub-directories (in 2 levels) under the output directory of each output 
