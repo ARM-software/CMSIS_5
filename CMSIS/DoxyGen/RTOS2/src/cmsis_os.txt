@@ -2,13 +2,12 @@
 /**
 \mainpage
 
-The <b>CMSIS-RTOS API Version 2</b> addresses the following new requirements:
+The <b>CMSIS-RTOS API v2</b> addresses the following new requirements:
  - Dynamic object creation no longer requires static memory, static memory buffers are now optional.
  - Support for ARMv8-M architecture that provides a Secure and Non-Secure state of code execution.
  - Provisions for message passing in multi-core systems.
  - Full support of C++ run-time environments.
- - C interface which is binary compatible across ABI
-   <http://infocenter.arm.com/help/topic/com.arm.doc.subset.swdev.abi/index.html> compatible compilers.
+ - C interface which is binary compatible across <a class="el" href="http://infocenter.arm.com/help/topic/com.arm.doc.subset.swdev.abi/index.html">ABI compatible compilers</a>.
 
 As a consequence of these requirements the CMSIS-RTOS API v2 has the following fundamental modifications:
  - The functions osXxxxNew replace osXxxxCreate functions; osXxxxNew and osXxxxDelete create and destroy objects.
@@ -16,7 +15,7 @@ As a consequence of these requirements the CMSIS-RTOS API v2 has the following f
  - Functions that return osEvent have been replaced.
 
 CMSIS-RTOS API v2 provides an translation layer for the
-<a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API Version 1</a> that simplifies migration.
+<a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API v1</a> that simplifies migration.
 
 CMSIS-RTOS API v2 is not POSIX compliant, but has provisions to enable a POSIX translation layer and a C++ interface.
 \todo Investigate into a flexible C++ interface and potential POSIX translation
@@ -30,8 +29,8 @@ The following files relevant to CMSIS-RTOS are present in the <b>ARM::CMSIS</b> 
 |File/Folder                  | Content                                                                |
 |-----------------------------|------------------------------------------------------------------------|
 |\b CMSIS/Documentation/RTOS2 | This documentation                                                     |
-|\b CMSIS/Documentation/RTOS  | CMSIS-RTOS API Version 1 documentation                                 |
-|\b CMSIS/RTOS/Template       | \ref cmsis_os_h                                                        |
+|\b CMSIS/Documentation/RTOS  | CMSIS-RTOS API v1 documentation                                 |
+|\b CMSIS/RTOS2/Template      | \ref cmsis_os_h                                                        |
 */
 
 
@@ -428,8 +427,8 @@ Test Result: PASSED
 /* ========================================================================================================================== */
 // Reference 
 /** 
- * \addtogroup CMSIS_RTOS CMSIS-RTOS API Version 2
- * \brief This section describes the CMSIS-RTOS API Version 2. 
+ * \addtogroup CMSIS_RTOS CMSIS-RTOS API v2
+ * \brief This section describes the CMSIS-RTOS API v2. 
  * \details The CMSIS-RTOS is a generic API layer that interfaces to an existing RTOS kernel.
  *  @{
  */
