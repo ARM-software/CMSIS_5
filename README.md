@@ -1,10 +1,10 @@
-# CMSIS Version 5 Development Repository
+# CMSIS Version 5
 
-CMSIS Version 5.0.0 is scheduled for release in June 2016.
+CMSIS Version 5.0.0 is scheduled for release in June 2016. Once completed it will be release in this GitHub project.
 
-This development repository gives our users and partners contiguous access
-to the CMSIS components. It allows you to review the work and provide feedback.
-Please use GitHub to discuss and track issues or create pull requests for contributions.
+
+Use *Issues* to provide feedback and report problems for CMSIS Version 5. Note that this repository gives our users and partners contiguous access to the CMSIS development. It allows you to review the work and provide feedback or create pull requests for contributions.
+
 
 ## Planned Enhancements
  - Add support for ARMv8-M Architecture (Mainline and Baseline)
