@@ -1628,7 +1628,7 @@ typedef struct
  
 #ifndef (CMSIS_VECTAB_VIRTUAL)
   #define NVIC_SetVector              __NVIC_SetVector
-  #define NVIC_NVIC_GetVector         __NVIC_NVIC_GetVector
+  #define NVIC_GetVector              __NVIC_GetVector
 #endif  /* (CMSIS_VECTAB_VIRTUAL) */
 
 #define NVIC_USER_IRQ_OFFSET          16U
