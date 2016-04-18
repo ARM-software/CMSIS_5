@@ -1615,7 +1615,7 @@ typedef struct
   @{
  */
 
- #ifndef (CMSIS_NVIC_VIRTUAL)
+ #ifndef CMSIS_NVIC_VIRTUAL
   #define NVIC_EnableIRQ              __NVIC_EnableIRQ
   #define NVIC_DisableIRQ             __NVIC_DisableIRQ
   #define NVIC_GetPendingIRQ          __NVIC_GetPendingIRQ
@@ -1626,7 +1626,7 @@ typedef struct
   #define NVIC_GetPriority            __NVIC_GetPriority
 #endif /* CMSIS_NVIC_VIRTUAL */
  
-#ifndef (CMSIS_VECTAB_VIRTUAL)
+#ifndef CMSIS_VECTAB_VIRTUAL
   #define NVIC_SetVector              __NVIC_SetVector
   #define NVIC_GetVector              __NVIC_GetVector
 #endif  /* (CMSIS_VECTAB_VIRTUAL) */
