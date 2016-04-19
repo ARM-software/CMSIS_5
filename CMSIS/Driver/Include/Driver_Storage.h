@@ -237,6 +237,96 @@ typedef enum _ARM_STORAGE_OPERATION {
   ARM_STORAGE_OPERATION_GET_BLOCK
 } ARM_STORAGE_OPERATION;
 
+// Function documentation
+/**
+  \fn          ARM_DRIVER_VERSION ARM_Storage_GetVersion (void)
+  \brief       Get driver version.
+  \return      \ref ARM_DRIVER_VERSION
+*/
+/**
+  \fn          ARM_STORAGE_CAPABILITIES ARM_Storage_GetCapabilities (void)
+  \brief       Get driver capabilities.
+  \return      \ref ARM_STORAGE_CAPABILITIES
+*/
+/**
+  \fn          int32_t ARM_Storage_Initialize (ARM_Storage_Callback_t callback)
+  \brief       Initialize the Storage Interface.
+  \param[in]   callback  Pointer to \ref ARM_Storage_Callback_t. Caller-defined callback to be invoked upon command completion.
+  \return      ARM_DRIVER_OK (for asynchronous execution), 1 (for synchronous completion), or <ARM_DRIVER_OK (for error).
+*/
+/**
+  \fn          int32_t ARM_Storage_Uninitialize (void)
+  \brief       De-initialize the Storage Interface.
+  \return      ARM_DRIVER_OK (for asynchronous execution), 1 (for synchronous completion), or <ARM_DRIVER_OK (for error).
+*/
+/**
+  \fn          int32_t ARM_Storage_PowerControl (ARM_POWER_STATE state)
+  \brief       Control the Storage interface power.
+  \param[in]   state  Power state
+  \return      ARM_DRIVER_OK (for asynchronous execution), 1 (for synchronous completion), or <ARM_DRIVER_OK (for error).
+*/
+/**
+  \fn          int32_t ARM_Storage_ReadData (uint64_t addr, void *data, uint32_t size)
+  \brief       Read data from Storage.
+  \param[in]   addr  Data address.
+  \param[out]  data  Pointer to a buffer storing the data read from Storage.
+  \param[in]   size  Number of bytes to read.
+  \return      ARM_DRIVER_OK (for asynchronous execution), number of bytes read (for synchronous completion), or <ARM_DRIVER_OK (for error).
+*/
+/**
+  \fn          int32_t ARM_Storage_ProgramData (uint64_t addr, const void *data, uint32_t size)
+  \brief       Program data to Storage.
+  \param[in]   addr  Data address.
+  \param[in]   data  Pointer to a buffer containing the data to be programmed to Storage.
+  \param[in]   size  Number of bytes to program.
+  \return      ARM_DRIVER_OK (for asynchronous execution), number of bytes programmed (for synchronous completion), or <ARM_DRIVER_OK (for error).
+*/
+/**
+  \fn          int32_t ARM_Storage_Erase (uint64_t addr, uint32_t size)
+  \brief       Erase Storage range.
+  \param[in]   addr  Start-address of the range to be erased.
+  \param[in]   size  Size (in bytes) of the range to be erased.
+  \return      ARM_DRIVER_OK (for asynchronous execution), number of bytes erased (for synchronous completion), or <ARM_DRIVER_OK (for error).
+*/
+/**
+  \fn          int32_t ARM_Storage_EraseAll (void)
+  \brief       Erase complete Storage.
+               Optional function for faster full chip erase.
+  \return      ARM_DRIVER_OK (for asynchronous execution), 1 (for synchronous completion), or <ARM_DRIVER_OK (for error).
+*/
+/**
+  \fn          ARM_STORAGE_STATUS ARM_Storage_GetStatus (void)
+  \brief       Get Storage status.
+  \return      Storage status \ref ARM_STORAGE_STATUS
+*/
+/**
+  \fn          int32_t ARM_Storage_GetInfo (ARM_STORAGE_INFO *info)
+  \brief       Get Storage information.
+  \param[out]  info  A caller-supplied buffer capable of being filled in with an \ref ARM_STORAGE_INFO.
+  \return      ARM_DRIVER_OK if successful, else an appropriate error value.
+*/
+/**
+  \fn          uint32_t ARM_Storage_ResolveAddress(uint64_t addr)
+  \brief       Resolve an address relative to the storage controller into a memory address.
+  \param[in]   addr The address for which we want a resolution to the processor's physical address space.
+  \return      The resolved address in the processor's address space, else ARM_STORAGE_INVALID_ADDRESS.
+*/
+/**
+  \fn          int32_t ARM_Storage_GetNextBlock(const ARM_STORAGE_BLOCK* prev_block, ARM_STORAGE_BLOCK *next_block);
+  \brief       Advance to the successor of the current block (iterator).
+  \param[in]   prev_block An existing block (iterator) within the same storage controller, or NULL.
+  \param[out]  next_block A caller-owned buffer large enough to be filled in with the following ARM_STORAGE_BLOCK.
+  \return      ARM_DRIVER_OK if a valid next block is found, else <ARM_DRIVER_OK for errors.
+*/
+/**
+  \fn          int32_t ARM_Storage_GetBlock(uint64_t addr, ARM_STORAGE_BLOCK *block);
+  \brief       Find the storage block (iterator) encompassing a given storage address.
+  \param[in]   addr Storage address in bytes.
+  \param[out]  block A caller-owned buffer large enough to be filled in with the ARM_STORAGE_BLOCK encapsulating the given address.
+  \return      ARM_DRIVER_OK if a containing storage-block is found, else <ARM_DRIVER_OK for errors.
+*/
+
+
 /**
  * Declaration of the callback-type for command completion.
  *
