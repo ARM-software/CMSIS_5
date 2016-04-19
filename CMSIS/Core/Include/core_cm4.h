@@ -1839,9 +1839,9 @@ __STATIC_INLINE void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGr
   \details Sets an interrupt vector in SRAM based interrupt vector table.
            The interrupt number can be positive to specify an external (device specific) interrupt,
            or negative to specify an internal (core) interrupt.
-           VTOR must been releoctaed to SRAM before.
-  \param [in]   IRQn      Interrupt number.
-  \param [in]   vector    Interrupt Vector.
+           VTOR must been relocated to SRAM before.
+  \param [in]   IRQn      Interrupt number
+  \param [in]   vector    Address of interrupt handler function
  */
 __STATIC_INLINE void __NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)
 {
@@ -1856,7 +1856,7 @@ __STATIC_INLINE void __NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)
            The interrupt number can be positive to specify an external (device specific) interrupt,
            or negative to specify an internal (core) interrupt.
   \param [in]   IRQn      Interrupt number.
-  \return                 Interrupt vector.
+  \return                 Address of interrupt handler function
  */
 __STATIC_INLINE uint32_t __NVIC_GetVector(IRQn_Type IRQn)
 {
