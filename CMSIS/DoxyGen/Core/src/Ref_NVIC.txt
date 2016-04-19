@@ -14,7 +14,7 @@ The table below lists the core exception vectors of the various Cortex-M process
 <table class="cmtable" summary="Core Exception Name">
     <tr>
       <th>Exception Vector</th>
-      <th>IRQn\nValue</th>
+      <th>IRQn<br/>Value</th>
       <th>M0</th>
       <th>M0+</th>
       <th>M3</th>
@@ -22,8 +22,8 @@ The table below lists the core exception vectors of the various Cortex-M process
       <th>M7</th>
       <th>SC000</th>
       <th>SC300</th>
-      <th>ARMv8MBL</th>
-      <th>ARMv8MML</th>
+      <th>ARMv8-M<br/>Baseline</th>
+      <th>ARMv8-M<br/>Mainline</th>
       <th>Description</th>
     </tr>
     <tr>
@@ -316,10 +316,12 @@ int main (void) {
 
 NVIC Function Virtualization
 ============================
-The CMSIS-Core has provisions for NVIC function Virtualization as required for implementation of
+The CMSIS-Core has provisions for NVIC function virtualization as required for implementation of
 secure systems that control access to peripherals and related interrupts.
 
-
+The NVIC function virtualization is enabled with the following \#define symbols:
+  - \ref CMSIS_NVIC_VIRTUAL allows to replace the CMSIS-CORE NVIC functions.
+  - \ref CMSIS_VECTAB_VIRTUAL allows to replace the CMSIS-CORE interrupt vector table access functions.
 
 */     
 
@@ -327,7 +329,9 @@ secure systems that control access to peripherals and related interrupts.
 /**
 \def CMSIS_NVIC_VIRTUAL
 When \ref CMSIS_NVIC_VIRTUAL is defined the functions in the table below should be replaced
-to virtualize the NVIC access.
+for the virtualization of the NVIC access.  The NVIC Access Function should be implemented
+in a different source module which allows to check for example access with a specific IRQn value.
+The original CMSIS-Core Function is still available, but prefixed with __NVIC.
 
 NVIC Access Function      | CMSIS-Core Function
 --------------------------|---------------------------------------------
@@ -348,7 +352,9 @@ NVIC_GetPriorityGrouping  | __NVIC_GetPriorityGrouping
 
 \def CMSIS_VECTAB_VIRTUAL
 When \ref When \ref CMSIS_NVIC_VIRTUAL is defined the functions in the table below should be replaced
-to virtualize the access function for the interrupt vector table.
+to virtualization the access function for the interrupt vector table. The NVIC Vector Table Access Function should be implemented
+in a different source module which allows to check for example access with a specific IRQn value.
+The original CMSIS-Core Function is still available, but prefixed with __NVIC.
 
 Interrupt Vector Table Access  | CMSIS-Core Function
 -------------------------------|---------------------------------------------

@@ -27,9 +27,12 @@ The CMSIS components are:
  - <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>: DSP Library Collection with over 60 Functions for various data types: fix-point (fractional q7, q15, q31) and single precision floating-point (32-bit).
    The library is available for all Cortex-M cores. The Cortex-M4 and Cortex-M7 implementations are optimized for the SIMD instruction set.
 
- - <a href="../../RTOS/html/index.html"><b>CMSIS-RTOS API Version 2</b></a>: Common API for Real-Time operating systems. It provides a standardized programming interface that is portable to many RTOS and enables therefore 
-    software templates, middleware, libraries, and other components that can work across supported the RTOS systems.
+ - <a href="../../RTOS/html/index.html"><b>CMSIS-RTOS v1</b></a>: Common API for Real-Time Operating Systems along with reference implementation based on RTX.
+    It provides a standardized programming interface that is portable to many RTOS and enables software components that can work across multiple RTOS systems.
 
+ - <a href="../../RTOS2/html/index.html"><b>CMSIS-RTOS v2</b></a>: extends CMSIS-RTOS v1 with support for ARMv8-M architecture, dynamic object creation,
+    provisions for multi-core systems, and binary compatible interface across ABI compliant compilers.
+	
  - <a href="../../Pack/html/index.html"><b>CMSIS-Pack</b></a>: describes with a XML based package description (PDSC) file the user and device relevant parts of a file collection (called software pack) that includes source, header, and library files, documentation, 
     Flash programming algorithms, source code templates, and example projects. Development tools and web infrastructures use the PDSC file to extract device parameters, 
     software components, and evaluation board configurations.
@@ -107,7 +110,6 @@ The <b>ARM::CMSIS</b> Pack contains the following:
 |:-----------------|:---------------------------------------------------------------------------------|
 |\b ARM.CMSIS.pdsc |Package description file                                                          |
 |\b CMSIS          |\ref CM_Components "CMSIS components" (see below)                                 |
-|\b CMSIS_RTX      |<a class=el href="http://www.keil.com/pack/doc/cmsis_rtx/index.html" target="_blank">Keil RTX</a> implementation of <a href="../../RTOS/html/index.html"><b>CMSIS-RTOS</b></a>|
 |\b Device         |ARM reference implementations of Cortex-M devices                                 |
 
 CMSIS Directory
@@ -125,8 +127,8 @@ index.html file for this documentation, and the following sub-directories:
 |\b Include                |Include files for <a href="../../Core/html/index.html"><b>CMSIS-CORE</b></a> and <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>|
 |\b Lib                    |<a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> generated libraries for ARMCC and GCC                                           |
 |\b Pack                   |<a href="../../Pack/html/_pack__example.html"><b>CMSIS-Pack</b></a> example                                                              |
-|\b RTOS                   |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS API Version 2</b></a> header file                                                     |
-|\b RTOSv1                 |<a href="../../RTOSv1/html/index.html"><b>CMSIS-RTOS API Version 1</b></a> header file                                                   |
+|\b RTOS                   |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS API Version 1</b></a> along with RTX reference implementation                         |
+|\b RTOSv2                 |<a href="../../RTOSv1/html/index.html"><b>CMSIS-RTOS Version 2</b></a> along with RTX reference implementation                           |
 |\b SVD                    |<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a> example                                                                         |
 |\b UserCodeTemplates\\ARM |ITM_Retarget.c, CMSIS <a href="../../Core/html/group___i_t_m___debug__gr.html"><b>retarget output</b></a> to ITM Channel 0 template file |
 |\b Utilities              |PACK.xsd (<a href="../../Pack/html/_pack__example.html"><b>CMSIS-Pack</b></a> schema file), PackChk.exe (checking tool for software packs), \n CMSIS-SVD.xsd (<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a> schema file), SVDConv.exe (conversion tool for SVD files)|
@@ -147,7 +149,8 @@ In addition, each CMSIS component has its own release history:
 - <a href="../../Driver/html/driver_revision_history.html"><b>Driver Revision History</b></a>
 - <a href="../../DSP/html/_change_log_pg.html"><b>DSP Revision History (Change Log)</b></a>
 - <a href="../../Pack/html/pack_revision_history.html"><b>Pack Revision History</b></a>
-- <a href="../../RTOS/html/rtos_revision_history.html"><b>RTOS API Revision History</b></a>
+- <a href="../../RTOS/html/rtos_revision_history.html"><b>RTOS v1 Revision History</b></a>
+- <a href="../../RTOS2/html/rtos_revision_history.html"><b>RTOS v2 Revision History</b></a>
 - <a href="../../RTX/html/rtx_revision_history.html"><b>RTX Revision History</b></a>
 - <a href="../../SVD/html/svd_revision_history.html"><b>SVD Revision History</b></a>
 
@@ -163,6 +166,7 @@ In addition, each CMSIS component has its own release history:
       <td>
         Added <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>ARMv8-M architecture</b></a> support.
         - CMSIS-CORE 5.0.0
+		- CMSIS-RTOS 2.0.0
       </td>
     </tr>
     <tr>
