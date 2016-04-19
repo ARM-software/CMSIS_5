@@ -45,8 +45,7 @@ This manual contains the following sections:
  - \subpage RtosValidation : Describes the Software Pack that can be used to validate a CMSIS-RTOS implementation.
  - \subpage RTXImplementation : Documents the open-source implementation CMSIS-RTOS RTX.
 
-\note An updated version of the API can be found in the
-<a class="el" href="../../RTOS2/html/index.html">CMSIS-RTOS API Version 2</a> documentation.
+\note An extended version of the CMSIS-RTOS API is available in <a class="el" href="../../RTOS2/html/index.html">CMSIS-RTOS v2</a>.
 
 <hr>
 

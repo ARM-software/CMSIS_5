@@ -57,6 +57,7 @@ These manuals contain the programmers model and detailed information about the c
 \section tested_tools_sec Tested and Verified Toolchains
 
 The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified with the following toolchains:
+\todo add version information for ARMCC compilers, verify compiler versions
  - ARM: MDK-ARM Version 5.16
  - GNU: GNU Tools ARM Embedded 4.9 2015.q2
  - IAR: IAR Embedded Workbench Kickstart Edition V6.10
@@ -81,14 +82,15 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
          Changed: license under Apache-2.0. \n
          Added: check if macro is defined before use. \n
          Corrected: function \ref SCB_DisableDCache. \n
-         Corrected: macros \ref _VAL2FLD, \ref _FLD2VAL.
+         Corrected: macros \ref \_VAL2FLD, \ref \_FLD2VAL.
+		 Added: NVIC function virtualization with macros \ref CMSIS_NVIC_VIRTUAL and \ref CMSIS_VECTAB_VIRTUAL.
       </td>
     </tr>
     <tr>
       <td>V5.00 - Beta</td>
       <td>
          Renamed: cmsis_armcc_V6.h to cmsis_armclang.h.\n
-         Renamed: core_*.h to lower case.\n
+         Renamed: core\_*.h to lower case.\n
          Added: function \ref SCB_GetFPUType to all CMSIS cores.\n
          Added: ARMv8-M support.
        </td>
@@ -98,7 +100,7 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
       <td>
          Corrected: DoxyGen function parameter comments.\n
          Corrected: IAR toolchain: removed for \ref NVIC_SystemReset the attribute(noreturn).\n
-         Corrected: GCC toolchain: supressed irrelevant compiler warnings.\n
+         Corrected: GCC toolchain: suppressed irrelevant compiler warnings.\n
          Added: Support files for ARM Compiler v6 (cmsis_armcc_v6.h).
       </td>
     </tr>
