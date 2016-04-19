@@ -25,7 +25,7 @@
 \mainpage
 
 This manual describes the \b CMSIS-RTOS \b API \b Version \b 1 and the reference implementation
-\ref RTXImplmentation "CMSIS-RTOS RTX" which is designed for Cortex-M processor-based devices. The RTOS kernel can be used
+\ref RTXImplementation "CMSIS-RTOS RTX" which is designed for Cortex-M processor-based devices. The RTOS kernel can be used
 for creating applications that perform multiple tasks simultaneously. These tasks are executed by threads that operate in a
 quasi-parallel fashion.
 
@@ -43,7 +43,7 @@ This manual contains the following sections:
  - \subpage UsingOS : Provides generic instructions for using a CMSIS-RTOS API compliant implementation. 
  - \subpage FunctionOverview : Lists the CMSIS-RTOS API functions including RTX-specific extensions.
  - \subpage RtosValidation : Describes the Software Pack that can be used to validate a CMSIS-RTOS implementation.
- - \subpage RTXImplmentation : Documents the open-source implementation CMSIS-RTOS RTX.
+ - \subpage RTXImplementation : Documents the open-source implementation CMSIS-RTOS RTX.
 
 \note An updated version of the API can be found in the
 <a class="el" href="../../RTOS2/html/index.html">CMSIS-RTOS API Version 2</a> documentation.
@@ -365,7 +365,7 @@ The following list provides a brief overview of all CMSIS-RTOS functions.  Funct
 A specific CMSIS-RTOS implementation may not provide all functions, but this is clearly indicated with \b osFeatureXXXX
 defines.
 
-\note Functions that are not supported by the \ref RTXImplmentation, are marked with a (*).
+\note Functions that are not supported by the \ref RTXImplementation, are marked with a (*).
 
  - \ref CMSIS_RTOS_KernelCtrl
    - \ref osKernelInitialize : Initialize the RTOS kernel.
@@ -429,7 +429,7 @@ defines.
    - \ref osMailGet : Get a mail or suspend thread execution until mail arrives.
    - \ref osMailFree : Return a memory block to the mail queue.
 
- - \ref RTX_Global_Functions "RTX-specific Global Functions"
+ - \ref RTX_Global_Functions "RTX Specific Functions"
    - \ref os_idle_demon : System thread running when no other thread is ready to run.
    - \ref os_suspend : Suspend the RTX task scheduler.
    - \ref os_resume : Resume the RTX task scheduler.
@@ -587,7 +587,7 @@ Test Result: PASSED
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page RTXImplmentation RTX Implementation
+\page RTXImplementation RTX Implementation
 
 This version of RTX implements the CMSIS-RTOS API, which is a generic RTOS interface for Cortex-M processor-based devices.
 The CMSIS-RTOS API provides a standardized interface for software components that require RTOS functionality.
@@ -645,6 +645,23 @@ The following sections provide further details:
 
 This section describes how CMSIS-RTOS RTX manages the resources of the target system. Many aspects of the CMSIS-RTOS RTX
 kernel can be configured. Information about configuration options is mentioned where applicable.
+
+
+\section osFeature Settings for osFeature_xxx in cmsis_os.h
+
+CMSIS-RTOS RTX uses the following \#defines.
+
+| osFeature_xxx \#define      | RTX Setting | Meaning                                            |
+|-----------------------------|-------------|----------------------------------------------------|
+| \ref osFeature_MainThread   |  1          | main can be a thread
+| \ref osFeature_Pool         |  1          | Memory Pools are available
+| \ref osFeature_MailQ        |  1          | Mail Queues are available
+| \ref osFeature_MessageQ     |  1          | Message Queues are available
+| \ref osFeature_Signals      |  16         | 16 Signal Flags are available per thread
+| \ref osFeature_Semaphore    |  65535      | Maximum count for \ref osSemaphoreCreate function
+| \ref osFeature_Wait         |  0          | \ref osWait is not available
+| \ref osFeature_SysTick      |  1          | \ref osKernelSysTick functions are available
+
 
 \section KernelTimer RTX Kernel Timer Tick and Thread Management
 
@@ -1629,6 +1646,254 @@ a reference for building the CMSIS-RTOS RTX libraries using a tool-chain of your
 /// @} 
 
 
+/** 
+\addtogroup RTX_Global_Functions RTX Specific Functions
+\brief This section describes the functions that are specific to CMSIS-RTOS RTX. 
+\details 
+The RTX kernel can be customized for different application requirements:
+- If you are depending on the \ref LowPower "lowest power consumption" possible, you need to adapt the function
+  \ref os_idle_demon to send the system to sleep mode as often as possible. In addition, use the
+  \ref TickLess "low power RTX extensions" \ref os_suspend and \ref os_resume to suspend the RTX scheduler and to stop the
+  SysTick timer.
+- If you need to specify an \ref AltTimer "alternate hardware timer" as the system tick timer, you need to
+  -# implement the functions \ref os_tick_init, \ref os_tick_ovf, \ref os_tick_val, and optionally the function
+     \ref os_tick_irqack.
+  -# replace the alternate timer interrupt vector with the \ref OS_Tick_Handler in the Interrupt Vector Table in startup
+     file.
+- If you try to find a \b runtime \b error, use the function \ref os_error to debug the error.
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn void os_idle_demon (void)
+The function \b os_idle_demon is executed by the RTX kernel, when no other threads are ready to run. By default, this task
+is an empty end-less loop that does nothing. It only waits until another task becomes ready to run. You may change the code
+of the \b os_idle_demon function to put the CPU into a power-saving or idle mode.
+
+The default stack size for this task is defined in the file \b \#RTX_Conf_CM.c. Refer to \ref ThreadConfig entry <b>Default Thread stack size [bytes]</b>.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+void os_idle_demon (void) {
+ 
+  for (;;) {
+  __WFI(); // wait for interrupt
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int os_tick_init (void)
+The function \b os_tick_init initializes an alternate hardware timer as the system tick timer and starts it. If you setup
+OS_SYSTICK to 0, this function will be available for adding the alternate timer. It returns the interrupt number of the
+alternative hardware timer.
+
+\note - When using an alternate timer, you must enter the \ref OS_Tick_Handler in the interrupt vector table in the startup
+file.
+
+\note - Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+#include "LPC43xx.h"                    // Device header
+ 
+int os_tick_init (void) {
+  // Initialize hardware timer as system tick timer. 
+ 
+  LPC_CCU1->CLK_M4_RITIMER_CFG = (1UL << 0);
+ 
+  LPC_RITIMER->COMPVAL = OS_TRV;     // Set match value
+  LPC_RITIMER->COUNTER = 0;          // Set count value to 0
+  LPC_RITIMER->CTRL    = (1UL << 3) |    // Timer enable
+                         (1UL << 2) |    // Timer enable for debug
+                         (1UL << 1) |    // Timer enable clear on match
+                         (1UL << 0);     // Clear interrupt flag
+  
+  return (M0_RITIMER_OR_WWDT_IRQn);  // Return IRQ number of timer (0..239) 
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn uint32_t os_tick_val (void)
+The function \b os_tick_val returns the current value of the alternate hardware timer specified by os_tick_init.
+
+\note - When using an alternate timer, you must enter the \ref OS_Tick_Handler in the interrupt vector table in the startup
+file.
+\note - Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+#include "LPC43xx.h"                    // Device header
+ 
+uint32_t os_tick_val (void) {
+ 
+  return (LPC_RITIMER->COUNTER);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn uint32_t os_tick_ovf (void)
+The function \b os_tick_ovf returns the overflow flag of the alternate hardware timer specified by os_tick_init.
+
+\note - When using an alternate timer, you must enter the \ref OS_Tick_Handler in the interrupt vector table in the startup
+file.
+\note - Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+#include "LPC43xx.h"                    // Device header
+ 
+uint32_t os_tick_ovf (void) {
+ 
+  return (LPC_RITIMER->CTRL);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn void os_tick_irqack (void)
+The function \b os_tick_irqack acknowledges the peripheral timer interrupt.
+
+\note - When using an alternate timer, you must enter the \ref OS_Tick_Handler in the interrupt vector table in the startup
+file.
+\note - Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+#include "LPC43xx.h"                    // Device header
+ 
+void os_tick_irqack (void) {
+ 
+  LPC_RITIMER->CTRL |= (1UL << 0);    // Clear interrupt flag
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn void os_error (uint32_t error_code)
+Some system error conditions can be detected during runtime. If the RTX kernel detects a runtime error, it calls the runtime
+error function \b os_error.
+
+The argument \a error_code passes the actual error code to this function:
+
+|Error Code        |Description|
+|------------------|-----------|
+|OS_ERROR_STACK_OVF|The stack checking has detected a stack overflow for the currently running thread.|
+|OS_ERROR_FIFO_OVF |The ISR FIFO Queue buffer overflow is detected.|
+|OS_ERROR_MBX_OVF  |A mailbox overflow is detected for the function \ref osMessagePut or \ref osMailPut.|
+|OS_ERROR_TIMER_OVF|The User Timer Callback Queue overflow is detected.|
+
+The function \b os_error must contain an infinite loop to prevent further program execution. You can use an emulator to step
+over infinite loop and trace into the code introducing a runtime error. For the overflow errors this means you need to
+increase the size of the object causing an overflow.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+void os_error (uint32_t error_code) {
+ 
+  // HERE: include optional code to be executed on runtime error. 
+  switch (error_code) {
+ 
+    case OS_ERROR_STACK_OVF:
+      // Stack overflow detected for the currently running task. 
+      // Thread can be identified by calling svcThreadGetId().   
+      break;
+ 
+    case OS_ERROR_FIFO_OVF:
+      // ISR FIFO Queue buffer overflow detected. 
+      break;
+ 
+    case OS_ERROR_MBX_OVF:
+      // Mailbox overflow detected. 
+      break;
+ 
+    case OS_ERROR_TIMER_OVF:
+      // User Timer Callback Queue overflow detected. 
+      break;
+  }
+  for (;;);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn uint32_t os_suspend (void)
+The function \b os_suspend suspends the RTX task scheduler. The function calculates the time, for how long the system is
+allowed to power-down, and locks the task scheduler. When the function returns, the task switches are disabled. For normal
+RTX operation, after calling \b os_suspend, you must call the \ref os_resume function to re-enable the OS task scheduler.
+
+\note
+- You can call this function from the idle task only.
+- When the system is in power-down, the system tick timer is not running.
+- Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+
+The low power RTX is controlled from the \ref os_idle_demon. The peripheral wake-up timer must be initialized before the
+system enters an endless loop. \b os_suspend calculates the timeout until the first suspended task becomes ready, and returns
+the timeout to the user:
+
+\code
+  for (;;) {
+  sleep = os_suspend();
+\endcode
+
+The user sets-up a peripheral timer to sleep timeout and starts the timer. The timeout is measured in system ticks.
+
+\code
+if (sleep) {
+  // Setup the wake-up timer ... 
+\endcode
+
+When the wake-up timer is set-up and running, the user puts the system in power-down mode. The wake-up timer must run also in
+power-down mode. All other peripherals and the CPU may power-down to reduce power.
+
+\code
+  // Power-down the system ... 
+  SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+  __WFE();
+\endcode
+
+The wake-up timer, when expired, generates the interrupt and wakes-up the system. Hence, it must run also in power-down mode.
+The system resumes operation and needs to call the function \ref os_resume. This function restores the RTX and re-enables the
+scheduler.
+
+\code
+  // After Wake-up 
+  sleep = (tc - LPC_WWDT->TV) / 250;
+}
+os_resume(sleep);
+\endcode
+
+If, for any reason, the system does not wake up immediately after the wake-up interrupt, the actual sleep time is checked and
+adjusted.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn void os_resume (uint32_t sleep_time)
+The function \b os_resume resumes the RTX task scheduler. You must call this function after you have called \ref os_suspend
+to re-enable the task scheduler.
+
+The argument \a sleep_time specifies how long the system was in sleep or power-down mode. It is measured in number of system
+intervals.
+
+\note
+- You can call this function from the idle task only.
+- When the system is in power-down, the system tick timer is not running.
+- Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+See \ref os_suspend for a \b Code \b Example.
+*/
+/// @}
+
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 //  ==== Kernel Control Functions ====
 /** 
@@ -1673,6 +1938,8 @@ int main (void) {
 A CMSIS-RTOS implementation may support to start thread execution with the function 'main'.
  - When \ref osFeature_MainThread is 1 the RTOS offers to start with 'main'. The RTOS kernel is in this case already started.
  - When \ref osFeature_MainThread is 0 the RTOS requires explicit start with \ref osKernelStart.
+
+\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_MainThread is 1
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -1681,6 +1948,8 @@ A CMSIS-RTOS implementation may provide access to the RTOS kernel system timer.
  - When \ref osFeature_SysTick is 1 access to the RTOS kernel system timer is provided with \ref osKernelSysTick, 
    \ref osKernelSysTickFrequency, and \ref osKernelSysTickMicroSec.
  - When \ref osFeature_SysTick is 0 access to the RTOS kernel system timer is not implemented.
+
+\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_SysTick is 1
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -2137,6 +2406,8 @@ The Generic Wait function group provides means for a time delay and allow to wai
 A CMSIS-RTOS implementation may support the generic wait function \ref osWait.
  - When \ref osFeature_Wait is 1 a generic wait function \ref osWait is available.
  - When \ref osFeature_Wait is 0 no generic wait function \ref osWait is available.
+
+\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_Wait is 0
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -2532,6 +2803,8 @@ osDelay (1000);                       // wait for 1 second
 /** \def osFeature_Signals
 The CMSIS-RTOS API may support a variable number of signal flags. This define specifies the number of signal flags available
 per thread. The maximum value is 32 signal flags per thread.
+
+\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_Signals is 16
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -2690,6 +2963,8 @@ osEvent event = osMessageGet(message_q_id, osWaitForever);
 A CMSIS-RTOS implementation may support message queues. 
  - When \ref osFeature_MailQ is 1 message queues are supported.
  - When \ref osFeature_MailQ is 0 no message queues are supported.
+
+\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_MessageQ is 1
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -2884,6 +3159,8 @@ object_data->weight = 1000;
 A CMSIS-RTOS implementation may support fixed-size memory pools. 
  - When \ref osFeature_Pool is 1 memory pools are supported.
  - When \ref osFeature_Pool is 0 no memory pools are supported.
+ 
+\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_Pool is 1
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -3112,6 +3389,8 @@ osMailFree(object_pool_q_id, received);
 A CMSIS-RTOS implementation may support mail queues. 
  - When \ref osFeature_MailQ is 1 mail queues are supported.
  - When \ref osFeature_MailQ is 0 no mail queues are supported.
+
+\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_MailQ is 1
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -3570,7 +3849,10 @@ void thread_n (void)
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \def osFeature_Semaphore
-A CMSIS-RTOS implementation may support semaphores. The value \ref osFeature_Semaphore indicates the maximum index count for a semaphore.
+A CMSIS-RTOS implementation may support semaphores. The value \ref osFeature_Semaphore indicates the maximum index count for
+a semaphore.
+
+\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_Semaphore is 65535
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -3686,260 +3968,6 @@ used. The Semaphore may be created again using the function \ref osSemaphoreCrea
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /// @}
-
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-//  ==== RTX Global Functions ====
-/** 
-\addtogroup RTX_Global_Functions RTX Global Functions
-\ingroup CMSIS_RTOS
-\brief Global functions that are specific for CMSIS-RTOS RTX.
-\details 
-The RTX kernel can be customized for different application requirements:
-- If you are depending on the \ref LowPower "lowest power consumption" possible, you need to adapt the function
-  \ref os_idle_demon to send the system to sleep mode as often as possible. In addition, use the
-  \ref TickLess "low power RTX extensions" \ref os_suspend and \ref os_resume to suspend the RTX scheduler and to stop the
-  SysTick timer.
-- If you need to specify an \ref AltTimer "alternate hardware timer" as the system tick timer, you need to
-  -# implement the functions \ref os_tick_init, \ref os_tick_ovf, \ref os_tick_val, and optionally the function
-     \ref os_tick_irqack.
-  -# replace the alternate timer interrupt vector with the \ref OS_Tick_Handler in the Interrupt Vector Table in startup
-     file.
-- If you try to find a \b runtime \b error, use the function \ref os_error to debug the error.
-
-
-@{
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn void os_idle_demon (void)
-The function \b os_idle_demon is executed by the RTX kernel, when no other threads are ready to run. By default, this task
-is an empty end-less loop that does nothing. It only waits until another task becomes ready to run. You may change the code
-of the \b os_idle_demon function to put the CPU into a power-saving or idle mode.
-
-The default stack size for this task is defined in the file \b \#RTX_Conf_CM.c. Refer to \ref ThreadConfig entry <b>Default Thread stack size [bytes]</b>.
-
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-\code
-void os_idle_demon (void) {
- 
-  for (;;) {
-  __WFI(); // wait for interrupt
-  }
-}
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn int os_tick_init (void)
-The function \b os_tick_init initializes an alternate hardware timer as the system tick timer and starts it. If you setup
-OS_SYSTICK to 0, this function will be available for adding the alternate timer. It returns the interrupt number of the
-alternative hardware timer.
-
-\note - When using an alternate timer, you must enter the \ref OS_Tick_Handler in the interrupt vector table in the startup
-file.
-
-\note - Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-\code
-#include "LPC43xx.h"                    // Device header
- 
-int os_tick_init (void) {
-  // Initialize hardware timer as system tick timer. 
- 
-  LPC_CCU1->CLK_M4_RITIMER_CFG = (1UL << 0);
- 
-  LPC_RITIMER->COMPVAL = OS_TRV;     // Set match value
-  LPC_RITIMER->COUNTER = 0;          // Set count value to 0
-  LPC_RITIMER->CTRL    = (1UL << 3) |    // Timer enable
-                         (1UL << 2) |    // Timer enable for debug
-                         (1UL << 1) |    // Timer enable clear on match
-                         (1UL << 0);     // Clear interrupt flag
-  
-  return (M0_RITIMER_OR_WWDT_IRQn);  // Return IRQ number of timer (0..239) 
-}
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn uint32_t os_tick_val (void)
-The function \b os_tick_val returns the current value of the alternate hardware timer specified by os_tick_init.
-
-\note - When using an alternate timer, you must enter the \ref OS_Tick_Handler in the interrupt vector table in the startup
-file.
-\note - Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-\code
-#include "LPC43xx.h"                    // Device header
- 
-uint32_t os_tick_val (void) {
- 
-  return (LPC_RITIMER->COUNTER);
-}
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn uint32_t os_tick_ovf (void)
-The function \b os_tick_ovf returns the overflow flag of the alternate hardware timer specified by os_tick_init.
-
-\note - When using an alternate timer, you must enter the \ref OS_Tick_Handler in the interrupt vector table in the startup
-file.
-\note - Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-\code
-#include "LPC43xx.h"                    // Device header
- 
-uint32_t os_tick_ovf (void) {
- 
-  return (LPC_RITIMER->CTRL);
-}
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn void os_tick_irqack (void)
-The function \b os_tick_irqack acknowledges the peripheral timer interrupt.
-
-\note - When using an alternate timer, you must enter the \ref OS_Tick_Handler in the interrupt vector table in the startup
-file.
-\note - Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-\code
-#include "LPC43xx.h"                    // Device header
- 
-void os_tick_irqack (void) {
- 
-  LPC_RITIMER->CTRL |= (1UL << 0);    // Clear interrupt flag
-}
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn void os_error (uint32_t error_code)
-Some system error conditions can be detected during runtime. If the RTX kernel detects a runtime error, it calls the runtime
-error function \b os_error.
-
-The argument \a error_code passes the actual error code to this function:
-
-|Error Code        |Description|
-|------------------|-----------|
-|OS_ERROR_STACK_OVF|The stack checking has detected a stack overflow for the currently running thread.|
-|OS_ERROR_FIFO_OVF |The ISR FIFO Queue buffer overflow is detected.|
-|OS_ERROR_MBX_OVF  |A mailbox overflow is detected for the function \ref osMessagePut or \ref osMailPut.|
-|OS_ERROR_TIMER_OVF|The User Timer Callback Queue overflow is detected.|
-
-The function \b os_error must contain an infinite loop to prevent further program execution. You can use an emulator to step
-over infinite loop and trace into the code introducing a runtime error. For the overflow errors this means you need to
-increase the size of the object causing an overflow.
-
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-\code
-void os_error (uint32_t error_code) {
- 
-  // HERE: include optional code to be executed on runtime error. 
-  switch (error_code) {
- 
-    case OS_ERROR_STACK_OVF:
-      // Stack overflow detected for the currently running task. 
-      // Thread can be identified by calling svcThreadGetId().   
-      break;
- 
-    case OS_ERROR_FIFO_OVF:
-      // ISR FIFO Queue buffer overflow detected. 
-      break;
- 
-    case OS_ERROR_MBX_OVF:
-      // Mailbox overflow detected. 
-      break;
- 
-    case OS_ERROR_TIMER_OVF:
-      // User Timer Callback Queue overflow detected. 
-      break;
-  }
-  for (;;);
-}
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn uint32_t os_suspend (void)
-The function \b os_suspend suspends the RTX task scheduler. The function calculates the time, for how long the system is
-allowed to power-down, and locks the task scheduler. When the function returns, the task switches are disabled. For normal
-RTX operation, after calling \b os_suspend, you must call the \ref os_resume function to re-enable the OS task scheduler.
-
-\note
-- You can call this function from the idle task only.
-- When the system is in power-down, the system tick timer is not running.
-- Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-
-The low power RTX is controlled from the \ref os_idle_demon. The peripheral wake-up timer must be initialized before the
-system enters an endless loop. \b os_suspend calculates the timeout until the first suspended task becomes ready, and returns
-the timeout to the user:
-
-\code
-  for (;;) {
-  sleep = os_suspend();
-\endcode
-
-The user sets-up a peripheral timer to sleep timeout and starts the timer. The timeout is measured in system ticks.
-
-\code
-if (sleep) {
-  // Setup the wake-up timer ... 
-\endcode
-
-When the wake-up timer is set-up and running, the user puts the system in power-down mode. The wake-up timer must run also in
-power-down mode. All other peripherals and the CPU may power-down to reduce power.
-
-\code
-  // Power-down the system ... 
-  SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
-  __WFE();
-\endcode
-
-The wake-up timer, when expired, generates the interrupt and wakes-up the system. Hence, it must run also in power-down mode.
-The system resumes operation and needs to call the function \ref os_resume. This function restores the RTX and re-enables the
-scheduler.
-
-\code
-  // After Wake-up 
-  sleep = (tc - LPC_WWDT->TV) / 250;
-}
-os_resume(sleep);
-\endcode
-
-If, for any reason, the system does not wake up immediately after the wake-up interrupt, the actual sleep time is checked and
-adjusted.
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn void os_resume (uint32_t sleep_time)
-The function \b os_resume resumes the RTX task scheduler. You must call this function after you have called \ref os_suspend
-to re-enable the task scheduler.
-
-The argument \a sleep_time specifies how long the system was in sleep or power-down mode. It is measured in number of system
-intervals.
-
-\note
-- You can call this function from the idle task only.
-- When the system is in power-down, the system tick timer is not running.
-- Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-See \ref os_suspend for a \b Code \b Example.
-*/
-/// @}
-
 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
