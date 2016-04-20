@@ -314,26 +314,28 @@ int main (void) {
 \endcode
 
 
-NVIC Function Virtualization
-============================
-The CMSIS-Core has provisions for NVIC function virtualization as required for implementation of
+NVIC API Virtualization
+=======================
+The CMSIS-Core has provisions for overriding NVIC APIs as required for implementing
 secure systems that control access to peripherals and related interrupts.
+These overrides allow an operating system to control the access privileges of
+application code to critical interrupts.
 
 The NVIC function virtualization is enabled with the following \#define symbols:
-  - \ref CMSIS_NVIC_VIRTUAL allows to replace the CMSIS-CORE NVIC functions.
-  - \ref CMSIS_VECTAB_VIRTUAL allows to replace the CMSIS-CORE interrupt vector table access functions.
+  - \ref CMSIS_NVIC_VIRTUAL enables overriding the CMSIS-CORE NVIC functions.
+  - \ref CMSIS_VECTAB_VIRTUAL enables overriding the CMSIS-CORE interrupt vector table access functions.
 
 */     
 
-#define CMSIS_NVIC_VIRTUAL   ///< Virtualization of NVIC functions
+#define CMSIS_NVIC_VIRTUAL   ///< Virtualization of the NVIC API
 /**
 \def CMSIS_NVIC_VIRTUAL
-When \ref CMSIS_NVIC_VIRTUAL is defined the functions in the table below should be replaced
-for the virtualization of the NVIC access.  The NVIC Access Function should be implemented
-in a different source module which allows to check for example access with a specific IRQn value.
-The original CMSIS-Core Function is still available, but prefixed with __NVIC.
+When \ref CMSIS_NVIC_VIRTUAL is defined, the NVIC access functions in the table below must be implemented
+for virtualizing NVIC access.  These functions should be implemented
+in a separate source module.
+The original CMSIS-Core __NVIC functions are always available independent of \ref CMSIS_NVIC_VIRTUAL.
 
-NVIC Access Function      | CMSIS-Core Function
+NVIC Access Functions     | CMSIS-Core Functions
 --------------------------|---------------------------------------------
 NVIC_EnableIRQ            | __NVIC_EnableIRQ
 NVIC_DisableIRQ           | __NVIC_DisableIRQ
@@ -351,10 +353,11 @@ NVIC_GetPriorityGrouping  | __NVIC_GetPriorityGrouping
 /**
 
 \def CMSIS_VECTAB_VIRTUAL
-When \ref When \ref CMSIS_NVIC_VIRTUAL is defined the functions in the table below should be replaced
-to virtualization the access function for the interrupt vector table. The NVIC Vector Table Access Function should be implemented
-in a different source module which allows to check for example access with a specific IRQn value.
-The original CMSIS-Core Function is still available, but prefixed with __NVIC.
+When \ref CMSIS_NVIC_VIRTUAL is defined, the functions in the table below must be replaced 
+to virtualize the API access functions to the interrupt vector table. The NVIC vector table API should be implemented
+in a separate source module. This allows, for example, alternate implementations to relocate the vector table from flash to RAM on the first vector table update.
+
+The original CMSIS-Core functions are always available, but prefixed with __NVIC.
 
 Interrupt Vector Table Access  | CMSIS-Core Function
 -------------------------------|---------------------------------------------
