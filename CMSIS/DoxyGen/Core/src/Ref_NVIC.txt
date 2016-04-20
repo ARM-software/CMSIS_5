@@ -359,7 +359,7 @@ in a separate source module. This allows, for example, alternate implementations
 
 The original CMSIS-Core functions are always available, but prefixed with __NVIC.
 
-Interrupt Vector Table Access  | CMSIS-Core Function
+Interrupt Vector Table Access  | CMSIS-Core Functions
 -------------------------------|---------------------------------------------
 NVIC_GetVector                 | __NVIC_GetVector
 NVIC_SetVector                 | __NVIC_SetVector
@@ -424,7 +424,7 @@ void NVIC_SetPriorityGrouping(uint32_t PriorityGroup);
 /** 
     \brief  Read the priority grouping [not for Cortex-M0, Cortex-M0+, or SC000]
 
-  This functuion returns the priority grouping (flag PRIGROUP in AIRCR[10:8]).
+  This function returns the priority grouping (flag PRIGROUP in AIRCR[10:8]).
 
     \return                Priority grouping field
 
