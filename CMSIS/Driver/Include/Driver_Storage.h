@@ -42,49 +42,40 @@ extern "C" {
 #define ARM_STORAGE_ERROR_PROTECTED         (ARM_DRIVER_ERROR_SPECIFIC - 3) ///< Part (or all) of the range to Erase() or ProgramData() is protected.
 
 /**
- * Attributes of the storage range within a storage block.
+ * \brief Attributes of the storage range within a storage block.
  */
 typedef struct _ARM_STORAGE_BLOCK_ATTRIBUTES {
   uint32_t erasable      :  1;   ///< Erasing blocks is permitted with a minimum granularity of 'erase_unit'.
-                                 ///< @note: if 'erasable' is 0--i.e. the 'erase' operation isn't available--then
-                                 ///< 'erase_unit' (see below) is immaterial and should be 0.
-
+                                 ///<   @note: if 'erasable' is 0--i.e. the 'erase' operation isn't available--then
+                                 ///<   'erase_unit' (see below) is immaterial and should be 0.
   uint32_t programmable  :  1;   ///< Writing to ranges is permitted with a minimum granularity of 'program_unit'.
-                                 ///< Writes are typically achieved through the ProgramData operation (following an erase);
-                                 ///< if storage isn't erasable (see 'erasable' above) but is memory-mapped
-                                 ///< (i.e. 'memory_mapped'), it can be written directly using memory-store operations.
-
+                                 ///<   Writes are typically achieved through the ProgramData operation (following an erase);
+                                 ///<   if storage isn't erasable (see 'erasable' above) but is memory-mapped
+                                 ///<   (i.e. 'memory_mapped'), it can be written directly using memory-store operations.
   uint32_t executable    :  1;   ///< This storage block can hold program data; the processor can fetch and execute code
-                                 ///< sourced from it. Often this is accompanied with the device being 'memory_mapped' (see \ref ARM_STORAGE_INFO).
-
+                                 ///<   sourced from it. Often this is accompanied with the device being 'memory_mapped' (see \ref ARM_STORAGE_INFO).
   uint32_t protectable   :  1;   ///< The entire block can be protected from program and erase operations. Once protection
-                                 ///< is enabled for a block, its 'erasable' and 'programmable' bits are turned off.
-
+                                 ///<   is enabled for a block, its 'erasable' and 'programmable' bits are turned off.
   uint32_t reserved      : 28;
-
   uint32_t erase_unit;           ///< Minimum erase size in bytes.
-                                 ///< The offset of the start of the erase-range should also be aligned with this value.
-                                 ///< Applicable if the 'erasable' attribute is set for the block.
-                                 ///< @note: if 'erasable' (see above) is 0--i.e. the 'erase' operation isn't available--then
-                                 ///< 'erase_unit' is immaterial and should be 0.
-
+                                 ///<   The offset of the start of the erase-range should also be aligned with this value.
+                                 ///<   Applicable if the 'erasable' attribute is set for the block.
+                                 ///<   @note: if 'erasable' (see above) is 0--i.e. the 'erase' operation isn't available--then
+                                 ///<   'erase_unit' is immaterial and should be 0.
   uint32_t protection_unit;      ///< Minimum protectable size in bytes. Applicable if the 'protectable'
-                                 ///< attribute is set for the block. This should be a divisor of the block's size. A
-                                 ///< block can be considered to be made up of consecutive, individually-protectable fragments.
+                                 ///<   attribute is set for the block. This should be a divisor of the block's size. A
+                                 ///<   block can be considered to be made up of consecutive, individually-protectable fragments.
 } ARM_STORAGE_BLOCK_ATTRIBUTES;
 
 /**
- * \brief A storage block is a range of memory with uniform attributes. Storage blocks
- * combine to make up the address map of a storage controller.
+ * \brief A storage block is a range of memory with uniform attributes.
  */
 typedef struct _ARM_STORAGE_BLOCK {
   uint64_t                     addr;       ///< This is the start address of the storage block. It is
-                                           ///< expressed as an offset from the start of the storage map
-                                           ///< maintained by the owning storage controller.
-
+                                           ///<   expressed as an offset from the start of the storage map
+                                           ///<   maintained by the owning storage controller.
   uint64_t                     size;       ///< This is the size of the storage block, in units of bytes.
-                                           ///< Together with addr, it describes a range [addr, addr+size).
-
+                                           ///<   Together with addr, it describes a range [addr, addr+size).
   ARM_STORAGE_BLOCK_ATTRIBUTES attributes; ///< Attributes for this block.
 } ARM_STORAGE_BLOCK;
 
@@ -141,48 +132,29 @@ typedef struct _ARM_STORAGE_SECURITY_FEATURES {
 #define ARM_STORAGE_PROGRAM_CYCLES_INFINITE (0UL) /**< Infinite or unknown endurance for reprogramming. */
 
 /**
- * \brief Storage information. This contains device-metadata, and is the return
- *     value from calling GetInfo() on the storage driver.
- *
- * \details These fields serve a different purpose than the ones contained in
- *     ARM_STORAGE_CAPABILITIES (\ref ARM_STORAGE_CAPABILITIES), which is
- *     another structure containing device-level metadata.
- *     ARM_STORAGE_CAPABILITIES describes the API capabilities, whereas ARM_STORAGE_INFO
- *     describes the device. Furthermore ARM_STORAGE_CAPABILITIES fits within a
- *     single word, and is designed to be passed around by value;
- *     ARM_STORAGE_INFO, on the other hand contains metadata which doesn't fit
- *     into a single word and requires the use of pointers to be moved around.
+ * Device level metadata regarding the Storage implementation.
  */
 typedef struct _ARM_STORAGE_INFO {
   uint64_t                      total_storage;        ///< Total available storage, in bytes.
-
   uint32_t                      program_unit;         ///< Minimum programming size in bytes.
-                                                      ///< The offset of the start of the program-range should also be aligned with this value.
-                                                      ///< Applicable only if the 'programmable' attribute is set for a block.
-                                                      ///< @note: setting program_unit to 0 has the effect of disabling the size and alignment
-                                                      ///< restrictions (setting it to 1 also has the same effect).
-
+                                                      ///<   The offset of the start of the program-range should also be aligned with this value.
+                                                      ///<   Applicable only if the 'programmable' attribute is set for a block.
+                                                      ///<   @note: setting program_unit to 0 has the effect of disabling the size and alignment
+                                                      ///<   restrictions (setting it to 1 also has the same effect).
   uint32_t                      optimal_program_unit; ///< Optimal programming page-size in bytes. Some storage controllers
-                                                      ///< have internal buffers into which to receive data. Writing in chunks of
-                                                      ///< 'optimal_program_unit' would make the best use of such capabilities.
-                                                      ///< Applicable only if the 'programmable' attribute is set a the block.
-
+                                                      ///<   have internal buffers into which to receive data. Writing in chunks of
+                                                      ///<   'optimal_program_unit' would achieve maximum programming speed.
+                                                      ///<   Applicable only if the 'programmable' attribute is set for the underlying block(s).
   uint32_t                      program_cycles;       ///< A measure of endurance for reprogramming.
-                                                      ///< Use ARM_STORAGE_PROGRAM_CYCLES_INFINITE for infinite or unknown endurance.
-
+                                                      ///<   Use ARM_STORAGE_PROGRAM_CYCLES_INFINITE for infinite or unknown endurance.
   uint32_t                      erased_value    :  1; ///< Contents of erased memory (usually 1 to indicate erased bytes with state 0xFF).
-
   uint32_t                      memory_mapped   :  1; ///< This storage device has a mapping onto the processor's memory address space.
-                                                      ///< @note: For a memory-mapped block which isn't erasable but is programmable (i.e. if
-                                                      ///< 'erasable' is set to 0, but 'programmable' is 1), writes should be possible directly to
-                                                      ///< the memory-mapped storage without going through the ProgramData operation.
-
+                                                      ///<   @note: For a memory-mapped block which isn't erasable but is programmable (i.e. if
+                                                      ///<   'erasable' is set to 0, but 'programmable' is 1), writes should be possible directly to
+                                                      ///<   the memory-mapped storage without going through the ProgramData operation.
   uint32_t                      programmability :  4; ///< A value to indicate storage programmability.
-
   uint32_t                      retention_level :  4;
-
   uint32_t                      reserved        : 22;
-
   ARM_STORAGE_SECURITY_FEATURES security;             ///< \ref ARM_STORAGE_SECURITY_FEATURES
 } ARM_STORAGE_INFO;
 
@@ -196,9 +168,6 @@ typedef struct _ARM_STORAGE_STATUS {
 
 /**
  * \brief Storage Driver API Capabilities.
- *
- * This data structure is designed to fit within a single word so that it can be
- * fetched cheaply using a call to driver->GetCapabilities().
  */
 typedef struct _ARM_STORAGE_CAPABILITIES {
   uint32_t asynchronous_ops :  1; ///< Used to indicate if APIs like initialize,
@@ -209,15 +178,12 @@ typedef struct _ARM_STORAGE_CAPABILITIES {
                                   ///<   set to 1, drivers may still complete asynchronous
                                   ///<   operations synchronously as necessary--in which case they
                                   ///<   return a positive error code to indicate synchronous completion.
-
   uint32_t erase_all        :  1; ///< Supports EraseAll operation.
-
   uint32_t reserved         : 30;
 } ARM_STORAGE_CAPABILITIES;
 
 /**
- * Command opcodes for Storage. Completion callbacks use these codes to refer to
- * completing commands. Refer to \ref ARM_Storage_Callback_t.
+ * Command opcodes for Storage.
  */
 typedef enum _ARM_STORAGE_OPERATION {
   ARM_STORAGE_OPERATION_GET_VERSION,
@@ -250,49 +216,110 @@ typedef enum _ARM_STORAGE_OPERATION {
 */
 /**
   \fn          int32_t ARM_Storage_Initialize (ARM_Storage_Callback_t callback)
-  \brief       Initialize the Storage Interface.
-  \param[in]   callback  Pointer to \ref ARM_Storage_Callback_t. Caller-defined callback to be invoked upon command completion.
-  \return      ARM_DRIVER_OK (for asynchronous execution), 1 (for synchronous completion), or <ARM_DRIVER_OK (for error).
+  \brief       Initialize the Storage interface.
+  \param [in]  callback Pointer to \ref ARM_Storage_Callback_t.
+               Caller-defined callback to be invoked upon command completion
+               for asynchronous APIs (including the completion of
+               initialization). Use a NULL pointer when no callback
+               signals are required.
+  \return      If asynchronous activity is launched, invocation
+               ARM_DRIVER_OK, and the caller can expect to receive a callback in the
+               future with a status value of ARM_DRIVER_OK or an error-code. In the
+               case of synchronous execution, control returns after completion with a
+               value of 1. Return values less than ARM_DRIVER_OK (0) signify errors.
 */
 /**
   \fn          int32_t ARM_Storage_Uninitialize (void)
   \brief       De-initialize the Storage Interface.
-  \return      ARM_DRIVER_OK (for asynchronous execution), 1 (for synchronous completion), or <ARM_DRIVER_OK (for error).
+  \return      If asynchronous activity is launched, an invocation returns
+               ARM_DRIVER_OK, and the caller can expect to receive a callback in the
+               future with a status value of ARM_DRIVER_OK or an error-code. In the
+               case of synchronous execution, control returns after completion with a
+               value of 1. Return values less than ARM_DRIVER_OK (0) signify errors.
 */
 /**
   \fn          int32_t ARM_Storage_PowerControl (ARM_POWER_STATE state)
   \brief       Control the Storage interface power.
   \param[in]   state  Power state
-  \return      ARM_DRIVER_OK (for asynchronous execution), 1 (for synchronous completion), or <ARM_DRIVER_OK (for error).
+  \return      If asynchronous activity is launched, an invocation returns
+               ARM_DRIVER_OK, and the caller can expect to receive a callback in the
+               future with a status value of ARM_DRIVER_OK or an error-code. In the
+               case of synchronous execution, control returns after completion with a
+               value of 1. Return values less than ARM_DRIVER_OK (0) signify errors.
 */
 /**
   \fn          int32_t ARM_Storage_ReadData (uint64_t addr, void *data, uint32_t size)
   \brief       Read data from Storage.
   \param[in]   addr  Data address.
   \param[out]  data  Pointer to a buffer storing the data read from Storage.
-  \param[in]   size  Number of bytes to read.
-  \return      ARM_DRIVER_OK (for asynchronous execution), number of bytes read (for synchronous completion), or <ARM_DRIVER_OK (for error).
+  \param[in]   size  Number of bytes to read. The data buffer
+               should be at least as large as this size.
+  \return      If asynchronous activity is launched, an invocation returns
+               ARM_DRIVER_OK, and the caller can expect to receive a callback in the
+               future with the number of successfully transferred bytes passed in as
+               the 'status' parameter. In the case of synchronous execution, control
+               returns after completion with a positive transfer-count. Return values
+               less than ARM_DRIVER_OK (0) signify errors.
 */
 /**
   \fn          int32_t ARM_Storage_ProgramData (uint64_t addr, const void *data, uint32_t size)
   \brief       Program data to Storage.
-  \param[in]   addr  Data address.
-  \param[in]   data  Pointer to a buffer containing the data to be programmed to Storage.
-  \param[in]   size  Number of bytes to program.
-  \return      ARM_DRIVER_OK (for asynchronous execution), number of bytes programmed (for synchronous completion), or <ARM_DRIVER_OK (for error).
+  \param [in] addr This is the start address of the range to be written into. It
+               needs to be aligned to the device's \em program_unit
+               specified in \ref ARM_STORAGE_INFO.
+  \param [in] data The source of the write operation. The buffer is owned by the
+               caller and should remain accessible for the lifetime of this
+               command.
+  \param [in] size The number of bytes requested to be written. The buffer
+               should be at least as large as this size. \note 'size' should
+               be a multiple of the device's 'program_unit' (see \ref
+               ARM_STORAGE_INFO).
+  \return      If asynchronous activity is launched, an invocation returns
+               ARM_DRIVER_OK, and the caller can expect to receive a callback in the
+               future with the number of successfully transferred bytes passed in as
+               the 'status' parameter. In the case of synchronous execution, control
+               returns after completion with a positive transfer-count. Return values
+               less than ARM_DRIVER_OK (0) signify errors.
 */
 /**
   \fn          int32_t ARM_Storage_Erase (uint64_t addr, uint32_t size)
   \brief       Erase Storage range.
-  \param[in]   addr  Start-address of the range to be erased.
-  \param[in]   size  Size (in bytes) of the range to be erased.
-  \return      ARM_DRIVER_OK (for asynchronous execution), number of bytes erased (for synchronous completion), or <ARM_DRIVER_OK (for error).
+  \param [in]  addr This is the start-address of the range to be erased. It must
+               start at an 'erase_unit' boundary of the underlying block.
+  \param [in]  size Size (in bytes) of the range to be erased. 'addr + size'
+               must be aligned with the 'erase_unit' of the underlying
+               block.
+  \return      If the range to be erased doesn't align with the erase_units of the
+               respective start and end blocks, ARM_DRIVER_ERROR_PARAMETER is
+               returned. If any part of the range is protected,
+               ARM_STORAGE_ERROR_PROTECTED is returned. If any part of the range
+               is not erasable, ARM_STORAGE_ERROR_NOT_ERASABLE is returned. All
+               such sanity-check failures result in the error code being
+               returned synchronously and the storage bytes within the range
+               remain unaffected. Otherwise the function executes in the
+               following ways: If asynchronous activity is launched, an
+               invocation returns ARM_DRIVER_OK, and the caller can expect to
+               receive a callback in the future with the number of successfully
+               erased bytes passed in as the 'status' parameter. In the case of
+               synchronous execution, control returns after completion with a
+               positive erase-count. Return values less than ARM_DRIVER_OK (0)
+               signify errors.
 */
 /**
   \fn          int32_t ARM_Storage_EraseAll (void)
   \brief       Erase complete Storage.
-               Optional function for faster full chip erase.
-  \return      ARM_DRIVER_OK (for asynchronous execution), 1 (for synchronous completion), or <ARM_DRIVER_OK (for error).
+  \return      If any part of the storage range is protected,
+               ARM_STORAGE_ERROR_PROTECTED is returned. If any part of the
+               storage range is not erasable, ARM_STORAGE_ERROR_NOT_ERASABLE is
+               returned. All such sanity-check failures result in the error code
+               being returned synchronously and the storage bytes within the
+               range remain unaffected. Otherwise the function executes in the
+               following ways: If asynchronous activity is launched, an
+               invocation returns ARM_DRIVER_OK, and the caller can expect to
+               receive a callback in the future with ARM_DRIVER_OK passed in as
+               the 'status' parameter. In the case of synchronous execution,
+               control returns after completion with a value of 1. Return values
+               less than ARM_DRIVER_OK (0) signify errors.
 */
 /**
   \fn          ARM_STORAGE_STATUS ARM_Storage_GetStatus (void)
@@ -303,569 +330,86 @@ typedef enum _ARM_STORAGE_OPERATION {
   \fn          int32_t ARM_Storage_GetInfo (ARM_STORAGE_INFO *info)
   \brief       Get Storage information.
   \param[out]  info  A caller-supplied buffer capable of being filled in with an \ref ARM_STORAGE_INFO.
-  \return      ARM_DRIVER_OK if successful, else an appropriate error value.
+  \return      ARM_DRIVER_OK if a ARM_STORAGE_INFO structure containing top level
+               metadata about the storage controller is filled into the supplied
+               buffer, else an appropriate error value.
 */
 /**
   \fn          uint32_t ARM_Storage_ResolveAddress(uint64_t addr)
   \brief       Resolve an address relative to the storage controller into a memory address.
-  \param[in]   addr The address for which we want a resolution to the processor's physical address space.
+  \param[in]   addr The address for which we want a resolution to the processor's physical address space. It is an offset from the
+               start of the storage map maintained by the owning storage
+               controller.
   \return      The resolved address in the processor's address space, else ARM_STORAGE_INVALID_ADDRESS.
 */
 /**
   \fn          int32_t ARM_Storage_GetNextBlock(const ARM_STORAGE_BLOCK* prev_block, ARM_STORAGE_BLOCK *next_block);
   \brief       Advance to the successor of the current block (iterator).
-  \param[in]   prev_block An existing block (iterator) within the same storage controller, or NULL.
-  \param[out]  next_block A caller-owned buffer large enough to be filled in with the following ARM_STORAGE_BLOCK.
-  \return      ARM_DRIVER_OK if a valid next block is found, else <ARM_DRIVER_OK for errors.
+  \param[in]   prev_block An existing block (iterator) within the same storage
+               controller. The memory buffer holding this block is owned
+               by the caller. This pointer may be NULL; if so, the
+               invocation fills in the first block into the out parameter:
+               'next_block'.
+  \param[out]  next_block A caller-owned buffer large enough to be filled in with
+               the following ARM_STORAGE_BLOCK. It is legal to provide the
+               same buffer using 'next_block' as was passed in with 'prev_block'. It
+               is also legal to pass a NULL into this parameter if the
+               caller isn't interested in populating a buffer with the next
+               block--i.e. if the caller only wishes to establish the
+               presence of a next block.
+  \return      ARM_DRIVER_OK if a valid next block is found (or first block, if
+               prev_block is passed as NULL); upon successful operation, the contents
+               of the next (or first) block are filled into the buffer pointed to by
+               the parameter 'next_block' and ARM_STORAGE_VALID_BLOCK(next_block) is
+               guaranteed to be true. Upon reaching the end of the sequence of blocks
+               (iterators), or in case the driver is unable to fetch information about
+               the next (or first) block, an error (negative) value is returned and an
+               invalid StorageBlock is populated into the supplied buffer. If
+               prev_block is NULL, the first block is returned.
 */
 /**
   \fn          int32_t ARM_Storage_GetBlock(uint64_t addr, ARM_STORAGE_BLOCK *block);
   \brief       Find the storage block (iterator) encompassing a given storage address.
   \param[in]   addr Storage address in bytes.
-  \param[out]  block A caller-owned buffer large enough to be filled in with the ARM_STORAGE_BLOCK encapsulating the given address.
-  \return      ARM_DRIVER_OK if a containing storage-block is found, else <ARM_DRIVER_OK for errors.
+  \param[out]  block A caller-owned buffer large enough to be filled in with the
+               ARM_STORAGE_BLOCK encapsulating the given address. This value
+               can also be passed in as NULL if the caller isn't interested
+               in populating a buffer with the block--if the caller only
+               wishes to establish the presence of a containing storage
+               block.
+  \return      ARM_DRIVER_OK if a containing storage-block is found. In this case,
+               if block is non-NULL, the buffer pointed to by it is populated with
+               the contents of the storage block--i.e. if block is valid and a block is
+               found, ARM_STORAGE_VALID_BLOCK(block) would return true following this
+               call. If there is no storage block containing the given offset, or in
+               case the driver is unable to resolve an address to a storage-block, an
+               error (negative) value is returned and an invalid StorageBlock is
+               populated into the supplied buffer.
 */
 
-
 /**
- * Declaration of the callback-type for command completion.
- *
- * @param [in] status
- *               A code to indicate the status of the completed operation. For data
- *               transfer operations, the status field is overloaded in case of
- *               success to return the count of items successfully transferred; this
- *               can be done safely because error codes are negative values.
- *
- * @param [in] operation
- *               The command op-code. This value isn't essential for the callback in
- *               the presence of the command instance-id, but it is expected that
- *               this information could be a quick and useful filter.
+ * Provides the typedef for the callback function \ref ARM_Storage_Callback_t.
  */
 typedef void (*ARM_Storage_Callback_t)(int32_t status, ARM_STORAGE_OPERATION operation);
 
 /**
- * This is the set of operations constituting the Storage driver. Their
- * implementation is platform-specific, and needs to be supplied by the
- * porting effort.
- *
- * Some APIs within `ARM_DRIVER_STORAGE` will always operate synchronously:
- * GetVersion, GetCapabilities, GetStatus, GetInfo, ResolveAddress,
- * GetNextBlock, and GetBlock. This means that control returns to the caller
- * with a relevant status code only after the completion of the operation (or
- * the discovery of a failure condition).
- *
- * The remainder of the APIs: Initialize, Uninitialize, PowerControl, ReadData,
- * ProgramData, Erase, EraseAll, can function asynchronously if the underlying
- * controller supports it--i.e. if ARM_STORAGE_CAPABILITIES::asynchronous_ops is
- * set. In the case of asynchronous operation, the invocation returns early
- * (with ARM_DRIVER_OK) and results in a completion callback later. If
- * ARM_STORAGE_CAPABILITIES::asynchronous_ops is not set, then all such APIs
- * execute synchronously, and control returns to the caller with a status code
- * only after the completion of the operation (or the discovery of a failure
- * condition).
- *
- * If ARM_STORAGE_CAPABILITIES::asynchronous_ops is set, a storage driver may
- * still choose to execute asynchronous operations in a synchronous manner. If
- * so, the driver returns a positive value to indicate successful synchronous
- * completion (or an error code in case of failure) and no further invocation of
- * completion callback should be expected. The expected return value for
- * synchronous completion of such asynchronous operations varies depending on
- * the operation. For operations involving data access, it often equals the
- * amount of data transferred or affected. For non data-transfer operations,
- * such as EraseAll or Initialize, it is usually 1.
- *
- * Here's a code snippet to suggest how asynchronous APIs might be used by
- * callers to handle both synchronous and asynchronous execution by the
- * underlying storage driver:
- * \code
- *     ASSERT(ARM_DRIVER_OK == 0); // this is a precondition; it doesn't need to be put in code
- *     int32_t returnValue = drv->asynchronousAPI(...);
- *     if (returnValue < ARM_DRIVER_OK) {
- *         // handle error.
- *     } else if (returnValue == ARM_DRIVER_OK) {
- *         ASSERT(drv->GetCapabilities().asynchronous_ops == 1);
- *         // handle early return from asynchronous execution; remainder of the work is done in the callback handler.
- *     } else {
- *         ASSERT(returnValue == EXPECTED_RETURN_VALUE_FOR_SYNCHRONOUS_COMPLETION);
- *         // handle synchronous completion.
- *     }
- * \endcode
+ * The set of operations constituting the Storage driver.
  */
 typedef struct _ARM_DRIVER_STORAGE {
-  /**
-   * \brief Get driver version.
-   *
-   * The function GetVersion() returns version information of the driver implementation in ARM_DRIVER_VERSION.
-   *
-   *    - API version is the version of the CMSIS-Driver specification used to implement this driver.
-   *    - Driver version is source code version of the actual driver implementation.
-   *
-   * Example:
-   * \code
-   *     extern ARM_DRIVER_STORAGE *drv_info;
-   *
-   *     void read_version (void)  {
-   *       ARM_DRIVER_VERSION  version;
-   *
-   *       version = drv_info->GetVersion ();
-   *       if (version.api < 0x10A)   {      // requires at minimum API version 1.10 or higher
-   *         // error handling
-   *         return;
-   *       }
-   *     }
-   * \endcode
-   *
-   * @return \ref ARM_DRIVER_VERSION.
-   *
-   * @note This API returns synchronously--it does not result in an invocation
-   *     of a completion callback.
-   *
-   * @note The functions GetVersion() can be called any time to obtain the
-   *     required information from the driver (even before initialization). It
-   *     always returns the same information.
-   */
-  ARM_DRIVER_VERSION (*GetVersion)(void);
-
-  /**
-   * \brief Get driver capabilities.
-   *
-   * \details The function GetCapabilities() returns information about
-   * capabilities in this driver implementation. The data fields of the struct
-   * ARM_STORAGE_CAPABILITIES encode various capabilities, for example if the device
-   * is able to execute operations asynchronously.
-   *
-   * Example:
-   * \code
-   *     extern ARM_DRIVER_STORAGE *drv_info;
-   *
-   *     void read_capabilities (void)  {
-   *       ARM_STORAGE_CAPABILITIES drv_capabilities;
-   *
-   *       drv_capabilities = drv_info->GetCapabilities ();
-   *       // interrogate capabilities
-   *
-   *     }
-   * \endcode
-   *
-   * @return \ref ARM_STORAGE_CAPABILITIES.
-   *
-   * @note This API returns synchronously--it does not result in an invocation
-   *     of a completion callback.
-   *
-   * @note The functions GetVersion() can be called any time to obtain the
-   *     required information from the driver (even before initialization). It
-   *     always returns the same information.
-   */
-  ARM_STORAGE_CAPABILITIES (*GetCapabilities)(void);
-
-  /**
-   * \brief Initialize the Storage Interface.
-   *
-   * The function Initialize is called when the middleware component starts
-   * operation. In addition to bringing the controller to a ready state,
-   * Initialize() receives a callback handler to be invoked upon completion of
-   * asynchronous operations.
-   *
-   * Initialize() needs to be called explicitly before
-   * powering the peripheral using PowerControl(), and before initiating other
-   * accesses to the storage controller.
-   *
-   * The function performs the following operations:
-   *   - Initializes the resources needed for the Storage interface.
-   *   - Registers the ARM_STOR_SignalEvent callback function.
-   *
-   * To start working with a peripheral the functions Initialize and PowerControl need to be called in this order:
-   *     drv->Initialize (...); // Allocate I/O pins
-   *     drv->PowerControl (ARM_POWER_FULL);        // Power up peripheral, setup IRQ/DMA
-   *
-   * - Initialize() typically allocates the I/O resources (pins) for the
-   *   peripheral. The function can be called multiple times; if the I/O resources
-   *   are already initialized it performs no operation and just returns with
-   *   ARM_DRIVER_OK.
-   *
-   * - PowerControl (ARM_POWER_FULL) sets the peripheral registers including
-   *   interrupt (NVIC) and optionally DMA. The function can be called multiple
-   *   times; if the registers are already set it performs no operation and just
-   *   returns with ARM_DRIVER_OK.
-   *
-   * To stop working with a peripheral the functions PowerControl and Uninitialize need to be called in this order:
-   *     drv->PowerControl (ARM_POWER_OFF);     // Terminate any pending transfers, reset IRQ/DMA, power off peripheral
-   *     drv->Uninitialize (...);               // Release I/O pins
-   *
-   * The functions PowerControl and Uninitialize always execute and can be used
-   * to put the peripheral into a Safe State, for example after any data
-   * transmission errors. To restart the peripheral in an error condition,
-   * you should first execute the Stop Sequence and then the Start Sequence.
-   *
-   * @param [in] callback
-   *               Caller-defined callback to be invoked upon command completion
-   *               for asynchronous APIs (including the completion of
-   *               initialization). Use a NULL pointer when no callback
-   *               signals are required.
-   *
-   * @note This API may execute asynchronously if
-   *     ARM_STORAGE_CAPABILITIES::asynchronous_ops is set. Asynchronous
-   *     execution is optional even if 'asynchronous_ops' is set.
-   *
-   * @return If asynchronous activity is launched, an invocation returns
-   *     ARM_DRIVER_OK, and the caller can expect to receive a callback in the
-   *     future with a status value of ARM_DRIVER_OK or an error-code. In the
-   *     case of synchronous execution, control returns after completion with a
-   *     value of 1. Return values less than ARM_DRIVER_OK (0) signify errors.
-   */
-  int32_t (*Initialize)(ARM_Storage_Callback_t callback);
-
-  /**
-   * \brief De-initialize the Storage Interface.
-   *
-   * The function Uninitialize() de-initializes the resources of Storage interface.
-   *
-   * It is called when the middleware component stops operation, and wishes to
-   * release the software resources used by the interface.
-   *
-   * @note This API may execute asynchronously if
-   *     ARM_STORAGE_CAPABILITIES::asynchronous_ops is set. Asynchronous
-   *     execution is optional even if 'asynchronous_ops' is set.
-   *
-   * @return If asynchronous activity is launched, an invocation returns
-   *     ARM_DRIVER_OK, and the caller can expect to receive a callback in the
-   *     future with a status value of ARM_DRIVER_OK or an error-code. In the
-   *     case of synchronous execution, control returns after completion with a
-   *     value of 1. Return values less than ARM_DRIVER_OK (0) signify errors.
-   */
-  int32_t (*Uninitialize)(void);
-
-  /**
-   * \brief Control the Storage interface power.
-   *
-   * The function ARM_STOR_PowerControl operates the power modes of the Storage interface.
-   *
-   * To start working with a peripheral the functions Initialize and PowerControl need to be called in this order:
-   *     drv->Initialize (...);                 // Allocate I/O pins
-   *     drv->PowerControl (ARM_POWER_FULL);    // Power up peripheral, setup IRQ/DMA
-   *
-   * - Initialize() typically allocates the I/O resources (pins) for the
-   *   peripheral. The function can be called multiple times; if the I/O resources
-   *   are already initialized it performs no operation and just returns with
-   *   ARM_DRIVER_OK.
-   *
-   * - PowerControl (ARM_POWER_FULL) sets the peripheral registers including
-   *   interrupt (NVIC) and optionally DMA. The function can be called multiple
-   *   times; if the registers are already set it performs no operation and just
-   *   returns with ARM_DRIVER_OK.
-   *
-   * To stop working with a peripheral the functions PowerControl and Uninitialize need to be called in this order:
-   *
-   *     drv->PowerControl (ARM_POWER_OFF);     // Terminate any pending transfers, reset IRQ/DMA, power off peripheral
-   *     drv->Uninitialize (...);               // Release I/O pins
-   *
-   * The functions PowerControl and Uninitialize always execute and can be used
-   * to put the peripheral into a Safe State, for example after any data
-   * transmission errors. To restart the peripheral in an error condition,
-   * you should first execute the Stop Sequence and then the Start Sequence.
-   *
-   * @param state
-   *          \ref ARM_POWER_STATE. The target power-state for the storage controller.
-   *          The parameter state can have the following values:
-   *              - ARM_POWER_FULL : set-up peripheral for data transfers, enable interrupts
-   *                                 (NVIC) and optionally DMA. Can be called multiple times. If the peripheral
-   *                                 is already in this mode, then the function performs no operation and returns
-   *                                 with ARM_DRIVER_OK.
-   *              - ARM_POWER_LOW : may use power saving. Returns ARM_DRIVER_ERROR_UNSUPPORTED when not implemented.
-   *              - ARM_POWER_OFF : terminates any pending data transfers, disables peripheral, disables related interrupts and DMA.
-   *
-   * @note This API may execute asynchronously if
-   *     ARM_STORAGE_CAPABILITIES::asynchronous_ops is set. Asynchronous
-   *     execution is optional even if 'asynchronous_ops' is set.
-   *
-   * @return If asynchronous activity is launched, an invocation returns
-   *     ARM_DRIVER_OK, and the caller can expect to receive a callback in the
-   *     future with a status value of ARM_DRIVER_OK or an error-code. In the
-   *     case of synchronous execution, control returns after completion with a
-   *     value of 1. Return values less than ARM_DRIVER_OK (0) signify errors.
-   */
-  int32_t (*PowerControl)(ARM_POWER_STATE state);
-
-  /**
-   * \brief read the contents of a given address range from the storage device.
-   *
-   * \details Read the contents of a range of storage memory into a buffer
-   *   supplied by the caller. The buffer is owned by the caller and should
-   *   remain accessible for the lifetime of this command.
-   *
-   * @param  [in] addr
-   *                This specifies the address from where to read data.
-   *
-   * @param [out] data
-   *                The destination of the read operation. The buffer
-   *                is owned by the caller and should remain accessible for the
-   *                lifetime of this command.
-   *
-   * @param  [in] size
-   *                The number of bytes requested to read. The data buffer
-   *                should be at least as large as this size.
-   *
-   * @note This API may execute asynchronously if
-   *     ARM_STORAGE_CAPABILITIES::asynchronous_ops is set. Asynchronous
-   *     execution is optional even if 'asynchronous_ops' is set.
-   *
-   * @return If asynchronous activity is launched, an invocation returns
-   *     ARM_DRIVER_OK, and the caller can expect to receive a callback in the
-   *     future with the number of successfully transferred bytes passed in as
-   *     the 'status' parameter. In the case of synchronous execution, control
-   *     returns after completion with a positive transfer-count. Return values
-   *     less than ARM_DRIVER_OK (0) signify errors.
-   */
-  int32_t (*ReadData)(uint64_t addr, void *data, uint32_t size);
-
-  /**
-   * \brief program (write into) the contents of a given address range of the storage device.
-   *
-   * \details Write the contents of a given memory buffer into a range of
-   *   storage memory. In the case of flash memory, the destination range in
-   *   storage memory typically has its contents in an erased state from a
-   *   preceding erase operation. The source memory buffer is owned by the
-   *   caller and should remain accessible for the lifetime of this command.
-   *
-   * @param [in] addr
-   *               This is the start address of the range to be written into. It
-   *               needs to be aligned to the device's \em program_unit
-   *               specified in \ref ARM_STORAGE_INFO.
-   *
-   * @param [in] data
-   *               The source of the write operation. The buffer is owned by the
-   *               caller and should remain accessible for the lifetime of this
-   *               command.
-   *
-   * @param [in] size
-   *               The number of bytes requested to be written. The buffer
-   *               should be at least as large as this size. \note 'size' should
-   *               be a multiple of the device's 'program_unit' (see \ref
-   *               ARM_STORAGE_INFO).
-   *
-   * @note It is best for the middleware to write in units of
-   *     'optimal_program_unit' (\ref ARM_STORAGE_INFO) of the device.
-   *
-   * @note This API may execute asynchronously if
-   *     ARM_STORAGE_CAPABILITIES::asynchronous_ops is set. Asynchronous
-   *     execution is optional even if 'asynchronous_ops' is set.
-   *
-   * @return If asynchronous activity is launched, an invocation returns
-   *     ARM_DRIVER_OK, and the caller can expect to receive a callback in the
-   *     future with the number of successfully transferred bytes passed in as
-   *     the 'status' parameter. In the case of synchronous execution, control
-   *     returns after completion with a positive transfer-count. Return values
-   *     less than ARM_DRIVER_OK (0) signify errors.
-   */
-  int32_t (*ProgramData)(uint64_t addr, const void *data, uint32_t size);
-
-  /**
-   * @brief Erase Storage range.
-   *
-   * @details This function erases a range of storage specified by [addr, addr +
-   *     size). Both 'addr' and 'addr + size' should align with the
-   *     'erase_unit'(s) of the respective owning storage block(s) (see \ref
-   *     ARM_STORAGE_BLOCK and \ref ARM_STORAGE_BLOCK_ATTRIBUTES). The range to
-   *     be erased will have its contents returned to the un-programmed state--
-   *     i.e. to 'erased_value' (see \ref ARM_STORAGE_BLOCK_ATTRIBUTES), which
-   *     is usually 1 to indicate the pattern of all ones: 0xFF.
-   *
-   * @param [in] addr
-   *               This is the start-address of the range to be erased. It must
-   *               start at an 'erase_unit' boundary of the underlying block.
-   *
-   * @param [in] size
-   *               Size (in bytes) of the range to be erased. 'addr + size'
-   *               must be aligned with the 'erase_unit' of the underlying
-   *               block.
-   *
-   * @note This API may execute asynchronously if
-   *     ARM_STORAGE_CAPABILITIES::asynchronous_ops is set. Asynchronous
-   *     execution is optional even if 'asynchronous_ops' is set.
-   *
-   * @return
-   *   If the range to be erased doesn't align with the erase_units of the
-   *   respective start and end blocks, ARM_DRIVER_ERROR_PARAMETER is returned.
-   *   If any part of the range is protected, ARM_STORAGE_ERROR_PROTECTED is
-   *   returned. If any part of the range is not erasable,
-   *   ARM_STORAGE_ERROR_NOT_ERASABLE is returned. All such sanity-check
-   *   failures result in the error code being returned synchronously and the
-   *   storage bytes within the range remain unaffected.
-   *   Otherwise the function executes in the following ways:
-   *     If asynchronous activity is launched, an invocation returns
-   *     ARM_DRIVER_OK, and the caller can expect to receive a callback in the
-   *     future with the number of successfully erased bytes passed in as
-   *     the 'status' parameter. In the case of synchronous execution, control
-   *     returns after completion with a positive erase-count. Return values
-   *     less than ARM_DRIVER_OK (0) signify errors.
-   *
-   * @note Erase() may return a smaller (positive) value than the size of the
-   *     requested range. The returned value indicates the actual number of bytes
-   *     erased. It is the caller's responsibility to follow up with an appropriate
-   *     request to complete the operation.
-   *
-   * @note in the case of a failed erase (except when
-   *     ARM_DRIVER_ERROR_PARAMETER, ARM_STORAGE_ERROR_PROTECTED, or
-   *     ARM_STORAGE_ERROR_NOT_ERASABLE is returned synchronously), the
-   *     requested range should be assumed to be in an unknown state. The
-   *     previous contents may not be retained.
-   */
-  int32_t (*Erase)(uint64_t addr, uint32_t size);
-
-  /**
-   * @brief Erase complete storage. Optional function for faster erase of the complete device.
-   *
-   * This optional function erases the complete device. If the device does not
-   *    support global erase then the function returns the error value \ref
-   *    ARM_DRIVER_ERROR_UNSUPPORTED. The data field \em 'erase_all' =
-   *    \token{1} of the structure \ref ARM_STORAGE_CAPABILITIES encodes that
-   *    \ref ARM_STORAGE_EraseAll is supported.
-   *
-   * @note This API may execute asynchronously if
-   *     ARM_STORAGE_CAPABILITIES::asynchronous_ops is set. Asynchronous
-   *     execution is optional even if 'asynchronous_ops' is set.
-   *
-   * @return
-   *   If any part of the storage range is protected,
-   *   ARM_STORAGE_ERROR_PROTECTED is returned. If any part of the storage
-   *   range is not erasable, ARM_STORAGE_ERROR_NOT_ERASABLE is returned. All
-   *   such sanity-check failures result in the error code being returned
-   *   synchronously and the storage bytes within the range remain unaffected.
-   *   Otherwise the function executes in the following ways:
-   *     If asynchronous activity is launched, an invocation returns
-   *     ARM_DRIVER_OK, and the caller can expect to receive a callback in the
-   *     future with ARM_DRIVER_OK passed in as the 'status' parameter. In the
-   *     case of synchronous execution, control returns after completion with a
-   *     value of 1. Return values less than ARM_DRIVER_OK (0) signify errors.
-   */
-  int32_t (*EraseAll)(void);
-
-  /**
-   * @brief Get the status of the current (or previous) command executed by the
-   *     storage controller; stored in the structure \ref ARM_STORAGE_STATUS.
-   *
-   * @return
-   *          The status of the underlying controller.
-   *
-   * @note This API returns synchronously--it does not result in an invocation
-   *     of a completion callback.
-   */
-  ARM_STORAGE_STATUS (*GetStatus)(void);
-
-  /**
-   * @brief Get information about the Storage device; stored in the structure \ref ARM_STORAGE_INFO.
-   *
-   * @param [out] info
-   *                A caller-supplied buffer capable of being filled in with an
-   *                \ref ARM_STORAGE_INFO.
-   *
-   * @return ARM_DRIVER_OK if a ARM_STORAGE_INFO structure containing top level
-   *         metadata about the storage controller is filled into the supplied
-   *         buffer, else an appropriate error value.
-   *
-   * @note It is the caller's responsibility to ensure that the buffer passed in
-   *         is able to be initialized with a \ref ARM_STORAGE_INFO.
-   *
-   * @note This API returns synchronously--it does not result in an invocation
-   *     of a completion callback.
-   */
-  int32_t (*GetInfo)(ARM_STORAGE_INFO *info);
-
-  /**
-   * \brief For memory-mapped storage, resolve an address relative to
-   *     the storage controller into a memory address.
-   *
-   * @param addr
-   *          This is the address for which we want a resolution to the
-   *          processor's physical address space. It is an offset from the
-   *          start of the storage map maintained by the owning storage
-   *          controller.
-   *
-   * @return
-   *          The resolved address in the processor's address space; else
-   *          ARM_STORAGE_INVALID_ADDRESS, if no resolution is possible.
-   *
-   * @note This API returns synchronously. The invocation should return quickly,
-   *     and result in a resolved address.
-   */
-  uint32_t (*ResolveAddress)(uint64_t addr);
-
-  /**
-   * @brief Advance to the successor of the current block (iterator), or fetch
-   *     the first block (if 'prev_block' is passed in as NULL).
-   *
-   * @details This helper function fetches (an iterator to) the next block (or
-   *     the first block if 'prev_block' is passed in as NULL). In the failure
-   *     case, a terminating, invalid block iterator is filled into the out
-   *     parameter: 'next_block'. In combination with \ref
-   *     ARM_STORAGE_VALID_BLOCK(), it can be used to iterate over the sequence
-   *     of blocks within the storage map:
-   *
-   * \code
-   *   ARM_STORAGE_BLOCK block;
-   *   for (drv->GetNextBlock(NULL, &block); ARM_STORAGE_VALID_BLOCK(&block); drv->GetNextBlock(&block, &block)) {
-   *       // make use of block
-   *   }
-   * \endcode
-   *
-   * @param[in]  prev_block
-   *               An existing block (iterator) within the same storage
-   *               controller. The memory buffer holding this block is owned
-   *               by the caller. This pointer may be NULL; if so, the
-   *               invocation fills in the first block into the out parameter:
-   *               'next_block'.
-   *
-   * @param[out] next_block
-   *               A caller-owned buffer large enough to be filled in with
-   *               the following ARM_STORAGE_BLOCK. It is legal to provide the
-   *               same buffer using 'next_block' as was passed in with 'prev_block'. It
-   *               is also legal to pass a NULL into this parameter if the
-   *               caller isn't interested in populating a buffer with the next
-   *               block--i.e. if the caller only wishes to establish the
-   *               presence of a next block.
-   *
-   * @return ARM_DRIVER_OK if a valid next block is found (or first block, if
-   *     prev_block is passed as NULL); upon successful operation, the contents
-   *     of the next (or first) block are filled into the buffer pointed to by
-   *     the parameter 'next_block' and ARM_STORAGE_VALID_BLOCK(next_block) is
-   *     guaranteed to be true. Upon reaching the end of the sequence of blocks
-   *     (iterators), or in case the driver is unable to fetch information about
-   *     the next (or first) block, an error (negative) value is returned and an
-   *     invalid StorageBlock is populated into the supplied buffer. If
-   *     prev_block is NULL, the first block is returned.
-   *
-   * @note This API returns synchronously--it does not result in an invocation
-   *     of a completion callback.
-   */
-   int32_t (*GetNextBlock)(const ARM_STORAGE_BLOCK* prev_block, ARM_STORAGE_BLOCK *next_block);
-
-  /**
-   * @brief Find the storage block (iterator) encompassing a given storage address.
-   *
-   * @param[in]  addr
-   *               Storage address in bytes.
-   *
-   * @param[out] block
-   *               A caller-owned buffer large enough to be filled in with the
-   *               ARM_STORAGE_BLOCK encapsulating the given address. This value
-   *               can also be passed in as NULL if the caller isn't interested
-   *               in populating a buffer with the block--if the caller only
-   *               wishes to establish the presence of a containing storage
-   *               block.
-   *
-   * @return ARM_DRIVER_OK if a containing storage-block is found. In this case,
-   *     if block is non-NULL, the buffer pointed to by it is populated with
-   *     the contents of the storage block--i.e. if block is valid and a block is
-   *     found, ARM_STORAGE_VALID_BLOCK(block) would return true following this
-   *     call. If there is no storage block containing the given offset, or in
-   *     case the driver is unable to resolve an address to a storage-block, an
-   *     error (negative) value is returned and an invalid StorageBlock is
-   *     populated into the supplied buffer.
-   *
-   * @note This API returns synchronously--it does not result in an invocation
-   *     of a completion callback.
-   */
-  int32_t (*GetBlock)(uint64_t addr, ARM_STORAGE_BLOCK *block);
+  ARM_DRIVER_VERSION       (*GetVersion)     (void);                                           ///< Pointer to \ref ARM_Storage_GetVersion : Get driver version.
+  ARM_STORAGE_CAPABILITIES (*GetCapabilities)(void);                                           ///< Pointer to \ref ARM_Storage_GetCapabilities : Get driver capabilities.
+  int32_t                  (*Initialize)     (ARM_Storage_Callback_t callback);                ///< Pointer to \ref ARM_Storage_Initialize : Initialize the Storage Interface.
+  int32_t                  (*Uninitialize)   (void);                                           ///< Pointer to \ref ARM_Storage_Uninitialize : De-initialize the Storage Interface.
+  int32_t                  (*PowerControl)   (ARM_POWER_STATE state);                          ///< Pointer to \ref ARM_Storage_PowerControl : Control the Storage interface power.
+  int32_t                  (*ReadData)       (uint64_t addr, void *data, uint32_t size);       ///< Pointer to \ref ARM_Storage_ReadData : Read data from Storage.
+  int32_t                  (*ProgramData)    (uint64_t addr, const void *data, uint32_t size); ///< Pointer to \ref ARM_Storage_ProgramData : Program data to Storage.
+  int32_t                  (*Erase)          (uint64_t addr, uint32_t size);                   ///< Pointer to \ref ARM_Storage_Erase : Erase Storage range.
+  int32_t                  (*EraseAll)       (void);                                           ///< Pointer to \ref ARM_Storage_EraseAll : Erase complete Storage.
+  ARM_STORAGE_STATUS       (*GetStatus)      (void);                                           ///< Pointer to \ref ARM_Storage_GetStatus : Get Storage status.
+  int32_t                  (*GetInfo)        (ARM_STORAGE_INFO *info);                         ///< Pointer to \ref ARM_Storage_GetInfo : Get Storage information.
+  uint32_t                 (*ResolveAddress) (uint64_t addr);                                  ///< Pointer to \ref ARM_Storage_ResolveAddress : Resolve a storage address.
+  int32_t                  (*GetNextBlock)   (const ARM_STORAGE_BLOCK* prev, ARM_STORAGE_BLOCK *next); ///< Pointer to \ref ARM_Storage_GetNextBlock : fetch successor for current block.
+  int32_t                  (*GetBlock)       (uint64_t addr, ARM_STORAGE_BLOCK *block);        ///< Pointer to \ref ARM_Storage_GetBlock :
 } const ARM_DRIVER_STORAGE;
 
 #ifdef __cplusplus
