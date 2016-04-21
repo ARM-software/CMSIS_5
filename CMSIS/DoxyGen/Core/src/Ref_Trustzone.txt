@@ -101,33 +101,6 @@ void TZ_NVIC_ClearPendingIRQ_NS(IRQn_Type IRQn);
 uint32_t TZ_NVIC_GetActive_NS(IRQn_Type IRQn);
 
 /**
-  \brief   Get Interrupt Target State (non-secure)
-  \details Reads the interrupt target field from the non-secure NVIC when in secure state.
-  \param [in]      IRQn  External interrupt number. Value cannot be negative.
-  \return             0  if interrupt is assigned to Secure
-  \return             1  if interrupt is assigned to Non Secure
- */
-uint32_t TZ_NVIC_GetTargetState_NS(IRQn_Type IRQn);
-
-/**
-  \brief   Set Interrupt Target State (non-secure)
-  \details Sets the interrupt target field in the non-secure NVIC when in secure state.
-  \param [in]      IRQn  External interrupt number. Value cannot be negative.
-  \return             0  if interrupt is assigned to Secure
-  \return             1  if interrupt is assigned to Non Secure
- */
-uint32_t TZ_NVIC_SetTargetState_NS(IRQn_Type IRQn);
-
-/**
-  \brief   Clear Interrupt Target State (non-secure)
-  \details Clears the interrupt target field in the non-secure NVIC when in secure state.
-  \param [in]      IRQn  External interrupt number. Value cannot be negative.
-  \return             0  if interrupt is assigned to Secure
-  \return             1  if interrupt is assigned to Non Secure
- */
-uint32_t TZ_NVIC_ClearTargetState_NS(IRQn_Type IRQn);
-
-/**
   \brief   Set Interrupt Priority (non-secure)
   \details Sets the priority of an non-secure interrupt when in secure state.
   \note    The priority cannot be set for every core interrupt.
@@ -244,33 +217,6 @@ uint32_t __TZ_get_CONTROL_NS(void);
 void __TZ_set_CONTROL_NS(uint32_t control);
 
 /**
-  \brief   Get IPSR register (non-secure)
-  \details Returns the content of the non-secure IPSR register when in secure state.
-  \return               IPSR register value
-  \sa     
-    - \ref __get_IPSR; IPSR_Type 
- */
-uint32_t __TZ_get_IPSR_NS(void);
-
-/**
-  \brief   Get APSR register (non-secure)
-  \details Returns the content of the non-secure APSR register when in secure state.
-  \return               APSR register value
-  \sa     
-    - \ref __get_APSR; APSR_Type 
- */
-uint32_t __TZ_get_APSR_NS(void);
-
-/**
-  \brief   Get xPSR register (non-secure)
-  \details Returns the content of the non-secure xPSR register when in secure state.
-  \return               xPSR register value
-  \sa     
-    - \ref __get_xPSR; xPSR_Type 
- */
-uint32_t __TZ_get_xPSR_NS(void);
-
-/**
   \brief   Get Process Stack Pointer (non-secure)
   \details Returns the current value of the non-secure Process Stack Pointer (PSP) when in secure state.
   \return               PSP register value
@@ -343,16 +289,6 @@ uint32_t __TZ_get_BASEPRI_NS(void);
 void __TZ_set_BASEPRI_NS(uint32_t basePri);
 
 /**
-  \brief   Set Base Priority with condition (non_secure)
-  \details Assigns the given value to the non-secure Base Priority register when in secure state only if BASEPRI masking is disabled,
-	       or the new value increases the BASEPRI priority level.
-  \param [in]    basePri  Base Priority value to set
-  \sa     
-    - \ref __set_BASEPRI_MAX
- */
-void __TZ_set_BASEPRI_MAX_NS(uint32_t basePri);
-
-/**
   \brief   Get Fault Mask (non-secure)
   \details Returns the current value of the non-secure Fault Mask register when in secure state.
   \return               Fault Mask register value
@@ -401,26 +337,6 @@ uint32_t __TZ_get_MSPLIM_NS(void);
   \note    Only available for ARMv8-M Mainline. 
  */
 void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit);
-
-/**
-  \brief   Get FPSCR (non-secure)
-  \details Returns the current value of the non-secure Floating Point Status/Control register when in secure state.
-  \return               Floating Point Status/Control register value
-  \note    Only available for ARMv8-M Mainline. 
-  \sa     
-    - \ref __get_FPSCR
- */
-uint32_t __TZ_get_FPSCR_NS(void);
-
-/**
-  \brief   Set FPSCR (non-secure)
-  \details Assigns the given value to the non-secure Floating Point Status/Control register when in secure state.
-  \param [in]    fpscr  Floating Point Status/Control value to set
-  \note    Only available for ARMv8-M Mainline. 
-  \sa     
-    - \ref __set_FPSCR
- */
-void __TZ_set_FPSCR_NS(uint32_t fpscr);
 
 /** close coreregister_trustzone_functions
   @}
