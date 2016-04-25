@@ -3,7 +3,7 @@
 ; * @brief    CMSIS Core Device Startup File for
 ; *           ARMv8MBL Device Series
 ; * @version  V5.00
-; * @date     08. March 2016
+; * @date     25. April 2016
 ; ******************************************************************************/
 ;/*
 ; * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -66,7 +66,7 @@ __vector_table
         DCD     0
         DCD     0
 __vector_table_0x1c
-        DCD     SecureFault_Handler
+        DCD     0
         DCD     0
         DCD     0
         DCD     0
@@ -138,11 +138,6 @@ NMI_Handler
         SECTION .text:CODE:REORDER:NOROOT(1)
 HardFault_Handler
         B HardFault_Handler
-
-        PUBWEAK SecureFault_Handler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-SecureFault_Handler
-        B SecureFault_Handler
 
         PUBWEAK SVC_Handler
         SECTION .text:CODE:REORDER:NOROOT(1)

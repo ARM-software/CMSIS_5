@@ -3,7 +3,7 @@
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMv8MBL Device Series
  * @version  V5.00
- * @date     08. March 2016
+ * @date     25. April 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -41,7 +41,7 @@ typedef enum IRQn
 
 
 
-  SecureFault_IRQn              =  -9,      /*  7 Secure Fault Interrupt */
+
   SVCall_IRQn                   =  -5,      /* 11 SV Call Interrupt */
 
   PendSV_IRQn                   =  -2,      /* 14 Pend SV Interrupt */

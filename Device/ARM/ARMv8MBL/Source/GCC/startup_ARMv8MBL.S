@@ -3,7 +3,7 @@
  * @brief    CMSIS Core Device Startup File for
  *           ARMv8MBL Device Series
  * @version  V5.00
- * @date     02. March 2016
+ * @date     25. April 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -69,7 +69,7 @@ __Vectors:
 	.long	0                     /* Reserved */
 	.long	0                     /* Reserved */
 	.long	0                     /* Reserved */
-    .long   SecureFault_Handler   /* Secure Fault Handler */
+	.long	0                     /* Reserved */
 	.long	0                     /* Reserved */
 	.long	0                     /* Reserved */
 	.long	0                     /* Reserved */
@@ -279,7 +279,6 @@ Default_Handler:
 
 	def_irq_handler	NMI_Handler
 	def_irq_handler	HardFault_Handler
-	def_irq_handler	SecureFault_Handler
 	def_irq_handler	SVC_Handler
 	def_irq_handler	PendSV_Handler
 	def_irq_handler	SysTick_Handler
