@@ -3,7 +3,7 @@
  * @brief    CMSIS Core Device Startup File for
  *           ARMv8MBL Device Series
  * @version  V5.00
- * @date     02. March 2016
+ * @date     25. April 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -89,7 +89,6 @@ static uint8_t heap[__HEAP_SIZE]   __attribute__ ((aligned(8), used, section(".h
 /* ARMv8MBL Processor Exceptions */
 void NMI_Handler         (void) __attribute__ ((weak, alias("Default_Handler")));
 void HardFault_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
-void SecureFault_Handler (void) __attribute__ ((weak, alias("Default_Handler")));
 void SVC_Handler         (void) __attribute__ ((weak, alias("Default_Handler")));
 void PendSV_Handler      (void) __attribute__ ((weak, alias("Default_Handler")));
 void SysTick_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
@@ -132,7 +131,7 @@ const pFunc __Vectors[] __attribute__ ((section(".vectors"))) = {
   0,                                        /*      Reserved                  */
   0,                                        /*      Reserved                  */
   0,                                        /*      Reserved                  */
-  SecureFault_Handler,                      /*      Secure Fault Handler      */
+  0,                                        /*      Reserved                  */
   0,                                        /*      Reserved                  */
   0,                                        /*      Reserved                  */
   0,                                        /*      Reserved                  */
