@@ -830,6 +830,7 @@ Multiple elements are allowed. The last occurrence in the hierarchy determines t
   are overridden.
 - It is good practice to add both attributes (\c header and \c define) in the attributes list of the 
   \c compile element together. This clarifies the relationship between header file and define.
+- The name of the header file should be exported by the IDE to the \ref RTE_Components_h file using the \#define CMSIS_device_header.
   
 \b Example
 \code
