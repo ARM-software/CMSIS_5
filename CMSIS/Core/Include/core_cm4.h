@@ -2,7 +2,7 @@
  * @file     core_cm4.h
  * @brief    CMSIS Cortex-M4 Core Peripheral Access Layer Header File
  * @version  V5.00
- * @date     19. April 2016
+ * @date     26. April 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -1637,7 +1637,7 @@ typedef struct
   #define NVIC_GetVector              __NVIC_GetVector
 #endif  /* (CMSIS_VECTAB_VIRTUAL) */
 
-#define NVIC_USER_IRQ_OFFSET          16U
+#define NVIC_USER_IRQ_OFFSET          16
 
 
 
