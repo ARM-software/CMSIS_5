@@ -3,7 +3,7 @@
  * @brief    CMSIS Device System Source File for
  *           ARMv8MML Device Series
  * @version  V5.00
- * @date     08. April 2016
+ * @date     29. April 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -25,8 +25,10 @@
 
 #if defined (ARMv8MML)
   #include "ARMv8MML.h"
-#elif defined (ARMv8MML_FP)
-  #include "ARMv8MML_FP.h"
+#elif defined (ARMv8MML_SP)
+  #include "ARMv8MML_SP.h"
+#elif defined (ARMv8MML_DP)
+  #include "ARMv8MML_DP.h"
 #else
   #error device not specified!
 #endif

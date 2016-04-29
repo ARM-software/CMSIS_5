@@ -1,9 +1,9 @@
 /**************************************************************************//**
- * @file     ARMv8MML_FP.h
+ * @file     ARMv8MML_DP.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
- *           ARMv8MML Device Series (configured for CM4 with FPU)
+ *           ARMv8MML Device Series (configured for ARMv8MML with double precision FPU)
  * @version  V5.00
- * @date     08. March 2016
+ * @date     29. April 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -23,8 +23,8 @@
  * limitations under the License.
  */
 
-#ifndef ARMv8MML_FP_H
-#define ARMv8MML_FP_H
+#ifndef ARMv8MML_DP_H
+#define ARMv8MML_DP_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -103,12 +103,13 @@ typedef enum IRQn
 
 /* --------  Configuration of the Cortex-M4 Processor and Core Peripherals  ------- */
 #define __ARMv8MML_REV            0x0001U   /* Core revision r0p1 */
-#define __SAU_PRESENT             1         /* SAU present or not */
-#define __MPU_PRESENT             1         /* MPU present or not */
+#define __SAU_PRESENT             1         /* SAU present */
+#define __MPU_PRESENT             1         /* MPU present */
 #define __VTOR_PRESENT            1         /* VTOR present */
 #define __NVIC_PRIO_BITS          3         /* Number of Bits used for Priority Levels */
 #define __Vendor_SysTickConfig    0         /* Set to 1 if different SysTick Config is used */
 #define __FPU_PRESENT             1         /* FPU present */
+#define __FPU_DP                  1         /* double precision FPU */
 
 #include "core_armv8mml.h"                  /* Processor and core peripherals */
 #include "system_ARMv8MML.h"                /* System Header */
@@ -275,4 +276,4 @@ typedef struct
 }
 #endif
 
-#endif  /* ARMv8MML_FP_H */
+#endif  /* ARMv8MML_DP_H */
