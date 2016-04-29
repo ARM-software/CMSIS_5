@@ -31,7 +31,8 @@ For further details see also the [Slides of the Embedded World CMSIS Partner Mee
 | CMSIS/DAP       | CMSIS-DAP related files and examples           |
 | CMSIS/Driver    | CMSIS-Driver API headers and template files    |
 | CMSIS/DSP       | CMSIS-DSP related files                        |
-| CMSIS/RTOS      | RTOS related files (template + include)        |
+| CMSIS/RTOS      | RTOS v1 related files (for Cortex-M)           |
+| CMSIS/RTOS2     | RTOS v2 related files (for Cortex-M & ARMv8-M) |
 | CMSIS/DoxyGen   | Source of the documentation                    |
 | CMSIS/Utilities | Utility programs                               |
 
