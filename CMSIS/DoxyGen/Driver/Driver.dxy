@@ -700,6 +700,8 @@ INPUT                  = . \
                          src/Driver_SAI.c \
                          ../../Driver/Include/Driver_SPI.h \
                          src/Driver_SPI.c \
+                         ../../Driver/Include/Driver_Storage.h \
+                         src/Driver_Storage.c \
                          ../../Driver/Include/Driver_USART.h \
                          src/Driver_USART.c \
                          ../../Driver/Include/Driver_USBD.h \
