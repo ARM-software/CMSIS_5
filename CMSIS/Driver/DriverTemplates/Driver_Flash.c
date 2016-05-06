@@ -120,3 +120,18 @@ ARM_FLASH_INFO * ARM_Flash_GetInfo(void)
 void ARM_Flash_SignalEvent(uint32_t event)
 {
 }
+// End Flash Interface
+
+ARM_DRIVER_FLASH Driver_FLASH = {
+    ARM_Flash_GetVersion,
+    ARM_Flash_GetCapabilities,
+    ARM_Flash_Initialize,
+    ARM_Flash_Uninitialize,
+    ARM_Flash_PowerControl,
+    ARM_Flash_ReadData,
+    ARM_Flash_ProgramData,
+    ARM_Flash_EraseSector,
+    ARM_Flash_EraseChip,
+    ARM_Flash_GetStatus,
+    ARM_Flash_GetInfo
+};

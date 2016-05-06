@@ -31,10 +31,10 @@ extern "C" {
 #define  ARM_Driver_Storage_(n) _ARM_Driver_Storage_(n)
 
 #define ARM_STORAGE_INVALID_OFFSET  (0xFFFFFFFFFFFFFFFFULL) ///< Invalid address (relative to a storage controller's
-                                                            ///< address space). A storage block may never start at this address.
+                                                            ///  address space). A storage block may never start at this address.
 
 #define ARM_STORAGE_INVALID_ADDRESS (0xFFFFFFFFUL)          ///< Invalid address within the processor's memory address space.
-                                                            ///< Refer to memory-mapped storage, i.e. < \ref ARM_DRIVER_STORAGE::ResolveAddress().
+                                                            ///  Refer to memory-mapped storage, i.e. \ref ARM_DRIVER_STORAGE::ResolveAddress().
 
 /****** Storage specific error codes *****/
 #define ARM_STORAGE_ERROR_NOT_ERASABLE      (ARM_DRIVER_ERROR_SPECIFIC - 1) ///< Part (or all) of the range provided to Erase() isn't erasable.
@@ -46,25 +46,25 @@ extern "C" {
  */
 typedef struct _ARM_STORAGE_BLOCK_ATTRIBUTES {
   uint32_t erasable      :  1;   ///< Erasing blocks is permitted with a minimum granularity of 'erase_unit'.
-                                 ///<   @note: if 'erasable' is 0--i.e. the 'erase' operation isn't available--then
-                                 ///<   'erase_unit' (see below) is immaterial and should be 0.
+                                 ///   @note if 'erasable' is 0 (i.e. the 'erase' operation isn't available) then
+                                 ///   'erase_unit' (see below) is immaterial and should be 0.
   uint32_t programmable  :  1;   ///< Writing to ranges is permitted with a minimum granularity of 'program_unit'.
-                                 ///<   Writes are typically achieved through the ProgramData operation (following an erase);
-                                 ///<   if storage isn't erasable (see 'erasable' above) but is memory-mapped
-                                 ///<   (i.e. 'memory_mapped'), it can be written directly using memory-store operations.
+                                 ///    Writes are typically achieved through the ProgramData operation (following an erase);
+                                 ///    if storage isn't erasable (see 'erasable' above) but is memory-mapped
+                                 ///    (i.e. 'memory_mapped'), it can be written directly using memory-store operations.
   uint32_t executable    :  1;   ///< This storage block can hold program data; the processor can fetch and execute code
-                                 ///<   sourced from it. Often this is accompanied with the device being 'memory_mapped' (see \ref ARM_STORAGE_INFO).
+                                 ///    sourced from it. Often this is accompanied with the device being 'memory_mapped' (see \ref ARM_STORAGE_INFO).
   uint32_t protectable   :  1;   ///< The entire block can be protected from program and erase operations. Once protection
-                                 ///<   is enabled for a block, its 'erasable' and 'programmable' bits are turned off.
+                                 ///    is enabled for a block, its 'erasable' and 'programmable' bits are turned off.
   uint32_t reserved      : 28;
   uint32_t erase_unit;           ///< Minimum erase size in bytes.
-                                 ///<   The offset of the start of the erase-range should also be aligned with this value.
-                                 ///<   Applicable if the 'erasable' attribute is set for the block.
-                                 ///<   @note: if 'erasable' (see above) is 0--i.e. the 'erase' operation isn't available--then
-                                 ///<   'erase_unit' is immaterial and should be 0.
+                                 ///    The offset of the start of the erase-range should also be aligned with this value.
+                                 ///    Applicable if the 'erasable' attribute is set for the block.
+                                 ///    @note if 'erasable' (see above) is 0 (i.e. the 'erase' operation isn't available) then
+                                 ///    'erase_unit' is immaterial and should be 0.
   uint32_t protection_unit;      ///< Minimum protectable size in bytes. Applicable if the 'protectable'
-                                 ///<   attribute is set for the block. This should be a divisor of the block's size. A
-                                 ///<   block can be considered to be made up of consecutive, individually-protectable fragments.
+                                 ///    attribute is set for the block. This should be a divisor of the block's size. A
+                                 ///    block can be considered to be made up of consecutive, individually-protectable fragments.
 } ARM_STORAGE_BLOCK_ATTRIBUTES;
 
 /**
@@ -72,10 +72,10 @@ typedef struct _ARM_STORAGE_BLOCK_ATTRIBUTES {
  */
 typedef struct _ARM_STORAGE_BLOCK {
   uint64_t                     addr;       ///< This is the start address of the storage block. It is
-                                           ///<   expressed as an offset from the start of the storage map
-                                           ///<   maintained by the owning storage controller.
+                                           ///    expressed as an offset from the start of the storage map
+                                           ///    maintained by the owning storage controller.
   uint64_t                     size;       ///< This is the size of the storage block, in units of bytes.
-                                           ///<   Together with addr, it describes a range [addr, addr+size).
+                                           ///    Together with addr, it describes a range [addr, addr+size).
   ARM_STORAGE_BLOCK_ATTRIBUTES attributes; ///< Attributes for this block.
 } ARM_STORAGE_BLOCK;
 
@@ -113,8 +113,8 @@ typedef struct _ARM_STORAGE_BLOCK {
 typedef struct _ARM_STORAGE_SECURITY_FEATURES {
   uint32_t acls                :  1; ///< Protection against internal software attacks using ACLs.
   uint32_t rollback_protection :  1; ///< Roll-back protection. Set to true if the creator of the storage
-                                     ///<   can ensure that an external attacker can't force an
-                                     ///<   older firmware to run or to revert back to a previous state.
+                                     ///    can ensure that an external attacker can't force an
+                                     ///    older firmware to run or to revert back to a previous state.
   uint32_t tamper_proof        :  1; ///< Tamper-proof memory (will be deleted on tamper-attempts using board level or chip level sensors).
   uint32_t internal_flash      :  1; ///< Internal flash.
   uint32_t reserved1           : 12;
@@ -137,21 +137,21 @@ typedef struct _ARM_STORAGE_SECURITY_FEATURES {
 typedef struct _ARM_STORAGE_INFO {
   uint64_t                      total_storage;        ///< Total available storage, in bytes.
   uint32_t                      program_unit;         ///< Minimum programming size in bytes.
-                                                      ///<   The offset of the start of the program-range should also be aligned with this value.
-                                                      ///<   Applicable only if the 'programmable' attribute is set for a block.
-                                                      ///<   @note: setting program_unit to 0 has the effect of disabling the size and alignment
-                                                      ///<   restrictions (setting it to 1 also has the same effect).
+                                                      ///    The offset of the start of the program-range should also be aligned with this value.
+                                                      ///    Applicable only if the 'programmable' attribute is set for a block.
+                                                      ///    @note setting program_unit to 0 has the effect of disabling the size and alignment
+                                                      ///    restrictions (setting it to 1 also has the same effect).
   uint32_t                      optimal_program_unit; ///< Optimal programming page-size in bytes. Some storage controllers
-                                                      ///<   have internal buffers into which to receive data. Writing in chunks of
-                                                      ///<   'optimal_program_unit' would achieve maximum programming speed.
-                                                      ///<   Applicable only if the 'programmable' attribute is set for the underlying block(s).
+                                                      ///    have internal buffers into which to receive data. Writing in chunks of
+                                                      ///    'optimal_program_unit' would achieve maximum programming speed.
+                                                      ///    Applicable only if the 'programmable' attribute is set for the underlying block(s).
   uint32_t                      program_cycles;       ///< A measure of endurance for reprogramming.
-                                                      ///<   Use ARM_STORAGE_PROGRAM_CYCLES_INFINITE for infinite or unknown endurance.
+                                                      ///    Use ARM_STORAGE_PROGRAM_CYCLES_INFINITE for infinite or unknown endurance.
   uint32_t                      erased_value    :  1; ///< Contents of erased memory (usually 1 to indicate erased bytes with state 0xFF).
   uint32_t                      memory_mapped   :  1; ///< This storage device has a mapping onto the processor's memory address space.
-                                                      ///<   @note: For a memory-mapped block which isn't erasable but is programmable (i.e. if
-                                                      ///<   'erasable' is set to 0, but 'programmable' is 1), writes should be possible directly to
-                                                      ///<   the memory-mapped storage without going through the ProgramData operation.
+                                                      ///    @note For a memory-mapped block which isn't erasable but is programmable (i.e. if
+                                                      ///    'erasable' is set to 0, but 'programmable' is 1), writes should be possible directly to
+                                                      ///    the memory-mapped storage without going through the ProgramData operation.
   uint32_t                      programmability :  4; ///< A value to indicate storage programmability.
   uint32_t                      retention_level :  4;
   uint32_t                      reserved        : 22;
@@ -171,13 +171,13 @@ typedef struct _ARM_STORAGE_STATUS {
  */
 typedef struct _ARM_STORAGE_CAPABILITIES {
   uint32_t asynchronous_ops :  1; ///< Used to indicate if APIs like initialize,
-                                  ///<   read, erase, program, etc. can operate in asynchronous mode.
-                                  ///<   Setting this bit to 1 means that the driver is capable
-                                  ///<   of launching asynchronous operations; command completion is
-                                  ///<   signaled by the invocation of a completion callback. If
-                                  ///<   set to 1, drivers may still complete asynchronous
-                                  ///<   operations synchronously as necessary--in which case they
-                                  ///<   return a positive error code to indicate synchronous completion.
+                                  ///    read, erase, program, etc. can operate in asynchronous mode.
+                                  ///    Setting this bit to 1 means that the driver is capable
+                                  ///    of launching asynchronous operations; command completion is
+                                  ///    signaled by the invocation of a completion callback. If
+                                  ///    set to 1, drivers may still complete asynchronous
+                                  ///    operations synchronously as necessary (in which case they
+                                  ///    return a positive error code to indicate synchronous completion).
   uint32_t erase_all        :  1; ///< Supports EraseAll operation.
   uint32_t reserved         : 30;
 } ARM_STORAGE_CAPABILITIES;
@@ -355,7 +355,7 @@ typedef enum _ARM_STORAGE_OPERATION {
                same buffer using 'next_block' as was passed in with 'prev_block'. It
                is also legal to pass a NULL into this parameter if the
                caller isn't interested in populating a buffer with the next
-               block--i.e. if the caller only wishes to establish the
+               block, i.e. if the caller only wishes to establish the
                presence of a next block.
   \return      ARM_DRIVER_OK if a valid next block is found (or first block, if
                prev_block is passed as NULL); upon successful operation, the contents
@@ -374,12 +374,12 @@ typedef enum _ARM_STORAGE_OPERATION {
   \param[out]  block A caller-owned buffer large enough to be filled in with the
                ARM_STORAGE_BLOCK encapsulating the given address. This value
                can also be passed in as NULL if the caller isn't interested
-               in populating a buffer with the block--if the caller only
+               in populating a buffer with the block, if the caller only
                wishes to establish the presence of a containing storage
                block.
   \return      ARM_DRIVER_OK if a containing storage-block is found. In this case,
                if block is non-NULL, the buffer pointed to by it is populated with
-               the contents of the storage block--i.e. if block is valid and a block is
+               the contents of the storage block, i.e. if block is valid and a block is
                found, ARM_STORAGE_VALID_BLOCK(block) would return true following this
                call. If there is no storage block containing the given offset, or in
                case the driver is unable to resolve an address to a storage-block, an

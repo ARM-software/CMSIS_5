@@ -31,36 +31,7 @@ Here's a picture to help locate the storage abstraction in the software stack.
 The part below the box labeled 'Storage abstraction layer' is implemented by a
 storage driver.
 
-         +----------------------------------+
-         |            Volume                |
-         |  or UBI (Unsorted Block Image)   |
-         | (Block Management: alloc, erase) |
-         |                                  |
-         +--------------+-------------------+
-                        |
-           +------------v--------------+
-           | Storage abstraction layer |
-           +--+--------------+----+----+
-              |              |    |
-     operates | upon         |    |
-              |              |    +-------------------------------------+
-    +---------v----------+   |                                          |
-    | ARM_DRIVER_STORAGE |   |                                          |
-    | +----------------+ |   |                                          |
-    | (impl. specific)   |   +------+                                   |
-    | GetVersion         |          | Implemented                       |
-    | GetCapability      |          | Using a potentially   Implemented | Using
-    | access operations  |          | dynamic table of                  | single
-    |   Init             |          |                                   |
-    |   Erase            | +--------v---------------------+  +----------v----------------+
-    |   Program          | |  ARM_STORAGE_BLOCK           |  |                           |
-    |   ...              | |  +---------------+           |  | ARM_STORAGE_CAPABILITIES  |
-    | Resolve Address    | |  start_addr                  |  |                           |
-    | Iteration ops      | |  size                        |  +---------------------------+
-    |   FirstSegment     | |  ARM_STORAGE_BLOCK_ATTRIBUTES|
-    |   NextSegment      | |                              |
-    |   ...              | +------------------------------+
-    +--------------------+
+\image html storage_sw_stack.png
 
 **Storage API**
 
@@ -70,175 +41,13 @@ The following header files define the Application Programming Interface (API) fo
 
 **Driver Functions**
 
-The driver functions are published in the access struct as explained in \ref DriverFunctions
+The driver functions are published in the access struct as explained in \ref StorageDriverFunctions
   - \ref ARM_DRIVER_STORAGE : access struct for Storage driver functions
 
 A sample use for the driver can be found at: \ref SampleUseOfStorageDriver
 *******************************************************************************************************************/
 
-/**
-\defgroup SampleUseOfStorageDriver Sample Use of Storage Driver
-@{
-<b>Example Code:</b>
 
-The following is a generic algorithm to erase
-and program one \ref ARM_STORAGE_BLOCK_ATTRIBUTES::erase_unit worth of storage
-and then read it back to be verified. It handles both synchronous and
-asynchronous driver implementations.
-
-\code
-// Copyright (c) 2006-2016, ARM Limited, All Rights Reserved
-// SPDX-License-Identifier: Apache-2.0
-//
-// Licensed under the Apache License, Version 2.0 (the "License"); you may
-// not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http:// www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-#include "Driver_Storage.h"
-#include <stdio.h>
-#include <string.h>
-
-#define TEST_ASSERT(Expr)                       if (!(Expr)) { printf("%s:%u: assertion failure\n", __FUNCTION__, __LINE__); while (1) ;}
-#define TEST_ASSERT_EQUAL(expected, actual)     if ((expected) != (actual)) {printf("%s:%u: assertion failure\n", __FUNCTION__, __LINE__); while (1) ;}
-#define TEST_ASSERT_NOT_EQUAL(expected, actual) if ((expected) == (actual)) {printf("%s:%u: assertion failure\n", __FUNCTION__, __LINE__); while (1) ;}
-
-// forward declarations
-void callbackHandler(int32_t status, ARM_STORAGE_OPERATION operation);
-void progressStateMachine(void);
-
-static enum {
-    NEEDS_INITIALIZATION,
-    NEEDS_ERASE,
-    NEEDS_PROGRAMMING,
-    NEEDS_READ,
-    NEEDS_VERIFICATION_FOLLOWING_READ,
-    FINISHED
-} state;
-
-extern ARM_DRIVER_STORAGE ARM_Driver_Storage_(0);
-ARM_DRIVER_STORAGE *drv = &ARM_Driver_Storage_(0);
-
-static const unsigned BUFFER_SIZE = 16384;
-static uint8_t buffer[BUFFER_SIZE];
-
-void main(int argc __unused, char** argv __unused)
-{
-    state = NEEDS_INITIALIZATION;
-
-    progressStateMachine();
-    while (true) {
-        // WFE(); // optional low-power sleep
-    }
-}
-
-void progressStateMachine(void)
-{
-    int32_t rc;
-
-    static ARM_STORAGE_BLOCK firstBlock;
-    if (!ARM_STORAGE_VALID_BLOCK(&firstBlock)) {
-        // Get the first block. This block is entered only once.
-        rc = drv->GetNextBlock(NULL, &firstBlock); // get first block
-        TEST_ASSERT_EQUAL(ARM_DRIVER_OK, rc);
-    }
-    TEST_ASSERT(ARM_STORAGE_VALID_BLOCK(&firstBlock));
-    TEST_ASSERT(firstBlock.size > 0);
-
-    switch (state) {
-        case NEEDS_INITIALIZATION:
-            rc = drv->Initialize(callbackHandler);
-            TEST_ASSERT(rc >= ARM_DRIVER_OK);
-            if (rc == ARM_DRIVER_OK) {
-                TEST_ASSERT_EQUAL(1, drv->GetCapabilities().asynchronous_ops);
-                state = NEEDS_ERASE;
-                return; // there is pending asynchronous activity which will lead to a completion callback later.
-            }
-            TEST_ASSERT_EQUAL(1, rc); // synchronous completion
-
-            // intentional fall-through
-
-        case NEEDS_ERASE:
-            TEST_ASSERT(firstBlock.attributes.erase_unit > 0);
-            rc = drv->Erase(firstBlock.addr, firstBlock.attributes.erase_unit);
-            TEST_ASSERT(rc >= ARM_DRIVER_OK);
-            if (rc == ARM_DRIVER_OK) {
-                TEST_ASSERT_EQUAL(1, drv->GetCapabilities().asynchronous_ops);
-                state = NEEDS_PROGRAMMING;
-                return; // there is pending asynchronous activity which will lead to a completion callback later.
-            }
-            TEST_ASSERT_EQUAL(firstBlock.attributes.erase_unit, (uint32_t)rc); // synchronous completion
-
-            // intentional fall-through
-
-        case NEEDS_PROGRAMMING:
-            TEST_ASSERT(BUFFER_SIZE >= firstBlock.attributes.erase_unit);
-            #define PATTERN 0xAA
-            memset(buffer, PATTERN, firstBlock.attributes.erase_unit);
-            rc = drv->ProgramData(firstBlock.addr, buffer, firstBlock.attributes.erase_unit);
-            TEST_ASSERT(rc >= ARM_DRIVER_OK);
-            if (rc == ARM_DRIVER_OK) {
-                TEST_ASSERT_EQUAL(1, drv->GetCapabilities().asynchronous_ops);
-                state = NEEDS_READ;
-                return;  // there is pending asynchronous activity which will lead to a completion callback later.
-            }
-            TEST_ASSERT_EQUAL(firstBlock.attributes.erase_unit, (uint32_t)rc); // synchronous completion
-
-            // intentional fall-through
-
-        case NEEDS_READ:
-            rc = drv->ReadData(firstBlock.addr, buffer, firstBlock.attributes.erase_unit);
-            TEST_ASSERT(rc >= ARM_DRIVER_OK);
-            if (rc == ARM_DRIVER_OK) {
-                TEST_ASSERT_EQUAL(1, drv->GetCapabilities().asynchronous_ops);
-                state = NEEDS_VERIFICATION_FOLLOWING_READ;
-                return;  // there is pending asynchronous activity which will lead to a completion callback later.
-            }
-            TEST_ASSERT_EQUAL(firstBlock.attributes.erase_unit, (uint32_t)rc);
-
-            // intentional fall-through
-
-        case NEEDS_VERIFICATION_FOLLOWING_READ:
-            printf("verifying data\r\n");
-            for (unsigned i = 0; i < firstBlock.attributes.erase_unit; i++) {
-                TEST_ASSERT_EQUAL(PATTERN, buffer[i]);
-            }
-            state = FINISHED;
-            printf("done\r\n");
-            break;
-
-        case FINISHED:
-            break;
-    } // switch (state)
-}
-
-void callbackHandler(int32_t status, ARM_STORAGE_OPERATION operation)
-{
-    (void)status;
-    (void)operation;
-    switch (operation) {
-        case ARM_STORAGE_OPERATION_INITIALIZE:
-        case ARM_STORAGE_OPERATION_READ_DATA:
-        case ARM_STORAGE_OPERATION_PROGRAM_DATA:
-        case ARM_STORAGE_OPERATION_ERASE:
-            progressStateMachine();
-            break;
-
-        default:
-            printf("callbackHandler: unexpected callback for opcode %u with status %ld\r\n", operation, status);
-            break;
-    }
-}
-\endcode
-@}
-*******************************************************************************************************************/
 
 /**
 \addtogroup storage_interface_gr
@@ -314,7 +123,7 @@ single word and requires the use of pointers to be moved around.
 This is the set of operations constituting the Storage driver. Their
 implementation is platform-specific, and needs to be supplied by the porting
 effort. The functions of the Storage driver are accessed by function pointers
-exposed by this structure. Refer to \ref DriverFunctions for overview
+exposed by this structure. Refer to \ref StorageDriverFunctions for overview
 information.
 
 Each instance of a Storage interface provides such an access structure.
@@ -327,27 +136,37 @@ The default is \token{0}, which connects a middleware to the first instance of a
 *******************************************************************************************************************/
 
 /**
-\defgroup DriverFunctions Use of Storage APIs
+\defgroup StorageDriverFunctions Use of Storage APIs
 
 Function pointers within \ref ARM_DRIVER_STORAGE form the set of operations
 constituting the Storage driver. Their implementation is platform-specific, and
 needs to be supplied by the porting effort.
 
 Some of these APIs will always operate synchronously:
-\ref ARM_Storage_GetVersion, \ref ARM_Storage_GetCapabilities, \ref ARM_Storage_GetStatus,
-\ref ARM_Storage_GetInfo, \ref ARM_Storage_ResolveAddress, \ref ARM_Storage_GetNextBlock,
-and \ref ARM_Storage_GetBlock. This means that control returns to the caller
-with a relevant status code only after the completion of the operation (or
+- \ref ARM_Storage_GetVersion
+- \ref ARM_Storage_GetCapabilities
+- \ref ARM_Storage_GetStatus
+- \ref ARM_Storage_GetInfo
+- \ref ARM_Storage_ResolveAddress
+- \ref ARM_Storage_GetNextBlock and
+- \ref ARM_Storage_GetBlock.
+
+This means that control returns to the caller with a relevant status code only after the completion of the operation (or
 the discovery of a failure condition).
 
-The remainder of the APIs: \ref ARM_Storage_Initialize, \ref ARM_Storage_Uninitialize, \ref ARM_Storage_PowerControl, \ref ARM_Storage_ReadData,
-\ref ARM_Storage_ProgramData, \ref ARM_Storage_Erase, and \ref ARM_Storage_EraseAll can function asynchronously if the underlying
-controller supports it--i.e. if ARM_STORAGE_CAPABILITIES::asynchronous_ops is
-set. In the case of asynchronous operation, the invocation returns early
-(with ARM_DRIVER_OK) and results in a completion callback later. If
-ARM_STORAGE_CAPABILITIES::asynchronous_ops is not set, then all such APIs
-execute synchronously, and control returns to the caller with a status code
-only after the completion of the operation (or the discovery of a failure
+The remainder of the APIs:
+- \ref ARM_Storage_Initialize
+- \ref ARM_Storage_Uninitialize
+- \ref ARM_Storage_PowerControl
+- \ref ARM_Storage_ReadData
+- \ref ARM_Storage_ProgramData
+- \ref ARM_Storage_Erase and
+- \ref ARM_Storage_EraseAll
+
+can function asynchronously if the underlying controller supports it; that is if ARM_STORAGE_CAPABILITIES::asynchronous_ops
+is set. In the case of asynchronous operation, the invocation returns early (with ARM_DRIVER_OK) and results in a completion
+callback later. If ARM_STORAGE_CAPABILITIES::asynchronous_ops is not set, then all such APIs execute synchronously, and
+control returns to the caller with a status code only after the completion of the operation (or the discovery of a failure
 condition).
 
 If ARM_STORAGE_CAPABILITIES::asynchronous_ops is set, a storage driver may
@@ -365,19 +184,23 @@ callers to handle both synchronous and asynchronous execution by the
 underlying storage driver:
 \code
     ASSERT(ARM_DRIVER_OK == 0); // this is a precondition; it doesn't need to be put in code
+    
     int32_t returnValue = drv->asynchronousAPI(...);
+         
     if (returnValue < ARM_DRIVER_OK) {
         // handle error.
+        
     } else if (returnValue == ARM_DRIVER_OK) {
         ASSERT(drv->GetCapabilities().asynchronous_ops == 1);
         // handle early return from asynchronous execution; remainder of the work is done in the callback handler.
+        
     } else {
         ASSERT(returnValue == EXPECTED_RETURN_VALUE_FOR_SYNCHRONOUS_COMPLETION);
         // handle synchronous completion.
     }
 \endcode
 
-Here's a sample use mixing synchronous and asynchronous APIs: \ref SampleUseOfStorageDriver
+THis example is mixing synchronous and asynchronous APIs: \ref SampleUseOfStorageDriver
 *******************************************************************************************************************/
 
 /**
@@ -466,10 +289,10 @@ The function \b ARM_Storage_GetVersion returns version information of the driver
 Example:
 \code
 extern ARM_DRIVER_STORAGE *drv_info;
-
+ 
 void read_version (void)  {
   ARM_DRIVER_VERSION  version;
-
+ 
   version = drv_info->GetVersion ();
   if (version.api < 0x10A)   {      // requires at minimum API version 1.10 or higher
     // error handling
@@ -501,10 +324,10 @@ is able to execute operations asynchronously.
 Example:
 \code
 extern ARM_DRIVER_STORAGE *drv_info;
-
+ 
 void read_capabilities (void)  {
   ARM_STORAGE_CAPABILITIES drv_capabilities;
-
+ 
   drv_capabilities = drv_info->GetCapabilities ();
   // interrogate capabilities
 
@@ -789,4 +612,169 @@ int32_t ARM_Storage_GetBlock(uint64_t addr, ARM_STORAGE_BLOCK *block) {
 /**
 @}
 */
-// End Flash Interface
+
+/**
+\defgroup SampleUseOfStorageDriver Sample Use of Storage Driver
+\ingroup storage_interface_gr
+@{
+<b>Example Code:</b>
+
+The following is a generic algorithm to erase
+and program one \ref ARM_STORAGE_BLOCK_ATTRIBUTES::erase_unit worth of storage
+and then read it back to be verified. It handles both synchronous and
+asynchronous driver implementations.
+
+\code
+// Copyright (c) 2006-2016, ARM Limited, All Rights Reserved
+// SPDX-License-Identifier: Apache-2.0
+//
+// Licensed under the Apache License, Version 2.0 (the "License"); you may
+// not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http:// www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "Driver_Storage.h"
+#include <stdio.h>
+#include <string.h>
+ 
+#define TEST_ASSERT(Expr)                       if (!(Expr)) { printf("%s:%u: assertion failure\n", __FUNCTION__, __LINE__); while (1) ;}
+#define TEST_ASSERT_EQUAL(expected, actual)     if ((expected) != (actual)) {printf("%s:%u: assertion failure\n", __FUNCTION__, __LINE__); while (1) ;}
+#define TEST_ASSERT_NOT_EQUAL(expected, actual) if ((expected) == (actual)) {printf("%s:%u: assertion failure\n", __FUNCTION__, __LINE__); while (1) ;}
+ 
+// forward declarations
+void callbackHandler(int32_t status, ARM_STORAGE_OPERATION operation);
+void progressStateMachine(void);
+ 
+static enum {
+    NEEDS_INITIALIZATION,
+    NEEDS_ERASE,
+    NEEDS_PROGRAMMING,
+    NEEDS_READ,
+    NEEDS_VERIFICATION_FOLLOWING_READ,
+    FINISHED
+} state;
+ 
+extern ARM_DRIVER_STORAGE ARM_Driver_Storage_(0);
+ARM_DRIVER_STORAGE *drv = &ARM_Driver_Storage_(0);
+ 
+static const unsigned BUFFER_SIZE = 16384;
+static uint8_t buffer[BUFFER_SIZE];
+ 
+void main(int argc __unused, char** argv __unused)
+{
+    state = NEEDS_INITIALIZATION;
+ 
+    progressStateMachine();
+    while (true) {
+        // WFE(); // optional low-power sleep
+    }
+}
+ 
+void progressStateMachine(void)
+{
+    int32_t rc;
+ 
+    static ARM_STORAGE_BLOCK firstBlock;
+    if (!ARM_STORAGE_VALID_BLOCK(&firstBlock)) {
+        // Get the first block. This block is entered only once.
+        rc = drv->GetNextBlock(NULL, &firstBlock); // get first block
+        TEST_ASSERT_EQUAL(ARM_DRIVER_OK, rc);
+    }
+    TEST_ASSERT(ARM_STORAGE_VALID_BLOCK(&firstBlock));
+    TEST_ASSERT(firstBlock.size > 0);
+ 
+    switch (state) {
+        case NEEDS_INITIALIZATION:
+            rc = drv->Initialize(callbackHandler);
+            TEST_ASSERT(rc >= ARM_DRIVER_OK);
+            if (rc == ARM_DRIVER_OK) {
+                TEST_ASSERT_EQUAL(1, drv->GetCapabilities().asynchronous_ops);
+                state = NEEDS_ERASE;
+                return; // there is pending asynchronous activity which will lead to a completion callback later.
+            }
+            TEST_ASSERT_EQUAL(1, rc); // synchronous completion
+ 
+            // intentional fall-through
+ 
+        case NEEDS_ERASE:
+            TEST_ASSERT(firstBlock.attributes.erase_unit > 0);
+            rc = drv->Erase(firstBlock.addr, firstBlock.attributes.erase_unit);
+            TEST_ASSERT(rc >= ARM_DRIVER_OK);
+            if (rc == ARM_DRIVER_OK) {
+                TEST_ASSERT_EQUAL(1, drv->GetCapabilities().asynchronous_ops);
+                state = NEEDS_PROGRAMMING;
+                return; // there is pending asynchronous activity which will lead to a completion callback later.
+            }
+            TEST_ASSERT_EQUAL(firstBlock.attributes.erase_unit, (uint32_t)rc); // synchronous completion
+ 
+            // intentional fall-through
+ 
+        case NEEDS_PROGRAMMING:
+            TEST_ASSERT(BUFFER_SIZE >= firstBlock.attributes.erase_unit);
+            #define PATTERN 0xAA
+            memset(buffer, PATTERN, firstBlock.attributes.erase_unit);
+            rc = drv->ProgramData(firstBlock.addr, buffer, firstBlock.attributes.erase_unit);
+            TEST_ASSERT(rc >= ARM_DRIVER_OK);
+            if (rc == ARM_DRIVER_OK) {
+                TEST_ASSERT_EQUAL(1, drv->GetCapabilities().asynchronous_ops);
+                state = NEEDS_READ;
+                return;  // there is pending asynchronous activity which will lead to a completion callback later.
+            }
+            TEST_ASSERT_EQUAL(firstBlock.attributes.erase_unit, (uint32_t)rc); // synchronous completion
+ 
+            // intentional fall-through
+ 
+        case NEEDS_READ:
+            rc = drv->ReadData(firstBlock.addr, buffer, firstBlock.attributes.erase_unit);
+            TEST_ASSERT(rc >= ARM_DRIVER_OK);
+            if (rc == ARM_DRIVER_OK) {
+                TEST_ASSERT_EQUAL(1, drv->GetCapabilities().asynchronous_ops);
+                state = NEEDS_VERIFICATION_FOLLOWING_READ;
+                return;  // there is pending asynchronous activity which will lead to a completion callback later.
+            }
+            TEST_ASSERT_EQUAL(firstBlock.attributes.erase_unit, (uint32_t)rc);
+ 
+            // intentional fall-through
+ 
+        case NEEDS_VERIFICATION_FOLLOWING_READ:
+            printf("verifying data\r\n");
+            for (unsigned i = 0; i < firstBlock.attributes.erase_unit; i++) {
+                TEST_ASSERT_EQUAL(PATTERN, buffer[i]);
+            }
+            state = FINISHED;
+            printf("done\r\n");
+            break;
+ 
+        case FINISHED:
+            break;
+    } // switch (state)
+}
+ 
+void callbackHandler(int32_t status, ARM_STORAGE_OPERATION operation)
+{
+    (void)status;
+    (void)operation;
+    switch (operation) {
+        case ARM_STORAGE_OPERATION_INITIALIZE:
+        case ARM_STORAGE_OPERATION_READ_DATA:
+        case ARM_STORAGE_OPERATION_PROGRAM_DATA:
+        case ARM_STORAGE_OPERATION_ERASE:
+            progressStateMachine();
+            break;
+ 
+        default:
+            printf("callbackHandler: unexpected callback for opcode %u with status %ld\r\n", operation, status);
+            break;
+    }
+}
+\endcode
+@}
+*******************************************************************************************************************/
+// End Storage Interface
