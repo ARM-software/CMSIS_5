@@ -31,6 +31,7 @@ The following CMSIS-Driver API groups are defined:
   - \ref flash_interface_gr "Flash": Flash Memory interface driver.
   - \ref sai_interface_gr "SAI": Serial audio interface driver (I2s, PCM, AC'97, TDM, MSB/LSB Justified).
   - \ref spi_interface_gr "SPI": Serial Peripheral Interface Bus driver.
+  - \ref storage_interface_gr "Storage": Storage device interface driver.
   - \ref usart_interface_gr "USART": Universal Synchronous and Asynchronous Receiver/Transmitter interface driver.
   - \ref usb_interface_gr "USB": Interface driver for USB Host and USB Device communication.
 
@@ -40,10 +41,11 @@ CMSIS-Driver in ARM::CMSIS Pack
 -------------------------------
 
 The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b> Pack directories:
-|Directory                       |Content                                                                 |
+| Directory                      | Content                                                                 |
 |--------------------------------|------------------------------------------------------------------------|
-|\b CMSIS\\Documentation\\Driver | This documentation                                                     |
-|\b CMSIS\\Driver\\Include       | Driver header files (Driver_<i>interface</i>.h, Driver_Common.h)       |
+|\b CMSIS/Documentation/Driver   | This documentation                                                     |
+|\b CMSIS/Driver/Include         | Driver header files (Driver_<i>interface</i>.h, Driver_Common.h)       |
+|\b CMSIS/Driver/DriverTemplates | Driver implementation template files (Driver_<i>interface</i>.c)       |
 
 <hr>
 */
@@ -68,7 +70,7 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
       <td>Modifications compared to Version 2.02:
  - Added: CAN API for an interface to CAN peripherals
  - Added: Overview of the \ref DriverValidation "CMSIS-Driver Validation" Software Pack.
- - Enhanced: documentation and clarified behaviour of the \ref CallSequence.
+ - Enhanced: documentation and clarified behavior of the \ref CallSequence.
       </td>
     </tr>
     <tr>
@@ -343,6 +345,7 @@ The following header files are available in the directory <b>.\\CMSIS\\Driver\\I
 | %Driver_MCI.h        | \ref mci_interface_gr
 | %Driver_NAND.h       | \ref nand_interface_gr
 | %Driver_SPI.h        | \ref spi_interface_gr
+| %Driver_Storage.h    | \ref storage_interface_gr
 | %Driver_SAI.h        | \ref sai_interface_gr
 | %Driver_USART.h      | \ref usart_interface_gr
 | %Driver_USB.h        | \ref usb_interface_gr
@@ -365,6 +368,7 @@ available in the directory <b>.\\CMSIS\\Driver\\DriverTemplates</b>.
 | %Driver_MCI.c     | \ref mci_interface_gr
 | %Driver_SAI.c     | \ref sai_interface_gr
 | %Driver_SPI.c     | \ref spi_interface_gr
+| %Driver_Storage.c | \ref storage_interface_gr
 | %Driver_USART.c   | \ref usart_interface_gr
 | %Driver_USBD.c    | \ref usbd_interface_gr
 | %Driver_USBH.c    | \ref usbh_interface_gr
@@ -408,8 +412,8 @@ Further driver reference implementations are available in Device Family Packs (D
 /**
 \page DriverValidation Driver Validation
 
-ARM offers a <a class=el href="http://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-Driver Validation.
-The <b>ARM::CMSIS-Driver_Validation</b> Pack contains the following:
+ARM offers a <a href="http://www.keil.com/pack/doc/CMSIS/DV/html/index.html" target=_blank>CMSIS-Driver Validation</a>
+Software Pack. The <b>ARM::CMSIS-Driver_Validation</b> Pack contains the following:
 
  - Source code of a CMSIS-Driver Validation Suite along with configuration file.
  - Documentation of the CMSIS-Driver Validation Suite.
@@ -423,12 +427,14 @@ The CMSIS-Driver Validation Suite performs the following tests:
  - Validation of Event functions
 
 The following CMSIS-Drivers can be tested with the current release:
+ - \ref can_interface_gr : with loop back test of communication.
  - \ref eth_interface_gr : MAC and PHY with loop back test of communication.
  - \ref i2c_interface_gr : only API and setup; does not test data transfer.
  - \ref mci_interface_gr : only API and setup; does not test data transfer.
  - \ref spi_interface_gr : with loop back test of communication.
  - \ref usart_interface_gr : with loop back test of communication.
  - \ref usbd_interface_gr : only API and setup; does not test data transfer.
+ - \ref usbh_interface_gr : only API and setup; does not test data transfer.
  
 The Driver Validation output can printed to a console, output via ITM printf, or output to a memory buffer.
  
