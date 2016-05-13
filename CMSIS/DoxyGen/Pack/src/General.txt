@@ -39,6 +39,7 @@ The following sections give you more details on the basics:
  - \ref CP_SWComponents gives detailed information on the contents of the PDSC file.
  - \ref CreatePack_DFP describes additional requirements of Device Family Packs (DFPs).
  - \ref CreatePackBoard covers the creation of Board Support Packs (BSPs).
+ - \ref Pack_Example explains the Software Pack example that is part of the CMSIS Pack in more detail.
  - \ref CreatePackPublish shows the options for publishing a Pack.
  - \ref CreatePackUtil caters to programs that are useful during the creation of a Pack.
  - \ref PackFormat describes all XML elements that can be used in a PDSC file.
@@ -52,6 +53,7 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
 |Folder          |Content                                       | 
 |----------------|----------------------------------------------|
 |Utilities       | \ref CreatePackUtil                          |
+|Pack\\Example   | \ref Pack_Example "Reference Software Pack"  |
 |Pack\\Tutorials | Tutorials for \ref CP_Packs "Creating Packs" |
 <hr>
 */
