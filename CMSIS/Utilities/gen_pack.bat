@@ -1,8 +1,8 @@
 :: Batch file for generating CMSIS pack
 :: This batch file uses:
-::    7-Zip for packaging.
-::    goxygen for creating documentation.
-:: the generated pack file can be found in folder ../../Local_Release
+::    7-Zip for packaging
+::    Doxygen version 1.8.2 and Mscgen version 0.20 for generating html documentation.
+:: The generated pack and pdsc file are placed in folder %RELEASE_PATH% (../../Local_Release)
 @ECHO off
 
 SETLOCAL
@@ -22,6 +22,9 @@ SET PATH=%ZIPPATH%;%DOXYGENPATH%;%MSCGENPATH%;%PATH%
 :: Pack Path (where generated pack is stored)
 SET RELEASE_PATH=..\..\Local_Release
 
+:: !!!!!!!!!!!!!!!!!
+:: DO NOT EDIT BELOW
+:: !!!!!!!!!!!!!!!!! 
 
 :: Remove previous build
 IF EXIST %RELEASE_PATH% (
@@ -32,8 +35,12 @@ IF EXIST %RELEASE_PATH% (
 :: Create build output directory
 MKDIR %RELEASE_PATH%
 
+
 :: Copy PDSC file
 COPY ..\..\ARM.CMSIS.pdsc %RELEASE_PATH%\ARM.CMSIS.pdsc
+
+:: Copy LICENSE file
+COPY ..\..\LICENSE %RELEASE_PATH%\LICENSE
 
 :: Copy Device folder
 XCOPY /Q /S /Y ..\..\Device\*.* %RELEASE_PATH%\Device\*.*
@@ -58,7 +65,7 @@ XCOPY /Q /S /Y ..\..\CMSIS\DSP\Lib\ARM\*.lib %RELEASE_PATH%\CMSIS\Lib\ARM\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Lib\GCC\*.a   %RELEASE_PATH%\CMSIS\Lib\GCC\*.*
 
 :: -- Pack files 
-XCOPY /Q /S /Y ..\..\CMSIS\Pack\Example\*.* %RELEASE_PATH%\CMSIS\Pack\Example\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Pack\Example\*.*   %RELEASE_PATH%\CMSIS\Pack\Example\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Pack\Tutorials\*.* %RELEASE_PATH%\CMSIS\Pack\Tutorials\*.*
 
 :: -- RTOS files 
@@ -78,6 +85,8 @@ XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PackChk.exe   %RELEASE_PATH%\CMSIS\Utilitie
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\SVDConv.exe   %RELEASE_PATH%\CMSIS\Utilities\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\SVDConv.linux %RELEASE_PATH%\CMSIS\Utilities\*.*
 
+:: -- index file 
+COPY ..\..\CMSIS\index.html %RELEASE_PATH%\CMSIS\index.html
 
 :: Generate Documentation 
 :: -- Generate doxygen files 
@@ -160,20 +169,17 @@ PackChk.exe %RELEASE_PATH%\ARM.CMSIS.pdsc -n %RELEASE_PATH%\PackName.txt -x M353
 :: --Check if PackChk.exe has completed successfully
 IF %errorlevel% neq 0 GOTO ErrPackChk
 
-
 :: Packing 
 PUSHD %RELEASE_PATH%
 
 :: -- Pipe Pack's Name into Variable
-set /p PackName=<PackName.txt
-del /q PackName.txt
+SET /P PackName=<PackName.txt
+DEL /Q PackName.txt
 
 :: Pack files
 7z.exe a %PackName% -tzip
-REM MOVE %PackName% ..\
 POPD
 GOTO End
-
 
 :ErrPackChk
 ECHO PackChk.exe has encountered an error!
@@ -183,5 +189,6 @@ EXIT /b
 ECHO removing temporary folders
 RMDIR /Q /S  %RELEASE_PATH%\CMSIS
 RMDIR /Q /S  %RELEASE_PATH%\Device
+DEL %RELEASE_PATH%\LICENSE
 
 ECHO PACK generation completed.
