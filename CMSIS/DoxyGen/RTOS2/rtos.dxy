@@ -26,19 +26,19 @@ DOXYFILE_ENCODING      = UTF-8
 # identify the project. Note that if you do not use Doxywizard you need 
 # to put quotes around the project name if it contains spaces.
 
-PROJECT_NAME           = CMSIS-Driver
+PROJECT_NAME           = CMSIS-RTOS
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. 
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = "Version 2.04"
+PROJECT_NUMBER         = "Version 2.0.0 - Alpha"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description 
 # for a project that appears at the top of each page and should give viewer 
 # a quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = "Peripheral Interface for Middleware and Application Code"
+PROJECT_BRIEF          = "Real-Time Operating System: API and RTX Reference Implementation"
 
 # With the PROJECT_LOGO tag one can specify an logo or icon that is 
 # included in the documentation. The maximum height of the logo should not 
@@ -52,7 +52,7 @@ PROJECT_LOGO           = ../Doxygen_Templates/CMSIS_Logo_Final.png
 # If a relative path is entered, it will be relative to the location 
 # where doxygen was started. If left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = ../../Documentation/Driver
+OUTPUT_DIRECTORY       = ../../Documentation/RTOS2
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 
 # 4096 sub-directories (in 2 levels) under the output directory of each output 
@@ -88,7 +88,7 @@ BRIEF_MEMBER_DESC      = YES
 # Note: if both HIDE_UNDOC_MEMBERS and BRIEF_MEMBER_DESC are set to NO, the 
 # brief descriptions will be completely suppressed.
 
-REPEAT_BRIEF           = YES
+REPEAT_BRIEF           = NO
 
 # This tag implements a quasi-intelligent brief description abbreviator 
 # that is used to form the text in various listings. Each string 
@@ -205,9 +205,7 @@ TAB_SIZE               = 8
 # will result in a user-defined paragraph with heading "Side Effects:". 
 # You can put \n's in the value part of an alias to insert newlines.
 
-ALIASES                = "token{1}=<span class=\"XML-Token\">\1</span>" \
-                         "kbd{1}=\token{<kbd>\1</kbd>}" \
-                         "elem{1}=\b \<\1>"
+ALIASES                = 
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only). 
 # A mapping has the form "name=value". For example adding 
@@ -329,7 +327,7 @@ INLINE_GROUPED_CLASSES = YES
 # structs, classes, and unions are shown on a separate page (for HTML and Man 
 # pages) or section (for LaTeX and RTF).
 
-INLINE_SIMPLE_STRUCTS  = YES
+INLINE_SIMPLE_STRUCTS  = NO
 
 # When TYPEDEF_HIDES_STRUCT is enabled, a typedef of a struct, union, or enum 
 # is documented as struct, union, or enum with the name of the typedef. So 
@@ -487,7 +485,7 @@ INLINE_INFO            = YES
 # alphabetically by member name. If set to NO the members will appear in 
 # declaration order.
 
-SORT_MEMBER_DOCS       = NO
+SORT_MEMBER_DOCS       = YES
 
 # If the SORT_BRIEF_DOCS tag is set to YES then doxygen will sort the 
 # brief documentation of file, namespace and class members alphabetically 
@@ -529,7 +527,7 @@ SORT_BY_SCOPE_NAME     = NO
 # by doing a simple string match. By disabling STRICT_PROTO_MATCHING doxygen 
 # will still accept a match between prototype and implementation in such cases.
 
-STRICT_PROTO_MATCHING  = YES
+STRICT_PROTO_MATCHING  = NO
 
 # The GENERATE_TODOLIST tag can be used to enable (YES) or 
 # disable (NO) the todo list. This list is created by putting \todo 
@@ -678,39 +676,7 @@ WARN_LOGFILE           =
 # with spaces.
 
 INPUT                  = . \
-                         ../../Driver/Include/Driver_Common.h \
-                         src/Driver_Common.c \
-                         ../../Driver/Include/Driver_CAN.h \
-                         src/Driver_CAN.c \
-                         ../../Driver/Include/Driver_ETH.h \
-                         src/Driver_ETH.c \
-                         ../../Driver/Include/Driver_ETH_MAC.h \
-                         src/Driver_ETH_MAC.c \
-                         ../../Driver/Include/Driver_ETH_PHY.h \
-                         src/Driver_ETH_PHY.c \
-                         ../../Driver/Include/Driver_I2C.h \
-                         src/Driver_I2C.c \
-                         ../../Driver/Include/Driver_MCI.h \
-                         src/Driver_MCI.c \
-                         ../../Driver/Include/Driver_NAND.h \
-                         src/Driver_NAND.c \
-                         ../../Driver/Include/Driver_Flash.h \
-                         src/Driver_Flash.c \
-                         ../../Driver/Include/Driver_SAI.h \
-                         src/Driver_SAI.c \
-                         ../../Driver/Include/Driver_SPI.h \
-                         src/Driver_SPI.c \
-                         ../../Driver/Include/Driver_Storage.h \
-                         src/Driver_Storage.c \
-                         ../../Driver/Include/Driver_USART.h \
-                         src/Driver_USART.c \
-                         ../../Driver/Include/Driver_USBD.h \
-                         src/Driver_USBD.c \
-                         ../../Driver/Include/Driver_USBH.h \
-                         src/Driver_USBH.c \
-                         ../../Driver/Include/Driver_USB.h \
-                         src/Driver_USB.c \
-                         src/General.txt
+                         ../../RTOS2/Template/cmsis_os.h
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 
@@ -729,21 +695,43 @@ INPUT_ENCODING         = UTF-8
 # *.f90 *.f *.for *.vhd *.vhdl
 
 FILE_PATTERNS          = *.c \
+                         *.cc \
+                         *.cxx \
                          *.cpp \
                          *.c++ \
                          *.java \
+                         *.ii \
+                         *.ixx \
+                         *.ipp \
+                         *.i++ \
+                         *.inl \
                          *.h \
                          *.hh \
+                         *.hxx \
                          *.hpp \
                          *.h++ \
+                         *.idl \
+                         *.odl \
+                         *.cs \
+                         *.php \
+                         *.php3 \
                          *.inc \
+                         *.m \
+                         *.mm \
+                         *.dox \
+                         *.py \
+                         *.f90 \
+                         *.f \
+                         *.for \
+                         *.vhd \
+                         *.vhdl \
                          *.txt
 
 # The RECURSIVE tag can be used to turn specify whether or not subdirectories 
 # should be searched for input files as well. Possible values are YES and NO. 
 # If left blank NO is used.
 
-RECURSIVE              = NO
+RECURSIVE              = YES
 
 # The EXCLUDE tag can be used to specify files and/or directories that should be 
 # excluded from the INPUT source files. This way you can easily exclude a 
@@ -751,7 +739,8 @@ RECURSIVE              = NO
 # Note that relative paths are relative to the directory from which doxygen is 
 # run.
 
-EXCLUDE                = 
+EXCLUDE                = system*.c \
+                         startup*.s
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or 
 # directories that are symbolic links (a Unix file system feature) are excluded 
@@ -779,8 +768,7 @@ EXCLUDE_SYMBOLS        =
 # directories that contain example code fragments that are included (see 
 # the \include command).
 
-EXAMPLE_PATH           = ../../Driver/Include \
-                         ./src
+EXAMPLE_PATH           = ..\..\RTOS2
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the 
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp 
@@ -861,7 +849,7 @@ STRIP_CODE_COMMENTS    = NO
 # then for each documented function all documented 
 # functions referencing it will be listed.
 
-REFERENCED_BY_RELATION = YES
+REFERENCED_BY_RELATION = NO
 
 # If the REFERENCES_RELATION tag is set to YES 
 # then for each documented function all documented entities 
@@ -911,7 +899,7 @@ COLS_IN_ALPHA_INDEX    = 5
 # The IGNORE_PREFIX tag can be used to specify one or more prefixes that 
 # should be ignored while generating the index headers.
 
-IGNORE_PREFIX          = ARM_
+IGNORE_PREFIX          = 
 
 #---------------------------------------------------------------------------
 # configuration options related to the HTML output
@@ -981,8 +969,7 @@ HTML_EXTRA_STYLESHEET  = ../Doxygen_Templates/cmsis.css
 
 HTML_EXTRA_FILES       = ../Doxygen_Templates/tabs.css \
                          ../Doxygen_Templates/tab_topnav.png \
-                         ../Doxygen_Templates/printComponentTabs.js \
-                         ../Doxygen_Templates/search.css
+                         ../Doxygen_Templates/printComponentTabs.js
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. 
 # Doxygen will adjust the colors in the style sheet and background images 
@@ -1270,7 +1257,7 @@ MATHJAX_EXTENSIONS     =
 # typically be disabled. For large projects the javascript based search engine 
 # can be slow, then enabling SERVER_BASED_SEARCH may provide a better solution.
 
-SEARCHENGINE           = YES
+SEARCHENGINE           = NO
 
 # When the SERVER_BASED_SEARCH tag is enabled the search engine will be 
 # implemented using a PHP enabled web server instead of at the web client 
@@ -1580,7 +1567,7 @@ INCLUDE_FILE_PATTERNS  =
 # undefined via #undef or recursively expanded use the := operator 
 # instead of the = operator.
 
-PREDEFINED             = __DOXYGEN__
+PREDEFINED             = 
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then 
 # this tag can be used to specify a list of macro names that should be expanded. 
@@ -1646,7 +1633,7 @@ PERL_PATH              = /usr/bin/perl
 # this option also works with HAVE_DOT disabled, but it is recommended to 
 # install and use dot, since it yields more powerful graphs.
 
-CLASS_DIAGRAMS         = NO
+CLASS_DIAGRAMS         = YES
 
 # You can define message sequence charts within doxygen comments using the \msc 
 # command. Doxygen will then run the mscgen tool (see 
