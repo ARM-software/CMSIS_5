@@ -412,7 +412,7 @@ component, certain settings may be required. A distinct header file is available
 \endverbatim
 The \c \#define can be checked by other components in a project.
 
-\note The RTE_components.h file needs to be included somewhere in your source files.
+\note The RTE_components.h file needs to be included somewhere in your source files.  Refer to \ref RTE_Components_h for more information.
 
 
 \section CP_Bundles Bundles

@@ -141,8 +141,9 @@ the availability of a certain instance in the user application code:
 
 \section RTE_Components_h RTE_Components.h
 
-The build environment should generate a C/C++ include file with the name <b>RTE_Components.h</b> that contains optional statements when a software component is selected.
-These statements are specified with the element \b RTE_Components_h in the grouping element \ref element_component "component".
+The build environment should generate a C/C++ include file with the name <b>RTE_Components.h</b> that contains:
+  - The statements of the related \<RTE_Components_h\> element for all selected software components. 
+  - The header file name specified in the \<compile\> element of the \ref pdsc_devices_pg.
 
 \b Example
 
@@ -157,6 +158,11 @@ It contains the statements that are specified with the element \b RTE_Components
  
 #ifndef RTE_COMPONENTS_H
 #define RTE_COMPONENTS_H
+
+/*
+ * Define the Device Header File: 
+ */
+#define CMSIS_device_header "stm32f10x.h"
  
 #define RTE_Network_Interface_ETH_0     /* Network Interface ETH 0 */
 #define RTE_Network_Socket_BSD          /* Network Socket BSD */

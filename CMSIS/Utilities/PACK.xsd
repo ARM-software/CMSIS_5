@@ -22,12 +22,13 @@
 
   $Project: Schema File for Package Description File Format Specification
 
-  Package file name convention <vendor>_<name>_<version>.pack
+  Package file name convention <vendor>.<name>.<version>.pack
   SchemaVersion=1.4
 
-  22. Dec 2015: 1.4.4
+  26. April 2016: 1.4.4
+  - added: attribute defaultResetSequence to DebugType.
   - added: <requirements> section:
-    - <packs> defining dependencies between packs
+    - <packages> defining dependencies between packs
     - <languages> defining required language support e.g. C99
     - <compiler> defining required toolchains
   - added: <create> section used for tool independent project description
@@ -111,11 +112,13 @@
       <xs:enumeration value="Micronas:30"/>
       <xs:enumeration value="Microsemi:112"/>
       <xs:enumeration value="Milandr:99"/>
+      <xs:enumeration value="MindMotion:132"/>
       <xs:enumeration value="NetSilicon:67"/>
       <xs:enumeration value="Nordic Semiconductor:54"/>
       <xs:enumeration value="Nuvoton:18"/>
       <xs:enumeration value="NXP:11"/>
       <xs:enumeration value="OKI SEMICONDUCTOR CO.,LTD.:108"/>
+      <xs:enumeration value="Panasonic:131"/>
       <xs:enumeration value="Realtek Semiconductor:124"/>
       <xs:enumeration value="Redpine Signals:125"/>
       <xs:enumeration value="Renesas:117"/>
@@ -229,6 +232,7 @@
   <xs:simpleType name="DebugProtocolEnum">
     <xs:restriction base="xs:token">
       <xs:enumeration value="jtag"/>
+      <xs:enumeration value="cjtag"/>
       <xs:enumeration value="swd"/>
     </xs:restriction>
   </xs:simpleType>
@@ -356,6 +360,7 @@
     <xs:attribute name="__ap"  type="xs:unsignedInt" use="optional"/> <!-- access port index -->
     <xs:attribute name="svd"   type="xs:string"      use="optional"/>
     <xs:attribute name="Pname" type="RestrictedString"      use="optional"/>
+    <xs:attribute name="defaultResetSequence" type="xs:string" use="optional"/>    
     <xs:anyAttribute processContents="lax"/>
   </xs:complexType>
 
@@ -401,7 +406,7 @@
     <!-- size specifies the size of the memory -->
     <xs:attribute name="size"    type="NonNegativeInteger"  use="required"/>
     <!-- access: specifies the access permissions of the memory (added in 1.4.4) -->
-    <xs:attribute name="access"  type="AccessType"          use="optional" default="rwx"/>
+    <xs:attribute name="access"  type="AccessType"          use="optional" default="r"/>
     <!-- alias: reference to another memory by 'name' to express that the same physical memory is mapped at another address (added in 1.4.4) -->
     <xs:attribute name="alias"   type="RestrictedString"    use="optional"/>
     <!-- !!! deprecated, do not use / ignore !!! specifies whether the memory shall be 0 initialized -->
@@ -532,7 +537,7 @@
       </xs:element>
       <!-- Variant Level end -->
     </xs:sequence>
-    <xs:attribute name="Dname" type="xs:string" use="required"/>
+    <xs:attribute name="Dname" type="RestrictedString" use="required"/>
     <!-- <xs:attributeGroup ref="DefaultDeviceAttributesGroup"/> -->
   </xs:complexType>
 
@@ -902,14 +907,15 @@
   </xs:complexType>
 
   <xs:complexType name="ComponentCategoryType">
-    <xs:attribute name="Cvendor"     type="xs:string"    use="optional"/>
-    <xs:attribute name="Cbundle"     type="xs:string"    use="optional"/>
-    <xs:attribute name="Cclass"      type="CclassType"   use="required"/>
-    <xs:attribute name="Cgroup"      type="CgroupType"   use="required"/>
-    <xs:attribute name="Csub"        type="CsubType"     use="optional"/>
-    <xs:attribute name="Cvariant"    type="CvariantType" use="optional"/>
+    <xs:attribute name="Cvendor"     type="xs:string"             use="optional"/>
+    <xs:attribute name="Cbundle"     type="xs:string"             use="optional"/>
+    <xs:attribute name="Cclass"      type="CclassType"            use="required"/>
+    <xs:attribute name="Cgroup"      type="CgroupType"            use="required"/>
+    <xs:attribute name="Csub"        type="CsubType"              use="optional"/>
+    <xs:attribute name="Cvariant"    type="CvariantType"          use="optional"/>
     <xs:attribute name="Cversion"    type="ConditionVersionType"  use="optional"/>
     <xs:attribute name="Capiversion" type="ConditionVersionType"  use="optional"/>
+    <xs:attribute name="instances"   type="InstancesType"         use="optional" default="1"/>
   </xs:complexType>
 
   <xs:complexType name="ExampleProjectType">
@@ -1034,7 +1040,7 @@
     <xs:attribute name="version"     type="xs:string" use="optional"/>
   </xs:complexType>
 
-  <!-- section listing all examples contained in the PACK -->
+  <!-- section listing all examples contained in the package -->
   <xs:complexType name="ExamplesType">
     <xs:sequence>
       <xs:element name="example" type="ExampleType" maxOccurs="unbounded"/>
@@ -1047,7 +1053,7 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:simpleType name="MaxInstancesType">
+  <xs:simpleType name="InstancesType">
     <xs:restriction base="xs:integer">
       <xs:minInclusive value="1"/>
     </xs:restriction>
@@ -1072,7 +1078,7 @@
     <xs:attribute name="src" type="xs:string" use ="optional"/>
   </xs:complexType>
 
-  <!-- some strings are used to construct filenames (e.g. packs). Such names can contain only subset of characters 
+  <!-- some strings are used to construct filenames (e.g. package name). Such names can contain only subset of characters 
        and must not contain neither spaces nor dots.
   -->
   <xs:simpleType name="RestrictedString">
@@ -1098,20 +1104,20 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <!-- PackType creates a unique ID for a PACK (added in 1.4.4) -->
-  <xs:complexType name="PackType">
-    <!-- vendor of the PACK -->
+  <!-- PackageType creates a unique ID for a package (added in 1.4.4) -->
+  <xs:complexType name="PackageType">
+    <!-- vendor of the package -->
     <xs:attribute name="vendor"  type="xs:string"            use="required"/>
-    <!-- name of the PACK -->
+    <!-- name of the package -->
     <xs:attribute name="name"    type="xs:string"            use="required"/>
-    <!-- version or version range of the PACK -->
+    <!-- version or version range of the package -->
     <xs:attribute name="version" type="ConditionVersionType" use="required"/>
   </xs:complexType>
   
-  <!-- Pack dependency section type (added in 1.4.4) -->
-  <xs:complexType name="PacksType">
+  <!-- Package dependency section type (added in 1.4.4) -->
+  <xs:complexType name="PackagesType">
     <xs:sequence maxOccurs="unbounded">
-      <xs:element name="pack" type="PackType"/>
+      <xs:element name="package" type="PackageType"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -1119,7 +1125,7 @@
   <xs:complexType name="LanguageType">
     <!-- language name e.g. C -->
     <xs:attribute name="name"    type="xs:string" use="required"/>
-    <!-- languabe version e.g. C99 -->
+    <!-- language version e.g. C99 -->
     <xs:attribute name="version" type="xs:string" use="required"/>
   </xs:complexType>
 
@@ -1132,7 +1138,7 @@
 
   <!-- CompilerType crates a unique toolchain ID, e.g. armcc 5.4.0 (added in 1.4.4) -->
   <xs:complexType name="CompilerType">
-    <xs:attribute name="name"    type="xs:string" use="required"/>
+    <xs:attribute name="name"    type="CompilerEnumType" use="required"/>
     <xs:attribute name="version" type="ConditionVersionType" use="required"/>
   </xs:complexType>
 
@@ -1146,9 +1152,9 @@
   <!-- Requirements Section: (added in 1.4.4) -->
   <xs:complexType name="RequirementsType">
     <xs:all>
-      <xs:element name="packs"     type="PacksType"/>
-      <xs:element name="languages" type="LanguagesType"/>
-      <xs:element name="compilers" type="CompilersType"/>
+      <xs:element name="packages"  type="PackagesType"     minOccurs="0"/>
+      <xs:element name="languages" type="LanguagesType" minOccurs="0"/>
+      <xs:element name="compilers" type="CompilersType" minOccurs="0"/>
     </xs:all>
   </xs:complexType>
 
@@ -1196,8 +1202,8 @@
     <xs:attribute name="protocol"  type="xs:string" use="required"/>
     <!-- Core clock configured by application -->
     <xs:attribute name="coreClock" type="NonNegativeInteger" use="required"/>
-    <!-- TPUI clock configured-->
-    <xs:attribute name="tpiuClock" type="NonNegativeInteger" use="required"/>
+    <!-- TPIU clock configured-->
+    <xs:attribute name="tpiuClock" type="NonNegativeInteger" use="optional"/>
   </xs:complexType>
 
   <!-- Build settings for the project, setting RTE filter options (added in 1.4.4) -->
@@ -1223,8 +1229,12 @@
     <xs:attribute name="remove"  type="xs:boolean" use="optional" default="0"/>
     <!-- if true, this memory is used for the startup code -->
     <xs:attribute name="startup" type="xs:boolean" use="optional" default="0"/>
-    <!-- if ture, this memory is initialized with 0 -->
+    <!-- if true, this memory is initialized with 0 -->
     <xs:attribute name="init"    type="xs:boolean" use="optional" default="0"/>
+    <!-- overrides access permisson configured by the DFP -->
+    <xs:attribute name="access"  type="AccessType" use="optional"/>
+    <!-- specifies whether the memory is used as default by linker -->
+    <xs:attribute name="default" type="xs:boolean"          use="optional" default="0"/>
   </xs:complexType>
 
   <!-- Algorithm settings for the project, redefining defaults from DFP (added in 1.4.4) -->
@@ -1282,8 +1292,37 @@
   
   <!-- Component selection section (added in 1.4.4) -->
   <xs:complexType name="ComponentSelectType">
-    <xs:sequence maxOccurs="unbounded">
-      <xs:element name="component" type="ComponentCategoryType" maxOccurs="unbounded"/>
+    <xs:sequence>
+      <xs:element name="component" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <!-- all config files -->
+            <xs:element name="file" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <!-- condition id of the condition that evaluates to true on project creation -->
+                <xs:attribute name="condition" type="xs:string" use="optional"/>
+                <!-- file item category: source, header, include path, etc.  -->
+                <xs:attribute name="category" type="FileCategoryType" use ="required"/>
+                <!-- file item action attribute : config (copy to project, template, interface)  -->
+                <xs:attribute name="attr"     type="FileAttributeType" use ="optional"/>
+                <!-- path + filename + extension -->
+                <xs:attribute name="name" type ="xs:string" use="required" />
+                <!-- configuration file version: to be used by RTE to see whether the file requires updating or not -->
+                <xs:attribute name="version" type ="VersionType" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="Cvendor"     type="xs:string"             use="required"/>
+          <xs:attribute name="Cbundle"     type="xs:string"             use="required"/>
+          <xs:attribute name="Cclass"      type="CclassType"            use="required"/>
+          <xs:attribute name="Cgroup"      type="CgroupType"            use="required"/>
+          <xs:attribute name="Csub"        type="CsubType"              use="required"/>
+          <xs:attribute name="Cvariant"    type="CvariantType"          use="required"/>
+          <xs:attribute name="Cversion"    type="ConditionVersionType"  use="required"/>
+          <xs:attribute name="Capiversion" type="ConditionVersionType"  use="optional"/> <!-- only used when component implements an API -->
+          <xs:attribute name="instances"   type="InstancesType"         use="optional" default="1"/>
+        </xs:complexType>
+      </xs:element> 
     </xs:sequence>
   </xs:complexType>
   
@@ -1301,15 +1340,13 @@
     <xs:attribute name="name" type="xs:string" use="optional"/>
     <!-- optional link/reference to documentation about the project -->
     <xs:attribute name="documentation" type="xs:string" use="optional"/>
-    <!-- a reference to a condition within the GPDSC which adds required components -->
-    <xs:attribute name="condition" type="xs:string" use="optional"/>
   </xs:complexType>
 
   <!-- Create Section: (added in 1.4.4) -->
   <xs:complexType name="CreateType">
     <xs:sequence>
       <!-- project section -->
-      <xs:element name="project" type="ProjectType"/>
+      <xs:element name="project" type="ProjectType" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -1422,15 +1459,15 @@
   <xs:element name="package" nillable="true">
     <xs:complexType>
       <xs:all>
-        <!-- name of the PACK (Device Support=DFP, Board Support=BSP) -->
+        <!-- name of the package (Device Support=DFP, Board Support=BSP) -->
         <xs:element name="name" type="RestrictedString" minOccurs="1"/>
-        <!-- company name of the developer/maintainer of this PACK -->
+        <!-- company name of the developer/maintainer of this package -->
         <xs:element name="vendor" type="RestrictedString" minOccurs="1"/>
-        <!-- brief description of the content and purpose of the PACK -->
+        <!-- brief description of the content and purpose of the package -->
         <xs:element name="description" type="xs:string" minOccurs="1"/>
-        <!-- download location of this PDSC and corresponding PACK file -->
+        <!-- download location of this PDSC and corresponding package file -->
         <xs:element name="url" type="xs:anyURI" minOccurs="1"/>
-        <!-- e.g. mailto:PackSupport@<vendor>.com or www.<vendor>.com/supportRequest -->
+        <!-- e.g. mailto:Support@<vendor>.com or www.<vendor>.com/supportRequest -->
         <xs:element name="supportContact" type="xs:string" minOccurs="0"/>
         <!-- optional: click through license file name and relative path -->
         <xs:element name="license" type="xs:string" minOccurs="0"/>
@@ -1444,7 +1481,7 @@
         <xs:element name="keywords" type="KeywordsType" minOccurs="0"/>
         <!-- generators are tools and utilities that are used to generate software components -->
         <xs:element name="generators" type="GeneratorsType" minOccurs="0"/>
-        <!-- definition of devices including references to device support files contained in PACK -->
+        <!-- definition of devices including references to device support files contained in package -->
         <xs:element name="devices" minOccurs="0">
           <xs:complexType>
             <!-- top level -->
@@ -1526,7 +1563,7 @@
                         <!-- component attribute for referencing a condition specified in conditions section above -->
                         <xs:attribute name="condition" type="xs:string" use="optional"/>
                         <!-- maximum allowed number of instances of a component in a project, default - 1-->
-                        <xs:attribute name="maxInstances" type="MaxInstancesType" use="optional"/>
+                        <xs:attribute name="maxInstances" type="InstancesType" use="optional"/>
                         <!-- association of component with a generator. If the component is selected the generator information becomes active -->
                         <xs:attribute name="generator" type="xs:string" use="optional"/>
                         <!-- identifies this component variant to be the preferred variant [Version 1.4.0] -->
@@ -1575,7 +1612,7 @@
                   <!-- component attribute for referencing a condition specified in conditions section above -->
                   <xs:attribute name="condition" type="xs:string" use="optional"/>
                   <!-- maximum allowed number of instances of a component in a project, default - 1-->
-                  <xs:attribute name="maxInstances" type="MaxInstancesType" use="optional"/>
+                  <xs:attribute name="maxInstances" type="InstancesType" use="optional"/>
                   <!-- association of component with a generator. If the component is selected the generator information becomes active -->
                   <xs:attribute name="generator" type="xs:string" use="optional"/>
                   <!-- identifies this component variant to be the preferred variant [Version 1.4.0] -->

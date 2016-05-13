@@ -3,7 +3,7 @@
 ; * @brief    CMSIS Core Device Startup File for
 ; *           ARMv8MBL Device Series
 ; * @version  V5.00
-; * @date     02. March 2016
+; * @date     25. April 2016
 ; ******************************************************************************/
 ;/*
 ; * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -69,7 +69,7 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
-                DCD     SecureFault_Handler       ; Secure Fault Handler
+                DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
@@ -141,11 +141,6 @@ NMI_Handler     PROC
 HardFault_Handler\
                 PROC
                 EXPORT  HardFault_Handler         [WEAK]
-                B       .
-                ENDP
-SecureFault_Handler\
-                PROC
-                EXPORT  SecureFault_Handler       [WEAK]
                 B       .
                 ENDP
 SVC_Handler     PROC

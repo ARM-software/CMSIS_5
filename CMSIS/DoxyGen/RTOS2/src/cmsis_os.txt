@@ -1,0 +1,2653 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\mainpage
+
+The <b>CMSIS-RTOS API v2</b> addresses the following new requirements:
+ - Dynamic object creation no longer requires static memory, static memory buffers are now optional.
+ - Support for ARMv8-M architecture that provides a Secure and Non-Secure state of code execution.
+ - Provisions for message passing in multi-core systems.
+ - Full support of C++ run-time environments.
+ - C interface which is binary compatible across <a class="el" href="http://infocenter.arm.com/help/topic/com.arm.doc.subset.swdev.abi/index.html">ABI compatible compilers</a>.
+
+As a consequence of these requirements the CMSIS-RTOS API v2 has the following fundamental modifications:
+ - The functions osXxxxNew replace osXxxxCreate functions; osXxxxNew and osXxxxDelete create and destroy objects.
+ - The C function main is not longer started as a thread (this was an optional feature in CMSIS-RTOS v1).
+ - Functions that return osEvent have been replaced.
+
+CMSIS-RTOS API v2 provides an translation layer for the
+<a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API v1</a> that simplifies migration.
+
+CMSIS-RTOS API v2 is not POSIX compliant, but has provisions to enable a POSIX translation layer and a C++ interface.
+\todo Investigate into a flexible C++ interface and potential POSIX translation
+
+<hr>
+
+CMSIS-RTOS in ARM::CMSIS Pack
+-----------------------------
+
+The following files relevant to CMSIS-RTOS are present in the <b>ARM::CMSIS</b> Pack directories:
+|File/Folder                  | Content                                                                |
+|-----------------------------|------------------------------------------------------------------------|
+|\b CMSIS/Documentation/RTOS2 | This documentation                                                     |
+|\b CMSIS/Documentation/RTOS  | CMSIS-RTOS API v1 documentation                                 |
+|\b CMSIS/RTOS2/Template      | \ref cmsis_os_h                                                        |
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page rtos_revisionHistory Revision History
+
+<table class="cmtable" summary="Revision History">
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>V2.00</td>
+      <td>
+        Extended number of thread priorities.\n
+        Added: osKernelTime, osKernelStop.\n
+        Added: osThreadState, osThreadGetState, osThreadSuspend, osThreadResume.\n
+        Added: osTimerRunning.\n
+        Added: osPoolDelete.\n
+        Added: osMessageCount, osMessageReset, osMessageDelete.\n
+        Added: osMailCount, osMailReset, osMailDelete.\n
+        Added: osFlag object.\n
+     </td>
+    </tr>
+    <tr>
+      <td>V1.02 - only documentation changes</td>
+      <td>
+      Added: Overview of the \ref RtosValidation "CMSIS-RTOS Validation" Software Pack.\n
+	  Clarified: Behavior of \ref CMSIS_RTOS_TimeOutValue.
+     </td>
+    </tr>
+    <tr>
+      <td>V1.02</td>
+      <td>Added: New control functions for short timeouts in microsecond resolution \ref osKernelSysTick,
+      \ref osKernelSysTickFrequency, \ref osKernelSysTickMicroSec.\n
+      Removed: osSignalGet.
+     </td>
+    </tr>
+    <tr>
+      <td>V1.01</td>
+      <td>Added capabilities for C++, kernel initialization and object deletion.\n
+      Prepared for C++ class interface. In this context to \em const attribute has been moved from osXxxxDef_t typedefs to
+      the osXxxxDef macros.\n
+      Added: \ref osTimerDelete, \ref osMutexDelete, \ref osSemaphoreDelete.\n
+      Added: \ref osKernelInitialize that prepares the Kernel for object creation.\n
+      </td>
+    </tr>
+    <tr>
+      <td>
+      V1.00</td>
+      <td>First official Release.\n
+      Added: \ref osKernelStart; starting 'main' as a thread is now an optional feature.\n
+      Semaphores have now the standard behavior.\n
+      \b osTimerCreate does no longer start the timer. Added: \ref osTimerStart (replaces osTimerRestart).\n
+      Changed: osThreadPass is renamed to \ref osThreadYield.
+      </td>
+    </tr>
+    <tr>
+      <td>V0.02</td>
+      <td>Preview Release.</td>
+    </tr>
+</table>
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page UsingOS Using a CMSIS-RTOS Implementation
+
+A CMSIS-RTOS implementation is typically provided as a library. To add the RTOS functionality to an existing CMSIS-based
+application, the RTOS library (and typically a configuration file) needs to be added. The available functionality of the
+RTOS library is defined in the header file \b cmsis_os.h that is specific for each CMSIS-RTOS implementation.
+
+\image html "CMSIS_RTOS_Files.png" "CMSIS-RTOS File Structure"
+
+Depending on the CMSIS-RTOS implementation, execution may start with the \b main function as the first thread. This has the
+benefit that an application programmer may use other middleware libraries that create threads internally, but the remaining
+part of the user application just uses the \b main thread. Therefore, the usage of the RTOS can be invisible to the
+application programmer, but libraries can use CMSIS-RTOS features.
+
+Once the files are added to a project, the user can start working with the CMSIS-RTOS functions. A code example is provided
+below:
+ 
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"                            // CMSIS-RTOS header file
+ 
+void job1 (void const *argument)  {              // thread function 'job1'
+  while (1)  {
+      :                                          // execute some code
+    osDelay (10);                                // delay execution for 10 milliseconds
+  }
+}
+ 
+osThreadDef(job1, osPriorityAboveNormal, 1, 0);  // define job1 as thread function
+ 
+void job2 (void const *argument)  {              // thread function 'job2'
+  osThreadCreate(osThread(job1),NULL);           // create job1 thread
+  while (1)   {
+    :                                            // execute some code
+  }
+}
+ 
+osThreadDef(job2, osPriorityNormal, 1, 0);       // define job2 as thread function
+ 
+void job3 (void const *argument)  {              // thread function 'job3'
+  while (1)   {
+      :                                          // execute some code
+    osDelay (20);                                // delay execution for 20 milliseconds
+  }
+}
+ 
+osThreadDef(job3, osPriorityNormal, 1, 0);       // define job3 as thread function
+ 
+int main (void) {                                // program execution starts here
+  osKernelInitialize ();                         // initialize RTOS kernel
+    :                                            // setup and initialize peripherals
+  osThreadCreate (osThread(job2));
+  osThreadCreate (osThread(job3));
+  osKernelStart ();                              // start kernel with job2 execution
+}
+\endcode
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page FunctionOverview Function Overview
+
+CMSIS-RTOS v2 provides multiple API functions:
+  - \subpage RTOS_API2 is the new C function API that support dynamic object creation, ARMv8-M, and multi-processor
+    communication.
+  - <a class="el" href="../../RTOSv1/html/_function_overview.html">CMSIS-RTOS C API Version 1</a> is a C function API the is
+    backward compatible with CMSIS-RTOS v2.
+  - \subpage RTOS_APICPP is a C++ class function API.
+
+It is possible to intermix the different API variants in the same application and even in the same C/C++ source module.
+However, the functions of the <b>C API Version 1</b> may be deprecated in future versions of CMSIS-RTOS.
+
+\section CMSIS_RTOS_TimeOutValue Timeout Value   
+
+The timeout value specifies the number of timer ticks until a timeout or time delay elapses. The value is an upper bound and 
+depends on the actual time elapsed since the last timer tick. 
+
+For a value of \b 1 the system waits until the next timer tick occurs. That means that the actual timeout value can be one
+timer tick less than the specified timeout value. 
+
+\image html TimerValues.png "Timer Values"
+
+\section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
+
+\todo Can any of the new functions be called from ISRs?
+
+The following CMSIS-RTOS functions can be called from threads and Interrupt Service Routines (ISR):
+  - \ref osKernelRunning
+  - \ref osSemaphoreRelease
+  - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree
+  - \ref osMessageQueuePut, \ref osMessageQueueGet
+  - \ref osMailQueueAlloc, \ref osMailQueueGet, \ref osMailQueuePut, \ref osMailQueueFree
+
+Functions that cannot be called from an ISR are verifying the interrupt status and return, in case they are called
+from an ISR context, the status code \b osErrorISR. In some implementations, this condition might be caught using the HARD
+FAULT vector.
+
+Some CMSIS-RTOS implementations support CMSIS-RTOS function calls from multiple ISRs at the same time.
+If this is impossible, the CMSIS-RTOS rejects calls by nested ISR functions with the status code \b osErrorISRRecursive.
+*/
+
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page RTOS_API2 CMSIS-RTOS C API Version 2  
+
+Overview of all CMSIS-RTOS C API v2 functions.
+
+ - \ref CMSIS_RTOS_KernelCtrl
+   - \ref osKernelInitialize : Initialize the RTOS kernel for creating objects.
+   - \ref osKernelStart : Start the RTOS kernel scheduler.
+   - \ref osKernelSuspend : Suspend the RTOS Kernel scheduler.
+   - \ref osKernelResume : Resume the RTOS Kernel scheduler.
+   - \ref osKernelState : Query if the RTOS kernel is inactive, running, or suspended.
+   - \ref osKernelTime : Get the RTOS kernel time (milli-second).
+   - \ref osKernelSysTick : Get RTOS kernel system timer counter.
+   - \ref osKernelSysTickFrequency : RTOS kernel system timer frequency in Hz.
+   - \ref osKernelSysTickMicroSec : Convert microseconds value to RTOS kernel system timer value.
+
+ - \ref CMSIS_RTOS_ThreadMgmt
+   - \ref osThreadNew : Create and start execution of a thread function.
+   - \ref osThreadTerminate : Stop execution of a thread function.
+   - \ref osThreadSuspend : Suspend a thread function.
+   - \ref osThreadResume : Resume a thread function.
+   - \ref osThreadGetState : Get current state of an active thread.
+   - \ref osThreadYield : Pass execution to next ready thread function.
+   - \ref osThreadGetId : Get the thread identifier to reference this thread.
+   - \ref osThreadSetPriority : Change the execution priority of a thread function.
+   - \ref osThreadGetPriority : Obtain the current execution priority of a thread function.
+
+ - \ref CMSIS_RTOS_Wait
+   - \ref osDelay : Wait for a specified time.
+   - \ref osDelayUntil : Wait until a specified kernel time.
+   - \ref osEventWait : Wait for Thread Flags, Event Flags, Message, Mail, or Timeout.
+
+ - \ref CMSIS_RTOS_TimerMgmt
+   - \ref osTimerNew : Create and define timer with related callback function.
+   - \ref osTimerDelete : Step a timer and remove related callback function.
+   - \ref osTimerStart : Start or restart the timer with a time value.
+   - \ref osTimerStop : Stop the timer.
+   - \ref osTimerIsRunning : Check if a timer is running.
+
+ - \ref CMSIS_RTOS_ThreadFlagsMgmt
+   - \ref osThreadFlagsSet : Set the specified Thread Flags of an active thread
+   - \ref osThreadFlagsClear : Clear the specified Thread Flags of an active thread
+   - \ref osThreadFlagsGet : Get the current Thread Flags of an active thread.
+   - \ref osThreadFlagsWait : Wait for one or more Thread Flags of the current running thread to become signaled
+
+ - \ref CMSIS_RTOS_EventFlags
+   - \ref osEventFlagsNew : Create and initialize an Event Flags object.
+   - \ref osEventFlagsDelete : Delete an Event Flags object.
+   - \ref osEventFlagsSet : Set the specified Event Flags.
+   - \ref osEventFlagsClear : Clear the specified Event Flags.
+   - \ref osEventFlagsGet : Get the current Event Flags. 
+   - \ref osEventFlagsWait : Wait for one or more Event Flags to become signalled.
+
+ - \ref CMSIS_RTOS_MutexMgmt
+   - \ref osMutexNew : Create and initialize a Mutex object.
+   - \ref osMutexDelete : Delete a Mutex object
+   - \ref osMutexAcquire : Obtain a Mutex or Wait until it becomes available.
+   - \ref osMutexRelease : Release a MMutex.
+
+ - \ref CMSIS_RTOS_SemaphoreMgmt
+   - \ref osSemaphoreNew : Create and initialize a Semaphore object
+   - \ref osSemaphoreDelete : Delete a Semaphore object.
+   - \ref osSemaphoreAcquire : Obtain a Semaphore token or Wait until it becomes available.
+   - \ref osSemaphoreRelease : Release a Semaphore token.
+     \todo do we need a function that retrieves how many semaphores are available?
+
+ - \ref CMSIS_RTOS_PoolMgmt
+   - \ref osMemoryPoolNew : Define and initialize a fix-size memory pool.
+   - \ref osMemoryPoolAlloc : Allocate a memory block.
+   - \ref osMemoryPoolFree : Return a memory block to the memory pool.
+   - \ref osMemoryPoolGetInfo : Get a Memory Pool information
+   - \ref osMemoryPoolDelete : Delete a Memory Pool object
+
+ - \ref CMSIS_RTOS_Message
+   - \ref osMessageQueueNew : Create and initialize a message queue.
+   - \ref osMessageQueuePut : Put a message into a message queue.
+   - \ref osMessageQueueGet : Get a message or suspend thread execution until message arrives.
+   - \ref osMessageQueueGetInfo : Get a Message Queue information.
+   - \ref osMessageQueueReset : Reset a Message Queue to initial empty state.
+   - \ref osMessageQueueDelete : Delete a Message Queue object.
+
+ - \ref CMSIS_RTOS_Mail
+   - \ref osMailQueueNew : Create and Initialize a Mail Queue object.
+   - \ref osMailQueueAlloc : Allocate a memory block for mail from a mail memory pool.
+   - \ref osMailQueuePut : Put a Mail into a Queue.
+   - \ref osMailQueueGet : Get a Mail from a Queue or timeout if Queue is empty.
+   - \ref osMailQueueFree : Free a memory block by returning it to a mail memory pool.
+   - \ref osMailQueueGetInfo : Get a Mail Queue information.
+   - \ref osMailQueueReset : Reset a Mail Queue to initial empty state.
+   - \ref osMailQueueDelete : Delete a Mail Queue object.
+*/
+
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page RTOS_APICPP CMSIS-RTOS C++ API
+
+Coming soon
+*/
+
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page cmsis_os_h Header File Template: cmsis_os.h
+
+The file \b cmsis_os.h is a template header file for a CMSIS-RTOS compliant Real-Time Operating System (RTOS).
+Each RTOS that is compliant with CMSIS-RTOS shall provide a specific \b cmsis_os.h header file that represents
+its implementation.
+
+The file cmsis_os.h contains:
+ - CMSIS-RTOS API function definitions
+ - struct definitions for parameters and return types
+ - status and priority values used by CMSIS-RTOS API functions
+ - macros for defining threads and other kernel objects
+
+
+<b>Name conventions and header file modifications</b>
+
+All definitions are prefixed with \b os to give an unique name space for CMSIS-RTOS functions.
+Definitions that are prefixed \b os_ are not used in the application code but local to this header file.
+All definitions and functions that belong to a module are grouped and have a common prefix, i.e. \b osThread.
+
+Definitions that are marked with <b>CAN BE CHANGED</b> can be adapted towards the needs of the actual CMSIS-RTOS
+implementation. These definitions can be specific to the underlying RTOS kernel.
+
+Definitions that are marked with <b>MUST REMAIN UNCHANGED</b> cannot be altered. Otherwise the CMSIS-RTOS implementation is
+no longer compliant to the standard. Note that some functions are optional and need not to be provided by every CMSIS-RTOS
+implementation.
+
+<b>Define and reference object definitions</b>
+
+With <b>\#define osObjectsExternal</b> objects are defined as external symbols. This allows to create a consistent header
+file that is used throughout a project as shown below:
+
+<i>Header File</i>
+\code
+#include <cmsis_os.h>                                         // CMSIS RTOS header file
+
+// Thread definition
+extern void thread_sample (void const *argument);             // function prototype
+osThreadDef (thread_sample, osPriorityBelowNormal, 1, 100);
+
+// Pool definition
+osPoolDef(MyPool, 10, long);
+\endcode
+
+
+This header file defines all objects when included in a C/C++ source file. When <b>\#define osObjectsExternal</b> is
+present before the header file, the objects are defined as external symbols. A single consistent header file can therefore be
+used throughout the whole project.
+
+<i>Example</i>
+\code
+#include "osObjects.h"     // Definition of the CMSIS-RTOS objects
+\endcode
+
+\code
+#define osObjectsExternal  // Objects will be defined as external symbols
+#include "osObjects.h"     // Reference to the CMSIS-RTOS objects
+\endcode
+
+<b>Header file %cmsis_os.h</b>
+
+\include Template/cmsis_os.h
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page RtosValidation RTOS Validation
+
+ARM offers a <a class=el href="http://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-RTOS Validation.
+The <b>ARM::CMSIS-RTOS_Validation</b> Pack contains the following:
+
+ - Source code of a CMSIS-RTOS Validation Suite along with configuration file.
+ - Documentation of the CMSIS-RTOS Validation Suite.
+ - Example that shows the usage of the CMSIS-RTOS Validation Suite using simulation.
+
+The CMSIS-RTOS Validation Suite is currently available in beta release and performs generic validation of various
+RTOS features. The test cases verify the functional behavior, test invalid parameters and call management 
+functions from ISR.
+
+The following CMSIS-RTOS features can be tested with the current release:
+ - Thread : Create multiple threads, terminate, restart, yield, change priority 
+ - Timer : Create periodic and one-shot timers
+ - GenWait : Call generic wait functions (osDelay and osWait)
+ - WaitFunc : Measure wait ticks (delay, mail, message, mutex, semaphore, signal)
+ 
+Moreover the following inter-thread communication functions can be tested: 
+ - Signal : Verify signal events
+ - Memory Pool : Verify memory allocation
+ - Message Queue : Exchange messages between threads
+ - Mail Queue : Exchange data between threads
+ - Mutex : Synchronize resource access 
+ - Semaphore : Access shared resources 
+ 
+The RTOS Validation output can be printed to a console, output via ITM printf, or output to a memory buffer.
+ 
+\section test_output Sample Test Output
+\verbatim
+CMSIS-RTOS Test Suite   Oct 21 2015   16:39:16 
+
+TEST 01: TC_ThreadCreate                  PASSED
+TEST 02: TC_ThreadMultiInstance           PASSED
+TEST 03: TC_ThreadTerminate               PASSED
+  :
+  :
+TEST 08: TC_ThreadChainedCreate           PASSED
+TEST 09: TC_ThreadYield                   NOT EXECUTED
+TEST 10: TC_ThreadParam                   PASSED
+  :
+  :
+TEST 60: TC_MailFromISRToThread           PASSED
+
+Test Summary: 60 Tests, 59 Executed, 59 Passed, 0 Failed, 0 Warnings.
+Test Result: PASSED
+\endverbatim
+*/
+
+
+/* ========================================================================================================================== */
+// Reference 
+/** 
+ * \addtogroup CMSIS_RTOS CMSIS-RTOS API v2
+ * \brief This section describes the CMSIS-RTOS API v2. 
+ * \details The CMSIS-RTOS is a generic API layer that interfaces to an existing RTOS kernel.
+ *  @{
+ */
+
+/// @} 
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Kernel Control Functions ====
+/** 
+\addtogroup CMSIS_RTOS_KernelCtrl Kernel Information and Control
+\ingroup CMSIS_RTOS
+\brief Provide version/system information and start the RTOS Kernel.
+\details 
+The Kernel Information and Control function group allows to:
+  - obtain information about the system and the underlying kernel.
+  - obtain version information about the CMSIS-RTOS API.
+  - initialize of the RTOS kernel for creating objects.
+  - start the RTOS kernel and thread switching.
+  - check the execution status of the RTOS kernel.
+
+The function \b main is a special thread function that may be started at system initialization. In this case it has the
+initial priority \a osPriorityNormal.
+
+When reaching \b main, it is necessary to:
+-# Call osKernelInitialize() to initialize the CMSIS-RTOS Kernel
+-# Setup device peripherals and create other RTOS objects using the \b os*Create functions.
+-# Start the Kernel and begin thread switching by calling osKernelStart().
+
+<b>Code Example</b>
+\code
+int main (void) {
+  osKernelInitialize ();                    // initialize CMSIS-RTOS
+ 
+  // initialize peripherals here
+ 
+  // create 'thread' functions that start executing,
+  // example: tid_name = osThreadCreate (osThread(name), NULL);
+ 
+  osKernelStart ();                         // start thread execution 
+}
+\endcode
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osCMSIS
+Version information of the CMSIS-RTOS API whereby major version is in bits [31:16] and sub version in bits [15:0].
+The value 0x10000 represents version 1.00.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osCMSIS_KERNEL
+Identifies the underlying RTOS kernel and version number. The actual name of that define depends on the RTOS Kernel used in
+the implementation. For example, \b osCMSIS_FreeRTOS identifies the FreeRTOS kernel and the value indicates the version
+number of that kernel whereby the major version is in bits [31:16] and sub version in bits [15:0]. The value 0x10000
+represents version 1.00.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osKernelSystemId
+Defines a string that identifies the underlying RTOS Kernel and provides version information. The length of that string is
+limited to 21 bytes. A valid identification string is for example, <b>"FreeRTOS V1.00"</b>.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFeature_KernelSysTick
+Defines if a Kernel SysTick timer is available or not.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osKernelInitialize (void)
+Initialize of the RTOS Kernel to allow peripheral setup and creation of other RTOS objects with the functions:
+   - \ref osThreadNew : Create a thread function.
+   - \ref osTimerNew : Define attributes of the timer callback function.
+   - \ref osMutexNew : Define and initialize a mutex.
+   - \ref osSemaphoreNew : Define and initialize a semaphore.
+   - \ref osMemoryPoolNew : Define and initialize a fix-size memory pool. 
+   - \ref osMessageQueueNew : Define and initialize a message queue.
+   - \ref osMailQueueNew : Define and initialize a mail queue with fix-size memory blocks.
+
+The RTOS kernel does not start thread switching until the function \ref osKernelStart is called.
+
+\note 
+In case that the RTOS Kernel starts thread execution with the function \em main the function osKernelInitialize stops thread switching.
+This allows you to setup the system to a defined state before thread switching is resumed with \ref osKernelStart.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+int main (void)  {
+  if (!osKernelRunning ())  {                    // if kernel is not running, initialize the kernel
+    if (osKernelInitialize () != osOK)  {        // check osStatus for other possible valid values
+      // exit with an error message
+    }
+  }
+  :
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osKernelStart (void)
+Start the RTOS Kernel and begin thread switching.
+
+\note
+When the CMSIS-RTOS starts thread execution with the function \em main this function resumes thread switching. The \em main
+thread will continue executing after \ref osKernelStart.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the RTOS kernel has been successfully started.
+ - \em osErrorISR: \ref osKernelStart cannot be called from interrupt service routines.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+int main (void)  {
+  if (osKernelInitialize () != osOK)  {          // check osStatus for other possible valid values
+    // exit with an error message
+  }
+ 
+  if (!osKernelRunning ())  {                    // is the kernel running ?
+    if (osKernelStart () != osOK)  {             // start the kernel
+                                                 // kernel could not be started
+    }
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn uint32_t osKernelSuspend (uint32_t tickless)
+ 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osKernelResume (uint32_t sleep_time)
+ 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osKernelState osKernelGetState (void)
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn uint32_t osKernelTime (void)
+Returns the current kernel time in milliseconds.
+
+\todo add code example for osKernelTime
+
+<b>Code Example</b>
+\code
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn uint32_t osKernelSysTick (void)
+
+Get the value of the Kernel SysTick timer for time comparison. The value is a rolling 
+32-bit counter that is typically composed of the kernel system interrupt timer value
+and an counter that counts these interrupts. 
+
+This function allows the implementation of timeout checks. These are for example
+required when checking for a busy status in a device or peripheral initialization routine.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void SetupDevice (void)  {
+  uint32_t tick;
+  
+  tick = osKernelSysTick();                      // get start value of the Kernel system tick
+  Device.Setup ();                               // initialize a device or peripheral
+  do {                                           // poll device busy status for 100 microseconds
+    if (!Device.Busy) break;                     // check if device is correctly initialized
+  } while ((osKernelSysTick() - tick) < osKernelSysTickMicroSec(100));  
+  if (Device.Busy)  {              
+    ;                                            // in case device still busy, signal error
+  }
+                                                 // start interacting with device
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osKernelSysTickFrequency
+
+Specifies the frequency of the Kernel SysTick timer in Hz. The value is typically
+use to scale a time value and is for example used in \ref osKernelSysTickMicroSec.
+
+\sa osKernelSysTick
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osKernelSysTickMicroSec
+
+Allows you to scale a microsecond value to the frequency of the Kernel SysTick timer.
+This macro is typically used to check for short timeouts in polling loops.
+
+\sa osKernelSysTick
+*/
+/// @}
+
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Thread Management Functions ====
+/** 
+@addtogroup CMSIS_RTOS_ThreadMgmt Thread Management
+@ingroup CMSIS_RTOS CMSIS_RTOSv2
+@brief Define, create, and control thread functions.
+@details 
+The Thread Management function group allows defining, creating, and controlling thread functions in the system. The function
+\b main is a special thread function that is started at system initialization and has the initial priority
+\a osPriorityNormal.
+
+\anchor ThreadStates
+Threads can be in the following states:
+ - \b RUNNING: The thread that is currently running is in the \b RUNNING state. Only one thread at a time can be in this
+   state.
+ - \b READY: Threads which are ready to run are in the \b READY state. Once the \b RUNNING thread has terminated or is
+   \b WAITING, the next \b READY thread with the highest priority becomes the \b RUNNING thread.
+ - \b WAITING: Threads that are waiting for an event to occur are in the \b WAITING state.
+ - \b INACTIVE: Threads that are not created or terminated are in the \b INACTIVE state. These threads typically consume no
+   system resources.
+
+\image html "ThreadStatus.png" "Thread State and State Transitions"
+
+A CMSIS-RTOS assumes that threads are scheduled as shown in the figure <b>Thread State and State Transitions</b>. The thread
+states change as follows:
+ - A thread is created using the function \ref osThreadNew. This puts the thread into the \b READY or \b RUNNING state
+   (depending on the thread priority).
+ - CMSIS-RTOS is pre-emptive. The active thread with the highest priority becomes the \b RUNNING thread provided it does not
+   wait for any event. The initial priority of a thread is defined with the \ref osThreadAttrInit but may be changed during
+   execution using the function \ref osThreadSetPriority.
+ - The \b RUNNING thread transfers into the \b WAITING state when it is waiting for an event.
+ - Active threads can be terminated any time using the function \ref osThreadTerminate. Threads can terminate also by just
+   returning from the thread function. Threads that are terminated are in the \b INACTIVE state and typically do not consume
+   any dynamic memory resources. 
+
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osThreadAttrInit
+Thread attributes initialization.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \typedef osPriority
+Priority used for thread control.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef osKernelState
+Kernel state definitions.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef osThreadState
+Thread state definitions.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\struct osThreadAttr_t
+Attributes structure for thread.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef osPriority
+\note MUST REMAIN UNCHANGED: \b osPriority shall be consistent in every CMSIS-RTOS.
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+The \ref osPriority value specifies the priority for a thread. The default thread priority should be \a osPriorityNormal.
+If a Thread is active that has a higher priority than the currently executing thread, then a thread switch occurs immediately
+to execute the new task.
+
+To prevent from a priority inversion, a CMSIS-RTOS compliant OS may optionally implement a <b>priority inheritance</b> method.
+A priority inversion occurs when a high priority thread is waiting for a resource or event that is controlled by a thread
+with a lower priority. 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osThreadId osThreadNew (os_pthread pthread, void *argument, const osThreadAttr_t *attr)
+\todo update osThreadNew description
+Start a thread function by adding it to the Active Threads list and set it to state \b READY. 
+The thread function receives the \a argument pointer as function argument when the function is started.
+When the priority of the created thread function is higher than the current \b RUNNING thread, 
+the created thread function starts instantly and becomes the new \b RUNNING thread.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void Thread_1 (void const *arg);                           // function prototype for Thread_1
+osThreadDef (Thread_1, osPriorityNormal, 1, 0);            // define Thread_1
+ 
+void ThreadCreate_example (void) {
+  osThreadId id;
+  
+  id = osThreadCreate (osThread (Thread_1), NULL);         // create the thread
+  if (id == NULL) {                                        // handle thread creation
+    // Failed to create a thread
+  }
+  //do something
+  osThreadTerminate (id);                                  // stop the thread
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osThreadId osThreadGetId (void)
+Get the thread ID of the current running thread.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+void ThreadGetId_example (void)  {
+  osThreadId id;                                           // id for the currently running thread
+   
+  id = osThreadGetId ();
+  if (id == NULL) {
+    // Failed to get the id; not in a thread
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osThreadState osThreadGetState (osThreadId thread_id)
+Get the state of a thread. In case of a failure the value \b osPriorityError is returned.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void Thread_1 (void const *arg)  {                         // Thread function
+  osThreadId id;                                           // id for the currently running thread
+  osThreadState status;                                    // thread state
+   
+  id = osThreadGetId ();                                   // Obtain ID of current running thread
+   
+  if (id != NULL) {
+    status = osThreadGetState (id);
+    if (status == osThreadRunning)  {
+      // Thread is currently running
+    }
+    else {
+      // Check other options
+    }
+  }
+  else  {
+    // Failed to get the id
+  }
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osThreadSetPriority (osThreadId thread_id, osPriority priority)
+Change the priority of an active thread.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the priority of the specified thread has been successfully changed.
+ - \em osErrorParameter: thread_id is incorrect.
+ - \em osErrorValue: incorrect priority value.
+ - \em osErrorResource: thread_id refers to a thread that is not an active thread.
+ - \em osErrorISR: \ref osThreadSetPriority cannot be called from interrupt service routines.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+ 
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void Thread_1 (void const *arg)  {                         // Thread function
+  osThreadId id;                                           // id for the currently running thread
+  osPriority pr;                                           // thread priority
+  osStatus   status;                                       // status of the executed function
+   
+  :  
+  id = osThreadGetId ();                                   // Obtain ID of current running thread
+   
+  if (id != NULL) {
+    status = osThreadSetPriority (id, osPriorityBelowNormal);
+    if (status == osOK)  {
+      // Thread priority changed to BelowNormal
+    }
+    else {
+      // Failed to set the priority
+    }
+  }
+  else  {
+    // Failed to get the id
+  }
+  :  
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osPriority osThreadGetPriority (osThreadId thread_id)
+Get the priority of an active thread. In case of a failure the value \b osPriorityError is returned.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void Thread_1 (void const *arg)  {                         // Thread function
+  osThreadId id;                                           // id for the currently running thread
+  osPriority priority;                                     // thread priority
+   
+  id = osThreadGetId ();                                   // Obtain ID of current running thread
+   
+  if (id != NULL)  {
+    priority = osThreadGetPriority (id);
+  }
+  else  {
+    // Failed to get the id
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osThreadYield  (void)
+Pass control to the next thread that is in state \b READY. If there is no other thread in the state \b READY, 
+the current thread continues execution and no thread switching occurs.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the function has been correctly executed.
+ - \em osErrorISR: \ref osThreadYield cannot be called from interrupt service routines.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void Thread_1 (void const *arg)  {                         // Thread function
+  osStatus   status;                                       // status of the executed function
+ 
+  while (1)  {
+    status = osThreadYield();                              // 
+    if (status != osOK)  {
+      // thread switch not occurred, not in a thread function
+    }
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osThreadSuspend (osThreadId thread_id)
+Suspends the execution of a thread. If the thread is currently RUNNING the execution will stop.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void Thread_1 (void const *arg)  {                         // Thread function
+  osThreadId id;                                           // id for the currently running thread
+  osStatus status;                                         // thread status
+   
+  id = osThreadGetId ();                                   // Obtain ID of current running thread
+   
+  if (id != NULL) {
+    status = osThreadSuspend(id);
+    if (status == osOK)  {
+      // Thread is suspended
+    }
+    else {
+      // Failed to suspend the thread
+    }
+  }
+  else  {
+    // Failed to get the id
+  }
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osThreadResume (osThreadId thread_id)
+Resumes the execution of a thread.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void Thread_1 (void const *arg)  {                         // Thread function
+  osThreadId id;                                           // id for the currently running thread
+  osStatus status;                                         // thread status
+   
+  id = osThreadGetId ();                                   // Obtain ID of current running thread
+   
+  if (id != NULL) {
+    status = osThreadResume(id);
+    if (status == osOK)  {
+      // Thread is resumed
+    }
+    else {
+      // Failed to resume the thread
+    }
+  }
+  else  {
+    // Failed to get the id
+  }
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osThreadTerminate  (osThreadId thread_id)
+Remove the thread function from the active thread list. If the thread is currently RUNNING the execution will stop.
+
+\note In case that \ref osThreadTerminate terminates the currently running task, the function never returns and other threads
+that are in the READY state are started.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the specified thread has been successfully terminated.
+ - \em osErrorParameter: thread_id is incorrect.
+ - \em osErrorResource: thread_id refers to a thread that is not an active thread.
+ - \em osErrorISR: \ref osThreadTerminate cannot be called from interrupt service routines.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void Thread_1 (void const *arg);                           // function prototype for Thread_1
+osThreadDef (Thread_1, osPriorityNormal, 1, 0);            // define Thread_1
+ 
+void ThreadTerminate_example (void) {
+  osStatus status;
+  osThreadId id;
+ 
+  id = osThreadCreate (osThread (Thread_1), NULL);         // create the thread
+  // do something  
+  status = osThreadTerminate (id);                         // stop the thread
+  if (status == osOK) {
+    // Thread was terminated successfully
+  }
+  else {
+    // Failed to terminate a thread
+  }
+}
+\endcode
+*/
+
+/// @}
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Thread Flags Management Functions ====
+/** 
+\addtogroup CMSIS_RTOS_ThreadFlagsMgmt Thread Flags Management Functions
+\ingroup CMSIS_RTOS
+\brief Lorem ipsum
+\details
+Lorem ipsum
+
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFeature_ThreadFlags
+Defined the maximum number of Thread Flags available per thread.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osThreadFlagsSet (osThreadId thread_id, int32_t flags);
+
+<b>Code Example</b>
+\code
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osThreadFlagsClear (osThreadId thread_id, int32_t flags);
+ 
+<b>Code Example</b>
+\code
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int32_t osThreadFlagsGet (osThreadId thread_id);
+ 
+<b>Code Example</b>
+\code
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t millisec);
+
+<b>Code Example</b>
+\code
+\endcode
+*/
+
+/// @}
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Generic Wait Functions ====
+/** 
+\addtogroup CMSIS_RTOS_Wait Generic Wait Functions
+\ingroup CMSIS_RTOS
+\brief Wait for a time period or unspecified events.
+\details 
+The Generic Wait function group provides means for a time delay and allow to wait for unspecified events.
+
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osWaitForever
+Wait forever timeout value.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osDelay (uint32_t millisec)
+Wait for a specified time period in \a millisec.
+
+The \ref CMSIS_RTOS_TimeOutValue "millisec" value specifies the number of timer ticks and is therefore an upper bound. The
+exact time delay depends on the actual time elapsed since the last timer tick. 
+
+For a value of <b>1</b>, the system waits until the next timer tick occurs. That means that the actual time delay may be up
+to one timer tick less.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osEventTimeout: the time delay is executed.
+ - \em osErrorISR: \ref osDelay cannot be called from interrupt service routines.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+ 
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void Thread_1 (void const *arg)  {               // Thread function
+  osStatus status;                               // capture the return status
+  uint32_t delayTime;                            // delay time in milliseconds
+ 
+  delayTime = 1000;                              // delay 1 second
+  status = osDelay (delayTime);                  // suspend thread execution
+  if (status != osOK) {
+    // handle error code
+  }  
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osDelayUntil (uint64_t millisec)
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn uint32_t osEventWait (uint32_t millisec)
+
+Wait for an event for a specified time period in \a millisec. While the system waits, the thread that is calling this
+function is put into the state \b WAITING. When \a millisec is set to \b osWaitForever, the function will wait for an
+infinite time until an event occurs.
+
+\todo Update osEventWait description.
+
+<b>Code Example</b>
+\code
+\endcode
+*/
+/// @}
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Timer Management Functions ====
+/** 
+\addtogroup CMSIS_RTOS_TimerMgmt Timer Management
+\ingroup CMSIS_RTOS
+\brief Create and control timer and timer callback functions.
+\details 
+In addition to the \ref CMSIS_RTOS_Wait CMSIS-RTOS also supports virtual timer objects. These timer objects can
+trigger the execution of a function (not threads). When a timer expires, a callback function is executed to run associated
+code with the timer. The timer number is passed as a parameter to the callback function. Each timer can be configured as a
+one-shot or a  periodic timer. A periodic timer repeats its operation until it is \ref osTimerDelete "deleted" or
+\ref osTimerStop "stopped". All timers can be \ref osTimerStart "started, restarted", or \ref osTimerStop "stopped".
+
+Timers are handled in the thread \b osTimerThread. Callback functions run under control of this thread and may use other
+CMSIS-RTOS API calls.
+
+The figure below shows the behavior of a periodic timer. For one-shot timers, the timer stops after execution of the
+callback function.
+
+\image html "Timer.png" "Behavior of a Periodic Timer"
+
+Working with Timers
+--------------------
+The following steps are required to use a timer:
+-# Define the timers:
+\code
+//osTimerDef(one_shot, start_machine);  // when the timer expires, the function start_machine is called
+//osTimerDef(periodic, toggle_power);   // when the timer expires, the function toggle_power is called
+osTimerId one_shot_id, periodic_id;
+\endcode
+-# Instantiate and start the timers in an RTOS thread:
+\code
+one_shot_id = osTimerCreate(osTimer(one_shot), osTimerOnce, (void *)0);      // creates a one-shot timer;
+                                                                             // (void*)0 is passed as an argument
+                                                                             // to the callback function
+periodic_id = osTimerCreate(osTimer(periodic), osTimerPeriodic, (void *)5);  // creates a periodic timer;
+                                                                             // (void*)5 is passed as an argument
+                                                                             // to the callback function
+osTimerStart(one_shot_id, 500);
+osTimerStart(periodic, 1500);
+\endcode
+
+@{
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osTimerAttrInit
+Timer attributes initialization.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \typedef os_timer_type
+The \ref os_timer_type specifies the a repeating (periodic) or one-shot timer for the function \ref osTimerNew.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \struct osTimerAttr_t
+Attributes structure for timer.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osTimerId osTimerNew (os_ptimer ptimer, os_timer_type type, void *argument, const osTimerAttr_t *attr)
+Create a one-shot or periodic timer and associate it with a callback function argument. The timer is in stopped until it is
+started with \ref osTimerStart.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void Timer1_Callback  (void const *arg);                   // prototypes for timer callback function
+void Timer2_Callback  (void const *arg);                   
+ 
+osTimerDef (Timer1, Timer1_Callback);                      // define timers
+osTimerDef (Timer2, Timer2_Callback);
+ 
+uint32_t  exec1;                                           // argument for the timer call back function
+uint32_t  exec2;                                           // argument for the timer call back function
+ 
+void TimerCreate_example (void)  {
+  osTimerId id1;                                           // timer id
+  osTimerId id2;                                           // timer id
+ 
+  // Create one-shoot timer
+  exec1 = 1;
+  id1 = osTimerCreate (osTimer(Timer1), osTimerOnce, &exec1);
+  if (id1 != NULL)  {
+    // One-shoot timer created
+  }
+ 
+  // Create periodic timer
+  exec2 = 2;
+  id2 = osTimerCreate (osTimer(Timer2), osTimerPeriodic, &exec2);
+  if (id2 != NULL)  {
+    // Periodic timer created
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osTimerStart  (osTimerId timer_id, uint32_t millisec)
+Start or restart the timer.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the specified timer has been started or restarted.
+ - \em osErrorISR: \b osTimerStart cannot be called from interrupt service routines.
+ - \em osErrorParameter: \a timer_id is incorrect.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+ 
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void Time_Callback  (void const *arg)  {                   // timer callback function
+                                                           // arg contains &exec
+                                                           // called every second after osTimerStart
+} 
+ 
+osTimerDef (Timer, Time_Callback);                         // define timer
+uint32_t  exec;                                            // argument for the timer call back function
+ 
+void TimerStart_example (void)  {
+  osTimerId id;                                            // timer id
+  uint32_t  timerDelay;                                    // timer value
+  osStatus  status;                                        // function return status
+ 
+  // Create periodic timer
+  exec = 1;
+  id = osTimerNew (osTimer(Timer), osTimerPeriodic, &exec);
+  if (id)  {
+    timerDelay = 1000;
+    status = osTimerStart (id, timerDelay);                // start timer
+    if (status != osOK)  {
+      // Timer could not be started
+    } 
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osTimerStop  (osTimerId timer_id)
+Stop the timer.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the specified timer has been stopped.
+ - \em osErrorISR: \ref osTimerStop cannot be called from interrupt service routines.
+ - \em osErrorParameter: \a timer_id is incorrect.
+ - \em osErrorResource: the timer is not started.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+void Timer_Callback  (void const *arg);                    // prototype for timer callback function
+osTimerDef (Timer, Timer_Callback);                        // define timer
+ 
+void TimerStop_example (void)  {
+  osTimerId id;                                            // timer id
+  osStatus status;                                         // function return status
+ 
+  // Create periodic timer
+  exec = 1;
+  id = osTimerCreate (osTimer(Timer2), osTimerPeriodic, NULL);
+  osTimerStart (id, 1000);                                 // start timer
+  // do something
+  status = osTimerStop (id);                               // stop timer
+  if (status != osOK)  {
+    // Timer could not be stopped
+  } 
+  osTimerStart (id, 1000);                                 // start timer again
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int32_t osTimerIsRunning (osTimerId timer_id)
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osTimerDelete  (osTimerId timer_id)
+Delete the timer object.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the specified timer has been deleted.
+ - \em osErrorISR: \ref osTimerDelete cannot be called from interrupt service routines.
+ - \em osErrorParameter: \a timer_id is incorrect.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+
+void Timer_Callback  (void const *arg);                    // prototype for timer callback function
+osTimerDef (Timer, Timer_Callback);                        // define timer
+ 
+void TimerDelete_example (void)  {
+  osTimerId id;                                            // timer id
+  osStatus status;                                         // function return status  
+ 
+  // Create periodic timer
+  exec = 1;
+  id = osTimerCreate (osTimer(Timer2), osTimerPeriodic, NULL);
+  osTimerStart (id, 1000UL);                               // start timer
+  // do something
+  status = osTimerDelete (id);                             // stop and delete timer
+  if (status != osOK)  {
+    // Timer could not be deleted
+  } 
+}
+\endcode
+*/
+/// @}
+
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Inter-Thread Communication Functions ====
+/** 
+\addtogroup CMSIS_RTOS_InterThread Inter-Thread Communication and Resource Sharing
+\ingroup CMSIS_RTOS
+\brief Functions for inter-thread communication.
+\details
+In most applications, threads need to \b communicate \b with \b each \b other or \b access \b shared \b resources together.
+There are many ways to exchange data between threads, for example using shared data, polling loops and message passing.
+
+Many resources in a microcontroller can be considered as \b serially-reusable. This means that they can be used repeatedly by
+different threads, but only by \b one \b thread \b at \b a \b time (for example communication peripherals such as \b UARTs,
+\b memory, and \b files that need to be modified).
+
+
+The CMSIS-RTOS API provides different means to pass messages between threads to make inter-thread communication more
+efficient. Also, resource sharing is inherently supported. The following methods are available to the user:
+Inter-Thread Communication
+--------------------------
+- \ref CMSIS_RTOS_ThreadFlagsMgmt
+- \ref CMSIS_RTOS_EventFlags
+- \ref CMSIS_RTOS_Message
+- \ref CMSIS_RTOS_PoolMgmt
+- \ref CMSIS_RTOS_Mail
+
+Resource Sharing
+----------------
+- \ref CMSIS_RTOS_MutexMgmt
+- \ref CMSIS_RTOS_SemaphoreMgmt
+*/
+/// @}
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Event Flag Management Functions ====
+/** 
+\addtogroup CMSIS_RTOS_EventFlags Event Flag Objects
+\ingroup CMSIS_RTOS_InterThread
+\brief Synchronize threads using flags.
+\details 
+\todo add details here.
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osEventFlagsAttrInit
+Event Flags attributes initialization.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFeature_EventWait
+Defines if \ref osEventWait is available or not.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFeature_EventFlags
+Defines the maximum number of Event Flags available per object.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \struct osEventFlagsAttr_t
+Attributes structure for event flags.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osEventFlagsId osEventFlagsNew (const osEventFlagsAttr_t *attr)
+Create and initialize a flag object.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+  
+osFlagDef (my_flag);                             // Flag name definition
+  
+void CreateFlag (void)  {
+osFlagId  my_flag_id;
+ 
+  my_flag_id = osFlagCreate (osFlag(my_flag));
+  if (my_flag_id != NULL)  {
+    // Flag object created
+  }   
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osEventFlagsSet (osEventFlagsId flags_id, int32_t flags)
+Set one or more flags for a flag object.  Returns all flags for the specified flag object \a after the manipulation.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+  
+osFlagDef my_flag;                               // Flag name definition 
+osFlagId  my_flag_id;                            // Flag ID populated by the function osFlagCreate()
+ 
+void SetFlagValues (osFlagId my_flag_id)  {
+int32_t flags;
+  
+  if (my_flag_id != NULL)  {
+    flags = osFlagSet(my_flag_id, 0x17);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osEventFlagsClear (osEventFlagsId flags_id, int32_t flags)
+Clear one or more flags of a flag object. Returns all flags for the specified flag object \a after the manipulation.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+  
+osFlagDef my_flag;                               // Flag name definition 
+osFlagId  my_flag_id;                            // Flag ID populated by the function osFlagCreate()
+ 
+void ClearFlagValues (osFlagId my_flag_id)  {
+int32_t flags;
+  
+  if (my_flag_id != NULL)  {
+    flags = osFlagClear(my_flag_id, 0x10);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int32_t osEventFlagsGet (osEventFlagsId flags_id)
+Retrieve the current flags of a flag object without changing the flag values. The functions \ref osEventFlagsSet and
+\ref osEventFlagsClear also return the flags for a given flag object but after they have changed them.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+  
+osFlagDef my_flag;                               // Flag name definition 
+osFlagId  my_flag_id;                            // Flag ID populated by the function osFlagCreate()
+ 
+void GetFlagValues (osFlagId my_flag_id)  {
+int32_t flags;
+  
+  if (my_flag_id != NULL)  {
+    flags = osFlagGet(my_flag_id);
+    // work with the flags
+    }
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int32_t osEventFlagsWait (osEventFlagsId flags_id, int32_t flags, uint32_t options, uint32_t millisec)
+Suspend the execution of the current \b RUNNING thread until one or more \a flags are set for flag object specified by
+\a flag_id. When the flags that are waited for are already set, the function returns instantly.
+
+The argument \a attributes can be used to specify whether to wait for \b any specified flag in the \a flags argument
+(default) or to wait for all \a flags to be set (use \c osFlagWaitForAll). Specifying \c osFlagAutoClear will automatically
+clear \b any specified flag in the \a flags argument (default) or all \a flags when used in conjunction with
+\c osFlagWaitForAll.
+
+The argument \a millisec specifies how long the system waits for a message to become available. While the system waits, the
+calling thread is put into the state \b WAITING. The \a millisec timeout value can have the following values:
+ - when \a millisec is 0, the function returns instantly.
+ - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until a message arrives.
+ - all other values specify a time in millisecond for a timeout.
+ 
+\note The parameter \a millisec must be 0 for using this function in an ISR.
+\note \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" can call this function.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: no message is available in the queue and no timeout was specified.
+ - \em osEventTimeout: no message has arrived during the given timeout period.
+ - \em osEventMessage: message received, \em value.p contains the pointer to message.
+ - \em osErrorParameter: a parameter is invalid or outside of a permitted range.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+  
+osFlagDef my_flag;                               // Flag name definition 
+osFlagId  my_flag_id;                            // Flag ID populated by the function osFlagCreate()
+ 
+void StartApplication (void)  {
+  my_flag_id = osFlagCreate (osFlag(my_flag));
+  if (my_flag_id != NULL)  {
+    event = osFlagWait(my_flag_id, 0x17, osFlagWaitForAll,0);
+    if (event != osOK)  {
+      // handle failure code
+    } else {
+      // do something
+    }
+  } else {
+    // flag object not created
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osEventFlagsDelete (osEventFlagsId flags_id)
+Delete a flag object. The function releases internal memory obtained for flag handling. After this call the flag ID is no
+longer valid and cannot be used. The flag may be created again using the function \ref osEventFlagsNew.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+  
+osFlagDef my_flag;                               // Flag name definition 
+osFlagId  my_flag_id;                            // Flag ID populated by the function osFlagCreate()
+ 
+void DeleteFlag (osFlagId my_flag_id)  {
+osStatus status;
+  
+  if (my_flag_id != NULL)  {
+    status = osFlagDelete(my_flag_id);
+    if (status != osOK)  {
+      // handle failure code
+    }
+  }
+}
+\endcode
+*/
+/// @}
+
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Mutex Management Functions ====
+/** 
+\addtogroup CMSIS_RTOS_MutexMgmt Mutexes
+\ingroup CMSIS_RTOS_InterThread
+\brief Synchronize resource access using Mutual Exclusion (Mutex).
+\details 
+<b>Mutual exclusion</b> (widely known as \b Mutex) is used in various operating systems for resource management. Many
+resources in a microcontroller device can be used repeatedly, but only by one thread at a time (for example communication
+channels, memory, and files). Mutexes are used to protect access to a shared resource. A mutex is created and then passed
+between the threads (they can acquire and release the mutex).
+
+\image html "Mutex.png" "CMSIS-RTOS Mutex"
+
+A mutex is a special version of a \ref CMSIS_RTOS_SemaphoreMgmt "semaphore". Like the semaphore, it is a container for
+tokens. But instead of being able to have multiple tokens, a mutex can only carry one (representing the resource). Thus, a
+mutex token is binary and bounded. The advantage of a mutex is that it introduces thread ownership. When a thread acquires a
+mutex and becomes its owner, subsequent mutex acquires from that thread will succeed immediately without any latency. Thus,
+mutex acquires/releases can be nested.
+
+\note
+- Mutex management functions cannot be called from interrupt service routines (ISR), unlike a binary semaphore that can be
+  released from an ISR.
+
+Working with Mutexes
+--------------------
+To use mutexes, you need to follow these steps for creating and using them:
+-# Declare the mutex container and initialize the mutex:
+\code
+//osMutexDef (uart_mutex);    // Declare mutex
+osMutexId  (uart_mutex_id); // Mutex ID
+\endcode
+-# Create the mutex in a thread:
+\code
+uart_mutex_id = osMutexCreate(osMutex(uart_mutex));
+\endcode
+-# Acquire the mutex when peripheral access is required:
+\code
+osMutexWait(uart_mutex_id, osWaitForever);
+\endcode
+-# When finished with the peripheral access, release the mutex:
+\code
+osMutexRelease(uart_mutex_id);
+\endcode
+
+@{
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osMutexAttrInit
+Mutex attributes initialization.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \struct osMutexAttr_t
+Attributes structure for mutex.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osMutexId osMutexNew (const osMutexAttr_t *attr)
+Create and initialize a Mutex object.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+  
+osMutexDef (MutexIsr);                                     // Mutex name definition
+  
+void CreateMutex (void)  {
+osMutexId mutex_id;   
+ 
+  mutex_id = osMutexCreate  (osMutex (MutexIsr));
+  if (mutex_id != NULL)  {
+    // Mutex object created
+  }   
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMutexAcquire (osMutexId mutex_id, uint32_t millisec)
+Wait until a Mutex becomes available. If no other thread has obtained the Mutex, the function instantly returns and blocks
+the mutex object. 
+
+The argument \a millisec specifies how long the system waits for a mutex.
+While the system waits the thread that is calling this function is put into the state \b WAITING.
+The \a millisec timeout can have the following values:
+ - when \a millisec is 0, the function returns instantly.
+ - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until the mutex becomes available.
+ - all other values specify a time in millisecond for a timeout.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the mutex has been obtained.
+ - \em osErrorTimeoutResource: the mutex could not be obtained in the given time.
+ - \em osErrorResource: the mutex could not be obtained when no timeout was specified.
+ - \em osErrorParameter: the parameter \a mutex_id is incorrect.
+ - \em osErrorISR: \b osMutexAcquire cannot be called from interrupt service routines.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+ 
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+  
+osMutexDef (MutexIsr);
+  
+void WaitMutex (void)  {
+osMutexId mutex_id;   
+osStatus status;
+ 
+  mutex_id = osMutexCreate  (osMutex (MutexIsr));
+  if (mutex_id != NULL)  {
+    status  = osMutexWait    (mutex_id, 0);
+    if (status != osOK)  {
+      // handle failure code
+    }
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMutexRelease (osMutexId mutex_id)
+Release a Mutex that was obtained with \ref osMutexAcquire. Other threads that currently wait for the same mutex will be now
+put into the state \b READY.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the mutex has been correctly released.
+ - \em osErrorResource: the mutex was not obtained before.
+ - \em osErrorParameter: the parameter \a mutex_id is incorrect.
+ - \em osErrorISR: \ref osMutexRelease cannot be called from interrupt service routines.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+ 
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+  
+osMutexDef (MutexIsr);                                     // Mutex name definition 
+osMutexId mutex_id;                                        // Mutex id populated by the function CreateMutex()
+osMutexId CreateMutex (void);                              // function prototype that creates the Mutex
+ 
+void ReleaseMutex (osMutexId mutex_id)  {
+osStatus status;
+  
+  if (mutex_id != NULL)  {
+    status = osMutexRelease(mutex_id);
+    if (status != osOK)  {
+      // handle failure code
+    }
+  }
+}
+\endcode
+*/
+ 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMutexDelete (osMutexId mutex_id)
+Delete a Mutex object. The function releases internal memory obtained for Mutex handling. After this call the \a mutex_id is
+no longer valid and cannot be used. The Mutex may be created again using the function \ref osMutexNew.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the mutex object has been deleted.
+ - \em osErrorISR: \ref osMutexDelete cannot be called from interrupt service routines.
+ - \em osErrorResource: all tokens have already been released.
+ - \em osErrorParameter: the parameter \a mutex_id is incorrect.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+ 
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+  
+osMutexDef (MutexIsr);                                     // Mutex name definition 
+osMutexId mutex_id;                                        // Mutex id populated by the function CreateMutex()
+osMutexId CreateMutex (void);                              // function prototype that creates the Mutex
+ 
+void DeleteMutex (osMutexId mutex_id)  {
+osStatus status;
+  
+  if (mutex_id != NULL)  {
+    status = osMutexDelete(mutex_id);
+    if (status != osOK)  {
+      // handle failure code
+    }
+  }
+}
+\endcode
+*/
+/// @}
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Semaphore Management Functions ====
+/** 
+\addtogroup CMSIS_RTOS_SemaphoreMgmt Semaphores
+\ingroup CMSIS_RTOS_InterThread
+\brief Access shared resources simultaneously from different threads.
+\details 
+Semaphores are used to manage and protect access to shared resources. Semaphores are very similar to
+\ref CMSIS_RTOS_MutexMgmt "Mutexes". Whereas a Mutex permits just one thread to access a shared resource at a
+time, a semaphore can be used to permit a fixed number of threads to access a pool of shared resources. Using semaphores,
+access to a group of identical peripherals can be managed (for example multiple DMA channels).
+
+\image html "Semaphore.png" "CMSIS-RTOS Semaphore"
+
+A semaphore object should be initialized to the maximum number of available tokens. This number of available resources is
+specified as parameter of the \ref osSemaphoreNew function. Each time a semaphore token is obtained with
+\ref osSemaphoreAcquire, the semaphore count is decremented. When the semaphore count is 0, no semaphore token can be
+obtained. The thread that tries to obtain the semaphore token needs to wait until the next token is free. Semaphores are
+released with \ref osSemaphoreRelease incrementing the semaphore count.
+
+\note Semaphore tokens can be acquired from threads and released from threads and ISRs.
+
+Working with Semaphores
+--------------------
+Follow these steps to create and use a semaphore:
+-# Declare the semaphore container and initialize the semaphore:
+\code
+osSemaphoreDef (my_semaphore);    // Declare semaphore
+osSemaphoreId  (my_semaphore_id); // Semaphore ID
+\endcode
+-# Initialize the semaphore container with a number of tokens within a thread:
+\code
+my_semaphore_id = osSemaphoreCreate(osSemaphore(my_semaphore), 4);  // Create semaphore with 4 tokens
+\endcode
+\b Important: semaphore tokens can be created and destroyed as threads run. This means that can initialize a semaphore with
+zero tokens and then use one thread to add/create tokens to the semaphore while a second thread removes them. In this way you
+can distinguish between producer and consumer threads.
+-# Acquire a token from the semaphore container:
+\code
+osSemaphoreWait(my_semaphore_id, osWaitForever);
+\endcode
+-# When finished using the semaphore resource, send the token back to the semaphore container:
+\code
+osSemaphoreRelease(my_semaphore_id);
+\endcode
+
+Semaphore Use Cases
+-------------------
+Due to their flexibility, semaphores cover a wide range of synchronizing applications. At the same time, they are perhaps the
+most challenging RTOS object to understand. The following explains a use case for semaphores, taken from the book
+<a href="http://www.greenteapress.com/semaphores/" target="_blank">The Little Book Of Semaphores</a> by Allen B. Downey which
+is available for free download.
+
+<b>Non-binary Semaphore (Multiplex)</b>
+
+A multiplex limits the number of threads that can access a critical section of code. For example, this could be a function
+accessing DMA resources which can only support a limited number of calls.
+
+To allow multiple threads to run the function, initialize a semaphore to the maximum number of threads that can be allowed.
+The number of tokens in the semaphore represents the number of additional threads that may enter. If this number is zero,
+then the next thread trying to access the function will have to wait until one of the other threads exits and releases its
+token. When all threads have exited the token number is back to n. Ths following example shows the code for one of the
+threads that might access the resource:
+
+\code
+osSemaphoreDef(multiplex);
+osSemaphoreId (multiplex_id);
+ 
+void thread_n (void)
+  {
+    multiplex_id = osSemaphoreCreate(osSemaphore(multiplex), 3);
+    while(1)
+      {
+        osSemaphoreWait(multiplex_id, osWaitForever);
+        // do something
+        osSemaphoreRelease(multiplex_id);
+      }
+  }
+\endcode
+
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFeature_SemaphoreTokens
+Defines the maximum number of tokens per semaphore.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osSemaphoreAttrInit
+Semaphore attributes initialization.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \struct osSemaphoreAttr_t
+Attributes structure for semaphore.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osSemaphoreId osSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr)
+Create and initialize a Semaphore object that is used to manage access to shared resources. The parameter \em count specifies
+the number of available resources. The \em count value 1 creates a binary semaphore.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+   
+osThreadId tid_thread1;                          // ID for thread 1
+osThreadId tid_thread2;                          // ID for thread 2
+  
+osSemaphoreId semaphore;                         // Semaphore ID
+osSemaphoreDef(semaphore);                       // Semaphore definition
+   
+//
+//   Thread 1 - High Priority - Active every 3ms
+//
+void thread1 (void const *argument) {
+  int32_t value;
+
+  while (1) {
+    osDelay(3);                                  // Pass control to other tasks for 3ms
+    val = osSemaphoreWait (semaphore, 1);        // Wait 1ms for the free semaphore
+    if (val > 0) {
+                                                 // If there was no time-out the semaphore was acquired
+      :                                          // OK, the interface is free now, use it.
+      osSemaphoreRelease (semaphore);            // Return a token back to a semaphore
+    }
+  }
+}
+  
+//
+//   Thread 2 - Normal Priority - looks for a free semaphore and uses
+//                                the resource whenever it is available
+//
+void thread2 (void const *argument) {
+  while (1) {
+    osSemaphoreWait (semaphore, osWaitForever);  // Wait indefinitely for a free semaphore
+                                                 // OK, the interface is free now, use it.
+    :
+    osSemaphoreRelease (semaphore);              // Return a token back to a semaphore.
+  }
+}
+  
+// Thread definitions 
+osThreadDef(thread1, osPriorityHigh,   1, 0);
+osThreadDef(thread2, osPriorityNormal, 1, 0);
+   
+void StartApplication (void) {
+  semaphore = osSemaphoreCreate(osSemaphore(semaphore), 1);
+ 
+  tid_thread1 = osThreadCreate(osThread(thread1), NULL);
+  tid_thread2 = osThreadCreate(osThread(thread2), NULL);
+  :
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osSemaphoreAcquire (osSemaphoreId semaphore_id, uint32_t millisec)
+Wait until a Semaphore token becomes available. When no Semaphore token is available, the function waits for the time
+specified with the parameter \em millisec.
+
+The argument \a millisec specifies how long the system waits for a Semaphore token to become available.
+While the system waits the thread that is calling this function is put into the state \b WAITING.
+The \a millisec timeout can have the following values:
+ - when \a millisec is 0, the function returns instantly.
+ - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until the Semaphore token becomes
+   available.
+ - all other values specify a time in millisecond for a timeout.
+
+The return value indicates the number of available tokens (the semaphore count value). If 0 is returned, then no semaphore
+was available.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osSemaphoreRelease (osSemaphoreId semaphore_id)
+Release a Semaphore token. This increments the count of available semaphore tokens.
+
+\note \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" can call this function.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the semaphore has been released.
+ - \em osErrorResource: all tokens have already been released.
+ - \em osErrorParameter: the parameter \a semaphore_id is incorrect.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osSemaphoreDelete (osSemaphoreId semaphore_id)
+Delete a Semaphore object. The function releases internal memory obtained for Semaphore handling. After this call the
+\a semaphore_id is no longer valid and cannot be used. The Semaphore may be created again using the function
+\ref osSemaphoreNew.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the semaphore object has been deleted.
+ - \em osErrorISR: \ref osSemaphoreDelete cannot be called from interrupt service routines.
+ - \em osErrorResource: the semaphore object could not be deleted.
+ - \em osErrorParameter: the parameter \a semaphore_id is incorrect.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+*/
+/// @}
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Memory Pool Management Functions ====
+/** 
+\addtogroup CMSIS_RTOS_PoolMgmt Memory Pool
+\ingroup CMSIS_RTOS_InterThread
+\brief Manage thread-safe fixed-size blocks of dynamic memory.
+\details
+\b Memory \b pools are fixed-size blocks of memory that are thread-safe. They operate much faster than the dynamically
+allocated heap and do not suffer from fragmentation. Being thread-safe, they can be accessed from threads and ISRs alike.
+
+\b Shared \b memory is one of the basic models to exchange information between threads. Using memory pools for exchanging
+data, you can share more complex objects between threads if compared to a \ref CMSIS_RTOS_Message. Memory pool management
+functions are used to define and manage such fixed-sized memory pools.
+
+Working with Memory Pools
+-------------------------
+Follow these steps to create and use a memory pool:
+-# Declare a data structure that combines a number of elements:
+\code
+typedef struct {
+  uint32_t length;
+  uint32_t width;
+  uint32_t height;
+  uint32_t weight;
+} properties_t;
+\endcode
+-# Declare a memory pool of these objects as a block of memory:
+\code
+osPoolDef (object_pool, 10, properties_t);  // Declare memory pool
+osPoolId  (object_pool_id);                 // Memory pool ID
+\endcode
+-# Then, create the memory pool in a thread:
+\code
+object_pool_id = osPoolCreate(osPool(object_pool));
+\endcode
+-# Allocate the pool within a thread and fill it with data:
+\code
+properties_t *object_data;
+*object_data = (properties_t *) osPoolAlloc(object_pool_id);
+ 
+object_data->length = 100;
+object_data->width  = 10;
+object_data->height = 23;
+object_data->weight = 1000;
+\endcode
+
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osMemoryPoolAttrInit
+Memory Pool attributes initialization.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osMemoryPoolMem
+User memory allocation for Memory Pool data.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFeature_MemoryPool
+Defines whether Memory Pools are available or not.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \struct osMemoryPoolAttr_t
+Attributes structure for memory pool.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osMemoryPoolId osMemoryPoolNew (uint32_t block_max, uint32_t block_size, void *memory, const osMemoryPoolAttr_t *attr)
+Create and initialize a memory pool.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+typedef struct {
+  uint8_t Buf[32];
+  uint8_t Idx;
+} MEM_BLOCK;
+ 
+osPoolDef (MemPool, 8, MEM_BLOCK);
+  
+void CreateMemoryPool (void)  {
+osPoolId MemPool_Id;
+ 
+  MemPool_Id = osPoolCreate (osPool (MemPool));
+  if (MemPool_Id != NULL)  {
+    // memory pool created
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn void *osMemoryPoolAlloc (osMemoryPoolId pool_id)
+Allocate a memory block from the memory pool.
+
+\note \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" can call this function.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+typedef struct {
+  uint8_t Buf[32];
+  uint8_t Idx;
+} MEM_BLOCK;
+ 
+osPoolDef (MemPool, 8, MEM_BLOCK);
+ 
+void AlocMemoryPoolBlock (void)  {
+  osPoolId   MemPool_Id;
+  MEM_BLOCK *addr;
+ 
+  MemPool_Id = osPoolCreate (osPool (MemPool));
+  if (MemPool_Id != NULL)  {
+    :
+    // allocate a memory block
+    addr = (MEM_BLOCK *)osPoolAlloc (MemPool_Id);
+    
+    if (addr != NULL) {
+      // memory block was allocated
+      :
+    }
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMemoryPoolFree (osMemoryPoolId pool_id, void *block)
+Return a memory block to a memory pool.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the memory block is released.
+ - \em osErrorValue: \a block does not belong to the memory pool.
+ - \em osErrorParameter: a parameter is invalid or outside of a permitted range.
+
+\note \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" can call this function.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+typedef struct {
+  uint8_t Buf[32];
+  uint8_t Idx;
+} MEM_BLOCK;
+ 
+osPoolDef (MemPool, 8, MEM_BLOCK);
+  
+void CAlocMemoryPoolBlock (void)  {
+  osPoolId   MemPool_Id;
+  MEM_BLOCK *addr;
+  osStatus   status;
+  
+  MemPool_Id = osPoolCreate (osPool (MemPool));
+  if (MemPool_Id != NULL)  {
+    addr = (MEM_BLOCK *)osPoolCAlloc (MemPool_Id);
+    if (addr != NULL) {
+      :
+      // return a memory block back to pool
+      status = osPoolFree (MemPool_Id, addr);
+      if (status==osOK)  {
+        // handle status code
+      }
+    }
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMemoryPoolGetInfo (osMemoryPoolId pool_id, uint32_t *block_max, uint32_t *block_size, uint32_t *block_used)
+ 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMemoryPoolDelete (osMemoryPoolId pool_id)
+
+*/
+
+/// @}
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Message Queue Management Functions ====
+/** 
+@addtogroup CMSIS_RTOS_Message Message Queue
+@ingroup CMSIS_RTOS_InterThread
+@brief Exchange messages between threads in a FIFO-like operation.
+@details 
+\b Message \b passing is another basic communication model between threads. In the message passing model, one thread sends
+data explicitly, while another thread receives it. The operation is more like some kind of I/O rather than a direct access to
+information to be shared. In CMSIS-RTOS, this mechanism is called s \b message \b queue. The data is passed from one thread
+to another in a FIFO-like operation. Using message queue functions, you can control, send, receive, or wait for messages. The
+data to be passed can be of integer or pointer type:
+
+\image html "MessageQueue.png" "CMSIS-RTOS Message Queue"
+
+Compared to a \ref CMSIS_RTOS_PoolMgmt, message queues are less efficient in general, but solve a broader range of problems.
+Sometimes, threads do not have a common address space or the use of shared memory raises problems, such as mutual exclusion.
+
+Working with Message Queues
+---------------------------
+Follow these steps to create and use a message queue:
+-# Setup the message queue:
+\code
+osMessageQDef(message_q, 5, uint32_t); // Declare a message queue
+osMessageQId (message_q_id);           // Declare an ID for the message queue
+\endcode
+-# Then, create the message queue in a thread:
+\code
+message_q_id = osMessageCreate(osMessageQ(message_q), NULL);
+\endcode
+-# Fill the message queue with data:
+\code
+uint32_t data = 512;
+ 
+osMailPut(message_q_id, data, osWaitForever);
+\endcode
+-# From the receiving thread access the data using:
+\code
+osEvent event = osMessageGet(message_q_id, osWaitForever);
+\endcode
+
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFeature_MessageQueue
+Defines whether Message Queues are available or not.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osMessageQueueAttrInit
+Message Queue attributes initialization.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osMessageQueueMem
+User memory allocation for Message Queue data.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \struct osMessageQueueAttr_t
+Attributes structure for message queue.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osMessageQueueId osMessageQueueNew (uint32_t queue_size, void *memory, const osMessageQueueAttr_t *attr)
+Create and initialize a message queue.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+osThreadId tid_thread1;                          // ID for thread 1
+osThreadId tid_thread2;                          // for thread 2
+ 
+typedef struct {                                 // Message object structure
+  float    voltage;                              // AD result of measured voltage
+  float    current;                              // AD result of measured current
+  int      counter;                              // A counter value
+} T_MEAS;
+ 
+osPoolDef(mpool, 16, T_MEAS);                    // Define memory pool
+osPoolId  mpool;
+osMessageQDef(MsgBox, 16, T_MEAS);               // Define message queue
+osMessageQId  MsgBox;
+ 
+void send_thread (void const *argument);         // forward reference
+void recv_thread (void const *argument);         // forward reference
+                                                 // Thread definitions
+osThreadDef(send_thread, osPriorityNormal, 1, 0);
+osThreadDef(recv_thread, osPriorityNormal, 1, 2000);
+ 
+//
+//  Thread 1: Send thread
+//
+void send_thread (void const *argument) {
+  T_MEAS    *mptr;
+ 
+  mptr = osPoolAlloc(mpool);                     // Allocate memory for the message
+  mptr->voltage = 223.72;                        // Set the message content
+  mptr->current = 17.54;
+  mptr->counter = 120786;
+  osMessagePut(MsgBox, (uint32_t)mptr, osWaitForever);  // Send Message
+  osDelay(100);
+ 
+  mptr = osPoolAlloc(mpool);                     // Allocate memory for the message
+  mptr->voltage = 227.23;                        // Prepare a 2nd message
+  mptr->current = 12.41;
+  mptr->counter = 170823;
+  osMessagePut(MsgBox, (uint32_t)mptr, osWaitForever);  // Send Message
+  osThreadYield();                               // Cooperative multitasking
+                                                 // We are done here, exit this thread
+}
+ 
+//
+//  Thread 2: Receive thread
+//
+void recv_thread (void const *argument) {
+  T_MEAS  *rptr;
+  osEvent  evt;
+   
+  for (;;) {
+    evt = osMessageGet(MsgBox, osWaitForever);  // wait for message
+    if (evt.status == osEventMessage) {
+      rptr = evt.value.p;
+      printf ("\nVoltage: %.2f V\n", rptr->voltage);
+      printf ("Current: %.2f A\n", rptr->current);
+      printf ("Number of cycles: %d\n", rptr->counter);
+      osPoolFree(mpool, rptr);                  // free memory allocated for message
+    }
+  }
+}
+ 
+void StartApplication (void) {
+  mpool = osPoolCreate(osPool(mpool));                 // create memory pool
+  MsgBox = osMessageCreate(osMessageQ(MsgBox), NULL);  // create msg queue
+   
+  tid_thread1 = osThreadCreate(osThread(send_thread), NULL);
+  tid_thread2 = osThreadCreate(osThread(recv_thread), NULL);
+  :
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMessageQueuePut (osMessageQueueId queue_id, uint32_t message, uint32_t millisec)
+Put the message \a info in a message queue specified by \a queue_id. 
+
+When the message queue is full, the system retries for a specified time with \a millisec. 
+While the system retries the thread that is calling this function is put into the state \b WAITING.
+The \a millisec timeout can have the following values:
+ - when \a millisec is 0, the function returns instantly.
+ - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until a message queue slot becomes
+   available.
+ - all other values specify a time in millisecond for a timeout.
+
+\note The parameter \a millisec must be 0 for using this function in an ISR.
+\note \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" can call this function.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the message is put into the queue.
+ - \em osErrorResource: no memory in the queue was available.
+ - \em osErrorTimeoutResource: no memory in the queue was available during the given time limit.
+ - \em osErrorParameter: a parameter is invalid or outside of a permitted range.
+
+<b>Code Example</b>
+Refer to \ref osMessageQueueNew.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMessageQueueGet (osMessageQueueId queue_id, uint32_t *message, uint32_t millisec)
+Suspend the execution of the current \b RUNNING thread until a message arrives. When a message is already in the queue,
+the function returns instantly with the message information.
+
+The argument \a millisec specifies how long the system waits for a message to become available.
+While the system waits the thread that is calling this function is put into the state \b WAITING.
+The \a millisec timeout value can have the following values:
+ - when \a millisec is 0, the function returns instantly.
+ - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until a message arrives.
+ - all other values specify a time in millisecond for a timeout.
+ 
+\note The parameter \a millisec must be 0 for using this function in an ISR.
+\note \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" can call this function.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: no message is available in the queue and no timeout was specified.
+ - \em osEventTimeout: no message has arrived during the given timeout period.
+ - \em osEventMessage: message received, \em value.p contains the pointer to message.
+ - \em osErrorParameter: a parameter is invalid or outside of a permitted range.
+
+<b>Code Example</b>
+Refer to \ref osMessageQueueNew.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMessageQueueGetInfo (osMessageQueueId queue_id, uint32_t *queue_size, uint32_t *message_count);
+ 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMessageQueueReset (osMessageQueueId queue_id);
+ 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMessageQueueDelete (osMessageQueueId queue_id);
+
+*/
+
+/// @}
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Mail Queue Management Functions ====
+/** 
+\addtogroup CMSIS_RTOS_Mail Mail Queue
+\ingroup CMSIS_RTOS_InterThread
+\brief Exchange data between threads using a queue of memory blocks.
+\details
+
+A \b mail \b queue resembles a \ref CMSIS_RTOS_Message, but the data that is being transferred consists of memory blocks that
+need to be allocated (before putting data in) and freed (after taking data out). The mail queue uses a
+\ref CMSIS_RTOS_PoolMgmt to create formatted memory blocks and passes pointers to these blocks in a message queue. This
+allows the data to stay in an allocated memory block while only a pointer is moved between the separate threads. This is an
+advantage over \ref CMSIS_RTOS_Message "messages" that can transfer only a 32-bit value or a pointer. Using the mail queue
+functions, you can control, send, receive, or wait for mail.
+
+\image html "MailQueue.png" "CMSIS-RTOS Mail Queue"
+
+Working with Mail Queues
+---------------------------
+Follow these steps to create and use a mail queue:
+-# Declare a data structure that combines a number of elements:
+\code
+typedef struct {
+  uint32_t length;
+  uint32_t width;
+  uint32_t height;
+  uint32_t weight;
+} properties_t;
+\endcode
+-# Declare a mail queue made up of these objects:
+\code
+//osMailQDef (object_pool_q, 10, properties_t);  // Declare mail queue
+osMailQId  (object_pool_q_id);                 // Mail queue ID
+\endcode
+-# Then, create the mail pool in a thread:
+\code
+object_pool_q_id = osMailCreate(osMailQ(object_pool_q), NULL);
+\endcode
+-# Allocate the mail queue within a thread and fill it with data:
+\code
+properties_t *object_data;
+*object_data = (properties_t *) osMailAlloc(object_pool_q_id, osWaitForever);
+ 
+object_data->length = 100;
+object_data->width = 10;
+object_data->height = 23;
+object_data->weight = 1000;
+\endcode
+-# Pass the pointer to the mail queue to another thread:
+\code
+osMailPut(object_pool_q_id, object_data);
+\endcode
+-# Access the data in another thread:
+\code
+osEvent event = osMailGet(properties_q_id, osWaitForever);
+properties_t *received = (properties_t *)event.value.p;       // ".p" indicates that the message is a pointer
+my_length(received->length);
+\endcode
+-# Once the data has been used, the memory block must be freed so that the memory pool can be reused
+\code
+osMailFree(object_pool_q_id, received);
+\endcode
+
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFeature_MailQueue
+Defines whether Mail Queues are available or not.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osMailQueueAttrInit
+Mail Queue attributes initialization.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osMailQueueMem
+User memory allocation for Mail Queue data.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \struct osMailQueueAttr_t
+Attributes structure for mail queue.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osMailQueueId osMailQueueNew (uint32_t queue_size, uint32_t mail_size, void *memory, const osMailQueueAttr_t *attr)
+Initialize and create a mail queue.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os.h"
+ 
+osThreadId tid_thread1;                          // ID for thread 1
+osThreadId tid_thread2;                          // ID for thread 2
+ 
+typedef struct {                                 // Mail object structure
+  float    voltage;                              // AD result of measured voltage
+  float    current;                              // AD result of measured current
+  int      counter;                              // A counter value
+} T_MEAS;
+ 
+osMailQDef(mail, 16, T_MEAS);                    // Define mail queue
+osMailQId  mail;
+ 
+void send_thread (void const *argument);         // forward reference
+void recv_thread (void const *argument);
+ 
+osThreadDef(send_thread, osPriorityNormal, 1, 0);     // thread definitions
+osThreadDef(recv_thread, osPriorityNormal, 1, 2000);
+ 
+//
+//  Thread 1: Send thread
+//
+void send_thread (void const *argument) {
+  T_MEAS *mptr;
+ 
+  mptr = osMailAlloc(mail, osWaitForever);       // Allocate memory
+  mptr->voltage = 223.72;                        // Set the mail content
+  mptr->current = 17.54;
+  mptr->counter = 120786;
+  osMailPut(mail, mptr);                         // Send Mail
+  osDelay(100);
+   
+  mptr = osMailAlloc(mail, osWaitForever);       // Allocate memory
+  mptr->voltage = 227.23;                        // Prepare 2nd mail
+  mptr->current = 12.41;
+  mptr->counter = 170823;
+  osMailPut(mail, mptr);                         // Send Mail
+  osThreadYield();                               // Cooperative multitasking
+                                                 // We are done here, exit this thread
+}
+ 
+//
+//  Thread 2: Receive thread
+//
+void recv_thread (void const *argument) {
+  T_MEAS  *rptr;
+  osEvent  evt;
+   
+  for (;;) {
+    evt = osMailGet(mail, osWaitForever);        // wait for mail
+    if (evt.status == osEventMail) {
+      rptr = evt.value.p;
+      printf ("\nVoltage: %.2f V\n", rptr->voltage);
+      printf ("Current: %.2f A\n", rptr->current);
+      printf ("Number of cycles: %d\n", rptr->counter);
+      osMailFree(mail, rptr);                    // free memory allocated for mail
+    }
+  }
+}
+ 
+void StartApplication (void) {
+  mail = osMailCreate(osMailQ(mail), NULL);      // create mail queue
+ 
+  tid_thread1 = osThreadCreate(osThread(send_thread), NULL);
+  tid_thread2 = osThreadCreate(osThread(recv_thread), NULL);
+  :
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn void *osMailQueueAlloc (osMailQueueId queue_id, uint32_t millisec)
+Allocate a memory block from the mail queue that is filled with the mail information.
+
+The argument \a queue_id specifies a mail queue identifier that is obtain with \ref osMailQueueNew.
+
+The argument \a millisec specifies how long the system waits for a mail slot to become available.
+While the system waits the tread calling this function is put into the state \b WAITING.
+The \a millisec timeout can have the following values:
+ - when \a millisec is 0, the function returns instantly.
+ - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until a mail slot can be allocated.
+ - all other values specify a time in millisecond for a timeout.
+ 
+\note The parameter \a millisec must be 0 for using this function in an ISR.
+\note \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" can call this function.
+
+A NULL pointer is returned when no memory slot can be obtained or \a queue specifies an illegal parameter.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMailQueuePut (osMailQueueId queue_id, const void *mail)
+Put the memory block specified with \a mail into the mail queue specified by \a queue. 
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the message is put into the queue.
+ - \em osErrorValue: \a mail was previously not allocated as memory slot.
+ - \em osErrorParameter: a parameter is invalid or outside of a permitted range.
+
+<b>Code Example</b>
+Refer to \ref osMailQueueNew.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMailQueueGet (osMailQueueId queue_id, void *mail, uint32_t millisec)
+Suspend the execution of the current \b RUNNING thread until a mail arrives. When a mail is already in the queue,
+the function returns instantly with the mail information.
+
+The argument \a millisec specifies how long the system waits for a mail to arrive.
+While the system waits the thread that is calling this function is put into the state \b WAITING.
+The \a millisec timeout can have the following values:
+ - when \a millisec is 0, the function returns instantly.
+ - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until a mail arrives.
+ - all other values specify a time in millisecond for a timeout.
+ 
+\note The parameter \a millisec must be 0 for using this function in an ISR.
+\note \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" can call this function.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: no mail is available in the queue and no timeout was specified
+ - \em osEventTimeout: no mail has arrived during the given timeout period.
+ - \em osEventMail: mail received, \em value.p contains the pointer to mail content.
+ - \em osErrorParameter: a parameter is invalid or outside of a permitted range.
+
+<b>Code Example</b>
+Refer to \ref osMailQueueNew.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMailQueueFree (osMailQueueId queue_id, void *mail)
+Free the memory block specified by \a mail and return it to the mail queue.
+
+\note \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" can call this function.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the \a mail block is released.
+ - \em osErrorValue: \a mail block does not belong to the mail queue pool.
+ - \em osErrorParameter: the value to the parameter \a queue_id is incorrect.
+
+<b>Code Example</b>
+Refer to \ref osMailQueueNew.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMailQueueGetInfo (osMailQueueId queue_id, uint32_t *queue_size, uint32_t *mail_size, uint32_t *mail_count)
+ 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMailQueueReset (osMailQueueId queue_id)
+ 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osMailQueueDelete (osMailQueueId queue_id)
+
+*/
+/// @}
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+// ==== Status and Error Codes ====
+/**
+\addtogroup CMSIS_RTOS_Status Status and Error Codes
+\ingroup CMSIS_RTOS
+\brief Status and Error Codes returned by CMSIS-RTOS API functions.
+\details The Status and Error Codes section lists all the return values that the CMSIS-RTOS functions will return.
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef osStatus
+\details
+The \b osStatus enumeration defines the event status and error codes that are returned by the CMSIS-RTOS functions.
+*/
+/// @} 
+
+
+

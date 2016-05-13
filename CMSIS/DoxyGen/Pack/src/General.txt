@@ -67,6 +67,31 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <th>Version</th>
     <th>Description</th>
   </tr>
+  <tr>
+    <td>1.4.4</td>
+    <td>Modifications compared to Version 1.4.3
+- added: attribute defaultResetSequence to DebugType.
+- added: \<requirements> section:
+    - \<packages> defining dependencies between packs
+    - \<languages> defining required language support e.g. C99
+    - \<compiler> defining required toolchains
+- added: \<create> section used for tool independent project description
+    - attributes: name, documentation, condition
+    - \<target> specifies the board and device targeted by the project 
+    - \<options> 
+    - \<files> specifies the grouped files 
+- updated: \<algorith> element
+    - added attributes: style, parameter and endian
+- updated: \<memory> element
+    - added attributes: name, access and alias
+    - deprecating attribute: id (replaced by name + access)
+    </td>
+  </tr>
+  <tr>
+    <td>1.4.3</td>
+    <td>Modifications compared to Version 1.4.1
+- Adding attribute "sdf" to debugconfig element within section \<devices>
+  </tr>
 	<tr>
     <td>1.4.1</td>
     <td>Modifications compared to Version 1.4.0

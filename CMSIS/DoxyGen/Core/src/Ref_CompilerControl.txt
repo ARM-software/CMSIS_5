@@ -82,7 +82,7 @@ __STATIC_INLINE void NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
   reg_value &= ~(SCB_AIRCR_VECTKEY_Msk | SCB_AIRCR_PRIGROUP_Msk);             /* clear bits to change               */
   reg_value  =  (reg_value                                 |
                 ((uint32_t)0x5FA << SCB_AIRCR_VECTKEY_Pos) |
-                (PriorityGroupTmp << 8));                                     /* Insert write key and priorty group */
+                (PriorityGroupTmp << 8));                                     /* Insert write key and priority group */
   SCB->AIRCR =  reg_value;
 }
 \endcode
@@ -134,11 +134,11 @@ __USED uint32_t const os_timernum  = 0;
 \brief Keyword instructing the compiler to export a function or variable weakly.
 \details
 Functions defined with \b __WEAK export their symbols weakly. A weakly defined function behaves like a normally defined
-function unless a nonweakly defined function of the same name is linked into the same image. If both a nonweakly defined
-function and a weakly defined function exist in the same image then all calls to the function resolve to call the nonweak
+function unless a non-weakly defined function of the same name is linked into the same image. If both a non-weakly defined
+function and a weakly defined function exist in the same image then all calls to the function resolve to call the non-weak
 function.
 
-Functions declared with \b __WEAK and then defined without \b __WEAK behave as nonweak functions.
+Functions declared with \b __WEAK and then defined without \b __WEAK behave as non-weak functions.
  
 <b> Code Example:</b>
 \code
@@ -164,7 +164,7 @@ processor core and compiler settings.
 <b> Code Example:</b>
 \code
 uint32_t val32;
-
+ 
 void test (uint8_t *ptr) {
   __PACKED_UINT32_POINTER(ptr) = val32;
 }

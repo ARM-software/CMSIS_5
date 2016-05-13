@@ -651,7 +651,7 @@ memory range and style are identical, the one on the lower level takes precedenc
 
     <device Dname="STM32F405OE">
 	  <!-- finally, this is the default for the device -->
-      <algorithm name="Flash/STM32F2xx_2048.flm" start=0x08000000 size=0x40000 default="1"/> style="Keil"/>
+      <algorithm name="Flash/STM32F2xx_2048.flm" start=0x08000000 size=0x40000 default="1" style="Keil"/>
     </device>
     ...
 </family>
@@ -830,6 +830,7 @@ Multiple elements are allowed. The last occurrence in the hierarchy determines t
   are overridden.
 - It is good practice to add both attributes (\c header and \c define) in the attributes list of the 
   \c compile element together. This clarifies the relationship between header file and define.
+- The name of the header file should be exported by the IDE to the \ref RTE_Components_h file using the \#define CMSIS_device_header.
   
 \b Example
 \code
@@ -910,7 +911,7 @@ of bullet points should not exceed ten. To create a detailed feature list use th
         STM32F2 devices are designed for medical, industrial and consumer
         applications and provide rich connectivity peripherals.
         - At 120 MHz CPU clock: 150 DMIPS executing from Flash memory 
-        - ART Accelerator for low-power Flash execution (175 µA/MHz @ 120 MHz)
+        - ART Accelerator for low-power Flash execution (175 ÂµA/MHz @ 120 MHz)
         - Flexible Memory Controller supports Compact Flash, SRAM, PSRAM, NOR and NAND
       </description>
  
@@ -1204,7 +1205,7 @@ The table lists predefined device features (peripherals).
 |PackageOther|Number of Pins|N/A|Other Package Type|\<feature type="PackageOther"  n="44" name="My other Package"/\>|44-contacts My other Package|
 |IOs|Number of I/Os|N/A|Inputs/Outputs|\<feature type="IOs"  n="112" name="General Purpose I/Os, 5V tolerant"/\>|112 General Purpose I/Os, 5V tolerant|
 |ExtInt|Number of External Interrupts|N/A|External Interrupts|\<feature type="ExtInt"  n="12"/\>|12 External Interrupts|
-|Temp|Minimum Operating Temperature|Maximum Operating Temperature|Operating Temperature Range|\<feature type="Temp"  n="-40" m="105" name="Extended Operating Temperature Range"/\>|-40 °C .. +105 °C Extended Operating Temperature Range|
+|Temp|Minimum Operating Temperature|Maximum Operating Temperature|Operating Temperature Range|\<feature type="Temp"  n="-40" m="105" name="Extended Operating Temperature Range"/\>|-40 Â°C .. +105 Â°C Extended Operating Temperature Range|
 |ADC|Number of Channels|Resolution in Bit|ADC|\<feature type="ADC"  n="5" m="12" name="High-Performance ADC"/\>|5-channel x 12-bit High-Performance ADC|
 |DAC|Number of Channels|Resolution in Bit|DAC|\<feature type="DAC"  n="2" m="10"/\>|2 x 12-bit DAC|
 |TempSens|Number of Sensors|N/A|Temperature Sensor|\<feature type="TempSens"  n="1"/\>|1 x Temperature Sensor|

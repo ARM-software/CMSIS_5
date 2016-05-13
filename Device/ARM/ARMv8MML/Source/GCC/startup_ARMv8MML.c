@@ -3,7 +3,7 @@
  * @brief    CMSIS Core Device Startup File for
  *           ARMv8MML Device Series
  * @version  V5.00
- * @date     02. March 2016
+ * @date     26. April 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -129,7 +129,7 @@ void SPI_IRQHandler      (void) __attribute__ ((weak, alias("Default_Handler")))
  *----------------------------------------------------------------------------*/
 const pFunc __Vectors[] __attribute__ ((section(".vectors"))) = {
   /* ARMv8MML Exceptions Handler */
-  (pFunc)&__StackTop,                       /*      Initial Stack Pointer     */
+  (pFunc)((uint32_t)&__StackTop),           /*      Initial Stack Pointer     */
   Reset_Handler,                            /*      Reset Handler             */
   NMI_Handler,                              /*      NMI Handler               */
   HardFault_Handler,                        /*      Hard Fault Handler        */

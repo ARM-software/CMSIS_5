@@ -78,27 +78,6 @@ This example of a *.PDSC File explains the sections, particularly how dependenci
 \image html PDSC_Example_top.png
 \image html PDSC_Example_bottom.png  "Example of a *.PDSC File"
 
-\section PACK_Example Example of a *.PACK File
-The ARM.CMSIS.*.Pack also contains an extracted example of a PACK file. It can be found in the .\\CMSIS\\Pack\\Example-directory.
-In a real-life *.PACK file this would be the archive's top-level containing the *.PDSC file and the subdirectories with all the
-files that are part of the Software Pack. Here, an exemplary PDSC file is stored which is renamed to *.pdsc.txt. This PDSC file
-can be used to examine the contents of the PACK. It is also a starting point for writing your own Software Pack.
-
-The folder structure of this exemplary Software Pack is as follows:
-- \b ARM.STM32F4xx_DFP.pdsc.txt: PDSC file example
-- \b CMSIS_Driver: Examples of driver implementations adhering to <a class="el" href="../../Driver/html/index.html">CMSIS-Driver</a>
-  - \b Config: Driver configuration file
-- \b Device: used in a \ref CreatePack_DFP "DFP"
-  - \b Include: <a class="el" href="../../Core/html/device_h_pg.html">device header files</a>
-  - \b Source: <a class="el" href="../../Core/html/system_c_pg.html">system configuration files</a>
-    - \b ARM: <a class="el" href="../../Core/html/startup_s_pg.html">startup files</a>
-- \b Documents: All kinds of documentation (reference manuals, data sheets, board schematics)
-- \b Flash: \ref FlashAlgorithm "Programming algorithms" for microcontroller devices
-  - \b STM32F4xx: uVision project files for generating the Flash programming algorithms
-- \b Images: Pictures of developments boards used for display on web sites or other documentation
-- \b SVD: <a class="el" href="../../SVD/html/index.html">System View Description</a> files for microcontroller devices
-
-
 */
 
 
