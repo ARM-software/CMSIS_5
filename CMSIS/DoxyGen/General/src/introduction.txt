@@ -166,7 +166,8 @@ In addition, each CMSIS component has its own release history:
       <td>
         Added <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>ARMv8-M architecture</b></a> support.
         - CMSIS-CORE 5.0.0
-		- CMSIS-RTOS 2.0.0
+		    - CMSIS-RTOS 2.0.0
+        - CMSIS-PACK 1.4.4 introducing CPDSC project description
       </td>
     </tr>
     <tr>
