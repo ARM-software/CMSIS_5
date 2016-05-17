@@ -7,18 +7,6 @@
   <!-- <license>CMSIS/CMSIS_END_USER_LICENCE_AGREEMENT.rtf</license> -->
   <url>http://www.keil.com/pack/</url>
 
-  <taxonomy>
-    <description Cclass="Board Support">Generic Interfaces for Evaluation and Development Boards</description>
-    <description Cclass="CMSIS" doc="CMSIS/Documentation/General/html/index.html">Cortex Microcontroller Software Interface Components</description>
-    <description Cclass="Device" doc="CMSIS/Documentation/Core/html/index.html">Startup, System Setup</description>
-    <description Cclass="CMSIS Driver" doc="CMSIS/Documentation/Driver/html/index.html">Unified Device Drivers compliant to CMSIS-Driver Specifications</description>
-    <description Cclass="File System">File Drive Support and File System</description>
-    <description Cclass="Graphics">Graphical User Interface</description>
-    <description Cclass="Network">Network Stack using Internet Protocols</description>
-    <description Cclass="USB">Universal Serial Bus Stack</description>
-    <description Cclass="Compiler">ARM Compiler Software Extensions</description>
-  </taxonomy>
-
   <releases>
     <release version="5.0.0-Beta4">
       Updated ARMv8MML device files.
@@ -146,10 +134,22 @@
     </release>
   </releases>
 
+  <taxonomy>
+    <description Cclass="Board Support">Generic Interfaces for Evaluation and Development Boards</description>
+    <description Cclass="CMSIS" doc="CMSIS/Documentation/General/html/index.html">Cortex Microcontroller Software Interface Components</description>
+    <description Cclass="Device" doc="CMSIS/Documentation/Core/html/index.html">Startup, System Setup</description>
+    <description Cclass="CMSIS Driver" doc="CMSIS/Documentation/Driver/html/index.html">Unified Device Drivers compliant to CMSIS-Driver Specifications</description>
+    <description Cclass="File System">File Drive Support and File System</description>
+    <description Cclass="Graphics">Graphical User Interface</description>
+    <description Cclass="Network">Network Stack using Internet Protocols</description>
+    <description Cclass="USB">Universal Serial Bus Stack</description>
+    <description Cclass="Compiler">ARM Compiler Software Extensions</description>
+  </taxonomy>
+
   <devices>
     <!-- ******************************  Cortex-M0  ****************************** -->
     <family Dfamily="ARM Cortex M0" Dvendor="ARM:82">
-      <book category="manual" name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/index.html" title="Cortex-M0 Device Generic Users Guide"/>
+      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/index.html" title="Cortex-M0 Device Generic Users Guide"/>
       <description>
 The Cortex-M0 processor is an entry-level 32-bit ARM Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -171,7 +171,7 @@ The Cortex-M0 processor is an entry-level 32-bit ARM Cortex processor designed f
 
     <!-- ******************************  Cortex-M0P  ****************************** -->
     <family Dfamily="ARM Cortex M0 plus" Dvendor="ARM:82">
-      <book category="manual" name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0662b/index.html" title="Cortex-M0+ Device Generic Users Guide"/>
+      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0662b/index.html" title="Cortex-M0+ Device Generic Users Guide"/>
       <description>
 The Cortex-M0+ processor is an entry-level 32-bit ARM Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -193,7 +193,7 @@ The Cortex-M0+ processor is an entry-level 32-bit ARM Cortex processor designed 
 
     <!-- ******************************  Cortex-M3  ****************************** -->
     <family Dfamily="ARM Cortex M3" Dvendor="ARM:82">
-      <book category="manual" name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0552a/index.html" title="Cortex-M3 Device Generic Users Guide"/>
+      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0552a/index.html" title="Cortex-M3 Device Generic Users Guide"/>
       <description>
 The Cortex-M3 processor is an entry-level 32-bit ARM Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -215,7 +215,7 @@ The Cortex-M3 processor is an entry-level 32-bit ARM Cortex processor designed f
 
     <!-- ******************************  Cortex-M4  ****************************** -->
     <family Dfamily="ARM Cortex M4" Dvendor="ARM:82">
-      <book category="manual" name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0553a/index.html" title="Cortex-M4 Device Generic Users Guide"/>
+      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0553a/index.html" title="Cortex-M4 Device Generic Users Guide"/>
       <description>
 The Cortex-M4 processor is an entry-level 32-bit ARM Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -242,7 +242,7 @@ The Cortex-M4 processor is an entry-level 32-bit ARM Cortex processor designed f
 
     <!-- ******************************  Cortex-M7  ****************************** -->
     <family Dfamily="ARM Cortex M7" Dvendor="ARM:82">
-      <book category="manual" name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646b/index.html" title="Cortex-M7 Device Generic Users Guide"/>
+      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646b/index.html" title="Cortex-M7 Device Generic Users Guide"/>
       <description>
 The Cortex-M4 processor is an entry-level 32-bit ARM Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
