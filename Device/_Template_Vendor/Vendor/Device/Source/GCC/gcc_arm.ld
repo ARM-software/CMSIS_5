@@ -33,6 +33,7 @@ GROUP(libgcc.a libc.a libm.a libnosys.a)
  *   __bss_end__
  *   __end__
  *   end
+ *   __HeapBase
  *   __HeapLimit
  *   __StackLimit
  *   __StackTop
