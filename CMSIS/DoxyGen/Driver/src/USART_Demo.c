@@ -12,26 +12,27 @@ extern ARM_DRIVER_USART Driver_USART3;
  
 void myUSART_callback(uint32_t event)
 {
-    switch (event)
-    {
-    case ARM_USART_EVENT_RECEIVE_COMPLETE:    
-    case ARM_USART_EVENT_TRANSFER_COMPLETE:
-    case ARM_USART_EVENT_SEND_COMPLETE:
-    case ARM_USART_EVENT_TX_COMPLETE:
-        /* Success: Wakeup Thread */
-        osSignalSet(tid_myUART_Thread, 0x01);
-        break;
- 
-    case ARM_USART_EVENT_RX_TIMEOUT:
-         __breakpoint(0);  /* Error: Call debugger or replace with custom error handling */
-        break;
- 
-    case ARM_USART_EVENT_RX_OVERFLOW:
-    case ARM_USART_EVENT_TX_UNDERFLOW:
-        __breakpoint(0);  /* Error: Call debugger or replace with custom error handling */
-        break;
-    }
+  uint32_t mask;
+
+  mask = ARM_USART_EVENT_RECEIVE_COMPLETE  |
+         ARM_USART_EVENT_TRANSFER_COMPLETE |
+         ARM_USART_EVENT_SEND_COMPLETE     |
+         ARM_USART_EVENT_TX_COMPLETE       ;
+
+  if (event & mask) {
+    /* Success: Wakeup Thread */
+    osSignalSet(tid_myUART_Thread, 0x01);
+  }
+
+  if (event & ARM_USART_EVENT_RX_TIMEOUT) {
+    __breakpoint(0);  /* Error: Call debugger or replace with custom error handling */
+  }
+
+  if (event & (ARM_USART_EVENT_RX_OVERFLOW | ARM_USART_EVENT_TX_UNDERFLOW)) {
+    __breakpoint(0);  /* Error: Call debugger or replace with custom error handling */
+  }
 }
+
  
 /* CMSIS-RTOS Thread - UART command thread */
 void myUART_Thread(const void* args)
