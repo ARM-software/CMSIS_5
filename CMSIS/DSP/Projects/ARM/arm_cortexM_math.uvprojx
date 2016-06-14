@@ -15,7 +15,7 @@
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -81,7 +81,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -328,11 +328,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM0, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1792,7 +1794,7 @@
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1858,7 +1860,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -2105,11 +2107,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM0, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3570,7 +3574,7 @@
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3636,7 +3640,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -3883,11 +3887,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM3, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5347,7 +5353,7 @@
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -5413,7 +5419,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -5660,11 +5666,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM3, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7124,7 +7132,7 @@
         <TargetCommonOption>
           <Device>ARMCM4</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -7190,7 +7198,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -7437,11 +7445,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM4, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8901,7 +8911,7 @@
         <TargetCommonOption>
           <Device>ARMCM4</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -8967,7 +8977,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -9214,11 +9224,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM4, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10679,7 +10691,7 @@
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -10745,7 +10757,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -10992,11 +11004,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls>--fpmode=ieee_full</MiscControls>
               <Define>ARM_MATH_CM4, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, __FPU_PRESENT = 1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -12456,7 +12470,7 @@
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -12522,7 +12536,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -12769,11 +12783,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM4, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, __FPU_PRESENT = 1, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -14233,7 +14249,7 @@
         <TargetCommonOption>
           <Device>ARMCM7</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -14299,7 +14315,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -14546,11 +14562,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -16010,7 +16028,7 @@
         <TargetCommonOption>
           <Device>ARMCM7</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -16076,7 +16094,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -16323,11 +16341,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -17787,7 +17807,7 @@
         <TargetCommonOption>
           <Device>ARMCM7_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -17853,7 +17873,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -18100,11 +18120,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls>--fpmode=ieee_full</MiscControls>
               <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, __FPU_PRESENT = 1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -19564,7 +19586,7 @@
         <TargetCommonOption>
           <Device>ARMCM7_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -19630,7 +19652,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -19877,11 +19899,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls>--fpmode=ieee_full</MiscControls>
               <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, __FPU_PRESENT = 1, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -21341,7 +21365,7 @@
         <TargetCommonOption>
           <Device>ARMCM7_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(DFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -21407,7 +21431,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -21654,11 +21678,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls>--fpmode=ieee_full</MiscControls>
               <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, __FPU_PRESENT = 1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -23118,7 +23144,7 @@
         <TargetCommonOption>
           <Device>ARMCM7_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0-Beta99</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta4</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(DFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -23184,7 +23210,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>cmd.exe /C copy "!L" "..\..\Lib\ARM\"</UserProg1Name>
+            <UserProg1Name>cmd.exe /C copy "!L" "..\..\..\Lib\ARM\"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -23431,11 +23457,13 @@
             <v6LangP>0</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls>--fpmode=ieee_full</MiscControls>
               <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, __FPU_PRESENT = 1, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Include; ..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
