@@ -338,6 +338,7 @@ The original CMSIS-Core __NVIC functions are always available independent of \re
 NVIC Access Functions     | CMSIS-Core Functions
 --------------------------|---------------------------------------------
 NVIC_EnableIRQ            | __NVIC_EnableIRQ
+NVIC_GetEnableIRQ         | __NVIC_GetEnableIRQ
 NVIC_DisableIRQ           | __NVIC_DisableIRQ
 NVIC_GetPendingIRQ        | __NVIC_GetPendingIRQ
 NVIC_SetPendingIRQ        | __NVIC_SetPendingIRQ
@@ -465,6 +466,30 @@ uint32_t NVIC_GetPriorityGrouping(void);
         - \ref ref_man_sec
 */
 void NVIC_EnableIRQ(IRQn_Type IRQn);
+
+
+/**************************************************************************************************/
+/** 
+    \brief  Get a device specific interrupt enable status
+
+    This function returns the interrupt enable status for the specified device specific interrupt \em IRQn. 
+    \em IRQn cannot be a negative value. 
+
+    \param [in]      IRQn  Interrupt number
+    
+    \returns    
+            - 0  Interrupt is not enabled
+            - 1  Interrupt is pending
+
+    \remarks
+        - IRQn must not be nagative.
+        - The registers that control the enabling and disabling of interrupts are called SETENA and CLRENA.
+        
+    \sa     
+        - \ref NVIC_EnableIRQ; NVIC_DisableIRQ;
+        - \ref ref_man_sec
+*/
+uint32_t NVIC_GetEnableIRQ(IRQn_Type IRQn);
 
 
 /**************************************************************************************************/
