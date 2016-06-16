@@ -75,6 +75,21 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.00 - Beta 6</td>
+      <td>
+         Added: SCB_CFSR register bit definitions. \n
+         Added: function \ref NVIC_GetEnableIRQ. \n
+         Updated: core instruction macros \ref \__NOP, \ref \__WFI, \ref \__WFE, \ref \__SEV for toolchain GCC.
+      </td>
+    </tr>
+    <tr>
+      <td>V5.00 - Beta 5</td>
+      <td>
+         Moved: DSP libraries from CMSIS/DSP/Lib to CMSIS/Lib. \n
+         Added: DSP libraries build projects to CMSIS pack.
+      </td>
+    </tr>
+    <tr>
       <td>V5.00 - Beta 2</td>
       <td>
          Changed: ARMv8M SAU regions to 8. \n

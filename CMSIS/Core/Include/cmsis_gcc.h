@@ -2,7 +2,7 @@
  * @file     cmsis_gcc.h
  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
  * @version  V5.00
- * @date     02. March 2016
+ * @date     16. June 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -360,20 +360,21 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
   \brief   No Operation
   \details No Operation does nothing. This instruction can be used for code alignment purposes.
  */
-__attribute__((always_inline)) __STATIC_INLINE void __NOP(void)
-{
-  __ASM volatile ("nop");
-}
-
+//__attribute__((always_inline)) __STATIC_INLINE void __NOP(void)
+//{
+//  __ASM volatile ("nop");
+//}
+#define __NOP()                             __ASM volatile ("nop")       /* This implementation generates debug information */
 
 /**
   \brief   Wait For Interrupt
   \details Wait For Interrupt is a hint instruction that suspends execution until one of a number of events occurs.
  */
-__attribute__((always_inline)) __STATIC_INLINE void __WFI(void)
-{
-  __ASM volatile ("wfi");
-}
+//__attribute__((always_inline)) __STATIC_INLINE void __WFI(void)
+//{
+//  __ASM volatile ("wfi");
+//}
+#define __WFI()                             __ASM volatile ("wfi")       /* This implementation generates debug information */
 
 
 /**
@@ -381,20 +382,22 @@ __attribute__((always_inline)) __STATIC_INLINE void __WFI(void)
   \details Wait For Event is a hint instruction that permits the processor to enter
            a low-power state until one of a number of events occurs.
  */
-__attribute__((always_inline)) __STATIC_INLINE void __WFE(void)
-{
-  __ASM volatile ("wfe");
-}
+//__attribute__((always_inline)) __STATIC_INLINE void __WFE(void)
+//{
+//  __ASM volatile ("wfe");
+//}
+#define __WFE()                             __ASM volatile ("wfe")       /* This implementation generates debug information */
 
 
 /**
   \brief   Send Event
   \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
  */
-__attribute__((always_inline)) __STATIC_INLINE void __SEV(void)
-{
-  __ASM volatile ("sev");
-}
+//__attribute__((always_inline)) __STATIC_INLINE void __SEV(void)
+//{
+//  __ASM volatile ("sev");
+//}
+#define __SEV()                             __ASM volatile ("sev")       /* This implementation generates debug information */
 
 
 /**

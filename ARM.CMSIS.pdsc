@@ -8,9 +8,16 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.0-Beta6">
+      CMSIS_Core:
+       - Added SCB_CFSR register bit definitions in core_*.h.
+       - Added NVIC_GetEnableIRQ function in core_*.h.
+       - Updated core instruction macros in cmsis_gcc.h.
+    </release>
     <release version="5.0.0-Beta5">
-      Moved DSP libraries from CMSIS/DSP/Lib to CMSIS/Lib.
-      Added DSP libraries build projects to CMSIS pack.
+      CMSIS_DSP:
+       - Moved DSP libraries from CMSIS/DSP/Lib to CMSIS/Lib.
+       - Added DSP libraries build projects to CMSIS pack.
     </release>
     <release version="5.0.0-Beta4">
       Updated ARMv8MML device files.

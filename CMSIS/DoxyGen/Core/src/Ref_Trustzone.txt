@@ -51,6 +51,18 @@ uint32_t TZ_NVIC_GetPriorityGrouping_NS(void);
  */
 void TZ_NVIC_EnableIRQ_NS(IRQn_Type IRQn);
 
+
+/**
+  \brief   Get Interrupt Enable status (non-secure)
+  \details Returns a device specific interrupt enable status from the non-secure NVIC interrupt controller when in secure state.
+  \param [in]      IRQn  Interrupt number.
+  \return             0  Interrupt is not enabled.
+  \return             1  Interrupt is enabled.
+  \sa     
+    - \ref NVIC_EnableIRQ; NVIC_DisableIRQ;
+ */
+uint32_t TZ_NVIC_GetEnableIRQ_NS(IRQn_Type IRQn);
+
 /**
   \brief   Disable External Interrupt (non-secure)
   \details Disables a device-specific interrupt in the non-secure NVIC when in secure state.
