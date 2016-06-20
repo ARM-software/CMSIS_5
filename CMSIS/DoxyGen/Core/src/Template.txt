@@ -185,8 +185,8 @@ EINT0_IRQHandler
 
 \section startup_s_sec startup_Device.s Template File
 
-The \ref startup_s_sec for the Cortex-M3 and the ARMCC compiler is shown below. The files for other compiler vendors
-differ slightly in the syntax, but not in the overall structure.
+An ARM Compiler \ref startup_s_sec for an ARMv7-M processor like Cortex-M3 is shown below.
+The files for other compiler vendors differ slightly in the syntax, but not in the overall structure.
 
 \verbinclude "Source\ARM\startup_Device.s"
 */
