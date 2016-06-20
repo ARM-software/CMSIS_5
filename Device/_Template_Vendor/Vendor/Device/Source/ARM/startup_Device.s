@@ -1,6 +1,6 @@
 ;/**************************************************************************//**
 ; * @file     startup_<Device>.s
-; * @brief    CMSIS Cortex-M# Core Device Startup File for
+; * @brief    CMSIS Cortex-M ARMv7-M based Core Device Startup File for
 ; *           Device <Device>
 ; * @version  V5.00
 ; * @date     02. March 2016
