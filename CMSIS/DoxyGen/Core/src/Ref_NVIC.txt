@@ -451,7 +451,7 @@ uint32_t NVIC_GetPriorityGrouping(void);
     \param [in]      IRQn  Interrupt number
 
     \remarks
-        - IRQn must not be nagative.
+        - IRQn must not be negative.
         - The registers that control the enabling and disabling of interrupts are called
         SETENA and CLRENA.
         - The number of supported interrupts depends on the implementation of the chip designer
@@ -482,7 +482,7 @@ void NVIC_EnableIRQ(IRQn_Type IRQn);
             - 1  Interrupt is pending
 
     \remarks
-        - IRQn must not be nagative.
+        - IRQn must not be negative.
         - The registers that control the enabling and disabling of interrupts are called SETENA and CLRENA.
         
     \sa     
@@ -502,7 +502,7 @@ uint32_t NVIC_GetEnableIRQ(IRQn_Type IRQn);
     \param [in]      IRQn  Number of the external interrupt to disable
 
     \remarks
-        - IRQn must not be nagative.
+        - IRQn must not be negative.
         - The registers that control the enabling and disabling of interrupts are called
         SETENA and CLRENA.
         
@@ -526,7 +526,7 @@ void NVIC_DisableIRQ(IRQn_Type IRQn);
             - 1  Interrupt is pending
             
     \remarks
-        - IRQn must not be nagative.
+        - IRQn must not be negative.
         - The registers that control the status of interrupts are called SETPEND and CLRPEND.
 
     \sa     
@@ -546,7 +546,7 @@ uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn);
     \param [in]      IRQn  Interrupt number 
     
     \remarks
-        - IRQn must not be nagative.
+        - IRQn must not be negative.
         - The registers that control the status of interrupts are called SETPEND and CLRPEND.
 
     \sa     
@@ -566,7 +566,7 @@ void NVIC_SetPendingIRQ(IRQn_Type IRQn);
     \param [in]      IRQn  Interrupt number
     
     \remarks
-        - IRQn must not be nagative.
+        - IRQn must not be negative.
         - The registers that control the status of interrupts are called SETPEND and CLRPEND.
         - An interrupt can have the status pending though it is not active.
         
@@ -592,7 +592,7 @@ void NVIC_ClearPendingIRQ(IRQn_Type IRQn);
     
     \remarks
         - not for Cortex-M0, Cortex-M0+, or SC000.
-        - IRQn must not be nagative.
+        - IRQn must not be negative.
         - Each external interrupt has an active status bit. When the processor starts the interrupt 
         handler the bit is set to 1 and cleared when the interrupt return is executed.
         - When an ISR is preempted and the processor executes anohter interrupt handler, the 
