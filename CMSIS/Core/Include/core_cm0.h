@@ -2,7 +2,7 @@
  * @file     core_cm0.h
  * @brief    CMSIS Cortex-M0 Core Peripheral Access Layer Header File
  * @version  V5.00
- * @date     16. June 2016
+ * @date     24. June 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -660,7 +660,7 @@ typedef struct
   \brief   Enable Interrupt
   \details Enables a device specific interrupt in the NVIC interrupt controller.
   \param [in]      IRQn  Device specific interrupt number.
-  \note    IRQn must not be nagative.
+  \note    IRQn must not be negative.
  */
 __STATIC_INLINE void NVIC_EnableIRQ(IRQn_Type IRQn)
 {
@@ -677,7 +677,7 @@ __STATIC_INLINE void NVIC_EnableIRQ(IRQn_Type IRQn)
   \param [in]      IRQn  Device specific interrupt number.
   \return             0  Interrupt is not enabled.
   \return             1  Interrupt is enabled.
-  \note    IRQn must not be nagative.
+  \note    IRQn must not be negative.
  */
 __STATIC_INLINE uint32_t NVIC_GetEnableIRQ(IRQn_Type IRQn)
 {
@@ -696,7 +696,7 @@ __STATIC_INLINE uint32_t NVIC_GetEnableIRQ(IRQn_Type IRQn)
   \brief   Disable Interrupt
   \details Disables a device specific interrupt in the NVIC interrupt controller.
   \param [in]      IRQn  Device specific interrupt number.
-  \note    IRQn must not be nagative.
+  \note    IRQn must not be negative.
  */
 __STATIC_INLINE void NVIC_DisableIRQ(IRQn_Type IRQn)
 {
@@ -713,7 +713,7 @@ __STATIC_INLINE void NVIC_DisableIRQ(IRQn_Type IRQn)
   \param [in]      IRQn  Device specific interrupt number.
   \return             0  Interrupt status is not pending.
   \return             1  Interrupt status is pending.
-  \note    IRQn must not be nagative.
+  \note    IRQn must not be negative.
  */
 __STATIC_INLINE uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn)
 {
@@ -732,7 +732,7 @@ __STATIC_INLINE uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn)
   \brief   Set Pending Interrupt
   \details Sets the pending bit of a device specific interrupt in the NVIC pending register.
   \param [in]      IRQn  Device specific interrupt number.
-  \note    IRQn must not be nagative.
+  \note    IRQn must not be negative.
  */
 __STATIC_INLINE void NVIC_SetPendingIRQ(IRQn_Type IRQn)
 {
@@ -747,7 +747,7 @@ __STATIC_INLINE void NVIC_SetPendingIRQ(IRQn_Type IRQn)
   \brief   Clear Pending Interrupt
   \details Clears the pending bit of a device specific interrupt in the NVIC pending register.
   \param [in]      IRQn  Device specific interrupt number.
-  \note    IRQn must not be nagative.
+  \note    IRQn must not be negative.
  */
 __STATIC_INLINE void NVIC_ClearPendingIRQ(IRQn_Type IRQn)
 {
