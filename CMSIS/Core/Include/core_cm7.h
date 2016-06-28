@@ -2,7 +2,7 @@
  * @file     core_cm7.h
  * @brief    CMSIS Cortex-M7 Core Peripheral Access Layer Header File
  * @version  V5.00
- * @date     24. June 2016
+ * @date     28. June 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -2226,6 +2226,8 @@ __STATIC_INLINE void SCB_EnableICache (void)
     __DSB();
     __ISB();
     SCB->ICIALLU = 0UL;                     /* invalidate I-Cache */
+    __DSB();
+    __ISB();
     SCB->CCR |=  (uint32_t)SCB_CCR_IC_Msk;  /* enable I-Cache */
     __DSB();
     __ISB();
