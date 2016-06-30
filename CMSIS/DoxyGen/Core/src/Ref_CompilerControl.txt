@@ -166,11 +166,26 @@ processor core and compiler settings.
 uint32_t val32;
  
 void test (uint8_t *ptr) {
-  __PACKED_UINT32_POINTER(ptr) = val32;
+  __UNALIGNED_UINT32(ptr) = val32;
 }
 \endcode
 
 */
 #define __UNALIGNED_UINT32
+
+/**************************************************************************************************/
+/**
+\def __ALIGNED
+\brief Alignment of a variable.
+\details
+Specifies a minimum alignment for a variable or structure field, measured in bytes.
+ 
+<b> Code Example:</b>
+\code
+uint32_t val32 __ALIGNED(4);
+\endcode
+
+*/
+#define __ALIGNED
 
 /** @} */ /** end of compiler_conntrol_gr **/

@@ -75,6 +75,12 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.00 - Beta n</td>
+      <td>
+         Added: macro \ref \__ALIGNED.
+      </td>
+    </tr>
+    <tr>
       <td>V5.00 - Beta 6</td>
       <td>
          Added: SCB_CFSR register bit definitions. \n
@@ -87,6 +93,14 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
       <td>
          Moved: DSP libraries from CMSIS/DSP/Lib to CMSIS/Lib. \n
          Added: DSP libraries build projects to CMSIS pack.
+      </td>
+    </tr>
+    <tr>
+      <td>V5.00 - Beta 4</td>
+      <td>
+         Updated: ARMv8M device files. \n
+         Corrected: ARMv8MBL interrupts. \n
+         Reworked: NVIC functions.
       </td>
     </tr>
     <tr>
