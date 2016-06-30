@@ -2,7 +2,7 @@
  * @file     core_cm0.h
  * @brief    CMSIS Cortex-M0 Core Peripheral Access Layer Header File
  * @version  V5.00
- * @date     24. June 2016
+ * @date     29. June 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -76,6 +76,7 @@
   - #define __USED              function or variable that is not optimized away
   - #define __WEAK              weak function or variable
   - #define __UNALIGNED_UINT32  pointer to unaligned uint32_t variable
+  - #define __ALIGNED(x)        compiler keyword to align a variable
  */
 #if   defined ( __CC_ARM )                                            /* ARM Compiler 4/5 */
   #define __ASM                     __asm
@@ -85,6 +86,7 @@
   #define __USED                    __attribute__((used))
   #define __WEAK                    __attribute__((weak))
   #define __UNALIGNED_UINT32(x)     (*((__packed uint32_t *)(x)))
+  #define __ALIGNED(x)              __attribute__((aligned(x)))
 
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)       /* ARM Compiler 6 */
   #define __ASM                     __asm
@@ -98,6 +100,7 @@
   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
   #pragma clang diagnostic pop
   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+  #define __ALIGNED(x)              __attribute__((aligned(x)))
 
 #elif defined ( __GNUC__ )                                            /* GNU Compiler */
   #define __ASM                     __asm
@@ -108,6 +111,7 @@
   #define __WEAK                    __attribute__((weak))
   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+  #define __ALIGNED(x)              __attribute__((aligned(x)))
 
 #elif defined ( __ICCARM__ )                                          /* IAR Compiler */
   #define __ASM                     __asm
@@ -118,6 +122,7 @@
   #define __WEAK                    __weak
   struct __packed T_UINT32 { uint32_t v; };
   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+  #define __ALIGNED(x)
 
 #elif defined ( __TI_ARM__ )                                          /* TI ARM Compiler */
   #define __ASM                     __asm
@@ -128,6 +133,7 @@
   #define __WEAK                    __attribute__((weak))
   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+  #define __ALIGNED(x)
 
 #elif defined ( __TASKING__ )                                         /* TASKING Compiler */
   #define __ASM                     __asm
@@ -138,6 +144,7 @@
   #define __WEAK                    __attribute__((weak))
   struct __packed__ T_UINT32 { uint32_t v; };
   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+  #define __ALIGNED(x)              __align(x)
 
 #elif defined ( __CSMC__ )                                            /* COSMIC Compiler */
   #define __packed
@@ -148,6 +155,7 @@
   #define __USED
   #define __WEAK
   #define __UNALIGNED_UINT32(x)     (*x)
+  #define __ALIGNED(x)
 
 #else
   #error Unknown compiler
