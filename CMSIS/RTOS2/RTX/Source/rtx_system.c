@@ -1,0 +1,258 @@
+/*
+ * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * -----------------------------------------------------------------------------
+ *
+ * Project:     CMSIS-RTOS RTX
+ * Title:       System functions
+ *
+ * -----------------------------------------------------------------------------
+ */
+
+#include "rtx_lib.h"
+
+
+//  ==== Helper functions ====
+
+/// Put Object into ISR Queue.
+/// \param[in]  object          object.
+/// \return 1 - success, 0 - failure.
+static uint32_t os_isr_queue_put (void *object) {
+#ifdef __NO_EXCLUSIVE_ACCESS
+  uint32_t primask = __get_PRIMASK();
+#else
+  uint32_t n;
+#endif
+  uint16_t max;
+  uint32_t ret;
+
+  max = os_Info.isr_queue.max;
+
+#ifdef __NO_EXCLUSIVE_ACCESS
+  __disable_irq();
+
+  if (os_Info.isr_queue.cnt < max) {
+    os_Info.isr_queue.cnt++;
+    os_Info.isr_queue.data[os_Info.isr_queue.in] = object;
+    if (++os_Info.isr_queue.in == max) {
+      os_Info.isr_queue.in = 0U;
+    }
+    ret = 1U;
+  } else {
+    ret = 0U;
+  }
+  
+  if (primask == 0U) {
+    __enable_irq();
+  }
+#else
+  if (os_exc_inc16_lt(&os_Info.isr_queue.cnt, max) < max) {
+    n = os_exc_inc16_lim(&os_Info.isr_queue.in, max);
+    os_Info.isr_queue.data[n] = object;
+    ret = 1U;
+  } else {
+    ret = 0U;
+  }
+#endif
+
+  return ret;
+}
+
+/// Get Object from ISR Queue.
+/// \return object or NULL.
+static void *os_isr_queue_get (void) {
+#ifdef __NO_EXCLUSIVE_ACCESS
+  uint32_t primask = __get_PRIMASK();
+#else
+  uint32_t n;
+#endif
+  uint16_t max;
+  void    *ret;
+
+  max = os_Info.isr_queue.max;
+
+#ifdef __NO_EXCLUSIVE_ACCESS
+  __disable_irq();
+
+  if (os_Info.isr_queue.cnt != 0U) {
+    os_Info.isr_queue.cnt--;
+    ret = os_Info.isr_queue.data[os_Info.isr_queue.out];
+    if (++os_Info.isr_queue.out == max) {
+      os_Info.isr_queue.out = 0U;
+    }
+  } else {
+    ret = NULL;
+  }
+  
+  if (primask == 0U) {
+    __enable_irq();
+  }
+#else
+  if (os_exc_dec16_nz(&os_Info.isr_queue.cnt) != 0U) {
+    n = os_exc_inc16_lim(&os_Info.isr_queue.out, max);
+    ret = os_Info.isr_queue.data[n];
+  } else {
+    ret = NULL;
+  }
+#endif
+
+  return ret;
+}
+
+
+//  ==== Library Functions ====
+
+/// Tick Handler.
+void os_Tick_Handler (void) {
+  os_thread_t *thread;
+
+  os_TickAckIRQ();
+  os_Info.kernel.time++;
+
+  // Process Thread Delays
+  os_ThreadDelayTick();
+
+  // Process Timers
+  os_TimerTick();
+
+  os_ThreadDispatch(NULL);
+
+  // Check Round Robin timeout
+  if (os_Info.thread.robin.timeout != 0U) {
+    if (os_Info.thread.robin.thread != os_Info.thread.run.next) {
+      // Reset Round Robin
+      os_Info.thread.robin.thread = os_Info.thread.run.next;
+      os_Info.thread.robin.tick   = os_Info.thread.robin.timeout;
+    } else {
+      if (os_Info.thread.robin.tick != 0U) {
+        os_Info.thread.robin.tick--;
+      }
+      if (os_Info.thread.robin.tick == 0U) {
+        // Round Robin Timeout
+        if (os_KernelGetState() == os_KernelRunning) {
+          thread = os_Info.thread.ready.thread_list;
+          if ((thread != NULL) && (thread->priority == os_Info.thread.robin.thread->priority)) {
+            os_ThreadListRemove(thread);
+            os_ThreadReadyPut(os_Info.thread.robin.thread);
+            os_ThreadSwitch(thread);
+            os_Info.thread.robin.thread = thread;
+            os_Info.thread.robin.tick   = os_Info.thread.robin.timeout;
+          }
+        }
+      }
+    }
+  }
+}
+
+/// Pending Service Call Handler.
+void os_PendSV_Handler (void) {
+  os_object_t *object;
+
+  for (;;) {
+    object = os_isr_queue_get();
+    if (object == NULL) {
+      break;
+    }
+    switch (object->id) {
+      case os_IdThread:
+        os_Info.post_process.thread((os_thread_t *)object);
+        break;
+      case os_IdEventFlags:
+        os_Info.post_process.event_flags((os_event_flags_t *)object);
+        break;
+      case os_IdSemaphore:
+        os_Info.post_process.semaphore((os_semaphore_t *)object);
+        break;
+      case os_IdMemoryPool:
+        os_Info.post_process.memory_pool((os_memory_pool_t *)object);
+        break;
+      case os_IdMessage:
+        os_Info.post_process.message_queue((os_message_t *)object);
+        break;
+      default:
+        break;
+    }
+  }
+
+  os_ThreadDispatch(NULL);
+}
+
+/// Register post ISR processing.
+/// \param[in]  object          generic object.
+void os_PostProcess (os_object_t *object) {
+
+  if (os_isr_queue_put(object) != 0U) {
+    if (os_Info.kernel.blocked == 0U) {
+      os_SetPendSV();
+    } else {
+      os_Info.kernel.pendSV = 1U;
+    }
+  } else {
+    os_Error(os_ErrorISRQueueOverflow, object);
+  }
+}
+
+
+//  ==== Public API ====
+
+/// Setup Tick Timer.
+__WEAK int32_t os_TickSetup (void) {
+
+  // Setup SysTick Timer with 1ms tick
+  os_SysTick_Setup(SystemCoreClock/1000U);
+
+  os_Info.kernel.usec_ticks = ((4295U * (SystemCoreClock & 0xFFFF)) >> 16) +
+                               (4295U * (SystemCoreClock >> 16));
+
+  return SysTick_IRQn;                  // Return IRQ number of SysTick
+}
+
+/// Enable Tick Timer.
+__WEAK void os_TickEnable (void) {
+  os_SysTick_Enable();
+}
+
+/// Disable Tick Timer.
+__WEAK void os_TickDisable (void) {
+  os_SysTick_Disable();
+}
+
+/// Acknowledge Tick Timer IRQ.
+__WEAK void os_TickAckIRQ (void) {
+  os_SysTick_GetOvf();
+}
+
+/// Get Tick Timer Value.
+__WEAK uint32_t os_TickGetVal (void) {
+  uint32_t tick;
+  uint32_t time;
+
+  time = (uint32_t)os_Info.kernel.time;
+  tick = os_SysTick_GetVal();
+  if (os_SysTick_GetOvf()) {
+    tick = os_SysTick_GetVal();
+    time++;
+  }
+  tick += time * os_SysTick_GetPeriod();
+
+  return tick;
+}
+
+/// Convert microseconds value to Tick Timer value.
+__WEAK uint32_t os_TickMicroSec (uint32_t microsec) {
+  return (uint32_t)(((uint64_t)microsec * (uint64_t)os_Info.kernel.usec_ticks) >> 16);
+}
