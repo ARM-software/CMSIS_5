@@ -75,6 +75,7 @@ XCOPY /Q /S /Y ..\..\CMSIS\RTOS\RTX\*.* %RELEASE_PATH%\CMSIS\RTOS\RTX\*.*
 
 :: -- RTOS2 files 
 XCOPY /Q /S /Y ..\..\CMSIS\RTOS2\Template\*.* %RELEASE_PATH%\CMSIS\RTOS2\Template\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\RTOS2\RTX\*.* %RELEASE_PATH%\CMSIS\RTOS2\RTX\*.*
 
 :: -- SVD files 
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\ARM_Example.* %RELEASE_PATH%\CMSIS\SVD\*.*
