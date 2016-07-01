@@ -17,14 +17,18 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        17. February 2016
-  $Revision:    1.4.4
+  $Date:        13. June 2016
+  $Revision:    1.4.5
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
   SchemaVersion=1.4
 
+  13. June 2016: 1.4.5
+  - added: Punits to ProcessorType
+  - added: Punit to DebugType
+  
   26. April 2016: 1.4.4
   - added: attribute defaultResetSequence to DebugType.
   - added: <requirements> section:
@@ -95,7 +99,6 @@
       <xs:enumeration value="Energy Micro:97"/>
       <xs:enumeration value="EnOcean:91"/>
       <xs:enumeration value="Evatronix:64"/>
-      <xs:enumeration value="Freescale:78"/>
       <xs:enumeration value="Generic:5"/>
       <xs:enumeration value="GigaDevice:123"/>
       <xs:enumeration value="Holtek:106"/>
@@ -104,6 +107,7 @@
       <xs:enumeration value="Infineon:7"/>
       <xs:enumeration value="Kionix:127"/>
       <xs:enumeration value="Lapis Semiconductor:10"/>
+      <xs:enumeration value="Linear Technology:136"/>
       <xs:enumeration value="Luminary Micro:76"/>
       <xs:enumeration value="Maxim:23"/>
       <xs:enumeration value="MediaTek:129"/>
@@ -134,7 +138,9 @@
       <xs:enumeration value="Toshiba:92"/>
       <xs:enumeration value="Triad Semiconductor:104"/>
       <xs:enumeration value="WIZnet:122"/>
+      <xs:enumeration value="Xinnova:135"/>
       <!-- deprecated: do not use -->
+      <xs:enumeration value="Freescale:78"/>
       <xs:enumeration value="Freescale Semiconductor:78"/>
       <xs:enumeration value="NXP (founded by Philips):11"/>
     </xs:restriction>
@@ -192,6 +198,8 @@
   <xs:complexType name="ProcessorType">
     <!-- Pname defines an identifier for a specific processor in a multi-processor devices -->
     <xs:attribute name="Pname"        type="RestrictedString"/>
+    <!-- Punits specifies the number of processing units in a symmetric multi-processor core -->
+    <xs:attribute name="Punits"       type="InstancesType"/>
     <!-- Dcore specifies the processor from a list of supported processors -->
     <xs:attribute name="Dcore"        type="DcoreEnum"/>
     <!-- Dfpu specifies the hardware floating point unit -->
@@ -214,6 +222,8 @@
     <xs:attribute name="header" type="xs:string"/>
     <!-- Device specific preprocessor define (sets preprocessor define  -->
     <xs:attribute name="define" type="xs:string"/>
+    <!-- Processor instance specific preprocessor define (sets preprocessor define on the commandline)  -->
+    <xs:attribute name="Pdefine" type="xs:string"/>
   </xs:complexType>
 
   <!-- DebugVarsType -->
@@ -358,9 +368,11 @@
     </xs:sequence>
     <xs:attribute name="__dp"  type="xs:unsignedInt" use="optional"/>
     <xs:attribute name="__ap"  type="xs:unsignedInt" use="optional"/> <!-- access port index -->
+    <xs:attribute name="address" type="NonNegativeInteger" use="optional"/> <!-- CPU debug block base address -->
     <xs:attribute name="svd"   type="xs:string"      use="optional"/>
-    <xs:attribute name="Pname" type="RestrictedString"      use="optional"/>
-    <xs:attribute name="defaultResetSequence" type="xs:string" use="optional"/>    
+    <xs:attribute name="Pname" type="RestrictedString" use="optional"/>
+    <xs:attribute name="Punit" type="xs:unsignedInt" use="optional"/>
+    <xs:attribute name="defaultResetSequence" type="xs:string" use="optional"/>
     <xs:anyAttribute processContents="lax"/>
   </xs:complexType>
 
@@ -1054,7 +1066,7 @@
   </xs:complexType>
 
   <xs:simpleType name="InstancesType">
-    <xs:restriction base="xs:integer">
+    <xs:restriction base="xs:unsignedInt">
       <xs:minInclusive value="1"/>
     </xs:restriction>
   </xs:simpleType>

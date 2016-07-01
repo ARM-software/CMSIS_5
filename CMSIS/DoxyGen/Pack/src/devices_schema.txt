@@ -1550,6 +1550,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <th>Web Link</th>
   </tr>
   <tr>
+    <td class="XML-Token">ABOV Semiconductor:126</td>
+    <td>ABOV Semiconductor</td>
+    <td>http://www.abov.co.kr/en/</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Ambiq Micro:120</td>
     <td>Ambiq Micro</td>
     <td>http://www.ambiqmicro.com</td>
@@ -1625,6 +1630,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.mediatek.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">MegaChips:128</td>
+    <td>MegaChips</td>
+    <td>http://www.megachips.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">MicroSemi:112</td>
     <td>Microsemi</td>
     <td>http://www.microsemi.com</td>
@@ -1633,6 +1643,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">Milandr:99</td>
     <td>Milandr</td>
     <td>http://www.milandr.ru</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">MindMotion:132</td>
+    <td>MindMotion</td>
+    <td>//http://www.mindmotion.com.cn</td>
   </tr>
   <tr>
     <td class="XML-Token">Nordic Semiconductor:54</td>
@@ -1648,6 +1663,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">NXP:11</td>
     <td>NXP</td>
     <td>http://www.nxp.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Panasonic:131</td>
+    <td>Panasonic</td>
+    <td>http://www.panasonic.com/industrial</td>
   </tr>
   <tr>
     <td class="XML-Token">Realtek Semiconductor:124</td>
@@ -1708,6 +1728,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">WIZnet:122</td>
     <td>WIZnet</td>
     <td>http://www.wiznet.co.kr</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Xinnova</td>
+    <td>Xinnova Technology</td>
+    <td>http://www.xinnovatech.com/en</td>
   </tr>
 </table>
 
