@@ -77,7 +77,10 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
     <tr>
       <td>V5.00 - Beta n</td>
       <td>
-         Added: macro \ref \__ALIGNED.
+         Replaced: macro __SAU_PRESENT with __SAU_REGION_PRESENT. \n
+         Reworked: SAU register and functions. \n
+         Added: macro \ref \__ALIGNED. \n
+         Updated: function \ref SCB_EnableICache.
       </td>
     </tr>
     <tr>
@@ -111,7 +114,7 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
          Changed: license under Apache-2.0. \n
          Added: check if macro is defined before use. \n
          Corrected: function \ref SCB_DisableDCache. \n
-         Corrected: macros \ref \_VAL2FLD, \ref \_FLD2VAL.
+         Corrected: macros \ref \_VAL2FLD, \ref \_FLD2VAL. \n
 		 Added: NVIC function virtualization with macros \ref CMSIS_NVIC_VIRTUAL and \ref CMSIS_VECTAB_VIRTUAL.
       </td>
     </tr>

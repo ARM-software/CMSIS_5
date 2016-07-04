@@ -8,6 +8,11 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.0-Beta9">
+      CMSIS_Core:
+       - Replaced macro __SAU_PRESENT with __SAU_REGION_PRESENT.
+       - Reworked SAU register and functions.
+    </release>
     <release version="5.0.0-Beta8">
       CMSIS-RTOS:
         - API 2.0
@@ -16,6 +21,7 @@
     <release version="5.0.0-Beta7">
       CMSIS_Core:
        - Added macro __ALIGNED.
+       - Updated function SCB_EnableICache.
     </release>
     <release version="5.0.0-Beta6">
       CMSIS_Core:

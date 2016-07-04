@@ -2,7 +2,7 @@
  * @file     core_armv8mbl.h
  * @brief    CMSIS ARMv8MBL Core Peripheral Access Layer Header File
  * @version  V5.00
- * @date     29. June 2016
+ * @date     04. July 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -238,9 +238,9 @@
     #warning "__MPU_PRESENT not defined in device header file; using default!"
   #endif
 
-  #ifndef __SAU_PRESENT
-    #define __SAU_PRESENT             0U
-    #warning "__SAU_PRESENT not defined in device header file; using default!"
+  #ifndef __SAUREGION_PRESENT
+    #define __SAUREGION_PRESENT       0U
+    #warning "__SAUREGION_PRESENT not defined in device header file; using default!"
   #endif
 
   #ifndef __VTOR_PRESENT
@@ -1055,7 +1055,7 @@ typedef struct
 #endif
 
 
-#if defined (__SAU_PRESENT) && (__SAU_PRESENT == 1U)
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 /**
   \ingroup  CMSIS_core_register
   \defgroup CMSIS_SAU     Security Attribution Unit (SAU)
@@ -1070,9 +1070,11 @@ typedef struct
 {
   __IOM uint32_t CTRL;                   /*!< Offset: 0x000 (R/W)  SAU Control Register */
   __IM  uint32_t TYPE;                   /*!< Offset: 0x004 (R/ )  SAU Type Register */
+#if defined (__SAUREGION_PRESENT) && (__SAUREGION_PRESENT == 1U)
   __IOM uint32_t RNR;                    /*!< Offset: 0x008 (R/W)  SAU Region Number Register */
   __IOM uint32_t RBAR;                   /*!< Offset: 0x00C (R/W)  SAU Region Base Address Register */
   __IOM uint32_t RLAR;                   /*!< Offset: 0x010 (R/W)  SAU Region Limit Address Register */
+#endif
 } SAU_Type;
 
 /* SAU Control Register Definitions */
@@ -1086,6 +1088,7 @@ typedef struct
 #define SAU_TYPE_SREGION_Pos                0U                                            /*!< SAU TYPE: SREGION Position */
 #define SAU_TYPE_SREGION_Msk               (0xFFUL /*<< SAU_TYPE_SREGION_Pos*/)           /*!< SAU TYPE: SREGION Mask */
 
+#if defined (__SAUREGION_PRESENT) && (__SAUREGION_PRESENT == 1U)
 /* SAU Region Number Register Definitions */
 #define SAU_RNR_REGION_Pos                  0U                                            /*!< SAU RNR: REGION Position */
 #define SAU_RNR_REGION_Msk                 (0xFFUL /*<< SAU_RNR_REGION_Pos*/)             /*!< SAU RNR: REGION Mask */
@@ -1104,8 +1107,10 @@ typedef struct
 #define SAU_RLAR_ENABLE_Pos                 0U                                            /*!< SAU RLAR: ENABLE Position */
 #define SAU_RLAR_ENABLE_Msk                (1UL /*<< SAU_RLAR_ENABLE_Pos*/)               /*!< SAU RLAR: ENABLE Mask */
 
+#endif /* defined (__SAUREGION_PRESENT) && (__SAUREGION_PRESENT == 1U) */
+
 /*@} end of group CMSIS_SAU */
-#endif
+#endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
 
 /**
@@ -1264,7 +1269,7 @@ typedef struct
     #define MPU               ((MPU_Type       *)     MPU_BASE         ) /*!< Memory Protection Unit */
   #endif
 
-  #if defined (__SAU_PRESENT) && (__SAU_PRESENT == 1U)
+  #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
     #define SAU_BASE          (SCS_BASE +  0x0DD0UL)                     /*!< Security Attribution Unit */
     #define SAU               ((SAU_Type       *)     SAU_BASE         ) /*!< Security Attribution Unit */
   #endif
@@ -1785,9 +1790,7 @@ __STATIC_INLINE uint32_t SCB_GetFPUType(void)
  */
 __STATIC_INLINE void TZ_SAU_Enable(void)
 {
-#if defined (__SAU_PRESENT) && (__SAU_PRESENT == 1U)
     SAU->CTRL |=  (SAU_CTRL_ENABLE_Msk);
-#endif
 }
 
 
@@ -1798,9 +1801,7 @@ __STATIC_INLINE void TZ_SAU_Enable(void)
  */
 __STATIC_INLINE void TZ_SAU_Disable(void)
 {
-#if defined (__SAU_PRESENT) && (__SAU_PRESENT == 1U)
     SAU->CTRL &= ~(SAU_CTRL_ENABLE_Msk);
-#endif
 }
 
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */

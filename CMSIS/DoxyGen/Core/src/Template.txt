@@ -594,10 +594,10 @@ If these <i>\#defines</i> are missing default values are used.
       <td>Defines if a MPU is present or not</td>
     </tr>
     <tr>
-      <td>__SAU_PRESENT</td>
+      <td>__SAUREGION_PRESENT</td>
       <td>0 .. 1</td>
       <td>0</td>
-      <td>Defines if a SAU is present or not</td>
+      <td>Defines if SAU regions are present or not</td>
     </tr>
     <tr>
       <td>__VTOR_PRESENT</td>
@@ -642,10 +642,10 @@ If these <i>\#defines</i> are missing default values are used.
       <td>Defines if a MPU is present or not</td>
     </tr>
     <tr>
-      <td>__SAU_PRESENT</td>
+      <td>__SAUREGION_PRESENT</td>
       <td>0 .. 1</td>
       <td>0</td>
-      <td>Defines if a SAU is present or not</td>
+      <td>Defines if SAU regions are present or not</td>
     </tr>
     <tr>
       <td>__FPU_PRESENT</td>
@@ -862,9 +862,9 @@ The following initializations are performed:
       <th>Description</th>
     </tr>
     <tr>
-      <td>SAU_NO_REGIONS</td>
+      <td>SAU_REGIONS_MAX</td>
       <td>0 .. tbd</td>
-      <td>4</td>
+      <td>8</td>
       <td>maximum number of SAU regions</td>
     </tr>
     <tr>
@@ -899,13 +899,13 @@ The following initializations are performed:
     </tr>
 </table>
 
-The range of \<number\> is from 0 .. SAU_NO_REGIONS.
+The range of \<number\> is from 0 .. SAU_REGIONS_MAX.
 A set of these macros must exist for each \<number\>.
 
 The following example shows a set of SAU region macros.
 
 \code
-#define SAU_NO_REGIONS   4                  /* Max. number of SAU regions */
+#define SAU_REGIONS_MAX   8                 /* Max. number of SAU regions */
  
 #define SAU_INIT_REGION0    1
 #define SAU_INIT_START0     0x00000000      /* start address of SAU region 0 */
@@ -926,6 +926,26 @@ The following example shows a set of SAU region macros.
 #define SAU_INIT_START3     0x40000000      /* start address of SAU region 3 */
 #define SAU_INIT_END3       0x40040000      /* end address of SAU region 3 */
 #define SAU_INIT_NSC3       0
+ 
+#define SAU_INIT_REGION4    0
+#define SAU_INIT_START4     0x00000000      /* start address of SAU region 4 */
+#define SAU_INIT_END4       0x00000000      /* end address of SAU region 4 */
+#define SAU_INIT_NSC4       0
+ 
+#define SAU_INIT_REGION5    0
+#define SAU_INIT_START5     0x00000000      /* start address of SAU region 5 */
+#define SAU_INIT_END5       0x00000000      /* end address of SAU region 5 */
+#define SAU_INIT_NSC5       0
+ 
+#define SAU_INIT_REGION6    0
+#define SAU_INIT_START6     0x00000000      /* start address of SAU region 6 */
+#define SAU_INIT_END6       0x00000000      /* end address of SAU region 6 */
+#define SAU_INIT_NSC6       0
+ 
+#define SAU_INIT_REGION7    0
+#define SAU_INIT_START7     0x00000000      /* start address of SAU region 7 */
+#define SAU_INIT_END7       0x00000000      /* end address of SAU region 7 */
+#define SAU_INIT_NSC7       0
 \endcode
 
 

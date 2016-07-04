@@ -3,7 +3,7 @@
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMv8MBL Device Series
  * @version  V5.00
- * @date     25. April 2016
+ * @date     04. July 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -103,7 +103,7 @@ typedef enum IRQn
 
 /* --------  Configuration of the Cortex-ARMv8MBL Processor and Core Peripherals  ------- */
 #define __ARMv8MBL_REV            0x0000U   /* Core revision r0p0 */
-#define __SAU_PRESENT             1         /* SAU present or not */
+#define __SAUREGION_PRESENT       1         /* SAU regions are present */
 #define __MPU_PRESENT             0         /* MPU present or not */
 #define __VTOR_PRESENT            0         /* VTOR present or not */
 #define __NVIC_PRIO_BITS          2         /* Number of Bits used for Priority Levels */
