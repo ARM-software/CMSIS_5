@@ -174,7 +174,9 @@ uint32_t TZ_SysTick_Config_NS(uint32_t ticks);
 The Secure Attribution Unit (SAU) functions SAU 
 
 \note
-TZ_SAU_* functions are only available if macro __SAU_PRESENT is set to 1.
+A SAU is always present if the security extension is available.
+The functionality differs if the SAU contains SAU regions.
+If SAU regions are available is configured with the macro __SAUREGION_PRESENT (see \ref core_config_sect).
 
  */
 
