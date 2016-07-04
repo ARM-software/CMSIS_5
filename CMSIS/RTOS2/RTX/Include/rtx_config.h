@@ -281,7 +281,7 @@ __attribute__((section(".os.object.cb"))) =
 
 // Memory for Control Blocks
 #if (OS_DYNAMIC_MEM_CB_SIZE != 0)
-#if ((OS_DYNAMIC_MEM_CB_SIZE & 4) != 0)
+#if ((OS_DYNAMIC_MEM_CB_SIZE & 3) != 0)
 #error "Invalid memory size for Control Blocks!"
 #endif
 static uint32_t os_mem_cb[OS_DYNAMIC_MEM_CB_SIZE/4] \
@@ -290,7 +290,7 @@ __attribute__((section(".os.object.cb")));
 
 // Memory for Data Storage
 #if (OS_DYNAMIC_MEM_DATA_SIZE != 0)
-#if ((OS_DYNAMIC_MEM_DATA_SIZE & 4) != 0)
+#if ((OS_DYNAMIC_MEM_DATA_SIZE & 3) != 0)
 #error "Invalid memory size for Data Storage!"
 #endif
 static uint32_t os_mem_data[OS_DYNAMIC_MEM_DATA_SIZE/4] \
@@ -310,7 +310,7 @@ __attribute__((section(".os.object.stack")));
 
 // Dynamic Memory
 #if (OS_DYNAMIC_MEM_SIZE != 0)
-#if ((OS_DYNAMIC_MEM_SIZE & 8) != 0)
+#if ((OS_DYNAMIC_MEM_SIZE & 7) != 0)
 #error "Invalid Dynamic Memory size!"
 #endif
 static uint64_t os_mem[OS_DYNAMIC_MEM_SIZE/8] \
