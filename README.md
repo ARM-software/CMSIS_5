@@ -36,21 +36,22 @@ For further details see also the [Slides of the Embedded World CMSIS Partner Mee
 | CMSIS/DoxyGen   | Source of the documentation                    |
 | CMSIS/Utilities | Utility programs                               |
 
-## Generate Documentation
+## Generate CMSIS Pack for Release
 
-The following tools are required to generate the documentation:
- - **doxygen.exe**  Version: 1.8.2 (Documentation Generator)
- - **mscgen.exe**   Version: 0.20  (Message Sequence Chart Converter)
+This GitHub development repository contains already pre-build libraries of various libraries (DSP, RTOS, RTOS2).
+These libraries are validated for release.
 
-Using these tools, documentation can be generated under Windows
-with the batch file **genDoc.bat** in directory CMSIS/DoxyGen/.
+To build a complete CMSIS pack for installation the following additional tools are required:
+ - **doxygen.exe**    Version: 1.8.2 (Documentation Generator)
+ - **mscgen.exe**     Version: 0.20  (Message Sequence Chart Converter)
+ - **7z.exe (7-Zip)** Version: 16.02 (File Archiver)
+  
+Using these tools, you can generate on a Windows PC:
+ - **CMSIS Software Pack** using the batch file **gen_pack.bat** (located in ./CMSIS/Utilities). This batch file also generates the documentation.
+  
+ - **CMSIS Documentation** using the batch file **genDoc.bat** (located in ./CMSIS/Doxygen). 
 
-The file CMSIS/DoxyGen/How2Doc.txt describes the rules for creating API
-documentation.
-
-## Generate CMSIS Software Pack
-
-*coming soon*
+The file ./CMSIS/DoxyGen/How2Doc.txt describes the rules for creating API documentation.
 
 ## License
 
