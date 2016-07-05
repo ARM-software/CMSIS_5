@@ -1430,9 +1430,9 @@ The ARMv8MML processor is brand new.
    <!-- <file category="doc"    name="CMSIS/Documentation/RTOS2/html/_r_t_x_implementation.html"/> -->
 
         <!-- RTX header files -->
-        <file category="header" name="CMSIS/RTOS2/RTX/Include/cmsis_os.h"/>
-        <file category="header" name="CMSIS/RTOS2/RTX/Include/cmsis_os2.h"/>
+        <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
+        <file category="header" name="CMSIS/RTOS2/RTX/Include1/cmsis_os.h"/>
 
         <!-- RTX configuration -->
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c" version="5.0.0"/>

@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -868,7 +868,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1401,7 +1401,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

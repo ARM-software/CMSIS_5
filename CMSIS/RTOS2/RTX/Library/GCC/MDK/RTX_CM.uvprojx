@@ -242,7 +242,7 @@
               <MiscControls>-ffunction-sections</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -658,7 +658,7 @@
               <MiscControls>-ffunction-sections</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -1121,7 +1121,7 @@
               <MiscControls>-mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffunction-sections</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
