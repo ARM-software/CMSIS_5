@@ -17,14 +17,17 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        13. June 2016
-  $Revision:    1.4.5
+  $Date:        12. July 2016
+  $Revision:    1.4.6
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
   SchemaVersion=1.4
 
+  12. July 2016: 1.4.6
+  - refined Dname string restriction
+  
   13. June 2016: 1.4.5
   - added: Punits to ProcessorType
   - added: Punit to DebugType
@@ -50,7 +53,7 @@
   - adding attribute "sdf" to devices section element debugconfig
   
   16. Oct 2015: 1.4.1
-  - pName, Dname, Dvariant type changed from xs:string to RestrictedString
+  - Pname, Dname, Dvariant type changed from xs:string to RestrictedString
 
   28. Aug 2015: 1.4.0
   - deprecate devices memory tag attribute id and use
@@ -69,7 +72,7 @@
   
 -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.3">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.4">
 
   <!-- NonNegativeInteger specifies the format in which numbers are represented in hexadecimal or decimal format -->
   <xs:simpleType name="NonNegativeInteger">
@@ -544,12 +547,12 @@
           <xs:sequence>
             <xs:group ref="DevicePropertiesGroup"/>
           </xs:sequence>
-          <xs:attribute name="Dvariant" type="RestrictedString" use="required"/>
+          <xs:attribute name="Dvariant" type="RestrictedStringDname" use="required"/>
         </xs:complexType>
       </xs:element>
       <!-- Variant Level end -->
     </xs:sequence>
-    <xs:attribute name="Dname" type="RestrictedString" use="required"/>
+    <xs:attribute name="Dname" type="RestrictedStringDname" use="required"/>
     <!-- <xs:attributeGroup ref="DefaultDeviceAttributesGroup"/> -->
   </xs:complexType>
 
@@ -1098,6 +1101,13 @@
       <xs:pattern value="[\-_A-Za-z0-9]+"/>
     </xs:restriction>
   </xs:simpleType>
+  
+  <xs:simpleType name="RestrictedStringDname">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[\-_A-Za-z0-9/]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
   <!-- version can contain one or more of alphanumeric characters and symbols '_' '-' '.' 
        Important: version pattern shall remain the same while versions change
   -->
