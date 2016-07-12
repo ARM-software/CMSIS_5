@@ -8,6 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.0-Beta11">
+      CMSIS_Core:
+       - Added CMSE support to cmsis_gcc.h.
+    </release>
     <release version="5.0.0-Beta10">
       CMSIS-RTOS2:
         - Added RTX5 component.
