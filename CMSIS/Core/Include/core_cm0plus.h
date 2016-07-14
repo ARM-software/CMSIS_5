@@ -2,7 +2,7 @@
  * @file     core_cm0plus.h
  * @brief    CMSIS Cortex-M0+ Core Peripheral Access Layer Header File
  * @version  V5.00
- * @date     13. July 2016
+ * @date     14. July 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -120,7 +120,7 @@
   #define __NO_RETURN               __noreturn
   #define __USED
   #define __WEAK                    __weak
-  struct __packed struct T_UINT32 { uint32_t v; };
+  __packed struct T_UINT32 { uint32_t v; };
   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
   #define __ALIGNED(x)
 
