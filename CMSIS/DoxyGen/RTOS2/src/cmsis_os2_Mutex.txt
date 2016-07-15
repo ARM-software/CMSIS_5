@@ -1,0 +1,109 @@
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Mutex Management ====
+/** 
+\addtogroup CMSIS_RTOS_MutexMgmt Mutexes
+\ingroup CMSIS_RTOS
+\brief Synchronize resource access using Mutual Exclusion (Mutex).
+\details 
+<b>Mutual exclusion</b> (widely known as \b Mutex) is used in various operating systems for resource management. Many
+resources in a microcontroller device can be used repeatedly, but only by one thread at a time (for example communication
+channels, memory, and files). Mutexes are used to protect access to a shared resource. A mutex is created and then passed
+between the threads (they can acquire and release the mutex).
+
+\image html "Mutex.png" "CMSIS-RTOS Mutex"
+
+A mutex is a special version of a \ref CMSIS_RTOS_SemaphoreMgmt "semaphore". Like the semaphore, it is a container for
+tokens. But instead of being able to have multiple tokens, a mutex can only carry one (representing the resource). Thus, a
+mutex token is binary and bounded. The advantage of a mutex is that it introduces thread ownership. When a thread acquires a
+mutex and becomes its owner, subsequent mutex acquires from that thread will succeed immediately without any latency. Thus,
+mutex acquires/releases can be nested.
+
+\note
+- Mutex management functions cannot be called from interrupt service routines (ISR), unlike a binary semaphore that can be
+  released from an ISR.
+
+Working with Mutexes
+--------------------
+To use mutexes, you need to follow these steps for creating and using them:
+-# Declare the mutex container and initialize the mutex:
+\code
+//osMutexDef (uart_mutex);    // Declare mutex
+osMutexId  (uart_mutex_id); // Mutex ID
+\endcode
+-# Create the mutex in a thread:
+\code
+uart_mutex_id = osMutexCreate(osMutex(uart_mutex));
+\endcode
+-# Acquire the mutex when peripheral access is required:
+\code
+osMutexWait(uart_mutex_id, osWaitForever);
+\endcode
+-# When finished with the peripheral access, release the mutex:
+\code
+osMutexRelease(uart_mutex_id);
+\endcode
+
+@{
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osMutexRecursive
+\details
+ - \ref osMutexAttr_t
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osMutexPrioInherit
+\details
+ - \ref osMutexAttr_t
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osMutexRobust
+\details
+ - \ref osMutexAttr_t
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef osMutexId_t
+\details
+
+*/ 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\struct osMutexAttr_t
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osMutexId_t osMutexNew (const osMutexAttr_t *attr)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osMutexAcquire (osMutexId_t mutex_id, uint32_t millisec)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osMutexRelease (osMutexId_t mutex_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osThreadId_t osMutexGetOwner (osMutexId_t mutex_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osMutexDelete (osMutexId_t mutex_id)
+\details
+
+*/
+/// @}
