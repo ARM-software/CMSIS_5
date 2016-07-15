@@ -475,13 +475,13 @@ int main (void) {
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \def osCMSIS
+/* \def osCMSIS
 Version information of the CMSIS-RTOS API whereby major version is in bits [31:16] and sub version in bits [15:0].
 The value 0x10000 represents version 1.00.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \def osCMSIS_KERNEL
+/* \def osCMSIS_KERNEL
 Identifies the underlying RTOS kernel and version number. The actual name of that define depends on the RTOS Kernel used in
 the implementation. For example, \b osCMSIS_FreeRTOS identifies the FreeRTOS kernel and the value indicates the version
 number of that kernel whereby the major version is in bits [31:16] and sub version in bits [15:0]. The value 0x10000
@@ -489,14 +489,20 @@ represents version 1.00.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \def osKernelSystemId
+/* \def osKernelSystemId
 Defines a string that identifies the underlying RTOS Kernel and provides version information. The length of that string is
 limited to 21 bytes. A valid identification string is for example, <b>"FreeRTOS V1.00"</b>.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \def osFeature_KernelSysTick
+/* \def osFeature_KernelSysTick
 Defines if a Kernel SysTick timer is available or not.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef osKernelState_t
+Kernel state definitions.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -648,10 +654,10 @@ This macro is typically used to check for short timeouts in polling loops.
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 //  ==== Thread Management Functions ====
 /** 
-@addtogroup CMSIS_RTOS_ThreadMgmt Thread Management
-@ingroup CMSIS_RTOS CMSIS_RTOSv2
-@brief Define, create, and control thread functions.
-@details 
+\addtogroup CMSIS_RTOS_ThreadMgmt Thread Management
+\ingroup CMSIS_RTOS CMSIS_RTOSv2
+\brief Define, create, and control thread functions.
+\details 
 The Thread Management function group allows defining, creating, and controlling thread functions in the system. The function
 \b main is a special thread function that is started at system initialization and has the initial priority
 \a osPriorityNormal.
@@ -682,6 +688,21 @@ states change as follows:
 
 @{
 */
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osThreadJoinable
+
+Reference: 
+ - \ref osThreadAttr_t
+ - \ref osThreadJoin
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osThreadDetached
+
+Reference: 
+ - \ref osThreadAttr_t
+ - \ref osThreadDetach
+*/
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \def osThreadAttrInit
@@ -689,19 +710,8 @@ Thread attributes initialization.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \typedef osPriority
-Priority used for thread control.
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\typedef osKernelState
-Kernel state definitions.
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\typedef osThreadState
+\typedef osThreadState_t
 Thread state definitions.
 */
 
@@ -713,7 +723,7 @@ Attributes structure for thread.
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\typedef osPriority
+\typedef osPriority_t
 \note MUST REMAIN UNCHANGED: \b osPriority shall be consistent in every CMSIS-RTOS.
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -1013,13 +1023,37 @@ Lorem ipsum
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \def osFeature_ThreadFlags
+/** \def osFlagsWaitAny
+Wait forever timeout value. 
+
+Reference: 
+ - \ref osEventFlagsWait
+ - \ref osThreadFlagsWait
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsWaitAll
+
+Reference: 
+ - \ref osEventFlagsWait
+ - \ref osThreadFlagsWait
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsAutoClear
+
+Reference: 
+ - \ref osEventFlagsWait
+ - \ref osThreadFlagsWait
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/* \def osFeature_ThreadFlags
 Defined the maximum number of Thread Flags available per thread.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn osStatus osThreadFlagsSet (osThreadId thread_id, int32_t flags);
-
+/** \fn int32_t osThreadFlagsSet (osThreadId_t thread_id, int32_t flags ) 	
 <b>Code Example</b>
 \code
 \endcode
@@ -1066,7 +1100,11 @@ The Generic Wait function group provides means for a time delay and allow to wai
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \def osWaitForever
-Wait forever timeout value.
+Wait forever timeout value. 
+
+Reference: 
+ - \ref osDelay
+ - \ref osDelayUntil
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -2613,6 +2651,11 @@ Free the memory block specified by \a mail and return it to the mail queue.
 
 <b>Code Example</b>
 Refer to \ref osMailQueueNew.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osMailQId osMailCreate 	( 	const osMailQDef_t *  	queue_def,		osThreadId  	thread_id 	) 	
+ 
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
