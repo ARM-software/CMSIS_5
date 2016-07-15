@@ -1,0 +1,110 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Kernel Control ====
+/** 
+\addtogroup CMSIS_RTOS_KernelCtrl Kernel Information and Control
+\ingroup CMSIS_RTOS
+\brief Provide version/system information and start the RTOS Kernel.
+\details 
+The Kernel Information and Control function group allows to:
+  - obtain information about the system and the underlying kernel.
+  - obtain version information about the CMSIS-RTOS API.
+  - initialize of the RTOS kernel for creating objects.
+  - start the RTOS kernel and thread switching.
+  - check the execution status of the RTOS kernel.
+
+The function \b main is a special thread function that may be started at system initialization. In this case it has the
+initial priority \a osPriorityNormal.
+
+When reaching \b main, it is necessary to:
+-# Call osKernelInitialize() to initialize the CMSIS-RTOS Kernel
+-# Setup device peripherals and create other RTOS objects using the \b os*Create functions.
+-# Start the Kernel and begin thread switching by calling osKernelStart().
+
+<b>Code Example</b>
+\code
+int main (void) {
+  osKernelInitialize ();                    // initialize CMSIS-RTOS
+ 
+  // initialize peripherals here
+ 
+  // create 'thread' functions that start executing,
+  // example: tid_name = osThreadCreate (osThread(name), NULL);
+ 
+  osKernelStart ();                         // start thread execution 
+}
+\endcode
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\enum osKernelState_t
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osKernelInitialize (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osKernelState_t osKernelGetState (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osKernelStart (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osKernelLock (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn void osKernelUnlock (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osKernelSuspend (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn void osKernelResume (uint32_t sleep_time)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint64_t osKernelGetTime (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osKernelGetTick (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osKernelTickMicroSec (uint32_t microsec)
+\details
+
+*/
+/// @}

@@ -1,0 +1,111 @@
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Memory Pool Management ====
+/** 
+\addtogroup CMSIS_RTOS_PoolMgmt Memory Pool
+\ingroup CMSIS_RTOS
+\brief Manage thread-safe fixed-size blocks of dynamic memory.
+\details
+\b Memory \b pools are fixed-size blocks of memory that are thread-safe. They operate much faster than the dynamically
+allocated heap and do not suffer from fragmentation. Being thread-safe, they can be accessed from threads and ISRs alike.
+
+\b Shared \b memory is one of the basic models to exchange information between threads. Using memory pools for exchanging
+data, you can share more complex objects between threads if compared to a \ref CMSIS_RTOS_Message. Memory pool management
+functions are used to define and manage such fixed-sized memory pools.
+
+Working with Memory Pools
+-------------------------
+Follow these steps to create and use a memory pool:
+-# Declare a data structure that combines a number of elements:
+\code
+typedef struct {
+  uint32_t length;
+  uint32_t width;
+  uint32_t height;
+  uint32_t weight;
+} properties_t;
+\endcode
+-# Declare a memory pool of these objects as a block of memory:
+\code
+osPoolDef (object_pool, 10, properties_t);  // Declare memory pool
+osPoolId  (object_pool_id);                 // Memory pool ID
+\endcode
+-# Then, create the memory pool in a thread:
+\code
+object_pool_id = osPoolCreate(osPool(object_pool));
+\endcode
+-# Allocate the pool within a thread and fill it with data:
+\code
+properties_t *object_data;
+*object_data = (properties_t *) osPoolAlloc(object_pool_id);
+ 
+object_data->length = 100;
+object_data->width  = 10;
+object_data->height = 23;
+object_data->weight = 1000;
+\endcode
+
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\typedef osMemoryPoolId_t
+\details 
+ 
+*/
+/** 
+\struct osMemoryPoolAttr_t
+\details 
+ 
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, const osMemoryPoolAttr_t *attr)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn void *osMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t millisec)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn osStatus_t osMemoryPoolFree (osMemoryPoolId_t mp_id, void *block)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn uint32_t osMemoryPoolGetCapacity (osMemoryPoolId_t mp_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn uint32_t osMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn uint32_t osMemoryPoolGetCount (osMemoryPoolId_t mp_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn uint32_t osMemoryPoolGetSpace (osMemoryPoolId_t mp_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn osStatus_t osMemoryPoolDelete (osMemoryPoolId_t mp_id)
+\details
+
+*/
+/// @}

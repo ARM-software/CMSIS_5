@@ -1,0 +1,95 @@
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Timer Management Functions ====
+/** 
+\addtogroup CMSIS_RTOS_TimerMgmt Timer Management
+\ingroup CMSIS_RTOS
+\brief Create and control timer and timer callback functions.
+\details 
+In addition to the \ref CMSIS_RTOS_Wait CMSIS-RTOS also supports virtual timer objects. These timer objects can
+trigger the execution of a function (not threads). When a timer expires, a callback function is executed to run associated
+code with the timer. The timer number is passed as a parameter to the callback function. Each timer can be configured as a
+one-shot or a  periodic timer. A periodic timer repeats its operation until it is \ref osTimerDelete "deleted" or
+\ref osTimerStop "stopped". All timers can be \ref osTimerStart "started, restarted", or \ref osTimerStop "stopped".
+
+Timers are handled in the thread \b osTimerThread. Callback functions run under control of this thread and may use other
+CMSIS-RTOS API calls.
+
+The figure below shows the behavior of a periodic timer. For one-shot timers, the timer stops after execution of the
+callback function.
+
+\image html "Timer.png" "Behavior of a Periodic Timer"
+
+Working with Timers
+--------------------
+The following steps are required to use a timer:
+-# Define the timers:
+\code
+//osTimerDef(one_shot, start_machine);  // when the timer expires, the function start_machine is called
+//osTimerDef(periodic, toggle_power);   // when the timer expires, the function toggle_power is called
+osTimerId one_shot_id, periodic_id;
+\endcode
+-# Instantiate and start the timers in an RTOS thread:
+\code
+one_shot_id = osTimerCreate(osTimer(one_shot), osTimerOnce, (void *)0);      // creates a one-shot timer;
+                                                                             // (void*)0 is passed as an argument
+                                                                             // to the callback function
+periodic_id = osTimerCreate(osTimer(periodic), osTimerPeriodic, (void *)5);  // creates a periodic timer;
+                                                                             // (void*)5 is passed as an argument
+                                                                             // to the callback function
+osTimerStart(one_shot_id, 500);
+osTimerStart(periodic, 1500);
+\endcode
+
+@{
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\enum  osTimerType_t
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef osTimerId_t 
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\struct osTimerAttr_t 
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn osTimerId_t osTimerNew (os_timer_func_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t millisec)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn osStatus_t osTimerStop (osTimerId_t timer_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn uint32_t osTimerIsRunning (osTimerId_t timer_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\fn osStatus_t osTimerDelete (osTimerId_t timer_id)
+\details
+
+*/
+/// @}

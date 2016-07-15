@@ -1,0 +1,236 @@
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Thread Management ====
+/** 
+\addtogroup CMSIS_RTOS_ThreadMgmt Thread Management
+\ingroup CMSIS_RTOS CMSIS_RTOSv2
+\brief Define, create, and control thread functions.
+\details 
+The Thread Management function group allows defining, creating, and controlling thread functions in the system. The function
+\b main is a special thread function that is started at system initialization and has the initial priority
+\a osPriorityNormal.
+
+\anchor ThreadStates
+Threads can be in the following states:
+ - \b RUNNING: The thread that is currently running is in the \b RUNNING state. Only one thread at a time can be in this
+   state.
+ - \b READY: Threads which are ready to run are in the \b READY state. Once the \b RUNNING thread has terminated or is
+   \b WAITING, the next \b READY thread with the highest priority becomes the \b RUNNING thread.
+ - \b WAITING: Threads that are waiting for an event to occur are in the \b WAITING state.
+ - \b INACTIVE: Threads that are not created or terminated are in the \b INACTIVE state. These threads typically consume no
+   system resources.
+
+\image html "ThreadStatus.png" "Thread State and State Transitions"
+
+A CMSIS-RTOS assumes that threads are scheduled as shown in the figure <b>Thread State and State Transitions</b>. The thread
+states change as follows:
+ - A thread is created using the function \ref osThreadNew. This puts the thread into the \b READY or \b RUNNING state
+   (depending on the thread priority).
+ - CMSIS-RTOS is pre-emptive. The active thread with the highest priority becomes the \b RUNNING thread provided it does not
+   wait for any event. The initial priority of a thread is defined with the \ref osThreadAttr_t but may be changed during
+   execution using the function \ref osThreadSetPriority.
+ - The \b RUNNING thread transfers into the \b WAITING state when it is waiting for an event.
+ - Active threads can be terminated any time using the function \ref osThreadTerminate. Threads can terminate also by just
+   returning from the thread function. Threads that are terminated are in the \b INACTIVE state and typically do not consume
+   any dynamic memory resources. 
+
+@{
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\enum osThreadState_t
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\enum osPriority_t
+\details
+\note MUST REMAIN UNCHANGED: \b osPriority_t shall be consistent in every CMSIS-RTOS.
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+The \b osPriority_t value specifies the priority for a thread. The default thread priority should be \a osPriorityNormal.
+If a Thread is active that has a higher priority than the currently executing thread, then a thread switch occurs immediately
+to execute the new task.
+
+To prevent from a priority inversion, a CMSIS-RTOS compliant OS may optionally implement a <b>priority inheritance</b> method.
+A priority inversion occurs when a high priority thread is waiting for a resource or event that is controlled by a thread
+with a lower priority. 
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef void *(*os_thread_func_t) (void *argument)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef void (*os_timer_func_t) (void *argument)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef osThreadId_t
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\struct osThreadAttr_t
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osThreadJoinable
+\details
+
+*/
+/**
+\def osThreadDetached
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osThreadId_t osThreadNew (os_thread_func_t func, void *argument, const osThreadAttr_t *attr)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osThreadId_t osThreadGetId (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osThreadState_t osThreadGetState (osThreadId_t thread_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadSetPriority (osThreadId_t thread_id, osPriority_t priority)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osPriority_t osThreadGetPriority (osThreadId_t thread_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadYield (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadAbortWait (osThreadId_t thread_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadSuspend (osThreadId_t thread_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadResume (osThreadId_t thread_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadDetach (osThreadId_t thread_id)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadJoin (osThreadId_t thread_id, void **exit_ptr)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn __NO_RETURN void osThreadExit (void *exit_ptr)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadTerminate (osThreadId_t thread_id)
+\details
+
+*/
+/// @}
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Thread Flags Management ====
+/** 
+\addtogroup CMSIS_RTOS_ThreadFlagsMgmt Thread Flags Management Functions
+\ingroup CMSIS_RTOS
+\brief Lorem ipsum
+\details
+Lorem ipsum
+
+@{
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsWaitAny
+Wait forever timeout value. 
+
+Reference: 
+ - \ref osEventFlagsWait
+ - \ref osThreadFlagsWait
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsWaitAll
+
+Reference: 
+ - \ref osEventFlagsWait
+ - \ref osThreadFlagsWait
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsAutoClear
+
+Reference: 
+ - \ref osEventFlagsWait
+ - \ref osThreadFlagsWait
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int32_t osThreadFlagsSet (osThreadId_t thread_id, int32_t flags ) 	
+<b>Code Example</b>
+\code
+\endcode
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osThreadFlagsClear (osThreadId thread_id, int32_t flags);
+ 
+<b>Code Example</b>
+\code
+\endcode
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int32_t osThreadFlagsGet (osThreadId thread_id);
+ 
+<b>Code Example</b>
+\code
+\endcode
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t millisec);
+
+<b>Code Example</b>
+\code
+\endcode
+*/
+/// @}
+
