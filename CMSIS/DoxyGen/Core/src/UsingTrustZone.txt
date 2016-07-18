@@ -27,7 +27,7 @@ An ARMv8-M TrustZone enabled device has restricted access for data, code, and I/
 software that runs in the Secure state. Typical applications are secure IoT nodes, firmware IP protection, 
 or multi-party embedded software deployments.
 
-The figure <b>Simplified Use Case</b> shows and embedded application that is split into a <b>User Project</b> 
+The figure <a href="#SimpleUseCase"><b>Simplified Use Case</b></a> shows and embedded application that is split into a <b>User Project</b> 
 (executed in Non-secure state) and a <b>Firmware Project</b> (executed in Secure state). 
 
  - <b>System Start:</b> after power on or reset, an ARMv8-M system starts code execution in the <b>Secure state</b>. The access rights for the <b>Non-secure state</b> is configured.
@@ -36,7 +36,8 @@ The figure <b>Simplified Use Case</b> shows and embedded application that is spl
 
  - <b>Firmware callbacks:</b> code running in the <b>Secure state</b> can execute code in the <b>Non-secure state</b> using call-back function pointers. For example, a communication stack (protected firmware) could use an I/O driver that is configured in user space.
  
-<img id="SimpleUseCase" src="SimpleUseCase.png"><CENTER><b>Simplified Use Case</b></CENTER>
+\anchor SimpleUseCase
+\image html "SimpleUseCase.png" "Simplified Use Case"
 
 Program execution in the <b>Secure state</b> is further protected by TrustZone hardware from software failures.
 For example, an ARMv8-M system may implement two independent SYSTICK timers which allows to stop code execution 
@@ -65,7 +66,8 @@ The system supports two separate interrupt vector tables for secure and non-secu
 This interrupt assignment is controlled during <b>Secure state</b> code execution via the NVIC 
 (nested vector interrupt controller).
 
-<img id="MemoryMap_S" src="MemoryMap_S.png"><CENTER><b>Secure Memory Map</b></CENTER>
+\anchor MemoryMap_S
+\image html "MemoryMap_S.png" "Secure Memory Map"
 
 The figure <a href="#MemoryMap_NS"><b>Non-Secure Memory Map</b></a> shows the memory view for the Non-secure state. This memory view is identical
 to the traditional Cortex-M memory map. Access to any secure memory or peripheral space triggers the secure exception
@@ -74,7 +76,8 @@ that executes a handler in <b>Secure state</b>.
 The \ref partition_h_pg defines the initial setup of the <a href="#MemoryMap_NS"><b>Non-Secure Memory Map</b></a> during system start in the Secure state
 (refer to functions \ref SystemInit and \ref TZ_SAU_Setup).
 
-<img id="MemoryMap_NS" src="MemoryMap_NS.png"><CENTER><b>Non-Secure Memory Map</b></CENTER>
+\anchor MemoryMap_NS
+\image html "MemoryMap_NS.png" "Non-Secure Memory Map"
 
 The figure <b>Registers</b> shows the register view of the ARMv8-M system with TrustZone. As the general purpose registers
 are can be accessed from any state (secure or non-secure), function calls between the states use these registers for parameter
