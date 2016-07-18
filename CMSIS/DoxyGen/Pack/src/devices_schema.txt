@@ -1436,7 +1436,7 @@ Specifies attributes of the device processor. The element can occur on various l
 Elements of multi-processor devices can be associated with a specific processor using the attribute \elem{Pname}. If the information is relevant to
 all processors, no processor must be specified in \elem{Pname}. 
 
-\b Example
+\b First Example
 \code
 <package>
   ...
@@ -1449,6 +1449,14 @@ all processors, no processor must be specified in \elem{Pname}.
   </devices>
   ...
 </package>
+\endcode
+
+\b Second Example
+\code
+<device name="MCIMX7D">
+  <processor Dcore="Cortex-A7" DcoreVersion="r0p5" Pname="Cortex-A7" Punits="2" />
+  <processor Dcore="Cortex-M4" DcoreVersion="r0p1" Pname="Cortex-M4"/>
+</device>
 \endcode
 
 <p>&nbsp;</p>		
@@ -1483,6 +1491,14 @@ all processors, no processor must be specified in \elem{Pname}.
         Only alphabetical characters, decimal digits, '-' and '_' are allowed.
     </td>
     <td>RestrictedString</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Punits</td>
+    <td>Specifies the number of processor units in a symmetric multi-processor core (MPCore). <b>processor</b> is a
+    single-core CPU if not specified.
+    </td>
+    <td>xs:unsignedInt</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -3616,19 +3632,28 @@ Describes configuration settings, default values, and patches for data accesses 
 elements can be defined which are either specific to a processor identified by attribute <b>Pname</b>, or which apply
 to all connections.
 
-\b Example
+\b First \b Example
 \code
-<family Dfamily="LPC4300 Series" Dvendor="NXP:11">
-  ...
-  <debug Pname="Cortex-M4" __dp="0" __ap="0" svd="SVD/LPC43xx.svd">
-    ...
-  </debug>
-  ...
-  <debug Pname="Cortex-M0" __dp="1" __ap="0" svd="SVD/LPC43xx.svd">
-    ...
-  </debug>
-  ...
-</family>
+<device name="MCIMX7D">
+  <processor Dcore="Cortex-A7" DcoreVersion="r0p5" Pname="Cortex-A7" Punits="2" />
+  <processor Dcore="Cortex-M4" DcoreVersion="r0p1" Pname="Cortex-M4"/>
+   ...
+  <debug   Pname="Cortex-A7" Punit="0" svd="SVD/iMX7D_A7.svd" __dp="0" __ap="1" address="0x80070000"/> 
+  <debug   Pname="Cortex-A7" Punit="1" svd="SVD/iMX7D_A7.svd" __dp="0" __ap="1" address="0x80072000"/>
+  <debug   Pname="Cortex-M4"           svd="SVD/iMX7D_M4.svd" __dp="0" __ap="4" defaultResetSequence="ResetHardware"/>
+   ...
+</device>
+\endcode
+
+\b Second \b Example
+\code
+<device name="MCIMX6QPxxx">
+  <processor Dcore="Cortex-A9" DcoreVersion="r4p1" Pname="Cortex-A9" Punits="4" />
+  <debug   Pname="Cortex-A9" Punit="0" svd="SVD/iMX6Q_A9.svd" __dp="0" __ap="1" address="0x82150000"/> 
+  <debug   Pname="Cortex-A9" Punit="1" svd="SVD/iMX6Q_A9.svd" __dp="0" __ap="1" address="0x82152000"/>
+  <debug   Pname="Cortex-A9" Punit="2" svd="SVD/iMX6Q_A9.svd" __dp="0" __ap="1" address="0x82154000"/>
+  <debug   Pname="Cortex-A9" Punit="3" svd="SVD/iMX6Q_A9.svd" __dp="0" __ap="1" address="0x82156000"/>
+</device>
 \endcode
 
 <p>&nbsp;</p>		
@@ -3659,13 +3684,23 @@ to all connections.
   <tr>
     <td>Pname</td>
     <td>
-      Reference to a processor identifier as specified for a <b>processor</b> element. If <b>Pname</b> is set
+      Reference to a processor identifier as specified for a <b>processor</b> element. If <b>Pname</b> is set,
       this <b>debug</b> element's settings and data patches only apply for target connections to the referenced
       processor. Otherwise, they apply for all processors.
       <b>This attribute must be set if defining multiple \em debug elements within the same section.</b>
       Only alphabetical characters, decimal digits, '-' and '_' are allowed.
     </td>
     <td>RestrictedString</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Punit</td>
+    <td>
+      Reference to a specific processor unit of a symmetric MPCore that the <b>debug</b> configuration applies to. <b>Punit</b> is
+      a '0'-based index and must be less than <b>Punits</b> of <b>processor</b>. If <b>Punit</b> is not specified, the
+      <b>debug</b> configuration applies to all processor units of the MPCore.
+    </td>
+    <td>xs:unsignedInt</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -3695,6 +3730,28 @@ to all connections.
     <td>svd</td>
     <td>The system viewer description (*.SVD) file to load for this debug connection. The file path is relative
     to the package base folder.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>address</td>
+    <td>
+      Base <b>address</b> of the CPU debug block referenced by <b>Pname</b> (and <b>Punit</b> if an MPCore system). Use in
+      combination with attributes <b>_dp</b> and <b>_ap</b>. Mandatory if multiple CPU debug blocks are accessible via a
+      single AP. Optional if an AP hosts a single CPU debug block. Then a debugger can determine its base address in by
+      analyzing the ROM table behind <b>_dp</b> and <b>_ap</b>.
+    </td>
+    <td>NonNegativeInteger</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>defaultResetSequence</td>
+    <td>
+      Default reset sequence that will be called for a device. Three reset sequences are defined by the CMSIS-Pack standard
+      (\ref ResetSystem, \ref ResetProcessor, \ref ResetHardware). If you wish to use
+      a custom default reset sequence, you need to create a \ref element_sequence "sequence" element and use its <b>name</b>
+      as <b>defaultResetSequence</b>.
+    </td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
