@@ -447,12 +447,6 @@ Test Result: PASSED
 \details
 The \b osStatus_t enumeration defines the event status and error codes that are returned by the CMSIS-RTOS functions.
 */
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\struct osVersion_t
-\details
-\todo should we put htis in here?
-*/
 /// @} 
 
 
