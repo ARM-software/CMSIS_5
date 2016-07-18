@@ -208,88 +208,95 @@ If this is impossible, the CMSIS-RTOS rejects calls by nested ISR functions with
 Overview of all CMSIS-RTOS C API v2 functions.
 
  - \ref CMSIS_RTOS_KernelCtrl
-   - \ref osKernelInitialize : Initialize the RTOS kernel for creating objects.
-   - \ref osKernelStart : Start the RTOS kernel scheduler.
-   - \ref osKernelSuspend : Suspend the RTOS Kernel scheduler.
-   - \ref osKernelResume : Resume the RTOS Kernel scheduler.
+   - \ref osKernelGetInfo : \copybrief osKernelGetInfo
+   - \ref osKernelGetState : \copybrief osKernelGetState
+   - \ref osKernelGetTick : \copybrief osKernelGetTick
+   - \ref osKernelGetTime : \copybrief osKernelGetTime
+   - \ref osKernelInitialize : \copybrief osKernelInitialize
+   - \ref osKernelLock : \copybrief osKernelLock
+   - \ref osKernelResume : \copybrief osKernelResume
+   - \ref osKernelStart : \copybrief osKernelStart
+   - \ref osKernelSuspend : \copybrief osKernelSuspend
+   - \ref osKernelTickMicroSec : \copybrief osKernelTickMicroSec
+   - \ref osKernelUnlock : \copybrief osKernelUnlock
 
  - \ref CMSIS_RTOS_ThreadMgmt
-   - \ref osThreadNew : Create and start execution of a thread function.
-   - \ref osThreadTerminate : Stop execution of a thread function.
-   - \ref osThreadSuspend : Suspend a thread function.
-   - \ref osThreadResume : Resume a thread function.
-   - \ref osThreadGetState : Get current state of an active thread.
-   - \ref osThreadYield : Pass execution to next ready thread function.
-   - \ref osThreadGetId : Get the thread identifier to reference this thread.
-   - \ref osThreadSetPriority : Change the execution priority of a thread function.
-   - \ref osThreadGetPriority : Obtain the current execution priority of a thread function.
-
- - \ref CMSIS_RTOS_Wait
-   - \ref osDelay : Wait for a specified time.
-   - \ref osDelayUntil : Wait until a specified kernel time.
-
- - \ref CMSIS_RTOS_TimerMgmt
-   - \ref osTimerNew : Create and define timer with related callback function.
-   - \ref osTimerDelete : Step a timer and remove related callback function.
-   - \ref osTimerStart : Start or restart the timer with a time value.
-   - \ref osTimerStop : Stop the timer.
-   - \ref osTimerIsRunning : Check if a timer is running.
+   - \ref osThreadAbortWait : \copybrief osThreadAbortWait
+   - \ref osThreadDetach : \copybrief osThreadDetach
+   - \ref osThreadExit : \copybrief osThreadExit
+   - \ref osThreadGetId : \copybrief osThreadGetId
+   - \ref osThreadGetPriority : \copybrief osThreadGetPriority
+   - \ref osThreadGetState : \copybrief osThreadGetState
+   - \ref osThreadJoin : \copybrief osThreadJoin
+   - \ref osThreadNew : \copybrief osThreadNew
+   - \ref osThreadResume : \copybrief osThreadResume
+   - \ref osThreadSetPriority : \copybrief osThreadSetPriority
+   - \ref osThreadSuspend : \copybrief osThreadSuspend
+   - \ref osThreadTerminate : \copybrief osThreadTerminate
+   - \ref osThreadYield : \copybrief osThreadYield
 
  - \ref CMSIS_RTOS_ThreadFlagsMgmt
-   - \ref osThreadFlagsSet : Set the specified Thread Flags of an active thread
-   - \ref osThreadFlagsClear : Clear the specified Thread Flags of an active thread
-   - \ref osThreadFlagsGet : Get the current Thread Flags of an active thread.
-   - \ref osThreadFlagsWait : Wait for one or more Thread Flags of the current running thread to become signaled
+   - \ref osFlagsAutoClear : \copybrief osFlagsAutoClear
+   - \ref osFlagsWaitAll : \copybrief osFlagsWaitAll
+   - \ref osFlagsWaitAny : \copybrief osFlagsWaitAny
+   - \ref osThreadFlagsSet : \copybrief osThreadFlagsSet
+   - \ref osThreadFlagsWait : \copybrief osThreadFlagsWait
 
  - \ref CMSIS_RTOS_EventFlags
-   - \ref osEventFlagsNew : Create and initialize an Event Flags object.
-   - \ref osEventFlagsDelete : Delete an Event Flags object.
-   - \ref osEventFlagsSet : Set the specified Event Flags.
-   - \ref osEventFlagsClear : Clear the specified Event Flags.
-   - \ref osEventFlagsGet : Get the current Event Flags. 
-   - \ref osEventFlagsWait : Wait for one or more Event Flags to become signalled.
-
- - \ref CMSIS_RTOS_MutexMgmt
-   - \ref osMutexNew : Create and initialize a Mutex object.
-   - \ref osMutexDelete : Delete a Mutex object
-   - \ref osMutexAcquire : Obtain a Mutex or Wait until it becomes available.
-   - \ref osMutexRelease : Release a MMutex.
-
- - \ref CMSIS_RTOS_SemaphoreMgmt
-   - \ref osSemaphoreNew : Create and initialize a Semaphore object
-   - \ref osSemaphoreDelete : Delete a Semaphore object.
-   - \ref osSemaphoreAcquire : Obtain a Semaphore token or Wait until it becomes available.
-   - \ref osSemaphoreRelease : Release a Semaphore token.
-     \todo do we need a function that retrieves how many semaphores are available?
+   - \ref osEventFlagsNew : \copybrief osEventFlagsNew
+   - \ref osEventFlagsDelete : \copybrief osEventFlagsDelete
+   - \ref osEventFlagsSet : \copybrief osEventFlagsSet
+   - \ref osEventFlagsClear : \copybrief osEventFlagsClear
+   - \ref osEventFlagsGet : \copybrief osEventFlagsGet
+   - \ref osEventFlagsWait : \copybrief osEventFlagsWait
 
  - \ref CMSIS_RTOS_PoolMgmt
-   - \ref osMemoryPoolNew : Define and initialize a fix-size memory pool.
-   - \ref osMemoryPoolAlloc : Allocate a memory block.
-   - \ref osMemoryPoolFree : Return a memory block to the memory pool.
-   - \ref osMemoryPoolDelete : Delete a Memory Pool object
+   - \ref osMemoryPoolAlloc : \copybrief osMemoryPoolAlloc
+   - \ref osMemoryPoolDelete : \copybrief osMemoryPoolDelete
+   - \ref osMemoryPoolFree : \copybrief osMemoryPoolFree
+   - \ref osMemoryPoolGetBlockSize : \copybrief osMemoryPoolGetBlockSize
+   - \ref osMemoryPoolGetCapacity : \copybrief osMemoryPoolGetCapacity
+   - \ref osMemoryPoolGetCount : \copybrief osMemoryPoolGetCount
+   - \ref osMemoryPoolGetSpace : \copybrief osMemoryPoolGetSpace
+   - \ref osMemoryPoolNew : \copybrief osMemoryPoolNew
+
+ - \ref CMSIS_RTOS_MutexMgmt
+   - \ref osMutexAcquire : \copybrief osMutexAcquire
+   - \ref osMutexDelete : \copybrief osMutexDelete
+   - \ref osMutexGetOwner : \copybrief osMutexGetOwner
+   - \ref osMutexNew : \copybrief osMutexNew
+   - \ref osMutexRelease : \copybrief osMutexRelease
 
  - \ref CMSIS_RTOS_Message
-   - \ref osMessageQueueNew : Create and initialize a message queue.
-   - \ref osMessageQueuePut : Put a message into a message queue.
-   - \ref osMessageQueueGet : Get a message or suspend thread execution until message arrives.
-   - \ref osMessageQueueReset : Reset a Message Queue to initial empty state.
-   - \ref osMessageQueueDelete : Delete a Message Queue object.
+   - \ref osMessageQueueDelete : \copybrief osMessageQueueDelete
+   - \ref osMessageQueueGet : \copybrief osMessageQueueGet
+   - \ref osMessageQueueGetCapacity : \copybrief osMessageQueueGetCapacity
+   - \ref osMessageQueueGetCount : \copybrief osMessageQueueGetCount
+   - \ref osMessageQueueGetMsgSize : \copybrief osMessageQueueGetMsgSize
+   - \ref osMessageQueueGetSpace : \copybrief osMessageQueueGetSpace
+   - \ref osMessageQueueNew : \copybrief osMessageQueueNew
+   - \ref osMessageQueuePut : \copybrief osMessageQueuePut
+   - \ref osMessageQueueReset : \copybrief osMessageQueueReset
+
+ - \ref CMSIS_RTOS_SemaphoreMgmt
+   - \ref osSemaphoreAcquire : \copybrief osSemaphoreAcquire
+   - \ref osSemaphoreDelete : \copybrief osSemaphoreDelete
+   - \ref osSemaphoreGetCount : \copybrief osSemaphoreGetCount
+   - \ref osSemaphoreNew : \copybrief osSemaphoreNew
+   - \ref osSemaphoreRelease : \copybrief osSemaphoreRelease
+
+ - \ref CMSIS_RTOS_TimerMgmt
+   - \ref osTimerDelete : \copybrief osTimerDelete
+   - \ref osTimerIsRunning : \copybrief osTimerIsRunning
+   - \ref osTimerNew : \copybrief osTimerNew
+   - \ref osTimerStart : \copybrief osTimerStart
+   - \ref osTimerStop : \copybrief osTimerStop
+
+ - \ref CMSIS_RTOS_Wait
+   - \ref osWaitForever : \copybrief osWaitForever
+   - \ref osDelay : \copybrief osDelay
+   - \ref osDelayUntil : \copybrief osDelayUntil
 */
-
-
-/*
- - \ref CMSIS_RTOS_Mail
-   - \ref osMailQueueNew : Create and Initialize a Mail Queue object.
-   - \ref osMailQueueAlloc : Allocate a memory block for mail from a mail memory pool.
-   - \ref osMailQueuePut : Put a Mail into a Queue.
-   - \ref osMailQueueGet : Get a Mail from a Queue or timeout if Queue is empty.
-   - \ref osMailQueueFree : Free a memory block by returning it to a mail memory pool.
-   - \ref osMailQueueGetInfo : Get a Mail Queue information.
-   - \ref osMailQueueReset : Reset a Mail Queue to initial empty state.
-   - \ref osMailQueueDelete : Delete a Mail Queue object.
-*/
-
-
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -419,26 +426,11 @@ Test Result: PASSED
 /* ========================================================================================================================== */
 // Reference 
 /** 
- * \addtogroup CMSIS_RTOS CMSIS-RTOS API v2
- * \brief This section describes the CMSIS-RTOS API v2. 
- * \details The CMSIS-RTOS is a generic API layer that interfaces to an existing RTOS kernel.
- *  @{
- */
+\addtogroup CMSIS_RTOS CMSIS-RTOS API v2
+\brief This section describes the CMSIS-RTOS API v2. 
+\details The CMSIS-RTOS is a generic API layer that interfaces to an existing RTOS kernel.
 
-/// @} 
-
-
-typedef struct osVersion_s {
-  uint32_t                       api;   ///< API version (major.minor.rev: mmnnnrrrr dec).
-  uint32_t                    kernel;   ///< Kernel version (major.minor.rev: mmnnnrrrr dec).
-} osVersion_t;
- 
-
-
-
-
-
-
+*/
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 // ==== Status and Error Codes ====
@@ -449,12 +441,17 @@ typedef struct osVersion_s {
 \details The Status and Error Codes section lists all the return values that the CMSIS-RTOS functions will return.
 @{
 */
-
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \typedef osStatus_t
 \details
 The \b osStatus_t enumeration defines the event status and error codes that are returned by the CMSIS-RTOS functions.
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\struct osVersion_t
+\details
+\todo should we put htis in here?
 */
 /// @} 
 
