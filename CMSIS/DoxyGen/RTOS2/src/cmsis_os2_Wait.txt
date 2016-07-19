@@ -24,7 +24,7 @@ Reference:
 \details
 Wait for a specified time period in \a millisec.
 
-The \ref CMSIS_RTOS_TimeOutValue "millisec" value specifies the number of timer ticks and is therefore an upper bound. The
+The \ref CMSIS_RTOS_TimeOutValue "millisec" value is converted to a number of timer ticks and is therefore an upper bound. The
 exact time delay depends on the actual time elapsed since the last timer tick. 
 
 For a value of <b>1</b>, the system waits until the next timer tick occurs. That means that the actual time delay may be up
@@ -38,11 +38,11 @@ to one timer tick less.
  
 <b>Code Example</b>
 \code
-#include "cmsis_os.h"
+#include "cmsis_os2.h"
  
-void Thread_1 (void const *arg)  {               // Thread function
-  osStatus status;                               // capture the return status
-  uint32_t delayTime;                            // delay time in milliseconds
+void *Thread_1 (void *arg)  {               // Thread function
+  osStatus_t status;                               // capture the return status
+  uint32_t   delayTime;                            // delay time in milliseconds
  
   delayTime = 1000;                              // delay 1 second
   status = osDelay (delayTime);                  // suspend thread execution
@@ -56,6 +56,33 @@ void Thread_1 (void const *arg)  {               // Thread function
 /** 
 \fn osStatus_t osDelayUntil (uint64_t millisec)
 \details
+Wait until an absolute time - specified in millisec - is reached. 
 
+The \ref CMSIS_RTOS_TimeOutValue "millisec" value is converted to a number of timer ticks and is therefore an upper bound. The
+exact time delay depends on the actual time elapsed since the last timer tick. 
+
+\ref osKernelGetTime can be used to retrieve the current elapsed time of the kernel in millisec.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osEventTimeout: the time delay is executed.
+ - \em osErrorISR: \ref osDelayUntil cannot be called from interrupt service routines.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines". 
+
+<b>Code Example</b>
+\code
+#include "cmsis_os2.h"
+ 
+void *Thread_1 (void *arg)  {               // Thread function
+  osStatus_t status;                               // capture the return status
+  uint32_t   delayTime;                            // delay time in milliseconds
+ 
+  delayTime = osKernelGetTime() + 2000;          // 2 seconds from now.
+  status = osDelay (delayTime);                  // suspend thread execution
+  if (status != osOK) {
+    // handle error code
+  }  
+}
+\endcode
 */
 /// @}
