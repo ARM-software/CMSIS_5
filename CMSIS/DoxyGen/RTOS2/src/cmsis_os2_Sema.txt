@@ -65,15 +65,14 @@ token. When all threads have exited the token number is back to n. Ths following
 threads that might access the resource:
 
 \code
-osSemaphoreDef(multiplex);
-osSemaphoreId (multiplex_id);
+osSemaphoreId_t multiplex_id;
  
 void thread_n (void)
   {
-    multiplex_id = osSemaphoreCreate(osSemaphore(multiplex), 3);
+    multiplex_id = osSemaphoreNew(3, 0, NULL);
     while(1)
       {
-        osSemaphoreWait(multiplex_id, osWaitForever);
+        osSemaphoreAcquire(multiplex_id, osWaitForever);
         // do something
         osSemaphoreRelease(multiplex_id);
       }
