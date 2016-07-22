@@ -138,7 +138,7 @@ index.html file for this documentation, and the following sub-directories:
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page CM_revisionHistory Revision History 
+\page cm_revisionHistory Revision History 
 
 
 The following table shows the overall high-level history of the various CMSIS releases.

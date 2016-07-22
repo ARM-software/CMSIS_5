@@ -196,7 +196,7 @@ SEPARATE_MEMBER_PAGES  = NO
 # The TAB_SIZE tag can be used to set the number of spaces in a tab. 
 # Doxygen uses this value to replace tabs by spaces in code fragments.
 
-TAB_SIZE               = 8
+TAB_SIZE               = 9
 
 # This tag can be used to specify a number of aliases that acts 
 # as commands in the documentation. An alias has the form "name=value". 
@@ -205,7 +205,12 @@ TAB_SIZE               = 8
 # will result in a user-defined paragraph with heading "Side Effects:". 
 # You can put \n's in the value part of an alias to insert newlines.
 
-ALIASES                = 
+ALIASES                = "token{1}=<span class=\"XML-Token\">\1</span>" \
+                         "div{1}=<hr><div class=\"\1\">" \
+                         "enddiv= </div>" \
+                         "func{1}=<kbd>\1</kbd> <br>" \
+                         "copybrief{1}=<br> \copybrief \1 <br>" \
+                         "none=\em none <br>"
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only). 
 # A mapping has the form "name=value". For example adding 
@@ -533,19 +538,19 @@ STRICT_PROTO_MATCHING  = NO
 # disable (NO) the todo list. This list is created by putting \todo 
 # commands in the documentation.
 
-GENERATE_TODOLIST      = YES
+GENERATE_TODOLIST      = NO
 
 # The GENERATE_TESTLIST tag can be used to enable (YES) or 
 # disable (NO) the test list. This list is created by putting \test 
 # commands in the documentation.
 
-GENERATE_TESTLIST      = YES
+GENERATE_TESTLIST      = NO
 
 # The GENERATE_BUGLIST tag can be used to enable (YES) or 
 # disable (NO) the bug list. This list is created by putting \bug 
 # commands in the documentation.
 
-GENERATE_BUGLIST       = YES
+GENERATE_BUGLIST       = NO
 
 # The GENERATE_DEPRECATEDLIST tag can be used to enable (YES) or 
 # disable (NO) the deprecated list. This list is created by putting 
@@ -676,7 +681,20 @@ WARN_LOGFILE           =
 # with spaces.
 
 INPUT                  = . \
-                         ../../RTOS2/Template/cmsis_os.h
+                         ../../RTOS2/Include/cmsis_os2.h \
+                         ./src/cmsis_os2.txt \
+                         ./src/cmsis_os2_Kernel.txt \
+                         ./src/cmsis_os2_Thread.txt \
+                         ./src/cmsis_os2_Wait.txt \
+                         ./src/cmsis_os2_ThreadFlags.txt \
+                         ./src/cmsis_os2_Event.txt \
+                         ./src/cmsis_os2_Mutex.txt \
+                         ./src/cmsis_os2_Sema.txt \
+                         ./src/cmsis_os2_Timer.txt \
+                         ./src/cmsis_os2_MemPool.txt \
+                         ./src/cmsis_os2_Message.txt \
+                         ./src/cmsis_os2_Status.txt \
+                         ./src/cmsis_os2_Migration.txt
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 
@@ -731,7 +749,7 @@ FILE_PATTERNS          = *.c \
 # should be searched for input files as well. Possible values are YES and NO. 
 # If left blank NO is used.
 
-RECURSIVE              = YES
+RECURSIVE              = NO
 
 # The EXCLUDE tag can be used to specify files and/or directories that should be 
 # excluded from the INPUT source files. This way you can easily exclude a 
@@ -768,7 +786,9 @@ EXCLUDE_SYMBOLS        =
 # directories that contain example code fragments that are included (see 
 # the \include command).
 
-EXAMPLE_PATH           = ..\..\RTOS2
+EXAMPLE_PATH           = ../../RTOS2/Include \
+                         ../../RTOS2 \
+                         ../../RTOS2/Template
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the 
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp 
@@ -849,13 +869,13 @@ STRIP_CODE_COMMENTS    = NO
 # then for each documented function all documented 
 # functions referencing it will be listed.
 
-REFERENCED_BY_RELATION = NO
+REFERENCED_BY_RELATION = YES
 
 # If the REFERENCES_RELATION tag is set to YES 
 # then for each documented function all documented entities 
 # called/used by that function will be listed.
 
-REFERENCES_RELATION    = NO
+REFERENCES_RELATION    = YES
 
 # If the REFERENCES_LINK_SOURCE tag is set to YES (the default) 
 # and SOURCE_BROWSER tag is set to YES, then the hyperlinks from 
@@ -969,7 +989,8 @@ HTML_EXTRA_STYLESHEET  = ../Doxygen_Templates/cmsis.css
 
 HTML_EXTRA_FILES       = ../Doxygen_Templates/tabs.css \
                          ../Doxygen_Templates/tab_topnav.png \
-                         ../Doxygen_Templates/printComponentTabs.js
+                         ../Doxygen_Templates/printComponentTabs.js \
+                         ../Doxygen_Templates/search.css
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. 
 # Doxygen will adjust the colors in the style sheet and background images 
@@ -985,7 +1006,7 @@ HTML_COLORSTYLE_HUE    = 220
 # the colors in the HTML output. For a value of 0 the output will use 
 # grayscales only. A value of 255 will produce the most vivid colors.
 
-HTML_COLORSTYLE_SAT    = 100
+HTML_COLORSTYLE_SAT    = 103
 
 # The HTML_COLORSTYLE_GAMMA tag controls the gamma correction applied to 
 # the luminance component of the colors in the HTML output. Values below 
@@ -1257,7 +1278,7 @@ MATHJAX_EXTENSIONS     =
 # typically be disabled. For large projects the javascript based search engine 
 # can be slow, then enabling SERVER_BASED_SEARCH may provide a better solution.
 
-SEARCHENGINE           = NO
+SEARCHENGINE           = YES
 
 # When the SERVER_BASED_SEARCH tag is enabled the search engine will be 
 # implemented using a PHP enabled web server instead of at the web client 

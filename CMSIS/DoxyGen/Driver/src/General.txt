@@ -69,7 +69,7 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
       <td>2.03</td>
       <td>Modifications compared to Version 2.02:
  - Added: CAN API for an interface to CAN peripherals
- - Added: Overview of the \ref DriverValidation "CMSIS-Driver Validation" Software Pack.
+ - Added: Overview of the \ref driverValidation "CMSIS-Driver Validation" Software Pack.
  - Enhanced: documentation and clarified behavior of the \ref CallSequence.
       </td>
     </tr>
@@ -93,7 +93,7 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page TheoryOperation Theory of Operation
+\page theoryOperation Theory of Operation
 
 [TOC]
 
@@ -305,7 +305,7 @@ init_middleware (&Driver_SPI2);      // connect middleware to SPI2 interface
 
 \section DriverConfiguration Driver Configuration
 
-For a device family, the drivers may be configurable. The \ref ReferenceImplementation stores configuration options in a
+For a device family, the drivers may be configurable. The \ref referenceImplementation stores configuration options in a
 central file with the name \b RTE_Device.h. However, the configuration of the drivers itself is not part of the CMSIS-Driver
 specification.
 
@@ -318,13 +318,13 @@ The following example code shows the usage of the SPI interface.
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page ReferenceImplementation Reference Implementation
+\page referenceImplementation Reference Implementation
 
 The API of the CMSIS-Drivers is published in the \ref DriverHeaderFiles.
 
 To simplify the development of a CMSIS-Driver both \ref DriverTemplates and \ref DriverExamples are provided.
 
-ARM offers also a Software Pack for CMSIS-Driver Validation as described in \ref DriverValidation.
+ARM offers also a Software Pack for CMSIS-Driver Validation as described in \ref driverValidation.
 
 \section DriverHeaderFiles Driver Header Files
 
@@ -410,7 +410,7 @@ Further driver reference implementations are available in Device Family Packs (D
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page DriverValidation Driver Validation
+\page driverValidation Driver Validation
 
 ARM offers a <a href="http://www.keil.com/pack/doc/CMSIS/DV/html/index.html" target=_blank>CMSIS-Driver Validation</a>
 Software Pack. The <b>ARM::CMSIS-Driver_Validation</b> Pack contains the following:

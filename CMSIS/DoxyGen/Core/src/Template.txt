@@ -1,5 +1,5 @@
 /**
-\page Templates_pg Template Files
+\page templates_pg Template Files
 
 \details
 

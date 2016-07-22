@@ -1,0 +1,168 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Kernel Control ====
+/** 
+\addtogroup CMSIS_RTOS_KernelCtrl Kernel Information and Control
+\ingroup CMSIS_RTOS
+\brief Provide version/system information and start the RTOS Kernel.
+\details 
+The Kernel Information and Control function group allows to:
+  - obtain information about the system and the underlying kernel.
+  - obtain version information about the CMSIS-RTOS API.
+  - initialize of the RTOS kernel for creating objects.
+  - start the RTOS kernel and thread switching.
+  - check the execution status of the RTOS kernel.
+
+The function \b main is a special thread function that may be started at system initialization. In this case it has the
+initial priority \a osPriorityNormal.
+
+When reaching \b main, it is necessary to:
+-# Call osKernelInitialize() to initialize the CMSIS-RTOS Kernel
+-# Setup device peripherals and create other RTOS objects using the \b os*Create functions.
+-# Start the Kernel and begin thread switching by calling osKernelStart().
+
+<b>Code Example</b>
+\code
+int main (void) {
+  osKernelInitialize ();                    // initialize CMSIS-RTOS
+ 
+  // initialize peripherals here
+ 
+  // create 'thread' functions that start executing,
+  // example: tid_name = osThreadCreate (osThread(name), NULL);
+ 
+  osKernelStart ();                         // start thread execution 
+}
+\endcode
+@{
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\struct osVersion_t
+\details
+Identifies the underlying RTOS kernel and API version number. 
+The Version is represented in a combined decimal number in the format: major.minor.rev: mmnnnrrrr 
+
+Use \ref osKernelGetInfo to retrieve the version numbers
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\enum osKernelState_t
+\details
+State of the Kernel. Can be retrieved by \ref osKernelGetState.
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osKernelInitialize (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size)
+\details
+Retrieve API and kernel version of the underlying RTOS kernel and a human readable identifier string of the kernel.
+
+\b Example
+\code
+void info (void) {
+  char infobuf[100];
+  osVersion_t osv;
+  osStatus_t status;
+	
+  status = osKernelGetInfo(&osv, infobuf, 100);
+  if(status == osOK) {
+    printf("Kernel Information: %s\r\n", infobuf);
+		printf("Kernel Version    : %d\r\n", osv.kernel);
+		printf("Kernel API Version: %d\r\n", osv.api);
+	}		
+}
+\endcode
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osKernelState_t osKernelGetState (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osKernelStart (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osKernelLock (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn void osKernelUnlock (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osKernelSuspend (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn void osKernelResume (uint32_t sleep_time)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint64_t osKernelGetTime (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osKernelGetTick (void)
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osKernelTickMicroSec (uint32_t microsec)
+\details
+
+*/
+/// @}
+
+// these struct members must stay outside the group to avoid double entries in documentation
+/**
+\var osKernelState_t::osKernelInactive
+\details
+The kernel is not ready yet. \ref osKernelInitialize needs to be executed successfully.
+
+\var osKernelState_t::osKernelReady
+\details
+The kernel is not yet running. \ref osKernelStart transfers the kernel to the running state.
+
+\var osKernelState_t::osKernelRunning
+\details
+The kernel is initialized and running.
+
+\var osKernelState_t::osKernelLocked
+\details
+The kernel was locked with \ref osKernelLock. The function \ref osKernelUnlock unlocks it.
+
+\var osKernelState_t::osKernelSuspended
+\details
+The kernel was suspended using \ref osKernelSuspend. The function \ref osKernelResume returns to normal operation.
+
+\var osKernelState_t::osKernelError
+\details
+An error occurred. The kernel error handler should have been called in this state.
+
+\var osKernelState_t::osKernelReserved
+\details
+Reserved. 
+*/
+

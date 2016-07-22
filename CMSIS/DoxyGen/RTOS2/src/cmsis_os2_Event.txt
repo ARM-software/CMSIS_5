@@ -1,0 +1,153 @@
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Event Flag Management ====
+/** 
+\addtogroup CMSIS_RTOS_EventFlags Event Flags
+\ingroup CMSIS_RTOS
+\brief Create events using flags.
+\details 
+Events are used to trigger execution states between threads. The event flag management functions in CMSIS-RTOS allow you to control or wait for event flags. Each signal has up to 31 event flags (int32_t flags provides 31 bits).
+
+A thread
+- can wait for event flags to be set (using \ref osEventFlagsGet). Using this function, it enters the
+  \ref ThreadStates "WAITING" state. The \ref osEventFlagsGet parameter \a flags defines the signals that are required to put the thread back into \b READY state.
+- may set one or more flags in any other given thread (using \ref osEventFlagsSet).
+- may clear its own signals or the signals of other threads (using \ref osEventFlagsClear).
+
+When a thread wakes up and resumes execution, its signal flags are automatically cleared. 
+
+Working with Events
+--------------------
+Here is a simple example that shows how two thread can communicate with each others using event flags:
+
+\image html simple_signal.png "Simple event communication"
+
+The following steps are required to use signals:
+-# In the thread that is supposed to send  a event with id sig1_id, call the wait function:
+\code
+osEventFlagsSet (sig1_id, 0x0001); // 
+\endcode
+-# In another thread (or threads) that are supposed wait for the event:
+\code
+osEventFlagsGet (sig1_id, 0x0001, NULL, osWaitForever);    // set the signal 0x0001 for thread tid_thread1
+osDelay (1000);                       // wait for 1 second
+\endcode
+
+@{
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef osEventFlagsId_t 
+\details
+ 
+*/ 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\struct osEventFlagsAttr_t 
+\details
+ 
+*/ 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osEventFlagsId_t osEventFlagsNew (const osEventFlagsAttr_t *attr)
+\details
+Create and initialize a Event Flag object that is used to send events accross threads. 
+
+<b>Code Example</b>
+\code{.c}
+#include "cmsis_os2.h"
+
+osEventId_tId_t event_id;   
+  
+void CreateEvent (void)  {
+
+  event_id = osEventFlagsNew(NULL);
+  if (event_id != NULL)  {
+    // Event object created
+  }   
+}
+\endcode
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t osEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags)
+\details
+Set the event flags in an event flags object. This function may be used also within interrupt service routines. 
+All threads waiting for the flag set will be notified to resume from WAITING state.
+
+\note \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" can call this function.
+
+<b>Code Example</b>
+\code{.c}
+void *Thread_2 (void *arg);
+ 
+static void EX_Signal_1 (void)  {
+  int32_t      signals;
+  osThreadId_t thread_id;
+  
+  thread_id = osThreadCreate  (Thread_2, NULL, NULL);
+  signals   = osEventFlagsSet (event_id, 0x00000005);         // Send signals to the created thread
+}
+\endcode
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t osEventFlagsClear (osEventFlagsId_t ef_id, int32_t flags)
+\details
+Clear the event flags of an event flags object.
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t osEventFlagsGet (osEventFlagsId_t ef_id)
+\details
+Return the event flags currently set in an event flags object.
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t osEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t millisec)
+\details
+Suspend the execution of the current \b RUNNING thread until any or all specified event flags with the parameter \a flags are set.
+The /em options parameter specifies the wait condition. 
+
+|Option              |													     |
+|--------------------|-------------------------------------------------------|
+|\b osFlagsWaitAny   |   Wait for any flag (default).                        |
+|\b osFlagsWaitAll   |   Wait for all flags.                                 |
+|\b osFlagsAutoClear |   Clear flags which have been specified to wait for.  |
+
+If osFlagsAutoClear is not set in the options /ref osEventFlagsClear can be used to clear flags manually.
+
+When these event flags are already set, the function returns instantly. Otherwise the thread is put into the state \b WAITING. 
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osEventFlagsDelete (osEventFlagsId_t ef_id)
+\details
+Delete an event flag object.  The function releases internal memory obtained for event flags handling.  After this call the \em ef_id is no longer valid and cannot be used. The \em ef_id may be created again using the function \ref osEventFlagsNew.
+This can cause starvation of threads that are waiting for flags of this event object.
+*/
+/// @}
+
+// these struct members must stay outside the group to avoid double entries in documentation
+/**
+\var osEventFlagsAttr_t::attr_bits
+\details
+No attributes available.
+
+\var osEventFlagsAttr_t::cb_mem
+\details
+Pointer to a memory location for the event object. This can optionally be used for custom memory management systems. 
+Specify \token{NULL} to use the kernel memory management.
+
+
+\var osEventFlagsAttr_t::cb_size
+\details
+The size of the memory block passed with \ref cb_mem. Must be the size of an event object or larger.
+
+\var osEventFlagsAttr_t::name
+\details
+String with a human readable name of the event object.
+
+*/

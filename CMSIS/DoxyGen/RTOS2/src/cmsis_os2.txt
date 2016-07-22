@@ -1,0 +1,511 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\mainpage
+
+The <b>CMSIS-RTOS API v2</b> addresses the following new requirements:
+ - Dynamic object creation no longer requires static memory, static memory buffers are now optional.
+ - Support for ARMv8-M architecture that provides a Secure and Non-Secure state of code execution.
+ - Provisions for message passing in multi-core systems.
+ - Full support of C++ run-time environments.
+ - C interface which is binary compatible across <a class="el" href="http://infocenter.arm.com/help/topic/com.arm.doc.subset.swdev.abi/index.html">ABI compatible compilers</a>.
+
+As a consequence of these requirements the CMSIS-RTOS API v2 has the following fundamental modifications:
+ - The functions osXxxxNew replace osXxxxCreate functions; osXxxxNew and osXxxxDelete create and destroy objects.
+ - The C function main is not longer started as a thread (this was an optional feature in CMSIS-RTOS v1).
+ - Functions that return osEvent have been replaced.
+
+CMSIS-RTOS API v2 provides an translation layer for the
+<a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API v1</a> that simplifies migration.
+
+CMSIS-RTOS API v2 is not POSIX compliant, but has provisions to enable a POSIX translation layer and a C++ interface.
+\todo Investigate into a flexible C++ interface and potential POSIX translation
+
+<hr>
+
+CMSIS-RTOS in ARM::CMSIS Pack
+-----------------------------
+
+The following files relevant to CMSIS-RTOS are present in the <b>ARM::CMSIS</b> Pack directories:
+File/Folder                  | Content                                                                
+-----------------------------|------------------------------------------------------------------------
+\b CMSIS/Documentation/RTOS2 | This documentation                                                     
+\b CMSIS/Documentation/RTOS  | CMSIS-RTOS API v1 documentation                                 
+\b CMSIS/RTOS2/Template      | \ref cmsis_os2_h                                                 
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page rtos_revisionHistory Revision History
+
+<table class="cmtable" summary="Revision History">
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>V2.00</td>
+      <td>
+        Extended number of thread priorities.\n
+        Added: osKernelTime, osKernelStop.\n
+        Added: osThreadState, osThreadGetState, osThreadSuspend, osThreadResume.\n
+        Added: osTimerRunning.\n
+        Added: osPoolDelete.\n
+        Added: osMessageCount, osMessageReset, osMessageDelete.\n
+        Added: osMailCount, osMailReset, osMailDelete.\n
+        Added: osFlag object.\n
+     </td>
+    </tr>
+    <tr>
+      <td>V1.02 - only documentation changes</td>
+      <td>
+      Added: Overview of the \ref rtosValidation "CMSIS-RTOS Validation" Software Pack.\n
+	  Clarified: Behavior of \ref CMSIS_RTOS_TimeOutValue.
+     </td>
+    </tr>
+    <tr>
+      <td>V1.02</td>
+      <td>Added: New control functions for short timeouts in microsecond resolution \b osKernelSysTick,
+      \b osKernelSysTickFrequency, \b osKernelSysTickMicroSec.\n
+      Removed: osSignalGet.
+     </td>
+    </tr>
+    <tr>
+      <td>V1.01</td>
+      <td>Added capabilities for C++, kernel initialization and object deletion.\n
+      Prepared for C++ class interface. In this context to \em const attribute has been moved from osXxxxDef_t typedefs to
+      the osXxxxDef macros.\n
+      Added: \ref osTimerDelete, \ref osMutexDelete, \ref osSemaphoreDelete.\n
+      Added: \ref osKernelInitialize that prepares the Kernel for object creation.\n
+      </td>
+    </tr>
+    <tr>
+      <td>
+      V1.00</td>
+      <td>First official Release.\n
+      Added: \ref osKernelStart; starting 'main' as a thread is now an optional feature.\n
+      Semaphores have now the standard behavior.\n
+      \b osTimerCreate does no longer start the timer. Added: \ref osTimerStart (replaces osTimerRestart).\n
+      Changed: osThreadPass is renamed to \ref osThreadYield.
+      </td>
+    </tr>
+    <tr>
+      <td>V0.02</td>
+      <td>Preview Release.</td>
+    </tr>
+</table>
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page functionOverview Function Overview
+
+CMSIS-RTOS v2 provides multiple API functions:
+  - \subpage rtos_api2 is the new C function API that support dynamic object creation, ARMv8-M, and multi-processor
+    communication.
+  - <a class="el" href="../../RTOSv1/html/_function_overview.html">CMSIS-RTOS C API Version 1</a> is a C function API the is
+    backward compatible with CMSIS-RTOS v2.
+  - \subpage rtos_apicpp is a C++ class function API.
+
+It is possible to intermix the different API variants in the same application and even in the same C/C++ source module.
+However, the functions of the <b>C API Version 1</b> may be deprecated in future versions of CMSIS-RTOS.
+
+\section CMSIS_RTOS_TimeOutValue Timeout Value   
+
+The timeout value specifies the number of timer ticks until a timeout or time delay elapses. The value is an upper bound and 
+depends on the actual time elapsed since the last timer tick. 
+
+For a value of \b 1 the system waits until the next timer tick occurs. That means that the actual timeout value can be one
+timer tick less than the specified timeout value. 
+
+\image html TimerValues.png "Timer Values"
+
+\section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
+
+\todo Can any of the new functions be called from ISRs?
+
+The following CMSIS-RTOS functions can be called from threads and Interrupt Service Routines (ISR):
+  - \ref osKernelRunning
+  - \ref osSemaphoreRelease
+  - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree
+  - \ref osMessageQueuePut, \ref osMessageQueueGet
+
+Functions that cannot be called from an ISR are verifying the interrupt status and return, in case they are called
+from an ISR context, the status code \b osErrorISR. In some implementations, this condition might be caught using the HARD
+FAULT vector.
+
+Some CMSIS-RTOS implementations support CMSIS-RTOS function calls from multiple ISRs at the same time.
+If this is impossible, the CMSIS-RTOS rejects calls by nested ISR functions with the status code \b osErrorISRRecursive.
+*/
+
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page rtos_api2 CMSIS-RTOS C API Version 2  
+
+Overview of all CMSIS-RTOS C API v2 functions.
+
+ - \ref CMSIS_RTOS_KernelCtrl
+   - \ref osKernelGetInfo : \copybrief osKernelGetInfo
+   - \ref osKernelGetState : \copybrief osKernelGetState
+   - \ref osKernelGetTick : \copybrief osKernelGetTick
+   - \ref osKernelGetTime : \copybrief osKernelGetTime
+   - \ref osKernelInitialize : \copybrief osKernelInitialize
+   - \ref osKernelLock : \copybrief osKernelLock
+   - \ref osKernelResume : \copybrief osKernelResume
+   - \ref osKernelStart : \copybrief osKernelStart
+   - \ref osKernelSuspend : \copybrief osKernelSuspend
+   - \ref osKernelTickMicroSec : \copybrief osKernelTickMicroSec
+   - \ref osKernelUnlock : \copybrief osKernelUnlock
+
+ - \ref CMSIS_RTOS_ThreadMgmt
+   - \ref osThreadAbortWait : \copybrief osThreadAbortWait
+   - \ref osThreadDetach : \copybrief osThreadDetach
+   - \ref osThreadExit : \copybrief osThreadExit
+   - \ref osThreadGetId : \copybrief osThreadGetId
+   - \ref osThreadGetPriority : \copybrief osThreadGetPriority
+   - \ref osThreadGetState : \copybrief osThreadGetState
+   - \ref osThreadJoin : \copybrief osThreadJoin
+   - \ref osThreadNew : \copybrief osThreadNew
+   - \ref osThreadResume : \copybrief osThreadResume
+   - \ref osThreadSetPriority : \copybrief osThreadSetPriority
+   - \ref osThreadSuspend : \copybrief osThreadSuspend
+   - \ref osThreadTerminate : \copybrief osThreadTerminate
+   - \ref osThreadYield : \copybrief osThreadYield
+
+ - \ref CMSIS_RTOS_Wait
+   - \ref osWaitForever : \copybrief osWaitForever
+   - \ref osDelay : \copybrief osDelay
+   - \ref osDelayUntil : \copybrief osDelayUntil
+
+ - \ref CMSIS_RTOS_TimerMgmt
+   - \ref osTimerDelete : \copybrief osTimerDelete
+   - \ref osTimerIsRunning : \copybrief osTimerIsRunning
+   - \ref osTimerNew : \copybrief osTimerNew
+   - \ref osTimerStart : \copybrief osTimerStart
+   - \ref osTimerStop : \copybrief osTimerStop
+
+ - \ref CMSIS_RTOS_EventFlags
+   - \ref osEventFlagsNew : \copybrief osEventFlagsNew
+   - \ref osEventFlagsDelete : \copybrief osEventFlagsDelete
+   - \ref osEventFlagsSet : \copybrief osEventFlagsSet
+   - \ref osEventFlagsClear : \copybrief osEventFlagsClear
+   - \ref osEventFlagsGet : \copybrief osEventFlagsGet
+   - \ref osEventFlagsWait : \copybrief osEventFlagsWait
+
+ - \ref CMSIS_RTOS_ThreadFlagsMgmt
+   - \ref osFlagsAutoClear : \copybrief osFlagsAutoClear
+   - \ref osFlagsWaitAll : \copybrief osFlagsWaitAll
+   - \ref osFlagsWaitAny : \copybrief osFlagsWaitAny
+   - \ref osThreadFlagsSet : \copybrief osThreadFlagsSet
+   - \ref osThreadFlagsWait : \copybrief osThreadFlagsWait
+
+ - \ref CMSIS_RTOS_Message
+   - \ref osMessageQueueDelete : \copybrief osMessageQueueDelete
+   - \ref osMessageQueueGet : \copybrief osMessageQueueGet
+   - \ref osMessageQueueGetCapacity : \copybrief osMessageQueueGetCapacity
+   - \ref osMessageQueueGetCount : \copybrief osMessageQueueGetCount
+   - \ref osMessageQueueGetMsgSize : \copybrief osMessageQueueGetMsgSize
+   - \ref osMessageQueueGetSpace : \copybrief osMessageQueueGetSpace
+   - \ref osMessageQueueNew : \copybrief osMessageQueueNew
+   - \ref osMessageQueuePut : \copybrief osMessageQueuePut
+   - \ref osMessageQueueReset : \copybrief osMessageQueueReset
+
+ - \ref CMSIS_RTOS_PoolMgmt
+   - \ref osMemoryPoolAlloc : \copybrief osMemoryPoolAlloc
+   - \ref osMemoryPoolDelete : \copybrief osMemoryPoolDelete
+   - \ref osMemoryPoolFree : \copybrief osMemoryPoolFree
+   - \ref osMemoryPoolGetBlockSize : \copybrief osMemoryPoolGetBlockSize
+   - \ref osMemoryPoolGetCapacity : \copybrief osMemoryPoolGetCapacity
+   - \ref osMemoryPoolGetCount : \copybrief osMemoryPoolGetCount
+   - \ref osMemoryPoolGetSpace : \copybrief osMemoryPoolGetSpace
+   - \ref osMemoryPoolNew : \copybrief osMemoryPoolNew
+
+ - \ref CMSIS_RTOS_MutexMgmt
+   - \ref osMutexAcquire : \copybrief osMutexAcquire
+   - \ref osMutexDelete : \copybrief osMutexDelete
+   - \ref osMutexGetOwner : \copybrief osMutexGetOwner
+   - \ref osMutexNew : \copybrief osMutexNew
+   - \ref osMutexRelease : \copybrief osMutexRelease
+
+ - \ref CMSIS_RTOS_SemaphoreMgmt
+   - \ref osSemaphoreAcquire : \copybrief osSemaphoreAcquire
+   - \ref osSemaphoreDelete : \copybrief osSemaphoreDelete
+   - \ref osSemaphoreGetCount : \copybrief osSemaphoreGetCount
+   - \ref osSemaphoreNew : \copybrief osSemaphoreNew
+   - \ref osSemaphoreRelease : \copybrief osSemaphoreRelease
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page rtos_apicpp CMSIS-RTOS C++ API
+
+Coming soon
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page cmsis_os2_h Header File Template: cmsis_os2.h
+
+The file \b cmsis_os2.h is a template header file for a CMSIS-RTOS compliant Real-Time Operating System (RTOS).
+Each RTOS that is compliant with CMSIS-RTOS shall provide a specific \b cmsis_os2.h header file that represents
+its implementation.
+
+The file cmsis_os2.h contains:
+ - CMSIS-RTOS API function definitions
+ - struct definitions for parameters and return types
+ - status and priority values used by CMSIS-RTOS API functions
+ - macros for defining threads and other kernel objects
+
+
+<b>Name conventions and header file modifications</b>
+
+All definitions are prefixed with \b os to give an unique name space for CMSIS-RTOS functions.
+Definitions that are prefixed \b os_ are not used in the application code but local to this header file.
+All definitions and functions that belong to a module are grouped and have a common prefix, i.e. \b osThread.
+
+Definitions that are marked with <b>CAN BE CHANGED</b> can be adapted towards the needs of the actual CMSIS-RTOS
+implementation. These definitions can be specific to the underlying RTOS kernel.
+
+Definitions that are marked with <b>MUST REMAIN UNCHANGED</b> cannot be altered. Otherwise the CMSIS-RTOS implementation is
+no longer compliant to the standard. Note that some functions are optional and need not to be provided by every CMSIS-RTOS
+implementation.
+
+<b>Define and reference object definitions</b>
+
+With <b>\#define osObjectsExternal</b> objects are defined as external symbols. This allows to create a consistent header
+file that is used throughout a project as shown below:
+
+<i>Header File</i>
+\code
+#include <cmsis_os2.h>                                         // CMSIS RTOS header file
+
+// Thread definition
+ 
+// Pool definition
+
+\endcode
+
+\todo add the code for pool and thread creation.
+
+This header file defines all objects when included in a C/C++ source file. When <b>\#define osObjectsExternal</b> is
+present before the header file, the objects are defined as external symbols. A single consistent header file can therefore be
+used throughout the whole project.
+
+<i>Example</i>
+\code
+#include "osObjects.h"     // Definition of the CMSIS-RTOS objects
+\endcode
+
+\code
+#define osObjectsExternal  // Objects will be defined as external symbols
+#include "osObjects.h"     // Reference to the CMSIS-RTOS objects
+\endcode
+
+<b>Header file %cmsis_os2.h</b>
+
+\include cmsis_os2.h
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page rtx5_impl RTX5 Implementation
+
+The following chapters guide you towards implementing the CMSIS-RTOS RTX:
+ - \subpage theory_op
+ - \subpage cre_rtx_proj
+ - \subpage config_rtx
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page theory_op Theory of Operation
+
+This section describes how CMSIS-RTOS RTX manages the resources of the target system. Many aspects of the CMSIS-RTOS RTX
+kernel can be configured. Information about configuration options is mentioned where applicable.
+
+\section KernelTimer RTX Kernel Timer Tick and Thread Management
+
+By default, CMSIS-RTOS RTX5 uses the Cortex-M
+<a href="http://www.keil.com/support/man/docs/gsac/GSAC_SYSTICKtimer.htm" target="_blank">SysTick</a> timer to generate
+periodic interrupts for the RTX kernel timer tick. CMSIS-RTOS provides \ref CMSIS_RTOS_TimerMgmt functions and several
+CMSIS-RTOS functions have a timeout parameter. This periodic RTX kernel timer tick interrupt is used to derive the required
+time interval. CMSIS-RTOS RTX also provides configuration options for a alternative timer and tick-less operation. 
+
+To handle timeout and time delays for threads, the CMSIS-RTOS RTX thread management is controlled by the RTX kernel timer
+tick interrupt. The thread context switch itself is implemented in the HAL_CMx.x hardware abstraction layer source files. The
+thread context contains all CPU registers (R0 - R12), the return address (LR), the program counter (PC), and the processor
+status register (xPSR). For the Cortex-M4 FPU and Cortex-M7 FPU the floating point status and registers (S0 - S32, FPSCR) are
+also part of the thread context.
+
+When a thread switch occurs:
+ - the thread context of the current running thread is stored on the local stack of this thread.
+ - the stack pointer is switched to the next running thread.
+ - the thread context of this next running thread is restored and this thread starts to run.
+
+\note 
+- For Cortex-M0, Cortex-M3, Cortex-M4, and Cortex-M7 the thread context requires 64 bytes on the local stack.
+- For Cortex-M4 FPU and Cortex-M7 FPU the thread context requires 200 bytes on the local stack. For devices with Cortex-M4 FPU and Cortex-M7 FPU the default stack space should be increased to a minimum of 300 bytes.
+
+Each thread is provided with an separate stack that holds the thread context and stack space for automatic variables and return addresses for function call nesting. The stack sizes of the RTX threads are flexible configurable as explained in the section \ref threadConfig. RTX even offers a configurable checking for stack overflows and stack utilization. 
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page cre_rtx_proj Create an RTX Project
+
+Example projects using CMSIS-RTOS RTX are available for various development boards. To make use of these examples, you need
+to install a Device Family Pack in µVision and use Pack Installer to open a CMSIS-RTOS2 Blinky project. If you wish to start a CMSIS-RTOS RTX5 from scratch, follow these steps:
+- Create a new project and select a device.
+- In the Manage Run-Time Environment window that opens, select <b>CMSIS\::CORE</b> and <b>CMSIS\::RTOS2 (API)\::Keil RTX5</b>.
+  If the <b>Validation Output</b> requires other components to be present, try to use the \b Resolve button:
+
+   \image html manage_rte_output.png
+
+- Click \b OK. In the \b Project window, you will see the files that have been automatically added to you project, such as
+  \b %RTX_Config.c and the system and startup files:
+
+   \image html project_window.png
+   
+- You can add template files to the project by right-clicking on <b>Source Group 1</b> and selecting
+  <b>Add New Item to 'Source Group 1'</b>. In the new window, click on <b>User Code Template</b>. On the right-hand side
+  you will see all available template files for CMSIS-RTOS RTX:
+  
+   \image html add_item.png
+
+- Finally, \ref config_rtx "configure" RTX to the application's needs using the \b %RTX_Config.c file.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page config_rtx Configure RTX
+
+The file "RTX_Config.c" is used to define the configuration parameters of CMSIS-RTOS RTX. This file must be part of every project that is using the CMSIS-RTOS RTX kernel.
+
+The configuration file uses
+<a class="el" href="http://www.keil.com/pack/doc/CMSIS/Pack/html/_config_wizard.html" target="_blank">Configuration Wizard Annotations</a>.
+Depending on the development tool that is used, this might lead to a more user friendly graphical representation of the settings. The following is a screenshot of the same configuration file using µVision's Configuration Wizard view:
+
+\image html config_wizard.png "RTX_Conf_CM.c in Configuration Wizard View"
+
+The configuration options are explained on these pages:
+- \subpage threadConfig
+
+*/
+
+
+/* ========================================================================================================================== */
+/**
+\page threadConfig Thread Configuration
+
+The CMSIS-RTOS RTX provides several parameters for the thread configuration.
+
+\section stackConfig Configuration of Thread count and Stack Space
+
+\ref osThreadAttr_t is passed to osThreadNew to set the options of a thread.
+
+CMSIS-RTOS RTX defines two methods for defining the stack requirements:
+ - when \a *stack_mem in osThreadAttr_t is NULL, a fixed-size memory pool is used to for the thread stack.  In this case \b OS_STKSIZE specifies the stack size for the thread function.
+ - when \a *stack_mem specifies a memory location, the thread stack provided there. The size of this user space is specified with \b stack_size. 
+ 
+Stack memory for threads is configured either statically by Static Resources - Number of Threads (total). Static memory in the size of Number of Threads * Default Thread Stack size is reserved.
+Alternatively the memory is allocated on demand from the Dynamic Resources pool (configured by System Configuration - Dynamic Resources - Memory size [bytes] for Stack).
+
+The CMSIS-RTOS RTX kernel uses a separate stack for each thread it creates. However, before the kernel is started by the\ref osKernelInitialize() function, the main stack size that is configured in the file startup_<i>device</i>.s is used.
+
+Main stack is also used when:
+- the user application calls the majority of RTX functions from Thread mode (ending up in an SVC call)
+- running from handlers (user interrupt of exception handlers like SVCm PendSV, Faults, etc.)
+
+|Name                                                               |\#define         |Description|
+|-------------------------------------------------------------------|-----------------|-----------|
+|Number of concurrent running user threads                          |\c OS_THREAD_NUM    |Indicates the maximum number of threads that will run at the same time (including main).|
+|Default Thread stack size [bytes]                                  |\c OS_STACK_SIZE    |Specifies the default stack size (in words) for threads that are defined with osThreadDef \a stacksz = 0.|
+|Number of threads with user-provided stack size                    |\c OS_THREAD_USER_STACK_NUM    |Indicates the number of threads that are created with \ref osThreadNew \a stack_size specifies the stack size requirement of that thread.|
+|stackCheck                                            |\c OS_STACK_CHECK   |If a stack overflow is detected at a thread switch, the function \b os_error with error code = 1 is called.  By default, this function is implemented as endless loop and will practically stop code execution.|
+|stackUsage                                              |\c OS_STACK_WATERMARK    |Initializes the thread stack with a watermark pattern that can be used to determine the maximum stack usage within each thread.|
+|processorMode                                |\c OS_PRIVILEGE_MODE    |Controls the processor mode (privileged/unprivileged)|
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page rtosValidation RTOS Validation
+
+\note
+The test suite is available only for RTOS v1 API.
+
+ARM offers a <a class=el href="http://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-RTOS Validation.
+The <b>ARM::CMSIS-RTOS_Validation</b> Pack contains the following:
+
+ - Source code of a CMSIS-RTOS Validation Suite along with configuration file.
+ - Documentation of the CMSIS-RTOS Validation Suite.
+ - Example that shows the usage of the CMSIS-RTOS Validation Suite using simulation.
+
+The CMSIS-RTOS Validation Suite is currently available in beta release and performs generic validation of various
+RTOS features. The test cases verify the functional behavior, test invalid parameters and call management 
+functions from ISR.
+
+The following CMSIS-RTOS features can be tested with the current release:
+ - Thread : Create multiple threads, terminate, restart, yield, change priority 
+ - Timer : Create periodic and one-shot timers
+ - GenWait : Call generic wait functions (osDelay and osWait)
+ - WaitFunc : Measure wait ticks (delay, mail, message, mutex, semaphore, signal)
+ 
+Moreover the following inter-thread communication functions can be tested: 
+ - Signal : Verify signal events
+ - Memory Pool : Verify memory allocation
+ - Message Queue : Exchange messages between threads
+ - Mail Queue : Exchange data between threads
+ - Mutex : Synchronize resource access 
+ - Semaphore : Access shared resources 
+ 
+The RTOS Validation output can be printed to a console, output via ITM printf, or output to a memory buffer.
+ 
+\section test_output Sample Test Output
+\verbatim
+CMSIS-RTOS Test Suite   Oct 21 2015   16:39:16 
+
+TEST 01: TC_ThreadCreate                  PASSED
+TEST 02: TC_ThreadMultiInstance           PASSED
+TEST 03: TC_ThreadTerminate               PASSED
+  :
+  :
+TEST 08: TC_ThreadChainedCreate           PASSED
+TEST 09: TC_ThreadYield                   NOT EXECUTED
+TEST 10: TC_ThreadParam                   PASSED
+  :
+  :
+TEST 60: TC_MailFromISRToThread           PASSED
+
+Test Summary: 60 Tests, 59 Executed, 59 Passed, 0 Failed, 0 Warnings.
+Test Result: PASSED
+\endverbatim
+*/
+
+/* ========================================================================================================================== */
+// Group creation for Reference 
+/** 
+\addtogroup CMSIS_RTOS1 CMSIS-RTOS API v1
+\brief This section describes the CMSIS-RTOS API v1. 
+\details 
+The CMSIS-RTOS is a generic API layer that interfaces to an existing RTOS kernel.
+
+CMSIS-RTOS API v2 provides an translation layer for the
+<a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API v1</a> that simplifies migration.
+
+Refer to the <a class="el" href="../../RTOS/html/modules.html">Reference</a> guide of the CMSIS-RTOS API v1 for details.
+*/
+
+// Group creation for Reference 
+/** 
+\addtogroup CMSIS_RTOS CMSIS-RTOS API v2
+\brief This section describes the CMSIS-RTOS API v2. 
+\details 
+The CMSIS-RTOS is a generic API layer that interfaces to an existing RTOS kernel.
+
+*/
+

@@ -11,10 +11,10 @@ In detail it defines:
 
 
 The following sections provide details about the CMSIS-CORE:
- - \ref Using_pg describes the project setup and shows a simple program example.
- - \ref Using_TrustZone_pg "Using TrustZone&reg; for ARMv8-M" describes how to use the security extensions available in the ARMv8-M architecture.
- - \ref Templates_pg describes the files of the CMSIS-CORE in detail and explains how to adapt template files provided by ARM to silicon vendor devices.
- - \ref CORE_MISRA_Exceptions_pg describes the violations to the MISRA standard.
+ - \ref using_pg describes the project setup and shows a simple program example.
+ - \ref using_TrustZone_pg "Using TrustZone&reg; for ARMv8-M" describes how to use the security extensions available in the ARMv8-M architecture.
+ - \ref templates_pg describes the files of the CMSIS-CORE in detail and explains how to adapt template files provided by ARM to silicon vendor devices.
+ - \ref coreMISRA_Exceptions_pg describes the violations to the MISRA standard.
  - <a href="Modules.html">\b Reference </a> describe the features and functions of the \ref device_h_pg in detail.
  - <a href="Annotated.html">\b Data \b Structures </a> describe the data structures of the \ref device_h_pg in detail.
     
@@ -28,8 +28,8 @@ Files relevant to CMSIS-CORE are present in the following <b>ARM::CMSIS</b> dire
 |------------------------------|------------------------------------------------------------------------|
 |\b CMSIS\\Documentation\\Core | This documentation                                                     |
 |\b CMSIS\\Include             | CMSIS-CORE header files (for example core_cm3.h, core_cmInstr.h, etc.) |
-|\b Device                     | \ref Using_ARM_pg "ARM reference implementations" of Cortex-M devices  |
-|\b Device\\\_Template_Vendor  | \ref Templates_pg for extension by silicon vendors                     |
+|\b Device                     | \ref using_ARM_pg "ARM reference implementations" of Cortex-M devices  |
+|\b Device\\\_Template_Vendor  | \ref templates_pg for extension by silicon vendors                     |
 
 <hr>
 
@@ -56,7 +56,7 @@ These manuals contain the programmers model and detailed information about the c
 
 \section tested_tools_sec Tested and Verified Toolchains
 
-The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified with the following toolchains:
+The CMSIS-CORE \ref templates_pg supplied by ARM have been tested and verified with the following toolchains:
 \todo add version information for ARMCC compilers, verify compiler versions
  - ARM: MDK-ARM Version 5.16
  - GNU: GNU Tools ARM Embedded 4.9 2015.q2
@@ -200,7 +200,7 @@ The CMSIS-CORE \ref Templates_pg supplied by ARM have been tested and verified w
       <td>V3.00</td>
       <td>Added support for GNU GCC ARM Embedded Compiler. \n
 		  Added function \ref __ROR.\n
-		  Added \ref RegMap_pg for TPIU, DWT. \n
+		  Added \ref regMap_pg for TPIU, DWT. \n
 		  Added support for \ref core_config_sect "SC000 and SC300 processors".\n
 		  Corrected \ref ITM_SendChar function. \n
 		  Corrected the functions \ref __STREXB, \ref __STREXH, \ref __STREXW for the GNU GCC compiler section. \n
