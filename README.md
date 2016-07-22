@@ -1,6 +1,8 @@
 # CMSIS Version 5
 
-CMSIS Version 5.0.0 is scheduled for release in June 2016. Once completed it will be released in this GitHub project.
+CMSIS Version 5.0.0 is now available as beta release, but will need further refinement as we are reviewing the feedback that we have got via various channels. As it looks today we are scheduling the final release for September 2016.
+
+Once completed it will be released in this GitHub project.
 
 
 Use *Issues* to provide feedback and report problems for CMSIS Version 5. Note that this repository gives our users and partners contiguous access to the CMSIS development. It allows you to review the work and provide feedback or create pull requests for contributions.
