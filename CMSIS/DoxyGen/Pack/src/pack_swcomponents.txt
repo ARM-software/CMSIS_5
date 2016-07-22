@@ -1,6 +1,6 @@
 ﻿/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page CP_SWComponents Pack with Software Components
+\page cp_SWComponents Pack with Software Components
 This section is a tutorial that explains how to create a Software Pack. Initially, a Software Pack with a simple PDSC file
 is created that contains only one software component. This Software Pack is then extended to show the various features for
 describing software components.
@@ -15,11 +15,11 @@ describing software components.
 -# Make sure that files/directories are not write protected (remove read-only flag).
 -# Copy from the directory <b>\\CMSIS\\Utilities</b> available in the \b ARM::CMSIS Pack installation the following files
    into your working directory:
-   - PackChk.exe
+   - packChk.exe
    - PACK.xsd
 
 
-\section CP_CreatePDSC Create PDSC File
+\section cp_CreatePDSC Create PDSC File
 
 <ol>
 <li>
@@ -111,13 +111,13 @@ all other header files as in this example. Configuration files are copied into t
 specifically for that project but chances are that due to the include path search order of the compiler, the unmodified
 header file in the pack repository is found first and used by the compiler (creating unexpected results).
 
-More information on <b>\<components\></b> will be given in section \ref CP_Components. Save the file and close your editor.
+More information on <b>\<components\></b> will be given in section \ref cp_Components. Save the file and close your editor.
 In the next section, the generation of a Pack will be explained in detail.
 </li>
 </ol>
 
 
-\section CP_GeneratePack Generate a Pack
+\section cp_GeneratePack Generate a Pack
 <ol>
 <li>
 Rename the file <b>vendor.pack_name.pdsc</b> to <b>MyVendor.MyPack.pdsc</b>.
@@ -133,11 +133,11 @@ ZIP tool that supports command line calls. In that case you have to adapt the co
 </li>
 <li>
 Having saved <b>gen_pack.bat</b>, you can execute it either by double-clicking or by using the command line which is
-recommended to see the output of PackChk.exe (open a command window at the location of the files and enter \c gen_pack.bat).
+recommended to see the output of packChk.exe (open a command window at the location of the files and enter \c gen_pack.bat).
 The batch file will:
 - Check the availability of the PDSC file
 - Copy the PDSC file to the <b>Files</b> directory
-- Run PackChk.exe on the <b>Files</b> directory\n
+- Run packChk.exe on the <b>Files</b> directory\n
 - Create a Pack file in the working directory. It will be called <b>MyVendor.MyPack.1.0.0.pack</b>.
 </li>
 <li>
@@ -149,7 +149,7 @@ may differ:
 </ol>
 
 
-\section CP_Components Software Components
+\section cp_Components Software Components
 
 A component lists the files that belong to it and that are relevant for a project. The component itself or each individual
 file may refer to a \ref element_condition "condition" that must resolve to true; if it is false, the component or file is
@@ -180,7 +180,7 @@ The following \c Cclass names have a special meaning:
 Other \c Cclass names can be freely assigned to software components.
 
 In case multiple interdependent components (belonging to the same \c Cclass) form part of a solution, these can be grouped
-in a so called \ref CP_Bundles "bundle". 
+in a so called \ref cp_Bundles "bundle". 
 
 Use the following syntax to reference to software components and APIs:\n
 <b>\<Vendor\>::\<Cclass\>:\<Cgroup\>:\<Csub\></b>
@@ -217,7 +217,7 @@ Optionally, every file may have the following attributes:
   component version is used.
 
 
-\section CP_Conditions Conditions
+\section cp_Conditions Conditions
 
 A condition describes dependencies on:
 - a specific device
@@ -239,7 +239,7 @@ true. A condition becomes true when:
 
 If a condition resolves to false during processing, the respective element will be ignored.
 
-Let's modify the example from the \ref CP_CreatePDSC section by adding the requirement for a CMSIS-RTOS and libraries that
+Let's modify the example from the \ref cp_CreatePDSC section by adding the requirement for a CMSIS-RTOS and libraries that
 are specific to a certain Cortex-M class core:
 - \c mylib_cm0.lib for use with a Cortex-M0 and Cortex-M0+ processor
 - \c mylib_cm3.lib for use with a Cortex-M3 processor
@@ -309,14 +309,14 @@ Add a new version number to the header of the PDSC file so that a Pack with a ne
 \endcode
 </li>
 <li>
-Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.bat</b> script. See \ref CP_GeneratePack for
+Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.bat</b> script. See \ref cp_GeneratePack for
 further details. Afterwards, install the Pack in your development tool and observe the differences to version 1.0.0.
 
 \image html ConditionsDisplay.png "Display of conditionally added files for a Cortex-M3 device in development tools"
 </li>
 </ol>
 
-\note PackChk.exe will will now display an \b M362 warning:
+\note packChk.exe will will now display an \b M362 warning:
 \verbatim
 *** WARNING M362: (Line 80)
   Not all Component Dependencies for 'Cclass=MyClass, Cgroup=MyGroup, Csub=MySubGroup, Cversion=1.0.1, Capiversion=' can be resolved.
@@ -329,7 +329,7 @@ components). You can either safely ignore this warning or add the ARM:CMSIS PDSC
 dependencies can be correctly examined.
 
 
-\section CP_Variants Variants
+\section cp_Variants Variants
 
 Software components may have <b>variants</b>, for example: 
 - Debug version with or release version without diagnostic output
@@ -393,14 +393,14 @@ Add a new revision to reflect the changes in a newly generated Pack:
 \endcode
 </li>
 <li>
-Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.bat</b> script. See \ref CP_GeneratePack for
+Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.bat</b> script. See \ref cp_GeneratePack for
 further details. Afterwards, install the Pack in your development tool and observe the differences to version 1.0.1.
 
 \image html VariantDisplay.png "Display of MyVariant in development tools"
 </li>
 </ol>
 
-\section CP_RTEComponents_h RTE_Components.h
+\section cp_RTEComponents_h RTE_Components.h
 Sometimes, software components need to know of other components. Depending on the availability or configuration of another
 component, certain settings may be required. A distinct header file is available to make components aware of each other:
 <b>RTE_Components.h</b>. To add a line of C code to this header file, simply add this to your component:
@@ -415,18 +415,18 @@ The \c \#define can be checked by other components in a project.
 \note The RTE_components.h file needs to be included somewhere in your source files.  Refer to \ref RTE_Components_h for more information.
 
 
-\section CP_Bundles Bundles
+\section cp_Bundles Bundles
 A bundle is basically a variant on the \c Cclass level. It specifies the attributes \c Cclass, \c Cversion and optionally
 \c Cgroup and \c Cvendor for a collection of interdependent components. Components within a bundle inherit the attributes
 set by the bundle and must not set these attributes again. Bundles ensure consistency of attributes across multiple
 interworking components and restrict the mix and match of components within a \c Cclass from different solutions.
 In addition to components, a bundle has the mandatory elements \c description and \c doc (for documentation).
 
-An example of a <b>bundle</b> is shown in the \ref CP_BundleExample section where the bundle is used to deliver board
+An example of a <b>bundle</b> is shown in the \ref cp_BundleExample section where the bundle is used to deliver board
 support files for a certain development platform.
 
 
-\section CP_Instances Instances
+\section cp_Instances Instances
 
 Some \ref pdsc_components_pg "software components" allow several instances. This is useful if more than one peripheral can
 be connected.
@@ -448,7 +448,7 @@ Add a new version number:
 \endcode
 </li>
 <li>
-Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.bat</b> script. See \ref CP_GeneratePack for
+Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.bat</b> script. See \ref cp_GeneratePack for
 further details. Afterwards, install the Pack in your development tool and observe the differences to version 1.0.2. When
 selecting a certain number of instances of the component, causes the development tool to copy the required configuration
 files multiple times into the project. This ensures that each component instance can be configured separately.
@@ -458,7 +458,7 @@ files multiple times into the project. This ensures that each component instance
 </ol>
 
 
-\section CP_API API Interface
+\section cp_API API Interface
 
 An \ref pdsc_apis_pg "API" is a special form of a software component that only defines a C/C++ Application Programming
 Interface (API). An API does not contain the actual implementation (usually provided by source code or library files) and
@@ -490,14 +490,14 @@ Add a new version number:
 \endcode
 </li>
 <li>
-Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.bat</b> script. See \ref CP_GeneratePack for
+Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.bat</b> script. See \ref cp_GeneratePack for
 further details. Afterwards, install the Pack in your development tool and observe the differences to version 1.0.3. Most
 likely, you will see none as APIs are not selectable and are thus not displayed in the tools.
 </li>
 </ol>
 
 
-\section CP_CodeTemplates User Code Templates
+\section cp_CodeTemplates User Code Templates
 User code templates provide a quick start for implementing an application. To add user code templates, add source files with
 the attribute <code>attr=“template”</code> in a \c \<component\>. The \c select attribute is used to identify template files.
 Template files with the same \c select attribute will be added to a project simultaneously.
@@ -522,7 +522,7 @@ Add a new version number:
 \endcode
 </li>
 <li>
-Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.bat</b> script. See \ref CP_GeneratePack for
+Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.bat</b> script. See \ref cp_GeneratePack for
 further details. Afterwards, install the Pack in your development tool and observe the differences to version 1.0.4.
 
 \image html UserCodeTemplatesDisplay.png  "Display of user code templates in development tools"
@@ -530,7 +530,7 @@ further details. Afterwards, install the Pack in your development tool and obser
 </ol>
 
 
-\section CP_Examples Example Projects 
+\section cp_Examples Example Projects 
 Example projects help to understand a certain MCU or development board better. An example and each individual file of it may
 refer to a condition that must resolve to true; if it is false, the example or file will be ignored. The board element is
 used to reference to one or more board descriptions using the board vendor and name an example is targeted for. Each example
@@ -569,13 +569,13 @@ Add a new version number:
 \endcode
 </li>
 <li>
-Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.bat</b> script. See \ref CP_GeneratePack for
+Finally, save the PDSC file and regenerate the Pack file using the <b>gen_pack.bat</b> script. See \ref cp_GeneratePack for
 further details. Afterwards, install the Pack in your development tool and observe the differences to version 1.0.5.
 
 \image html ExampleDisplay.png  "Display of example projects in development tools"
 </li>
 </ol>
 Example projects rely on a development board to be present (as the code needs to run on real hardware). In the code above
-you will notice that a development board called "MyDevBoard" was specified. \ref CreatePackBoard explains how to integrate
+you will notice that a development board called "MyDevBoard" was specified. \ref createPackBoard explains how to integrate
 boards into a Pack.
 */

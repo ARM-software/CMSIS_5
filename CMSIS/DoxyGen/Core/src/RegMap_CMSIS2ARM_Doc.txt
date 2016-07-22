@@ -1,5 +1,5 @@
 /** 
-\page RegMap_pg  Register Mapping
+\page regMap_pg  Register Mapping
 
 \details 
 

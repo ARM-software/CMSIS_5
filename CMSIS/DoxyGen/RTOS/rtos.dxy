@@ -533,19 +533,19 @@ STRICT_PROTO_MATCHING  = NO
 # disable (NO) the todo list. This list is created by putting \todo 
 # commands in the documentation.
 
-GENERATE_TODOLIST      = YES
+GENERATE_TODOLIST      = NO
 
 # The GENERATE_TESTLIST tag can be used to enable (YES) or 
 # disable (NO) the test list. This list is created by putting \test 
 # commands in the documentation.
 
-GENERATE_TESTLIST      = YES
+GENERATE_TESTLIST      = NO
 
 # The GENERATE_BUGLIST tag can be used to enable (YES) or 
 # disable (NO) the bug list. This list is created by putting \bug 
 # commands in the documentation.
 
-GENERATE_BUGLIST       = YES
+GENERATE_BUGLIST       = NO
 
 # The GENERATE_DEPRECATEDLIST tag can be used to enable (YES) or 
 # disable (NO) the deprecated list. This list is created by putting 
@@ -1259,7 +1259,7 @@ MATHJAX_EXTENSIONS     =
 # typically be disabled. For large projects the javascript based search engine 
 # can be slow, then enabling SERVER_BASED_SEARCH may provide a better solution.
 
-SEARCHENGINE           = NO
+SEARCHENGINE           = YES
 
 # When the SERVER_BASED_SEARCH tag is enabled the search engine will be 
 # implemented using a PHP enabled web server instead of at the web client 

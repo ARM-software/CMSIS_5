@@ -1,11 +1,11 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page PackChk PackChk.exe
+\page packChk packChk.exe
 
-\b PackChk.exe is a utility for validation of a Software Pack. It operates on the unzipped content of the Software Pack and
+\b packChk.exe is a utility for validation of a Software Pack. It operates on the unzipped content of the Software Pack and
 is located in the directory <b>.\\CMSIS\\Utilities</b> of the <b>ARM::CMSIS</b> Pack.
 
-\b PackChk.exe performs the following operations:
+\b packChk.exe performs the following operations:
  - Reads the content of the specified *.PDSC file. The path to this *.PDSC file is considered as root directory of the Software Pack.
  - Verifies the existence of all files in the Software Pack that are referenced in the *.PDSC file.
  - Checks for presence and correctness of mandatory elements such as \<vendor>, \<version>, etc.
@@ -21,13 +21,13 @@ is located in the directory <b>.\\CMSIS\\Utilities</b> of the <b>ARM::CMSIS</b> 
 Operation
 ---------
 
-\b PackChk.exe is invoked from the command line:\n
+\b packChk.exe is invoked from the command line:\n
 \code
- PackChk.exe <pdsc_file> <options>
+ packChk.exe <pdsc_file> <options>
 \endcode
 
 \n
-<table class="cmtable" summary="PackChk Args">
+<table class="cmtable" summary="packChk Args">
   <tr>
     <th>\<options></th>
     <th>Short Name</th>
@@ -47,7 +47,7 @@ Operation
     <td>-s</td>
     <td nowrap>Verify SVD files</td>	
     <td>Each SVD file referenced in the *.PDSC file is <a href="../../SVD/html/svd_validate_file_pg.html"><b>validated</b></a> with \b SVDConv.exe.
-	With this option set, \b SVDConv.exe is invoked from the same directory as \b PackChk.exe.
+	With this option set, \b SVDConv.exe is invoked from the same directory as \b packChk.exe.
 	</td>
   </tr>
   <tr>
@@ -78,38 +78,38 @@ Operation
 
 <b>Examples</b>
 
-Run \b PackChk.exe on the package description file called <b>MyVendor.MyPack.pdsc</b>. \b PackChk.exe verifies the file against the Software Pack that is located in the same directory.
+Run \b packChk.exe on the package description file called <b>MyVendor.MyPack.pdsc</b>. \b packChk.exe verifies the file against the Software Pack that is located in the same directory.
 \verbatim
-PackChk.exe MyVendor.MyPack.pdsc
+packChk.exe MyVendor.MyPack.pdsc
 \endverbatim
 
-Run \b PackChk.exe on the package description file called <b>MyVendor.MyPack.pdsc</b> in the current directory and try to resolve conditions using the ARM.CMSIS.pdsc file based in another directory.
+Run \b packChk.exe on the package description file called <b>MyVendor.MyPack.pdsc</b> in the current directory and try to resolve conditions using the ARM.CMSIS.pdsc file based in another directory.
 \verbatim
-PackChk.exe MyVendor.MyPack.pdsc -i ..\..\PACK\ARM\CMSIS\ARM.CMSIS.pdsc
+packChk.exe MyVendor.MyPack.pdsc -i ..\..\PACK\ARM\CMSIS\ARM.CMSIS.pdsc
 \endverbatim
 
-Run \b PackChk.exe on the  package description file called <b>MyVendor.MVCM3.pdsc</b>, verify SVD files, verify the URL to the Pack Server, and generate a ASCII text file with the standardized name of the Software Pack.
+Run \b packChk.exe on the  package description file called <b>MyVendor.MVCM3.pdsc</b>, verify SVD files, verify the URL to the Pack Server, and generate a ASCII text file with the standardized name of the Software Pack.
 \verbatim
-PackChk.exe "MyVendor.MVCM3.pdsc" -s -u "http://www.myvendor.com/pack" -n packname.txt
+packChk.exe "MyVendor.MVCM3.pdsc" -s -u "http://www.myvendor.com/pack" -n packname.txt
 \endverbatim
 
-Run \b PackChk.exe on the  package description file called <b>MyVendor.MVCM3.pdsc</b>. Suppress validation messages M304 and M331.
+Run \b packChk.exe on the  package description file called <b>MyVendor.MVCM3.pdsc</b>. Suppress validation messages M304 and M331.
 \verbatim
-PackChk.exe MyVendor.MVCM3.pdsc -x M304 M331           // messages as a list
-PackChk.exe MyVendor.MVCM3.pdsc -x M304 -x M331        // option repeated
+packChk.exe MyVendor.MVCM3.pdsc -x M304 M331           // messages as a list
+packChk.exe MyVendor.MVCM3.pdsc -x M304 -x M331        // option repeated
 \endverbatim
 
-\section PackChkMessages Error and Warning Messages
+\section packChkMessages Error and Warning Messages
 
 [SVDConv.exe]: ../../SVD/html/svd__s_v_d_conv_pg.html
 
-The following table shows the errors and warnings issued by PackChk.
+The following table shows the errors and warnings issued by packChk.
 
 Internal Errors
 ---------------
 If you encounter one of the following errors, please send a problem report via email to cmsis@arm.com.
 
-<table class="cmtable" summary="PackChk Internal Msgs">
+<table class="cmtable" summary="packChk Internal Msgs">
   <tr>
     <th>Message Number</th>
     <th>Type</th>
@@ -156,7 +156,7 @@ If you encounter one of the following errors, please send a problem report via e
 Invocation Errors
 -----------------
 
-<table class="cmtable" summary="PackChk Invocation Msgs">
+<table class="cmtable" summary="packChk Invocation Msgs">
   <tr>
     <th>Message Number</th>
     <th>Type</th>
@@ -170,7 +170,7 @@ Invocation Errors
   <td>The list of arguments is too long. Verify if you have used one argument twice.</td>
 </tr>
 <tr><td>M202</td> <td>ERROR</td> <td>No PDSC input file specified</td>
-  <td>Correct the command line. \b PackChk.exe expects a *.PDSC file name as input.</td>
+  <td>Correct the command line. \b packChk.exe expects a *.PDSC file name as input.</td>
 </tr>
 <tr><td>M203</td> <td>ERROR</td> <td>Error reading PDSC file  \em 'PATH/FILENAME'!</td>
   <td>Verify the PDSC file for consistency. 
@@ -191,7 +191,7 @@ Invocation Errors
   <td>The PDSC file expected has not been found. Rename or exchange the PDSC file.</td>
 </tr>
 <tr><td>M208</td> <td>ERROR</td> <td>Error calling SVDConv.exe:  \em 'PATH'</td>
-  <td>SVDConv.exe was not found. Copy the executable into the directory of PackChk.exe or enter the path where SVDConv.exe is located. Default is \token{CMSIS\\Utilities}.</td>
+  <td>SVDConv.exe was not found. Copy the executable into the directory of packChk.exe or enter the path where SVDConv.exe is located. Default is \token{CMSIS\\Utilities}.</td>
 </tr>
 <tr><td>M209</td> <td>ERROR</td> <td>Unknown Option: \em 'OPT'</td>
   <td>The command line option entered is not known or invalid.</td>
@@ -205,7 +205,7 @@ Invocation Errors
 Validation Messages
 --------------------
 
-<table class="cmtable" summary="PackChk Validation Msgs">
+<table class="cmtable" summary="packChk Validation Msgs">
   <tr>
     <th>Message Number</th>
     <th>Type</th>
@@ -415,7 +415,7 @@ Validation Messages
 XML Reader Errors
 ---------------
 
-<table class="cmtable" summary="PackChk XML Reader Msgs">
+<table class="cmtable" summary="packChk XML Reader Msgs">
   <tr>
     <th>Message Number</th>
     <th>Type</th>  <th>Description</th>
@@ -468,7 +468,7 @@ XML Reader Errors
 Model Errors
 ---------------
 
-<table class="cmtable" summary="PackChk Model Msgs">
+<table class="cmtable" summary="packChk Model Msgs">
   <tr>
     <th>Message Number</th>
     <th>Type</th>  <th>Description</th>

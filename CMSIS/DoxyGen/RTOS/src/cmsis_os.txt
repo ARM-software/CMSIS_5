@@ -25,7 +25,7 @@
 \mainpage
 
 This manual describes the \b CMSIS-RTOS \b API \b Version \b 1 and the reference implementation
-\ref RTXImplementation "CMSIS-RTOS RTX" which is designed for Cortex-M processor-based devices. The RTOS kernel can be used
+\ref rtxImplementation "CMSIS-RTOS RTX" which is designed for Cortex-M processor-based devices. The RTOS kernel can be used
 for creating applications that perform multiple tasks simultaneously. These tasks are executed by threads that operate in a
 quasi-parallel fashion.
 
@@ -39,11 +39,11 @@ features easily.
 
 This manual contains the following sections:
  - \subpage rtos_revisionHistory : Documents changes made in each version for CMSIS-RTOS API and RTX.
- - \subpage GenRTOSIF : Provides an overview about the CMSIS-RTOS API.
- - \subpage UsingOS : Provides generic instructions for using a CMSIS-RTOS API compliant implementation. 
- - \subpage FunctionOverview : Lists the CMSIS-RTOS API functions including RTX-specific extensions.
- - \subpage RtosValidation : Describes the Software Pack that can be used to validate a CMSIS-RTOS implementation.
- - \subpage RTXImplementation : Documents the open-source implementation CMSIS-RTOS RTX.
+ - \subpage genRTOSIF : Provides an overview about the CMSIS-RTOS API.
+ - \subpage usingOS : Provides generic instructions for using a CMSIS-RTOS API compliant implementation. 
+ - \subpage functionOverview : Lists the CMSIS-RTOS API functions including RTX-specific extensions.
+ - \subpage rtosValidation : Describes the Software Pack that can be used to validate a CMSIS-RTOS implementation.
+ - \subpage rtxImplementation : Documents the open-source implementation CMSIS-RTOS RTX.
 
 \note An extended version of the CMSIS-RTOS API is available in <a class="el" href="../../RTOS2/html/index.html">CMSIS-RTOS v2</a>.
 
@@ -81,7 +81,7 @@ The following files relevant to CMSIS-RTOS are present in the <b>ARM::CMSIS</b> 
     <tr>
       <td>V1.02 - only documentation changes</td>
       <td>
-      Added: Overview of the \ref RtosValidation "CMSIS-RTOS Validation" Software Pack.\n
+      Added: Overview of the \ref rtosValidation "CMSIS-RTOS Validation" Software Pack.\n
 	  Clarified: Behaviour of \ref CMSIS_RTOS_TimeOutValue.
      </td>
     </tr>
@@ -236,7 +236,7 @@ The following files relevant to CMSIS-RTOS are present in the <b>ARM::CMSIS</b> 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page UsingOS Using a CMSIS-RTOS Implementation
+\page usingOS Using a CMSIS-RTOS Implementation
 
 A CMSIS-RTOS implementation is typically provided as a library. To add the RTOS functionality to an existing CMSIS-based
 application, the RTOS library (and typically a configuration file) needs to be added.  The available functionality of the
@@ -358,13 +358,13 @@ used throughout the whole project.
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page FunctionOverview Function Overview
+\page functionOverview Function Overview
 
 The following list provides a brief overview of all CMSIS-RTOS functions.  Functions marked with $ are optional.
 A specific CMSIS-RTOS implementation may not provide all functions, but this is clearly indicated with \b osFeatureXXXX
 defines.
 
-\note Functions that are not supported by the \ref RTXImplementation, are marked with a (*).
+\note Functions that are not supported by the \ref rtxImplementation, are marked with a (*).
 
  - \ref CMSIS_RTOS_KernelCtrl
    - \ref osKernelInitialize : Initialize the RTOS kernel.
@@ -470,7 +470,7 @@ If this is impossible, the CMSIS-RTOS rejects calls by nested ISR functions with
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page GenRTOSIF Generic RTOS Interface
+\page genRTOSIF Generic RTOS Interface
 
 The CMSIS-RTOS API is a generic RTOS interface for ARM&reg; Cortex&reg;-M processor-based devices. CMSIS-RTOS provides a
 standardized API for software components that require RTOS functionality and gives therefore serious benefits to the users
@@ -533,7 +533,7 @@ towards the Cortex-M processors. Optional features may be for example
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page RtosValidation RTOS Validation
+\page rtosValidation RTOS Validation
 
 ARM offers a <a class=el href="http://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-RTOS Validation.
 The <b>ARM::CMSIS-RTOS_Validation</b> Pack contains the following:
@@ -586,7 +586,7 @@ Test Result: PASSED
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page RTXImplementation RTX Implementation
+\page rtxImplementation RTX Implementation
 
 This version of RTX implements the CMSIS-RTOS API, which is a generic RTOS interface for Cortex-M processor-based devices.
 The CMSIS-RTOS API provides a standardized interface for software components that require RTOS functionality.
@@ -612,35 +612,35 @@ functions, memory management, and message exchange between threads with time lim
 
 Compared to the classic Keil RTX version, the CMSIS-RTOS RTX library is extended with the CMSIS API interface module (source
 file rt_cmsis.c) which implements the function translation. The header file cmsis_os.h provides the API to the CMSIS-RTOS RTX
-for the user application. Refer to \ref Using for more information.
+for the user application. Refer to \ref using for more information.
 
 CMSIS-RTOS RTX has several options that are configured with the \ref RTX_Conf_CM "RTX_Conf_CM.c" file. Refer to
-\ref Configure for more information.
+\ref configure for more information.
 
 Attributes of the CMSIS-RTOS RTX implementation:
  - Provides the complete functions specified for a CMSIS-RTOS with the exception of the function \ref osWait.
  - Interrupt Service Routines (ISR) \ref isr_function_calls "may call some CMSIS-RTOS RTX functions".
- - Configurations options for Thread Stack. Refer to \ref ThreadConfig for more information.
+ - Configurations options for Thread Stack. Refer to \ref threadConfig for more information.
  - Fully deterministic context switching and deadlock avoidance. Refer to \ref PriorityInversion for more information.
- - Optional Round-Robin Thread switching with configurable time-slices. Refer to \ref ThreadConfig for more information.
+ - Optional Round-Robin Thread switching with configurable time-slices. Refer to \ref threadConfig for more information.
 
 
 The following sections provide further details:
- - \subpage Theory : provides general information about the operation of CMSIS-RTOS RTX.
- - \subpage Files : explains the directories and files that are supplied as part of CMSIS-RTOS RTX.
- - \subpage TechnicalData : lists hardware requirements and limitations such as number of concurrent threads.
- - \subpage MISRACompliance : describes the violations to the MISRA standard.
- - \subpage Using : Provides instructions for writing and debugging applications with CMSIS-RTOS RTX. 
- - \subpage Configure : Describes configuration parameters of CMSIS-RTOS RTX. 
- - \subpage ExampleRTX_Tutorial : Is an in-depth tutorial that can be used with any hardware to get a better understanding of
+ - \subpage theory : provides general information about the operation of CMSIS-RTOS RTX.
+ - \subpage files : explains the directories and files that are supplied as part of CMSIS-RTOS RTX.
+ - \subpage technicalData : lists hardware requirements and limitations such as number of concurrent threads.
+ - \subpage misraCompliance : describes the violations to the MISRA standard.
+ - \subpage using : Provides instructions for writing and debugging applications with CMSIS-RTOS RTX. 
+ - \subpage configure : Describes configuration parameters of CMSIS-RTOS RTX. 
+ - \subpage exampleRTX_Tutorial : Is an in-depth tutorial that can be used with any hardware to get a better understanding of
    the concepts and use cases of a real-time operating system.
- - \subpage Creating_RTX_LIB : Describes how to build your own CMSIS-RTOS RTX library.
+ - \subpage creating_RTX_LIB : Describes how to build your own CMSIS-RTOS RTX library.
 */
 
 
 /* ========================================================================================================================== */
 /** 
-\page Theory Theory of Operation
+\page theory Theory of Operation
 
 This section describes how CMSIS-RTOS RTX manages the resources of the target system. Many aspects of the CMSIS-RTOS RTX
 kernel can be configured. Information about configuration options is mentioned where applicable.
@@ -669,7 +669,7 @@ By default, CMSIS-RTOS RTX uses the Cortex-M
 periodic interrupts for the RTX kernel timer tick. CMSIS-RTOS provides \ref CMSIS_RTOS_TimerMgmt functions and several
 CMSIS-RTOS functions have a timeout parameter. This periodic RTX kernel timer tick interrupt is used to derive the required
 time interval. CMSIS-RTOS RTX also provides configuration options for a alternative timer and tick-less operation. Refer to
-\ref TimerTick for more information.
+\ref timerTick for more information.
 
 To handle timeout and time delays for threads, the CMSIS-RTOS RTX thread management is controlled by the RTX kernel timer
 tick interrupt. The thread context switch itself is implemented in the HAL_CMx.x hardware abstraction layer source files. The
@@ -689,7 +689,7 @@ When a thread switch occurs:
 
 Each thread is provided with an separate stack that holds the thread context and stack space for automatic variables and
 return addresses for function call nesting. The stack sizes of the RTX threads are flexible configurable as explained in the
-section \ref ThreadConfig. RTX even offers a configurable checking for stack overflows. Refer to \ref StackCheck for more
+section \ref threadConfig. RTX even offers a configurable checking for stack overflows. Refer to \ref stackCheck for more
 information.
 
 \section RTX_Threads CMSIS-RTOS RTX Threads
@@ -738,7 +738,7 @@ case that they are called from an ISR context.
 
 /* ========================================================================================================================== */
 /** 
-\page Files Directory Structure and File Overview
+\page files Directory Structure and File Overview
 
 The following section provides an overview of the directory structure and the files that are relevant for the user's for
 CMSIS-RTOS RTX.
@@ -774,7 +774,7 @@ The CMSIS-RTOS RTX is delivered in source code and several examples are provided
     </tr>
 </table>
 
-\section LibFiles CMSIS-RTOS RTX Library Files
+\section libFiles CMSIS-RTOS RTX Library Files
 
 The CMSIS-RTOS RTX Library is available pre-compiled for ARMCC, GCC, and IAR C/C++ Compilers and supports all Cortex-M
 processor variants in every configuration.
@@ -866,7 +866,7 @@ processor variants in every configuration.
 
 /* ========================================================================================================================== */
 /** 
-\page TechnicalData Technical Data
+\page technicalData Technical Data
 
 This section lists the technical data of CMSIS-RTOS RTX.
 
@@ -975,7 +975,7 @@ The generic wait function \b osWait is currently not supported by CMSIS-RTOS RTX
 
 /* ========================================================================================================================== */
 /** 
-\page MISRACompliance MISRA-C:2004 Compliance Exceptions
+\page misraCompliance MISRA-C:2004 Compliance Exceptions
 CMSIS-RTOS RTX tries to be MISRA-C compliant as much as possible. However, there are some violations in order to simplify
 the overall code logic and to generate more efficient code.
 
@@ -1024,7 +1024,7 @@ CMSIS-RTOS RTX violates the following MISRA-C:2004 rules:
 
 /* ========================================================================================================================== */
 /** 
-\page Using Create an RTX Project
+\page using Create an RTX Project
 
 Example projects using CMSIS-RTOS RTX are available for various development boards. To make use of these examples, you need
 to install a Device Family Pack in µVision and use Pack Installer to open a CMSIS-RTOS Blinky project. If you wish to start a
@@ -1046,7 +1046,7 @@ CMSIS-RTOS RTX from scratch, follow these steps:
   
    \image html add_item.png
 
-- Finally, \ref Configure "configure" RTX to the application's needs using the \b %RTX_Conf_CM.c file.
+- Finally, \ref configure "configure" RTX to the application's needs using the \b %RTX_Conf_CM.c file.
 
 \section DefRefObj Define and Reference Object Definitions
 
@@ -1106,7 +1106,7 @@ The CMSIS-RTOS RTX kernel uses the following interrupts:
 Interrupts can be used without limitation. Interrupt priority grouping can be used with some restrictions:
 - IRQ interrupts are never disabled by RTX Kernel for ARMv7-M architectures (Cortex-M3/M4/M7).
 - Software interrupt 0 is used by RTX and cannot be used in an application.
-- RTX uses its own SVC Handler which is automatically linked from the library. \ref SVCFunctions explains how to use a custom
+- RTX uses its own SVC Handler which is automatically linked from the library. \ref svcFunctions explains how to use a custom
   SVC table.
 - When interrupt \b priority \b grouping is used, the PRIGROUP must be set before the \ref osKernelInitialize() function is
   called (usually in the SystemInit() function in the system_<i>device</i>.c file). The kernel reads the value of PRIGROUP to
@@ -1123,7 +1123,7 @@ Interrupts can be used without limitation. Interrupt priority grouping can be us
 
 /* ========================================================================================================================== */
 /**
-\page Configure Configure RTX
+\page configure Configure RTX
 
 The file \ref RTX_Conf_CM "RTX_Conf_CM.c" is used to define the configuration parameters of CMSIS-RTOS RTX. This file must be
 part of every project that is using the CMSIS-RTOS RTX kernel.
@@ -1136,25 +1136,25 @@ settings. The following is a screenshot of the same configuration file using µV
 \image html config_wizard.png "RTX_Conf_CM.c in Configuration Wizard View"
 
 The configuration options are explained on these pages:
-- \subpage ThreadConfig
-- \subpage TimerTick
-- \subpage SystemConfig
+- \subpage threadConfig
+- \subpage timerTick
+- \subpage systemConfig
 
 Other configuration options not covered by the Configuration Wizard are explained here:
-- \subpage LowPower
-- \subpage SVCFunctions
+- \subpage lowPower
+- \subpage svcFunctions
 */
 
 /* ========================================================================================================================== */
 /**
-\page ThreadConfig Thread Configuration
+\page threadConfig Thread Configuration
 
 The CMSIS-RTOS RTX provides several parameters for the thread configuration.
- - \ref StackConfig
- - \ref StackCheck
- - \ref ProcessorMode
+ - \ref stackConfig
+ - \ref stackCheck
+ - \ref processorMode
 
-\section StackConfig Configuration of Thread count and Stack Space
+\section stackConfig Configuration of Thread count and Stack Space
 
 \ref osThreadDef defines a thread function. The parameter \a stacksz specifies thereby the stack requirements of this
 thread function. CMSIS-RTOS RTX defines two methods for defining the stack requirements:
@@ -1177,11 +1177,11 @@ Main stack is also used when:
 |Main Thread stack size [bytes]                                     |\c OS_MAINSTKSIZE|Is the stack requirement (in words) for the main function that is started by default as an RTOS thread.|
 |Number of threads with user-provided stack size                    |\c OS_PRIVCNT    |Indicates the number of threads that are defined with \ref osThreadDef \a stacksz != 0 (excluding main). \a stacksz specifies the stack size requirement of that thread.|
 |Total stack size [bytes] for threads with user-provided stack size |\c OS_PRIVSTKSIZE|Is the combined stack requirement (in words) of all threads that are defined with with \ref osThreadDef \a stacksz != 0 (excluding main).|
-|\ref StackCheck                                            |\c OS_STKCHECK   |If a stack overflow is detected at a thread switch, the function \b os_error with error code = 1 is called.  By default, this function is implemented as endless loop and will practically stop code execution.|
-|\ref StackUsage                                              |\c OS_STKINIT    |Initializes the thread stack with a watermark pattern that can be used to determine the maximum stack usage within each thread.|
-|\ref ProcessorMode                                |\c OS_RUNPRIV    |Controls the processor mode (privileged/unprivileged)|
+|\ref stackCheck                                            |\c OS_STKCHECK   |If a stack overflow is detected at a thread switch, the function \b os_error with error code = 1 is called.  By default, this function is implemented as endless loop and will practically stop code execution.|
+|\ref stackUsage                                              |\c OS_STKINIT    |Initializes the thread stack with a watermark pattern that can be used to determine the maximum stack usage within each thread.|
+|\ref processorMode                                |\c OS_RUNPRIV    |Controls the processor mode (privileged/unprivileged)|
 
-\section StackCheck Stack Overflow Checking
+\section stackCheck Stack Overflow Checking
 
 CMSIS-RTOS RTX implements a software stack overflow checking that traps stack overruns. Stack is used for return addresses
 and automatic variables and extensive usage or incorrect stack configuration may cause a stack overflow. Software stack
@@ -1190,7 +1190,7 @@ overflow checking is controlled with the <b>\#define OS_STKCHECK</b>.
 If a stack overflow is detected, the function \b os_error with error code = 1 is called.  By default, this function is
 implemented as endless loop and will practically stop code execution.
 
-\section StackUsage Stack Usage Watermark
+\section stackUsage Stack Usage Watermark
 
 The total stack size of an application needs to be as small as possible in a memory restricted embedded system. To be able to
 set the smallest stack size for every thread, the developer needs to know the maximum stack usage over the runtime of the
@@ -1204,7 +1204,7 @@ a thread is created. This allows the debugger to determine the maximum stack usa
 Stack usage watermark is controlled with the <b>\#define OS_STKINIT</b>. Setting this \c \#define increases significantly the
 execution time of \ref osThreadCreate (depending on thread stack size).
 
-\section ProcessorMode Processor Mode for Thread Execution
+\section processorMode Processor Mode for Thread Execution
 
 CMSIS-RTOS RTX allows to execute threads in unprivileged or privileged processor mode. The processor mode is controlled with
 the <b>\#define OS_RUNPRIV</b>.
@@ -1221,7 +1221,7 @@ In privileged processor mode the software can use all the instructions and has a
 
 /* ========================================================================================================================== */
 /**
-\page TimerTick RTX Kernel Tick Timer Configuration
+\page timerTick RTX Kernel Tick Timer Configuration
 
 The CMSIS-RTOS RTX functions provide delays in units of milliseconds that are derived from the RTX Timer Tick.
 It is therefore recommended to configure the RTX Timer Tick to generate a 1 millisecond interval. 
@@ -1337,7 +1337,7 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
 
 /* ========================================================================================================================== */
 /**
-\page SystemConfig System Configuration
+\page systemConfig System Configuration
 
 The CMSIS-RTOS RTX provides system-wide settings for:
  - \ref RoundRobin
@@ -1420,7 +1420,7 @@ ISR functions store requests to this buffer, when they are called from the inter
 
 /* ========================================================================================================================== */
 /**
-\page LowPower Configuration for Low-Power Modes
+\page lowPower Configuration for Low-Power Modes
 
 The system thread \b os_idle_demon can be use to switch the system into a low-power mode.  The easiest form to enter a
 low-power mode is the execution of the \c __WFE function that puts the processor into a sleep mode where it waits for an
@@ -1527,7 +1527,7 @@ void os_idle_demon (void) {
 
 /* ========================================================================================================================== */
 /**
-\page SVCFunctions SVC Functions
+\page svcFunctions SVC Functions
 Supervisor Calls (SVC) are exceptions targeted at software and operating systems for generating system function calls. They
 are sometimes called software interrupts. For example, instead of allowing user programs to directly access hardware, an
 operating system may provide access to hardware through an SVC. So when a user program wants to use certain hardware, it
@@ -1599,7 +1599,7 @@ To implement SVC functions in your CMSIS-RTOS RTX kernel project, you need to:
 
 /* ========================================================================================================================== */
 /** 
-\page ExampleRTX_Tutorial RTX Tutorial
+\page exampleRTX_Tutorial RTX Tutorial
 
 The tutorial is an excerpt of Trevor Martin's book
 <a href="http://store.elsevier.com/product.jsp?isbn=9780080982960&pagename=search" target="_blank">The Designer's Guide to the Cortex-M Processor Family</a>.
@@ -1615,7 +1615,7 @@ Pack which contains all example projects referenced in the
 
 /* ========================================================================================================================== */
 /** 
-\page Creating_RTX_LIB Building the RTX Library
+\page creating_RTX_LIB Building the RTX Library
 
 The CMSIS Pack contains a µVision project for building the set of CMSIS-RTOS RTX libraries. This project can also be used as
 a reference for building the CMSIS-RTOS RTX libraries using a tool-chain of your choice.
@@ -1650,7 +1650,7 @@ a reference for building the CMSIS-RTOS RTX libraries using a tool-chain of your
 \brief This section describes the functions that are specific to CMSIS-RTOS RTX. 
 \details 
 The RTX kernel can be customized for different application requirements:
-- If you are depending on the \ref LowPower "lowest power consumption" possible, you need to adapt the function
+- If you are depending on the \ref lowPower "lowest power consumption" possible, you need to adapt the function
   \ref os_idle_demon to send the system to sleep mode as often as possible. In addition, use the
   \ref TickLess "low power RTX extensions" \ref os_suspend and \ref os_resume to suspend the RTX scheduler and to stop the
   SysTick timer.
@@ -1669,7 +1669,7 @@ The function \b os_idle_demon is executed by the RTX kernel, when no other threa
 is an empty end-less loop that does nothing. It only waits until another task becomes ready to run. You may change the code
 of the \b os_idle_demon function to put the CPU into a power-saving or idle mode.
 
-The default stack size for this task is defined in the file \b \#RTX_Conf_CM.c. Refer to \ref ThreadConfig entry <b>Default Thread stack size [bytes]</b>.
+The default stack size for this task is defined in the file \b \#RTX_Conf_CM.c. Refer to \ref threadConfig entry <b>Default Thread stack size [bytes]</b>.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -1938,7 +1938,7 @@ A CMSIS-RTOS implementation may support to start thread execution with the funct
  - When \ref osFeature_MainThread is 1 the RTOS offers to start with 'main'. The RTOS kernel is in this case already started.
  - When \ref osFeature_MainThread is 0 the RTOS requires explicit start with \ref osKernelStart.
 
-\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_MainThread is 1
+\ref rtxImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_MainThread is 1
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -1948,7 +1948,7 @@ A CMSIS-RTOS implementation may provide access to the RTOS kernel system timer.
    \ref osKernelSysTickFrequency, and \ref osKernelSysTickMicroSec.
  - When \ref osFeature_SysTick is 0 access to the RTOS kernel system timer is not implemented.
 
-\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_SysTick is 1
+\ref rtxImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_SysTick is 1
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -2406,7 +2406,7 @@ A CMSIS-RTOS implementation may support the generic wait function \ref osWait.
  - When \ref osFeature_Wait is 1 a generic wait function \ref osWait is available.
  - When \ref osFeature_Wait is 0 no generic wait function \ref osWait is available.
 
-\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_Wait is 0
+\ref rtxImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_Wait is 0
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -2803,7 +2803,7 @@ osDelay (1000);                       // wait for 1 second
 The CMSIS-RTOS API may support a variable number of signal flags. This define specifies the number of signal flags available
 per thread. The maximum value is 32 signal flags per thread.
 
-\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_Signals is 16
+\ref rtxImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_Signals is 16
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -2963,7 +2963,7 @@ A CMSIS-RTOS implementation may support message queues.
  - When \ref osFeature_MailQ is 1 message queues are supported.
  - When \ref osFeature_MailQ is 0 no message queues are supported.
 
-\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_MessageQ is 1
+\ref rtxImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_MessageQ is 1
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -3159,7 +3159,7 @@ A CMSIS-RTOS implementation may support fixed-size memory pools.
  - When \ref osFeature_Pool is 1 memory pools are supported.
  - When \ref osFeature_Pool is 0 no memory pools are supported.
  
-\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_Pool is 1
+\ref rtxImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_Pool is 1
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -3389,7 +3389,7 @@ A CMSIS-RTOS implementation may support mail queues.
  - When \ref osFeature_MailQ is 1 mail queues are supported.
  - When \ref osFeature_MailQ is 0 no mail queues are supported.
 
-\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_MailQ is 1
+\ref rtxImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_MailQ is 1
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -3851,7 +3851,7 @@ void thread_n (void)
 A CMSIS-RTOS implementation may support semaphores. The value \ref osFeature_Semaphore indicates the maximum index count for
 a semaphore.
 
-\ref RTXImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_Semaphore is 65535
+\ref rtxImplementation "CMSIS-RTOS RTX" Setting: \b osFeature_Semaphore is 65535
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

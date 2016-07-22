@@ -1,20 +1,20 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page CreatePackBoard Pack with Board Support
+\page createPackBoard Pack with Board Support
 
-A \ref CP_SWComponents "Software Pack" that contains a \ref pdsc_boards_pg "<board>" element is called Board Support Pack (BSP).
+A \ref cp_SWComponents "Software Pack" that contains a \ref pdsc_boards_pg "<board>" element is called Board Support Pack (BSP).
 A BSP may contain additional <b>Software Components</b>, <b>Example Projects</b>, as well as <b>Code Templates</b>. The typical
 content of a BSP is:
 - Source code, libraries, header/configuration files for the underlying hardware and documentation
   (for example user manuals, getting started guides, and schematics).
-- \ref CP_Examples "Example Projects" that show the usage of the development board and its peripherals.
-- \ref CP_CodeTemplates "User Code Templates" that can be used as a starting point for using the development board or the
+- \ref cp_Examples "Example Projects" that show the usage of the development board and its peripherals.
+- \ref cp_CodeTemplates "User Code Templates" that can be used as a starting point for using the development board or the
   mounted device.
 
 This section is a tutorial that explains how to create a BSP. 
 Initially the PDSC file in the BSP only describes an evaluation board.
 This BSP is then extended to contain also software components that interface with the hardware of the board.
-Example projects and code templates may be added as described in the section \ref CP_SWComponents.
+Example projects and code templates may be added as described in the section \ref cp_SWComponents.
   
   
 BSP Use Cases
@@ -28,7 +28,7 @@ BSPs can also be used to provide information for the display on <b>web sites</b>
 \image html BoardsSectionMCB1500.png "Board information on a web site extracted from a BSP"
 
 
-\section CP_SpecDevBoard Specify a Development Board
+\section cp_SpecDevBoard Specify a Development Board
 
 <b>Preparations</b>
 -# Install the Software Pack
@@ -43,7 +43,7 @@ BSPs can also be used to provide information for the display on <b>web sites</b>
 -# Make sure that files/directories are not write protected (remove read-only flag).
 -# Copy from the directory <b>\\CMSIS\\Utilities</b> available in the \b ARM::CMSIS Pack installation the following files
    into your working directory:
-   - PackChk.exe
+   - packChk.exe
    - PACK.xsd
 -# Open the \b MyVendor.MyBSP.pdsc file in an editor.
 
@@ -75,14 +75,14 @@ Add a \ref element_boards "<boards>" section in the PDSC file with the following
       <b>01_Specify_Dev_Board</b> directory.
 </li>
 <li>
-Finally, save the PDSC file and generate the Pack file using the <b>gen_pack.bat</b> script. See \ref CP_GeneratePack for
+Finally, save the PDSC file and generate the Pack file using the <b>gen_pack.bat</b> script. See \ref cp_GeneratePack for
 further details. Afterwards, install the Pack in your development tool.
 
 \image html DevBoardDisplay.png  "Display of development boards in development tools"
 </li>
 </ol>
 
-\note PackChk.exe will display \b M346 informations:
+\note packChk.exe will display \b M346 informations:
 \verbatim
 *** WARNING M346: .\Files\MyVendor.MyBSP.pdsc (Line 29)
   Referenced device(s) in 'MyDevBoard' not found: 'ARMCM3'
@@ -94,7 +94,7 @@ This is because this BSP does not contain a device section with the mentioned de
 add the ARM:CMSIS PDSC file to the checking process.
 
 
-\section CP_BundleExample Create a BSP Bundle
+\section cp_BundleExample Create a BSP Bundle
 
 A bundle is basically a variant on the \c Cclass level. It specifies the attributes \c Cclass, \c Cversion and optionally
 \c Cgroup and \c Cvendor for a collection of interdependent components. Components within a bundle inherit the attributes
@@ -106,7 +106,7 @@ Copy the \e content of the <b>02_BSP_Bundle</b> directory of the \b Pack_with_Bo
 directory in your working environment:
 <ol>
 <li>
-Add a \c \<conditions\> section in your PDSC with the following (the \ref CP_Conditions "conditions" section
+Add a \c \<conditions\> section in your PDSC with the following (the \ref cp_Conditions "conditions" section
 provides more information on this step):
 \code{.xml}
     <condition id="ARM Cortex M3 Series">
@@ -121,7 +121,7 @@ provides more information on this step):
 \endcode
 </li>
 <li>
-Add a \c \<components\> section in your PDSC with the following (the \ref CP_Components "components" section
+Add a \c \<components\> section in your PDSC with the following (the \ref cp_Components "components" section
 provides more information on this step):
 \code{.xml}
     <bundle Cbundle="MyDevBoardSupport" Cclass="Board Support" Cversion="1.0.1">
@@ -165,7 +165,7 @@ Add a new version number:
 \endcode
 </li>
 <li>
-Finally, save the PDSC file and regenerate the Pack file using the \ref CP_GeneratePack "gen_pack.bat" script. Afterwards,
+Finally, save the PDSC file and regenerate the Pack file using the \ref cp_GeneratePack "gen_pack.bat" script. Afterwards,
 install the Pack in your development tool and observe the differences to version 1.0.0.
 
 \image html BSPBundleDisplay.png "BSP bundle display in development tools"

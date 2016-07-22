@@ -1,5 +1,5 @@
 /** 
-\page Using_pg  Using CMSIS in Embedded Applications
+\page using_pg  Using CMSIS in Embedded Applications
 
 
 \details 
@@ -61,17 +61,17 @@ For example, the following files are provided in MDK-ARM to support the STM32F10
 </table>
 
 
-\note The silicon vendors create these device-specific CMSIS-CORE files based on \ref Templates_pg provide by ARM.
+\note The silicon vendors create these device-specific CMSIS-CORE files based on \ref templates_pg provide by ARM.
 
 Thereafter, the functions described under <a href="Modules.html">\b Reference </a> can be used in the application.
 
 \b Examples
- - \subpage Using_CMSIS is a simple example that shows the usage of the CMSIS layer.
- - \subpage Using_VTOR_pg shows how to remap the interrupt vector table.
- - \subpage Using_ARM_pg explains how to use CMSIS-CORE for ARM processors.
+ - \subpage using_CMSIS is a simple example that shows the usage of the CMSIS layer.
+ - \subpage using_VTOR_pg shows how to remap the interrupt vector table.
+ - \subpage using_ARM_pg explains how to use CMSIS-CORE for ARM processors.
 
 
-\page Using_CMSIS Basic CMSIS Example
+\page using_CMSIS Basic CMSIS Example
 
 A typical example for using the CMSIS layer is provided below. The example is based on a STM32F10x Device. 
     
@@ -125,7 +125,7 @@ void main (void) {	                             // user application starts here
 }
 \endcode
 
-\page Using_VTOR_pg Using Interrupt Vector Remap
+\page using_VTOR_pg Using Interrupt Vector Remap
 
 Most Cortex-M processors provide VTOR register for remapping interrupt vectors. The following example shows
 a typical use case where the interrupt vectors are copied to RAM and the SysTick_Handler is replaced.
@@ -184,7 +184,7 @@ int main (void) {
 }
 \endcode
     
-\page Using_ARM_pg Using CMSIS with generic ARM Processors
+\page using_ARM_pg Using CMSIS with generic ARM Processors
 
 ARM provides CMSIS-CORE files for the supported ARM Processors and for various compiler vendors. 
 These files can be used when standard ARM processors should be used in a project.
@@ -247,7 +247,7 @@ The table below lists the folder and device names of the ARM processors.
     </tr>
 </table>
 
-\section Using_ARM_Lib_sec Create generic Libraries with CMSIS
+\section using_ARM_Lib_sec Create generic Libraries with CMSIS
 
 The CMSIS Processor and Core Peripheral files allow also to create generic libraries. 
 The <a href="../../DSP/html/index.html">\b CMSIS-DSP </a> Libraries are an example for such a generic library.

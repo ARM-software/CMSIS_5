@@ -1,13 +1,13 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page Pack_Example Pack Example
+\page pack_Example Pack Example
 
 The <b>ARM::CMSIS</b> Pack contains an example of a Software Pack that contains device support, board support and software
 components. This Pack can be used as a reference for user generated Software Packs. It is available in the directory
 \\CMSIS\\Pack\\Example. It contains a \ref PE_PDSC "PDSC example file" and all sub-directories containing the files referenced
 in the PDSC.
-\n The example is a \ref CreatePack_DFP "DFP" for NXP's LPC1800 series of microcontrollers. It also contains
-\ref CreatePackBoard "BSP" information and software components, mainly peripheral drivers. Some of the drivers adhere to the
+\n The example is a \ref createPack_DFP "DFP" for NXP's LPC1800 series of microcontrollers. It also contains
+\ref createPackBoard "BSP" information and software components, mainly peripheral drivers. Some of the drivers adhere to the
 <a class=el href="../../Driver/html/index.html" target="_blank">CMSIS-Driver</a> standard. This is the layout of the
 sub-directories:
 |Directory                          |Content                                                                                    |Section in PDSC                     |
@@ -16,7 +16,7 @@ sub-directories:
 |\ref PE_CMSIS_Driver "CMSIS_Driver"|<a href="../../Driver/html/index.html"><b>CMSIS-Driver</b></a> compliant peripheral drivers|\ref element_component "<component>"|
 |\ref PE_Device "Device"            |<a href="../../Core/html/index.html"><b>CMSIS-CORE</b></a> files for LPC1800 series        |\ref element_device "<device>"      |
 |\ref PE_Documents "Documents"      |Documentation for devices and boards                                                       |\ref element_book "<book>"          |
-|\b Flash                           |\ref FlashAlgorithm and a sub-directory called \b LPC18xx43xx_IAP containing a uVision project for IAP (In-Application Programming) support|\ref element_algorithm "<algorithm>"|
+|\b Flash                           |\ref flashAlgorithm and a sub-directory called \b LPC18xx43xx_IAP containing a uVision project for IAP (In-Application Programming) support|\ref element_algorithm "<algorithm>"|
 |\b Images                          |Images of the MCB1800 development board                                                    |\ref pdsc_boards_pg "<board>"       |
 |\b SVD                             |<a href="../../SVD/html/index.html"><b>SVD</b></a> file for LPC1800 series                 |\ref element_debug "<debug>"        |
 

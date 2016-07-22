@@ -1,9 +1,9 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page CreatePackPublish Publish a Pack
+\page createPackPublish Publish a Pack
 There are multiple ways to distribute a Software Pack:
 
-\section CP_LocalInstallation Local Installation
+\section cp_LocalInstallation Local Installation
 The easiest way to distribute a Software Pack is attaching it to an email or using other means of electronic distribution
 (for example using a company internal file server). The installation of a Software Pack is usually triggered by
 double-clicking the PACK file. The Pack management tool is invoked and the Pack is installed on the local machine. After
@@ -17,7 +17,7 @@ check for updates on the server or the local machine that is specified by \c \<u
 <a href="https://en.wikipedia.org/wiki/File_URI_scheme" target="_blank">file URI scheme</a>.
 
 
-\section CP_WebDownload Web Download
+\section cp_WebDownload Web Download
 
 Any web server can be used to host a Software Pack (specified by the \c \<url\> element in the PDSC file). At this location,
 at least two files need to be present (refer to \ref PackFilenames):
@@ -52,7 +52,7 @@ updates of Packs within the development environment.
 \image html WebInstallation.png "Web installation and update"
 
 
-\section CP_KeilComPack Publishing on www.keil.com/pack
+\section cp_KeilComPack Publishing on www.keil.com/pack
 
 ARM tries to maintain a list of all available Software Packs. If a Software Pack is intended to be on that list, its PDSC
 file needs to be sent to to the following email address: cmsis@arm.com. The PDSC file will be manually XML validated. The

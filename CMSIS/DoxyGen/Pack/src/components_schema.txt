@@ -92,7 +92,7 @@ into a <em>bundle</em>. A <em>bundle</em> specifies identical attributes \b Ccla
 these attributes. Bundles ensure consistency of attributes across multiple interworking components and restrict the mix and
 match of components within a Cclass from different Software Packs.
 
-An example of a <b>bundle</b> is shown in the \ref CP_BundleExample section where the bundle is used to deliver board
+An example of a <b>bundle</b> is shown in the \ref cp_BundleExample section where the bundle is used to deliver board
 support files for a certain development platform.
 
 \section Component_Files Component Files
@@ -107,7 +107,7 @@ attributes, the files are handled differently:
     note that header files that are used with the attribute \c "config" need to be stored separately from other header files
     (for example in an extra directory) to avoid that due to the include path search order of the compiler, the unmodified
     header file in the pack repository is found first and used by the compiler (creating unexpected results).
-  - Source and header files that have the attribute \c "template" are part of \ref CP_CodeTemplates and can be added to a
+  - Source and header files that have the attribute \c "template" are part of \ref cp_CodeTemplates and can be added to a
     project manually by the user.
 	
 The following image shows the dependency between the attribute and the display in a development environment:

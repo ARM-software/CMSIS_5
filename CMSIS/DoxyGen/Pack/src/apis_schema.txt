@@ -17,7 +17,7 @@ a detailed specification of the API.
 
 \section element_apis /package/apis
 
-This element is a grouping element for all application programming interfaces included in the \ref CP_SWComponents "Software Pack".
+This element is a grouping element for all application programming interfaces included in the \ref cp_SWComponents "Software Pack".
 The element itself is optional. Only one such section can exist in a package.
 
 \b Example:

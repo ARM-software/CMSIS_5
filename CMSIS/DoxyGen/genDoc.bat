@@ -75,6 +75,8 @@ copy /Y Doxygen_Templates\search.css ..\Documentation\Pack\html\search\.
 REM copy /Y Doxygen_Templates\search.css ..\Documentation\SVD\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\DSP\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\DAP\html\search\.
+copy /Y Doxygen_Templates\search.css ..\Documentation\RTOS\html\search\.
+copy /Y Doxygen_Templates\search.css ..\Documentation\RTOS2\html\search\.
   
 :END
   ECHO.

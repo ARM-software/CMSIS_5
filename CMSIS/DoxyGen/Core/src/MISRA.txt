@@ -1,4 +1,4 @@
-/** \page CORE_MISRA_Exceptions_pg MISRA-C:2004 Compliance Exceptions
+/** \page coreMISRA_Exceptions_pg MISRA-C:2004 Compliance Exceptions
 CMSIS-CORE uses the common coding rules for CMSIS components that are documented under 
 <a href="../../General/html/index.html"><b>Introduction</b></a>.
 

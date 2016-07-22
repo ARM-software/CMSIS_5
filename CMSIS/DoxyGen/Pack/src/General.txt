@@ -3,7 +3,7 @@
 \mainpage
 
 <b>CMSIS-Pack</b> describes a delivery mechanism for software components, device parameters, and evaluation board
-support. The XML-based package description (PDSC) file describes the content of a \ref CP_SWComponents "Software Pack"
+support. The XML-based package description (PDSC) file describes the content of a \ref cp_SWComponents "Software Pack"
 (file collection) that includes:
  -	Source code, header files, and software libraries
  -	Documentation and source code templates
@@ -14,9 +14,9 @@ The complete file collection along with the PDSC file is shipped in ZIP-format a
 for software development environments and describes the user and device relevant context for the files supplied within such
 a Software Pack. A Software Pack can be used for multiple purposes (see below).
 
-After installing a \ref CP_SWComponents "Software Pack", all included software components are available to the development
-tools. \ref CP_Components "Software components" are a collection of source modules, header and configuration files as well as
-libraries. Packs containing software components can also include \ref CP_Examples and \ref CP_CodeTemplates.
+After installing a \ref cp_SWComponents "Software Pack", all included software components are available to the development
+tools. \ref cp_Components "Software components" are a collection of source modules, header and configuration files as well as
+libraries. Packs containing software components can also include \ref cp_Examples and \ref cp_CodeTemplates.
 
 
 \section SWPackVariants Software Pack Use Cases
@@ -35,15 +35,15 @@ The figure above shows the following use cases for Software Packs:
 \note A Software Pack can address multiple use cases at the same time!
 
 The following sections give you more details on the basics:
- - \ref CP_Packs explains the steps required for creating a Software Pack in general.
- - \ref CP_SWComponents gives detailed information on the contents of the PDSC file.
- - \ref CreatePack_DFP describes additional requirements of Device Family Packs (DFPs).
- - \ref CreatePackBoard covers the creation of Board Support Packs (BSPs).
- - \ref Pack_Example explains the Software Pack example that is part of the CMSIS Pack in more detail.
- - \ref CreatePackPublish shows the options for publishing a Pack.
- - \ref CreatePackUtil caters to programs that are useful during the creation of a Pack.
- - \ref PackFormat describes all XML elements that can be used in a PDSC file.
- - \ref ConfigWizard can be used to create GUI-like elements in development tools for configuration files.
+ - \ref cp_Packs explains the steps required for creating a Software Pack in general.
+ - \ref cp_SWComponents gives detailed information on the contents of the PDSC file.
+ - \ref createPack_DFP describes additional requirements of Device Family Packs (DFPs).
+ - \ref createPackBoard covers the creation of Board Support Packs (BSPs).
+ - \ref pack_Example explains the Software Pack example that is part of the CMSIS Pack in more detail.
+ - \ref createPackPublish shows the options for publishing a Pack.
+ - \ref createPackUtil caters to programs that are useful during the creation of a Pack.
+ - \ref packFormat describes all XML elements that can be used in a PDSC file.
+ - \ref configWizard can be used to create GUI-like elements in development tools for configuration files.
  
 <hr>
 
@@ -52,9 +52,9 @@ CMSIS-Pack in ARM::CMSIS Pack
 Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS directories:
 |Folder          |Content                                       | 
 |----------------|----------------------------------------------|
-|Utilities       | \ref CreatePackUtil                          |
-|Pack\\Example   | \ref Pack_Example "Reference Software Pack"  |
-|Pack\\Tutorials | Tutorials for \ref CP_Packs "Creating Packs" |
+|Utilities       | \ref createPackUtil                          |
+|Pack\\Example   | \ref pack_Example "Reference Software Pack"  |
+|Pack\\Tutorials | Tutorials for \ref cp_Packs "Creating Packs" |
 <hr>
 */
 
@@ -113,7 +113,7 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
   automatically included in the project as part of the component.
 - <em>Added</em> A generator command is optionally extended by a separate description of arguments
 - <em>Updated</em> Vendor list
-- <em>Updated</em> Utility PackChk.exe to Version 1.3.0.0:
+- <em>Updated</em> Utility packChk.exe to Version 1.3.0.0:
   - detect redefinitions of boards
   - check presence of board image files
   - check for duplicate device features
@@ -140,7 +140,7 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
  - <em>Removed</em> external RAMn and ROMn memory IDs in memory tag
  - <em>Added</em> FileCategoryTypes in \<file> element for C, C++, Assembler, Linker
  - <em>Extended</em> specification of \<require>, \<accept> and \<deny> with Cversion and Capiversion ranges
- - <em>Added</em> \ref CreatePackUtil and \ref PackChk for pack validation
+ - <em>Added</em> \ref createPackUtil and \ref packChk for pack validation
  - <em>Added</em> documentation for the Example PACK based on LPC1800 Device Family
  - <em>Refined</em> \<debug> element description
  - Many clarifications in the documentation along with examples

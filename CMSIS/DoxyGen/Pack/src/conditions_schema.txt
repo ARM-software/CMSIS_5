@@ -1,7 +1,7 @@
 /**
 \page pdsc_conditions_pg /package/conditions element
 
-The grouping element \ref element_conditions contains all conditions defined for the \ref CP_SWComponents "Software Pack". 
+The grouping element \ref element_conditions contains all conditions defined for the \ref cp_SWComponents "Software Pack". 
 
 A condition describes dependencies on device, processor, and tool attributes as well as the presence of other components.
 The <b>conditions</b> are used to define AND and OR rules used to make components conditional and therefore only available under certain circumstances,
@@ -55,7 +55,7 @@ be ignored.
 
 \section element_conditions /package/conditions
 
-This element groups all conditions used in the \ref CP_SWComponents "Software Pack".
+This element groups all conditions used in the \ref cp_SWComponents "Software Pack".
 
 <table class="cmtable" summary="Element: Conditions">
   <tr>
@@ -106,7 +106,7 @@ If a condition resolves to \token{false}, then the component or file description
   </tr>
   <tr>
     <td>id</td>
-    <td>Condition identifier which is unique within a \ref CP_SWComponents "Software Pack". The condition identifier is referenced by other elements with the attribute \b condition.</td>
+    <td>Condition identifier which is unique within a \ref cp_SWComponents "Software Pack". The condition identifier is referenced by other elements with the attribute \b condition.</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>

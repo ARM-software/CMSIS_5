@@ -89,7 +89,7 @@ Grouping element for boards. No more than one such group can exist in a PACK. No
 
 \section element_board /package/boards/board
 
-This element provides information to specify the \ref CreatePackBoard "Board Support Package (BSP)". At least one board must be defined.
+This element provides information to specify the \ref createPackBoard "Board Support Package (BSP)". At least one board must be defined.
 
 <table class="cmtable" summary="Element: Board">
   <tr>
@@ -120,7 +120,7 @@ This element provides information to specify the \ref CreatePackBoard "Board Sup
   </tr>
   <tr>
     <td>revision</td>
-    <td>Revision of the board that is suited to be used with the \ref CreatePackBoard "BSP".</td>
+    <td>Revision of the board that is suited to be used with the \ref createPackBoard "BSP".</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>

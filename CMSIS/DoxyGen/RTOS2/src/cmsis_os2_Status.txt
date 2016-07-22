@@ -1,0 +1,19 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+// ==== Status and Error Codes ====
+/**
+\addtogroup CMSIS_RTOS_Status Status and Error Codes
+\ingroup CMSIS_RTOS
+\brief Status and Error Codes returned by CMSIS-RTOS API functions.
+\details The Status and Error Codes section lists all the return values that the CMSIS-RTOS functions will return.
+@{
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef osStatus_t
+\details
+The \b osStatus_t enumeration defines the event status and error codes that are returned by the CMSIS-RTOS functions.
+*/
+/// @} 
+
+
+

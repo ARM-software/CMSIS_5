@@ -1,0 +1,202 @@
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Semaphore Management ====
+/** 
+\addtogroup CMSIS_RTOS_SemaphoreMgmt Semaphores
+\ingroup CMSIS_RTOS
+\brief Access shared resources simultaneously from different threads.
+\details 
+Semaphores are used to manage and protect access to shared resources. Semaphores are very similar to
+\ref CMSIS_RTOS_MutexMgmt "Mutexes". Whereas a Mutex permits just one thread to access a shared resource at a
+time, a semaphore can be used to permit a fixed number of threads to access a pool of shared resources. Using semaphores,
+access to a group of identical peripherals can be managed (for example multiple DMA channels).
+
+\image html "Semaphore.png" "CMSIS-RTOS Semaphore"
+
+A semaphore object should be initialized to the maximum number of available tokens. This number of available resources is
+specified as parameter of the \ref osSemaphoreNew function. Each time a semaphore token is obtained with
+\ref osSemaphoreAcquire, the semaphore count is decremented. When the semaphore count is 0, no semaphore token can be
+obtained. The thread that tries to obtain the semaphore token needs to wait until the next token is free. Semaphores are
+released with \ref osSemaphoreRelease incrementing the semaphore count.
+
+\note Semaphore tokens can be acquired from threads and released from threads and ISRs.
+
+Working with Semaphores
+--------------------
+Follow these steps to create and use a semaphore:
+-# Declare the semaphore container and initialize the semaphore:
+\code
+osSemaphoreDef (my_semaphore);    // Declare semaphore
+osSemaphoreId  (my_semaphore_id); // Semaphore ID
+\endcode
+-# Initialize the semaphore container with a number of tokens within a thread:
+\code
+my_semaphore_id = osSemaphoreCreate(osSemaphore(my_semaphore), 4);  // Create semaphore with 4 tokens
+\endcode
+\b Important: semaphore tokens can be created and destroyed as threads run. This means that can initialize a semaphore with
+zero tokens and then use one thread to add/create tokens to the semaphore while a second thread removes them. In this way you
+can distinguish between producer and consumer threads.
+-# Acquire a token from the semaphore container:
+\code
+osSemaphoreAcquire(my_semaphore_id, osWaitForever);
+\endcode
+-# When finished using the semaphore resource, send the token back to the semaphore container:
+\code
+osSemaphoreRelease(my_semaphore_id);
+\endcode
+
+Semaphore Use Cases
+-------------------
+Due to their flexibility, semaphores cover a wide range of synchronizing applications. At the same time, they are perhaps the
+most challenging RTOS object to understand. The following explains a use case for semaphores, taken from the book
+<a href="http://www.greenteapress.com/semaphores/" target="_blank">The Little Book Of Semaphores</a> by Allen B. Downey which
+is available for free download.
+
+<b>Non-binary Semaphore (Multiplex)</b>
+
+A multiplex limits the number of threads that can access a critical section of code. For example, this could be a function
+accessing DMA resources which can only support a limited number of calls.
+
+To allow multiple threads to run the function, initialize a semaphore to the maximum number of threads that can be allowed.
+The number of tokens in the semaphore represents the number of additional threads that may enter. If this number is zero,
+then the next thread trying to access the function will have to wait until one of the other threads exits and releases its
+token. When all threads have exited the token number is back to n. Ths following example shows the code for one of the
+threads that might access the resource:
+
+\code
+osSemaphoreId_t multiplex_id;
+ 
+void thread_n (void)
+  {
+    multiplex_id = osSemaphoreNew(3, 0, NULL);
+    while(1)
+      {
+        osSemaphoreAcquire(multiplex_id, osWaitForever);
+        // do something
+        osSemaphoreRelease(multiplex_id);
+      }
+  }
+\endcode
+
+@{
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\typedef  osSemaphoreId_t
+\details
+
+*/
+/**
+\struct osSemaphoreAttr_t
+\details
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr)
+\details
+Create and initialize a Semaphore object that is used to manage access to shared resources. The parameter \em count specifies the number of available resources. 
+The \em max_count value 1 creates a binary semaphore.
+
+<b>Code Example</b>
+\code{.c}
+#include "cmsis_os2.h"
+   
+osThreadId_t tid_thread1;                          // ID for thread 1
+osThreadId_t tid_thread2;                          // ID for thread 2
+  
+osSemaphoreId_t semaphore;                         // Semaphore ID
+   
+//
+//   Thread 1 - High Priority - Active every 3ms
+//
+void *thread1 (void *argument) {
+  int32_t value;
+
+  while (1) {
+    osDelay(3);                                  // Pass control to other tasks for 3ms
+    val = osSemaphoreAcquire (semaphore, 1);     // Wait 1ms for the free semaphore
+    if (val > 0) {
+                                                 // If there was no time-out the semaphore was acquired
+      :                                          // OK, the interface is free now, use it.
+      osSemaphoreRelease (semaphore);            // Return a token back to a semaphore
+    }
+  }
+}
+  
+//
+//   Thread 2 - Normal Priority - looks for a free semaphore and uses
+//                                the resource whenever it is available
+//
+void *thread2 (void *argument) {
+  while (1) {
+    osSemaphoreAcquire (semaphore, osWaitForever);  // Wait indefinitely for a free semaphore
+                                                 // OK, the interface is free now, use it.
+    :
+    osSemaphoreRelease (semaphore);              // Return a token back to a semaphore.
+  }
+}
+  
+  
+void StartApplication (void) {
+  semaphore = osSemaphoreNew(osSemaphore(semaphore), 1);
+
+  tid_thread1 = osThreadCreate(thread1, NULL, NULL);
+  tid_thread2 = osThreadCreate(thread2, NULL, NULL);
+  :
+}
+\endcode
+
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t millisec)
+\details
+Wait until a Semaphore token becomes available and acquires it for the thread if available. 
+When no Semaphore token is available, the function waits for the time specified with the parameter \em millisec.
+
+The argument \a millisec specifies how long the system waits for a Semaphore token to become available.
+While the system waits the thread that is calling this function is put into the state \b WAITING.
+The \a millisec timeout can have the following values:
+ - when \a millisec is 0, the function returns instantly.
+ - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until the Semaphore token becomes available.
+ - all other values specify a time in millisecond for a timeout.
+
+The return value indicates the number of available tokens (the semaphore count value). If 0 is returned, then no semaphore was available.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id)
+\details
+Release a Semaphore token.  This increments the count of available semaphore tokens.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the semaphore has been released.
+ - \em osErrorResource: all tokens have already been released.
+ - \em osErrorParameter: the parameter \a semaphore_id is incorrect.
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osSemaphoreGetCount (osSemaphoreId_t semaphore_id)
+\details
+Returns the count of availble semaphores of the semaphore object specified by /em semaphore_id.
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osSemaphoreDelete (osSemaphoreId_t semaphore_id)
+\details
+Delete a Semaphore object.  The function releases internal memory obtained for Semaphore handling.  After this call the \a semaphore_id is no longer valid and cannot be
+used. The Semaphore may be created again using the function \ref osSemaphoreNew.
+
+<b>\ref CMSIS_RTOS_Status</b>\n
+ - \em osOK: the semaphore object has been deleted.
+ - \em osErrorISR: \ref osSemaphoreDelete cannot be called from interrupt service routines.
+ - \em osErrorResource: the semaphore object could not be deleted.
+ - \em osErrorParameter: the parameter \a semaphore_id is incorrect.
+*/
+/// @}

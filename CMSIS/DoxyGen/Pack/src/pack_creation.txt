@@ -1,41 +1,41 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page CP_Packs Create Software Packs
+\page cp_Packs Create Software Packs
 
 The <b>CMSIS-Pack</b> format is used to deliver a Software Pack and is aimed to be scalable for future requirements.
 It provides a management process and supports a tool independent distribution for:
 
- - \ref CreatePack_DFP "Device Support" for tool chains and software applications to target a specific device:
+ - \ref createPack_DFP "Device Support" for tool chains and software applications to target a specific device:
   - Information about the processor and it's features.
   - C and assembly files for the device startup and access to the memory mapped peripheral registers.
   - Parameters, technical information, and data sheets about the device family and the specific devices.
   - Device description and available peripherals.
   - Memory layout of internal and external RAM and ROM address ranges.
-  - \ref FlashAlgorithm "Flash algorithms" for programming the device.
+  - \ref flashAlgorithm "Flash algorithms" for programming the device.
   - Debug and trace configurations as well as System View Description files for device specific display of the memory mapped
     peripheral registers.
 
- - \ref CreatePackBoard "Board Support" for rapid development in the prototyping stage:
+ - \ref createPackBoard "Board Support" for rapid development in the prototyping stage:
   - Information about the development board and it's features.
   - Parameters, technical information, and data sheets about the board, the mounted microcontroller and peripheral devices.
   - Drivers for on-board peripheral devices
 
- - \ref CP_SWComponents "Software Components" simplify the re-use of software and the management of 3rd party software. They contain:
-  - A collection of source modules, header and \ref ConfigWizard "configuration files" as well as libraries.
+ - \ref cp_SWComponents "Software Components" simplify the re-use of software and the management of 3rd party software. They contain:
+  - A collection of source modules, header and \ref configWizard "configuration files" as well as libraries.
   - Documentation of the software, including features and APIs.
   
- - \ref CP_API "Application Programming Interfaces" specify one or more APIs for \ref CP_Components "software components" that are
-   part of another \ref CP_SWComponents "Software Pack".
+ - \ref cp_API "Application Programming Interfaces" specify one or more APIs for \ref cp_Components "software components" that are
+   part of another \ref cp_SWComponents "Software Pack".
 
- - \ref CP_Examples can be used as a reference and starting point for similar applications. They contain:
+ - \ref cp_Examples can be used as a reference and starting point for similar applications. They contain:
   - Fully defined application projects that work out of the box in the specified build and debug environments.
   - Documentation about the purpose of the example, how to build, configure and execute the application.
   
- - \ref CP_CodeTemplates help to understand the basic concepts of a software component better and to give the user a
+ - \ref cp_CodeTemplates help to understand the basic concepts of a software component better and to give the user a
    good starting point for implementing his application. 
 
 
-\section CP_PackSteps Steps to Create a Pack
+\section cp_PackSteps Steps to Create a Pack
 
 The following image shows the basic steps that are required to create a Software Pack:
 
@@ -45,30 +45,30 @@ The following image shows the basic steps that are required to create a Software
 -# <b>Organize files:</b> Use directories to separate the content of the Pack.
 -# <b>Create PDSC file:</b> The XML based PDSC file can be created using any text editor. Editors that can
    validate XML code against a schema file help to find bugs early in the Pack development stage.
--# <b>Generate PACK:</b> Any compression tool supporting the ZIP format can be used to create a PACK file. \ref PackChk is
+-# <b>Generate PACK:</b> Any compression tool supporting the ZIP format can be used to create a PACK file. \ref packChk is
    helpful for the validation of the contents of a Pack.
 
-The following pages will show how to create a Software Pack from scratch. The page \ref CP_SWComponents will start with a simple
+The following pages will show how to create a Software Pack from scratch. The page \ref cp_SWComponents will start with a simple
 Pack containing only the PDSC file and a single software component and will then explain further elements of a Pack in more detail.
-The page \ref CreatePack_DFP adds information on the additional requirements that a DFP has, while \ref CreatePackBoard will
+The page \ref createPack_DFP adds information on the additional requirements that a DFP has, while \ref createPackBoard will
 elaborate on the content specific to a BSP.
 
 
 \section PackFilenames Pack Conventions
 
-All files that belong to a \ref CP_SWComponents "Software Pack" are compressed into a *.PACK file using a standard
+All files that belong to a \ref cp_SWComponents "Software Pack" are compressed into a *.PACK file using a standard
 <a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29" target="_blank">ZIP file format</a>.
-The content of each \ref CP_SWComponents "Software Pack" is described in the Pack Description (*.PDSC) file that is part of each
-\b Pack. Refer to \ref PackFormat for more information. 
+The content of each \ref cp_SWComponents "Software Pack" is described in the Pack Description (*.PDSC) file that is part of each
+\b Pack. Refer to \ref packFormat for more information. 
 
-A \ref CP_SWComponents "Software Pack" must have a unique filename following this naming convention:
+A \ref cp_SWComponents "Software Pack" must have a unique filename following this naming convention:
 <b>\<vendor\>.\<name\>.\<version\>.pack</b>.
 
 \b Where:
- - <b>\<vendor\></b> is name of the supplier or vendor of the \ref CP_SWComponents "Software Pack".
- - <b>\<name\></b> is name of the \ref CP_SWComponents "Software Pack". It is the vendor's responsibility to ensure unique package names.
- - <b>\<version\></b>specifies the version number of the \ref CP_SWComponents "Software Pack".
- - <b>.pack</b> is the file extension identifying a \ref CP_SWComponents "Software Pack".
+ - <b>\<vendor\></b> is name of the supplier or vendor of the \ref cp_SWComponents "Software Pack".
+ - <b>\<name\></b> is name of the \ref cp_SWComponents "Software Pack". It is the vendor's responsibility to ensure unique package names.
+ - <b>\<version\></b>specifies the version number of the \ref cp_SWComponents "Software Pack".
+ - <b>.pack</b> is the file extension identifying a \ref cp_SWComponents "Software Pack".
 
 \note
 - The XML elements \elem{vendor}, \elem{name}, and \elem{version} are declared in the \ref Filenames "PDSC" file.
@@ -81,7 +81,7 @@ The <b>ARM::CMSIS</b> Pack contains tutorials that are explained on the followin
 directory the following three ZIP files are available:
 |ZIP File                           |Documentation        
 |-----------------------------------|---------------------
-|Pack_with_Software_Components.zip  | \ref CP_SWComponents
-|Pack_with_Device_Support.zip       | \ref CreatePack_DFP
-|Pack_with_Board_Support.zip        | \ref CreatePackBoard
+|Pack_with_Software_Components.zip  | \ref cp_SWComponents
+|Pack_with_Device_Support.zip       | \ref createPack_DFP
+|Pack_with_Board_Support.zip        | \ref createPackBoard
 */

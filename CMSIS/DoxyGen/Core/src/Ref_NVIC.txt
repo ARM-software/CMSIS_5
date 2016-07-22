@@ -173,7 +173,7 @@ Vector Table
 ============
 The Vector Table defines the entry addresses of the processor exceptions and the
 device specific interrupts.  It is typically located at the beginning of the 
-program memory, however \ref Using_VTOR_pg it can be relocated to RAM.  The symbol 
+program memory, however \ref using_VTOR_pg it can be relocated to RAM.  The symbol 
 <b>__Vectors</b> is the address of the vector table in the startup code and the
 register <b>SCB->VTOR</b> holds the start address of the vector table. 
 
@@ -751,7 +751,7 @@ uint32_t NVIC_GetVector(IRQn_Type IRQn);
     \param [in]    vector  Address of new interrupt handler function
     
     \remarks
-        - Usage of this function requires vector relocation to RAM. Refer to \ref Using_VTOR_pg for more information.
+        - Usage of this function requires vector relocation to RAM. Refer to \ref using_VTOR_pg for more information.
 		- For using this function with Cortex-M0+ processor based devices, the SBC->VTOR register must be implemented.
         
     \sa     

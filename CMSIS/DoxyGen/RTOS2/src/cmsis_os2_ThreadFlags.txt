@@ -1,0 +1,91 @@
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== Thread Flags Management ====
+/** 
+\addtogroup CMSIS_RTOS_ThreadFlagsMgmt Thread Flags
+\ingroup CMSIS_RTOS
+\brief Synchronize threads using flags.
+\details
+Thread Flags are a more specialized version of the Event Flags. See \ref CMSIS_RTOS_EventFlags.
+While Event Flags can be used to globally signal a number of threads, thread flags are only send to a single specific thread. Every thread instance can receive thread flags without any additional allocation of a thread flags object.
+
+@{
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsWaitAny
+
+Reference: 
+ - \ref osEventFlagsWait
+ - \ref osThreadFlagsWait
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsWaitAll
+
+Reference: 
+ - \ref osEventFlagsWait
+ - \ref osThreadFlagsWait
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsAutoClear
+
+Reference: 
+ - \ref osEventFlagsWait
+ - \ref osThreadFlagsWait
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int32_t osThreadFlagsSet (osThreadId_t thread_id, int32_t flags ) 	
+Set the thread flags for a thread instance specified by \em thread_id. This function may be used also within interrupt service routines. 
+The threads waiting for the flag set will be notified to resume from WAITING state.
+
+<b>Code Example</b>
+\code
+void *Thread (void *arg);
+ 
+static void EX_Signal_1 (void)  {
+  int32_t      signals;
+  osThreadId_t thread_id;
+  
+  thread_id = osThreadCreate  (Thread, NULL, NULL);
+  signals   = osThreadFlagsSet (event_id, 0x00000001ul);         // Send signals to the created thread
+}
+\endcode
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn osStatus osThreadFlagsClear (osThreadId thread_id, int32_t flags);
+Clear the event flags of an thread flags object. 
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int32_t osThreadFlagsGet (osThreadId thread_id);
+Return the event flags currently set in an thread flags object. 
+ 
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+
+/** \fn int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t millisec);
+Suspend the execution of the current \b RUNNING thread until any or all specified thread flags with the parameter \a flags are set.
+The /em options parameter specifies the wait condition. 
+
+|Option              |													     |
+|--------------------|-------------------------------------------------------|
+|\b osFlagsWaitAny   |   Wait for any flag (default).                        |
+|\b osFlagsWaitAll   |   Wait for all flags.                                 |
+|\b osFlagsAutoClear |   Clear flags which have been specified to wait for.  |
+
+If osFlagsAutoClear is not set in the options /ref osThreadFlagClear can be used to clear flags manually.
+
+When these thread flags are already set, the function returns instantly. Otherwise the thread is put into the state \b WAITING. 
+
+
+<b>Code Example</b>
+\code
+#include "cmsis_os2.h"
+:
+void *Thread (void* arg) {
+:
+  osThreadFlagsGet (0x00000001ul, NULL, osWaitForever); //Wait forever until event 0x01 is set.
+:
+}
+\endcode
+*/
+/// @}

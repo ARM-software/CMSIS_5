@@ -1,10 +1,10 @@
 /**************************************************************************************************/
 /**
-\page FlashAlgorithm  Flash Programming Algorithms
+\page flashAlgorithm  Flash Programming Algorithms
 
 [TOC]
 
-<b>Flash Programming Algorithms</b> are a piece of software to erase or download applications to Flash devices. A \ref CreatePack_DFP
+<b>Flash Programming Algorithms</b> are a piece of software to erase or download applications to Flash devices. A \ref createPack_DFP
 usually contains predefined Flash algorithms for programming the devices that are supported by the DFP. A template for
 creating new algorithms are available in the <b>ARM:CMSIS</b> Pack. The following section describes the process in more detail.
 
@@ -35,7 +35,7 @@ settings are required. Follow these steps to create and configure a new Flash pr
   <b>Options for Target</b> - \b Asm.
 - The dialog \b Project - <b>Options for Target</b> - \b Linker defines the linker scatter file \b Target.lin. The error
   L6305 is disabled with \c --diag_suppress \c L6305.
-- The \subpage AlgorithmFunc "Flash Algorithm Functions" section contains reference for all the available functions.
+- The \subpage algorithmFunc "Flash Algorithm Functions" section contains reference for all the available functions.
 
 \anchor FlashPrg
 FlashPrg.c
@@ -79,7 +79,7 @@ STM32F10x device. Adapt the code to your needs.
 
 
 \section AddFPA Adding an Algorithm to a Pack
-The generated <b>*.FLM</b> file needs to be added to the \ref CreatePack_DFP, so that it is available to the tool user for programming
+The generated <b>*.FLM</b> file needs to be added to the \ref createPack_DFP, so that it is available to the tool user for programming
 his device. Usually, a directory \b Flash is created and the algorithm is saved in this directory.
 
 The algorithm is specified within the the \ref element_family level:
@@ -110,7 +110,7 @@ However, the Flash programming algorithm of a project can be changed manually at
 
 /**************************************************************************************************/
 /**
-\page AlgorithmFunc Algorithm Functions
+\page algorithmFunc Algorithm Functions
 
 The following functions are available for creating new Flash programming algorithms:
 |Function Name   |Indication|Description|

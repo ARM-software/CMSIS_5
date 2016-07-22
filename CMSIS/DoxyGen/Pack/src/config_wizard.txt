@@ -1,6 +1,6 @@
 /**************************************************************************************************/
 /**
-\page ConfigWizard Configuration Wizard Annotations
+\page configWizard Configuration Wizard Annotations
 \section configWizard_annotations Annotation Rules
 
 <b>Configuration Wizard Annotations</b> consist of annotation items and annotation modifiers. They create GUI-like elements

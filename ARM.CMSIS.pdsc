@@ -1361,7 +1361,7 @@ The ARMv8MML processor is brand new.
       </RTE_Components_h>
       <files>
         <!-- CPU independent -->
-        <file category="doc" name="CMSIS/Documentation/RTOS/html/_r_t_x_implementation.html"/>
+        <file category="doc" name="CMSIS/Documentation/RTOS/html/rtxImplementation.html"/>
         <file category="header" name="CMSIS/RTOS/RTX/INC/cmsis_os.h"/>
         <file category="source" attr="config"   name="CMSIS/RTOS/RTX/Templates/RTX_Conf_CM.c" version="4.70.1"/>
 
@@ -1453,7 +1453,7 @@ The ARMv8MML processor is brand new.
       </RTE_Components_h>
       <files>
         <!-- RTX documentation -->
-   <!-- <file category="doc"    name="CMSIS/Documentation/RTOS2/html/_r_t_x_implementation.html"/> -->
+        <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/> 
 
         <!-- RTX header files -->
         <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
@@ -1465,7 +1465,8 @@ The ARMv8MML processor is brand new.
         <!-- RTX templates -->
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"   select="CMSIS-RTOS 'main' function"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Source/user_svc.c" select="CMSIS-RTOS User SVC"/>
-
+        <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
+		
         <!-- RTX libraries (CPU and Compiler dependent) -->
         <!-- ARMCC -->
         <file category="library" condition="CM0_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"      src="CMSIS/RTOS2/RTX/Source"/>
@@ -1650,6 +1651,21 @@ The ARMv8MML processor is brand new.
         <category>Getting Started</category>
       </attributes>
     </example>
+	
+	<example name="CMSIS-RTOS2 Blinky" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Simulation/RTX5_Blinky">
+      <description>CMSIS-RTOS2 Blinky example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="Blinky.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="RTOS2"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+	
   </examples>
 
 </package>
