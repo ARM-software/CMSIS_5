@@ -1361,7 +1361,7 @@ The ARMv8MML processor is brand new.
       </RTE_Components_h>
       <files>
         <!-- CPU independent -->
-        <file category="doc" name="CMSIS/Documentation/RTOS/html/rtxImplementation.html"/>
+        <file category="doc" name="CMSIS/Documentation/RTOS/html/rtx_implementation.html"/>
         <file category="header" name="CMSIS/RTOS/RTX/INC/cmsis_os.h"/>
         <file category="source" attr="config"   name="CMSIS/RTOS/RTX/Templates/RTX_Conf_CM.c" version="4.70.1"/>
 
