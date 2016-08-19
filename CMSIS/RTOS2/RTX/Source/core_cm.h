@@ -201,7 +201,7 @@ __STATIC_INLINE uint32_t os_SysTick_GetVal (void) {
 /// Get SysTick Overflow (Auto Clear)
 /// \return    SysTick Overflow flag
 __STATIC_INLINE uint32_t os_SysTick_GetOvf (void) {
-  return ((SysTick->CTRL >> 26) & 1U);
+  return ((SysTick->CTRL >> 16) & 1U);
 }
 
 /// Enable SysTick Timer
