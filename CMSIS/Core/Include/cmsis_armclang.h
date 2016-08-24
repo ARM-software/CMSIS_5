@@ -2,7 +2,7 @@
  * @file     cmsis_armclang.h
  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
  * @version  V5.00
- * @date     20. April 2016
+ * @date     24. August 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -24,6 +24,39 @@
 
 #ifndef __CMSIS_ARMCLANG_H
 #define __CMSIS_ARMCLANG_H
+
+/* CMSIS compiler specific defines */
+#ifndef   __ASM
+  #define __ASM                     __asm
+#endif
+#ifndef   __INLINE
+  #define __INLINE                  __inline
+#endif
+#ifndef   __STATIC_INLINE
+  #define __STATIC_INLINE           static __inline
+#endif
+#ifndef   __NO_RETURN
+  #define __NO_RETURN               __attribute__((noreturn))
+#endif
+#ifndef   __USED
+  #define __USED                    __attribute__((used))
+#endif
+#ifndef   __WEAK
+  #define __WEAK                    __attribute__((weak))
+#endif
+#ifndef   __UNALIGNED_UINT32
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wpacked"
+  struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+  #pragma clang diagnostic pop
+  #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+#endif
+#ifndef   __ALIGNED
+  #define __ALIGNED(x)              __attribute__((aligned(x)))
+#endif
+#ifndef   __PACKED
+  #define __PACKED                  __attribute__((packed, aligned(1)))
+#endif
 
 
 /* ###########################  Core Function Access  ########################### */
@@ -1662,6 +1695,7 @@ __attribute__((always_inline)) __STATIC_INLINE  int32_t __QSUB( int32_t op1,  in
   return(result);
 }
 
+#if 0
 #define __PKHBT(ARG1,ARG2,ARG3) \
 ({                          \
   uint32_t __RES, __ARG1 = (ARG1), __ARG2 = (ARG2); \
@@ -1678,8 +1712,15 @@ __attribute__((always_inline)) __STATIC_INLINE  int32_t __QSUB( int32_t op1,  in
     __ASM ("pkhtb %0, %1, %2, asr %3" : "=r" (__RES) :  "r" (__ARG1), "r" (__ARG2), "I" (ARG3)  ); \
   __RES; \
  })
+#endif
 
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
+#define __PKHBT(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0x0000FFFFUL) |  \
+                                           ((((uint32_t)(ARG2)) << (ARG3)) & 0xFFFF0000UL)  )
+
+#define __PKHTB(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0xFFFF0000UL) |  \
+                                           ((((uint32_t)(ARG2)) >> (ARG3)) & 0x0000FFFFUL)  )
+
+__attribute__((always_inline)) __STATIC_INLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 {
  int32_t result;
 

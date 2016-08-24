@@ -2,7 +2,7 @@
  * @file     core_armv8mml.h
  * @brief    CMSIS ARMv8MML Core Peripheral Access Layer Header File
  * @version  V5.00
- * @date     14. July 2016
+ * @date     24. August 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -67,99 +67,6 @@
                                          __ARMv8MML_CMSIS_VERSION_SUB           )  /*!< CMSIS HAL version number */
 
 #define __CORTEX_M                     (81U)                                       /*!< Cortex-M Core */
-
-/* Common defines in core_*.h files
-  - #define __ASM               Compiler keyword for asm
-  - #define __INLINE            Compiler keyword for inline
-  - #define __STATIC_INLINE     Compiler keyword for static inline
-  - #define __NO_RETURN         function that never returns
-  - #define __USED              function or variable that is not optimized away
-  - #define __WEAK              weak function or variable
-  - #define __UNALIGNED_UINT32  pointer to unaligned uint32_t variable
-  - #define __ALIGNED(x)        compiler keyword to align a variable
- */
-#if   defined ( __CC_ARM )                                            /* ARM Compiler 4/5 */
-  #define __ASM                     __asm
-  #define __INLINE                  __inline
-  #define __STATIC_INLINE           static __inline
-  #define __NO_RETURN               __declspec(noreturn)
-  #define __USED                    __attribute__((used))
-  #define __WEAK                    __attribute__((weak))
-  #define __UNALIGNED_UINT32(x)     (*((__packed uint32_t *)(x)))
-  #define __ALIGNED(x)              __attribute__((aligned(x)))
-
-#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)       /* ARM Compiler 6 */
-  #define __ASM                     __asm
-  #define __INLINE                  __inline
-  #define __STATIC_INLINE           static __inline
-  #define __NO_RETURN               __attribute__((noreturn))
-  #define __USED                    __attribute__((used))
-  #define __WEAK                    __attribute__((weak))
-  #pragma clang diagnostic push
-  #pragma clang diagnostic ignored "-Wpacked"
-  struct __attribute__((packed)) T_UINT32 { uint32_t v; };
-  #pragma clang diagnostic pop
-  #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
-  #define __ALIGNED(x)              __attribute__((aligned(x)))
-
-#elif defined ( __GNUC__ )                                            /* GNU Compiler */
-  #define __ASM                     __asm
-  #define __INLINE                  inline
-  #define __STATIC_INLINE           static inline
-  #define __NO_RETURN               __attribute__((noreturn))
-  #define __USED                    __attribute__((used))
-  #define __WEAK                    __attribute__((weak))
-  struct __attribute__((packed)) T_UINT32 { uint32_t v; };
-  #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
-  #define __ALIGNED(x)              __attribute__((aligned(x)))
-
-#elif defined ( __ICCARM__ )                                          /* IAR Compiler */
-  #define __ASM                     __asm
-  #define __INLINE                  inline
-  #define __STATIC_INLINE           static inline
-  #define __NO_RETURN               __noreturn
-  #define __USED
-  #define __WEAK                    __weak
-  __packed struct T_UINT32 { uint32_t v; };
-  #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
-  #define __ALIGNED(x)
-
-#elif defined ( __TI_ARM__ )                                          /* TI ARM Compiler */
-  #define __ASM                     __asm
-  #define __INLINE                  inline
-  #define __STATIC_INLINE           static inline
-  #define __NO_RETURN               __attribute__((noreturn))
-  #define __USED                    __attribute__((used))
-  #define __WEAK                    __attribute__((weak))
-  struct __attribute__((packed)) T_UINT32 { uint32_t v; };
-  #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
-  #define __ALIGNED(x)
-
-#elif defined ( __TASKING__ )                                         /* TASKING Compiler */
-  #define __ASM                     __asm
-  #define __INLINE                  inline
-  #define __STATIC_INLINE           static inline
-  #define __NO_RETURN               __attribute__((noreturn))
-  #define __USED                    __attribute__((used))
-  #define __WEAK                    __attribute__((weak))
-  struct __packed__ T_UINT32 { uint32_t v; };
-  #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
-  #define __ALIGNED(x)              __align(x)
-
-#elif defined ( __CSMC__ )                                            /* COSMIC Compiler */
-  #define __packed
-  #define __ASM                     _asm
-  #define __INLINE                  inline
-  #define __STATIC_INLINE           static inline
-  #define __NO_RETURN
-  #define __USED
-  #define __WEAK
-  #define __UNALIGNED_UINT32(x)     (*x)
-  #define __ALIGNED(x)
-
-#else
-  #error Unknown compiler
-#endif
 
 /** __FPU_USED indicates whether an FPU is used or not.
     For this, __FPU_PRESENT has to be checked prior to making use of FPU specific registers and functions.
@@ -250,9 +157,7 @@
 
 #endif
 
-#include "core_cminstr.h"                /* Core Instruction Access */
-#include "core_cmfunc.h"                 /* Core Function Access */
-#include "core_cmsimd.h"                 /* Compiler specific SIMD Intrinsics */
+#include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
 
 #ifdef __cplusplus
 }
@@ -2133,6 +2038,10 @@ typedef struct
   @{
  */
 
+#define NVIC_USER_IRQ_OFFSET          16
+
+
+
 /**
   \brief   Set Priority Grouping
   \details Sets the priority grouping field using the required unlock sequence.
@@ -2451,6 +2360,37 @@ __STATIC_INLINE void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGr
 
   *pPreemptPriority = (Priority >> SubPriorityBits) & (uint32_t)((1UL << (PreemptPriorityBits)) - 1UL);
   *pSubPriority     = (Priority                   ) & (uint32_t)((1UL << (SubPriorityBits    )) - 1UL);
+}
+
+
+/**
+  \brief   Set Interrupt Vector
+  \details Sets an interrupt vector in SRAM based interrupt vector table.
+           The interrupt number can be positive to specify a device specific interrupt,
+           or negative to specify a processor exception.
+           VTOR must been relocated to SRAM before.
+  \param [in]   IRQn      Interrupt number
+  \param [in]   vector    Address of interrupt handler function
+ */
+__STATIC_INLINE void NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)
+{
+    uint32_t *vectors = (uint32_t *)SCB->VTOR;
+    vectors[IRQn + NVIC_USER_IRQ_OFFSET] = vector;
+}
+
+
+/**
+  \brief   Get Interrupt Vector
+  \details Reads an interrupt vector from interrupt vector table.
+           The interrupt number can be positive to specify a device specific interrupt,
+           or negative to specify a processor exception.
+  \param [in]   IRQn      Interrupt number.
+  \return                 Address of interrupt handler function
+ */
+__STATIC_INLINE uint32_t NVIC_GetVector(IRQn_Type IRQn)
+{
+    uint32_t *vectors = (uint32_t *)SCB->VTOR;
+    return vectors[IRQn + NVIC_USER_IRQ_OFFSET];
 }
 
 

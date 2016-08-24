@@ -188,4 +188,23 @@ uint32_t val32 __ALIGNED(4);
 */
 #define __ALIGNED
 
+/**************************************************************************************************/
+/**
+\def __PACKED
+\brief Smallest possible alignment.
+\details
+Specifies that a type must have the smallest possible alignment.
+ 
+<b> Code Example:</b>
+\code
+struct __PACKED {
+  uint8_t  len;
+  uint8_t  type;
+  uint16_t langid;
+} desc_langid;
+\endcode
+
+*/
+#define __PACKED
+
 /** @} */ /** end of compiler_conntrol_gr **/

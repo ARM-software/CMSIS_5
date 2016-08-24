@@ -77,18 +77,6 @@ In addition ARM provides the following core header files that do not need any mo
 	     - core_armv8mml.h: for the ARMv8-M Mainline processor
 	  </td>
     </tr>
-    <tr>
-      <td><b>core_cminstr.h</b></td>
-      <td>Defines intrinsic functions to access special Cortex-M instructions.</td>
-    </tr>
-    <tr>
-      <td><b>core_cmiunc.h</b></td>
-      <td>Defines functions to access the Cortex-M core peripherals.</td>
-    </tr>
-    <tr>
-      <td><b>core_cmsimd.h</b></td>
-      <td>Defines intrinsic functions to access the SIMD instructions for Cortex-M4, Cortex-M7 and ARMv8MML.</td>
-    </tr>
 </table>
 
 

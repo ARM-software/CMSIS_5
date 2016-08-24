@@ -2,7 +2,7 @@
  * @file     core_sc000.h
  * @brief    CMSIS SC000 Core Peripheral Access Layer Header File
  * @version  V5.00
- * @date     14. July 2016
+ * @date     24. August 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -68,99 +68,6 @@
 
 #define __CORTEX_SC                 (000U)                                   /*!< Cortex secure core */
 
-/* Common defines in core_*.h files
-  - #define __ASM               Compiler keyword for asm
-  - #define __INLINE            Compiler keyword for inline
-  - #define __STATIC_INLINE     Compiler keyword for static inline
-  - #define __NO_RETURN         function that never returns
-  - #define __USED              function or variable that is not optimized away
-  - #define __WEAK              weak function or variable
-  - #define __UNALIGNED_UINT32  pointer to unaligned uint32_t variable
-  - #define __ALIGNED(x)        compiler keyword to align a variable
- */
-#if   defined ( __CC_ARM )                                            /* ARM Compiler 4/5 */
-  #define __ASM                     __asm
-  #define __INLINE                  __inline
-  #define __STATIC_INLINE           static __inline
-  #define __NO_RETURN               __declspec(noreturn)
-  #define __USED                    __attribute__((used))
-  #define __WEAK                    __attribute__((weak))
-  #define __UNALIGNED_UINT32(x)     (*((__packed uint32_t *)(x)))
-  #define __ALIGNED(x)              __attribute__((aligned(x)))
-
-#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)       /* ARM Compiler 6 */
-  #define __ASM                     __asm
-  #define __INLINE                  __inline
-  #define __STATIC_INLINE           static __inline
-  #define __NO_RETURN               __attribute__((noreturn))
-  #define __USED                    __attribute__((used))
-  #define __WEAK                    __attribute__((weak))
-  #pragma clang diagnostic push
-  #pragma clang diagnostic ignored "-Wpacked"
-  struct __attribute__((packed)) T_UINT32 { uint32_t v; };
-  #pragma clang diagnostic pop
-  #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
-  #define __ALIGNED(x)              __attribute__((aligned(x)))
-
-#elif defined ( __GNUC__ )                                            /* GNU Compiler */
-  #define __ASM                     __asm
-  #define __INLINE                  inline
-  #define __STATIC_INLINE           static inline
-  #define __NO_RETURN               __attribute__((noreturn))
-  #define __USED                    __attribute__((used))
-  #define __WEAK                    __attribute__((weak))
-  struct __attribute__((packed)) T_UINT32 { uint32_t v; };
-  #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
-  #define __ALIGNED(x)              __attribute__((aligned(x)))
-
-#elif defined ( __ICCARM__ )                                          /* IAR Compiler */
-  #define __ASM                     __asm
-  #define __INLINE                  inline
-  #define __STATIC_INLINE           static inline
-  #define __NO_RETURN               __noreturn
-  #define __USED
-  #define __WEAK                    __weak
-  __packed struct T_UINT32 { uint32_t v; };
-  #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
-  #define __ALIGNED(x)
-
-#elif defined ( __TI_ARM__ )                                          /* TI ARM Compiler */
-  #define __ASM                     __asm
-  #define __INLINE                  inline
-  #define __STATIC_INLINE           static inline
-  #define __NO_RETURN               __attribute__((noreturn))
-  #define __USED                    __attribute__((used))
-  #define __WEAK                    __attribute__((weak))
-  struct __attribute__((packed)) T_UINT32 { uint32_t v; };
-  #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
-  #define __ALIGNED(x)
-
-#elif defined ( __TASKING__ )                                         /* TASKING Compiler */
-  #define __ASM                     __asm
-  #define __INLINE                  inline
-  #define __STATIC_INLINE           static inline
-  #define __NO_RETURN               __attribute__((noreturn))
-  #define __USED                    __attribute__((used))
-  #define __WEAK                    __attribute__((weak))
-  struct __packed__ T_UINT32 { uint32_t v; };
-  #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
-  #define __ALIGNED(x)              __align(x)
-
-#elif defined ( __CSMC__ )                                            /* COSMIC Compiler */
-  #define __packed
-  #define __ASM                     _asm
-  #define __INLINE                  inline
-  #define __STATIC_INLINE           static inline
-  #define __NO_RETURN
-  #define __USED
-  #define __WEAK
-  #define __UNALIGNED_UINT32(x)     (*x)
-  #define __ALIGNED(x)
-
-#else
-  #error Unknown compiler
-#endif
-
 /** __FPU_USED indicates whether an FPU is used or not.
     This core does not support an FPU at all
 */
@@ -203,8 +110,8 @@
 
 #endif
 
-#include "core_cminstr.h"                /* Core Instruction Access */
-#include "core_cmfunc.h"                 /* Core Function Access */
+#include "cmsis_compiler.h"               /* CMSIS compiler specific defines */
+
 
 #ifdef __cplusplus
 }

@@ -8,6 +8,14 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.0-Beta12">
+      CMSIS_Core:
+       - Added new file cmsis_compiler.h.
+       - Deleted deprecated files core_cmfunc.h, core_cminstr.h, core_cmsimd.h.
+       - Reworked compiler secific include files.
+       - Reworked core dependant include files.
+       - Added __PACKED macro.
+    </release>
     <release version="5.0.0-Beta11">
       CMSIS_Core:
        - Added CMSE support to cmsis_gcc.h.
@@ -1453,7 +1461,7 @@ The ARMv8MML processor is brand new.
       </RTE_Components_h>
       <files>
         <!-- RTX documentation -->
-        <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/> 
+        <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/>
 
         <!-- RTX header files -->
         <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
@@ -1466,7 +1474,7 @@ The ARMv8MML processor is brand new.
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"   select="CMSIS-RTOS 'main' function"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Source/user_svc.c" select="CMSIS-RTOS User SVC"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
-		
+
         <!-- RTX libraries (CPU and Compiler dependent) -->
         <!-- ARMCC -->
         <file category="library" condition="CM0_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"      src="CMSIS/RTOS2/RTX/Source"/>
@@ -1651,7 +1659,7 @@ The ARMv8MML processor is brand new.
         <category>Getting Started</category>
       </attributes>
     </example>
-	
+
 	<example name="CMSIS-RTOS2 Blinky" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Simulation/RTX5_Blinky">
       <description>CMSIS-RTOS2 Blinky example</description>
       <board name="uVision Simulator" vendor="Keil"/>
@@ -1665,7 +1673,7 @@ The ARMv8MML processor is brand new.
         <category>Getting Started</category>
       </attributes>
     </example>
-	
+
   </examples>
 
 </package>
