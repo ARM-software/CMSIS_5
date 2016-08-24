@@ -2,7 +2,7 @@
  * @file     cmsis_gcc.h
  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
  * @version  V5.00
- * @date     12. July 2016
+ * @date     24. August 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -31,6 +31,36 @@
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wconversion"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
+#endif
+
+/* CMSIS compiler specific defines */
+#ifndef   __ASM
+  #define __ASM                     __asm
+#endif
+#ifndef   __INLINE
+  #define __INLINE                  inline
+#endif
+#ifndef   __STATIC_INLINE
+  #define __STATIC_INLINE           static inline
+#endif
+#ifndef   __NO_RETURN
+  #define __NO_RETURN               __attribute__((noreturn))
+#endif
+#ifndef   __USED
+  #define __USED                    __attribute__((used))
+#endif
+#ifndef   _WEAK
+  #define __WEAK                    __attribute__((weak))
+#endif
+#ifndef   __UNALIGNED_UINT32
+  struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+  #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+#endif
+#ifndef   __ALIGNED
+  #define __ALIGNED(x)              __attribute__((aligned(x)))
+#endif
+#ifndef   __PACKED
+  #define __PACKED                  __attribute__((packed, aligned(1)))
 #endif
 
 
@@ -837,7 +867,10 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 #define __CLZ             __builtin_clz
 
 
-#if ((__ARM_ARCH_7M__ == 1U) || (__ARM_ARCH_7EM__ == 1U) || (__ARM_ARCH_8M_MAIN__ == 1U) || (__ARM_ARCH_8M_BASE__ == 1U))
+#if ((__ARM_ARCH_7M__      == 1U) || \
+     (__ARM_ARCH_7EM__     == 1U) || \
+     (__ARM_ARCH_8M_MAIN__ == 1U) || \
+     (__ARM_ARCH_8M_BASE__ == 1U)    )
 
 /**
   \brief   LDR Exclusive (8 bit)
@@ -1191,7 +1224,13 @@ __attribute__((always_inline)) __STATIC_INLINE void __STL(uint32_t value, volati
   \param [in]    ptr  Pointer to data
   \return             value of type uint8_t at (*ptr)
  */
-#define     __LDAEXB                 (uint8_t)__builtin_arm_ldaex
+__attribute__((always_inline)) __STATIC_INLINE uint8_t __LDAEXB(volatile uint8_t *ptr)
+{
+    uint32_t result;
+
+   __ASM volatile ("ldaexb %0, %1" : "=r" (result) : "Q" (*ptr) );
+   return ((uint8_t) result);
+}
 
 
 /**
@@ -1200,7 +1239,13 @@ __attribute__((always_inline)) __STATIC_INLINE void __STL(uint32_t value, volati
   \param [in]    ptr  Pointer to data
   \return        value of type uint16_t at (*ptr)
  */
-#define     __LDAEXH                 (uint16_t)__builtin_arm_ldaex
+__attribute__((always_inline)) __STATIC_INLINE uint16_t __LDAEXH(volatile uint16_t *ptr)
+{
+    uint32_t result;
+
+   __ASM volatile ("ldaexh %0, %1" : "=r" (result) : "Q" (*ptr) );
+   return ((uint16_t) result);
+}
 
 
 /**
@@ -1209,7 +1254,13 @@ __attribute__((always_inline)) __STATIC_INLINE void __STL(uint32_t value, volati
   \param [in]    ptr  Pointer to data
   \return        value of type uint32_t at (*ptr)
  */
-#define     __LDAEX                  (uint32_t)__builtin_arm_ldaex
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __LDAEX(volatile uint32_t *ptr)
+{
+    uint32_t result;
+
+   __ASM volatile ("ldaex %0, %1" : "=r" (result) : "Q" (*ptr) );
+   return(result);
+}
 
 
 /**
@@ -1220,7 +1271,13 @@ __attribute__((always_inline)) __STATIC_INLINE void __STL(uint32_t value, volati
   \return          0  Function succeeded
   \return          1  Function failed
  */
-#define     __STLEXB                 (uint32_t)__builtin_arm_stlex
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __STLEXB(uint8_t value, volatile uint8_t *ptr)
+{
+   uint32_t result;
+
+   __ASM volatile ("stlexb %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) );
+   return(result);
+}
 
 
 /**
@@ -1231,7 +1288,13 @@ __attribute__((always_inline)) __STATIC_INLINE void __STL(uint32_t value, volati
   \return          0  Function succeeded
   \return          1  Function failed
  */
-#define     __STLEXH                 (uint32_t)__builtin_arm_stlex
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __STLEXH(uint16_t value, volatile uint16_t *ptr)
+{
+   uint32_t result;
+
+   __ASM volatile ("stlexh %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) );
+   return(result);
+}
 
 
 /**
@@ -1242,7 +1305,13 @@ __attribute__((always_inline)) __STATIC_INLINE void __STL(uint32_t value, volati
   \return          0  Function succeeded
   \return          1  Function failed
  */
-#define     __STLEX                  (uint32_t)__builtin_arm_stlex
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __STLEX(uint32_t value, volatile uint32_t *ptr)
+{
+   uint32_t result;
+
+   __ASM volatile ("stlex %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) );
+   return(result);
+}
 
 #endif /* ((__ARM_ARCH_8M_MAIN__ == 1U) || (__ARM_ARCH_8M_BASE__ == 1U)) */
 
@@ -1765,6 +1834,7 @@ __attribute__((always_inline)) __STATIC_INLINE  int32_t __QSUB( int32_t op1,  in
   return(result);
 }
 
+#if 0
 #define __PKHBT(ARG1,ARG2,ARG3) \
 ({                          \
   uint32_t __RES, __ARG1 = (ARG1), __ARG2 = (ARG2); \
@@ -1781,8 +1851,15 @@ __attribute__((always_inline)) __STATIC_INLINE  int32_t __QSUB( int32_t op1,  in
     __ASM ("pkhtb %0, %1, %2, asr %3" : "=r" (__RES) :  "r" (__ARG1), "r" (__ARG2), "I" (ARG3)  ); \
   __RES; \
  })
+#endif
 
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
+#define __PKHBT(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0x0000FFFFUL) |  \
+                                           ((((uint32_t)(ARG2)) << (ARG3)) & 0xFFFF0000UL)  )
+
+#define __PKHTB(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0xFFFF0000UL) |  \
+                                           ((((uint32_t)(ARG2)) >> (ARG3)) & 0x0000FFFFUL)  )
+
+__attribute__((always_inline)) __STATIC_INLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 {
  int32_t result;
 
