@@ -2,7 +2,7 @@
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler specific macros, functions, instructions
  * @version  V5.00
- * @date     24. August 2016
+ * @date     25. August 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -113,8 +113,7 @@
     #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
   #endif
   #ifndef   __ALIGNED
-    #warning No compiler specific solution for __ALIGNED. __ALIGNED is ignored.
-    #define __ALIGNED(x)
+    #define __ALIGNED(x)              __attribute__((aligned(x)))
   #endif
   #ifndef   __PACKED
     #define __PACKED                  __attribute__((packed))
