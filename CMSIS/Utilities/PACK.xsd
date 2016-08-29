@@ -140,6 +140,7 @@
       <xs:enumeration value="Texas Instruments:16"/>
       <xs:enumeration value="Toshiba:92"/>
       <xs:enumeration value="Triad Semiconductor:104"/>
+      <xs:enumeration value="Vorago:137"/>
       <xs:enumeration value="WIZnet:122"/>
       <xs:enumeration value="Xinnova:135"/>
       <xs:enumeration value="Zilog:89"/>
