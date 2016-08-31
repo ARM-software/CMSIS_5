@@ -2,7 +2,7 @@
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler specific macros, functions, instructions
  * @version  V5.00
- * @date     25. August 2016
+ * @date     31. August 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -51,6 +51,8 @@
 /*
  * IAR Compiler
  */
+  #include <cmsis_iar.h>
+
 #elif defined ( __ICCARM__ )
   #ifndef   __ASM
     #define __ASM                     __asm
@@ -65,8 +67,7 @@
     #define __NO_RETURN               __noreturn
   #endif
   #ifndef   __USED
-    #warning No compiler specific solution for __USED. __USED is ignored.
-    #define __USED
+    #define __USED                    __root
   #endif
   #ifndef   __WEAK
     #define __WEAK                    __weak
@@ -83,12 +84,12 @@
     #define __PACKED                  __packed
   #endif
 
-  #include <cmsis_iar.h>
-
 
 /*
  * TI ARM Compiler
  */
+  #include <cmsis_ccs.h>
+
 #elif defined ( __TI_ARM__ )
   #ifndef   __ASM
     #define __ASM                     __asm
@@ -119,12 +120,16 @@
     #define __PACKED                  __attribute__((packed))
   #endif
 
-  #include <cmsis_ccs.h>
-
 
 /*
  * TASKING Compiler
  */
+  /*
+   * The CMSIS functions have been implemented as intrinsics in the compiler.
+   * Please use "carm -?i" to get an up to date list of all intrinsics,
+   * Including the CMSIS ones.
+   */
+
 #elif defined ( __TASKING__ )
   #ifndef   __ASM
     #define __ASM                     __asm
@@ -155,16 +160,12 @@
     #define __PACKED                  __packed__
   #endif
 
-  /*
-   * The CMSIS functions have been implemented as intrinsics in the compiler.
-   * Please use "carm -?i" to get an up to date list of all intrinsics,
-   * Including the CMSIS ones.
-   */
-
 
 /*
  * COSMIC Compiler
  */
+  #include <cmsis_csm.h>
+
 #elif defined ( __CSMC__ )
   #ifndef   __ASM
     #define __ASM                     _asm
@@ -199,8 +200,6 @@
     #warning No compiler specific solution for __PACKED. __PACKED is ignored.
     #define __PACKED
   #endif
-
-  #include <cmsis_csm.h>
 
 
 #else
