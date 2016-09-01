@@ -2,7 +2,7 @@
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler specific macros, functions, instructions
  * @version  V5.00
- * @date     31. August 2016
+ * @date     01. September 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -51,9 +51,9 @@
 /*
  * IAR Compiler
  */
+#elif defined ( __ICCARM__ )
   #include <cmsis_iar.h>
 
-#elif defined ( __ICCARM__ )
   #ifndef   __ASM
     #define __ASM                     __asm
   #endif
@@ -88,9 +88,9 @@
 /*
  * TI ARM Compiler
  */
+#elif defined ( __TI_ARM__ )
   #include <cmsis_ccs.h>
 
-#elif defined ( __TI_ARM__ )
   #ifndef   __ASM
     #define __ASM                     __asm
   #endif
@@ -124,13 +124,13 @@
 /*
  * TASKING Compiler
  */
+#elif defined ( __TASKING__ )
   /*
    * The CMSIS functions have been implemented as intrinsics in the compiler.
    * Please use "carm -?i" to get an up to date list of all intrinsics,
    * Including the CMSIS ones.
    */
 
-#elif defined ( __TASKING__ )
   #ifndef   __ASM
     #define __ASM                     __asm
   #endif
@@ -164,10 +164,10 @@
 /*
  * COSMIC Compiler
  */
-  #include <cmsis_csm.h>
-
 #elif defined ( __CSMC__ )
-  #ifndef   __ASM
+   #include <cmsis_csm.h>
+
+ #ifndef   __ASM
     #define __ASM                     _asm
   #endif
   #ifndef   __INLINE
