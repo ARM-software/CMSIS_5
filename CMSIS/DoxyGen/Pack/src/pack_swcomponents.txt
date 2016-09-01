@@ -15,7 +15,7 @@ describing software components.
 -# Make sure that files/directories are not write protected (remove read-only flag).
 -# Copy from the directory <b>\\CMSIS\\Utilities</b> available in the \b ARM::CMSIS Pack installation the following files
    into your working directory:
-   - packChk.exe
+   - PackChk.exe
    - PACK.xsd
 
 
@@ -133,11 +133,11 @@ ZIP tool that supports command line calls. In that case you have to adapt the co
 </li>
 <li>
 Having saved <b>gen_pack.bat</b>, you can execute it either by double-clicking or by using the command line which is
-recommended to see the output of packChk.exe (open a command window at the location of the files and enter \c gen_pack.bat).
+recommended to see the output of PackChk.exe (open a command window at the location of the files and enter \c gen_pack.bat).
 The batch file will:
 - Check the availability of the PDSC file
 - Copy the PDSC file to the <b>Files</b> directory
-- Run packChk.exe on the <b>Files</b> directory\n
+- Run PackChk.exe on the <b>Files</b> directory\n
 - Create a Pack file in the working directory. It will be called <b>MyVendor.MyPack.1.0.0.pack</b>.
 </li>
 <li>
@@ -316,18 +316,19 @@ further details. Afterwards, install the Pack in your development tool and obser
 </li>
 </ol>
 
-\note packChk.exe will will now display an \b M362 warning:
-\verbatim
+\note PackChk.exe will will now display an \b M362 warning:
+\code
 *** WARNING M362: (Line 80)
   Not all Component Dependencies for 'Cclass=MyClass, Cgroup=MyGroup, Csub=MySubGroup, Cversion=1.0.1, Capiversion=' can be resolved.
 M502: RTE Model reports: #error 511:  MyVendor::MyClass:MyGroup:MySubGroup : Additional software components required
 M504: RTE Model reports: MISSING:     -- require CMSIS:CORE
 M504: RTE Model reports: MISSING:     -- require CMSIS:RTOS
-\endverbatim
+\endcode
 This is because it cannot resolve and check dependencies on components that are not part of this Pack (in this case the CMSIS
-components). You can either safely ignore this warning or add the ARM:CMSIS PDSC to the checking process, so that the
-dependencies can be correctly examined.
-
+components CORE and RTOS). You can either safely ignore these warnings or include the ARM.CMSIS.pdsc in the checking process, so that the correctness of the references to the CMSIS pack can be validated.
+\code
+PackChk.exe <InFile.pdsc> -i <path to installed CMSIS pack>\ARM.CMSIS.pdsc
+\endcode
 
 \section cp_Variants Variants
 
