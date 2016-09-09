@@ -39,12 +39,22 @@
 #endif
 
 
-#if (OS_THREAD_STATIC != 0)
+#if (OS_THREAD_OBJ_MEM != 0)
 
 #define OS_THREAD_DEF_STACK_NUM (OS_THREAD_NUM - OS_THREAD_USER_STACK_NUM)
 
-#if ((OS_THREAD_NUM == 0) || (OS_THREAD_DEF_STACK_NUM < 0))
+#if ((OS_THREAD_NUM == 0) || (OS_THREAD_NUM < OS_THREAD_USER_STACK_NUM))
 #error "Invalid number of user Threads!"
+#endif
+
+#if ((OS_THREAD_USER_STACK_NUM != 0) && (OS_THREAD_USER_STACK_SIZE == 0))
+#error "Total Stack size must not be zero!"
+#endif
+
+#if ((OS_THREAD_USER_STACK_SIZE != 0) && \
+   (((OS_THREAD_USER_STACK_SIZE & 7) != 0) || \
+     (OS_THREAD_USER_STACK_SIZE < (72*OS_THREAD_USER_STACK_NUM))))
+#error "Invalid total Stack size!"
 #endif
 
 // Thread Control Blocks
@@ -53,7 +63,7 @@ __attribute__((section(".os.object.cb")));
 
 // Thread Default Stack
 #if (OS_THREAD_DEF_STACK_NUM != 0)
-static uint64_t os_thread_stack[OS_THREAD_DEF_STACK_NUM*(OS_STACK_SIZE/8)] \
+static uint64_t os_thread_def_stack[OS_THREAD_DEF_STACK_NUM*(OS_STACK_SIZE/8)] \
 __attribute__((section(".os.object.stack")));
 #endif
 
@@ -64,12 +74,18 @@ __attribute__((section(".os.object.cb"))) =
 
 // Memory Pool for Thread Default Stack
 #if (OS_THREAD_DEF_STACK_NUM != 0)
-static os_mp_info_t os_mpi_stack \
-__attribute__((section(".os.object.cb"))) =
-{ (uint32_t)OS_THREAD_DEF_STACK_NUM, 0U, (uint32_t)OS_STACK_SIZE, &os_thread_stack, NULL, NULL };
+static os_mp_info_t os_mpi_def_stack \
+__attribute__((section(".os.object.stack"))) =
+{ (uint32_t)OS_THREAD_DEF_STACK_NUM, 0U, (uint32_t)OS_STACK_SIZE, &os_thread_def_stack, NULL, NULL };
 #endif
 
-#endif  // (OS_THREAD_STATIC != 0)
+// Memory Pool for Thread Stack
+#if (OS_THREAD_USER_STACK_SIZE != 0)
+static uint64_t os_thread_stack[OS_THREAD_USER_STACK_SIZE/8] \
+__attribute__((section(".os.object.stack")));
+#endif
+
+#endif  // (OS_THREAD_OBJ_MEM != 0)
 
 
 // Stack overrun checking
@@ -104,10 +120,10 @@ static const osThreadAttr_t os_idle_thread_attr = {
 // Timer Configuration
 // ===================
 
-#if (OS_TIMER_STATIC != 0)
+#if (OS_TIMER_OBJ_MEM != 0)
 
 #if (OS_TIMER_NUM == 0)
-#error "Invalid number of user Timers!"
+#error "Invalid number of Timer objects!"
 #endif
 
 // Timer Control Blocks
@@ -119,10 +135,10 @@ static os_mp_info_t os_mpi_timer \
 __attribute__((section(".os.object.cb"))) =
 { (uint32_t)OS_TIMER_NUM, 0U, (uint32_t)os_TimerCbSize, &os_timer_cb, NULL, NULL };
 
-#endif  // (OS_TIMER_STATIC != 0)
+#endif  // (OS_TIMER_OBJ_MEM != 0)
 
 
-#if ((OS_TIMER_THREAD_STACK_SIZE > 0) && (OS_TIMER_CB_QUEUE > 0))
+#if ((OS_TIMER_THREAD_STACK_SIZE != 0) && (OS_TIMER_CB_QUEUE != 0))
 
 #if (((OS_TIMER_THREAD_STACK_SIZE & 7) != 0) || (OS_TIMER_THREAD_STACK_SIZE < 96))
 #error "Invalid Timer Thread Stack size!"
@@ -166,13 +182,13 @@ static const osMessageQueueAttr_t os_timer_mq_attr = {
   (uint32_t)sizeof(os_timer_mq_data)
 };
 
-#endif  // ((OS_TIMER_THREAD_STACK_SIZE > 0) && (OS_TIMER_CB_QUEUE > 0))
+#endif  // ((OS_TIMER_THREAD_STACK_SIZE != 0) && (OS_TIMER_CB_QUEUE != 0))
 
 
 // Event Flags Configuration
 // =========================
 
-#if (OS_EVFLAGS_STATIC != 0)
+#if (OS_EVFLAGS_OBJ_MEM != 0)
 
 #if (OS_EVFLAGS_NUM == 0)
 #error "Invalid number of Event Flags objects!"
@@ -187,13 +203,13 @@ static os_mp_info_t os_mpi_ef \
 __attribute__((section(".os.object.cb"))) =
 { (uint32_t)OS_EVFLAGS_NUM, 0U, (uint32_t)os_EventFlagsCbSize, &os_ef_cb, NULL, NULL };
 
-#endif  // (OS_EVFLAGS_STATIC != 0)
+#endif  // (OS_EVFLAGS_OBJ_MEM != 0)
 
 
 // Mutex Configuration
 // ===================
 
-#if (OS_MUTEX_STATIC != 0)
+#if (OS_MUTEX_OBJ_MEM != 0)
 
 #if (OS_MUTEX_NUM == 0)
 #error "Invalid number of Mutex objects!"
@@ -208,13 +224,13 @@ static os_mp_info_t os_mpi_mutex \
 __attribute__((section(".os.object.cb"))) =
 { (uint32_t)OS_MUTEX_NUM, 0U, (uint32_t)os_MutexCbSize, &os_mutex_cb, NULL, NULL };
 
-#endif  // (OS_MUTEX_STATIC != 0)
+#endif  // (OS_MUTEX_OBJ_MEM != 0)
 
 
 // Semaphore Configuration
 // =======================
 
-#if (OS_SEMAPHORE_STATIC != 0)
+#if (OS_SEMAPHORE_OBJ_MEM != 0)
 
 #if (OS_SEMAPHORE_NUM == 0)
 #error "Invalid number of Semaphore objects!"
@@ -229,15 +245,15 @@ static os_mp_info_t os_mpi_semaphore \
 __attribute__((section(".os.object.cb"))) =
 { (uint32_t)OS_SEMAPHORE_NUM, 0U, (uint32_t)os_SemaphoreCbSize, &os_semaphore_cb, NULL, NULL };
 
-#endif  // (OS_SEMAPHORE_STATIC != 0)
+#endif  // (OS_SEMAPHORE_OBJ_MEM != 0)
 
 
 // Memory Pool Configuration
 // =========================
 
-#if (OS_MEMPOOL_STATIC != 0)
+#if (OS_MEMPOOL_OBJ_MEM != 0)
 
-#if (OS_MUTEX_NUM == 0)
+#if (OS_MEMPOOL_NUM == 0)
 #error "Invalid number of Memory Pool objects!"
 #endif
 
@@ -250,15 +266,24 @@ static os_mp_info_t os_mpi_mp \
 __attribute__((section(".os.object.cb"))) =
 { (uint32_t)OS_MEMPOOL_NUM, 0U, (uint32_t)os_MemoryPoolCbSize, &os_mp_cb, NULL, NULL };
 
-#endif  // (OS_MEMPOOL_STATIC != 0)
+// Memory Pool for Memory Pool Data Storage
+#if (OS_MEMPOOL_DATA_SIZE != 0)
+#if ((OS_MEMPOOL_DATA_SIZE & 3) != 0)
+#error "Invalid Data Memory size for Memory Pools!"
+#endif
+static uint32_t os_mp_data[OS_MEMPOOL_DATA_SIZE/4] \
+__attribute__((section(".os.object.data")));
+#endif
+
+#endif  // (OS_MEMPOOL_OBJ_MEM != 0)
 
 
 // Message Queue Configuration
 // ===========================
 
-#if (OS_MSGQUEUE_STATIC != 0)
+#if (OS_MSGQUEUE_OBJ_MEM != 0)
 
-#if (OS_MUTEX_NUM == 0)
+#if (OS_MSGQUEUE_NUM == 0)
 #error "Invalid number of Message Queue objects!"
 #endif
 
@@ -271,42 +296,20 @@ static os_mp_info_t os_mpi_mq \
 __attribute__((section(".os.object.cb"))) =
 { (uint32_t)OS_MSGQUEUE_NUM, 0U, (uint32_t)os_MessageQueueCbSize, &os_mq_cb, NULL, NULL };
 
-#endif  // (OS_MSGQUEUE_STATIC != 0)
+// Memory Pool for Message Queue Data Storage
+#if (OS_MSGQUEUE_DATA_SIZE != 0)
+#if ((OS_MSGQUEUE_DATA_SIZE & 3) != 0)
+#error "Invalid Data Memory size for Message Queues!"
+#endif
+static uint32_t os_mq_data[OS_MSGQUEUE_DATA_SIZE/4] \
+__attribute__((section(".os.object.data")));
+#endif
+
+#endif  // (OS_MSGQUEUE_OBJ_MEM != 0)
 
 
 // System Configuration
 // ====================
-
-#if (OS_DYNAMIC != 0)
-
-// Memory for Control Blocks
-#if (OS_DYNAMIC_MEM_CB_SIZE != 0)
-#if ((OS_DYNAMIC_MEM_CB_SIZE & 3) != 0)
-#error "Invalid memory size for Control Blocks!"
-#endif
-static uint32_t os_mem_cb[OS_DYNAMIC_MEM_CB_SIZE/4] \
-__attribute__((section(".os.object.cb")));
-#endif
-
-// Memory for Data Storage
-#if (OS_DYNAMIC_MEM_DATA_SIZE != 0)
-#if ((OS_DYNAMIC_MEM_DATA_SIZE & 3) != 0)
-#error "Invalid memory size for Data Storage!"
-#endif
-static uint32_t os_mem_data[OS_DYNAMIC_MEM_DATA_SIZE/4] \
-__attribute__((section(".os.object.data")));
-#endif
-
-// Memory for Stack
-#if (OS_DYNAMIC_MEM_STACK_SIZE != 0)
-#if ((OS_DYNAMIC_MEM_STACK_SIZE & 7) != 0)
-#error "Invalid memory size for Stack!"
-#endif
-static uint64_t os_mem_stack[OS_DYNAMIC_MEM_STACK_SIZE/8] \
-__attribute__((section(".os.object.stack")));
-#endif
-
-#endif  // (OS_DYNAMIC != 0)
 
 // Dynamic Memory
 #if (OS_DYNAMIC_MEM_SIZE != 0)
@@ -342,18 +345,18 @@ const os_config_t os_Config = {
   { &os_isr_queue[0], sizeof(os_isr_queue)/sizeof(void *), 0U },
   { 
     // Memory Pools (Variable Block Size)
-#if (OS_DYNAMIC_MEM_CB_SIZE != 0)
-    &os_mem_cb, (uint32_t)OS_DYNAMIC_MEM_CB_SIZE,
+#if ((OS_THREAD_OBJ_MEM != 0) && (OS_THREAD_USER_STACK_SIZE != 0))
+    &os_thread_stack, (uint32_t)OS_THREAD_USER_STACK_SIZE,
 #else
     NULL, 0U,
 #endif
-#if (OS_DYNAMIC_MEM_DATA_SIZE != 0)
-    &os_mem_data, (uint32_t)OS_DYNAMIC_MEM_DATA_SIZE,
+#if ((OS_MEMPOOL_OBJ_MEM != 0) && (OS_MEMPOOL_DATA_SIZE != 0))
+    &os_mp_data, (uint32_t)OS_MEMPOOL_DATA_SIZE,
 #else
     NULL, 0U,
 #endif
-#if (OS_DYNAMIC_MEM_STACK_SIZE != 0)
-    &os_mem_stack, (uint32_t)OS_DYNAMIC_MEM_STACK_SIZE,
+#if ((OS_MSGQUEUE_OBJ_MEM != 0) && (OS_MSGQUEUE_DATA_SIZE != 0))
+    &os_mq_data, (uint32_t)OS_MSGQUEUE_DATA_SIZE,
 #else
     NULL, 0U,
 #endif
@@ -365,9 +368,9 @@ const os_config_t os_Config = {
   },
   {
     // Memory Pools (Fixed Block Size)
-#if (OS_THREAD_STATIC != 0)
+#if (OS_THREAD_OBJ_MEM != 0)
 #if (OS_THREAD_DEF_STACK_NUM != 0)
-    &os_mpi_stack,
+    &os_mpi_def_stack,
 #else
     NULL,
 #endif
@@ -376,32 +379,32 @@ const os_config_t os_Config = {
     NULL, 
     NULL,
 #endif
-#if (OS_TIMER_STATIC != 0)
+#if (OS_TIMER_OBJ_MEM != 0)
     &os_mpi_timer,
 #else
     NULL,
 #endif
-#if (OS_EVFLAGS_STATIC != 0)
+#if (OS_EVFLAGS_OBJ_MEM != 0)
     &os_mpi_ef,
 #else
     NULL,
 #endif
-#if (OS_MUTEX_STATIC != 0)
+#if (OS_MUTEX_OBJ_MEM != 0)
     &os_mpi_mutex,
 #else
     NULL,
 #endif
-#if (OS_SEMAPHORE_STATIC != 0)
+#if (OS_SEMAPHORE_OBJ_MEM != 0)
     &os_mpi_semaphore,
 #else
     NULL,
 #endif
-#if (OS_MEMPOOL_STATIC != 0)
+#if (OS_MEMPOOL_OBJ_MEM != 0)
     &os_mpi_mp,
 #else
     NULL,
 #endif
-#if (OS_MSGQUEUE_STATIC != 0)
+#if (OS_MSGQUEUE_OBJ_MEM != 0)
     &os_mpi_mq,
 #else
     NULL,
@@ -409,7 +412,7 @@ const os_config_t os_Config = {
   },
   (uint32_t)OS_STACK_SIZE,
   &os_idle_thread_attr,
-#if ((OS_TIMER_THREAD_STACK_SIZE > 0) && (OS_TIMER_CB_QUEUE > 0))
+#if ((OS_TIMER_THREAD_STACK_SIZE != 0) && (OS_TIMER_CB_QUEUE != 0))
   &os_timer_thread_attr,
   &os_timer_mq_attr,
   (uint32_t)OS_TIMER_CB_QUEUE

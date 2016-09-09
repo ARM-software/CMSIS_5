@@ -324,13 +324,13 @@ typedef struct {
     void (*event_flags)(os_event_flags_t*); ///< Event Flags Post Processing function
     void     (*semaphore)(os_semaphore_t*); ///< Semaphore Post Processing function
     void (*memory_pool)(os_memory_pool_t*); ///< Memory Pool Post Processing function
-    void   (*message_queue)(os_message_t*); ///< MEssage Queue Post Processing function
+    void   (*message_queue)(os_message_t*); ///< Message Queue Post Processing function
   } post_process;
   struct {                              ///< Memory Pools (Variable Block Size)
-    void                          *cb;  ///< Control Blocks Memory
-    void                        *data;  ///< Data Memory
     void                       *stack;  ///< Stack Memory
-    void                      *common;  ///< Common Memory Address
+    void                     *mp_data;  ///< Memory Pool Data Memory
+    void                     *mq_data;  ///< Message Queue Data Memory
+    void                      *common;  ///< Common Memory
   } mem;
   struct {                              ///< Memory Pools (Fixed Block Size)
     os_mp_info_t               *stack;  ///< Stack for Threads
@@ -439,12 +439,12 @@ typedef struct {
     uint16_t                         padding;
   } isr_queue;
   struct {                                      ///< Memory Pools (Variable Block Size)
-    void                            *cb_addr;   ///< Control Blocks Memory Address
-    uint32_t                         cb_size;   ///< Control Blocks Memory Size
-    void                          *data_addr;   ///< Data Memory Address
-    uint32_t                       data_size;   ///< Data Memory Size
     void                         *stack_addr;   ///< Stack Memory Address
     uint32_t                      stack_size;   ///< Stack Memory Size
+    void                       *mp_data_addr;   ///< Memory Pool Memory Address
+    uint32_t                    mp_data_size;   ///< Memory Pool Memory Size
+    void                       *mq_data_addr;   ///< Message Queue Data Memory Address
+    uint32_t                    mq_data_size;   ///< Message Queue Data Memory Size
     void                        *common_addr;   ///< Common Memory Address
     uint32_t                     common_size;   ///< Common Memory Size
   } mem;

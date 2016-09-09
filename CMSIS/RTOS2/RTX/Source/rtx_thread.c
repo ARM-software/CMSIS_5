@@ -443,7 +443,7 @@ bool os_ThreadWaitEnter (uint8_t state, uint32_t millisec) {
 }
 
 /// Check current running Thread Stack.
-void os_ThreadStackCheck (void) {
+__WEAK void os_ThreadStackCheck (void) {
   os_thread_t *thread;
 
   thread = os_ThreadGetRunning();
@@ -558,7 +558,7 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
     if (os_Info.mpi.thread != NULL) {
       thread = os_MemoryPoolAlloc(os_Info.mpi.thread);
     } else {
-      thread = os_MemoryAlloc(os_Info.mem.cb, sizeof(os_thread_t));
+      thread = os_MemoryAlloc(os_Info.mem.common, sizeof(os_thread_t));
     }
     if (thread == NULL) {
       return (osThreadId_t)NULL;
@@ -587,7 +587,7 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
         if (os_Info.mpi.thread != NULL) {
           os_MemoryPoolFree(os_Info.mpi.thread, thread);
         } else {
-          os_MemoryFree(os_Info.mem.cb, thread);
+          os_MemoryFree(os_Info.mem.common, thread);
         }
       }
       return (osThreadId_t)NULL;
@@ -851,7 +851,7 @@ static void os_ThreadFree (os_thread_t *thread) {
     if (os_Info.mpi.thread != NULL) {
       os_MemoryPoolFree(os_Info.mpi.thread, thread);
     } else {
-      os_MemoryFree(os_Info.mem.cb, thread);
+      os_MemoryFree(os_Info.mem.common, thread);
     }
   }
 }

@@ -163,7 +163,7 @@ osSemaphoreId_t os_svcSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
     if (os_Info.mpi.semaphore != NULL) {
       semaphore = os_MemoryPoolAlloc(os_Info.mpi.semaphore);
     } else {
-      semaphore = os_MemoryAlloc(os_Info.mem.cb, sizeof(os_semaphore_t));
+      semaphore = os_MemoryAlloc(os_Info.mem.common, sizeof(os_semaphore_t));
     }
     if (semaphore == NULL) {
       return (osSemaphoreId_t)NULL;
@@ -305,7 +305,7 @@ osStatus_t os_svcSemaphoreDelete (osSemaphoreId_t semaphore_id) {
     if (os_Info.mpi.semaphore != NULL) {
       os_MemoryPoolFree(os_Info.mpi.semaphore, semaphore);
     } else {
-      os_MemoryFree(os_Info.mem.cb, semaphore);
+      os_MemoryFree(os_Info.mem.common, semaphore);
     }
   }
 

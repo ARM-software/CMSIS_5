@@ -281,7 +281,7 @@ osMemoryPoolId_t os_svcMemoryPoolNew (uint32_t block_count, uint32_t block_size,
     if (os_Info.mpi.memory_pool != NULL) {
       mp = os_MemoryPoolAlloc(os_Info.mpi.memory_pool);
     } else {
-      mp = os_MemoryAlloc(os_Info.mem.cb, sizeof(os_memory_pool_t));
+      mp = os_MemoryAlloc(os_Info.mem.common, sizeof(os_memory_pool_t));
     }
     if (mp == NULL) {
       return (osMemoryPoolId_t)NULL;
@@ -293,13 +293,13 @@ osMemoryPoolId_t os_svcMemoryPoolNew (uint32_t block_count, uint32_t block_size,
 
   // Allocate data memory if not provided
   if (mp_mem == NULL) {
-    mp_mem = os_MemoryAlloc(os_Info.mem.data, size);
+    mp_mem = os_MemoryAlloc(os_Info.mem.mp_data, size);
     if (mp_mem == NULL) {
       if (flags & os_FlagSystemObject) {
         if (os_Info.mpi.memory_pool != NULL) {
           os_MemoryPoolFree(os_Info.mpi.memory_pool, mp);
         } else {
-          os_MemoryFree(os_Info.mem.cb, mp);
+          os_MemoryFree(os_Info.mem.common, mp);
         }
       }
       return (osMemoryPoolId_t)NULL;
@@ -496,7 +496,7 @@ osStatus_t os_svcMemoryPoolDelete (osMemoryPoolId_t mp_id) {
 
   // Free data memory
   if (mp->flags & os_FlagSystemMemory) {
-    os_MemoryFree(os_Info.mem.data, mp->mp_info.block_base);
+    os_MemoryFree(os_Info.mem.mp_data, mp->mp_info.block_base);
   }
 
   // Free object memory
@@ -504,7 +504,7 @@ osStatus_t os_svcMemoryPoolDelete (osMemoryPoolId_t mp_id) {
     if (os_Info.mpi.memory_pool != NULL) {
       os_MemoryPoolFree(os_Info.mpi.memory_pool, mp);
     } else {
-      os_MemoryFree(os_Info.mem.cb, mp);
+      os_MemoryFree(os_Info.mem.common, mp);
     }
   }
 

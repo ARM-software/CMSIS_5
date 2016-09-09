@@ -120,20 +120,20 @@ osStatus_t os_svcKernelInitialize (void) {
   if (os_MemoryInit(os_Config.mem.common_addr, os_Config.mem.common_size) != 0U) {
     os_Info.mem.common = os_Config.mem.common_addr;
   }
-  if (os_MemoryInit(os_Config.mem.cb_addr, os_Config.mem.cb_size) != 0U) {
-    os_Info.mem.cb = os_Config.mem.cb_addr;
-  } else {
-    os_Info.mem.cb = os_Info.mem.common;
-  }
-  if (os_MemoryInit(os_Config.mem.data_addr, os_Config.mem.data_size) != 0U) {
-    os_Info.mem.data = os_Config.mem.data_addr;
-  } else {
-    os_Info.mem.data = os_Info.mem.common;
-  }
   if (os_MemoryInit(os_Config.mem.stack_addr, os_Config.mem.stack_size) != 0U) {
     os_Info.mem.stack = os_Config.mem.stack_addr;
   } else {
     os_Info.mem.stack = os_Info.mem.common;
+  }
+  if (os_MemoryInit(os_Config.mem.mp_data_addr, os_Config.mem.mp_data_size) != 0U) {
+    os_Info.mem.mp_data = os_Config.mem.mp_data_addr;
+  } else {
+    os_Info.mem.mp_data = os_Info.mem.common;
+  }
+  if (os_MemoryInit(os_Config.mem.mq_data_addr, os_Config.mem.mq_data_size) != 0U) {
+    os_Info.mem.mq_data = os_Config.mem.mq_data_addr;
+  } else {
+    os_Info.mem.mq_data = os_Info.mem.common;
   }
 
   // Initialize Memory Pools (Fixed Block Size)

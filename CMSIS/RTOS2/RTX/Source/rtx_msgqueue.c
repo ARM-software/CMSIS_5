@@ -291,7 +291,7 @@ osMessageQueueId_t os_svcMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
     if (os_Info.mpi.message_queue != NULL) {
       mq = os_MemoryPoolAlloc(os_Info.mpi.message_queue);
     } else {
-      mq = os_MemoryAlloc(os_Info.mem.cb, sizeof(os_message_queue_t));
+      mq = os_MemoryAlloc(os_Info.mem.common, sizeof(os_message_queue_t));
     }
     if (mq == NULL) {
       return (osMessageQueueId_t)NULL;
@@ -303,13 +303,13 @@ osMessageQueueId_t os_svcMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
 
   // Allocate data memory if not provided
   if (mq_mem == NULL) {
-    mq_mem = os_MemoryAlloc(os_Info.mem.data, size);
+    mq_mem = os_MemoryAlloc(os_Info.mem.mq_data, size);
     if (mq_mem == NULL) {
       if (flags & os_FlagSystemObject) {
         if (os_Info.mpi.message_queue != NULL) {
           os_MemoryPoolFree(os_Info.mpi.message_queue, mq);
         } else {
-          os_MemoryFree(os_Info.mem.cb, mq);
+          os_MemoryFree(os_Info.mem.common, mq);
         }
       }
       return (osMessageQueueId_t)NULL;
@@ -632,7 +632,7 @@ osStatus_t os_svcMessageQueueDelete (osMessageQueueId_t mq_id) {
 
   // Free data memory
   if (mq->flags & os_FlagSystemMemory) {
-    os_MemoryFree(os_Info.mem.data, mq->mp_info.block_base);
+    os_MemoryFree(os_Info.mem.mq_data, mq->mp_info.block_base);
   }
 
   // Free object memory
@@ -640,7 +640,7 @@ osStatus_t os_svcMessageQueueDelete (osMessageQueueId_t mq_id) {
     if (os_Info.mpi.message_queue != NULL) {
       os_MemoryPoolFree(os_Info.mpi.message_queue, mq);
     } else {
-      os_MemoryFree(os_Info.mem.cb, mq);
+      os_MemoryFree(os_Info.mem.common, mq);
     }
   }
 

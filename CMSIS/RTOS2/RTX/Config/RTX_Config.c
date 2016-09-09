@@ -30,19 +30,25 @@
 // <h>Thread Configuration
 // =======================
  
-//   <e>Static Resources
-//   <i> Enables static resources allocation.
-#define OS_THREAD_STATIC            0
+//   <e>Object specific Memory allocation
+//   <i> Enables object specific memory allocation.
+#define OS_THREAD_OBJ_MEM           0
  
 //     <o>Number of user Threads (total) <1-1000>
 //     <i> Defines maximum number of user threads that can be active at the same time.
+//     <i> Applies to user threads with system provided memory for control blocks.
 #define OS_THREAD_NUM               1
  
 //     <o>Number of user Threads with user-provided Stack size <0-1000>
 //     <i> Defines maximum number of user threads with user-provided stack size.
 //     <i> Default: 0
 #define OS_THREAD_USER_STACK_NUM    0
-  
+ 
+//     <o>Total Stack size [bytes] for user Threads with user-provided Stack size <0-1073741824:8>
+//     <i> Defines the combined stack size for user threads with user-provided stack size.
+//     <i> Default: 0
+#define OS_THREAD_USER_STACK_SIZE   0
+ 
 //   </e>
  
 //   <o>Default Thread Stack size [bytes] <96-1073741824:8>
@@ -76,12 +82,13 @@
 // <h>Timer Configuration
 // ======================
  
-//   <e>Static Resources
-//   <i> Enables static resources allocation.
-#define OS_TIMER_STATIC             0
+//   <e>Object specific Memory allocation
+//   <i> Enables object specific memory allocation.
+#define OS_TIMER_OBJ_MEM            0
  
-//     <o>Number of user Timers <1-1000>
-//     <i> Defines maximum number of user timers that can be active at the same time.
+//     <o>Number of Timer objects <1-1000>
+//     <i> Defines maximum number of objects that can be active at the same time.
+//     <i> Applies to objects with system provided memory for control blocks.
 #define OS_TIMER_NUM                1
  
 //   </e>
@@ -112,12 +119,13 @@
 // <h>Event Flags Configuration
 // ============================
  
-//   <e>Static Resources
-//   <i> Enables static resources allocation.
-#define OS_EVFLAGS_STATIC           0
+//   <e>Object specific Memory allocation
+//   <i> Enables object specific memory allocation.
+#define OS_EVFLAGS_OBJ_MEM          0
  
 //     <o>Number of Event Flags objects <1-1000>
 //     <i> Defines maximum number of objects that can be active at the same time.
+//     <i> Applies to objects with system provided memory for control blocks.
 #define OS_EVFLAGS_NUM              1
  
 //   </e>
@@ -127,12 +135,13 @@
 // <h>Mutex Configuration
 // ======================
  
-//   <e>Static Resources
-//   <i> Enables static resources allocation.
-#define OS_MUTEX_STATIC             0
+//   <e>Object specific Memory allocation
+//   <i> Enables object specific memory allocation.
+#define OS_MUTEX_OBJ_MEM            0
  
 //     <o>Number of Mutex objects <1-1000>
 //     <i> Defines maximum number of objects that can be active at the same time.
+//     <i> Applies to objects with system provided memory for control blocks.
 #define OS_MUTEX_NUM                1
  
 //   </e>
@@ -142,12 +151,13 @@
 // <h>Semaphore Configuration
 // ==========================
  
-//   <e>Static Resources
-//   <i> Enables static resources allocation.
-#define OS_SEMAPHORE_STATIC         0
+//   <e>Object specific Memory allocation
+//   <i> Enables object specific memory allocation.
+#define OS_SEMAPHORE_OBJ_MEM        0
  
 //     <o>Number of Semaphore objects <1-1000>
 //     <i> Defines maximum number of objects that can be active at the same time.
+//     <i> Applies to objects with system provided memory for control blocks.
 #define OS_SEMAPHORE_NUM            1
  
 //   </e>
@@ -157,13 +167,20 @@
 // <h>Memory Pool Configuration
 // ============================
  
-//   <e>Static Resources
-//   <i> Enables static resources allocation.
-#define OS_MEMPOOL_STATIC           0
+//   <e>Object specific Memory allocation
+//   <i> Enables object specific memory allocation.
+#define OS_MEMPOOL_OBJ_MEM          0
  
 //     <o>Number of Memory Pool objects <1-1000>
 //     <i> Defines maximum number of objects that can be active at the same time.
+//     <i> Applies to objects with system provided memory for control blocks.
 #define OS_MEMPOOL_NUM              1
+ 
+//     <o>Data Storage Memory size [bytes] <0-1073741824:4>
+//     <i> Defines the combined data storage memory size.
+//     <i> Applies to objects with system provided memory for data storage.
+//     <i> Default: 0
+#define OS_MEMPOOL_DATA_SIZE        0
  
 //   </e>
  
@@ -172,13 +189,20 @@
 // <h>Message Queue Configuration
 // ==============================
  
-//   <e>Static Resources
-//   <i> Enables static resources allocation.
-#define OS_MSGQUEUE_STATIC          0
+//   <e>Object specific Memory allocation
+//   <i> Enables object specific memory allocation.
+#define OS_MSGQUEUE_OBJ_MEM         0
  
 //     <o>Number of Message Queue objects <1-1000>
 //     <i> Defines maximum number of objects that can be active at the same time.
+//     <i> Applies to objects with system provided memory for control blocks.
 #define OS_MSGQUEUE_NUM             1
+ 
+//     <o>Data Storage Memory size [bytes] <0-1073741824:4>
+//     <i> Defines the combined data storage memory size.
+//     <i> Applies to objects with system provided memory for data storage.
+//     <i> Default: 0
+#define OS_MSGQUEUE_DATA_SIZE       0
  
 //   </e>
  
@@ -187,31 +211,8 @@
 // <h>System Configuration
 // =======================
  
-//   <e>Dynamic Resources
-//   <i> Enables dynamic resources allocation
-#define OS_DYNAMIC                  0
- 
-//     <o>Memory size [bytes] for Control Blocks <0-1073741824:4>
-//     <i> Defines the combined memory size for control blocks.
-//     <i> Excluding objects with static resources.
-//     <i> Default: 0
-#define OS_DYNAMIC_MEM_CB_SIZE      0
- 
-//     <o>Memory size [bytes] for Data Storage <0-1073741824:4>
-//     <i> Defines the combined memory size for data storage (Memory Pool and Message Queue).
-//     <i> Default: 0
-#define OS_DYNAMIC_MEM_DATA_SIZE    0
- 
-//     <o>Memory size [bytes] for Stack <0-1073741824:8>
-//     <i> Defines the combined memory size for stack (Thread).
-//     <i> Excluding threads with static resources and default stack size.
-//     <i> Default: 0
-#define OS_DYNAMIC_MEM_STACK_SIZE   0
- 
-//   </e>
- 
-//     <o>Dynamic Memory size [bytes] <0-1073741824:8>
-//     <i> Defines the combined dynamic memory size (excluding static and dynamic resources).
+//     <o>Global Dynamic Memory size [bytes] <0-1073741824:8>
+//     <i> Defines the combined global dynamic memory size.
 //     <i> Default: 4096
 #define OS_DYNAMIC_MEM_SIZE         4096
  
@@ -237,8 +238,8 @@
 // </h>
  
 // Number of Threads which use standard C/C++ library libspace
-// (when static thread resource allocation is not used).
-#if (OS_THREAD_STATIC == 0)
+// (when thread specific memory allocation is not used).
+#if (OS_THREAD_OBJ_MEM == 0)
 #define OS_THREAD_LIBSPACE_NUM      4
 #else
 #define OS_THREAD_LIBSPACE_NUM      OS_THREAD_NUM

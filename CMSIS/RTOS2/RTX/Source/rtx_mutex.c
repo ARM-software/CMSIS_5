@@ -102,7 +102,7 @@ osMutexId_t os_svcMutexNew (const osMutexAttr_t *attr) {
     if (os_Info.mpi.mutex != NULL) {
       mutex = os_MemoryPoolAlloc(os_Info.mpi.mutex);
     } else {
-      mutex = os_MemoryAlloc(os_Info.mem.cb, sizeof(os_mutex_t));
+      mutex = os_MemoryAlloc(os_Info.mem.common, sizeof(os_mutex_t));
     }
     if (mutex == NULL) {
       return (osMutexId_t)NULL;
@@ -363,7 +363,7 @@ osStatus_t os_svcMutexDelete (osMutexId_t mutex_id) {
     if (os_Info.mpi.mutex != NULL) {
       os_MemoryPoolFree(os_Info.mpi.mutex, mutex);
     } else {
-      os_MemoryFree(os_Info.mem.cb, mutex);
+      os_MemoryFree(os_Info.mem.common, mutex);
     }
   }
 
