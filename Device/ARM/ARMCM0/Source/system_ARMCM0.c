@@ -3,7 +3,7 @@
  * @brief    CMSIS Device System Source File for
  *           ARMCM0 Device Series
  * @version  V5.00
- * @date     08. April 2016
+ * @date     07. September 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -28,9 +28,9 @@
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
-#define  XTAL            ( 5000000U)      /* Oscillator frequency */
+#define  XTAL            ( 5000000UL)      /* Oscillator frequency */
 
-#define  SYSTEM_CLOCK    (5 * XTAL)
+#define  SYSTEM_CLOCK    (5U * XTAL)
 
 
 /*----------------------------------------------------------------------------

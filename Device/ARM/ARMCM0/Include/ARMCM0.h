@@ -3,7 +3,7 @@
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMCM0 Device Series
  * @version  V5.00
- * @date     02. March 2016
+ * @date     07. September 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -102,10 +102,10 @@ typedef enum IRQn
 
 /* --------  Configuration of the Cortex-M0 Processor and Core Peripherals  ------- */
 #define __CM0_REV                 0x0000U   /* Core revision r0p0 */
-#define __MPU_PRESENT             0         /* MPU present or not */
-#define __VTOR_PRESENT            0         /* no VTOR present*/
-#define __NVIC_PRIO_BITS          2         /* Number of Bits used for Priority Levels */
-#define __Vendor_SysTickConfig    0         /* Set to 1 if different SysTick Config is used */
+#define __MPU_PRESENT             0U        /* MPU present or not */
+#define __VTOR_PRESENT            0U        /* no VTOR present*/
+#define __NVIC_PRIO_BITS          2U        /* Number of Bits used for Priority Levels */
+#define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
 
 #include "core_cm0.h"                       /* Processor and core peripherals */
 #include "system_ARMCM0.h"                  /* System Header */
@@ -127,11 +127,11 @@ typedef struct
   __IOM uint32_t LED;             /* Offset: 0x00C (R/W)  LED Output States */
   __IM  uint32_t TS;              /* Offset: 0x010 (R/ )  Touchscreen Register */
   __IOM uint32_t CTRL1;           /* Offset: 0x014 (R/W)  Misc Control Functions */
-        uint32_t RESERVED0[2];
+        uint32_t RESERVED0[2U];
   __IOM uint32_t CLKCFG;          /* Offset: 0x020 (R/W)  System Clock Configuration */
   __IOM uint32_t WSCFG;           /* Offset: 0x024 (R/W)  Flash Waitstate Configuration */
   __IOM uint32_t CPUCFG;          /* Offset: 0x028 (R/W)  Processor Configuration */
-        uint32_t RESERVED1[3];
+        uint32_t RESERVED1[3U];
   __IOM uint32_t BASE;            /* Offset: 0x038 (R/W)  ROM Table base Address */
   __IOM uint32_t ID2;             /* Offset: 0x03C (R/W)  Secondary Identification Register */
 } ARM_CPU_SYS_TypeDef;
@@ -164,7 +164,7 @@ typedef struct
   __IM  uint32_t Timer1RIS;       /* Offset: 0x010 (R/ )  Timer 1 Raw Interrupt Status */
   __IM  uint32_t Timer1MIS;       /* Offset: 0x014 (R/ )  Timer 1 Masked Interrupt Status */
   __IOM uint32_t Timer1BGLoad;    /* Offset: 0x018 (R/W)  Background Load Register */
-        uint32_t RESERVED0[1];
+        uint32_t RESERVED0[1U];
   __IOM uint32_t Timer2Load;      /* Offset: 0x020 (R/W)  Timer 2 Load */
   __IM  uint32_t Timer2Value;     /* Offset: 0x024 (R/ )  Timer 2 Counter Current Value */
   __IOM uint32_t Timer2Control;   /* Offset: 0x028 (R/W)  Timer 2 Control */
@@ -185,9 +185,9 @@ typedef struct
   __IM  uint32_t RSR;             /* Offset: 0x000 (R/ )  Receive Status */
   __OM  uint32_t ECR;             /* Offset: 0x000 ( /W)  Error Clear */
   };
-        uint32_t RESERVED0[4];
+        uint32_t RESERVED0[4U];
   __IOM uint32_t FR;              /* Offset: 0x018 (R/W)  Flags */
-        uint32_t RESERVED1[1];
+        uint32_t RESERVED1[1U];
   __IOM uint32_t ILPR;            /* Offset: 0x020 (R/W)  IrDA Low-power Counter */
   __IOM uint32_t IBRD;            /* Offset: 0x024 (R/W)  Interger Baud Rate */
   __IOM uint32_t FBRD;            /* Offset: 0x028 (R/W)  Fractional Baud Rate */
