@@ -2,7 +2,7 @@
  * @file     cmsis_armcc.h
  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
  * @version  V5.00
- * @date     24. August 2016
+ * @date     07. September 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -66,7 +66,19 @@
   @{
  */
 
+/**
+  \brief   Enable IRQ Interrupts
+  \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+           Can only be executed in Privileged modes.
+ */
 /* intrinsic void __enable_irq();     */
+
+
+/**
+  \brief   Disable IRQ Interrupts
+  \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+           Can only be executed in Privileged modes.
+ */
 /* intrinsic void __disable_irq();    */
 
 /**
@@ -86,7 +98,7 @@ __STATIC_INLINE uint32_t __get_CONTROL(void)
   \details Writes the given value to the Control Register.
   \param [in]    control  Control Register value to set
  */
-__STATIC_INLINE void __set_CONTROL(uint32_t control)
+__STATIC_INLINE void __set_CONTROL(uint32_t const control)
 {
   register uint32_t __regControl         __ASM("control");
   __regControl = control;
@@ -146,7 +158,7 @@ __STATIC_INLINE uint32_t __get_PSP(void)
   \details Assigns the given value to the Process Stack Pointer (PSP).
   \param [in]    topOfProcStack  Process Stack Pointer value to set
  */
-__STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+__STATIC_INLINE void __set_PSP(uint32_t const topOfProcStack)
 {
   register uint32_t __regProcessStackPointer  __ASM("psp");
   __regProcessStackPointer = topOfProcStack;
@@ -170,7 +182,7 @@ __STATIC_INLINE uint32_t __get_MSP(void)
   \details Assigns the given value to the Main Stack Pointer (MSP).
   \param [in]    topOfMainStack  Main Stack Pointer value to set
  */
-__STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
+__STATIC_INLINE void __set_MSP(uint32_t const topOfMainStack)
 {
   register uint32_t __regMainStackPointer     __ASM("msp");
   __regMainStackPointer = topOfMainStack;
@@ -194,15 +206,15 @@ __STATIC_INLINE uint32_t __get_PRIMASK(void)
   \details Assigns the given value to the Priority Mask Register.
   \param [in]    priMask  Priority Mask
  */
-__STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
+__STATIC_INLINE void __set_PRIMASK(uint32_t const priMask)
 {
   register uint32_t __regPriMask         __ASM("primask");
   __regPriMask = (priMask);
 }
 
 
-#if ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1)) || \
-     (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     )
+#if ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1U)) || \
+     (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1U))     )
 
 /**
   \brief   Enable FIQ
@@ -237,7 +249,7 @@ __STATIC_INLINE uint32_t  __get_BASEPRI(void)
   \details Assigns the given value to the Base Priority register.
   \param [in]    basePri  Base Priority value to set
  */
-__STATIC_INLINE void __set_BASEPRI(uint32_t basePri)
+__STATIC_INLINE void __set_BASEPRI(uint32_t const basePri)
 {
   register uint32_t __regBasePri         __ASM("basepri");
   __regBasePri = (basePri & 0xFFU);
@@ -250,7 +262,7 @@ __STATIC_INLINE void __set_BASEPRI(uint32_t basePri)
            or the new value increases the BASEPRI priority level.
   \param [in]    basePri  Base Priority value to set
  */
-__STATIC_INLINE void __set_BASEPRI_MAX(uint32_t basePri)
+__STATIC_INLINE void __set_BASEPRI_MAX(uint32_t const basePri)
 {
   register uint32_t __regBasePriMax      __ASM("basepri_max");
   __regBasePriMax = (basePri & 0xFFU);
@@ -274,17 +286,17 @@ __STATIC_INLINE uint32_t __get_FAULTMASK(void)
   \details Assigns the given value to the Fault Mask register.
   \param [in]    faultMask  Fault Mask value to set
  */
-__STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
+__STATIC_INLINE void __set_FAULTMASK(uint32_t const faultMask)
 {
   register uint32_t __regFaultMask       __ASM("faultmask");
-  __regFaultMask = (faultMask & (uint32_t)1);
+  __regFaultMask = (faultMask & (uint32_t)1U);
 }
 
-#endif /* ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1)) || \
-           (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     ) */
+#endif /* ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1U)) || \
+           (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1U))     ) */
 
 
-#if ((defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     )
+#if ((defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1U))     )
 
 /**
   \brief   Get FPSCR
@@ -308,7 +320,7 @@ __STATIC_INLINE uint32_t __get_FPSCR(void)
   \details Assigns the given value to the Floating Point Status/Control register.
   \param [in]    fpscr  Floating Point Status/Control value to set
  */
-__STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+__STATIC_INLINE void __set_FPSCR(uint32_t const fpscr)
 {
 #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
@@ -317,7 +329,7 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 #endif
 }
 
-#endif /* ((defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     ) */
+#endif /* ((defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1U))     ) */
 
 
 
@@ -409,12 +421,13 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
   \return               Reversed value
  */
 #ifndef __NO_EMBEDDED_ASM
-__attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t value)
+__attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t const value)
 {
   rev16 r0, r0
   bx lr
 }
 #endif
+
 
 /**
   \brief   Reverse byte order in signed short value
@@ -423,7 +436,7 @@ __attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(u
   \return               Reversed value
  */
 #ifndef __NO_EMBEDDED_ASM
-__attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t value)
+__attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t const value)
 {
   revsh r0, r0
   bx lr
@@ -434,8 +447,8 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
 /**
   \brief   Rotate Right in unsigned value (32 bit)
   \details Rotate Right (immediate) provides the value of the contents of a register rotated by a variable number of bits.
-  \param [in]    value  Value to rotate
-  \param [in]    value  Number of Bits to rotate
+  \param [in]    op1  Value to rotate
+  \param [in]    op2  Number of Bits to rotate
   \return               Rotated value
  */
 #define __ROR                             __ror
@@ -457,8 +470,8 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#if ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1)) || \
-     (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     )
+#if ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1U)) || \
+     (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1U))     )
   #define __RBIT                          __rbit
 #else
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
@@ -488,8 +501,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 #define __CLZ                             __clz
 
 
-#if ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1)) || \
-     (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     )
+#if ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1U)) || \
+     (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1U))     )
 
 /**
   \brief   LDR Exclusive (8 bit)
@@ -610,7 +623,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
   \return               Rotated value
  */
 #ifndef __NO_EMBEDDED_ASM
-__attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint32_t value)
+__attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint32_t const value)
 {
   rrx r0, r0
   bx lr
@@ -671,8 +684,8 @@ __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint3
  */
 #define __STRT(value, ptr)                __strt(value, ptr)
 
-#endif /* ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1)) || \
-           (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     ) */
+#endif /* ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1U)) || \
+           (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1U))     ) */
 
 /*@}*/ /* end of group CMSIS_Core_InstructionInterface */
 
@@ -683,7 +696,7 @@ __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint3
   @{
 */
 
-#if ((defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     )
+#if ((defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1U))     )
 
 #define __SADD8                           __sadd8
 #define __QADD8                           __qadd8
@@ -754,7 +767,7 @@ __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint3
 #define __SMMLA(ARG1,ARG2,ARG3)          ( (int32_t)((((int64_t)(ARG1) * (ARG2)) + \
                                                       ((int64_t)(ARG3) << 32U)     ) >> 32U))
 
-#endif /* ((defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     ) */
+#endif /* ((defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1U))     ) */
 /*@} end of group CMSIS_SIMD_intrinsics */
 
 

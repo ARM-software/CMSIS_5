@@ -2,7 +2,7 @@
  * @file     cmsis_gcc.h
  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
  * @version  V5.00
- * @date     24. August 2016
+ * @date     07. September 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -26,12 +26,10 @@
 #define __CMSIS_GCC_H
 
 /* ignore some GCC warnings */
-#if defined ( __GNUC__ )
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wconversion"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-#endif
 
 /* CMSIS compiler specific defines */
 #ifndef   __ASM
@@ -106,7 +104,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_CONTROL(void)
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U)
+#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3U))
 /**
   \brief   Get Control Register (non-secure)
   \details Returns the content of the non-secure Control Register when in secure mode.
@@ -127,19 +125,19 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_CONTROL_NS(void
   \details Writes the given value to the Control Register.
   \param [in]    control  Control Register value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_CONTROL(uint32_t control)
+__attribute__((always_inline)) __STATIC_INLINE void __set_CONTROL(uint32_t const control)
 {
   __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U)
+#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3U))
 /**
   \brief   Set Control Register (non-secure)
   \details Writes the given value to the non-secure Control Register when in secure state.
   \param [in]    control  Control Register value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_CONTROL_NS(uint32_t control)
+__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_CONTROL_NS(uint32_t const control)
 {
   __ASM volatile ("MSR control_ns, %0" : : "r" (control) : "memory");
 }
@@ -202,7 +200,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PSP(void)
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U)
+#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3U))
 /**
   \brief   Get Process Stack Pointer (non-secure)
   \details Returns the current value of the non-secure Process Stack Pointer (PSP) when in secure state.
@@ -223,19 +221,19 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PSP_NS(void)
   \details Assigns the given value to the Process Stack Pointer (PSP).
   \param [in]    topOfProcStack  Process Stack Pointer value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+__attribute__((always_inline)) __STATIC_INLINE void __set_PSP(uint32_t const topOfProcStack)
 {
   __ASM volatile ("MSR psp, %0" : : "r" (topOfProcStack) : "sp");
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U)
+#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3U))
 /**
   \brief   Set Process Stack Pointer (non-secure)
   \details Assigns the given value to the non-secure Process Stack Pointer (PSP) when in secure state.
   \param [in]    topOfProcStack  Process Stack Pointer value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PSP_NS(uint32_t topOfProcStack)
+__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PSP_NS(uint32_t const topOfProcStack)
 {
   __ASM volatile ("MSR psp_ns, %0" : : "r" (topOfProcStack) : "sp");
 }
@@ -256,7 +254,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_MSP(void)
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U)
+#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3U))
 /**
   \brief   Get Main Stack Pointer (non-secure)
   \details Returns the current value of the non-secure Main Stack Pointer (MSP) when in secure state.
@@ -277,19 +275,19 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_MSP_NS(void)
   \details Assigns the given value to the Main Stack Pointer (MSP).
   \param [in]    topOfMainStack  Main Stack Pointer value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
+__attribute__((always_inline)) __STATIC_INLINE void __set_MSP(uint32_t const topOfMainStack)
 {
   __ASM volatile ("MSR msp, %0" : : "r" (topOfMainStack) : "sp");
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U)
+#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3U))
 /**
   \brief   Set Main Stack Pointer (non-secure)
   \details Assigns the given value to the non-secure Main Stack Pointer (MSP) when in secure state.
   \param [in]    topOfMainStack  Main Stack Pointer value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
+__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSP_NS(uint32_t const topOfMainStack)
 {
   __ASM volatile ("MSR msp_ns, %0" : : "r" (topOfMainStack) : "sp");
 }
@@ -310,7 +308,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PRIMASK(void)
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U)
+#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3U))
 /**
   \brief   Get Priority Mask (non-secure)
   \details Returns the current state of the non-secure priority mask bit from the Priority Mask Register when in secure state.
@@ -331,28 +329,28 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PRIMASK_NS(void
   \details Assigns the given value to the Priority Mask Register.
   \param [in]    priMask  Priority Mask
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
+__attribute__((always_inline)) __STATIC_INLINE void __set_PRIMASK(uint32_t const priMask)
 {
   __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U)
+#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3U))
 /**
   \brief   Set Priority Mask (non-secure)
   \details Assigns the given value to the non-secure Priority Mask Register when in secure state.
   \param [in]    priMask  Priority Mask
  */
-__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PRIMASK_NS(uint32_t priMask)
+__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PRIMASK_NS(uint32_t const priMask)
 {
   __ASM volatile ("MSR primask_ns, %0" : : "r" (priMask) : "memory");
 }
 #endif
 
 
-#if ((__ARM_ARCH_7M__      == 1U) || \
-     (__ARM_ARCH_7EM__     == 1U) || \
-     (__ARM_ARCH_8M_MAIN__ == 1U)   )
+#if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1U)) || \
+     (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1U)) || \
+     (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1U))    )
 /**
   \brief   Enable FIQ
   \details Enables FIQ interrupts by clearing the F-bit in the CPSR.
@@ -389,7 +387,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_BASEPRI(void)
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U)
+#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3U))
 /**
   \brief   Get Base Priority (non-secure)
   \details Returns the current value of the non-secure Base Priority register when in secure state.
@@ -410,21 +408,21 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_BASEPRI_NS(void
   \details Assigns the given value to the Base Priority register.
   \param [in]    basePri  Base Priority value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_BASEPRI(uint32_t value)
+__attribute__((always_inline)) __STATIC_INLINE void __set_BASEPRI(uint32_t const basePri)
 {
-  __ASM volatile ("MSR basepri, %0" : : "r" (value) : "memory");
+  __ASM volatile ("MSR basepri, %0" : : "r" (basePri) : "memory");
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U)
+#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3U))
 /**
   \brief   Set Base Priority (non-secure)
   \details Assigns the given value to the non-secure Base Priority register when in secure state.
   \param [in]    basePri  Base Priority value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_BASEPRI_NS(uint32_t value)
+__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_BASEPRI_NS(uint32_t const basePri)
 {
-  __ASM volatile ("MSR basepri_ns, %0" : : "r" (value) : "memory");
+  __ASM volatile ("MSR basepri_ns, %0" : : "r" (basePri) : "memory");
 }
 #endif
 
@@ -435,9 +433,9 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_BASEPRI_NS(uint32_t
            or the new value increases the BASEPRI priority level.
   \param [in]    basePri  Base Priority value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_BASEPRI_MAX(uint32_t value)
+__attribute__((always_inline)) __STATIC_INLINE void __set_BASEPRI_MAX(uint32_t const basePri)
 {
-  __ASM volatile ("MSR basepri_max, %0" : : "r" (value) : "memory");
+  __ASM volatile ("MSR basepri_max, %0" : : "r" (basePri) : "memory");
 }
 
 
@@ -455,7 +453,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FAULTMASK(void)
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U)
+#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3U))
 /**
   \brief   Get Fault Mask (non-secure)
   \details Returns the current value of the non-secure Fault Mask register when in secure state.
@@ -476,27 +474,27 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_FAULTMASK_NS(vo
   \details Assigns the given value to the Fault Mask register.
   \param [in]    faultMask  Fault Mask value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
+__attribute__((always_inline)) __STATIC_INLINE void __set_FAULTMASK(uint32_t const faultMask)
 {
   __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) : "memory");
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U)
+#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3U))
 /**
   \brief   Set Fault Mask (non-secure)
   \details Assigns the given value to the non-secure Fault Mask register when in secure state.
   \param [in]    faultMask  Fault Mask value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask)
+__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_FAULTMASK_NS(uint32_t const faultMask)
 {
   __ASM volatile ("MSR faultmask_ns, %0" : : "r" (faultMask) : "memory");
 }
 #endif
 
-#endif /* ((__ARM_ARCH_7M__      == 1U) || \
-           (__ARM_ARCH_7EM__     == 1U) || \
-           (__ARM_ARCH_8M_MAIN__ == 1U)   )  */
+#endif /* ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1U)) || \
+           (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1U)) || \
+           (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1U))    ) */
 
 
 #if ((__ARM_ARCH_8M_MAIN__ == 1U) || (__ARM_ARCH_8M_BASE__ == 1U))
@@ -515,7 +513,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PSPLIM(void)
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U) && (__ARM_ARCH_8M_MAIN__ == 1U)
+#if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3U)) && \
+     (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1U))    )
 /**
   \brief   Get Process Stack Pointer Limit (non-secure)
   \details Returns the current value of the non-secure Process Stack Pointer Limit (PSPLIM) when in secure state.
@@ -536,19 +535,20 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PSPLIM_NS(void)
   \details Assigns the given value to the Process Stack Pointer Limit (PSPLIM).
   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_PSPLIM(uint32_t ProcStackPtrLimit)
+__attribute__((always_inline)) __STATIC_INLINE void __set_PSPLIM(uint32_t const ProcStackPtrLimit)
 {
   __ASM volatile ("MSR psplim, %0" : : "r" (ProcStackPtrLimit));
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U) && (__ARM_ARCH_8M_MAIN__ == 1U)
+#if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3U)) && \
+     (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1U))    )
 /**
   \brief   Set Process Stack Pointer (non-secure)
   \details Assigns the given value to the non-secure Process Stack Pointer Limit (PSPLIM) when in secure state.
   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PSPLIM_NS(uint32_t ProcStackPtrLimit)
+__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PSPLIM_NS(uint32_t const ProcStackPtrLimit)
 {
   __ASM volatile ("MSR psplim_ns, %0\n" : : "r" (ProcStackPtrLimit));
 }
@@ -570,7 +570,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_MSPLIM(void)
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U) && (__ARM_ARCH_8M_MAIN__ == 1U)
+#if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3U)) && \
+     (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1U))    )
 /**
   \brief   Get Main Stack Pointer Limit (non-secure)
   \details Returns the current value of the non-secure Main Stack Pointer Limit(MSPLIM) when in secure state.
@@ -591,19 +592,20 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_MSPLIM_NS(void)
   \details Assigns the given value to the Main Stack Pointer Limit (MSPLIM).
   \param [in]    MainStackPtrLimit  Main Stack Pointer Limit value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_MSPLIM(uint32_t MainStackPtrLimit)
+__attribute__((always_inline)) __STATIC_INLINE void __set_MSPLIM(uint32_t const MainStackPtrLimit)
 {
   __ASM volatile ("MSR msplim, %0" : : "r" (MainStackPtrLimit));
 }
 
 
-#if  (__ARM_FEATURE_CMSE == 3U) && (__ARM_ARCH_8M_MAIN__ == 1U)
+#if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3U)) && \
+     (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1U))    )
 /**
   \brief   Set Main Stack Pointer Limit (non-secure)
   \details Assigns the given value to the non-secure Main Stack Pointer Limit (MSPLIM) when in secure state.
   \param [in]    MainStackPtrLimit  Main Stack Pointer value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
+__attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t const MainStackPtrLimit)
 {
   __ASM volatile ("MSR msplim_ns, %0" : : "r" (MainStackPtrLimit));
 }
@@ -612,7 +614,8 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t 
 #endif /* ((__ARM_ARCH_8M_MAIN__ == 1U) || (__ARM_ARCH_8M_BASE__ == 1U)) */
 
 
-#if ((__ARM_ARCH_7EM__ == 1U) || (__ARM_ARCH_8M_MAIN__ == 1U))
+#if ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1U)) || \
+     (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1U))    )
 
 /**
   \brief   Get FPSCR
@@ -640,7 +643,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
   \details Assigns the given value to the Floating Point Status/Control register.
   \param [in]    fpscr  Floating Point Status/Control value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+__attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t const fpscr)
 {
 #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
@@ -777,7 +780,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __REV(uint32_t value)
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __REV16(uint32_t value)
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __REV16(uint32_t const value)
 {
   uint32_t result;
 
@@ -792,7 +795,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __REV16(uint32_t value)
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-__attribute__((always_inline)) __STATIC_INLINE int32_t __REVSH(int32_t value)
+__attribute__((always_inline)) __STATIC_INLINE int32_t __REVSH(int32_t const value)
 {
 #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
   return (short)__builtin_bswap16(value);
@@ -812,7 +815,7 @@ __attribute__((always_inline)) __STATIC_INLINE int32_t __REVSH(int32_t value)
   \param [in]    op2  Number of Bits to rotate
   \return               Rotated value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __ROR(uint32_t const op1, uint32_t const op2)
 {
   return (op1 >> op2) | (op1 << (32U - op2));
 }
@@ -838,9 +841,9 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 {
   uint32_t result;
 
-#if ((__ARM_ARCH_7M__       == 1U) || \
-     (__ARM_ARCH_7EM__      == 1U) || \
-     (__ARM_ARCH_8M_MAIN__  == 1U) )
+#if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1U)) || \
+     (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1U)) || \
+     (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1U))    )
    __ASM volatile ("rbit %0, %1" : "=r" (result) : "r" (value) );
 #else
   int32_t s = 4 /*sizeof(v)*/ * 8 - 1; /* extra shift needed at end */
@@ -867,11 +870,10 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 #define __CLZ             __builtin_clz
 
 
-#if ((__ARM_ARCH_7M__      == 1U) || \
-     (__ARM_ARCH_7EM__     == 1U) || \
-     (__ARM_ARCH_8M_MAIN__ == 1U) || \
-     (__ARM_ARCH_8M_BASE__ == 1U)    )
-
+#if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1U)) || \
+     (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1U)) || \
+     (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1U)) || \
+     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1U))    )
 /**
   \brief   LDR Exclusive (8 bit)
   \details Executes a exclusive LDR instruction for 8 bit value.
@@ -1029,7 +1031,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __CLREX(void)
   \param [in]    value  Value to rotate
   \return               Rotated value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __RRX(uint32_t value)
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __RRX(uint32_t const value)
 {
   uint32_t result;
 
@@ -1103,7 +1105,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __LDRT(volatile uint32_t
   \param [in]  value  Value to store
   \param [in]    ptr  Pointer to location
  */
-__attribute__((always_inline)) __STATIC_INLINE void __STRBT(uint8_t value, volatile uint8_t *ptr)
+__attribute__((always_inline)) __STATIC_INLINE void __STRBT(uint8_t const value, volatile uint8_t *ptr)
 {
    __ASM volatile ("strbt %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
 }
@@ -1115,7 +1117,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __STRBT(uint8_t value, volat
   \param [in]  value  Value to store
   \param [in]    ptr  Pointer to location
  */
-__attribute__((always_inline)) __STATIC_INLINE void __STRHT(uint16_t value, volatile uint16_t *ptr)
+__attribute__((always_inline)) __STATIC_INLINE void __STRHT(uint16_t const value, volatile uint16_t *ptr)
 {
    __ASM volatile ("strht %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
 }
@@ -1127,16 +1129,19 @@ __attribute__((always_inline)) __STATIC_INLINE void __STRHT(uint16_t value, vola
   \param [in]  value  Value to store
   \param [in]    ptr  Pointer to location
  */
-__attribute__((always_inline)) __STATIC_INLINE void __STRT(uint32_t value, volatile uint32_t *ptr)
+__attribute__((always_inline)) __STATIC_INLINE void __STRT(uint32_t const value, volatile uint32_t *ptr)
 {
    __ASM volatile ("strt %1, %0" : "=Q" (*ptr) : "r" (value) );
 }
 
-#endif /* ((__ARM_ARCH_7M__ == 1U) || (__ARM_ARCH_7EM__ == 1U) || (__ARM_ARCH_8M_MAIN__ == 1U) || (__ARM_ARCH_8M_BASE__ == 1U)) */
+#endif /* ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1U)) || \
+           (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1U)) || \
+           (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1U)) || \
+           (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1U))    ) */
 
 
-#if ((__ARM_ARCH_8M_MAIN__ == 1U) || (__ARM_ARCH_8M_BASE__ == 1U))
-
+#if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1U)) || \
+     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1U))    )
 /**
   \brief   Load-Acquire (8 bit)
   \details Executes a LDAB instruction for 8 bit value.
@@ -1313,7 +1318,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __STLEX(uint32_t value, 
    return(result);
 }
 
-#endif /* ((__ARM_ARCH_8M_MAIN__ == 1U) || (__ARM_ARCH_8M_BASE__ == 1U)) */
+#endif /* ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1U)) || \
+           (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1U))    ) */
 
 /*@}*/ /* end of group CMSIS_Core_InstructionInterface */
 
@@ -1871,8 +1877,6 @@ __attribute__((always_inline)) __STATIC_INLINE int32_t __SMMLA (int32_t op1, int
 /*@} end of group CMSIS_SIMD_intrinsics */
 
 
-#if defined ( __GNUC__ )
 #pragma GCC diagnostic pop
-#endif
 
 #endif /* __CMSIS_GCC_H */
