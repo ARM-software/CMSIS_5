@@ -101,7 +101,7 @@ packChk.exe MyVendor.MVCM3.pdsc -x M304 -x M331        // option repeated
 
 \section packChkMessages Error and Warning Messages
 
-[SVDConv.exe]: ../../SVD/html/svd__s_v_d_conv_pg.html
+[SVDConv.exe]: ../../SVD/html/svd_SVDConv_pg.html
 
 The following table shows the errors and warnings issued by packChk.
 

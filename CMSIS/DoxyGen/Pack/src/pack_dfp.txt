@@ -130,7 +130,7 @@ an embedded application:
   contain stack and heap configurations for the user application.
 - \c system_<device>.c and \c system_<device>.h with general system configuration information (i.e. for clock and BUS setup).
 - \c <device.h> gives access to processor core and all peripherals. This file should be generated out of the
-  \ref cp_SVD "SVD" file using <a href="../../SVD/html/svd__s_v_d_conv_pg.html"><b>SVDConv.exe</b></a> to ensure consistency
+  \ref cp_SVD "SVD" file using <a href="../../SVD/html/svd_SVDConv_pg.html"><b>SVDConv.exe</b></a> to ensure consistency
   between the header file and what is being displayed by the debugger.
 
 \image html SystemStartupFiles.png  "System and startup files in relation to user code"
@@ -219,7 +219,7 @@ microcontrollers, in particular the memory mapped registers of the peripherals. 
 descriptions is comparable to what is found in device reference manuals published by silicon vendors. The information ranges
 from a high level functional description of a peripheral all the way down to the definition and purpose of an individual bit
 field in a memory mapped register. CMSIS-SVD files are developed and maintained by the silicon vendors. 
-The XML based SVD file is the input for <a href="../../SVD/html/svd__s_v_d_conv_pg.html"><b>SVDConv.exe</b></a> that
+The XML based SVD file is the input for <a href="../../SVD/html/svd_SVDConv_pg.html"><b>SVDConv.exe</b></a> that
 generates the tool dependent debug view and the device header file.
 
 \image html SVDFlow.png "SVD file conversion flow"

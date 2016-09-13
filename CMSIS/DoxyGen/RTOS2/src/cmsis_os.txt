@@ -164,7 +164,7 @@ int main (void) {                                // program execution starts her
 CMSIS-RTOS v2 provides multiple API functions:
   - \subpage RTOS_API2 is the new C function API that support dynamic object creation, ARMv8-M, and multi-processor
     communication.
-  - <a class="el" href="../../RTOSv1/html/_function_overview.html">CMSIS-RTOS C API Version 1</a> is a C function API the is
+  - <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API Version 1</a> is a C function API the is
     backward compatible with CMSIS-RTOS v2.
   - \subpage RTOS_APICPP is a C++ class function API.
 

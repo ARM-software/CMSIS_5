@@ -66,18 +66,9 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
 
 <hr>
 
-License
-=======
-
-The CMSIS-DAP is provided free of charge by ARM and can be freely distributed as part of 
-Cortex-M processor-based Debug Units that are stand-alone or integrated evaluation boards.
-used for all Cortex-M based devices. 
-View the <a href="..\..\..\DAP\CMSIS-DAP EULA.pdf">LICENCE AGREEMENT for CMSIS-DAP</a> in detail.
-
-<hr>
 */
 /** 
-\page rev_hist_dap Revision History of CMSIS-DAP
+\page dap_revisionHistory Revision History of CMSIS-DAP
 
 <table>
     <tr>

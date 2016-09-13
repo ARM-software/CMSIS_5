@@ -113,15 +113,15 @@ However, the Flash programming algorithm of a project can be changed manually at
 \page algorithmFunc Algorithm Functions
 
 The following functions are available for creating new Flash programming algorithms:
-|Function Name   |Indication|Description|
-|----------------|----------|-----------|
-|\ref BlankCheck |optional  |Check and compare patterns.|
-|\ref EraseChip  |optional  |Delete entire Flash memory content.|
-|\ref EraseSector|mandatory |Delete Flash memory content of a specific sector.|
-|\ref Init       |mandatory |Initialize and prepare device for Flash programming.|
-|\ref ProgramPage|mandatory |Write the application into the Flash memory.|
-|\ref UnInit     |mandatory |De-initialize the microcontroller after one of the Flash programming steps.|
-|\ref Verify     |optional  |Compare Flash memory content with the program code.|
+Function Name    |Indication |Description 
+-----------------|-----------|-----------
+\ref BlankCheck  |optional   |Check and compare patterns.
+\ref EraseChip   |optional   |Delete entire Flash memory content.
+\ref EraseSector |mandatory  |Delete Flash memory content of a specific sector.
+\ref Init        |mandatory  |Initialize and prepare device for Flash programming.
+\ref ProgramPage |mandatory  |Write the application into the Flash memory.
+\ref UnInit      |mandatory  |De-initialize the microcontroller after one of the Flash programming steps.
+\ref Verify      |optional   |Compare Flash memory content with the program code.
 
 <p>&nbsp;</p>
 <hr>
