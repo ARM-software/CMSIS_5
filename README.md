@@ -1,21 +1,23 @@
 # CMSIS Version 5
 
-CMSIS Version 5.0.0 is now available as beta release, but will need further refinement as we are reviewing the feedback that we have got via various channels. As it looks today we are scheduling the final release for September 2016.
+CMSIS Version 5.0.0 is now available as beta release, but will need further refinement as we are reviewing the feedback that we have got via various channels. We are scheduling the final release for November 2016.
 
-Once completed it will be released in this GitHub project.
+This GitHub repository reflects our current development stage and is constantly updated.
 
+The [pre-built documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
 
 Use *Issues* to provide feedback and report problems for CMSIS Version 5. Note that this repository gives our users and partners contiguous access to the CMSIS development. It allows you to review the work and provide feedback or create pull requests for contributions.
 
-
-## Planned Enhancements
- - Add support for ARMv8-M Architecture (Mainline and Baseline)
-
- - Improvements for Cortex-A / M hybrid devices (focus on Cortex-M interaction)
+## Implemented Enhancements
+ - Support for ARMv8-M Architecture (Mainline and Baseline)
 
  - CMSIS-RTOS API and RTX reference implementation with several enhancements:
-     - Dynamic object creation, Flag events, C and C++ API, additional thread and timer functions
-     - Secure and Non-Secure support, multi-processor support
+     - Dynamic object creation, Flag events, C API, additional thread and timer functions
+
+## Futher Planned Enhancements
+ - CMSIS-RTOS API Secure and Non-Secure support, multi-processor support
+
+ - Improvements for Cortex-A / M hybrid devices (focus on Cortex-M interaction)
 
  - CMSIS-Pack 
      - Additions for generic example, project templates, multiple download portals
@@ -24,8 +26,6 @@ Use *Issues* to provide feedback and report problems for CMSIS Version 5. Note t
 For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/master/CMSIS_EW2016.pdf).
 
 ## Directory Structure
-
-*All CMSIS components will be available by end of March 2016*
 
 | Directory       | Content                                        |                
 | --------------- | ---------------------------------------------- |
@@ -44,7 +44,7 @@ This GitHub development repository contains already pre-build libraries of vario
 These libraries are validated for release.
 
 To build a complete CMSIS pack for installation the following additional tools are required:
- - **doxygen.exe**    Version: 1.8.2 (Documentation Generator)
+ - **doxygen.exe**    Version: 1.8.6 (Documentation Generator)
  - **mscgen.exe**     Version: 0.20  (Message Sequence Chart Converter)
  - **7z.exe (7-Zip)** Version: 16.02 (File Archiver)
   
