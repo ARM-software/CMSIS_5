@@ -11,8 +11,8 @@ The node may also be a gateway allowing a standard computer to communicate over 
 Devices are connected to the bus through a host processor, a CAN controller, and a CAN transceiver.
 
 
-The CAN Driver API allows to implement CAN Interfaces that conform to the following 
-<a href="http://www.bosch-semiconductors.de/en/ubk_semiconductors/ip_modules_3/produkttabelle_ip_modules/can_literature_1/can_literature.html" target="_blank">
+The CAN Driver API allows to implement CAN Interfaces that conform to the  
+<a href="http://www.bosch-semiconductors.com/" target="_blank">
 CAN specifications available from BOSCH</a>:
   - CAN 2.0B: CAN Specification 2.0B (released Sep. 1991) which is now superseded by ISO 11898-1.
   - CAN FD: CAN with Flexible Data Rate introduced in 2012 (released April 17th, 2012).
