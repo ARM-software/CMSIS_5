@@ -97,13 +97,16 @@ arm_status arm_mat_mult_fast_q15(
   uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
   uint16_t numRowsB = pSrcB->numRows;            /* number of rows of input matrix A    */
-  uint16_t col, i = 0u, row = numRowsB, colCnt;  /* loop counters */
+  uint32_t col, i = 0u, row = numRowsB, colCnt;  /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
 
 #ifndef UNALIGNED_SUPPORT_DISABLE
 
   q31_t in;                                      /* Temporary variable to hold the input value */
   q31_t inA1, inA2, inB1, inB2;
+  q31_t sum2, sum3, sum4;
+  q15_t *pInA2, *pInB2, *px2;
+  uint32_t j = 0;
 
 #else
 
@@ -269,9 +272,15 @@ arm_status arm_mat_mult_fast_q15(
     i = 0u;
     px = pDst->pData;
 
+#ifndef UNALIGNED_SUPPORT_DISABLE
+    /* Process two rows from matrix A at a time and output two rows at a time */
+    row = row >> 1;
+    px2 = px + numColsB;
+#endif
+
     /* The following loop performs the dot-product of each row in pSrcA with each column in pSrcB */
     /* row loop */
-    do
+    while(row > 0u)
     {
       /* For every row wise process, the column loop counter is to be initiated */
       col = numColsB;
@@ -280,17 +289,34 @@ arm_status arm_mat_mult_fast_q15(
        ** to the starting address of the transposed pSrcB data */
       pInB = pSrcBT;
 
+#ifndef UNALIGNED_SUPPORT_DISABLE
+      /* Process two (transposed) columns from matrix B at a time */
+      col = col >> 1;
+      j = 0;
+#endif
+
       /* column loop */
-      do
+      while (col > 0u)
       {
         /* Set the variable sum, that acts as accumulator, to zero */
         sum = 0;
 
-        /* Apply loop unrolling and compute 2 MACs simultaneously. */
-        colCnt = numColsA >> 2;
-
-        /* Initiate the pointer pIn1 to point to the starting address of the column being processed */
+        /* Initiate the pointer pInA to point to the starting address of the column being processed */
         pInA = pSrcA->pData + i;
+
+#ifndef UNALIGNED_SUPPORT_DISABLE
+        sum2 = 0;
+        sum3 = 0;
+        sum4 = 0;
+        pInB  = pSrcBT + j;
+        pInA2 = pInA + numColsA;
+        pInB2 = pInB + numRowsB;
+        
+        /* Read in two elements at once - alows dual MAC instruction */
+        colCnt = numColsA >> 1;
+#else
+        colCnt = numColsA >> 2;
+#endif
 
         /* matrix multiplication */
         while(colCnt > 0u)
@@ -300,28 +326,34 @@ arm_status arm_mat_mult_fast_q15(
 
           inA1 = *__SIMD32(pInA)++;
           inB1 = *__SIMD32(pInB)++;
-          inA2 = *__SIMD32(pInA)++;
-          inB2 = *__SIMD32(pInB)++;
+          inA2 = *__SIMD32(pInA2)++;
+          inB2 = *__SIMD32(pInB2)++;
 
-          sum = __SMLAD(inA1, inB1, sum);
-          sum = __SMLAD(inA2, inB2, sum);
+          sum  = __SMLAD(inA1, inB1, sum);
+          sum2 = __SMLAD(inA1, inB2, sum2);
+          sum3 = __SMLAD(inA2, inB1, sum3);
+          sum4 = __SMLAD(inA2, inB2, sum4);
 
 #else
 
-          inA1 = *pInA++;
-          inB1 = *pInB++;
-          inA2 = *pInA++;
+          inA1 = *pInA;
+          inB1 = *pInB;
           sum += inA1 * inB1;
-          inB2 = *pInB++;
 
-          inA1 = *pInA++;
-          inB1 = *pInB++;
+          inA2 = pInA[1];
+          inB2 = pInB[1];
           sum += inA2 * inB2;
-          inA2 = *pInA++;
-          inB2 = *pInB++;
 
+          inA1 = pInA[2];
+          inB1 = pInB[2];
           sum += inA1 * inB1;
+
+          inA2 = pInA[3];
+          inB2 = pInB[3];
           sum += inA2 * inB2;
+
+          pInA += 4;
+          pInB += 4;
 
 #endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
 
@@ -330,6 +362,18 @@ arm_status arm_mat_mult_fast_q15(
         }
 
         /* process odd column samples */
+#ifndef UNALIGNED_SUPPORT_DISABLE
+        if (numColsA & 1u) {
+          inA1 = *pInA++;
+          inB1 = *pInB++;
+          inA2 = *pInA2++;
+          inB2 = *pInB2++;
+          sum  += inA1 * inB1;
+          sum2 += inA1 * inB2;
+          sum3 += inA2 * inB1;
+          sum4 += inA2 * inB2;
+        }
+#else
         colCnt = numColsA % 0x4u;
 
         while(colCnt > 0u)
@@ -339,22 +383,146 @@ arm_status arm_mat_mult_fast_q15(
 
           colCnt--;
         }
+#endif
 
         /* Saturate and store the result in the destination buffer */
-        *px = (q15_t) (sum >> 15);
-        px++;
+        *px++  = (q15_t) (sum >> 15);
+
+#ifndef UNALIGNED_SUPPORT_DISABLE
+        *px++  = (q15_t) (sum2 >> 15);
+        *px2++ = (q15_t) (sum3 >> 15);
+        *px2++ = (q15_t) (sum4 >> 15);
+        j += numRowsB * 2;
+#endif
 
         /* Decrement the column loop counter */
         col--;
 
-      } while(col > 0u);
+      }
 
       i = i + numColsA;
+
+#ifndef UNALIGNED_SUPPORT_DISABLE
+      i = i + numColsA;
+      px = px2 + (numColsB & 1u);
+      px2 = px + numColsB;
+#endif
 
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    }
+
+    /* Compute any remaining odd row/column below */
+
+#ifndef UNALIGNED_SUPPORT_DISABLE
+
+    /* Compute remaining output column */
+    if (numColsB & 1u) {
+
+      /* Avoid redundant computation of last element */
+      row = numRowsA & (~0x1);
+
+      /* Point to remaining unfilled column in output matrix */
+      px = pDst->pData+numColsB-1;
+      pInA = pSrcA->pData;
+
+      /* row loop */
+      while (row > 0)
+      {
+
+        /* point to last column in matrix B */
+        pInB  = pSrcBT + numRowsB*(numColsB-1);
+
+        /* Set the variable sum, that acts as accumulator, to zero */
+        sum  = 0;
+
+        /* Compute 4 columns at once */
+        colCnt = numColsA >> 2;
+
+        /* matrix multiplication */
+        while(colCnt > 0u)
+        {
+          inA1 = *__SIMD32(pInA)++;
+          inA2 = *__SIMD32(pInA)++;
+          inB1 = *__SIMD32(pInB)++;
+          inB2 = *__SIMD32(pInB)++;
+
+          sum  = __SMLAD(inA1, inB1, sum);
+          sum  = __SMLAD(inA2, inB2, sum);
+
+          /* Decrement the loop counter */
+          colCnt--;
+        }
+
+        colCnt = numColsA & 3u;
+        while(colCnt > 0u) {
+          sum += (q31_t) (*pInA++) * (*pInB++);
+          colCnt--;
+        }
+
+        /* Store the result in the destination buffer */
+        *px  = (q15_t) (sum  >> 15);
+        px += numColsB;
+
+        /* Decrement the row loop counter */
+        row--;
+      } 
+    }
+
+    /* Compute remaining output row */
+    if (numRowsA & 1u) {
+
+      /* point to last row in output matrix */
+      px = pDst->pData+(numColsB)*(numRowsA-1);
+
+      pInB  = pSrcBT;
+      col = numColsB;
+      i = 0u;
+
+      /* col loop */
+      while (col > 0)
+      {
+
+        /* point to last row in matrix A */
+        pInA = pSrcA->pData + (numRowsA-1)*numColsA;
+
+        /* Set the variable sum, that acts as accumulator, to zero */
+        sum  = 0;
+
+        /* Compute 4 columns at once */
+        colCnt = numColsA >> 2;
+
+        /* matrix multiplication */
+        while(colCnt > 0u)
+        {
+          inA1 = *__SIMD32(pInA)++;
+          inA2 = *__SIMD32(pInA)++;
+          inB1 = *__SIMD32(pInB)++;
+          inB2 = *__SIMD32(pInB)++;
+
+          sum  = __SMLAD(inA1, inB1, sum);
+          sum  = __SMLAD(inA2, inB2, sum);
+
+          /* Decrement the loop counter */
+          colCnt--;
+        }
+
+        colCnt = numColsA & 3u;
+        while(colCnt > 0u) {
+          sum += (q31_t) (*pInA++) * (*pInB++);
+          colCnt--;
+        }
+
+        /* Store the result in the destination buffer */
+        *px++  = (q15_t) (sum  >> 15);
+
+        /* Decrement the col loop counter */
+        col--;
+      }
+    }
+
+#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;

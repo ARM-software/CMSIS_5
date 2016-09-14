@@ -85,22 +85,27 @@ arm_status arm_mat_mult_fast_q31(
   const arm_matrix_instance_q31 * pSrcB,
   arm_matrix_instance_q31 * pDst)
 {
-  q31_t *pIn1 = pSrcA->pData;                    /* input data matrix pointer A */
-  q31_t *pIn2 = pSrcB->pData;                    /* input data matrix pointer B */
   q31_t *pInA = pSrcA->pData;                    /* input data matrix pointer A */
-//  q31_t *pSrcB = pSrcB->pData;                    /* input data matrix pointer B */    
-  q31_t *pOut = pDst->pData;                     /* output data matrix pointer */
+  q31_t *pInB = pSrcB->pData;                    /* input data matrix pointer B */
   q31_t *px;                                     /* Temporary output data matrix pointer */
   q31_t sum;                                     /* Accumulator */
   uint16_t numRowsA = pSrcA->numRows;            /* number of rows of input matrix A    */
   uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
-  uint16_t col, i = 0u, j, row = numRowsA, colCnt;      /* loop counters */
+  uint32_t col, i = 0u, j, row = numRowsA, colCnt;  /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
-  q31_t inA1, inA2, inA3, inA4, inB1, inB2, inB3, inB4;
+  q31_t inA1, inB1;
+
+#ifndef ARM_MATH_CM0_FAMILY
+
+  q31_t sum2, sum3, sum4;
+  q31_t inA2, inB2;
+  q31_t *pInA2;
+  q31_t *px2;
+
+#endif
 
 #ifdef ARM_MATH_MATRIX_CHECK
-
 
   /* Check for matrix mismatch condition */
   if((pSrcA->numCols != pSrcB->numRows) ||
@@ -113,110 +118,275 @@ arm_status arm_mat_mult_fast_q31(
 #endif /*      #ifdef ARM_MATH_MATRIX_CHECK    */
 
   {
+
+    px = pDst->pData;
+
+#ifndef ARM_MATH_CM0_FAMILY
+    row = row >> 1;
+    px2 = px + numColsB;
+#endif
+
     /* The following loop performs the dot-product of each row in pSrcA with each column in pSrcB */
     /* row loop */
-    do
+    while(row > 0u)
     {
-      /* Output pointer is set to starting address of the row being processed */
-      px = pOut + i;
 
       /* For every row wise process, the column loop counter is to be initiated */
       col = numColsB;
 
       /* For every row wise process, the pIn2 pointer is set    
        ** to the starting address of the pSrcB data */
-      pIn2 = pSrcB->pData;
+      pInB = pSrcB->pData;
 
       j = 0u;
 
+#ifndef ARM_MATH_CM0_FAMILY
+      col = col >> 1;
+#endif
+
       /* column loop */
-      do
+      while (col > 0u)
       {
         /* Set the variable sum, that acts as accumulator, to zero */
         sum = 0;
 
-        /* Initiate the pointer pIn1 to point to the starting address of pInA */
-        pIn1 = pInA;
+        /* Initiate data pointers */
+        pInA = pSrcA->pData + i;
+        pInB  = pSrcB->pData + j;
 
-        /* Apply loop unrolling and compute 4 MACs simultaneously. */
+#ifndef ARM_MATH_CM0_FAMILY
+        sum2 = 0;
+        sum3 = 0;
+        sum4 = 0;
+        pInA2 = pInA + numColsA;
+        colCnt = numColsA;
+#else
         colCnt = numColsA >> 2;
-
+#endif
 
         /* matrix multiplication */
         while(colCnt > 0u)
         {
+
+#ifndef ARM_MATH_CM0_FAMILY
+          inA1 = *pInA++;
+          inB1 = pInB[0];
+          inA2 = *pInA2++;
+          inB2 = pInB[1];
+          pInB += numColsB;
+
+          sum  = __SMMLA(inA1, inB1, sum);
+          sum2 = __SMMLA(inA1, inB2, sum2);
+          sum3 = __SMMLA(inA2, inB1, sum3);
+          sum4 = __SMMLA(inA2, inB2, sum4);
+#else
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           /* Perform the multiply-accumulates */
-          inB1 = *pIn2;
-          pIn2 += numColsB;
+          inB1 = *pInB;
+          pInB += numColsB;
+          inA1 = pInA[0];
+          sum = __SMMLA(inA1, inB1, sum);
 
-          inA1 = pIn1[0];
-          inA2 = pIn1[1];
+          inB1 = *pInB;
+          pInB += numColsB;
+          inA1 = pInA[1];
+          sum = __SMMLA(inA1, inB1, sum);
 
-          inB2 = *pIn2;
-          pIn2 += numColsB;
+          inB1 = *pInB;
+          pInB += numColsB;
+          inA1 = pInA[2];
+          sum = __SMMLA(inA1, inB1, sum);
 
-          inB3 = *pIn2;
-          pIn2 += numColsB;
+          inB1 = *pInB;
+          pInB += numColsB;
+          inA1 = pInA[3];
+          sum = __SMMLA(inA1, inB1, sum);
 
-          sum = (q31_t) ((((q63_t) sum << 32) + ((q63_t) inA1 * inB1)) >> 32);
-          sum = (q31_t) ((((q63_t) sum << 32) + ((q63_t) inA2 * inB2)) >> 32);
-
-          inA3 = pIn1[2];
-          inA4 = pIn1[3];
-
-          inB4 = *pIn2;
-          pIn2 += numColsB;
-
-          sum = (q31_t) ((((q63_t) sum << 32) + ((q63_t) inA3 * inB3)) >> 32);
-          sum = (q31_t) ((((q63_t) sum << 32) + ((q63_t) inA4 * inB4)) >> 32);
-
-          pIn1 += 4u;
-
+          pInA += 4u;
+#endif
+          
           /* Decrement the loop counter */
           colCnt--;
         }
 
-        /* If the columns of pSrcA is not a multiple of 4, compute any remaining output samples here.    
-         ** No loop unrolling is used. */
+#ifdef ARM_MATH_CM0_FAMILY
+        /* If the columns of pSrcA is not a multiple of 4, compute any remaining output samples here. */
         colCnt = numColsA % 0x4u;
-
         while(colCnt > 0u)
         {
-          /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
-          /* Perform the multiply-accumulates */
-          sum = (q31_t) ((((q63_t) sum << 32) +
-                          ((q63_t) * pIn1++ * (*pIn2))) >> 32);
-          pIn2 += numColsB;
-
-          /* Decrement the loop counter */
+          sum = __SMMLA(*pInA++, *pInB, sum);
+          pInB += numColsB;
           colCnt--;
         }
+        j++;
+#endif
 
         /* Convert the result from 2.30 to 1.31 format and store in destination buffer */
-        *px++ = sum << 1;
+        *px++  = sum << 1;
 
-        /* Update the pointer pIn2 to point to the  starting address of the next column */
-        j++;
-        pIn2 = pSrcB->pData + j;
+#ifndef ARM_MATH_CM0_FAMILY        
+        *px++  = sum2 << 1; 
+        *px2++ = sum3 << 1;
+        *px2++ = sum4 << 1; 
+        j += 2;
+#endif
 
         /* Decrement the column loop counter */
         col--;
 
-      } while(col > 0u);
+      }
 
-      /* Update the pointer pInA to point to the  starting address of the next row */
-      i = i + numColsB;
-      pInA = pInA + numColsA;
+      i = i + numColsA;
+
+#ifndef ARM_MATH_CM0_FAMILY  
+      i = i + numColsA;
+      px = px2 + (numColsB & 1u);
+      px2 = px + numColsB;
+#endif
 
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    }
+
+    /* Compute any remaining odd row/column below */
+
+#ifndef ARM_MATH_CM0_FAMILY
+
+    /* Compute remaining output column */
+    if (numColsB & 1u) {
+
+      /* Avoid redundant computation of last element */
+      row = numRowsA & (~0x1);
+
+      /* Point to remaining unfilled column in output matrix */
+      px = pDst->pData+numColsB-1;
+      pInA = pSrcA->pData;
+
+      /* row loop */
+      while (row > 0)
+      {
+
+        /* point to last column in matrix B */
+        pInB  = pSrcB->pData + numColsB-1;
+
+        /* Set the variable sum, that acts as accumulator, to zero */
+        sum  = 0;
+
+        /* Compute 4 columns at once */
+        colCnt = numColsA >> 2;
+
+        /* matrix multiplication */
+        while(colCnt > 0u)
+        {
+          inA1 = *pInA++;
+          inA2 = *pInA++;
+          inB1 = *pInB;
+          pInB += numColsB;
+          inB2 = *pInB;
+          pInB += numColsB;
+          sum = __SMMLA(inA1, inB1, sum);
+          sum = __SMMLA(inA2, inB2, sum);
+
+          inA1 = *pInA++;
+          inA2 = *pInA++;
+          inB1 = *pInB;
+          pInB += numColsB;
+          inB2 = *pInB;
+          pInB += numColsB;
+          sum = __SMMLA(inA1, inB1, sum);
+          sum = __SMMLA(inA2, inB2, sum);
+
+          /* Decrement the loop counter */
+          colCnt--;
+        }
+
+        colCnt = numColsA & 3u;
+        while(colCnt > 0u) {
+          sum = __SMMLA(*pInA++, *pInB, sum);
+          pInB += numColsB;
+          colCnt--;
+        }
+
+        /* Convert the result from 2.30 to 1.31 format and store in destination buffer */
+        *px = sum << 1;
+        px += numColsB;
+
+        /* Decrement the row loop counter */
+        row--;
+      } 
+    }
+
+    /* Compute remaining output row */
+    if (numRowsA & 1u) {
+
+      /* point to last row in output matrix */
+      px = pDst->pData+(numColsB)*(numRowsA-1);
+
+      col = numColsB;
+      i = 0u;
+
+      /* col loop */
+      while (col > 0)
+      {
+
+        /* point to last row in matrix A */
+        pInA = pSrcA->pData + (numRowsA-1)*numColsA;
+        pInB  = pSrcB->pData + i;
+
+        /* Set the variable sum, that acts as accumulator, to zero */
+        sum  = 0;
+
+        /* Compute 4 columns at once */
+        colCnt = numColsA >> 2;
+
+        /* matrix multiplication */
+        while(colCnt > 0u)
+        {
+          inA1 = *pInA++;
+          inA2 = *pInA++;
+          inB1 = *pInB;
+          pInB += numColsB;
+          inB2 = *pInB;
+          pInB += numColsB;
+          sum = __SMMLA(inA1, inB1, sum);
+          sum = __SMMLA(inA2, inB2, sum);
+
+          inA1 = *pInA++;
+          inA2 = *pInA++;
+          inB1 = *pInB;
+          pInB += numColsB;
+          inB2 = *pInB;
+          pInB += numColsB;
+          sum = __SMMLA(inA1, inB1, sum);
+          sum = __SMMLA(inA2, inB2, sum);
+
+          /* Decrement the loop counter */
+          colCnt--;
+        }
+
+        colCnt = numColsA & 3u;
+        while(colCnt > 0u) {
+          sum = __SMMLA(*pInA++, *pInB, sum);
+          pInB += numColsB;
+          colCnt--;
+        }
+
+        /* Saturate and store the result in the destination buffer */
+        *px++ = sum << 1;
+        i++;
+
+        /* Decrement the col loop counter */
+        col--;
+      }
+    }
+
+#endif	/*	#ifndef ARM_MATH_CM0_FAMILY	*/
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
   }
+
   /* Return to application */
   return (status);
 }
