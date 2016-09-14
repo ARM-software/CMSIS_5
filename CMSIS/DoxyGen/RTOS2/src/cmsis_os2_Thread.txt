@@ -408,6 +408,7 @@ Specifytoken{NULL} to use the kernel memory management.
 
 \var osThreadAttr_t::cb_size
 \details
+\todo: How to retrieve the size of the required object?
 The size of the memory block passed with \ref cb_mem. Must be the size of a thread object or larger.
 
 \var osThreadAttr_t::name
