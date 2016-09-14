@@ -1,20 +1,21 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page os2Migration Migration from RTOSv1 to RTOSv2
+\page os2Migration Migration from API v1 to API v2
 
-This section lists all new API functions along with the differences to the RTOS v1 functionality.
+This section lists the CMSIS-RTOS API v1 and API v2 functions along with the differences in functionality.
+The list is sorted alphabetically by API v2 function names and is structured the following way:
 
-The list is sorted alphabetically by RTOSv2 function names and is structured the following way:
-<hr>
-\token{for RTOS v2} : \func{RTOS version 2 function}
-\token{for RTOS v1} : \func{RTOS version 1 function}
- 
-Brief description of new function. \n
-Description of the difference.
+  - RTOS API v2 function prototype
+  - RTOS API v1 function prototype that is equivalent or provides similar functionality
+  - Brief description of the RTOS v2 function.
+  - Description of the difference.
 
-\div{new} New functions have a green background. \enddiv 
-\div{mod} Modifying or replacing functions have an amber background. \enddiv 
-\div{del} Deprecated functions without replacement have a red background. \enddiv 
+The background color indicates:
+  - <div class="new">Green: New functions in API v2 that are not available in API v1 </div>
+  
+  - <div class="mod">Amber: Functions that are modified or replaced in API v2 compared to API v1 </div>
+  
+  - <div class="del">Red: Functions in API v1 that are deprecated in API v2 </div>
 
 
 \if NEVER_ENABLE

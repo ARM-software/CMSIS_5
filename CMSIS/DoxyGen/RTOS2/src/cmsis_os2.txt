@@ -2,6 +2,17 @@
 /**
 \mainpage
 
+The CMSIS-RTOS manages the resources of the microcontroller system and implements the concept of parallel threads that run concurrently. 
+There are many advantages of using an CMSIS-RTOS v2 compliant kernel as it provides an standardized interface. avoids the login 
+
+Applications frequently require several concurrent activities. CMSIS-RTOS can manage multiple concurrent activities at the time when 
+they are needed. Each activity gets a separate thread which executes a specific task and this simplifies the overall program structure.
+The CMSIS-RTOS system is scalable and additional threads can be added easily at a later time. Threads have a priority allowing faster 
+execution of time-critical parts of an user application.
+
+The CMSIS-RTOS offers services needed in many real-time applications, for example, periodical activation of timer functions, 
+memory management, and message exchange between threads with time limits.
+
 The <b>CMSIS-RTOS API v2</b> addresses the following new requirements:
  - Dynamic object creation no longer requires static memory, static memory buffers are now optional.
  - Support for ARMv8-M architecture that provides a Secure and Non-Secure state of code execution.
@@ -15,7 +26,9 @@ As a consequence of these requirements the CMSIS-RTOS API v2 has the following f
  - Functions that return osEvent have been replaced.
 
 CMSIS-RTOS API v2 provides an translation layer for the
-<a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API v1</a> that simplifies migration.
+<a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API v1</a>. 
+It is possible to intermix CMSIS-RTOS API v2 and CMSIS-RTOS API v1 within the same application.
+You may migrate overtime to the new API as explained in \ref os2Migration.
 
 CMSIS-RTOS API v2 is not POSIX compliant, but has provisions to enable a POSIX translation layer and a C++ interface.
 \todo Investigate into a flexible C++ interface and potential POSIX translation
@@ -44,7 +57,7 @@ File/Folder                  | Content
       <th>Description</th>
     </tr>
     <tr>
-      <td>V2.00</td>
+      <td>V2.00 Alpha</td>
       <td>
         Extended number of thread priorities.\n
         Added: osKernelTime, osKernelStop.\n
@@ -101,11 +114,9 @@ File/Folder                  | Content
 /**
 \page functionOverview Function Overview
 
-CMSIS-RTOS v2 provides multiple API functions:
-  - \subpage rtos_api2 is the new C function API that support dynamic object creation, ARMv8-M, and multi-processor
-    communication.
-  - <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API Version 1</a> is a C function API the is
-    backward compatible with CMSIS-RTOS v2.
+CMSIS-RTOS v2 provides multiple API interfaces:
+  - \subpage rtos_api2 is the new C function API that supports dynamic object creation, ARMv8-M, and multi-processor communication.
+  - <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a> is a C function API the is backward compatible with CMSIS-RTOS v1.
   - \subpage rtos_apicpp is a C++ class function API.
 
 It is possible to intermix the different API variants in the same application and even in the same C/C++ source module.
@@ -143,7 +154,7 @@ If this is impossible, the CMSIS-RTOS rejects calls by nested ISR functions with
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page rtos_api2 CMSIS-RTOS C API Version 2  
+\page rtos_api2 CMSIS-RTOS C API v2  
 
 Overview of all CMSIS-RTOS C API v2 functions.
 
@@ -248,62 +259,13 @@ Coming soon
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page cmsis_os2_h Header File Template: cmsis_os2.h
+\page cmsis_os2_h Header File: cmsis_os2.h
 
-The file \b cmsis_os2.h is a template header file for a CMSIS-RTOS compliant Real-Time Operating System (RTOS).
-Each RTOS that is compliant with CMSIS-RTOS shall provide a specific \b cmsis_os2.h header file that represents
-its implementation.
+The file \b cmsis_os2.h is a standard header file that interfaces to every CMSIS-RTOS API v2 compliant Real-Time Operating Systems (RTOS).
+Each implementation is provided the same cmsis_os2.h which defines the interface to the \ref rtos_api2.
 
-The file cmsis_os2.h contains:
- - CMSIS-RTOS API function definitions
- - struct definitions for parameters and return types
- - status and priority values used by CMSIS-RTOS API functions
- - macros for defining threads and other kernel objects
-
-
-<b>Name conventions and header file modifications</b>
-
-All definitions are prefixed with \b os to give an unique name space for CMSIS-RTOS functions.
-Definitions that are prefixed \b os_ are not used in the application code but local to this header file.
-All definitions and functions that belong to a module are grouped and have a common prefix, i.e. \b osThread.
-
-Definitions that are marked with <b>CAN BE CHANGED</b> can be adapted towards the needs of the actual CMSIS-RTOS
-implementation. These definitions can be specific to the underlying RTOS kernel.
-
-Definitions that are marked with <b>MUST REMAIN UNCHANGED</b> cannot be altered. Otherwise the CMSIS-RTOS implementation is
-no longer compliant to the standard. Note that some functions are optional and need not to be provided by every CMSIS-RTOS
-implementation.
-
-<b>Define and reference object definitions</b>
-
-With <b>\#define osObjectsExternal</b> objects are defined as external symbols. This allows to create a consistent header
-file that is used throughout a project as shown below:
-
-<i>Header File</i>
-\code
-#include <cmsis_os2.h>                                         // CMSIS RTOS header file
-
-// Thread definition
- 
-// Pool definition
-
-\endcode
-
-\todo add the code for pool and thread creation.
-
-This header file defines all objects when included in a C/C++ source file. When <b>\#define osObjectsExternal</b> is
-present before the header file, the objects are defined as external symbols. A single consistent header file can therefore be
-used throughout the whole project.
-
-<i>Example</i>
-\code
-#include "osObjects.h"     // Definition of the CMSIS-RTOS objects
-\endcode
-
-\code
-#define osObjectsExternal  // Objects will be defined as external symbols
-#include "osObjects.h"     // Reference to the CMSIS-RTOS objects
-\endcode
+Using the \b cmsis_os2.h along with dynamic object allocation allows to create source code or libraries that require no modifications
+when using on a different CMSIS-RTOS v2 implementation.
 
 <b>Header file %cmsis_os2.h</b>
 
@@ -312,10 +274,14 @@ used throughout the whole project.
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page rtx5_impl RTX5 Implementation
+\page rtx5_impl RTX v5 Implementation
 
-The following chapters guide you towards implementing the CMSIS-RTOS RTX:
- - \subpage theory_op
+The RTX version 5 implements the CMSIS-RTOS API v2 as native RTOS interface for Cortex-M processor-based devices.
+A translation layer to CMSIS-RTOS API v1 is provided and with minimal effort RTX version 5 can be used in applications that 
+where previously based on RTX version 4 and CMSIS-RTOS v1.
+
+The following sections provide further details:
+ - \subpage theory_op : provides general information about the operation of RTX version 5.
  - \subpage cre_rtx_proj
  - \subpage config_rtx
 */
@@ -324,8 +290,8 @@ The following chapters guide you towards implementing the CMSIS-RTOS RTX:
 /**
 \page theory_op Theory of Operation
 
-This section describes how CMSIS-RTOS RTX manages the resources of the target system. Many aspects of the CMSIS-RTOS RTX
-kernel can be configured. Information about configuration options is mentioned where applicable.
+This section describes how RTX version 5 manages the resources of the target system. Many aspects of the kernel are configurable 
+and the configuration options are is mentioned where applicable.
 
 \section KernelTimer RTX Kernel Timer Tick and Thread Management
 
