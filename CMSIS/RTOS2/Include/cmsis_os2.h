@@ -277,7 +277,7 @@ osStatus_t osKernelInitialize (void);
 ///  Get RTOS Kernel Information.
 /// \param[out]    version       pointer to buffer for retrieving version information.
 /// \param[out]    id_buf        pointer to buffer for retrieving kernel identification string.
-/// \param[in]     id_size       maximum size of buffer for kernel identification string.
+/// \param[in]     id_size       size of buffer for kernel identification string.
 /// \return status code that indicates the execution status of the function.
 osStatus_t osKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size);
  
