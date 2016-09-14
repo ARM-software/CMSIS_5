@@ -629,7 +629,7 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
     ptr = (uint32_t *)thread->sp;
   }
   for (n = 13U; n; n--) {
-    *ptr++ = 0U;                        // R4..R11, R0..R3, R12, LR
+    *ptr++ = 0U;                        // R4..R11, R0..R3, R12
   }
   *ptr++   = (uint32_t)osThreadExit;    // LR
   *ptr++   = (uint32_t)func;            // PC

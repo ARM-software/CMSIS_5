@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
   <component name="RTOS" version="5.0.0"/>    <!-- name and version of the component  -->
 
   <typedefs>
-    <!-- Thread Control Block (rtx_os.h line 111) -->
+    <!-- Thread Control Block -->
     <typedef name="os_thread_t" info="" size="60">
       <member name="id"            type="uint8_t"      offset="0" info="Object Identifier"/>
       <member name="state"         type="uint8_t"      offset="1" info="Object State">
@@ -101,19 +100,19 @@
       <member name="stack_size"    type="uint32_t"     offset="52" info="Stack size"/>
       <member name="sp"            type="uint32_t"     offset="56" info="Current stack pointer"/>
 
-      <var name="cb_id"      type="uint8_t"  size="1" info="Component View ID"/>
-      <var name="cb_valid"   type="uint32_t" size="1" info="Control Block validation status (valid=1, invalid=0)"/>
+      <var name="cb_id"      type="uint8_t"  info="Component View ID"/>
+      <var name="cb_valid"   type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
 
-      <var name="ex_delay"   type="uint32_t" size="1" info="Calculated execution delay"/>
+      <var name="ex_delay"   type="uint32_t" info="Calculated execution delay"/>
 
-      <var name="stack_val"  type="uint32_t" size="1" info="Stack usage: analysis result"/>
-      <var name="stack_cur"  type="uint32_t" size="1" info="Stack usage: current (in percent)"/>
-      <var name="stack_maxb" type="uint32_t" size="1" info="Stack usage: maximum (in bytes)"/>
-      <var name="stack_maxp" type="uint32_t" size="1" info="Stack usage: maximum (in percent)"/>
-      <var name="stack_over" type="uint8_t"  size="1" info="Stack usage: overflow"/>
+      <var name="stack_val"  type="uint32_t" info="Stack usage: analysis result"/>
+      <var name="stack_cur"  type="uint32_t" info="Stack usage: current (in percent)"/>
+      <var name="stack_maxb" type="uint32_t" info="Stack usage: maximum (in bytes)"/>
+      <var name="stack_maxp" type="uint32_t" info="Stack usage: maximum (in percent)"/>
+      <var name="stack_over" type="uint8_t"  info="Stack usage: overflow"/>
     </typedef>
 
-    <!-- Timer Control Block (rtx_os.h line 153) -->
+    <!-- Timer Control Block -->
     <typedef name="os_timer_t" info="" size="32">
       <member name="id"          type="uint8_t"     offset="0" info="Object Identifier"/>
       <member name="state"       type="uint8_t"     offset="1" info="Object State">
@@ -131,15 +130,15 @@
       <member name="next"        type="*os_timer_t" offset="12" info="Pointer to next active timer"/>
       <member name="tick"        type="uint32_t"    offset="16" info="Timer current tick"/>
       <member name="load"        type="uint32_t"    offset="20" info="Timer load value"/>
-      <!-- Inlined "os_timer_finfo_t" structure (rtx_os.h line 147) -->
+      <!-- Inlined "os_timer_finfo_t" structure -->
       <member name="finfo_fp"    type="uint32_t"    offset="24" info="Timer function pointer (type is void *)"/>
       <member name="finfo_arg"   type="uint32_t"    offset="28" info="Timer function argument (type is void *)"/>
 
-      <var name="cb_valid" type="uint32_t" size="1" info="Control Block validation status (valid=1, invalid=0)"/>
-      <var name="ex_tick"  type="uint32_t" size="1" info="Calculated absolute tick time"/>
+      <var name="cb_valid" type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
+      <var name="ex_tick"  type="uint32_t" info="Calculated absolute tick time"/>
     </typedef>
 
-    <!-- Event Flags Control Block (rtx_os.h line 170) -->
+    <!-- Event Flags Control Block -->
     <typedef name="os_event_flags_t" info="" size="16">
       <member name="id"          type="uint8_t"      offset="0" info="Object Identifier"/>
       <member name="state"       type="uint8_t"      offset="1" info="Object State"/>
@@ -149,12 +148,12 @@
       <member name="thread_list" type="*os_thread_t" offset="8" info="Waiting threads list"/>
       <member name="event_flags" type="int32_t"      offset="12" info="Event flags"/>
 
-      <var name="cb_valid" type="uint32_t" size="1" info="Control Block validation status (valid=1, invalid=0)"/>
-      <var name="wl_idx"   type="uint32_t" size="1" info="EventFlags waiting list (EWL) index" />
-      <var name="wl_cnt"   type="uint32_t" size="1" info="Number of threads waiting for event flags" />
+      <var name="cb_valid" type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
+      <var name="wl_idx"   type="uint32_t" info="EventFlags waiting list (EWL) index" />
+      <var name="wl_cnt"   type="uint32_t" info="Number of threads waiting for event flags" />
     </typedef>
 
-    <!-- Mutex Control Block (rtx_os.h line 184) -->
+    <!-- Mutex Control Block -->
     <typedef name="os_mutex_t" info="" size="28">
       <member name="id"           type="uint8_t"      offset="0" info="Object Identifier"/>
       <member name="state"        type="uint8_t"      offset="1" info="Object State"/>
@@ -167,12 +166,12 @@
       <member name="owner_next"   type="*os_mutex_t"  offset="20" info="Pointer to next owned mutex"/>
       <member name="lock"         type="uint8_t"      offset="24" info="Lock counter"/>
 
-      <var name="cb_valid" type="uint32_t" size="1" info="Control Block validation status (valid=1, invalid=0)"/>
-      <var name="wl_idx"   type="uint32_t" size="1" info="Mutex waiting list (MWL) index" />
-      <var name="wl_cnt"   type="uint32_t" size="1" info="Number of threads waiting for current mutex" />
+      <var name="cb_valid" type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
+      <var name="wl_idx"   type="uint32_t" info="Mutex waiting list (MWL) index" />
+      <var name="wl_cnt"   type="uint32_t" info="Number of threads waiting for current mutex" />
     </typedef>
 
-    <!-- Semaphore Control Block (rtx_os.h line 202) -->
+    <!-- Semaphore Control Block -->
     <typedef name="os_semaphore_t" info="" size="16">
       <member name="id"          type="uint8_t"      offset="0" info="Object Identifier"/>
       <member name="state"       type="uint8_t"      offset="1" info="Object State"/>
@@ -183,12 +182,12 @@
       <member name="tokens"      type="uint16_t"     offset="12" info="Current number of tokens"/>
       <member name="max_tokens"  type="uint16_t"     offset="14" info="Maximum number of tokens"/>
 
-      <var name="cb_valid" type="uint32_t" size="1" info="Control Block validation status (valid=1, invalid=0)"/>
-      <var name="wl_idx"   type="uint32_t" size="1" info="Semaphore waiting list (SWL) index" />
-      <var name="wl_cnt"   type="uint32_t" size="1" info="Number of threads waiting for current semaphore" />
+      <var name="cb_valid" type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
+      <var name="wl_idx"   type="uint32_t" info="Semaphore waiting list (SWL) index" />
+      <var name="wl_cnt"   type="uint32_t" info="Number of threads waiting for current semaphore" />
     </typedef>
 
-    <!-- Memory Pool Information (rtx_os.h line 217) -->
+    <!-- Memory Pool Information -->
     <typedef name="os_mp_info_t" info="Memory pool information" size="24">
       <member name="max_blocks"  type="uint32_t" offset="0" info="Maximum number of blocks"/>
       <member name="used_blocks" type="uint32_t" offset="4" info="Number of used blocks"/>
@@ -198,7 +197,7 @@
       <member name="block_free"  type="uint32_t" offset="20" info="First free block address (type is void *)"/>
     </typedef>
 
-    <!-- Memory Pool Control Block (rtx_os.h line 227) -->
+    <!-- Memory Pool Control Block -->
     <typedef name="os_memory_pool_t" info="" size="36">
       <member name="id"          type="uint8_t"      offset="0" info="Object Identifier"/>
       <member name="state"       type="uint8_t"      offset="1" info="Object State"/>
@@ -207,7 +206,7 @@
       <member name="name"        type="uint32_t"     offset="4" info="Object name (type is *uint8_t)"/>
       <member name="thread_list" type="*os_thread_t" offset="8" info="Waiting threads list"/>
 
-      <!-- Inlined "os_mp_info_t" structure (rtx_os.h line 217) -->
+      <!-- Inlined "os_mp_info_t" structure -->
       <member name="max_blocks"  type="uint32_t" offset="12+0" info="Maximum number of blocks"/>
       <member name="used_blocks" type="uint32_t" offset="12+4" info="Number of used blocks"/>
       <member name="block_size"  type="uint32_t" offset="12+8" info="Block size"/>
@@ -215,12 +214,12 @@
       <member name="block_lim"   type="uint32_t" offset="12+16" info="Block memory limit address (type is void *)"/>
       <member name="block_free"  type="uint32_t" offset="12+20" info="First free block address (type is void *)"/>
 
-      <var name="cb_valid" type="uint32_t" size="1" info="Control Block validation status (valid=1, invalid=0)"/>
-      <var name="wl_idx"   type="uint32_t" size="1" info="Memory Pool waiting list (PWL) index" />
-      <var name="wl_cnt"   type="uint32_t" size="1" info="Number of threads waiting for memory pool" />
+      <var name="cb_valid" type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
+      <var name="wl_idx"   type="uint32_t" info="Memory Pool waiting list (PWL) index" />
+      <var name="wl_cnt"   type="uint32_t" info="Number of threads waiting for memory pool" />
     </typedef>
 
-    <!-- Message Control Block (rtx_os.h line 241) -->
+    <!-- Message Control Block -->
     <typedef name="os_message_t" info="" size="12">
       <member name="id"       type="uint8_t"       offset="0" info="Object Identifier"/>
       <member name="state"    type="uint8_t"       offset="1" info="Object State"/>
@@ -230,7 +229,7 @@
       <member name="next"     type="*os_message_t" offset="8" info="Pointer to next message"/>
     </typedef>
 
-    <!-- Message Queue Control Block (rtx_os.h line 251) -->
+    <!-- Message Queue Control Block -->
     <typedef name="os_message_queue_t" info="" size="52">
       <member name="id"          type="uint8_t"       offset="0" info="Object Identifier"/>
       <member name="state"       type="uint8_t"       offset="1" info="Object State"/>
@@ -239,7 +238,7 @@
       <member name="name"        type="uint32_t"      offset="4" info="Object name (type is *uint8_t)"/>
       <member name="thread_list" type="*os_thread_t"  offset="8" info="Waiting threads list"/>
 
-      <!-- Inlined "os_mp_info_t" structure (rtx_os.h line 217) -->
+      <!-- Inlined "os_mp_info_t" structure -->
       <member name="max_blocks"  type="uint32_t"      offset="12+0" info="Maximum number of blocks"/>
       <member name="used_blocks" type="uint32_t"      offset="12+4" info="Number of used blocks"/>
       <member name="block_size"  type="uint32_t"      offset="12+8" info="Block size"/>
@@ -252,12 +251,12 @@
       <member name="msg_first"   type="*os_message_t" offset="44" info="Pointer to first message"/>
       <member name="msg_last"    type="*os_message_t" offset="48" info="Pointer to last message"/>
 
-      <var name="cb_valid" type="uint32_t" size="1" info="Control Block validation status (valid=1, invalid=0)"/>
-      <var name="wl_idx"   type="uint32_t" size="1" info="Waiting list index (QWL)" />
-      <var name="wl_cnt"   type="uint32_t" size="1" info="Number of threads waiting" />
+      <var name="cb_valid" type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
+      <var name="wl_idx"   type="uint32_t" info="Waiting list index (QWL)" />
+      <var name="wl_cnt"   type="uint32_t" info="Number of threads waiting" />
     </typedef>
 
-    <!-- Generic Object Control Block (rtx_os.h line 269) -->
+    <!-- Generic Object Control Block -->
     <typedef name="os_object_t" info="" size="12">
       <member name="id"          type="uint8_t"      offset="0" info="Object Identifier"/>
       <member name="state"       type="uint8_t"      offset="1" info="Object State"/>
@@ -267,7 +266,7 @@
       <member name="thread_list" type="*os_thread_t" offset="8" info="Threads list"/>
     </typedef>
 
-    <!-- OS Runtime Information structure (rtx_os.h line 282) -->
+    <!-- OS Runtime Information structure -->
     <typedef name="os_info_t" info="OS Runtime Information" size="168">
       <member name="os_id"                      type="uint32_t"      offset="0" info="OS Identification (type is *uint8_t)"/>
       <member name="version"                    type="uint32_t"      offset="4" info="OS Version"/>
@@ -290,7 +289,7 @@
       <member name="thread_run_curr"            type="*os_thread_t"  offset="28" info="Current running thread"/>
       <member name="thread_run_next"            type="*os_thread_t"  offset="32" info="Next thread to run"/>
 
-      <!-- Inlined "os_object_t" structure at offset: 36 (rtx_os.h line 269) -->
+      <!-- Inlined "os_object_t" structure at offset: 36 -->
       <!-- <member name="thread_ready"          type="os_object_t"  offset="36" info="Ready list object"/>-->
       <member name="thread_ready_id"            type="uint8_t"       offset="36+0" info="Object Identifier" />
       <member name="thread_ready_state"         type="uint8_t"       offset="36+1" info="Object State" />
@@ -324,9 +323,9 @@
       <member name="post_process_memory_pool"   type="uint32_t"      offset="112" info="Memory pool post processing function (value is func *)"/>
       <member name="post_process_message_queue" type="uint32_t"      offset="116" info="Message queue post processing function (value is func *)"/>
 
-      <member name="mem_cb"                     type="uint32_t"      offset="120" info="Control blocks memory (value is void *)"/>
-      <member name="mem_data"                   type="uint32_t"      offset="124" info="Data memory (value is void *)"/>
-      <member name="mem_stack"                  type="uint32_t"      offset="128" info="Stack memory (value is void *)"/>
+      <member name="mem_stack"                  type="uint32_t"      offset="120" info="Stack memory (value is void *)"/>
+      <member name="mem_mp_data"                type="uint32_t"      offset="124" info="Memory pool data memory (value is void *)"/>
+      <member name="mem_mq_data"                type="uint32_t"      offset="128" info="Message queue Data memory (value is void *)"/>
       <member name="mem_common"                 type="uint32_t"      offset="132" info="Common memory address (value is void *)"/>
 
       <member name="mpi_stack"                  type="*os_mp_info_t" offset="136" info="Stack for threads"/>
@@ -339,20 +338,20 @@
       <member name="mpi_message_queue"          type="*os_mp_info_t" offset="164" info="Message queue control blocks"/>
     </typedef>
 
-    <!-- OS Configuration structure (rtx_os.h line 433) -->
-    <typedef name="os_config_t" info="OS Configuration Structure" size="100">
+    <!-- OS Configuration structure -->
+    <typedef name="os_config_t" const="1" info="OS Configuration Structure" size="100">
       <member name="flags"                 type="uint32_t" offset="0" info="OS configuration flags"/>
       <member name="robin_timeout"         type="uint32_t" offset="4" info="Round Robim timeout tick"/>
       <member name="isr_queue_data"        type="uint32_t" offset="8" info="ISR post processing queue (value is void **)"/>
       <member name="isr_queue_max"         type="uint16_t" offset="12" info="Maximum data"/>
       <member name="isr_queue_padding"     type="uint16_t" offset="14" info="Padding bytes"/>
 
-      <member name="mem_cb_addr"           type="uint32_t" offset="16" info="Control block memory address"/>
-      <member name="mem_cb_size"           type="uint32_t" offset="20" info="Control block memory size"/>
-      <member name="mem_data_addr"         type="uint32_t" offset="24" info="Data memory address"/>
-      <member name="mem_data_size"         type="uint32_t" offset="28" info="Data memory size"/>
-      <member name="mem_stack_addr"        type="uint32_t" offset="32" info="Stack memory address"/>
-      <member name="mem_stack_size"        type="uint32_t" offset="36" info="Stack memory size"/>
+      <member name="mem_stack_addr"        type="uint32_t" offset="16" info="Stack memory address"/>
+      <member name="mem_stack_size"        type="uint32_t" offset="20" info="Stack memory size"/>
+      <member name="mem_mp_data_addr"      type="uint32_t" offset="24" info="Memory pool data memory address"/>
+      <member name="mem_mp_data_size"      type="uint32_t" offset="28" info="Memory pool data memory size"/>
+      <member name="mem_mq_data_addr"      type="uint32_t" offset="32" info="Message queue data memory address"/>
+      <member name="mem_mq_data_size"      type="uint32_t" offset="36" info="Message queue data memory size"/>
       <member name="mem_common_addr"       type="uint32_t" offset="40" info="Common memory address"/>
       <member name="mem_common_size"       type="uint32_t" offset="44" info="Common memory size"/>
 
@@ -411,7 +410,7 @@
       <var name="stack_wmark" type="uint8_t" value="(os_Config.flags >> 1) &amp; 1"/>
 
       <!-- Read ISR FIFO queue -->
-      <read name="ISR_FIFO" type="uint32_t" offset="os_Config.isr_queue_data" size="os_Config.isr_queue_max" init="1"/>
+      <read name="ISR_FIFO" type="uint32_t" offset="os_Config.isr_queue_data" size="os_Config.isr_queue_max"/>
 
       <!-- Read idle and timer thread control blocks -->
       <readlist name="TCB" cond="os_Info.thread_idle"  type="os_thread_t" offset="os_Info.thread_idle"  count="1" />
@@ -446,8 +445,11 @@
       <readlist name="QCB"       cond="os_Info.mpi_message_queue" type="os_message_queue_t" offset="mp_mqueue.block_base"      count="mp_mqueue.max_blocks" />
 
       <!-- Read control block memory pool info (MEM) -->
+<!-- 
       <readlist name="mem_cb_head" cond="os_Info.mem_cb" type="mem_head_t"  offset="os_Info.mem_cb" count="1" init="1"/>
       <readlist name="mem_cb"      cond="os_Info.mem_cb" type="mem_block_t" offset="os_Info.mem_cb + 8" next="next"/>
+-->
+      <readlist name="mem_cb"      cond="0" type="mem_block_t" offset="0" next="next"/>
 
       <list cond="mem_cb._count > 1" name="i" start="0" limit="mem_cb._count-1">
         <calc>
@@ -521,7 +523,8 @@
         </calc>
 
         <!-- Create Thread Delay List (TDL) -->
-        <readlist name="TDL" type="os_thread_t" offset="TCB[i].delay_prev" next="delay_prev" while="TCB[i].delay_prev != 0" init="1"/>
+<!--    <readlist name="TDL" type="os_thread_t" offset="TCB[i].delay_prev" next="delay_prev" while="TCB[i].delay_prev != 0" init="1"/> -->
+        <readlist name="TDL" type="os_thread_t" offset="TCB[i].delay_prev" next="delay_prev" init="1"/>
 
         <list name="j" start="0" limit="TDL._count" >
           <calc>
@@ -538,7 +541,8 @@
         </calc>
 
         <!-- Create Timer Execution List (TEL) -->
-        <readlist name="TEL" type="os_timer_t" offset="CCB[i].prev" next="prev" while="CCB[i].prev != 0" init="1"/>
+<!--    <readlist name="TEL" type="os_timer_t" offset="CCB[i].prev" next="prev" while="CCB[i].prev != 0" init="1"/> -->
+        <readlist name="TEL" type="os_timer_t" offset="CCB[i].prev" next="prev" init="1"/>
 
         <list name="j" start="0" limit="TEL._count">
           <calc>
