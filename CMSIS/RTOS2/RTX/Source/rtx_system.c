@@ -32,7 +32,7 @@
 /// \param[in]  object          object.
 /// \return 1 - success, 0 - failure.
 static uint32_t os_isr_queue_put (void *object) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #else
   uint32_t n;
@@ -42,7 +42,7 @@ static uint32_t os_isr_queue_put (void *object) {
 
   max = os_Info.isr_queue.max;
 
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
   if (os_Info.isr_queue.cnt < max) {
@@ -75,7 +75,7 @@ static uint32_t os_isr_queue_put (void *object) {
 /// Get Object from ISR Queue.
 /// \return object or NULL.
 static void *os_isr_queue_get (void) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #else
   uint32_t n;
@@ -85,7 +85,7 @@ static void *os_isr_queue_get (void) {
 
   max = os_Info.isr_queue.max;
 
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
   if (os_Info.isr_queue.cnt != 0U) {

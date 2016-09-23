@@ -1,5 +1,5 @@
 ;/*
-; * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+; * Copyright (c) 2016 ARM Limited. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *
@@ -18,15 +18,25 @@
 ; * -----------------------------------------------------------------------------
 ; *
 ; * Project:     CMSIS-RTOS RTX
-; * Title:       Cortex-M4F Exception handlers
+; * Title:       ARMv8M Main Line Exception handlers
 ; *
 ; * -----------------------------------------------------------------------------
 ; */
 
 
+                IF       :LNOT::DEF:__FPU_USED
+__FPU_USED      EQU      0
+                ENDIF
+
+                IF       :LNOT::DEF:__DOMAIN_NS
+__DOMAIN_NS     EQU      0
+                ENDIF
+
 I_T_RUN_OFS     EQU      28                     ; osInfo.thread.run offset
+TCB_SM_OFS      EQU      48                     ; TCB.stack_mem offset
 TCB_SP_OFS      EQU      56                     ; TCB.SP offset
 TCB_SF_OFS      EQU      34                     ; TCB.stack_frame offset
+TCB_TZM_OFS     EQU      60                     ; TCB.tz_memory offset
 
 
                 PRESERVE8
@@ -45,6 +55,9 @@ SVC_Handler     PROC
                 EXPORT   SVC_Handler
                 IMPORT   os_UserSVC_Table
                 IMPORT   os_Info
+                IF       __DOMAIN_NS = 1
+                IMPORT   TZ_LoadContext_S
+                ENDIF
 
                 MRS      R0,PSP                 ; Get PSP
                 LDR      R1,[R0,#24]            ; Load saved PC from stack
@@ -63,6 +76,7 @@ SVC_Context
                 CMP      R1,R2                  ; Check if thread switch is required
                 BXEQ     LR                     ; Exit when threads are the same
 
+                IF       __FPU_USED = 1
                 CBNZ     R1,SVC_ContextSave     ; Branch if running thread is not deleted
                 TST      LR,#0x10               ; Check if extended stack frame
                 BNE      SVC_ContextSwitch
@@ -71,11 +85,16 @@ SVC_Context
                 BIC      R0,#1                  ; Clear LSPACT (Lazy state)
                 STR      R0,[R1]                ; Store FPCCR
                 B        SVC_ContextSwitch
+                ELSE
+                CBZ      R1,SVC_ContextSwitch   ; Branch if running thread is deleted
+                ENDIF
 
 SVC_ContextSave
                 STMDB    R12!,{R4-R11}          ; Save R4..R11
+                IF       __FPU_USED = 1
                 TST      LR,#0x10               ; Check if extended stack frame
                 VSTMDBEQ R12!,{S16-S31}         ;  Save VFP S16.S31
+                ENDIF
 
                 STR      R12,[R1,#TCB_SP_OFS]   ; Store SP
                 STRB     LR, [R1,#TCB_SF_OFS]   ; Store stack frame information
@@ -84,14 +103,26 @@ SVC_ContextSwitch
                 STR      R2,[R3]                ; os_Info.thread.run: curr = next
 
 SVC_ContextRestore
+                LDR      R0,[R2,#TCB_SM_OFS]    ; Load stack memory base
                 LDRB     R1,[R2,#TCB_SF_OFS]    ; Load stack frame information
+                MSR      PSPLIM,R0              ; Set PSPLIM
                 LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
                 ORR      LR,R1,#0xFFFFFF00      ; Set EXC_RETURN
 
+                IF       __FPU_USED = 1
                 TST      LR,#0x10               ; Check if extended stack frame
                 VLDMIAEQ R0!,{S16-S31}          ;  Restore VFP S16..S31
+                ENDIF
                 LDMIA    R0!,{R4-R11}           ; Restore R4..R11
                 MSR      PSP,R0                 ; Set PSP
+
+                IF       __DOMAIN_NS = 1
+                LDR      R0,[R2,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
+                CBZ      R0,SVC_Exit            ; Branch if there is no secure context
+                PUSH     {R4,LR}                ; Save EXC_RETURN
+                BL       TZ_LoadContext_S       ; Load secure context
+                POP      {R4,PC}                ; Exit from handler
+                ENDIF
 
 SVC_Exit
                 BX       LR                     ; Exit from handler
@@ -124,8 +155,7 @@ PendSV_Handler  PROC
                 PUSH     {R4,LR}                ; Save EXC_RETURN
                 BL       os_PendSV_Handler
                 POP      {R4,LR}                ; Restore EXC_RETURN
-                MRS      R12,PSP
-                B        SVC_Context
+                B        Sys_Context
 
                 ALIGN
                 ENDP
@@ -136,10 +166,78 @@ SysTick_Handler PROC
                 IMPORT   os_Tick_Handler
 
                 PUSH     {R4,LR}                ; Save EXC_RETURN
-                BL       os_Tick_Handler
+                BL       os_Tick_Handler        ; Call os_Tick_Handler
                 POP      {R4,LR}                ; Restore EXC_RETURN
-                MRS      R12,PSP
-                B        SVC_Context
+                B        Sys_Context
+
+                ALIGN
+                ENDP
+
+
+Sys_Context     PROC
+                EXPORT   Sys_Context
+                IMPORT   os_Info
+                IF       __DOMAIN_NS = 1
+                IMPORT   TZ_LoadContext_S
+                IMPORT   TZ_StoreContext_S
+                ENDIF
+
+                LDR      R3,=os_Info+I_T_RUN_OFS; Load address of os_Info.run
+                LDM      R3,{R1,R2}             ; Load os_Info.thread.run: curr & next
+                CMP      R1,R2                  ; Check if thread switch is required
+                BXEQ     LR                     ; Exit when threads are the same
+
+Sys_ContextSave
+                IF       __DOMAIN_NS = 1
+                TST      LR,#0x40               ; Check domain of interrupted thread
+                BEQ      Sys_ContextSave1       ; Branch if non-secure
+                LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
+                PUSH     {R1,R2,R3,LR}          ; Save registers and EXC_RETURN
+                BL       TZ_StoreContext_S      ; Store secure context
+                POP      {R1,R2,R3,LR}          ; Restore registers and EXC_RETURN
+                MRS      R0,PSP                 ; Get PSP
+                B        Sys_ContextSave2
+                ENDIF
+
+Sys_ContextSave1
+                MRS      R0,PSP                 ; Get PSP
+                STMDB    R0!,{R4-R11}           ; Save R4..R11
+                IF       __FPU_USED = 1
+                TST      LR,#0x10               ; Check if extended stack frame
+                VSTMDBEQ R0!,{S16-S31}          ;  Save VFP S16.S31
+                ENDIF
+
+Sys_ContextSave2
+                STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
+                STRB     LR,[R1,#TCB_SF_OFS]    ; Store stack frame information
+
+Sys_ContextSwitch
+                STR      R2,[R3]                ; os_Info.run: curr = next
+
+Sys_ContextRestore
+                LDR      R0,[R2,#TCB_SM_OFS]    ; Load stack memory base
+                LDRB     R1,[R2,#TCB_SF_OFS]    ; Load stack frame information
+                MSR      PSPLIM,R0              ; Set PSPLIM
+                LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
+                ORR      LR,R1,#0xFFFFFF00      ; Set EXC_RETURN
+
+                IF       __FPU_USED = 1
+                TST      LR,#0x10               ; Check if extended stack frame
+                VLDMIAEQ R0!,{S16-S31}          ;  Restore VFP S16..S31
+                ENDIF
+                LDMIA    R0!,{R4-R11}           ; Restore R4..R11
+                MSR      PSP,R0                 ; Set PSP
+
+                IF       __DOMAIN_NS = 1
+                LDR      R0,[R2,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
+                CBZ      R0,Sys_ContextExit     ; Branch if there is no secure context
+                PUSH     {R4,LR}                ; Save EXC_RETURN
+                BL       TZ_LoadContext_S       ; Load secure context
+                POP      {R4,PC}                ; Exit from handler
+                ENDIF
+
+Sys_ContextExit
+                BX       LR                     ; Exit from handler
 
                 ALIGN
                 ENDP

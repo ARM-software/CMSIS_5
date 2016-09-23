@@ -32,12 +32,12 @@
 /// \param[in]  semaphore       semaphore object.
 /// \return 1 - success, 0 - failure.
 static uint32_t os_SemaphoreTokenDecrement (os_semaphore_t *semaphore) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
   uint32_t ret;
 
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
   if (semaphore->tokens != 0U) {
@@ -65,12 +65,12 @@ static uint32_t os_SemaphoreTokenDecrement (os_semaphore_t *semaphore) {
 /// \param[in]  semaphore       semaphore object.
 /// \return 1 - success, 0 - failure.
 static uint32_t os_SemaphoreTokenIncrement (os_semaphore_t *semaphore) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
   uint32_t ret;
 
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
   if (semaphore->tokens < semaphore->max_tokens) {

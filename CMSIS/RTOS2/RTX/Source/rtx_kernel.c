@@ -194,6 +194,13 @@ osStatus_t os_svcKernelInitialize (void) {
     os_Info.mpi.message_queue = os_Config.mpi.message_queue;
   }
 
+#if (__DOMAIN_NS == 1U)
+  // Initialize Secure Process Stack
+  if (TZ_InitContextSystem_S() == 0U) {
+    return osError;
+  }
+#endif
+
   // Create Idle Thread
   os_Info.thread.idle = (os_thread_t *)(os_svcThreadNew(
                                           os_IdleThread,
@@ -251,7 +258,6 @@ osStatus_t os_svcKernelStart (void) {
     return osError;
   }
   os_ThreadSwitch(thread);
-  __set_PSP(thread->sp + (8U*4U));
 
   if ((os_Config.flags & os_ConfigPrivilegedMode) != 0U) {
     // Privileged Thread mode & PSP
@@ -457,6 +463,9 @@ osStatus_t osKernelStart (void) {
   }
   switch (__get_CONTROL() & 0x03U) {
     case 0x00U:                                 // Privileged Thread mode & MSP
+#if ((__ARM_ARCH_8M_BASE__ == 1U) || (__ARM_ARCH_8M_MAIN__ == 1U))
+      __set_PSPLIM((uint32_t)stack);
+#endif
       __set_PSP((uint32_t)(stack + 8));         // Initial PSP
       __set_CONTROL(0x02U);                     // Set Privileged Thread mode & PSP
       __DSB();

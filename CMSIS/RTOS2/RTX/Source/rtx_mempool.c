@@ -68,7 +68,7 @@ uint32_t os_MemoryPoolInit (os_mp_info_t *mp_info, uint32_t block_count, uint32_
 /// \param[in]  mp_info         memory pool info.
 /// \return address of the allocated memory block or NULL in case of no memory is available.
 void *os_MemoryPoolAlloc (os_mp_info_t *mp_info) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
   void *block;
@@ -77,7 +77,7 @@ void *os_MemoryPoolAlloc (os_mp_info_t *mp_info) {
     return NULL;
   }
 
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
   block = mp_info->block_free;
@@ -130,7 +130,7 @@ void *os_MemoryPoolAlloc (os_mp_info_t *mp_info) {
 /// \param[in]  block           address of the allocated memory block to be returned to the memory pool.
 /// \return status code that indicates the execution status of the function.
 osStatus_t os_MemoryPoolFree (os_mp_info_t *mp_info, void *block) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
 
@@ -141,7 +141,7 @@ osStatus_t os_MemoryPoolFree (os_mp_info_t *mp_info, void *block) {
     return osErrorParameter;
   }
 
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
   *((void **)block) = mp_info->block_free;

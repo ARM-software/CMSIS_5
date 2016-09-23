@@ -32,7 +32,7 @@
 /// \param[in]  mq              message queue object.
 /// \param[in]  msg             message object.
 static void os_MessageQueuePut (os_message_queue_t *mq, os_message_t *msg) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t      primask = __get_PRIMASK();
 #endif
   os_message_t *prev, *next;
@@ -63,7 +63,7 @@ static void os_MessageQueuePut (os_message_queue_t *mq, os_message_t *msg) {
     mq->msg_last = msg;
   }
 
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
   mq->msg_count++;
@@ -80,14 +80,14 @@ static void os_MessageQueuePut (os_message_queue_t *mq, os_message_t *msg) {
 /// \param[in]  mq              message queue object.
 /// \return message object or NULL.
 static os_message_t *os_MessageQueueGet (os_message_queue_t *mq) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t      primask = __get_PRIMASK();
 #endif
   os_message_t *msg;
   uint32_t      count;
   uint8_t       flags;
 
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
   count = mq->msg_count;
@@ -109,7 +109,7 @@ static os_message_t *os_MessageQueueGet (os_message_queue_t *mq) {
   msg = mq->msg_first;
 
   while (msg != NULL) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
     __disable_irq();
 
     flags = msg->flags;

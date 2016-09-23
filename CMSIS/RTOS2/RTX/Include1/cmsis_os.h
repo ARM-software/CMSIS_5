@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        30. June 2016
+ * $Date:        20. September 2016
  * $Revision:    V2.0
  *
  * Project:      CMSIS-RTOS API
@@ -428,7 +428,7 @@ const osThreadDef_t os_thread_def_##name = \
     (instances == 1) ? os_ThreadCbSize : 0U, \
     ((stacksz) && (instances == 1)) ? (&os_thread_stack##name) : NULL, \
     8*((stacksz+7)/8), \
-    (priority), { 0U, 0U } } }
+    (priority), 0U, 0U } }
 #endif
 #endif
  

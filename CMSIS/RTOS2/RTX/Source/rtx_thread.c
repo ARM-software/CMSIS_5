@@ -33,12 +33,12 @@
 /// \param[in]  flags           specifies the flags to set.
 /// \return thread flags after setting.
 static int32_t os_ThreadFlagsSet (os_thread_t *thread, int32_t flags) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
   int32_t  thread_flags;
 
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
   thread->thread_flags |= flags;
@@ -59,12 +59,12 @@ static int32_t os_ThreadFlagsSet (os_thread_t *thread, int32_t flags) {
 /// \param[in]  flags           specifies the flags to clear.
 /// \return thread flags before clearing.
 static int32_t os_ThreadFlagsClear (os_thread_t *thread, int32_t flags) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
   int32_t  thread_flags;
 
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
   thread_flags = thread->thread_flags;
@@ -86,13 +86,13 @@ static int32_t os_ThreadFlagsClear (os_thread_t *thread, int32_t flags) {
 /// \param[in]  options         specifies flags options (osFlagsXxxx).
 /// \return thread flags before clearing or 0 if specified flags have not been set.
 static int32_t os_ThreadFlagsCheck (os_thread_t *thread, int32_t flags, uint32_t options) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask;
 #endif
   int32_t  thread_flags;
 
   if ((options & osFlagsAutoClear) != 0U) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
     primask = __get_PRIMASK();
     __disable_irq();
 
@@ -312,13 +312,13 @@ void os_ThreadDelayTick (void) {
 /// \return pointer to registers R0-R3.
 uint32_t *os_ThreadRegPtr (os_thread_t *thread) {
 
-#if (__FPU_USED != 0U)
-  if (thread->stack_frame & os_StackFrameExtended) {
-    // Extended Stack Frame: R4-R11, S16-S31, R0-R3, R12, LR, PC, xPSR, S0-S15, FPSCR
-    return ((uint32_t *)(thread->sp + 8U*4U + 16U*4U));
+#if (__FPU_USED == 1U)
+  if (IS_EXTENDED_STACK_FRAME(thread->stack_frame)) {
+    // Extended Stack Frame: S16-S31, R4-R11, R0-R3, R12, LR, PC, xPSR, S0-S15, FPSCR
+    return ((uint32_t *)(thread->sp + (16U+8U)*4U));
   } else {
-    // Basic Stack Frame:    R4-R11,          R0-R3, R12, LR, PC, xPSR
-    return ((uint32_t *)(thread->sp + 8U*4U));
+    // Basic Stack Frame:             R4-R11, R0-R3, R12, LR, PC, xPSR
+    return ((uint32_t *)(thread->sp +      8U *4U));
   }
 #else
   // Stack Frame: R4-R11, R0-R3, R12, LR, PC, xPSR
@@ -499,15 +499,19 @@ SVC0_3 (ThreadFlagsWait,   int32_t,         int32_t, uint32_t, uint32_t)
 /// Create a thread and add it to Active Threads.
 /// \note API identical to osThreadNew
 osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThreadAttr_t *attr) {
-  os_thread_t *thread;
-  uint32_t     attr_bits;
-  void        *stack_mem;
-  uint32_t     stack_size;
-  osPriority_t priority;
-  uint8_t      flags;
-  const char  *name;
-  uint32_t    *ptr;
-  uint32_t     n;
+  os_thread_t  *thread;
+  uint32_t      attr_bits;
+  void         *stack_mem;
+  uint32_t      stack_size;
+  osPriority_t  priority;
+  uint8_t       flags;
+  const char   *name;
+  uint32_t     *ptr;
+  uint32_t      n;
+#if (__DOMAIN_NS == 1U)
+  TZ_ModuleId_t tz_module;
+  TZ_MemoryId_t tz_memory;
+#endif
 
   // Check parameters
   if (func == NULL) {
@@ -522,6 +526,9 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
     stack_mem  = attr->stack_mem;
     stack_size = attr->stack_size;
     priority   = attr->priority;
+#if (__DOMAIN_NS == 1U)
+    tz_module  = attr->tz_module;
+#endif
     if (thread != NULL) {
       if (((uint32_t)thread & 3U) || (attr->cb_size < sizeof(os_thread_t))) {
         return (osThreadId_t)NULL;
@@ -546,6 +553,9 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
     stack_mem  = NULL;
     stack_size = 0U;
     priority   = osPriorityNormal;
+#if (__DOMAIN_NS == 1U)
+    tz_module  = 0U;
+#endif
   }
 
   // Check stack size
@@ -595,6 +605,32 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
     flags |= os_FlagSystemMemory;
   }
 
+#if (__DOMAIN_NS == 1U)
+  // Allocate secure process stack
+  if (tz_module != 0U) {
+    tz_memory = TZ_AllocModuleContext_S(tz_module);
+    if (tz_memory == 0U) {
+      if (flags & os_FlagSystemMemory) {
+        if (flags & os_ThreadFlagDefStack) {
+          os_MemoryPoolFree(os_Info.mpi.stack, thread->stack_mem);
+        } else {
+          os_MemoryFree(os_Info.mem.stack, thread->stack_mem);
+        }
+      }
+      if (flags & os_FlagSystemObject) {
+        if (os_Info.mpi.thread != NULL) {
+          os_MemoryPoolFree(os_Info.mpi.thread, thread);
+        } else {
+          os_MemoryFree(os_Info.mem.common, thread);
+        }
+      }
+      return (osThreadId_t)NULL;
+    }
+  } else {
+    tz_memory = 0U;
+  }
+#endif
+
   // Initialize control block
   thread->id            = os_IdThread;
   thread->state         = os_ThreadReady;
@@ -609,7 +645,7 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
   thread->delay         = 0U;
   thread->priority      = (int8_t)priority;
   thread->priority_base = (int8_t)priority;
-  thread->stack_frame   = os_StackFrameBasic;
+  thread->stack_frame   = STACK_FRAME_INIT;
   thread->flags_options = 0U;
   thread->wait_flags    = 0;
   thread->thread_flags  = 0;
@@ -617,6 +653,9 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
   thread->stack_mem     = stack_mem;
   thread->stack_size    = stack_size;
   thread->sp            = (uint32_t)stack_mem + stack_size - 64U;
+#if (__DOMAIN_NS == 1U)
+  thread->tz_memory     = tz_memory;
+#endif
 
   // Initialize stack
    ptr   = (uint32_t *)stack_mem;
@@ -836,6 +875,13 @@ static void os_ThreadFree (os_thread_t *thread) {
 
   // Mark object as inactive
   thread->state = os_ThreadInactive;
+
+#if (__DOMAIN_NS == 1U)
+  // Free secure process stack
+  if (thread->tz_memory != 0U) {
+    TZ_FreeModuleContext_S(thread->tz_memory);
+  }
+#endif
 
   // Free stack memory
   if (thread->flags & os_FlagSystemMemory) {

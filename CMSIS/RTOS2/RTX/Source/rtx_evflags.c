@@ -33,12 +33,12 @@
 /// \param[in]  flags           specifies the flags to set.
 /// \return event flags after setting.
 static int32_t os_EventFlagsSet (os_event_flags_t *ef, int32_t flags) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
   int32_t  event_flags;
 
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
   ef->event_flags |= flags;
@@ -59,12 +59,12 @@ static int32_t os_EventFlagsSet (os_event_flags_t *ef, int32_t flags) {
 /// \param[in]  flags           specifies the flags to clear.
 /// \return event flags before clearing.
 static int32_t os_EventFlagsClear (os_event_flags_t *ef, int32_t flags) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
   int32_t  event_flags;
 
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
   event_flags = ef->event_flags;
@@ -86,13 +86,13 @@ static int32_t os_EventFlagsClear (os_event_flags_t *ef, int32_t flags) {
 /// \param[in]  options         specifies flags options (osFlagsXxxx).
 /// \return event flags before clearing or 0 if specified flags have not been set.
 static int32_t os_EventFlagsCheck (os_event_flags_t *ef, int32_t flags, uint32_t options) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask;
 #endif
   int32_t  event_flags;
 
   if ((options & osFlagsAutoClear) != 0U) {
-#ifdef __NO_EXCLUSIVE_ACCESS
+#if (__EXCLUSIVE_ACCESS == 0U)
     primask = __get_PRIMASK();
     __disable_irq();
 

@@ -29,6 +29,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "core_cm.h"                    // Cortex-M definitions
+#include "tz_context.h"                 // TrustZone Context API
 #include "cmsis_os2.h"                  // CMSIS RTOS API
 #include "rtx_os.h"                     // RTX OS definitions
 

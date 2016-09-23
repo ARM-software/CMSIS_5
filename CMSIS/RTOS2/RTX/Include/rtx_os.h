@@ -99,10 +99,6 @@ extern "C"
 #define os_ThreadFlagDefStack   0x10U   ///< Default Stack flag
 #define os_ThreadFlagExitPtr    0x20U   ///< Exit Pointer flag
 
-/// Stack Frame definitions
-#define os_StackFrameBasic      0x00U   ///< Stack Frame: Basic (CPU)
-#define os_StackFrameExtended   0x01U   ///< Stack Frame: Extended (CPU and FPU)
-
 /// Stack Marker definitions
 #define os_StackMagicWord       0xE25A2EA5U ///< Stack Magic Word (Stack Base)
 #define os_StackFillPattern     0xCCCCCCCCU ///< Stack Fill Pattern 
@@ -122,7 +118,7 @@ typedef struct os_thread_s {
   uint32_t                      delay;  ///< Delay Time
   int8_t                     priority;  ///< Thread Priority
   int8_t                priority_base;  ///< Base Priority
-  uint8_t                 stack_frame;  ///< Stack Frame
+  uint8_t                 stack_frame;  ///< Stack Frame (EXC_RETURN[7..0])
   uint8_t               flags_options;  ///< Thread/Event Flags Options
   int32_t                  wait_flags;  ///< Waiting Thread/Event Flags
   int32_t                thread_flags;  ///< Thread Flags
@@ -130,6 +126,7 @@ typedef struct os_thread_s {
   void                     *stack_mem;  ///< Stack Memory
   uint32_t                 stack_size;  ///< Stack Size
   uint32_t                         sp;  ///< Current Stack Pointer
+  uint32_t                  tz_memory;  ///< TrustZone Memory Identifier
 } os_thread_t;
 
 
