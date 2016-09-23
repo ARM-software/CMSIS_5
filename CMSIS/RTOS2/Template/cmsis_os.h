@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        30. June 2016
+ * $Date:        20. September 2016
  * $Revision:    V2.0
  *
  * Project:      CMSIS-RTOS API
@@ -440,7 +440,7 @@ const osThreadDef_t os_thread_def_##name = \
 #define osThreadDef(name, priority, instances, stacksz) \
 const osThreadDef_t os_thread_def_##name = \
 { (name), \
-  { NULL, osThreadDetached, NULL, 0U, NULL, 8*((stacksz+7)/8), (priority), { 0U, 0U } } }
+  { NULL, osThreadDetached, NULL, 0U, NULL, 8*((stacksz+7)/8), (priority), 0U, 0U } }
 #endif
 #endif
  

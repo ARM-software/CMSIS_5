@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        30. June 2016
+ * $Date:        20. September 2016
  * $Revision:    V2.0
  *
  * Project:      CMSIS-RTOS2 API
@@ -30,6 +30,7 @@
 #ifndef __CMSIS_OS2_H
 #define __CMSIS_OS2_H
  
+#ifndef __NO_RETURN
 #if   defined(__CC_ARM)
 #define __NO_RETURN __declspec(noreturn)
 #elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
@@ -41,7 +42,8 @@
 #else
 #define __NO_RETURN
 #endif
-
+#endif
+ 
 #include <stdint.h>
 #include <stddef.h>
  
@@ -52,9 +54,9 @@ extern "C"
  
  
 //  ==== Enumerations, structures, defines ====
-
+ 
 /// Version information.
-typedef struct osVersion_s {
+typedef struct {
   uint32_t                       api;   ///< API version (major.minor.rev: mmnnnrrrr dec).
   uint32_t                    kernel;   ///< Kernel version (major.minor.rev: mmnnnrrrr dec).
 } osVersion_t;
@@ -138,7 +140,7 @@ typedef enum {
   osPriorityError         = -1,         ///< System cannot determine priority or illegal priority.
   osPriorityReserved      = 0x7FFFFFFF  ///< Prevents enum down-size compiler optimization.
 } osPriority_t;
-
+ 
 /// Entry point of a thread.
 typedef void *(*os_thread_func_t) (void *argument);
  
@@ -203,6 +205,13 @@ typedef uint32_t osMemoryPoolId_t;
 typedef uint32_t osMessageQueueId_t;
  
  
+#ifndef TZ_MODULEID_T
+#define TZ_MODULEID_T
+/// \details Data type that identifies secure software modules called by a process.
+typedef uint32_t TZ_ModuleId_t;
+#endif
+ 
+ 
 /// Attributes structure for thread.
 typedef struct osThreadAttr_s {
   const char                   *name;   ///< name of the thread
@@ -212,7 +221,8 @@ typedef struct osThreadAttr_s {
   void                   *stack_mem;    ///< memory for stack
   uint32_t                stack_size;   ///< size of stack
   osPriority_t              priority;   ///< initial thread priority (default: osPriorityNormal)
-  uint32_t               reserved[2];   ///< reserved (must be 0)
+  TZ_ModuleId_t            tz_module;   ///< TrustZone module identifier
+  uint32_t                  reserved;   ///< reserved (must be 0)
 } osThreadAttr_t;
  
 /// Attributes structure for timer.
