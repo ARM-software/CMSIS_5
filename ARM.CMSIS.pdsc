@@ -12,8 +12,8 @@
       CMSIS_Core:
        - Added new file cmsis_compiler.h.
        - Deleted deprecated files core_cmfunc.h, core_cminstr.h, core_cmsimd.h.
-       - Reworked compiler secific include files.
-       - Reworked core dependant include files.
+       - Reworked compiler specific include files.
+       - Reworked core dependent include files.
        - Added __PACKED macro.
     </release>
     <release version="5.0.0-Beta11">
@@ -814,6 +814,25 @@ The ARMv8MML processor is brand new.
       <require Tcompiler="ARMCC"/>
     </condition>
 
+    <condition id="ARMv8MBL_LE_ARMCC">
+      <description>ARMv8-M Baseline processor based device in little endian mode for the ARM Compiler</description>
+      <require Dcore="ARMV8MBL" Dendian="Little-endian"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+
+    <condition id="ARMv8MML_LE_ARMCC">
+      <description>ARMv8-M Mainline processor based device in little endian mode for the ARM Compiler</description>
+      <require Dcore="ARMV8MML" Dfpu="0" Dendian="Little-endian"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+
+    <condition id="ARMv8MML_FP_LE_ARMCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit in little endian mode for the ARM Compiler</description>
+      <accept Dcore="ARMV8MML" Dfpu="SP_FPU" Dendian="Little-endian"/>
+      <accept Dcore="ARMV8MML" Dfpu="DP_FPU" Dendian="Little-endian"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+
     <!-- GCC compiler -->
     <condition id="CM0_LE_GCC">
       <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device in little endian mode for the GCC Compiler</description>
@@ -1056,23 +1075,32 @@ The ARMv8MML processor is brand new.
       <require Tcompiler="IAR"/>
     </condition>
 
-    <condition id="RTOS RTX Dependency">
+    <condition id="RTOS RTX">
       <description>Components required for RTOS RTX</description>
       <require condition="Cortex-M Device"/>
       <require Cclass="Device" Cgroup="Startup"/>
-      <deny    Cclass="CMSIS"  Cgroup="RTOS2" Csub="Keil RTX5"/> -->
+      <deny    Cclass="CMSIS"  Cgroup="RTOS2" Csub="Keil RTX5"/>
     </condition>
-    <condition id="RTOS RTX5 Dependency">
+    <condition id="RTOS RTX5">
       <description>Components required for RTOS RTX5</description>
-      <require Cclass="CMSIS"  Cgroup="RTOS2" Csub="Keil RTX5"/> -->
+      <require condition="Cortex-M Device"/>
+      <require Cclass="CMSIS"  Cgroup="RTOS2" Csub="Keil RTX5"/>
     </condition>
-    <condition id="RTOS2 RTX5 Dependency">
+    <condition id="RTOS2 RTX5">
       <description>Components required for RTOS2 RTX5</description>
       <require condition="Cortex-M Device"/>
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
       <deny    Cclass="CMSIS"  Cgroup="RTOS" Csub="Keil RTX"/>
     </condition>
+    <condition id="RTOS2 RTX5 ARMv8M">
+      <description>Components required for RTOS2 RTX5 on ARMv8M</description>
+      <accept  Dcore="ARMV8MBL"/>
+      <accept  Dcore="ARMV8MML"/>
+      <require Cclass="CMSIS"  Cgroup="CORE"/>
+      <require Cclass="Device" Cgroup="Startup"/>
+    </condition>
+
   </conditions>
 
   <components>
@@ -1360,7 +1388,7 @@ The ARMv8MML processor is brand new.
     </component>
 
     <!-- CMSIS-RTOS Keil RTX component -->
-    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cversion="4.81.0" Capiversion="1.0" condition="RTOS RTX Dependency">
+    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cversion="4.81.0" Capiversion="1.0" condition="RTOS RTX">
       <description>CMSIS-RTOS RTX implementation for Cortex-M, SC000, and SC300</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -1436,7 +1464,7 @@ The ARMv8MML processor is brand new.
     </component>
 
     <!-- CMSIS-RTOS Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX5" Cversion="5.0.0-Alpha" Capiversion="1.0" condition="RTOS RTX5 Dependency">
+    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX5" Cversion="5.0.0-Alpha" Capiversion="1.0" condition="RTOS RTX5">
       <description>CMSIS-RTOS RTX5 implementation for Cortex-M, SC000, and SC300</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -1452,7 +1480,7 @@ The ARMv8MML processor is brand new.
     </component>
 
     <!-- CMSIS-RTOS2 Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 Dependency">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Release" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5">
       <description>CMSIS-RTOS2 RTX5 implementation for Cortex-M, SC000, and SC300</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -1492,6 +1520,67 @@ The ARMv8MML processor is brand new.
         <file category="library" condition="CM7F_LE_GCC"       name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"    src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Release" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 ARMv8M">
+      <description>CMSIS-RTOS2 RTX5 implementation for ARMv8-M</description>
+      <RTE_Components_h>
+        <!-- the following content goes into file 'RTE_Components.h' -->
+        #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
+        #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
+      </RTE_Components_h>
+      <files>
+        <!-- RTX documentation -->
+        <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/>
+
+        <!-- RTX header files -->
+        <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
+        <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
+
+        <!-- RTX configuration -->
+        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c" version="5.0.0"/>
+
+        <!-- RTX templates -->
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"   select="CMSIS-RTOS 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Source/user_svc.c" select="CMSIS-RTOS User SVC"/>
+        <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
+
+        <!-- RTX libraries (CPU and Compiler dependent) -->
+        <!-- ARMCC -->
+   <!-- <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"  src="CMSIS/RTOS2/RTX/Source"/> -->
+        <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib" src="CMSIS/RTOS2/RTX/Source"/>
+      </files>
+    </component>
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Release NS" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 ARMv8M">
+      <description>CMSIS-RTOS2 RTX5 implementation for ARMv8-M None-Secure Domain</description>
+      <RTE_Components_h>
+        <!-- the following content goes into file 'RTE_Components.h' -->
+        #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
+        #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
+      </RTE_Components_h>
+      <files>
+        <!-- RTX documentation -->
+        <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/>
+
+        <!-- RTX header files -->
+        <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
+        <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
+
+        <!-- RTX configuration -->
+        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c" version="5.0.0"/>
+
+        <!-- RTX templates -->
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"   select="CMSIS-RTOS 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Source/user_svc.c" select="CMSIS-RTOS User SVC"/>
+        <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
+
+        <!-- RTX libraries (CPU and Compiler dependent) -->
+        <!-- ARMCC -->
+   <!-- <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"  src="CMSIS/RTOS2/RTX/Source"/> -->
+        <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib" src="CMSIS/RTOS2/RTX/Source"/>
+      </files>
+    </component>
+
   </components>
 
   <boards>
@@ -1660,7 +1749,7 @@ The ARMv8MML processor is brand new.
       </attributes>
     </example>
 
-	<example name="CMSIS-RTOS2 Blinky" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Simulation/RTX5_Blinky">
+    <example name="CMSIS-RTOS2 Blinky" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Simulation/RTX5_Blinky">
       <description>CMSIS-RTOS2 Blinky example</description>
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
