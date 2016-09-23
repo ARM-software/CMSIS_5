@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-
+ 
   Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  
   SPDX-License-Identifier: Apache-2.0
@@ -16,10 +16,18 @@
   WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
+ 
+  $Date:         23. September 2016
+  $Revision:     1.3.3
 
-  $Date:        22. January 2016
-  $Revision:    1.3.2
-
+  Version 1.3.3:
+  - update file header to Apache 2.0 License
+  - add dimableIdentifierType, as a copy of previous identifierType adding "%s",
+  - update identifierType to only allow names without %s included.
+  - remove enumerationNameType.
+  - add headerEnumName to enumerationType and to dimArrayIndexType for peripheral arrays 
+    overwriting hierarchically generated names
+  - add dimName to dimElementGroup. Only valid in <cluster> context, ignored otherwise.
   
   Version 1.3.2:
   adding dimIndexArray to peripheral-, cluster- and register-array to describe
@@ -68,6 +76,8 @@
       <xs:enumeration value="SC300"/>
       <xs:enumeration value="CM4"/>
       <xs:enumeration value="CM7"/>
+      <xs:enumeration value="ARMV8MML"/>
+      <xs:enumeration value="ARMV8MBL"/>
       <xs:enumeration value="CA5"/>
       <xs:enumeration value="CA7"/>
       <xs:enumeration value="CA8"/>
@@ -123,16 +133,16 @@
       <xs:maxInclusive value="8"/>
     </xs:restriction>
   </xs:simpleType>
-  <!-- identifierType specifies the subset and sequence of characters used for specifying identifiers within the description. -->
+  <!-- dimableIdentifierType specifies the subset and sequence of characters used for specifying identifiers that may contain %s from dim. -->
   <!-- this is particularly important as these are used in ANSI C Structures during the device header file generation -->
-  <xs:simpleType name="identifierType">
+  <xs:simpleType name="dimableIdentifierType">
     <xs:restriction base="xs:string">
-      <xs:pattern value="((%s)[_A-Za-z]{1}[_A-Za-z0-9]*)|([_A-Za-z]{1}[_A-Za-z0-9]*(\[%s\])?)|([_A-Za-z]{1}[_A-Za-z0-9]*(%s)?[_A-Za-z0-9]*)"/>
+      <xs:pattern value="((%s)|(%s)[_A-Za-z]{1}[_A-Za-z0-9]*)|([_A-Za-z]{1}[_A-Za-z0-9]*(\[%s\])?)|([_A-Za-z]{1}[_A-Za-z0-9]*(%s)?[_A-Za-z0-9]*)"/>
     </xs:restriction>
   </xs:simpleType>
-  <!-- enumerationNameType specifies the subset and sequence of characters used for specifying names of enumeratedValues. -->
+  <!-- identifierType specifies the subset and sequence of characters used for specifying identifiers that must not contain %s from dim. -->
   <!-- this is particularly important as these are used in ANSI C Structures during the device header file generation -->
-  <xs:simpleType name="enumerationNameType">
+  <xs:simpleType name="identifierType">
     <xs:restriction base="xs:string">
       <xs:pattern value="[_A-Za-z0-9]*"/>
     </xs:restriction>
@@ -290,16 +300,15 @@
     </xs:sequence> 
   </xs:group>
   
-  <!-- dimElementGroup specifies a series of elements (dim), the address offset
-       between to consecutive elements and an a comma seperated list of strings 
-       being used for identifying each element. A specialized case is an array
-       of elements, where the name is contructed using [%s] and the dimIndex being
-       integers from 0 to n -->
+  <!-- dimElementGroup specifies the number of array elements (dim), the address offset
+       between to consecutive array elements and an a comma seperated list of strings 
+       being used for identifying each element in the array -->
   <xs:group name="dimElementGroup">
     <xs:sequence>
       <xs:element name="dim" type="scaledNonNegativeInteger"/>
       <xs:element name="dimIncrement" type="scaledNonNegativeInteger"/>
       <xs:element name="dimIndex" type="dimIndexType" minOccurs="0"/>
+      <xs:element name="dimName" type="identifierType" minOccurs="0"/>
       <xs:element name="dimArrayIndex" type="dimArrayIndexType" minOccurs="0"/>
     </xs:sequence>
   </xs:group>
@@ -367,7 +376,7 @@
   <xs:complexType name="enumeratedValueType">
     <xs:sequence>
       <!-- name is a ANSI C indentifier representing the value (C Enumeration) -->
-      <xs:element name="name" type="enumerationNameType"/>
+      <xs:element name="name" type="identifierType"/>
       <!-- description contains the details about the semantics/behavior specified by this value -->
       <xs:element name="description" type="stringType" minOccurs="0"/>
       <xs:choice>
@@ -383,29 +392,31 @@
     <xs:sequence>
       <!-- name specfies a reference to this enumeratedValues section for reuse purposes
            this name does not appear in the System Viewer nor the Header File. -->
-      <xs:element name="name" type="enumerationNameType" minOccurs="0"/>
+      <xs:element name="name" type="identifierType" minOccurs="0"/>
+      <!-- overrides the hierarchical enumeration type in the device header file. User is responsible for uniqueness across description -->
+      <xs:element name="headerEnumName" type="identifierType" minOccurs="0"/>
       <!-- usage specifies whether this enumeration is to be used for read or write or 
                                                        (read and write) accesses -->
       <xs:element name="usage" type="enumUsageType" minOccurs="0"/>
       <!-- enumeratedValue derivedFrom=<identifierType> -->
       <xs:element name="enumeratedValue" type="enumeratedValueType" minOccurs="1" maxOccurs="unbounded"/>
     </xs:sequence>
-    <xs:attribute name="derivedFrom" type="enumerationNameType" use="optional"/>
+    <xs:attribute name="derivedFrom" type="identifierType" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="dimArrayIndexType">
     <xs:sequence>
+      <xs:element name="headerEnumName" type="identifierType" minOccurs="0"/>
       <xs:element name="enumeratedValue" type="enumeratedValueType" minOccurs="1" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="fieldType">
     <xs:sequence>
-      <!-- describes a series of consecutive fields -->
       <xs:group    ref="dimElementGroup" minOccurs="0"/>
       <!-- name specifies a field's name. The System Viewer and the device header file will
            use the name of the field as identifier -->
-      <xs:element name="name" type="identifierType"/>
+      <xs:element name="name" type="dimableIdentifierType"/>
       <!-- description contains reference manual level information about the function and 
            options of a field -->
       <xs:element name="description" type="stringType" minOccurs="0"/>
@@ -430,7 +441,7 @@
       <xs:element name="enumeratedValues" type="enumerationType" minOccurs="0" maxOccurs="2">
       </xs:element>
     </xs:sequence>
-    <xs:attribute name="derivedFrom" type="identifierType" use="optional"/>
+    <xs:attribute name="derivedFrom" type="dimableIdentifierType" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="fieldsType">
@@ -442,11 +453,10 @@
 
   <xs:complexType name="registerType">
     <xs:sequence>
-      <!-- describes a series of consecutive registers -->
       <xs:group    ref="dimElementGroup" minOccurs="0"/>
       <!-- name specifies the name of the register. The register name is used by System Viewer and
                                      device header file generator to represent a register -->
-      <xs:element name="name" type="identifierType"/>
+      <xs:element name="name" type="dimableIdentifierType"/>
       <!-- display name specifies a register name without the restritions of an ANSIS C identifier.
                                      The use of this tag is discouraged because it does not allow consistency between
                                      the System View and the device header file. -->
@@ -459,7 +469,7 @@
         <xs:element name="alternateGroup" type="identifierType" minOccurs="0"/>
         <!-- V1.1: alternateRegister specifies an alternate register description for an address that is
                                        already fully described. In this case the register name must be unique within the peripheral -->
-        <xs:element name="alternateRegister" type="identifierType" minOccurs="0"/>
+        <xs:element name="alternateRegister" type="dimableIdentifierType" minOccurs="0"/>
       </xs:choice>
       <!-- addressOffset describes the address of the register relative to the baseOffset of the peripheral -->
       <xs:element name="addressOffset" type="scaledNonNegativeInteger"/>
@@ -477,19 +487,18 @@
       <!-- fields section contains all fields that belong to this register -->
       <xs:element name="fields" type="fieldsType" minOccurs="0" maxOccurs="1"/>
     </xs:sequence>
-    <xs:attribute name="derivedFrom" type="identifierType" use="optional"/>
+    <xs:attribute name="derivedFrom" type="dimableIdentifierType" use="optional"/>
   </xs:complexType>
 
   <!-- V1.1: A cluster is a set of registers that are composed into a C data structure in the device header file -->
   <xs:complexType name="clusterType">
     <xs:sequence>
-      <!-- describes a series of consecutive clusters -->
       <xs:group   ref="dimElementGroup" minOccurs="0"/>
-      <xs:element name="name" type="identifierType"/>
+      <xs:element name="name" type="dimableIdentifierType"/>
       <xs:element name="description" type="xs:string"/>
       <!-- V1.1: alternateCluster specifies an alternative description for a cluster address range that is
                  already fully described. In this case the cluster name must be unique within the peripheral -->
-      <xs:element name="alternateCluster" type="identifierType" minOccurs="0"/>
+      <xs:element name="alternateCluster" type="dimableIdentifierType" minOccurs="0"/>
       <!-- V1.1: headerStructName specifies the name for the cluster structure typedef
                  used in the device header generation instead of the cluster name -->
       <xs:element name="headerStructName" type="identifierType" minOccurs="0"/>
@@ -505,7 +514,7 @@
         </xs:choice>
       </xs:sequence>
     </xs:sequence>
-    <xs:attribute name="derivedFrom" type="identifierType" use="optional"/>
+    <xs:attribute name="derivedFrom" type="dimableIdentifierType" use="optional"/>
   </xs:complexType>
 
   <!-- the registers section can have an arbitrary list of cluster and register sections -->
@@ -521,14 +530,14 @@
       <!-- 1.3: specify uni-dimensional array of peripheral - requires name="<name>[%s]" -->
       <xs:group    ref="dimElementGroup" minOccurs="0"/>
       <!-- name specifies the name of a peripheral. This name is used for the System View and device header file -->
-      <xs:element name="name" type="identifierType"/>
+      <xs:element name="name" type="dimableIdentifierType"/>
       <!-- version specifies the version of the peripheral descriptions -->
       <xs:element name="version" type="stringType" minOccurs="0"/>
       <!-- description provides a high level functional description of the peripheral -->
       <xs:element name="description" type="stringType" minOccurs="0"/>
       <!-- V1.1: alternatePeripheral specifies an alternative description for an address range that is
            already fully by a peripheral described. In this case the peripheral name must be unique within the device description -->
-      <xs:element name="alternatePeripheral" type="identifierType" minOccurs="0"/>
+      <xs:element name="alternatePeripheral" type="dimableIdentifierType" minOccurs="0"/>
       <!-- groupName assigns this peripheral to a group of peripherals. This is only used bye the System View -->
       <xs:element name="groupName" type="xs:Name" minOccurs="0"/>
       <!-- prependToName specifies a prefix that is placed in front of each register name of this peripheral. 
@@ -539,7 +548,7 @@
       <xs:element name="appendToName" type="identifierType" minOccurs="0"/>
       <!-- V1.1: headerStructName specifies the name for the peripheral structure typedef
                          used in the device header generation instead of the peripheral name -->
-      <xs:element name="headerStructName" type="identifierType" minOccurs="0"/>
+      <xs:element name="headerStructName" type="dimableIdentifierType" minOccurs="0"/>
       <!-- disableCondition contains a logical expression based on constants and register or bit-field values 
                          if the condition is evaluated to true, the peripheral display will be disabled -->
       <xs:element name="disableCondition" type="stringType" minOccurs="0"/>
@@ -561,7 +570,7 @@
       <xs:element name="registers" type="registersType" minOccurs="0" maxOccurs="1">
       </xs:element>
     </xs:sequence>
-    <xs:attribute name="derivedFrom" type="identifierType" use="optional"/>
+    <xs:attribute name="derivedFrom" type="dimableIdentifierType" use="optional"/>
   </xs:complexType>
   
   <!-- ==================================================== -->
