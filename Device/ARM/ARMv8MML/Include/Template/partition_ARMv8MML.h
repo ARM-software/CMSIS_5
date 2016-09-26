@@ -2,7 +2,7 @@
  * @file     partition_ARMv8MML.h
  * @brief    CMSIS-CORE Initial Setup for Secure / Non-Secure Zones for ARMv8M
  * @version  V5.00
- * @date     04. May 2016
+ * @date     26. September 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -55,6 +55,10 @@
 
 /*
 // <h>Initialize Secure Attribute Unit (SAU) Address Regions
+// <i>SAU configuration specifies regions to be one of:
+// <i> - Secure and Non-Secure Callable
+// <i> - Non-Secure
+// <i>Note: All memory regions not configured by SAU are Secure
 */
 #define SAU_REGIONS_MAX   8                 /* Max. number of SAU regions */
 
