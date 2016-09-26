@@ -1,22 +1,24 @@
 /**************************************************************************************************/
 /**
     \defgroup   peripheral_gr    Peripheral Access
-    \brief      Describes naming conventions, requirements, and optional features for accessing peripherals.
+    \brief      Naming conventions and optional features for accessing peripherals.
     \details
 	
 The section below describes the naming conventions, requirements, and optional features for accessing device specific peripherals.
 Most of the rules also apply to the core peripherals.  The \ref device_h_pg contains typically these definition and also includes
 the core specific header files.
 
-Most of the definitions can be generated using the <a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a> System View Description for Peripherals.
+The definitions for \ref peripheral_gr can be generated using the <a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a> System View Description for Peripherals.
 Refer to <a href="../../SVD/html/svd_SVDConv_pg.html"><b>SVDConv.exe</b></a> for more information.
 	
 Each peripheral provides a data type definition with a name that is composed of:
-  - prefix <b>&lt;<i>device abbreviation&gt;</i>_</b>
+  - an optional prefix <b>&lt;<i>device abbreviation&gt;</i>_</b>
   - <b>&lt;<i>peripheral name</i>&gt;</b>
   - postfix \b _Type or \b _TypeDef to identify a type definition.
 
-Example: \b LPC_UART_TypeDef for the device \b LPC and the peripheral \b UART.
+Examples:
+  - \b UART_TypeDef for the peripheral \b UART.
+  - \b LPC_UART_TypeDef for the device family \b LPC and the peripheral \b UART.
 
 The data type definition uses standard C data types defined by the ANSI C header file <stdint.h>.
  
@@ -80,6 +82,9 @@ In this example \b LPC_UART2 and \b LPC_UART3 are two pointers to UARTs defined 
 #define LPC_UART3             ((LPC_UART_TypeDef      *) LPC_UART3_BASE    )
 \endcode
 
+\note 
+ - The prefix <b>LPC</b> is optional.
+ 
 The registers in the various UARTs can now be referred in the user code as shown below:\n
 \code
  val = LPC_UART2->DR   // is the data register of UART1.

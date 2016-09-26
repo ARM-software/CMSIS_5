@@ -114,4 +114,26 @@ during \ref SystemInit in Secure state.
 Refer to \ref using_pg for a general description of the CMSIS-CORE files.
 
 
+\subsection RTOS_TrustZone RTOS Thread Context Management
+
+To provide a consistent RTOS thread context management for ARMv8-M TrustZone across the various real-time operating systems (RTOS), the CMSIS-CORE includes header file <b>TZ_context.h</b> with API definitions.
+An <i>non-secure application</i> which uses an RTOS and calls <i>secure</i> library modules requires the management of the <i>secure</i> stack space.   Since <i>secure state</i> registers cannot be accessed 
+by the RTOS that runs in <i>non-secure state</i> secure functions implement the thread context switch.
+
+As the <i>non-secure state</i> and <i>secure state</i> parts of an application are separated, the API for managing the <i>secure</i> stack space should be standardized. Otherwise the <i>secure</i> library modules
+would force the <i>non-secure state</i> application to use a matching RTOS implementation.
+
+
+\image html "TZ_context.png" "RTOS Thread Context Management for ARMv8-M TrustZone"
+
+To allocate the context memory for threads, an RTOS kernel that runs in <i>non-secure state</i> calls the interface functions defined by the header file <b>TZ_context.h</b>. The <b>TZ_context</b> functions itself are
+part of the <i>secure state</i> application. An minimum implementation is provided as part of RTOS2 and should handle the secure stack for the thread execution. However it is also possible to implement the context memory 
+management system with additional features such as access control to <i>secure state</i> memory regions using an MPU.
+
+\todo refer to RTOS2 once the file is provided
+
+The API functions of <b>TZ_context.png</b> are described in the chapter <a href="Modules.html">\b Reference </a> under \ref trustzone_functions - \ref context_trustzone_functions.
+
+  
+
 */

@@ -1,17 +1,61 @@
 /**************************************************************************************************/
 /**
 \defgroup   compiler_conntrol_gr    Compiler Control
-\brief      Compiler specific \#defines in CMSIS-Core
+\brief      Compiler agnostic \#define symbols for generic C/C++ source code
 \details
-CMSIS-Core provides a set of compiler control \#defines that produce a consistent behavior, no matter which compiler is used
-to build the application code.
+The CMSIS-Core provides the header file <b>cmsis_compiler.h</b> with consistent \#define symbols for generate C or C++ source files that should be compiler agnostic.
+Each CMSIS compliant compiler should support the functionality described in this section.
+
+The header file <b>cmsis_compiler.h</b> is also included by each \ref device_h_pg so that these definitions are available. 
 @{
 */
+
+/**
+\def __ARM_ARCH_6M__
+\brief Set to 1 when generating code for ARMv6-M (Cortex-M0, Cortex-M1)
+\details
+The <b>\#define __ARM_ARCH_6M__</b> is set to 1 when generating code for the ARMv6-M architecture. This architecture is for example used by the Cortex-M0, Cortex-M0+, and Cortex-M1 processor.
+*/
+#define __ARM_ARCH_6M__
+
+/**
+\def __ARM_ARCH_7M__
+\brief Set to 1 when generating code for ARMv7-M (Cortex-M3)
+\details
+The <b>\#define __ARM_ARCH_7M__</b> is set to 1 when generating code for the ARMv7-M architecture. This architecture is for example used by the Cortex-M3 processor.
+*/
+#define __ARM_ARCH_7M__
+
+/**
+\def __ARM_ARCH_7EM__
+\brief Set to 1 when generating code for ARMv7-M (Cortex-M4) with FPU
+\details
+The <b>\#define __ARM_ARCH_7EM__</b> is set to 1 when generating code for the ARMv7-M architecture with floating point extension. This architecture is for example used by the Cortex-M4 processor with FPU
+*/
+#define __ARM_ARCH_7EM__
+
+/**
+\def __ARM_ARCH_8M_BASE__
+\brief Set to 1 when generating code for ARMv8-M Baseline
+\details
+The <b>\#define __ARM_ARCH_8M_BASE__</b> is set to 1 when generating code for the ARMv8-M architecture baseline variant.
+*/
+#define __ARM_ARCH_8M_BASE__
+
+/**
+\def __ARM_ARCH_8M_MAIN__
+\brief Set to 1 when generating code for ARMv8-M Mainline
+\details
+The <b>\#define __ARM_ARCH_8M_MAIN__</b> is set to 1 when generating code for the ARMv8-M architecture mainline variant.
+*/
+#define __ARM_ARCH_8M_MAIN__
+
+
 
 /**************************************************************************************************/
 /**
 \def __ASM
-\brief Keyword passing information from the compiler to the assembler.
+\brief Pass information from the compiler to the assembler.
 \details
 The \b __ASM keyword can declare or define an embedded assembly function or incorporate inline assembly into a function
 (shown in the code example below).
@@ -35,14 +79,11 @@ __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __RBIT(uint32_t valu
 /**************************************************************************************************/
 /**
 \def __INLINE
-\brief Keyword suggesting to the compiler that it compiles a C or C++ function inline.
+\brief Recommend that function should be inlined by the compiler.
 \details
-Inline functions offer a trade-off between code size and performance. By default, the compiler decides for itself whether to
-inline code or not.
-
-In most circumstances, the decision to inline a particular function is best left to the compiler. However, you can give the
-compiler a hint that a function is required to be inlined by using \b __INLINE. Still, the compiler can decide not to inline
-the function.
+Inline functions offer a trade-off between code size and performance. By default, the compiler decides during optimization whether to
+inline code or not. The \b __INLINE attribute gives the compiler an hint to inline this function. Still, the compiler may decide not to inline
+the function.  As the function is global an callable function is also generated. 
 
 <b> Code Example:</b>
 \code
@@ -63,27 +104,18 @@ __INLINE static void LED_On (uint32_t led) {
 /**************************************************************************************************/
 /**
 \def __STATIC_INLINE
-\brief Keyword suggesting to the compiler that it compiles a C or C++ function statically inline.
+\brief Define a static function should be inlined by the compiler.
 \details
-As for \ref __INLINE, the compiler may choose to inline the function. In addition, the compiler will add a locally scoped
-version of the function in the resulting object file. As you can have one static version of the function per object file, you
-may end up with multiple definitions of the same function. This will require more space.
+Defines a static function that may be inlined by the compiler. If the compiler generates inline code for 
+all calls to this functions, no additional function implementation is generated which may further optimize space.
 
 <b> Code Example:</b>
 \code
-// Set Priority Grouping
- 
-__STATIC_INLINE void NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
+\\ Get Interrupt Vector
+__STATIC_INLINE uint32_t NVIC_GetVector(IRQn_Type IRQn)
 {
-  uint32_t reg_value;
-  uint32_t PriorityGroupTmp = (PriorityGroup & (uint32_t)0x07);               /* only values 0..7 are used          */
- 
-  reg_value  =  SCB->AIRCR;                                                   /* read old register configuration    */
-  reg_value &= ~(SCB_AIRCR_VECTKEY_Msk | SCB_AIRCR_PRIGROUP_Msk);             /* clear bits to change               */
-  reg_value  =  (reg_value                                 |
-                ((uint32_t)0x5FA << SCB_AIRCR_VECTKEY_Pos) |
-                (PriorityGroupTmp << 8));                                     /* Insert write key and priority group */
-  SCB->AIRCR =  reg_value;
+    uint32_t *vectors = (uint32_t *)SCB->VTOR;
+    return vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET];
 }
 \endcode
 
@@ -93,10 +125,10 @@ __STATIC_INLINE void NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
 /**************************************************************************************************/
 /**
 \def __NO_RETURN
-\brief Informs the compiler that the function does not return.
+\brief Inform the compiler that a function does not return.
 \details
-The compiler can perform optimizations by removing code that is never reached. If the function reaches an explicit or
-implicit return, \b __NO_RETURN is ignored and the compiler generates a warning.
+Informs the compiler that the function does not return. The compiler can then perform optimizations by
+removing code that is never reached.
  
 <b> Code Example:</b>
 \code
@@ -111,14 +143,13 @@ __NO_RETURN void os_idle_demon (void);
 /**************************************************************************************************/
 /**
 \def __USED
-\brief Informs the compiler that a static variable is to be retained in the object file.
+\brief Inform that a variable shall be retained in executable image.
 \details
-Data marked with \b __USED is tagged in the object file to avoid removal by linker unused section removal. Static variables
-marked as used are emitted to a single section, in the order they are declared.
+Definitions tagged with \b __USED in the source code should be not removed by the linker when detected as unused.
  
 <b> Code Example:</b>
 \code
-/* Export following defines to debugger. */
+/* Export following variables for debugging */
 __USED uint32_t const CMSIS_RTOS_API_Version = osCMSIS;
 __USED uint32_t const CMSIS_RTOS_RTX_Version = osCMSIS_RTX;
 __USED uint32_t const os_clockrate = OS_TICK;
@@ -131,7 +162,7 @@ __USED uint32_t const os_timernum  = 0;
 /**************************************************************************************************/
 /**
 \def __WEAK
-\brief Keyword instructing the compiler to export a function or variable weakly.
+\brief Export a function or variable weakly to allow overwrites.
 \details
 Functions defined with \b __WEAK export their symbols weakly. A weakly defined function behaves like a normally defined
 function unless a non-weakly defined function of the same name is linked into the same image. If both a non-weakly defined
@@ -155,7 +186,7 @@ __WEAK void SystemInit(void)
 /**************************************************************************************************/
 /**
 \def __UNALIGNED_UINT32
-\brief Pointer to unaligned uint32_t variable.
+\brief Pointer for unaligned access of a uint32_t variable.
 \details
 Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in read/write
 operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying ARM
@@ -176,13 +207,13 @@ void test (uint8_t *ptr) {
 /**************************************************************************************************/
 /**
 \def __ALIGNED
-\brief Alignment of a variable.
+\brief Minimum alignment for a variable.
 \details
 Specifies a minimum alignment for a variable or structure field, measured in bytes.
  
 <b> Code Example:</b>
 \code
-uint32_t val32 __ALIGNED(4);
+uint32_t stack_space[0x100] __ALIGNED(8);   // 8-byte alignment required
 \endcode
 
 */
@@ -191,7 +222,7 @@ uint32_t val32 __ALIGNED(4);
 /**************************************************************************************************/
 /**
 \def __PACKED
-\brief Smallest possible alignment.
+\brief Request smallest possible alignment.
 \details
 Specifies that a type must have the smallest possible alignment.
  
