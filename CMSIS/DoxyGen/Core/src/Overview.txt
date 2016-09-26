@@ -33,12 +33,10 @@ Files relevant to CMSIS-CORE are present in the following <b>ARM::CMSIS</b> dire
 
 <hr>
 
-\section ref_v6-v8M Cortex-M and ARMv8-M
+\section ref_v6-v8M Processor Support
 
 CMSIS supports the complete range of <a href="http://www.arm.com/products/processors/cortex-m/index.php" target="_blank"><b>Cortex-M processors</b></a> (with exception of Cortex-M1) and 
 the <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>ARMv8-M architecture</b></a> including security extensions.
-ARMv8-M introduces two profiles \b Baseline (for power and area constrained applications) and \b Mainline (full-featured with optional SIMD, floating-point, and co-processor extensions).
-Both ARMv8-M profiles are supported by CMSIS.
 
 \subsection ref_man_sec Cortex-M Reference Manuals
 
@@ -51,6 +49,12 @@ These manuals contain the programmers model and detailed information about the c
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0553a/DUI0553A_cortex_m4_dgug.pdf" target="_blank"><b>Cortex-M4 Devices Generic User Guide</b></a> (ARMv7-M architecture)
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646a/DUI0646A_cortex_m7_dgug.pdf" target="_blank"><b>Cortex-M7 Devices Generic User Guide</b></a> (ARMv7-M architecture)
 
+\subsection ARMv8M ARMv8-M Architecture 
+
+ARMv8-M introduces two profiles \b Baseline (for power and area constrained applications) and \b Mainline (full-featured with optional SIMD, floating-point, and co-processor extensions).
+Both ARMv8-M profiles are supported by CMSIS.
+
+The ARMv8-M Architecture is described in the <a href="http://developer.arm.com/products/architecture/m-profile/docs/ddi0553/latest/armv8-m-architecture-reference-manual" target="_blank"><b>ARMv8-M Architecture Reference Manual</b></a>.
     
 <hr>
 

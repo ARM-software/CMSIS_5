@@ -1,8 +1,10 @@
 /**
 \defgroup   NVIC_gr  Interrupts and Exceptions (NVIC)
   @{
-\brief      Explains how to use interrupts and exceptions and access functions for the Nested Vector Interrupt Controller (NVIC).
+\brief      Functions to access the Nested Vector Interrupt Controller (NVIC).
 \details
+This section explains how to use interrupts and exceptions and access functions for the Nested Vector Interrupt Controller (NVIC).
+
 ARM provides a template file <strong>startup_<em>device</em></strong> for each supported
 compiler. The file must be adapted by the silicon vendor to include interrupt vectors for all device-specific 
 interrupt handlers. Each interrupt handler is defined as a <strong><em>weak</em></strong> function 

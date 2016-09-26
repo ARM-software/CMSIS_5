@@ -47,7 +47,7 @@ uint32_t TZ_InitContextSystem_S (void);
  
 /// Allocate context memory for calling secure software modules in TrustZone
 /// \param[in]  module   identifies software modules called from non-secure mode
-/// \return value != 0 TrustZone memory slot identifier
+/// \return value != 0 id TrustZone memory slot identifier
 /// \return value 0    no memory available or internal error
 TZ_MemoryId_t TZ_AllocModuleContext_S (TZ_ModuleId_t module);
  
