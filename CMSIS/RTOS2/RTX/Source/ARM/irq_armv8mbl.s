@@ -18,15 +18,11 @@
 ; * -----------------------------------------------------------------------------
 ; *
 ; * Project:     CMSIS-RTOS RTX
-; * Title:       ARMv8M Main Line Exception handlers
+; * Title:       ARMv8M Baseline Exception handlers
 ; *
 ; * -----------------------------------------------------------------------------
 ; */
 
-
-                IF       :LNOT::DEF:__FPU_USED
-__FPU_USED      EQU      0
-                ENDIF
 
                 IF       :LNOT::DEF:__DOMAIN_NS
 __DOMAIN_NS     EQU      0
@@ -61,60 +57,68 @@ SVC_Handler     PROC
 
                 MRS      R0,PSP                 ; Get PSP
                 LDR      R1,[R0,#24]            ; Load saved PC from stack
-                LDRB     R1,[R1,#-2]            ; Load SVC number
+                SUBS     R1,R1,#2               ; Point to SVC instruction
+                LDRB     R1,[R1]                ; Load SVC number
                 CBNZ     R1,SVC_User            ; Branch if not SVC 0
 
                 PUSH     {R0,LR}                ; Save PSP and EXC_RETURN
-                LDM      R0,{R0-R3,R12}         ; Load function parameters and address from stack
-                BLX      R12                    ; Call service function
-                POP      {R12,LR}               ; Restore PSP and EXC_RETURN
-                STR      R0,[R12]               ; Store function return value
+                LDM      R0,{R0-R3}             ; Load function parameters from stack
+                BLX      R7                     ; Call service function
+                POP      {R1,R2}                ; Restore PSP and EXC_RETURN
+                STR      R0,[R1]                ; Store function return value
+                MOV      R0,R1                  ; Save PSP
+                MOV      LR,R2                  ; Set EXC_RETURN
 
 SVC_Context
                 LDR      R3,=os_Info+I_T_RUN_OFS; Load address of os_Info.run
-                LDM      R3,{R1,R2}             ; Load os_Info.thread.run: curr & next
+                LDMIA    R3!,{R1,R2}            ; Load os_Info.thread.run: curr & next
                 CMP      R1,R2                  ; Check if thread switch is required
-                BXEQ     LR                     ; Exit when threads are the same
+                BEQ      SVC_Exit               ; Branch when threads are the same
 
-                IF       __FPU_USED = 1
-                CBNZ     R1,SVC_ContextSave     ; Branch if running thread is not deleted
-                TST      LR,#0x10               ; Check if extended stack frame
-                BNE      SVC_ContextSwitch
-                LDR      R1,=0xE000EF34         ; FPCCR Address
-                LDR      R0,[R1]                ; Load FPCCR
-                BIC      R0,#1                  ; Clear LSPACT (Lazy state)
-                STR      R0,[R1]                ; Store FPCCR
-                B        SVC_ContextSwitch
-                ELSE
                 CBZ      R1,SVC_ContextSwitch   ; Branch if running thread is deleted
-                ENDIF
 
 SVC_ContextSave
-                STMDB    R12!,{R4-R11}          ; Save R4..R11
-                IF       __FPU_USED = 1
-                TST      LR,#0x10               ; Check if extended stack frame
-                VSTMDBEQ R12!,{S16-S31}         ;  Save VFP S16.S31
-                ENDIF
+                SUBS     R0,R0,#32              ; Adjust PSP
+                STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
+                STMIA    R0!,{R4-R7}            ; Save R4..R7
+                MOV      R4,R8
+                MOV      R5,R9
+                MOV      R6,R10
+                MOV      R7,R11
+                STMIA    R0!,{R4-R7}            ; Save R8..R11
 
-                STR      R12,[R1,#TCB_SP_OFS]   ; Store SP
-                STRB     LR, [R1,#TCB_SF_OFS]   ; Store stack frame information
+                MOV      R0,LR                  ; Get EXC_RETURN
+                ADDS     R1,R1,#TCB_SF_OFS      ; Adjust address
+                STRB     R0,[R1]                ; Store stack frame information
 
 SVC_ContextSwitch
+                SUBS     R3,R3,#8               ; Adjust address
                 STR      R2,[R3]                ; os_Info.thread.run: curr = next
 
 SVC_ContextRestore
-                LDR      R0,[R2,#TCB_SM_OFS]    ; Load stack memory base
-                LDRB     R1,[R2,#TCB_SF_OFS]    ; Load stack frame information
-                MSR      PSPLIM,R0              ; Set PSPLIM
-                LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
-                ORR      LR,R1,#0xFFFFFF00      ; Set EXC_RETURN
+                MOV      R1,R2
+                ADDS     R1,R1,#TCB_SF_OFS      ; Adjust address
+                LDRB     R0,[R1]                ; Load stack frame information
+                MOVS     R1,#0xFF
+                MVNS     R1,R1                  ; R1=0xFFFFFF00
+                ORRS     R0,R1
+                MOV      LR,R0                  ; Set EXC_RETURN
 
-                IF       __FPU_USED = 1
-                TST      LR,#0x10               ; Check if extended stack frame
-                VLDMIAEQ R0!,{S16-S31}          ;  Restore VFP S16..S31
+                IF       __DOMAIN_NS = 0
+                LDR      R0,[R2,#TCB_SM_OFS]    ; Load stack memory base
+                MSR      PSPLIM,R0              ; Set PSPLIM
                 ENDIF
-                LDMIA    R0!,{R4-R11}           ; Restore R4..R11
+
+                LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
+                ADDS     R0,R0,#16              ; Adjust address
+                LDMIA    R0!,{R4-R7}            ; Restore R8..R11
+                MOV      R8,R4
+                MOV      R9,R5
+                MOV      R10,R6
+                MOV      R11,R7
                 MSR      PSP,R0                 ; Set PSP
+                SUBS     R0,R0,#32              ; Adjust address
+                LDMIA    R0!,{R4-R7}            ; Restore R4..R7
 
                 IF       __DOMAIN_NS = 1
                 LDR      R0,[R2,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
@@ -134,7 +138,8 @@ SVC_User
                 CMP      R1,R3                  ; Check SVC number range
                 BHI      SVC_Done               ; Branch if out of range
 
-                LDR      R4,[R2,R1,LSL #2]      ; Load address of SVC function
+                LSLS     R1,R1,#2
+                LDR      R4,[R2,R1]             ; Load address of SVC function
 
                 LDM      R0,{R0-R3}             ; Load function parameters from stack
                 BLX      R4                     ; Call service function
@@ -152,9 +157,10 @@ PendSV_Handler  PROC
                 EXPORT   PendSV_Handler
                 IMPORT   os_PendSV_Handler
 
-                PUSH     {R4,LR}                ; Save EXC_RETURN
+                PUSH     {R0,LR}                ; Save EXC_RETURN
                 BL       os_PendSV_Handler
-                POP      {R4,LR}                ; Restore EXC_RETURN
+                POP      {R0,R1}                ; Restore EXC_RETURN
+                MOV      LR,R1                  ; Set EXC_RETURN
                 B        Sys_Context
 
                 ALIGN
@@ -165,9 +171,10 @@ SysTick_Handler PROC
                 EXPORT   SysTick_Handler
                 IMPORT   os_Tick_Handler
 
-                PUSH     {R4,LR}                ; Save EXC_RETURN
+                PUSH     {R0,LR}                ; Save EXC_RETURN
                 BL       os_Tick_Handler        ; Call os_Tick_Handler
-                POP      {R4,LR}                ; Restore EXC_RETURN
+                POP      {R0,R1}                ; Restore EXC_RETURN
+                MOV      LR,R1                  ; Set EXC_RETURN
                 B        Sys_Context
 
                 ALIGN
@@ -183,50 +190,70 @@ Sys_Context     PROC
                 ENDIF
 
                 LDR      R3,=os_Info+I_T_RUN_OFS; Load address of os_Info.run
-                LDM      R3,{R1,R2}             ; Load os_Info.thread.run: curr & next
+                LDM      R3!,{R1,R2}            ; Load os_Info.thread.run: curr & next
                 CMP      R1,R2                  ; Check if thread switch is required
-                BXEQ     LR                     ; Exit when threads are the same
+                BEQ      Sys_ContextExit        ; Branch when threads are the same
 
 Sys_ContextSave
                 IF       __DOMAIN_NS = 1
-                TST      LR,#0x40               ; Check domain of interrupted thread
-                BEQ      Sys_ContextSave1       ; Branch if non-secure
+                MOV      R0,LR                  ; Get EXC_RETURN
+                LSLS     R0,R0,#25              ; Check domain of interrupted thread
+                BPL      Sys_ContextSave1       ; Branch if non-secure
+                MOV      R0,LR                  ; Get EXC_RETURN
+                PUSH     {R0,R1,R2,R3}          ; Save registers
                 LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
-                PUSH     {R1,R2,R3,LR}          ; Save registers and EXC_RETURN
                 BL       TZ_StoreContext_S      ; Store secure context
-                POP      {R1,R2,R3,LR}          ; Restore registers and EXC_RETURN
+                POP      {R0,R1,R2,R3}          ; Restore registers
+                MOV      LR,R0                  ; Set EXC_RETURN
                 MRS      R0,PSP                 ; Get PSP
+                STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
                 B        Sys_ContextSave2
                 ENDIF
 
 Sys_ContextSave1
                 MRS      R0,PSP                 ; Get PSP
-                STMDB    R0!,{R4-R11}           ; Save R4..R11
-                IF       __FPU_USED = 1
-                TST      LR,#0x10               ; Check if extended stack frame
-                VSTMDBEQ R0!,{S16-S31}          ;  Save VFP S16.S31
-                ENDIF
+                SUBS     R0,R0,#32              ; Adjust address
+                STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
+                STMIA    R0!,{R4-R7}            ; Save R4..R7
+                MOV      R4,R8
+                MOV      R5,R9
+                MOV      R6,R10
+                MOV      R7,R11
+                STMIA    R0!,{R4-R7}            ; Save R8..R11
 
 Sys_ContextSave2
-                STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
-                STRB     LR,[R1,#TCB_SF_OFS]    ; Store stack frame information
+                MOV      R0,LR                  ; Get EXC_RETURN
+                ADDS     R1,R1,#TCB_SF_OFS      ; Adjust address
+                STRB     R0,[R1]                ; Store stack frame information
 
 Sys_ContextSwitch
+                SUBS     R3,R3,#8               ; Adjust address
                 STR      R2,[R3]                ; os_Info.run: curr = next
 
 Sys_ContextRestore
-                LDR      R0,[R2,#TCB_SM_OFS]    ; Load stack memory base
-                LDRB     R1,[R2,#TCB_SF_OFS]    ; Load stack frame information
-                MSR      PSPLIM,R0              ; Set PSPLIM
-                LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
-                ORR      LR,R1,#0xFFFFFF00      ; Set EXC_RETURN
+                MOV      R1,R2
+                ADDS     R1,R1,#TCB_SF_OFS      ; Adjust offset
+                LDRB     R0,[R1]                ; Load stack frame information
+                MOVS     R1,#0xFF
+                MVNS     R1,R1                  ; R1=0xFFFFFF00
+                ORRS     R0,R1
+                MOV      LR,R0                  ; Set EXC_RETURN
 
-                IF       __FPU_USED = 1
-                TST      LR,#0x10               ; Check if extended stack frame
-                VLDMIAEQ R0!,{S16-S31}          ;  Restore VFP S16..S31
+                IF       __DOMAIN_NS = 0
+                LDR      R0,[R2,#TCB_SM_OFS]    ; Load stack memory base
+                MSR      PSPLIM,R0              ; Set PSPLIM
                 ENDIF
-                LDMIA    R0!,{R4-R11}           ; Restore R4..R11
+
+                LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
+                ADDS     R0,R0,#16              ; Adjust address
+                LDMIA    R0!,{R4-R7}            ; Restore R8..R11
+                MOV      R8,R4
+                MOV      R9,R5
+                MOV      R10,R6
+                MOV      R11,R7
                 MSR      PSP,R0                 ; Set PSP
+                SUBS     R0,R0,#32              ; Adjust address
+                LDMIA    R0!,{R4-R7}            ; Restore R4..R7
 
                 IF       __DOMAIN_NS = 1
                 LDR      R0,[R2,#TCB_TZM_OFS]   ; Load TrustZone memory identifier

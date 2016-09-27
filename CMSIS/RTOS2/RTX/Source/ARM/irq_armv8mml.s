@@ -18,7 +18,7 @@
 ; * -----------------------------------------------------------------------------
 ; *
 ; * Project:     CMSIS-RTOS RTX
-; * Title:       ARMv8M Main Line Exception handlers
+; * Title:       ARMv8M Mainline Exception handlers
 ; *
 ; * -----------------------------------------------------------------------------
 ; */

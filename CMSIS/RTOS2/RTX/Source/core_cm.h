@@ -388,7 +388,12 @@ __STATIC_INLINE uint32_t os_exc_set32 (uint32_t *mem, uint32_t bits) {
   __ASM volatile (
   "loop%=:\n\t"
     "ldrex %[val],[%[mem]]\n\t"
+#if (__ARM_ARCH_8M_BASE__ == 1U)
+    "mov   %[ret],%[val]\n\t"
+    "orrs  %[ret],%[bits]\n\t"
+#else
     "orr   %[ret],%[val],%[bits]\n\t"
+#endif
     "strex %[res],%[ret],[%[mem]]\n\t"
     "cbz   %[res],exit%=\n\t"
     "b     loop%=\n\t"
@@ -398,7 +403,11 @@ __STATIC_INLINE uint32_t os_exc_set32 (uint32_t *mem, uint32_t bits) {
     [res]  "=&l" (res)
   : [mem]  "l"   (mem),
     [bits] "l"   (bits)
+#if (__ARM_ARCH_8M_BASE__ == 1U)
+  : "memory", "cc"
+#else
   : "memory"
+#endif
   );
 
   return ret;
@@ -415,7 +424,12 @@ __STATIC_INLINE uint32_t os_exc_clr32 (uint32_t *mem, uint32_t bits) {
   __ASM volatile (
   "loop%=:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
+#if (__ARM_ARCH_8M_BASE__ == 1U)
+    "mov   %[val],%[ret]\n\t"
+    "bics  %[val],%[bits]\n\t"
+#else
     "bic   %[val],%[ret],%[bits]\n\t"
+#endif
     "strex %[res],%[val],[%[mem]]\n\t"
     "cbz   %[res],exit%=\n\t"
     "b     loop%=\n\t"
@@ -425,7 +439,11 @@ __STATIC_INLINE uint32_t os_exc_clr32 (uint32_t *mem, uint32_t bits) {
     [res]  "=&l" (res)
   : [mem]  "l"   (mem),
     [bits] "l"   (bits)
+#if (__ARM_ARCH_8M_BASE__ == 1U)
+  : "memory", "cc"
+#else
   : "memory"
+#endif
   );
 
   return ret;
@@ -442,14 +460,24 @@ __STATIC_INLINE uint32_t os_exc_chk32_all (uint32_t *mem, uint32_t bits) {
   __ASM volatile (
   "loop%=:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
+#if (__ARM_ARCH_8M_BASE__ == 1U)
+    "mov   %[val],%[ret]\n\t"
+    "ands  %[val],%[bits]\n\t"
+#else
     "and   %[val],%[ret],%[bits]\n\t"
+#endif
     "cmp   %[val],%[bits]\n\t"
     "beq   update%=\n\t"
     "clrex\n\t"
     "movs  %[ret],#0\n\t"
     "b     exit%=\n\t"
   "update%=:\n\t"
+#if (__ARM_ARCH_8M_BASE__ == 1U)
+    "mov   %[val],%[ret]\n\t"
+    "bics  %[val],%[bits]\n\t"
+#else
     "bic   %[val],%[ret],%[bits]\n\t"
+#endif
     "strex %[res],%[val],[%[mem]]\n\t"
     "cbz   %[res],exit%=\n\t"
     "b     loop%=\n\t"
@@ -476,13 +504,18 @@ __STATIC_INLINE uint32_t os_exc_chk32_any (uint32_t *mem, uint32_t bits) {
   __ASM volatile (
   "loop%=:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
-    "ands  %[val],%[ret],%[bits]\n\t"
+    "tst   %[ret],%[bits]\n\t"
     "bne   update%=\n\t"
     "clrex\n\t"
     "movs  %[ret],#0\n\t"
     "b     exit%=\n\t"
   "update%=:\n\t"
+#if (__ARM_ARCH_8M_BASE__ == 1U)
+    "mov   %[val],%[ret]\n\t"
+    "bics  %[val],%[bits]\n\t"
+#else
     "bic   %[val],%[ret],%[bits]\n\t"
+#endif
     "strex %[res],%[val],[%[mem]]\n\t"
     "cbz   %[res],exit%=\n\t"
     "b     loop%=\n\t"
