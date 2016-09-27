@@ -2,7 +2,7 @@
  * @file     cmsis_armcc.h
  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
  * @version  V5.00
- * @date     13. September 2016
+ * @date     27. September 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -29,6 +29,23 @@
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 400677)
   #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
 #endif
+
+/* CMSIS compiler control architecture macros */
+#if (defined (__TARGET_ARCH_6_M ) && (__TARGET_ARCH_6_M  == 1))
+  #define __ARM_ARCH_6M__           1
+#endif
+
+#if (defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1))
+  #define __ARM_ARCH_7M__           1
+#endif
+
+#if (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))
+  #define __ARM_ARCH_7EM__          1
+#endif
+
+  /* __ARM_ARCH_8M_BASE__  not applicable */
+  /* __ARM_ARCH_8M_MAIN__  not applicable */
+
 
 /* CMSIS compiler specific defines */
 #ifndef   __ASM
@@ -213,8 +230,8 @@ __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
 }
 
 
-#if ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1)) || \
-     (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     )
+#if ((defined (__ARM_ARCH_7M__ ) && (__ARM_ARCH_7M__  == 1)) || \
+     (defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     )
 
 /**
   \brief   Enable FIQ
@@ -292,11 +309,11 @@ __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
   __regFaultMask = (faultMask & (uint32_t)1U);
 }
 
-#endif /* ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1)) || \
-           (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     ) */
+#endif /* ((defined (__ARM_ARCH_7M__ ) && (__ARM_ARCH_7M__  == 1)) || \
+           (defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
 
 
-#if ((defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     )
+#if ((defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     )
 
 /**
   \brief   Get FPSCR
@@ -329,7 +346,7 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 #endif
 }
 
-#endif /* ((defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     ) */
+#endif /* ((defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
 
 
 
@@ -470,8 +487,8 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#if ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1)) || \
-     (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     )
+#if ((defined (__ARM_ARCH_7M__ ) && (__ARM_ARCH_7M__  == 1)) || \
+     (defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     )
   #define __RBIT                          __rbit
 #else
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
@@ -501,8 +518,8 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 #define __CLZ                             __clz
 
 
-#if ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1)) || \
-     (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     )
+#if ((defined (__ARM_ARCH_7M__ ) && (__ARM_ARCH_7M__  == 1)) || \
+     (defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     )
 
 /**
   \brief   LDR Exclusive (8 bit)
@@ -684,8 +701,8 @@ __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint3
  */
 #define __STRT(value, ptr)                __strt(value, ptr)
 
-#endif /* ((defined (__TARGET_ARCH_7_M ) && (__TARGET_ARCH_7_M  == 1)) || \
-           (defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     ) */
+#endif /* ((defined (__ARM_ARCH_7M__ ) && (__ARM_ARCH_7M__  == 1)) || \
+           (defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
 
 /*@}*/ /* end of group CMSIS_Core_InstructionInterface */
 
@@ -696,7 +713,7 @@ __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint3
   @{
 */
 
-#if ((defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     )
+#if ((defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     )
 
 #define __SADD8                           __sadd8
 #define __QADD8                           __qadd8
@@ -767,7 +784,7 @@ __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint3
 #define __SMMLA(ARG1,ARG2,ARG3)          ( (int32_t)((((int64_t)(ARG1) * (ARG2)) + \
                                                       ((int64_t)(ARG3) << 32U)     ) >> 32U))
 
-#endif /* ((defined (__TARGET_ARCH_7E_M) && (__TARGET_ARCH_7E_M == 1))     ) */
+#endif /* ((defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
 /*@} end of group CMSIS_SIMD_intrinsics */
 
 
