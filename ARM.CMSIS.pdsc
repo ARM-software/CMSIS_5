@@ -966,6 +966,25 @@ The ARMv8MML processor is brand new.
       <require Tcompiler="GCC"/>
     </condition>
 
+    <condition id="ARMv8MBL_LE_GCC">
+      <description>ARMv8-M Baseline processor based device in little endian mode for the GCC Compiler</description>
+      <require Dcore="ARMV8MBL" Dendian="Little-endian"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+
+    <condition id="ARMv8MML_LE_GCC">
+      <description>ARMv8-M Mainline processor based device in little endian mode for the GCC Compiler</description>
+      <require Dcore="ARMV8MML" Dfpu="0" Dendian="Little-endian"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+
+    <condition id="ARMv8MML_FP_LE_GCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit in little endian mode for the GCC Compiler</description>
+      <accept Dcore="ARMV8MML" Dfpu="SP_FPU" Dendian="Little-endian"/>
+      <accept Dcore="ARMV8MML" Dfpu="DP_FPU" Dendian="Little-endian"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+
     <!-- IAR compiler -->
     <condition id="CM0_LE_IAR">
       <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device in little endian mode for the IAR Compiler</description>
@@ -1545,9 +1564,13 @@ The ARMv8MML processor is brand new.
 
         <!-- RTX libraries (CPU and Compiler dependent) -->
         <!-- ARMCC -->
-        <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <!-- GCC -->
+        <file category="library" condition="ARMv8MBL_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Release NS" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 ARMv8M">
@@ -1575,9 +1598,13 @@ The ARMv8MML processor is brand new.
 
         <!-- RTX libraries (CPU and Compiler dependent) -->
         <!-- ARMCC -->
-        <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <!-- GCC -->
+        <file category="library" condition="ARMv8MBL_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MBN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
 
