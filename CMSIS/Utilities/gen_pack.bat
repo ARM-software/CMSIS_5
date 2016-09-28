@@ -82,14 +82,15 @@ XCOPY /Q /S /Y ..\..\CMSIS\RTOS2\RTX\*.* %RELEASE_PATH%\CMSIS\RTOS2\RTX\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\ARM_Example.* %RELEASE_PATH%\CMSIS\SVD\*.*
 
 :: -- Utilities files 
-XCOPY /Q /S /Y ..\..\CMSIS\Utilities\CMSIS-SVD.xsd %RELEASE_PATH%\CMSIS\Utilities\*.*
-XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PACK.xsd      %RELEASE_PATH%\CMSIS\Utilities\*.*
-XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PackChk.exe   %RELEASE_PATH%\CMSIS\Utilities\*.*
-XCOPY /Q /S /Y ..\..\CMSIS\Utilities\SVDConv.exe   %RELEASE_PATH%\CMSIS\Utilities\*.*
-XCOPY /Q /S /Y ..\..\CMSIS\Utilities\SVDConv.linux %RELEASE_PATH%\CMSIS\Utilities\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Utilities\CMSIS-SVD.xsd       %RELEASE_PATH%\CMSIS\Utilities\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PACK.xsd            %RELEASE_PATH%\CMSIS\Utilities\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PackChk.exe         %RELEASE_PATH%\CMSIS\Utilities\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Win32\*.*           %RELEASE_PATH%\CMSIS\Utilities\Win32\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Linux-gcc-4.4.4\*.* %RELEASE_PATH%\CMSIS\Utilities\Linux-gcc-4.4.4\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Linux-gcc-4.8.3\*.* %RELEASE_PATH%\CMSIS\Utilities\Linux-gcc-4.8.3\*.*
 
 :: -- index file 
-COPY ..\..\CMSIS\index.html %RELEASE_PATH%\CMSIS\index.html
+REM COPY ..\..\CMSIS\index.html %RELEASE_PATH%\CMSIS\index.html
 
 :: Generate Documentation 
 :: -- Generate doxygen files 

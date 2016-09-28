@@ -10294,7 +10294,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_CM4, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, __FPU_PRESENT = 1</Define>
+              <Define>ARM_MATH_CM4, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -11970,7 +11970,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_CM4, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, __FPU_PRESENT = 1, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_CM4, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, __FPU_PRESENT=1U, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -16998,7 +16998,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, __FPU_PRESENT = 1</Define>
+              <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -18674,7 +18674,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, __FPU_PRESENT = 1, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, __FPU_PRESENT=1U, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -20350,7 +20350,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, __FPU_PRESENT = 1</Define>
+              <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>
@@ -22026,7 +22026,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
-              <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, __FPU_PRESENT = 1, ARM_MATH_BIG_ENDIAN</Define>
+              <Define>ARM_MATH_CM7, ARM_MATH_MATRIX_CHECK, ARM_MATH_ROUNDING, UNALIGNED_SUPPORT_DISABLE, __FPU_PRESENT=1U, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Include;..\..\..\Core\Include;..\..\..\Include</IncludePath>
             </VariousControls>

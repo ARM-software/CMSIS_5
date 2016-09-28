@@ -1139,7 +1139,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_CM4 __FPU_PRESENT=1</Define>
+              <Define>ARM_MATH_CM4 __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -1542,7 +1542,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARM_MATH_CM7 __FPU_PRESENT=1</Define>
+              <Define>ARM_MATH_CM7 __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
