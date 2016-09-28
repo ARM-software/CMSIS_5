@@ -96,6 +96,15 @@ SVC_ContextSwitch
                 STR      R2,[R3]                ; os_Info.thread.run: curr = next
 
 SVC_ContextRestore
+                IF       __DOMAIN_NS = 1
+                LDR      R0,[R2,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
+                CBZ      R0,SVC_ContextRestore1 ; Branch if there is no secure context
+                PUSH     {R2,R3}                ; Save registers
+                BL       TZ_LoadContext_S       ; Load secure context
+                POP      {R2,R3}                ; Restore registers
+                ENDIF
+
+SVC_ContextRestore1
                 MOV      R1,R2
                 ADDS     R1,R1,#TCB_SF_OFS      ; Adjust address
                 LDRB     R0,[R1]                ; Load stack frame information
@@ -104,11 +113,18 @@ SVC_ContextRestore
                 ORRS     R0,R1
                 MOV      LR,R0                  ; Set EXC_RETURN
 
-                IF       __DOMAIN_NS = 0
+                IF       __DOMAIN_NS = 1
+                LSLS     R0,R0,#25              ; Check domain of interrupted thread
+                BPL      SVC_ContextRestore2    ; Branch if non-secure
+                LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
+                MSR      PSP,R0                 ; Set PSP
+                BX       LR                     ; Exit from handler
+                ELSE
                 LDR      R0,[R2,#TCB_SM_OFS]    ; Load stack memory base
                 MSR      PSPLIM,R0              ; Set PSPLIM
                 ENDIF
 
+SVC_ContextRestore2
                 LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
                 ADDS     R0,R0,#16              ; Adjust address
                 LDMIA    R0!,{R4-R7}            ; Restore R8..R11
@@ -119,14 +135,6 @@ SVC_ContextRestore
                 MSR      PSP,R0                 ; Set PSP
                 SUBS     R0,R0,#32              ; Adjust address
                 LDMIA    R0!,{R4-R7}            ; Restore R4..R7
-
-                IF       __DOMAIN_NS = 1
-                LDR      R0,[R2,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
-                CBZ      R0,SVC_Exit            ; Branch if there is no secure context
-                PUSH     {R4,LR}                ; Save EXC_RETURN
-                BL       TZ_LoadContext_S       ; Load secure context
-                POP      {R4,PC}                ; Exit from handler
-                ENDIF
 
 SVC_Exit
                 BX       LR                     ; Exit from handler
@@ -158,7 +166,7 @@ PendSV_Handler  PROC
                 IMPORT   os_PendSV_Handler
 
                 PUSH     {R0,LR}                ; Save EXC_RETURN
-                BL       os_PendSV_Handler
+                BL       os_PendSV_Handler      ; Call os_PendSV_Handler
                 POP      {R0,R1}                ; Restore EXC_RETURN
                 MOV      LR,R1                  ; Set EXC_RETURN
                 B        Sys_Context
@@ -231,6 +239,15 @@ Sys_ContextSwitch
                 STR      R2,[R3]                ; os_Info.run: curr = next
 
 Sys_ContextRestore
+                IF       __DOMAIN_NS = 1
+                LDR      R0,[R2,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
+                CBZ      R0,Sys_ContextRestore1 ; Branch if there is no secure context
+                PUSH     {R2,R3}                ; Save registers
+                BL       TZ_LoadContext_S       ; Load secure context
+                POP      {R2,R3}                ; Restore registers
+                ENDIF
+
+Sys_ContextRestore1
                 MOV      R1,R2
                 ADDS     R1,R1,#TCB_SF_OFS      ; Adjust offset
                 LDRB     R0,[R1]                ; Load stack frame information
@@ -239,11 +256,18 @@ Sys_ContextRestore
                 ORRS     R0,R1
                 MOV      LR,R0                  ; Set EXC_RETURN
 
-                IF       __DOMAIN_NS = 0
+                IF       __DOMAIN_NS = 1
+                LSLS     R0,R0,#25              ; Check domain of interrupted thread
+                BPL      Sys_ContextRestore2    ; Branch if non-secure
+                LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
+                MSR      PSP,R0                 ; Set PSP
+                BX       LR                     ; Exit from handler
+                ELSE
                 LDR      R0,[R2,#TCB_SM_OFS]    ; Load stack memory base
                 MSR      PSPLIM,R0              ; Set PSPLIM
                 ENDIF
 
+Sys_ContextRestore2
                 LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
                 ADDS     R0,R0,#16              ; Adjust address
                 LDMIA    R0!,{R4-R7}            ; Restore R8..R11
@@ -254,14 +278,6 @@ Sys_ContextRestore
                 MSR      PSP,R0                 ; Set PSP
                 SUBS     R0,R0,#32              ; Adjust address
                 LDMIA    R0!,{R4-R7}            ; Restore R4..R7
-
-                IF       __DOMAIN_NS = 1
-                LDR      R0,[R2,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
-                CBZ      R0,Sys_ContextExit     ; Branch if there is no secure context
-                PUSH     {R4,LR}                ; Save EXC_RETURN
-                BL       TZ_LoadContext_S       ; Load secure context
-                POP      {R4,PC}                ; Exit from handler
-                ENDIF
 
 Sys_ContextExit
                 BX       LR                     ; Exit from handler

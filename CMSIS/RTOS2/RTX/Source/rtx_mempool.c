@@ -94,6 +94,7 @@ void *os_MemoryPoolAlloc (os_mp_info_t *mp_info) {
     register uint32_t val, res;
 
     __ASM volatile (
+    ".syntax unified\n\t"
     "loop1%=:\n\t"
       "ldrex %[block],[%[mp_info],%[_block_free]]\n\t"
       "cbnz  %[block],update%=\n\t"
@@ -156,6 +157,7 @@ osStatus_t os_MemoryPoolFree (os_mp_info_t *mp_info, void *block) {
     register uint32_t val1, val2, res;
 
     __ASM volatile (
+    ".syntax unified\n\t"
     "loop1%=:\n\t"
       "ldr   %[val1],[%[mp_info],%[_block_free]]\n\t"
       "str   %[val1],[%[block]]\n\t"

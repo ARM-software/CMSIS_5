@@ -465,7 +465,7 @@ osStatus_t osKernelStart (void) {
     case 0x00U:                                 // Privileged Thread mode & MSP
 #if ( (__ARM_ARCH_8M_MAIN__ == 1U) || \
      ((__ARM_ARCH_8M_BASE__ == 1U) && (__DOMAIN_NS == 0U)))
-      __set_PSPLIM((uint32_t)stack);
+//    __set_PSPLIM((uint32_t)stack);
 #endif
       __set_PSP((uint32_t)(stack + 8));         // Initial PSP
       __set_CONTROL(0x02U);                     // Set Privileged Thread mode & PSP

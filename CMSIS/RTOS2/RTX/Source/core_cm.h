@@ -361,6 +361,7 @@ __STATIC_INLINE uint8_t os_exc_wr8 (uint8_t *mem, uint8_t val) {
   register uint8_t  ret;
 
   __ASM volatile (
+  ".syntax unified\n\t"
   "loop%=:\n\t"
     "ldrexb %[ret],[%[mem]]\n\t"
     "strexb %[res],%[val],[%[mem]]\n\t"
@@ -386,6 +387,7 @@ __STATIC_INLINE uint32_t os_exc_set32 (uint32_t *mem, uint32_t bits) {
   register uint32_t ret;
 
   __ASM volatile (
+  ".syntax unified\n\t"
   "loop%=:\n\t"
     "ldrex %[val],[%[mem]]\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
@@ -422,6 +424,7 @@ __STATIC_INLINE uint32_t os_exc_clr32 (uint32_t *mem, uint32_t bits) {
   register uint32_t ret;
 
   __ASM volatile (
+  ".syntax unified\n\t"
   "loop%=:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
@@ -458,6 +461,7 @@ __STATIC_INLINE uint32_t os_exc_chk32_all (uint32_t *mem, uint32_t bits) {
   register uint32_t ret;
 
   __ASM volatile (
+  ".syntax unified\n\t"
   "loop%=:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
@@ -502,6 +506,7 @@ __STATIC_INLINE uint32_t os_exc_chk32_any (uint32_t *mem, uint32_t bits) {
   register uint32_t ret;
 
   __ASM volatile (
+  ".syntax unified\n\t"
   "loop%=:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
     "tst   %[ret],%[bits]\n\t"
@@ -539,6 +544,7 @@ __STATIC_INLINE uint32_t os_exc_inc32 (uint32_t *mem) {
   register uint32_t ret;
 
   __ASM volatile (
+  ".syntax unified\n\t"
   "loop%=:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
     "adds  %[val],%[ret],#1\n\t"
@@ -565,6 +571,7 @@ __STATIC_INLINE uint16_t os_exc_inc16_lt (uint16_t *mem, uint16_t max) {
   register uint16_t ret;
 
   __ASM volatile (
+  ".syntax unified\n\t"
   "loop%=:\n\t"
     "ldrexh %[ret],[%[mem]]\n\t"
     "cmp    %[max],%[ret]\n\t"
@@ -597,6 +604,7 @@ __STATIC_INLINE uint16_t os_exc_inc16_lim (uint16_t *mem, uint16_t lim) {
   register uint16_t ret;
 
   __ASM volatile (
+  ".syntax unified\n\t"
   "loop%=:\n\t"
     "ldrexh %[ret],[%[mem]]\n\t"
     "adds   %[val],%[ret],#1\n\t"
@@ -627,6 +635,7 @@ __STATIC_INLINE uint32_t os_exc_dec32_nz (uint32_t *mem) {
   register uint32_t ret;
 
   __ASM volatile (
+  ".syntax unified\n\t"
   "loop%=:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
     "cbnz  %[ret],update%=\n\t"
@@ -656,6 +665,7 @@ __STATIC_INLINE uint16_t os_exc_dec16_nz (uint16_t *mem) {
   register uint16_t ret;
 
   __ASM volatile (
+  ".syntax unified\n\t"
   "loop%=:\n\t"
     "ldrexh %[ret],[%[mem]]\n\t"
     "cbnz   %[ret],update%=\n\t"
