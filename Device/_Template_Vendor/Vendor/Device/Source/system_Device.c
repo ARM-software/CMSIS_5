@@ -3,7 +3,7 @@
  * @brief    CMSIS Cortex-M# Device Peripheral Access Layer Source File for
  *           Device <Device>
  * @version  V5.00
- * @date     02. March 2016
+ * @date     28. September 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -43,7 +43,7 @@
 /* ToDo: initialize SystemCoreClock with the system core clock frequency value
          achieved after system intitialization.
          This means system core clock frequency after call to SystemInit() */
-uint32_t SystemCoreClock = __SYSTEM_CLOCK;  /* System Clock Frequency (Core Clock)*/
+uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Clock Frequency (Core Clock)*/
 
 
 
