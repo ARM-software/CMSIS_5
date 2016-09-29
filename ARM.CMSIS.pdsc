@@ -8,13 +8,23 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.0.0-Beta12">
-      CMSIS_Core:
+    <release version="5.0.0-Beta12" date="2016-09-29">
+      Interim Beta Release:
+      CMSIS-RTOS2 and RTX implementation:
+       - added context management API for ARMv8-M TrustZone
+       - added ARMv8-M support (ARMClang, GCC)
+      CMSIS-Core:
+       - Updated documentation
        - Added new file cmsis_compiler.h.
        - Deleted deprecated files core_cmfunc.h, core_cminstr.h, core_cmsimd.h.
        - Reworked compiler specific include files.
        - Reworked core dependent include files.
        - Added __PACKED macro.
+      CMSIS-DSP:
+        - updated library projects
+      CMSIS-SVD:
+       - removed SVD file database documentation as SVD files are distributed in packs
+       - updated SVDConv for Win32 and Linux
     </release>
     <release version="5.0.0-Beta11">
       CMSIS_Core:
