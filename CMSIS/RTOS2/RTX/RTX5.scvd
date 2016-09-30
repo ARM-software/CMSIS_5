@@ -4,7 +4,7 @@
 
   <typedefs>
     <!-- Thread Control Block -->
-    <typedef name="os_thread_t" info="" size="60">
+    <typedef name="os_thread_t" info="" size="64">
       <member name="id"            type="uint8_t"      offset="0" info="Object Identifier"/>
       <member name="state"         type="uint8_t"      offset="1" info="Object State">
         <enum name="osThreadInactive"    value="0"  info=""/>
