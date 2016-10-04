@@ -3,7 +3,7 @@
 \mainpage
 
 The CMSIS-RTOS manages the resources of the microcontroller system and implements the concept of parallel threads that run concurrently. 
-There are many advantages of using an CMSIS-RTOS v2 compliant kernel as it provides an standardized interface. avoids the login 
+There are many advantages of using an CMSIS-RTOS v2 compliant kernel as it provides a standardized interface.
 
 Applications frequently require several concurrent activities. CMSIS-RTOS can manage multiple concurrent activities at the time when 
 they are needed. Each activity gets a separate thread which executes a specific task and this simplifies the overall program structure.
