@@ -135,7 +135,8 @@ osSemaphoreId_t os_svcSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
   const char     *name;
 
   // Check parameters
-  if ((max_count     > os_SemaphoreTokenLimit) ||
+  if ((max_count    == 0U)                     ||
+      (max_count     > os_SemaphoreTokenLimit) ||
       (initial_count > max_count)) {
     return (osSemaphoreId_t)NULL;
   }
