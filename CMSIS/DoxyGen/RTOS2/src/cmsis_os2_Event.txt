@@ -52,7 +52,7 @@ osDelay (1000);                       // wait for 1 second
 /**
 \fn osEventFlagsId_t osEventFlagsNew (const osEventFlagsAttr_t *attr)
 \details
-Create and initialize a Event Flag object that is used to send events accross threads. 
+Create and initialize a Event Flag object that is used to send events across threads. 
 
 <b>Code Example</b>
 \code{.c}

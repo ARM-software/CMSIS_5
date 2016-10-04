@@ -371,8 +371,8 @@ defines.
    - \ref osKernelStart : Start the RTOS kernel.
    - \ref osKernelRunning : Query if the RTOS kernel is running.
    - \ref osKernelSysTick : Get RTOS kernel system timer counter.
-   - \ref osKernelSysTickFrequency : RTOS kernel system timer frequency in Hz.(*)
-   - \ref osKernelSysTickMicroSec : Convert microseconds value to RTOS kernel system timer value.(*)
+   - \ref osKernelSysTickFrequency : RTOS kernel system timer frequency in Hz.
+   - \ref osKernelSysTickMicroSec : Convert microseconds value to RTOS kernel system timer value.
 
  - \ref CMSIS_RTOS_ThreadMgmt
    - \ref osThreadCreate : Start execution of a thread function.
@@ -527,7 +527,7 @@ towards the Cortex-M processors. Optional features may be for example
  - Deterministic context switching.
  - Round-robin context switching.
  - Deadlock avoidance, for example with priority inversion.
- - Zero interrupt latency by using the Cortex-M3/M4 instructions LDEX and STEX.
+ - Zero interrupt latency by using the Cortex-M3/M4 instructions LDREX and STREX.
 */
 
 

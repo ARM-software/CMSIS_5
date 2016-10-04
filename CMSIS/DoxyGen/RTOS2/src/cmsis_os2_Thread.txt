@@ -97,9 +97,9 @@ Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 \note
 MUST REMAIN UNCHANGED: the function shall be consistent in every CMSIS-RTOS. 
 
-Start a thread function by adding it to the Active Threads list and set it to state \b READY. Arguments fo the thread function are passed
+Start a thread function by adding it to the Active Threads list and set it to state \b READY. Arguments for the thread function are passed
 using the parameter pointer \em *argument. When the priority of the created thread function is higher than the current \b RUNNING thread, 
-the created thread function starts instantly and becomes the new \b RUNNING thread. Thread sttributes are defined with the parameter pointer \em attr.
+the created thread function starts instantly and becomes the new \b RUNNING thread. Thread attributes are defined with the parameter pointer \em attr.
 Attributes include settings for thread priority, stack size, or memory allocation.
 
 \note
@@ -404,7 +404,7 @@ osThreadDettached       | Thread is created in a detached state.
 \var osThreadAttr_t::cb_mem
 \details
 Pointer to a memory location for the thread object. This can optionally be used for custom memory management systems. 
-Specifytoken{NULL} to use the kernel memory management.
+Specify token{NULL} to use the kernel memory management.
 
 \var osThreadAttr_t::cb_size
 \details
