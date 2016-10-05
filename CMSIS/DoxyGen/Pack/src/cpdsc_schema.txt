@@ -1368,7 +1368,7 @@ software components. Files can be sorted into named groups.
   </tr>
   <tr>
     <td>name</td>
-    <td>name of the group of files</td>
+    <td>path and name of file relative to CPDSC location</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
