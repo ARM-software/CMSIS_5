@@ -43,7 +43,7 @@ File/Folder                  | Content
 -----------------------------|------------------------------------------------------------------------
 \b CMSIS/Documentation/RTOS2 | This documentation                                                     
 \b CMSIS/Documentation/RTOS  | CMSIS-RTOS API v1 documentation                                 
-\b CMSIS/RTOS2/Template      | \ref cmsis_os2_h                                                 
+\b CMSIS/RTOS2/Include       | \ref cmsis_os2_h                                                 
 */
 
 
@@ -59,14 +59,59 @@ File/Folder                  | Content
     <tr>
       <td>V2.00 Alpha</td>
       <td>
-        Extended number of thread priorities.\n
-        Added: osKernelTime, osKernelStop.\n
-        Added: osThreadState, osThreadGetState, osThreadSuspend, osThreadResume.\n
-        Added: osTimerRunning.\n
-        Added: osPoolDelete.\n
-        Added: osMessageCount, osMessageReset, osMessageDelete.\n
-        Added: osMailCount, osMailReset, osMailDelete.\n
-        Added: osFlag object.\n
+        - Kernel:\n
+         -- added: osKernelGetInfo, osKernelGetState.\n
+         -- added: osKernelLock, osKernelUnlock.\n
+         -- added: osKernelSuspend, osKernelResume.\n
+         -- added: osKernelGetTime.\n
+         -- renamed osKernelSysTick to osKernelGetSysTick.\n
+        - Thread:\n
+         -- extended number of thread priorities.\n
+         -- changed thread return value.\n
+         -- replaced osThreadCreate with osThreadNew.\n
+         -- added: osThreadGetState.\n
+         -- added: osThreadAbortWait.\n
+         -- added: osThreadSuspend, osThreadResume.\n
+         -- added: osThreadJoin, osThreadDetach, osThreadExit.\n
+        - Signals:\n
+         -- renamed osSignals to osThreadFlags.\n
+         -- changed return value of Set/Clear/Wait functions.\n
+         -- extended Wait function (options).\n
+         -- added: osThreadFlagsGet.\n        
+        - Event Flags: added new independent object for handling Event Flags.\n
+        - Delay and Wait functions:\n
+         -- added: osDelayUntil.\n
+         -- deprecated: osWait.\n
+        - Timer:\n
+         -- replaced osTimerCreate with osTimerNew.\n
+         -- added: osTimerIsRunning.\n
+        - Mutex:\n
+         -- extended: attributes (Recursive, Priority Inherit, Robust).\n
+         -- replaced osMutexCreate with osMutexNew.\n
+         -- renamed osMutexWait to osMutexAcquire.\n
+         -- added: osMutexGetOwner.\n
+        - Semaphore:\n
+         -- extended: maximum and initial token count.\n
+         -- replaced osSemaphoreCreate with osSemaphoreNew.\n
+         -- renamed osSemaphoreWait to osSemaphoreAcquire (changed return value).\n
+         -- added: osSemaphoreGetCount.\n
+        - Memory Pool:\n
+         -- using osMemoryPool prefix instead of osPool.\n
+         -- replaced osPoolCreate with osMemoryPoolNew.\n
+         -- extended: osMemoryPoolAlloc (timeout).\n
+         -- added: osMemoryPoolGetCapacity, osMemoryPoolGetBlockSize.\n
+         -- added: osMemoryPoolGetCount, osMemoryPoolGetSpace.\n
+         -- added: osMemoryPoolDelete.\n
+         -- deprecated: osPoolCAlloc.\n
+        - Message Queue:\n
+         -- fixed size messages instead of a single 32-bit values.\n
+         -- using osMessageQueue prefix instead of osMessage.\n
+         -- replaced osMessageCreate with osMessageQueueNew.\n
+         -- updated: osMessageQueuePut, osMessageQueueGet.\n 
+         -- added: osMessageQueueGetCapacity, osMessageQueueGetMsgSize.\n
+         -- added: osMessageQueueGetCount, osMessageQueueGetSpace.\n
+         -- added: osMessageQueueReset, osMessageQueueDelete.\n
+        - Mail Queue: deprecated (superseded by extended Message Queue functionality).\n
      </td>
     </tr>
     <tr>
