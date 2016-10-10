@@ -267,7 +267,7 @@
     </typedef>
 
     <!-- OS Runtime Information structure -->
-    <typedef name="os_info_t" info="OS Runtime Information" size="168">
+    <typedef name="os_info_t" info="OS Runtime Information" size="172">
       <member name="os_id"                      type="uint32_t"      offset="0" info="OS Identification (type is *uint8_t)"/>
       <member name="version"                    type="uint32_t"      offset="4" info="OS Version"/>
       <member name="kernel_state"               type="uint8_t"       offset="8" info="Kernel state">
@@ -300,42 +300,43 @@
 
       <member name="thread_idle"                type="*os_thread_t"  offset="48" info="Idle thread"/>
       <member name="thread_delay_list"          type="*os_thread_t"  offset="52" info="Delay list"/>
-      <member name="thread_suspended_list"      type="*os_thread_t"  offset="56" info="Suspended thread list"/>
-      <member name="thread_terminated_list"     type="*os_thread_t"  offset="60" info="Terminated thread list"/>
+      <member name="thread_wait_list"           type="*os_thread_t"  offset="56" info="Wait list (no timeout)"/>
+      <member name="thread_suspend_list"        type="*os_thread_t"  offset="60" info="Suspend thread list"/>
+      <member name="thread_terminate_list"      type="*os_thread_t"  offset="64" info="Terminate thread list"/>
 
-      <member name="thread_robin_thread"        type="*os_thread_t"  offset="64" info="Round Robin thread"/>
-      <member name="thread_robin_tick"          type="uint32_t"      offset="68" info="Round Robin time tick"/>
-      <member name="thread_timeout"             type="uint32_t"      offset="72" info="Round Robin timeout"/>
+      <member name="thread_robin_thread"        type="*os_thread_t"  offset="68" info="Round Robin thread"/>
+      <member name="thread_robin_tick"          type="uint32_t"      offset="72" info="Round Robin time tick"/>
+      <member name="thread_timeout"             type="uint32_t"      offset="76" info="Round Robin timeout"/>
 
-      <member name="timer_list"                 type="*os_timer_t"   offset="76" info="Active timer list"/>
-      <member name="timer_thread"               type="*os_thread_t"  offset="80" info="Timer thread"/>
-      <member name="timer_mq"                   type="*os_message_queue_t" offset="84" info="Timer message queue"/>
+      <member name="timer_list"                 type="*os_timer_t"   offset="80" info="Active timer list"/>
+      <member name="timer_thread"               type="*os_thread_t"  offset="84" info="Timer thread"/>
+      <member name="timer_mq"                   type="*os_message_queue_t" offset="88" info="Timer message queue"/>
 
-      <member name="isr_queue_max"              type="uint16_t"      offset="88" info="Maximum items"/>
-      <member name="isr_queue_cnt"              type="uint16_t"      offset="90" info="Item count"/>
-      <member name="isr_queue_in"               type="uint16_t"      offset="92" info="Incoming item index"/>
-      <member name="isr_queue_out"              type="uint16_t"      offset="94" info="Outgoing item index"/>
-      <member name="isr_queue_data"             type="uint32_t"      offset="96" info="Queue data (value is void **)"/>
+      <member name="isr_queue_max"              type="uint16_t"      offset="92" info="Maximum items"/>
+      <member name="isr_queue_cnt"              type="uint16_t"      offset="94" info="Item count"/>
+      <member name="isr_queue_in"               type="uint16_t"      offset="96" info="Incoming item index"/>
+      <member name="isr_queue_out"              type="uint16_t"      offset="98" info="Outgoing item index"/>
+      <member name="isr_queue_data"             type="uint32_t"      offset="100" info="Queue data (value is void **)"/>
 
-      <member name="post_process_thread"        type="uint32_t"      offset="100" info="Thread post processing function (value is func *)"/>
-      <member name="post_process_event_flags"   type="uint32_t"      offset="104" info="Event flags post processing function (value is func *)"/>
-      <member name="post_process_semaphore"     type="uint32_t"      offset="108" info="Semaphore post processing function (value is func *)"/>
-      <member name="post_process_memory_pool"   type="uint32_t"      offset="112" info="Memory pool post processing function (value is func *)"/>
-      <member name="post_process_message_queue" type="uint32_t"      offset="116" info="Message queue post processing function (value is func *)"/>
+      <member name="post_process_thread"        type="uint32_t"      offset="104" info="Thread post processing function (value is func *)"/>
+      <member name="post_process_event_flags"   type="uint32_t"      offset="108" info="Event flags post processing function (value is func *)"/>
+      <member name="post_process_semaphore"     type="uint32_t"      offset="112" info="Semaphore post processing function (value is func *)"/>
+      <member name="post_process_memory_pool"   type="uint32_t"      offset="116" info="Memory pool post processing function (value is func *)"/>
+      <member name="post_process_message_queue" type="uint32_t"      offset="120" info="Message queue post processing function (value is func *)"/>
 
-      <member name="mem_stack"                  type="uint32_t"      offset="120" info="Stack memory (value is void *)"/>
-      <member name="mem_mp_data"                type="uint32_t"      offset="124" info="Memory pool data memory (value is void *)"/>
-      <member name="mem_mq_data"                type="uint32_t"      offset="128" info="Message queue Data memory (value is void *)"/>
-      <member name="mem_common"                 type="uint32_t"      offset="132" info="Common memory address (value is void *)"/>
+      <member name="mem_stack"                  type="uint32_t"      offset="124" info="Stack memory (value is void *)"/>
+      <member name="mem_mp_data"                type="uint32_t"      offset="128" info="Memory pool data memory (value is void *)"/>
+      <member name="mem_mq_data"                type="uint32_t"      offset="132" info="Message queue Data memory (value is void *)"/>
+      <member name="mem_common"                 type="uint32_t"      offset="136" info="Common memory address (value is void *)"/>
 
-      <member name="mpi_stack"                  type="*os_mp_info_t" offset="136" info="Stack for threads"/>
-      <member name="mpi_thread"                 type="*os_mp_info_t" offset="140" info="Thread control blocks"/>
-      <member name="mpi_timer"                  type="*os_mp_info_t" offset="144" info="Timer control blocks"/>
-      <member name="mpi_event_flags"            type="*os_mp_info_t" offset="148" info="Event flags control blocks"/>
-      <member name="mpi_mutex"                  type="*os_mp_info_t" offset="152" info="Mutex control blocks"/>
-      <member name="mpi_semaphore"              type="*os_mp_info_t" offset="156" info="Semaphore control blocks"/>
-      <member name="mpi_memory_pool"            type="*os_mp_info_t" offset="160" info="Memory pool control blocks"/>
-      <member name="mpi_message_queue"          type="*os_mp_info_t" offset="164" info="Message queue control blocks"/>
+      <member name="mpi_stack"                  type="*os_mp_info_t" offset="140" info="Stack for threads"/>
+      <member name="mpi_thread"                 type="*os_mp_info_t" offset="144" info="Thread control blocks"/>
+      <member name="mpi_timer"                  type="*os_mp_info_t" offset="148" info="Timer control blocks"/>
+      <member name="mpi_event_flags"            type="*os_mp_info_t" offset="152" info="Event flags control blocks"/>
+      <member name="mpi_mutex"                  type="*os_mp_info_t" offset="156" info="Mutex control blocks"/>
+      <member name="mpi_semaphore"              type="*os_mp_info_t" offset="160" info="Semaphore control blocks"/>
+      <member name="mpi_memory_pool"            type="*os_mp_info_t" offset="164" info="Memory pool control blocks"/>
+      <member name="mpi_message_queue"          type="*os_mp_info_t" offset="168" info="Message queue control blocks"/>
     </typedef>
 
     <!-- OS Configuration structure -->

@@ -296,8 +296,9 @@ typedef struct {
     volatile os_object_t        ready;  ///< Ready List Object
     os_thread_t                 *idle;  ///< Idle Thread
     os_thread_t           *delay_list;  ///< Delay List
-    os_thread_t       *suspended_list;  ///< Suspended Thread List
-    os_thread_t      *terminated_list;  ///< Terminated Thread List
+    os_thread_t            *wait_list;  ///< Wait List (no Timeout)
+    os_thread_t         *suspend_list;  ///< Suspend Thread List
+    os_thread_t       *terminate_list;  ///< Terminate Thread List
     struct {                            ///< Thread Round Robin Info
       os_thread_t             *thread;  ///< Round Robin Thread
       uint32_t                   tick;  ///< Round Robin Time Tick
@@ -339,6 +340,7 @@ typedef struct {
     os_mp_info_t         *memory_pool;  ///< Memory Pool Control Blocks
     os_mp_info_t       *message_queue;  ///< Message Queue Control Blocks
   } mpi;
+  uint32_t                    padding;
 } os_info_t;
 
 extern os_info_t os_Info;               ///< OS Runtime Information

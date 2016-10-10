@@ -235,6 +235,14 @@ void os_ThreadReadyPut (os_thread_t *thread) {
 void os_ThreadDelayInsert (os_thread_t *thread, uint32_t millisec) {
   os_thread_t *prev, *next;
 
+  if (millisec == osWaitForever) {
+    thread->delay = millisec;
+    thread->delay_prev = NULL;
+    thread->delay_next = os_Info.thread.wait_list;
+    os_Info.thread.wait_list = thread;
+    return;
+  }
+
   if (os_Info.thread.delay_list != NULL) {
     prev = NULL;
     next = os_Info.thread.delay_list;
@@ -266,6 +274,11 @@ void os_ThreadDelayInsert (os_thread_t *thread, uint32_t millisec) {
 /// Remove a Thread from the Delay list.
 /// \param[in]  thread          thread object.
 void os_ThreadDelayRemove (os_thread_t *thread) {
+
+  if (thread->delay == osWaitForever) {
+    os_ThreadListUnlink(&os_Info.thread.wait_list, thread);
+    return;
+  }
 
   if ((thread->delay_prev == NULL) && (os_Info.thread.delay_list != thread)) {
     return;
@@ -433,9 +446,7 @@ bool os_ThreadWaitEnter (uint8_t state, uint32_t millisec) {
   }
 
   thread->state = state;
-  if (millisec != osWaitForever) {
-    os_ThreadDelayInsert(thread, millisec);
-  }
+  os_ThreadDelayInsert(thread, millisec);
   thread = os_ThreadListGet(&os_Info.thread.ready);
   os_ThreadSwitch(thread);
 
@@ -835,11 +846,11 @@ osStatus_t os_svcThreadSuspend (osThreadId_t thread_id) {
       return osErrorResource;
   }
 
-  // Update Thread State and put it into Suspended Thread list
+  // Update Thread State and put it into Suspend Thread list
   thread->state = os_ThreadSuspended;
   thread->thread_prev = NULL;
-  thread->thread_next = os_Info.thread.suspended_list;
-  os_Info.thread.suspended_list = thread;
+  thread->thread_next = os_Info.thread.suspend_list;
+  os_Info.thread.suspend_list = thread;
 
   return osOK;
 }
@@ -860,8 +871,8 @@ osStatus_t os_svcThreadResume (osThreadId_t thread_id) {
     return osErrorResource;
   }
 
-  // Remove Thread from Suspended Thread List
-  os_ThreadListUnlink(&os_Info.thread.suspended_list, thread);
+  // Remove Thread from Suspend Thread List
+  os_ThreadListUnlink(&os_Info.thread.suspend_list, thread);
 
   // Dispatch Thread
   os_ThreadDispatch(thread);
@@ -923,7 +934,7 @@ osStatus_t os_svcThreadDetach (osThreadId_t thread_id) {
   }
 
   if (thread->state == os_ThreadTerminated) {
-    os_ThreadListUnlink(&os_Info.thread.terminated_list, thread);
+    os_ThreadListUnlink(&os_Info.thread.terminate_list, thread);
     os_ThreadFree(thread);
   } else {
     thread->attr |= osThreadDetached;
@@ -959,7 +970,7 @@ osStatus_t os_svcThreadJoin (osThreadId_t thread_id, void **exit_ptr) {
       reg = os_ThreadRegPtr(thread);
       *exit_ptr = (void *)reg[0];
     }
-    os_ThreadListUnlink(&os_Info.thread.terminated_list, thread);
+    os_ThreadListUnlink(&os_Info.thread.terminate_list, thread);
     os_ThreadFree(thread);
   } else {
     // Suspend current Thread
@@ -1009,12 +1020,12 @@ void os_svcThreadExit (void *exit_ptr) {
   if (thread->attr & osThreadDetached) {
     os_ThreadFree(thread);
   } else {
-    // Update Thread State and put it into Terminated Thread list
+    // Update Thread State and put it into Terminate Thread list
     thread->state  = os_ThreadTerminated;
     thread->flags |= os_ThreadFlagExitPtr;
     thread->thread_prev = NULL;
-    thread->thread_next = os_Info.thread.terminated_list;
-    os_Info.thread.terminated_list = thread;
+    thread->thread_next = os_Info.thread.terminate_list;
+    os_Info.thread.terminate_list = thread;
   }
 }
 
@@ -1041,7 +1052,7 @@ osStatus_t os_svcThreadTerminate (osThreadId_t thread_id) {
       os_ThreadDelayRemove(thread);
       break;
     case os_ThreadSuspended:
-      os_ThreadListUnlink(&os_Info.thread.suspended_list, thread);
+      os_ThreadListUnlink(&os_Info.thread.suspend_list, thread);
       break;
     case os_ThreadInactive:
     case os_ThreadTerminated:
@@ -1073,11 +1084,11 @@ osStatus_t os_svcThreadTerminate (osThreadId_t thread_id) {
   if (thread->attr & osThreadDetached) {
     os_ThreadFree(thread);
   } else {
-    // Update Thread State and put it into Terminated Thread list
+    // Update Thread State and put it into Terminate Thread list
     thread->state = os_ThreadTerminated;
     thread->thread_prev = NULL;
-    thread->thread_next = os_Info.thread.terminated_list;
-    os_Info.thread.terminated_list = thread;
+    thread->thread_next = os_Info.thread.terminate_list;
+    os_Info.thread.terminate_list = thread;
   }
 
   return osOK;
