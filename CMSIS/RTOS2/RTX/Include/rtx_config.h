@@ -59,30 +59,30 @@
 
 // Thread Control Blocks
 static os_thread_t os_thread_cb[OS_THREAD_NUM] \
-__attribute__((section(".os.object.cb")));
+__attribute__((section(".bss.os.thread.cb")));
 
 // Thread Default Stack
 #if (OS_THREAD_DEF_STACK_NUM != 0)
 static uint64_t os_thread_def_stack[OS_THREAD_DEF_STACK_NUM*(OS_STACK_SIZE/8)] \
-__attribute__((section(".os.object.stack")));
+__attribute__((section(".bss.os.thread.stack")));
 #endif
 
 // Memory Pool for Thread Control Blocks
 static os_mp_info_t os_mpi_thread \
-__attribute__((section(".os.object.cb"))) =
+__attribute__((section(".bss.os.thread.mpi"))) =
 { (uint32_t)OS_THREAD_NUM, 0U, (uint32_t)os_ThreadCbSize, &os_thread_cb, NULL, NULL };
 
 // Memory Pool for Thread Default Stack
 #if (OS_THREAD_DEF_STACK_NUM != 0)
 static os_mp_info_t os_mpi_def_stack \
-__attribute__((section(".os.object.stack"))) =
+__attribute__((section(".bss.os.thread.mpi"))) =
 { (uint32_t)OS_THREAD_DEF_STACK_NUM, 0U, (uint32_t)OS_STACK_SIZE, &os_thread_def_stack, NULL, NULL };
 #endif
 
 // Memory Pool for Thread Stack
 #if (OS_THREAD_USER_STACK_SIZE != 0)
 static uint64_t os_thread_stack[OS_THREAD_USER_STACK_SIZE/8] \
-__attribute__((section(".os.object.stack")));
+__attribute__((section(".bss.os.thread.stack")));
 #endif
 
 #endif  // (OS_THREAD_OBJ_MEM != 0)
@@ -98,11 +98,11 @@ void os_ThreadStackCheck (void) {}
 
 // Idle Thread Control Block
 static os_thread_t os_idle_thread_cb \
-__attribute__((section(".os.object.cb")));
+__attribute__((section(".bss.os.thread.cb")));
 
 // Idle Thread Stack
 static uint64_t os_idle_thread_stack[OS_IDLE_THREAD_STACK_SIZE/8] \
-__attribute__((section(".os.object.stack")));
+__attribute__((section(".bss.os.thread.stack")));
 
 // Idle Thread Attributes
 static const osThreadAttr_t os_idle_thread_attr = {
@@ -128,11 +128,11 @@ static const osThreadAttr_t os_idle_thread_attr = {
 
 // Timer Control Blocks
 static os_timer_t os_timer_cb[OS_TIMER_NUM] \
-__attribute__((section(".os.object.cb")));
+__attribute__((section(".bss.os.timer.cb")));
 
 // Memory Pool for Timer Control Blocks
 static os_mp_info_t os_mpi_timer \
-__attribute__((section(".os.object.cb"))) =
+__attribute__((section(".bss.os.timer.mpi"))) =
 { (uint32_t)OS_TIMER_NUM, 0U, (uint32_t)os_TimerCbSize, &os_timer_cb, NULL, NULL };
 
 #endif  // (OS_TIMER_OBJ_MEM != 0)
@@ -146,11 +146,11 @@ __attribute__((section(".os.object.cb"))) =
 
 // Timer Thread Control Block
 static os_thread_t os_timer_thread_cb \
-__attribute__((section(".os.object.cb")));
+__attribute__((section(".bss.os.thread.cb")));
 
 // Timer Thread Stack
 static uint64_t os_timer_thread_stack[OS_TIMER_THREAD_STACK_SIZE/8] \
-__attribute__((section(".os.object.stack")));
+__attribute__((section(".bss.os.thread.stack")));
 
 // Timer Thread Attributes
 static const osThreadAttr_t os_timer_thread_attr = {
@@ -166,11 +166,11 @@ static const osThreadAttr_t os_timer_thread_attr = {
 
 // Timer Message Queue Control Block
 static os_message_queue_t os_timer_mq_cb \
-__attribute__((section(".os.object.cb")));
+__attribute__((section(".bss.os.msgqueue.cb")));
 
 // Timer Message Queue Data
 static uint32_t os_timer_mq_data[os_MessageQueueMemSize(OS_TIMER_CB_QUEUE,8)/4] \
-__attribute__((section(".os.object.data")));
+__attribute__((section(".bss.os.msgqueue.mem")));
 
 // Timer Message Queue Attributes
 static const osMessageQueueAttr_t os_timer_mq_attr = {
@@ -196,11 +196,11 @@ static const osMessageQueueAttr_t os_timer_mq_attr = {
 
 // Event Flags Control Blocks
 static os_event_flags_t os_ef_cb[OS_EVFLAGS_NUM] \
-__attribute__((section(".os.object.cb")));
+__attribute__((section(".bss.os.evflags.cb")));
 
 // Memory Pool for Event Flags Control Blocks
 static os_mp_info_t os_mpi_ef \
-__attribute__((section(".os.object.cb"))) =
+__attribute__((section(".bss.os.evflags.mpi"))) =
 { (uint32_t)OS_EVFLAGS_NUM, 0U, (uint32_t)os_EventFlagsCbSize, &os_ef_cb, NULL, NULL };
 
 #endif  // (OS_EVFLAGS_OBJ_MEM != 0)
@@ -217,11 +217,11 @@ __attribute__((section(".os.object.cb"))) =
 
 // Mutex Control Blocks
 static os_mutex_t os_mutex_cb[OS_MUTEX_NUM] \
-__attribute__((section(".os.object.cb")));
+__attribute__((section(".bss.os.mutex.cb")));
 
 // Memory Pool for Mutex Control Blocks
 static os_mp_info_t os_mpi_mutex \
-__attribute__((section(".os.object.cb"))) =
+__attribute__((section(".bss.os.mutex.mpi"))) =
 { (uint32_t)OS_MUTEX_NUM, 0U, (uint32_t)os_MutexCbSize, &os_mutex_cb, NULL, NULL };
 
 #endif  // (OS_MUTEX_OBJ_MEM != 0)
@@ -238,11 +238,11 @@ __attribute__((section(".os.object.cb"))) =
 
 // Semaphore Control Blocks
 static os_semaphore_t os_semaphore_cb[OS_SEMAPHORE_NUM] \
-__attribute__((section(".os.object.cb")));
+__attribute__((section(".bss.os.semaphore.cb")));
 
 // Memory Pool for Semaphore Control Blocks
 static os_mp_info_t os_mpi_semaphore \
-__attribute__((section(".os.object.cb"))) =
+__attribute__((section(".bss.os.semaphore.mpi"))) =
 { (uint32_t)OS_SEMAPHORE_NUM, 0U, (uint32_t)os_SemaphoreCbSize, &os_semaphore_cb, NULL, NULL };
 
 #endif  // (OS_SEMAPHORE_OBJ_MEM != 0)
@@ -259,11 +259,11 @@ __attribute__((section(".os.object.cb"))) =
 
 // Memory Pool Control Blocks
 static os_memory_pool_t os_mp_cb[OS_MEMPOOL_NUM] \
-__attribute__((section(".os.object.cb")));
+__attribute__((section(".bss.os.mempool.cb")));
 
 // Memory Pool for Memory Pool Control Blocks
 static os_mp_info_t os_mpi_mp \
-__attribute__((section(".os.object.cb"))) =
+__attribute__((section(".bss.os.mempool.mpi"))) =
 { (uint32_t)OS_MEMPOOL_NUM, 0U, (uint32_t)os_MemoryPoolCbSize, &os_mp_cb, NULL, NULL };
 
 // Memory Pool for Memory Pool Data Storage
@@ -272,7 +272,7 @@ __attribute__((section(".os.object.cb"))) =
 #error "Invalid Data Memory size for Memory Pools!"
 #endif
 static uint32_t os_mp_data[OS_MEMPOOL_DATA_SIZE/4] \
-__attribute__((section(".os.object.data")));
+__attribute__((section(".bss.os.mempool.mem")));
 #endif
 
 #endif  // (OS_MEMPOOL_OBJ_MEM != 0)
@@ -289,11 +289,11 @@ __attribute__((section(".os.object.data")));
 
 // Message Queue Control Blocks
 static os_message_queue_t os_mq_cb[OS_MSGQUEUE_NUM] \
-__attribute__((section(".os.object.cb")));
+__attribute__((section(".bss.os.msgqueue.cb")));
 
 // Memory Pool for Message Queue Control Blocks
 static os_mp_info_t os_mpi_mq \
-__attribute__((section(".os.object.cb"))) =
+__attribute__((section(".bss.os.msgqueue.mpi"))) =
 { (uint32_t)OS_MSGQUEUE_NUM, 0U, (uint32_t)os_MessageQueueCbSize, &os_mq_cb, NULL, NULL };
 
 // Memory Pool for Message Queue Data Storage
@@ -302,7 +302,7 @@ __attribute__((section(".os.object.cb"))) =
 #error "Invalid Data Memory size for Message Queues!"
 #endif
 static uint32_t os_mq_data[OS_MSGQUEUE_DATA_SIZE/4] \
-__attribute__((section(".os.object.data")));
+__attribute__((section(".bss.os.msgqueue.mem")));
 #endif
 
 #endif  // (OS_MSGQUEUE_OBJ_MEM != 0)
@@ -317,12 +317,12 @@ __attribute__((section(".os.object.data")));
 #error "Invalid Dynamic Memory size!"
 #endif
 static uint64_t os_mem[OS_DYNAMIC_MEM_SIZE/8] \
-__attribute__((section(".os.object")));
+__attribute__((section(".bss.os")));
 #endif
 
 // ISR FIFO Queue
 static void *os_isr_queue[OS_ISR_FIFO_QUEUE] \
-__attribute__((section(".os.data")));
+__attribute__((section(".bss.os")));
 
 
 // OS Configuration
@@ -464,11 +464,11 @@ void software_init_hook (void) {
 
 // Memory for libspace
 static uint32_t os_libspace[OS_THREAD_LIBSPACE_NUM+1][LIBSPACE_SIZE/sizeof(uint32_t)] \
-__attribute__((section(".os.object.data")));
+__attribute__((section(".bss.os")));
 
 // Thread IDs for libspace
 static uint32_t os_libspace_id[OS_THREAD_LIBSPACE_NUM] \
-__attribute__((section(".os.object.cb")));
+__attribute__((section(".bss.os")));
 
 // Check if Kernel has been started
 static uint32_t os_kernel_is_active (void) {

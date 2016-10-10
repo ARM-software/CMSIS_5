@@ -27,7 +27,7 @@
 
 
 //  OS Runtime Information
-os_info_t os_Info __attribute__((section(".os.data"))) =
+os_info_t os_Info __attribute__((section(".data.os"))) =
 { .os_id = os_KernelId, .version = os_CMSIS_RTX, .kernel.state = os_KernelInactive };
 
 //  Library reference to irq_cm module

@@ -419,8 +419,8 @@ const osThreadDef_t os_thread_def_##name = \
 { (name), (priority), (instances), (stacksz) }
 #else
 #define osThreadDef(name, priority, instances, stacksz) \
-static uint64_t os_thread_stack##name[(stacksz)?(((stacksz+7)/8)):1] __attribute__((section(".os.object.stack"))); \
-static os_thread_t os_thread_cb_##name __attribute__((section(".os.object.cb"))); \
+static uint64_t os_thread_stack##name[(stacksz)?(((stacksz+7)/8)):1] __attribute__((section(".bss.os.thread.stack"))); \
+static os_thread_t os_thread_cb_##name __attribute__((section(".bss.os.thread.cb"))); \
 const osThreadDef_t os_thread_def_##name = \
 { (name), \
   { NULL, osThreadDetached, \
@@ -532,7 +532,7 @@ extern const osTimerDef_t os_timer_def_##name
 const osTimerDef_t os_timer_def_##name = { (function) }
 #else
 #define osTimerDef(name, function) \
-static os_timer_t os_timer_cb_##name __attribute__((section(".os.object.cb"))); \
+static os_timer_t os_timer_cb_##name __attribute__((section(".bss.os.timer.cb"))); \
 const osTimerDef_t os_timer_def_##name = \
 { (function), { NULL, 0U, (&os_timer_cb_##name), os_TimerCbSize } }
 #endif
@@ -586,7 +586,7 @@ extern const osMutexDef_t os_mutex_def_##name
 const osMutexDef_t os_mutex_def_##name = { 0 }
 #else
 #define osMutexDef(name) \
-static os_mutex_t os_mutex_cb_##name __attribute__((section(".os.object.cb"))); \
+static os_mutex_t os_mutex_cb_##name __attribute__((section(".bss.os.mutex.cb"))); \
 const osMutexDef_t os_mutex_def_##name = \
 { NULL, osMutexRecursive | osMutexPrioInherit | osMutexRobust, (&os_mutex_cb_##name), os_MutexCbSize }
 #endif
@@ -642,7 +642,7 @@ extern const osSemaphoreDef_t os_semaphore_def_##name
 const osSemaphoreDef_t os_semaphore_def_##name = { 0 }
 #else
 #define osSemaphoreDef(name) \
-static os_semaphore_t os_semaphore_cb_##name __attribute__((section(".os.object.cb"))); \
+static os_semaphore_t os_semaphore_cb_##name __attribute__((section(".bss.os.semaphore.cb"))); \
 const osSemaphoreDef_t os_semaphore_def_##name = \
 { NULL, 0U, (&os_semaphore_cb_##name), os_SemaphoreCbSize }
 #endif
@@ -700,8 +700,8 @@ const osPoolDef_t os_pool_def_##name = \
 { (no), sizeof(type), NULL }
 #else
 #define osPoolDef(name, no, type) \
-static os_memory_pool_t os_mp_cb_##name __attribute__((section(".os.object.cb"))); \
-static uint32_t os_mp_data_##name[os_MemoryPoolMemSize((no),sizeof(type))/4] __attribute__((section(".os.object.data"))); \
+static os_memory_pool_t os_mp_cb_##name __attribute__((section(".bss.os.mempool.cb"))); \
+static uint32_t os_mp_data_##name[os_MemoryPoolMemSize((no),sizeof(type))/4] __attribute__((section(".bss.os.mempool.mem"))); \
 const osPoolDef_t os_pool_def_##name = \
 { (no), sizeof(type), \
   { NULL, 0U, (&os_mp_cb_##name), os_MemoryPoolCbSize, \
@@ -756,8 +756,8 @@ const osMessageQDef_t os_messageQ_def_##name = \
 { (queue_sz), NULL }
 #else
 #define osMessageQDef(name, queue_sz, type) \
-static os_message_queue_t os_mq_cb_##name __attribute__((section(".os.object.cb"))); \
-static uint32_t os_mq_data_##name[os_MessageQueueMemSize((queue_sz),sizeof(uint32_t))/4] __attribute__((section(".os.object.data"))); \
+static os_message_queue_t os_mq_cb_##name __attribute__((section(".bss.os.msgqueue.cb"))); \
+static uint32_t os_mq_data_##name[os_MessageQueueMemSize((queue_sz),sizeof(uint32_t))/4] __attribute__((section(".bss.os.msgqueue.mem"))); \
 const osMessageQDef_t os_messageQ_def_##name = \
 { (queue_sz), \
   { NULL, 0U, (&os_mq_cb_##name), os_MessageQueueCbSize, \
@@ -810,11 +810,11 @@ const osMailQDef_t os_mailQ_def_##name = \
 { (queue_sz), sizeof(type), NULL }
 #else
 #define osMailQDef(name, queue_sz, type) \
-static void              *os_mail_p_##name[2]  __attribute__((section(".os.object.cb"))); \
-static os_memory_pool_t   os_mail_mp_cb_##name __attribute__((section(".os.object.cb"))); \
-static os_message_queue_t os_mail_mq_cb_##name __attribute__((section(".os.object.cb"))); \
-static uint32_t os_mail_mp_data_##name[os_MemoryPoolMemSize  ((queue_sz),sizeof(type))/4] __attribute__((section(".os.object.data"))); \
-static uint32_t os_mail_mq_data_##name[os_MessageQueueMemSize((queue_sz),sizeof(type))/4] __attribute__((section(".os.object.data"))); \
+static void              *os_mail_p_##name[2]  __attribute__((section(".bss.os"))); \
+static os_memory_pool_t   os_mail_mp_cb_##name __attribute__((section(".bss.os.mempool.cb"))); \
+static os_message_queue_t os_mail_mq_cb_##name __attribute__((section(".bss.os.msgqueue.cb"))); \
+static uint32_t os_mail_mp_data_##name[os_MemoryPoolMemSize  ((queue_sz),sizeof(type))/4] __attribute__((section(".bss.os.mempool.mem"))); \
+static uint32_t os_mail_mq_data_##name[os_MessageQueueMemSize((queue_sz),sizeof(type))/4] __attribute__((section(".bss.os.msgqueue.mem"))); \
 const osMailQDef_t os_mailQ_def_##name = \
 { (queue_sz), sizeof(type), (&os_mail_p_##name), \
   { NULL, 0U, (&os_mail_mp_cb_##name), os_MemoryPoolCbSize, \
