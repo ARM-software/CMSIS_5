@@ -117,7 +117,7 @@ void TimerCreate_example (void)  {
 \details
 Start or restart the timer.
 
-<b>\ref CMSIS_RTOS_Status</b>\n
+\ref osStatus_t return values:
  - \em osOK: the specified timer has been started or restarted.
  - \em osErrorISR: \ref osTimerStart cannot be called from interrupt service routines.
  - \em osErrorParameter: \a timer_id is incorrect.
@@ -160,7 +160,7 @@ void TimerStart_example (void)  {
 \details
 Stop the timer.
 
-<b>\ref CMSIS_RTOS_Status</b>\n
+\ref osStatus_t return values:
  - \em osOK: the specified timer has been stopped.
  - \em osErrorISR: \ref osTimerStop cannot be called from interrupt service routines.
  - \em osErrorParameter: \a timer_id is incorrect.
@@ -208,7 +208,7 @@ Returns 1 if timer is running.
 \details
 Delete the timer object.
 
-<b>\ref CMSIS_RTOS_Status</b>\n
+\ref osStatus_t return values:
  - \em osOK: the specified timer has been deleted.
  - \em osErrorISR: \ref osTimerDelete cannot be called from interrupt service routines.
  - \em osErrorParameter: \a timer_id is incorrect.

@@ -174,7 +174,7 @@ The return value indicates the number of available tokens (the semaphore count v
 \details
 Release a Semaphore token.  This increments the count of available semaphore tokens.
 
-<b>\ref CMSIS_RTOS_Status</b>\n
+\ref osStatus_t return values:
  - \em osOK: the semaphore has been released.
  - \em osErrorResource: all tokens have already been released.
  - \em osErrorParameter: the parameter \a semaphore_id is incorrect.
@@ -183,7 +183,7 @@ Release a Semaphore token.  This increments the count of available semaphore tok
 /**
 \fn uint32_t osSemaphoreGetCount (osSemaphoreId_t semaphore_id)
 \details
-Returns the count of available semaphores of the semaphore object specified by /em semaphore_id.
+Returns the count of available semaphores of the semaphore object specified by \em semaphore_id.
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -193,7 +193,7 @@ Returns the count of available semaphores of the semaphore object specified by /
 Delete a Semaphore object.  The function releases internal memory obtained for Semaphore handling.  After this call the \a semaphore_id is no longer valid and cannot be
 used. The Semaphore may be created again using the function \ref osSemaphoreNew.
 
-<b>\ref CMSIS_RTOS_Status</b>\n
+\ref osStatus_t return values:
  - \em osOK: the semaphore object has been deleted.
  - \em osErrorISR: \ref osSemaphoreDelete cannot be called from interrupt service routines.
  - \em osErrorResource: the semaphore object could not be deleted.

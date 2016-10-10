@@ -151,7 +151,7 @@ MUST REMAIN UNCHANGED: the function shall be consistent in every CMSIS-RTOS.
 
 Change the priority of an active thread.
 
-\ref CMSIS_RTOS_Status
+\ref osStatus_t return values:
     - \em osOK: the priority of the specified thread has been changed successfully.
     - \em osErrorParameter: the value of the parameter \em thread_id or parameter \em priority is incorrect.
     - \em osErrorResource: parameter \em thread_id refers to a thread that is not an active thread.
@@ -428,7 +428,7 @@ Reserved for future use. Must be \token{0}.
 Pointer to a memory location for the thread stack. This can optionally be used for custom memory management systems. 
 Specify \token{NULL} to use the kernel memory management.
 
-\var osThreadAttr_t::stack_mem
+\var osThreadAttr_t::stack_size
 \details
 The size of the stack specified by \ref stack_mem in Bytes.
 

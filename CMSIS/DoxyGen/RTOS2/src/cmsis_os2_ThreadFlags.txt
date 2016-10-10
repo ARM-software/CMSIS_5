@@ -12,27 +12,6 @@ While Event Flags can be used to globally signal a number of threads, thread fla
 @{
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \def osFlagsWaitAny
-
-Reference: 
- - \ref osEventFlagsWait
- - \ref osThreadFlagsWait
-*/
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \def osFlagsWaitAll
-
-Reference: 
- - \ref osEventFlagsWait
- - \ref osThreadFlagsWait
-*/
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \def osFlagsAutoClear
-
-Reference: 
- - \ref osEventFlagsWait
- - \ref osThreadFlagsWait
-*/
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \fn int32_t osThreadFlagsSet (osThreadId_t thread_id, int32_t flags ) 	
 Set the thread flags for a thread instance specified by \em thread_id. This function may be used also within interrupt service routines. 
 The threads waiting for the flag set will be notified to resume from WAITING state.
@@ -64,7 +43,7 @@ Return the event flags currently set in an thread flags object.
 
 /** \fn int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t millisec);
 Suspend the execution of the current \b RUNNING thread until any or all specified thread flags with the parameter \a flags are set.
-The /em options parameter specifies the wait condition. 
+The \em options parameter specifies the wait condition. 
 
 |Option              |													     |
 |--------------------|-------------------------------------------------------|
@@ -72,7 +51,7 @@ The /em options parameter specifies the wait condition.
 |\b osFlagsWaitAll   |   Wait for all flags.                                 |
 |\b osFlagsAutoClear |   Clear flags which have been specified to wait for.  |
 
-If osFlagsAutoClear is not set in the options /ref osThreadFlagClear can be used to clear flags manually.
+If osFlagsAutoClear is not set in the options \ref osThreadFlagsClear can be used to clear flags manually.
 
 When these thread flags are already set, the function returns instantly. Otherwise the thread is put into the state \b WAITING. 
 

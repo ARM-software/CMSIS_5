@@ -1,18 +1,55 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-// ==== Status and Error Codes ====
+// ==== Definitions ====
 /**
-\addtogroup CMSIS_RTOS_Status Status and Error Codes
+\addtogroup CMSIS_RTOS_Definitions Definitions
 \ingroup CMSIS_RTOS
-\brief Status and Error Codes returned by CMSIS-RTOS API functions.
-\details The Status and Error Codes section lists all the return values that the CMSIS-RTOS functions will return.
+\brief Constants and enumerations used by many CMSIS-RTOS functions.
+\details The following constants and enumerations are used by many CMSIS-RTOS function calls.
 @{
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \typedef osStatus_t
 \details
-The \b osStatus_t enumeration defines the event status and error codes that are returned by the CMSIS-RTOS functions.
+The \b osStatus_t enumeration defines the event status and error codes that are returned by many CMSIS-RTOS functions.
 */
+
+/**
+\def osWaitForever
+\details A special \ref CMSIS_RTOS_TimeOutValue that informs the RTOS to wait infinite until a resource becomes available.
+It applies to the following functions: 
+ - \ref osThreadFlagsWait : \copybrief osThreadFlagsWait 
+ - \ref osEventFlagsWait : \copybrief osEventFlagsWait
+ - \ref osMutexAcquire : \copybrief osMutexAcquire
+ - \ref osSemaphoreAcquire : \copybrief osSemaphoreAcquire
+ - \ref osMemoryPoolAlloc : \copybrief osMemoryPoolAlloc
+ - \ref osMessageQueuePut :	\copybrief osMessageQueuePut
+ - \ref osMessageQueueGet :	\copybrief osMessageQueueGet
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsWaitAny
+
+\todo
+Reference: 
+ - \ref osEventFlagsWait
+ - \ref osThreadFlagsWait
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsWaitAll
+
+Reference: 
+ - \ref osEventFlagsWait
+ - \ref osThreadFlagsWait
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsAutoClear
+
+Reference: 
+ - \ref osEventFlagsWait
+ - \ref osThreadFlagsWait
+*/
+
 /// @} 
 
 

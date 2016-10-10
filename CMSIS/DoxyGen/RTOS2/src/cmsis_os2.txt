@@ -1,4 +1,4 @@
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+﻿/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \mainpage
 
@@ -169,30 +169,46 @@ However, the functions of the <b>C API Version 1</b> may be deprecated in future
 
 \section CMSIS_RTOS_TimeOutValue Timeout Value   
 
-The timeout value specifies the number of timer ticks until a timeout or time delay elapses. The value is an upper bound and 
+Timeout values are an argument to several \b osXxx functions to allow time for resolving a request.
+A timeout value of \b 0 means that the RTOS does not wait and returns instantly, even when no resource is available.   
+\todo R: should we introduce a define osWaitNone which would translate to 0.
+A timeout value of \ref osWaitForever means that the RTOS waits infinite until a resource becomes available.
+ 
+The timeout value specifies the number of timer ticks until the time delay elapses. The value is an upper bound and 
 depends on the actual time elapsed since the last timer tick. 
 
-For a value of \b 1 the system waits until the next timer tick occurs. That means that the actual timeout value can be one
-timer tick less than the specified timeout value. 
+Examples:
+  - timeout value \b 0 : the system does not wait, even when no resource is available the RTOS function returns instantly. 
+  - timeout value \b 1 : the system waits until the next timer tick occurs; depending on the previous timer tick, it may be a very short wait time.
+  - timeout value \b 2 : actual wait time is between 1 and 2 timer ticks.
+  - timeout value \ref osWaitForever : system waits infinite until a resource becomes available. 
+  
+\todo B: remove first '|' to make the picture clearer, make ... before first tick, add word 'time' after the arrow. 
 
 \image html TimerValues.png "Timer Values"
 
 \section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
 
-\todo Can any of the new functions be called from ISRs?
+The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
+\todo R: what about  - \ref osKernelGetState
 
-The following CMSIS-RTOS functions can be called from threads and Interrupt Service Routines (ISR):
-  - \ref osKernelRunning
-  - \ref osSemaphoreRelease
-  - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree
-  - \ref osMessageQueuePut, \ref osMessageQueueGet
+  - \ref osThreadFlagsSet, \ref osThreadFlagsClear, \ref osThreadFlagsGet
+  - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
+  - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
+  - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize, \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace
+  - \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity, \ref osMessageQueueGetMsgSize, \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace
+
+In addition, the following legacy CMSIS-RTOS1 functions can be called from threads and Interrupt Service Routines (ISR):
+\todo R: verify
+\todo B: make references to RTOS1 functions
+
+  - osKernelRunning
+  - osMailQueueAlloc, osMailQueueGet, osMailQueuePut, osMailQueueFree
 
 Functions that cannot be called from an ISR are verifying the interrupt status and return, in case they are called
 from an ISR context, the status code \b osErrorISR. In some implementations, this condition might be caught using the HARD
 FAULT vector.
 
-Some CMSIS-RTOS implementations support CMSIS-RTOS function calls from multiple ISRs at the same time.
-If this is impossible, the CMSIS-RTOS rejects calls by nested ISR functions with the status code \b osErrorISRRecursive.
 */
 
 
@@ -336,7 +352,7 @@ The following sections provide further details:
 \page theory_op Theory of Operation
 
 This section describes how RTX version 5 manages the resources of the target system. Many aspects of the kernel are configurable 
-and the configuration options are is mentioned where applicable.
+and the configuration options are mentioned where applicable.
 
 \section KernelTimer RTX Kernel Timer Tick and Thread Management
 
@@ -347,8 +363,7 @@ CMSIS-RTOS functions have a timeout parameter. This periodic RTX kernel timer ti
 time interval. CMSIS-RTOS RTX also provides configuration options for a alternative timer and tick-less operation. 
 
 To handle timeout and time delays for threads, the CMSIS-RTOS RTX thread management is controlled by the RTX kernel timer
-tick interrupt. The thread context switch itself is implemented in the HAL_CMx.x hardware abstraction layer source files. The
-thread context contains all CPU registers (R0 - R12), the return address (LR), the program counter (PC), and the processor
+tick interrupt. The thread context contains all CPU registers (R0 - R12), the return address (LR), the program counter (PC), and the processor
 status register (xPSR). For the Cortex-M4 FPU and Cortex-M7 FPU the floating point status and registers (S0 - S32, FPSCR) are
 also part of the thread context.
 

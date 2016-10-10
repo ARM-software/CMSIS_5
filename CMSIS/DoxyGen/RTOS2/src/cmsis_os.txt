@@ -183,21 +183,25 @@ timer tick less than the specified timeout value.
 
 \section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
 
-\todo Can any of the new functions be called from ISRs?
+The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
+\todo what about  - \ref osKernelGetState
+  - \ref osThreadFlagsSet, \ref osThreadFlagsClear, \ref osThreadFlagsGet
+  - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
+  - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
+  - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize, \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace
+  - \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity, \ref osMessageQueueGetMsgSize, \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace
 
-The following CMSIS-RTOS functions can be called from threads and Interrupt Service Routines (ISR):
+
+In addition, the following legacy CMSIS-RTOS1 functions can be called from threads and Interrupt Service Routines (ISR):
+\todo verify
   - \ref osKernelRunning
-  - \ref osSemaphoreRelease
-  - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree
-  - \ref osMessageQueuePut, \ref osMessageQueueGet
   - \ref osMailQueueAlloc, \ref osMailQueueGet, \ref osMailQueuePut, \ref osMailQueueFree
 
+  
 Functions that cannot be called from an ISR are verifying the interrupt status and return, in case they are called
 from an ISR context, the status code \b osErrorISR. In some implementations, this condition might be caught using the HARD
 FAULT vector.
 
-Some CMSIS-RTOS implementations support CMSIS-RTOS function calls from multiple ISRs at the same time.
-If this is impossible, the CMSIS-RTOS rejects calls by nested ISR functions with the status code \b osErrorISRRecursive.
 */
 
 
