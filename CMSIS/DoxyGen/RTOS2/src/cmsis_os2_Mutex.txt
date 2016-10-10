@@ -114,7 +114,7 @@ The \a millisec timeout can have the following values:
  - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until the mutex becomes available.
  - all other values specify a time in millisecond for a timeout.
 
-<b>\ref CMSIS_RTOS_Status</b>\n
+\ref osStatus_t return values:
  - \em osOK: the mutex has been obtained.
  - \em osErrorTimeoutResource: the mutex could not be obtained in the given time.
  - \em osErrorResource: the mutex could not be obtained when no timeout was specified.
@@ -147,7 +147,7 @@ osStatus_t  status;
 \details
 Release a Mutex that was obtained with \ref osMutexAcquire. Other threads that currently wait for the same mutex will be now put into the state \b READY.
 
-<b>\ref CMSIS_RTOS_Status</b>\n
+\ref osStatus_t return values:
  - \em osOK: the mutex has been correctly released.
  - \em osErrorResource: the mutex was not obtained before.
  - \em osErrorParameter: the parameter \a mutex_id is incorrect.
@@ -186,7 +186,7 @@ Returns the \ref osThreadId_t of the thread that acquired a mutex.
 Delete a Mutex object.  The function releases internal memory obtained for Mutex handling.  After this call the \a mutex_id is no longer valid and cannot be
 used. The Mutex may be created again using the function \ref osMutexNew.
 
-<b>\ref CMSIS_RTOS_Status</b>
+\ref osStatus_t return values:
  - \em osOK: the mutex object has been deleted.
  - \em osErrorISR: \ref osMutexDelete cannot be called from interrupt service routines.
  - \em osErrorResource: all tokens have already been released.

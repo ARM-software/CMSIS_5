@@ -755,12 +755,12 @@ INPUT                  = . \
                          ./src/cmsis_os2.txt \
                          ./src/cmsis_os2_Kernel.txt \
                          ./src/cmsis_os2_Thread.txt \
-                         ./src/cmsis_os2_Wait.txt \
                          ./src/cmsis_os2_ThreadFlags.txt \
                          ./src/cmsis_os2_Event.txt \
+                         ./src/cmsis_os2_Wait.txt \
+                         ./src/cmsis_os2_Timer.txt \
                          ./src/cmsis_os2_Mutex.txt \
                          ./src/cmsis_os2_Sema.txt \
-                         ./src/cmsis_os2_Timer.txt \
                          ./src/cmsis_os2_MemPool.txt \
                          ./src/cmsis_os2_Message.txt \
                          ./src/cmsis_os2_Status.txt \

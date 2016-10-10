@@ -108,7 +108,7 @@ Return the event flags currently set in an event flags object.
 \fn int32_t osEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t millisec)
 \details
 Suspend the execution of the current \b RUNNING thread until any or all specified event flags with the parameter \a flags are set.
-The /em options parameter specifies the wait condition. 
+The \em options parameter specifies the wait condition. 
 
 |Option              |													     |
 |--------------------|-------------------------------------------------------|
@@ -116,7 +116,7 @@ The /em options parameter specifies the wait condition.
 |\b osFlagsWaitAll   |   Wait for all flags.                                 |
 |\b osFlagsAutoClear |   Clear flags which have been specified to wait for.  |
 
-If osFlagsAutoClear is not set in the options /ref osEventFlagsClear can be used to clear flags manually.
+If osFlagsAutoClear is not set in the options \ref osEventFlagsClear can be used to clear flags manually.
 
 When these event flags are already set, the function returns instantly. Otherwise the thread is put into the state \b WAITING. 
 
