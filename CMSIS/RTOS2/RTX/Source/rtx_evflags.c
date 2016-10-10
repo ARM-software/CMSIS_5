@@ -193,7 +193,7 @@ osEventFlagsId_t os_svcEventFlagsNew (const osEventFlagsAttr_t *attr) {
     if (os_Info.mpi.event_flags != NULL) {
       ef = os_MemoryPoolAlloc(os_Info.mpi.event_flags);
     } else {
-      ef = os_MemoryAlloc(os_Info.mem.common, sizeof(os_event_flags_t));
+      ef = os_MemoryAlloc(os_Info.mem.common, sizeof(os_event_flags_t), 1U);
     }
     if (ef == NULL) {
       return (osEventFlagsId_t)NULL;

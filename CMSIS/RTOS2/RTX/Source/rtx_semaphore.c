@@ -164,7 +164,7 @@ osSemaphoreId_t os_svcSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
     if (os_Info.mpi.semaphore != NULL) {
       semaphore = os_MemoryPoolAlloc(os_Info.mpi.semaphore);
     } else {
-      semaphore = os_MemoryAlloc(os_Info.mem.common, sizeof(os_semaphore_t));
+      semaphore = os_MemoryAlloc(os_Info.mem.common, sizeof(os_semaphore_t), 1U);
     }
     if (semaphore == NULL) {
       return (osSemaphoreId_t)NULL;

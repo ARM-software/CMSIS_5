@@ -568,7 +568,7 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
     if (os_Info.mpi.thread != NULL) {
       thread = os_MemoryPoolAlloc(os_Info.mpi.thread);
     } else {
-      thread = os_MemoryAlloc(os_Info.mem.common, sizeof(os_thread_t));
+      thread = os_MemoryAlloc(os_Info.mem.common, sizeof(os_thread_t), 1U);
     }
     if (thread == NULL) {
       return (osThreadId_t)NULL;
@@ -590,7 +590,7 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
       }
     }
     if (stack_mem == NULL) {
-      stack_mem = os_MemoryAlloc(os_Info.mem.stack, stack_size);
+      stack_mem = os_MemoryAlloc(os_Info.mem.stack, stack_size, 0U);
     }
     if (stack_mem == NULL) {
       if (flags & os_FlagSystemObject) {

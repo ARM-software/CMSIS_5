@@ -283,7 +283,7 @@ osMemoryPoolId_t os_svcMemoryPoolNew (uint32_t block_count, uint32_t block_size,
     if (os_Info.mpi.memory_pool != NULL) {
       mp = os_MemoryPoolAlloc(os_Info.mpi.memory_pool);
     } else {
-      mp = os_MemoryAlloc(os_Info.mem.common, sizeof(os_memory_pool_t));
+      mp = os_MemoryAlloc(os_Info.mem.common, sizeof(os_memory_pool_t), 1U);
     }
     if (mp == NULL) {
       return (osMemoryPoolId_t)NULL;
@@ -295,7 +295,7 @@ osMemoryPoolId_t os_svcMemoryPoolNew (uint32_t block_count, uint32_t block_size,
 
   // Allocate data memory if not provided
   if (mp_mem == NULL) {
-    mp_mem = os_MemoryAlloc(os_Info.mem.mp_data, size);
+    mp_mem = os_MemoryAlloc(os_Info.mem.mp_data, size, 0U);
     if (mp_mem == NULL) {
       if (flags & os_FlagSystemObject) {
         if (os_Info.mpi.memory_pool != NULL) {

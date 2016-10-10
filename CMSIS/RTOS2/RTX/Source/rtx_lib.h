@@ -73,7 +73,7 @@ extern void  os_MutexOwnerRelease (os_mutex_t *mutex_list);
 
 // Memory Heap Library functions
 extern uint32_t os_MemoryInit (void *mem, uint32_t size);
-extern void    *os_MemoryAlloc(void *mem, uint32_t size);
+extern void    *os_MemoryAlloc(void *mem, uint32_t size, uint32_t type);
 extern uint32_t os_MemoryFree (void *mem, void *block);
 
 // Memory Pool Library functions

@@ -196,7 +196,7 @@ osTimerId_t os_svcTimerNew (os_timer_func_t func, osTimerType_t type, void *argu
     if (os_Info.mpi.timer != NULL) {
       timer = os_MemoryPoolAlloc(os_Info.mpi.timer);
     } else {
-      timer = os_MemoryAlloc(os_Info.mem.common, sizeof(os_timer_t));
+      timer = os_MemoryAlloc(os_Info.mem.common, sizeof(os_timer_t), 1U);
     }
     if (timer == NULL) {
       return (osTimerId_t)NULL;

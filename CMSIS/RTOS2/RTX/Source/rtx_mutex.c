@@ -102,7 +102,7 @@ osMutexId_t os_svcMutexNew (const osMutexAttr_t *attr) {
     if (os_Info.mpi.mutex != NULL) {
       mutex = os_MemoryPoolAlloc(os_Info.mpi.mutex);
     } else {
-      mutex = os_MemoryAlloc(os_Info.mem.common, sizeof(os_mutex_t));
+      mutex = os_MemoryAlloc(os_Info.mem.common, sizeof(os_mutex_t), 1U);
     }
     if (mutex == NULL) {
       return (osMutexId_t)NULL;

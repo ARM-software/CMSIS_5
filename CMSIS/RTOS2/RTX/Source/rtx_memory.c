@@ -35,8 +35,11 @@ typedef struct mem_head_s {
 //  Memory Block Header structure
 typedef struct mem_block_s {
   struct mem_block_s *next;     // Next Memory Block in list
-  uint32_t             len;     // Memory Block length
+  uint32_t            info;     // Info: length = <31:2>:'00', type = <1:0>
 } mem_block_t;
+
+#define MB_INFO_LEN_MASK        0xFFFFFFFCU
+#define MB_INFO_TYPE_MASK       0x00000003U
 
 
 //  ==== Library functions ====
@@ -61,7 +64,7 @@ uint32_t os_MemoryInit (void *mem, uint32_t size) {
   ptr = (mem_block_t *)((uint32_t)mem + sizeof(mem_head_t));
   ptr->next = (mem_block_t *)((uint32_t)mem + size - sizeof(mem_block_t *));
   ptr->next->next = NULL;
-  ptr->len = 0U;
+  ptr->info = 0U;
 
   return 1U;
 }
@@ -69,12 +72,13 @@ uint32_t os_MemoryInit (void *mem, uint32_t size) {
 /// Allocate a memory block from a Memory Pool.
 /// \param[in]  mem             pointer to memory pool.
 /// \param[in]  size            size of a memory block in bytes.
+/// \param[in]  type            memory block type: 0 - generic, 1 - control block
 /// \return allocated memory block or NULL in case of no memory is available.
-void *os_MemoryAlloc (void *mem, uint32_t size) {
+void *os_MemoryAlloc (void *mem, uint32_t size, uint32_t type) {
   mem_block_t *p, *p_new, *ptr;
   uint32_t     hole_size;
 
-  if ((mem == NULL) || (size == 0U)) {
+  if ((mem == NULL) || (size == 0U) || (type & ~MB_INFO_TYPE_MASK)) {
     return NULL;
   }
 
@@ -87,7 +91,7 @@ void *os_MemoryAlloc (void *mem, uint32_t size) {
   p = (mem_block_t *)((uint32_t)mem + sizeof(mem_head_t));
   for (;;) {
     hole_size  = (uint32_t)p->next - (uint32_t)p;
-    hole_size -= p->len;
+    hole_size -= p->info & MB_INFO_LEN_MASK;
     if (hole_size >= size) {
       // Hole found
       break;
@@ -101,15 +105,15 @@ void *os_MemoryAlloc (void *mem, uint32_t size) {
 
   ((mem_head_t *)mem)->used += size;
 
-  if (p->len == 0U) {
-    // No block allocated, set length of first element
-    p->len = size;
+  if (p->info == 0U) {
+    // No block allocated, set info of first element
+    p->info = size | type;
     ptr = (mem_block_t *)((uint32_t)p + sizeof(mem_block_t));
   } else {
     // Insert new element into the list
-    p_new = (mem_block_t *)((uint32_t)p + p->len);
+    p_new = (mem_block_t *)((uint32_t)p + (p->info & MB_INFO_LEN_MASK));
     p_new->next = p->next;
-    p_new->len  = size;
+    p_new->info = size | type;
     p->next = p_new;
     ptr = (mem_block_t *)((uint32_t)p_new + sizeof(mem_block_t));
   }
@@ -142,11 +146,11 @@ uint32_t os_MemoryFree (void *mem, void *block) {
     }
   }
 
-  ((mem_head_t *)mem)->used -= p->len;
+  ((mem_head_t *)mem)->used -= p->info & MB_INFO_LEN_MASK;
 
   if (p_prev == NULL) {
-    // Release first block, only set len to 0
-    p->len = 0U;
+    // Release first block, only set info to 0
+    p->info = 0U;
   } else {
     // Discard block from chained list
     p_prev->next = p->next;

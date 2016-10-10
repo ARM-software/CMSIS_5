@@ -291,7 +291,7 @@ osMessageQueueId_t os_svcMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
     if (os_Info.mpi.message_queue != NULL) {
       mq = os_MemoryPoolAlloc(os_Info.mpi.message_queue);
     } else {
-      mq = os_MemoryAlloc(os_Info.mem.common, sizeof(os_message_queue_t));
+      mq = os_MemoryAlloc(os_Info.mem.common, sizeof(os_message_queue_t), 1U);
     }
     if (mq == NULL) {
       return (osMessageQueueId_t)NULL;
@@ -303,7 +303,7 @@ osMessageQueueId_t os_svcMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
 
   // Allocate data memory if not provided
   if (mq_mem == NULL) {
-    mq_mem = os_MemoryAlloc(os_Info.mem.mq_data, size);
+    mq_mem = os_MemoryAlloc(os_Info.mem.mq_data, size, 0U);
     if (mq_mem == NULL) {
       if (flags & os_FlagSystemObject) {
         if (os_Info.mpi.message_queue != NULL) {
