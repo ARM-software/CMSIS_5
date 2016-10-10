@@ -78,8 +78,8 @@
    * - arm_cortexM4b_math.lib (Big endian on Cortex-M4)
    * - arm_cortexM3l_math.lib (Little endian on Cortex-M3)
    * - arm_cortexM3b_math.lib (Big endian on Cortex-M3)
-   * - arm_cortexM0l_math.lib (Little endian on Cortex-M0 / CortexM0+)
-   * - arm_cortexM0b_math.lib (Big endian on Cortex-M0 / CortexM0+)
+   * - arm_cortexM0l_math.lib (Little endian on Cortex-M0 / Cortex-M0+)
+   * - arm_cortexM0b_math.lib (Big endian on Cortex-M0 / Cortex-M0+)
    *
    * The library functions are declared in the public file <code>arm_math.h</code> which is placed in the <code>Include</code> folder.
    * Simply include this file and link the appropriate library in the application and begin calling the library functions. The Library supports single
