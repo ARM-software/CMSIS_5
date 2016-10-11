@@ -27,6 +27,35 @@
  
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
  
+// <h>System Configuration
+// =======================
+ 
+//     <o>Global Dynamic Memory size [bytes] <0-1073741824:8>
+//     <i> Defines the combined global dynamic memory size.
+//     <i> Default: 4096
+#define OS_DYNAMIC_MEM_SIZE         4096
+ 
+//   <e>Round-Robin Thread switching
+//   <i> Enables Round-Robin Thread switching.
+#define OS_ROBIN_ENABLE             1
+ 
+//     <o>Round-Robin Timeout [ms] <1-1000>
+//     <i> Defines how long a thread will execute before a thread switch.
+//     <i> Default: 5
+#define OS_ROBIN_TIMEOUT            5
+ 
+//   </e>
+ 
+//   <o>ISR FIFO Queue 
+//      <4=>  4 entries    <8=>   8 entries   <12=>  12 entries   <16=>  16 entries
+//     <24=> 24 entries   <32=>  32 entries   <48=>  48 entries   <64=>  64 entries
+//     <96=> 96 entries  <128=> 128 entries  <196=> 196 entries  <256=> 256 entries
+//   <i> RTOS Functions called from ISR store requests to this buffer.
+//   <i> Default: 16 entries
+#define OS_ISR_FIFO_QUEUE           16
+ 
+// </h>
+ 
 // <h>Thread Configuration
 // =======================
  
@@ -205,35 +234,6 @@
 #define OS_MSGQUEUE_DATA_SIZE       0
  
 //   </e>
- 
-// </h>
- 
-// <h>System Configuration
-// =======================
- 
-//     <o>Global Dynamic Memory size [bytes] <0-1073741824:8>
-//     <i> Defines the combined global dynamic memory size.
-//     <i> Default: 4096
-#define OS_DYNAMIC_MEM_SIZE         4096
- 
-//   <e>Round-Robin Thread switching
-//   <i> Enables Round-Robin Thread switching.
-#define OS_ROBIN_ENABLE             1
- 
-//     <o>Round-Robin Timeout [ms] <1-1000>
-//     <i> Defines how long a thread will execute before a thread switch.
-//     <i> Default: 5
-#define OS_ROBIN_TIMEOUT            5
- 
-//   </e>
- 
-//   <o>ISR FIFO Queue 
-//      <4=>  4 entries    <8=>   8 entries   <12=>  12 entries   <16=>  16 entries
-//     <24=> 24 entries   <32=>  32 entries   <48=>  48 entries   <64=>  64 entries
-//     <96=> 96 entries  <128=> 128 entries  <196=> 196 entries  <256=> 256 entries
-//   <i> RTOS Functions called from ISR store requests to this buffer.
-//   <i> Default: 16 entries
-#define OS_ISR_FIFO_QUEUE           16
  
 // </h>
  
