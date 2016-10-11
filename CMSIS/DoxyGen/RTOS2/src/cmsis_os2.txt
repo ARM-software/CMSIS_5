@@ -171,7 +171,6 @@ However, the functions of the <b>C API Version 1</b> may be deprecated in future
 
 Timeout values are an argument to several \b osXxx functions to allow time for resolving a request.
 A timeout value of \b 0 means that the RTOS does not wait and returns instantly, even when no resource is available.   
-\todo R: should we introduce a define osWaitNone which would translate to 0.
 A timeout value of \ref osWaitForever means that the RTOS waits infinite until a resource becomes available.
  
 The timeout value specifies the number of timer ticks until the time delay elapses. The value is an upper bound and 
@@ -190,20 +189,12 @@ Examples:
 \section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
 
 The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
-\todo R: what about  - \ref osKernelGetState
-
   - \ref osThreadFlagsSet, \ref osThreadFlagsClear, \ref osThreadFlagsGet
   - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
   - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
   - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize, \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace
   - \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity, \ref osMessageQueueGetMsgSize, \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace
 
-In addition, the following legacy CMSIS-RTOS1 functions can be called from threads and Interrupt Service Routines (ISR):
-\todo R: verify
-\todo B: make references to RTOS1 functions
-
-  - osKernelRunning
-  - osMailQueueAlloc, osMailQueueGet, osMailQueuePut, osMailQueueFree
 
 Functions that cannot be called from an ISR are verifying the interrupt status and return, in case they are called
 from an ISR context, the status code \b osErrorISR. In some implementations, this condition might be caught using the HARD
@@ -248,7 +239,6 @@ Overview of all CMSIS-RTOS C API v2 functions.
    - \ref osThreadYield : \copybrief osThreadYield
 
  - \ref CMSIS_RTOS_Wait
-   - \ref osWaitForever : \copybrief osWaitForever
    - \ref osDelay : \copybrief osDelay
    - \ref osDelayUntil : \copybrief osDelayUntil
 
@@ -268,10 +258,9 @@ Overview of all CMSIS-RTOS C API v2 functions.
    - \ref osEventFlagsWait : \copybrief osEventFlagsWait
 
  - \ref CMSIS_RTOS_ThreadFlagsMgmt
-   - \ref osFlagsAutoClear : \copybrief osFlagsAutoClear
-   - \ref osFlagsWaitAll : \copybrief osFlagsWaitAll
-   - \ref osFlagsWaitAny : \copybrief osFlagsWaitAny
    - \ref osThreadFlagsSet : \copybrief osThreadFlagsSet
+   - \ref osThreadFlagsClear : \copybrief osThreadFlagsClear
+   - \ref osThreadFlagsGet : \copybrief osThreadFlagsGet
    - \ref osThreadFlagsWait : \copybrief osThreadFlagsWait
 
  - \ref CMSIS_RTOS_Message
