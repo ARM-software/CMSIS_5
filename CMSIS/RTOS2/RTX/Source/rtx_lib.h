@@ -116,7 +116,6 @@ extern osThreadState_t  os_svcThreadGetState     (osThreadId_t thread_id);
 extern osStatus_t       os_svcThreadSetPriority  (osThreadId_t thread_id, osPriority_t priority);
 extern osPriority_t     os_svcThreadGetPriority  (osThreadId_t thread_id);
 extern osStatus_t       os_svcThreadYield        (void);
-extern osStatus_t       os_svcThreadAbortWait    (osThreadId_t thread_id);
 extern osStatus_t       os_svcThreadSuspend      (osThreadId_t thread_id);
 extern osStatus_t       os_svcThreadResume       (osThreadId_t thread_id);
 extern osStatus_t       os_svcThreadDetach       (osThreadId_t thread_id);

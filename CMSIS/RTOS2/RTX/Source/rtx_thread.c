@@ -236,14 +236,24 @@ void os_ThreadDelayInsert (os_thread_t *thread, uint32_t millisec) {
   os_thread_t *prev, *next;
 
   if (millisec == osWaitForever) {
+    prev = NULL;
+    next = os_Info.thread.wait_list;
+    while (next != NULL)  {
+      prev = next;
+      next = next->delay_next;
+    }
     thread->delay = millisec;
-    thread->delay_prev = NULL;
-    thread->delay_next = os_Info.thread.wait_list;
-    os_Info.thread.wait_list = thread;
-    return;
-  }
-
-  if (os_Info.thread.delay_list != NULL) {
+    thread->delay_prev = prev;
+    thread->delay_next = next;
+    if (prev != NULL) {
+      prev->delay_next = thread;
+    } else {
+      os_Info.thread.wait_list = thread;
+    }
+    if (next != NULL) {
+      next->delay_prev = thread;
+    }
+  } else {
     prev = NULL;
     next = os_Info.thread.delay_list;
     while ((next != NULL) && (next->delay <= millisec)) {
@@ -263,11 +273,6 @@ void os_ThreadDelayInsert (os_thread_t *thread, uint32_t millisec) {
       next->delay -= millisec;
       next->delay_prev = thread;
     }
-  } else {
-    os_Info.thread.delay_list = thread;
-    thread->delay = millisec;
-    thread->delay_prev = NULL;
-    thread->delay_next = NULL;
   }
 }
 
@@ -495,7 +500,6 @@ SVC0_1 (ThreadGetState,    osThreadState_t, osThreadId_t)
 SVC0_2 (ThreadSetPriority, osStatus_t,      osThreadId_t, osPriority_t)
 SVC0_1 (ThreadGetPriority, osPriority_t,    osThreadId_t)
 SVC0_0 (ThreadYield,       osStatus_t)
-SVC0_1 (ThreadAbortWait,   osStatus_t,      osThreadId_t)
 SVC0_1 (ThreadSuspend,     osStatus_t,      osThreadId_t)
 SVC0_1 (ThreadResume,      osStatus_t,      osThreadId_t)
 SVC0_1 (ThreadDetach,      osStatus_t,      osThreadId_t)
@@ -788,30 +792,6 @@ osStatus_t os_svcThreadYield (void) {
   return osOK;
 }
 
-/// Abort waiting operation of a thread.
-/// \note API identical to osThreadAbortWait
-osStatus_t os_svcThreadAbortWait (osThreadId_t thread_id) {
-  os_thread_t *thread = (os_thread_t *)thread_id;
-
-  // Check parameters
-  if ((thread == NULL) ||
-      (thread->id != os_IdThread)) {
-    return osErrorParameter;
-  }
-
-  // Check object state
-  if ((thread->state & os_ThreadStateMask) != os_ThreadWaiting) {
-    return osErrorResource;
-  }
-
-  // Wakeup Thread
-  os_ThreadListRemove(thread);
-  os_ThreadDelayRemove(thread);
-  os_ThreadDispatch(thread);
-
-  return osOK;
-}
-
 /// Suspend execution of a thread.
 /// \note API identical to osThreadSuspend
 osStatus_t os_svcThreadSuspend (osThreadId_t thread_id) {
@@ -835,22 +815,21 @@ osStatus_t os_svcThreadSuspend (osThreadId_t thread_id) {
     case os_ThreadReady:
       os_ThreadListRemove(thread);
       break;
-    case os_ThreadWaiting:
+    case os_ThreadBlocked:
       os_ThreadListRemove(thread);
       os_ThreadDelayRemove(thread);
       break;
-    case os_ThreadSuspended:
     case os_ThreadInactive:
     case os_ThreadTerminated:
     default:
       return osErrorResource;
   }
 
-  // Update Thread State and put it into Suspend Thread list
-  thread->state = os_ThreadSuspended;
+  // Update Thread State and put it into Delay list
+  thread->state = os_ThreadBlocked;
   thread->thread_prev = NULL;
-  thread->thread_next = os_Info.thread.suspend_list;
-  os_Info.thread.suspend_list = thread;
+  thread->thread_next = NULL;
+  os_ThreadDelayInsert(thread, osWaitForever);
 
   return osOK;
 }
@@ -867,14 +846,13 @@ osStatus_t os_svcThreadResume (osThreadId_t thread_id) {
   }
 
   // Check object state
-  if (thread->state != os_ThreadSuspended) {
+  if ((thread->state & os_ThreadStateMask) != os_ThreadBlocked) {
     return osErrorResource;
   }
 
-  // Remove Thread from Suspend Thread List
-  os_ThreadListUnlink(&os_Info.thread.suspend_list, thread);
-
-  // Dispatch Thread
+  // Wakeup Thread
+  os_ThreadListRemove(thread);
+  os_ThreadDelayRemove(thread);
   os_ThreadDispatch(thread);
 
   return osOK;
@@ -1047,12 +1025,9 @@ osStatus_t os_svcThreadTerminate (osThreadId_t thread_id) {
     case os_ThreadReady:
       os_ThreadListRemove(thread);
       break;
-    case os_ThreadWaiting:
+    case os_ThreadBlocked:
       os_ThreadListRemove(thread);
       os_ThreadDelayRemove(thread);
-      break;
-    case os_ThreadSuspended:
-      os_ThreadListUnlink(&os_Info.thread.suspend_list, thread);
       break;
     case os_ThreadInactive:
     case os_ThreadTerminated:
@@ -1302,14 +1277,6 @@ osStatus_t osThreadYield (void) {
     return osErrorISR;                          // Not allowed in ISR
   }
   return __svcThreadYield();
-}
-
-/// Abort waiting operation of a thread.
-osStatus_t osThreadAbortWait (osThreadId_t thread_id) {
-  if (__get_IPSR() != 0U) {
-    return osErrorISR;                          // Not allowed in ISR
-  }
-  return __svcThreadAbortWait(thread_id);
 }
 
 /// Suspend execution of a thread.

@@ -81,19 +81,18 @@ extern "C"
 #define os_ThreadInactive           ((uint8_t)osThreadInactive)
 #define os_ThreadReady              ((uint8_t)osThreadReady)
 #define os_ThreadRunning            ((uint8_t)osThreadRunning)
-#define os_ThreadWaiting            ((uint8_t)osThreadWaiting)
-#define os_ThreadSuspended          ((uint8_t)osThreadSuspended)
+#define os_ThreadBlocked            ((uint8_t)osThreadBlocked)
 #define os_ThreadTerminated         ((uint8_t)osThreadTerminated)
 
-#define os_ThreadWaitingDelay       (os_ThreadWaiting | 0x10U)
-#define os_ThreadWaitingJoin        (os_ThreadWaiting | 0x20U)
-#define os_ThreadWaitingThreadFlags (os_ThreadWaiting | 0x30U) 
-#define os_ThreadWaitingEventFlags  (os_ThreadWaiting | 0x40U) 
-#define os_ThreadWaitingMutex       (os_ThreadWaiting | 0x50U)
-#define os_ThreadWaitingSemaphore   (os_ThreadWaiting | 0x60U)
-#define os_ThreadWaitingMemoryPool  (os_ThreadWaiting | 0x70U)
-#define os_ThreadWaitingMessageGet  (os_ThreadWaiting | 0x80U)
-#define os_ThreadWaitingMessagePut  (os_ThreadWaiting | 0x90U)
+#define os_ThreadWaitingDelay       (os_ThreadBlocked | 0x10U)
+#define os_ThreadWaitingJoin        (os_ThreadBlocked | 0x20U)
+#define os_ThreadWaitingThreadFlags (os_ThreadBlocked | 0x30U) 
+#define os_ThreadWaitingEventFlags  (os_ThreadBlocked | 0x40U) 
+#define os_ThreadWaitingMutex       (os_ThreadBlocked | 0x50U)
+#define os_ThreadWaitingSemaphore   (os_ThreadBlocked | 0x60U)
+#define os_ThreadWaitingMemoryPool  (os_ThreadBlocked | 0x70U)
+#define os_ThreadWaitingMessageGet  (os_ThreadBlocked | 0x80U)
+#define os_ThreadWaitingMessagePut  (os_ThreadBlocked | 0x90U)
 
 /// Thread Flags definitions
 #define os_ThreadFlagDefStack   0x10U   ///< Default Stack flag
@@ -297,7 +296,6 @@ typedef struct {
     os_thread_t                 *idle;  ///< Idle Thread
     os_thread_t           *delay_list;  ///< Delay List
     os_thread_t            *wait_list;  ///< Wait List (no Timeout)
-    os_thread_t         *suspend_list;  ///< Suspend Thread List
     os_thread_t       *terminate_list;  ///< Terminate Thread List
     struct {                            ///< Thread Round Robin Info
       os_thread_t             *thread;  ///< Round Robin Thread
@@ -340,7 +338,6 @@ typedef struct {
     os_mp_info_t         *memory_pool;  ///< Memory Pool Control Blocks
     os_mp_info_t       *message_queue;  ///< Message Queue Control Blocks
   } mpi;
-  uint32_t                    padding;
 } os_info_t;
 
 extern os_info_t os_Info;               ///< OS Runtime Information
