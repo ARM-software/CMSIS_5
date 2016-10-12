@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        20. September 2016
+ * $Date:        12. October 2016
  * $Revision:    V2.0
  *
  * Project:      CMSIS-RTOS2 API
@@ -77,9 +77,8 @@ typedef enum {
   osThreadInactive        =  0,         ///< Inactive.
   osThreadReady           =  1,         ///< Ready.
   osThreadRunning         =  2,         ///< Running.
-  osThreadWaiting         =  3,         ///< Waiting.
-  osThreadSuspended       =  4,         ///< Suspended.
-  osThreadTerminated      =  5,         ///< Terminated.
+  osThreadBlocked         =  3,         ///< Blocked.
+  osThreadTerminated      =  4,         ///< Terminated.
   osThreadError           = -1,         ///< Error.
   osThreadReserved        = 0x7FFFFFFF  ///< Prevents enum down-size compiler optimization.
 } osThreadState_t;
@@ -360,11 +359,6 @@ osPriority_t osThreadGetPriority (osThreadId_t thread_id);
 /// Pass control to next thread that is in state \b READY.
 /// \return status code that indicates the execution status of the function.
 osStatus_t osThreadYield (void);
- 
-/// Abort waiting operation of a thread.
-/// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
-/// \return status code that indicates the execution status of the function.
-osStatus_t osThreadAbortWait (osThreadId_t thread_id);
  
 /// Suspend execution of a thread.
 /// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.

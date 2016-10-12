@@ -15,12 +15,10 @@ Threads can be in the following states:
 
  - \b RUNNING: The thread that is currently running is in the \b RUNNING state. Only one thread at a time can be in this state.
 
- - \b READY: Threads which are ready to run are in the \b READY state. Once the \b RUNNING thread has terminated, suspended, or is \b WAITING, the next \b READY thread with the highest priority becomes the \b RUNNING thread.
+ - \b READY: Threads which are ready to run are in the \b READY state. Once the \b RUNNING thread has terminated, or is \b BLOCKED, the next \b READY thread with the highest priority becomes the \b RUNNING thread.
  
- - \b WAITING: Threads that are waiting for an event to occur are in the \b WAITING state.
+ - \b BLOCKED: Threads that are blocked either delayed, waiting for an event to occur or suspended are in the \b BLOCKED state.
  
- - \b SUSPENDED: When \ref osThreadSuspend is called, a thread is in the \b SUSPENDED state. When \ref osThreadResume is called the thread restarts from the beginning.  
-
  - \b TERMINATED: When \ref osThreadTerminate is called, and threads that joined are in \b TERMINATED state. When all joined threads have terminated, resources are released an the threads are in state \b INACTIVE. 
  
  - \b INACTIVE: Threads that are not created or have been terminated with all resources released are in the \b INACTIVE state.
@@ -35,7 +33,7 @@ states change as follows:
  - CMSIS-RTOS is pre-emptive. The active thread with the highest priority becomes the \b RUNNING thread provided it does not
    wait for any event. The initial priority of a thread is defined with the \ref osThreadAttr_t but may be changed during
    execution using the function \ref osThreadSetPriority.
- - The \b RUNNING thread transfers into the \b WAITING state when it is waiting for an event.
+ - The \b RUNNING thread transfers into the \b BLOCKED state when it is delayed, waiting for an event or suspended.
  - Active threads can be terminated any time using the function \ref osThreadTerminate. Threads can terminate also by just
    returning from the thread function. Threads that are terminated are in the \b INACTIVE state and typically do not consume
    any dynamic memory resources. 
@@ -255,24 +253,9 @@ void Thread_1 (void const *arg)  {                         // Thread function
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn osStatus_t osThreadAbortWait (osThreadId_t thread_id)
-\details
-Forces a thread in WAITING stated, specified with \em thread_id, to continue operation. 
-Functions that will put a thread into WAITING state are:
-\ref osEventFlagsWait and \ref osThreadFlagsWait,
-\ref osDelay and \ref osDelayUntil,
-\ref osMutexAcquire and \ref osSemaphoreAcquire,
-\ref osMessageQueueGet,
-\ref osThreadJoin.
-
-The return value of the waiting function is unspecified.
-
-*/
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
 \fn osStatus_t osThreadSuspend (osThreadId_t thread_id)
 \details
-Sets the thread identified by parameter \em thread_id into the state \em Suspended (\ref osThreadSuspended).
+Suspends execution of the thread identified by parameter \em thread_id. Thread is put into the state \em Blocked (\ref osThreadBlocked).
 The thread is not executed until restarted with the function \ref osThreadResume.
 
 */
@@ -280,8 +263,14 @@ The thread is not executed until restarted with the function \ref osThreadResume
 /**
 \fn osStatus_t osThreadResume (osThreadId_t thread_id)
 \details
-Restart a thread defined by parameter \em thread_id that has been suspended with \ref osThreadSuspend.
-If the \b RUNNING thread has a higher priority, then the thread is put in state \b READY.
+Forces a thread in BLOCKED state, specified with \em thread_id, to resume operation. 
+Functions that will put a thread into BLOCKED state are:
+\ref osEventFlagsWait and \ref osThreadFlagsWait,
+\ref osDelay and \ref osDelayUntil,
+\ref osMutexAcquire and \ref osSemaphoreAcquire,
+\ref osMessageQueueGet,
+\ref osThreadJoin,
+\ref osThreadSuspend.
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

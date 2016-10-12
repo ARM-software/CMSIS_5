@@ -11,7 +11,7 @@ Events are used to trigger execution states between threads. The event flag mana
 
 A thread
 - can wait for event flags to be set (using \ref osEventFlagsGet). Using this function, it enters the
-  \ref ThreadStates "WAITING" state. The \ref osEventFlagsGet parameter \a flags defines the signals that are required to put the thread back into \b READY state.
+  \ref ThreadStates "BLOCKED" state. The \ref osEventFlagsGet parameter \a flags defines the signals that are required to put the thread back into \b READY state.
 - may set one or more flags in any other given thread (using \ref osEventFlagsSet).
 - may clear its own signals or the signals of other threads (using \ref osEventFlagsClear).
 
@@ -74,7 +74,7 @@ void CreateEvent (void)  {
 \fn int32_t osEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags)
 \details
 Set the event flags in an event flags object. This function may be used also within interrupt service routines. 
-All threads waiting for the flag set will be notified to resume from WAITING state.
+All threads waiting for the flag set will be notified to resume from BLOCKED state.
 
 \note \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" can call this function.
 
@@ -118,7 +118,7 @@ The \em options parameter specifies the wait condition.
 
 If osFlagsAutoClear is not set in the options \ref osEventFlagsClear can be used to clear flags manually.
 
-When these event flags are already set, the function returns instantly. Otherwise the thread is put into the state \b WAITING. 
+When these event flags are already set, the function returns instantly. Otherwise the thread is put into the state \b BLOCKED. 
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
