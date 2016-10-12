@@ -75,6 +75,7 @@ File/Folder                  | Content
         - Signals:\n
          -- renamed osSignals to osThreadFlags.\n
          -- changed return value of Set/Clear/Wait functions.\n
+         -- Clear function limited to current running thread.\n
          -- extended Wait function (options).\n
          -- added: osThreadFlagsGet.\n        
         - Event Flags: added new independent object for handling Event Flags.\n
@@ -188,7 +189,7 @@ Examples:
 \section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
 
 The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
-  - \ref osThreadFlagsSet, \ref osThreadFlagsClear, \ref osThreadFlagsGet
+  - \ref osThreadFlagsSet
   - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
   - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
   - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize, \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace

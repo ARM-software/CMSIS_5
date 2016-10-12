@@ -114,9 +114,9 @@ The \em options parameter specifies the wait condition.
 |--------------------|-------------------------------------------------------|
 |\b osFlagsWaitAny   |   Wait for any flag (default).                        |
 |\b osFlagsWaitAll   |   Wait for all flags.                                 |
-|\b osFlagsAutoClear |   Clear flags which have been specified to wait for.  |
+|\b osFlagsNoClear   |   Do not clear flags which have been specified to wait for.  |
 
-If osFlagsAutoClear is not set in the options \ref osEventFlagsClear can be used to clear flags manually.
+If osFlagsNoClear is set in the options \ref osEventFlagsClear can be used to clear flags manually.
 
 When these event flags are already set, the function returns instantly. Otherwise the thread is put into the state \b BLOCKED. 
 

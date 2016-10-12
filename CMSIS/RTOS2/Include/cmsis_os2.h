@@ -158,7 +158,7 @@ typedef enum {
 /// Flags options (\ref osThreadFlagsWait and \ref osEventFlagsWait).
 #define osFlagsWaitAny      0x00000000U ///< Wait for any flag (default).
 #define osFlagsWaitAll      0x00000001U ///< Wait for all flags.
-#define osFlagsAutoClear    0x00000002U ///< Clear flags which have been specified to wait for.
+#define osFlagsNoClear      0x00000002U ///< Do not clear flags which have been specified to wait for.
  
 /// Thread attributes (attr_bits in \ref osThreadAttr_t).
 #define osThreadJoinable    0x00000000U ///< Thread created in joinable state (default)
@@ -399,16 +399,14 @@ osStatus_t osThreadTerminate (osThreadId_t thread_id);
 /// \return thread flags after setting or error code if negative.
 int32_t osThreadFlagsSet (osThreadId_t thread_id, int32_t flags);
  
-/// Clear the specified Thread Flags of a thread.
-/// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
+/// Clear the specified Thread Flags of current running thread.
 /// \param[in]     flags         specifies the flags of the thread that shall be cleared.
 /// \return thread flags before clearing or error code if negative.
-int32_t osThreadFlagsClear (osThreadId_t thread_id, int32_t flags);
+int32_t osThreadFlagsClear (int32_t flags);
  
-/// Get the current Thread Flags of a thread.
-/// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
+/// Get the current Thread Flags of current running thread.
 /// \return current thread flags.
-int32_t osThreadFlagsGet (osThreadId_t thread_id);
+int32_t osThreadFlagsGet (void);
  
 /// Wait for one or more Thread Flags of the current running thread to become signaled.
 /// \param[in]     flags         specifies the flags to wait for.
