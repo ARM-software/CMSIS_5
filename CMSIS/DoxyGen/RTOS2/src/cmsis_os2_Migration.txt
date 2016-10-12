@@ -117,13 +117,6 @@ New function.
 \section mig_threadMgmt Thread Management
 
 \div{new}
-\func{osStatus_t #osThreadAbortWait (osThreadId_t thread_id)}
-\none
-\copybrief{osThreadAbortWait}
-New function.
-\enddiv
-
-\div{new}
 \func{osStatus_t #osThreadDetach (osThreadId_t thread_id)}
 \none
 \copybrief{osThreadDetach}

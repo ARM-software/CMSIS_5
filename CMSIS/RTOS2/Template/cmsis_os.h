@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        20. September 2016
+ * $Date:        12. October 2016
  * $Revision:    V2.0
  *
  * Project:      CMSIS-RTOS API
@@ -61,7 +61,7 @@
  *     - changed thread return value
  *     - replaced osThreadCreate with osThreadNew
  *     - added: osThreadState_t and osThreadGetState
- *     - added: osThreadAbortWait, osThreadSuspend, osThreadResume
+ *     - added: osThreadSuspend, osThreadResume
  *     - added: osThreadJoin, osThreadDetach, osThreadExit
  *     - added: Thread Flags (moved from Signals) 
  *    Signals:

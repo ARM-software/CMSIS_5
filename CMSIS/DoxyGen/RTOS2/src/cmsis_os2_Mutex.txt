@@ -108,7 +108,7 @@ void CreateMutex (void)  {
 Wait until a Mutex becomes available. If no other thread has obtained the Mutex, the function instantly returns and blocks the mutex object. 
 
 The argument \a millisec specifies how long the system waits for a mutex.
-While the system waits the thread that is calling this function is put into the state \b WAITING.
+While the system waits the thread that is calling this function is put into the state \b BLOCKED.
 The \a millisec timeout can have the following values:
  - when \a millisec is 0, the function returns instantly.
  - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until the mutex becomes available.

@@ -70,7 +70,6 @@ File/Folder                  | Content
          -- changed thread return value.\n
          -- replaced osThreadCreate with osThreadNew.\n
          -- added: osThreadGetState.\n
-         -- added: osThreadAbortWait.\n
          -- added: osThreadSuspend, osThreadResume.\n
          -- added: osThreadJoin, osThreadDetach, osThreadExit.\n
         - Signals:\n
@@ -224,7 +223,6 @@ Overview of all CMSIS-RTOS C API v2 functions.
    - \ref osKernelUnlock : \copybrief osKernelUnlock
 
  - \ref CMSIS_RTOS_ThreadMgmt
-   - \ref osThreadAbortWait : \copybrief osThreadAbortWait
    - \ref osThreadDetach : \copybrief osThreadDetach
    - \ref osThreadExit : \copybrief osThreadExit
    - \ref osThreadGetId : \copybrief osThreadGetId

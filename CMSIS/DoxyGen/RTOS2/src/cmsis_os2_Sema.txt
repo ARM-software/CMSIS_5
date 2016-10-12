@@ -158,7 +158,7 @@ Wait until a Semaphore token becomes available and acquires it for the thread if
 When no Semaphore token is available, the function waits for the time specified with the parameter \em millisec.
 
 The argument \a millisec specifies how long the system waits for a Semaphore token to become available.
-While the system waits the thread that is calling this function is put into the state \b WAITING.
+While the system waits the thread that is calling this function is put into the state \b BLOCKED.
 The \a millisec timeout can have the following values:
  - when \a millisec is 0, the function returns instantly.
  - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until the Semaphore token becomes available.
