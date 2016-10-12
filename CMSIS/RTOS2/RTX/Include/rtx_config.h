@@ -333,6 +333,9 @@ const os_config_t os_Config = {
 #if (OS_PRIVILEGE_MODE != 0)
   | os_ConfigPrivilegedMode
 #endif
+#if (OS_STACK_CHECK != 0)
+  | os_ConfigStackCheck
+#endif
 #if (OS_STACK_WATERMARK != 0)
   | os_ConfigStackWatermark
 #endif

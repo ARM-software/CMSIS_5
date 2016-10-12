@@ -423,7 +423,8 @@ extern uint32_t os_TickMicroSec (uint32_t microsec);
 
 /// OS Configuration flags
 #define os_ConfigPrivilegedMode     (1UL<<0)    ///< Threads in Privileged mode
-#define os_ConfigStackWatermark     (1UL<<1)    ///< Stack usage Watermark
+#define os_ConfigStackCheck         (1UL<<1)    ///< Stack overrun checking
+#define os_ConfigStackWatermark     (1UL<<2)    ///< Stack usage Watermark
 
 /// OS Configuration structure
 typedef struct {
