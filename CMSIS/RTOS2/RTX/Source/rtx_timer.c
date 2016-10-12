@@ -96,7 +96,7 @@ void os_TimerTick (void) {
   timer->tick--;
   while ((timer != NULL) && (timer->tick == 0U)) {
     os_TimerUnlink(timer);
-    status = osMessageQueuePut((osMessageQueueId_t)os_Info.timer.mq, &timer->finfo, 0U, 0U);
+    status = osMessageQueuePut(os_Info.timer.mq, &timer->finfo, 0U, 0U);
     if (status != osOK) {
       os_Error(os_ErrorTimerQueueOverflow, timer);
     }
@@ -116,7 +116,7 @@ void *os_TimerThread (void *argument) {
   (void)           argument;
 
   for (;;) {
-    status = osMessageQueueGet((osMessageQueueId_t)os_Info.timer.mq, &finfo, NULL, osWaitForever);
+    status = osMessageQueueGet(os_Info.timer.mq, &finfo, NULL, osWaitForever);
     if (status == osOK) {
       (*(os_timer_func_t)finfo.fp)(finfo.arg);
     }
@@ -148,7 +148,7 @@ osTimerId_t os_svcTimerNew (os_timer_func_t func, osTimerType_t type, void *argu
                                                 sizeof(os_timer_finfo_t),
                                                 os_Config.timer_mq_attr));
     if (os_Info.timer.mq == NULL) {
-      return (osTimerId_t)NULL;
+      return NULL;
     }
   }
 
@@ -159,18 +159,18 @@ osTimerId_t os_svcTimerNew (os_timer_func_t func, osTimerType_t type, void *argu
                                              NULL,
                                              os_Config.timer_thread_attr));
     if (os_Info.timer.thread == NULL) {
-      return (osTimerId_t)NULL;
+      return NULL;
     }
   }
 
   // Check parameters
   if ((func == NULL) || ((type != osTimerOnce) && (type != osTimerPeriodic))) {
-    return (osTimerId_t)NULL;
+    return NULL;
   }
 
   // Check timer objects
   if ((os_Info.timer.thread == NULL) || (os_Info.timer.mq == NULL)) {
-    return (osTimerId_t)NULL;
+    return NULL;
   }
 
   // Process attributes
@@ -179,11 +179,11 @@ osTimerId_t os_svcTimerNew (os_timer_func_t func, osTimerType_t type, void *argu
     timer = attr->cb_mem;
     if (timer != NULL) {
       if (((uint32_t)timer & 3U) || (attr->cb_size < sizeof(os_timer_t))) {
-        return (osTimerId_t)NULL;
+        return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
-        return (osTimerId_t)NULL;
+        return NULL;
       }
     }
   } else {
@@ -199,7 +199,7 @@ osTimerId_t os_svcTimerNew (os_timer_func_t func, osTimerType_t type, void *argu
       timer = os_MemoryAlloc(os_Info.mem.common, sizeof(os_timer_t), 1U);
     }
     if (timer == NULL) {
-      return (osTimerId_t)NULL;
+      return NULL;
     }
     flags = os_FlagSystemObject;
   } else {
@@ -219,7 +219,7 @@ osTimerId_t os_svcTimerNew (os_timer_func_t func, osTimerType_t type, void *argu
   timer->finfo.fp  = (void *)func;
   timer->finfo.arg = argument;
 
-  return (osTimerId_t)timer;
+  return timer;
 }
 
 /// Start or restart a timer.
@@ -341,7 +341,7 @@ osStatus_t os_svcTimerDelete (osTimerId_t timer_id) {
 /// Create and Initialize a timer.
 osTimerId_t osTimerNew (os_timer_func_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr) {
   if (__get_IPSR() != 0U) {
-    return (osTimerId_t)NULL;                   // Not allowed in ISR
+    return NULL;                                // Not allowed in ISR
   }
   if ((os_KernelGetState() == os_KernelReady) && ((__get_CONTROL() & 1U) == 0U)) {
     // Kernel Ready (not running) and in Priviledged mode

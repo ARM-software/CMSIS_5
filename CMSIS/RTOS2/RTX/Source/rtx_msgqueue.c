@@ -246,12 +246,12 @@ osMessageQueueId_t os_svcMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
   // Check parameters
   if ((msg_count == 0U) ||
       (msg_size  == 0U)) {
-    return (osMessageQueueId_t)NULL;
+    return NULL;
   }
   msg_size = (msg_size + 3U) & ~3UL;
   block_size = msg_size + sizeof(os_message_t);
   if ((__CLZ(msg_count) + __CLZ(block_size)) < 32) {
-    return (osMessageQueueId_t)NULL;
+    return NULL;
   }
 
   size = msg_count * block_size;
@@ -264,20 +264,20 @@ osMessageQueueId_t os_svcMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
     mq_size = attr->mq_size;
     if (mq != NULL) {
       if (((uint32_t)mq & 3U) || (attr->cb_size < sizeof(os_message_queue_t))) {
-        return (osMessageQueueId_t)NULL;
+        return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
-        return (osMessageQueueId_t)NULL;
+        return NULL;
       }
     }
     if (mq_mem != NULL) {
       if (((uint32_t)mq_mem & 3U) || (mq_size < size)) {
-        return (osMessageQueueId_t)NULL;
+        return NULL;
       }
     } else {
       if (mq_size != 0U) {
-        return (osMessageQueueId_t)NULL;
+        return NULL;
       }
     }
   } else {
@@ -294,7 +294,7 @@ osMessageQueueId_t os_svcMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
       mq = os_MemoryAlloc(os_Info.mem.common, sizeof(os_message_queue_t), 1U);
     }
     if (mq == NULL) {
-      return (osMessageQueueId_t)NULL;
+      return NULL;
     }
     flags = os_FlagSystemObject;
   } else {
@@ -312,7 +312,7 @@ osMessageQueueId_t os_svcMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
           os_MemoryFree(os_Info.mem.common, mq);
         }
       }
-      return (osMessageQueueId_t)NULL;
+      return NULL;
     }
     memset(mq_mem, 0, size);
     flags |= os_FlagSystemMemory;
@@ -333,7 +333,7 @@ osMessageQueueId_t os_svcMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
   // Register post ISR processing function
   os_Info.post_process.message_queue = os_MessageQueuePostProcess;
 
-  return (osMessageQueueId_t)mq;
+  return mq;
 }
 
 /// Put a Message into a Queue or timeout if Queue is full.
@@ -747,7 +747,7 @@ osStatus_t os_isrMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
 /// Create and Initialize a Message Queue object.
 osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, const osMessageQueueAttr_t *attr) {
   if (__get_IPSR() != 0U) {
-    return (osMessageQueueId_t)NULL;            // Not allowed in ISR
+    return NULL;                                // Not allowed in ISR
   }
   if ((os_KernelGetState() == os_KernelReady) && ((__get_CONTROL() & 1U) == 0U)) {
     // Kernel Ready (not running) and in Privileged mode

@@ -470,7 +470,7 @@ static uint32_t os_libspace[OS_THREAD_LIBSPACE_NUM+1][LIBSPACE_SIZE/sizeof(uint3
 __attribute__((section(".bss.os")));
 
 // Thread IDs for libspace
-static uint32_t os_libspace_id[OS_THREAD_LIBSPACE_NUM] \
+static osThreadId_t os_libspace_id[OS_THREAD_LIBSPACE_NUM] \
 __attribute__((section(".bss.os")));
 
 // Check if Kernel has been started
@@ -491,8 +491,8 @@ static uint32_t os_kernel_is_active (void) {
 // Provide libspace for current thread
 void *__user_perthread_libspace (void);
 void *__user_perthread_libspace (void) {
-  uint32_t id;
-  uint32_t n;
+  osThreadId_t id;
+  uint32_t     n;
 
   if (!os_kernel_is_active()) {
     return (void *)&os_libspace[OS_THREAD_LIBSPACE_NUM][0];
@@ -500,7 +500,7 @@ void *__user_perthread_libspace (void) {
 
   id = osThreadGetId();
   for (n = 0U; n < OS_THREAD_LIBSPACE_NUM; n++) {
-    if (os_libspace_id[n] == 0U) {
+    if (os_libspace_id[n] == NULL) {
       os_libspace_id[n] = id;
       return (void *)&os_libspace[n][0];
     }
@@ -510,20 +510,20 @@ void *__user_perthread_libspace (void) {
   }
 
   if (n == OS_THREAD_LIBSPACE_NUM) {
-    os_Error(os_ErrorClibSpace, (void *)id);
+    os_Error(os_ErrorClibSpace, id);
   }
 
   return (void *)&os_libspace[n][0];
 }
 
 // Mutex identifier
-typedef uint32_t mutex;
+typedef void *mutex;
 
 // Initialize mutex
 int _mutex_initialize(mutex *m);
 int _mutex_initialize(mutex *m) {
   *m = osMutexNew(NULL);
-  if (*m == (mutex)NULL) {
+  if (*m == NULL) {
     os_Error(os_ErrorClibMutex, m);
     return 0;
   }

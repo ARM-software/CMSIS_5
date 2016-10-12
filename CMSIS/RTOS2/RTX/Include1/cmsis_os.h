@@ -215,40 +215,40 @@ typedef int32_t                  osStatus;
  
 /// Thread ID identifies the thread.
 #if (osCMSIS < 0x20000U)
-typedef uint32_t osThreadId;
+typedef void *osThreadId;
 #else
 #define osThreadId osThreadId_t
 #endif
  
 /// Timer ID identifies the timer.
 #if (osCMSIS < 0x20000U)
-typedef uint32_t osTimerId;
+typedef void *osTimerId;
 #else
 #define osTimerId osTimerId_t
 #endif
  
 /// Mutex ID identifies the mutex.
 #if (osCMSIS < 0x20000U)
-typedef uint32_t osMutexId;
+typedef void *osMutexId;
 #else
 #define osMutexId osMutexId_t
 #endif
  
 /// Semaphore ID identifies the semaphore.
 #if (osCMSIS < 0x20000U)
-typedef uint32_t osSemaphoreId;
+typedef void *osSemaphoreId;
 #else
 #define osSemaphoreId osSemaphoreId_t
 #endif
  
 /// Pool ID identifies the memory pool.
-typedef uint32_t osPoolId;
+typedef void *osPoolId;
  
 /// Message ID identifies the message queue.
-typedef uint32_t osMessageQId;
+typedef void *osMessageQId;
  
 /// Mail ID identifies the mail queue.
-typedef uint32_t osMailQId;
+typedef void *osMailQId;
  
  
 /// Thread Definition structure contains startup information of a thread.

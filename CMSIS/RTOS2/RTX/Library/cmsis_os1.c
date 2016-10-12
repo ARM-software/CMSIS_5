@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        30. June 2016
+ * $Date:        12. October 2016
  * $Revision:    V1.0
  *
  * Project:      CMSIS-RTOS API V1
@@ -35,7 +35,7 @@
 osThreadId osThreadCreate (const osThreadDef_t *thread_def, void *argument) {
 
   if (thread_def == NULL) {
-    return (osThreadId)NULL;
+    return NULL;
   }
   return osThreadNew((os_thread_func_t)thread_def->pthread, argument, &thread_def->attr);
 }
@@ -110,7 +110,7 @@ osEvent osSignalWait (int32_t signals, uint32_t millisec) {
 osTimerId osTimerCreate (const osTimerDef_t *timer_def, os_timer_type type, void *argument) {
 
   if (timer_def == NULL) {
-    return (osTimerId)NULL;
+    return NULL;
   }
   return osTimerNew((os_timer_func_t)timer_def->ptimer, type, argument, &timer_def->attr);
 }
@@ -122,7 +122,7 @@ osTimerId osTimerCreate (const osTimerDef_t *timer_def, os_timer_type type, void
 osMutexId osMutexCreate (const osMutexDef_t *mutex_def) {
 
   if (mutex_def == NULL) {
-    return (osMutexId)NULL;
+    return NULL;
   }
   return osMutexNew(mutex_def);
 }
@@ -136,7 +136,7 @@ osMutexId osMutexCreate (const osMutexDef_t *mutex_def) {
 osSemaphoreId osSemaphoreCreate (const osSemaphoreDef_t *semaphore_def, int32_t count) {
 
   if (semaphore_def == NULL) {
-    return (osSemaphoreId)NULL;
+    return NULL;
   }
   return osSemaphoreNew((uint32_t)count, (uint32_t)count, semaphore_def);
 }
@@ -169,13 +169,13 @@ int32_t osSemaphoreWait (osSemaphoreId semaphore_id, uint32_t millisec) {
 osPoolId osPoolCreate (const osPoolDef_t *pool_def) {
 
   if (pool_def == NULL) {
-    return (osPoolId)NULL;
+    return NULL;
   }
-  return ((osPoolId)(osMemoryPoolNew(pool_def->pool_sz, pool_def->item_sz, &pool_def->attr)));
+  return osMemoryPoolNew(pool_def->pool_sz, pool_def->item_sz, &pool_def->attr);
 }
 
 void *osPoolAlloc (osPoolId pool_id) {
-  return osMemoryPoolAlloc((osMemoryPoolId_t)pool_id, 0U);
+  return osMemoryPoolAlloc(pool_id, 0U);
 }
 
 void *osPoolCAlloc (osPoolId pool_id) {
@@ -186,7 +186,7 @@ void *osPoolCAlloc (osPoolId pool_id) {
   if (block_size == 0U) {
     return NULL;
   }
-  block = osMemoryPoolAlloc((osMemoryPoolId_t)pool_id, 0U);
+  block = osMemoryPoolAlloc(pool_id, 0U);
   if (block != NULL) {
     memset(block, 0, block_size);
   }
@@ -194,7 +194,7 @@ void *osPoolCAlloc (osPoolId pool_id) {
 }
 
 osStatus osPoolFree (osPoolId pool_id, void *block) {
-  return osMemoryPoolFree((osMemoryPoolId_t)pool_id, block);
+  return osMemoryPoolFree(pool_id, block);
 }
 
 #endif  // Memory Pool
@@ -208,13 +208,13 @@ osMessageQId osMessageCreate (const osMessageQDef_t *queue_def, osThreadId threa
   (void)thread_id;
 
   if (queue_def == NULL) {
-    return (osMessageQId)NULL;
+    return NULL;
   }
-  return ((osMessageQId)(osMessageQueueNew(queue_def->queue_sz, sizeof(uint32_t), &queue_def->attr)));
+  return osMessageQueueNew(queue_def->queue_sz, sizeof(uint32_t), &queue_def->attr);
 }
 
 osStatus osMessagePut (osMessageQId queue_id, uint32_t info, uint32_t millisec) {
-  return osMessageQueuePut((osMessageQueueId_t)queue_id, &info, 0U, millisec);
+  return osMessageQueuePut(queue_id, &info, 0U, millisec);
 }
 
 osEvent osMessageGet (osMessageQId queue_id, uint32_t millisec) {
@@ -222,7 +222,7 @@ osEvent osMessageGet (osMessageQId queue_id, uint32_t millisec) {
   osEvent    event;
   uint32_t   message;
 
-  status = osMessageQueueGet((osMessageQueueId_t)queue_id, &message, NULL, millisec);
+  status = osMessageQueueGet(queue_id, &message, NULL, millisec);
   switch (status) {
     case osOK:
       event.status = osEventMessage;
@@ -258,27 +258,27 @@ osMailQId osMailCreate (const osMailQDef_t *queue_def, osThreadId thread_id) {
   (void)thread_id;
 
   if (queue_def == NULL) {
-    return (osMailQId)NULL;
+    return NULL;
   }
 
   ptr = queue_def->mail;
   if (ptr == NULL) {
-    return (osMailQId)NULL;
+    return NULL;
   }
 
   ptr->mp_id = osMemoryPoolNew  (queue_def->queue_sz, queue_def->item_sz, &queue_def->mp_attr);
   ptr->mq_id = osMessageQueueNew(queue_def->queue_sz, sizeof(void *), &queue_def->mq_attr);
-  if ((ptr->mp_id == (osMemoryPoolId_t)NULL) || (ptr->mq_id == (osMessageQueueId_t)NULL)) {
-    if (ptr->mp_id != (osMemoryPoolId_t)NULL) {
+  if ((ptr->mp_id == NULL) || (ptr->mq_id == NULL)) {
+    if (ptr->mp_id != NULL) {
       osMemoryPoolDelete(ptr->mp_id);
     }
-    if (ptr->mq_id != (osMessageQueueId_t)NULL) {
+    if (ptr->mq_id != NULL) {
       osMessageQueueDelete(ptr->mq_id);
     }
-    return (osMailQId)NULL;
+    return NULL;
   }
 
-  return (osMailQId)ptr;
+  return ptr;
 }
 
 void *osMailAlloc (osMailQId queue_id, uint32_t millisec) {

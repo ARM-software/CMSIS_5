@@ -176,11 +176,11 @@ osEventFlagsId_t os_svcEventFlagsNew (const osEventFlagsAttr_t *attr) {
     ef   = attr->cb_mem;
     if (ef != NULL) {
       if (((uint32_t)ef & 3U) || (attr->cb_size < sizeof(os_event_flags_t))) {
-        return (osEventFlagsId_t)NULL;
+        return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
-        return (osEventFlagsId_t)NULL;
+        return NULL;
       }
     }
   } else {
@@ -196,7 +196,7 @@ osEventFlagsId_t os_svcEventFlagsNew (const osEventFlagsAttr_t *attr) {
       ef = os_MemoryAlloc(os_Info.mem.common, sizeof(os_event_flags_t), 1U);
     }
     if (ef == NULL) {
-      return (osEventFlagsId_t)NULL;
+      return NULL;
     }
     flags = os_FlagSystemObject;
   } else {
@@ -214,7 +214,7 @@ osEventFlagsId_t os_svcEventFlagsNew (const osEventFlagsAttr_t *attr) {
   // Register post ISR processing function
   os_Info.post_process.event_flags = os_EventFlagsPostProcess;
 
-  return (osEventFlagsId_t)ef;
+  return ef;
 }
 
 /// Set the specified Event Flags.
@@ -465,7 +465,7 @@ int32_t os_isrEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t op
 /// Create and Initialize an Event Flags object.
 osEventFlagsId_t osEventFlagsNew (const osEventFlagsAttr_t *attr) {
   if (__get_IPSR() != 0U) {
-    return (osEventFlagsId_t)NULL;              // Not allowed in ISR
+    return NULL;                                // Not allowed in ISR
   }
   if ((os_KernelGetState() == os_KernelReady) && ((__get_CONTROL() & 1U) == 0U)) {
     // Kernel Ready (not running) and in Privileged mode

@@ -239,11 +239,11 @@ osMemoryPoolId_t os_svcMemoryPoolNew (uint32_t block_count, uint32_t block_size,
   // Check parameters
   if ((block_count == 0U) ||
       (block_size  == 0U)) {
-    return (osMemoryPoolId_t)NULL;
+    return NULL;
   }
   block_size = (block_size + 3U) & ~3UL;
   if ((__CLZ(block_count) + __CLZ(block_size)) < 32) {
-    return (osMemoryPoolId_t)NULL;
+    return NULL;
   }
 
   size = block_count * block_size;
@@ -256,20 +256,20 @@ osMemoryPoolId_t os_svcMemoryPoolNew (uint32_t block_count, uint32_t block_size,
     mp_size = attr->mp_size;
     if (mp != NULL) {
       if (((uint32_t)mp & 3U) || (attr->cb_size < sizeof(os_memory_pool_t))) {
-        return (osMemoryPoolId_t)NULL;
+        return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
-        return (osMemoryPoolId_t)NULL;
+        return NULL;
       }
     }
     if (mp_mem != NULL) {
       if (((uint32_t)mp_mem & 3U) || (mp_size < size)) {
-        return (osMemoryPoolId_t)NULL;
+        return NULL;
       }
     } else {
       if (mp_size != 0U) {
-        return (osMemoryPoolId_t)NULL;
+        return NULL;
       }
     }
   } else {
@@ -286,7 +286,7 @@ osMemoryPoolId_t os_svcMemoryPoolNew (uint32_t block_count, uint32_t block_size,
       mp = os_MemoryAlloc(os_Info.mem.common, sizeof(os_memory_pool_t), 1U);
     }
     if (mp == NULL) {
-      return (osMemoryPoolId_t)NULL;
+      return NULL;
     }
     flags = os_FlagSystemObject;
   } else {
@@ -304,7 +304,7 @@ osMemoryPoolId_t os_svcMemoryPoolNew (uint32_t block_count, uint32_t block_size,
           os_MemoryFree(os_Info.mem.common, mp);
         }
       }
-      return (osMemoryPoolId_t)NULL;
+      return NULL;
     }
     memset(mp_mem, 0, size);
     flags |= os_FlagSystemMemory;
@@ -321,7 +321,7 @@ osMemoryPoolId_t os_svcMemoryPoolNew (uint32_t block_count, uint32_t block_size,
   // Register post ISR processing function
   os_Info.post_process.memory_pool = os_MemoryPoolPostProcess;
 
-  return (osMemoryPoolId_t)mp;
+  return mp;
 }
 
 /// Allocate a memory block from a Memory Pool.
@@ -577,7 +577,7 @@ osStatus_t os_isrMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
 /// Create and Initialize a Memory Pool object.
 osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, const osMemoryPoolAttr_t *attr) {
   if (__get_IPSR() != 0U) {
-    return (osMemoryPoolId_t)NULL;              // Not allowed in ISR
+    return NULL;                                // Not allowed in ISR
   }
   if ((os_KernelGetState() == os_KernelReady) && ((__get_CONTROL() & 1U) == 0U)) {
     // Kernel Ready (not running) and in Privileged mode

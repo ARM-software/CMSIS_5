@@ -138,7 +138,7 @@ osSemaphoreId_t os_svcSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
   if ((max_count    == 0U)                     ||
       (max_count     > os_SemaphoreTokenLimit) ||
       (initial_count > max_count)) {
-    return (osSemaphoreId_t)NULL;
+    return NULL;
   }
 
   // Process attributes
@@ -147,11 +147,11 @@ osSemaphoreId_t os_svcSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
     semaphore = attr->cb_mem;
     if (semaphore != NULL) {
       if (((uint32_t)semaphore & 3U) || (attr->cb_size < sizeof(os_semaphore_t))) {
-        return (osSemaphoreId_t)NULL;
+        return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
-        return (osSemaphoreId_t)NULL;
+        return NULL;
       }
     }
   } else {
@@ -167,7 +167,7 @@ osSemaphoreId_t os_svcSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
       semaphore = os_MemoryAlloc(os_Info.mem.common, sizeof(os_semaphore_t), 1U);
     }
     if (semaphore == NULL) {
-      return (osSemaphoreId_t)NULL;
+      return NULL;
     }
     flags = os_FlagSystemObject;
   } else {
@@ -186,7 +186,7 @@ osSemaphoreId_t os_svcSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
   // Register post ISR processing function
   os_Info.post_process.semaphore = os_SemaphorePostProcess;
 
-  return (osSemaphoreId_t)semaphore;
+  return semaphore;
 }
 
 /// Acquire a Semaphore token or timeout if no tokens are available.
@@ -379,7 +379,7 @@ osStatus_t os_isrSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 /// Create and Initialize a Semaphore object.
 osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr) {
   if (__get_IPSR() != 0U) {
-    return (osSemaphoreId_t)NULL;               // Not allowed in ISR
+    return NULL;                                // Not allowed in ISR
   }
   if ((os_KernelGetState() == os_KernelReady) && ((__get_CONTROL() & 1U) == 0U)) {
     // Kernel Ready (not running) and in Privileged mode

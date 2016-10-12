@@ -84,11 +84,11 @@ osMutexId_t os_svcMutexNew (const osMutexAttr_t *attr) {
     mutex     = attr->cb_mem;
     if (mutex != NULL) {
       if (((uint32_t)mutex & 3U) || (attr->cb_size < sizeof(os_mutex_t))) {
-        return (osMutexId_t)NULL;
+        return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
-        return (osMutexId_t)NULL;
+        return NULL;
       }
     }
   } else {
@@ -105,7 +105,7 @@ osMutexId_t os_svcMutexNew (const osMutexAttr_t *attr) {
       mutex = os_MemoryAlloc(os_Info.mem.common, sizeof(os_mutex_t), 1U);
     }
     if (mutex == NULL) {
-      return (osMutexId_t)NULL;
+      return NULL;
     }
     flags = os_FlagSystemObject;
   } else {
@@ -124,7 +124,7 @@ osMutexId_t os_svcMutexNew (const osMutexAttr_t *attr) {
   mutex->owner_next   = NULL;
   mutex->lock         = 0U;
 
-  return (osMutexId_t)mutex;
+  return mutex;
 }
 
 /// Acquire a Mutex or timeout if it is locked.
@@ -276,20 +276,20 @@ osThreadId_t os_svcMutexGetOwner (osMutexId_t mutex_id) {
   // Check parameters
   if ((mutex == NULL) ||
       (mutex->id != os_IdMutex)) {
-    return (osThreadId_t)NULL;
+    return NULL;
   }
 
   // Check object state
   if (mutex->state == os_ObjectInactive) {
-    return (osThreadId_t)NULL;
+    return NULL;
   }
 
   // Check if Mutex is locked
   if (mutex->lock != 0U) {
-    return (osThreadId_t)mutex->owner_thread;
+    return mutex->owner_thread;
   }
 
-  return (osThreadId_t)NULL;
+  return NULL;
 }
 
 /// Delete a Mutex object.
@@ -376,7 +376,7 @@ osStatus_t os_svcMutexDelete (osMutexId_t mutex_id) {
 /// Create and Initialize a Mutex object.
 osMutexId_t osMutexNew (const osMutexAttr_t *attr) {
   if (__get_IPSR() != 0U) {
-    return (osMutexId_t)NULL;                   // Not allowed in ISR
+    return NULL;                                // Not allowed in ISR
   }
   if ((os_KernelGetState() == os_KernelReady) && ((__get_CONTROL() & 1U) == 0U)) {
     // Kernel Ready (not running) and in Privileged mode
@@ -405,7 +405,7 @@ osStatus_t osMutexRelease (osMutexId_t mutex_id) {
 /// Get Thread which owns a Mutex object.
 osThreadId_t osMutexGetOwner (osMutexId_t mutex_id) {
   if (__get_IPSR() != 0U) {
-    return (osThreadId_t)NULL;                  // Not allowed in ISR
+    return NULL;                                // Not allowed in ISR
   }
   return  __svcMutexGetOwner(mutex_id);
 }

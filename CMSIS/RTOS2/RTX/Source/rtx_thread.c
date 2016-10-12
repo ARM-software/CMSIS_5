@@ -530,7 +530,7 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
 
   // Check parameters
   if (func == NULL) {
-    return (osThreadId_t)NULL;
+    return NULL;
   }
 
   // Process attributes
@@ -546,20 +546,20 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
 #endif
     if (thread != NULL) {
       if (((uint32_t)thread & 3U) || (attr->cb_size < sizeof(os_thread_t))) {
-        return (osThreadId_t)NULL;
+        return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
-        return (osThreadId_t)NULL;
+        return NULL;
       }
     }
     if (stack_mem != NULL) {
       if (((uint32_t)stack_mem & 7U) || (stack_size == 0U)) {
-        return (osThreadId_t)NULL;
+        return NULL;
       }
     }
     if ((priority < osPriorityIdle) || (priority > osPriorityISR)) {
-      return (osThreadId_t)NULL;
+      return NULL;
     }
   } else {
     name       = NULL;
@@ -575,7 +575,7 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
 
   // Check stack size
   if ((stack_size != 0U) && ((stack_size & 7U) || (stack_size < (64U + 8U)))) {
-    return (osThreadId_t)NULL;
+    return NULL;
   }
 
   // Allocate object memory if not provided
@@ -586,7 +586,7 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
       thread = os_MemoryAlloc(os_Info.mem.common, sizeof(os_thread_t), 1U);
     }
     if (thread == NULL) {
-      return (osThreadId_t)NULL;
+      return NULL;
     }
     flags = os_FlagSystemObject;
   } else {
@@ -615,7 +615,7 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
           os_MemoryFree(os_Info.mem.common, thread);
         }
       }
-      return (osThreadId_t)NULL;
+      return NULL;
     }
     flags |= os_FlagSystemMemory;
   }
@@ -639,7 +639,7 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
           os_MemoryFree(os_Info.mem.common, thread);
         }
       }
-      return (osThreadId_t)NULL;
+      return NULL;
     }
   } else {
     tz_memory = 0U;
@@ -695,7 +695,7 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
 
   os_ThreadDispatch(thread);
 
-  return (osThreadId_t)thread;
+  return thread;
 }
 
 /// Return the thread ID of the current running thread.
@@ -704,7 +704,7 @@ osThreadId_t os_svcThreadGetId (void) {
   os_thread_t *thread;
 
   thread = os_ThreadGetRunning();
-  return (osThreadId_t)thread;
+  return thread;
 }
 
 /// Get current thread state of a thread.
@@ -1229,7 +1229,7 @@ int32_t os_isrThreadFlagsSet (osThreadId_t thread_id, int32_t flags) {
 /// Create a thread and add it to Active Threads.
 osThreadId_t osThreadNew (os_thread_func_t func, void *argument, const osThreadAttr_t *attr) {
   if (__get_IPSR() != 0U) {
-    return (osThreadId_t)NULL;                  // Not allowed in ISR
+    return NULL;                                // Not allowed in ISR
   }
   if ((os_KernelGetState() == os_KernelReady) && ((__get_CONTROL() & 1U) == 0U)) {
     // Kernel Ready (not running) and in Privileged mode
@@ -1242,7 +1242,7 @@ osThreadId_t osThreadNew (os_thread_func_t func, void *argument, const osThreadA
 /// Return the thread ID of the current running thread.
 osThreadId_t osThreadGetId (void) {
   if (__get_IPSR() != 0U) {
-    return (osThreadId_t)NULL;                  // Not allowed in ISR
+    return NULL;                                // Not allowed in ISR
   }
   return __svcThreadGetId();
 }
