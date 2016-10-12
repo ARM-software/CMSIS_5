@@ -67,6 +67,7 @@
  *    Signals:
  *     - renamed osSignals to osThreadFlags (moved to Thread Flags)
  *     - changed return value of Set/Clear/Wait functions
+ *     - Clear function limited to current running thread
  *     - extended Wait function (options)
  *     - added: osThreadFlagsGet
  *    Event Flags:

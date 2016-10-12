@@ -123,8 +123,8 @@ extern osStatus_t       os_svcThreadJoin         (osThreadId_t thread_id, void *
 extern void             os_svcThreadExit         (void *exit_ptr);
 extern osStatus_t       os_svcThreadTerminate    (osThreadId_t thread_id);
 extern int32_t          os_svcThreadFlagsSet     (osThreadId_t thread_id, int32_t flags);
-extern int32_t          os_svcThreadFlagsClear   (osThreadId_t thread_id, int32_t flags);
-extern int32_t          os_svcThreadFlagsGet     (osThreadId_t thread_id);
+extern int32_t          os_svcThreadFlagsClear   (int32_t flags);
+extern int32_t          os_svcThreadFlagsGet     (void);
 extern int32_t          os_svcThreadFlagsWait    (int32_t flags, uint32_t options, uint32_t millisec);
 
 // Delay Service Calls

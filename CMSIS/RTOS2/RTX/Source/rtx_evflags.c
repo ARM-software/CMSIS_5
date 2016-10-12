@@ -91,7 +91,7 @@ static int32_t os_EventFlagsCheck (os_event_flags_t *ef, int32_t flags, uint32_t
 #endif
   int32_t  event_flags;
 
-  if ((options & osFlagsAutoClear) != 0U) {
+  if ((options & osFlagsNoClear) == 0U) {
 #if (__EXCLUSIVE_ACCESS == 0U)
     primask = __get_PRIMASK();
     __disable_irq();
@@ -249,7 +249,7 @@ int32_t os_svcEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags) {
     thread_next = thread->thread_next;
     event_flags0 = os_EventFlagsCheck(ef, thread->wait_flags, thread->flags_options);
     if (event_flags0 > 0) {
-      if ((thread->flags_options & osFlagsAutoClear) != 0U) {
+      if ((thread->flags_options & osFlagsNoClear) == 0U) {
         event_flags = event_flags0 & ~thread->wait_flags;
       } else {
         event_flags = event_flags0;

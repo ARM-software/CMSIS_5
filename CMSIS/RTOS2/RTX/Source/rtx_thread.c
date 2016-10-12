@@ -91,7 +91,7 @@ static int32_t os_ThreadFlagsCheck (os_thread_t *thread, int32_t flags, uint32_t
 #endif
   int32_t  thread_flags;
 
-  if ((options & osFlagsAutoClear) != 0U) {
+  if ((options & osFlagsNoClear) == 0U) {
 #if (__EXCLUSIVE_ACCESS == 0U)
     primask = __get_PRIMASK();
     __disable_irq();
@@ -507,8 +507,8 @@ SVC0_2 (ThreadJoin,        osStatus_t,      osThreadId_t, void **)
 SVC0_1N(ThreadExit,        void,            void *)
 SVC0_1 (ThreadTerminate,   osStatus_t,      osThreadId_t)
 SVC0_2 (ThreadFlagsSet,    int32_t,         osThreadId_t, int32_t)
-SVC0_2 (ThreadFlagsClear,  int32_t,         osThreadId_t, int32_t)
-SVC0_1 (ThreadFlagsGet,    int32_t,         osThreadId_t)
+SVC0_1 (ThreadFlagsClear,  int32_t,         int32_t)
+SVC0_0 (ThreadFlagsGet,    int32_t)
 SVC0_3 (ThreadFlagsWait,   int32_t,         int32_t, uint32_t, uint32_t)
 
 /// Create a thread and add it to Active Threads.
@@ -1098,7 +1098,7 @@ int32_t os_svcThreadFlagsSet (osThreadId_t thread_id, int32_t flags) {
   if (thread->state == os_ThreadWaitingThreadFlags) {
     thread_flags0 = os_ThreadFlagsCheck(thread, thread->wait_flags, thread->flags_options);
     if (thread_flags0 > 0) {
-      if ((thread->flags_options & osFlagsAutoClear) != 0U) {
+      if ((thread->flags_options & osFlagsNoClear) == 0U) {
         thread_flags = thread_flags0 & ~thread->wait_flags;
       } else {
         thread_flags = thread_flags0;
@@ -1110,16 +1110,17 @@ int32_t os_svcThreadFlagsSet (osThreadId_t thread_id, int32_t flags) {
   return thread_flags;
 }
 
-/// Clear the specified Thread Flags of a thread.
+/// Clear the specified Thread Flags of current running thread.
 /// \note API identical to osThreadFlagsClear
-int32_t os_svcThreadFlagsClear (osThreadId_t thread_id, int32_t flags) {
-  os_thread_t *thread = (os_thread_t *)thread_id;
+int32_t os_svcThreadFlagsClear (int32_t flags) {
+  os_thread_t *thread;
+
+  thread = os_ThreadGetRunning();
+  if (thread == NULL) {
+    return osError;
+  }
 
   // Check parameters
-  if ((thread == NULL) ||
-      (thread->id != os_IdThread)) {
-    return osErrorParameter;
-  }
   if ((uint32_t)flags & ~((1U << os_ThreadFlagsLimit) - 1U)) {
     return osErrorParameter;
   }
@@ -1134,14 +1135,13 @@ int32_t os_svcThreadFlagsClear (osThreadId_t thread_id, int32_t flags) {
   return os_ThreadFlagsClear(thread, flags);
 }
 
-/// Get the current Thread Flags of a thread.
+/// Get the current Thread Flags of current running thread.
 /// \note API identical to osThreadFlagsGet
-int32_t os_svcThreadFlagsGet (osThreadId_t thread_id) {
-  os_thread_t *thread = (os_thread_t *)thread_id;
+int32_t os_svcThreadFlagsGet (void) {
+  os_thread_t *thread;
 
-  // Check parameters
-  if ((thread == NULL) ||
-      (thread->id != os_IdThread)) {
+  thread = os_ThreadGetRunning();
+  if (thread == NULL) {
     return 0;
   }
 
@@ -1334,22 +1334,20 @@ int32_t osThreadFlagsSet (osThreadId_t thread_id, int32_t flags) {
   }
 }
 
-/// Clear the specified Thread Flags of a thread.
-int32_t osThreadFlagsClear (osThreadId_t thread_id, int32_t flags) {
-  if (__get_IPSR() != 0U) {                     // in ISR
-    return os_svcThreadFlagsClear(thread_id, flags);
-  } else {                                      // in Thread
-    return  __svcThreadFlagsClear(thread_id, flags);
+/// Clear the specified Thread Flags of current running thread.
+int32_t osThreadFlagsClear (int32_t flags) {
+  if (__get_IPSR() != 0U) {
+    return osErrorISR;                          // Not allowed in ISR
   }
+  return  __svcThreadFlagsClear(flags);
 }
 
-/// Get the current Thread Flags of a thread.
-int32_t osThreadFlagsGet (osThreadId_t thread_id) {
-  if (__get_IPSR() != 0U) {                     // in ISR
-    return os_svcThreadFlagsGet(thread_id);
-  } else {                                      // in Thread
-    return  __svcThreadFlagsGet(thread_id);
-  }
+/// Get the current Thread Flags of current running thread.
+int32_t osThreadFlagsGet (void) {
+  if (__get_IPSR() != 0U) {
+    return 0;                                   // Not allowed in ISR
+  }                               
+  return  __svcThreadFlagsGet();
 }
 
 /// Wait for one or more Thread Flags of the current running thread to become signaled.
