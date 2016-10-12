@@ -219,7 +219,7 @@ typedef int32_t                  osStatus;
 /// Thread ID identifies the thread.
 /// \note CAN BE CHANGED: \b implementation specific in every CMSIS-RTOS.
 #if (osCMSIS < 0x20000U)
-typedef uint32_t osThreadId;
+typedef void *osThreadId;
 #else
 #define osThreadId osThreadId_t
 #endif
@@ -227,7 +227,7 @@ typedef uint32_t osThreadId;
 /// Timer ID identifies the timer.
 /// \note CAN BE CHANGED: \b implementation specific in every CMSIS-RTOS.
 #if (osCMSIS < 0x20000U)
-typedef uint32_t osTimerId;
+typedef void *osTimerId;
 #else
 #define osTimerId osTimerId_t
 #endif
@@ -235,7 +235,7 @@ typedef uint32_t osTimerId;
 /// Mutex ID identifies the mutex.
 /// \note CAN BE CHANGED: \b implementation specific in every CMSIS-RTOS.
 #if (osCMSIS < 0x20000U)
-typedef uint32_t osMutexId;
+typedef void *osMutexId;
 #else
 #define osMutexId osMutexId_t
 #endif
@@ -243,22 +243,22 @@ typedef uint32_t osMutexId;
 /// Semaphore ID identifies the semaphore.
 /// \note CAN BE CHANGED: \b implementation specific in every CMSIS-RTOS.
 #if (osCMSIS < 0x20000U)
-typedef uint32_t osSemaphoreId;
+typedef void *osSemaphoreId;
 #else
 #define osSemaphoreId osSemaphoreId_t
 #endif
  
 /// Pool ID identifies the memory pool.
 /// \note CAN BE CHANGED: \b implementation specific in every CMSIS-RTOS.
-typedef uint32_t osPoolId;
+typedef void *osPoolId;
  
 /// Message ID identifies the message queue.
 /// \note CAN BE CHANGED: \b implementation specific in every CMSIS-RTOS.
-typedef uint32_t osMessageQId;
+typedef void *osMessageQId;
  
 /// Mail ID identifies the mail queue.
 /// \note CAN BE CHANGED: \b implementation specific in every CMSIS-RTOS.
-typedef uint32_t osMailQId;
+typedef void *osMailQId;
  
  
 /// Thread Definition structure contains startup information of a thread.

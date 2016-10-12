@@ -183,25 +183,25 @@ typedef enum {
  
  
 /// \details Thread ID identifies the thread.
-typedef uint32_t osThreadId_t;
+typedef void *osThreadId_t;
  
 /// \details Timer ID identifies the timer.
-typedef uint32_t osTimerId_t;
+typedef void *osTimerId_t;
  
 /// \details Event Flags ID identifies the event flags.
-typedef uint32_t osEventFlagsId_t;
+typedef void *osEventFlagsId_t;
  
 /// \details Mutex ID identifies the mutex.
-typedef uint32_t osMutexId_t;
+typedef void *osMutexId_t;
  
 /// \details Semaphore ID identifies the semaphore.
-typedef uint32_t osSemaphoreId_t;
+typedef void *osSemaphoreId_t;
  
 /// \details Memory Pool ID identifies the memory pool.
-typedef uint32_t osMemoryPoolId_t;
+typedef void *osMemoryPoolId_t;
  
 /// \details Message Queue ID identifies the message queue.
-typedef uint32_t osMessageQueueId_t;
+typedef void *osMessageQueueId_t;
  
  
 #ifndef TZ_MODULEID_T

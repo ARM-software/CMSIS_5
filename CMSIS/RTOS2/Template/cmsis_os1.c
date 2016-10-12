@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        30. June 2016
+ * $Date:        12. October 2016
  * $Revision:    V1.0
  *
  * Project:      CMSIS-RTOS API V1
@@ -47,20 +47,20 @@ osThreadId osThreadCreate (const osThreadDef_t *thread_def, void *argument) {
 int32_t osSignalSet (osThreadId thread_id, int32_t signals) {
   int32_t flags;
 
-  flags = osThreadFlagsGet(thread_id);
+  flags = osThreadFlagsSet(thread_id, signals);
   if (flags < 0) {
     return (int32_t)0x80000000U;
   }
-  if (osThreadFlagsSet(thread_id, signals) < 0) {
-    return (int32_t)0x80000000U;
-  }
-  return flags;
+  return (flags & ~signals);
 }
 
 int32_t osSignalClear (osThreadId thread_id, int32_t signals) {
   int32_t flags;
 
-  flags = osThreadFlagsClear(thread_id, signals);
+  if (thread_id != osThreadGetId()) {
+    return (int32_t)0x80000000U;
+  }
+  flags = osThreadFlagsClear(signals);
   if (flags < 0) {
     return (int32_t)0x80000000U;
   }
@@ -72,9 +72,9 @@ osEvent osSignalWait (int32_t signals, uint32_t millisec) {
   int32_t flags;
 
   if (signals != 0) {
-    flags = osThreadFlagsWait(signals,    osFlagsWaitAll | osFlagsAutoClear, millisec);
+    flags = osThreadFlagsWait(signals,    osFlagsWaitAll, millisec);
   } else {
-    flags = osThreadFlagsWait(SignalMask, osFlagsWaitAny | osFlagsAutoClear, millisec);
+    flags = osThreadFlagsWait(SignalMask, osFlagsWaitAny, millisec);
   }
   if (flags > 0) {
     event.status = osEventSignal;
