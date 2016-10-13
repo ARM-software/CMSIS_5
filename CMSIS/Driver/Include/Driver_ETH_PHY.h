@@ -32,8 +32,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_ETH_PHY_H
-#define __DRIVER_ETH_PHY_H
+#ifndef DRIVER_ETH_PHY_H_
+#define DRIVER_ETH_PHY_H_
 
 #include "Driver_ETH.h"
 
@@ -127,4 +127,4 @@ typedef struct _ARM_DRIVER_ETH_PHY {
   ARM_ETH_LINK_INFO  (*GetLinkInfo)  (void);                          ///< Pointer to \ref ARM_ETH_PHY_GetLinkInfo : Get Ethernet PHY Device Link information.
 } const ARM_DRIVER_ETH_PHY;
 
-#endif /* __DRIVER_ETH_PHY_H */
+#endif /* DRIVER_ETH_PHY_H_ */

@@ -26,8 +26,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_SAI_H
-#define __DRIVER_SAI_H
+#ifndef DRIVER_SAI_H_
+#define DRIVER_SAI_H_
 
 #include "Driver_Common.h"
 
@@ -292,4 +292,4 @@ typedef struct _ARM_DRIVER_SAI {
   ARM_SAI_STATUS       (*GetStatus)       (void);                                            ///< Pointer to \ref ARM_SAI_GetStatus : Get SAI status.
 } const ARM_DRIVER_SAI;
 
-#endif /* __DRIVER_SAI_H */
+#endif /* DRIVER_SAI_H_ */

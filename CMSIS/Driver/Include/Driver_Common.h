@@ -31,8 +31,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_COMMON_H
-#define __DRIVER_COMMON_H
+#ifndef DRIVER_COMMON_H_
+#define DRIVER_COMMON_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -66,4 +66,4 @@ typedef enum _ARM_POWER_STATE {
   ARM_POWER_FULL                        ///< Power on: full operation at maximum performance
 } ARM_POWER_STATE;
 
-#endif /* __DRIVER_COMMON_H */
+#endif /* DRIVER_COMMON_H_ */

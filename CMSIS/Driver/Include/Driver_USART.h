@@ -50,8 +50,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_USART_H
-#define __DRIVER_USART_H
+#ifndef DRIVER_USART_H_
+#define DRIVER_USART_H_
 
 #include "Driver_Common.h"
 
@@ -324,4 +324,4 @@ typedef struct _ARM_DRIVER_USART {
   ARM_USART_MODEM_STATUS (*GetModemStatus)  (void);                              ///< Pointer to \ref ARM_USART_GetModemStatus : Get USART Modem Status lines state.
 } const ARM_DRIVER_USART;
 
-#endif /* __DRIVER_USART_H */
+#endif /* DRIVER_USART_H_ */

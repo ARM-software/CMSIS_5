@@ -39,8 +39,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_USBH_H
-#define __DRIVER_USBH_H
+#ifndef DRIVER_USBH_H_
+#define DRIVER_USBH_H_
 
 #include "Driver_USB.h"
 
@@ -395,4 +395,4 @@ typedef struct _ARM_DRIVER_USBH_HCI {
 
 #endif /* __DOXYGEN_MW__ */
 
-#endif /* __DRIVER_USBH_H */
+#endif /* DRIVER_USBH_H_ */

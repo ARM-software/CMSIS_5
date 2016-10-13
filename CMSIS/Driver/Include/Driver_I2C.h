@@ -48,8 +48,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_I2C_H
-#define __DRIVER_I2C_H
+#ifndef DRIVER_I2C_H_
+#define DRIVER_I2C_H_
 
 #include "Driver_Common.h"
 
@@ -201,4 +201,4 @@ typedef struct _ARM_DRIVER_I2C {
   ARM_I2C_STATUS       (*GetStatus)      (void);                                                                ///< Pointer to \ref ARM_I2C_GetStatus : Get I2C status.
 } const ARM_DRIVER_I2C;
 
-#endif /* __DRIVER_I2C_H */
+#endif /* DRIVER_I2C_H_ */

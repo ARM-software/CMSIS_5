@@ -26,8 +26,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_CAN_H
-#define __DRIVER_CAN_H
+#ifndef DRIVER_CAN_H_
+#define DRIVER_CAN_H_
 
 #include "Driver_Common.h"
 
@@ -359,4 +359,4 @@ typedef struct _ARM_DRIVER_CAN {
   ARM_CAN_STATUS           (*GetStatus)             (void);                             ///< Pointer to \ref ARM_CAN_GetStatus             : Get CAN status.
 } const ARM_DRIVER_CAN;
 
-#endif /* __DRIVER_CAN_H */
+#endif /* DRIVER_CAN_H_ */

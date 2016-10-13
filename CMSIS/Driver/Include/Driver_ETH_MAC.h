@@ -49,8 +49,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_ETH_MAC_H
-#define __DRIVER_ETH_MAC_H
+#ifndef DRIVER_ETH_MAC_H_
+#define DRIVER_ETH_MAC_H_
 
 #include "Driver_ETH.h"
 
@@ -295,4 +295,4 @@ typedef struct _ARM_DRIVER_ETH_MAC {
   int32_t                  (*PHY_Write)       (uint8_t phy_addr, uint8_t reg_addr, uint16_t  data);  ///< Pointer to \ref ARM_ETH_MAC_PHY_Write : Write Ethernet PHY Register through Management Interface.
 } const ARM_DRIVER_ETH_MAC;
 
-#endif /* __DRIVER_ETH_MAC_H */
+#endif /* DRIVER_ETH_MAC_H_ */

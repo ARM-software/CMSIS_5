@@ -39,8 +39,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_NAND_H
-#define __DRIVER_NAND_H
+#ifndef DRIVER_NAND_H_
+#define DRIVER_NAND_H_
 
 #include "Driver_Common.h"
 
@@ -397,4 +397,4 @@ typedef struct _ARM_DRIVER_NAND {
   int32_t               (*InquireECC)     ( int32_t index, ARM_NAND_ECC_INFO *info);                          ///< Pointer to \ref ARM_NAND_InquireECC : Inquire about available ECC. 
 } const ARM_DRIVER_NAND;
 
-#endif /* __DRIVER_NAND_H */
+#endif /* DRIVER_NAND_H_ */

@@ -30,8 +30,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_FLASH_H
-#define __DRIVER_FLASH_H
+#ifndef DRIVER_FLASH_H_
+#define DRIVER_FLASH_H_
 
 #include "Driver_Common.h"
 
@@ -183,4 +183,4 @@ typedef struct _ARM_DRIVER_FLASH {
   ARM_FLASH_INFO *       (*GetInfo)        (void);                                          ///< Pointer to \ref ARM_Flash_GetInfo : Get Flash information.
 } const ARM_DRIVER_FLASH;
 
-#endif /* __DRIVER_FLASH_H */
+#endif /* DRIVER_FLASH_H_ */
