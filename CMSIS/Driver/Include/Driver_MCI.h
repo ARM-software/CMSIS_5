@@ -57,8 +57,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_MCI_H
-#define __DRIVER_MCI_H
+#ifndef DRIVER_MCI_H_
+#define DRIVER_MCI_H_
 
 #include "Driver_Common.h"
 
@@ -344,4 +344,4 @@ typedef struct _ARM_DRIVER_MCI {
   ARM_MCI_STATUS       (*GetStatus)      (void);                           ///< Pointer to \ref ARM_MCI_GetStatus : Get MCI status.
 } const ARM_DRIVER_MCI;
 
-#endif /* __DRIVER_MCI_H */
+#endif /* DRIVER_MCI_H_ */

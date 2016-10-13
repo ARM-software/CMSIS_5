@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-#ifndef __DRIVER_STORAGE_H
-#define __DRIVER_STORAGE_H
+#ifndef DRIVER_STORAGE_H_
+#define DRIVER_STORAGE_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -415,4 +415,4 @@ typedef struct _ARM_DRIVER_STORAGE {
 }
 #endif // __cplusplus
 
-#endif /* __DRIVER_STORAGE_H */
+#endif /* DRIVER_STORAGE_H_ */

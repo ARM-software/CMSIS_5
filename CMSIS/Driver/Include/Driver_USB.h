@@ -31,8 +31,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_USB_H
-#define __DRIVER_USB_H
+#ifndef DRIVER_USB_H_
+#define DRIVER_USB_H_
 
 #include "Driver_Common.h"
 
@@ -89,4 +89,4 @@
 #define ARM_USB_ENDPOINT_MICROFRAME_TRANSACTIONS_2      0x0800
 #define ARM_USB_ENDPOINT_MICROFRAME_TRANSACTIONS_3      0x1000
 
-#endif /* __DRIVER_USB_H */
+#endif /* DRIVER_USB_H_ */

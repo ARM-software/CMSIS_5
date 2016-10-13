@@ -31,8 +31,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_ETH_H
-#define __DRIVER_ETH_H
+#ifndef DRIVER_ETH_H_
+#define DRIVER_ETH_H_
 
 #include "Driver_Common.h"
 
@@ -79,4 +79,4 @@ typedef struct _ARM_ETH_MAC_ADDR {
   uint8_t b[6];                         ///< MAC Address (6 bytes), MSB first
 } ARM_ETH_MAC_ADDR;
 
-#endif /* __DRIVER_ETH_H */
+#endif /* DRIVER_ETH_H_ */

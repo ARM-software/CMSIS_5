@@ -42,8 +42,8 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_SPI_H
-#define __DRIVER_SPI_H
+#ifndef DRIVER_SPI_H_
+#define DRIVER_SPI_H_
 
 #include "Driver_Common.h"
 
@@ -231,4 +231,4 @@ typedef struct _ARM_DRIVER_SPI {
   ARM_SPI_STATUS       (*GetStatus)       (void);                             ///< Pointer to \ref ARM_SPI_GetStatus : Get SPI status.
 } const ARM_DRIVER_SPI;
 
-#endif /* __DRIVER_SPI_H */
+#endif /* DRIVER_SPI_H_ */
