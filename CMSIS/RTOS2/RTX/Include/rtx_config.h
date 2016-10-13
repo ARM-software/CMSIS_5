@@ -69,13 +69,13 @@ __attribute__((section(".bss.os.thread.stack")));
 
 // Memory Pool for Thread Control Blocks
 static os_mp_info_t os_mpi_thread \
-__attribute__((section(".bss.os.thread.mpi"))) =
+__attribute__((section(".data.os.thread.mpi"))) =
 { (uint32_t)OS_THREAD_NUM, 0U, (uint32_t)os_ThreadCbSize, &os_thread_cb, NULL, NULL };
 
 // Memory Pool for Thread Default Stack
 #if (OS_THREAD_DEF_STACK_NUM != 0)
 static os_mp_info_t os_mpi_def_stack \
-__attribute__((section(".bss.os.thread.mpi"))) =
+__attribute__((section(".data.os.thread.mpi"))) =
 { (uint32_t)OS_THREAD_DEF_STACK_NUM, 0U, (uint32_t)OS_STACK_SIZE, &os_thread_def_stack, NULL, NULL };
 #endif
 
@@ -132,7 +132,7 @@ __attribute__((section(".bss.os.timer.cb")));
 
 // Memory Pool for Timer Control Blocks
 static os_mp_info_t os_mpi_timer \
-__attribute__((section(".bss.os.timer.mpi"))) =
+__attribute__((section(".data.os.timer.mpi"))) =
 { (uint32_t)OS_TIMER_NUM, 0U, (uint32_t)os_TimerCbSize, &os_timer_cb, NULL, NULL };
 
 #endif  // (OS_TIMER_OBJ_MEM != 0)
@@ -200,7 +200,7 @@ __attribute__((section(".bss.os.evflags.cb")));
 
 // Memory Pool for Event Flags Control Blocks
 static os_mp_info_t os_mpi_ef \
-__attribute__((section(".bss.os.evflags.mpi"))) =
+__attribute__((section(".data.os.evflags.mpi"))) =
 { (uint32_t)OS_EVFLAGS_NUM, 0U, (uint32_t)os_EventFlagsCbSize, &os_ef_cb, NULL, NULL };
 
 #endif  // (OS_EVFLAGS_OBJ_MEM != 0)
@@ -221,7 +221,7 @@ __attribute__((section(".bss.os.mutex.cb")));
 
 // Memory Pool for Mutex Control Blocks
 static os_mp_info_t os_mpi_mutex \
-__attribute__((section(".bss.os.mutex.mpi"))) =
+__attribute__((section(".data.os.mutex.mpi"))) =
 { (uint32_t)OS_MUTEX_NUM, 0U, (uint32_t)os_MutexCbSize, &os_mutex_cb, NULL, NULL };
 
 #endif  // (OS_MUTEX_OBJ_MEM != 0)
@@ -242,7 +242,7 @@ __attribute__((section(".bss.os.semaphore.cb")));
 
 // Memory Pool for Semaphore Control Blocks
 static os_mp_info_t os_mpi_semaphore \
-__attribute__((section(".bss.os.semaphore.mpi"))) =
+__attribute__((section(".data.os.semaphore.mpi"))) =
 { (uint32_t)OS_SEMAPHORE_NUM, 0U, (uint32_t)os_SemaphoreCbSize, &os_semaphore_cb, NULL, NULL };
 
 #endif  // (OS_SEMAPHORE_OBJ_MEM != 0)
@@ -263,7 +263,7 @@ __attribute__((section(".bss.os.mempool.cb")));
 
 // Memory Pool for Memory Pool Control Blocks
 static os_mp_info_t os_mpi_mp \
-__attribute__((section(".bss.os.mempool.mpi"))) =
+__attribute__((section(".data.os.mempool.mpi"))) =
 { (uint32_t)OS_MEMPOOL_NUM, 0U, (uint32_t)os_MemoryPoolCbSize, &os_mp_cb, NULL, NULL };
 
 // Memory Pool for Memory Pool Data Storage
@@ -293,7 +293,7 @@ __attribute__((section(".bss.os.msgqueue.cb")));
 
 // Memory Pool for Message Queue Control Blocks
 static os_mp_info_t os_mpi_mq \
-__attribute__((section(".bss.os.msgqueue.mpi"))) =
+__attribute__((section(".data.os.msgqueue.mpi"))) =
 { (uint32_t)OS_MSGQUEUE_NUM, 0U, (uint32_t)os_MessageQueueCbSize, &os_mq_cb, NULL, NULL };
 
 // Memory Pool for Message Queue Data Storage
