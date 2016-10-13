@@ -108,8 +108,8 @@
  *     - deprecated (superseded by extended Message Queue functionality)
  *---------------------------------------------------------------------------*/
  
-#ifndef __CMSIS_OS_H
-#define __CMSIS_OS_H
+#ifndef CMSIS_OS_H_
+#define CMSIS_OS_H_
  
 /// \b osCMSIS identifies the CMSIS-RTOS API version.
 #define osCMSIS             0x20000U    ///< API version (main[31:16].sub[15:0])
@@ -894,4 +894,4 @@ osStatus osMailFree (osMailQId queue_id, void *mail);
 }
 #endif
  
-#endif  // __CMSIS_OS_H
+#endif  // CMSIS_OS_H_

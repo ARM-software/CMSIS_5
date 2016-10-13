@@ -23,8 +23,8 @@
  * -----------------------------------------------------------------------------
  */
 
-#ifndef __CORE_CM_H
-#define __CORE_CM_H
+#ifndef CORE_CM_H_
+#define CORE_CM_H_
 
 #include "RTE_Components.h"
 #include CMSIS_device_header
@@ -690,4 +690,4 @@ __STATIC_INLINE uint16_t os_exc_dec16_nz (uint16_t *mem) {
 #endif  // (__EXCLUSIVE_ACCESS == 1U)
 
 
-#endif  // __CORE_CM_H
+#endif  // CORE_CM_H_

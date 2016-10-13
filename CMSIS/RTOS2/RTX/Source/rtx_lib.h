@@ -23,8 +23,8 @@
  * -----------------------------------------------------------------------------
  */
 
-#ifndef __RTX_LIB_H
-#define __RTX_LIB_H
+#ifndef RTX_LIB_H_
+#define RTX_LIB_H_
 
 #include <string.h>
 #include <stdbool.h>
@@ -182,4 +182,4 @@ extern osStatus_t         os_svcMessageQueueReset       (osMessageQueueId_t mq_i
 extern osStatus_t         os_svcMessageQueueDelete      (osMessageQueueId_t mq_id);
 
 
-#endif  // __RTX_LIB_H
+#endif  // RTX_LIB_H_

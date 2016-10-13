@@ -23,8 +23,8 @@
  * -----------------------------------------------------------------------------
  */
 
-#ifndef __RTX_OS_H
-#define __RTX_OS_H
+#ifndef RTX_OS_H_
+#define RTX_OS_H_
 
 #include <stdint.h>
 #include <stddef.h>
@@ -472,4 +472,4 @@ extern const os_config_t os_Config;             ///< OS Configuration
 }
 #endif
 
-#endif  // __RTX_OS_H
+#endif  // RTX_OS_H_
