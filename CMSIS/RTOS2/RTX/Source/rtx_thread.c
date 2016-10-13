@@ -281,23 +281,32 @@ void os_ThreadDelayInsert (os_thread_t *thread, uint32_t millisec) {
 void os_ThreadDelayRemove (os_thread_t *thread) {
 
   if (thread->delay == osWaitForever) {
-    os_ThreadListUnlink(&os_Info.thread.wait_list, thread);
-    return;
-  }
-
-  if ((thread->delay_prev == NULL) && (os_Info.thread.delay_list != thread)) {
-    return;
-  }
-
-  if (thread->delay_next != NULL) {
-    thread->delay_next->delay += thread->delay;
-    thread->delay_next->delay_prev = thread->delay_prev;
-  }
-  if (thread->delay_prev != NULL) {
-    thread->delay_prev->delay_next = thread->delay_next;
-    thread->delay_prev = NULL;
+    if ((thread->delay_prev == NULL) && (os_Info.thread.wait_list != thread)) {
+      return;
+    }
+    if (thread->delay_next != NULL) {
+      thread->delay_next->delay_prev = thread->delay_prev;
+    }
+    if (thread->delay_prev != NULL) {
+      thread->delay_prev->delay_next = thread->delay_next;
+      thread->delay_prev = NULL;
+    } else {
+      os_Info.thread.wait_list = thread->delay_next;
+    }
   } else {
-    os_Info.thread.delay_list = thread->delay_next;
+    if ((thread->delay_prev == NULL) && (os_Info.thread.delay_list != thread)) {
+      return;
+    }
+    if (thread->delay_next != NULL) {
+      thread->delay_next->delay += thread->delay;
+      thread->delay_next->delay_prev = thread->delay_prev;
+    }
+    if (thread->delay_prev != NULL) {
+      thread->delay_prev->delay_next = thread->delay_next;
+      thread->delay_prev = NULL;
+    } else {
+      os_Info.thread.delay_list = thread->delay_next;
+    }
   }
 }
 
