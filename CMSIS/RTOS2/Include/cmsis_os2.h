@@ -27,8 +27,8 @@
  *    Initial Release
  *---------------------------------------------------------------------------*/
  
-#ifndef __CMSIS_OS2_H
-#define __CMSIS_OS2_H
+#ifndef CMSIS_OS2_H_
+#define CMSIS_OS2_H_
  
 #ifndef __NO_RETURN
 #if   defined(__CC_ARM)
@@ -666,4 +666,4 @@ osStatus_t osMessageQueueDelete (osMessageQueueId_t mq_id);
 }
 #endif
  
-#endif  // __CMSIS_OS2_H
+#endif  // CMSIS_OS2_H_
