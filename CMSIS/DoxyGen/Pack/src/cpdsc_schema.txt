@@ -236,7 +236,7 @@ If no language requirements are set ANSI C is assumed.
     </compilers>
     <languages>
       <language name="C" version="C99"/>
-    <languages>
+    </languages>
   </requirements>
   ...
 </package>
