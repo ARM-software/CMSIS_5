@@ -366,6 +366,139 @@ When a thread switch occurs:
 
 Each thread is provided with an separate stack that holds the thread context and stack space for automatic variables and return addresses for function call nesting. The stack sizes of the RTX threads are flexible configurable as explained in the section \ref threadConfig. RTX even offers a configurable checking for stack overflows and stack utilization. 
 
+
+\section MemoryAllocation Variants of Memory Allocation 
+The RTX objects threads, mutexes, semaphores, timers, messages, events and memory pools require dedicated RAM memory everytime they are created. 
+
+RTX5 offers three different allocation mechanisms. If no specific method is configured or used os<i>object</i>New()calls always default to the Global Dynamic Memory Pool.
+
+\subsection MemoryAllocationGlobal Global Dynamic Memory Pool
+\image html MemAllocGlob.png "Global Memory Pool for all objects"
+The global memory pool allocates all objects from a single large memory pool when an object is created. This method is often selected when object instances of arbitrary type and count are created at run-time.
+In case of insufficient memory the creation of an object instance can fail. This requires proper handling of \ref osErrorNoMemory returned by os<i>object</i>New() functions.
+
+Enabled in \ref systemConfig.
+
+\subsection MemoryAllocationObject Object-specific Dynamic Memory Pools
+\image html MemAllocSpec.png "One memory pool per object type"
+Object-specific memory pools allows to reserve pools specific to a type of object, e.g: mutexes or threads. This is less flexible than a large single pool, but does provide advantages. e.g.:
+- Simplifies analysis of memory usage and handling of out-of-memory situations.
+- Allows dynamic memory management for specific object types only, while others might be allocated statically.
+- Map pools to different memory spaces (e.g. for systems with different speed grades of RAM memory)
+
+Enabled in \ref threadConfig for thread objects.         <br> 
+Enabled in \ref timerConfig for timer objects.           <br> 
+Enabled in \ref eventFlagsConfig for event objects.      <br> 
+Enabled in \ref mutexConfig for mutex objects.           <br> 
+Enabled in \ref semaphoreConfig for semaphore.           <br> 
+Enabled in \ref memPoolConfig for memory pools.          <br> 
+Enabled in \ref msgQueueConfig for message objects.      <br> 
+
+
+\subsection MemoryAllocationStatic Static Memory Allocation
+\image html MemAllocStat.png "Statically allocated memory for all objects"
+In contrast to the dynamic memory allocations the static memory allocation requires compile-time allocation of object memory. This memory is reserved by the user application. e.g. by declaring a global array of the proper size for each object.
+Although this method is less flexible it has advantages. Mainly it removes the likelyhood of an \ref osErrorNoMemory when instancing a new object and avoids memory fragmentation.
+Most functional safety standards (like IEC61508) do not allow dynamic memory management or make the use of it very difficult.
+
+The following example shows how to create an OS object with static memory.
+
+\b Example:
+\code
+/*----------------------------------------------------------------------------
+ * CMSIS-RTOS 'main' function template
+ *---------------------------------------------------------------------------*/
+
+#include "RTE_Components.h"
+#include  CMSIS_device_header
+#include "cmsis_os2.h"
+
+//include rtx_os.h for types of RTX objects
+#include "rtx_os.h"
+
+//The thread function instanced in this example
+void *worker(void *arg)
+{
+    //work
+	osDelay(10000);
+  return 0;
+}
+
+// Define objects that are statically allocated for worker threads 1 and 2
+os_thread_t worker_thread_tcb_1;
+os_thread_t worker_thread_tcb_2;
+
+
+// Reserve two areas for the stacks of worker threads 1 and 2
+// uint64_t makes sure the memory alignment is 8
+uint64_t worker_thread_stk_1[64];
+uint64_t worker_thread_stk_2[64];
+
+
+// Define the attributes which are used for thread creation
+// Optional const saves RAM memory and includes the values in periodic ROM tests 
+const osThreadAttr_t worker_attr_1 = { 
+	"wrk1", 
+	osThreadJoinable, 
+	&worker_thread_tcb_1, 
+	sizeof(worker_thread_tcb_1),
+	&worker_thread_stk_1[0],  
+	sizeof(worker_thread_stk_1),
+	osPriorityAboveNormal,
+	0
+};
+
+const osThreadAttr_t worker_attr_2 = { 
+	"wrk2", 
+	osThreadJoinable, 
+	&worker_thread_tcb_2, 
+	sizeof(worker_thread_tcb_2),
+	&worker_thread_stk_2[0],  
+	sizeof(worker_thread_stk_2),
+	osPriorityAboveNormal,
+	0
+};
+
+// Define ID objects for threads
+osThreadId_t th1;
+osThreadId_t th2;
+
+/*----------------------------------------------------------------------------
+ * Application main thread
+ *---------------------------------------------------------------------------*/
+void *app_main (void *argument) {
+	uint32_t param = NULL;
+	
+	//Create an instance of the worker thread with static resources (TCB and stack)
+  th1 = osThreadNew(worker, &param, &worker_attr_1);
+	//Create an instance of the worker thread with static resources
+  th2 = osThreadNew(worker, &param, &worker_attr_2);
+
+	//wait until worker thread 1 is terminated
+  (void) osThreadJoin(th1, NULL);	
+	//wait until worker thread 2 is terminated
+  (void) osThreadJoin(th2, NULL);
+   
+  for (;;) {}
+}
+
+int main (void) {
+
+  // System Initialization
+  SystemCoreClockUpdate();
+  // ...
+
+  osKernelInitialize();                 // Initialize CMSIS-RTOS
+  osThreadNew(app_main, NULL, NULL);    // Create application main thread
+  osKernelStart();                      // Start thread execution
+  for (;;) {}
+}
+
+
+\endcode
+
+
+
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -428,7 +561,7 @@ The configuration options are explained on these pages:
 
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
-Global Dynamic Memory size [bytes]     | \c OS_DYNAMIC_MEM_SIZE   | Defines the combined global dynamic memory size. Default value is \token{4096}. Value range is \token{[0-1073741824]} bits, stepping \token{8} bits.
+Global Dynamic Memory size [bytes]     | \c OS_DYNAMIC_MEM_SIZE   | Defines the combined global dynamic memory size. Default value is \token{4096}. Value range is \token{[0-1073741824]} bytes, in multiples of \token{8} bytes.
 Round-Robin Thread switching           | \c OS_ROBIN_ENABLE       | Enables Round-Robin Thread switching.
 Round-Robin Timeout [ms]               | \c OS_ROBIN_TIMEOUT      | Defines how long a thread will execute before a thread switch. Default value is \token{5}. Value range is \token{[1-1000]}.
 ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functions called from ISR store requests to this buffer. Default value is \token{16 entries}. Value range is \token{[4-256]} entries, stepping \token{4} entries.
