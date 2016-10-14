@@ -2,7 +2,7 @@
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler specific macros, functions, instructions
  * @version  V5.00
- * @date     01. September 2016
+ * @date     14. October 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -177,7 +177,7 @@
     #define __STATIC_INLINE           static inline
   #endif
   #ifndef   __NO_RETURN
-    #warning No compiler specific solution for __NO_RETURN. __NO_RETURN is ignored.
+    // NO RETURN is automatically detected hence no warning here
     #define __NO_RETURN
   #endif
   #ifndef   __USED
@@ -185,20 +185,18 @@
     #define __USED
   #endif
   #ifndef   __WEAK
-    #warning No compiler specific solution for __WEAK. __WEAK is ignored.
-    #define __WEAK
+    #define __WEAK                    __weak
   #endif
   #ifndef   __UNALIGNED_UINT32
-    #warning No compiler specific solution for __UNALIGNED_UINT32. __UNALIGNED_UINT32 is ignored.
-    #define __UNALIGNED_UINT32(x)     (*x)
+    @packed struct T_UINT32 { uint32_t v; };
+    #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
   #endif
   #ifndef   __ALIGNED
     #warning No compiler specific solution for __ALIGNED. __ALIGNED is ignored.
     #define __ALIGNED(x)
   #endif
   #ifndef   __PACKED
-    #warning No compiler specific solution for __PACKED. __PACKED is ignored.
-    #define __PACKED
+    #define __PACKED                  @packed
   #endif
 
 
