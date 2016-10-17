@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        12. October 2016
+ * $Date:        17. October 2016
  * $Revision:    V2.0
  *
  * Project:      CMSIS-RTOS API
@@ -58,7 +58,6 @@
  *    Thread:
  *     - extended number of thread priorities
  *     - renamed osPrioriry to osPrioriry_t
- *     - changed thread return value
  *     - replaced osThreadCreate with osThreadNew
  *     - added: osThreadState_t and osThreadGetState
  *     - added: osThreadSuspend, osThreadResume
