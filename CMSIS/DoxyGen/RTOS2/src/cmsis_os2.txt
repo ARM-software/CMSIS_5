@@ -436,21 +436,19 @@ The following example shows how to create an OS object using static memory.
 //The thread function instanced in this example
 void *worker(void *arg)
 {
+  while(1) 
+  {
     //work
 	osDelay(10000);
-  return 0;
+  }  
 }
  
 // Define objects that are statically allocated for worker threads 1 and 2
 os_thread_t worker_thread_tcb_1;
-os_thread_t worker_thread_tcb_2;
- 
  
 // Reserve two areas for the stacks of worker threads 1 and 2
 // uint64_t makes sure the memory alignment is 8
 uint64_t worker_thread_stk_1[64];
-uint64_t worker_thread_stk_2[64];
- 
  
 // Define the attributes which are used for thread creation
 // Optional const saves RAM memory and includes the values in periodic ROM tests 
@@ -465,20 +463,9 @@ const osThreadAttr_t worker_attr_1 = {
 	0
 };
  
-const osThreadAttr_t worker_attr_2 = { 
-	"wrk2", 
-	osThreadJoinable, 
-	&worker_thread_tcb_2, 
-	sizeof(worker_thread_tcb_2),
-	&worker_thread_stk_2[0],  
-	sizeof(worker_thread_stk_2),
-	osPriorityAboveNormal,
-	0
-};
- 
-// Define ID objects for threads
+
+// Define ID object for thread
 osThreadId_t th1;
-osThreadId_t th2;
  
 /*----------------------------------------------------------------------------
  * Application main thread
@@ -488,13 +475,6 @@ void *app_main (void *argument) {
 	
 	//Create an instance of the worker thread with static resources (TCB and stack)
   th1 = osThreadNew(worker, &param, &worker_attr_1);
-	//Create an instance of the worker thread with static resources
-  th2 = osThreadNew(worker, &param, &worker_attr_2);
-
-	//wait until worker thread 1 is terminated
-  (void) osThreadJoin(th1, NULL);	
-	//wait until worker thread 2 is terminated
-  (void) osThreadJoin(th2, NULL);
     
   for (;;) {}
 }
@@ -578,10 +558,10 @@ The configuration options are explained on these pages:
 
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
-Global Dynamic Memory size [bytes]     | \c OS_DYNAMIC_MEM_SIZE   | Defines the combined global dynamic memory size. Default value is \token{4096}. Value range is \token{[0-1073741824]} bytes, in multiples of \token{8} bytes.
+Global Dynamic Memory size [bytes]     | \c OS_DYNAMIC_MEM_SIZE   | Defines the combined global dynamic memory size for the \ref GlobalMemoryPool. Default value is \token{4096}. Value range is \token{[0-1073741824]} bytes, in multiples of \token{8} bytes.
 Round-Robin Thread switching           | \c OS_ROBIN_ENABLE       | Enables Round-Robin Thread switching.
 Round-Robin Timeout [ms]               | \c OS_ROBIN_TIMEOUT      | Defines how long a thread will execute before a thread switch. Default value is \token{5}. Value range is \token{[1-1000]}.
-ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functions called from ISR store requests to this buffer. Default value is \token{16 entries}. Value range is \token{[4-256]} entries, stepping \token{4} entries.
+ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functions called from ISR store requests to this buffer. Default value is \token{16 entries}. Value range is \token{[4-256]} entries in multiples of \token{4}.
 */
 
 /* ========================================================================================================================== */
@@ -611,7 +591,7 @@ Main stack is also used when:
 
 Name                                                     | \#define               | Description
 ---------------------------------------------------------|------------------------|----------------------------------------------------------------
-Object specific Memory allocation                        | \c OS_THREAD_OBJ_MEM   | Enables object specific memory allocation.
+Object specific Memory allocation                        | \c OS_THREAD_OBJ_MEM   | Enables object specific memory allocation. See /ref ObjectMemoryPool.
 Number of user Threads (total)               | \c OS_THREAD_NUM       | Defines maximum number of user threads that can be active at the same time. Applies to user threads with system provided memory for control blocks. Default value is \token{6}. Value range is \token{[1-1000]}.
 Number of user Threads with user-provided Stack size | \c OS_THREAD_USER_STACK_NUM     | Defines maximum number of user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1000]}.
 Total Stack size [bytes] for user Threads with user-provided Stack size    | \c OS_THREAD_USER_STACK_SIZE | Defines the combined stack size for user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1073741824]} bits, sepping \token{8} bits. 
@@ -632,7 +612,7 @@ Processor mode for Thread execution                      | \c OS_PRIVILEGE_MODE 
 
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
-Object specific Memory allocation      | \c OS_TIMER_OBJ_MEM      | Enables object specific memory allocation.
+Object specific Memory allocation      | \c OS_TIMER_OBJ_MEM      | Enables object specific memory allocation. See /ref ObjectMemoryPool.
 Number of Timer objects                | \c OS_TIMER_NUM          | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[1-1000]}.
 Timer Thread Priority                  | \c OS_TIMER_THREAD_PRIO        | Defines priority for timer thread. Default value is \token{40}. Value range is \token{[8-48]}, stepping \token{8}. The numbers have the following priority correlation: \token{8=Low}; \token{16=Below Normal}; \token{24=Normal}; \token{32=Above Normal}; \token{40=High}; \token{48=Realtime} 
 Timer Thread Stack size [bytes]        | \c OS_TIMER_THREAD_STACK_SIZE  | Defines stack size for Timer thread. May be set to 0 when timers are not used. Default value is \token{200}. Value range is \token{[0-1073741824]}, stepping \token{8}.
@@ -648,7 +628,7 @@ Timer Callback Queue entries           | \c OS_TIMER_CB_QUEUE           | Number
 
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
-Object specific Memory allocation      | \c OS_EVFLAGS_OBJ_MEM    | Enables object specific memory allocation.
+Object specific Memory allocation      | \c OS_EVFLAGS_OBJ_MEM    | Enables object specific memory allocation. See /ref ObjectMemoryPool.
 Number of Event Flags objects          | \c OS_EVFLAGS_NUM        | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[0-1000]}.
 */
 
@@ -662,7 +642,7 @@ Number of Event Flags objects          | \c OS_EVFLAGS_NUM        | Defines maxi
 
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
-Object specific Memory allocation      | \c OS_MUTEX_OBJ_MEM      | Enables object specific memory allocation.
+Object specific Memory allocation      | \c OS_MUTEX_OBJ_MEM      | Enables object specific memory allocation. See /ref ObjectMemoryPool.
 Number of Mutex objects                | \c OS_MUTEX_NUM          | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[0-1000]}.
 */
 
@@ -676,7 +656,7 @@ Number of Mutex objects                | \c OS_MUTEX_NUM          | Defines maxi
 
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
-Object specific Memory allocation      | \c OS_SEMAPHORE_OBJ_MEM  | Enables object specific memory allocation.
+Object specific Memory allocation      | \c OS_SEMAPHORE_OBJ_MEM  | Enables object specific memory allocation. See /ref ObjectMemoryPool.
 Number of Semaphore objects            | \c OS_SEMAPHORE_NUM      | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[0-1000]}.
 */
 
@@ -690,7 +670,7 @@ Number of Semaphore objects            | \c OS_SEMAPHORE_NUM      | Defines maxi
 
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
-Object specific Memory allocation      | \c OS_MEMPOOL_OBJ_MEM    | Enables object specific memory allocation.
+Object specific Memory allocation      | \c OS_MEMPOOL_OBJ_MEM    | Enables object specific memory allocation. See /ref ObjectMemoryPool.
 Number of Memory Pool objects          | \c OS_MEMPOOL_NUM        | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[0-1000]}.
 Data Storage Memory size [bytes]       | \c OS_MEMPOOL_DATA_SIZE  | Defines the combined data storage memory size. Applies to objects with system provided memory for data storage. Default value is \token{0}. Value range is \token{[0-1073741824]}, stepping \token{4}.
 
@@ -709,7 +689,7 @@ Data Storage Memory size [bytes]       | \c OS_MEMPOOL_DATA_SIZE  | Defines the 
 
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
-Object specific Memory allocation      | \c OS_MSGQUEUE_OBJ_MEM   | Enables object specific memory allocation.
+Object specific Memory allocation      | \c OS_MSGQUEUE_OBJ_MEM   | Enables object specific memory allocation. See /ref ObjectMemoryPool.
 Number of Message Queue objects        | \c OS_MSGQUEUE_NUM       | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[0-1000]}.
 Data Storage Memory size [bytes]       | \c OS_MSGQUEUE_DATA_SIZE | Defines the combined data storage memory size. Applies to objects with system provided memory for data storage. Default value is \token{0}. Value range is \token{[0-1073741824]}, stepping \token{4}.
 
