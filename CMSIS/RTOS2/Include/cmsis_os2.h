@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        12. October 2016
+ * $Date:        17. October 2016
  * $Revision:    V2.0
  *
  * Project:      CMSIS-RTOS2 API
@@ -141,7 +141,7 @@ typedef enum {
 } osPriority_t;
  
 /// Entry point of a thread.
-typedef void *(*os_thread_func_t) (void *argument);
+typedef void (*os_thread_func_t) (void *argument);
  
 /// Entry point of a timer call back function.
 typedef void (*os_timer_func_t) (void *argument);
@@ -161,8 +161,8 @@ typedef enum {
 #define osFlagsNoClear      0x00000002U ///< Do not clear flags which have been specified to wait for.
  
 /// Thread attributes (attr_bits in \ref osThreadAttr_t).
-#define osThreadJoinable    0x00000000U ///< Thread created in joinable state (default)
-#define osThreadDetached    0x00000001U ///< Thread created in detached state
+#define osThreadDetached    0x00000000U ///< Thread created in detached state (default)
+#define osThreadJoinable    0x00000001U ///< Thread created in joinable state
  
 /// Mutex attributes (attr_bits in \ref osMutexAttr_t).
 #define osMutexRecursive    0x00000001U ///< Recursive mutex.
@@ -377,13 +377,11 @@ osStatus_t osThreadDetach (osThreadId_t thread_id);
  
 /// Wait for specified thread to terminate.
 /// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
-/// \param[out]    exit_ptr      pointer to thread exit pointer value.
 /// \return status code that indicates the execution status of the function.
-osStatus_t osThreadJoin (osThreadId_t thread_id, void **exit_ptr);
+osStatus_t osThreadJoin (osThreadId_t thread_id);
  
 /// Terminate execution of current running thread.
-/// \param[in]     exit_ptr      thread exit pointer value.
-__NO_RETURN void osThreadExit (void *exit_ptr);
+__NO_RETURN void osThreadExit (void);
  
 /// Terminate execution of a thread.
 /// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
