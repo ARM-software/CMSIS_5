@@ -30,8 +30,7 @@ CMSIS-RTOS API v2 provides an translation layer for the
 It is possible to intermix CMSIS-RTOS API v2 and CMSIS-RTOS API v1 within the same application.
 You may migrate overtime to the new API as explained in \ref os2Migration.
 
-CMSIS-RTOS API v2 is not POSIX compliant, but has provisions to enable a POSIX translation layer and a C++ interface.
-\todo Investigate into a flexible C++ interface and potential POSIX translation
+CMSIS-RTOS API v2 is not POSIX compliant, but has provisions to enable a C++11/C++14 interface.
 
 <hr>
 
@@ -367,41 +366,59 @@ When a thread switch occurs:
 Each thread is provided with an separate stack that holds the thread context and stack space for automatic variables and return addresses for function call nesting. The stack sizes of the RTX threads are flexible configurable as explained in the section \ref threadConfig. RTX even offers a configurable checking for stack overflows and stack utilization. 
 
 
-\section MemoryAllocation Variants of Memory Allocation 
-The RTX objects threads, mutexes, semaphores, timers, messages, events and memory pools require dedicated RAM memory everytime they are created. 
+\section MemoryAllocation Memory Allocation 
 
-RTX5 offers three different allocation mechanisms. If no specific method is configured or used os<i>object</i>New()calls always default to the Global Dynamic Memory Pool.
+The RTX objects (thread, mutex, semaphore, timer, message, event and memory pool) require dedicated RAM memory.
+Objects can be created using os<i>object</i>New() calls and deleted using os<i>object</i>Delete() calls. The related
+object memory needs to be available during the life-time of the object.
 
-\subsection MemoryAllocationGlobal Global Dynamic Memory Pool
+RTX5 offers three different memory allocation methods for objects:
+
+  - \ref GlobalDynamicMemoryPool uses a single global memory pool for all objects. It is easy to configure, but may have 
+    the disadvantage for memory fragmentation when different object sizes are created and deleted.
+
+  - \ref ObjectMemoryPool uses a fixed-size memory pool for each object type. The method is time deterministic
+     and avoids memory fragmentation.
+
+  - \ref StaticObjectMemory is reserved during the compile time and completely avoids that a system can be out of memory.
+    This is required for some safety critical applications.
+ 
+It possible to intermix the usage of the all memory allocation methods in the same application.
+
+
+\subsection GlobalMemoryPool Global Memory Pool
 \image html MemAllocGlob.png "Global Memory Pool for all objects"
-The global memory pool allocates all objects from a single large memory pool when an object is created. This method is often selected when object instances of arbitrary type and count are created at run-time.
-In case of insufficient memory the creation of an object instance can fail. This requires proper handling of \ref osErrorNoMemory returned by os<i>object</i>New() functions.
+The global memory pool allocates all objects from a one memory area.
+This method of memory allocation is the default configuration setting of RTX5.
+
+When pool does not provide sufficient memory the creation of the object fails and the related os<i>object</i>New() function returns \token{NULL}.
+
+\todo refer to object counters once available
 
 Enabled in \ref systemConfig.
 
-\subsection MemoryAllocationObject Object-specific Dynamic Memory Pools
+\subsection ObjectMemoryPool Object-specific Memory Pools
 \image html MemAllocSpec.png "One memory pool per object type"
-Object-specific memory pools allows to reserve pools specific to a type of object, e.g: mutexes or threads. This is less flexible than a large single pool, but does provide advantages. e.g.:
-- Simplifies analysis of memory usage and handling of out-of-memory situations.
-- Allows dynamic memory management for specific object types only, while others might be allocated statically.
-- Map pools to different memory spaces (e.g. for systems with different speed grades of RAM memory)
+Object-specific memory pools may be enabled for a selected object type, e.g: mutex or thread using the RTX configuration file:
+ - Enabled in \ref threadConfig for thread objects.
+ - Enabled in \ref timerConfig for timer objects.           <br> 
+ - Enabled in \ref eventFlagsConfig for event objects.      <br> 
+ - Enabled in \ref mutexConfig for mutex objects.           <br> 
+ - Enabled in \ref semaphoreConfig for semaphore.           <br> 
+ - Enabled in \ref memPoolConfig for memory pools.          <br> 
+ - Enabled in \ref msgQueueConfig for message objects.      <br> 
 
-Enabled in \ref threadConfig for thread objects.         <br> 
-Enabled in \ref timerConfig for timer objects.           <br> 
-Enabled in \ref eventFlagsConfig for event objects.      <br> 
-Enabled in \ref mutexConfig for mutex objects.           <br> 
-Enabled in \ref semaphoreConfig for semaphore.           <br> 
-Enabled in \ref memPoolConfig for memory pools.          <br> 
-Enabled in \ref msgQueueConfig for message objects.      <br> 
+This dedicated fixed-size memory pool ensures time deterministic behaviour and avoids memory fragmentation.
+As the memory pool is specific to an object the handling of out-of-memory situations may be simplified.
 
+When pool does not provide sufficient memory the creation of the object fails and the related os<i>object</i>New() function returns \token{NULL}.
 
-\subsection MemoryAllocationStatic Static Memory Allocation
+\todo explain how to Map pools to different memory spaces (e.g. for systems with different speed grades of RAM memory)
+
+\subsection StaticObjectMemory Static Object Memory
 \image html MemAllocStat.png "Statically allocated memory for all objects"
-In contrast to the dynamic memory allocations the static memory allocation requires compile-time allocation of object memory. This memory is reserved by the user application. e.g. by declaring a global array of the proper size for each object.
-Although this method is less flexible it has advantages. Mainly it removes the likelyhood of an \ref osErrorNoMemory when instancing a new object and avoids memory fragmentation.
-Most functional safety standards (like IEC61508) do not allow dynamic memory management or make the use of it very difficult.
-
-The following example shows how to create an OS object with static memory.
+In contrast to the dynamic memory allocations the static memory allocation requires compile-time allocation of object memory. 
+The following example shows how to create an OS object using static memory.
 
 \b Example:
 \code
@@ -412,10 +429,10 @@ The following example shows how to create an OS object with static memory.
 #include "RTE_Components.h"
 #include  CMSIS_device_header
 #include "cmsis_os2.h"
-
+ 
 //include rtx_os.h for types of RTX objects
 #include "rtx_os.h"
-
+ 
 //The thread function instanced in this example
 void *worker(void *arg)
 {
@@ -423,18 +440,18 @@ void *worker(void *arg)
 	osDelay(10000);
   return 0;
 }
-
+ 
 // Define objects that are statically allocated for worker threads 1 and 2
 os_thread_t worker_thread_tcb_1;
 os_thread_t worker_thread_tcb_2;
-
-
+ 
+ 
 // Reserve two areas for the stacks of worker threads 1 and 2
 // uint64_t makes sure the memory alignment is 8
 uint64_t worker_thread_stk_1[64];
 uint64_t worker_thread_stk_2[64];
-
-
+ 
+ 
 // Define the attributes which are used for thread creation
 // Optional const saves RAM memory and includes the values in periodic ROM tests 
 const osThreadAttr_t worker_attr_1 = { 
@@ -447,7 +464,7 @@ const osThreadAttr_t worker_attr_1 = {
 	osPriorityAboveNormal,
 	0
 };
-
+ 
 const osThreadAttr_t worker_attr_2 = { 
 	"wrk2", 
 	osThreadJoinable, 
@@ -458,11 +475,11 @@ const osThreadAttr_t worker_attr_2 = {
 	osPriorityAboveNormal,
 	0
 };
-
+ 
 // Define ID objects for threads
 osThreadId_t th1;
 osThreadId_t th2;
-
+ 
 /*----------------------------------------------------------------------------
  * Application main thread
  *---------------------------------------------------------------------------*/
@@ -478,10 +495,10 @@ void *app_main (void *argument) {
   (void) osThreadJoin(th1, NULL);	
 	//wait until worker thread 2 is terminated
   (void) osThreadJoin(th2, NULL);
-   
+    
   for (;;) {}
 }
-
+ 
 int main (void) {
 
   // System Initialization
