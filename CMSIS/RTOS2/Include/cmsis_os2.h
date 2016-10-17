@@ -310,8 +310,8 @@ void osKernelUnlock (void);
 uint32_t osKernelSuspend (void);
  
 /// Resume the RTOS Kernel scheduler.
-/// \param[in]     sleep_time    time in ticks for how long the system was in sleep or power-down mode.
-void osKernelResume (uint32_t sleep_time);
+/// \param[in]     sleep_ticks   time in ticks for how long the system was in sleep or power-down mode.
+void osKernelResume (uint32_t sleep_ticks);
  
 /// Get the RTOS kernel time.
 /// \return RTOS kernel current time in ticks.
@@ -417,14 +417,14 @@ int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout);
 //  ==== Generic Wait Functions ====
  
 /// Wait for Timeout (Time Delay).
-/// \param[in]     delay         \ref CMSIS_RTOS_TimeOutValue "time delay" value
+/// \param[in]     ticks         \ref CMSIS_RTOS_TimeOutValue "time ticks" value
 /// \return status code that indicates the execution status of the function.
-osStatus_t osDelay (uint32_t delay);
+osStatus_t osDelay (uint32_t ticks);
  
 /// Wait until specified time.
-/// \param[in]     abs_time      absolute time in ticks
+/// \param[in]     abs_ticks     absolute time in ticks
 /// \return status code that indicates the execution status of the function.
-osStatus_t osDelayUntil (uint64_t abs_time);
+osStatus_t osDelayUntil (uint64_t abs_ticks);
  
  
 //  ==== Timer Management Functions ====
@@ -439,9 +439,9 @@ osTimerId_t osTimerNew (os_timer_func_t func, osTimerType_t type, void *argument
  
 /// Start or restart a timer.
 /// \param[in]     timer_id      timer ID obtained by \ref osTimerNew.
-/// \param[in]     timeout       \ref CMSIS_RTOS_TimeOutValue "time delay" value of the timer.
+/// \param[in]     ticks         \ref CMSIS_RTOS_TimeOutValue "time ticks" value of the timer.
 /// \return status code that indicates the execution status of the function.
-osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t timeout);
+osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t ticks);
  
 /// Stop a timer.
 /// \param[in]     timer_id      timer ID obtained by \ref osTimerNew.
