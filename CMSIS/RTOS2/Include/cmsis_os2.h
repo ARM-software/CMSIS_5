@@ -306,15 +306,15 @@ uint32_t osKernelLock (void);
 void osKernelUnlock (void);
  
 /// Suspend the RTOS Kernel scheduler.
-/// \return time in millisec, for how long the system can sleep or power-down.
+/// \return time in ticks, for how long the system can sleep or power-down.
 uint32_t osKernelSuspend (void);
  
 /// Resume the RTOS Kernel scheduler.
-/// \param[in]     sleep_time    time in millisec for how long the system was in sleep or power-down mode.
+/// \param[in]     sleep_time    time in ticks for how long the system was in sleep or power-down mode.
 void osKernelResume (uint32_t sleep_time);
  
 /// Get the RTOS kernel time.
-/// \return RTOS kernel current time in millisec.
+/// \return RTOS kernel current time in ticks.
 uint64_t osKernelGetTime (void);
  
 /// Get the RTOS kernel system timer counter.
@@ -409,22 +409,22 @@ int32_t osThreadFlagsGet (void);
 /// Wait for one or more Thread Flags of the current running thread to become signaled.
 /// \param[in]     flags         specifies the flags to wait for.
 /// \param[in]     options       specifies flags options (osFlagsXxxx).
-/// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
+/// \param[in]     timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return thread flags before clearing or error code if negative.
-int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t millisec);
+int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout);
  
  
 //  ==== Generic Wait Functions ====
  
 /// Wait for Timeout (Time Delay).
-/// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue "time delay" value
+/// \param[in]     delay         \ref CMSIS_RTOS_TimeOutValue "time delay" value
 /// \return status code that indicates the execution status of the function.
-osStatus_t osDelay (uint32_t millisec);
+osStatus_t osDelay (uint32_t delay);
  
 /// Wait until specified time.
-/// \param[in]     millisec      absolute time in millisec
+/// \param[in]     abs_time      absolute time in ticks
 /// \return status code that indicates the execution status of the function.
-osStatus_t osDelayUntil (uint64_t millisec);
+osStatus_t osDelayUntil (uint64_t abs_time);
  
  
 //  ==== Timer Management Functions ====
@@ -439,9 +439,9 @@ osTimerId_t osTimerNew (os_timer_func_t func, osTimerType_t type, void *argument
  
 /// Start or restart a timer.
 /// \param[in]     timer_id      timer ID obtained by \ref osTimerNew.
-/// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue "time delay" value of the timer.
+/// \param[in]     timeout       \ref CMSIS_RTOS_TimeOutValue "time delay" value of the timer.
 /// \return status code that indicates the execution status of the function.
-osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t millisec);
+osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t timeout);
  
 /// Stop a timer.
 /// \param[in]     timer_id      timer ID obtained by \ref osTimerNew.
@@ -487,9 +487,9 @@ int32_t osEventFlagsGet (osEventFlagsId_t ef_id);
 /// \param[in]     ef_id         event flags ID obtained by \ref osEventFlagsNew.
 /// \param[in]     flags         specifies the flags to wait for.
 /// \param[in]     options       specifies flags options (osFlagsXxxx).
-/// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
+/// \param[in]     timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return event flags before clearing or error code if negative.
-int32_t osEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t millisec);
+int32_t osEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout);
  
 /// Delete an Event Flags object.
 /// \param[in]     ef_id         event flags ID obtained by \ref osEventFlagsNew.
@@ -506,9 +506,9 @@ osMutexId_t osMutexNew (const osMutexAttr_t *attr);
  
 /// Acquire a Mutex or timeout if it is locked.
 /// \param[in]     mutex_id      mutex ID obtained by \ref osMutexNew.
-/// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
+/// \param[in]     timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return status code that indicates the execution status of the function.
-osStatus_t osMutexAcquire (osMutexId_t mutex_id, uint32_t millisec);
+osStatus_t osMutexAcquire (osMutexId_t mutex_id, uint32_t timeout);
  
 /// Release a Mutex that was acquired by \ref osMutexAcquire.
 /// \param[in]     mutex_id      mutex ID obtained by \ref osMutexNew.
@@ -537,9 +537,9 @@ osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, cons
  
 /// Acquire a Semaphore token or timeout if no tokens are available.
 /// \param[in]     semaphore_id  semaphore ID obtained by \ref osSemaphoreNew.
-/// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
+/// \param[in]     timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return status code that indicates the execution status of the function.
-osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t millisec);
+osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout);
  
 /// Release a Semaphore token that was acquired by \ref osSemaphoreAcquire.
 /// \param[in]     semaphore_id  semaphore ID obtained by \ref osSemaphoreNew.
@@ -568,9 +568,9 @@ osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, con
  
 /// Allocate a memory block from a Memory Pool.
 /// \param[in]     mp_id         memory pool ID obtained by \ref osMemoryPoolNew.
-/// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
+/// \param[in]     timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return address of the allocated memory block or NULL in case of no memory is available.
-void *osMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t millisec);
+void *osMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout);
  
 /// Return an allocated memory block back to a Memory Pool.
 /// \param[in]     mp_id         memory pool ID obtained by \ref osMemoryPoolNew.
@@ -617,17 +617,17 @@ osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, con
 /// \param[in]     mq_id         message queue ID obtained by \ref osMessageQueueNew.
 /// \param[in]     msg_ptr       pointer to buffer with message to put into a queue.
 /// \param[in]     msg_prio      message priority.
-/// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
+/// \param[in]     timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return status code that indicates the execution status of the function.
-osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t millisec);
+osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout);
  
 /// Get a Message from a Queue or timeout if Queue is empty.
 /// \param[in]     mq_id         message queue ID obtained by \ref osMessageQueueNew.
 /// \param[out]    msg_ptr       pointer to buffer for message to get from a queue.
 /// \param[out]    msg_prio      pointer to buffer for message priority or NULL.
-/// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
+/// \param[in]     timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return status code that indicates the execution status of the function.
-osStatus_t osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t millisec);
+osStatus_t osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout);
  
 /// Get maximum number of messages in a Message Queue.
 /// \param[in]     mq_id         message queue ID obtained by \ref osMessageQueueNew.
