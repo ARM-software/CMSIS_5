@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        17. October 2016
+ * $Date:        18. October 2016
  * $Revision:    V2.0
  *
  * Project:      CMSIS-RTOS API
@@ -53,8 +53,10 @@
  *     - added: osKernelState_t and osKernelGetState (replaces osKernelRunning)
  *     - added: osKernelLock, osKernelUnlock
  *     - added: osKernelSuspend, osKernelResume
- *     - added: osKernelGetTime
- *     - renamed osKernelSysTick to osKernelGetSysTick
+ *     - added: osKernelGetTickCount, osKernelGetTickFreq
+ *     - renamed osKernelSysTick to osKernelGetSysTimerCount
+ *     - replaced osKernelSysTickFrequency with osKernelGetSysTimerFreq
+ *     - deprecated osKernelSysTickMicroSec
  *    Thread:
  *     - extended number of thread priorities
  *     - renamed osPrioriry to osPrioriry_t
@@ -400,12 +402,14 @@ int32_t osKernelRunning(void);
 #if (osCMSIS < 0x20000U)
 uint32_t osKernelSysTick (void);
 #else
-#define  osKernelSysTick osKernelGetTick
+#define  osKernelSysTick osKernelGetSysTimerCount
 #endif
  
 /// The RTOS kernel system timer frequency in Hz.
 /// \note Reflects the system timer setting and is typically defined in a configuration file.
+#if (osCMSIS < 0x20000U)
 #define osKernelSysTickFrequency 100000000
+#endif
  
 /// Convert a microseconds value to a RTOS kernel system timer value.
 /// \param         microsec     time value in microseconds.
@@ -413,7 +417,7 @@ uint32_t osKernelSysTick (void);
 #if (osCMSIS < 0x20000U)
 #define osKernelSysTickMicroSec(microsec) (((uint64_t)microsec * (osKernelSysTickFrequency)) / 1000000)
 #else
-#define osKernelSysTickMicroSec osKernelTickMicroSec
+#define osKernelSysTickMicroSec(microsec) (((uint64_t)microsec *  osKernelGetSysTimerFreq()) / 1000000)
 #endif
  
 #endif  // System Timer available
