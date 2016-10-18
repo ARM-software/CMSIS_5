@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        17. October 2016
+ * $Date:        18. October 2016
  * $Revision:    V2.0
  *
  * Project:      CMSIS-RTOS2 API
@@ -313,18 +313,21 @@ uint32_t osKernelSuspend (void);
 /// \param[in]     sleep_ticks   time in ticks for how long the system was in sleep or power-down mode.
 void osKernelResume (uint32_t sleep_ticks);
  
-/// Get the RTOS kernel time.
-/// \return RTOS kernel current time in ticks.
-uint64_t osKernelGetTime (void);
+/// Get the RTOS kernel tick count.
+/// \return RTOS kernel current tick count.
+uint64_t osKernelGetTickCount (void);
  
-/// Get the RTOS kernel system timer counter.
-/// \return RTOS kernel system timer as 32-bit value.
-uint32_t osKernelGetTick (void);
+/// Get the RTOS kernel tick frequency.
+/// \return frequency of the kernel tick.
+uint32_t osKernelGetTickFreq (void);
  
-/// Convert a microseconds value to a RTOS kernel system timer value.
-/// \param         microsec     time value in microseconds.
-/// \return time value normalized to the system timer ticks.
-uint32_t osKernelTickMicroSec (uint32_t microsec);
+/// Get the RTOS kernel system timer count.
+/// \return RTOS kernel current system timer count as 32-bit value.
+uint32_t osKernelGetSysTimerCount (void);
+ 
+/// Get the RTOS kernel system timer frequency.
+/// \return frequency of the system timer.
+uint32_t osKernelGetSysTimerFreq (void);
  
  
 //  ==== Thread Management Functions ====
@@ -422,9 +425,9 @@ int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout);
 osStatus_t osDelay (uint32_t ticks);
  
 /// Wait until specified time.
-/// \param[in]     abs_ticks     absolute time in ticks
+/// \param[in]     ticks         absolute time in ticks
 /// \return status code that indicates the execution status of the function.
-osStatus_t osDelayUntil (uint64_t abs_ticks);
+osStatus_t osDelayUntil (uint64_t ticks);
  
  
 //  ==== Timer Management Functions ====
