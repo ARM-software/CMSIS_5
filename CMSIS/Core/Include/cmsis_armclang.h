@@ -2,7 +2,7 @@
  * @file     cmsis_armclang.h
  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
  * @version  V5.00
- * @date     13. September 2016
+ * @date     18. October 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -633,7 +633,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
   __ASM volatile ("");
   return(result);
 #else
-   return(0U);
+  return(0U);
 #endif
 }
 
@@ -652,6 +652,8 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 /*  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc"); */
   __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) :);
   __ASM volatile ("");
+#else
+  (void)fpscr;
 #endif
 }
 
@@ -967,10 +969,10 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RRX(uint32_t value)
  */
 __attribute__((always_inline)) __STATIC_INLINE uint8_t __LDRBT(volatile uint8_t *ptr)
 {
-    uint32_t result;
+  uint32_t result;
 
-   __ASM volatile ("ldrbt %0, %1" : "=r" (result) : "Q" (*ptr) );
-   return ((uint8_t) result);    /* Add explicit type cast here */
+  __ASM volatile ("ldrbt %0, %1" : "=r" (result) : "Q" (*ptr) );
+  return ((uint8_t) result);    /* Add explicit type cast here */
 }
 
 
@@ -982,10 +984,10 @@ __attribute__((always_inline)) __STATIC_INLINE uint8_t __LDRBT(volatile uint8_t 
  */
 __attribute__((always_inline)) __STATIC_INLINE uint16_t __LDRHT(volatile uint16_t *ptr)
 {
-    uint32_t result;
+  uint32_t result;
 
-   __ASM volatile ("ldrht %0, %1" : "=r" (result) : "Q" (*ptr) );
-   return ((uint16_t) result);    /* Add explicit type cast here */
+  __ASM volatile ("ldrht %0, %1" : "=r" (result) : "Q" (*ptr) );
+  return ((uint16_t) result);    /* Add explicit type cast here */
 }
 
 
@@ -997,10 +999,10 @@ __attribute__((always_inline)) __STATIC_INLINE uint16_t __LDRHT(volatile uint16_
  */
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __LDRT(volatile uint32_t *ptr)
 {
-    uint32_t result;
+  uint32_t result;
 
-   __ASM volatile ("ldrt %0, %1" : "=r" (result) : "Q" (*ptr) );
-   return(result);
+  __ASM volatile ("ldrt %0, %1" : "=r" (result) : "Q" (*ptr) );
+  return(result);
 }
 
 
@@ -1012,7 +1014,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __LDRT(volatile uint32_t
  */
 __attribute__((always_inline)) __STATIC_INLINE void __STRBT(uint8_t value, volatile uint8_t *ptr)
 {
-   __ASM volatile ("strbt %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
+  __ASM volatile ("strbt %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
 }
 
 
@@ -1024,7 +1026,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __STRBT(uint8_t value, volat
  */
 __attribute__((always_inline)) __STATIC_INLINE void __STRHT(uint16_t value, volatile uint16_t *ptr)
 {
-   __ASM volatile ("strht %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
+  __ASM volatile ("strht %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
 }
 
 
@@ -1036,7 +1038,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __STRHT(uint16_t value, vola
  */
 __attribute__((always_inline)) __STATIC_INLINE void __STRT(uint32_t value, volatile uint32_t *ptr)
 {
-   __ASM volatile ("strt %1, %0" : "=Q" (*ptr) : "r" (value) );
+  __ASM volatile ("strt %1, %0" : "=Q" (*ptr) : "r" (value) );
 }
 
 #endif /* ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
@@ -1055,10 +1057,10 @@ __attribute__((always_inline)) __STATIC_INLINE void __STRT(uint32_t value, volat
  */
 __attribute__((always_inline)) __STATIC_INLINE uint8_t __LDAB(volatile uint8_t *ptr)
 {
-    uint32_t result;
+  uint32_t result;
 
-   __ASM volatile ("ldab %0, %1" : "=r" (result) : "Q" (*ptr) );
-   return ((uint8_t) result);
+  __ASM volatile ("ldab %0, %1" : "=r" (result) : "Q" (*ptr) );
+  return ((uint8_t) result);
 }
 
 
@@ -1070,10 +1072,10 @@ __attribute__((always_inline)) __STATIC_INLINE uint8_t __LDAB(volatile uint8_t *
  */
 __attribute__((always_inline)) __STATIC_INLINE uint16_t __LDAH(volatile uint16_t *ptr)
 {
-    uint32_t result;
+  uint32_t result;
 
-   __ASM volatile ("ldah %0, %1" : "=r" (result) : "Q" (*ptr) );
-   return ((uint16_t) result);
+  __ASM volatile ("ldah %0, %1" : "=r" (result) : "Q" (*ptr) );
+  return ((uint16_t) result);
 }
 
 
@@ -1085,10 +1087,10 @@ __attribute__((always_inline)) __STATIC_INLINE uint16_t __LDAH(volatile uint16_t
  */
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __LDA(volatile uint32_t *ptr)
 {
-    uint32_t result;
+  uint32_t result;
 
-   __ASM volatile ("lda %0, %1" : "=r" (result) : "Q" (*ptr) );
-   return(result);
+  __ASM volatile ("lda %0, %1" : "=r" (result) : "Q" (*ptr) );
+  return(result);
 }
 
 
@@ -1100,7 +1102,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __LDA(volatile uint32_t 
  */
 __attribute__((always_inline)) __STATIC_INLINE void __STLB(uint8_t value, volatile uint8_t *ptr)
 {
-   __ASM volatile ("stlb %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
+  __ASM volatile ("stlb %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
 }
 
 
@@ -1112,7 +1114,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __STLB(uint8_t value, volati
  */
 __attribute__((always_inline)) __STATIC_INLINE void __STLH(uint16_t value, volatile uint16_t *ptr)
 {
-   __ASM volatile ("stlh %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
+  __ASM volatile ("stlh %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
 }
 
 
@@ -1124,7 +1126,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __STLH(uint16_t value, volat
  */
 __attribute__((always_inline)) __STATIC_INLINE void __STL(uint32_t value, volatile uint32_t *ptr)
 {
-   __ASM volatile ("stl %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
+  __ASM volatile ("stl %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
 }
 
 
@@ -1199,7 +1201,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __STL(uint32_t value, volati
   @{
 */
 
-#if (__ARM_FEATURE_DSP == 1)                             /* ToDo ARMCLANG: This should be ARCH >= ARMv7-M + SIMD */
+#if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
 
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __SADD8(uint32_t op1, uint32_t op2)
 {
@@ -1736,10 +1738,10 @@ __attribute__((always_inline)) __STATIC_INLINE  int32_t __QSUB( int32_t op1,  in
 
 __attribute__((always_inline)) __STATIC_INLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 {
- int32_t result;
+  int32_t result;
 
- __ASM volatile ("smmla %0, %1, %2, %3" : "=r" (result): "r"  (op1), "r" (op2), "r" (op3) );
- return(result);
+  __ASM volatile ("smmla %0, %1, %2, %3" : "=r" (result): "r"  (op1), "r" (op2), "r" (op3) );
+  return(result);
 }
 
 #endif /* (__ARM_FEATURE_DSP == 1) */
