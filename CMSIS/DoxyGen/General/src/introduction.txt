@@ -18,13 +18,13 @@ including <a class="el" href="http://www.arm.com/products/processors/technologie
 
 \anchor CM_Components
 The CMSIS components are:
- - <a href="../../Core/html/index.html"><b>CMSIS-CORE</b></a>: API for the Cortex-M processor core and peripherals. It provides at standardized interface for Cortex-M0, Cortex-M3, Cortex-M4, Cortex-M7, SC000, and SC300. 
-   Included are also SIMD intrinsic functions for Cortex-M4 and Cortex-M7 SIMD instructions.
+ - <a href="../../Core/html/index.html"><b>CMSIS-CORE</b></a>: API for the Cortex-M processor core and peripherals. It provides a standardized interface for Cortex-M0, Cortex-M3, Cortex-M4, Cortex-M7, SC000, and SC300. 
+   Also included are SIMD intrinsic functions for Cortex-M4 and Cortex-M7 SIMD instructions.
 
  - <a href="../../Driver/html/index.html"><b>CMSIS-Driver</b></a>: defines generic peripheral driver interfaces for middleware making it reusable across supported devices. The API is RTOS independent
     and connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces.
 
- - <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>: DSP Library Collection with over 60 Functions for various data types: fix-point (fractional q7, q15, q31) and single precision floating-point (32-bit).
+ - <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>: DSP Library Collection with over 60 Functions for various data types: fixed-point (fractional q7, q15, q31) and single precision floating-point (32-bit).
    The library is available for all Cortex-M cores. The Cortex-M4 and Cortex-M7 implementations are optimized for the SIMD instruction set.
 
  - <a href="../../RTOS/html/index.html"><b>CMSIS-RTOS v1</b></a>: Common API for Real-Time Operating Systems along with reference implementation based on RTX.
@@ -33,14 +33,14 @@ The CMSIS components are:
  - <a href="../../RTOS2/html/index.html"><b>CMSIS-RTOS v2</b></a>: extends CMSIS-RTOS v1 with support for ARMv8-M architecture, dynamic object creation,
     provisions for multi-core systems, and binary compatible interface across ABI compliant compilers.
 	
- - <a href="../../Pack/html/index.html"><b>CMSIS-Pack</b></a>: describes with a XML based package description (PDSC) file the user and device relevant parts of a file collection (called software pack) that includes source, header, and library files, documentation, 
+ - <a href="../../Pack/html/index.html"><b>CMSIS-Pack</b></a>: describes with an XML-based package description (PDSC) file the user and device relevant parts of a file collection (called a software pack) that includes source, header and library files, documentation, 
     Flash programming algorithms, source code templates, and example projects. Development tools and web infrastructures use the PDSC file to extract device parameters, 
     software components, and evaluation board configurations.
 
  - <a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a>: System View Description for Peripherals. Describes the peripherals of a device in an XML file and can be used to create peripheral awareness in 
     debuggers or header files with peripheral register and interrupt definitions.
 
- - <a href="../../DAP/html/index.html"><b>CMSIS-DAP</b></a>: Debug Access Port. Standardized firmware for a Debug Unit that connects to the CoreSight Debug Access Port. CMSIS-DAP is distributed as separate package and
+ - <a href="../../DAP/html/index.html"><b>CMSIS-DAP</b></a>: Debug Access Port. Standardized firmware for a Debug Unit that connects to the CoreSight Debug Access Port. CMSIS-DAP is distributed as a separate package and is
     well suited for integration on evaluation boards. This component is provided as separate download.
 
 \note Refer to \ref CM_Pack_Content for more information on the content of the Software Pack.
@@ -101,7 +101,7 @@ Doxygen	comment example:
 
 The various components of CMSIS Version 5 are validated using mainstream compilers.  To get a diverse coverage,
 ARM uses the ARM Compiler v5 (based on EDG front-end), the ARM Compiler v6 (based on LLVM front-end), and the
-GCC Compiler) in the various tests. For each component the section \b "Validation" describes the scope of the 
+GCC Compiler in the various tests. For each component, the section \b "Validation" describes the scope of the 
 various verifications. 
 
 CMSIS components are compatible with a range of C and C++ language standards. The CMSIS components comply with 
