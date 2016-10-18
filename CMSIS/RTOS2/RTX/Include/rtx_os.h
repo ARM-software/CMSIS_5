@@ -26,6 +26,20 @@
 #ifndef RTX_OS_H_
 #define RTX_OS_H_
 
+#ifndef __NO_RETURN
+#if   defined(__CC_ARM)
+#define __NO_RETURN __declspec(noreturn)
+#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+#define __NO_RETURN __attribute__((noreturn))
+#elif defined(__GNUC__)
+#define __NO_RETURN __attribute__((noreturn))
+#elif defined(__ICCARM__)
+#define __NO_RETURN __noreturn
+#else
+#define __NO_RETURN
+#endif
+#endif
+
 #include <stdint.h>
 #include <stddef.h>
 
@@ -96,7 +110,6 @@ extern "C"
 
 /// Thread Flags definitions
 #define os_ThreadFlagDefStack   0x10U   ///< Default Stack flag
-#define os_ThreadFlagExitPtr    0x20U   ///< Exit Pointer flag
 
 /// Stack Marker definitions
 #define os_StackMagicWord       0xE25A2EA5U ///< Stack Magic Word (Stack Base)
@@ -386,7 +399,7 @@ extern os_info_t os_Info;               ///< OS Runtime Information
 extern uint32_t os_Error (uint32_t code, void *object_id);
 
 /// OS Idle Thread
-extern void *os_IdleThread (void *argument);
+extern void os_IdleThread (void *argument);
 
 /// OS Exception handlers
 extern void SVC_Handler     (void);

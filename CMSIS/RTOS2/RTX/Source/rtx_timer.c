@@ -110,7 +110,7 @@ void os_TimerTick (void) {
 }
 
 /// Timer Thread
-void *os_TimerThread (void *argument) {
+__NO_RETURN void os_TimerThread (void *argument) {
   os_timer_finfo_t finfo;
   osStatus_t       status;
   (void)           argument;
@@ -121,8 +121,6 @@ void *os_TimerThread (void *argument) {
       (*(os_timer_func_t)finfo.fp)(finfo.arg);
     }
   }
-  
-  return NULL;
 }
 
 //  ==== Service Calls ====

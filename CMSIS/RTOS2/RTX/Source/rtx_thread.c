@@ -512,8 +512,8 @@ SVC0_0 (ThreadYield,       osStatus_t)
 SVC0_1 (ThreadSuspend,     osStatus_t,      osThreadId_t)
 SVC0_1 (ThreadResume,      osStatus_t,      osThreadId_t)
 SVC0_1 (ThreadDetach,      osStatus_t,      osThreadId_t)
-SVC0_2 (ThreadJoin,        osStatus_t,      osThreadId_t, void **)
-SVC0_1N(ThreadExit,        void,            void *)
+SVC0_1 (ThreadJoin,        osStatus_t,      osThreadId_t)
+SVC0_0N(ThreadExit,        void)
 SVC0_1 (ThreadTerminate,   osStatus_t,      osThreadId_t)
 SVC0_2 (ThreadFlagsSet,    int32_t,         osThreadId_t, int32_t)
 SVC0_1 (ThreadFlagsClear,  int32_t,         int32_t)
@@ -911,7 +911,7 @@ osStatus_t os_svcThreadDetach (osThreadId_t thread_id) {
     return osErrorParameter;
   }
 
-  if (thread->attr & osThreadDetached) {
+  if ((thread->attr & osThreadJoinable) == 0U) {
     return osErrorResource;
   }
 
@@ -924,7 +924,7 @@ osStatus_t os_svcThreadDetach (osThreadId_t thread_id) {
     os_ThreadListUnlink(&os_Info.thread.terminate_list, thread);
     os_ThreadFree(thread);
   } else {
-    thread->attr |= osThreadDetached;
+    thread->attr &= ~osThreadJoinable;
   }
 
   return osOK;
@@ -932,9 +932,8 @@ osStatus_t os_svcThreadDetach (osThreadId_t thread_id) {
 
 /// Wait for specified thread to terminate.
 /// \note API identical to osThreadJoin
-osStatus_t os_svcThreadJoin (osThreadId_t thread_id, void **exit_ptr) {
+osStatus_t os_svcThreadJoin (osThreadId_t thread_id) {
   os_thread_t *thread = (os_thread_t *)thread_id;
-  uint32_t    *reg;
 
   // Check parameters
   if ((thread == NULL) ||
@@ -942,7 +941,7 @@ osStatus_t os_svcThreadJoin (osThreadId_t thread_id, void **exit_ptr) {
     return osErrorParameter;
   }
 
-  if (thread->attr & osThreadDetached) {
+  if ((thread->attr & osThreadJoinable) == 0U) {
     return osErrorResource;
   }
 
@@ -953,10 +952,6 @@ osStatus_t os_svcThreadJoin (osThreadId_t thread_id, void **exit_ptr) {
   }
 
   if (thread->state == os_ThreadTerminated) {
-    if ((thread->flags & os_ThreadFlagExitPtr) && (exit_ptr != NULL)) {
-      reg = os_ThreadRegPtr(thread);
-      *exit_ptr = (void *)reg[0];
-    }
     os_ThreadListUnlink(&os_Info.thread.terminate_list, thread);
     os_ThreadFree(thread);
   } else {
@@ -972,10 +967,8 @@ osStatus_t os_svcThreadJoin (osThreadId_t thread_id, void **exit_ptr) {
 
 /// Terminate execution of current running thread.
 /// \note API identical to osThreadExit
-void os_svcThreadExit (void *exit_ptr) {
+void os_svcThreadExit (void) {
   os_thread_t *thread;
-  uint32_t    *reg;
-  void       **ptr;
 
   thread = os_ThreadGetRunning();
   if (thread == NULL) {
@@ -987,11 +980,6 @@ void os_svcThreadExit (void *exit_ptr) {
 
   // Wakeup Thread waiting to Join
   if (thread->thread_join != NULL) {
-    reg = os_ThreadRegPtr(thread->thread_join);
-    ptr = (void **)reg[1];
-    if (ptr != NULL) {
-      *ptr = exit_ptr;
-    }
     os_ThreadWaitExit(thread->thread_join, (uint32_t)osOK, false);
   }
 
@@ -1004,12 +992,11 @@ void os_svcThreadExit (void *exit_ptr) {
   os_ThreadSwitch(os_ThreadListGet(&os_Info.thread.ready));
   os_ThreadSetRunning(NULL);
 
-  if (thread->attr & osThreadDetached) {
+  if ((thread->attr & osThreadJoinable) == 0U) {
     os_ThreadFree(thread);
   } else {
     // Update Thread State and put it into Terminate Thread list
-    thread->state  = os_ThreadTerminated;
-    thread->flags |= os_ThreadFlagExitPtr;
+    thread->state = os_ThreadTerminated;
     thread->thread_prev = NULL;
     thread->thread_next = os_Info.thread.terminate_list;
     os_Info.thread.terminate_list = thread;
@@ -1065,7 +1052,7 @@ osStatus_t os_svcThreadTerminate (osThreadId_t thread_id) {
     os_ThreadDispatch(NULL);
   }
 
-  if (thread->attr & osThreadDetached) {
+  if ((thread->attr & osThreadJoinable) == 0U) {
     os_ThreadFree(thread);
   } else {
     // Update Thread State and put it into Terminate Thread list
@@ -1313,16 +1300,16 @@ osStatus_t osThreadDetach (osThreadId_t thread_id) {
 }
 
 /// Wait for specified thread to terminate.
-osStatus_t osThreadJoin (osThreadId_t thread_id, void **exit_ptr) {
+osStatus_t osThreadJoin (osThreadId_t thread_id) {
   if (__get_IPSR() != 0U) {
     return osErrorISR;                          // Not allowed in ISR
   }
-  return __svcThreadJoin(thread_id, exit_ptr);
+  return __svcThreadJoin(thread_id);
 }
 
 /// Terminate execution of current running thread.
-__NO_RETURN void osThreadExit (void *exit_ptr) {
-  __svcThreadExit(exit_ptr);
+__NO_RETURN void osThreadExit (void) {
+  __svcThreadExit();
   for (;;);
 }
 

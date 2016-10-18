@@ -250,7 +250,7 @@
 #include "rtx_os.h"
  
 // OS Idle Thread
-void *os_IdleThread (void *argument) {
+__NO_RETURN void os_IdleThread (void *argument) {
   (void)argument;
 
   for (;;) {}

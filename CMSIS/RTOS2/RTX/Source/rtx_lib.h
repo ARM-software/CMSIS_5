@@ -65,8 +65,8 @@ extern bool         os_ThreadWaitEnter   (uint8_t state, uint32_t millisec);
 extern void         os_ThreadStackCheck  (void);
 
 // Timer Library functions
-extern void  os_TimerTick   (void);
-extern void *os_TimerThread (void *argument);
+extern void os_TimerTick   (void);
+extern void os_TimerThread (void *argument);
 
 // Mutex Library functions
 extern void  os_MutexOwnerRelease (os_mutex_t *mutex_list);
@@ -119,8 +119,8 @@ extern osStatus_t       os_svcThreadYield        (void);
 extern osStatus_t       os_svcThreadSuspend      (osThreadId_t thread_id);
 extern osStatus_t       os_svcThreadResume       (osThreadId_t thread_id);
 extern osStatus_t       os_svcThreadDetach       (osThreadId_t thread_id);
-extern osStatus_t       os_svcThreadJoin         (osThreadId_t thread_id, void **exit_ptr);
-extern void             os_svcThreadExit         (void *exit_ptr);
+extern osStatus_t       os_svcThreadJoin         (osThreadId_t thread_id);
+extern void             os_svcThreadExit         (void);
 extern osStatus_t       os_svcThreadTerminate    (osThreadId_t thread_id);
 extern int32_t          os_svcThreadFlagsSet     (osThreadId_t thread_id, int32_t flags);
 extern int32_t          os_svcThreadFlagsClear   (int32_t flags);
