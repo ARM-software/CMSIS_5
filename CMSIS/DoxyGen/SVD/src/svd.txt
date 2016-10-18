@@ -13,7 +13,7 @@ field in a memory mapped register.
 
 CMSIS-SVD files are developed and maintained by silicon vendors.
 Silicon vendors manage their descriptions in a central, web-based Device Database. The CMSIS-SVD
-files are down-loadable via a public web interface once they have been released by the silicon
+files are down-loadable via a public web interface once they were released by the silicon
 vendor. Tool vendors use CMSIS-SVD files for providing device-specific debug views of peripherals in 
 their debugger. Last but not least, CMSIS-compliant device header files are generated from CMSIS-SVD
 files.
@@ -96,14 +96,66 @@ The following files relevant to CMSIS-SVD are present in the <b>ARM::CMSIS</b> P
 From a schema perspective, CMSIS-SVD Version 1.1,1.2 and 1.3 are fully backward compatible to
 version 1.0. 
 
-Version   |  Description
-:---------|:----------------------
-V1.3.2    | Extended command line of SVDConv.exe for partition.h file generation.
-V1.3.1    | Added protection element - Fixed elem_peripheral "peripheral" name type to allow array format - Added Cortex A class CPUs to enumeration.
-V1.3      | Added array of peripherals and nesting of clusters. The \ref elem_cpu "CPU" section and \ref registerPropertiesGroup_gr "register properties" have been extended to reflect security aspects.
-V1.2      | Added optional tags for Cortex-M7 in \ref elem_cpu "CPU".
-V1.1      | Many of the features added in version 1.1 are required for generating CMSIS-Core device header files from a CMSIS SVD description. It can be expected that all CMSIS-SVD descriptions will comply with version 1.1 by now.
-V1.0      | Initial revision.
+
+<table class="cmtable" summary="Revision History table">
+<tr>
+  <th style="column-width:30pt;">Version</th>
+  <th>Description</th>
+</tr>
+<tr>
+  <td>V1.3.3</td>
+  <td> 
+       - Updated file header to Apache 2.0 License.
+       - Added \em dimableIdentifierType, as a copy of previous \em identifierType adding "%s".
+       - Updated \em identifierType to only allow names without "%s" included.
+       - Removed \em enumerationNameType.
+       - Added \tagem{headerEnumName} to \refelem{enumeratedValues} and to \refelem{dimArrayIndex} for \refelem{peripheral} 
+         arrays, overwriting hierarchically generated names.
+       - Added \tagem{dimName} to \ref dimElementGroup_gr "dimElementGroup". Only valid in \refelem{cluster} context, ignored otherwise.</td>
+</tr>
+<tr>
+  <td>V1.3.2</td>
+  <td> 
+       - Extended command line of SVDConv.exe for partition.h file generation.
+       - added \refelem{dimArrayIndex} to \refelem{peripheral}, \refelem{cluster}, and \refelem{register} 
+         to describe enumeration of array indices.</td>
+</tr>
+<tr>
+  <td>V1.3.1</td>
+  <td> 
+       - Added \refelem{protection} element; extended with protection option \token{p=privileged}.
+       - Added \refelem{protection} element to \refelem{addressBlock}.
+       - Fixed \refelem{peripheral} name type to \em identifierType to support "%s" for peripheral arrays.
+       - Added Cortex-A class enumeration to \refelem{cpu}.
+       - added \refelem{dimArrayIndex} to \refelem{peripheral}, \refelem{cluster}, and \refelem{register} to describe enumeration of array indices.</td>
+</tr>
+<tr>
+  <td>V1.3</td>
+  <td> 
+       - Extended \refelem{peripheral} with \tagem{dim} to support arrays. 
+       - Added nesting of \refelem{cluster} to support hierarchical register structures.
+       - Extended \refelem{cpu} with description of the \refelem{sauRegionsConfig} (Secure Attribution Unit).
+       - Extended \ref registerPropertiesGroup_gr "register properties" with  \refelem{protection} to reflect security aspects.</td>
+</tr>
+<tr>
+  <td>V1.2</td>
+  <td>Added optional elements for Cortex-M7 in \ref elem_cpu "CPU": 
+        - \tagem{fpuDP}
+        - \tagem{icachePresent}
+        - \tagem{dcachePresent}
+        - \tagem{itcmPresent}
+        - \tagem{dtcmPresent}</td>
+</tr>
+<tr>
+  <td>V1.1</td>
+  <td>Many of the features added in version 1.1 are required for generating CMSIS-Core device header files from a CMSIS SVD description. 
+      It is expected that all CMSIS-SVD descriptions will comply with version 1.1 by now.</td>
+</tr>
+<tr>
+  <td>V1.0</td>
+  <td>Initial version.</td>
+</tr>
+</table>
 
 <p>&nbsp;</p>
 <hr>
@@ -213,33 +265,36 @@ SVDConv.exe <SVD_file> <options>
     </td>
   </tr>
   <tr>
-    <td> \-\-fields=struct </td>
-    <td>Bit-field Structs</td>
-    <td>Generates bit fields for each field description contained in the CMSIS-SVD input file. 
- Must be used in combination with <i>\-\-generate=header</i>. 
-    </td>
-  </tr>
-  <tr>
-    <td> \-\-fields=macro </td>
-    <td>Bit-field Macros</td>
-    <td>Generates position and mask C-Macros for each field description contained in the CMSIS-SVD input file. 
-    Must be used in combination with <i>\-\-generate=header</i>. 
-    </td>
-  </tr>
-  <tr>
-    <td> \-\-fields=struct-ansic </td>
-    <td>ANSI Bit-field Structs</td>
-    <td>Generates MISRA-compliant structures for each bitfield. The generated code <b>is not CMSIS-compliant</b>!
-    Must be used in combination with <i>\-\-generate=header</i>. 
-    </td>
-  </tr>
-  <tr>
     <td> \-\-generate=partition </td>
     <td>Generate Partition file for Cortex-M Security Extensions (ARMv8M)</td>
     <td>Generates the device partition file. The name of the generated file is composed of <em>partition_</em> and the value of the device <em>\<name></em>
     (for example, <em>partition_CMSDK_ARMv8MBL.h</em>).
     Refer to \ref elem_device. The content of the file uses Configuration Wizard annotations and is derived 
     from the SAU-specific information of the \ref elem_sauRegionsConfig and the interrupts specified in the \ref elem_peripherals.</td>
+  </tr>
+  <tr>
+    <td> \-\-fields=enum </td>
+    <td>Bit-field Enums</td>
+    <td>Generates enum lists for each field value description contained in the CMSIS-SVD input file. 
+        Must be used in combination with <i>\-\-generate=header</i>.</td>
+  </tr>
+  <tr>
+    <td> \-\-fields=macro </td>
+    <td>Bit-field Macros</td>
+    <td>Generates position and mask C-Macros for each field description contained in the CMSIS-SVD input file. 
+    Must be used in combination with <i>\-\-generate=header</i>.</td>
+  </tr>
+  <tr>
+    <td> \-\-fields=struct </td>
+    <td>Bit-field Structs</td>
+    <td>Generates bit fields for each field description contained in the CMSIS-SVD input file. 
+        Must be used in combination with <i>\-\-generate=header</i>.</td>
+  </tr>
+  <tr>
+    <td> \-\-fields=struct-ansic </td>
+    <td>ANSI Bit-field Structs</td>
+    <td>Generates MISRA-compliant structures for each bitfield. The generated code <b>is not CMSIS-compliant</b>!
+    Must be used in combination with <i>\-\-generate=header</i>.</td>
   </tr>
 </table>
 
@@ -488,17 +543,16 @@ provide more instructive information to the programmer, avoiding a lookup in the
 \n\n
 - \subpage elem_special "Special Elements:"
 Specific elements that occur in various other elements are described in this section.
-\n\n
+\n\n 
 - <b>Vendor Extensions:</b>
-The CMSIS-SVD format includes a section named \em vendorExtensions positioned after the closing tag \em peripherals.
-This allows silicon vendors and tool partners to innovate and expand the description beyond
-the current specification.
+The CMSIS-SVD format includes a section named \tagem{vendorExtensions} positioned after the closing tag \tagem{/peripherals}.
+This allows silicon vendors and tool partners to extend the description beyond the current specification.
 
 
 <b>Multiple Instantiation</b>
 
-CMSIS-SVD supports the reuse of whole sections of the description. The attribute <em>derivedFrom</em> for
-the peripheral-, register-, and field-section specifies the source of the section to be copied from.
+CMSIS-SVD supports the reuse of whole sections of the description. The attribute \em derivedFrom for
+\refelem{peripheral}, \refelem{register}, and \refelem{field} specifies the source of the section to be copied from.
 Individual tags can be used to redefine specific elements within a copied section. 
 In case the name of the description source is not unique, the name needs to be qualified hierarchically
 until the element composite name becomes unique. Hierarchies 
@@ -506,24 +560,23 @@ are separated by a dot. For example, <em>\<peripheral name\>.\<register name\>.\
 
 <b>Array of Elements</b>
 
-A powerfull construct in data structures of the C programming language is the <em>array</em>. An 
+A powerfull construct in data structures of the C programming language is the array. An 
 array is a series of data elements of the same type selected via an index. CMSIS-SVD supports arrays
-of \tagem{peripherals}, \tagem{cluster} and \tagem{register}.
+for \refelem{peripheral}, \refelem{cluster}, and \refelem{register}.
 
 <b>Peripheral Grouping</b>
 
-Peripherals that provide similar functionality (Simple Timer, Complex Timer) can be grouped with the element <em>groupName</em>. 
+Peripherals that provide similar functionality (Simple Timer, Complex Timer) can be grouped with the element \tagem{groupName}. 
+Peripheral groups help structuring the list of peripherals in the debugger.
 All peripherals associated with the same group name are collectively listed under this group 
-in the order they have been specified in the file. Collecting similar or related peripherals into 
-peripheral groups helps structuring the list of peripherals in the debugger.
+in the order they were specified in the SVD file. 
 
 <b>Descriptions</b>
 
-On each level, the tag <em>description</em> provides verbose information about 
-the respective element. The description field plays an important part in improving the software 
-development productivity as it gives instant access to information that otherwise would need to be looked up
-in the device documentation.
+On each level, the tag \tagem{description} provides verbose information about the respective element. 
+The description field plays an important part in improving software development productivity as it gives 
+instant access to information that otherwise would need to be looked up in the device documentation.
 
-
+&nbsp;
 */
 
