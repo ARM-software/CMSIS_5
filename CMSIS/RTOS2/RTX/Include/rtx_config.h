@@ -23,8 +23,29 @@
  * -----------------------------------------------------------------------------
  */
 
-#include "cmsis_os2.h"
 #include "rtx_os.h"
+
+
+// System Configuration
+// ====================
+
+// Dynamic Memory
+#if (OS_DYNAMIC_MEM_SIZE != 0)
+#if ((OS_DYNAMIC_MEM_SIZE & 7) != 0)
+#error "Invalid Dynamic Memory size!"
+#endif
+static uint64_t os_mem[OS_DYNAMIC_MEM_SIZE/8] \
+__attribute__((section(".bss.os")));
+#endif
+
+// Kernel Tick Frequency
+#if (OS_TICK_FREQ < 1)
+#error "Invalid Kernel Tick Frequency!"
+#endif
+
+// ISR FIFO Queue
+static void *os_isr_queue[OS_ISR_FIFO_QUEUE] \
+__attribute__((section(".bss.os")));
 
 
 // Thread Configuration
@@ -308,23 +329,6 @@ __attribute__((section(".bss.os.msgqueue.mem")));
 #endif  // (OS_MSGQUEUE_OBJ_MEM != 0)
 
 
-// System Configuration
-// ====================
-
-// Dynamic Memory
-#if (OS_DYNAMIC_MEM_SIZE != 0)
-#if ((OS_DYNAMIC_MEM_SIZE & 7) != 0)
-#error "Invalid Dynamic Memory size!"
-#endif
-static uint64_t os_mem[OS_DYNAMIC_MEM_SIZE/8] \
-__attribute__((section(".bss.os")));
-#endif
-
-// ISR FIFO Queue
-static void *os_isr_queue[OS_ISR_FIFO_QUEUE] \
-__attribute__((section(".bss.os")));
-
-
 // OS Configuration
 // ================
 
@@ -340,6 +344,7 @@ const os_config_t os_Config = {
   | os_ConfigStackWatermark
 #endif
   ,
+  (uint32_t)OS_TICK_FREQ,
 #if (OS_ROBIN_ENABLE != 0)
   (uint32_t)OS_ROBIN_TIMEOUT,
 #else

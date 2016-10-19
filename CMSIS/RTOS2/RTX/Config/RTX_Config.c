@@ -35,12 +35,17 @@
 //     <i> Default: 4096
 #define OS_DYNAMIC_MEM_SIZE         4096
  
+//   <o>Kernel Tick Frequency [Hz] <1-1000000>
+//   <i> Defines base time unit for delays and timeouts.
+//   <i> Default: 1000 (1ms tick)
+#define OS_TICK_FREQ                1000
+ 
 //   <e>Round-Robin Thread switching
 //   <i> Enables Round-Robin Thread switching.
 #define OS_ROBIN_ENABLE             1
  
-//     <o>Round-Robin Timeout [ms] <1-1000>
-//     <i> Defines how long a thread will execute before a thread switch.
+//     <o>Round-Robin Timeout <1-1000>
+//     <i> Defines how many ticks a thread will execute before a thread switch.
 //     <i> Default: 5
 #define OS_ROBIN_TIMEOUT            5
  

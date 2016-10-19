@@ -231,18 +231,18 @@ void os_ThreadReadyPut (os_thread_t *thread) {
 
 /// Insert a Thread into the Delay list sorted by Delay (Lowest at Head).
 /// \param[in]  thread          thread object.
-/// \param[in]  millisec        delay value.
-void os_ThreadDelayInsert (os_thread_t *thread, uint32_t millisec) {
+/// \param[in]  delay           delay value.
+void os_ThreadDelayInsert (os_thread_t *thread, uint32_t delay) {
   os_thread_t *prev, *next;
 
-  if (millisec == osWaitForever) {
+  if (delay == osWaitForever) {
     prev = NULL;
     next = os_Info.thread.wait_list;
     while (next != NULL)  {
       prev = next;
       next = next->delay_next;
     }
-    thread->delay = millisec;
+    thread->delay = delay;
     thread->delay_prev = prev;
     thread->delay_next = next;
     if (prev != NULL) {
@@ -256,12 +256,12 @@ void os_ThreadDelayInsert (os_thread_t *thread, uint32_t millisec) {
   } else {
     prev = NULL;
     next = os_Info.thread.delay_list;
-    while ((next != NULL) && (next->delay <= millisec)) {
-      millisec -= next->delay;
+    while ((next != NULL) && (next->delay <= delay)) {
+      delay -= next->delay;
       prev = next;
       next = next->delay_next;
     }
-    thread->delay = millisec;
+    thread->delay = delay;
     thread->delay_prev = prev;
     thread->delay_next = next;
     if (prev != NULL) {
@@ -270,7 +270,7 @@ void os_ThreadDelayInsert (os_thread_t *thread, uint32_t millisec) {
       os_Info.thread.delay_list = thread;
     }
     if (next != NULL) {
-      next->delay -= millisec;
+      next->delay -= delay;
       next->delay_prev = thread;
     }
   }
@@ -440,9 +440,9 @@ void os_ThreadWaitExit (os_thread_t *thread, uint32_t ret_val, bool dispatch) {
 
 /// Enter Thread wait state.
 /// \param[in]  state           new thread state.
-/// \param[in]  millisec        wait time.
+/// \param[in]  timeout         timeout.
 /// \return true - success, false - failure.
-bool os_ThreadWaitEnter (uint8_t state, uint32_t millisec) {
+bool os_ThreadWaitEnter (uint8_t state, uint32_t timeout) {
   os_thread_t *thread;
 
   thread = os_ThreadGetRunning();
@@ -460,7 +460,7 @@ bool os_ThreadWaitEnter (uint8_t state, uint32_t millisec) {
   }
 
   thread->state = state;
-  os_ThreadDelayInsert(thread, millisec);
+  os_ThreadDelayInsert(thread, timeout);
   thread = os_ThreadListGet(&os_Info.thread.ready);
   os_ThreadSwitch(thread);
 
@@ -1152,7 +1152,7 @@ int32_t os_svcThreadFlagsGet (void) {
 
 /// Wait for one or more Thread Flags of the current running thread to become signaled.
 /// \note API identical to osThreadFlagsWait
-int32_t os_svcThreadFlagsWait (int32_t flags, uint32_t options, uint32_t millisec) {
+int32_t os_svcThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout) {
   os_thread_t *thread;
   int32_t      thread_flags;
 
@@ -1173,12 +1173,12 @@ int32_t os_svcThreadFlagsWait (int32_t flags, uint32_t options, uint32_t millise
   }
 
   // Check if timeout is specified
-  if (millisec != 0U) {
+  if (timeout != 0U) {
     // Store waiting flags and options
     thread->wait_flags = flags;
     thread->flags_options = (uint8_t)options;
     // Suspend current Thread
-    os_ThreadWaitEnter(os_ThreadWaitingThreadFlags, millisec);
+    os_ThreadWaitEnter(os_ThreadWaitingThreadFlags, timeout);
     return osErrorTimeout;
   }
 
@@ -1347,9 +1347,9 @@ int32_t osThreadFlagsGet (void) {
 }
 
 /// Wait for one or more Thread Flags of the current running thread to become signaled.
-int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t millisec) {
+int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout) {
   if (__get_IPSR() != 0U) {
     return osErrorISR;                          // Not allowed in ISR
   }
-  return  __svcThreadFlagsWait(flags, options, millisec);
+  return  __svcThreadFlagsWait(flags, options, timeout);
 }

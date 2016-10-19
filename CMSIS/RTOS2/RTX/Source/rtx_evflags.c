@@ -308,7 +308,7 @@ int32_t os_svcEventFlagsGet (osEventFlagsId_t ef_id) {
 
 /// Wait for one or more Event Flags to become signaled.
 /// \note API identical to osEventFlagsWait
-int32_t os_svcEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t millisec) {
+int32_t os_svcEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
   os_thread_t      *running_thread;
   int32_t           event_flags;
@@ -339,13 +339,13 @@ int32_t os_svcEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t op
   }
 
   // Check if timeout is specified
-  if (millisec != 0U) {
+  if (timeout != 0U) {
     // Store waiting flags and options
     running_thread->wait_flags = flags;
     running_thread->flags_options = (uint8_t)options;
     // Suspend current Thread
     os_ThreadListPut((os_object_t*)ef, running_thread);
-    os_ThreadWaitEnter(os_ThreadWaitingEventFlags, millisec);
+    os_ThreadWaitEnter(os_ThreadWaitingEventFlags, timeout);
     return osErrorTimeout;
   }
 
@@ -429,7 +429,7 @@ int32_t os_isrEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags) {
 /// Wait for one or more Event Flags to become signaled.
 /// \note API identical to osEventFlagsWait
 __STATIC_INLINE
-int32_t os_isrEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t millisec) {
+int32_t os_isrEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
   int32_t           event_flags;
 
@@ -441,7 +441,7 @@ int32_t os_isrEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t op
   if ((uint32_t)flags & ~((1U << os_EventFlagsLimit) - 1U)) {
     return osErrorParameter;
   }
-  if (millisec != 0U) {
+  if (timeout != 0U) {
     return osErrorParameter;
   }
 
@@ -503,11 +503,11 @@ int32_t osEventFlagsGet (osEventFlagsId_t ef_id) {
 }
 
 /// Wait for one or more Event Flags to become signaled.
-int32_t osEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t millisec) {
+int32_t osEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout) {
   if (__get_IPSR() != 0U) {                     // in ISR
-    return os_isrEventFlagsWait(ef_id, flags, options, millisec);
+    return os_isrEventFlagsWait(ef_id, flags, options, timeout);
   } else {                                      // in Thread
-    return  __svcEventFlagsWait(ef_id, flags, options, millisec);
+    return  __svcEventFlagsWait(ef_id, flags, options, timeout);
   }
 }
 

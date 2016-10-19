@@ -212,7 +212,7 @@ typedef uint32_t TZ_ModuleId_t;
  
  
 /// Attributes structure for thread.
-typedef struct osThreadAttr_s {
+typedef struct {
   const char                   *name;   ///< name of the thread
   uint32_t                 attr_bits;   ///< attribute bits
   void                      *cb_mem;    ///< memory for control block
@@ -225,7 +225,7 @@ typedef struct osThreadAttr_s {
 } osThreadAttr_t;
  
 /// Attributes structure for timer.
-typedef struct osTimerAttr_s {
+typedef struct {
   const char                   *name;   ///< name of the timer
   uint32_t                 attr_bits;   ///< attribute bits
   void                      *cb_mem;    ///< memory for control block
@@ -233,7 +233,7 @@ typedef struct osTimerAttr_s {
 } osTimerAttr_t;
  
 /// Attributes structure for event flags.
-typedef struct osEventFlagsAttr_s {
+typedef struct {
   const char                   *name;   ///< name of the event flags
   uint32_t                 attr_bits;   ///< attribute bits
   void                      *cb_mem;    ///< memory for control block
@@ -241,7 +241,7 @@ typedef struct osEventFlagsAttr_s {
 } osEventFlagsAttr_t;
  
 /// Attributes structure for mutex.
-typedef struct osMutexAttr_s {
+typedef struct {
   const char                   *name;   ///< name of the mutex
   uint32_t                 attr_bits;   ///< attribute bits
   void                      *cb_mem;    ///< memory for control block
@@ -249,7 +249,7 @@ typedef struct osMutexAttr_s {
 } osMutexAttr_t;
  
 /// Attributes structure for semaphore.
-typedef struct osSemaphoreAttr_s {
+typedef struct {
   const char                   *name;   ///< name of the semaphore
   uint32_t                 attr_bits;   ///< attribute bits
   void                      *cb_mem;    ///< memory for control block
@@ -257,7 +257,7 @@ typedef struct osSemaphoreAttr_s {
 } osSemaphoreAttr_t;
  
 /// Attributes structure for memory pool.
-typedef struct osMemoryPoolAttr_s {
+typedef struct {
   const char                   *name;   ///< name of the memory pool
   uint32_t                 attr_bits;   ///< attribute bits
   void                      *cb_mem;    ///< memory for control block
@@ -267,7 +267,7 @@ typedef struct osMemoryPoolAttr_s {
 } osMemoryPoolAttr_t;
  
 /// Attributes structure for message queue.
-typedef struct osMessageQueueAttr_s {
+typedef struct {
   const char                   *name;   ///< name of the message queue
   uint32_t                 attr_bits;   ///< attribute bits
   void                      *cb_mem;    ///< memory for control block

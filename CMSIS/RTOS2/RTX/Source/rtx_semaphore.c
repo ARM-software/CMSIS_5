@@ -191,7 +191,7 @@ osSemaphoreId_t os_svcSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
 
 /// Acquire a Semaphore token or timeout if no tokens are available.
 /// \note API identical to osSemaphoreAcquire
-osStatus_t os_svcSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t millisec) {
+osStatus_t os_svcSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
   os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
 
   // Check parameters
@@ -208,10 +208,10 @@ osStatus_t os_svcSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t millis
   // Try to acquire token
   if (os_SemaphoreTokenDecrement(semaphore) == 0U) {
     // No token available
-    if (millisec != 0U) {
+    if (timeout != 0U) {
       // Suspend current Thread
       os_ThreadListPut((os_object_t*)semaphore, os_ThreadGetRunning());
-      os_ThreadWaitEnter(os_ThreadWaitingSemaphore, millisec);
+      os_ThreadWaitEnter(os_ThreadWaitingSemaphore, timeout);
       return osErrorTimeout;
     } else {
       return osErrorResource;
@@ -319,7 +319,7 @@ osStatus_t os_svcSemaphoreDelete (osSemaphoreId_t semaphore_id) {
 /// Acquire a Semaphore token or timeout if no tokens are available.
 /// \note API identical to osSemaphoreAcquire
 __STATIC_INLINE
-osStatus_t os_isrSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t millisec) {
+osStatus_t os_isrSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
   os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
 
   // Check parameters
@@ -327,7 +327,7 @@ osStatus_t os_isrSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t millis
       (semaphore->id != os_IdSemaphore)) {
     return osErrorParameter;
   }
-  if (millisec != 0U) {
+  if (timeout != 0U) {
     return osErrorParameter;
   }
 
@@ -390,11 +390,11 @@ osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, cons
 }
 
 /// Acquire a Semaphore token or timeout if no tokens are available.
-osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t millisec) {
+osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
   if (__get_IPSR() != 0U) {                     // in ISR
-    return os_isrSemaphoreAcquire(semaphore_id, millisec);
+    return os_isrSemaphoreAcquire(semaphore_id, timeout);
   } else {                                      // in Thread
-    return  __svcSemaphoreAcquire(semaphore_id, millisec);
+    return  __svcSemaphoreAcquire(semaphore_id, timeout);
   }
 }
 

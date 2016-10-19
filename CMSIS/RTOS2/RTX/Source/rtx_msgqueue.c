@@ -338,7 +338,7 @@ osMessageQueueId_t os_svcMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
 
 /// Put a Message into a Queue or timeout if Queue is full.
 /// \note API identical to osMessageQueuePut
-osStatus_t os_svcMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t millisec) {
+osStatus_t os_svcMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
   os_message_t       *msg;
   os_thread_t        *thread;
@@ -385,10 +385,10 @@ osStatus_t os_svcMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
     os_MessageQueuePut(mq, msg);
   } else {
     // No memory available
-    if (millisec != 0U) {
+    if (timeout != 0U) {
       // Suspend current Thread
       os_ThreadListPut((os_object_t*)mq, os_ThreadGetRunning());
-      os_ThreadWaitEnter(os_ThreadWaitingMessagePut, millisec);
+      os_ThreadWaitEnter(os_ThreadWaitingMessagePut, timeout);
       return osErrorTimeout;
     } else {
       return osErrorResource;
@@ -400,7 +400,7 @@ osStatus_t os_svcMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
 
 /// Get a Message from a Queue or timeout if Queue is empty.
 /// \note API identical to osMessageQueueGet
-osStatus_t os_svcMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t millisec) {
+osStatus_t os_svcMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
   os_message_t       *msg;
   os_thread_t        *thread;
@@ -434,10 +434,10 @@ osStatus_t os_svcMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
     os_MemoryPoolFree(&mq->mp_info, msg);
   } else {
     // No Message available
-    if (millisec != 0U) {
+    if (timeout != 0U) {
       // Suspend current Thread
       os_ThreadListPut((os_object_t*)mq, os_ThreadGetRunning());
-      os_ThreadWaitEnter(os_ThreadWaitingMessageGet, millisec);
+      os_ThreadWaitEnter(os_ThreadWaitingMessageGet, timeout);
       return osErrorTimeout;
     } else {
       return osErrorResource;
@@ -653,7 +653,7 @@ osStatus_t os_svcMessageQueueDelete (osMessageQueueId_t mq_id) {
 /// Put a Message into a Queue or timeout if Queue is full.
 /// \note API identical to osMessageQueuePut
 __STATIC_INLINE
-osStatus_t os_isrMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t millisec) {
+osStatus_t os_isrMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
   os_message_t       *msg;
   void              **ptr;
@@ -666,7 +666,7 @@ osStatus_t os_isrMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
   if (msg_ptr == NULL) {
     return osErrorParameter;
   }
-  if (millisec != 0U) {
+  if (timeout != 0U) {
     return osErrorParameter;
   }
 
@@ -699,7 +699,7 @@ osStatus_t os_isrMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
 /// Get a Message from a Queue or timeout if Queue is empty.
 /// \note API identical to osMessageQueueGet
 __STATIC_INLINE
-osStatus_t os_isrMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t millisec) {
+osStatus_t os_isrMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
   os_message_t       *msg;
   void              **ptr;
@@ -712,7 +712,7 @@ osStatus_t os_isrMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
   if (msg_ptr == NULL) {
     return osErrorParameter;
   }
-  if (millisec != 0U) {
+  if (timeout != 0U) {
     return osErrorParameter;
   }
 
@@ -758,20 +758,20 @@ osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, con
 }
 
 /// Put a Message into a Queue or timeout if Queue is full.
-osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t millisec) {
+osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout) {
   if (__get_IPSR() != 0U) {                     // in ISR
-    return os_isrMessageQueuePut(mq_id, msg_ptr, msg_prio, millisec);
+    return os_isrMessageQueuePut(mq_id, msg_ptr, msg_prio, timeout);
   } else {                                      // in Thread
-    return  __svcMessageQueuePut(mq_id, msg_ptr, msg_prio, millisec);
+    return  __svcMessageQueuePut(mq_id, msg_ptr, msg_prio, timeout);
   }
 }
 
 /// Get a Message from a Queue or timeout if Queue is empty.
-osStatus_t osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t millisec) {
+osStatus_t osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout) {
   if (__get_IPSR() != 0U) {                     // in ISR
-    return os_isrMessageQueueGet(mq_id, msg_ptr, msg_prio, millisec);
+    return os_isrMessageQueueGet(mq_id, msg_ptr, msg_prio, timeout);
   } else {                                      // in Thread
-    return  __svcMessageQueueGet(mq_id, msg_ptr, msg_prio, millisec);
+    return  __svcMessageQueueGet(mq_id, msg_ptr, msg_prio, timeout);
   }
 }
 

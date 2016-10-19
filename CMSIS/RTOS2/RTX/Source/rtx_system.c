@@ -120,8 +120,8 @@ static void *os_isr_queue_get (void) {
 void os_Tick_Handler (void) {
   os_thread_t *thread;
 
-  os_TickAckIRQ();
-  os_Info.kernel.time++;
+  os_SysTimerAckIRQ();
+  os_Info.kernel.tick++;
 
   // Process Thread Delays
   os_ThreadDelayTick();
@@ -209,50 +209,47 @@ void os_PostProcess (os_object_t *object) {
 
 //  ==== Public API ====
 
-/// Setup Tick Timer.
-__WEAK int32_t os_TickSetup (void) {
+/// Setup System Timer.
+__WEAK int32_t os_SysTimerSetup (void) {
 
-  // Setup SysTick Timer with 1ms tick
-  os_SysTick_Setup(SystemCoreClock/1000U);
-
-  os_Info.kernel.usec_ticks = ((4295U * (SystemCoreClock & 0xFFFF)) >> 16) +
-                               (4295U * (SystemCoreClock >> 16));
+  // Setup SysTick Timer
+  os_SysTick_Setup(os_Info.kernel.sys_freq / os_Config.tick_freq);
 
   return SysTick_IRQn;                  // Return IRQ number of SysTick
 }
 
-/// Enable Tick Timer.
-__WEAK void os_TickEnable (void) {
+/// Enable System Timer.
+__WEAK void os_SysTimerEnable (void) {
   os_SysTick_Enable();
 }
 
-/// Disable Tick Timer.
-__WEAK void os_TickDisable (void) {
+/// Disable System Timer.
+__WEAK void os_SysTimerDisable (void) {
   os_SysTick_Disable();
 }
 
-/// Acknowledge Tick Timer IRQ.
-__WEAK void os_TickAckIRQ (void) {
+/// Acknowledge System Timer IRQ.
+__WEAK void os_SysTimerAckIRQ (void) {
   os_SysTick_GetOvf();
 }
 
-/// Get Tick Timer Value.
-__WEAK uint32_t os_TickGetVal (void) {
+/// Get System Timer count.
+__WEAK uint32_t os_SysTimerGetCount (void) {
   uint32_t tick;
-  uint32_t time;
+  uint32_t val;
 
-  time = (uint32_t)os_Info.kernel.time;
-  tick = os_SysTick_GetVal();
+  tick = (uint32_t)os_Info.kernel.tick;
+  val  = os_SysTick_GetVal();
   if (os_SysTick_GetOvf()) {
-    tick = os_SysTick_GetVal();
-    time++;
+    val = os_SysTick_GetVal();
+    tick++;
   }
-  tick += time * os_SysTick_GetPeriod();
+  val += tick * os_SysTick_GetPeriod();
 
-  return tick;
+  return val;
 }
 
-/// Convert microseconds value to Tick Timer value.
-__WEAK uint32_t os_TickMicroSec (uint32_t microsec) {
-  return (uint32_t)(((uint64_t)microsec * (uint64_t)os_Info.kernel.usec_ticks) >> 16);
+/// Get System Timer frequency.
+__WEAK uint32_t os_SysTimerGetFreq (void) {
+  return os_Info.kernel.sys_freq;
 }

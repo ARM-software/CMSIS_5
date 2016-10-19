@@ -44,7 +44,7 @@ static void os_KernelBlock (void) {
   if (os_Info.tick_irqn >= 0) {
     os_ExtTick_DisableIRQ(os_Info.tick_irqn);
   }
-  os_TickDisable();
+  os_SysTimerDisable();
   os_Info.kernel.blocked = 1U;
   __DSB();
   if (os_Info.tick_irqn < 0) {
@@ -71,24 +71,25 @@ static void os_KernelUnblock (void) {
   if (os_Info.tick_irqn >= 0) {
     os_ExtTick_EnableIRQ(os_Info.tick_irqn);
   }
-  os_TickEnable();
+  os_SysTimerEnable();
 }
 
 
 //  ==== Service Calls ====
 
 //  Service Calls definitions
-SVC0_0 (KernelInitialize,   osStatus_t)
-SVC0_3 (KernelGetInfo,      osStatus_t, osVersion_t *, char *, uint32_t)
-SVC0_0 (KernelStart,        osStatus_t)
-SVC0_0 (KernelLock,         uint32_t)
-SVC0_0N(KernelUnlock,       void)
-SVC0_0 (KernelSuspend,      uint32_t)
-SVC0_1N(KernelResume,       void, uint32_t)
-SVC0_0 (KernelGetState,     osKernelState_t)
-SVC0_0 (KernelGetTime,      uint64_t)
-SVC0_0 (KernelGetTick,      uint32_t)
-SVC0_1 (KernelTickMicroSec, uint32_t, uint32_t)
+SVC0_0 (KernelInitialize,       osStatus_t)
+SVC0_3 (KernelGetInfo,          osStatus_t, osVersion_t *, char *, uint32_t)
+SVC0_0 (KernelStart,            osStatus_t)
+SVC0_0 (KernelLock,             uint32_t)
+SVC0_0N(KernelUnlock,           void)
+SVC0_0 (KernelSuspend,          uint32_t)
+SVC0_1N(KernelResume,           void, uint32_t)
+SVC0_0 (KernelGetState,         osKernelState_t)
+SVC0_0 (KernelGetTickCount,     uint64_t)
+SVC0_0 (KernelGetTickFreq,      uint32_t)
+SVC0_0 (KernelGetSysTimerCount, uint32_t)
+SVC0_0 (KernelGetSysTimerFreq,  uint32_t)
 
 /// Initialize the RTOS Kernel.
 /// \note API identical to osKernelInitialize
@@ -269,12 +270,14 @@ osStatus_t os_svcKernelStart (void) {
   __DSB();
   __ISB();
 
-  // Setup and Enable Tick Timer
-  os_Info.tick_irqn = os_TickSetup();
+  os_Info.kernel.sys_freq = SystemCoreClock;
+
+  // Setup and Enable System Timer
+  os_Info.tick_irqn = os_SysTimerSetup();
   if (os_Info.tick_irqn >= 0) {
     os_ExtTick_EnableIRQ(os_Info.tick_irqn);
   }
-  os_TickEnable();
+  os_SysTimerEnable();
 
   os_Info.kernel.state = os_KernelRunning;
 
@@ -338,7 +341,7 @@ uint32_t os_svcKernelSuspend (void) {
 
 /// Resume the RTOS Kernel scheduler.
 /// \note API identical to osKernelResume
-void os_svcKernelResume (uint32_t sleep_time) {
+void os_svcKernelResume (uint32_t sleep_ticks) {
   os_thread_t *thread;
   os_timer_t  *timer;
   uint32_t     delay;
@@ -350,10 +353,10 @@ void os_svcKernelResume (uint32_t sleep_time) {
   // Process Thread Delay list
   thread = os_Info.thread.delay_list;
   if (thread != NULL) {
-    delay = sleep_time;
+    delay = sleep_ticks;
     if (delay >= thread->delay) {
         delay -= thread->delay;
-      os_Info.kernel.time += thread->delay;
+      os_Info.kernel.tick += thread->delay;
       thread->delay = 1U;
       do {
         os_ThreadDelayTick();
@@ -361,31 +364,31 @@ void os_svcKernelResume (uint32_t sleep_time) {
           break;
         }
         delay--;
-        os_Info.kernel.time++;
+        os_Info.kernel.tick++;
       } while (os_Info.thread.delay_list != NULL);
     } else {
       thread->delay -= delay;
-      os_Info.kernel.time += delay;
+      os_Info.kernel.tick += delay;
     }
   } else {
-    os_Info.kernel.time += sleep_time;
+    os_Info.kernel.tick += sleep_ticks;
   }
 
   // Process Active Timer list
   timer = os_Info.timer.list;
   if (timer != NULL) {
-    if (sleep_time >= timer->tick) {
-        sleep_time -= timer->tick;
+    if (sleep_ticks >= timer->tick) {
+        sleep_ticks -= timer->tick;
       timer->tick = 1U;
       do {
         os_TimerTick();
-        if (sleep_time == 0U) {
+        if (sleep_ticks == 0U) {
           break;
         }
-        sleep_time--;
+        sleep_ticks--;
       } while (os_Info.timer.list != NULL);
     } else {
-      timer->tick -= sleep_time;
+      timer->tick -= sleep_ticks;
     }
   }
 
@@ -396,22 +399,28 @@ void os_svcKernelResume (uint32_t sleep_time) {
   os_KernelUnblock();
 }
 
-/// Get the RTOS kernel time.
-/// \note API identical to osKernelGetTime
-uint64_t os_svcKernelGetTime (void) {
-  return os_Info.kernel.time;
+/// Get the RTOS kernel tick count.
+/// \note API identical to osKernelGetTickCount
+uint64_t os_svcKernelGetTickCount (void) {
+  return os_Info.kernel.tick;
 }
 
-/// Get the RTOS kernel system timer counter.
-/// \note API identical to osKernelGetSysTick
-uint32_t os_svcKernelGetTick (void) {
-  return os_TickGetVal();
+/// Get the RTOS kernel tick frequency.
+/// \note API identical to osKernelGetTickFreq
+uint32_t os_svcKernelGetTickFreq (void) {
+  return os_Config.tick_freq;
 }
 
-/// Convert a microseconds value to a RTOS kernel system timer value.
-/// \note API identical to osKernelInitialize
-uint32_t os_svcKernelTickMicroSec (uint32_t microsec) {
-  return os_TickMicroSec(microsec);
+/// Get the RTOS kernel system timer count.
+/// \note API identical to osKernelGetSysTimerCount
+uint32_t os_svcKernelGetSysTimerCount (void) {
+  return os_SysTimerGetCount();
+}
+
+/// Get the RTOS kernel system timer frequency.
+/// \note API identical to osKernelGetSysTimerFreq
+uint32_t os_svcKernelGetSysTimerFreq (void) {
+  return os_SysTimerGetFreq();
 }
 
 
@@ -510,33 +519,41 @@ uint32_t osKernelSuspend (void) {
 }
 
 /// Resume the RTOS Kernel scheduler.
-void osKernelResume (uint32_t sleep_time) {
+void osKernelResume (uint32_t sleep_ticks) {
   if (__get_IPSR() != 0U) {
     return;                                     // Not allowed in ISR
   }
-  __svcKernelResume(sleep_time);
+  __svcKernelResume(sleep_ticks);
 }
 
-/// Get the RTOS kernel time.
-uint64_t osKernelGetTime (void) {
+/// Get the RTOS kernel tick count.
+uint64_t osKernelGetTickCount (void) {
   if (__get_IPSR() != 0U) {
     return 0U;                                  // Not allowed in ISR
   }
-  return  __svcKernelGetTime();
+  return __svcKernelGetTickCount();
 }
 
-/// Get the RTOS kernel system timer counter.
-uint32_t osKernelGetTick (void) {
+/// Get the RTOS kernel tick frequency.
+uint32_t osKernelGetTickFreq (void) {
   if (__get_IPSR() != 0U) {
     return 0U;                                  // Not allowed in ISR
   }
-  return  __svcKernelGetTick();
+  return __svcKernelGetTickFreq();
 }
 
-/// Convert a microseconds value to a RTOS kernel system timer value.
-uint32_t osKernelTickMicroSec (uint32_t microsec) {
+/// Get the RTOS kernel system timer count.
+uint32_t osKernelGetSysTimerCount (void) {
   if (__get_IPSR() != 0U) {
     return 0U;                                  // Not allowed in ISR
   }
-  return  __svcKernelTickMicroSec(microsec);
+  return __svcKernelGetSysTimerCount();
+}
+
+/// Get the RTOS kernel system timer frequency.
+uint32_t osKernelGetSysTimerFreq (void) {
+  if (__get_IPSR() != 0U) {
+    return 0U;                                  // Not allowed in ISR
+  }
+  return __svcKernelGetSysTimerFreq();
 }

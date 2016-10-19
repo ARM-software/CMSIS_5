@@ -222,7 +222,7 @@ osTimerId_t os_svcTimerNew (os_timer_func_t func, osTimerType_t type, void *argu
 
 /// Start or restart a timer.
 /// \note API identical to osTimerStart
-osStatus_t os_svcTimerStart (osTimerId_t timer_id, uint32_t millisec) {
+osStatus_t os_svcTimerStart (osTimerId_t timer_id, uint32_t ticks) {
   os_timer_t *timer = (os_timer_t *)timer_id;
 
   // Check parameters
@@ -230,7 +230,7 @@ osStatus_t os_svcTimerStart (osTimerId_t timer_id, uint32_t millisec) {
       (timer->id != os_IdTimer)) {
     return osErrorParameter;
   }
-  if (millisec == 0U) {
+  if (ticks == 0U) {
     return osErrorParameter;
   }
 
@@ -238,7 +238,7 @@ osStatus_t os_svcTimerStart (osTimerId_t timer_id, uint32_t millisec) {
   switch (timer->state) {
     case os_TimerStopped:
       timer->state = os_TimerRunning;
-      timer->load  = millisec;
+      timer->load  = ticks;
       break;
     case os_TimerRunning:
       os_TimerRemove(timer);
@@ -248,7 +248,7 @@ osStatus_t os_svcTimerStart (osTimerId_t timer_id, uint32_t millisec) {
       return osErrorResource;
   }
 
-  os_TimerInsert(timer, millisec);
+  os_TimerInsert(timer, ticks);
 
   return osOK;
 }
@@ -350,11 +350,11 @@ osTimerId_t osTimerNew (os_timer_func_t func, osTimerType_t type, void *argument
 }
 
 /// Start or restart a timer.
-osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t millisec) {
+osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t ticks) {
   if (__get_IPSR() != 0U) {
     return osErrorISR;                          // Not allowed in ISR
   }
-  return __svcTimerStart(timer_id, millisec);
+  return __svcTimerStart(timer_id, ticks);
 }
 
 /// Stop a timer.

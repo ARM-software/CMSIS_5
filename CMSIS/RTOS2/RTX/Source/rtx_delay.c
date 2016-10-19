@@ -34,27 +34,27 @@ SVC0_1(DelayUntil, osStatus_t, uint64_t)
 
 /// Wait for Timeout (Time Delay).
 /// \note API identical to osDelay
-osStatus_t os_svcDelay (uint32_t millisec) {
+osStatus_t os_svcDelay (uint32_t ticks) {
 
-  if (millisec == 0U) {
+  if (ticks == 0U) {
     return osOK;
   }
 
-  os_ThreadWaitEnter(os_ThreadWaitingDelay, millisec);
+  os_ThreadWaitEnter(os_ThreadWaitingDelay, ticks);
 
   return osOK;
 }
 
 /// Wait until specified time.
 /// \note API identical to osDelayUntil
-osStatus_t os_svcDelayUntil (uint64_t millisec) {
+osStatus_t os_svcDelayUntil (uint64_t ticks) {
 
-  millisec -= os_Info.kernel.time;
-  if (millisec >= 0xFFFFFFFFU) {
+  ticks -= os_Info.kernel.tick;
+  if (ticks >= 0xFFFFFFFFU) {
     return osError;
   }
 
-  os_ThreadWaitEnter(os_ThreadWaitingDelay, (uint32_t)millisec);
+  os_ThreadWaitEnter(os_ThreadWaitingDelay, (uint32_t)ticks);
 
   return osOK;
 }
@@ -63,17 +63,17 @@ osStatus_t os_svcDelayUntil (uint64_t millisec) {
 //  ==== Public API ====
 
 /// Wait for Timeout (Time Delay).
-osStatus_t osDelay (uint32_t millisec) {
+osStatus_t osDelay (uint32_t ticks) {
   if (__get_IPSR() != 0U) {
     return osErrorISR;                          // Not allowed in ISR
   }
-  return __svcDelay(millisec);
+  return __svcDelay(ticks);
 }
 
 /// Wait until specified time.
-osStatus_t osDelayUntil (uint64_t millisec) {
+osStatus_t osDelayUntil (uint64_t ticks) {
   if (__get_IPSR() != 0U) {
     return osErrorISR;                          // Not allowed in ISR
   }
-  return __svcDelayUntil(millisec);
+  return __svcDelayUntil(ticks);
 }

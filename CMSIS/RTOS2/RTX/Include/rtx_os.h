@@ -26,22 +26,9 @@
 #ifndef RTX_OS_H_
 #define RTX_OS_H_
 
-#ifndef __NO_RETURN
-#if   defined(__CC_ARM)
-#define __NO_RETURN __declspec(noreturn)
-#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-#define __NO_RETURN __attribute__((noreturn))
-#elif defined(__GNUC__)
-#define __NO_RETURN __attribute__((noreturn))
-#elif defined(__ICCARM__)
-#define __NO_RETURN __noreturn
-#else
-#define __NO_RETURN
-#endif
-#endif
-
 #include <stdint.h>
 #include <stddef.h>
+#include "cmsis_os2.h"
 
 #ifdef  __cplusplus
 extern "C"
@@ -153,7 +140,7 @@ typedef struct os_thread_s {
 #define os_TimerPeriodic        ((uint8_t)osTimerPeriodic)
 
 /// Timer Function Information
-typedef struct os_timer_finfo_s {
+typedef struct {
   void                            *fp;  ///< Function Pointer
   void                           *arg;  ///< Function Argument
 } os_timer_finfo_t;
@@ -296,8 +283,8 @@ typedef struct {
     volatile uint8_t          blocked;  ///< Blocked
     uint8_t                   pendISR;  ///< Pending ISR (SV and SysTick)
     uint8_t                    pendSV;  ///< Pending SV
-    uint32_t               usec_ticks;  ///< 1 microsec ticks * 2^16
-    uint64_t                     time;  ///< Time in millisec
+    uint32_t                 sys_freq;  ///< System Frequency
+    uint64_t                     tick;  ///< Tick counter
   } kernel;
   int32_t                   tick_irqn;  ///< Tick Timer IRQ Number
   struct {                              ///< Thread Info
@@ -407,29 +394,28 @@ extern void PendSV_Handler  (void);
 extern void SysTick_Handler (void);
 
 
-/// OS Tick functions (default implementation uses SysTick)
+/// OS System Timer functions (default implementation uses SysTick)
 
-/// Setup Tick Timer.
-/// \return tick timer IRQ number.
-extern int32_t os_TickSetup (void);
+/// Setup System Timer.
+/// \return system timer IRQ number.
+extern int32_t os_SysTimerSetup (void);
 
-/// Enable Tick Timer.
-extern void os_TickEnable (void);
+/// Enable System Timer.
+extern void os_SysTimerEnable (void);
 
-/// Disable Tick Timer.
-extern void os_TickDisable (void);
+/// Disable System Timer.
+extern void os_SysTimerDisable (void);
 
-/// Acknowledge Tick Timer IRQ.
-extern void os_TickAckIRQ (void);
+/// Acknowledge System Timer IRQ.
+extern void os_SysTimerAckIRQ (void);
 
-/// Get Tick Timer Value.
-/// \return tick timer value.
-extern uint32_t os_TickGetVal (void);
+/// Get System Timer count.
+/// \return system timer count.
+extern uint32_t os_SysTimerGetCount (void);
 
-/// Convert microseconds value to Tick Timer value.
-/// \param         microsec     time value in microseconds.
-/// \return time value normalized to timer ticks.
-extern uint32_t os_TickMicroSec (uint32_t microsec);
+/// Get System Timer frequency.
+/// \return system timer frequency.
+extern uint32_t os_SysTimerGetFreq (void);
 
 
 //  ==== OS External Configuration ====
@@ -442,6 +428,7 @@ extern uint32_t os_TickMicroSec (uint32_t microsec);
 /// OS Configuration structure
 typedef struct {
   uint32_t                             flags;   ///< OS Configuration Flags
+  uint32_t                         tick_freq;   ///< Kernel Tick Frequency
   uint32_t                     robin_timeout;   ///< Round Robin Timeout Tick
   struct {                                      ///< ISR Post Processing Queue
     void                              **data;   ///< Queue Data
@@ -470,11 +457,11 @@ typedef struct {
   } mpi;
   uint32_t                 thread_stack_size;   ///< Default Thread Stack Size
   const 
-  struct osThreadAttr_s    *idle_thread_attr;   ///< Idle Thread Attributes
+  osThreadAttr_t           *idle_thread_attr;   ///< Idle Thread Attributes
   const
-  struct osThreadAttr_s   *timer_thread_attr;   ///< Timer Thread Attributes
+  osThreadAttr_t          *timer_thread_attr;   ///< Timer Thread Attributes
   const
-  struct osMessageQueueAttr_s *timer_mq_attr;   ///< Timer Message Queue Attributes
+  osMessageQueueAttr_t        *timer_mq_attr;   ///< Timer Message Queue Attributes
   uint32_t                     timer_mq_mcnt;   ///< Timer Message Queue maximum Messages
 } os_config_t;
 
