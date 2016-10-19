@@ -45,6 +45,11 @@
 #ifndef DRIVER_SPI_H_
 #define DRIVER_SPI_H_
 
+#ifdef  __cplusplus
+extern "C"
+{
+#endif
+
 #include "Driver_Common.h"
 
 #define ARM_SPI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,01)  /* API version */
@@ -230,5 +235,9 @@ typedef struct _ARM_DRIVER_SPI {
   int32_t              (*Control)         (uint32_t control, uint32_t arg);   ///< Pointer to \ref ARM_SPI_Control : Control SPI Interface.
   ARM_SPI_STATUS       (*GetStatus)       (void);                             ///< Pointer to \ref ARM_SPI_GetStatus : Get SPI status.
 } const ARM_DRIVER_SPI;
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif /* DRIVER_SPI_H_ */

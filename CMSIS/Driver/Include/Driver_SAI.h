@@ -29,6 +29,11 @@
 #ifndef DRIVER_SAI_H_
 #define DRIVER_SAI_H_
 
+#ifdef  __cplusplus
+extern "C"
+{
+#endif
+
 #include "Driver_Common.h"
 
 #define ARM_SAI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,00)  /* API version */
@@ -291,5 +296,9 @@ typedef struct _ARM_DRIVER_SAI {
   int32_t              (*Control)         (uint32_t control, uint32_t arg1, uint32_t arg2);  ///< Pointer to \ref ARM_SAI_Control : Control SAI Interface.
   ARM_SAI_STATUS       (*GetStatus)       (void);                                            ///< Pointer to \ref ARM_SAI_GetStatus : Get SAI status.
 } const ARM_DRIVER_SAI;
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif /* DRIVER_SAI_H_ */

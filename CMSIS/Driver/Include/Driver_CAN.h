@@ -29,6 +29,11 @@
 #ifndef DRIVER_CAN_H_
 #define DRIVER_CAN_H_
 
+#ifdef  __cplusplus
+extern "C"
+{
+#endif
+
 #include "Driver_Common.h"
 
 #define ARM_CAN_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,0)/* API version */
@@ -358,5 +363,9 @@ typedef struct _ARM_DRIVER_CAN {
                                                      uint32_t                 arg);     ///< Pointer to \ref ARM_CAN_Control               : Control CAN interface.
   ARM_CAN_STATUS           (*GetStatus)             (void);                             ///< Pointer to \ref ARM_CAN_GetStatus             : Get CAN status.
 } const ARM_DRIVER_CAN;
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif /* DRIVER_CAN_H_ */

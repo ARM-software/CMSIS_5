@@ -18,9 +18,9 @@
 #ifndef DRIVER_STORAGE_H_
 #define DRIVER_STORAGE_H_
 
-#ifdef __cplusplus
+#ifdef  __cplusplus
 extern "C" {
-#endif // __cplusplus
+#endif
 
 #include "Driver_Common.h"
 
@@ -411,8 +411,8 @@ typedef struct _ARM_DRIVER_STORAGE {
   int32_t                  (*GetBlock)       (uint64_t addr, ARM_STORAGE_BLOCK *block);        ///< Pointer to \ref ARM_Storage_GetBlock :
 } const ARM_DRIVER_STORAGE;
 
-#ifdef __cplusplus
+#ifdef  __cplusplus
 }
-#endif // __cplusplus
+#endif
 
 #endif /* DRIVER_STORAGE_H_ */

@@ -52,6 +52,11 @@
 #ifndef DRIVER_ETH_MAC_H_
 #define DRIVER_ETH_MAC_H_
 
+#ifdef  __cplusplus
+extern "C"
+{
+#endif
+
 #include "Driver_ETH.h"
 
 #define ARM_ETH_MAC_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,01)  /* API version */
@@ -294,5 +299,9 @@ typedef struct _ARM_DRIVER_ETH_MAC {
   int32_t                  (*PHY_Read)        (uint8_t phy_addr, uint8_t reg_addr, uint16_t *data);  ///< Pointer to \ref ARM_ETH_MAC_PHY_Read : Read Ethernet PHY Register through Management Interface.
   int32_t                  (*PHY_Write)       (uint8_t phy_addr, uint8_t reg_addr, uint16_t  data);  ///< Pointer to \ref ARM_ETH_MAC_PHY_Write : Write Ethernet PHY Register through Management Interface.
 } const ARM_DRIVER_ETH_MAC;
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif /* DRIVER_ETH_MAC_H_ */
