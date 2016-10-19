@@ -51,6 +51,11 @@
 #ifndef DRIVER_I2C_H_
 #define DRIVER_I2C_H_
 
+#ifdef  __cplusplus
+extern "C"
+{
+#endif
+
 #include "Driver_Common.h"
 
 #define ARM_I2C_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,02)  /* API version */
@@ -200,5 +205,9 @@ typedef struct _ARM_DRIVER_I2C {
   int32_t              (*Control)        (uint32_t control, uint32_t arg);                                      ///< Pointer to \ref ARM_I2C_Control : Control I2C Interface.
   ARM_I2C_STATUS       (*GetStatus)      (void);                                                                ///< Pointer to \ref ARM_I2C_GetStatus : Get I2C status.
 } const ARM_DRIVER_I2C;
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif /* DRIVER_I2C_H_ */

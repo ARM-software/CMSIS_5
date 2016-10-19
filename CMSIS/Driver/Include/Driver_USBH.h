@@ -42,6 +42,11 @@
 #ifndef DRIVER_USBH_H_
 #define DRIVER_USBH_H_
 
+#ifdef  __cplusplus
+extern "C"
+{
+#endif
+
 #include "Driver_USB.h"
 
 #define ARM_USBH_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,01)  /* API version */
@@ -394,5 +399,9 @@ typedef struct _ARM_DRIVER_USBH_HCI {
 } const ARM_DRIVER_USBH_HCI;
 
 #endif /* __DOXYGEN_MW__ */
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif /* DRIVER_USBH_H_ */

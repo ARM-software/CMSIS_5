@@ -35,6 +35,11 @@
 #ifndef DRIVER_ETH_PHY_H_
 #define DRIVER_ETH_PHY_H_
 
+#ifdef  __cplusplus
+extern "C"
+{
+#endif
+
 #include "Driver_ETH.h"
 
 #define ARM_ETH_PHY_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,00)  /* API version */
@@ -126,5 +131,9 @@ typedef struct _ARM_DRIVER_ETH_PHY {
   ARM_ETH_LINK_STATE (*GetLinkState) (void);                          ///< Pointer to \ref ARM_ETH_PHY_GetLinkState : Get Ethernet PHY Device Link state.
   ARM_ETH_LINK_INFO  (*GetLinkInfo)  (void);                          ///< Pointer to \ref ARM_ETH_PHY_GetLinkInfo : Get Ethernet PHY Device Link information.
 } const ARM_DRIVER_ETH_PHY;
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif /* DRIVER_ETH_PHY_H_ */
