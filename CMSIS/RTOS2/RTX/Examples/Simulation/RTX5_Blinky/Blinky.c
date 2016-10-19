@@ -26,12 +26,11 @@
 #include "cmsis_os2.h"                  // ARM::CMSIS:RTOS2:Keil RTX5
 
 
-osThreadId_t tid_phaseA;                  /* Thread id of thread: phase_a      */
-osThreadId_t tid_phaseB;                  /* Thread id of thread: phase_b      */
-osThreadId_t tid_phaseC;                  /* Thread id of thread: phase_c      */
-osThreadId_t tid_phaseD;                  /* Thread id of thread: phase_d      */
-osThreadId_t tid_clock;                   /* Thread id of thread: clock        */
-osThreadId_t tid_lcd;                     /* Thread id of thread: lcd          */
+osThreadId_t tid_phaseA;                /* Thread id of thread: phase_a      */
+osThreadId_t tid_phaseB;                /* Thread id of thread: phase_b      */
+osThreadId_t tid_phaseC;                /* Thread id of thread: phase_c      */
+osThreadId_t tid_phaseD;                /* Thread id of thread: phase_d      */
+osThreadId_t tid_clock;                 /* Thread id of thread: clock        */
 
 #define LED_A   0
 #define LED_B   1
@@ -44,7 +43,7 @@ osThreadId_t tid_lcd;                     /* Thread id of thread: lcd          *
  *      Switch LED on
  *---------------------------------------------------------------------------*/
 void Switch_On (unsigned char led) {
-	printf("LED On: #%d\n\r", led);
+  printf("LED On: #%d\n\r", led);
 }
 
 /*----------------------------------------------------------------------------
@@ -70,7 +69,7 @@ void signal_func (osThreadId_t tid)  {
 /*----------------------------------------------------------------------------
  *      Thread 1 'phaseA': Phase A output
  *---------------------------------------------------------------------------*/
-void *phaseA (void *argument) {
+void phaseA (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0001, osFlagsWaitAny ,osWaitForever);    /* wait for an event flag 0x0001 */
     Switch_On (LED_A);
@@ -82,7 +81,7 @@ void *phaseA (void *argument) {
 /*----------------------------------------------------------------------------
  *      Thread 2 'phaseB': Phase B output
  *---------------------------------------------------------------------------*/
-void *phaseB (void *argument) {
+void phaseB (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);    /* wait for an event flag 0x0001 */
     Switch_On (LED_B);
@@ -94,7 +93,7 @@ void *phaseB (void *argument) {
 /*----------------------------------------------------------------------------
  *      Thread 3 'phaseC': Phase C output
  *---------------------------------------------------------------------------*/
-void *phaseC (void *argument) {
+void phaseC (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);    /* wait for an event flag 0x0001 */
     Switch_On (LED_C);
@@ -106,7 +105,7 @@ void *phaseC (void *argument) {
 /*----------------------------------------------------------------------------
  *      Thread 4 'phaseD': Phase D output
  *---------------------------------------------------------------------------*/
-void *phaseD (void *argument) {
+void phaseD (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);    /* wait for an event flag 0x0001 */
     Switch_On (LED_D);
@@ -118,7 +117,7 @@ void *phaseD (void *argument) {
 /*----------------------------------------------------------------------------
  *      Thread 5 'clock': Signal Clock
  *---------------------------------------------------------------------------*/
-void *clock (void *argument) {
+void clock (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0100, osFlagsWaitAny, osWaitForever);    /* wait for an event flag 0x0100 */
     Switch_On (LED_CLK);
@@ -130,7 +129,7 @@ void *clock (void *argument) {
 /*----------------------------------------------------------------------------
  *      Main: Initialize and start RTX Kernel
  *---------------------------------------------------------------------------*/
-void *app_main (void *argument) {
+void app_main (void *argument) {
 
   tid_phaseA = osThreadNew(phaseA, NULL, NULL);
   tid_phaseB = osThreadNew(phaseB, NULL, NULL);
@@ -152,8 +151,8 @@ int main (void) {
   osKernelInitialize();                 // Initialize CMSIS-RTOS
   osThreadNew(app_main, NULL, NULL);    // Create application main thread
   if (osKernelGetState() == osKernelReady) {
-		osKernelStart();                      // Start thread execution
-	}
+    osKernelStart();                    // Start thread execution
+  }
 
   while(1);
 }
