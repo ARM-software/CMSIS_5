@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        18. October 2016
+ * $Date:        20. October 2016
  * $Revision:    V2.0
  *
  * Project:      CMSIS-RTOS API
@@ -62,6 +62,7 @@
  *     - renamed osPrioriry to osPrioriry_t
  *     - replaced osThreadCreate with osThreadNew
  *     - added: osThreadState_t and osThreadGetState
+ *     - added: osThreadGetStackSize, osThreadGetStackSpace
  *     - added: osThreadSuspend, osThreadResume
  *     - added: osThreadJoin, osThreadDetach, osThreadExit
  *     - added: Thread Flags (moved from Signals) 
