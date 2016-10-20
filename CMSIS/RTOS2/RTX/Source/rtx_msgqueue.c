@@ -223,6 +223,7 @@ void os_MessageQueuePostProcess (os_message_t *msg) {
 //  ==== Service Calls ====
 
 SVC0_3(MessageQueueNew,         osMessageQueueId_t, uint32_t, uint32_t, const osMessageQueueAttr_t *)
+SVC0_1(MessageQueueGetName,     const char *,       osMessageQueueId_t)
 SVC0_4(MessageQueuePut,         osStatus_t,         osMessageQueueId_t, const void *, uint8_t,   uint32_t)
 SVC0_4(MessageQueueGet,         osStatus_t,         osMessageQueueId_t,       void *, uint8_t *, uint32_t)
 SVC0_1(MessageQueueGetCapacity, uint32_t,           osMessageQueueId_t)
@@ -334,6 +335,25 @@ osMessageQueueId_t os_svcMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
   os_Info.post_process.message_queue = os_MessageQueuePostProcess;
 
   return mq;
+}
+
+/// Get name of a Message Queue object.
+/// \note API identical to osMessageQueueGetName
+const char *os_svcMessageQueueGetName (osMessageQueueId_t mq_id) {
+  os_message_queue_t *mq = (os_message_queue_t *)mq_id;
+
+  // Check parameters
+  if ((mq == NULL) ||
+      (mq->id != os_IdMessageQueue)) {
+    return NULL;
+  }
+
+  // Check object state
+  if (mq->state == os_ObjectInactive) {
+    return NULL;
+  }
+
+  return mq->name;
 }
 
 /// Put a Message into a Queue or timeout if Queue is full.
@@ -755,6 +775,14 @@ osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, con
   } else {
     return  __svcMessageQueueNew(msg_count, msg_size, attr);
   }
+}
+
+/// Get name of a Message Queue object.
+const char *osMessageQueueGetName (osMessageQueueId_t mq_id) {
+  if (__get_IPSR() != 0U) {
+    return NULL;                                // Not allowed in ISR
+  }
+  return  __svcMessageQueueGetName(mq_id);
 }
 
 /// Put a Message into a Queue or timeout if Queue is full.

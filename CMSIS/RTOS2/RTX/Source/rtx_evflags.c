@@ -156,12 +156,13 @@ void os_EventFlagsPostProcess (os_event_flags_t *ef) {
 //  ==== Service Calls ====
 
 //  Service Calls definitions
-SVC0_1(EventFlagsNew,    osEventFlagsId_t, const osEventFlagsAttr_t *)
-SVC0_2(EventFlagsSet,    int32_t,          osEventFlagsId_t, int32_t)
-SVC0_2(EventFlagsClear,  int32_t,          osEventFlagsId_t, int32_t)
-SVC0_1(EventFlagsGet,    int32_t,          osEventFlagsId_t)
-SVC0_4(EventFlagsWait,   int32_t,          osEventFlagsId_t, int32_t, uint32_t, uint32_t)
-SVC0_1(EventFlagsDelete, osStatus_t,       osEventFlagsId_t)
+SVC0_1(EventFlagsNew,     osEventFlagsId_t, const osEventFlagsAttr_t *)
+SVC0_1(EventFlagsGetName, const char *,     osEventFlagsId_t)
+SVC0_2(EventFlagsSet,     int32_t,          osEventFlagsId_t, int32_t)
+SVC0_2(EventFlagsClear,   int32_t,          osEventFlagsId_t, int32_t)
+SVC0_1(EventFlagsGet,     int32_t,          osEventFlagsId_t)
+SVC0_4(EventFlagsWait,    int32_t,          osEventFlagsId_t, int32_t, uint32_t, uint32_t)
+SVC0_1(EventFlagsDelete,  osStatus_t,       osEventFlagsId_t)
 
 /// Create and Initialize an Event Flags object.
 /// \note API identical to osEventFlagsNew
@@ -215,6 +216,25 @@ osEventFlagsId_t os_svcEventFlagsNew (const osEventFlagsAttr_t *attr) {
   os_Info.post_process.event_flags = os_EventFlagsPostProcess;
 
   return ef;
+}
+
+/// Get name of an Event Flags object.
+/// \note API identical to osEventFlagsGetName
+const char *os_svcEventFlagsGetName (osEventFlagsId_t ef_id) {
+  os_event_flags_t *ef = (os_event_flags_t *)ef_id;
+
+  // Check parameters
+  if ((ef == NULL) ||
+      (ef->id != os_IdEventFlags)) {
+    return NULL;
+  }
+
+  // Check object state
+  if (ef->state == os_ObjectInactive) {
+    return NULL;
+  }
+
+  return ef->name;
 }
 
 /// Set the specified Event Flags.
@@ -473,6 +493,14 @@ osEventFlagsId_t osEventFlagsNew (const osEventFlagsAttr_t *attr) {
   } else {
     return  __svcEventFlagsNew(attr);
   }
+}
+
+/// Get name of an Event Flags object.
+const char *osEventFlagsGetName (osEventFlagsId_t ef_id) {
+  if (__get_IPSR() != 0U) {
+    return NULL;                                // Not allowed in ISR
+  }
+  return  __svcEventFlagsGetName(ef_id);
 }
 
 /// Set the specified Event Flags.

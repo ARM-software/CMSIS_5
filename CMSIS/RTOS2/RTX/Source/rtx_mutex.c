@@ -64,6 +64,7 @@ void os_MutexOwnerRelease (os_mutex_t *mutex_list) {
 
 //  Service Calls definitions
 SVC0_1(MutexNew,      osMutexId_t,  const osMutexAttr_t *)
+SVC0_1(MutexGetName,  const char *, osMutexId_t)
 SVC0_2(MutexAcquire,  osStatus_t,   osMutexId_t, uint32_t)
 SVC0_1(MutexRelease,  osStatus_t,   osMutexId_t)
 SVC0_1(MutexGetOwner, osThreadId_t, osMutexId_t)
@@ -125,6 +126,25 @@ osMutexId_t os_svcMutexNew (const osMutexAttr_t *attr) {
   mutex->lock         = 0U;
 
   return mutex;
+}
+
+/// Get name of a Mutex object.
+/// \note API identical to osMutexGetName
+const char *os_svcMutexGetName (osMutexId_t mutex_id) {
+  os_mutex_t *mutex = (os_mutex_t *)mutex_id;
+
+  // Check parameters
+  if ((mutex == NULL) ||
+      (mutex->id != os_IdMutex)) {
+    return NULL;
+  }
+
+  // Check object state
+  if (mutex->state == os_ObjectInactive) {
+    return NULL;
+  }
+
+  return mutex->name;
 }
 
 /// Acquire a Mutex or timeout if it is locked.
@@ -384,6 +404,14 @@ osMutexId_t osMutexNew (const osMutexAttr_t *attr) {
   } else {
     return  __svcMutexNew(attr);
   }
+}
+
+/// Get name of a Mutex object.
+const char *osMutexGetName (osMutexId_t mutex_id) {
+  if (__get_IPSR() != 0U) {
+    return NULL;                                // Not allowed in ISR
+  }
+  return  __svcMutexGetName(mutex_id);
 }
 
 /// Acquire a Mutex or timeout if it is locked.

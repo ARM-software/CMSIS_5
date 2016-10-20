@@ -504,6 +504,7 @@ void os_ThreadPostProcess (os_thread_t *thread) {
 
 //  Service Calls definitions
 SVC0_3 (ThreadNew,           osThreadId_t,    os_thread_func_t, void *, const osThreadAttr_t *)
+SVC0_1 (ThreadGetName,       const char *,    osThreadId_t)
 SVC0_0 (ThreadGetId,         osThreadId_t)
 SVC0_1 (ThreadGetState,      osThreadState_t, osThreadId_t)
 SVC0_1 (ThreadGetStackSize,  uint32_t, osThreadId_t)
@@ -707,6 +708,25 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
   os_ThreadDispatch(thread);
 
   return thread;
+}
+
+/// Get name of a thread.
+/// \note API identical to osThreadGetName
+const char *os_svcThreadGetName (osThreadId_t thread_id) {
+  os_thread_t *thread = (os_thread_t *)thread_id;
+
+  // Check parameters
+  if ((thread == NULL) ||
+      (thread->id != os_IdThread)) {
+    return NULL;
+  }
+
+  // Check object state
+  if (thread->state == os_ObjectInactive) {
+    return NULL;
+  }
+
+  return thread->name;
 }
 
 /// Return the thread ID of the current running thread.
@@ -1289,6 +1309,14 @@ osThreadId_t osThreadNew (os_thread_func_t func, void *argument, const osThreadA
   } else {
     return  __svcThreadNew(func, argument, attr);
   }
+}
+
+/// Get name of a thread.
+const char *osThreadGetName (osThreadId_t thread_id) {
+  if (__get_IPSR() != 0U) {
+    return NULL;                                // Not allowed in ISR
+  }
+  return  __svcThreadGetName(thread_id);
 }
 
 /// Return the thread ID of the current running thread.

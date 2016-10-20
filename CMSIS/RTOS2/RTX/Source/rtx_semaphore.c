@@ -122,6 +122,7 @@ void os_SemaphorePostProcess (os_semaphore_t *semaphore) {
 
 //  Service Calls definitions
 SVC0_3(SemaphoreNew,      osSemaphoreId_t, uint32_t, uint32_t, const osSemaphoreAttr_t *)
+SVC0_1(SemaphoreGetName,  const char *,    osSemaphoreId_t)
 SVC0_2(SemaphoreAcquire,  osStatus_t,      osSemaphoreId_t, uint32_t)
 SVC0_1(SemaphoreRelease,  osStatus_t,      osSemaphoreId_t)
 SVC0_1(SemaphoreGetCount, uint32_t,        osSemaphoreId_t)
@@ -187,6 +188,25 @@ osSemaphoreId_t os_svcSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
   os_Info.post_process.semaphore = os_SemaphorePostProcess;
 
   return semaphore;
+}
+
+/// Get name of a Semaphore object.
+/// \note API identical to osSemaphoreGetName
+const char *os_svcSemaphoreGetName (osSemaphoreId_t semaphore_id) {
+  os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
+
+  // Check parameters
+  if ((semaphore == NULL) ||
+      (semaphore->id != os_IdSemaphore)) {
+    return NULL;
+  }
+
+  // Check object state
+  if (semaphore->state == os_ObjectInactive) {
+    return NULL;
+  }
+
+  return semaphore->name;
 }
 
 /// Acquire a Semaphore token or timeout if no tokens are available.
@@ -387,6 +407,14 @@ osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, cons
   } else {
     return  __svcSemaphoreNew(max_count, initial_count, attr);
   }
+}
+
+/// Get name of a Semaphore object.
+const char *osSemaphoreGetName (osSemaphoreId_t semaphore_id) {
+  if (__get_IPSR() != 0U) {
+    return NULL;                                // Not allowed in ISR
+  }
+  return  __svcSemaphoreGetName(semaphore_id);
 }
 
 /// Acquire a Semaphore token or timeout if no tokens are available.

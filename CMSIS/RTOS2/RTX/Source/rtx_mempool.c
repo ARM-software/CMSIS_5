@@ -218,6 +218,7 @@ void os_MemoryPoolPostProcess (os_memory_pool_t *mp) {
 
 //  Service Calls definitions
 SVC0_3(MemoryPoolNew,          osMemoryPoolId_t, uint32_t, uint32_t, const osMemoryPoolAttr_t *)
+SVC0_1(MemoryPoolGetName,      const char *,     osMemoryPoolId_t)
 SVC0_2(MemoryPoolAlloc,        void *,           osMemoryPoolId_t, uint32_t)
 SVC0_2(MemoryPoolFree,         osStatus_t,       osMemoryPoolId_t, void *)
 SVC0_1(MemoryPoolGetCapacity,  uint32_t,         osMemoryPoolId_t)
@@ -322,6 +323,25 @@ osMemoryPoolId_t os_svcMemoryPoolNew (uint32_t block_count, uint32_t block_size,
   os_Info.post_process.memory_pool = os_MemoryPoolPostProcess;
 
   return mp;
+}
+
+/// Get name of a Memory Pool object.
+/// \note API identical to osMemoryPoolGetName
+const char *os_svcMemoryPoolGetName (osMemoryPoolId_t mp_id) {
+  os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
+
+  // Check parameters
+  if ((mp == NULL) ||
+      (mp->id != os_IdMemoryPool)) {
+    return NULL;
+  }
+
+  // Check object state
+  if (mp->state == os_ObjectInactive) {
+    return NULL;
+  }
+
+  return mp->name;
 }
 
 /// Allocate a memory block from a Memory Pool.
@@ -585,6 +605,14 @@ osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, con
   } else {
     return  __svcMemoryPoolNew(block_count, block_size, attr);
   }
+}
+
+/// Get name of a Memory Pool object.
+const char *osMemoryPoolGetName (osMemoryPoolId_t mp_id) {
+  if (__get_IPSR() != 0U) {
+    return NULL;                                // Not allowed in ISR
+  }
+  return  __svcMemoryPoolGetName(mp_id);
 }
 
 /// Allocate a memory block from a Memory Pool.
