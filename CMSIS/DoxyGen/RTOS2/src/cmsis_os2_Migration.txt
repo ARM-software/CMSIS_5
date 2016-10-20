@@ -42,17 +42,32 @@ New function #osKernelGetInfo.
 \enddiv
 
 \div{mod}
-\func{uint32_t #osKernelGetTick (void)}
+\func{uint32_t #osKernelGetTickCount (void)}
 \func{uint32_t osKernelSysTick (void)}
-\copybrief{osKernelGetTick}
- - The function \b osKernelGetTick replaces the RTOS v1 function \b osKernelSysTick.
+\copybrief{osKernelGetTickCount}
+ - The function \b osKernelGetTickCount replaces the RTOS v1 function \b osKernelSysTick.
+
+\enddiv
+
+\div{mod}
+\func{uint32_t #osKernelGetTickFreq (void)}
+\copybrief{osKernelTickMicroSec}
+\copybrief{osKernelGetTickFreq}
+ - The function \b osKernelGetTickFreq replaces the RTOS v1 macro \b osKernelTickMicroSec.
 
 \enddiv
 
 \div{new}
-\func{uint64_t #osKernelGetTime (void)}
+\func{uint64_t #osKernelGetSysTimerCount (void)}
 \none
-\copybrief{osKernelGetTime}
+\copybrief{osKernelGetTimerCount}
+New function.
+\enddiv
+
+\div{new}
+\func{uint64_t #osKernelGetSysTimerFreq (void)}
+\none
+\copybrief{osKernelGetSysTimerFreq}
 New function.
 \enddiv
 
@@ -91,14 +106,6 @@ New function.
 \none
 \copybrief{osKernelSuspend}
 New function.
-\enddiv
-
-\div{mod}
-\func{uint32_t #osKernelTickMicroSec (uint32_t microsec)}
-\func{uint32_t osKernelTickMicroSec (osKernelSysTickFrequency)}
-\copybrief{osKernelTickMicroSec}
- - The function \b osKernelTickMicroSec replaces the RTOS v1 macro \b osKernelTickMicroSec.
-
 \enddiv
 
 \div{new}
@@ -220,7 +227,7 @@ New function.
 Refer to \ref CMSIS_RTOS_Wait for details.
 
 \div{mod}
-\func{osStatus_t #osDelay (uint32_t millisec)}
+\func{osStatus_t #osDelay (uint32_t ticks)}
 \func{osStatus &nbsp; osDelay (uint32_t millisec)}
 \copybrief{osDelay}
  - The return type changed to #osStatus_t. 
@@ -228,7 +235,7 @@ Refer to \ref CMSIS_RTOS_Wait for details.
 \enddiv
 
 \div{mod}
-\func{osStatus_t #osDelayUntil (uint64_t millisec)}
+\func{osStatus_t #osDelayUntil (uint64_t ticks)}
 \func{osStatus &nbsp; osDelayUntil (uint64_t millisec)}
 \copybrief{osDelayUntil}
  - The return type changed to #osStatus_t. 
@@ -272,7 +279,7 @@ New function.
 \enddiv
 
 \div{mod}
-\func{osStatus_t #osTimerStart (osTimerId_t timer_id, uint32_t millisec)}
+\func{osStatus_t #osTimerStart (osTimerId_t timer_id, uint32_t ticks)}
 \func{osStatus &nbsp; osTimerStart (osTimerId timer_id, uint32_t millisec)}
 \copybrief{osTimerStart}
  - The return type changed to #osStatus_t. 
@@ -396,7 +403,7 @@ New function.
 \enddiv
 
 \div{new}
-\func{int32_t #osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t millisec)}
+\func{int32_t #osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t ticks)}
 \none
 \copybrief{osThreadFlagsWait}
 New function.
@@ -618,7 +625,7 @@ Deprecated.
 Refer to \ref CMSIS_RTOS_MutexMgmt for details.
 
 \div{mod}
-\func{osStatus_t #osMutexAcquire (osMutexId_t mutex_id, uint32_t millisec)}
+\func{osStatus_t #osMutexAcquire (osMutexId_t mutex_id, uint32_t timeout)}
 \func{osStatus &nbsp; osMutexWait (osMutexId mutex_id, uint32_t millisec)}
 \copybrief{osMutexAcquire}
  - The function \b osMutexAcquire replaces the RTOS v1 function \b osMutexWait.
@@ -672,7 +679,7 @@ New function.
 Refer to \ref CMSIS_RTOS_SemaphoreMgmt for details.
 
 \div{new}
-\func{osStatus_t #osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t millisec)}
+\func{osStatus_t #osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout)}
 \none
 \copybrief{osSemaphoreAcquire}
 New function.

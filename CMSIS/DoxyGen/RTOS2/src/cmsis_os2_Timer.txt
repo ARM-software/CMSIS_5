@@ -112,7 +112,7 @@ void TimerCreate_example (void)  {
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
-\fn osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t millisec)
+\fn osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t ticks)
 \details
 Start or restart the timer.
 
