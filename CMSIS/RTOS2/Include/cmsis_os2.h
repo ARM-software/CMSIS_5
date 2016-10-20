@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        18. October 2016
+ * $Date:        20. October 2016
  * $Revision:    V2.0
  *
  * Project:      CMSIS-RTOS2 API
@@ -347,6 +347,16 @@ osThreadId_t osThreadGetId (void);
 /// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
 /// \return current thread state of the specified thread.
 osThreadState_t osThreadGetState (osThreadId_t thread_id);
+ 
+/// Get stack size of a thread.
+/// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
+/// \return stack size in bytes.
+uint32_t osThreadGetStackSize (osThreadId_t thread_id);
+ 
+/// Get available stack space of a thread.
+/// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
+/// \return available stack in bytes.
+uint32_t osThreadGetStackSpace (osThreadId_t thread_id);
  
 /// Change priority of a thread.
 /// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
