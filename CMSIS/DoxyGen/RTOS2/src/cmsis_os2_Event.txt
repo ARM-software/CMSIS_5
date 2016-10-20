@@ -105,7 +105,7 @@ Return the event flags currently set in an event flags object.
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn int32_t osEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t millisec)
+\fn int32_t osEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout)
 \details
 Suspend the execution of the current \b RUNNING thread until any or all specified event flags with the parameter \a flags are set.
 The \em options parameter specifies the wait condition. 

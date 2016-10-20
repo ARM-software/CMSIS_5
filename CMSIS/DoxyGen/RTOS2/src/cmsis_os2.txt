@@ -212,14 +212,15 @@ Overview of all CMSIS-RTOS C API v2 functions.
  - \ref CMSIS_RTOS_KernelCtrl
    - \ref osKernelGetInfo : \copybrief osKernelGetInfo
    - \ref osKernelGetState : \copybrief osKernelGetState
-   - \ref osKernelGetTick : \copybrief osKernelGetTick
-   - \ref osKernelGetTime : \copybrief osKernelGetTime
+   - \ref osKernelGetSysTimerCount : \copybrief osKernelGetSysTimerCount
+   - \ref osKernelGetSysTimerFreq : \copybrief osKernelGetSysTimerFreq
    - \ref osKernelInitialize : \copybrief osKernelInitialize
    - \ref osKernelLock : \copybrief osKernelLock
    - \ref osKernelResume : \copybrief osKernelResume
    - \ref osKernelStart : \copybrief osKernelStart
    - \ref osKernelSuspend : \copybrief osKernelSuspend
-   - \ref osKernelTickMicroSec : \copybrief osKernelTickMicroSec
+   - \ref osKernelGetTickCount : \copybrief osKernelGetTickCount
+   - \ref osKernelGetTickFreq : \copybrief osKernelGetTickFreq
    - \ref osKernelUnlock : \copybrief osKernelUnlock
 
  - \ref CMSIS_RTOS_ThreadMgmt
@@ -374,7 +375,7 @@ object memory needs to be available during the life-time of the object.
 
 RTX5 offers three different memory allocation methods for objects:
 
-  - \ref GlobalDynamicMemoryPool uses a single global memory pool for all objects. It is easy to configure, but may have 
+  - \ref GlobalMemoryPool uses a single global memory pool for all objects. It is easy to configure, but may have 
     the disadvantage for memory fragmentation when different object sizes are created and deleted.
 
   - \ref ObjectMemoryPool uses a fixed-size memory pool for each object type. The method is time deterministic
