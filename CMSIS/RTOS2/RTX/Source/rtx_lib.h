@@ -114,6 +114,8 @@ extern uint32_t         os_svcKernelGetSysTimerFreq  (void);
 extern osThreadId_t     os_svcThreadNew          (os_thread_func_t func, void *argument, const osThreadAttr_t *attr);
 extern osThreadId_t     os_svcThreadGetId        (void);
 extern osThreadState_t  os_svcThreadGetState     (osThreadId_t thread_id);
+extern uint32_t         os_svcThreadGetStackSize (osThreadId_t thread_id);
+extern uint32_t         os_svcThreadGetStackSpace(osThreadId_t thread_id);
 extern osStatus_t       os_svcThreadSetPriority  (osThreadId_t thread_id, osPriority_t priority);
 extern osPriority_t     os_svcThreadGetPriority  (osThreadId_t thread_id);
 extern osStatus_t       os_svcThreadYield        (void);

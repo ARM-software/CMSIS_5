@@ -503,22 +503,24 @@ void os_ThreadPostProcess (os_thread_t *thread) {
 //  ==== Service Calls ====
 
 //  Service Calls definitions
-SVC0_3 (ThreadNew,         osThreadId_t,    os_thread_func_t, void *, const osThreadAttr_t *)
-SVC0_0 (ThreadGetId,       osThreadId_t)
-SVC0_1 (ThreadGetState,    osThreadState_t, osThreadId_t)
-SVC0_2 (ThreadSetPriority, osStatus_t,      osThreadId_t, osPriority_t)
-SVC0_1 (ThreadGetPriority, osPriority_t,    osThreadId_t)
-SVC0_0 (ThreadYield,       osStatus_t)
-SVC0_1 (ThreadSuspend,     osStatus_t,      osThreadId_t)
-SVC0_1 (ThreadResume,      osStatus_t,      osThreadId_t)
-SVC0_1 (ThreadDetach,      osStatus_t,      osThreadId_t)
-SVC0_1 (ThreadJoin,        osStatus_t,      osThreadId_t)
-SVC0_0N(ThreadExit,        void)
-SVC0_1 (ThreadTerminate,   osStatus_t,      osThreadId_t)
-SVC0_2 (ThreadFlagsSet,    int32_t,         osThreadId_t, int32_t)
-SVC0_1 (ThreadFlagsClear,  int32_t,         int32_t)
-SVC0_0 (ThreadFlagsGet,    int32_t)
-SVC0_3 (ThreadFlagsWait,   int32_t,         int32_t, uint32_t, uint32_t)
+SVC0_3 (ThreadNew,           osThreadId_t,    os_thread_func_t, void *, const osThreadAttr_t *)
+SVC0_0 (ThreadGetId,         osThreadId_t)
+SVC0_1 (ThreadGetState,      osThreadState_t, osThreadId_t)
+SVC0_1 (ThreadGetStackSize,  uint32_t, osThreadId_t)
+SVC0_1 (ThreadGetStackSpace, uint32_t, osThreadId_t)
+SVC0_2 (ThreadSetPriority,   osStatus_t,      osThreadId_t, osPriority_t)
+SVC0_1 (ThreadGetPriority,   osPriority_t,    osThreadId_t)
+SVC0_0 (ThreadYield,         osStatus_t)
+SVC0_1 (ThreadSuspend,       osStatus_t,      osThreadId_t)
+SVC0_1 (ThreadResume,        osStatus_t,      osThreadId_t)
+SVC0_1 (ThreadDetach,        osStatus_t,      osThreadId_t)
+SVC0_1 (ThreadJoin,          osStatus_t,      osThreadId_t)
+SVC0_0N(ThreadExit,          void)
+SVC0_1 (ThreadTerminate,     osStatus_t,      osThreadId_t)
+SVC0_2 (ThreadFlagsSet,      int32_t,         osThreadId_t, int32_t)
+SVC0_1 (ThreadFlagsClear,    int32_t,         int32_t)
+SVC0_0 (ThreadFlagsGet,      int32_t)
+SVC0_3 (ThreadFlagsWait,     int32_t,         int32_t, uint32_t, uint32_t)
 
 /// Create a thread and add it to Active Threads.
 /// \note API identical to osThreadNew
@@ -728,6 +730,60 @@ osThreadState_t os_svcThreadGetState (osThreadId_t thread_id) {
   }
 
   return ((osThreadState_t)(thread->state & os_ThreadStateMask));
+}
+
+/// Get stack size of a thread.
+/// \note API identical to osThreadGetStackSize
+uint32_t os_svcThreadGetStackSize (osThreadId_t thread_id) {
+  os_thread_t *thread = (os_thread_t *)thread_id;
+
+  // Check parameters
+  if ((thread == NULL) ||
+      (thread->id != os_IdThread)) {
+    return 0U;
+  }
+
+  // Check object state
+  if (thread->state == os_ObjectInactive) {
+    return 0U;
+  }
+
+  return thread->stack_size;
+}
+
+/// Get available stack space of a thread.
+/// \note API identical to osThreadGetStackSpace
+uint32_t os_svcThreadGetStackSpace (osThreadId_t thread_id) {
+  os_thread_t *thread = (os_thread_t *)thread_id;
+  uint32_t    *stack;
+  uint32_t     space;
+
+  // Check parameters
+  if ((thread == NULL) ||
+      (thread->id != os_IdThread)) {
+    return 0U;
+  }
+
+  // Check object state
+  if (thread->state == os_ObjectInactive) {
+    return 0U;
+  }
+
+  if ((os_Config.flags & os_ConfigStackWatermark) == 0U) {
+    return 0U;
+  }
+
+  stack = thread->stack_mem;
+  if (*stack++ != os_StackMagicWord) {
+    return 0U;
+  }
+  for (space = 4U; space < thread->stack_size; space += 4U) {
+    if (*stack++ != os_StackFillPattern) {
+      break;
+    }
+  }
+
+  return space;
 }
 
 /// Change priority of a thread.
@@ -1249,6 +1305,22 @@ osThreadState_t osThreadGetState (osThreadId_t thread_id) {
     return osThreadError;                       // Not allowed in ISR
   }
   return __svcThreadGetState(thread_id);
+}
+
+/// Get stack size of a thread.
+uint32_t osThreadGetStackSize (osThreadId_t thread_id) {
+  if (__get_IPSR() != 0U) {
+    return 0U;                                  // Not allowed in ISR
+  }
+  return __svcThreadGetStackSize(thread_id);
+}
+
+/// Get available stack space of a thread.
+uint32_t osThreadGetStackSpace (osThreadId_t thread_id) {
+  if (__get_IPSR() != 0U) {
+    return 0U;                                  // Not allowed in ISR
+  }
+  return __svcThreadGetStackSpace(thread_id);
 }
 
 /// Change priority of a thread.
