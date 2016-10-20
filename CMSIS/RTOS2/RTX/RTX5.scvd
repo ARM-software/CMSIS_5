@@ -880,7 +880,7 @@
           <item property="Round Robin"         cond="os_Config.robin_timeout == 0" value="Disabled" />
           <item property="Round Robin Tick"    cond="os_Config.robin_timeout > 0"  value="%d[os_Info.thread_robin_tick]" />
           <item property="Round Robin Timeout" cond="os_Config.robin_timeout > 0"  value="%d[os_Config.robin_timeout]" />
-          
+          <item property="Global Dynamic Memory size" value="%d[os_Config.mem_common_size]" />          
           <item property="Stack Overrun Check"   value="%t[stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" />
           <item property="Stack Usage Watermark" value="%t[stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" />
           <item property="Default Thread Stack Size" value="%d[os_Config.thread_stack_size]" />
@@ -891,7 +891,7 @@
             </list>
           </item>
 
-          <item property="Static Object Configuration" cond="StaticMp_En">
+          <item property="Object specific Memory allocation" cond="StaticMp_En">
               <item property="Thread objects"        value="Used: %d[cfg_mp_thread.used_blocks], Max: %d[cfg_mp_thread.max_blocks]" cond="os_Config.mpi_thread" />
               <item property="Timer objects"         value="Used: %d[cfg_mp_timer.used_blocks], Max: %d[cfg_mp_timer.max_blocks]" cond="os_Config.mpi_timer" />
               <item property="Event Flags objects"   value="Used: %d[cfg_mp_events.used_blocks], Max: %d[cfg_mp_events.max_blocks]" cond="os_Config.mpi_event_flags" />
@@ -1033,7 +1033,7 @@
         <item cond="MCB_En" property="Mutexes" value="">
           <list name="i" start="0" limit="MCB._count">
             <item cond="MCB[i].cb_valid" property="id: %x[MCB[i]._addr]%t[MCB[i].obj_name]" value="Lock counter: %d[MCB[i].lock]">
-
+              <item property="Lock counter" value="%x[MCB[i].lock]"/>
               <item property="Attributes" value="%x[MCB[i].attr]">
                 <item property="osMutexRecursive"   value="%t[(MCB[i].attr &amp; 0x01) ?  &quot;True&quot; : &quot;False&quot;]" />
                 <item property="osMutexPrioInherit" value="%t[(MCB[i].attr &amp; 0x02) ?  &quot;True&quot; : &quot;False&quot;]" />
@@ -1043,7 +1043,6 @@
               <list cond="MCB[i].owner_thread" name="n" start="0" limit="TCB._count">
                 <item cond="MCB[i].owner_thread == TCB[n]._addr" property="Owner thread" value="id: %x[TCB[n]._addr]%t[TCB[n].obj_name]"/>
               </list>
-              <item property="Lock counter" value="%x[MCB[i].lock]"/>
 
               <!-- Waiting thread list -->
               <item cond="MCB[i].wl_cnt" property="Threads waiting (%d[MCB[i].wl_cnt])" value="">
@@ -1081,7 +1080,7 @@
         </item>
 
         <!-- Memory Pool -->
-        <item cond="PCB_En" property="Memory Pool" value="">
+        <item cond="PCB_En" property="Memory Pools" value="">
           <list name="i" start="0" limit="PCB._count">
             <item cond="PCB[i].cb_valid" property="id: %x[PCB[i]._addr]%t[PCB[i].obj_name]" value="Used: %d[PCB[i].used_blocks], Max: %d[PCB[i].max_blocks]">
 
@@ -1107,7 +1106,7 @@
         </item>
 
         <!-- Message Queue -->
-        <item cond="QCB_En" property="Message Queue" value="">
+        <item cond="QCB_En" property="Message Queues" value="">
           <list name="i" start="0" limit="QCB._count">
             <item cond="QCB[i].cb_valid" property="id: %x[QCB[i]._addr]%t[QCB[i].obj_name]" value="Messages: %d[QCB[i].used_blocks], Max: %d[QCB[i].max_blocks]">
 
