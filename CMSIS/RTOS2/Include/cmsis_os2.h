@@ -406,6 +406,16 @@ __NO_RETURN void osThreadExit (void);
 /// \return status code that indicates the execution status of the function.
 osStatus_t osThreadTerminate (osThreadId_t thread_id);
  
+/// Get number of active threads.
+/// \return number of active threads.
+uint32_t osThreadGetCount (void);
+ 
+/// Enumerate active threads.
+/// \param[out]    thread_array  pointer to array for retrieving thread IDs.
+/// \param[in]     array_size    size of array for retrieving thread IDs.
+/// \return number of enumerated threads.
+uint32_t osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_size);
+ 
  
 //  ==== Thread Flags Functions ====
  
