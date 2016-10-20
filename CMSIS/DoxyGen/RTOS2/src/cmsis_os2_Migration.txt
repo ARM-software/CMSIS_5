@@ -80,7 +80,7 @@ New function.
 \enddiv
 
 \div{new}
-\func{uint32_t osKernelLock (void)}
+\func{uint32_t #osKernelLock (void)}
 \none
 \copybrief{osKernelLock}
 New function.
@@ -102,7 +102,7 @@ New function.
 \enddiv
 
 \div{new}
-\func{uint32_t osKernelSuspend (void)}
+\func{uint32_t #osKernelSuspend (void)}
 \none
 \copybrief{osKernelSuspend}
 New function.
@@ -134,6 +134,13 @@ New function.
 \func{__NO_RETURN void #osThreadExit (void * exit_ptr)}
 \none
 \copybrief{osThreadExit}
+New function.
+\enddiv
+
+\div{new}
+\func{const char *#osThreadGetName (osThreadId_t thread_id)}
+\none
+\copybrief{osThreadGetName}
 New function.
 \enddiv
 
@@ -403,7 +410,21 @@ New function.
 \enddiv
 
 \div{new}
-\func{int32_t #osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t ticks)}
+\func{int32_t #osThreadFlagsClear (int32_t flags)}
+\none
+\copybrief{osThreadFlagsClear}
+New function.
+\enddiv
+
+\div{new}
+\func{int32_t #osThreadFlagsGet (void)}
+\none
+\copybrief{osThreadFlagsGet}
+New function.
+\enddiv
+
+\div{new}
+\func{int32_t #osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout)}
 \none
 \copybrief{osThreadFlagsWait}
 New function.

@@ -30,18 +30,19 @@ static void EX_Signal_1 (void)  {
 \endcode
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn osStatus osThreadFlagsClear (osThreadId thread_id, int32_t flags);
-Clear the event flags of an thread flags object. 
+/** \fn osStatus osThreadFlagsClear (int32_t flags)
+\details
+Clear the event flags of a thread flags object. 
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn int32_t osThreadFlagsGet (osThreadId thread_id);
-Return the event flags currently set in an thread flags object. 
+/** \fn int32_t osThreadFlagsGet (void)
+\details
+Return the event flags currently set in a thread flags object. 
  
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-
-/** \fn int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout);
+/** \fn int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout)
 Suspend the execution of the current \b RUNNING thread until any or all specified thread flags with the parameter \a flags are set.
 The \em options parameter specifies the wait condition. 
 

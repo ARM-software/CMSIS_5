@@ -226,6 +226,7 @@ Overview of all CMSIS-RTOS C API v2 functions.
  - \ref CMSIS_RTOS_ThreadMgmt
    - \ref osThreadDetach : \copybrief osThreadDetach
    - \ref osThreadExit : \copybrief osThreadExit
+   - \ref osThreadGetName : \copybrief osThreadGetName
    - \ref osThreadGetId : \copybrief osThreadGetId
    - \ref osThreadGetPriority : \copybrief osThreadGetPriority
    - \ref osThreadGetState : \copybrief osThreadGetState
