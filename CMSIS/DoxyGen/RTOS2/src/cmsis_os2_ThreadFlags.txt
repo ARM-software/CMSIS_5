@@ -17,7 +17,7 @@ Set the thread flags for a thread instance specified by \em thread_id. This func
 The threads waiting for the flag set will be notified to resume from BLOCKED state.
 
 <b>Code Example</b>
-\code
+\code{.c}
 void *Thread (void *arg);
  
 static void EX_Signal_1 (void)  {
@@ -58,7 +58,7 @@ When these thread flags are already set, the function returns instantly. Otherwi
 
 
 <b>Code Example</b>
-\code
+\code{.c}
 #include "cmsis_os2.h"
 :
 void *Thread (void* arg) {

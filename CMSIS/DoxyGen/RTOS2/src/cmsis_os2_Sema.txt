@@ -24,23 +24,23 @@ Working with Semaphores
 --------------------
 Follow these steps to create and use a semaphore:
 -# Declare the semaphore container and initialize the semaphore:
-\code
+\code{.c}
 osSemaphoreDef (my_semaphore);    // Declare semaphore
 osSemaphoreId  (my_semaphore_id); // Semaphore ID
 \endcode
 -# Initialize the semaphore container with a number of tokens within a thread:
-\code
+\code{.c}
 my_semaphore_id = osSemaphoreCreate(osSemaphore(my_semaphore), 4);  // Create semaphore with 4 tokens
 \endcode
 \b Important: semaphore tokens can be created and destroyed as threads run. This means that can initialize a semaphore with
 zero tokens and then use one thread to add/create tokens to the semaphore while a second thread removes them. In this way you
 can distinguish between producer and consumer threads.
 -# Acquire a token from the semaphore container:
-\code
+\code{.c}
 osSemaphoreAcquire(my_semaphore_id, osWaitForever);
 \endcode
 -# When finished using the semaphore resource, send the token back to the semaphore container:
-\code
+\code{.c}
 osSemaphoreRelease(my_semaphore_id);
 \endcode
 
@@ -62,7 +62,7 @@ then the next thread trying to access the function will have to wait until one o
 token. When all threads have exited the token number is back to n. Ths following example shows the code for one of the
 threads that might access the resource:
 
-\code
+\code{.c}
 osSemaphoreId_t multiplex_id;
  
 void thread_n (void)

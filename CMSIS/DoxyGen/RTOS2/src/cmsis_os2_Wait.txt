@@ -30,7 +30,7 @@ to one timer tick less.
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
  
 <b>Code Example</b>
-\code
+\code{.c}
 #include "cmsis_os2.h"
  
 void *Thread_1 (void *arg)  {               // Thread function
@@ -63,7 +63,7 @@ exact time delay depends on the actual time elapsed since the last timer tick.
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines". 
 
 <b>Code Example</b>
-\code
+\code{.c}
 #include "cmsis_os2.h"
  
 void *Thread_1 (void *arg)  {               // Thread function

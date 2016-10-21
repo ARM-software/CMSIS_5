@@ -28,19 +28,19 @@ Working with Mutexes
 --------------------
 To use mutexes, you need to follow these steps for creating and using them:
 -# Declare the mutex container and initialize the mutex:
-\code
+\code{.c}
 osMutexId  (uart_mutex_id); // Mutex ID
 \endcode
 -# Create the mutex in a thread:
-\code
+\code{.c}
 uart_mutex_id = osMutexNew(NULL);
 \endcode
 -# Acquire the mutex when peripheral access is required:
-\code
+\code{.c}
 osMutexAcquire(uart_mutex_id, osWaitForever);
 \endcode
 -# When finished with the peripheral access, release the mutex:
-\code
+\code{.c}
 osMutexRelease(uart_mutex_id);
 \endcode
 
@@ -243,7 +243,7 @@ The size of the memory block passed with \ref cb_mem. Must be the size of a mute
 \details
 String with a human readable name of the mutex object.
 
-\code
+\code{.c}
 osMutexId_t mid_Thread_Mutex;               // mutex id
  
 const osMutexAttr_t Thread_Mutex_attr = {

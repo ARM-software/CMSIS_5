@@ -21,7 +21,7 @@ When reaching \b main, it is necessary to:
 -# Start the Kernel and begin thread switching by calling osKernelStart().
 
 <b>Code Example</b>
-\code
+\code{.c}
 int main (void) {
   osKernelInitialize ();                    // initialize CMSIS-RTOS
  
@@ -64,7 +64,7 @@ State of the Kernel. Can be retrieved by \ref osKernelGetState.
 Retrieve API and kernel version of the underlying RTOS kernel and a human readable identifier string of the kernel.
 
 \b Example
-\code
+\code{.c}
 void info (void) {
   char infobuf[100];
   osVersion_t osv;
