@@ -423,7 +423,7 @@ In contrast to the dynamic memory allocations the static memory allocation requi
 The following example shows how to create an OS object using static memory.
 
 \b Example:
-\code
+\code{.c}
 /*----------------------------------------------------------------------------
  * CMSIS-RTOS 'main' function template
  *---------------------------------------------------------------------------*/

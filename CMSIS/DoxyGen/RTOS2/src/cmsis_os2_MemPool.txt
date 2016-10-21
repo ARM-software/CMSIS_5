@@ -16,7 +16,7 @@ Working with Memory Pools
 -------------------------
 Follow these steps to create and use a memory pool:
 -# Declare a data structure that combines a number of elements:
-\code
+\code{.c}
 typedef struct {
   uint32_t length;
   uint32_t width;
@@ -25,16 +25,16 @@ typedef struct {
 } properties_t;
 \endcode
 -# Declare a memory pool of these objects as a block of memory:
-\code
+\code{.c}
 osPoolDef (object_pool, 10, properties_t);  // Declare memory pool
 osPoolId  (object_pool_id);                 // Memory pool ID
 \endcode
 -# Then, create the memory pool in a thread:
-\code
+\code{.c}
 object_pool_id = osPoolCreate(osPool(object_pool));
 \endcode
 -# Allocate the pool within a thread and fill it with data:
-\code
+\code{.c}
 properties_t *object_data;
 *object_data = (properties_t *) osPoolAlloc(object_pool_id);
  

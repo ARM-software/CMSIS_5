@@ -25,11 +25,11 @@ Working with Timers
 --------------------
 The following steps are required to use a timer:
 -# Define the timers:
-\code
+\code{.c}
 osTimerId one_shot_id, periodic_id;
 \endcode
 -# Instantiate and start the timers:
-\code
+\code{.c}
 one_shot_id = osTimerNew((os_timer_func_t)&one_shot_Callback, osTimerOnce, (void *)0);					 // creates a one-shot timer;
                                                                              // (void*)0 is passed as an argument
                                                                              // to the callback function
