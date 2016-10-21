@@ -596,10 +596,10 @@ osStatus_t os_isrMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
 
 /// Create and Initialize a Memory Pool object.
 osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, const osMemoryPoolAttr_t *attr) {
-  if (__get_IPSR() != 0U) {
-    return NULL;                                // Not allowed in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return NULL;
   }
-  if ((os_KernelGetState() == os_KernelReady) && ((__get_CONTROL() & 1U) == 0U)) {
+  if ((os_KernelGetState() == os_KernelReady) && IS_PRIVILEGED()) {
     // Kernel Ready (not running) and in Privileged mode
     return os_svcMemoryPoolNew(block_count, block_size, attr);
   } else {
@@ -609,70 +609,70 @@ osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, con
 
 /// Get name of a Memory Pool object.
 const char *osMemoryPoolGetName (osMemoryPoolId_t mp_id) {
-  if (__get_IPSR() != 0U) {
-    return NULL;                                // Not allowed in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return NULL;
   }
   return  __svcMemoryPoolGetName(mp_id);
 }
 
 /// Allocate a memory block from a Memory Pool.
 void *osMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_isrMemoryPoolAlloc(mp_id, timeout);
-  } else {                                      // in Thread
+  } else {
     return  __svcMemoryPoolAlloc(mp_id, timeout);
   }
 }
 
 /// Return an allocated memory block back to a Memory Pool.
 osStatus_t osMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_isrMemoryPoolFree(mp_id, block);
-  } else {                                      // in Thread
+  } else {
     return  __svcMemoryPoolFree(mp_id, block);
   }
 }
 
 /// Get maximum number of memory blocks in a Memory Pool.
 uint32_t osMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_svcMemoryPoolGetCapacity(mp_id);
-  } else {                                      // in Thread
+  } else {
     return  __svcMemoryPoolGetCapacity(mp_id);
   }
 }
 
 /// Get memory block size in a Memory Pool.
 uint32_t osMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_svcMemoryPoolGetBlockSize(mp_id);
-  } else {                                      // in Thread
+  } else {
     return  __svcMemoryPoolGetBlockSize(mp_id);
   }
 }
 
 /// Get number of memory blocks used in a Memory Pool.
 uint32_t osMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_svcMemoryPoolGetCount(mp_id);
-  } else {                                      // in Thread
+  } else {
     return  __svcMemoryPoolGetCount(mp_id);
   }
 }
 
 /// Get number of memory blocks available in a Memory Pool.
 uint32_t osMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_svcMemoryPoolGetSpace(mp_id);
-  } else {                                      // in Thread
+  } else {
     return  __svcMemoryPoolGetSpace(mp_id);
   }
 }
 
 /// Delete a Memory Pool object.
 osStatus_t osMemoryPoolDelete (osMemoryPoolId_t mp_id) {
-  if (__get_IPSR() != 0U) {
-    return osErrorISR;                          // Not allowed in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return osErrorISR;
   }
   return __svcMemoryPoolDelete(mp_id);
 }

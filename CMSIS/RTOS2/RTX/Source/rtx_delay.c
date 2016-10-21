@@ -64,16 +64,16 @@ osStatus_t os_svcDelayUntil (uint64_t ticks) {
 
 /// Wait for Timeout (Time Delay).
 osStatus_t osDelay (uint32_t ticks) {
-  if (__get_IPSR() != 0U) {
-    return osErrorISR;                          // Not allowed in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return osErrorISR;
   }
   return __svcDelay(ticks);
 }
 
 /// Wait until specified time.
 osStatus_t osDelayUntil (uint64_t ticks) {
-  if (__get_IPSR() != 0U) {
-    return osErrorISR;                          // Not allowed in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return osErrorISR;
   }
   return __svcDelayUntil(ticks);
 }

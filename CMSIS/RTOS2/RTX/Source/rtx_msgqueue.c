@@ -766,10 +766,10 @@ osStatus_t os_isrMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
 
 /// Create and Initialize a Message Queue object.
 osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, const osMessageQueueAttr_t *attr) {
-  if (__get_IPSR() != 0U) {
-    return NULL;                                // Not allowed in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return NULL;
   }
-  if ((os_KernelGetState() == os_KernelReady) && ((__get_CONTROL() & 1U) == 0U)) {
+  if ((os_KernelGetState() == os_KernelReady) && IS_PRIVILEGED()) {
     // Kernel Ready (not running) and in Privileged mode
     return os_svcMessageQueueNew(msg_count, msg_size, attr);
   } else {
@@ -779,78 +779,78 @@ osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, con
 
 /// Get name of a Message Queue object.
 const char *osMessageQueueGetName (osMessageQueueId_t mq_id) {
-  if (__get_IPSR() != 0U) {
-    return NULL;                                // Not allowed in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return NULL;
   }
   return  __svcMessageQueueGetName(mq_id);
 }
 
 /// Put a Message into a Queue or timeout if Queue is full.
 osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_isrMessageQueuePut(mq_id, msg_ptr, msg_prio, timeout);
-  } else {                                      // in Thread
+  } else {
     return  __svcMessageQueuePut(mq_id, msg_ptr, msg_prio, timeout);
   }
 }
 
 /// Get a Message from a Queue or timeout if Queue is empty.
 osStatus_t osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_isrMessageQueueGet(mq_id, msg_ptr, msg_prio, timeout);
-  } else {                                      // in Thread
+  } else {
     return  __svcMessageQueueGet(mq_id, msg_ptr, msg_prio, timeout);
   }
 }
 
 /// Get maximum number of messages in a Message Queue.
 uint32_t osMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_svcMessageQueueGetCapacity(mq_id);
-  } else {                                      // in Thread
+  } else {
     return  __svcMessageQueueGetCapacity(mq_id);
   }
 }
 
 /// Get maximum message size in a Memory Pool.
 uint32_t osMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_svcMessageQueueGetMsgSize(mq_id);
-  } else {                                      // in Thread
+  } else {
     return  __svcMessageQueueGetMsgSize(mq_id);
   }
 }
 
 /// Get number of queued messages in a Message Queue.
 uint32_t osMessageQueueGetCount (osMessageQueueId_t mq_id) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_svcMessageQueueGetCount(mq_id);
-  } else {                                      // in Thread
+  } else {
     return  __svcMessageQueueGetCount(mq_id);
   }
 }
 
 /// Get number of available slots for messages in a Message Queue.
 uint32_t osMessageQueueGetSpace (osMessageQueueId_t mq_id) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_svcMessageQueueGetSpace(mq_id);
-  } else {                                      // in Thread
+  } else {
     return  __svcMessageQueueGetSpace(mq_id);
   }
 }
 
 /// Reset a Message Queue to initial empty state.
 osStatus_t osMessageQueueReset (osMessageQueueId_t mq_id) {
-  if (__get_IPSR() != 0U) {
-    return osErrorISR;                          // Not allowed in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return osErrorISR;
   }
   return __svcMessageQueueReset(mq_id);
 }
 
 /// Delete a Message Queue object.
 osStatus_t osMessageQueueDelete (osMessageQueueId_t mq_id) {
-  if (__get_IPSR() != 0U) {
-    return osErrorISR;                          // Not allowed in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return osErrorISR;
   }
   return __svcMessageQueueDelete(mq_id);
 }

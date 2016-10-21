@@ -398,10 +398,10 @@ osStatus_t os_isrSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 
 /// Create and Initialize a Semaphore object.
 osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr) {
-  if (__get_IPSR() != 0U) {
-    return NULL;                                // Not allowed in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return NULL;
   }
-  if ((os_KernelGetState() == os_KernelReady) && ((__get_CONTROL() & 1U) == 0U)) {
+  if ((os_KernelGetState() == os_KernelReady) && IS_PRIVILEGED()) {
     // Kernel Ready (not running) and in Privileged mode
     return os_svcSemaphoreNew(max_count, initial_count, attr);
   } else {
@@ -411,43 +411,43 @@ osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, cons
 
 /// Get name of a Semaphore object.
 const char *osSemaphoreGetName (osSemaphoreId_t semaphore_id) {
-  if (__get_IPSR() != 0U) {
-    return NULL;                                // Not allowed in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return NULL;
   }
   return  __svcSemaphoreGetName(semaphore_id);
 }
 
 /// Acquire a Semaphore token or timeout if no tokens are available.
 osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_isrSemaphoreAcquire(semaphore_id, timeout);
-  } else {                                      // in Thread
+  } else {
     return  __svcSemaphoreAcquire(semaphore_id, timeout);
   }
 }
 
 /// Release a Semaphore token that was acquired by osSemaphoreAcquire.
 osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_isrSemaphoreRelease(semaphore_id);
-  } else {                                      // in Thread
+  } else {
     return  __svcSemaphoreRelease(semaphore_id);
   }
 }
 
 /// Get current Semaphore token count.
 uint32_t osSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
-  if (__get_IPSR() != 0U) {                     // in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return os_svcSemaphoreGetCount(semaphore_id);
-  } else {                                      // in Thread
+  } else {
     return  __svcSemaphoreGetCount(semaphore_id);
   }
 }
 
 /// Delete a Semaphore object.
 osStatus_t osSemaphoreDelete (osSemaphoreId_t semaphore_id) {
-  if (__get_IPSR() != 0U) {
-    return osErrorISR;                          // Not allowed in ISR
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return osErrorISR;
   }
   return __svcSemaphoreDelete(semaphore_id);
 }

@@ -74,6 +74,18 @@
 #endif
 
 
+#define IS_PRIVILEGED()         ((__get_CONTROL() & 1U) == 0U)
+
+#define IS_IRQ_MODE()            (__get_IPSR() != 0U)
+
+#if   ((__ARM_ARCH_7M__      == 1U) || \
+       (__ARM_ARCH_7EM__     == 1U) || \
+       (__ARM_ARCH_8M_MAIN__ == 1U))
+#define IS_IRQ_MASKED()         ((__get_PRIMASK() != 0U) || (__get_BASEPRI() != 0U))
+#else
+#define IS_IRQ_MASKED()          (__get_PRIMASK() != 0U) 
+#endif
+
 #define XPSR_INITIAL_VALUE      0x01000000U
 
 #if    (__DOMAIN_NS == 1U)
