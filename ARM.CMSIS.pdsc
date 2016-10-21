@@ -8,6 +8,14 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.0-Beta13" date="2016-10-21">
+      Interim Beta Release:
+      CMSIS-RTOS2 and RTX implementation:
+       - reworked API based on customer feedback
+      CMSIS-SVD:
+       - reworked SVD format documentation
+    </release>
+
     <release version="5.0.0-Beta12" date="2016-09-29">
       Interim Beta Release:
       CMSIS-RTOS2 and RTX implementation:
