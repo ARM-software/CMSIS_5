@@ -294,7 +294,7 @@ Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn osStatus_t osThreadJoin (osThreadId_t thread_id, void **exit_ptr)
+\fn osStatus_t osThreadJoin (osThreadId_t thread_id)
 \details
 Waits for the thread specified by \em thread_id to terminate. 
 If that thread has already terminated, then \ref osThreadJoin returns immediately.  
@@ -332,7 +332,7 @@ int join_threads(void)
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn __NO_RETURN void osThreadExit (void *exit_ptr)
+\fn __NO_RETURN void osThreadExit (void)
 \details
 
 Exit the \b RUNNING thread an exit point defined by parameter pointer \em exit_ptr.
