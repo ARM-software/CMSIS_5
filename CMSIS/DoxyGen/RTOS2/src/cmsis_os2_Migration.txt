@@ -131,7 +131,7 @@ New function.
 \enddiv
 
 \div{new}
-\func{__NO_RETURN void #osThreadExit (void * exit_ptr)}
+\func{__NO_RETURN void #osThreadExit (void)}
 \none
 \copybrief{osThreadExit}
 New function.
@@ -169,7 +169,7 @@ New function.
 \enddiv
 
 \div{new}
-\func{osStatus_t #osThreadJoin (osThreadId_t thread_id, void **exit_ptr)}
+\func{osStatus_t #osThreadJoin (osThreadId_t thread_id)}
 \none
 \copybrief{osThreadJoin}
 New function.
