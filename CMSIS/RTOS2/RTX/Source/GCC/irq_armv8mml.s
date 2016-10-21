@@ -117,7 +117,7 @@ SVC_ContextRestore:
 SVC_ContextRestore1:
         LDR      R0,[R2,#TCB_SM_OFS]    // Load stack memory base
         LDRB     R1,[R2,#TCB_SF_OFS]    // Load stack frame information
-//      MSR      PSPLIM,R0              // Set PSPLIM
+        MSR      PSPLIM,R0              // Set PSPLIM
         LDR      R0,[R2,#TCB_SP_OFS]    // Load SP
         ORR      LR,R1,#0xFFFFFF00      // Set EXC_RETURN
 
@@ -245,7 +245,7 @@ Sys_ContextRestore:
 Sys_ContextRestore1:
         LDR      R0,[R2,#TCB_SM_OFS]    // Load stack memory base
         LDRB     R1,[R2,#TCB_SF_OFS]    // Load stack frame information
-//      MSR      PSPLIM,R0              // Set PSPLIM
+        MSR      PSPLIM,R0              // Set PSPLIM
         LDR      R0,[R2,#TCB_SP_OFS]    // Load SP
         ORR      LR,R1,#0xFFFFFF00      // Set EXC_RETURN
 

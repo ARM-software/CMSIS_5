@@ -122,7 +122,7 @@ SVC_ContextRestore1:
         BX       LR                     // Exit from handler
         .else
         LDR      R0,[R2,#TCB_SM_OFS]    // Load stack memory base
-//      MSR      PSPLIM,R0              // Set PSPLIM
+        MSR      PSPLIM,R0              // Set PSPLIM
         .endif
 
 SVC_ContextRestore2:
@@ -270,7 +270,7 @@ Sys_ContextRestore1:
         BX       LR                     // Exit from handler
         .else
         LDR      R0,[R2,#TCB_SM_OFS]    // Load stack memory base
-//      MSR      PSPLIM,R0              // Set PSPLIM
+        MSR      PSPLIM,R0              // Set PSPLIM
         .endif
 
 Sys_ContextRestore2:
