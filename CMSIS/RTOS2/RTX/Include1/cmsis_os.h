@@ -66,6 +66,7 @@
  *     - added: osThreadGetStackSize, osThreadGetStackSpace
  *     - added: osThreadSuspend, osThreadResume
  *     - added: osThreadJoin, osThreadDetach, osThreadExit
+ *     - added: osThreadGetCount, osThreadEnumerate
  *     - added: Thread Flags (moved from Signals) 
  *    Signals:
  *     - renamed osSignals to osThreadFlags (moved to Thread Flags)

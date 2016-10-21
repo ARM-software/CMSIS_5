@@ -518,6 +518,8 @@ SVC0_1 (ThreadDetach,        osStatus_t,      osThreadId_t)
 SVC0_1 (ThreadJoin,          osStatus_t,      osThreadId_t)
 SVC0_0N(ThreadExit,          void)
 SVC0_1 (ThreadTerminate,     osStatus_t,      osThreadId_t)
+SVC0_0 (ThreadGetCount,      uint32_t)
+SVC0_2 (ThreadEnumerate,     uint32_t,        osThreadId_t *, uint32_t)
 SVC0_2 (ThreadFlagsSet,      int32_t,         osThreadId_t, int32_t)
 SVC0_1 (ThreadFlagsClear,    int32_t,         int32_t)
 SVC0_0 (ThreadFlagsGet,      int32_t)
@@ -1141,6 +1143,66 @@ osStatus_t os_svcThreadTerminate (osThreadId_t thread_id) {
   return osOK;
 }
 
+/// Get number of active threads.
+/// \note API identical to osThreadGetCount
+uint32_t os_svcThreadGetCount (void) {
+  os_thread_t *thread;
+  uint32_t     count;
+
+  // Running Thread
+  count = 1U;
+
+  // Ready List
+  for (thread = os_Info.thread.ready.thread_list;
+       (thread != NULL); thread = thread->thread_next, count++);
+
+  // Delay List
+  for (thread = os_Info.thread.delay_list;
+       (thread != NULL); thread = thread->delay_next,  count++);
+
+  // Wait List
+  for (thread = os_Info.thread.wait_list;
+       (thread != NULL); thread = thread->delay_next,  count++);
+
+  return count;
+}
+
+/// Enumerate active threads.
+/// \note API identical to osThreadEnumerate
+uint32_t os_svcThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items) {
+  os_thread_t *thread;
+  uint32_t     count;
+
+  // Check parameters
+  if ((thread_array == NULL) || (array_items == 0U)) {
+    return 0U;
+  }
+
+  // Running Thread
+  *thread_array++ = os_ThreadGetRunning();
+  count = 1U;
+
+  // Ready List
+  for (thread = os_Info.thread.ready.thread_list;
+       (thread != NULL) && (count < array_items); thread = thread->thread_next, count++) {
+    *thread_array++ = thread;
+  }
+
+  // Delay List
+  for (thread = os_Info.thread.delay_list;
+       (thread != NULL) && (count < array_items); thread = thread->delay_next,  count++) {
+    *thread_array++ = thread;
+  }
+
+  // Wait List
+  for (thread = os_Info.thread.wait_list;
+       (thread != NULL) && (count < array_items); thread = thread->delay_next,  count++) {
+    *thread_array++ = thread;
+  }
+
+  return count;
+}
+
 /// Set the specified Thread Flags of a thread.
 /// \note API identical to osThreadFlagsSet
 int32_t os_svcThreadFlagsSet (osThreadId_t thread_id, int32_t flags) {
@@ -1419,6 +1481,22 @@ osStatus_t osThreadTerminate (osThreadId_t thread_id) {
     return osErrorISR;                          // Not allowed in ISR
   }
   return __svcThreadTerminate(thread_id);
+}
+
+/// Get number of active threads.
+uint32_t osThreadGetCount (void) {
+  if (__get_IPSR() != 0U) {
+    return 0U;                                  // Not allowed in ISR
+  }
+  return __svcThreadGetCount();
+}
+
+/// Enumerate active threads.
+uint32_t osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items) {
+  if (__get_IPSR() != 0U) {
+    return 0U;                                  // Not allowed in ISR
+  }
+  return __svcThreadEnumerate(thread_array, array_items);
 }
 
 /// Set the specified Thread Flags of a thread.

@@ -126,6 +126,8 @@ extern osStatus_t       os_svcThreadDetach       (osThreadId_t thread_id);
 extern osStatus_t       os_svcThreadJoin         (osThreadId_t thread_id);
 extern void             os_svcThreadExit         (void);
 extern osStatus_t       os_svcThreadTerminate    (osThreadId_t thread_id);
+extern uint32_t         os_svcThreadGetCount     (void);
+extern uint32_t         os_svcThreadEnumerate    (osThreadId_t *thread_array, uint32_t array_items);
 extern int32_t          os_svcThreadFlagsSet     (osThreadId_t thread_id, int32_t flags);
 extern int32_t          os_svcThreadFlagsClear   (int32_t flags);
 extern int32_t          os_svcThreadFlagsGet     (void);

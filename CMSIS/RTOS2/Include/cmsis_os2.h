@@ -412,9 +412,9 @@ uint32_t osThreadGetCount (void);
  
 /// Enumerate active threads.
 /// \param[out]    thread_array  pointer to array for retrieving thread IDs.
-/// \param[in]     array_size    size of array for retrieving thread IDs.
+/// \param[in]     array_items   maximum number of items in array for retrieving thread IDs.
 /// \return number of enumerated threads.
-uint32_t osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_size);
+uint32_t osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items);
  
  
 //  ==== Thread Flags Functions ====
