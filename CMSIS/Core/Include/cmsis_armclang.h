@@ -2,7 +2,7 @@
  * @file     cmsis_armclang.h
  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
  * @version  V5.00
- * @date     18. October 2016
+ * @date     24. October 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -24,6 +24,10 @@
 
 #ifndef __CMSIS_ARMCLANG_H
 #define __CMSIS_ARMCLANG_H
+
+#ifndef __ARM_COMPAT_H
+#include <arm_compat.h>    /* Compatibility header for ARM Compiler 5 intrinsics */
+#endif
 
 /* CMSIS compiler specific defines */
 #ifndef   __ASM
@@ -70,10 +74,7 @@
   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
            Can only be executed in Privileged modes.
  */
-__attribute__((always_inline)) __STATIC_INLINE void __enable_irq(void)
-{
-  __ASM volatile ("cpsie i" : : : "memory");
-}
+/* intrinsic void __enable_irq();  see arm_compat.h */
 
 
 /**
@@ -81,10 +82,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __enable_irq(void)
   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
            Can only be executed in Privileged modes.
  */
-__attribute__((always_inline)) __STATIC_INLINE void __disable_irq(void)
-{
-  __ASM volatile ("cpsid i" : : : "memory");
-}
+/* intrinsic void __disable_irq();  see arm_compat.h */
 
 
 /**
@@ -353,10 +351,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PRIMASK_NS(uint32_t
   \details Enables FIQ interrupts by clearing the F-bit in the CPSR.
            Can only be executed in Privileged modes.
  */
-__attribute__((always_inline)) __STATIC_INLINE void __enable_fault_irq(void)
-{
-  __ASM volatile ("cpsie f" : : : "memory");
-}
+#define __enable_fault_irq                __enable_fiq   /* see arm_compat.h */
 
 
 /**
@@ -364,10 +359,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __enable_fault_irq(void)
   \details Disables FIQ interrupts by setting the F-bit in the CPSR.
            Can only be executed in Privileged modes.
  */
-__attribute__((always_inline)) __STATIC_INLINE void __disable_fault_irq(void)
-{
-  __ASM volatile ("cpsid f" : : : "memory");
-}
+#define __disable_fault_irq               __disable_fiq   /* see arm_compat.h */
 
 
 /**
