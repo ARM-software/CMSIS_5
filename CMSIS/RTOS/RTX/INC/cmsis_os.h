@@ -56,9 +56,9 @@
 
 #define osCMSIS           0x10002U     ///< CMSIS-RTOS API version (main [31:16] .sub [15:0])
 
-#define osCMSIS_RTX     ((4<<16)|81)   ///< RTOS identification and version (main [31:16] .sub [15:0])
+#define osCMSIS_RTX     ((4<<16)|82)   ///< RTOS identification and version (main [31:16] .sub [15:0])
 
-#define osKernelSystemId "RTX V4.81"   ///< RTOS identification string
+#define osKernelSystemId "RTX V4.82"   ///< RTOS identification string
 
 
 #define osFeature_MainThread   1       ///< main can be thread

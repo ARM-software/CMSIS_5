@@ -124,6 +124,12 @@ The following files relevant to CMSIS-RTOS are present in the <b>ARM::CMSIS</b> 
       <th>Description</th>
     </tr>
     <tr>
+      <td>V4.82</td>
+      <td>
+       Corrected: Recursive Mutex 16-bit lock counter is now checked to not overflow.\n
+      </td>
+    </tr>
+    <tr>
       <td>V4.81</td>
       <td>
        Added provisions for ARM Compiler 6.\n

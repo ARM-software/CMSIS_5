@@ -3,10 +3,10 @@
  *----------------------------------------------------------------------------
  *      Name:    rt_CMSIS.c
  *      Purpose: CMSIS RTOS API
- *      Rev.:    V4.80
+ *      Rev.:    V4.82
  *----------------------------------------------------------------------------
  *
- * Copyright (c) 1999-2009 KEIL, 2009-2015 ARM Germany GmbH
+ * Copyright (c) 1999-2009 KEIL, 2009-2016 ARM Germany GmbH
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -1425,6 +1425,9 @@ osStatus svcMutexWait (osMutexId mutex_id, uint32_t millisec) {
 
   if (res == OS_R_TMO) {
     return ((millisec != 0U) ? osErrorTimeoutResource : osErrorResource);
+  }
+  if (res == OS_R_NOK) {
+    return osErrorResource;
   }
 
   return osOK;

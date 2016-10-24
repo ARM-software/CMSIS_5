@@ -3,10 +3,10 @@
  *----------------------------------------------------------------------------
  *      Name:    RT_SYSTEM.C
  *      Purpose: System Task Manager
- *      Rev.:    V4.81
+ *      Rev.:    V4.82
  *----------------------------------------------------------------------------
  *
- * Copyright (c) 1999-2009 KEIL, 2009-2015 ARM Germany GmbH
+ * Copyright (c) 1999-2009 KEIL, 2009-2016 ARM Germany GmbH
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -63,7 +63,7 @@ static          U8  pend_flags;
  *      Global Functions
  *---------------------------------------------------------------------------*/
 
-#define RL_RTX_VER      0x481
+#define RL_RTX_VER      0x482
 
 #if defined (__CC_ARM)
 __asm void $$RTX$$version (void) {
