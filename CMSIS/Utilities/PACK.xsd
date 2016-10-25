@@ -17,16 +17,22 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        12. July 2016
-  $Revision:    1.4.6
+  $Date:        25. November 2016
+  $Revision:    1.4.7
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
   SchemaVersion=1.4
 
+  25. November 2016: 1.4.7
+  - added multiple version types to tighten the schema checking depending on context
+  - added new generator sections for exe, web and eclipse based generators
+  - added new processor attributes Dtz = Trustzone and Ddsp = DSP instructions for ARMv8-M
+  - added new processors Cortex-M23 and Cortex-M33
+  
   12. July 2016: 1.4.6
-  - refined Dname string restriction
+  - refined Dname string pattern restriction
   
   13. June 2016: 1.4.5
   - added: Punits to ProcessorType
@@ -65,7 +71,8 @@
   
   29. May 2015
   - added missing Pname attribute to GeneratorDeviceSelectType used for multi processor
-    devices  
+    devices
+  
   12. Jan. 2014
   - allow to link a component with a generator via new component attribute
   - generator command extended to deal with more sophisticated command lines / document sequence
@@ -212,6 +219,10 @@
     <xs:attribute name="Dfpu"         type="DfpuEnum"/>
     <!-- Dmpu specifies the memory protection unit -->
     <xs:attribute name="Dmpu"         type="DmpuEnum"/>
+    <!-- Dtz specifies the processor TrustZone support -->
+    <xs:attribute name="Dtz"          type="DtzEnum"/>
+    <!-- Tdsp specifies the processor support for DSP instructions -->
+    <xs:attribute name="Ddsp"         type="DdspEnum"/>
     <!-- Dendian specifies the endianess supported by the processor -->
     <xs:attribute name="Dendian"      type="DendianEnum"/>
     <!-- Dclock specifies the maximum core clock frequency -->
@@ -237,7 +248,7 @@
     <xs:simpleContent>
       <xs:extension base="xs:string">
         <xs:attribute name="configfile" type="xs:string"   use="optional"/>
-        <xs:attribute name="version"    type="VersionType" use="optional"/>
+        <xs:attribute name="version"    type="ComponentVersionType" use="optional"/>
         <xs:attribute name="Pname"      type="xs:string"   use="optional"/>
         <xs:anyAttribute processContents="lax"/>
       </xs:extension>
@@ -567,7 +578,9 @@
       <xs:enumeration value="Cortex-M0"/>
       <xs:enumeration value="Cortex-M0+"/>
       <xs:enumeration value="Cortex-M1"/>
+      <xs:enumeration value="Cortex-M23"/>
       <xs:enumeration value="Cortex-M3"/>
+      <xs:enumeration value="Cortex-M33"/>
       <xs:enumeration value="Cortex-M4"/>
       <xs:enumeration value="Cortex-M7"/>
       <xs:enumeration value="Cortex-R4"/>
@@ -586,7 +599,6 @@
       <xs:enumeration value="other"/>
     </xs:restriction>
   </xs:simpleType>
-
 
   <!-- DeviceFeatureTypeEnum -->
   <xs:simpleType name="DeviceFeatureTypeEnum">
@@ -785,6 +797,28 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <!-- Dtz TrustZone enumeration type -->
+  <xs:simpleType name="DtzEnum">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="TZ"/>
+      <xs:enumeration value="NO_TZ"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Ddsp DSP extensions enumeration type -->
+  <xs:simpleType name="DdspEnum">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="DSP"/>
+      <xs:enumeration value="NO_DSP"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <!-- file category type -->
   <xs:simpleType name="FileCategoryType">
     <xs:restriction base="xs:token">
@@ -897,7 +931,7 @@
     <xs:attribute name="Cclass"    type="CclassType" use="required"/>
     <xs:attribute name="Cgroup"    type="CgroupType" use="required"/>
     <xs:attribute name="exclusive" type="xs:boolean" use="optional" default="1"/>
-    <xs:attribute name="Capiversion" type="VersionType" use="optional"/>
+    <xs:attribute name="Capiversion" type="ComponentVersionType" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="ApisType">
@@ -931,8 +965,8 @@
     <xs:attribute name="Cgroup"      type="CgroupType"            use="required"/>
     <xs:attribute name="Csub"        type="CsubType"              use="optional"/>
     <xs:attribute name="Cvariant"    type="CvariantType"          use="optional"/>
-    <xs:attribute name="Cversion"    type="ConditionVersionType"  use="optional"/>
-    <xs:attribute name="Capiversion" type="ConditionVersionType"  use="optional"/>
+    <xs:attribute name="Cversion"    type="ComponentVersionType"  use="optional"/>
+    <xs:attribute name="Capiversion" type="ComponentVersionType"  use="optional"/>
     <xs:attribute name="instances"   type="InstancesType"         use="optional" default="1"/>
   </xs:complexType>
 
@@ -1091,7 +1125,7 @@
     <!-- copy file to project folder:  deprecated, use attr="config" instead  -->
     <xs:attribute name="copy" type ="xs:string" use="optional"/>
     <!-- simple file version: to be used by RTE copy file action to see whether the file needs updating in project -->
-    <xs:attribute name="version" type ="VersionType" use="optional"/>
+    <xs:attribute name="version" type ="ComponentVersionType" use="optional"/>
     <!-- path(s) to find source files for a library, paths are delimited with semicolon (;) -->
     <xs:attribute name="src" type="xs:string" use ="optional"/>
   </xs:complexType>
@@ -1104,19 +1138,32 @@
       <xs:pattern value="[\-_A-Za-z0-9]+"/>
     </xs:restriction>
   </xs:simpleType>
-  
+
   <xs:simpleType name="RestrictedStringDname">
     <xs:restriction base="xs:string">
       <xs:pattern value="[\-_A-Za-z0-9/]+"/>
     </xs:restriction>
   </xs:simpleType>
-  
+
+  <xs:simpleType name="SchemaVersionType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]+\.[0-9]+((\.[0-9]+)|())"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ComponentVersionType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]+\.[0-9]+((\.[0-9]+)|())((\-[0-9A-Za-z_\-\.]+)|([_A-Za-z][0-9A-Za-z_\-\.]*)|())((\+[\-\._A-Za-z0-9]+)|())"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <!-- version can contain one or more of alphanumeric characters and symbols '_' '-' '.' 
        Important: version pattern shall remain the same while versions change
   -->
-  <xs:simpleType name="VersionType">
+  <xs:simpleType name="PackVersionType">
     <xs:restriction base="xs:string">
-      <xs:pattern value="[\.\-_A-Za-z0-9]+"/>
+      <!-- major . minor . patch [[-]quality] [+build] -->
+      <xs:pattern value="[0-9]+.[0-9]+.[0-9]+((\-[0-9A-Za-z_\-\.]+)|([_A-Za-z][0-9A-Za-z_\-\.]*)|())((\+[\-\._A-Za-z0-9]+)|())"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -1125,7 +1172,8 @@
   -->
   <xs:simpleType name="ConditionVersionType">
     <xs:restriction base="xs:string">
-      <xs:pattern value="[\.:\-_A-Za-z0-9]+"/>
+     <!-- <xs:pattern value="[\.:\-_A-Za-z0-9]+"/> -->
+      <xs:pattern value="[0-9]+.[0-9]+.[0-9]*((:[0-9]+.[0-9]+.[0-9]+)|())"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -1333,18 +1381,18 @@
                 <!-- path + filename + extension -->
                 <xs:attribute name="name" type ="xs:string" use="required" />
                 <!-- configuration file version: to be used by RTE to see whether the file requires updating or not -->
-                <xs:attribute name="version" type ="VersionType" use="required"/>
+                <xs:attribute name="version" type ="ComponentVersionType" use="required"/>
               </xs:complexType>
             </xs:element>
           </xs:sequence>
-          <xs:attribute name="Cvendor"     type="xs:string"             use="required"/>
-          <xs:attribute name="Cbundle"     type="xs:string"             use="required"/>
+          <xs:attribute name="Cvendor"     type="xs:string"             use="optional"/>
+          <xs:attribute name="Cbundle"     type="xs:string"             use="optional"/>
           <xs:attribute name="Cclass"      type="CclassType"            use="required"/>
           <xs:attribute name="Cgroup"      type="CgroupType"            use="required"/>
-          <xs:attribute name="Csub"        type="CsubType"              use="required"/>
-          <xs:attribute name="Cvariant"    type="CvariantType"          use="required"/>
-          <xs:attribute name="Cversion"    type="ConditionVersionType"  use="required"/>
-          <xs:attribute name="Capiversion" type="ConditionVersionType"  use="optional"/> <!-- only used when component implements an API -->
+          <xs:attribute name="Csub"        type="CsubType"              use="optional"/>
+          <xs:attribute name="Cvariant"    type="CvariantType"          use="optional"/>
+          <xs:attribute name="Cversion"    type="ComponentVersionType"  use="optional"/>
+          <xs:attribute name="Capiversion" type="ComponentVersionType"  use="optional"/> <!-- only used when component implements an API -->
           <xs:attribute name="instances"   type="InstancesType"         use="optional" default="1"/>
         </xs:complexType>
       </xs:element> 
@@ -1379,7 +1427,7 @@
   <xs:complexType name="ReleaseType">
     <xs:simpleContent>
       <xs:extension base='xs:string'>
-        <xs:attribute name="version"     type="VersionType" use="required"/>
+        <xs:attribute name="version"     type="PackVersionType" use="required"/>
         <xs:attribute name="date"        type="xs:date"     use="optional"/>
         <xs:attribute name="deprecated"  type="xs:date"     use="optional"/>
         <xs:attribute name="replacement" type="xs:string"   use="optional"/>
@@ -1403,7 +1451,7 @@
     <!-- path + filename + extension -->
     <xs:attribute name="name" type ="xs:string" use="required" />
     <!-- file version -->
-    <xs:attribute name="version" type ="VersionType" use="optional"/>
+    <xs:attribute name="version" type ="ComponentVersionType" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="GeneratorDeviceSelectType">
@@ -1413,17 +1461,68 @@
     <xs:attribute name="Pname"       type="RestrictedString"        use="optional"/>
   </xs:complexType>
 
-  <xs:complexType name="GeneratorCommandArgumentType">
+  <xs:simpleType name="HostEnumType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="all"/>
+      <xs:enumeration value="win"/>
+      <xs:enumeration value="linux"/>
+      <xs:enumeration value="mac"/>
+      <xs:enumeration value="other"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="WebGeneratorURLType">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="http[s]{0,1}://[!-~]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- exe generator argument has optional host and switch attributes -->
+  <xs:complexType name="ExeGeneratorArgumentType">
     <xs:simpleContent>
       <xs:extension base='xs:string'>
         <xs:attribute name="switch" type="xs:string" use="optional"/>
+        <xs:attribute name="host" type="HostEnumType" use="optional" default="all"/>
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
 
+  <!-- web generator argument does not have host attribute -->
+  <xs:complexType name="WebGeneratorArgumentType">
+    <xs:simpleContent>
+      <xs:extension base='xs:string'>
+        <!-- web generator argument must have switch argument -->
+        <xs:attribute name="switch" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- eclipse generator argument does not have host nor switch attribute -->
+  <xs:complexType name="EclipseGeneratorArgumentType">
+    <xs:simpleContent>
+      <xs:extension base='xs:string'>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="GeneratorCommandType">
+    <xs:simpleContent>
+      <xs:extension base='xs:string'>
+        <xs:attribute name="host" type="HostEnumType" use="optional" default="all"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
   <xs:complexType name="GeneratorCommandArgumentsType">
     <xs:sequence>
-      <xs:element name="argument" type="GeneratorCommandArgumentType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="argument" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base='xs:string'>
+              <xs:attribute name="switch" type="xs:string" use="optional"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 
@@ -1431,14 +1530,44 @@
     <xs:attribute name="name" type="xs:string" use="required"/>
   </xs:complexType>
 
+  <xs:complexType name="ExeGeneratorType">
+    <xs:sequence>
+      <xs:element name="command" type="GeneratorCommandType" minOccurs="1" maxOccurs="4"/>
+      <xs:element name="argument" type="ExeGeneratorArgumentType" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="host" type="HostEnumType" use="optional" default="all"/>
+  </xs:complexType>
+
+  <xs:complexType name="WebGeneratorType">
+    <xs:sequence>
+      <xs:element name="argument" type="WebGeneratorArgumentType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="url" type="WebGeneratorURLType" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="EclipseGeneratorType">
+    <xs:sequence>
+      <xs:element name="argument" type="EclipseGeneratorArgumentType" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="plugin" type="xs:string" use="required"/>
+    <xs:attribute name="class"  type="xs:string" use="required"/>
+    <xs:attribute name="method" type="xs:string" use="required"/>
+  </xs:complexType>
+
+
   <!-- Generator Type -->
   <xs:complexType name="GeneratorType">
-    <xs:all>
+    <xs:choice maxOccurs="unbounded">
+      <!-- deprecated - use exe, web and/or eclipse -->
+      <xs:element name="command" type="xs:string" minOccurs="0"/>
+      <!-- deprecated - use argument tags under exe, web and or eclipse-->
+      <xs:element name="arguments" type="GeneratorCommandArgumentsType" minOccurs="0"/>
       <xs:element name="description" type="xs:string"/>
       <xs:element name="select" type="GeneratorDeviceSelectType" minOccurs="0"/>
-      <xs:element name="command" type="xs:string"/>
       <xs:element name="workingDir" type="xs:string" minOccurs="0"/>
-      <xs:element name="arguments" type="GeneratorCommandArgumentsType" minOccurs="0"/>
+      <xs:element name="exe" type="ExeGeneratorType" minOccurs="0" maxOccurs="5"/>
+      <xs:element name="web" type="WebGeneratorType" minOccurs="0"/>
+      <xs:element name="eclipse" type="EclipseGeneratorType" minOccurs="0"/>
       <xs:element name="gpdsc" type="GpdscFileType" minOccurs="0"/>
       <!-- list of project files / content -->
       <xs:element name="project_files" minOccurs="0">
@@ -1466,7 +1595,7 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-    </xs:all>
+    </xs:choice>
     <xs:attribute name="id"       type="xs:string" use ="required"/>
     <xs:attribute name="Gvendor"  type="xs:string" use ="optional"/>
     <xs:attribute name="Gtool"    type="xs:string" use ="optional"/>
@@ -1574,17 +1703,18 @@
                           <xs:element name="files">
                             <xs:complexType>
                               <xs:sequence>
-                                <xs:element name="file" type="FileType" maxOccurs="unbounded"/>
+                                <xs:element name="file" type="FileType"  minOccurs="0" maxOccurs="unbounded"/>
                               </xs:sequence>
                             </xs:complexType>
                           </xs:element>
                         </xs:sequence>
                         <!-- component identity attributes Cclass Cvendor and Cversion are specified by bundle -->
-                        <xs:attribute name="Cgroup"   type="CgroupType"   use="required"/>
-                        <xs:attribute name="Csub"     type="CsubType"     use="optional"/>
-                        <xs:attribute name="Cvariant" type="CvariantType" use="optional"/>
+                        <xs:attribute name="Cgroup"   type="CgroupType"           use="required"/>
+                        <xs:attribute name="Csub"     type="CsubType"             use="optional"/>
+                        <xs:attribute name="Cvariant" type="CvariantType"         use="optional"/>
+                        <xs:attribute name="Cversion" type="ComponentVersionType" use="optional"/>
                         <!-- api version for this component -->
-                        <xs:attribute name="Capiversion"  type="VersionType" use="optional"/>
+                        <xs:attribute name="Capiversion"  type="ComponentVersionType" use="optional"/>
                         <!-- component attribute for referencing a condition specified in conditions section above -->
                         <xs:attribute name="condition" type="xs:string" use="optional"/>
                         <!-- maximum allowed number of instances of a component in a project, default - 1-->
@@ -1600,7 +1730,7 @@
                   <xs:attribute name="Cbundle"  type="xs:string"   use="required"/>
                   <xs:attribute name="Cvendor"  type="xs:string"   use="optional"/>
                   <xs:attribute name="Cclass"   type="CclassType"  use="required"/>
-                  <xs:attribute name="Cversion" type="VersionType" use="required"/>
+                  <xs:attribute name="Cversion" type="ComponentVersionType" use="required"/>
                   <!-- association of component with a generator. If the component is selected the generator information becomes active -->
                   <xs:attribute name="generator" type="xs:string" use="optional"/>
                   <!-- identifies this bundle variant to be the preferred variant [Version 1.4.0] -->
@@ -1626,14 +1756,14 @@
                     </xs:element>
                   </xs:sequence>
                   <!-- component identity attributes -->
-                  <xs:attribute name="Cvendor"  type="xs:string"    use="optional"/>
-                  <xs:attribute name="Cclass"   type="CclassType"   use="required"/>
-                  <xs:attribute name="Cgroup"   type="CgroupType"   use="required"/>
-                  <xs:attribute name="Csub"     type="CsubType"     use="optional"/>
-                  <xs:attribute name="Cvariant" type="CvariantType" use="optional"/>
-                  <xs:attribute name="Cversion" type="VersionType"  use="required"/>
+                  <xs:attribute name="Cvendor"  type="xs:string"            use="optional"/>
+                  <xs:attribute name="Cclass"   type="CclassType"           use="required"/>
+                  <xs:attribute name="Cgroup"   type="CgroupType"           use="required"/>
+                  <xs:attribute name="Csub"     type="CsubType"             use="optional"/>
+                  <xs:attribute name="Cvariant" type="CvariantType"         use="optional"/>
+                  <xs:attribute name="Cversion" type="ComponentVersionType" use="required"/>
                   <!-- api version for this component -->
-                  <xs:attribute name="Capiversion"  type="VersionType" use="optional"/>
+                  <xs:attribute name="Capiversion"  type="ComponentVersionType" use="optional"/>
                   <!-- component attribute for referencing a condition specified in conditions section above -->
                   <xs:attribute name="condition" type="xs:string" use="optional"/>
                   <!-- maximum allowed number of instances of a component in a project, default - 1-->
@@ -1649,7 +1779,7 @@
           </xs:complexType>
         </xs:element>
       </xs:all>
-      <xs:attribute name="schemaVersion" type="VersionType" use="required"/>
+      <xs:attribute name="schemaVersion" type="SchemaVersionType" use="required"/>
     </xs:complexType>
   </xs:element>
 </xs:schema>
