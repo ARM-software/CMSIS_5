@@ -48,6 +48,7 @@ XCOPY /Q /S /Y ..\..\Device\*.* %RELEASE_PATH%\Device\*.*
 :: Copy CMSIS folder 
 :: -- Core files 
 XCOPY /Q /S /Y ..\..\CMSIS\Core\Include\*.* %RELEASE_PATH%\CMSIS\Include\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Core\Template\ARMv8-M\*.* %RELEASE_PATH%\CMSIS\Core\Template\ARMv8-M\*.*
 
 :: -- DAP files 
 XCOPY /Q /S /Y ..\..\CMSIS\DAP\*.* %RELEASE_PATH%\CMSIS\DAP\*.*
