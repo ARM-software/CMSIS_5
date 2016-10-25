@@ -88,7 +88,6 @@ The following files relevant to CMSIS-SVD are present in the <b>ARM::CMSIS</b> P
 <hr>
 */
 
-
 /* ************************************************************************************************ */
 /**
 \page svd_revisionHistory Revision History

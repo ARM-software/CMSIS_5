@@ -5,7 +5,8 @@
 The section outlines the main conventions for writing the SVD description file.
 
     \section Names
-    All <b>name</b> tags must comply with the ANSI C identifier naming restrictions. In particular, they
+    All <b>name</b> tags must comp
+ly with the ANSI C identifier naming restrictions. In particular, they
     must not contain any spaces or special characters. This is necessary to support the generation of device header files
     thus providing consistency between the names being shown by the debugger and the symbols being used in the CMSIS
     compliant target software.
