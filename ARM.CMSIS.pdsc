@@ -534,15 +534,12 @@ The ARMv8MML processor is brand new.
     <condition id="ARMCC">
       <require Tcompiler="ARMCC"/>
     </condition>
-
     <condition id="GCC">
       <require Tcompiler="GCC"/>
     </condition>
-
     <condition id="IAR">
       <require Tcompiler="IAR"/>
     </condition>
-
     <condition id="ARMCC GCC">
       <accept Tcompiler="ARMCC"/>
       <accept Tcompiler="GCC"/>
@@ -578,26 +575,18 @@ The ARMv8MML processor is brand new.
       <accept Dcore="ARMV8MML"/>
     </condition>
 
-    <condition id="Cortex-M Device CMSIS Core">
-      <description>ARM Cortex-M device that depends on CMSIS Core component</description>
-      <require condition="Cortex-M Device"/>
+    <condition id="CMSIS Core">
+      <description>CMSIS CORE processor and device specific Startup files</description>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
 
-    <condition id="CMSIS Core">
-      <description>CMSIS CORE processor and device specific Startup files</description>
-        <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-
+    <!-- Device Startup -->
     <condition id="ARMCM0 CMSIS">
-      <!-- conditions selecting Devices -->
       <description>Generic ARM Cortex-M0 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMCM0"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-
     <condition id="ARMCM0 CMSIS GCC">
-      <!-- conditions selecting Devices -->
       <description>Generic ARM Cortex-M0 device startup and depends on CMSIS Core requiring GCC</description>
       <require condition="ARMCM0 CMSIS"/>
       <require condition="GCC"/>
@@ -608,7 +597,6 @@ The ARMv8MML processor is brand new.
       <require Dvendor="ARM:82" Dname="ARMCM0P"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-
     <condition id="ARMCM0+ CMSIS GCC">
       <description>Generic ARM Cortex-M0+ device startup and depends CMSIS Core requiring GCC</description>
       <require condition="ARMCM0+ CMSIS"/>
@@ -620,7 +608,6 @@ The ARMv8MML processor is brand new.
       <require Dvendor="ARM:82" Dname="ARMCM3"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-
     <condition id="ARMCM3 CMSIS GCC">
       <description>Generic ARM Cortex-M3 device startup and depends on CMSIS Core requiring GCC</description>
       <require condition="ARMCM3 CMSIS"/>
@@ -632,7 +619,6 @@ The ARMv8MML processor is brand new.
       <require Dvendor="ARM:82" Dname="ARMCM4*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-
     <condition id="ARMCM4 CMSIS GCC">
       <description>Generic ARM Cortex-M4 device startup and depends on CMSIS Core requiring GCC</description>
       <require condition="ARMCM4 CMSIS"/>
@@ -644,7 +630,6 @@ The ARMv8MML processor is brand new.
       <require Dvendor="ARM:82" Dname="ARMCM7*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-
     <condition id="ARMCM7 CMSIS GCC">
       <description>Generic ARM Cortex-M7 device startup and depends on CMSIS Core requiring GCC</description>
       <require condition="ARMCM7 CMSIS"/>
@@ -656,7 +641,6 @@ The ARMv8MML processor is brand new.
       <require Dvendor="ARM:82" Dname="ARMSC000"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-
     <condition id="ARMSC000 CMSIS GCC">
       <description>Generic ARM SC000 device startup and depends on CMSIS Core requiring GCC</description>
       <require condition="ARMSC000 CMSIS"/>
@@ -668,7 +652,6 @@ The ARMv8MML processor is brand new.
       <require Dvendor="ARM:82" Dname="ARMSC300"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-
     <condition id="ARMSC300 CMSIS GCC">
       <description>Generic ARM SC300 device startup and dependson CMSIS Core requiring GCC</description>
       <require condition="ARMSC300 CMSIS"/>
@@ -680,7 +663,6 @@ The ARMv8MML processor is brand new.
       <require Dvendor="ARM:82" Dname="ARMv8MBL"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-
     <condition id="ARMv8MBL CMSIS GCC">
       <description>Generic ARM ARMv8MBL device startup and depends on CMSIS Core requiring GCC</description>
       <require condition="ARMv8MBL CMSIS"/>
@@ -692,78 +674,126 @@ The ARMv8MML processor is brand new.
       <require Dvendor="ARM:82" Dname="ARMv8MML*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-
     <condition id="ARMv8MML CMSIS GCC">
       <description>Generic ARM ARMv8MML device startup and depends on CMSIS Core requiring GCC</description>
       <require condition="ARMv8MML CMSIS"/>
       <require condition="GCC"/>
     </condition>
 
-    <condition id="CMSIS DSP">
-      <description>CMSIS DSP Library is for ARM Cortex-M Devices only and is prebuild for one of the compilers ARMCC, GCC or IAR</description>
-      <require condition="Cortex-M Device CMSIS Core"/>
-      <accept Tcompiler="GCC"/>
-      <accept Tcompiler="ARMCC"/>
-      <accept Tcompiler="IAR"/>
+    <!-- ARM core -->
+    <condition id="CM0">
+      <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device</description>
+      <accept Dcore="Cortex-M0"/>
+      <accept Dcore="Cortex-M0+"/>
+      <accept Dcore="SC000"/>
+    </condition>
+    <condition id="CM3">
+      <description>Cortex-M3 or SC300 processor based device</description>
+      <accept Dcore="Cortex-M3"/>
+      <accept Dcore="SC300"/>
+    </condition>
+    <condition id="CM4">
+      <description>Cortex-M4 processor based device</description>
+      <require Dcore="Cortex-M4" Dfpu="NO_FPU"/>
+    </condition>
+    <condition id="CM4_FP">
+      <description>Cortex-M4 processor based device using Floating Point Unit</description>
+      <require Dcore="Cortex-M4" Dfpu="FPU"/>
+    </condition>
+    <condition id="CM7">
+      <description>Cortex-M7 processor based device</description>
+      <require Dcore="Cortex-M7" Dfpu="NO_FPU"/>
+    </condition>
+    <condition id="CM7_FP">
+      <description>Cortex-M7 processor based device using Floating Point Unit</description>
+      <accept Dcore="Cortex-M7" Dfpu="SP_FPU"/>
+      <accept Dcore="Cortex-M7" Dfpu="DP_FPU"/>
+    </condition>
+    <condition id="CM7_SP">
+      <description>Cortex-M7 processor based device using Floating Point Unit (SP)</description>
+      <require Dcore="Cortex-M7" Dfpu="SP_FPU"/>
+    </condition>
+    <condition id="CM7_DP">
+      <description>Cortex-M7 processor based device using Floating Point Unit (DP)</description>
+      <require Dcore="Cortex-M7" Dfpu="DP_FPU"/>
+    </condition>
+    <condition id="ARMv8MBL">
+      <description>ARMv8-M Baseline processor based device</description>
+      <require Dcore="ARMV8MBL"/>
+    </condition>
+    <condition id="ARMv8MML">
+      <description>ARMv8-M Mainline processor based device</description>
+      <require Dcore="ARMV8MML" Dfpu="0"/>
+    </condition>
+    <condition id="ARMv8MML_FP">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit</description>
+      <accept Dcore="ARMV8MML" Dfpu="SP_FPU"/>
+      <accept Dcore="ARMV8MML" Dfpu="DP_FPU"/>
     </condition>
 
     <!-- ARMCC compiler -->
+    <condition id="CM0_ARMCC">
+      <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device for the ARM Compiler</description>
+      <require condition="CM0"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
     <condition id="CM0_LE_ARMCC">
       <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device in little endian mode for the ARM Compiler</description>
-      <accept Dcore="Cortex-M0"/>
-      <accept Dcore="Cortex-M0+"/>
-      <accept Dcore="SC000"/>
+      <require condition="CM0_ARMCC"/>
       <require Dendian="Little-endian"/>
-      <require Tcompiler="ARMCC"/>
     </condition>
-
     <condition id="CM0_BE_ARMCC">
       <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device in big endian mode for the ARM Compiler</description>
-      <accept Dcore="Cortex-M0"/>
-      <accept Dcore="Cortex-M0+"/>
-      <accept Dcore="SC000"/>
+      <require condition="CM0_ARMCC"/>
       <require Dendian="Big-endian"/>
-      <require Tcompiler="ARMCC"/>
     </condition>
 
+    <condition id="CM3_ARMCC">
+      <description>Cortex-M3 or SC300 processor based device for the ARM Compiler</description>
+      <require condition="CM3"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
     <condition id="CM3_LE_ARMCC">
       <description>Cortex-M3 or SC300 processor based device in little endian mode for the ARM Compiler</description>
-      <accept Dcore="Cortex-M3"/>
-      <accept Dcore="SC300"/>
+      <require condition="CM3_ARMCC"/>
       <require Dendian="Little-endian"/>
-      <require Tcompiler="ARMCC"/>
     </condition>
-
     <condition id="CM3_BE_ARMCC">
       <description>Cortex-M3 or SC300 processor based device in big endian mode for the ARM Compiler</description>
-      <accept Dcore="Cortex-M3"/>
-      <accept Dcore="SC300"/>
+      <require condition="CM3_ARMCC"/>
       <require Dendian="Big-endian"/>
-      <require Tcompiler="ARMCC"/>
     </condition>
 
+    <condition id="CM4_ARMCC">
+      <description>Cortex-M4 processor based device for the ARM Compiler</description>
+      <require condition="CM4"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
     <condition id="CM4_LE_ARMCC">
       <description>Cortex-M4 processor based device in little endian mode for the ARM Compiler</description>
-      <require Dcore="Cortex-M4" Dfpu="NO_FPU" Dendian="Little-endian"/>
-      <require Tcompiler="ARMCC"/>
+      <require condition="CM4_ARMCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
-
     <condition id="CM4_BE_ARMCC">
       <description>Cortex-M4 processor based device in big endian mode for the ARM Compiler</description>
-      <require Dcore="Cortex-M4" Dfpu="NO_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="ARMCC"/>
+      <require condition="CM4_ARMCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM4F_LE_ARMCC">
+    <condition id="CM4_FP_ARMCC">
+      <description>Cortex-M4 processor based device using Floating Point Unit for the ARM Compiler</description>
+      <require condition="CM4_FP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM4_FP_LE_ARMCC">
       <description>Cortex-M4 processor based device using Floating Point Unit in little endian mode for the ARM Compiler</description>
-      <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Little-endian"/>
-      <require Tcompiler="ARMCC"/>
+      <require condition="CM4_FP_ARMCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
-
-    <condition id="CM4F_BE_ARMCC">
+    <condition id="CM4_FP_BE_ARMCC">
       <description>Cortex-M4 processor based device using Floating Point Unit in big endian mode for the ARM Compiler</description>
-      <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Big-endian"/>
-      <require Tcompiler="ARMCC"/>
+      <require condition="CM4_FP_ARMCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
     <!-- XMC 4000 Series devices from Infineon require a special library -->
@@ -778,144 +808,178 @@ The ARMv8MML processor is brand new.
       <require Dcore="Cortex-M4" Dfpu="NO_FPU" Dendian="Little-endian" Dvendor="Infineon:7" Dname="XMC4*"/>
       <require Tcompiler="ARMCC"/>
     </condition>
-    <condition id="CM4F_LE_ARMCC_STD">
+    <condition id="CM4_FP_LE_ARMCC_STD">
       <description>Cortex-M4 processor based device using Floating Point Unit in little endian mode for the ARM Compiler without Infineon devices</description>
       <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Little-endian"/>
       <deny Dvendor="Infineon:7" Dname="XMC4*"/>
       <require Tcompiler="ARMCC"/>
     </condition>
-    <condition id="CM4F_LE_ARMCC_IFX">
+    <condition id="CM4_FP_LE_ARMCC_IFX">
       <description>Cortex-M4 processor based device using Floating Point Unit in little endian mode for the ARM Compiler and Infineon devices</description>
       <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Little-endian" Dvendor="Infineon:7" Dname="XMC4*"/>
       <require Tcompiler="ARMCC"/>
     </condition>
 
+    <condition id="CM7_ARMCC">
+      <description>Cortex-M7 processor based device for the ARM Compiler</description>
+      <require condition="CM7"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
     <condition id="CM7_LE_ARMCC">
       <description>Cortex-M7 processor based device in little endian mode for the ARM Compiler</description>
-      <require Dcore="Cortex-M7" Dfpu="NO_FPU" Dendian="Little-endian"/>
-      <require Tcompiler="ARMCC"/>
+      <require condition="CM7_ARMCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
-
     <condition id="CM7_BE_ARMCC">
       <description>Cortex-M7 processor based device in big endian mode for the ARM Compiler</description>
-      <require Dcore="Cortex-M7" Dfpu="NO_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="ARMCC"/>
+      <require condition="CM7_ARMCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM7F_LE_ARMCC">
+    <condition id="CM7_FP_ARMCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit for the ARM Compiler</description>
+      <require condition="CM7_FP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM7_FP_LE_ARMCC">
       <description>Cortex-M7 processor based device using Floating Point Unit in little endian mode for the ARM Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="SP_FPU" Dendian="Little-endian"/>
-      <accept Dcore="Cortex-M7" Dfpu="DP_FPU" Dendian="Little-endian"/>
-      <require Tcompiler="ARMCC"/>
+      <require condition="CM7_FP_ARMCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
-
-    <condition id="CM7F_BE_ARMCC">
+    <condition id="CM7_FP_BE_ARMCC">
       <description>Cortex-M7 processor based device using Floating Point Unit in big endian mode for the ARM Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="SP_FPU" Dendian="Big-endian"/>
-      <accept Dcore="Cortex-M7" Dfpu="DP_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="ARMCC"/>
+      <require condition="CM7_FP_ARMCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM7FSP_LE_ARMCC">
-      <description>Cortex-M7 processor based device using Floating Point Unit in little endian mode for the ARM Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="SP_FPU" Dendian="Little-endian"/>
+    <condition id="CM7_SP_ARMCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit (SP) for the ARM Compiler</description>
+      <require condition="CM7_SP"/>
       <require Tcompiler="ARMCC"/>
     </condition>
-
-    <condition id="CM7FSP_BE_ARMCC">
-      <description>Cortex-M7 processor based device using Floating Point Unit in big endian mode for the ARM Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="SP_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="ARMCC"/>
+    <condition id="CM7_SP_LE_ARMCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit (SP) in little endian mode for the ARM Compiler</description>
+      <require condition="CM7_SP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM7_SP_BE_ARMCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit (SP) in big endian mode for the ARM Compiler</description>
+      <require condition="CM7_SP_ARMCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM7FDP_LE_ARMCC">
-      <description>Cortex-M7 processor based device using Floating Point Unit in little endian mode for the ARM Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="DP_FPU" Dendian="Little-endian"/>
+    <condition id="CM7_DP_ARMCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit (DP) for the ARM Compiler</description>
+      <require condition="CM7_DP"/>
       <require Tcompiler="ARMCC"/>
     </condition>
-
-    <condition id="CM7FDP_BE_ARMCC">
-      <description>Cortex-M7 processor based device using Floating Point Unit in big endian mode for the ARM Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="DP_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="ARMCC"/>
+    <condition id="CM7_DP_LE_ARMCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit (DP) in little endian mode for the ARM Compiler</description>
+      <require condition="CM7_DP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM7_DP_BE_ARMCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit (DP) in big endian mode for the ARM Compiler</description>
+      <require condition="CM7_DP_ARMCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
+    <condition id="ARMv8MBL_ARMCC">
+      <description>ARMv8-M Baseline processor based device for the ARM Compiler</description>
+      <require condition="ARMv8MBL"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
     <condition id="ARMv8MBL_LE_ARMCC">
       <description>ARMv8-M Baseline processor based device in little endian mode for the ARM Compiler</description>
-      <require Dcore="ARMV8MBL" Dendian="Little-endian"/>
-      <require Tcompiler="ARMCC"/>
+      <require condition="ARMv8MBL_ARMCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
 
+    <condition id="ARMv8MML_ARMCC">
+      <description>ARMv8-M Mainline processor based device for the ARM Compiler</description>
+      <require condition="ARMv8MML"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
     <condition id="ARMv8MML_LE_ARMCC">
       <description>ARMv8-M Mainline processor based device in little endian mode for the ARM Compiler</description>
-      <require Dcore="ARMV8MML" Dfpu="0" Dendian="Little-endian"/>
-      <require Tcompiler="ARMCC"/>
+      <require condition="ARMv8MML_ARMCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
 
+    <condition id="ARMv8MML_FP_ARMCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit for the ARM Compiler</description>
+      <require condition="ARMv8MML_FP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
     <condition id="ARMv8MML_FP_LE_ARMCC">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit in little endian mode for the ARM Compiler</description>
-      <accept Dcore="ARMV8MML" Dfpu="SP_FPU" Dendian="Little-endian"/>
-      <accept Dcore="ARMV8MML" Dfpu="DP_FPU" Dendian="Little-endian"/>
-      <require Tcompiler="ARMCC"/>
+      <require condition="ARMv8MML_FP_ARMCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
 
     <!-- GCC compiler -->
+    <condition id="CM0_GCC">
+      <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device for the GCC Compiler</description>
+      <require condition="CM0"/>
+      <require Tcompiler="GCC"/>
+    </condition>
     <condition id="CM0_LE_GCC">
       <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device in little endian mode for the GCC Compiler</description>
-      <accept Dcore="Cortex-M0"/>
-      <accept Dcore="Cortex-M0+"/>
-      <accept Dcore="SC000"/>
+      <require condition="CM0_GCC"/>
       <require Dendian="Little-endian"/>
-      <require Tcompiler="GCC"/>
     </condition>
-
     <condition id="CM0_BE_GCC">
       <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device in big endian mode for the GCC Compiler</description>
-      <accept Dcore="Cortex-M0"/>
-      <accept Dcore="Cortex-M0+"/>
-      <accept Dcore="SC000"/>
+      <require condition="CM0_GCC"/>
       <require Dendian="Big-endian"/>
-      <require Tcompiler="GCC"/>
     </condition>
 
+    <condition id="CM3_GCC">
+      <description>Cortex-M3 or SC300 processor based device for the GCC Compiler</description>
+      <require condition="CM3"/>
+      <require Tcompiler="GCC"/>
+    </condition>
     <condition id="CM3_LE_GCC">
       <description>Cortex-M3 or SC300 processor based device in little endian mode for the GCC Compiler</description>
-      <accept Dcore="Cortex-M3"/>
-      <accept Dcore="SC300"/>
+      <require condition="CM3_GCC"/>
       <require Dendian="Little-endian"/>
-      <require Tcompiler="GCC"/>
     </condition>
-
     <condition id="CM3_BE_GCC">
       <description>Cortex-M3 or SC300 processor based device in big endian mode for the GCC Compiler</description>
-      <accept Dcore="Cortex-M3"/>
-      <accept Dcore="SC300"/>
+      <require condition="CM3_GCC"/>
       <require Dendian="Big-endian"/>
-      <require Tcompiler="GCC"/>
     </condition>
 
+    <condition id="CM4_GCC">
+      <description>Cortex-M4 processor based device for the GCC Compiler</description>
+      <require condition="CM4"/>
+      <require Tcompiler="GCC"/>
+    </condition>
     <condition id="CM4_LE_GCC">
       <description>Cortex-M4 processor based device in little endian mode for the GCC Compiler</description>
-      <require Dcore="Cortex-M4" Dfpu="NO_FPU" Dendian="Little-endian"/>
-      <require Tcompiler="GCC"/>
+      <require condition="CM4_GCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
-
     <condition id="CM4_BE_GCC">
       <description>Cortex-M4 processor based device in big endian mode for the GCC Compiler</description>
-      <require Dcore="Cortex-M4" Dfpu="NO_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="GCC"/>
+      <require condition="CM4_GCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM4F_LE_GCC">
+    <condition id="CM4_FP_GCC">
+      <description>Cortex-M4 processor based device using Floating Point Unit for the GCC Compiler</description>
+      <require condition="CM4_FP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM4_FP_LE_GCC">
       <description>Cortex-M4 processor based device using Floating Point Unit in little endian mode for the GCC Compiler</description>
-      <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Little-endian"/>
-      <require Tcompiler="GCC"/>
+      <require condition="CM4_FP_GCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
-
-    <condition id="CM4F_BE_GCC">
+    <condition id="CM4_FP_BE_GCC">
       <description>Cortex-M4 processor based device using Floating Point Unit in big endian mode for the GCC Compiler</description>
-      <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Big-endian"/>
-      <require Tcompiler="GCC"/>
+      <require condition="CM4_FP_GCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
     <!-- XMC 4000 Series devices from Infineon require a special library -->
@@ -930,196 +994,255 @@ The ARMv8MML processor is brand new.
       <require Dcore="Cortex-M4" Dfpu="NO_FPU" Dendian="Little-endian" Dvendor="Infineon:7" Dname="XMC4*"/>
       <require Tcompiler="GCC"/>
     </condition>
-    <condition id="CM4F_LE_GCC_STD">
+    <condition id="CM4_FP_LE_GCC_STD">
       <description>Cortex-M4 processor based device using Floating Point Unit in little endian mode for the GCC Compiler without Infineon devices</description>
       <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Little-endian"/>
       <deny Dvendor="Infineon:7" Dname="XMC4*"/>
       <require Tcompiler="GCC"/>
     </condition>
-    <condition id="CM4F_LE_GCC_IFX">
+    <condition id="CM4_FP_LE_GCC_IFX">
       <description>Cortex-M4 processor based device using Floating Point Unit in little endian mode for the GCC Compiler and Infineon devices</description>
       <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Little-endian" Dvendor="Infineon:7" Dname="XMC4*"/>
       <require Tcompiler="GCC"/>
     </condition>
 
+    <condition id="CM7_GCC">
+      <description>Cortex-M7 processor based device for the GCC Compiler</description>
+      <require condition="CM7"/>
+      <require Tcompiler="GCC"/>
+    </condition>
     <condition id="CM7_LE_GCC">
       <description>Cortex-M7 processor based device in little endian mode for the GCC Compiler</description>
-      <require Dcore="Cortex-M7" Dfpu="NO_FPU" Dendian="Little-endian"/>
-      <require Tcompiler="GCC"/>
+      <require condition="CM7_GCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
-
     <condition id="CM7_BE_GCC">
       <description>Cortex-M7 processor based device in big endian mode for the GCC Compiler</description>
-      <require Dcore="Cortex-M7" Dfpu="NO_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="GCC"/>
+      <require condition="CM7_GCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM7F_LE_GCC">
+    <condition id="CM7_FP_GCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit for the GCC Compiler</description>
+      <require condition="CM7_FP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM7_FP_LE_GCC">
       <description>Cortex-M7 processor based device using Floating Point Unit in little endian mode for the GCC Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="SP_FPU" Dendian="Little-endian"/>
-      <accept Dcore="Cortex-M7" Dfpu="DP_FPU" Dendian="Little-endian"/>
-      <require Tcompiler="GCC"/>
+      <require condition="CM7_FP_GCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
-
-    <condition id="CM7F_BE_GCC">
+    <condition id="CM7_FP_BE_GCC">
       <description>Cortex-M7 processor based device using Floating Point Unit in big endian mode for the GCC Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="SP_FPU" Dendian="Big-endian"/>
-      <accept Dcore="Cortex-M7" Dfpu="DP_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="GCC"/>
+      <require condition="CM7_FP_GCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM7FSP_LE_GCC">
-      <description>Cortex-M7 processor based device using Floating Point Unit in little endian mode for the GCC Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="SP_FPU" Dendian="Little-endian"/>
+    <condition id="CM7_SP_GCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit (SP) for the GCC Compiler</description>
+      <require condition="CM7_SP"/>
       <require Tcompiler="GCC"/>
     </condition>
-
-    <condition id="CM7FSP_BE_GCC">
-      <description>Cortex-M7 processor based device using Floating Point Unit in big endian mode for the GCC Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="SP_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="GCC"/>
+    <condition id="CM7_SP_LE_GCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit (SP) in little endian mode for the GCC Compiler</description>
+      <require condition="CM7_SP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM7_SP_BE_GCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit (SP) in big endian mode for the GCC Compiler</description>
+      <require condition="CM7_SP_GCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM7FDP_LE_GCC">
-      <description>Cortex-M7 processor based device using Floating Point Unit in little endian mode for the GCC Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="DP_FPU" Dendian="Little-endian"/>
+    <condition id="CM7_DP_GCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit (DP) for the GCC Compiler</description>
+      <require condition="CM7_DP"/>
       <require Tcompiler="GCC"/>
     </condition>
-
-    <condition id="CM7FDP_BE_GCC">
-      <description>Cortex-M7 processor based device using Floating Point Unit in big endian mode for the GCC Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="DP_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="GCC"/>
+    <condition id="CM7_DP_LE_GCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit (DP) in little endian mode for the GCC Compiler</description>
+      <require condition="CM7_DP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM7_DP_BE_GCC">
+      <description>Cortex-M7 processor based device using Floating Point Unit (DP) in big endian mode for the GCC Compiler</description>
+      <require condition="CM7_DP_GCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
+    <condition id="ARMv8MBL_GCC">
+      <description>ARMv8-M Baseline processor based device for the GCC Compiler</description>
+      <require condition="ARMv8MBL"/>
+      <require Tcompiler="GCC"/>
+    </condition>
     <condition id="ARMv8MBL_LE_GCC">
       <description>ARMv8-M Baseline processor based device in little endian mode for the GCC Compiler</description>
-      <require Dcore="ARMV8MBL" Dendian="Little-endian"/>
-      <require Tcompiler="GCC"/>
+      <require condition="ARMv8MBL_GCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
 
+    <condition id="ARMv8MML_GCC">
+      <description>ARMv8-M Mainline processor based device for the GCC Compiler</description>
+      <require condition="ARMv8MML"/>
+      <require Tcompiler="GCC"/>
+    </condition>
     <condition id="ARMv8MML_LE_GCC">
       <description>ARMv8-M Mainline processor based device in little endian mode for the GCC Compiler</description>
-      <require Dcore="ARMV8MML" Dfpu="0" Dendian="Little-endian"/>
-      <require Tcompiler="GCC"/>
+      <require condition="ARMv8MML_GCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
 
+    <condition id="ARMv8MML_FP_GCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit for the GCC Compiler</description>
+      <require condition="ARMv8MML_FP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
     <condition id="ARMv8MML_FP_LE_GCC">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit in little endian mode for the GCC Compiler</description>
-      <accept Dcore="ARMV8MML" Dfpu="SP_FPU" Dendian="Little-endian"/>
-      <accept Dcore="ARMV8MML" Dfpu="DP_FPU" Dendian="Little-endian"/>
-      <require Tcompiler="GCC"/>
+      <require condition="ARMv8MML_FP_GCC"/>
+      <require Dendian="Little-endian"/>
     </condition>
 
     <!-- IAR compiler -->
+    <condition id="CM0_IAR">
+      <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device for the IAR Compiler</description>
+      <require condition="CM0"/>
+      <require Tcompiler="IAR"/>
+    </condition>
     <condition id="CM0_LE_IAR">
       <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device in little endian mode for the IAR Compiler</description>
-      <accept Dcore="Cortex-M0"/>
-      <accept Dcore="Cortex-M0+"/>
-      <accept Dcore="SC000"/>
+      <require condition="CM0_IAR"/>
       <require Dendian="Little-endian"/>
-      <require Tcompiler="IAR"/>
     </condition>
-
     <condition id="CM0_BE_IAR">
       <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device in big endian mode for the IAR Compiler</description>
-      <accept Dcore="Cortex-M0"/>
-      <accept Dcore="Cortex-M0+"/>
-      <accept Dcore="SC000"/>
+      <require condition="CM0_IAR"/>
       <require Dendian="Big-endian"/>
-      <require Tcompiler="IAR"/>
     </condition>
 
+    <condition id="CM3_IAR">
+      <description>Cortex-M3 or SC300 processor based device for the IAR Compiler</description>
+      <require condition="CM3"/>
+      <require Tcompiler="IAR"/>
+    </condition>
     <condition id="CM3_LE_IAR">
       <description>Cortex-M3 or SC300 processor based device in little endian mode for the IAR Compiler</description>
-      <accept Dcore="Cortex-M3"/>
-      <accept Dcore="SC300"/>
+      <require condition="CM3_IAR"/>
       <require Dendian="Little-endian"/>
-      <require Tcompiler="IAR"/>
     </condition>
-
     <condition id="CM3_BE_IAR">
       <description>Cortex-M3 or SC300 processor based device in big endian mode for the IAR Compiler</description>
-      <accept Dcore="Cortex-M3"/>
-      <accept Dcore="SC300"/>
+      <require condition="CM3_IAR"/>
       <require Dendian="Big-endian"/>
-      <require Tcompiler="IAR"/>
     </condition>
 
+    <condition id="CM4_IAR">
+      <description>Cortex-M4 processor based device for the IAR Compiler</description>
+      <require condition="CM4"/>
+      <require Tcompiler="IAR"/>
+    </condition>
     <condition id="CM4_LE_IAR">
       <description>Cortex-M4 processor based device in little endian mode for the IAR Compiler</description>
-      <require Dcore="Cortex-M4" Dfpu="NO_FPU" Dendian="Little-endian"/>
-      <require Tcompiler="IAR"/>
+      <require condition="CM4_IAR"/>
+      <require Dendian="Little-endian"/>
     </condition>
-
     <condition id="CM4_BE_IAR">
       <description>Cortex-M4 processor based device in big endian mode for the IAR Compiler</description>
-      <require Dcore="Cortex-M4" Dfpu="NO_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="IAR"/>
+      <require condition="CM4_IAR"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM4F_LE_IAR">
+    <condition id="CM4_FP_IAR">
+      <description>Cortex-M4 processor based device using Floating Point Unit for the IAR Compiler</description>
+      <require condition="CM4_FP"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM4_FP_LE_IAR">
       <description>Cortex-M4 processor based device using Floating Point Unit in little endian mode for the IAR Compiler</description>
-      <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Little-endian"/>
-      <require Tcompiler="IAR"/>
+      <require condition="CM4_FP_IAR"/>
+      <require Dendian="Little-endian"/>
     </condition>
-
-    <condition id="CM4F_BE_IAR">
+    <condition id="CM4_FP_BE_IAR">
       <description>Cortex-M4 processor based device using Floating Point Unit in big endian mode for the IAR Compiler</description>
-      <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Big-endian"/>
-      <require Tcompiler="IAR"/>
+      <require condition="CM4_FP_IAR"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
+    <condition id="CM7_IAR">
+      <description>Cortex-M7 processor based device for the IAR Compiler</description>
+      <require condition="CM7"/>
+      <require Tcompiler="IAR"/>
+    </condition>
     <condition id="CM7_LE_IAR">
       <description>Cortex-M7 processor based device in little endian mode for the IAR Compiler</description>
-      <require Dcore="Cortex-M7" Dfpu="NO_FPU" Dendian="Little-endian"/>
-      <require Tcompiler="IAR"/>
+      <require condition="CM7_IAR"/>
+      <require Dendian="Little-endian"/>
     </condition>
-
     <condition id="CM7_BE_IAR">
       <description>Cortex-M7 processor based device in big endian mode for the IAR Compiler</description>
-      <require Dcore="Cortex-M7" Dfpu="NO_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="IAR"/>
+      <require condition="CM7_IAR"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM7F_LE_IAR">
+    <condition id="CM7_FP_IAR">
+      <description>Cortex-M7 processor based device using Floating Point Unit for the IAR Compiler</description>
+      <require condition="CM7_FP"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM7_FP_LE_IAR">
       <description>Cortex-M7 processor based device using Floating Point Unit in little endian mode for the IAR Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="SP_FPU" Dendian="Little-endian"/>
-      <accept Dcore="Cortex-M7" Dfpu="DP_FPU" Dendian="Little-endian"/>
-      <require Tcompiler="IAR"/>
+      <require condition="CM7_FP_IAR"/>
+      <require Dendian="Little-endian"/>
     </condition>
-
-    <condition id="CM7F_BE_IAR">
+    <condition id="CM7_FP_BE_IAR">
       <description>Cortex-M7 processor based device using Floating Point Unit in big endian mode for the IAR Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="SP_FPU" Dendian="Big-endian"/>
-      <accept Dcore="Cortex-M7" Dfpu="DP_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="IAR"/>
+      <require condition="CM7_FP_IAR"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM7FSP_LE_IAR">
-      <description>Cortex-M7 processor based device using Floating Point Unit in little endian mode for the IAR Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="SP_FPU" Dendian="Little-endian"/>
+    <condition id="CM7_SP_IAR">
+      <description>Cortex-M7 processor based device using Floating Point Unit (SP) for the IAR Compiler</description>
+      <require condition="CM7_SP"/>
       <require Tcompiler="IAR"/>
     </condition>
-
-    <condition id="CM7FSP_BE_IAR">
-      <description>Cortex-M7 processor based device using Floating Point Unit in big endian mode for the IAR Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="SP_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="IAR"/>
+    <condition id="CM7_SP_LE_IAR">
+      <description>Cortex-M7 processor based device using Floating Point Unit (SP) in little endian mode for the IAR Compiler</description>
+      <require condition="CM7_SP_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM7_SP_BE_IAR">
+      <description>Cortex-M7 processor based device using Floating Point Unit (SP) in big endian mode for the IAR Compiler</description>
+      <require condition="CM7_SP_IAR"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM7FDP_LE_IAR">
-      <description>Cortex-M7 processor based device using Floating Point Unit in little endian mode for the IAR Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="DP_FPU" Dendian="Little-endian"/>
+    <condition id="CM7_DP_IAR">
+      <description>Cortex-M7 processor based device using Floating Point Unit (DP) for the IAR Compiler</description>
+      <require condition="CM7_DP"/>
       <require Tcompiler="IAR"/>
     </condition>
-
-    <condition id="CM7FDP_BE_IAR">
-      <description>Cortex-M7 processor based device using Floating Point Unit in big endian mode for the IAR Compiler</description>
-      <accept Dcore="Cortex-M7" Dfpu="DP_FPU" Dendian="Big-endian"/>
-      <require Tcompiler="IAR"/>
+    <condition id="CM7_DP_LE_IAR">
+      <description>Cortex-M7 processor based device using Floating Point Unit (DP) in little endian mode for the IAR Compiler</description>
+      <require condition="CM7_DP_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM7_DP_BE_IAR">
+      <description>Cortex-M7 processor based device using Floating Point Unit (DP) in big endian mode for the IAR Compiler</description>
+      <require condition="CM7_DP_IAR"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
+    <!-- CMSIS DSP -->
+    <condition id="CMSIS DSP">
+      <description>CMSIS DSP Library is for ARM Cortex-M Devices only and is prebuild for one of the compilers ARMCC, GCC or IAR</description>
+      <require condition="Cortex-M Device"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+      <accept Tcompiler="GCC"/>
+      <accept Tcompiler="ARMCC"/>
+      <accept Tcompiler="IAR"/>
+    </condition>
+
+    <!-- RTOS RTX -->
     <condition id="RTOS RTX">
       <description>Components required for RTOS RTX</description>
       <require condition="Cortex-M Device"/>
@@ -1133,7 +1256,7 @@ The ARMv8MML processor is brand new.
     </condition>
     <condition id="RTOS2 RTX5">
       <description>Components required for RTOS2 RTX5</description>
-      <require condition="Cortex-M Device"/>
+      <require condition="Cortex-M ARMv8-M Device"/>
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
       <deny    Cclass="CMSIS"  Cgroup="RTOS" Csub="Keil RTX"/>
@@ -1144,6 +1267,16 @@ The ARMv8MML processor is brand new.
       <accept  Dcore="ARMV8MML"/>
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
+    </condition>
+    <condition id="RTOS2 RTX5 Debug">
+      <description>Components required for RTOS2 RTX5 (Debug)</description>
+      <require condition="RTOS2 RTX5"/>
+      <require Cclass="Compiler" Cgroup="Event Recorder"/>
+    </condition>
+    <condition id="RTOS2 RTX5 ARMv8M Debug">
+      <description>Components required for RTOS2 RTX5 on ARMv8M (Debug)</description>
+      <require condition="RTOS2 RTX5 ARMv8M"/>
+      <require Cclass="Compiler" Cgroup="Event Recorder"/>
     </condition>
 
   </conditions>
@@ -1415,22 +1548,22 @@ The ARMv8MML processor is brand new.
         <file category="library" condition="CM3_BE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM3b_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
         <file category="library" condition="CM4_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM4l_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
         <file category="library" condition="CM4_BE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM4b_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM4F_LE_ARMCC"    name="CMSIS/Lib/ARM/arm_cortexM4lf_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM4F_BE_ARMCC"    name="CMSIS/Lib/ARM/arm_cortexM4bf_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM4_FP_LE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM4lf_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM4_FP_BE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM4bf_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
         <file category="library" condition="CM7_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM7l_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
         <file category="library" condition="CM7_BE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM7b_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM7FSP_LE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM7lfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM7FSP_BE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM7bfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM7FDP_LE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM7lfdp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM7FDP_BE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM7bfdp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM7_SP_LE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM7lfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM7_SP_BE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM7bfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM7_DP_LE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM7lfdp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM7_DP_BE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM7bfdp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
         <!-- GCC -->
         <file category="library" condition="CM0_LE_GCC"       name="CMSIS/Lib/GCC/libarm_cortexM0l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
         <file category="library" condition="CM3_LE_GCC"       name="CMSIS/Lib/GCC/libarm_cortexM3l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
         <file category="library" condition="CM4_LE_GCC"       name="CMSIS/Lib/GCC/libarm_cortexM4l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM4F_LE_GCC"      name="CMSIS/Lib/GCC/libarm_cortexM4lf_math.a"    src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM4_FP_LE_GCC"    name="CMSIS/Lib/GCC/libarm_cortexM4lf_math.a"    src="CMSIS/DSP_Lib/Source/GCC"/>
         <file category="library" condition="CM7_LE_GCC"       name="CMSIS/Lib/GCC/libarm_cortexM7l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM7FSP_LE_GCC"    name="CMSIS/Lib/GCC/libarm_cortexM7lfsp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM7FDP_LE_GCC"    name="CMSIS/Lib/GCC/libarm_cortexM7lfdp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM7_SP_LE_GCC"    name="CMSIS/Lib/GCC/libarm_cortexM7lfsp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM7_DP_LE_GCC"    name="CMSIS/Lib/GCC/libarm_cortexM7lfdp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
       </files>
     </component>
 
@@ -1465,48 +1598,48 @@ The ARMv8MML processor is brand new.
 
         <!-- CPU and Compiler dependent -->
         <!-- ARMCC -->
-        <file category="library" condition="CM0_LE_ARMCC"      name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM0_BE_ARMCC"      name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM3_LE_ARMCC"      name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM3_BE_ARMCC"      name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM4_LE_ARMCC_STD"  name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM4_LE_ARMCC_IFX"  name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_IFX.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM4_BE_ARMCC"      name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM4F_LE_ARMCC_STD" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM4F_LE_ARMCC_IFX" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_IFX.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM4F_BE_ARMCC"     name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM7_LE_ARMCC"      name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM7_BE_ARMCC"      name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM7F_LE_ARMCC"     name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM7F_BE_ARMCC"     name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM0_LE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM0_BE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM3_LE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM3_BE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM4_LE_ARMCC_STD"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM4_LE_ARMCC_IFX"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_IFX.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM4_BE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM4_FP_LE_ARMCC_STD" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM4_FP_LE_ARMCC_IFX" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_IFX.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM4_FP_BE_ARMCC"     name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM7_LE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM7_BE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM7_FP_LE_ARMCC"     name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM7_FP_BE_ARMCC"     name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
         <!-- GCC -->
-        <file category="library" condition="CM0_LE_GCC"        name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM0_BE_GCC"        name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM3_LE_GCC"        name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM3_BE_GCC"        name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM4_LE_GCC_STD"    name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM4_LE_GCC_IFX"    name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_IFX.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM4_BE_GCC"        name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM4F_LE_GCC_STD"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM4F_LE_GCC_IFX"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_IFX.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM4F_BE_GCC"       name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM7_LE_GCC"        name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM7_BE_GCC"        name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM7F_LE_GCC"       name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM7F_BE_GCC"       name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM0_LE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM0_BE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM3_LE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM3_BE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM4_LE_GCC_STD"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM4_LE_GCC_IFX"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_IFX.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM4_BE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM4_FP_LE_GCC_STD"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM4_FP_LE_GCC_IFX"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_IFX.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM4_FP_BE_GCC"       name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM7_LE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM7_BE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM7_FP_LE_GCC"       name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM7_FP_BE_GCC"       name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
         <!-- IAR -->
-        <file category="library" condition="CM0_LE_IAR"        name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM0_BE_IAR"        name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM3_LE_IAR"        name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM3_BE_IAR"        name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM4_LE_IAR"        name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM4_BE_IAR"        name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM4F_LE_IAR"       name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM4F_BE_IAR"       name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM7_LE_IAR"        name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM7_BE_IAR"        name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM7F_LE_IAR"       name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM7F_BE_IAR"       name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM0_LE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM0_BE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM3_LE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM3_BE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM4_LE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM4_BE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM4_FP_LE_IAR"       name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM4_FP_BE_IAR"       name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM7_LE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM7_BE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM7_FP_LE_IAR"       name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM7_FP_BE_IAR"       name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
       </files>
     </component>
 
@@ -1528,7 +1661,7 @@ The ARMv8MML processor is brand new.
 
     <!-- CMSIS-RTOS2 Keil RTX5 component -->
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Release" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5">
-      <description>CMSIS-RTOS2 RTX5 implementation for Cortex-M, SC000, and SC300</description>
+      <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and ARMv8-M (Release)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
         #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
@@ -1552,61 +1685,34 @@ The ARMv8MML processor is brand new.
 
         <!-- RTX libraries (CPU and Compiler dependent) -->
         <!-- ARMCC -->
-        <file category="library" condition="CM0_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"      src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM3_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"      src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4_LE_ARMCC_STD"  name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"      src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4F_LE_ARMCC_STD" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM7_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"      src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM7F_LE_ARMCC"     name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"     src="CMSIS/RTOS2/RTX/Source"/>
-        <!-- GCC -->
-        <file category="library" condition="CM0_LE_GCC"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM0.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM3_LE_GCC"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4_LE_GCC_STD"    name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4F_LE_GCC_STD"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM7_LE_GCC"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM7F_LE_GCC"       name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"    src="CMSIS/RTOS2/RTX/Source"/>
-      </files>
-    </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Release" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 ARMv8M">
-      <description>CMSIS-RTOS2 RTX5 implementation for ARMv8-M</description>
-      <RTE_Components_h>
-        <!-- the following content goes into file 'RTE_Components.h' -->
-        #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
-        #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
-      </RTE_Components_h>
-      <files>
-        <!-- RTX documentation -->
-        <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/>
-
-        <!-- RTX header files -->
-        <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
-        <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
-
-        <!-- RTX configuration -->
-        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c" version="5.0.0"/>
-
-        <!-- RTX templates -->
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"   select="CMSIS-RTOS 'main' function"/>
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Source/user_svc.c" select="CMSIS-RTOS User SVC"/>
-        <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
-
-        <!-- RTX libraries (CPU and Compiler dependent) -->
-        <!-- ARMCC -->
+        <file category="library" condition="CM0_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM3_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_LE_ARMCC_STD"     name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_FP_LE_ARMCC_STD"  name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM7_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM7_FP_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
         <!-- GCC -->
+        <file category="library" condition="CM0_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM0.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM3_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_LE_GCC_STD"       name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_FP_LE_GCC_STD"    name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM7_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM7_FP_LE_GCC"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MBL_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Release NS" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 ARMv8M">
-      <description>CMSIS-RTOS2 RTX5 implementation for ARMv8-M Non-Secure Domain</description>
+      <description>CMSIS-RTOS2 RTX5 for ARMv8-M Non-Secure Domain (Release)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
         #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
         #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
+        #define RTE_CMSIS_RTOS2_RTX5_ARMV8M_NS  /* CMSIS-RTOS2 Keil RTX5 ARMv8-M Non-secure domain */
       </RTE_Components_h>
       <files>
         <!-- RTX documentation -->
@@ -1633,6 +1739,123 @@ The ARMv8MML processor is brand new.
         <file category="library" condition="ARMv8MBL_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MBN.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
+      </files>
+    </component>
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Debug" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 Debug">
+      <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and ARMv8-M (Debug)</description>
+      <RTE_Components_h>
+        <!-- the following content goes into file 'RTE_Components.h' -->
+        #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
+        #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
+        #define RTE_CMSIS_RTOS2_RTX5_DEBUG      /* CMSIS-RTOS2 Keil RTX5 Debug */
+      </RTE_Components_h>
+      <files>
+        <!-- RTX documentation -->
+        <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/>
+
+        <!-- RTX header files -->
+        <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
+        <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
+
+        <!-- RTX configuration -->
+        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c" version="5.0.0"/>
+
+        <!-- RTX templates -->
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"   select="CMSIS-RTOS 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Source/user_svc.c" select="CMSIS-RTOS User SVC"/>
+        <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
+
+        <!-- RTX sources (core) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_kernel.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_thread.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_delay.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_timer.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_evflags.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_mutex.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_semaphore.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_memory.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_mempool.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_msgqueue.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_system.c"/>
+        <!-- RTX sources (handlers ARMCC) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm0.s"         condition="CM0_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM3_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM4_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"        condition="CM4_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM7_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"        condition="CM7_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl.s"    condition="ARMv8MBL_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_FP_ARMCC"/>
+        <!-- RTX sources (handlers GCC) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm0.s"         condition="CM0_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"         condition="CM3_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"         condition="CM4_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.s"        condition="CM4_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"         condition="CM7_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.s"        condition="CM7_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.s"    condition="ARMv8MBL_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.s"    condition="ARMv8MML_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.s" condition="ARMv8MML_FP_GCC"/>
+      </files>
+    </component>
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Debug NS" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 ARMv8M Debug">
+      <description>CMSIS-RTOS2 RTX5 for ARMv8-M Non-Secure Domain (Debug)</description>
+      <RTE_Components_h>
+        <!-- the following content goes into file 'RTE_Components.h' -->
+        #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
+        #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
+        #define RTE_CMSIS_RTOS2_RTX5_DEBUG      /* CMSIS-RTOS2 Keil RTX5 Debug */
+        #define RTE_CMSIS_RTOS2_RTX5_ARMV8M_NS  /* CMSIS-RTOS2 Keil RTX5 ARMv8-M Non-secure domain */
+      </RTE_Components_h>
+      <files>
+        <!-- RTX documentation -->
+        <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/>
+
+        <!-- RTX header files -->
+        <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
+        <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
+
+        <!-- RTX configuration -->
+        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c" version="5.0.0"/>
+
+        <!-- RTX templates -->
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"   select="CMSIS-RTOS 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Source/user_svc.c" select="CMSIS-RTOS User SVC"/>
+        <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
+
+        <!-- RTX sources (core) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_kernel.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_thread.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_delay.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_timer.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_evflags.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_mutex.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_semaphore.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_memory.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_mempool.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_msgqueue.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_system.c"/>
+        <!-- RTX sources (ARMCC handlers) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm0.s"            condition="CM0_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"            condition="CM3_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"            condition="CM4_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"           condition="CM4_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"            condition="CM7_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"           condition="CM7_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl_ns.s"    condition="ARMv8MBL_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="ARMv8MML_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="ARMv8MML_FP_ARMCC"/>
+        <!-- RTX sources (GCC handlers) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm0.s"            condition="CM0_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"            condition="CM3_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"            condition="CM4_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.s"           condition="CM4_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"            condition="CM7_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.s"           condition="CM7_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.s"    condition="ARMv8MBL_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.s"    condition="ARMv8MML_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.s" condition="ARMv8MML_FP_GCC"/>
       </files>
     </component>
 
