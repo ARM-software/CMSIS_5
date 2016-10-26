@@ -437,6 +437,11 @@ extern       uint8_t  os_irq_cm;
 extern const uint8_t *os_irq_cm_ref;
        const uint8_t* os_irq_cm_ref = &os_irq_cm;
 
+// Default User SVC Table
+__attribute__((weak))
+extern void * const os_UserSVC_Table[];
+       void * const os_UserSVC_Table[1] = { (void *)0 };
+
 
 // OS Initialization
 // =================

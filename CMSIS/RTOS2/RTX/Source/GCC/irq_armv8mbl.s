@@ -31,7 +31,6 @@
         .equ     __DOMAIN_NS, 0
         .endif
 
-
         .equ     I_T_RUN_OFS, 28        // osInfo.thread.run offset
         .equ     TCB_SM_OFS,  48        // TCB.stack_mem offset
         .equ     TCB_SP_OFS,  56        // TCB.SP offset

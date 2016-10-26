@@ -53,6 +53,10 @@
 #error "Unknown ARM Architecture!"
 #endif
 
+#ifdef RTE_CMSIS_RTOS2_RTX5_ARMV8M_NS
+#define __DOMAIN_NS             1U
+#endif
+
 #ifndef __DOMAIN_NS
 #define __DOMAIN_NS             0U
 #elif ((__DOMAIN_NS          == 1U) && \

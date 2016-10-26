@@ -27,14 +27,13 @@
         .file    "irq_armv8mml.s"
         .syntax  unified
 
-        .ifndef  __FPU_USED
-        .equ     __FPU_USED,  0
-        .endif
-
         .ifndef  __DOMAIN_NS
         .equ     __DOMAIN_NS, 0
         .endif
 
+        .ifndef  __FPU_USED
+        .equ     __FPU_USED,  0
+        .endif
 
         .equ     I_T_RUN_OFS, 28        // osInfo.thread.run offset
         .equ     TCB_SM_OFS,  48        // TCB.stack_mem offset

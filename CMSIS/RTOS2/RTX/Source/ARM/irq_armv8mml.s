@@ -24,12 +24,14 @@
 ; */
 
 
-                IF       :LNOT::DEF:__FPU_USED
-__FPU_USED      EQU      0
-                ENDIF
-
                 IF       :LNOT::DEF:__DOMAIN_NS
 __DOMAIN_NS     EQU      0
+                ENDIF
+
+                IF       ({FPU}="FPv5-SP") || ({FPU}="FPv5_D16")
+__FPU_USED      EQU      1
+                ELSE
+__FPU_USED      EQU      0
                 ENDIF
 
 I_T_RUN_OFS     EQU      28                     ; osInfo.thread.run offset
