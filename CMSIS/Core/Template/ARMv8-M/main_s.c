@@ -32,7 +32,7 @@
 #endif
 
 /* Generate BLXNS instruction */
-void NonSecure_Start (uint32_t addr);
+void NonSecure_Start (uint32_t addr) __attribute__((always_inline));
 
 void NonSecure_Start (uint32_t addr) {
   __ASM volatile ("MOV r0, %0\n\t"
