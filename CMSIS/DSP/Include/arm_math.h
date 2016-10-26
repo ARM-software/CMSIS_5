@@ -1031,6 +1031,17 @@ extern "C"
                        ((((q31_t)x <<  8) >>  8) & (q31_t)0xFFFF0000)  ));
   }
 
+  /*
+   * @brief C custom defined SMMLA for M3 and M0 processors
+   */
+  CMSIS_INLINE __STATIC_INLINE int32_t __SMMLA(
+  int32_t x,
+  int32_t y,
+  int32_t sum)
+  {
+    return (sum + (int32_t) (((int64_t) x * y) >> 32));
+  }
+
 #endif /* defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
 
 
