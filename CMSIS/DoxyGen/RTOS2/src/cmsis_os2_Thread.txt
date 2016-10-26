@@ -38,9 +38,7 @@ states change as follows:
    returning from the thread function. Threads that are terminated are in the \b INACTIVE state and typically do not consume
    any dynamic memory resources. 
 
-By using sizeof on the object control block.
-
-For example RTX5 has the following internal defines (starting with os_ which is not RTOS prefix but rather RTX implementation prefix):
+For example RTX5 has the following internal defines to determine the size of os objects:
 /// Control Block sizes
 \code{.c}
 #define os_ThreadCbSize         sizeof(os_thread_t)
@@ -52,68 +50,84 @@ For example RTX5 has the following internal defines (starting with os_ which is 
 #define os_MessageQueueCbSize   sizeof(os_message_queue_t)
 \endcode
 
-\anchor Thread Examples
+Thread Examples
+===============
 The following examples show various scenarios to create threads:
 
-\b Example 1 - Create a simple thread
+<b>Example 1 - Create a simple thread</b>
+Create a thread out of the function thread1 using all default values for thread attributes and memory from the \ref GlobalMemoryPool.
 
 \code{.c}
 __NO_RETURN void thread1 (void *argument) {
   // ...
   for (;;) {}
 }
- 
+
 int main (void) {
-  
+  osKernelInitialize();
   ;
   osThreadNew(thread1, NULL, NULL);    // Create thread with default settings
   ;
+  osKernelStart(); 
 }
 \endcode
 
-\b Example 2 - Create thread with statically allocated stack
+<b>Example 2 - Create thread with statically allocated stack</b>
+Similar to the simple thread all attributes are default. The stack is statically allocated using the uint64_t array thread1_stk_1. This allocates 64*8 Bytes (=512 Bytes) with an alignment of 8 Bytes (mandatory for Cortex-M stack memory). 
+ 
+\ref osThreadAttr_t.stack_mem holds a pointer to the stacks lowest address. 
+\ref osThreadAttr_t.stack_size is used to pass the stack size in Bytes to osThreadNew.
 
 \code{.c}
 __NO_RETURN void thread1 (void *argument) {
   // ...
   for (;;) {}
 }
- 
+
 static uint64_t thread1_stk_1[64];
- 
+
+const osThreadAttr_t thread1_attr = {
+  .stack_mem  = &thread1_stk_1[0];
+  .stack_size = sizeof(thread1_stk_1);
+}
+
 int main (void) {
-  osThreadAttr_t thread1_attr;
-  thread1_attr.stack_mem  = &thread1_stk_1[0];
-  thread1_attr.stack_size = sizeof(thread1_stk_1);
-  
+  ;  
   osThreadNew(thread1, NULL, &thread1_attr);    // Create thread with statically allocated stack memory
   ;
 }
+
 \endcode
 
-\b 3. Example 3 - Thread with statically allocated tcb
+<b>Example 3 - Thread with statically allocated task control block</b>
+Typically this method is chosen together with a statically allocated stack as shown in Example 2. 
+The important difference is that to determine the size of a task control block an RTX specific header file "rtx_os.h" needs to be included. 
+os_<i>object</i>Size macros supply the size of OS objects.
  
 \code{.c} 
-#include "rtx_os.h"
- 
+#include "rtx_os.h"     //required for os_ThreadCbSize macro definition
+
 __NO_RETURN void thread1 (void *argument) {
   // ...
   for (;;) {}
 }
- 
+
 static os_thread_t thread1_tcb;
- 
+
+const osThreadAttr_t thread1_attr = {
+  .cb_mem  = &thread1_tcb;
+  .cb_size = os_ThreadCbSize;
+}
+
 int main (void) {
-  osThreadAttr_t thread1_attr;
-  thread1_attr.cb_mem  = &thread1_tcb;
-  thread1_attr.cb_size = sizeof(os_thread_t);
-  
+  ;
   osThreadNew(thread1, NULL, &thread1_attr);    // Create thread with custom tcb memory
   ;
 }
 \endcode
 
-\b Example 4 - Create thread with a different priority 
+<b>Example 4 - Create thread with a different priority</b> 
+The default priority of RTX is \ref osPriorityNormal. Often you want to run a task with a higher or lower priority. Using the \ref osThreadAttr_t control structure you can set any inital priority required.
 
 \code
 __NO_RETURN void thread1 (void *argument) {
@@ -121,33 +135,35 @@ __NO_RETURN void thread1 (void *argument) {
   for (;;) {}
 }
  
+const osThreadAttr_t thread1_attr = {
+  .priority = osPriorityHigh  //Set initial thread priority to high   
+} 
+ 
 int main (void) {
-  osThreadAttr_t thread1_attr;
-  thread1_attr.priority = osPriorityHigh;      //Set initial thread priority to high    
-   
+  ;
   osThreadNew(thread1, NULL, &thread1_attr);   
   ;
 }
 \endcode
 
-\(b)Example 5 - Joinable threads
+<b>Example 5 - Joinable threads</b>
+In this example a master thread creates four threads with the \ref osThreadJoinable attribute. These will do some work and return using the osThreadExit call after finished. \ref osThreadJoin is used to synchronize the thread termination. 
+
 
 \code{.c} 
 __NO_RETURN void worker (void *argument) {     
-    ; // work a lot on data
-	osDelay(1000);
+    ; // work a lot on data[] 
+	osDelay(1000);       
 	osThreadExit();
 }
  
 __NO_RETURN void thread1 (void *argument) {
-  osThreadAttr_t worker_attr;
+  osThreadAttr_t worker_attr = {0};
   osThreadId_t worker_ids[4];
   uint8_t data[4][10];
+
+  worker_attr.attr_bits = osThreadJoinable; 
   
-  ;
-  worker_attr.attr_bits |= osThreadJoinable;
-  worker_attr.priority   = osPriorityHigh;
-   	
   worker_ids[0] = osThreadNew(worker, &data[0][0], &worker_attr);    
   worker_ids[1] = osThreadNew(worker, &data[1][0], &worker_attr);    
   worker_ids[2] = osThreadNew(worker, &data[2][0], &worker_attr);    
@@ -450,7 +466,7 @@ int join_threads(void)
 \fn __NO_RETURN void osThreadExit (void)
 \details
 
-Exit the \b RUNNING thread an exit point defined by parameter pointer \em exit_ptr.
+osThreadExit terminates the calling thread. This allows the thread to be synchronized with osThreadJoin. 
 
 \note
 Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
