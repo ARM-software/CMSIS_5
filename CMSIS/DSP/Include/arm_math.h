@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
-* Copyright (C) 2010-2015 ARM Limited. All rights reserved.
+* Copyright (C) 2010-2016 ARM Limited. All rights reserved.
 *
-* $Date:        28. December 2015
-* $Revision:    V1.4.5 d
+* $Date:        22. October 2016
+* $Revision:    V1.4.5 e
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_math.h

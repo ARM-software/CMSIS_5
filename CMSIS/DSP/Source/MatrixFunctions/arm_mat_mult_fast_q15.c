@@ -1,24 +1,24 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015
-* $Revision: 	V.1.4.5
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_mat_mult_fast_q15.c    
-*    
-* Description:	 Q15 matrix multiplication (fast variant)    
-*    
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2016 ARM Limited. All rights reserved.
+*
+* $Date:        26. October 2016
+* $Revision:    V.1.4.5 a
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_mat_mult_fast_q15.c
+*
+* Description:  Q15 matrix multiplication (fast variant)
+*
 * Target Processor: Cortex-M4/Cortex-M3
-*  
-* Redistribution and use in source and binary forms, with or without 
+*
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -27,7 +27,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -35,51 +35,51 @@
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.    
+* POSSIBILITY OF SUCH DAMAGE.
 * -------------------------------------------------------------------- */
 
 #include "arm_math.h"
 
-/**    
- * @ingroup groupMatrix    
+/**
+ * @ingroup groupMatrix
  */
 
-/**    
- * @addtogroup MatrixMult    
- * @{    
+/**
+ * @addtogroup MatrixMult
+ * @{
  */
 
 
-/**    
- * @brief Q15 matrix multiplication (fast variant) for Cortex-M3 and Cortex-M4    
- * @param[in]       *pSrcA points to the first input matrix structure    
- * @param[in]       *pSrcB points to the second input matrix structure    
- * @param[out]      *pDst points to output matrix structure    
- * @param[in]		*pState points to the array for storing intermediate results    
- * @return     		The function returns either    
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.    
- *    
- * @details    
- * <b>Scaling and Overflow Behavior:</b>    
- *    
- * \par    
- * The difference between the function arm_mat_mult_q15() and this fast variant is that    
- * the fast variant use a 32-bit rather than a 64-bit accumulator.    
- * The result of each 1.15 x 1.15 multiplication is truncated to        
- * 2.30 format. These intermediate results are accumulated in a 32-bit register in 2.30        
- * format. Finally, the accumulator is saturated and converted to a 1.15 result.        
- *        
- * \par        
- * The fast version has the same overflow behavior as the standard version but provides        
- * less precision since it discards the low 16 bits of each multiplication result.        
- * In order to avoid overflows completely the input signals must be scaled down.        
- * Scale down one of the input matrices by log2(numColsA) bits to        
- * avoid overflows, as a total of numColsA additions are computed internally for each        
- * output element.        
- *        
- * \par    
- * See <code>arm_mat_mult_q15()</code> for a slower implementation of this function    
- * which uses 64-bit accumulation to provide higher precision.    
+/**
+ * @brief Q15 matrix multiplication (fast variant) for Cortex-M3 and Cortex-M4
+ * @param[in]       *pSrcA points to the first input matrix structure
+ * @param[in]       *pSrcB points to the second input matrix structure
+ * @param[out]      *pDst points to output matrix structure
+ * @param[in]       *pState points to the array for storing intermediate results
+ * @return          The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ *
+ * @details
+ * <b>Scaling and Overflow Behavior:</b>
+ *
+ * \par
+ * The difference between the function arm_mat_mult_q15() and this fast variant is that
+ * the fast variant use a 32-bit rather than a 64-bit accumulator.
+ * The result of each 1.15 x 1.15 multiplication is truncated to
+ * 2.30 format. These intermediate results are accumulated in a 32-bit register in 2.30
+ * format. Finally, the accumulator is saturated and converted to a 1.15 result.
+ *
+ * \par
+ * The fast version has the same overflow behavior as the standard version but provides
+ * less precision since it discards the low 16 bits of each multiplication result.
+ * In order to avoid overflows completely the input signals must be scaled down.
+ * Scale down one of the input matrices by log2(numColsA) bits to
+ * avoid overflows, as a total of numColsA additions are computed internally for each
+ * output element.
+ *
+ * \par
+ * See <code>arm_mat_mult_q15()</code> for a slower implementation of this function
+ * which uses 64-bit accumulation to provide higher precision.
  */
 
 arm_status arm_mat_mult_fast_q15(
@@ -113,7 +113,7 @@ arm_status arm_mat_mult_fast_q15(
   q15_t in;                                      /* Temporary variable to hold the input value */
   q15_t inA1, inA2, inB1, inB2;
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif /* #ifndef UNALIGNED_SUPPORT_DISABLE */
 
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch condition */
@@ -135,7 +135,7 @@ arm_status arm_mat_mult_fast_q15(
       /* The pointer px is set to starting address of the column being processed */
       px = pSrcBT + i;
 
-      /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.        
+      /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
        ** a second loop below computes the remaining 1 to 3 samples. */
       while(col > 0u)
       {
@@ -207,25 +207,7 @@ arm_status arm_mat_mult_fast_q15(
 
         /* Store one element in the destination */
         *px = in;
- 
-        /* Update the pointer px to point to the next row of the transposed matrix */
-        px += numRowsB;
 
-        /* Read one element from the row */
-        in = *pInB++;
-
-        /* Store one element in the destination */
-        *px = in;
- 
-        /* Update the pointer px to point to the next row of the transposed matrix */
-        px += numRowsB;
-
-        /* Read one element from the row */
-        in = *pInB++;
-
-        /* Store one element in the destination */
-        *px = in;
- 
         /* Update the pointer px to point to the next row of the transposed matrix */
         px += numRowsB;
 
@@ -235,16 +217,34 @@ arm_status arm_mat_mult_fast_q15(
         /* Store one element in the destination */
         *px = in;
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
-        
-		/* Update the pointer px to point to the next row of the transposed matrix */
+        /* Update the pointer px to point to the next row of the transposed matrix */
+        px += numRowsB;
+
+        /* Read one element from the row */
+        in = *pInB++;
+
+        /* Store one element in the destination */
+        *px = in;
+
+        /* Update the pointer px to point to the next row of the transposed matrix */
+        px += numRowsB;
+
+        /* Read one element from the row */
+        in = *pInB++;
+
+        /* Store one element in the destination */
+        *px = in;
+
+#endif /* #ifndef UNALIGNED_SUPPORT_DISABLE */
+
+        /* Update the pointer px to point to the next row of the transposed matrix */
         px += numRowsB;
 
         /* Decrement the column loop counter */
         col--;
       }
 
-      /* If the columns of pSrcB is not a multiple of 4, compute any remaining output samples here.        
+      /* If the columns of pSrcB is not a multiple of 4, compute any remaining output samples here.
        ** No loop unrolling is used. */
       col = numColsB % 0x4u;
 
@@ -285,7 +285,7 @@ arm_status arm_mat_mult_fast_q15(
       /* For every row wise process, the column loop counter is to be initiated */
       col = numColsB;
 
-      /* For every row wise process, the pIn2 pointer is set        
+      /* For every row wise process, the pIn2 pointer is set
        ** to the starting address of the transposed pSrcB data */
       pInB = pSrcBT;
 
@@ -311,7 +311,7 @@ arm_status arm_mat_mult_fast_q15(
         pInB  = pSrcBT + j;
         pInA2 = pInA + numColsA;
         pInB2 = pInB + numRowsB;
-        
+
         /* Read in two elements at once - alows dual MAC instruction */
         colCnt = numColsA >> 1;
 #else
@@ -355,7 +355,7 @@ arm_status arm_mat_mult_fast_q15(
           pInA += 4;
           pInB += 4;
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif /* #ifndef UNALIGNED_SUPPORT_DISABLE */
 
           /* Decrement the loop counter */
           colCnt--;
@@ -467,7 +467,7 @@ arm_status arm_mat_mult_fast_q15(
 
         /* Decrement the row loop counter */
         row--;
-      } 
+      }
     }
 
     /* Compute remaining output row */
@@ -522,7 +522,7 @@ arm_status arm_mat_mult_fast_q15(
       }
     }
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif /* #ifndef UNALIGNED_SUPPORT_DISABLE */
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
@@ -532,6 +532,6 @@ arm_status arm_mat_mult_fast_q15(
   return (status);
 }
 
-/**        
- * @} end of MatrixMult group        
+/**
+ * @} end of MatrixMult group
  */

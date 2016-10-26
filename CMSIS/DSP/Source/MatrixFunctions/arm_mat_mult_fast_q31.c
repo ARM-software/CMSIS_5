@@ -1,24 +1,24 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015
-* $Revision: 	V.1.4.5
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_mat_mult_fast_q31.c    
-*    
-* Description:	 Q31 matrix multiplication (fast variant).    
-*    
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+*
+* $Date:        26. October 2016
+* $Revision:    V.1.4.5 a
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_mat_mult_fast_q31.c
+*
+* Description:  Q31 matrix multiplication (fast variant).
+*
 * Target Processor: Cortex-M4/Cortex-M3
-*  
-* Redistribution and use in source and binary forms, with or without 
+*
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -27,7 +27,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -35,49 +35,49 @@
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.   
+* POSSIBILITY OF SUCH DAMAGE.
 * -------------------------------------------------------------------- */
 
 #include "arm_math.h"
 
-/**    
- * @ingroup groupMatrix    
+/**
+ * @ingroup groupMatrix
  */
 
-/**    
- * @addtogroup MatrixMult    
- * @{    
+/**
+ * @addtogroup MatrixMult
+ * @{
  */
 
-/**    
- * @brief Q31 matrix multiplication (fast variant) for Cortex-M3 and Cortex-M4    
- * @param[in]       *pSrcA points to the first input matrix structure    
- * @param[in]       *pSrcB points to the second input matrix structure    
- * @param[out]      *pDst points to output matrix structure    
- * @return     		The function returns either    
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.    
- *    
- * @details    
- * <b>Scaling and Overflow Behavior:</b>    
- *    
- * \par    
- * The difference between the function arm_mat_mult_q31() and this fast variant is that    
- * the fast variant use a 32-bit rather than a 64-bit accumulator.    
- * The result of each 1.31 x 1.31 multiplication is truncated to    
- * 2.30 format. These intermediate results are accumulated in a 32-bit register in 2.30    
- * format. Finally, the accumulator is saturated and converted to a 1.31 result.    
- *    
- * \par    
- * The fast version has the same overflow behavior as the standard version but provides    
- * less precision since it discards the low 32 bits of each multiplication result.    
- * In order to avoid overflows completely the input signals must be scaled down.    
- * Scale down one of the input matrices by log2(numColsA) bits to    
- * avoid overflows, as a total of numColsA additions are computed internally for each    
- * output element.    
- *    
- * \par    
- * See <code>arm_mat_mult_q31()</code> for a slower implementation of this function    
- * which uses 64-bit accumulation to provide higher precision.    
+/**
+ * @brief Q31 matrix multiplication (fast variant) for Cortex-M3 and Cortex-M4
+ * @param[in]       *pSrcA points to the first input matrix structure
+ * @param[in]       *pSrcB points to the second input matrix structure
+ * @param[out]      *pDst points to output matrix structure
+ * @return          The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ *
+ * @details
+ * <b>Scaling and Overflow Behavior:</b>
+ *
+ * \par
+ * The difference between the function arm_mat_mult_q31() and this fast variant is that
+ * the fast variant use a 32-bit rather than a 64-bit accumulator.
+ * The result of each 1.31 x 1.31 multiplication is truncated to
+ * 2.30 format. These intermediate results are accumulated in a 32-bit register in 2.30
+ * format. Finally, the accumulator is saturated and converted to a 1.31 result.
+ *
+ * \par
+ * The fast version has the same overflow behavior as the standard version but provides
+ * less precision since it discards the low 32 bits of each multiplication result.
+ * In order to avoid overflows completely the input signals must be scaled down.
+ * Scale down one of the input matrices by log2(numColsA) bits to
+ * avoid overflows, as a total of numColsA additions are computed internally for each
+ * output element.
+ *
+ * \par
+ * See <code>arm_mat_mult_q31()</code> for a slower implementation of this function
+ * which uses 64-bit accumulation to provide higher precision.
  */
 
 arm_status arm_mat_mult_fast_q31(
@@ -134,7 +134,7 @@ arm_status arm_mat_mult_fast_q31(
       /* For every row wise process, the column loop counter is to be initiated */
       col = numColsB;
 
-      /* For every row wise process, the pIn2 pointer is set    
+      /* For every row wise process, the pIn2 pointer is set
        ** to the starting address of the pSrcB data */
       pInB = pSrcB->pData;
 
@@ -204,7 +204,7 @@ arm_status arm_mat_mult_fast_q31(
 
           pInA += 4u;
 #endif
-          
+
           /* Decrement the loop counter */
           colCnt--;
         }
@@ -224,10 +224,10 @@ arm_status arm_mat_mult_fast_q31(
         /* Convert the result from 2.30 to 1.31 format and store in destination buffer */
         *px++  = sum << 1;
 
-#ifndef ARM_MATH_CM0_FAMILY        
-        *px++  = sum2 << 1; 
+#ifndef ARM_MATH_CM0_FAMILY
+        *px++  = sum2 << 1;
         *px2++ = sum3 << 1;
-        *px2++ = sum4 << 1; 
+        *px2++ = sum4 << 1;
         j += 2;
 #endif
 
@@ -238,7 +238,7 @@ arm_status arm_mat_mult_fast_q31(
 
       i = i + numColsA;
 
-#ifndef ARM_MATH_CM0_FAMILY  
+#ifndef ARM_MATH_CM0_FAMILY
       i = i + numColsA;
       px = px2 + (numColsB & 1u);
       px2 = px + numColsB;
@@ -314,7 +314,7 @@ arm_status arm_mat_mult_fast_q31(
 
         /* Decrement the row loop counter */
         row--;
-      } 
+      }
     }
 
     /* Compute remaining output row */
@@ -381,7 +381,7 @@ arm_status arm_mat_mult_fast_q31(
       }
     }
 
-#endif	/*	#ifndef ARM_MATH_CM0_FAMILY	*/
+#endif /* #ifndef ARM_MATH_CM0_FAMILY */
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
@@ -391,6 +391,6 @@ arm_status arm_mat_mult_fast_q31(
   return (status);
 }
 
-/**    
- * @} end of MatrixMult group    
+/**
+ * @} end of MatrixMult group
  */
