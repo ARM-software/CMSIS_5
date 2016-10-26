@@ -572,8 +572,12 @@ osThreadId_t os_svcThreadNew (os_thread_func_t func, void *argument, const osThr
         return NULL;
       }
     }
-    if ((priority < osPriorityIdle) || (priority > osPriorityISR)) {
-      return NULL;
+    if (priority == osPriorityNone) {
+      priority = osPriorityNormal;
+    } else {
+      if ((priority < osPriorityIdle) || (priority > osPriorityISR)) {
+        return NULL;
+      }
     }
   } else {
     name       = NULL;
