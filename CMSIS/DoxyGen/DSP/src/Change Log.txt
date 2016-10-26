@@ -4,14 +4,17 @@
 <hr>
 <b>Version 1.4.9 (no source code change [still labeled 1.4.5]) 2016/09/26</b>
 
+Modified arm_mat_mult_fast_q15.c, arm_mat_mult_fast_q31.c
+- performance optimizations for \ref arm_mat_mult_fast_q15() and \ref arm_mat_mult_fast_q31().
+
 Modified arm_conv_partial_q15.c
-- corrected arm_conv_partial_q15() for Cortex-M7 based cores.
+- corrected \ref arm_conv_partial_q15() for Cortex-M7 based cores.
 
 Modified arm_conv_q15.c
-- corrected arm_conv_q15() for Cortex-M7 based cores.
+- corrected \ref arm_conv_q15() for Cortex-M7 based cores.
 
 Modified arm_correlate_q15.c
-- corrected arm_correlate_q15() for Cortex-M7 based cores.
+- corrected \ref arm_correlate_q15() for Cortex-M7 based cores.
 
 
 <hr>

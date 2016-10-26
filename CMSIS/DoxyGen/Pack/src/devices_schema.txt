@@ -1510,6 +1510,18 @@ all processors, no processor must be specified in \elem{Pname}.
     <td>optional</td>
   </tr>
   <tr>
+    <td>Dtz</td>
+    <td>Specifies whether an ARMv8M based device implements TrustZone. Use predefined values as listed in the table \ref DtzEnum "Device TZ".</td>
+    <td>DtzEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Ddsp</td>
+    <td>Specifies whether an ARMv8M based device supports the DSP instructions set. Use predefined values as listed in the table \ref DdspEnum "Device DSP".</td>
+    <td>DdspEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <td>Dendian</td>
     <td>Specifies the endianess of the processor. Use predefined values as listed in the table \ref DendianEnum "Endinaness".</td>
     <td>DendianEnum</td>
@@ -1789,9 +1801,18 @@ These values can be used in the elements:
     <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m1.php" target="_blank">ARM Cortex-M1</a> processor based device</td>
   </tr>
   <tr>
+    <td class="XML-Token">Cortex-M23</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" target="_blank">ARM Cortex-M23</a> processor based device</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Cortex-M3</td>
     <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m3.php" target="_blank">ARM Cortex-M3</a> processor based device</td>
   </tr>
+  <tr>
+    <td class="XML-Token">Cortex-M33</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" target="_blank">ARM Cortex-M33</a> processor based device</td>
+  </tr>
+
   <tr>
     <td class="XML-Token">Cortex-M4</td>
     <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m4-processor.php" target="_blank">ARM Cortex-M4</a> processor based device</td>
@@ -1896,6 +1917,59 @@ The values can be used in the elements:
 </table>
 
 <p>&nbsp;</p>		
+
+\anchor DtzEnum <b>Table: Device Trust Zone </b>
+
+The table shows predefined values that identify whether a CPU implements TrustZone(TZ).
+The values can be used in the elements:
+- \ref element_accept  
+- \ref element_require 
+- \ref element_deny  
+- \ref element_processor
+
+<table class="cmtable" summary="Enumeration: DtzEnum">
+  <tr>
+    <th>Dtz=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">TZ</td>
+    <td>TrustZone is present</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">NO_TZ</td>
+    <td>No TrustZone is present</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>		
+
+\anchor DdspEnum <b>Table: Device implements DSP Instructions</b>
+
+The table shows predefined values that identify whether a CPU implements DSP instructions (DSP).
+The values can be used in the elements:
+- \ref element_accept  
+- \ref element_require 
+- \ref element_deny  
+- \ref element_processor
+
+<table class="cmtable" summary="Enumeration: DdspEnum">
+  <tr>
+    <th>Ddsp=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">DSP</td>
+    <td>DSP instructions supported</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">NO_DSP</td>
+    <td>No DSP instructions supported</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>		
+
 
 \anchor DendianEnum <b>Table: Endianness</b>
 
