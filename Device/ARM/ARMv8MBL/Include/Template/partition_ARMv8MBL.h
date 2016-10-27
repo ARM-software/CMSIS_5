@@ -2,7 +2,7 @@
  * @file     partition_ARMv8MBL.h
  * @brief    CMSIS-CORE Initial Setup for Secure / Non-Secure Zones for ARMv8M
  * @version  V5.00
- * @date     26. September 2016
+ * @date     27. October 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -30,7 +30,7 @@
 */
 
 /*
-// <e>Initialize Secure Attribute Unit (SAU) CTRL register
+// <e>Initialize Security Attribution Unit (SAU) CTRL register
 */
 #define SAU_INIT_CTRL          1
 
@@ -54,7 +54,7 @@
 */
 
 /*
-// <h>Initialize Secure Attribute Unit (SAU) Address Regions
+// <h>Initialize Security Attribution Unit (SAU) Address Regions
 // <i>SAU configuration specifies regions to be one of:
 // <i> - Secure and Non-Secure Callable
 // <i> - Non-Secure
