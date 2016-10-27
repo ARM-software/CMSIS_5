@@ -8,6 +8,9 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.0-Beta15">
+      Reworked conditions.
+    </release>
     <release version="5.0.0-Beta14">
       CMSIS-RTOS RTX 4.82 (see revision history for details)
     </release>
@@ -386,7 +389,7 @@ The ARMv8MBL processor is brand new.
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMv8MBL">
-        <processor Dcore="ARMV8MBL" DcoreVersion="r0p0" Dfpu="0" Dmpu="0" Dendian="Little-endian" Dclock="10000000"/>
+        <processor Dcore="ARMV8MBL" DcoreVersion="r0p0" Dfpu="0" Dmpu="1" Dtz="1" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MBL/Include/ARMv8MBL.h" define="ARMv8MBL"/>
       </device>
     </family>
@@ -403,17 +406,17 @@ The ARMv8MML processor is brand new.
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMv8MML">
-        <processor Dcore="ARMV8MML" DcoreVersion="r0p0" Dfpu="0" Dmpu="0" Dendian="Little-endian" Dclock="10000000"/>
+        <processor Dcore="ARMV8MML" DcoreVersion="r0p0" Dfpu="0" Dmpu="1" Dtz="1" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML.h" define="ARMv8MML"/>
       </device>
 
       <device Dname="ARMv8MML_SP">
-        <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="SP_FPU" Dmpu="1" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="SP_FPU" Dmpu="1" Dtz="1" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_SP.h" define="ARMv8MML_SP"/>
       </device>
 
       <device Dname="ARMv8MML_DP">
-        <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="1" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="1" Dtz="1" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_DP.h" define="ARMv8MML_DP"/>
       </device>
     </family>
@@ -531,6 +534,7 @@ The ARMv8MML processor is brand new.
 
   <!-- conditions are dependency rules that can apply to a component or an individual file -->
   <conditions>
+    <!-- compiler -->
     <condition id="ARMCC">
       <require Tcompiler="ARMCC"/>
     </condition>
@@ -544,140 +548,45 @@ The ARMv8MML processor is brand new.
       <accept Tcompiler="ARMCC"/>
       <accept Tcompiler="GCC"/>
     </condition>
+    <condition id="ARMCC GCC IAR">
+      <accept Tcompiler="ARMCC"/>
+      <accept Tcompiler="GCC"/>
+      <accept Tcompiler="IAR"/>
+    </condition>
 
-    <condition id="Cortex-M Device">
-      <description>Cortex-M processor based device: one of CM0, CM0+, CM3, CM4, CM7, SC000, SC3000</description>
+    <!-- ARM architecture -->
+    <condition id="ARMv6-M Device">
+      <description>ARMv6-M architecture based device</description>
       <accept Dcore="Cortex-M0"/>
       <accept Dcore="Cortex-M0+"/>
+      <accept Dcore="SC000"/>
+    </condition>
+    <condition id="ARMv7-M Device">
+      <description>ARMv7-M architecture based device</description>
       <accept Dcore="Cortex-M3"/>
       <accept Dcore="Cortex-M4"/>
       <accept Dcore="Cortex-M7"/>
-      <accept Dcore="SC000"/>
       <accept Dcore="SC300"/>
     </condition>
-
-    <condition id="Cortex-M ARMv8-M Device">
-      <description>Cortex-M processor based device: one of CM0, CM0+, CM3, CM4, CM7, SC000, SC3000, ARMv8MBL, ARMv8MML</description>
-      <accept Dcore="Cortex-M0"/>
-      <accept Dcore="Cortex-M0+"/>
-      <accept Dcore="Cortex-M3"/>
-      <accept Dcore="Cortex-M4"/>
-      <accept Dcore="Cortex-M7"/>
-      <accept Dcore="SC000"/>
-      <accept Dcore="SC300"/>
-      <accept Dcore="ARMV8MBL"/>
-      <accept Dcore="ARMV8MML"/>
-    </condition>
-
     <condition id="ARMv8-M Device">
-      <description>ARMv8-M architecture based device: ARMv8MBL, ARMv8MML</description>
+      <description>ARMv8-M architecture based device</description>
       <accept Dcore="ARMV8MBL"/>
       <accept Dcore="ARMV8MML"/>
     </condition>
-
-    <condition id="CMSIS Core">
-      <description>CMSIS CORE processor and device specific Startup files</description>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
+    <condition id="ARMv8-M TZ Device">
+      <description>ARMv8-M architecture based device with TrustZone</description>
+      <require condition="ARMv8-M Device"/>
     </condition>
-
-    <!-- Device Startup -->
-    <condition id="ARMCM0 CMSIS">
-      <description>Generic ARM Cortex-M0 device startup and depends on CMSIS Core</description>
-      <require Dvendor="ARM:82" Dname="ARMCM0"/>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
+    <condition id="ARMv6_7-M Device">
+      <description>ARMv6_7-M architecture based device</description>
+      <accept condition="ARMv6-M Device"/>
+      <accept condition="ARMv7-M Device"/>
     </condition>
-    <condition id="ARMCM0 CMSIS GCC">
-      <description>Generic ARM Cortex-M0 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMCM0 CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
-
-    <condition id="ARMCM0+ CMSIS">
-      <description>Generic ARM Cortex-M0+ device startup and depends on CMSIS Core</description>
-      <require Dvendor="ARM:82" Dname="ARMCM0P"/>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMCM0+ CMSIS GCC">
-      <description>Generic ARM Cortex-M0+ device startup and depends CMSIS Core requiring GCC</description>
-      <require condition="ARMCM0+ CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
-
-    <condition id="ARMCM3 CMSIS">
-      <description>Generic ARM Cortex-M3 device startup and depends on CMSIS Core</description>
-      <require Dvendor="ARM:82" Dname="ARMCM3"/>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMCM3 CMSIS GCC">
-      <description>Generic ARM Cortex-M3 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMCM3 CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
-
-    <condition id="ARMCM4 CMSIS">
-      <description>Generic ARM Cortex-M4 device startup and depends on CMSIS Core</description>
-      <require Dvendor="ARM:82" Dname="ARMCM4*"/>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMCM4 CMSIS GCC">
-      <description>Generic ARM Cortex-M4 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMCM4 CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
-
-    <condition id="ARMCM7 CMSIS">
-      <description>Generic ARM Cortex-M7 device startup and depends on CMSIS Core</description>
-      <require Dvendor="ARM:82" Dname="ARMCM7*"/>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMCM7 CMSIS GCC">
-      <description>Generic ARM Cortex-M7 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMCM7 CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
-
-    <condition id="ARMSC000 CMSIS">
-      <description>Generic ARM SC000 device startup and depends on CMSIS Core</description>
-      <require Dvendor="ARM:82" Dname="ARMSC000"/>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMSC000 CMSIS GCC">
-      <description>Generic ARM SC000 device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMSC000 CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
-
-    <condition id="ARMSC300 CMSIS">
-      <description>Generic ARM SC300 device startup and depends on CMSIS Core</description>
-      <require Dvendor="ARM:82" Dname="ARMSC300"/>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMSC300 CMSIS GCC">
-      <description>Generic ARM SC300 device startup and dependson CMSIS Core requiring GCC</description>
-      <require condition="ARMSC300 CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
-
-    <condition id="ARMv8MBL CMSIS">
-      <description>Generic ARM ARMv8MBL device startup and depends on CMSIS Core</description>
-      <require Dvendor="ARM:82" Dname="ARMv8MBL"/>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMv8MBL CMSIS GCC">
-      <description>Generic ARM ARMv8MBL device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMv8MBL CMSIS"/>
-      <require condition="GCC"/>
-    </condition>
-
-    <condition id="ARMv8MML CMSIS">
-      <description>Generic ARM ARMv8MML device startup and depends on CMSIS Core</description>
-      <require Dvendor="ARM:82" Dname="ARMv8MML*"/>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-    <condition id="ARMv8MML CMSIS GCC">
-      <description>Generic ARM ARMv8MML device startup and depends on CMSIS Core requiring GCC</description>
-      <require condition="ARMv8MML CMSIS"/>
-      <require condition="GCC"/>
+    <condition id="ARMv6_7_8-M Device">
+      <description>ARMv6_7_8-M architecture based device</description>
+      <accept condition="ARMv6-M Device"/>
+      <accept condition="ARMv7-M Device"/>
+      <accept condition="ARMv8-M Device"/>
     </condition>
 
     <!-- ARM core -->
@@ -729,6 +638,14 @@ The ARMv8MML processor is brand new.
       <description>ARMv8-M Mainline processor based device using Floating Point Unit</description>
       <accept Dcore="ARMV8MML" Dfpu="SP_FPU"/>
       <accept Dcore="ARMV8MML" Dfpu="DP_FPU"/>
+    </condition>
+    <condition id="ARMv8MML_SP">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP)</description>
+      <require Dcore="ARMV8MML" Dfpu="SP_FPU"/>
+    </condition>
+    <condition id="ARMv8MML_DP">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP)</description>
+      <require Dcore="ARMV8MML" Dfpu="DP_FPU"/>
     </condition>
 
     <!-- ARMCC compiler -->
@@ -894,6 +811,11 @@ The ARMv8MML processor is brand new.
       <require condition="ARMv8MBL_ARMCC"/>
       <require Dendian="Little-endian"/>
     </condition>
+    <condition id="ARMv8MBL_BE_ARMCC">
+      <description>ARMv8-M Baseline processor based device in big endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MBL_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
 
     <condition id="ARMv8MML_ARMCC">
       <description>ARMv8-M Mainline processor based device for the ARM Compiler</description>
@@ -905,6 +827,11 @@ The ARMv8MML processor is brand new.
       <require condition="ARMv8MML_ARMCC"/>
       <require Dendian="Little-endian"/>
     </condition>
+    <condition id="ARMv8MML_BE_ARMCC">
+      <description>ARMv8-M Mainline processor based device in big endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MML_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
 
     <condition id="ARMv8MML_FP_ARMCC">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit for the ARM Compiler</description>
@@ -915,6 +842,11 @@ The ARMv8MML processor is brand new.
       <description>ARMv8-M Mainline processor based device using Floating Point Unit in little endian mode for the ARM Compiler</description>
       <require condition="ARMv8MML_FP_ARMCC"/>
       <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_FP_BE_ARMCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit in big endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MML_FP_ARMCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
     <!-- GCC compiler -->
@@ -1080,6 +1012,11 @@ The ARMv8MML processor is brand new.
       <require condition="ARMv8MBL_GCC"/>
       <require Dendian="Little-endian"/>
     </condition>
+    <condition id="ARMv8MBL_BE_GCC">
+      <description>ARMv8-M Baseline processor based device in big endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MBL_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
 
     <condition id="ARMv8MML_GCC">
       <description>ARMv8-M Mainline processor based device for the GCC Compiler</description>
@@ -1091,6 +1028,11 @@ The ARMv8MML processor is brand new.
       <require condition="ARMv8MML_GCC"/>
       <require Dendian="Little-endian"/>
     </condition>
+    <condition id="ARMv8MML_BE_GCC">
+      <description>ARMv8-M Mainline processor based device in big endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MML_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
 
     <condition id="ARMv8MML_FP_GCC">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit for the GCC Compiler</description>
@@ -1101,6 +1043,11 @@ The ARMv8MML processor is brand new.
       <description>ARMv8-M Mainline processor based device using Floating Point Unit in little endian mode for the GCC Compiler</description>
       <require condition="ARMv8MML_FP_GCC"/>
       <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_FP_BE_GCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit in big endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MML_FP_GCC"/>
+      <require Dendian="Big-endian"/>
     </condition>
 
     <!-- IAR compiler -->
@@ -1232,65 +1179,156 @@ The ARMv8MML processor is brand new.
       <require Dendian="Big-endian"/>
     </condition>
 
+    <!-- conditions selecting single devices and CMSIS Core -->
+    <!-- used for component startup, GCC version is used for C-Startup -->
+    <condition id="ARMCM0 CMSIS">
+      <description>Generic ARM Cortex-M0 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCM0"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMCM0 CMSIS GCC">
+      <description>Generic ARM Cortex-M0 device startup and depends on CMSIS Core requiring GCC</description>
+      <require condition="ARMCM0 CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
+    <condition id="ARMCM0+ CMSIS">
+      <description>Generic ARM Cortex-M0+ device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCM0P"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMCM0+ CMSIS GCC">
+      <description>Generic ARM Cortex-M0+ device startup and depends CMSIS Core requiring GCC</description>
+      <require condition="ARMCM0+ CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
+    <condition id="ARMCM3 CMSIS">
+      <description>Generic ARM Cortex-M3 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCM3"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMCM3 CMSIS GCC">
+      <description>Generic ARM Cortex-M3 device startup and depends on CMSIS Core requiring GCC</description>
+      <require condition="ARMCM3 CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
+    <condition id="ARMCM4 CMSIS">
+      <description>Generic ARM Cortex-M4 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCM4*"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMCM4 CMSIS GCC">
+      <description>Generic ARM Cortex-M4 device startup and depends on CMSIS Core requiring GCC</description>
+      <require condition="ARMCM4 CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
+    <condition id="ARMCM7 CMSIS">
+      <description>Generic ARM Cortex-M7 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCM7*"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMCM7 CMSIS GCC">
+      <description>Generic ARM Cortex-M7 device startup and depends on CMSIS Core requiring GCC</description>
+      <require condition="ARMCM7 CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
+    <condition id="ARMSC000 CMSIS">
+      <description>Generic ARM SC000 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMSC000"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMSC000 CMSIS GCC">
+      <description>Generic ARM SC000 device startup and depends on CMSIS Core requiring GCC</description>
+      <require condition="ARMSC000 CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
+    <condition id="ARMSC300 CMSIS">
+      <description>Generic ARM SC300 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMSC300"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMSC300 CMSIS GCC">
+      <description>Generic ARM SC300 device startup and dependson CMSIS Core requiring GCC</description>
+      <require condition="ARMSC300 CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
+    <condition id="ARMv8MBL CMSIS">
+      <description>Generic ARM ARMv8MBL device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMv8MBL"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMv8MBL CMSIS GCC">
+      <description>Generic ARM ARMv8MBL device startup and depends on CMSIS Core requiring GCC</description>
+      <require condition="ARMv8MBL CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
+    <condition id="ARMv8MML CMSIS">
+      <description>Generic ARM ARMv8MML device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMv8MML*"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMv8MML CMSIS GCC">
+      <description>Generic ARM ARMv8MML device startup and depends on CMSIS Core requiring GCC</description>
+      <require condition="ARMv8MML CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
     <!-- CMSIS DSP -->
     <condition id="CMSIS DSP">
       <description>CMSIS DSP Library is for ARM Cortex-M Devices only and is prebuild for one of the compilers ARMCC, GCC or IAR</description>
-      <require condition="Cortex-M Device"/>
+      <require condition="ARMv6_7-M Device"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
-      <accept Tcompiler="GCC"/>
-      <accept Tcompiler="ARMCC"/>
-      <accept Tcompiler="IAR"/>
+      <require condition="ARMCC GCC IAR"/>
     </condition>
 
     <!-- RTOS RTX -->
     <condition id="RTOS RTX">
       <description>Components required for RTOS RTX</description>
-      <require condition="Cortex-M Device"/>
+      <require condition="ARMv6_7-M Device"/>
+      <require condition="ARMCC GCC IAR"/>
       <require Cclass="Device" Cgroup="Startup"/>
       <deny    Cclass="CMSIS"  Cgroup="RTOS2" Csub="Keil RTX5"/>
     </condition>
     <condition id="RTOS RTX5">
       <description>Components required for RTOS RTX5</description>
-      <require condition="Cortex-M Device"/>
+      <require condition="ARMv6_7_8-M Device"/>
+      <require condition="ARMCC GCC"/>
       <require Cclass="CMSIS"  Cgroup="RTOS2" Csub="Keil RTX5"/>
     </condition>
     <condition id="RTOS2 RTX5">
       <description>Components required for RTOS2 RTX5</description>
-      <require condition="Cortex-M ARMv8-M Device"/>
-      <require Cclass="CMSIS"  Cgroup="CORE"/>
-      <require Cclass="Device" Cgroup="Startup"/>
-      <deny    Cclass="CMSIS"  Cgroup="RTOS" Csub="Keil RTX"/>
-    </condition>
-    <condition id="RTOS2 RTX5 ARMv8M">
-      <description>Components required for RTOS2 RTX5 on ARMv8M</description>
-      <accept  Dcore="ARMV8MBL"/>
-      <accept  Dcore="ARMV8MML"/>
+      <require condition="ARMv6_7_8-M Device"/>
+      <require condition="ARMCC GCC"/>
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
     </condition>
-    <condition id="RTOS2 RTX5 Debug">
-      <description>Components required for RTOS2 RTX5 (Debug)</description>
-      <require condition="RTOS2 RTX5"/>
-      <require Cclass="Compiler" Cgroup="Event Recorder"/>
-    </condition>
-    <condition id="RTOS2 RTX5 ARMv8M Debug">
-      <description>Components required for RTOS2 RTX5 on ARMv8M (Debug)</description>
-      <require condition="RTOS2 RTX5 ARMv8M"/>
-      <require Cclass="Compiler" Cgroup="Event Recorder"/>
+    <condition id="RTOS2 RTX5 NS">
+      <description>Components required for RTOS2 RTX5 in Non-Secure Domain</description>
+      <require condition="ARMv8-M TZ Device"/>
+      <require condition="ARMCC GCC"/>
+      <require Cclass="CMSIS"  Cgroup="CORE"/>
+      <require Cclass="Device" Cgroup="Startup"/>
     </condition>
 
   </conditions>
 
   <components>
     <!-- CMSIS-Core component -->
-    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.0.0"  condition="Cortex-M ARMv8-M Device" >
+    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.0.0"  condition="ARMv6_7_8-M Device" >
       <description>CMSIS-CORE for Cortex-M, SC000, SC300, ARMv8-M</description>
       <files>
         <!-- CPU independent -->
         <file category="doc"     name="CMSIS/Documentation/Core/html/index.html"/>
         <file category="include" name="CMSIS/Include/"/>
         <!-- Code template -->
-        <file category="sourceC" attr="template" name="CMSIS/Core/Template/ARMv8-M/main_s.c" select="CMSIS-Core 'main' function for ARMv8-M" condition="ARMv8-M Device"/>
+        <file category="sourceC" attr="template" name="CMSIS/Core/Template/ARMv8-M/main_s.c" select="CMSIS-Core 'main' function for ARMv8-M" condition="ARMv8-M TZ Device"/>
       </files>
     </component>
 
@@ -1309,7 +1347,7 @@ The ARMv8MML processor is brand new.
         <file category="sourceC"      name="Device/ARM/ARMCM0/Source/system_ARMCM0.c"      version="1.0.0" attr="config"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup"   Cversion="1.0.1" condition="ARMCM0 CMSIS GCC">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.1" condition="ARMCM0 CMSIS GCC">
       <description>System and Startup for Generic ARM Cortex-M0 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1335,7 +1373,7 @@ The ARMv8MML processor is brand new.
         <file category="sourceC"      name="Device/ARM/ARMCM0plus/Source/system_ARMCM0plus.c"      version="1.0.0" attr="config"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup"   Cversion="1.0.1" condition="ARMCM0+ CMSIS GCC">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.1" condition="ARMCM0+ CMSIS GCC">
       <description>System and Startup for Generic ARM Cortex-M0+ device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1361,7 +1399,7 @@ The ARMv8MML processor is brand new.
         <file category="sourceC"      name="Device/ARM/ARMCM3/Source/system_ARMCM3.c"      version="1.0.0" attr="config"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup"   Cversion="1.0.1" condition="ARMCM3 CMSIS GCC">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.1" condition="ARMCM3 CMSIS GCC">
       <description>System and Startup for Generic ARM Cortex-M3 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1387,7 +1425,7 @@ The ARMv8MML processor is brand new.
         <file category="sourceC"      name="Device/ARM/ARMCM4/Source/system_ARMCM4.c"      version="1.0.0" attr="config"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup"   Cversion="1.0.1" condition="ARMCM4 CMSIS GCC">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.1" condition="ARMCM4 CMSIS GCC">
       <description>System and Startup for Generic ARM Cortex-M4 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1413,7 +1451,7 @@ The ARMv8MML processor is brand new.
         <file category="sourceC"      name="Device/ARM/ARMCM7/Source/system_ARMCM7.c"      version="1.0.0" attr="config"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup"   Cversion="1.0.1" condition="ARMCM7 CMSIS GCC">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.1" condition="ARMCM7 CMSIS GCC">
       <description>System and Startup for Generic ARM Cortex-M7 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1439,7 +1477,7 @@ The ARMv8MML processor is brand new.
         <file category="sourceC"      name="Device/ARM/ARMSC000/Source/system_ARMSC000.c"      version="1.0.0" attr="config"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup"   Cversion="1.0.1" condition="ARMSC000 CMSIS GCC">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.1" condition="ARMSC000 CMSIS GCC">
       <description>System and Startup for Generic ARM SC000 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1465,7 +1503,7 @@ The ARMv8MML processor is brand new.
         <file category="sourceC"      name="Device/ARM/ARMSC300/Source/system_ARMSC300.c"      version="1.0.0" attr="config"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup"   Cversion="1.0.1" condition="ARMSC300 CMSIS GCC">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.1" condition="ARMSC300 CMSIS GCC">
       <description>System and Startup for Generic ARM SC300 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1492,7 +1530,7 @@ The ARMv8MML processor is brand new.
         <file category="header"       name="Device/ARM/ARMv8MBL/Include/Template/partition_ARMv8MBL.h" version="1.0.0" attr="config"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup"   Cversion="1.0.0" condition="ARMv8MBL CMSIS GCC">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMv8MBL CMSIS GCC">
       <description>System and Startup for Generic ARM ARMv8MBL device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1501,6 +1539,8 @@ The ARMv8MML processor is brand new.
         <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/GCC/startup_ARMv8MBL.c" version="1.0.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/GCC/gcc_arm.ld"         version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/system_ARMv8MBL.c"      version="1.0.0" attr="config"/>
+        <!-- SAU configuration -->
+        <file category="header"       name="Device/ARM/ARMv8MBL/Include/Template/partition_ARMv8MBL.h" version="1.0.0" attr="config"/>
       </files>
     </component>
 
@@ -1519,7 +1559,7 @@ The ARMv8MML processor is brand new.
         <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.0.0" attr="config"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup"   Cversion="1.0.0" condition="ARMv8MML CMSIS GCC">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMv8MML CMSIS GCC">
       <description>System and Startup for Generic ARM ARMv8MML device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1528,6 +1568,8 @@ The ARMv8MML processor is brand new.
         <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/GCC/startup_ARMv8MML.c" version="1.0.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"         version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"      version="1.0.0" attr="config"/>
+        <!-- SAU configuration -->
+        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.0.0" attr="config"/>
       </files>
     </component>
 
@@ -1538,8 +1580,8 @@ The ARMv8MML processor is brand new.
       <files>
         <!-- CPU independent -->
         <file category="doc" name="CMSIS/Documentation/DSP/html/index.html"/>
-        <!-- <file category="header" name="CMSIS/Include/arm_common_tables.h"/> -->
         <file category="header" name="CMSIS/Include/arm_math.h"/>
+
         <!-- CPU and Compiler dependent -->
         <!-- ARMCC -->
         <file category="library" condition="CM0_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM0l_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
@@ -1706,7 +1748,7 @@ The ARMv8MML processor is brand new.
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Release NS" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 ARMv8M">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Release NS" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 NS">
       <description>CMSIS-RTOS2 RTX5 for ARMv8-M Non-Secure Domain (Release)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -1741,7 +1783,7 @@ The ARMv8MML processor is brand new.
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Debug" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 Debug">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Debug" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5">
       <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and ARMv8-M (Debug)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -1799,7 +1841,7 @@ The ARMv8MML processor is brand new.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.s" condition="ARMv8MML_FP_GCC"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Debug NS" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 ARMv8M Debug">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Debug NS" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 NS">
       <description>CMSIS-RTOS2 RTX5 for ARMv8-M Non-Secure Domain (Debug)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -1868,7 +1910,7 @@ The ARMv8MML processor is brand new.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM0P"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM3"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM4_FP"/>
-      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM7_DP"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM7_SP"/>
     </board>
   </boards>
 
