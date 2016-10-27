@@ -674,9 +674,11 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
  * Otherwise, use general registers, specified by constraint "r" */
 #if defined (__thumb__) && !defined (__thumb2__)
 #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+#define __CMSIS_GCC_RW_REG(r) "+l" (r)
 #define __CMSIS_GCC_USE_REG(r) "l" (r)
 #else
 #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+#define __CMSIS_GCC_RW_REG(r) "+r" (r)
 #define __CMSIS_GCC_USE_REG(r) "r" (r)
 #endif
 
