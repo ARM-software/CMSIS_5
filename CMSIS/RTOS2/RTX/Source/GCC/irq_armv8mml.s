@@ -62,7 +62,8 @@ SVC_Handler:
         MRS      R0,PSP                 // Get PSP
         LDR      R1,[R0,#24]            // Load saved PC from stack
         LDRB     R1,[R1,#-2]            // Load SVC number
-        CBNZ     R1,SVC_User            // Branch if not SVC 0
+        CMP      R1,#0
+        BNE      SVC_User               // Branch if not SVC 0
 
         PUSH     {R0,LR}                // Save PSP and EXC_RETURN
         LDM      R0,{R0-R3,R12}         // Load function parameters and address from stack
@@ -91,15 +92,26 @@ SVC_Context:
         .endif
 
 SVC_ContextSave:
-        STMDB    R12!,{R4-R11}          // Save R4..R11
+        .if      __DOMAIN_NS == 1
+        LDR      R0,[R1,#TCB_TZM_OFS]   // Load TrustZone memory identifier
+        CBZ      R0,SVC_ContextSave1    // Branch if there is no secure context
+        PUSH     {R1,R2,R3,LR}          // Save registers and EXC_RETURN
+        BL       TZ_StoreContext_S      // Store secure context
+        POP      {R1,R2,R3,LR}          // Restore registers and EXC_RETURN
+        .endif
+
+SVC_ContextSave1:
+        MRS      R0,PSP                 // Get PSP
+        STMDB    R0!,{R4-R11}           // Save R4..R11
         .if      __FPU_USED == 1
         TST      LR,#0x10               // Check if extended stack frame
         IT       EQ
-        VSTMDBEQ R12!,{S16-S31}         //  Save VFP S16.S31
+        VSTMDBEQ R0!,{S16-S31}          //  Save VFP S16.S31
         .endif
 
-        STR      R12,[R1,#TCB_SP_OFS]   // Store SP
-        STRB     LR, [R1,#TCB_SF_OFS]   // Store stack frame information
+SVC_ContextSave2:
+        STR      R0,[R1,#TCB_SP_OFS]    // Store SP
+        STRB     LR,[R1,#TCB_SF_OFS]    // Store stack frame information
 
 SVC_ContextSwitch:
         STR      R2,[R3]                // os_Info.thread.run: curr = next
@@ -206,14 +218,15 @@ Sys_Context:
 
 Sys_ContextSave:
         .if      __DOMAIN_NS == 1
-        TST      LR,#0x40               // Check domain of interrupted thread
-        BEQ      Sys_ContextSave1       // Branch if non-secure
         LDR      R0,[R1,#TCB_TZM_OFS]   // Load TrustZone memory identifier
+        CBZ      R0,Sys_ContextSave1    // Branch if there is no secure context
         PUSH     {R1,R2,R3,LR}          // Save registers and EXC_RETURN
         BL       TZ_StoreContext_S      // Store secure context
         POP      {R1,R2,R3,LR}          // Restore registers and EXC_RETURN
-        MRS      R0,PSP                 // Get PSP
-        B        Sys_ContextSave2
+        TST      LR,#0x40               // Check domain of interrupted thread
+        IT       NE
+        MRSNE    R0,PSP                 // Get PSP
+        BNE      Sys_ContextSave2       // Branch if secure
         .endif
 
 Sys_ContextSave1:

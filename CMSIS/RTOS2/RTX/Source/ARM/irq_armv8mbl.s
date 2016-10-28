@@ -53,20 +53,21 @@ SVC_Handler     PROC
                 IMPORT   os_Info
                 IF       __DOMAIN_NS = 1
                 IMPORT   TZ_LoadContext_S
+                IMPORT   TZ_StoreContext_S
                 ENDIF
 
                 MRS      R0,PSP                 ; Get PSP
                 LDR      R1,[R0,#24]            ; Load saved PC from stack
                 SUBS     R1,R1,#2               ; Point to SVC instruction
                 LDRB     R1,[R1]                ; Load SVC number
-                CBNZ     R1,SVC_User            ; Branch if not SVC 0
+                CMP      R1,#0
+                BNE      SVC_User               ; Branch if not SVC 0
 
                 PUSH     {R0,LR}                ; Save PSP and EXC_RETURN
                 LDM      R0,{R0-R3}             ; Load function parameters from stack
                 BLX      R7                     ; Call service function
                 POP      {R1,R2}                ; Restore PSP and EXC_RETURN
                 STR      R0,[R1]                ; Store function return value
-                MOV      R0,R1                  ; Save PSP
                 MOV      LR,R2                  ; Set EXC_RETURN
 
 SVC_Context
@@ -78,6 +79,18 @@ SVC_Context
                 CBZ      R1,SVC_ContextSwitch   ; Branch if running thread is deleted
 
 SVC_ContextSave
+                IF       __DOMAIN_NS = 1
+                LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
+                CBZ      R0,SVC_ContextSave1    ; Branch if there is no secure context
+                PUSH     {R1,R2,R3,R7}          ; Save registers
+                MOV      R7,LR                  ; Get EXC_RETURN
+                BL       TZ_StoreContext_S      ; Store secure context
+                MOV      LR,R7                  ; Set EXC_RETURN
+                POP      {R1,R2,R3,R7}          ; Restore registers
+                ENDIF
+
+SVC_ContextSave1
+                MRS      R0,PSP                 ; Get PSP
                 SUBS     R0,R0,#32              ; Adjust PSP
                 STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
                 STMIA    R0!,{R4-R7}            ; Save R4..R7
@@ -87,6 +100,7 @@ SVC_ContextSave
                 MOV      R7,R11
                 STMIA    R0!,{R4-R7}            ; Save R8..R11
 
+SVC_ContextSave2
                 MOV      R0,LR                  ; Get EXC_RETURN
                 ADDS     R1,R1,#TCB_SF_OFS      ; Adjust address
                 STRB     R0,[R1]                ; Store stack frame information
@@ -204,15 +218,15 @@ Sys_Context     PROC
 
 Sys_ContextSave
                 IF       __DOMAIN_NS = 1
-                MOV      R0,LR                  ; Get EXC_RETURN
-                LSLS     R0,R0,#25              ; Check domain of interrupted thread
-                BPL      Sys_ContextSave1       ; Branch if non-secure
-                MOV      R0,LR                  ; Get EXC_RETURN
-                PUSH     {R0,R1,R2,R3}          ; Save registers
                 LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
+                CBZ      R0,Sys_ContextSave1    ; Branch if there is no secure context
+                PUSH     {R1,R2,R3,R7}          ; Save registers
+                MOV      R7,LR                  ; Get EXC_RETURN
                 BL       TZ_StoreContext_S      ; Store secure context
-                POP      {R0,R1,R2,R3}          ; Restore registers
-                MOV      LR,R0                  ; Set EXC_RETURN
+                MOV      LR,R7                  ; Set EXC_RETURN
+                POP      {R1,R2,R3,R7}          ; Restore registers
+                LSLS     R7,R7,#25              ; Check domain of interrupted thread
+                BMI      Sys_ContextSave1       ; Branch if secure
                 MRS      R0,PSP                 ; Get PSP
                 STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
                 B        Sys_ContextSave2
