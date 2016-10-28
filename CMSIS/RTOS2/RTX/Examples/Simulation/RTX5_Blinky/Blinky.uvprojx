@@ -10,12 +10,12 @@
       <TargetName>Simulation</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060300::V5.06 update 3 (build 300)::ARMCC</pCCUsed>
+      <pCCUsed>5060422::V5.06 update 4 (build 422)::ARMCC</pCCUsed>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.0-Beta15</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -419,14 +419,14 @@
       </api>
     </apis>
     <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.0.0" condition="Cortex-M ARMv8-M Device">
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0-Beta11"/>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.0.0" condition="ARMv6_7_8-M Device">
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0-Beta15"/>
         <targetInfos>
           <targetInfo name="Simulation"/>
         </targetInfos>
       </component>
-      <component Capiversion="2.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvendor="ARM" Cversion="5.0.0-Alpha" condition="RTOS2 RTX5 Dependency">
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0-Beta11"/>
+      <component Capiversion="2.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cvendor="ARM" Cversion="5.0.0-Alpha" condition="RTOS2 RTX5">
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0-Beta15"/>
         <targetInfos>
           <targetInfo name="Simulation"/>
         </targetInfos>
@@ -437,8 +437,8 @@
           <targetInfo name="Simulation"/>
         </targetInfos>
       </component>
-      <component Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="ITM" Cvendor="Keil" Cversion="1.1.0" condition="ARMCC Cortex-M with ITM">
-        <package name="ARM_Compiler" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="Keil" version="1.2.0-Dev3"/>
+      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="ITM" Cvendor="Keil" Cversion="1.1.0" condition="ARMCC Cortex-M with ITM">
+        <package name="ARM_Compiler" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="Keil" version="1.2.0-Dev9"/>
         <targetInfos>
           <targetInfo name="Simulation"/>
         </targetInfos>
@@ -453,8 +453,8 @@
       </file>
       <file attr="config" category="source" name="CMSIS\RTOS2\RTX\Config\RTX_Config.c" version="5.0.0">
         <instance index="0">RTE\CMSIS\RTX_Config.c</instance>
-        <component Capiversion="2.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Release" Cvendor="ARM" Cversion="5.0.0-Alpha" condition="RTOS2 RTX5"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0"/>
+        <component Capiversion="2.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cvendor="ARM" Cversion="5.0.0-Alpha" condition="RTOS2 RTX5"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0-Beta15"/>
         <targetInfos>
           <targetInfo name="Simulation"/>
         </targetInfos>
@@ -462,7 +462,7 @@
       <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\ARM\ARMCM3\Source\ARM\startup_ARMCM3.s" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM3\startup_ARMCM3.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM3 CMSIS"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0-Beta15"/>
         <targetInfos>
           <targetInfo name="Simulation"/>
         </targetInfos>
@@ -470,7 +470,7 @@
       <file attr="config" category="sourceC" name="Device\ARM\ARMCM3\Source\system_ARMCM3.c" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM3\system_ARMCM3.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM3 CMSIS"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0-Beta15"/>
         <targetInfos>
           <targetInfo name="Simulation"/>
         </targetInfos>
