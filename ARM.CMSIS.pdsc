@@ -576,6 +576,7 @@ The ARMv8MML processor is brand new.
     <condition id="ARMv8-M TZ Device">
       <description>ARMv8-M architecture based device with TrustZone</description>
       <require condition="ARMv8-M Device"/>
+ <!-- <require Dtz="1"/> -->
     </condition>
     <condition id="ARMv6_7-M Device">
       <description>ARMv6_7-M architecture based device</description>
@@ -1702,8 +1703,8 @@ The ARMv8MML processor is brand new.
     </component>
 
     <!-- CMSIS-RTOS2 Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Release" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5">
-      <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and ARMv8-M (Release)</description>
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5">
+      <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and ARMv8-M (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
         #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
@@ -1748,8 +1749,8 @@ The ARMv8MML processor is brand new.
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Release NS" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 NS">
-      <description>CMSIS-RTOS2 RTX5 for ARMv8-M Non-Secure Domain (Release)</description>
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library_NS" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 NS">
+      <description>CMSIS-RTOS2 RTX5 for ARMv8-M Non-Secure Domain (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
         #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
@@ -1783,13 +1784,13 @@ The ARMv8MML processor is brand new.
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Debug" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5">
-      <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and ARMv8-M (Debug)</description>
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5">
+      <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and ARMv8-M (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
         #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
         #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
-        #define RTE_CMSIS_RTOS2_RTX5_DEBUG      /* CMSIS-RTOS2 Keil RTX5 Debug */
+        #define RTE_CMSIS_RTOS2_RTX5_SOURCE     /* CMSIS-RTOS2 Keil RTX5 Source */
       </RTE_Components_h>
       <files>
         <!-- RTX documentation -->
@@ -1841,13 +1842,13 @@ The ARMv8MML processor is brand new.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.s" condition="ARMv8MML_FP_GCC"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Debug NS" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 NS">
-      <description>CMSIS-RTOS2 RTX5 for ARMv8-M Non-Secure Domain (Debug)</description>
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.0.0-Alpha" Capiversion="2.0" condition="RTOS2 RTX5 NS">
+      <description>CMSIS-RTOS2 RTX5 for ARMv8-M Non-Secure Domain (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
         #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
         #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
-        #define RTE_CMSIS_RTOS2_RTX5_DEBUG      /* CMSIS-RTOS2 Keil RTX5 Debug */
+        #define RTE_CMSIS_RTOS2_RTX5_SOURCE     /* CMSIS-RTOS2 Keil RTX5 Source */
         #define RTE_CMSIS_RTOS2_RTX5_ARMV8M_NS  /* CMSIS-RTOS2 Keil RTX5 ARMv8-M Non-secure domain */
       </RTE_Components_h>
       <files>
@@ -1879,22 +1880,10 @@ The ARMv8MML processor is brand new.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_msgqueue.c"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_system.c"/>
         <!-- RTX sources (ARMCC handlers) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm0.s"            condition="CM0_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"            condition="CM3_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"            condition="CM4_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"           condition="CM4_FP_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"            condition="CM7_ARMCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"           condition="CM7_FP_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl_ns.s"    condition="ARMv8MBL_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="ARMv8MML_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="ARMv8MML_FP_ARMCC"/>
         <!-- RTX sources (GCC handlers) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm0.s"            condition="CM0_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"            condition="CM3_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"            condition="CM4_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.s"           condition="CM4_FP_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"            condition="CM7_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.s"           condition="CM7_FP_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.s"    condition="ARMv8MBL_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.s"    condition="ARMv8MML_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.s" condition="ARMv8MML_FP_GCC"/>
