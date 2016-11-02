@@ -107,12 +107,12 @@ void CreateMutex (void)  {
 \details
 Wait until a Mutex becomes available. If no other thread has obtained the Mutex, the function instantly returns and blocks the mutex object. 
 
-The argument \a millisec specifies how long the system waits for a mutex.
+The argument \a timeout specifies how long the system waits for a mutex.
 While the system waits the thread that is calling this function is put into the state \b BLOCKED.
-The \a millisec timeout can have the following values:
- - when \a millisec is 0, the function returns instantly.
- - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until the mutex becomes available.
- - all other values specify a time in millisecond for a timeout.
+The \a timeout timeout can have the following values:
+ - when \a timeout is 0, the function returns instantly.
+ - when \a timeout is set to \b osWaitForever the function will wait for an infinite time until the mutex becomes available.
+ - all other values specify a time in kernel ticks for a timeout.
 
 \ref osStatus_t return values:
  - \em osOK: the mutex has been obtained.

@@ -25,12 +25,11 @@ Working with Semaphores
 Follow these steps to create and use a semaphore:
 -# Declare the semaphore container and initialize the semaphore:
 \code{.c}
-osSemaphoreDef (my_semaphore);    // Declare semaphore
-osSemaphoreId  (my_semaphore_id); // Semaphore ID
+osSemaphoreId_t  my_semaphore_id
 \endcode
 -# Initialize the semaphore container with a number of tokens within a thread:
 \code{.c}
-my_semaphore_id = osSemaphoreCreate(osSemaphore(my_semaphore), 4);  // Create semaphore with 4 tokens
+my_semaphore_id = osSemaphoreNew(4, 0, NULL);  // Create semaphore with 4 tokens
 \endcode
 \b Important: semaphore tokens can be created and destroyed as threads run. This means that can initialize a semaphore with
 zero tokens and then use one thread to add/create tokens to the semaphore while a second thread removes them. In this way you
@@ -153,14 +152,14 @@ void StartApplication (void) {
 \fn osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout)
 \details
 Wait until a Semaphore token becomes available and acquires it for the thread if available. 
-When no Semaphore token is available, the function waits for the time specified with the parameter \em millisec.
+When no Semaphore token is available, the function waits for the time specified with the parameter \em timeout.
 
-The argument \a millisec specifies how long the system waits for a Semaphore token to become available.
+The argument \a timeout specifies how long the system waits for a Semaphore token to become available.
 While the system waits the thread that is calling this function is put into the state \b BLOCKED.
 The \a millisec timeout can have the following values:
- - when \a millisec is 0, the function returns instantly.
- - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until the Semaphore token becomes available.
- - all other values specify a time in millisecond for a timeout.
+ - when \a timeout is 0, the function returns instantly.
+ - when \a timeout is set to \b osWaitForever the function will wait for an infinite time until the Semaphore token becomes available.
+ - all other values specify a time in kernel ticks for a timeout.
 
 The return value indicates the number of available tokens (the semaphore count value). If 0 is returned, then no semaphore was available.
 

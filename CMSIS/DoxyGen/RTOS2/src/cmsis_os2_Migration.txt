@@ -235,7 +235,7 @@ Refer to \ref CMSIS_RTOS_Wait for details.
 
 \div{mod}
 \func{osStatus_t #osDelay (uint32_t ticks)}
-\func{osStatus &nbsp; osDelay (uint32_t millisec)}
+\func{osStatus &nbsp; osDelay (uint32_t timeout)}
 \copybrief{osDelay}
  - The return type changed to #osStatus_t. 
 
@@ -243,7 +243,7 @@ Refer to \ref CMSIS_RTOS_Wait for details.
 
 \div{mod}
 \func{osStatus_t #osDelayUntil (uint64_t ticks)}
-\func{osStatus &nbsp; osDelayUntil (uint64_t millisec)}
+\func{osStatus &nbsp; osDelayUntil (uint64_t timeout)}
 \copybrief{osDelayUntil}
  - The return type changed to #osStatus_t. 
 
@@ -287,7 +287,7 @@ New function.
 
 \div{mod}
 \func{osStatus_t #osTimerStart (osTimerId_t timer_id, uint32_t ticks)}
-\func{osStatus &nbsp; osTimerStart (osTimerId timer_id, uint32_t millisec)}
+\func{osStatus &nbsp; osTimerStart (osTimerId timer_id, uint32_t timeout)}
 \copybrief{osTimerStart}
  - The return type changed to #osStatus_t. 
  - The first parameter type has changed to #osTimerId_t.
@@ -330,7 +330,7 @@ Deprecated.
 
 \div{del}
 \none
-\func{osEvent osSignalWait (int32_t signals, uint32_t millisec)}
+\func{osEvent osSignalWait (int32_t signals, uint32_t timeout)}
 \n
 Deprecated.
 \enddiv
@@ -448,7 +448,7 @@ New function.
 
 \div{mod}
 \func{osStatus_t #osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout)}
-\func{osEvent &nbsp;&nbsp; osMessageGet (osMessageQId queue_id, uint32_t millisec)}
+\func{osEvent &nbsp;&nbsp; osMessageGet (osMessageQId queue_id, uint32_t timeout)}
 \copybrief{osMessageQueueGet}
  - The function \b osMessageQueueGet replaces the RTOS v1 function \b osMessageGet.
  - The return type changed to #osStatus_t. 
@@ -496,7 +496,7 @@ New function.
 
 \div{mod}
 \func{osStatus_t #osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout)}
-\func{osStatus &nbsp; osMessagePut (osMessageQId queue_id, uint32_t info, uint32_t millisec)}
+\func{osStatus &nbsp; osMessagePut (osMessageQId queue_id, uint32_t info, uint32_t timeout)}
 \copybrief{osMessageQueuePut}
  - The function \b osMessageQueuePut replaces the RTOS v1 function \b osMessagePut.
  - The return type changed to #osStatus_t. 
@@ -596,14 +596,14 @@ Differences are listed under \ref mig_msgQueue.
 
 \div{del}
 \none
-\func{void * osMailAlloc (osMailQId queue_id, uint32_t millisec)}
+\func{void * osMailAlloc (osMailQId queue_id, uint32_t timeout)}
 \n
 Deprecated.
 \enddiv
 
 \div{del}
 \none
-\func{void * osMailCAlloc (osMailQId queue_id, uint32_t millisec)}
+\func{void * osMailCAlloc (osMailQId queue_id, uint32_t timeout)}
 \n
 Deprecated.
 \enddiv
@@ -624,7 +624,7 @@ Deprecated.
 
 \div{del}
 \none
-\func{osEvent osMailGet (osMailQId queue_id, uint32_t millisec)}
+\func{osEvent osMailGet (osMailQId queue_id, uint32_t timeout)}
 \n
 Deprecated.
 \enddiv
@@ -647,7 +647,7 @@ Refer to \ref CMSIS_RTOS_MutexMgmt for details.
 
 \div{mod}
 \func{osStatus_t #osMutexAcquire (osMutexId_t mutex_id, uint32_t timeout)}
-\func{osStatus &nbsp; osMutexWait (osMutexId mutex_id, uint32_t millisec)}
+\func{osStatus &nbsp; osMutexWait (osMutexId mutex_id, uint32_t timeout)}
 \copybrief{osMutexAcquire}
  - The function \b osMutexAcquire replaces the RTOS v1 function \b osMutexWait.
  - Return type changed to \ref osStatus_t. 
@@ -743,7 +743,7 @@ New function.
 
 \div{del}
 \none
-\func{int32_t osSemaphoreWait (osSemaphoreId semaphore_id, uint32_t millisec)}
+\func{int32_t osSemaphoreWait (osSemaphoreId semaphore_id, uint32_t timeout)}
 \n
 Deprecated. 
 \enddiv
