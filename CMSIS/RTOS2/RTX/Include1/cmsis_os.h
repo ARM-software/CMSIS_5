@@ -132,6 +132,14 @@
 #define osFeature_MessageQ    1         ///< Message Queues:  1=available, 0=not available
 #define osFeature_MailQ       1         ///< Mail Queues:     1=available, 0=not available
  
+#if   defined(__CC_ARM)
+#define os_InRegs __value_in_regs
+#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+#define os_InRegs __attribute__((value_in_regs))
+#else
+#define os_InRegs
+#endif
+ 
 #if (osCMSIS >= 0x20000U)
 #include "cmsis_os2.h"
 #else
@@ -505,7 +513,7 @@ int32_t osSignalClear (osThreadId thread_id, int32_t signals);
 /// \param[in]     signals       wait until all specified signal flags set or 0 for any single signal flag.
 /// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return event flag information or error code.
-osEvent osSignalWait (int32_t signals, uint32_t millisec);
+os_InRegs osEvent osSignalWait (int32_t signals, uint32_t millisec);
  
  
 //  ==== Generic Wait Functions ====
@@ -522,7 +530,7 @@ osStatus osDelay (uint32_t millisec);
 /// Wait for Signal, Message, Mail, or Timeout.
 /// \param[in] millisec          \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out
 /// \return event that contains signal, message, or mail information or error code.
-osEvent osWait (uint32_t millisec);
+os_InRegs osEvent osWait (uint32_t millisec);
  
 #endif  // Generic Wait available
  
@@ -796,7 +804,7 @@ osStatus osMessagePut (osMessageQId queue_id, uint32_t info, uint32_t millisec);
 /// \param[in]     queue_id      message queue ID obtained with \ref osMessageCreate.
 /// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return event information that includes status code.
-osEvent osMessageGet (osMessageQId queue_id, uint32_t millisec);
+os_InRegs osEvent osMessageGet (osMessageQId queue_id, uint32_t millisec);
  
 #endif  // Message Queue available
  
@@ -866,7 +874,7 @@ osStatus osMailPut (osMailQId queue_id, const void *mail);
 /// \param[in]     queue_id      mail queue ID obtained with \ref osMailCreate.
 /// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return event information that includes status code.
-osEvent osMailGet (osMailQId queue_id, uint32_t millisec);
+os_InRegs osEvent osMailGet (osMailQId queue_id, uint32_t millisec);
  
 /// Free a memory block by returning it to a mail memory pool.
 /// \param[in]     queue_id      mail queue ID obtained with \ref osMailCreate.

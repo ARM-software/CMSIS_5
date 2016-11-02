@@ -71,7 +71,7 @@ int32_t osSignalClear (osThreadId thread_id, int32_t signals) {
   return flags;
 }
 
-osEvent osSignalWait (int32_t signals, uint32_t millisec) {
+os_InRegs osEvent osSignalWait (int32_t signals, uint32_t millisec) {
   osEvent event;
   int32_t flags;
 
@@ -217,7 +217,7 @@ osStatus osMessagePut (osMessageQId queue_id, uint32_t info, uint32_t millisec) 
   return osMessageQueuePut(queue_id, &info, 0U, millisec);
 }
 
-osEvent osMessageGet (osMessageQId queue_id, uint32_t millisec) {
+os_InRegs osEvent osMessageGet (osMessageQId queue_id, uint32_t millisec) {
   osStatus_t status;
   osEvent    event;
   uint32_t   message;
@@ -323,7 +323,7 @@ osStatus osMailPut (osMailQId queue_id, const void *mail) {
   return osMessageQueuePut(ptr->mq_id, &mail, 0U, 0U);
 }
 
-osEvent osMailGet (osMailQId queue_id, uint32_t millisec) {
+os_InRegs osEvent osMailGet (osMailQId queue_id, uint32_t millisec) {
   os_mail_queue_t *ptr = (os_mail_queue_t *)queue_id;
   osStatus_t       status;
   osEvent          event;
