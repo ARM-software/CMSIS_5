@@ -26,12 +26,11 @@ typedef struct {
 \endcode
 -# Declare a memory pool of these objects as a block of memory:
 \code{.c}
-osPoolDef (object_pool, 10, properties_t);  // Declare memory pool
-osPoolId  (object_pool_id);                 // Memory pool ID
+osMemoryPoolId_t  object_pool_id;                 // Memory pool ID
 \endcode
 -# Then, create the memory pool in a thread:
 \code{.c}
-object_pool_id = osPoolCreate(osPool(object_pool));
+object_pool_id = osMemoryPoolNew(16, sizeof(properties_t), NULL);
 \endcode
 -# Allocate the pool within a thread and fill it with data:
 \code{.c}
@@ -66,7 +65,7 @@ object_data->weight = 1000;
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
-\fn void *osMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t millisec)
+\fn void *osMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout)
 \details
 
 */

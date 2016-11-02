@@ -61,7 +61,30 @@ int main (void) {
 }
 \endcode
 
-<b>Example 2 - Create thread with statically allocated stack</b>
+<b>Example 2 - Create thread with stack non-default stack size</b>
+ 
+Similar to the simple thread all attributes are default. The stack is dynamically allocated from the \ref GlobalMemoryPool
+ 
+\ref osThreadAttr_t.stack_size is used to pass the stack size in Bytes to osThreadNew.
+
+\code{.c}
+__NO_RETURN void thread1 (void *argument) {
+  // ...
+  for (;;) {}
+}
+ 
+const osThreadAttr_t thread1_attr = {
+  .stack_size = 1024;    // Create the thread stack with a size of 1024 bytes
+}
+ 
+int main (void) {
+  ;  
+  osThreadNew(thread1, NULL, &thread1_attr);    // Create thread with custom sized stack memory
+  ;
+}
+\endcode
+
+<b>Example 3 - Create thread with statically allocated stack</b>
  
 Similar to the simple thread all attributes are default. The stack is statically allocated using the uint64_t array thread1_stk_1. This allocates 64*8 Bytes (=512 Bytes) with an alignment of 8 Bytes (mandatory for Cortex-M stack memory). 
  
@@ -89,7 +112,7 @@ int main (void) {
 }
 \endcode
 
-<b>Example 3 - Thread with statically allocated task control block</b>
+<b>Example 4 - Thread with statically allocated task control block</b>
  
 Typically this method is chosen together with a statically allocated stack as shown in Example 2. 
 os_<i>object</i>Size macros supply the size of OS objects. 
@@ -128,7 +151,7 @@ int main (void) {
 }
 \endcode
 
-<b>Example 4 - Create thread with a different priority</b> 
+<b>Example 5 - Create thread with a different priority</b> 
  
 The default priority of RTX is \ref osPriorityNormal. Often you want to run a task with a higher or lower priority. Using the \ref osThreadAttr_t control structure you can set any inital priority required.
 
@@ -149,7 +172,7 @@ int main (void) {
 }
 \endcode
 
-<b>Example 5 - Joinable threads</b>
+<b>Example 6 - Joinable threads</b>
  
 In this example a master thread creates four threads with the \ref osThreadJoinable attribute. These will do some work and return using the osThreadExit call after finished. \ref osThreadJoin is used to synchronize the thread termination. 
 

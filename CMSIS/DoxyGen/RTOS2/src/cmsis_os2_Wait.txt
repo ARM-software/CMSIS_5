@@ -15,9 +15,9 @@ The Generic Wait function group provides means for a time delay and allow to wai
 /** 
 \fn osStatus_t osDelay (uint32_t ticks)
 \details
-Wait for a specified time period in \a millisec.
+Wait for a specified time period in \a kernel ticks.
 
-The \ref CMSIS_RTOS_TimeOutValue "millisec" value is converted to a number of timer ticks and is therefore an upper bound. The
+The \ref CMSIS_RTOS_TimeOutValue "timeout" value represents a number of timer ticks and is an upper bound. The
 exact time delay depends on the actual time elapsed since the last timer tick. 
 
 For a value of <b>1</b>, the system waits until the next timer tick occurs. That means that the actual time delay may be up
@@ -49,12 +49,12 @@ void *Thread_1 (void *arg)  {               // Thread function
 /** 
 \fn osStatus_t osDelayUntil (uint64_t ticks)
 \details
-Wait until an absolute time - specified in millisec - is reached. 
+Wait until an absolute time - specified in kernel ticks - is reached. 
 
-The \ref CMSIS_RTOS_TimeOutValue "millisec" value is converted to a number of timer ticks and is therefore an upper bound. The
+The \ref CMSIS_RTOS_TimeOutValue "timeout" value represents a number of timer ticks and is an upper bound. The
 exact time delay depends on the actual time elapsed since the last timer tick. 
 
-\ref osKernelGetSysTimerCount can be used to retrieve the current elapsed time of the kernel in millisec.
+\ref osKernelGetSysTimerCount can be used to retrieve the current elapsed time of the kernel in .
 
 \ref osStatus_t return values:
  - \em osEventTimeout: the time delay is executed.
