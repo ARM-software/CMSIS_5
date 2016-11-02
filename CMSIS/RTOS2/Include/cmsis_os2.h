@@ -358,9 +358,9 @@ osThreadState_t osThreadGetState (osThreadId_t thread_id);
 /// \return stack size in bytes.
 uint32_t osThreadGetStackSize (osThreadId_t thread_id);
  
-/// Get available stack space of a thread.
+/// Get available stack space of a thread based on stack watermark recording during execution.
 /// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
-/// \return available stack in bytes.
+/// \return remaining stack space in bytes.
 uint32_t osThreadGetStackSpace (osThreadId_t thread_id);
  
 /// Change priority of a thread.
