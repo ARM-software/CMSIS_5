@@ -204,12 +204,6 @@ __NO_RETURN void thread1 (void *argument) {
   osThreadExit(); 
 }
 \endcode
-
-
-
-
-
-
    
 @{
 */
@@ -445,8 +439,6 @@ Functions that will put a thread into BLOCKED state are:
 Changes the attribute of a thread specified in \em thread_id to \ref osThreadDetached. Detached threads are not joinable with \ref osThreadJoin. 
 When a detached thread is terminated all resources are returned to the system. The behaviour of \ref osThreadDetach on an already detached thread is undefined.
 
-\todo : describe
-
 \note
 Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -505,6 +497,20 @@ void ThreadTerminate_example (void) {
 }
 \endcode
 */
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osThreadGetStackSpace (osThreadId_t thread_id); 
+\details
+
+osThreadGetStackSpace returns the size of unused stack space for the thread passed in thread_id.
+If this function is not implemented or stack checking is disabled it will return 0.
+
+\note
+Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+*/
+
 /// @}
 
 

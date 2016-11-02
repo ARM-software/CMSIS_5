@@ -95,7 +95,7 @@ void info (void) {
 /**
 \fn uint32_t osKernelLock (void)
 \details
-
+Allows to lock all task switches. 
 \b Example
 \code{.c}
 uint32_t lock;
@@ -112,18 +112,48 @@ if (lock) {
 /**
 \fn void osKernelUnlock (void)
 \details
-
+Resumes from \ref osKernelLock.
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn uint32_t osKernelSuspend (void)
 \details
+CMSIS-RTOS provides extension for tick-less operation which is useful for applications that use extensively low-power modes where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to derive timer intervals. The functions osKernelSuspend and osKernelResume control the tick-less operation.
+
+\b Example
+\code{.c}
+void os_idle_demon (void) {
+  /* The idle demon is a system thread, running when no other thread is       */
+  /* ready to run.                                                            */
+  unsigned int sleep;
+
+  for (;;) {
+  /* HERE: include optional user code to be executed when no task runs.*/
+    sleep = os_suspend();                      /* Suspend RTX thread scheduler */
+ 
+    if (sleep) {                               /* How long can we sleep?       */
+      /* "sleep" is in RTX Timer Ticks which is 1ms in this configuration      */
+       
+      /* Setup wake-up e.g. watchdog */
+ 
+      /* Enter Power-down mode */
+      __WFE();                                 /* Enter Power-down mode        */
+      
+      /* After Wake-up */
+      sleep = tc;                              /* Adjust with cycles slept     */  
+    }
+ 
+    os_resume(sleep);                          /* Resume thread scheduler      */
+  }
+}
+\endcode
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn void osKernelResume (uint32_t sleep_time)
+\fn void osKernelResume (uint32_t sleep_ticks)
 \details
+See \ref osKernelSuspend.
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
