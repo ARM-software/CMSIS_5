@@ -108,7 +108,7 @@ osSemaphoreId_t semaphore;                         // Semaphore ID
 //
 //   Thread 1 - High Priority - Active every 3ms
 //
-void *thread1 (void *argument) {
+void thread1 (void *argument) {
   int32_t value;
 
   while (1) {
@@ -126,7 +126,7 @@ void *thread1 (void *argument) {
 //   Thread 2 - Normal Priority - looks for a free semaphore and uses
 //                                the resource whenever it is available
 //
-void *thread2 (void *argument) {
+void thread2 (void *argument) {
   while (1) {
     osSemaphoreAcquire (semaphore, osWaitForever);  // Wait indefinitely for a free semaphore
                                                  // OK, the interface is free now, use it.
@@ -163,7 +163,6 @@ The \a millisec timeout can have the following values:
 
 The return value indicates the number of available tokens (the semaphore count value). If 0 is returned, then no semaphore was available.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -195,5 +194,8 @@ used. The Semaphore may be created again using the function \ref osSemaphoreNew.
  - \em osErrorISR: \ref osSemaphoreDelete cannot be called from interrupt service routines.
  - \em osErrorResource: the semaphore object could not be deleted.
  - \em osErrorParameter: the parameter \a semaphore_id is incorrect.
-*/
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osSemaphoreDelete from an ISR will return \ref osErrorISR.
+ */
 /// @}

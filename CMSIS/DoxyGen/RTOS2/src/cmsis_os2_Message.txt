@@ -66,7 +66,7 @@ Attributes structure for message queue.
 /** 
 \fn osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout);
 \details
-\b Example:
+<b>Code Example:</b>
 \code{.c}
 
 #include "cmsis_os2.h"                                           // CMSIS RTOS header file
@@ -130,8 +130,6 @@ void *Thread_MsgQueue2 (void *argument) {
   }
 }
 \endcode
-
-\todo Example formatting does not use syntax highlighting and links to known identifiers
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

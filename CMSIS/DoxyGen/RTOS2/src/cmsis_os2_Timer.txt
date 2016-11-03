@@ -122,6 +122,7 @@ Start or restart the timer.
  - \em osErrorParameter: \a timer_id is incorrect.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osTimerStart from an ISR will return \ref osErrorISR. 
  
 <b>Code Example</b>
 \code{.c}
@@ -166,6 +167,7 @@ Stop the timer.
  - \em osErrorResource: the timer is not started.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osTimerStop from an ISR will return \ref osErrorISR. 
 
 <b>Code Example</b>
 \code{.c}
@@ -213,6 +215,7 @@ Delete the timer object.
  - \em osErrorParameter: \a timer_id is incorrect.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osTimerDelete from an ISR will return \ref osErrorISR. 
 
 <b>Code Example</b>
 \code{.c}
