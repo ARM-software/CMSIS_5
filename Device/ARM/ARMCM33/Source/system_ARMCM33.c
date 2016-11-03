@@ -1,7 +1,7 @@
 /**************************************************************************//**
- * @file     system_ARMv8MML.c
+ * @file     system_ARMCM33.c
  * @brief    CMSIS Device System Source File for
- *           ARMv8MML Device Series
+ *           ARMCM33 Device Series
  * @version  V5.00
  * @date     02. November 2016
  ******************************************************************************/
@@ -23,24 +23,24 @@
  * limitations under the License.
  */
 
-#if defined (ARMv8MML)
-  #include "ARMv8MML.h"
-#elif defined (ARMv8MML_DSP)
-  #include "ARMv8MML_DSP.h"
-#elif defined (ARMv8MML_SP)
-  #include "ARMv8MML_SP.h"
-#elif defined (ARMv8MML_DSP_SP)
-  #include "ARMv8MML_DSP_SP.h"
-#elif defined (ARMv8MML_DP)
-  #include "ARMv8MML_DP.h"
-#elif defined (ARMv8MML_DSP_DP)
-  #include "ARMv8MML_DSP_DP.h"
+#if defined (ARMCM33)
+  #include "ARMCM33.h"
+#elif defined (ARMCM33_TZ)
+  #include "ARMCM33_TZ.h"
+
+  #if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U)
+    #include "partition_ARMCM33.h"
+  #endif
+#elif defined (ARMCM33_DSP_FP)
+  #include "ARMCM33_DSP_FP.h"
+#elif defined (ARMCM33_DSP_FP_TZ)
+  #include "ARMCM33_DSP_FP_TZ.h"
+
+  #if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U)
+    #include "partition_ARMCM33.h"
+  #endif
 #else
   #error device not specified!
-#endif
-
-#if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U)
-  #include "partition_ARMv8MML.h"
 #endif
 
 /*----------------------------------------------------------------------------

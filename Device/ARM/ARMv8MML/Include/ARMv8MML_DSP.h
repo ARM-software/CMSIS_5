@@ -1,7 +1,7 @@
 /**************************************************************************//**
- * @file     ARMv8MML_DP.h
+ * @file     ARMv8MML.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
- *           ARMv8MML Device Series (configured for ARMv8MML with double precision FPU, without DSP extension, with TrustZone)
+ *           ARMv8MML Device Series (configured for ARMv8MML without FPU, with DSP extension, with TrustZone)
  * @version  V5.00
  * @date     02. November 2016
  ******************************************************************************/
@@ -23,8 +23,8 @@
  * limitations under the License.
  */
 
-#ifndef ARMv8MML_DP_H
-#define ARMv8MML_DP_H
+#ifndef ARMv8MML_DSP_H
+#define ARMv8MML_DSP_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -103,14 +103,13 @@ typedef enum IRQn
 
 /* --------  Configuration of the Cortex-M4 Processor and Core Peripherals  ------- */
 #define __ARMv8MML_REV            0x0001U   /* Core revision r0p1 */
-#define __SAUREGION_PRESENT       1U        /* SAU regions present */
+#define __SAUREGION_PRESENT       1U        /* SAU regions are present */
 #define __MPU_PRESENT             1U        /* MPU present */
 #define __VTOR_PRESENT            1U        /* VTOR present */
 #define __NVIC_PRIO_BITS          3U        /* Number of Bits used for Priority Levels */
 #define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
-#define __FPU_PRESENT             1U        /* FPU present */
-#define __FPU_DP                  1U        /* double precision FPU */
-#define __DSP_PRESENT             0U        /* no DSP extension present */
+#define __FPU_PRESENT             0U        /* no FPU present */
+#define __DSP_PRESENT             1U        /* DSP extension present */
 
 #include "core_armv8mml.h"                  /* Processor and core peripherals */
 #include "system_ARMv8MML.h"                /* System Header */
@@ -277,4 +276,4 @@ typedef struct
 }
 #endif
 
-#endif  /* ARMv8MML_DP_H */
+#endif  /* ARMv8MML_DSP_H */

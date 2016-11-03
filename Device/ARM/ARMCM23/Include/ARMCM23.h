@@ -1,9 +1,9 @@
 /**************************************************************************//**
- * @file     ARMv8MML_DP.h
+ * @file     ARMCM23.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
- *           ARMv8MML Device Series (configured for ARMv8MML with double precision FPU, without DSP extension, with TrustZone)
+ *           ARMCM23 Device Series
  * @version  V5.00
- * @date     02. November 2016
+ * @date     21. October 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -23,8 +23,8 @@
  * limitations under the License.
  */
 
-#ifndef ARMv8MML_DP_H
-#define ARMv8MML_DP_H
+#ifndef ARMCM23_H
+#define ARMCM23_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,19 +35,19 @@ extern "C" {
 
 typedef enum IRQn
 {
-/* --------------------  ARMv8MML Processor Exceptions Numbers  ------------------- */
+/* --------------------  ARMCM23 Processor Exceptions Numbers  -------------------- */
   NonMaskableInt_IRQn           = -14,      /*  2 Non Maskable Interrupt */
   HardFault_IRQn                = -13,      /*  3 HardFault Interrupt */
-  MemoryManagement_IRQn         = -12,      /*  4 Memory Management Interrupt */
-  BusFault_IRQn                 = -11,      /*  5 Bus Fault Interrupt */
-  UsageFault_IRQn               = -10,      /*  6 Usage Fault Interrupt */
-  SecureFault_IRQn              =  -9,      /*  7 Secure Fault Interrupt */
+
+
+
+
   SVCall_IRQn                   =  -5,      /* 11 SV Call Interrupt */
-  DebugMonitor_IRQn             =  -4,      /* 12 Debug Monitor Interrupt */
+
   PendSV_IRQn                   =  -2,      /* 14 Pend SV Interrupt */
   SysTick_IRQn                  =  -1,      /* 15 System Tick Interrupt */
 
-/* --------------------  ARMv8MML Specific Interrupt Numbers  --------------------- */
+/* --------------------  ARMCM23 Specific Interrupt Numbers  ---------------------- */
   WDT_IRQn                      =   0,      /* Watchdog Timer Interrupt */
   RTC_IRQn                      =   1,      /* Real Time Clock Interrupt */
   TIM0_IRQn                     =   2,      /* Timer0 / Timer1 Interrupt */
@@ -101,19 +101,16 @@ typedef enum IRQn
 #endif
 
 
-/* --------  Configuration of the Cortex-M4 Processor and Core Peripherals  ------- */
-#define __ARMv8MML_REV            0x0001U   /* Core revision r0p1 */
-#define __SAUREGION_PRESENT       1U        /* SAU regions present */
-#define __MPU_PRESENT             1U        /* MPU present */
-#define __VTOR_PRESENT            1U        /* VTOR present */
-#define __NVIC_PRIO_BITS          3U        /* Number of Bits used for Priority Levels */
+/* --------  Configuration of the Cortex-M23 Processor and Core Peripherals  ------ */
+#define __CM23_REV                0x0000U   /* Core revision r0p0 */
+#define __SAUREGION_PRESENT       0U        /* SAU regions are present */
+#define __MPU_PRESENT             1U        /* MPU present or not */
+#define __VTOR_PRESENT            0U        /* VTOR present or not */
+#define __NVIC_PRIO_BITS          2U        /* Number of Bits used for Priority Levels */
 #define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
-#define __FPU_PRESENT             1U        /* FPU present */
-#define __FPU_DP                  1U        /* double precision FPU */
-#define __DSP_PRESENT             0U        /* no DSP extension present */
 
-#include "core_armv8mml.h"                  /* Processor and core peripherals */
-#include "system_ARMv8MML.h"                /* System Header */
+#include "core_cm23.h"                      /* Processor and core peripherals */
+#include "system_ARMCM23.h"                 /* System Header */
 
 
 /* ================================================================================ */
@@ -277,4 +274,4 @@ typedef struct
 }
 #endif
 
-#endif  /* ARMv8MML_DP_H */
+#endif  /* ARMCM23_H */

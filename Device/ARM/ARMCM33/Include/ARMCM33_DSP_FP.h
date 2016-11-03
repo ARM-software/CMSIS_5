@@ -1,7 +1,7 @@
 /**************************************************************************//**
- * @file     ARMv8MML_DP.h
+ * @file     ARMCM33_DSP_FP.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
- *           ARMv8MML Device Series (configured for ARMv8MML with double precision FPU, without DSP extension, with TrustZone)
+ *           ARMCM33 Device Series (configured for ARMCM33 with FPU, with DSP extension)
  * @version  V5.00
  * @date     02. November 2016
  ******************************************************************************/
@@ -23,8 +23,8 @@
  * limitations under the License.
  */
 
-#ifndef ARMv8MML_DP_H
-#define ARMv8MML_DP_H
+#ifndef ARMCM33_DSP_FP_H
+#define ARMCM33_DSP_FP_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,7 +35,7 @@ extern "C" {
 
 typedef enum IRQn
 {
-/* --------------------  ARMv8MML Processor Exceptions Numbers  ------------------- */
+/* --------------------  ARMCM33 Processor Exceptions Numbers  -------------------- */
   NonMaskableInt_IRQn           = -14,      /*  2 Non Maskable Interrupt */
   HardFault_IRQn                = -13,      /*  3 HardFault Interrupt */
   MemoryManagement_IRQn         = -12,      /*  4 Memory Management Interrupt */
@@ -47,7 +47,7 @@ typedef enum IRQn
   PendSV_IRQn                   =  -2,      /* 14 Pend SV Interrupt */
   SysTick_IRQn                  =  -1,      /* 15 System Tick Interrupt */
 
-/* --------------------  ARMv8MML Specific Interrupt Numbers  --------------------- */
+/* --------------------  ARMCM33 Specific Interrupt Numbers  ---------------------- */
   WDT_IRQn                      =   0,      /* Watchdog Timer Interrupt */
   RTC_IRQn                      =   1,      /* Real Time Clock Interrupt */
   TIM0_IRQn                     =   2,      /* Timer0 / Timer1 Interrupt */
@@ -101,19 +101,18 @@ typedef enum IRQn
 #endif
 
 
-/* --------  Configuration of the Cortex-M4 Processor and Core Peripherals  ------- */
-#define __ARMv8MML_REV            0x0001U   /* Core revision r0p1 */
-#define __SAUREGION_PRESENT       1U        /* SAU regions present */
+/* --------  Configuration of the Cortex-M33 Processor and Core Peripherals  ------ */
+#define __CM33_REV                0x0000U   /* Core revision r0p1 */
+#define __SAUREGION_PRESENT       0U        /* SAU regions present */
 #define __MPU_PRESENT             1U        /* MPU present */
 #define __VTOR_PRESENT            1U        /* VTOR present */
 #define __NVIC_PRIO_BITS          3U        /* Number of Bits used for Priority Levels */
 #define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
 #define __FPU_PRESENT             1U        /* FPU present */
-#define __FPU_DP                  1U        /* double precision FPU */
-#define __DSP_PRESENT             0U        /* no DSP extension present */
+#define __DSP_PRESENT             1U        /* DSP extension present */
 
-#include "core_armv8mml.h"                  /* Processor and core peripherals */
-#include "system_ARMv8MML.h"                /* System Header */
+#include "core_cm33.h"                      /* Processor and core peripherals */
+#include "system_ARMCM33.h"                 /* System Header */
 
 
 /* ================================================================================ */
@@ -277,4 +276,4 @@ typedef struct
 }
 #endif
 
-#endif  /* ARMv8MML_DP_H */
+#endif  /* ARMCM33_DSP_FP_H */

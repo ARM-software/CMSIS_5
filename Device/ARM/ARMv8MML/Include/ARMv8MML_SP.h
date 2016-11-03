@@ -1,9 +1,9 @@
 /**************************************************************************//**
  * @file     ARMv8MML_SP.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
- *           ARMv8MML Device Series (configured for ARMv8MML with single precision FPU)
+ *           ARMv8MML Device Series (configured for ARMv8MML with single precision FPU, without DSP extension, with TrustZone)
  * @version  V5.00
- * @date     07. September 2016
+ * @date     02. November 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -110,6 +110,7 @@ typedef enum IRQn
 #define __Vendor_SysTickConfig    0U        /* Set to 1 if different SysTick Config is used */
 #define __FPU_PRESENT             1U        /* FPU present */
 #define __FPU_DP                  0U        /* single precision FPU */
+#define __DSP_PRESENT             0U        /* no DSP extension present */
 
 #include "core_armv8mml.h"                  /* Processor and core peripherals */
 #include "system_ARMv8MML.h"                /* System Header */
