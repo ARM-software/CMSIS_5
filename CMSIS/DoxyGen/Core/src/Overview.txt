@@ -81,6 +81,8 @@ The CMSIS-CORE \ref templates_pg supplied by ARM have been tested and verified w
     <tr>
       <td>V5.00 - Beta n</td>
       <td>
+	     Added: Cortex-M23, Cortex-M33 support.\n	 
+         Added: macro __SAU_PRESENT with __SAU_REGION_PRESENT. \n
          Replaced: macro __SAU_PRESENT with __SAU_REGION_PRESENT. \n
          Reworked: SAU register and functions. \n
          Added: macro \ref \__ALIGNED. \n

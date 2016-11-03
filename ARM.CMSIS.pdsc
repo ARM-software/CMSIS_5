@@ -8,6 +8,11 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.0-Beta16">
+      CMSIS_Core:
+       - Added Cortex-M23, Cortex-M33 support.
+       - Added ARMv8MML DSP devices.
+    </release>
     <release version="5.0.0-Beta15">
       Reworked conditions.
     </release>
@@ -229,7 +234,7 @@ The Cortex-M0 processor is an entry-level 32-bit ARM Cortex processor designed f
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMCM0">
-        <processor Dcore="Cortex-M0" DcoreVersion="r0p0" Dfpu="0" Dmpu="0" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="Cortex-M0" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="NO_MPU" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM0/Include/ARMCM0.h" define="ARMCM0"/>
       </device>
     </family>
@@ -251,7 +256,7 @@ The Cortex-M0+ processor is an entry-level 32-bit ARM Cortex processor designed 
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMCM0P">
-        <processor Dcore="Cortex-M0+" DcoreVersion="r0p1" Dfpu="0" Dmpu="0" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="Cortex-M0+" DcoreVersion="r0p1" Dfpu="NO_FPU" Dmpu="NO_MPU" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM0plus/Include/ARMCM0plus.h" define="ARMCM0P"/>
       </device>
     </family>
@@ -273,7 +278,7 @@ The Cortex-M3 processor is an entry-level 32-bit ARM Cortex processor designed f
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMCM3">
-        <processor Dcore="Cortex-M3" DcoreVersion="r2p1" Dfpu="0" Dmpu="1" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="Cortex-M3" DcoreVersion="r2p1" Dfpu="NO_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM3/Include/ARMCM3.h" define="ARMCM3"/>
       </device>
     </family>
@@ -295,12 +300,12 @@ The Cortex-M4 processor is an entry-level 32-bit ARM Cortex processor designed f
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMCM4">
-        <processor Dcore="Cortex-M4" DcoreVersion="r0p1" Dfpu="0" Dmpu="1" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="Cortex-M4" DcoreVersion="r0p1" Dfpu="NO_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM4/Include/ARMCM4.h"    define="ARMCM4"/>
       </device>
 
       <device Dname="ARMCM4_FP">
-        <processor Dcore="Cortex-M4" DcoreVersion="r0p1" Dfpu="1" Dmpu="1" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="Cortex-M4" DcoreVersion="r0p1" Dfpu="SP_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM4/Include/ARMCM4_FP.h" define="ARMCM4_FP"/>
       </device>
     </family>
@@ -322,18 +327,72 @@ The Cortex-M4 processor is an entry-level 32-bit ARM Cortex processor designed f
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMCM7">
-        <processor Dcore="Cortex-M7" DcoreVersion="r0p0" Dfpu="0" Dmpu="1" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM7/Include/ARMCM7.h" define="ARMCM7"/>
       </device>
 
       <device Dname="ARMCM7_SP">
-        <processor Dcore="Cortex-M7" DcoreVersion="r0p0" Dfpu="SP_FPU" Dmpu="1" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p0" Dfpu="SP_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM7/Include/ARMCM7_SP.h" define="ARMCM7_SP"/>
       </device>
 
       <device Dname="ARMCM7_DP">
-        <processor Dcore="Cortex-M7" DcoreVersion="r0p0" Dfpu="DP_FPU" Dmpu="1" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p0" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM7/Include/ARMCM7_DP.h" define="ARMCM7_DP"/>
+      </device>
+    </family>
+
+    <!-- ******************************  Cortex-M23  ********************** -->
+    <family Dfamily="ARM Cortex M23" Dvendor="ARM:82">
+      <!--book name="Device/ARM/Documents/??_dgug.pdf"       title="?? Device Generic Users Guide"/-->
+      <description>
+The Cortex-M23 processor is brand new.
+      </description>
+      <debug svd="Device/ARM/SVD/ARMCM23.svd"/>
+      <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
+      <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
+      <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
+
+      <device Dname="ARMCM23">
+        <processor Dcore="Cortex-M23" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Dtz="NO_TZ" Dendian="Configurable" Dclock="10000000"/>
+        <compile header="Device/ARM/ARMCM23/Include/ARMCM23.h" define="ARMCM23"/>
+      </device>
+
+      <device Dname="ARMCM23_TZ">
+        <processor Dcore="Cortex-M23" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
+        <compile header="Device/ARM/ARMCM23/Include/ARMCM23_TZ.h" define="ARMCM23_TZ"/>
+      </device>
+    </family>
+
+    <!-- ******************************  Cortex-M33  ****************************** -->
+    <family Dfamily="ARM Cortex M33" Dvendor="ARM:82">
+      <!--book name="Device/ARM/Documents/??_dgug.pdf"       title="?? Device Generic Users Guide"/-->
+      <description>
+The Cortex-M33 processor is brand new.
+      </description>
+      <debug svd="Device/ARM/SVD/ARMCM33.svd"/>
+      <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
+      <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
+      <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
+
+      <device Dname="ARMCM33">
+        <processor Dcore="Cortex-M33" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="NO_TZ" Dendian="Configurable" Dclock="10000000"/>
+        <compile header="Device/ARM/ARMCM33/Include/ARMCM33.h" define="ARMCM33"/>
+      </device>
+
+      <device Dname="ARMCM33_TZ">
+        <processor Dcore="Cortex-M33" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
+        <compile header="Device/ARM/ARMCM33/Include/ARMCM33_TZ.h" define="ARMCM33_TZ"/>
+      </device>
+
+      <device Dname="ARMCM33_DSP_FP">
+        <processor Dcore="Cortex-M33" DcoreVersion="r0p0" Dfpu="SP_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="NO_TZ" Dendian="Configurable" Dclock="10000000"/>
+        <compile header="Device/ARM/ARMCM33/Include/ARMCM33_DSP_FP.h" define="ARMCM33_DSP_FP"/>
+      </device>
+
+      <device Dname="ARMCM33_DSP_FP_TZ">
+        <processor Dcore="Cortex-M33" DcoreVersion="r0p0" Dfpu="SP_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
+        <compile header="Device/ARM/ARMCM33/Include/ARMCM33_DSP_FP_TZ.h" define="ARMCM33_DSP_FP_TZ"/>
       </device>
     </family>
 
@@ -352,7 +411,7 @@ The ARM SC000 processor is an entry-level 32-bit ARM Cortex processor designed f
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMSC000">
-        <processor Dcore="SC000" DcoreVersion="r0p1" Dfpu="0" Dmpu="0" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="SC000" DcoreVersion="r0p1" Dfpu="NO_FPU" Dmpu="NO_MPU" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMSC000/Include/ARMSC000.h" define="ARMSC000"/>
       </device>
     </family>
@@ -372,7 +431,7 @@ The ARM SC300 processor is an entry-level 32-bit ARM Cortex processor designed f
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMSC300">
-        <processor Dcore="SC300" DcoreVersion="r0p1" Dfpu="0" Dmpu="0" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="SC300" DcoreVersion="r0p1" Dfpu="NO_FPU" Dmpu="NO_MPU" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMSC300/Include/ARMSC300.h" define="ARMSC300"/>
       </device>
     </family>
@@ -389,7 +448,7 @@ The ARMv8MBL processor is brand new.
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMv8MBL">
-        <processor Dcore="ARMV8MBL" DcoreVersion="r0p0" Dfpu="0" Dmpu="1" Dtz="1" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="ARMV8MBL" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MBL/Include/ARMv8MBL.h" define="ARMv8MBL"/>
       </device>
     </family>
@@ -406,18 +465,33 @@ The ARMv8MML processor is brand new.
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMv8MML">
-        <processor Dcore="ARMV8MML" DcoreVersion="r0p0" Dfpu="0" Dmpu="1" Dtz="1" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="ARMV8MML" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML.h" define="ARMv8MML"/>
       </device>
 
+      <device Dname="ARMv8MML_DSP">
+        <processor Dcore="ARMV8MML" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
+        <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML.h" define="ARMv8MML_DSP"/>
+      </device>
+
       <device Dname="ARMv8MML_SP">
-        <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="SP_FPU" Dmpu="1" Dtz="1" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="SP_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_SP.h" define="ARMv8MML_SP"/>
       </device>
 
+      <device Dname="ARMv8MML_DSP_SP">
+        <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="SP_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
+        <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_SP.h" define="ARMv8MML_DSP_SP"/>
+      </device>
+
       <device Dname="ARMv8MML_DP">
-        <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="1" Dtz="1" Dendian="Configurable" Dclock="10000000"/>
+        <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_DP.h" define="ARMv8MML_DP"/>
+      </device>
+
+      <device Dname="ARMv8MML_DSP_DP">
+        <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
+        <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_DP.h" define="ARMv8MML_DSP_DP"/>
       </device>
     </family>
 
@@ -572,11 +646,13 @@ The ARMv8MML processor is brand new.
       <description>ARMv8-M architecture based device</description>
       <accept Dcore="ARMV8MBL"/>
       <accept Dcore="ARMV8MML"/>
+      <accept Dcore="Cortex-M23"/>
+      <accept Dcore="Cortex-M33"/>
     </condition>
     <condition id="ARMv8-M TZ Device">
       <description>ARMv8-M architecture based device with TrustZone</description>
       <require condition="ARMv8-M Device"/>
- <!-- <require Dtz="1"/> -->
+      <require Dtz="TZ"/>
     </condition>
     <condition id="ARMv6_7-M Device">
       <description>ARMv6_7-M architecture based device</description>
@@ -627,13 +703,41 @@ The ARMv8MML processor is brand new.
       <description>Cortex-M7 processor based device using Floating Point Unit (DP)</description>
       <require Dcore="Cortex-M7" Dfpu="DP_FPU"/>
     </condition>
+    <condition id="CM23">
+      <description>Cortex-M23 processor based device</description>
+      <require Dcore="Cortex-M23"/>
+    </condition>
+    <condition id="CM33">
+      <description>Cortex-M33 processor based device</description>
+      <require Dcore="Cortex-M33" Dfpu="NO_FPU"/>
+    </condition>
+    <condition id="CM33_DSP">
+      <description>Cortex-M33 processor based device with DSP extension</description>
+      <require Dcore="Cortex-M33" Dfpu="NO_FPU" Ddsp="DSP"/>
+    </condition>
+    <condition id="CM33_FP">
+      <description>Cortex-M33 processor based device using Floating Point Unit</description>
+      <require Dcore="Cortex-M33" Dfpu="SP_FPU"/>
+    </condition>
+    <condition id="CM33_SP">
+      <description>Cortex-M33 processor based device using Floating Point Unit (SP)</description>
+      <require Dcore="Cortex-M33" Dfpu="SP_FPU" Ddsp="NO_DSP"/>
+    </condition>
+    <condition id="CM33_DSP_SP">
+      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP)</description>
+      <require Dcore="Cortex-M33" Dfpu="SP_FPU" Ddsp="DSP"/>
+    </condition>
     <condition id="ARMv8MBL">
       <description>ARMv8-M Baseline processor based device</description>
       <require Dcore="ARMV8MBL"/>
     </condition>
     <condition id="ARMv8MML">
       <description>ARMv8-M Mainline processor based device</description>
-      <require Dcore="ARMV8MML" Dfpu="0"/>
+      <require Dcore="ARMV8MML" Dfpu="NO_FPU"/>
+    </condition>
+    <condition id="ARMv8MML_DSP">
+      <description>ARMv8-M Mainline processor based device with DSP extension</description>
+      <require Dcore="ARMV8MML" Dfpu="NO_FPU" Ddsp="DSP"/>
     </condition>
     <condition id="ARMv8MML_FP">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit</description>
@@ -644,9 +748,17 @@ The ARMv8MML processor is brand new.
       <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP)</description>
       <require Dcore="ARMV8MML" Dfpu="SP_FPU"/>
     </condition>
+    <condition id="ARMv8MML_DSP_SP">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP)</description>
+      <require Dcore="ARMV8MML" Dfpu="SP_FPU" Ddsp="DSP"/>
+    </condition>
     <condition id="ARMv8MML_DP">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP)</description>
       <require Dcore="ARMV8MML" Dfpu="DP_FPU"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_DP">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP)</description>
+      <require Dcore="ARMV8MML" Dfpu="DP_FPU" Ddsp="DSP"/>
     </condition>
 
     <!-- ARMCC compiler -->
@@ -802,6 +914,102 @@ The ARMv8MML processor is brand new.
       <require Dendian="Big-endian"/>
     </condition>
 
+    <condition id="CM23_ARMCC">
+      <description>Cortex-M23 processor based device for the ARM Compiler</description>
+      <require condition="CM23"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM23_LE_ARMCC">
+      <description>Cortex-M23 processor based device in little endian mode for the ARM Compiler</description>
+      <require condition="CM23_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM23_BE_ARMCC">
+      <description>Cortex-M23 processor based device in big endian mode for the ARM Compiler</description>
+      <require condition="CM23_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_ARMCC">
+      <description>Cortex-M33 processor based device for the ARM Compiler</description>
+      <require condition="CM33"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM33_LE_ARMCC">
+      <description>Cortex-M33 processor based device in little endian mode for the ARM Compiler</description>
+      <require condition="CM33_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_BE_ARMCC">
+      <description>Cortex-M33 processor based device in big endian mode for the ARM Compiler</description>
+      <require condition="CM33_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_DSP_ARMCC">
+      <description>Cortex-M33 processor based device with DSP extension for the ARM Compiler</description>
+      <require condition="CM33_DSP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM33_DSP_LE_ARMCC">
+      <description>Cortex-M33 processor based device with DSP extension in little endian mode for the ARM Compiler</description>
+      <require condition="CM33_DSP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_DSP_BE_ARMCC">
+      <description>Cortex-M33 processor based device with DSP extension in big endian mode for the ARM Compiler</description>
+      <require condition="CM33_DSP_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_FP_ARMCC">
+      <description>Cortex-M33 processor based device using Floating Point Unit for the ARM Compiler</description>
+      <require condition="CM33_FP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM33_FP_LE_ARMCC">
+      <description>Cortex-M33 processor based device using Floating Point Unit in little endian mode for the ARM Compiler</description>
+      <require condition="CM33_FP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_FP_BE_ARMCC">
+      <description>Cortex-M33 processor based device using Floating Point Unit in big endian mode for the ARM Compiler</description>
+      <require condition="CM33_FP_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_SP_ARMCC">
+      <description>Cortex-M33 processor based device using Floating Point Unit (SP) for the ARM Compiler</description>
+      <require condition="CM33_SP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM33_SP_LE_ARMCC">
+      <description>Cortex-M33 processor based device using Floating Point Unit (SP) in little endian mode for the ARM Compiler</description>
+      <require condition="CM33_SP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_SP_BE_ARMCC">
+      <description>Cortex-M33 processor based device using Floating Point Unit (SP) in big endian mode for the ARM Compiler</description>
+      <require condition="CM33_SP_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_DSP_SP_ARMCC">
+      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP) for the ARM Compiler</description>
+      <require condition="CM33_DSP_SP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM33_DSP_SP_LE_ARMCC">
+      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP) in little endian mode for the ARM Compiler</description>
+      <require condition="CM33_DSP_SP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_DSP_SP_BE_ARMCC">
+      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP) in big endian mode for the ARM Compiler</description>
+      <require condition="CM33_DSP_SP_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
     <condition id="ARMv8MBL_ARMCC">
       <description>ARMv8-M Baseline processor based device for the ARM Compiler</description>
       <require condition="ARMv8MBL"/>
@@ -834,6 +1042,22 @@ The ARMv8MML processor is brand new.
       <require Dendian="Big-endian"/>
     </condition>
 
+    <condition id="ARMv8MML_DSP_ARMCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension for the ARM Compiler</description>
+      <require condition="ARMv8MML_DSP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_LE_ARMCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension in little endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MML_DSP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_BE_ARMCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension in big endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MML_DSP_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
     <condition id="ARMv8MML_FP_ARMCC">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit for the ARM Compiler</description>
       <require condition="ARMv8MML_FP"/>
@@ -847,6 +1071,70 @@ The ARMv8MML processor is brand new.
     <condition id="ARMv8MML_FP_BE_ARMCC">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit in big endian mode for the ARM Compiler</description>
       <require condition="ARMv8MML_FP_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="ARMv8MML_SP_ARMCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP) for the ARM Compiler</description>
+      <require condition="ARMv8MML_SP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="ARMv8MML_SP_LE_ARMCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP) in little endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MML_SP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_SP_BE_ARMCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP) in big endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MML_SP_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="ARMv8MML_DSP_SP_ARMCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP) for the ARM Compiler</description>
+      <require condition="ARMv8MML_DSP_SP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_SP_LE_ARMCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP) in little endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MML_DSP_SP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_SP_BE_ARMCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP) in big endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MML_DSP_SP_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="ARMv8MML_DP_ARMCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP) for the ARM Compiler</description>
+      <require condition="ARMv8MML_DP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="ARMv8MML_DP_LE_ARMCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP) in little endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MML_DP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_DP_BE_ARMCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP) in big endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MML_DP_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="ARMv8MML_DSP_DP_ARMCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP) for the ARM Compiler</description>
+      <require condition="ARMv8MML_DSP_DP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_DP_LE_ARMCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP) in little endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MML_DSP_DP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_DP_BE_ARMCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP) in big endian mode for the ARM Compiler</description>
+      <require condition="ARMv8MML_DSP_DP_ARMCC"/>
       <require Dendian="Big-endian"/>
     </condition>
 
@@ -1003,6 +1291,102 @@ The ARMv8MML processor is brand new.
       <require Dendian="Big-endian"/>
     </condition>
 
+    <condition id="CM23_GCC">
+      <description>Cortex-M23 processor based device for the GCC Compiler</description>
+      <require condition="CM23"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM23_LE_GCC">
+      <description>Cortex-M23 processor based device in little endian mode for the GCC Compiler</description>
+      <require condition="CM23_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM23_BE_GCC">
+      <description>Cortex-M23 processor based device in big endian mode for the GCC Compiler</description>
+      <require condition="CM23_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_GCC">
+      <description>Cortex-M33 processor based device for the GCC Compiler</description>
+      <require condition="CM33"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM33_LE_GCC">
+      <description>Cortex-M33 processor based device in little endian mode for the GCC Compiler</description>
+      <require condition="CM33_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_BE_GCC">
+      <description>Cortex-M33 processor based device in big endian mode for the GCC Compiler</description>
+      <require condition="CM33_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_DSP_GCC">
+      <description>Cortex-M33 processor based device with DSP extension for the GCC Compiler</description>
+      <require condition="CM33_DSP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM33_DSP_LE_GCC">
+      <description>Cortex-M33 processor based device with DSP extension in little endian mode for the GCC Compiler</description>
+      <require condition="CM33_DSP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_DSP_BE_GCC">
+      <description>Cortex-M33 processor based device with DSP extension in big endian mode for the GCC Compiler</description>
+      <require condition="CM33_DSP_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_FP_GCC">
+      <description>Cortex-M33 processor based device using Floating Point Unit for the GCC Compiler</description>
+      <require condition="CM33_FP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM33_FP_LE_GCC">
+      <description>Cortex-M33 processor based device using Floating Point Unit in little endian mode for the GCC Compiler</description>
+      <require condition="CM33_FP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_FP_BE_GCC">
+      <description>Cortex-M33 processor based device using Floating Point Unit in big endian mode for the GCC Compiler</description>
+      <require condition="CM33_FP_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_SP_GCC">
+      <description>Cortex-M33 processor based device using Floating Point Unit (SP) for the GCC Compiler</description>
+      <require condition="CM33_SP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM33_SP_LE_GCC">
+      <description>Cortex-M33 processor based device using Floating Point Unit (SP) in little endian mode for the GCC Compiler</description>
+      <require condition="CM33_SP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_SP_BE_GCC">
+      <description>Cortex-M33 processor based device using Floating Point Unit (SP) in big endian mode for the GCC Compiler</description>
+      <require condition="CM33_SP_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_DSP_SP_GCC">
+      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP) for the GCC Compiler</description>
+      <require condition="CM33_DSP_SP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM33_DSP_SP_LE_GCC">
+      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP) in little endian mode for the GCC Compiler</description>
+      <require condition="CM33_DSP_SP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_DSP_SP_BE_GCC">
+      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP) in big endian mode for the GCC Compiler</description>
+      <require condition="CM33_DSP_SP_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
     <condition id="ARMv8MBL_GCC">
       <description>ARMv8-M Baseline processor based device for the GCC Compiler</description>
       <require condition="ARMv8MBL"/>
@@ -1035,6 +1419,22 @@ The ARMv8MML processor is brand new.
       <require Dendian="Big-endian"/>
     </condition>
 
+    <condition id="ARMv8MML_DSP_GCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension for the GCC Compiler</description>
+      <require condition="ARMv8MML_DSP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_LE_GCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension in little endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MML_DSP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_BE_GCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension in big endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MML_DSP_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
     <condition id="ARMv8MML_FP_GCC">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit for the GCC Compiler</description>
       <require condition="ARMv8MML_FP"/>
@@ -1048,6 +1448,70 @@ The ARMv8MML processor is brand new.
     <condition id="ARMv8MML_FP_BE_GCC">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit in big endian mode for the GCC Compiler</description>
       <require condition="ARMv8MML_FP_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="ARMv8MML_SP_GCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP) for the GCC Compiler</description>
+      <require condition="ARMv8MML_SP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="ARMv8MML_SP_LE_GCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP) in little endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MML_SP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_SP_BE_GCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP) in big endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MML_SP_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="ARMv8MML_DSP_SP_GCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP) for the GCC Compiler</description>
+      <require condition="ARMv8MML_DSP_SP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_SP_LE_GCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP) in little endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MML_DSP_SP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_SP_BE_GCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP) in big endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MML_DSP_SP_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="ARMv8MML_DP_GCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP) for the GCC Compiler</description>
+      <require condition="ARMv8MML_DP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="ARMv8MML_DP_LE_GCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP) in little endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MML_DP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_DP_BE_GCC">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP) in big endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MML_DP_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="ARMv8MML_DSP_DP_GCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP) for the GCC Compiler</description>
+      <require condition="ARMv8MML_DSP_DP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_DP_LE_GCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP) in little endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MML_DSP_DP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_DP_BE_GCC">
+      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP) in big endian mode for the GCC Compiler</description>
+      <require condition="ARMv8MML_DSP_DP_GCC"/>
       <require Dendian="Big-endian"/>
     </condition>
 
@@ -1237,6 +1701,28 @@ The ARMv8MML processor is brand new.
       <require condition="GCC"/>
     </condition>
 
+    <condition id="ARMCM23 CMSIS">
+      <description>Generic ARM Cortex-M23 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCM23*"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMCM23 CMSIS GCC">
+      <description>Generic ARM Cortex-M23 device startup and depends on CMSIS Core requiring GCC</description>
+      <require condition="ARMCM23 CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
+    <condition id="ARMCM33 CMSIS">
+      <description>Generic ARM Cortex-M33 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCM33*"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMCM33 CMSIS GCC">
+      <description>Generic ARM Cortex-M33 device startup and depends on CMSIS Core requiring GCC</description>
+      <require condition="ARMCM33 CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
     <condition id="ARMSC000 CMSIS">
       <description>Generic ARM SC000 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMSC000"/>
@@ -1286,7 +1772,7 @@ The ARMv8MML processor is brand new.
       <description>CMSIS DSP Library is for ARM Cortex-M Devices only and is prebuild for one of the compilers ARMCC, GCC or IAR</description>
       <require condition="ARMv6_7-M Device"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
-      <require condition="ARMCC GCC IAR"/>
+      <require condition="ARMCC GCC"/>
     </condition>
 
     <!-- RTOS RTX -->
@@ -1464,6 +1950,64 @@ The ARMv8MML processor is brand new.
       </files>
     </component>
 
+    <!-- Cortex-M23 -->
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMCM23 CMSIS">
+      <description>System and Startup for Generic ARM Cortex-M23 device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="include"      name="Device/ARM/ARMCM23/Include/"/>
+        <!-- startup / system file -->
+        <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/ARM/startup_ARMCM23.s" version="1.0.0" attr="config" condition="ARMCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/GCC/startup_ARMCM23.S" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/GCC/gcc_arm.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM23/Source/system_ARMCM23.c"      version="1.0.0" attr="config" condition="ARMCC GCC"/>
+        <!-- SAU configuration -->
+        <file category="header"       name="Device/ARM/ARMCM23/Include/Template/partition_ARMCM23.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+      </files>
+    </component>
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMCM23 CMSIS GCC">
+      <description>System and Startup for Generic ARM Cortex-M23 device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="include"  name="Device/ARM/ARMCM23/Include/"/>
+        <!-- startup / system file -->
+        <file category="sourceC"      name="Device/ARM/ARMCM23/Source/GCC/startup_ARMCM23.c" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM23/Source/GCC/gcc_arm.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM23/Source/system_ARMCM23.c"      version="1.0.0" attr="config"/>
+        <!-- SAU configuration -->
+        <file category="header"       name="Device/ARM/ARMCM23/Include/Template/partition_ARMCM23.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+      </files>
+    </component>
+
+    <!-- Cortex-M33 -->
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMCM33 CMSIS">
+      <description>System and Startup for Generic ARM Cortex-M33 device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="include"      name="Device/ARM/ARMCM33/Include/"/>
+        <!-- startup / system file -->
+        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/ARM/startup_ARMCM33.s" version="1.0.0" attr="config" condition="ARMCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/GCC/startup_ARMCM33.S" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"      version="1.0.0" attr="config" condition="ARMCC GCC"/>
+        <!-- SAU configuration -->
+        <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+      </files>
+    </component>
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMCM33 CMSIS GCC">
+      <description>System and Startup for Generic ARM Cortex-M33 device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="include"  name="Device/ARM/ARMCM33/Include/"/>
+        <!-- startup / system file -->
+        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/GCC/startup_ARMCM33.c" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"      version="1.0.0" attr="config"/>
+        <!-- SAU configuration -->
+        <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+      </files>
+    </component>
+
     <!-- Cortex-SC000 -->
     <component Cclass="Device" Cgroup="Startup" Cversion="1.0.1" condition="ARMSC000 CMSIS">
       <description>System and Startup for Generic ARM SC000 device</description>
@@ -1541,7 +2085,7 @@ The ARMv8MML processor is brand new.
         <file category="linkerScript" name="Device/ARM/ARMv8MBL/Source/GCC/gcc_arm.ld"         version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MBL/Source/system_ARMv8MBL.c"      version="1.0.0" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMv8MBL/Include/Template/partition_ARMv8MBL.h" version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMv8MBL/Include/Template/partition_ARMv8MBL.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>
     </component>
 
@@ -1557,7 +2101,7 @@ The ARMv8MML processor is brand new.
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"         version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"      version="1.0.0" attr="config" condition="ARMCC GCC"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>
     </component>
     <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMv8MML CMSIS GCC">
@@ -1570,7 +2114,7 @@ The ARMv8MML processor is brand new.
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"         version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"      version="1.0.0" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>
     </component>
 
@@ -1585,28 +2129,52 @@ The ARMv8MML processor is brand new.
 
         <!-- CPU and Compiler dependent -->
         <!-- ARMCC -->
-        <file category="library" condition="CM0_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM0l_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM0_BE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM0b_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM3_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM3l_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM3_BE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM3b_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM4_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM4l_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM4_BE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM4b_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM4_FP_LE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM4lf_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM4_FP_BE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM4bf_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM7_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM7l_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM7_BE_ARMCC"     name="CMSIS/Lib/ARM/arm_cortexM7b_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM7_SP_LE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM7lfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM7_SP_BE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM7bfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM7_DP_LE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM7lfdp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM7_DP_BE_ARMCC"  name="CMSIS/Lib/ARM/arm_cortexM7bfdp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM0_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM0l_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM0_BE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM0b_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM3_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM3l_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM3_BE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM3b_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM4_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM4l_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM4_BE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM4b_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM4_FP_LE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM4lf_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM4_FP_BE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM4bf_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM7_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM7l_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM7_BE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM7b_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM7_SP_LE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM7lfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM7_SP_BE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM7bfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM7_DP_LE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM7lfdp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM7_DP_BE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM7bfdp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+<!--
+        <file category="library" condition="CM23_LE_ARMCC"            name="CMSIS/Lib/ARM/arm_ARMv8MBLl_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM33_LE_ARMCC"            name="CMSIS/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM33_DSP_LE_ARMCC"        name="CMSIS/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM33_SP_LE_ARMCC"         name="CMSIS/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM33_DSP_SP_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="ARMv8MBL_LE_ARMCC"        name="CMSIS/Lib/ARM/arm_ARMv8MBLl_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="ARMv8MML_LE_ARMCC"        name="CMSIS/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="ARMv8MML_DSP_LE_ARMCC"    name="CMSIS/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="ARMv8MML_SP_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="ARMv8MML_DSP_SP_LE_ARMCC" name="CMSIS/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP_Lib/Source/ARM"/>
+-->
         <!-- GCC -->
-        <file category="library" condition="CM0_LE_GCC"       name="CMSIS/Lib/GCC/libarm_cortexM0l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM3_LE_GCC"       name="CMSIS/Lib/GCC/libarm_cortexM3l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM4_LE_GCC"       name="CMSIS/Lib/GCC/libarm_cortexM4l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM4_FP_LE_GCC"    name="CMSIS/Lib/GCC/libarm_cortexM4lf_math.a"    src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM7_LE_GCC"       name="CMSIS/Lib/GCC/libarm_cortexM7l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM7_SP_LE_GCC"    name="CMSIS/Lib/GCC/libarm_cortexM7lfsp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM7_DP_LE_GCC"    name="CMSIS/Lib/GCC/libarm_cortexM7lfdp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM0_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM0l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM3_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM3l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM4_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM4l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM4_FP_LE_GCC"            name="CMSIS/Lib/GCC/libarm_cortexM4lf_math.a"    src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM7_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM7l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM7_SP_LE_GCC"            name="CMSIS/Lib/GCC/libarm_cortexM7lfsp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM7_DP_LE_GCC"            name="CMSIS/Lib/GCC/libarm_cortexM7lfdp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
+<!--
+        <file category="library" condition="CM23_LE_GCC"              name="CMSIS/Lib/GCC/libarm_ARMv8MBLl_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM33_LE_GCC"              name="CMSIS/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM33_DSP_LE_GCC"          name="CMSIS/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM33_SP_LE_GCC"           name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM33_DSP_SP_LE_GCC"       name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="ARMv8MBL_LE_GCC"          name="CMSIS/Lib/GCC/libarm_ARMv8MBLl_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="ARMv8MML_LE_GCC"          name="CMSIS/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="ARMv8MML_DSP_LE_GCC"      name="CMSIS/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="ARMv8MML_SP_LE_GCC"       name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="ARMv8MML_DSP_SP_LE_GCC"   name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP_Lib/Source/GCC"/>
+-->
       </files>
     </component>
 
@@ -1734,6 +2302,9 @@ The ARMv8MML processor is brand new.
         <file category="library" condition="CM4_FP_LE_ARMCC_STD"  name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM7_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM7_FP_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM23_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_FP_LE_ARMCC"     name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
@@ -1744,6 +2315,9 @@ The ARMv8MML processor is brand new.
         <file category="library" condition="CM4_FP_LE_GCC_STD"    name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM7_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM7_FP_LE_GCC"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM23_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_FP_LE_GCC"       name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MBL_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
@@ -1775,10 +2349,16 @@ The ARMv8MML processor is brand new.
 
         <!-- RTX libraries (CPU and Compiler dependent) -->
         <!-- ARMCC -->
+        <file category="library" condition="CM23_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_FP_LE_ARMCC"     name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
         <!-- GCC -->
+        <file category="library" condition="CM23_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MBN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM33_FP_LE_GCC"       name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MBL_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MBN.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
@@ -1827,6 +2407,9 @@ The ARMv8MML processor is brand new.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"        condition="CM4_FP_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM7_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"        condition="CM7_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl.s"    condition="CM23_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="CM33_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="CM33_FP_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl.s"    condition="ARMv8MBL_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_FP_ARMCC"/>
@@ -1837,6 +2420,9 @@ The ARMv8MML processor is brand new.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.s"        condition="CM4_FP_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"         condition="CM7_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.s"        condition="CM7_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.s"    condition="CM23_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.s"    condition="CM33_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.s" condition="CM33_FP_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.s"    condition="ARMv8MBL_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.s"    condition="ARMv8MML_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.s" condition="ARMv8MML_FP_GCC"/>
@@ -1880,10 +2466,16 @@ The ARMv8MML processor is brand new.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_msgqueue.c"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_system.c"/>
         <!-- RTX sources (ARMCC handlers) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl_ns.s"    condition="CM23_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="CM33_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="CM33_FP_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl_ns.s"    condition="ARMv8MBL_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="ARMv8MML_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="ARMv8MML_FP_ARMCC"/>
         <!-- RTX sources (GCC handlers) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.s"    condition="CM23_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.s"    condition="CM33_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.s" condition="CM33_FP_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.s"    condition="ARMv8MBL_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.s"    condition="ARMv8MML_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.s" condition="ARMv8MML_FP_GCC"/>
