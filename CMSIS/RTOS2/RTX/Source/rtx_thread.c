@@ -777,7 +777,7 @@ uint32_t os_svcThreadGetStackSize (osThreadId_t thread_id) {
   return thread->stack_size;
 }
 
-/// Get available stack space of a thread.
+/// Get available stack space of a thread based on stack watermark recording during execution.
 /// \note API identical to osThreadGetStackSpace
 uint32_t os_svcThreadGetStackSpace (osThreadId_t thread_id) {
   os_thread_t *thread = (os_thread_t *)thread_id;
@@ -1409,7 +1409,7 @@ uint32_t osThreadGetStackSize (osThreadId_t thread_id) {
   return __svcThreadGetStackSize(thread_id);
 }
 
-/// Get available stack space of a thread.
+/// Get available stack space of a thread based on stack watermark recording during execution.
 uint32_t osThreadGetStackSpace (osThreadId_t thread_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return 0U;

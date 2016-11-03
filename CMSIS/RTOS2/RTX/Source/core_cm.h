@@ -103,118 +103,105 @@
 
 //  ==== Service Calls definitions ====
 
-#define SVC_ArgN(n) \
-  register uint32_t __r##n __asm("r"#n)
-
-#define SVC_ArgR(n,a) \
-  register uint32_t __r##n __asm("r"#n) = (uint32_t)a
-
-#define SVC_Arg0()                                                             \
-  SVC_ArgN(0);                                                                 \
-  SVC_ArgN(1);                                                                 \
-  SVC_ArgN(2);                                                                 \
-  SVC_ArgN(3)
-
-#define SVC_Arg1(a1)                                                           \
-  SVC_ArgR(0,a1);                                                              \
-  SVC_ArgN(1);                                                                 \
-  SVC_ArgN(2);                                                                 \
-  SVC_ArgN(3)
-
-#define SVC_Arg2(a1,a2)                                                        \
-  SVC_ArgR(0,a1);                                                              \
-  SVC_ArgR(1,a2);                                                              \
-  SVC_ArgN(2);                                                                 \
-  SVC_ArgN(3)
-
-#define SVC_Arg3(a1,a2,a3)                                                     \
-  SVC_ArgR(0,a1);                                                              \
-  SVC_ArgR(1,a2);                                                              \
-  SVC_ArgR(2,a3);                                                              \
-  SVC_ArgN(3)
-
-#define SVC_Arg4(a1,a2,a3,a4)                                                  \
-  SVC_ArgR(0,a1);                                                              \
-  SVC_ArgR(1,a2);                                                              \
-  SVC_ArgR(2,a3);                                                              \
-  SVC_ArgR(3,a4)
-
 #if   ((__ARM_ARCH_7M__      == 1U) || \
        (__ARM_ARCH_7EM__     == 1U) || \
        (__ARM_ARCH_8M_MAIN__ == 1U))
-#define SVC_Call0(f)                                                           \
-  __ASM volatile                                                               \
-  (                                                                            \
-    "ldr r12,="#f"\n\t"                                                        \
-    "svc 0"                                                                    \
-    : "=r" (__r0), "=r" (__r1), "=r" (__r2), "=r" (__r3)                       \
-    :  "r" (__r0),  "r" (__r1),  "r" (__r2),  "r" (__r3)                       \
-    : "r12", "lr", "cc"                                                        \
-  )
+#define SVC_RegF "r12"
 #elif ((__ARM_ARCH_6M__      == 1U) || \
        (__ARM_ARCH_8M_BASE__ == 1U))
-#define SVC_Call0(f)                                                           \
-  __ASM volatile                                                               \
-  (                                                                            \
-    "ldr r7,="#f"\n\t"                                                         \
-    "svc 0"                                                                    \
-    : "=r" (__r0), "=r" (__r1), "=r" (__r2), "=r" (__r3)                       \
-    :  "r" (__r0),  "r" (__r1),  "r" (__r2),  "r" (__r3)                       \
-    : "r7", "lr", "cc"                                                         \
-  )
+#define SVC_RegF "r7"
 #endif
+
+#define SVC_ArgN(n) \
+register uint32_t __r##n __ASM("r"#n)
+
+#define SVC_ArgR(n,a) \
+register uint32_t __r##n __ASM("r"#n) = (uint32_t)a
+
+#define SVC_ArgF(f) \
+register uint32_t __rf   __ASM(SVC_RegF) = (uint32_t)f
+
+#define SVC_In0 "r"(__rf)
+#define SVC_In1 "r"(__rf),"r"(__r0)
+#define SVC_In2 "r"(__rf),"r"(__r0),"r"(__r1)
+#define SVC_In3 "r"(__rf),"r"(__r0),"r"(__r1),"r"(__r2)
+#define SVC_In4 "r"(__rf),"r"(__r0),"r"(__r1),"r"(__r2),"r"(__r3)
+
+#define SVC_Out0
+#define SVC_Out1 "=r"(__r0)
+
+#define SVC_CL0 "r0","r1","r2","r3","lr","cc"
+#define SVC_CL1      "r1","r2","r3","lr","cc"
+#define SVC_CL2           "r2","r3","lr","cc"
+#define SVC_CL3                "r3","lr","cc"
+#define SVC_CL4                     "lr","cc"
+
+#define SVC_Call0(in, out, cl)                                                 \
+  __ASM volatile ("svc 0" : out : in : cl)
 
 #define SVC0_0N(f,t)                                                           \
 __attribute__((always_inline))                                                 \
-static inline t __svc##f (void) {                                              \
-  SVC_Arg0();                                                                  \
-  SVC_Call0(os_svc##f);                                                        \
+__STATIC_INLINE t __svc##f (void) {                                            \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0(SVC_In0, SVC_Out0, SVC_CL0);                                       \
 }
 
 #define SVC0_0(f,t)                                                            \
 __attribute__((always_inline))                                                 \
-static inline t __svc##f (void) {                                              \
-  SVC_Arg0();                                                                  \
-  SVC_Call0(os_svc##f);                                                        \
+__STATIC_INLINE t __svc##f (void) {                                            \
+  SVC_ArgN(0);                                                                 \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0(SVC_In0, SVC_Out1, SVC_CL1);                                       \
   return (t) __r0;                                                             \
 }
 
 #define SVC0_1N(f,t,t1)                                                        \
 __attribute__((always_inline))                                                 \
-static inline t __svc##f (t1 a1) {                                             \
-  SVC_Arg1(a1);                                                                \
-  SVC_Call0(os_svc##f);                                                        \
+__STATIC_INLINE t __svc##f (t1 a1) {                                           \
+  SVC_ArgR(0,a1);                                                              \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0(SVC_In1, SVC_Out0, SVC_CL1);                                       \
 }
 
 #define SVC0_1(f,t,t1)                                                         \
 __attribute__((always_inline))                                                 \
-static inline t __svc##f (t1 a1) {                                             \
-  SVC_Arg1(a1);                                                                \
-  SVC_Call0(os_svc##f);                                                        \
+__STATIC_INLINE t __svc##f (t1 a1) {                                           \
+  SVC_ArgR(0,a1);                                                              \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0(SVC_In1, SVC_Out1, SVC_CL1);                                       \
   return (t) __r0;                                                             \
 }
 
 #define SVC0_2(f,t,t1,t2)                                                      \
 __attribute__((always_inline))                                                 \
-static inline t __svc##f (t1 a1, t2 a2) {                                      \
-  SVC_Arg2(a1,a2);                                                             \
-  SVC_Call0(os_svc##f);                                                        \
+__STATIC_INLINE t __svc##f (t1 a1, t2 a2) {                                    \
+  SVC_ArgR(0,a1);                                                              \
+  SVC_ArgR(1,a2);                                                              \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0(SVC_In2, SVC_Out1, SVC_CL2);                                       \
   return (t) __r0;                                                             \
 }
 
 #define SVC0_3(f,t,t1,t2,t3)                                                   \
 __attribute__((always_inline))                                                 \
-static inline t __svc##f (t1 a1, t2 a2, t3 a3) {                               \
-  SVC_Arg3(a1,a2,a3);                                                          \
-  SVC_Call0(os_svc##f);                                                        \
+__STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3) {                             \
+  SVC_ArgR(0,a1);                                                              \
+  SVC_ArgR(1,a2);                                                              \
+  SVC_ArgR(2,a3);                                                              \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0(SVC_In3, SVC_Out1, SVC_CL3);                                       \
   return (t) __r0;                                                             \
 }
 
 #define SVC0_4(f,t,t1,t2,t3,t4)                                                \
 __attribute__((always_inline))                                                 \
-static inline t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                        \
-  SVC_Arg4(a1,a2,a3,a4);                                                       \
-  SVC_Call0(os_svc##f);                                                        \
+__STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
+  SVC_ArgR(0,a1);                                                              \
+  SVC_ArgR(1,a2);                                                              \
+  SVC_ArgR(2,a3);                                                              \
+  SVC_ArgR(3,a4);                                                              \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0(SVC_In4, SVC_Out1, SVC_CL4);                                       \
   return (t) __r0;                                                             \
 }
 
@@ -378,12 +365,12 @@ __STATIC_INLINE uint8_t os_exc_wr8 (uint8_t *mem, uint8_t val) {
 
   __ASM volatile (
   ".syntax unified\n\t"
-  "loop%=:\n\t"
+  "1:\n\t"
     "ldrexb %[ret],[%[mem]]\n\t"
     "strexb %[res],%[val],[%[mem]]\n\t"
-    "cbz    %[res],exit%=\n\t"
-    "b      loop%=\n\t"
-  "exit%=:"
+    "cbz    %[res],2f\n\t"
+    "b       1b\n\t"
+  "2:"
   : [ret] "=&l" (ret),
     [res] "=&l" (res)
   : [mem] "l"   (mem),
@@ -404,7 +391,7 @@ __STATIC_INLINE uint32_t os_exc_set32 (uint32_t *mem, uint32_t bits) {
 
   __ASM volatile (
   ".syntax unified\n\t"
-  "loop%=:\n\t"
+  "1:\n\t"
     "ldrex %[val],[%[mem]]\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
     "mov   %[ret],%[val]\n\t"
@@ -413,9 +400,9 @@ __STATIC_INLINE uint32_t os_exc_set32 (uint32_t *mem, uint32_t bits) {
     "orr   %[ret],%[val],%[bits]\n\t"
 #endif
     "strex %[res],%[ret],[%[mem]]\n\t"
-    "cbz   %[res],exit%=\n\t"
-    "b     loop%=\n\t"
-  "exit%=:"
+    "cbz   %[res],2f\n\t"
+    "b     1b\n\t"
+  "2:"
   : [ret]  "=&l" (ret),
     [val]  "=&l" (val),
     [res]  "=&l" (res)
@@ -441,7 +428,7 @@ __STATIC_INLINE uint32_t os_exc_clr32 (uint32_t *mem, uint32_t bits) {
 
   __ASM volatile (
   ".syntax unified\n\t"
-  "loop%=:\n\t"
+  "1:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
     "mov   %[val],%[ret]\n\t"
@@ -450,9 +437,9 @@ __STATIC_INLINE uint32_t os_exc_clr32 (uint32_t *mem, uint32_t bits) {
     "bic   %[val],%[ret],%[bits]\n\t"
 #endif
     "strex %[res],%[val],[%[mem]]\n\t"
-    "cbz   %[res],exit%=\n\t"
-    "b     loop%=\n\t"
-  "exit%=:"
+    "cbz   %[res],2f\n\t"
+    "b     1b\n\t"
+  "2:"
   : [ret]  "=&l" (ret),
     [val]  "=&l" (val),
     [res]  "=&l" (res)
@@ -478,7 +465,7 @@ __STATIC_INLINE uint32_t os_exc_chk32_all (uint32_t *mem, uint32_t bits) {
 
   __ASM volatile (
   ".syntax unified\n\t"
-  "loop%=:\n\t"
+  "1:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
     "mov   %[val],%[ret]\n\t"
@@ -487,11 +474,11 @@ __STATIC_INLINE uint32_t os_exc_chk32_all (uint32_t *mem, uint32_t bits) {
     "and   %[val],%[ret],%[bits]\n\t"
 #endif
     "cmp   %[val],%[bits]\n\t"
-    "beq   update%=\n\t"
+    "beq   2f\n\t"
     "clrex\n\t"
     "movs  %[ret],#0\n\t"
-    "b     exit%=\n\t"
-  "update%=:\n\t"
+    "b     3f\n\t"
+  "2:\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
     "mov   %[val],%[ret]\n\t"
     "bics  %[val],%[bits]\n\t"
@@ -499,9 +486,9 @@ __STATIC_INLINE uint32_t os_exc_chk32_all (uint32_t *mem, uint32_t bits) {
     "bic   %[val],%[ret],%[bits]\n\t"
 #endif
     "strex %[res],%[val],[%[mem]]\n\t"
-    "cbz   %[res],exit%=\n\t"
-    "b     loop%=\n\t"
-  "exit%=:"
+    "cbz   %[res],3f\n\t"
+    "b     1b\n\t"
+  "3:"
   : [ret]  "=&l" (ret),
     [val]  "=&l" (val),
     [res]  "=&l" (res)
@@ -523,14 +510,14 @@ __STATIC_INLINE uint32_t os_exc_chk32_any (uint32_t *mem, uint32_t bits) {
 
   __ASM volatile (
   ".syntax unified\n\t"
-  "loop%=:\n\t"
+  "1:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
     "tst   %[ret],%[bits]\n\t"
-    "bne   update%=\n\t"
+    "bne   2f\n\t"
     "clrex\n\t"
     "movs  %[ret],#0\n\t"
-    "b     exit%=\n\t"
-  "update%=:\n\t"
+    "b     3f\n\t"
+  "2:\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
     "mov   %[val],%[ret]\n\t"
     "bics  %[val],%[bits]\n\t"
@@ -538,9 +525,9 @@ __STATIC_INLINE uint32_t os_exc_chk32_any (uint32_t *mem, uint32_t bits) {
     "bic   %[val],%[ret],%[bits]\n\t"
 #endif
     "strex %[res],%[val],[%[mem]]\n\t"
-    "cbz   %[res],exit%=\n\t"
-    "b     loop%=\n\t"
-  "exit%=:"
+    "cbz   %[res],3f\n\t"
+    "b     1b\n\t"
+  "3:"
   : [ret]  "=&l" (ret),
     [val]  "=&l" (val),
     [res]  "=&l" (res)
@@ -561,13 +548,13 @@ __STATIC_INLINE uint32_t os_exc_inc32 (uint32_t *mem) {
 
   __ASM volatile (
   ".syntax unified\n\t"
-  "loop%=:\n\t"
+  "1:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
     "adds  %[val],%[ret],#1\n\t"
     "strex %[res],%[val],[%[mem]]\n\t"
-    "cbz   %[res],exit%=\n\t"
-    "b     loop%=\n\t"
-  "exit%=:"
+    "cbz   %[res],2f\n\t"
+    "b     1b\n\t"
+  "2:"
   : [ret] "=&l" (ret),
     [val] "=&l" (val),
     [res] "=&l" (res)
@@ -588,18 +575,18 @@ __STATIC_INLINE uint16_t os_exc_inc16_lt (uint16_t *mem, uint16_t max) {
 
   __ASM volatile (
   ".syntax unified\n\t"
-  "loop%=:\n\t"
+  "1:\n\t"
     "ldrexh %[ret],[%[mem]]\n\t"
     "cmp    %[max],%[ret]\n\t"
-    "bhi    update%=\n\t"
+    "bhi    2f\n\t"
     "clrex\n\t"
-    "b      exit%=\n\t"
-  "update%=:\n\t"
+    "b      3f\n\t"
+  "2:\n\t"
     "adds   %[val],%[ret],#1\n\t"
     "strexh %[res],%[val],[%[mem]]\n\t"
-    "cbz    %[res],exit%=\n\t"
-    "b      loop%=\n\t"
-  "exit%=:"
+    "cbz    %[res],3f\n\t"
+    "b      1b\n\t"
+  "3:"
   : [ret] "=&l" (ret),
     [val] "=&l" (val),
     [res] "=&l" (res)
@@ -621,17 +608,17 @@ __STATIC_INLINE uint16_t os_exc_inc16_lim (uint16_t *mem, uint16_t lim) {
 
   __ASM volatile (
   ".syntax unified\n\t"
-  "loop%=:\n\t"
+  "1:\n\t"
     "ldrexh %[ret],[%[mem]]\n\t"
     "adds   %[val],%[ret],#1\n\t"
     "cmp    %[lim],%[val]\n\t"
-    "bhi    update%=\n\t"
+    "bhi    2f\n\t"
     "movs   %[val],#0\n\t"
-  "update%=:\n\t"
+  "2:\n\t"
     "strexh %[res],%[val],[%[mem]]\n\t"
-    "cbz    %[res],exit%=\n\t"
-    "b      loop%=\n\t"
-  "exit%=:"
+    "cbz    %[res],3f\n\t"
+    "b      1b\n\t"
+  "3:"
   : [ret] "=&l" (ret),
     [val] "=&l" (val),
     [res] "=&l" (res)
@@ -652,17 +639,17 @@ __STATIC_INLINE uint32_t os_exc_dec32_nz (uint32_t *mem) {
 
   __ASM volatile (
   ".syntax unified\n\t"
-  "loop%=:\n\t"
+  "1:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
-    "cbnz  %[ret],update%=\n\t"
+    "cbnz  %[ret],2f\n\t"
     "clrex\n\t"
-    "b     exit%=\n\t"
-  "update%=:\n\t"
+    "b     3f\n\t"
+  "2:\n\t"
     "subs  %[val],%[ret],#1\n\t"
     "strex %[res],%[val],[%[mem]]\n\t"
-    "cbz   %[res],exit%=\n\t"
-    "b     loop%=\n\t"
-  "exit%=:"
+    "cbz   %[res],3f\n\t"
+    "b     1b\n\t"
+  "3:"
   : [ret] "=&l" (ret),
     [val] "=&l" (val),
     [res] "=&l" (res)
@@ -682,17 +669,17 @@ __STATIC_INLINE uint16_t os_exc_dec16_nz (uint16_t *mem) {
 
   __ASM volatile (
   ".syntax unified\n\t"
-  "loop%=:\n\t"
+  "1:\n\t"
     "ldrexh %[ret],[%[mem]]\n\t"
-    "cbnz   %[ret],update%=\n\t"
+    "cbnz   %[ret],2f\n\t"
     "clrex\n\t"
-    "b      exit%=\n\t"
-  "update%=:\n\t"
+    "b      3f\n\t"
+  "2:\n\t"
     "subs   %[val],%[ret],#1\n\t"
     "strexh %[res],%[val],[%[mem]]\n\t"
-    "cbz    %[res],exit%=\n\t"
-    "b      loop%=\n\t"
-  "exit%=:"
+    "cbz    %[res],3f\n\t"
+    "b      1b\n\t"
+  "3:"
   : [ret] "=&l" (ret),
     [val] "=&l" (val),
     [res] "=&l" (res)
