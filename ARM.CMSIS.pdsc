@@ -346,7 +346,9 @@ The Cortex-M4 processor is an entry-level 32-bit ARM Cortex processor designed f
     <family Dfamily="ARM Cortex M23" Dvendor="ARM:82">
       <!--book name="Device/ARM/Documents/??_dgug.pdf"       title="?? Device Generic Users Guide"/-->
       <description>
-The Cortex-M23 processor is brand new.
+The ARM Cortex-M23 is based on the ARMv8-M baseline architecture.
+It is the smallest and most energy efficient ARM processor with ARM TrustZone technology. 
+Cortex-M23 is the ideal processor for constrained embedded applications requiring efficient security.
       </description>
       <debug svd="Device/ARM/SVD/ARMCM23.svd"/>
       <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
@@ -368,7 +370,8 @@ The Cortex-M23 processor is brand new.
     <family Dfamily="ARM Cortex M33" Dvendor="ARM:82">
       <!--book name="Device/ARM/Documents/??_dgug.pdf"       title="?? Device Generic Users Guide"/-->
       <description>
-The Cortex-M33 processor is brand new.
+The ARM Cortex-M33 is the most configurable of all Cortex-M processors. It is a full featured microcontroller 
+class processor based on the ARMv8-M mainline architecture with ARM TrustZone security.
       </description>
       <debug svd="Device/ARM/SVD/ARMCM33.svd"/>
       <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
@@ -440,7 +443,7 @@ The ARM SC300 processor is an entry-level 32-bit ARM Cortex processor designed f
     <family Dfamily="ARMv8-M Baseline" Dvendor="ARM:82">
       <!--book name="Device/ARM/Documents/ARMv8MBL_dgug.pdf"       title="ARMv8MBL Device Generic Users Guide"/-->
       <description>
-The ARMv8MBL processor is brand new.
+ARMv8-M Baseline based device with TrustZone
       </description>
       <debug svd="Device/ARM/SVD/ARMv8MBL.svd"/>
       <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
@@ -457,7 +460,7 @@ The ARMv8MBL processor is brand new.
     <family Dfamily="ARMv8-M Mainline" Dvendor="ARM:82">
       <!--book name="Device/ARM/Documents/ARMv8MML_dgug.pdf"       title="ARMv8MML Device Generic Users Guide"/-->
       <description>
-The ARMv8MML processor is brand new.
+ARMv8-M Mainline based device with TrustZone
       </description>
       <debug svd="Device/ARM/SVD/ARMv8MML.svd"/>
       <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
