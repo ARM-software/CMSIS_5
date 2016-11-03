@@ -14,6 +14,56 @@ The detailed file structure of the CMSIS-CORE is shown in the following picture.
 
 \image html "CMSIS_CORE_Files.png" "CMSIS-CORE File Structure"
 
+The CMSIS-Core standard files provided by ARM are in the directory .\CMSIS\Core\Include. These header files are generic and do not need any modifications.
+The <b>core_&lt;cpu&gt;.h</b> defines the core peripherals and provides helper functions that access the core registers. This file is available for each supported processor
+and with the following name:
+
+Core Header File | Processor
+:----------------|:------------------------------
+core_cm0.h       | for the Cortex-M0 processor
+core_cm0plus.h   | for the Cortex-M0+ processor
+core_cm3.h       | for the Cortex-M3 processor
+core_cm4.h       | for the Cortex-M4 processor
+core_cm7.h       | for the Cortex-M7 processor
+core_cm23.h      | for the Cortex-M23 processor
+core_cm33.h      | for the Cortex-M33 processor
+core_sc000.h     | for the SecurCore SC000 processor
+core_sc300.h     | for the SecurCore SC300 processor
+core_armv8mbl.h  | for the ARMv8-M Baseline processor
+core_armv8mml.h  | for the ARMv8-M Mainline processor
+
+\section device_examples Device Examples
+
+The CMSIS Software Pack defines several devices that are based on the various processors. The device related CMSIS-Core files are in the directory .\Device\ARM.
+The following sample devices are also defined in the CMSIS-Pack description file <b>ARM.CMSIS.pdsc</b> where the related CMSIS-Core files are referenced:
+
+Family             | Device            | Description
+:------------------|:------------------|:---------------------------------
+ARM Cortex-M0      | ARMCM0            | Cortex-M0 based device
+ARM Cortex-M0 plus | ARMCM0P           | Cortex-M0+ based device
+ARM Cortex-M3      | ARMCM3            | Cortex-M3 based device
+ARM Cortex-M4      | ARMCM4            | Cortex-M4 based device without floating-point hardware
+ARM Cortex-M4      | ARMCM4_FP         | Cortex-M4 based device with floating-point hardware
+ARM Cortex-M7      | ARMCM7            | Cortex-M4 based device without floating-point hardware
+ARM Cortex-M7      | ARMCM7_FP         | Cortex-M7 based device with single precision floating-point unit (FPU)
+ARM Cortex-M7      | ARMCM7_DP         | Cortex-M7 based device with double precision floating-point unit
+ARM Cortex-M7      | ARMCM7            | Cortex-M7 based device without floating-point hardware
+ARM Cortex-M23     | ARMCM23           | Cortex-M23 based device without TrustZone
+ARM Cortex-M23     | ARMCM23_TZ        | Cortex-M23 based device with TrustZone
+ARM Cortex-M33     | ARMCM33           | Cortex-M33 based device without TrustZone, SIMD, FPU
+ARM Cortex-M33     | ARMCM33_TZ        | Cortex-M33 based device with TrustZone, no SIMD, no FPU
+ARM Cortex-M33     | ARMCM33_DSP_FP    | Cortex-M23 based device with SIMD, FPU, no TrustZone
+ARM Cortex-M33     | ARMCM33_DSP_FP_TZ | Cortex-M23 based device with TrustZone, SIMD, FPU
+ARM SC000          | ARM SC000         | SC000 based device
+ARM SC300          | ARM SC300         | SC300 based device
+ARMv8-M Baseline   | ARMv8MBL          | ARMv8-M Baseline based device with TrustZone
+ARMv8-M Mainline   | ARMv8MML          | ARMv8-M Mainline based device with TrustZone
+ARMv8-M Mainline   | ARMv8MML_DP       | ARMv8-M Mainline based device with TrustZone and double precision FPU 
+ARMv8-M Mainline   | ARMv8MML_SP       | ARMv8-M Mainline based device with TrustZone and single precision FPU 
+ARMv8-M Mainline   | ARMv8MML_DSP      | ARMv8-M Mainline based device with TrustZone and SIMD
+ARMv8-M Mainline   | ARMv8MML_DPS_DP   | ARMv8-M Mainline based device with TrustZone, SIMD, and double precision FPU 
+ARMv8-M Mainline   | ARMv8MML_DPS_SP   | ARMv8-M Mainline based device with TrustZone, SIMD, and single precision FPU 
+
 
 \section template_files_sec Template Files
 
@@ -56,28 +106,6 @@ Silicon vendors add in this context the:
 </table>
 
 
-In addition ARM provides the following core header files that do not need any modifications.
-
-<table class="cmtable">
-    <tr>
-      <th>Core Header Files</th>
-      <th>Description</th>
-    </tr>
-    <tr>
-      <td><b>core_&lt;cpu&gt;.h</b></td>
-      <td>Defines the core peripherals and provides helper functions that access the core registers. This file is available for all supported processors:
-	     - core_cm0.h: for the Cortex-M0 processor
-	     - core_cm0plus.h: for the Cortex-M0+ processor
-	     - core_cm3.h: for the Cortex-M3 processor
-	     - core_cm4.h: for the Cortex-M4 processor
-	     - core_cm7.h: for the Cortex-M7 processor
-	     - core_sc000.h: for the SecurCore SC000 processor
-	     - core_sc300.h: for the SecurCore SC300 processor
-	     - core_armv8mbl.h: for the ARMv8-M Baseline processor
-	     - core_armv8mml.h: for the ARMv8-M Mainline processor
-	  </td>
-    </tr>
-</table>
 
 
 \section adapt_template_files_sec Adaption of Template Files to Devices

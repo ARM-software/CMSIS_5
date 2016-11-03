@@ -61,8 +61,8 @@ The ARMv8-M Architecture is described in the <a href="http://developer.arm.com/p
 \section tested_tools_sec Tested and Verified Toolchains
 
 The CMSIS-CORE \ref templates_pg supplied by ARM have been tested and verified with the following toolchains:
-\todo add version information for ARMCC compilers, verify compiler versions
- - ARM: MDK-ARM Version 5.21a
+ - ARM: ARM Compiler V5.6
+ - ARM: ARM Compiler V6.6 (for Cortex-M23, Cortex-M33, ARMv8-M)
  - GNU: GNU Tools ARM Embedded 5.4 2016q2
  - IAR: IAR Embedded Workbench Kickstart Edition V6.10
 
@@ -87,7 +87,7 @@ The CMSIS-CORE \ref templates_pg supplied by ARM have been tested and verified w
          Reworked: SAU register and functions. \n
          Added: macro \ref \__ALIGNED. \n
          Updated: function \ref SCB_EnableICache. \n
-         Added: cmsis_compiler.h with compiler specific CMSIS macros, functions, instrauctions. \n
+         Added: cmsis_compiler.h with compiler specific CMSIS macros, functions, instructions. \n
          Added: macro \ref \__PACKED. \n
          Updated: compiler specific include files. \n
          Updated: core dependant include files. \n
