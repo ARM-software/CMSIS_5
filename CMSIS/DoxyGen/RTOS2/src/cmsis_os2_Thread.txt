@@ -252,10 +252,15 @@ Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 \def osThreadJoinable
 \details
 
+See \ref osThreadJoin.
+
+
 */
 /**
 \def osThreadDetached
 \details
+
+A thread in this state cannot be joined using \ref osThreadJoin.
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -290,7 +295,7 @@ Get the thread ID of the current running thread.
 \note
 Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
-\b Example:
+<b>Code Example:</b>
 \code{.c}
 void ThreadGetId_example (void)  {
   osThreadId id;                                           // id for the currently running thread
@@ -309,6 +314,10 @@ void ThreadGetId_example (void)  {
 
 Return the state of the thread identified by parameter \em thread_id.
 See \ref osThreadState_t for possible states.
+ 
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osThreadGetState from an ISR will return \ref osThreadError.
+
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -324,10 +333,11 @@ Change the priority of an active thread.
     - \em osErrorResource: parameter \em thread_id refers to a thread that is not an active thread.
     - \em osErrorISR: the function \b osThreadSetPriority cannot be called from interrupt service routines.
 
-\note
-Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
-\b Example:
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osThreadSetPriority from an ISR will return \ref osErrorISR. 
+
+<b>Code Example:</b>
 \code{.c}
 #include "cmsis_os2.h"
  
@@ -361,10 +371,10 @@ void Thread_1 (void const *arg)  {                         // Thread function
 
 Get the priority of an active thread. In case of failure, the value \b osPriorityError is returned.
 
-\note
-Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osThreadGetPriority from an ISR will return \ref osErrorISR. 
 
-\b Example:
+<b>Code Example:</b>
 \code{.c}
 #include "cmsis_os2.h"
  
@@ -391,10 +401,10 @@ void Thread_1 (void const *arg)  {                         // Thread function
 Pass control to the next thread that is in state \b READY. If there is no other thread in state \b READY, 
 then the current thread continues execution and no thread switching occurs.
 
-\note
-Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osThreadYield from an ISR will return \ref osErrorISR. 
 
-\b Example:
+<b>Code Example:</b>
 \code{.c}
 #include "cmsis_os2.h"
  
@@ -417,6 +427,10 @@ void Thread_1 (void const *arg)  {                         // Thread function
 Suspends execution of the thread identified by parameter \em thread_id. Thread is put into the state \em Blocked (\ref osThreadBlocked).
 The thread is not executed until restarted with the function \ref osThreadResume.
 
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osThreadSuspend from an ISR will return \ref osErrorISR. 
+
+
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -431,6 +445,10 @@ Functions that will put a thread into BLOCKED state are:
 \ref osThreadJoin,
 \ref osThreadSuspend.
 
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osThreadResume from an ISR will return \ref osErrorISR. 
+
+
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -439,8 +457,8 @@ Functions that will put a thread into BLOCKED state are:
 Changes the attribute of a thread specified in \em thread_id to \ref osThreadDetached. Detached threads are not joinable with \ref osThreadJoin. 
 When a detached thread is terminated all resources are returned to the system. The behaviour of \ref osThreadDetach on an already detached thread is undefined.
 
-\note
-Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osThreadDetach from an ISR will return \ref osErrorISR. 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -450,10 +468,10 @@ Waits for the thread specified by \em thread_id to terminate.
 If that thread has already terminated, then \ref osThreadJoin returns immediately.  
 The thread referred to by thread_id must joinable. By default threads are created with the attribute \ref osThreadJoinable. The thread may not have been detached by \ref osThreadDetach.
 
-\note
-Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osThreadJoin from an ISR will return \ref osErrorISR. 
 
-\todo See Example 5
+\todo See Example 6
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -463,18 +481,15 @@ Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 osThreadExit terminates the calling thread. This allows the thread to be synchronized with osThreadJoin. 
 
-\note
-Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osStatus_t osThreadTerminate (osThreadId_t thread_id)
 \details
-Remove the thread function from the active thread list. If the thread is currently /b RUNNING the execution stops and the thread
-terminates.
+Remove the thread function from the active thread list. If the thread is currently /b RUNNING the execution stops and the thread terminates.
 
-\note
-Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osThreadTerminate from an ISR will return \ref osErrorISR. 
 
 \code
 #include "cmsis_os2.h"
@@ -507,8 +522,8 @@ void ThreadTerminate_example (void) {
 osThreadGetStackSpace returns the size of unused stack space for the thread passed in thread_id.
 If this function is not implemented or stack checking is disabled it will return 0.
 
-\note
-Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osThreadGetStackSpace from an ISR will return 0. 
 */
 
 /// @}

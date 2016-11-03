@@ -422,7 +422,7 @@ When pool does not provide sufficient memory the creation of the object fails an
 In contrast to the dynamic memory allocations the static memory allocation requires compile-time allocation of object memory. 
 The following example shows how to create an OS object using static memory.
 
-\b Example:
+<b> Code Example: </b> 
 \code{.c}
 /*----------------------------------------------------------------------------
  * CMSIS-RTOS 'main' function template
@@ -436,7 +436,7 @@ The following example shows how to create an OS object using static memory.
 #include "rtx_os.h"
  
 //The thread function instanced in this example
-void *worker(void *arg)
+void worker(void *arg)
 {
   while(1) 
   {
@@ -472,7 +472,7 @@ osThreadId_t th1;
 /*----------------------------------------------------------------------------
  * Application main thread
  *---------------------------------------------------------------------------*/
-void *app_main (void *argument) {
+void app_main (void *argument) {
 	uint32_t param = NULL;
 	
 	//Create an instance of the worker thread with static resources (TCB and stack)
@@ -679,9 +679,6 @@ Data Storage Memory size [bytes]       | \c OS_MEMPOOL_DATA_SIZE  | Defines the 
 */
 
 
-
-
-
 /* ========================================================================================================================== */
 /**
 \page msgQueueConfig Message Queue Configuration
@@ -697,31 +694,115 @@ Data Storage Memory size [bytes]       | \c OS_MSGQUEUE_DATA_SIZE | Defines the 
 
 */
 
+/* ========================================================================================================================== */
+/**
+\page lowPower Configuration for Low-Power Modes
 
+The system thread \b os_IdleThread can be use to switch the system into a low-power mode.  The easiest form to enter a
+low-power mode is the execution of the \c __WFE function that puts the processor into a sleep mode where it waits for an
+event.
 
+<b>Configuration Example:</b>
 
+\code
+#include "RTE_Components.h"
+#include CMSIS_device_header            /* Device definitions                 */
+ 
+void os_IdleThread (void) {
+  /* The idle demon is a system thread, running when no other thread is       */
+  /* ready to run.                                                            */
+ 
+  for (;;) {
+    __WFE();                            /* Enter sleep mode                   */
+  }
+}
+\endcode
 
+\note
+\c __WFE() is not available at every Cortex-M implementation. Check device manuals for availability.
 
+\section TickLess Tick-less operation
 
+RTX5 provides extension for tick-less operation which is useful for applications that use extensively low-power
+modes where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to
+derive timer intervals. The CMSIS-RTOS2 functions \ref osKernelSuspend and \ref osKernelResume control the tick-less operation.
 
+Using this functions allows the RTX5 thread scheduler to stop the periodic kernel tick interrupt. When all active threads
+are suspended, the system enters power-down and calculates how long it can stay in this power-down mode. In the power-down
+mode the processor and potentially peripherals can be switched off. Only a wake-up timer must remain powered, because this
+timer is responsible to wake-up the system after the power-down period expires.
 
+The tick-less operation is controlled from the \b os_IdleThread thread. The wake-up timeout value is set before the system
+enters the power-down mode. The function \ref osKernelSuspend calculates the wake-up timeout measured in RTX Timer Ticks; this
+value is used to setup the wake-up timer that runs during the power-down mode of the system.
 
+Once the system resumes operation (either by a wake-up time out or other interrupts) the RTX5 thread scheduler is started with
+the function \ref osKernelResume. The parameter \a sleep_time specifies the time (in RTX Timer Ticks) that the system was in
+power-down mode.
 
+<b>Code Example:</b>
+\code
+#include "msp.h"                        // Device header
 
+/*----------------------------------------------------------------------------
+ *      MSP432 Low-Power Extension Functions
+ *---------------------------------------------------------------------------*/
+static void MSP432_LP_Entry(void) {
+  /* Enable PCM rude mode, which allows to device to enter LPM3 without waiting for peripherals */
+  PCM->CTL1 = PCM_CTL1_KEY_VAL | PCM_CTL1_FORCE_LPM_ENTRY;       
+  /* Enable all SRAM bank retentions prior to going to LPM3  */
+  SYSCTL->SRAM_BANKRET |= SYSCTL_SRAM_BANKRET_BNK7_RET;
+  __enable_interrupt();		
+  NVIC_EnableIRQ(RTC_C_IRQn);
+  /* Do not wake up on exit from ISR */	
+  SCB->SCR |= SCB_SCR_SLEEPONEXIT_Msk;    
+  /* Setting the sleep deep bit */
+  SCB->SCR |= (SCB_SCR_SLEEPDEEP_Msk);	
+}
+ 
+static volatile unsigned int tc;
+static volatile unsigned int tc_wakeup;
+ 
+void RTC_C_IRQHandler(void)
+{
+  if (tc++ > tc_wakeup) 
+  {
+    SCB->SCR &= ~SCB_SCR_SLEEPONEXIT_Msk;    
+    NVIC_DisableIRQ(RTC_C_IRQn);
+    NVIC_ClearPendingIRQ(RTC_C_IRQn);
+    return;
+  }
+  if (RTC_C->PS0CTL & RTC_C_PS0CTL_RT0PSIFG)
+  {
+    RTC_C->CTL0 = RTC_C_KEY_VAL;                 // Unlock RTC key protected registers
+    RTC_C->PS0CTL &= ~RTC_C_PS0CTL_RT0PSIFG;
+    RTC_C->CTL0 = 0;
+    SCB->SCR |= (SCB_SCR_SLEEPDEEP_Msk);
+  }
+}
+ 
+uint32_t g_enable_sleep = 0;
+  
+void os_IdleThread (void) {
+ 
+  for (;;) {	  
+	tc_wakeup = osKernelSuspend();
+	/* Is there some time to sleep? */
+    if (tc_wakeup > 0) {
+      tc = 0;
+	  /* Enter the low power state */
+      MSP432_LP_Entry();
+	  __wfi();
+	} 
+    /* Adjust the kernel ticks with the amount of ticks slept */	
+	osKernelResume (tc);		
+  }
+}
+\endcode
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+\note
+\c __WFE() is not available at every Cortex-M implementation. Check device manuals for availability.
+*/
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**

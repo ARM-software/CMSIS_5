@@ -32,13 +32,13 @@ static void EX_Signal_1 (void)  {
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \fn osStatus osThreadFlagsClear (int32_t flags)
 \details
-Clear the event flags of a thread flags object. 
+Clear the specified event flags set for the a calling thread. 
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \fn int32_t osThreadFlagsGet (void)
 \details
-Return the event flags currently set in a thread flags object. 
+Return the event flags currently set for the calling thread. 
  
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -63,7 +63,7 @@ When these thread flags are already set, the function returns instantly. Otherwi
 :
 void *Thread (void* arg) {
 :
-  osThreadFlagsGet (0x00000001ul, NULL, osWaitForever); //Wait forever until event 0x01 is set.
+  osThreadFlagsWait (0x00000001ul, NULL, osWaitForever); //Wait forever until event 0x01 is set.
 :
 }
 \endcode

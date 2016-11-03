@@ -17,7 +17,7 @@ initial priority \a osPriorityNormal.
 
 When reaching \b main, it is necessary to:
 -# Call osKernelInitialize() to initialize the CMSIS-RTOS Kernel
--# Setup device peripherals and create other RTOS objects using the \b os*Create functions.
+-# Setup device peripherals and create other RTOS objects using the \b os*New functions.
 -# Start the Kernel and begin thread switching by calling osKernelStart().
 
 <b>Code Example</b>
@@ -28,7 +28,7 @@ int main (void) {
   // initialize peripherals here
  
   // create 'thread' functions that start executing,
-  // example: tid_name = osThreadCreate (osThread(name), NULL);
+  // example: tid_name = osThreadNew(thread, NULL, NULL);
  
   osKernelStart ();                         // start thread execution 
 }
@@ -55,15 +55,30 @@ State of the Kernel. Can be retrieved by \ref osKernelGetState.
 /**
 \fn osStatus_t osKernelInitialize (void)
 \details
+ 
+\return Returns \ref osStatus_t with \ref osOK in case of success. 
+\return Returns \ref osError if an internal error prevents the kernel initialization.
+ 
+Initialize the RTOS Kernel. Before osKernelInitialize is successfully executed no RTOS function may be called.
+ 
+The RTOS kernel does not start thread switching until the function osKernelStart is called.
+ 
+<b> Code Example:</b>
+\code{.c}
+int main (void) {
+  osKernelInitialize ();                    // initialize CMSIS-RTOS at first
+  ;                                         // ...   
+}
+\endcode
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osStatus_t osKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size)
 \details
-Retrieve API and kernel version of the underlying RTOS kernel and a human readable identifier string of the kernel.
-
-\b Example
+Retrieve API and kernel version of the underlying RTOS kernel and a human readable identifier string for the kernel.
+ 
+<b>Code Example:</b>
 \code{.c}
 void info (void) {
   char infobuf[100];
@@ -83,20 +98,59 @@ void info (void) {
 /**
 \fn osKernelState_t osKernelGetState (void)
 \details
+\return The state of the kernel is represented in the \ref osKernelState_t enum. \ref osKernelGetState can be safely called before the RTOS is initialized.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+Calling \ref osKernelGetState from an ISR will return \ref osKernelError. 
+ 
+<b>Code Example:</b>
+\code{.c}
+int main (void) {
+  // System Initialization
+  SystemCoreClockUpdate();
+  // ...
+  if(osKernelGetState() == osKernelInactive) {     // Is the kernel initialized?
+     osKernelInitialize();                          // Initialize CMSIS-RTOS kernel		 
+  }
+  ;
+}
+\endcode
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osStatus_t osKernelStart (void)
 \details
+Start the RTOS Kernel and begin thread switching.
+The function osKernelStart will not return to its calling function in case of success.
 
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines". Calling \ref osKernelStart from an ISR will return \ref osErrorISR.
+ 
+<b>Code Example:</b>
+\code{.c}
+int main (void) {
+  // System Initialization
+  SystemCoreClockUpdate();
+  // ...
+	if(osKernelGetState() == osKernelInactive) { 
+    osKernelInitialize();                        	 
+	}
+   ; // ... Start Threads
+  if (osKernelGetState() == osKernelReady) {        // If kernel is ready to run...
+    osKernelStart();                                // ... start thread execution
+  }
+
+  while(1);                                         // only reached in case of error
+}
+\endcode
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn uint32_t osKernelLock (void)
 \details
 Allows to lock all task switches. 
-\b Example
+<b>Code Example:</b>
 \code{.c}
 uint32_t lock;
 
@@ -120,7 +174,7 @@ Resumes from \ref osKernelLock.
 \details
 CMSIS-RTOS provides extension for tick-less operation which is useful for applications that use extensively low-power modes where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to derive timer intervals. The functions osKernelSuspend and osKernelResume control the tick-less operation.
 
-\b Example
+<b>Code Example:</b>
 \code{.c}
 void os_idle_demon (void) {
   /* The idle demon is a system thread, running when no other thread is       */
