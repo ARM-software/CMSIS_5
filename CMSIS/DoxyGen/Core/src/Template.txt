@@ -1,24 +1,27 @@
 /**
-\page templates_pg Template Files
+\page templates_pg CMSIS-Core Device Templates
 
 \details
 
-ARM supplies CMSIS-CORE template files for the all supported Cortex-M processors and various compiler vendors.
+ARM supplies CMSIS-Core device template files for the all supported Cortex-M processors and various compiler vendors.
 Refer to the list of \ref tested_tools_sec for compliance.
-These template files include the following:
+
+
+These CMSIS-Core device template files include the following:
  - Register names of the Core Peripherals and names of the Core Exception Vectors.
  - Functions to access core peripherals, special CPU instructions and SIMD instructions (for Cortex-M4 and Cortex-M7)
  - Generic startup code and system configuration code.
 
-The detailed file structure of the CMSIS-CORE is shown in the following picture.
+The detailed file structure of the CMSIS-Core device templates is shown in the following picture.
 
-\image html "CMSIS_CORE_Files.png" "CMSIS-CORE File Structure"
+\image html "CMSIS_CORE_Files.png" "CMSIS-Core File Structure"
 
-The CMSIS-Core standard files provided by ARM are in the directory .\CMSIS\Core\Include. These header files are generic and do not need any modifications.
-The <b>core_&lt;cpu&gt;.h</b> defines the core peripherals and provides helper functions that access the core registers. This file is available for each supported processor
-and with the following name:
+\section CMSIS_Processor_files CMSIS-Core Processor Files 
 
-Core Header File | Processor
+The CMSIS-Core processor files provided by ARM are in the directory .\\CMSIS\\Core\\Include. These header files define all processor specific attributes do not need any modifications.
+The <b>core_&lt;cpu&gt;.h</b> defines the core peripherals and provides helper functions that access the core registers. One file is available for each supported Cortex-M processor:
+
+Header File      | Processor
 :----------------|:------------------------------
 core_cm0.h       | for the Cortex-M0 processor
 core_cm0plus.h   | for the Cortex-M0+ processor
@@ -34,8 +37,8 @@ core_armv8mml.h  | for the ARMv8-M Mainline processor
 
 \section device_examples Device Examples
 
-The CMSIS Software Pack defines several devices that are based on the various processors. The device related CMSIS-Core files are in the directory .\Device\ARM.
-The following sample devices are also defined in the CMSIS-Pack description file <b>ARM.CMSIS.pdsc</b> where the related CMSIS-Core files are referenced:
+The CMSIS Software Pack defines several devices that are based on the various processors. The device related CMSIS-Core files are in the directory .\\Device\\ARM
+and include CMSIS-Core processor file explained before. The following sample devices are defined in the CMSIS-Pack description file <b>ARM.CMSIS.pdsc</b>:
 
 Family             | Device            | Description
 :------------------|:------------------|:---------------------------------
@@ -67,8 +70,8 @@ ARMv8-M Mainline   | ARMv8MML_DPS_SP   | ARMv8-M Mainline based device with Trus
 
 \section template_files_sec Template Files
 
-The CMSIS-CORE template files should be extended by the silicon vendor to reflect the actual device and device peripherals.
-Silicon vendors add in this context the:
+To simplify the creation of CMSIS-Core device files, the following template files are provided that should be extended by the silicon vendor to reflect the actual device and device peripherals.
+Silicon vendors add to these template files the following information:
  - <b>Device Peripheral Access Layer</b> that provides definitions for device-specific peripherals.
  - <b>Access Functions for Peripherals</b> (optional) that provides additional helper functions to access device-specific peripherals.
  - <b>Interrupt vectors</b> in the startup file that are device specific.
@@ -106,17 +109,16 @@ Silicon vendors add in this context the:
 </table>
 
 
+<b>Adapt Template Files to a Device</b>
 
-
-\section adapt_template_files_sec Adaption of Template Files to Devices
-
-Copy the complete folder including files and replace:
-  - folder name 'Vendor' with the abbreviation for the device vendor  e.g.: NXP.
-  - folder name 'Device' with the specific device name e.g.: LPC17xx.
-  - in the filenames 'Device' with the specific device name e.g.: LPC17xx.
+The following steps describe how to adopt the template files to a specific device or device family.
+Copy the complete all files in the template directory and replace:
+  - directory name 'Vendor' with the abbreviation for the device vendor  e.g.: NXP.
+  - directory name 'Device' with the specific device name e.g.: LPC17xx.
+  - in the file names 'Device' with the specific device name e.g.: LPC17xx.
 
 Each template file contains comments that start with \b ToDo: that describe a required modification.
-The template files contain placeholders:
+The template files contain place holders:
 
 <table class="cmtable">
     <tr>
@@ -141,7 +143,7 @@ The template files contain placeholders:
 </table>
 
 
-The adaption of the template files is described in detail on the following pages:
+The device configuration of the template files is described in detail on the following pages:
   - \subpage startup_s_pg
   - \subpage system_c_pg
   - \subpage device_h_pg
@@ -589,7 +591,7 @@ If these <i>\#defines</i> are missing default values are used.
     </tr>
 </table>
 
-\b core_ARMv8MBL.h
+\b core_CM23.h or \b core_ARMv8MBL.h
 <table class="cmtable">
     <tr>
       <th>\#define</th>
@@ -637,7 +639,7 @@ If these <i>\#defines</i> are missing default values are used.
     </tr>
 </table>
 
-\b core_ARMv8MML.h
+\b core_CM33.h or \b core_ARMv8MML.h
 <table class="cmtable">
     <tr>
       <th>\#define</th>
