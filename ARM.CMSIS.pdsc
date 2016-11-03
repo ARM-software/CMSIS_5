@@ -471,7 +471,7 @@ The ARMv8MML processor is brand new.
 
       <device Dname="ARMv8MML_DSP">
         <processor Dcore="ARMV8MML" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
-        <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML.h" define="ARMv8MML_DSP"/>
+        <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_DSP.h" define="ARMv8MML_DSP"/>
       </device>
 
       <device Dname="ARMv8MML_SP">
@@ -481,7 +481,7 @@ The ARMv8MML processor is brand new.
 
       <device Dname="ARMv8MML_DSP_SP">
         <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="SP_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
-        <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_SP.h" define="ARMv8MML_DSP_SP"/>
+        <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_DSP_SP.h" define="ARMv8MML_DSP_SP"/>
       </device>
 
       <device Dname="ARMv8MML_DP">
@@ -491,7 +491,7 @@ The ARMv8MML processor is brand new.
 
       <device Dname="ARMv8MML_DSP_DP">
         <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
-        <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_DP.h" define="ARMv8MML_DSP_DP"/>
+        <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_DSP_DP.h" define="ARMv8MML_DSP_DP"/>
       </device>
     </family>
 
