@@ -351,8 +351,10 @@ It is the smallest and most energy efficient ARM processor with ARM TrustZone te
 Cortex-M23 is the ideal processor for constrained embedded applications requiring efficient security.
       </description>
       <debug svd="Device/ARM/SVD/ARMCM23.svd"/>
-      <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
+      <memory id="IROM1"                                start="0x00000000" size="0x00200000" startup="1" default="1"/>
+      <memory id="IROM2"                                start="0x00200000" size="0x00200000" startup="0" default="0"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
+      <memory id="IRAM2"                                start="0x20200000" size="0x00020000" init   ="0" default="0"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMCM23">
@@ -374,9 +376,11 @@ The ARM Cortex-M33 is the most configurable of all Cortex-M processors. It is a 
 class processor based on the ARMv8-M mainline architecture with ARM TrustZone security.
       </description>
       <debug svd="Device/ARM/SVD/ARMCM33.svd"/>
-      <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
+      <memory id="IROM1"                                start="0x00000000" size="0x00200000" startup="1" default="1"/>
+      <memory id="IROM2"                                start="0x00200000" size="0x00200000" startup="0" default="0"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
-      <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
+      <memory id="IRAM2"                                start="0x20200000" size="0x00020000" init   ="0" default="0"/>
+      <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"          default="1"/-->
 
       <device Dname="ARMCM33">
         <processor Dcore="Cortex-M33" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="NO_TZ" Dendian="Configurable" Dclock="10000000"/>
@@ -446,8 +450,10 @@ The ARM SC300 processor is an entry-level 32-bit ARM Cortex processor designed f
 ARMv8-M Baseline based device with TrustZone
       </description>
       <debug svd="Device/ARM/SVD/ARMv8MBL.svd"/>
-      <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
+      <memory id="IROM1"                                start="0x00000000" size="0x00200000" startup="1" default="1"/>
+      <memory id="IROM2"                                start="0x00200000" size="0x00200000" startup="0" default="0"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
+      <memory id="IRAM2"                                start="0x20200000" size="0x00020000" init   ="0" default="0"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMv8MBL">
@@ -463,8 +469,10 @@ ARMv8-M Baseline based device with TrustZone
 ARMv8-M Mainline based device with TrustZone
       </description>
       <debug svd="Device/ARM/SVD/ARMv8MML.svd"/>
-      <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
+      <memory id="IROM1"                                start="0x00000000" size="0x00200000" startup="1" default="1"/>
+      <memory id="IROM2"                                start="0x00200000" size="0x00200000" startup="0" default="0"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
+      <memory id="IRAM2"                                start="0x20200000" size="0x00020000" init   ="0" default="0"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMv8MML">
