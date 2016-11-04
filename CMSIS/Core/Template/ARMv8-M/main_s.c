@@ -48,10 +48,6 @@ void NonSecure_Start (uint32_t addr) {
   __ASM volatile ("blxns %[addr]" : : [addr] "l" (addr));
 }
  
-/* main function does not take arguments */
-#if !defined(__MICROLIB) && defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-__asm(" .global __ARM_use_no_argv\n");
-#endif
  
 /* Secure main() */
 int main(void) {
