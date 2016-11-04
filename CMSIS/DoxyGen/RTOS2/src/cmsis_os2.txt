@@ -2,15 +2,15 @@
 /**
 \mainpage
 
-The CMSIS-RTOS manages the resources of the microcontroller system and implements the concept of parallel threads that run concurrently. 
-There are many advantages of using an CMSIS-RTOS v2 compliant kernel as it provides a standardized interface.
+The CMSIS-RTOS2 manages the resources of the microcontroller system and implements the concept of parallel threads that run concurrently. 
+There are many advantages of using an CMSIS-RTOS2 compliant kernel as it provides a standardized interface.
 
-Applications frequently require several concurrent activities. CMSIS-RTOS can manage multiple concurrent activities at the time when 
+Applications frequently require several concurrent activities. CMSIS-RTOS2 can manage multiple concurrent activities at the time when 
 they are needed. Each activity gets a separate thread which executes a specific task and this simplifies the overall program structure.
-The CMSIS-RTOS system is scalable and additional threads can be added easily at a later time. Threads have a priority allowing faster 
+The CMSIS-RTOS2 system is scalable and additional threads can be added easily at a later time. Threads have a priority allowing faster 
 execution of time-critical parts of an user application.
 
-The CMSIS-RTOS offers services needed in many real-time applications, for example, periodical activation of timer functions, 
+The CMSIS-RTOS2 offers services needed in many real-time applications, for example, periodical activation of timer functions, 
 memory management, and message exchange between threads with time limits.
 
 The <b>CMSIS-RTOS API v2</b> addresses the following new requirements:
@@ -32,17 +32,27 @@ You may migrate overtime to the new API as explained in \ref os2Migration.
 
 CMSIS-RTOS API v2 is not POSIX compliant, but has provisions to enable a C++11/C++14 interface.
 
+The following sections provide further details about CMSIS-RTOS2 and the RTX reference implementation.
+ - \subpage rtos_revisionHistory documents changes made in each version for CMSIS-RTOS2 and RTX version 5.
+ - \subpage rtx5_impl provides general information about the operation of RTX version 5.
+ - \subpage config_rtx explains the configuration options of RTX version 5.
+ - \subpage cre_rtx_proj describes how to create projects using RTX version 5.
+ - \subpage os2Migration shows how to use CMSIS-RTOS2 in existing projects and lists function differences to CMSIS-RTOS v1.
+ - \subpage rtosValidation describes the validation suite that is public available.
+ - \subpage functionOverview lists the CMSIS-RTOS2 API functions and the header file cmsis_os2.h.
+
 <hr>
 
-CMSIS-RTOS in ARM::CMSIS Pack
+CMSIS-RTOS2 in ARM::CMSIS Pack
 -----------------------------
 
-The following files relevant to CMSIS-RTOS are present in the <b>ARM::CMSIS</b> Pack directories:
+The following files relevant to CMSIS-RTOS2 are present in the <b>ARM::CMSIS</b> Pack directories:
 File/Folder                  | Content                                                                
 -----------------------------|------------------------------------------------------------------------
 \b CMSIS/Documentation/RTOS2 | This documentation                                                     
-\b CMSIS/Documentation/RTOS  | CMSIS-RTOS API v1 documentation                                 
 \b CMSIS/RTOS2/Include       | \ref cmsis_os2_h                                                 
+\b CMSIS/RTOS2/RTX           | CMSIS-RTOS v2 reference implementation based on RTX version 5
+\b CMSIS/RTOS2/Template      | compatiblity layer to CMSIS-RTOS v1
 */
 
 
@@ -56,7 +66,7 @@ File/Folder                  | Content
       <th>Description</th>
     </tr>
     <tr>
-      <td>V2.00 Alpha</td>
+      <td>V2.0.0</td>
       <td>
         - Kernel:\n
          -- added: osKernelGetInfo, osKernelGetState.\n
@@ -156,219 +166,31 @@ File/Folder                  | Content
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page functionOverview Function Overview
-
-CMSIS-RTOS v2 provides multiple API interfaces:
-  - \subpage rtos_api2 is the new C function API that supports dynamic object creation, ARMv8-M, and multi-processor communication.
-  - <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a> is a C function API the is backward compatible with CMSIS-RTOS v1.
-  - \subpage rtos_apicpp is a C++ class function API.
-
-It is possible to intermix the different API variants in the same application and even in the same C/C++ source module.
-However, the functions of the <b>C API Version 1</b> may be deprecated in future versions of CMSIS-RTOS.
-
-\section CMSIS_RTOS_TimeOutValue Timeout Value   
-
-Timeout values are an argument to several \b osXxx functions to allow time for resolving a request.
-A timeout value of \b 0 means that the RTOS does not wait and returns instantly, even when no resource is available.   
-A timeout value of \ref osWaitForever means that the RTOS waits infinite until a resource becomes available.
- 
-The timeout value specifies the number of timer ticks until the time delay elapses. The value is an upper bound and 
-depends on the actual time elapsed since the last timer tick. 
-
-Examples:
-  - timeout value \b 0 : the system does not wait, even when no resource is available the RTOS function returns instantly. 
-  - timeout value \b 1 : the system waits until the next timer tick occurs; depending on the previous timer tick, it may be a very short wait time.
-  - timeout value \b 2 : actual wait time is between 1 and 2 timer ticks.
-  - timeout value \ref osWaitForever : system waits infinite until a resource becomes available. 
-  
-\todo B: remove first '|' to make the picture clearer, make ... before first tick, add word 'time' after the arrow. 
-
-\image html TimerValues.png "Timer Values"
-
-\section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
-
-The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
-  - \ref osThreadFlagsSet
-  - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
-  - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
-  - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize, \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace
-  - \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity, \ref osMessageQueueGetMsgSize, \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace
-
-
-Functions that cannot be called from an ISR are verifying the interrupt status and return, in case they are called
-from an ISR context, the status code \b osErrorISR. In some implementations, this condition might be caught using the HARD
-FAULT vector.
-
-*/
-
-
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page rtos_api2 CMSIS-RTOS C API v2  
-
-Overview of all CMSIS-RTOS C API v2 functions.
-
- - \ref CMSIS_RTOS_KernelCtrl
-   - \ref osKernelGetInfo : \copybrief osKernelGetInfo
-   - \ref osKernelGetState : \copybrief osKernelGetState
-   - \ref osKernelGetSysTimerCount : \copybrief osKernelGetSysTimerCount
-   - \ref osKernelGetSysTimerFreq : \copybrief osKernelGetSysTimerFreq
-   - \ref osKernelInitialize : \copybrief osKernelInitialize
-   - \ref osKernelLock : \copybrief osKernelLock
-   - \ref osKernelResume : \copybrief osKernelResume
-   - \ref osKernelStart : \copybrief osKernelStart
-   - \ref osKernelSuspend : \copybrief osKernelSuspend
-   - \ref osKernelGetTickCount : \copybrief osKernelGetTickCount
-   - \ref osKernelGetTickFreq : \copybrief osKernelGetTickFreq
-   - \ref osKernelUnlock : \copybrief osKernelUnlock
-
- - \ref CMSIS_RTOS_ThreadMgmt
-   - \ref osThreadDetach : \copybrief osThreadDetach
-   - \ref osThreadExit : \copybrief osThreadExit
-   - \ref osThreadGetName : \copybrief osThreadGetName
-   - \ref osThreadGetId : \copybrief osThreadGetId
-   - \ref osThreadGetPriority : \copybrief osThreadGetPriority
-   - \ref osThreadGetState : \copybrief osThreadGetState
-   - \ref osThreadJoin : \copybrief osThreadJoin
-   - \ref osThreadNew : \copybrief osThreadNew
-   - \ref osThreadResume : \copybrief osThreadResume
-   - \ref osThreadSetPriority : \copybrief osThreadSetPriority
-   - \ref osThreadSuspend : \copybrief osThreadSuspend
-   - \ref osThreadTerminate : \copybrief osThreadTerminate
-   - \ref osThreadYield : \copybrief osThreadYield
-
- - \ref CMSIS_RTOS_Wait
-   - \ref osDelay : \copybrief osDelay
-   - \ref osDelayUntil : \copybrief osDelayUntil
-
- - \ref CMSIS_RTOS_TimerMgmt
-   - \ref osTimerDelete : \copybrief osTimerDelete
-   - \ref osTimerIsRunning : \copybrief osTimerIsRunning
-   - \ref osTimerNew : \copybrief osTimerNew
-   - \ref osTimerStart : \copybrief osTimerStart
-   - \ref osTimerStop : \copybrief osTimerStop
-
- - \ref CMSIS_RTOS_EventFlags
-   - \ref osEventFlagsNew : \copybrief osEventFlagsNew
-   - \ref osEventFlagsDelete : \copybrief osEventFlagsDelete
-   - \ref osEventFlagsSet : \copybrief osEventFlagsSet
-   - \ref osEventFlagsClear : \copybrief osEventFlagsClear
-   - \ref osEventFlagsGet : \copybrief osEventFlagsGet
-   - \ref osEventFlagsWait : \copybrief osEventFlagsWait
-
- - \ref CMSIS_RTOS_ThreadFlagsMgmt
-   - \ref osThreadFlagsSet : \copybrief osThreadFlagsSet
-   - \ref osThreadFlagsClear : \copybrief osThreadFlagsClear
-   - \ref osThreadFlagsGet : \copybrief osThreadFlagsGet
-   - \ref osThreadFlagsWait : \copybrief osThreadFlagsWait
-
- - \ref CMSIS_RTOS_Message
-   - \ref osMessageQueueDelete : \copybrief osMessageQueueDelete
-   - \ref osMessageQueueGet : \copybrief osMessageQueueGet
-   - \ref osMessageQueueGetCapacity : \copybrief osMessageQueueGetCapacity
-   - \ref osMessageQueueGetCount : \copybrief osMessageQueueGetCount
-   - \ref osMessageQueueGetMsgSize : \copybrief osMessageQueueGetMsgSize
-   - \ref osMessageQueueGetSpace : \copybrief osMessageQueueGetSpace
-   - \ref osMessageQueueNew : \copybrief osMessageQueueNew
-   - \ref osMessageQueuePut : \copybrief osMessageQueuePut
-   - \ref osMessageQueueReset : \copybrief osMessageQueueReset
-
- - \ref CMSIS_RTOS_PoolMgmt
-   - \ref osMemoryPoolAlloc : \copybrief osMemoryPoolAlloc
-   - \ref osMemoryPoolDelete : \copybrief osMemoryPoolDelete
-   - \ref osMemoryPoolFree : \copybrief osMemoryPoolFree
-   - \ref osMemoryPoolGetBlockSize : \copybrief osMemoryPoolGetBlockSize
-   - \ref osMemoryPoolGetCapacity : \copybrief osMemoryPoolGetCapacity
-   - \ref osMemoryPoolGetCount : \copybrief osMemoryPoolGetCount
-   - \ref osMemoryPoolGetSpace : \copybrief osMemoryPoolGetSpace
-   - \ref osMemoryPoolNew : \copybrief osMemoryPoolNew
-
- - \ref CMSIS_RTOS_MutexMgmt
-   - \ref osMutexAcquire : \copybrief osMutexAcquire
-   - \ref osMutexDelete : \copybrief osMutexDelete
-   - \ref osMutexGetOwner : \copybrief osMutexGetOwner
-   - \ref osMutexNew : \copybrief osMutexNew
-   - \ref osMutexRelease : \copybrief osMutexRelease
-
- - \ref CMSIS_RTOS_SemaphoreMgmt
-   - \ref osSemaphoreAcquire : \copybrief osSemaphoreAcquire
-   - \ref osSemaphoreDelete : \copybrief osSemaphoreDelete
-   - \ref osSemaphoreGetCount : \copybrief osSemaphoreGetCount
-   - \ref osSemaphoreNew : \copybrief osSemaphoreNew
-   - \ref osSemaphoreRelease : \copybrief osSemaphoreRelease
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page rtos_apicpp CMSIS-RTOS C++ API
-
-Coming soon
-*/
-
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page cmsis_os2_h Header File: cmsis_os2.h
-
-The file \b cmsis_os2.h is a standard header file that interfaces to every CMSIS-RTOS API v2 compliant Real-Time Operating Systems (RTOS).
-Each implementation is provided the same cmsis_os2.h which defines the interface to the \ref rtos_api2.
-
-Using the \b cmsis_os2.h along with dynamic object allocation allows to create source code or libraries that require no modifications
-when using on a different CMSIS-RTOS v2 implementation.
-
-<b>Header file %cmsis_os2.h</b>
-
-\include cmsis_os2.h
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
 \page rtx5_impl RTX v5 Implementation
 
 The RTX version 5 implements the CMSIS-RTOS API v2 as native RTOS interface for Cortex-M processor-based devices.
 A translation layer to CMSIS-RTOS API v1 is provided and with minimal effort RTX version 5 can be used in applications that 
 where previously based on RTX version 4 and CMSIS-RTOS v1.
 
-The following sections provide further details:
- - \subpage theory_op : provides general information about the operation of RTX version 5.
- - \subpage cre_rtx_proj
- - \subpage config_rtx
-*/
+<b>Theory of Operation</b>
 
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page theory_op Theory of Operation
+This section describes the internal operations of RTX version 5:
+ - \subpage SystemStartup describes the C/C++ library initialization process.
+ - \subpage MemoryAllocation describes the resource management in the target system.
+ - \subpage ThreadStack explains how RTX manages the stack memory for threads.
+ - \subpage lowPower explains how to utilize power saving modes of Cortex-M devices.
+ - \subpage KernelTimer explains the options for time delays and timeouts.
+ - \subpage CMSIS_RTOS_TimeOutValue explains behaviour of timeouts including \token{0}=no wait and \ref osWaitForever.
+ - \subpage TickLess enables ultra-low power operation with custom timer.
+ - \subpage CMSIS_RTOS_ISR_Calls lists the functions calls that are supported from interrupt context.
 
-This section describes how RTX version 5 manages the resources of the target system. Many aspects of the kernel are configurable 
-and the configuration options are mentioned where applicable.
+Many aspects of the kernel are configurable and the configuration options are mentioned where applicable.
 
-\section KernelTimer RTX Kernel Timer Tick and Thread Management
+\page SystemStartup System Startup
 
-By default, CMSIS-RTOS RTX5 uses the Cortex-M
-<a href="http://www.keil.com/support/man/docs/gsac/GSAC_SYSTICKtimer.htm" target="_blank">SysTick</a> timer to generate
-periodic interrupts for the RTX kernel timer tick. CMSIS-RTOS provides \ref CMSIS_RTOS_TimerMgmt functions and several
-CMSIS-RTOS functions have a timeout parameter. This periodic RTX kernel timer tick interrupt is used to derive the required
-time interval. CMSIS-RTOS RTX also provides configuration options for a alternative timer and tick-less operation. 
+todo
 
-To handle timeout and time delays for threads, the CMSIS-RTOS RTX thread management is controlled by the RTX kernel timer
-tick interrupt. The thread context contains all CPU registers (R0 - R12), the return address (LR), the program counter (PC), and the processor
-status register (xPSR). For the Cortex-M4 FPU and Cortex-M7 FPU the floating point status and registers (S0 - S32, FPSCR) are
-also part of the thread context.
-
-When a thread switch occurs:
- - the thread context of the current running thread is stored on the local stack of this thread.
- - the stack pointer is switched to the next running thread.
- - the thread context of this next running thread is restored and this thread starts to run.
-
-\note 
-- For Cortex-M0, Cortex-M3, Cortex-M4, and Cortex-M7 the thread context requires 64 bytes on the local stack.
-- For Cortex-M4 FPU and Cortex-M7 FPU the thread context requires 200 bytes on the local stack. For devices with Cortex-M4 FPU and Cortex-M7 FPU the default stack space should be increased to a minimum of 300 bytes.
-
-Each thread is provided with an separate stack that holds the thread context and stack space for automatic variables and return addresses for function call nesting. The stack sizes of the RTX threads are flexible configurable as explained in the section \ref threadConfig. RTX even offers a configurable checking for stack overflows and stack utilization. 
-
-
-\section MemoryAllocation Memory Allocation 
+\page MemoryAllocation Memory Allocation 
 
 The RTX objects (thread, mutex, semaphore, timer, message, event and memory pool) require dedicated RAM memory.
 Objects can be created using os<i>object</i>New() calls and deleted using os<i>object</i>Delete() calls. The related
@@ -377,21 +199,22 @@ object memory needs to be available during the life-time of the object.
 RTX5 offers three different memory allocation methods for objects:
 
   - \ref GlobalMemoryPool uses a single global memory pool for all objects. It is easy to configure, but may have 
-    the disadvantage for memory fragmentation when different object sizes are created and deleted.
+    the disadvantage for memory fragmentation when objects with different sizes are created and destroyed.
 
   - \ref ObjectMemoryPool uses a fixed-size memory pool for each object type. The method is time deterministic
      and avoids memory fragmentation.
 
-  - \ref StaticObjectMemory is reserved during the compile time and completely avoids that a system can be out of memory.
-    This is required for some safety critical applications.
- 
-It possible to intermix the usage of the all memory allocation methods in the same application.
+  - \ref StaticObjectMemory reserves memory during compile time and completely avoids that a system can be out of memory.
+    This is typically a required for some safety critical systems.
+	
+It possible to intermix all the memory allocation methods in the same application.
 
+\section GlobalMemoryPool Global Memory Pool
 
-\subsection GlobalMemoryPool Global Memory Pool
-\image html MemAllocGlob.png "Global Memory Pool for all objects"
 The global memory pool allocates all objects from a one memory area.
 This method of memory allocation is the default configuration setting of RTX5.
+
+\image html MemAllocGlob.png "Global Memory Pool for all objects"
 
 When pool does not provide sufficient memory the creation of the object fails and the related os<i>object</i>New() function returns \token{NULL}.
 
@@ -399,28 +222,33 @@ When pool does not provide sufficient memory the creation of the object fails an
 
 Enabled in \ref systemConfig.
 
-\subsection ObjectMemoryPool Object-specific Memory Pools
+\section ObjectMemoryPool Object-specific Memory Pools
+
+Object-specific Memory Pools avoids memory fragmentation with a dedicated fixed-size memory management for each object type.
+This type of memory pools are fully time deterministic, which means object creation and destruction takes always the same fixed amount of time.
+As a fixed-size memory pool is specific to an object type the handling of out-of-memory situations is simplified.
+
 \image html MemAllocSpec.png "One memory pool per object type"
-Object-specific memory pools may be enabled for a selected object type, e.g: mutex or thread using the RTX configuration file:
+
+Object-specific memory pools are selectively enabled for each object type, e.g: mutex or thread using the RTX configuration file:
  - Enabled in \ref threadConfig for thread objects.
- - Enabled in \ref timerConfig for timer objects.           <br> 
- - Enabled in \ref eventFlagsConfig for event objects.      <br> 
- - Enabled in \ref mutexConfig for mutex objects.           <br> 
- - Enabled in \ref semaphoreConfig for semaphore.           <br> 
- - Enabled in \ref memPoolConfig for memory pools.          <br> 
- - Enabled in \ref msgQueueConfig for message objects.      <br> 
+ - Enabled in \ref timerConfig for timer objects.
+ - Enabled in \ref eventFlagsConfig for event objects.
+ - Enabled in \ref mutexConfig for mutex objects.
+ - Enabled in \ref semaphoreConfig for semaphore.
+ - Enabled in \ref memPoolConfig for memory pools.
+ - Enabled in \ref msgQueueConfig for message objects.
 
-This dedicated fixed-size memory pool ensures time deterministic behaviour and avoids memory fragmentation.
-As the memory pool is specific to an object the handling of out-of-memory situations may be simplified.
-
-When pool does not provide sufficient memory the creation of the object fails and the related os<i>object</i>New() function returns \token{NULL}.
+When memory pool does not provide sufficient memory the creation of the object fails and the related os<i>object</i>New() function returns \token{NULL}.
 
 \todo explain how to Map pools to different memory spaces (e.g. for systems with different speed grades of RAM memory)
 
-\subsection StaticObjectMemory Static Object Memory
-\image html MemAllocStat.png "Statically allocated memory for all objects"
+\section StaticObjectMemory Static Object Memory
 In contrast to the dynamic memory allocations the static memory allocation requires compile-time allocation of object memory. 
-The following example shows how to create an OS object using static memory.
+
+\image html MemAllocStat.png "Statically allocated memory for all objects"
+
+The following code example shows how to create an OS object using static memory.
 
 <b> Code Example: </b> 
 \code{.c}
@@ -473,16 +301,15 @@ osThreadId_t th1;
  * Application main thread
  *---------------------------------------------------------------------------*/
 void app_main (void *argument) {
-	uint32_t param = NULL;
-	
-	//Create an instance of the worker thread with static resources (TCB and stack)
+  uint32_t param = NULL;
+ 
+  // Create an instance of the worker thread with static resources (TCB and stack)
   th1 = osThreadNew(worker, &param, &worker_attr_1);
-    
+ 
   for (;;) {}
 }
  
 int main (void) {
-
   // System Initialization
   SystemCoreClockUpdate();
   // ...
@@ -492,13 +319,194 @@ int main (void) {
   osKernelStart();                      // Start thread execution
   for (;;) {}
 }
-
-
 \endcode
 
+*/
+
+/* ========================================================================================================================== */
+/**
+\page ThreadStack Thread Stack Management
+
+
+
+For Cortex-M processors without floating point unit the thread context requires 64 bytes on the local stack.
+\note
+For Cortex-M4 FPU and Cortex-M7 FPU the thread context requires 200 bytes on the local stack. For devices with Cortex-M4 FPU and Cortex-M7 FPU the default stack space should be increased to a minimum of 300 bytes.
+
+Each thread is provided with an separate stack that holds the thread context and stack space for automatic variables and return addresses for function call nesting. The stack sizes of the RTX threads are flexible configurable as explained in the section \ref threadConfig. RTX even offers a configurable checking for stack overflows and stack utilization. 
 
 
 */
+
+/* ========================================================================================================================== */
+/**
+\page lowPower Low-Power Operation
+
+The system thread \b os_IdleThread can be use to switch the system into a low-power mode.  The easiest form to enter a
+low-power mode is the execution of the \c __WFE function that puts the processor into a sleep mode where it waits for an
+event.
+
+<b>Configuration Example:</b>
+
+\code
+#include "RTE_Components.h"
+#include CMSIS_device_header            /* Device definitions                 */
+ 
+void os_IdleThread (void) {
+  /* The idle demon is a system thread, running when no other thread is       */
+  /* ready to run.                                                            */
+ 
+  for (;;) {
+    __WFE();                            /* Enter sleep mode                   */
+  }
+}
+\endcode
+
+\note
+\c __WFE() is not available at every Cortex-M implementation. Check device manuals for availability.
+
+*/
+
+/* ========================================================================================================================== */
+/**
+\page KernelTimer RTX Kernel Timer Tick
+
+By default, CMSIS-RTOS RTX5 uses the Cortex-M
+<a href="http://www.keil.com/support/man/docs/gsac/GSAC_SYSTICKtimer.htm" target="_blank">SysTick</a> timer to generate
+periodic interrupts for the RTX kernel timer tick. CMSIS-RTOS provides \ref CMSIS_RTOS_TimerMgmt functions and several
+CMSIS-RTOS functions have a timeout parameter. This periodic RTX kernel timer tick interrupt is used to derive the required
+time interval. CMSIS-RTOS RTX also provides configuration options for a alternative timer and tick-less operation. 
+
+To handle timeout and time delays for threads, the CMSIS-RTOS RTX thread management is controlled by the RTX kernel timer
+tick interrupt. The thread context contains all CPU registers (R0 - R12), the return address (LR), the program counter (PC), and the processor
+status register (xPSR). For the Cortex-M4 FPU and Cortex-M7 FPU the floating point status and registers (S0 - S32, FPSCR) are
+also part of the thread context.
+
+When a thread switch occurs:
+ - the thread context of the current running thread is stored on the local stack of this thread.
+ - the stack pointer is switched to the next running thread.
+ - the thread context of this next running thread is restored and this thread starts to run.
+
+
+\page CMSIS_RTOS_TimeOutValue Timeout Value   
+
+Timeout values are an argument to several \b osXxx functions to allow time for resolving a request.
+A timeout value of \b 0 means that the RTOS does not wait and returns instantly, even when no resource is available.   
+A timeout value of \ref osWaitForever means that the RTOS waits infinite until a resource becomes available.
+ 
+The timeout value specifies the number of timer ticks until the time delay elapses. The value is an upper bound and 
+depends on the actual time elapsed since the last timer tick. 
+
+Examples:
+  - timeout value \b 0 : the system does not wait, even when no resource is available the RTOS function returns instantly. 
+  - timeout value \b 1 : the system waits until the next timer tick occurs; depending on the previous timer tick, it may be a very short wait time.
+  - timeout value \b 2 : actual wait time is between 1 and 2 timer ticks.
+  - timeout value \ref osWaitForever : system waits infinite until a resource becomes available. 
+  
+\todo B: remove first '|' to make the picture clearer, make ... before first tick, add word 'time' after the arrow. 
+
+\image html TimerValues.png "Timer Values"
+
+\page CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
+
+The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
+  - \ref osThreadFlagsSet
+  - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
+  - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
+  - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize, \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace
+  - \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity, \ref osMessageQueueGetMsgSize, \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace
+
+Functions that cannot be called from an ISR are verifying the interrupt status and return, in case they are called
+from an ISR context, the status code \b osErrorISR. In some implementations, this condition might be caught using the HARD
+FAULT vector.
+
+*/
+
+/* ========================================================================================================================== */
+/**
+\page TickLess Tick-less Low-Power Operation
+
+RTX5 provides extension for tick-less operation which is useful for applications that use extensively low-power
+modes where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to
+derive timer intervals. The CMSIS-RTOS2 functions \ref osKernelSuspend and \ref osKernelResume control the tick-less operation.
+
+Using this functions allows the RTX5 thread scheduler to stop the periodic kernel tick interrupt. When all active threads
+are suspended, the system enters power-down and calculates how long it can stay in this power-down mode. In the power-down
+mode the processor and potentially peripherals can be switched off. Only a wake-up timer must remain powered, because this
+timer is responsible to wake-up the system after the power-down period expires.
+
+The tick-less operation is controlled from the \b os_IdleThread thread. The wake-up timeout value is set before the system
+enters the power-down mode. The function \ref osKernelSuspend calculates the wake-up timeout measured in RTX Timer Ticks; this
+value is used to setup the wake-up timer that runs during the power-down mode of the system.
+
+Once the system resumes operation (either by a wake-up time out or other interrupts) the RTX5 thread scheduler is started with
+the function \ref osKernelResume. The parameter \a sleep_time specifies the time (in RTX Timer Ticks) that the system was in
+power-down mode.
+
+<b>Code Example:</b>
+\code
+#include "msp.h"                        // Device header
+
+/*----------------------------------------------------------------------------
+ *      MSP432 Low-Power Extension Functions
+ *---------------------------------------------------------------------------*/
+static void MSP432_LP_Entry(void) {
+  /* Enable PCM rude mode, which allows to device to enter LPM3 without waiting for peripherals */
+  PCM->CTL1 = PCM_CTL1_KEY_VAL | PCM_CTL1_FORCE_LPM_ENTRY;       
+  /* Enable all SRAM bank retentions prior to going to LPM3  */
+  SYSCTL->SRAM_BANKRET |= SYSCTL_SRAM_BANKRET_BNK7_RET;
+  __enable_interrupt();		
+  NVIC_EnableIRQ(RTC_C_IRQn);
+  /* Do not wake up on exit from ISR */	
+  SCB->SCR |= SCB_SCR_SLEEPONEXIT_Msk;    
+  /* Setting the sleep deep bit */
+  SCB->SCR |= (SCB_SCR_SLEEPDEEP_Msk);	
+}
+ 
+static volatile unsigned int tc;
+static volatile unsigned int tc_wakeup;
+ 
+void RTC_C_IRQHandler(void)
+{
+  if (tc++ > tc_wakeup) 
+  {
+    SCB->SCR &= ~SCB_SCR_SLEEPONEXIT_Msk;    
+    NVIC_DisableIRQ(RTC_C_IRQn);
+    NVIC_ClearPendingIRQ(RTC_C_IRQn);
+    return;
+  }
+  if (RTC_C->PS0CTL & RTC_C_PS0CTL_RT0PSIFG)
+  {
+    RTC_C->CTL0 = RTC_C_KEY_VAL;                 // Unlock RTC key protected registers
+    RTC_C->PS0CTL &= ~RTC_C_PS0CTL_RT0PSIFG;
+    RTC_C->CTL0 = 0;
+    SCB->SCR |= (SCB_SCR_SLEEPDEEP_Msk);
+  }
+}
+ 
+uint32_t g_enable_sleep = 0;
+  
+void os_IdleThread (void) {
+ 
+  for (;;) {	  
+	tc_wakeup = osKernelSuspend();
+	/* Is there some time to sleep? */
+    if (tc_wakeup > 0) {
+      tc = 0;
+	  /* Enter the low power state */
+      MSP432_LP_Entry();
+	  __WFI();
+	} 
+    /* Adjust the kernel ticks with the amount of ticks slept */	
+	osKernelResume (tc);		
+  }
+}
+\endcode
+
+\note
+\c __WFI() is not available at every Cortex-M implementation. Check device manuals for availability.
+*/
+
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -528,7 +536,7 @@ to install a Device Family Pack in µVision and use Pack Installer to open a CMS
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page config_rtx Configure RTX
+\page config_rtx Configure RTX v5
 
 The file "RTX_Config.c" defines the configuration parameters of CMSIS-RTOS RTX and must be part of every project that is using the CMSIS-RTOS RTX kernel.
 
@@ -694,122 +702,9 @@ Data Storage Memory size [bytes]       | \c OS_MSGQUEUE_DATA_SIZE | Defines the 
 
 */
 
-/* ========================================================================================================================== */
-/**
-\page lowPower Configuration for Low-Power Modes
-
-The system thread \b os_IdleThread can be use to switch the system into a low-power mode.  The easiest form to enter a
-low-power mode is the execution of the \c __WFE function that puts the processor into a sleep mode where it waits for an
-event.
-
-<b>Configuration Example:</b>
-
-\code
-#include "RTE_Components.h"
-#include CMSIS_device_header            /* Device definitions                 */
- 
-void os_IdleThread (void) {
-  /* The idle demon is a system thread, running when no other thread is       */
-  /* ready to run.                                                            */
- 
-  for (;;) {
-    __WFE();                            /* Enter sleep mode                   */
-  }
-}
-\endcode
-
-\note
-\c __WFE() is not available at every Cortex-M implementation. Check device manuals for availability.
-
-\section TickLess Tick-less operation
-
-RTX5 provides extension for tick-less operation which is useful for applications that use extensively low-power
-modes where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to
-derive timer intervals. The CMSIS-RTOS2 functions \ref osKernelSuspend and \ref osKernelResume control the tick-less operation.
-
-Using this functions allows the RTX5 thread scheduler to stop the periodic kernel tick interrupt. When all active threads
-are suspended, the system enters power-down and calculates how long it can stay in this power-down mode. In the power-down
-mode the processor and potentially peripherals can be switched off. Only a wake-up timer must remain powered, because this
-timer is responsible to wake-up the system after the power-down period expires.
-
-The tick-less operation is controlled from the \b os_IdleThread thread. The wake-up timeout value is set before the system
-enters the power-down mode. The function \ref osKernelSuspend calculates the wake-up timeout measured in RTX Timer Ticks; this
-value is used to setup the wake-up timer that runs during the power-down mode of the system.
-
-Once the system resumes operation (either by a wake-up time out or other interrupts) the RTX5 thread scheduler is started with
-the function \ref osKernelResume. The parameter \a sleep_time specifies the time (in RTX Timer Ticks) that the system was in
-power-down mode.
-
-<b>Code Example:</b>
-\code
-#include "msp.h"                        // Device header
-
-/*----------------------------------------------------------------------------
- *      MSP432 Low-Power Extension Functions
- *---------------------------------------------------------------------------*/
-static void MSP432_LP_Entry(void) {
-  /* Enable PCM rude mode, which allows to device to enter LPM3 without waiting for peripherals */
-  PCM->CTL1 = PCM_CTL1_KEY_VAL | PCM_CTL1_FORCE_LPM_ENTRY;       
-  /* Enable all SRAM bank retentions prior to going to LPM3  */
-  SYSCTL->SRAM_BANKRET |= SYSCTL_SRAM_BANKRET_BNK7_RET;
-  __enable_interrupt();		
-  NVIC_EnableIRQ(RTC_C_IRQn);
-  /* Do not wake up on exit from ISR */	
-  SCB->SCR |= SCB_SCR_SLEEPONEXIT_Msk;    
-  /* Setting the sleep deep bit */
-  SCB->SCR |= (SCB_SCR_SLEEPDEEP_Msk);	
-}
- 
-static volatile unsigned int tc;
-static volatile unsigned int tc_wakeup;
- 
-void RTC_C_IRQHandler(void)
-{
-  if (tc++ > tc_wakeup) 
-  {
-    SCB->SCR &= ~SCB_SCR_SLEEPONEXIT_Msk;    
-    NVIC_DisableIRQ(RTC_C_IRQn);
-    NVIC_ClearPendingIRQ(RTC_C_IRQn);
-    return;
-  }
-  if (RTC_C->PS0CTL & RTC_C_PS0CTL_RT0PSIFG)
-  {
-    RTC_C->CTL0 = RTC_C_KEY_VAL;                 // Unlock RTC key protected registers
-    RTC_C->PS0CTL &= ~RTC_C_PS0CTL_RT0PSIFG;
-    RTC_C->CTL0 = 0;
-    SCB->SCR |= (SCB_SCR_SLEEPDEEP_Msk);
-  }
-}
- 
-uint32_t g_enable_sleep = 0;
-  
-void os_IdleThread (void) {
- 
-  for (;;) {	  
-	tc_wakeup = osKernelSuspend();
-	/* Is there some time to sleep? */
-    if (tc_wakeup > 0) {
-      tc = 0;
-	  /* Enter the low power state */
-      MSP432_LP_Entry();
-	  __wfi();
-	} 
-    /* Adjust the kernel ticks with the amount of ticks slept */	
-	osKernelResume (tc);		
-  }
-}
-\endcode
-
-\note
-\c __WFE() is not available at every Cortex-M implementation. Check device manuals for availability.
-*/
-
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page rtosValidation RTOS Validation
-
-\note
-The test suite is available only for RTOS v1 API.
 
 ARM offers a <a class=el href="http://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-RTOS Validation.
 The <b>ARM::CMSIS-RTOS_Validation</b> Pack contains the following:
@@ -818,9 +713,11 @@ The <b>ARM::CMSIS-RTOS_Validation</b> Pack contains the following:
  - Documentation of the CMSIS-RTOS Validation Suite.
  - Example that shows the usage of the CMSIS-RTOS Validation Suite using simulation.
 
-The CMSIS-RTOS Validation Suite is currently available in beta release and performs generic validation of various
-RTOS features. The test cases verify the functional behavior, test invalid parameters and call management 
-functions from ISR.
+\note
+A public version of the test suite is available only for CMSIS-RTOS v1 API.
+
+The CMSIS-RTOS Validation Suite performs generic validation of various RTOS features. The test cases verify the 
+functional behavior, test invalid parameters and call management functions from ISR.
 
 The following CMSIS-RTOS features can be tested with the current release:
  - Thread : Create multiple threads, terminate, restart, yield, change priority 
@@ -859,9 +756,148 @@ Test Result: PASSED
 \endverbatim
 */
 
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page functionOverview Function Overview
+
+CMSIS-RTOS v2 provides multiple API interfaces:
+  - \subpage rtos_api2 is the new C function API that supports dynamic object creation, ARMv8-M, and multi-processor communication.
+  - <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a> is a C function API the is backward compatible with CMSIS-RTOS v1.
+  - \subpage rtos_apicpp is a C++ class function API.
+
+It is possible to intermix the different API variants in the same application and even in the same C/C++ source module.
+However, the functions of the <b>C API Version 1</b> may be deprecated in future versions of CMSIS-RTOS.
+
+\section rtos_api2 CMSIS-RTOS2
+
+Overview of all CMSIS-RTOS C API v2 functions that are implemented in the \subpage cmsis_os2_h. 
+
+ - \ref CMSIS_RTOS_KernelCtrl
+   - \ref osKernelGetInfo : \copybrief osKernelGetInfo
+   - \ref osKernelGetState : \copybrief osKernelGetState
+   - \ref osKernelGetSysTimerCount : \copybrief osKernelGetSysTimerCount
+   - \ref osKernelGetSysTimerFreq : \copybrief osKernelGetSysTimerFreq
+   - \ref osKernelInitialize : \copybrief osKernelInitialize
+   - \ref osKernelLock : \copybrief osKernelLock
+   - \ref osKernelResume : \copybrief osKernelResume
+   - \ref osKernelStart : \copybrief osKernelStart
+   - \ref osKernelSuspend : \copybrief osKernelSuspend
+   - \ref osKernelGetTickCount : \copybrief osKernelGetTickCount
+   - \ref osKernelGetTickFreq : \copybrief osKernelGetTickFreq
+   - \ref osKernelUnlock : \copybrief osKernelUnlock
+
+ - \ref CMSIS_RTOS_ThreadMgmt
+   - \ref osThreadDetach : \copybrief osThreadDetach
+   - \ref osThreadExit : \copybrief osThreadExit
+   - \ref osThreadGetName : \copybrief osThreadGetName
+   - \ref osThreadGetId : \copybrief osThreadGetId
+   - \ref osThreadGetPriority : \copybrief osThreadGetPriority
+   - \ref osThreadGetState : \copybrief osThreadGetState
+   - \ref osThreadJoin : \copybrief osThreadJoin
+   - \ref osThreadNew : \copybrief osThreadNew
+   - \ref osThreadResume : \copybrief osThreadResume
+   - \ref osThreadSetPriority : \copybrief osThreadSetPriority
+   - \ref osThreadSuspend : \copybrief osThreadSuspend
+   - \ref osThreadTerminate : \copybrief osThreadTerminate
+   - \ref osThreadYield : \copybrief osThreadYield
+
+ - \ref CMSIS_RTOS_Wait
+   - \ref osDelay : \copybrief osDelay
+   - \ref osDelayUntil : \copybrief osDelayUntil
+
+ - \ref CMSIS_RTOS_TimerMgmt
+   - \ref osTimerDelete : \copybrief osTimerDelete
+   - \ref osTimerIsRunning : \copybrief osTimerIsRunning
+   - \ref osTimerNew : \copybrief osTimerNew
+   - \ref osTimerStart : \copybrief osTimerStart
+   - \ref osTimerStop : \copybrief osTimerStop
+
+ - \ref CMSIS_RTOS_EventFlags
+   - \ref osEventFlagsNew : \copybrief osEventFlagsNew
+   - \ref osEventFlagsDelete : \copybrief osEventFlagsDelete
+   - \ref osEventFlagsSet : \copybrief osEventFlagsSet
+   - \ref osEventFlagsClear : \copybrief osEventFlagsClear
+   - \ref osEventFlagsGet : \copybrief osEventFlagsGet
+   - \ref osEventFlagsWait : \copybrief osEventFlagsWait
+
+ - \ref CMSIS_RTOS_ThreadFlagsMgmt
+   - \ref osThreadFlagsSet : \copybrief osThreadFlagsSet
+   - \ref osThreadFlagsClear : \copybrief osThreadFlagsClear
+   - \ref osThreadFlagsGet : \copybrief osThreadFlagsGet
+   - \ref osThreadFlagsWait : \copybrief osThreadFlagsWait
+
+ - \ref CMSIS_RTOS_Message
+   - \ref osMessageQueueDelete : \copybrief osMessageQueueDelete
+   - \ref osMessageQueueGet : \copybrief osMessageQueueGet
+   - \ref osMessageQueueGetCapacity : \copybrief osMessageQueueGetCapacity
+   - \ref osMessageQueueGetCount : \copybrief osMessageQueueGetCount
+   - \ref osMessageQueueGetMsgSize : \copybrief osMessageQueueGetMsgSize
+   - \ref osMessageQueueGetSpace : \copybrief osMessageQueueGetSpace
+   - \ref osMessageQueueNew : \copybrief osMessageQueueNew
+   - \ref osMessageQueuePut : \copybrief osMessageQueuePut
+   - \ref osMessageQueueReset : \copybrief osMessageQueueReset
+
+ - \ref CMSIS_RTOS_PoolMgmt
+   - \ref osMemoryPoolAlloc : \copybrief osMemoryPoolAlloc
+   - \ref osMemoryPoolDelete : \copybrief osMemoryPoolDelete
+   - \ref osMemoryPoolFree : \copybrief osMemoryPoolFree
+   - \ref osMemoryPoolGetBlockSize : \copybrief osMemoryPoolGetBlockSize
+   - \ref osMemoryPoolGetCapacity : \copybrief osMemoryPoolGetCapacity
+   - \ref osMemoryPoolGetCount : \copybrief osMemoryPoolGetCount
+   - \ref osMemoryPoolGetSpace : \copybrief osMemoryPoolGetSpace
+   - \ref osMemoryPoolNew : \copybrief osMemoryPoolNew
+
+ - \ref CMSIS_RTOS_MutexMgmt
+   - \ref osMutexAcquire : \copybrief osMutexAcquire
+   - \ref osMutexDelete : \copybrief osMutexDelete
+   - \ref osMutexGetOwner : \copybrief osMutexGetOwner
+   - \ref osMutexNew : \copybrief osMutexNew
+   - \ref osMutexRelease : \copybrief osMutexRelease
+
+ - \ref CMSIS_RTOS_SemaphoreMgmt
+   - \ref osSemaphoreAcquire : \copybrief osSemaphoreAcquire
+   - \ref osSemaphoreDelete : \copybrief osSemaphoreDelete
+   - \ref osSemaphoreGetCount : \copybrief osSemaphoreGetCount
+   - \ref osSemaphoreNew : \copybrief osSemaphoreNew
+   - \ref osSemaphoreRelease : \copybrief osSemaphoreRelease
+
+The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
+  - \ref osThreadFlagsSet
+  - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
+  - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
+  - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize, \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace
+  - \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity, \ref osMessageQueueGetMsgSize, \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace
+
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page rtos_apicpp CMSIS-RTOS C++ API
+
+The C++11/C++14 interface is planned to be released in January 2017.
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page cmsis_os2_h cmsis_os2.h header file
+
+The file \b cmsis_os2.h is a standard header file that interfaces to every CMSIS-RTOS API v2 compliant Real-Time Operating Systems (RTOS).
+Each implementation is provided the same cmsis_os2.h which defines the interface to the \ref rtos_api2.
+
+Using the \b cmsis_os2.h along with dynamic object allocation allows to create source code or libraries that require no modifications
+when using on a different CMSIS-RTOS v2 implementation.
+
+<b>Header file %cmsis_os2.h</b>
+
+\include cmsis_os2.h
+*/
+
 /* ========================================================================================================================== */
 // Group creation for Reference 
-/** 
+/* 
 \addtogroup CMSIS_RTOS1 CMSIS-RTOS API v1
 \brief This section describes the CMSIS-RTOS API v1. 
 \details 
@@ -875,10 +911,13 @@ Refer to the <a class="el" href="../../RTOS/html/modules.html">Reference</a> gui
 
 // Group creation for Reference 
 /** 
-\addtogroup CMSIS_RTOS CMSIS-RTOS API v2
-\brief This section describes the CMSIS-RTOS API v2. 
+\addtogroup CMSIS_RTOS CMSIS-RTOS2 API
+\brief Describes the C function interface of CMSIS-RTOS API v2. 
 \details 
-The CMSIS-RTOS is a generic API layer that interfaces to an existing RTOS kernel.
+The CMSIS-RTOS2 is a generic API layer that interfaces to an RTOS kernel.
+
+The complete API interface is defined in the \ref cmsis_os2_h. When using dynamic memory allocation for objects, source code or libraries require no modifications
+when using on a different CMSIS-RTOS2 implementation.
 
 */
 
