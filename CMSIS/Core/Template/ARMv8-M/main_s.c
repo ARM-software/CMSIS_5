@@ -22,45 +22,59 @@
  * Version 1.0
  *    Initial Release
  *---------------------------------------------------------------------------*/
-
+ 
 /* Use CMSE intrinsics */
 #include <arm_cmse.h>
-
+ 
+#include "RTE_Components.h"
+#include CMSIS_device_header
+ 
 /* TZ_START_NS: Start address of non-secure application */
-#if !(defined (TZ_START__NS))
-  #define TZ_START_NS  (0x200000U)
+#ifndef TZ_START_NS
+#define TZ_START_NS (0x200000U)
 #endif
-
+ 
+/* Default process stack size */
+#ifndef PROCESS_STACK_SIZE
+#define PROCESS_STACK_SIZE 256U
+#endif
+ 
+/* Default process stack */
+static uint64_t ProcessStack[PROCESS_STACK_SIZE/8U];
+ 
 /* Generate BLXNS instruction */
 void NonSecure_Start (uint32_t addr) __attribute__((always_inline));
-
 void NonSecure_Start (uint32_t addr) {
-  __ASM volatile ("MOV r0, %0\n\t"
-                  "BLXNS   r0\n\t" : : "r" (addr));
+  __ASM volatile ("blxns %[addr]" : : [addr] "l" (addr));
 }
-
+ 
 /* main function does not take arguments */
 #if !defined(__MICROLIB) && defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
 __asm(" .global __ARM_use_no_argv\n");
 #endif
-
+ 
 /* Secure main() */
 int main(void) {
   volatile uint32_t NonSecure_ResetHandler;
-  
+ 
   /* Add user setup code for secure part here*/
-  
-  /* Set non-secure main stack (MSP_NS) */
-  __TZ_set_MSP_NS(*((uint32_t *) (TZ_START_NS)));
  
   /* Set non-secure main stack (MSP_NS) */
-  NonSecure_ResetHandler = cmse_nsfptr_create(*((uint32_t *)((TZ_START_NS) + 4u)));
+  __TZ_set_MSP_NS(*((uint32_t *)(TZ_START_NS)));
+
+  /* Set default PSP, PSPLIM and privileged Thread Mode using PSP */
+  __set_PSPLIM((uint32_t)ProcessStack);
+  __set_PSP   ((uint32_t)ProcessStack + PROCESS_STACK_SIZE);
+  __set_CONTROL(0x02U);
+ 
+  /* Get non-secure reset hanlder */
+  NonSecure_ResetHandler = cmse_nsfptr_create(*((uint32_t *)((TZ_START_NS) + 4U)));
  
   /* Start non-secure state software application */
   NonSecure_Start(NonSecure_ResetHandler);
  
   /* Non-secure software does not return, this code is not executed */
   while (1) {
-    __NOP( ) ;
+    __NOP();
   }
 }
