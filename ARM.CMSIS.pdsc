@@ -2678,7 +2678,7 @@ ARMv8-M Mainline based device with TrustZone
     </example>
 
 	<example name="CMSIS-RTOS2 RTX5 Migration" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Migration">
-      <description>CMSIS-RTOS2 Blinky example</description>
+      <description>CMSIS-RTOS2 mixed API v1 and v2</description>
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="uv" load="Blinky.uvprojx"/>
@@ -2693,7 +2693,7 @@ ARMv8-M Mainline based device with TrustZone
 
 	
 	 <example name="Trustzone-M Example No-RTOS" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS">
-      <description>CMSIS-RTOS2 Blinky example</description>
+      <description>V8M Trustzone Example Bare-Metal</description>
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="uv" load="NoRTOS.uvmpw"/>
@@ -2707,7 +2707,7 @@ ARMv8-M Mainline based device with TrustZone
     </example>
 
 	 <example name="Trustzone-M Example CMSIS-RTOS2"  doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS">
-      <description>CMSIS-RTOS2 Blinky example</description>
+      <description>V8M Trustzone Example Using CMSIS-RTOS2</description>
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="uv" load="RTOS.uvmpw"/>
