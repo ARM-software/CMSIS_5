@@ -565,6 +565,39 @@ __STATIC_INLINE uint32_t os_exc_inc32 (uint32_t *mem) {
   return ret;
 }
 
+/// Exclusive Access Operation: Increment (32-bit) if Less Than
+/// \param[in]  mem             Memory address
+/// \param[in]  max             Maximum value
+/// \return                     Previous value
+__STATIC_INLINE uint32_t os_exc_inc32_lt (uint32_t *mem, uint32_t max) {
+  register uint32_t val, res;
+  register uint32_t ret;
+
+  __ASM volatile (
+  ".syntax unified\n\t"
+  "1:\n\t"
+    "ldrex %[ret],[%[mem]]\n\t"
+    "cmp   %[max],%[ret]\n\t"
+    "bhi    2f\n\t"
+    "clrex\n\t"
+    "b      3f\n\t"
+  "2:\n\t"
+    "adds  %[val],%[ret],#1\n\t"
+    "strex %[res],%[val],[%[mem]]\n\t"
+    "cbz   %[res],3f\n\t"
+    "b     1b\n\t"
+  "3:"
+  : [ret] "=&l" (ret),
+    [val] "=&l" (val),
+    [res] "=&l" (res)
+  : [mem] "l"   (mem),
+    [max] "l"   (max)
+  : "cc", "memory"
+  );
+
+  return ret;
+}
+
 /// Exclusive Access Operation: Increment (16-bit) if Less Than
 /// \param[in]  mem             Memory address
 /// \param[in]  max             Maximum value
@@ -688,6 +721,65 @@ __STATIC_INLINE uint16_t os_exc_dec16_nz (uint16_t *mem) {
   );
 
   return ret;
+}
+
+/// Exclusive Access Operation: Link Get
+/// \param[in]  root            Root address
+/// \return                     Link
+__STATIC_INLINE void *os_exc_link_get (void **root) {
+  register uint32_t val, res;
+  register void    *ret;
+
+  __ASM volatile (
+  ".syntax unified\n\t"
+  "1:\n\t"
+    "ldrex %[ret],[%[root]]\n\t"
+    "cbnz  %[ret],2f\n\t"
+    "clrex\n\t"
+    "b     3f\n\t"
+  "2:\n\t"
+    "ldr   %[val],[%[ret]]\n\t"
+    "strex %[res],%[val],[%[root]]\n\t"
+    "cbz   %[res],3f\n\t"
+    "b     1b\n\t"
+  "3:"
+  : [ret]  "=&l" (ret),
+    [val]  "=&l" (val),
+    [res]  "=&l" (res)
+  : [root] "l"   (root)
+  : "cc", "memory"
+  );
+
+  return ret;
+}
+
+/// Exclusive Access Operation: Link Put
+/// \param[in]  root            Root address
+/// \param[in]  lnk             Link
+__STATIC_INLINE void os_exc_link_put (void **root, void *link) {
+  register uint32_t val1, val2, res;
+
+  __ASM volatile (
+  ".syntax unified\n\t"
+  "1:\n\t"
+    "ldr   %[val1],[%[root]]\n\t"
+    "str   %[val1],[%[link]]\n\t"
+    "dmb\n\t"
+    "ldrex %[val1],[%[root]]\n\t"
+    "ldr   %[val2],[%[link]]\n\t"
+    "cmp   %[val2],%[val2]\n\t"
+    "bne   1b\n\t"
+    "strex %[res],%[link],[%[root]]\n\t"
+    "cbz   %[res],2f\n\t"
+    "b     1b\n\t"
+  "2:"
+  : [val1] "=&l" (val1),
+    [val2] "=&l" (val2),
+    [res]  "=&l" (res)
+  : [root] "l"   (root),
+    [link] "l"   (link)
+  : "cc", "memory"
+  );
 }
 
 #endif  // (__EXCLUSIVE_ACCESS == 1U)

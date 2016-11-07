@@ -80,46 +80,24 @@ void *os_MemoryPoolAlloc (os_mp_info_t *mp_info) {
 #if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
-  block = mp_info->block_free;
-  if (block != NULL) {
-    mp_info->block_free = *((void **)block);
+  if (mp_info->used_blocks < mp_info->max_blocks) {
     mp_info->used_blocks++;
+    block = mp_info->block_free;
+    if (block != NULL) {
+      mp_info->block_free = *((void **)block);
+    }
+  } else {
+    block = NULL;
   }
 
   if (primask == 0U) {
     __enable_irq();
   }
 #else
-  {
-    register uint32_t val, res;
-
-    __ASM volatile (
-    ".syntax unified\n\t"
-    "loop1%=:\n\t"
-      "ldrex %[block],[%[mp_info],%[_block_free]]\n\t"
-      "cbnz  %[block],update%=\n\t"
-      "clrex\n\t"
-      "b     exit%=\n\t"
-    "update%=:\n\t"
-      "ldr   %[val],[%[block]]\n\t"
-      "strex %[res],%[val],[%[mp_info],%[_block_free]]\n\t"
-      "cbz   %[res],loop2%=\n\t"
-      "b     loop1%=\n\t"
-    "loop2%=:\n\t"
-      "ldrex %[val],[%[mp_info],%[_used_blocks]]\n\t"
-      "adds  %[val],#1\n\t"
-      "strex %[res],%[val],[%[mp_info],%[_used_blocks]]\n\t"
-      "cbz   %[res],exit%=\n\t"
-      "b     loop2%=\n\t"
-    "exit%=:"
-    : [block]        "=&l" (block),
-      [val]          "=&l" (val),
-      [res]          "=&l" (res)
-    : [mp_info]      "l"   (mp_info),
-      [_block_free]  "I"   (offsetof(os_mp_info_t, block_free)),
-      [_used_blocks] "I"   (offsetof(os_mp_info_t, used_blocks))
-    : "cc", "memory"
-    );
+  if (os_exc_inc32_lt(&mp_info->used_blocks, mp_info->max_blocks) < mp_info->max_blocks) {
+    block = os_exc_link_get(&mp_info->block_free);
+  } else {
+    block = NULL;
   }
 #endif
 
@@ -134,6 +112,7 @@ osStatus_t os_MemoryPoolFree (os_mp_info_t *mp_info, void *block) {
 #if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
+  osStatus_t status;
 
   if (mp_info == NULL) {
     return osErrorParameter;
@@ -145,50 +124,28 @@ osStatus_t os_MemoryPoolFree (os_mp_info_t *mp_info, void *block) {
 #if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
 
-  *((void **)block) = mp_info->block_free;
-  mp_info->block_free = block;
-  mp_info->used_blocks--;
+  if (mp_info->used_blocks != 0U) {
+    mp_info->used_blocks--;
+    *((void **)block) = mp_info->block_free;
+    mp_info->block_free = block;
+    status = osOK;
+  } else {
+    status = osErrorResource;
+  }
 
   if (primask == 0U) {
     __enable_irq();
   }
 #else
-  {
-    register uint32_t val1, val2, res;
-
-    __ASM volatile (
-    ".syntax unified\n\t"
-    "loop1%=:\n\t"
-      "ldr   %[val1],[%[mp_info],%[_block_free]]\n\t"
-      "str   %[val1],[%[block]]\n\t"
-      "dmb\n\t"
-      "ldrex %[val1],[%[mp_info],%[_block_free]]\n\t"
-      "ldr   %[val2],[%[block]]\n\t"
-      "cmp   %[val2],%[val1]\n\t"
-      "bne   loop1%=\n\t"
-      "strex %[res],%[block],[%[mp_info],%[_block_free]]\n\t"
-      "cbz   %[res],loop2%=\n\t"
-      "b     loop1%=\n\t"
-    "loop2%=:\n\t"
-      "ldrex %[val1],[%[mp_info],%[_used_blocks]]\n\t"
-      "subs  %[val1],#1\n\t"
-      "strex %[res],%[val1],[%[mp_info],%[_used_blocks]]\n\t"
-      "cbz   %[res],exit%=\n\t"
-      "b     loop2%=\n\t"
-    "exit%=:"
-    : [val1]         "=&l" (val1),
-      [val2]         "=&l" (val2),
-      [res]          "=&l" (res)
-    : [block]        "l"   (block),
-      [mp_info]      "l"   (mp_info),
-      [_block_free]  "I"   (offsetof(os_mp_info_t, block_free)),
-      [_used_blocks] "I"   (offsetof(os_mp_info_t, used_blocks))
-    : "cc", "memory"
-    );
+  if (os_exc_dec32_nz(&mp_info->used_blocks) != 0U) {
+    os_exc_link_put(&mp_info->block_free, block);
+    status = osOK;
+  } else {
+    status = osErrorResource;
   }
 #endif
 
-  return osOK;
+  return status;
 }
 
 /// Memory Pool post ISR processing.

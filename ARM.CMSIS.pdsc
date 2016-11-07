@@ -2677,7 +2677,7 @@ ARMv8-M Mainline based device with TrustZone
       </attributes>
     </example>
 
-	<example name="CMSIS-RTOS2 RTX5 Migration" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Migration">
+    <example name="CMSIS-RTOS2 RTX5 Migration" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Migration">
       <description>CMSIS-RTOS2 mixed API v1 and v2</description>
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
@@ -2691,8 +2691,7 @@ ARMv8-M Mainline based device with TrustZone
       </attributes>
     </example>
 
-	
-	 <example name="Trustzone-M Example No-RTOS" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS">
+    <example name="Trustzone-M Example No-RTOS" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS">
       <description>V8M Trustzone Example Bare-Metal</description>
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
@@ -2706,7 +2705,7 @@ ARMv8-M Mainline based device with TrustZone
       </attributes>
     </example>
 
-	 <example name="Trustzone-M Example CMSIS-RTOS2"  doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS">
+    <example name="Trustzone-M Example CMSIS-RTOS2"  doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS">
       <description>V8M Trustzone Example Using CMSIS-RTOS2</description>
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
