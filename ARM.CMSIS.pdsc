@@ -2691,8 +2691,8 @@ ARMv8-M Mainline based device with TrustZone
       </attributes>
     </example>
 
-    <example name="Trustzone-M Example No-RTOS" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS">
-      <description>V8M Trustzone Example Bare-Metal</description>
+    <example name="Trustzone for ARMv8-M No RTOS" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS">
+      <description>Bare-metal secure/non-secure example without RTOS</description>
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="uv" load="NoRTOS.uvmpw"/>
@@ -2705,8 +2705,8 @@ ARMv8-M Mainline based device with TrustZone
       </attributes>
     </example>
 
-    <example name="Trustzone-M Example CMSIS-RTOS2"  doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS">
-      <description>V8M Trustzone Example Using CMSIS-RTOS2</description>
+    <example name="Trustzone for ARMv8-M RTOS"  doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS">
+      <description>Secure/non-secure RTOS example with thread context management</description>
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="uv" load="RTOS.uvmpw"/>
