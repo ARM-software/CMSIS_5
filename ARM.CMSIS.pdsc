@@ -1827,8 +1827,8 @@ ARMv8-M Mainline based device with TrustZone
         <file category="include" name="CMSIS/Include/"/>
         <file category="header"  name="CMSIS/Include/tz_context.h" condition="ARMv8-M TZ Device"/>
         <!-- Code template -->
-        <file category="sourceC" attr="template" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/main_s.c"     select="CMSIS-Core 'main' function for ARMv8-M"/>
-        <file category="sourceC" attr="template" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/tz_context.c" select="Context Management for ARMv8-M TrustZone" />
+        <file category="sourceC" attr="template" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/main_s.c"     select="Secure mode 'main' module for ARMv8-M"/>
+        <file category="sourceC" attr="template" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/tz_context.c" select="RTOS Context Management (TrustZone for ARMv8-M)" />
       </files>
     </component>
 
