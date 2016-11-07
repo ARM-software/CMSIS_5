@@ -28,6 +28,7 @@ The Upgrade to RTX Version 5 from any version 4.x is simple using the API v1 com
 	- System Configuration->Global Dynamic Memory size
 	- Kernel Tick Frequency
 	- Thread Configuration->Default Thread Stack size
+	- Details are found in \ref config_rtx
 -# Rename function int \b main (void) to void \b app_main (void *arg).
 Create new function int main (void) which implements at least:
 	- System initialization and configuration

@@ -43,8 +43,8 @@ int Init_Events (void)
 
 void Thread_EventSender (void *argument)
 {
-  while (1) {
-    evt_id = osEventFlagsNew(NULL);
+	evt_id = osEventFlagsNew(NULL);
+  while (1) {    
     osEventFlagsSet(evt_id, FLAGS_MSK1);
     osThreadYield ();                                           // suspend thread
   }

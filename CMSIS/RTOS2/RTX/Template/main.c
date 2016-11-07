@@ -26,3 +26,4 @@ int main (void) {
   osKernelStart();                      // Start thread execution
   for (;;) {}
 }
+

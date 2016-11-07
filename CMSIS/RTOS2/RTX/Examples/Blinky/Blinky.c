@@ -32,12 +32,14 @@ osThreadId_t tid_phaseC;                /* Thread id of thread: phase_c      */
 osThreadId_t tid_phaseD;                /* Thread id of thread: phase_d      */
 osThreadId_t tid_clock;                 /* Thread id of thread: clock        */
 
-#define LED_A   0
-#define LED_B   1
-#define LED_C   2
-#define LED_D   3
-#define LED_CLK 7
+struct phases_t {
+	int_fast8_t phaseA;
+	int_fast8_t phaseB;
+	int_fast8_t phaseC;
+	int_fast8_t phaseD;
+} g_phases;
 
+osMutexId_t phases_mut_id;
 
 /*----------------------------------------------------------------------------
  *      Switch LED on
@@ -72,9 +74,9 @@ void signal_func (osThreadId_t tid)  {
 void phaseA (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0001, osFlagsWaitAny ,osWaitForever);    /* wait for an event flag 0x0001 */
-    Switch_On (LED_A);
+    g_phases.phaseA = 1;
     signal_func(tid_phaseB);                                     /* call common signal function   */
-    Switch_Off(LED_A);
+    g_phases.phaseA = 0;
   }
 }
 
@@ -84,9 +86,9 @@ void phaseA (void *argument) {
 void phaseB (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);    /* wait for an event flag 0x0001 */
-    Switch_On (LED_B);
+    g_phases.phaseB = 1;
     signal_func(tid_phaseC);                /* call common signal function   */
-    Switch_Off(LED_B);
+    g_phases.phaseB = 0;
   }
 }
 
@@ -96,9 +98,9 @@ void phaseB (void *argument) {
 void phaseC (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);    /* wait for an event flag 0x0001 */
-    Switch_On (LED_C);
+    g_phases.phaseC = 1;
     signal_func(tid_phaseD);                /* call common signal function   */
-    Switch_Off(LED_C);
+    g_phases.phaseC = 0;
   }
 }
 
@@ -108,9 +110,9 @@ void phaseC (void *argument) {
 void phaseD (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);    /* wait for an event flag 0x0001 */
-    Switch_On (LED_D);
+    g_phases.phaseD = 1;
     signal_func(tid_phaseA);                /* call common signal function   */
-    Switch_Off(LED_D);
+    g_phases.phaseD = 0;
   }
 }
 
@@ -120,9 +122,7 @@ void phaseD (void *argument) {
 void clock (void *argument) {
   for (;;) {
     osThreadFlagsWait(0x0100, osFlagsWaitAny, osWaitForever);    /* wait for an event flag 0x0100 */
-    Switch_On (LED_CLK);
     osDelay(80);                            /* delay  80ms                   */
-    Switch_Off(LED_CLK);
   }
 }
 
@@ -156,4 +156,5 @@ int main (void) {
 
   while(1);
 }
+
 

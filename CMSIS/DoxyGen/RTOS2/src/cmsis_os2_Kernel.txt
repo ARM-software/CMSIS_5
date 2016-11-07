@@ -64,10 +64,29 @@ Initialize the RTOS Kernel. Before osKernelInitialize is successfully executed n
 The RTOS kernel does not start thread switching until the function osKernelStart is called.
  
 <b> Code Example:</b>
-\code{.c}
+#include "RTE_Components.h"
+#include  CMSIS_device_header
+#include "cmsis_os2.h"
+ 
+/*----------------------------------------------------------------------------
+ * Application main thread
+ *---------------------------------------------------------------------------*/
+void app_main (void *argument) {
+ 
+  // ...
+  for (;;) {}
+}
+ 
 int main (void) {
-  osKernelInitialize ();                    // initialize CMSIS-RTOS at first
-  ;                                         // ...   
+
+  // System Initialization
+  SystemCoreClockUpdate();
+  // ...
+ 
+  osKernelInitialize();                 // Initialize CMSIS-RTOS
+  osThreadNew(app_main, NULL, NULL);    // Create application main thread
+  osKernelStart();                      // Start thread execution
+  for (;;) {}
 }
 \endcode
 
