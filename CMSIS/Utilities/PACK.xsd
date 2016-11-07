@@ -17,7 +17,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        25. November 2016
+  $Date:        07. November 2016
   $Revision:    1.4.7
 
   $Project: Schema File for Package Description File Format Specification
@@ -25,11 +25,13 @@
   Package file name convention <vendor>.<name>.<version>.pack
   SchemaVersion=1.4
 
-  25. November 2016: 1.4.7
+  07. November 2016: 1.4.7
   - added multiple version types to tighten the schema checking depending on context
   - added new generator sections for exe, web and eclipse based generators
   - added new processor attributes Dtz = Trustzone and Ddsp = DSP instructions for ARMv8-M
+  - added new attributes Dtz, Ddsp, Dsecure to conditions
   - added new processors Cortex-M23 and Cortex-M33
+  - added new attribute public to books and images to indicate public use of documents and board images
   
   12. July 2016: 1.4.6
   - refined Dname string pattern restriction
@@ -478,6 +480,9 @@
     <xs:attribute name="name"    type="xs:string" use="required"/>
     <!-- title specifies the string displayed for this document -->
     <xs:attribute name="title"   type="xs:string" use="required"/>
+    <!-- if true, the vendor gives permission for this file being extracted from the pack and displayed on a web-page -->
+    <!-- links to web pages are assumed public -->
+    <xs:attribute name="public" type="xs:boolean" use="optional" default="false"/>
   </xs:complexType>
 
   <!-- Description Type-->
@@ -583,8 +588,12 @@
       <xs:enumeration value="Cortex-M33"/>
       <xs:enumeration value="Cortex-M4"/>
       <xs:enumeration value="Cortex-M7"/>
+      <xs:enumeration value="ARMV8MBL"/>
+      <xs:enumeration value="ARMV8MML"/>
       <xs:enumeration value="Cortex-R4"/>
       <xs:enumeration value="Cortex-R5"/>
+      <xs:enumeration value="Cortex-R7"/>
+      <xs:enumeration value="Cortex-R8"/>
       <xs:enumeration value="Cortex-A5"/>
       <xs:enumeration value="Cortex-A7"/>
       <xs:enumeration value="Cortex-A8"/>
@@ -594,8 +603,7 @@
       <xs:enumeration value="Cortex-A53"/>
       <xs:enumeration value="Cortex-A57"/>
       <xs:enumeration value="Cortex-A72"/>
-      <xs:enumeration value="ARMV8MBL"/>
-      <xs:enumeration value="ARMV8MML"/>
+      <xs:enumeration value="Cortex-A73"/>
       <xs:enumeration value="other"/>
     </xs:restriction>
   </xs:simpleType>
@@ -808,6 +816,17 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <!-- Dsecure enumeration type -->
+  <xs:simpleType name="DsecureEnum">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Secure"/>
+      <xs:enumeration value="Non-secure"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <!-- Ddsp DSP extensions enumeration type -->
   <xs:simpleType name="DdspEnum">
     <xs:restriction base="xs:token">
@@ -882,6 +901,9 @@
     <xs:attribute name="Dcore"       type="DcoreEnum"/>
     <xs:attribute name="Dfpu"        type="DfpuEnum"/>
     <xs:attribute name="Dmpu"        type="DmpuEnum"/>
+    <xs:attribute name="Dtz"         type="DtzEnum"/>
+    <xs:attribute name="Ddsp"        type="DdspEnum"/>
+    <xs:attribute name="Dsecure"     type="DsecureEnum"/>
     <xs:attribute name="Dendian"     type="DendianEnum"/>
     <xs:attribute name="Pname"       type="RestrictedString"/>
     <xs:attribute name="Cvendor"     type="xs:string"/>
@@ -905,6 +927,9 @@
         <xs:attribute name="Cgroup"    type="CgroupType" use="optional"/> <!-- Group the description is associated with -->
         <xs:attribute name="doc"       type="xs:string"  use="optional"/> <!-- link to documentation for the :Class:[Group] -->
         <xs:attribute name="generator" type="xs:string"  use="optional"/> <!-- link a generator to a taxonomy -->
+        <!-- if true, the vendor gives permission for the doc file above being extracted from the pack and displayed on a web-page -->
+        <!-- links to web pages are assumed public -->
+        <xs:attribute name="public" type="xs:boolean" use="optional" default="false"/>
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
@@ -1020,6 +1045,9 @@
     <xs:attribute name="category" type="BoardBookCategoryEnum"/>
     <xs:attribute name="name"     type="xs:string"/>
     <xs:attribute name="title"    type="xs:string"/>
+    <!-- if true, the vendor gives permission for this file being extracted from the pack and displayed on a web-page -->
+    <!-- links to web pages are assumed public -->
+    <xs:attribute name="public"   type="xs:boolean" use="optional" default="false"/>
   </xs:complexType>
 
   <xs:complexType name="DebugInterfaceType">
@@ -1035,8 +1063,11 @@
       <xs:element name="compatibleDevice" type="CompatibleDeviceType" maxOccurs="unbounded"/>
       <xs:element name="image">
         <xs:complexType>
-          <xs:attribute name="small" type="xs:string" use="optional"/>
-          <xs:attribute name="large" type="xs:string" use="optional"/>
+          <xs:attribute name="small"  type="xs:string"  use="optional"/>
+          <xs:attribute name="large"  type="xs:string"  use="optional"/>
+          <!-- if true, the vendor gives permission for this file being extracted from the pack and displayed on a web-page -->
+          <!-- links to web pages are assumed public -->
+          <xs:attribute name="public" type="xs:boolean" use="optional" default="false"/>
         </xs:complexType>
       </xs:element>
       <xs:element name="debugInterface" type="DebugInterfaceType" maxOccurs="unbounded"/>
@@ -1090,6 +1121,9 @@
     <xs:attribute name="doc"         type="xs:string" use="required"/>
     <!-- version of the example -->
     <xs:attribute name="version"     type="xs:string" use="optional"/>
+    <!-- if true, the vendor gives permission for the doc file being extracted from the pack and displayed on a web-page -->
+    <!-- links to web pages are assumed public -->
+    <xs:attribute name="public" type="xs:boolean" use="optional" default="false"/>
   </xs:complexType>
 
   <!-- section listing all examples contained in the package -->
@@ -1128,6 +1162,9 @@
     <xs:attribute name="version" type ="ComponentVersionType" use="optional"/>
     <!-- path(s) to find source files for a library, paths are delimited with semicolon (;) -->
     <xs:attribute name="src" type="xs:string" use ="optional"/>
+    <!-- if true, the vendor gives permission for this file being extracted from the pack and displayed on a web-page -->
+    <!-- links to web pages are assumed public -->
+    <xs:attribute name="public" type="xs:boolean" use="optional" default="false"/>
   </xs:complexType>
 
   <!-- some strings are used to construct filenames (e.g. package name). Such names can contain only subset of characters 
@@ -1413,6 +1450,9 @@
     <xs:attribute name="name" type="xs:string" use="optional"/>
     <!-- optional link/reference to documentation about the project -->
     <xs:attribute name="documentation" type="xs:string" use="optional"/>
+    <!-- if true, the vendor gives permission for the documentation being extracted from the pack and displayed on a web-page -->
+    <!-- links to web pages are assumed public -->
+    <xs:attribute name="public" type="xs:boolean" use="optional" default="false"/>
   </xs:complexType>
 
   <!-- Create Section: (added in 1.4.4) -->

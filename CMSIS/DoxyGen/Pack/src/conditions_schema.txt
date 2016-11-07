@@ -23,7 +23,9 @@ be ignored.
       <description>True if the active device has a Cortex-M0 or Cortex-M0+ or Cortex-M3 or Cortex-M4 or SC000 or SC3000 processor </description>
       <accept Dcore="Cortex-M0"/>                  <!-- any of the following cores will make the condition resolve to true -->
       <accept Dcore="Cortex-M0+"/>
+      <accept Dcore="Cortex-M23"/>
       <accept Dcore="Cortex-M3"/>
+      <accept Dcore="Cortex-M33"/>
       <accept Dcore="Cortex-M4"/>
       <accept Dcore="SC000"/>
       <accept Dcore="SC300"/>
@@ -225,14 +227,32 @@ A \ref element_condition "condition" becomes \token{true} when:
   </tr>
   <tr>
     <td>Dfpu</td>
-    <td>Specifies whether a Floating Point Unit (FPU) must be present or not. Predefined values can be uses as listed in the table \ref DfpuEnum "Device FPU".</td>
+    <td>Specifies whether a Floating Point Unit (FPU) must be present or not. Predefined values can be used as listed in the table \ref DfpuEnum "Device FPU".</td>
     <td>DfpuEnum</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>Dmpu</td>
-    <td>Specifies whether a Memory Protection Unit (MPU) must be present or not. Predefined values can be uses as listed in the table \ref DmpuEnum "Device MPU".</td>
+    <td>Specifies whether a Memory Protection Unit (MPU) must be present or not. Predefined values can be used as listed in the table \ref DmpuEnum "Device MPU".</td>
     <td>DmpuEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Dtz</td>
+    <td>Specifies whether TrustZone (TZ) must be supported by the device or not. Predefined values can be used as listed in the table \ref DtzEnum "Device TrustZone".</td>
+    <td>DtzEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Dsecure</td>
+    <td>Specifies whether Digital Signal Processing (DSP) instruction set must be supported by the device or not. Predefined values can be uses as listed in the table \ref DdspEnum "Device DSP".</td>
+    <td>DsecureEnum</td>
+    <td>optional</td>
+  </tr> 
+  <tr>
+    <td>Ddsp</td>
+    <td>Specifies whether Digital Signal Processing (DSP) instruction set must be supported by the device or not. Predefined values can be uses as listed in the table \ref DdspEnum "Device DSP".</td>
+    <td>DdspEnum</td>
     <td>optional</td>
   </tr>
   <tr>
