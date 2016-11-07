@@ -40,7 +40,7 @@ MKDIR %RELEASE_PATH%
 COPY ..\..\ARM.CMSIS.pdsc %RELEASE_PATH%\ARM.CMSIS.pdsc
 
 :: Copy LICENSE file
-COPY ..\..\LICENSE %RELEASE_PATH%\LICENSE
+COPY ..\..\LICENSE.txt %RELEASE_PATH%\LICENSE.txt
 
 :: Copy Device folder
 XCOPY /Q /S /Y ..\..\Device\*.* %RELEASE_PATH%\Device\*.*
