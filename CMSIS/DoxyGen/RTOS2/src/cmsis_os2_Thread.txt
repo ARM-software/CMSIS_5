@@ -232,7 +232,7 @@ Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\typedef void *(*os_thread_func_t) (void *argument)
+\typedef void (*os_thread_func_t) (void *argument)
 \details
 
 
@@ -494,7 +494,7 @@ Calling \ref osThreadTerminate from an ISR will return \ref osErrorISR.
 \code
 #include "cmsis_os2.h"
  
-void *Thread_1 (void c*arg);                           // function prototype for Thread_1
+void Thread_1 (void c*arg);                           // function prototype for Thread_1
 
 void ThreadTerminate_example (void) {
   osStatus_t status;

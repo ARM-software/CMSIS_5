@@ -5,7 +5,7 @@
  *      Thread 1 'Thread_Name': Sample thread
  *---------------------------------------------------------------------------*/
  
-void *Thread (void *argument);                             // thread function
+void Thread (void *argument);                             // thread function
 osThreadId_t tid_Thread;                                          // thread id
 
 int Init_Thread (void) {
@@ -16,7 +16,7 @@ int Init_Thread (void) {
   return(0);
 }
 
-void *Thread (void *argument) {
+void Thread (void *argument) {
 
   while (1) {
     ; // Insert thread code here...

@@ -2663,7 +2663,7 @@ ARMv8-M Mainline based device with TrustZone
       </attributes>
     </example>
 
-    <example name="CMSIS-RTOS2 Blinky" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Simulation/RTX5_Blinky">
+    <example name="CMSIS-RTOS2 Blinky" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Blinky">
       <description>CMSIS-RTOS2 Blinky example</description>
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
@@ -2676,6 +2676,51 @@ ARMv8-M Mainline based device with TrustZone
         <category>Getting Started</category>
       </attributes>
     </example>
+
+	    <example name="CMSIS-RTOS2 RTX5 Migration" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Migration">
+      <description>CMSIS-RTOS2 Blinky example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="Blinky.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="RTOS2"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+	
+	 <example name="Trustzone-M Example No-RTOS" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS">
+      <description>CMSIS-RTOS2 Blinky example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="NoRTOS.uvmpw"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="RTOS2"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+	 <example name="Trustzone-M Example CMSIS-RTOS2" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS">
+      <description>CMSIS-RTOS2 Blinky example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="RTOS.uvmpw"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="RTOS2"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+	
+	
 
   </examples>
 

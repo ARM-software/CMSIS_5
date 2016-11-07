@@ -75,8 +75,8 @@ Attributes structure for message queue.
  *      Message Queue creation & usage
  *---------------------------------------------------------------------------*/
   
-void *Thread_MsgQueue1 (void *argument);                   // thread function 1
-void *Thread_MsgQueue2 (void *argument);                   // thread function 2
+void Thread_MsgQueue1 (void *argument);                   // thread function 1
+void Thread_MsgQueue2 (void *argument);                   // thread function 2
 osThreadId_t tid_Thread_MsgQueue1;                                // thread id 1
 osThreadId_t tid_Thread_MsgQueue2;                                // thread id 2
  
@@ -105,7 +105,7 @@ int Init_MsgQueue (void) {
   return(0);
 }
  
-void *Thread_MsgQueue1 (void *argument) {
+void Thread_MsgQueue1 (void *argument) {
   MSGQUEUE_OBJ_t pMsg = 0;
 
   while (1) {
@@ -117,7 +117,7 @@ void *Thread_MsgQueue1 (void *argument) {
   }
 }
  
-void *Thread_MsgQueue2 (void *argument) {
+void Thread_MsgQueue2 (void *argument) {
 
   MSGQUEUE_OBJ_t pMsg = 0;
 

@@ -4,9 +4,9 @@
 /*----------------------------------------------------------------------------
  *      Message Queue creation & usage
  *---------------------------------------------------------------------------*/
- 
-void *Thread_MsgQueue1 (void *argument);                   // thread function 1
-void *Thread_MsgQueue2 (void *argument);                   // thread function 2
+
+void Thread_MsgQueue1 (void *argument);                   // thread function 1
+void Thread_MsgQueue2 (void *argument);                   // thread function 2
 osThreadId_t tid_Thread_MsgQueue1;                                // thread id 1
 osThreadId_t tid_Thread_MsgQueue2;                                // thread id 2
 
@@ -23,30 +23,36 @@ typedef struct {                                                // object data t
 } MSGQUEUE_OBJ_t;
 
 osMemoryPoolId_t mpid_MemPool2;                                         // memory pool id
-  
+
 osMessageQueueId_t mid_MsgQueue;                                      // message queue id
 
-int Init_MsgQueue (void) {
+int Init_MsgQueue (void)
+{
 
   mpid_MemPool2 = osMemoryPoolNew(MSGQUEUE_OBJECTS, sizeof(MSGQUEUE_OBJ_t), NULL);
   if (!mpid_MemPool2) {
     ; // MemPool object not created, handle failure
   }
-  
+
   mid_MsgQueue = osMessageQueueNew(MSGQUEUE_OBJECTS, sizeof(MSGQUEUE_OBJ_t), NULL);
   if (!mid_MsgQueue) {
     ; // Message Queue object not created, handle failure
   }
-  
+
   tid_Thread_MsgQueue1 = osThreadNew (Thread_MsgQueue1, NULL, NULL);
-  if (!tid_Thread_MsgQueue1) return(-1);
+  if (!tid_Thread_MsgQueue1) {
+    return(-1);
+  }
   tid_Thread_MsgQueue2 = osThreadNew (Thread_MsgQueue2, NULL, NULL);
-  if (!tid_Thread_MsgQueue2) return(-1);
-  
+  if (!tid_Thread_MsgQueue2) {
+    return(-1);
+  }
+
   return(0);
 }
 
-void *Thread_MsgQueue1 (void *argument) {
+void Thread_MsgQueue1 (void *argument)
+{
   MEM_BLOCK_t *pMsg = 0;
 
   while (1) {
@@ -62,7 +68,8 @@ void *Thread_MsgQueue1 (void *argument) {
   }
 }
 
-void *Thread_MsgQueue2 (void *argument) {
+void Thread_MsgQueue2 (void *argument)
+{
   osStatus_t      status;
   MEM_BLOCK_t *pMsg = 0;
 

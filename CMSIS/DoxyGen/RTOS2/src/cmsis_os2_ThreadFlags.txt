@@ -18,7 +18,7 @@ The threads waiting for the flag set will be notified to resume from BLOCKED sta
 
 <b>Code Example</b>
 \code{.c}
-void *Thread (void *arg);
+void Thread (void *arg);
  
 static void EX_Signal_1 (void)  {
   int32_t      signals;
@@ -60,11 +60,11 @@ When these thread flags are already set, the function returns instantly. Otherwi
 <b>Code Example</b>
 \code{.c}
 #include "cmsis_os2.h"
-:
-void *Thread (void* arg) {
-:
+ 
+void Thread (void* arg) {
+;
   osThreadFlagsWait (0x00000001ul, NULL, osWaitForever); //Wait forever until event 0x01 is set.
-:
+;
 }
 \endcode
 */

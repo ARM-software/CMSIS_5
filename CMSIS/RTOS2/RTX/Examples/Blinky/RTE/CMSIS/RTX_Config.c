@@ -71,7 +71,7 @@
 //     <o>Number of user Threads (total) <1-1000>
 //     <i> Defines maximum number of user threads that can be active at the same time.
 //     <i> Applies to user threads with system provided memory for control blocks.
-#define OS_THREAD_NUM               5
+#define OS_THREAD_NUM               6
  
 //     <o>Number of user Threads with user-provided Stack size <0-1000>
 //     <i> Defines maximum number of user threads with user-provided stack size.

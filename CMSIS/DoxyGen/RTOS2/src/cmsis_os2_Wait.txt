@@ -33,7 +33,7 @@ to one timer tick less.
 \code{.c}
 #include "cmsis_os2.h"
  
-void *Thread_1 (void *arg)  {               // Thread function
+void Thread_1 (void *arg)  {               // Thread function
   osStatus_t status;                        // capture the return status
   uint32_t   delayTime;                     // delay time in milliseconds
  
@@ -66,7 +66,7 @@ exact time delay depends on the actual time elapsed since the last timer tick.
 \code{.c}
 #include "cmsis_os2.h"
  
-void *Thread_1 (void *arg)  {               // Thread function
+void Thread_1 (void *arg)  {               // Thread function
   osStatus_t status;                        // capture the return status
   uint32_t   delayTime;                     // delay time in milliseconds
  
