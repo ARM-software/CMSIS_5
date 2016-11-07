@@ -194,6 +194,6 @@ EXIT /b
 ECHO removing temporary folders
 RMDIR /Q /S  %RELEASE_PATH%\CMSIS
 RMDIR /Q /S  %RELEASE_PATH%\Device
-DEL %RELEASE_PATH%\LICENSE
+DEL %RELEASE_PATH%\LICENSE.txt
 
 ECHO PACK generation completed.
