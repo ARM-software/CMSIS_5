@@ -764,7 +764,8 @@ INPUT                  = . \
                          ./src/cmsis_os2_MemPool.txt \
                          ./src/cmsis_os2_Message.txt \
                          ./src/cmsis_os2_Status.txt \
-                         ./src/cmsis_os2_Migration.txt
+                         ./src/cmsis_os2_Migration.txt \
+                         ./src/cmsis_os2_MigrationGuide.txt
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses

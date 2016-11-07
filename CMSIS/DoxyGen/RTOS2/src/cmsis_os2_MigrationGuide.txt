@@ -1,0 +1,155 @@
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page os2MigrationGuide RTX Migration Guide
+
+RTX5 supplies both API layers: CMSIS-RTOS v1 and CMSIS-RTOS v2. This allows a gradient transition from version 1 to 2.
+The first level of migration is to migrate to RTX5 without changing the API level.
+The second level in the transition is to use Version 2 API functions and Version 1 API functions in mixed variation.
+The third level is non-trivial and requires some additional development effort to migrate all API Version 1 calls to Version 2.
+
+
+\section Level 1 Migration - Upgrade to RTX5 on API v1
+1. Open Manage Run-Time Environment window:
+Expand CMSIS Software Component:
+Expand RTOS (API) and deselect Keil RTX
+(Also, if old RTOS API is still used, select Keil RTX5 from the RTOS (API) group)
+Click OK
+    
+\todo Screen of RTE windows	
+	
+2. Expand CMSIS group in the Project window:
+Open RTX_Config.c and adapt configuration to suit the application
+(System Configuration->Global Dynamic Memory size, Kernel Tick Frequency)
+(Thread Configuration->Default Thread Stack size)
+(etc)
+    
+3. In application convert main function to application thread:
+Rename function int main (void) to void app_main (void *arg).
+Create new function int main (void) which implements:
+- system initialization and configuration
+- updates SystemCoreClock
+- initializes CMSIS-RTOS kernel
+- creates new thread app_main
+- starts RTOS kernel                       
+
+		
+\code{.c}		
+/* Renamed main() function */
+void app_main (void *arg) {
+
+  while (1) {
+    /* .. */
+    ;
+  }
+}
+
+/* New main function to start app_main */	
+int main (void) {
+  Init_Hardware();
+
+  // System Initialization
+  SystemCoreClockUpdate();
+  // ...
+  osKernelInitialize();                 // Initialize CMSIS-RTOS
+  osThreadNew(app_main, NULL, NULL);    // Create application main thread
+  if (osKernelGetState() == osKernelReady) {
+    osKernelStart();                    // Start thread execution
+  }
+  while(1);
+}		
+		
+\note In RTOS API v1 all timings were specified in milliseconds. RTX5 defines all times in kernel ticks.
+To match both it is recommended to set the Kernel Tick Frequency to 1000Hz in the \ref SystemConfig.
+
+\todo Kernel Ticks needs to be added to SystemConfig documentation
+				
+To validate the correct operation of your RTOS after migration you can temporarily integrate the CMSIS-RTOS validation component into your project. 			
+		
+\section Level 2 Migration - Use API v2 and v1 alongside in RTX5
+1. Open Manage Run-Time Environment window:
+Expand CMSIS Software Component:
+Expand RTOS2 (API) Software Component and select Keil RTX5
+Click OK
+
+2. Include "cmsis_os2.h" in all modules where access to API v2 functions is required.
+
+\code{.c}
+#include "cmsis_os.h"                   // ARM::CMSIS:RTOS:Keil RTX5
+#include "cmsis_os2.h"                  // ARM::CMSIS:RTOS2:Keil RTX5
+\endcode
+
+The following snippet shows how threads created with both API versions live along-side:
+
+\code{.c}
+/*----------------------------------------------------------------------------
+ *      Thread 4 'phaseD': Phase D output   - API v2 thread
+ *---------------------------------------------------------------------------*/
+void phaseD (void *argument) {
+  for (;;) {
+    osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);    /* wait for an event flag 0x0001 */
+    Switch_On (LED_D);
+    signal_func(tid_phaseA);                                     /* call common signal function   */
+    Switch_Off(LED_D);
+  }
+}
+
+/*----------------------------------------------------------------------------
+ *      Thread 5 'clock': Signal Clock  - API v1 thread
+ *---------------------------------------------------------------------------*/
+void clock (void const *argument) {
+  for (;;) {
+    osSignalWait(0x0100, osWaitForever);    /*  Wait for event send by API v2 function osThreadFlagsSet() */
+    Switch_On (LED_CLK);
+    osDelay(80);                            /* delay ticks                    */
+    Switch_Off(LED_CLK);
+  }
+}
+
+/* Define the API v1 thread */
+osThreadDef(clock,  osPriorityNormal, 1, 0);
+
+/*----------------------------------------------------------------------------
+ *      Main: Initialize and start RTX Kernel
+ *---------------------------------------------------------------------------*/
+void app_main (void *argument) {
+
+  ; //...
+  /* Create the API v2 thread */
+  tid_phaseD = osThreadNew(phaseD, NULL, NULL);
+  /* Create the API v1 thread */
+  tid_clock  = osThreadCreate(osThread(clock),  NULL);
+	
+  osThreadFlagsSet(tid_phaseA, 0x0001);          /* set signal to phaseA thread   */
+
+  osDelay(osWaitForever);
+  while(1);
+}
+
+...
+
+\endcode
+
+
+\section Level 3 Migration - Full transition to API v2
+
+1. Open Manage Run-Time Environment window:
+Expand CMSIS Software Component:
+Expand RTOS (API) Software Component and de-select Keil RTX5
+Click OK
+
+2. Remove all occurances of
+\code{.c}
+#include "cmsis_os.h"  
+\endcode
+
+3. Identify all references to the API v1 and replace with the appropriate calls in v2. 
+See \ref os2Migration for details in differences.
+Generally there are now longer os*Def macros to declare OS objects. 
+Signal Events have been replaced. Use the functions listed under Thread Flags and Event Flags instead. 
+The Mail Queue RTOS v1 functions have been deprecated. Use the functionality of the Message Queue instead. Differences are listed under Message Queue.
+
+
+
+*/
