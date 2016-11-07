@@ -1142,7 +1142,7 @@ __STATIC_INLINE void TZ_SAU_Setup (void)
   #endif /* defined (SCB_CSR_AIRCR_INIT) && (SCB_CSR_AIRCR_INIT == 1U) */
 
   #if defined (__FPU_USED) && (__FPU_USED == 1U) && defined (TZ_FPU_NS_USAGE) && (TZ_FPU_NS_USAGE == 1U)
-    SCB->NSACR |= (0x3U << 10U);  // enable non-secure access to CP10 and CP11
+    SCB->NSACR |= (0x3U << 10U);  /* enable non-secure access to CP10 and CP11 */
   #endif
 
   #if defined (NVIC_INIT_ITNS0) && (NVIC_INIT_ITNS0 == 1U)
