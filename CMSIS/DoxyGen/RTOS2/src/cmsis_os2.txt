@@ -580,7 +580,7 @@ ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functio
 
 The CMSIS-RTOS RTX provides several parameters to configure threads.
 
-\section stackConfig Configuration of Thread count and Stack Space
+\section stackConfig Configuration of Thread Count and Stack Space
 
 \ref osThreadAttr_t is passed to osThreadNew to set the options of a thread.
 

@@ -80,7 +80,7 @@ All threads waiting for the flag set will be notified to resume from BLOCKED sta
 
 <b>Code Example</b>
 \code{.c}
-void *Thread_2 (void *arg);
+void Thread_2 (void *arg);
  
 static void EX_Signal_1 (void)  {
   int32_t      signals;
