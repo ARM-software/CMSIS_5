@@ -156,5 +156,5 @@ uint32_t os_MemoryFree (void *mem, void *block) {
     p_prev->next = p->next;
   }
 
-  return 0U;
+  return 1U;
 }

@@ -1074,7 +1074,7 @@ void os_svcThreadExit (void) {
   os_ThreadSwitch(os_ThreadListGet(&os_Info.thread.ready));
   os_ThreadSetRunning(NULL);
 
-  if ((thread->attr & osThreadJoinable) == 0U) {
+  if (((thread->attr & osThreadJoinable) == 0U) || (thread->thread_join != NULL)) {
     os_ThreadFree(thread);
   } else {
     // Update Thread State and put it into Terminate Thread list
@@ -1134,7 +1134,7 @@ osStatus_t os_svcThreadTerminate (osThreadId_t thread_id) {
     os_ThreadDispatch(NULL);
   }
 
-  if ((thread->attr & osThreadJoinable) == 0U) {
+  if (((thread->attr & osThreadJoinable) == 0U) || (thread->thread_join != NULL)) {
     os_ThreadFree(thread);
   } else {
     // Update Thread State and put it into Terminate Thread list
