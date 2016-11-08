@@ -573,15 +573,37 @@ The configuration options are explained on these pages:
 /**
 \page systemConfig System Configuration
 
-\image html config_wizard_system.png "RTX_Conf_CM.c: System Configuration"
 
+
+\image html config_wizard_system.png "RTX_Conf_CM.c: System Configuration"
+The system configuration covers system-wide settings for the global memory pool, tick frequency, ISR event buffer and round-robin thread switching.
 
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
 Global Dynamic Memory size [bytes]     | \c OS_DYNAMIC_MEM_SIZE   | Defines the combined global dynamic memory size for the \ref GlobalMemoryPool. Default value is \token{4096}. Value range is \token{[0-1073741824]} bytes, in multiples of \token{8} bytes.
+Kernel Tick Frequency (Hz)             | \c OS_TICK_FREQ          | Defines base time unit for delays and timeouts in Hz. Default: 1000Hz = 1ms period.
 Round-Robin Thread switching           | \c OS_ROBIN_ENABLE       | Enables Round-Robin Thread switching.
 Round-Robin Timeout [ms]               | \c OS_ROBIN_TIMEOUT      | Defines how long a thread will execute before a thread switch. Default value is \token{5}. Value range is \token{[1-1000]}.
 ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functions called from ISR store requests to this buffer. Default value is \token{16 entries}. Value range is \token{[4-256]} entries in multiples of \token{4}.
+
+Global Dynamic Memory
+=====================
+See \ref GlobalMemoryPool.
+
+Round-Robin Thread Switching
+============================
+RTX5 may be configured to use Round-Robin Multitasking thread switching. Round-Robin allows quasi-parallel execution of several threads. Threads are not really executed concurrently but are time-sliced where the available CPU time is divided into time slices and RTX5 assigns a time slice to each thread. Because the time slice is typically short (only a few milliseconds) it appears as though threads execute simultaneously.
+
+Threads execute for the duration of their time-slice (unless the thread's time slice is given up). Then RTX switches to the next thread that is ready to run and has the same priority. If no other task with the same priority is ready to run, the current running task resumes it execution.
+
+ISR FIFO Queue
+==============
+The RTX functions (\ref CMSIS_RTOS_ISR_Calls), when called from and interrupt handler, store the request type and optional parameter to the ISR FIFO Queue buffer to be processed later, after the interrupt handler exits.
+
+The scheduler is activated immediately after the IRQ handler has finished its execution to process the requests stored to the FIFO Queue buffer. The size of this buffer needed, depends on the number of functions, that are called within the interrupt handler.
+And insufficient queue size will be caught by \b os_Error, triggering the \b os_ErrorISRQueueOverflow case.
+
+
 */
 
 /* ========================================================================================================================== */
