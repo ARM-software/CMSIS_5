@@ -27,7 +27,7 @@
 #include <arm_cmse.h>     // CMSE definitions
 #include "interface.h"    // Header file with secure interface API
 
-/* typedef for non-necure callback functions */
+/* typedef for non-secure callback functions */
 typedef funcptr funcptr_NS __attribute__((cmse_nonsecure_call));
 
 /* Non-secure callable (entry) function */
