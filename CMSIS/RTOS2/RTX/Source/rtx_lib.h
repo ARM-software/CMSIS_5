@@ -135,7 +135,7 @@ extern int32_t          os_svcThreadFlagsWait    (int32_t flags, uint32_t option
 
 // Delay Service Calls
 extern osStatus_t       os_svcDelay      (uint32_t ticks);
-extern osStatus_t       os_svcDelayUntil (uint64_t ticks);
+extern osStatus_t       os_svcDelayUntil (uint32_t ticks_l, uint32_t ticks_h);
 
 // Timer Service Calls
 extern osTimerId_t      os_svcTimerNew       (os_timer_func_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr);
