@@ -394,11 +394,6 @@
               <FileType>3</FileType>
               <FilePath>..\CM33_s\Objects\CM33_s_CMSE_Lib.o</FilePath>
             </File>
-            <File>
-              <FileName>interface.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\CM33_s\interface.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

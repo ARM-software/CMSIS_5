@@ -380,11 +380,6 @@
           <GroupName>Secure Code</GroupName>
           <Files>
             <File>
-              <FileName>Abstract.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Abstract.txt</FilePath>
-            </File>
-            <File>
               <FileName>main_s.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\main_s.c</FilePath>
@@ -398,6 +393,16 @@
               <FileName>interface.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\interface.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Documentation</GroupName>
+          <Files>
+            <File>
+              <FileName>Abstract.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Abstract.txt</FilePath>
             </File>
           </Files>
         </Group>
