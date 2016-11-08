@@ -566,6 +566,10 @@ Reserved for future use. Must be \token{0}.
 Pointer to a memory location for the thread stack. This can optionally be used for custom memory management systems. 
 Specify \token{NULL} to use the kernel memory management.
 
+\var osThreadAttr_t::tz_module
+\details
+TrustZone Thread Context Management Identifier to allocate context memory for threads. The RTOS kernel that runs in non-secure state calls the interface functions defined by the header file TZ_context.h. See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZone RTOS Context Management</a>.
+
 \var osThreadAttr_t::stack_size
 \details
 The size of the stack specified by \ref stack_mem in Bytes.
