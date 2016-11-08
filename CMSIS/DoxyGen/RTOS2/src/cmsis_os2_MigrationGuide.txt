@@ -65,7 +65,7 @@ int main (void) {
 \endcode
 
 \note In RTOS API v1 all timings were specified in milliseconds. RTX5 defines all times in kernel ticks.
-To match both it is recommended to set the Kernel Tick Frequency to 1000Hz in the \ref SystemConfig.
+To match both it is recommended to set the Kernel Tick Frequency to 1000Hz in the \ref systemConfig.
 
 To validate the correct operation of your RTOS after migration you can temporarily integrate the \ref rtosValidation component into your project. 			
 
