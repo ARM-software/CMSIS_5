@@ -2303,8 +2303,14 @@ ARMv8-M Mainline based device with TrustZone
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c" version="5.0.0"/>
 
         <!-- RTX templates -->
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"   select="CMSIS-RTOS 'main' function"/>
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Source/user_svc.c" select="CMSIS-RTOS User SVC"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="1.0.0" select="CMSIS-RTOS2 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Events.c"    version="1.0.0" select="CMSIS-RTOS2 Events"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MemPool.c"   version="1.0.0" select="CMSIS-RTOS2 Memory Pool"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MsgQueue.c"  version="1.0.0" select="CMSIS-RTOS2 Message Queue"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Mutex.c"     version="1.0.0" select="CMSIS-RTOS2 Mutex"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="1.0.0" select="CMSIS-RTOS2 Semaphore"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="1.0.0" select="CMSIS-RTOS2 Thread"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="1.0.0" select="CMSIS-RTOS2 Timer"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX libraries (CPU and Compiler dependent) -->
@@ -2356,8 +2362,14 @@ ARMv8-M Mainline based device with TrustZone
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c" version="5.0.0"/>
 
         <!-- RTX templates -->
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"   select="CMSIS-RTOS 'main' function"/>
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Source/user_svc.c" select="CMSIS-RTOS User SVC"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="1.0.0" select="CMSIS-RTOS2 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Events.c"    version="1.0.0" select="CMSIS-RTOS2 Events"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MemPool.c"   version="1.0.0" select="CMSIS-RTOS2 Memory Pool"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MsgQueue.c"  version="1.0.0" select="CMSIS-RTOS2 Message Queue"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Mutex.c"     version="1.0.0" select="CMSIS-RTOS2 Mutex"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="1.0.0" select="CMSIS-RTOS2 Semaphore"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="1.0.0" select="CMSIS-RTOS2 Thread"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="1.0.0" select="CMSIS-RTOS2 Timer"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX libraries (CPU and Compiler dependent) -->
@@ -2397,8 +2409,14 @@ ARMv8-M Mainline based device with TrustZone
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c" version="5.0.0"/>
 
         <!-- RTX templates -->
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"   select="CMSIS-RTOS 'main' function"/>
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Source/user_svc.c" select="CMSIS-RTOS User SVC"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="1.0.0" select="CMSIS-RTOS2 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Events.c"    version="1.0.0" select="CMSIS-RTOS2 Events"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MemPool.c"   version="1.0.0" select="CMSIS-RTOS2 Memory Pool"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MsgQueue.c"  version="1.0.0" select="CMSIS-RTOS2 Message Queue"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Mutex.c"     version="1.0.0" select="CMSIS-RTOS2 Mutex"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="1.0.0" select="CMSIS-RTOS2 Semaphore"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="1.0.0" select="CMSIS-RTOS2 Thread"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="1.0.0" select="CMSIS-RTOS2 Timer"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX sources (core) -->
@@ -2462,8 +2480,14 @@ ARMv8-M Mainline based device with TrustZone
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c" version="5.0.0"/>
 
         <!-- RTX templates -->
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"   select="CMSIS-RTOS 'main' function"/>
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Source/user_svc.c" select="CMSIS-RTOS User SVC"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="1.0.0" select="CMSIS-RTOS2 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Events.c"    version="1.0.0" select="CMSIS-RTOS2 Events"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MemPool.c"   version="1.0.0" select="CMSIS-RTOS2 Memory Pool"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MsgQueue.c"  version="1.0.0" select="CMSIS-RTOS2 Message Queue"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Mutex.c"     version="1.0.0" select="CMSIS-RTOS2 Mutex"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="1.0.0" select="CMSIS-RTOS2 Semaphore"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="1.0.0" select="CMSIS-RTOS2 Thread"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="1.0.0" select="CMSIS-RTOS2 Timer"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX sources (core) -->
