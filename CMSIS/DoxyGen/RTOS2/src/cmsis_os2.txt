@@ -415,7 +415,7 @@ Examples:
   
 \todo B: remove first '|' to make the picture clearer, make ... before first tick, add word 'time' after the arrow. 
 
-\image html TimerValues.png "Timer Values"
+\image html TimerValues.png "Example of timeout using osDelay()"
 
 \page CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
 
