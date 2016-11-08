@@ -188,7 +188,17 @@ Many aspects of the kernel are configurable and the configuration options are me
 
 \page SystemStartup System Startup
 
-todo
+Since main is no longer a thread RTX5 does not interfere with the system startup until main is reached.
+Once the execution reaches main() there is a recommended order to initialize the hardware and start the kernel. This is also reflected in the "CMSIS-RTOS2 main Template" supplied with the RTX5 component.
+
+The main() of you application should implement at least the following in the given order:
+-# Initialization and configuration of hardware including peripheral, memory, pin, clock and interrupt system.
+-# Update \ref SystemCoreClock using the respective <a href=../../Core/html/group__system__init__gr.html>CMSIS-CORE function</a>.
+-# Initialize CMSIS-RTOS kernel using \ref osKernelInitialize.
+-# Optionally create a new thread app_main, which is used as a main thread using \ref osThreadCreate. Alternatively threads can be created in main directly.
+-# Start RTOS scheduler using \ref osKernelStart. Any application code after osKernelStart will not be executed unless \ref osKernelStart fails.            
+
+\note Interrupts like SVC used by the Kernel are initialized in \ref osKernelInitialize. In case priorities and groupings in the NVIC are altered by the application after the above sequence it might be necessary to call \ref osKernelInitialize again.
 
 \page MemoryAllocation Memory Allocation 
 
