@@ -200,7 +200,7 @@ SVC_Handler:
         STMIA   R3!,{R0-R2}             /* Store return values */
 
         LDR     R3,=os_tsk
-        LDMIA   R3!,{R1,R2}             /* os_tsk.run, os_tsk.new */
+        LDMIA   R3!,{R1,R2}             /* os_tsk.run, os_tsk.next */
         CMP     R1,R2
         BEQ     SVC_Exit                /* no task switch */
 
@@ -223,9 +223,9 @@ SVC_Handler:
         POP     {R2,R3}
 
 SVC_Next:
-        STR     R2,[R3]                 /* os_tsk.run = os_tsk.new */
+        STR     R2,[R3]                 /* os_tsk.run = os_tsk.next */
 
-        LDR     R0,[R2,#TCB_TSTACK]     /* os_tsk.new->tsk_stack */
+        LDR     R0,[R2,#TCB_TSTACK]     /* os_tsk.next->tsk_stack */
         ADDS    R0,R0,#16               /* Adjust Start Address */
         LDMIA   R0!,{R4-R7}             /* Restore new Context (R8-R11) */
         MOV     R8,R4
@@ -284,7 +284,7 @@ PendSV_Handler:
 
 Sys_Switch:
         LDR     R3,=os_tsk
-        LDMIA   R3!,{R1,R2}             /* os_tsk.run, os_tsk.new */
+        LDMIA   R3!,{R1,R2}             /* os_tsk.run, os_tsk.next */
         CMP     R1,R2
         BEQ     Sys_Exit                /* no task switch */
 
@@ -304,9 +304,9 @@ Sys_Switch:
         BL      rt_stk_check            /* Check for Stack overflow */
         POP     {R2,R3}
 
-        STR     R2,[R3]                 /* os_tsk.run = os_tsk.new */
+        STR     R2,[R3]                 /* os_tsk.run = os_tsk.next */
 
-        LDR     R0,[R2,#TCB_TSTACK]     /* os_tsk.new->tsk_stack */
+        LDR     R0,[R2,#TCB_TSTACK]     /* os_tsk.next->tsk_stack */
         ADDS    R0,R0,#16               /* Adjust Start Address */
         LDMIA   R0!,{R4-R7}             /* Restore new Context (R8-R11) */
         MOV     R8,R4

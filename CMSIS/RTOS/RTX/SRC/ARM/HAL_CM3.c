@@ -141,7 +141,7 @@ SVC_Handler_Veneer
         STM     R12,{R0-R2}             ; Store return values
 
         LDR     R3,=__cpp(&os_tsk)
-        LDM     R3,{R1,R2}              ; os_tsk.run, os_tsk.new
+        LDM     R3,{R1,R2}              ; os_tsk.run, os_tsk.next
         CMP     R1,R2
         BEQ     SVC_Exit                ; no task switch
 
@@ -154,9 +154,9 @@ SVC_Handler_Veneer
         POP     {R2,R3}
 
 SVC_Next
-        STR     R2,[R3]                 ; os_tsk.run = os_tsk.new
+        STR     R2,[R3]                 ; os_tsk.run = os_tsk.next
 
-        LDR     R12,[R2,#TCB_TSTACK]    ; os_tsk.new->tsk_stack
+        LDR     R12,[R2,#TCB_TSTACK]    ; os_tsk.next->tsk_stack
         LDMIA   R12!,{R4-R11}           ; Restore New Context
         MSR     PSP,R12                 ; Write PSP
 
@@ -207,7 +207,7 @@ PendSV_Handler_Veneer
 
 Sys_Switch
         LDR     R3,=__cpp(&os_tsk)
-        LDM     R3,{R1,R2}              ; os_tsk.run, os_tsk.new
+        LDM     R3,{R1,R2}              ; os_tsk.run, os_tsk.next
         CMP     R1,R2
         BEQ     Sys_Exit
 
@@ -219,9 +219,9 @@ Sys_Switch
         BL      rt_stk_check            ; Check for Stack overflow
         POP     {R2,R3}
 
-        STR     R2,[R3]                 ; os_tsk.run = os_tsk.new
+        STR     R2,[R3]                 ; os_tsk.run = os_tsk.next
 
-        LDR     R12,[R2,#TCB_TSTACK]    ; os_tsk.new->tsk_stack
+        LDR     R12,[R2,#TCB_TSTACK]    ; os_tsk.next->tsk_stack
         LDMIA   R12!,{R4-R11}           ; Restore New Context
         MSR     PSP,R12                 ; Write PSP
 
