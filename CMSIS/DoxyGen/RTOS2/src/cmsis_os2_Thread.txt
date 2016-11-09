@@ -38,6 +38,9 @@ states change as follows:
    returning from the thread function. Threads that are terminated are in the \b INACTIVE state and typically do not consume
    any dynamic memory resources. 
 
+\note 
+Refer to \ref threadConfig for RTX5 configuration options.
+ 
 Thread Examples
 ===============
 The following examples show various scenarios to create threads:
