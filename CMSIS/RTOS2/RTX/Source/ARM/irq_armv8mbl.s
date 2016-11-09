@@ -66,9 +66,9 @@ SVC_Handler     PROC
                 PUSH     {R0,LR}                ; Save PSP and EXC_RETURN
                 LDM      R0,{R0-R3}             ; Load function parameters from stack
                 BLX      R7                     ; Call service function
-                POP      {R1,R2}                ; Restore PSP and EXC_RETURN
-                STR      R0,[R1]                ; Store function return value
-                MOV      LR,R2                  ; Set EXC_RETURN
+                POP      {R2,R3}                ; Restore PSP and EXC_RETURN
+                STMIA    R2!,{R0-R1}            ; Store function return values
+                MOV      LR,R3                  ; Set EXC_RETURN
 
 SVC_Context
                 LDR      R3,=os_Info+I_T_RUN_OFS; Load address of os_Info.run

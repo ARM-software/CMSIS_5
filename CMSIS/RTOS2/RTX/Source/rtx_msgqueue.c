@@ -181,14 +181,14 @@ void os_MessageQueuePostProcess (os_message_t *msg) {
         // Wakeup waiting Thread with highest Priority
         thread = os_ThreadListGet((os_object_t*)mq);
         os_ThreadWaitExit(thread, (uint32_t)osOK, false);
-        // Copy Message (R1 = const void *msg_ptr, R2 = msg_prio)
+        // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
         reg = os_ThreadRegPtr(thread);
-        memcpy((uint8_t *)msg + sizeof(os_message_t), (void *)reg[1], mq->msg_size);
+        memcpy((uint8_t *)msg + sizeof(os_message_t), (void *)reg[2], mq->msg_size);
         // Store Message into Queue
         msg->id       = os_IdMessage;
         msg->state    = os_ObjectActive;
         msg->flags    = 0U;
-        msg->priority = (uint8_t)reg[2];
+        msg->priority = (uint8_t)reg[3];
         os_MessageQueuePut(mq, msg);
       }
     }
@@ -204,11 +204,11 @@ void os_MessageQueuePostProcess (os_message_t *msg) {
       // Wakeup waiting Thread with highest Priority
       thread = os_ThreadListGet((os_object_t*)mq);
       os_ThreadWaitExit(thread, (uint32_t)osOK, false);
-      // Copy Message (R1 = void *msg_ptr, R2 = *msg_prio)
+      // Copy Message (R2: void *msg_ptr, R3: uint8_t *msg_prio)
       reg = os_ThreadRegPtr(thread);
-      memcpy((void *)reg[1], (uint8_t *)msg + sizeof(os_message_t), mq->msg_size);
-      if (reg[2] != 0U) {
-        *((uint8_t *)reg[2]) = msg->priority;
+      memcpy((void *)reg[2], (uint8_t *)msg + sizeof(os_message_t), mq->msg_size);
+      if (reg[3] != 0U) {
+        *((uint8_t *)reg[3]) = msg->priority;
       }
       // Free memory
       msg->state = os_ObjectInactive;
@@ -383,11 +383,11 @@ osStatus_t os_svcMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
     // Wakeup waiting Thread with highest Priority
     thread = os_ThreadListGet((os_object_t*)mq);
     os_ThreadWaitExit(thread, (uint32_t)osOK, true);
-    // Copy Message (R1 = void *msg_ptr, R2 = *msg_prio)
+    // Copy Message (R2: void *msg_ptr, R3: uint8_t *msg_prio)
     reg = os_ThreadRegPtr(thread);
-    memcpy((void *)reg[1], msg_ptr, mq->msg_size);
-    if (reg[2] != 0U) {
-      *((uint8_t *)reg[2]) = msg_prio;
+    memcpy((void *)reg[2], msg_ptr, mq->msg_size);
+    if (reg[3] != 0U) {
+      *((uint8_t *)reg[3]) = msg_prio;
     }
     return osOK;
   }
@@ -409,6 +409,10 @@ osStatus_t os_svcMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
       // Suspend current Thread
       os_ThreadListPut((os_object_t*)mq, os_ThreadGetRunning());
       os_ThreadWaitEnter(os_ThreadWaitingMessagePut, timeout);
+      // Save arguments (R2: const void *msg_ptr, R3: uint8_t msg_prio)
+      reg = (uint32_t *)(__get_PSP());
+      reg[2] = (uint32_t)msg_ptr;
+      reg[3] = (uint32_t)msg_prio;
       return osErrorTimeout;
     } else {
       return osErrorResource;
@@ -458,6 +462,10 @@ osStatus_t os_svcMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
       // Suspend current Thread
       os_ThreadListPut((os_object_t*)mq, os_ThreadGetRunning());
       os_ThreadWaitEnter(os_ThreadWaitingMessageGet, timeout);
+      // Save arguments (R2: void *msg_ptr, R3: uint8_t *msg_prio)
+      reg = (uint32_t *)(__get_PSP());
+      reg[2] = (uint32_t)msg_ptr;
+      reg[3] = (uint32_t)msg_prio;
       return osErrorTimeout;
     } else {
       return osErrorResource;
@@ -472,14 +480,14 @@ osStatus_t os_svcMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
       // Wakeup waiting Thread with highest Priority
       thread = os_ThreadListGet((os_object_t*)mq);
       os_ThreadWaitExit(thread, (uint32_t)osOK, true);
-      // Copy Message (R1 = const void *msg_ptr, R2 = msg_prio)
+      // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
       reg = os_ThreadRegPtr(thread);
-      memcpy((uint8_t *)msg + sizeof(os_message_t), (void *)reg[1], mq->msg_size);
+      memcpy((uint8_t *)msg + sizeof(os_message_t), (void *)reg[2], mq->msg_size);
       // Store Message into Queue
       msg->id       = os_IdMessage;
       msg->state    = os_ObjectActive;
       msg->flags    = 0U;
-      msg->priority = (uint8_t)reg[2];
+      msg->priority = (uint8_t)reg[3];
       os_MessageQueuePut(mq, msg);
     }
   }
@@ -604,14 +612,14 @@ osStatus_t os_svcMessageQueueReset (osMessageQueueId_t mq_id) {
         // Wakeup waiting Thread with highest Priority
         thread = os_ThreadListGet((os_object_t*)mq);
         os_ThreadWaitExit(thread, (uint32_t)osOK, false);
-        // Copy Message (R1 = const void *msg_ptr, R2 = msg_prio)
+        // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
         reg = os_ThreadRegPtr(thread);
-        memcpy((uint8_t *)msg + sizeof(os_message_t), (void *)reg[1], mq->msg_size);
+        memcpy((uint8_t *)msg + sizeof(os_message_t), (void *)reg[2], mq->msg_size);
         // Store Message into Queue
         msg->id       = os_IdMessage;
         msg->state    = os_ObjectActive;
         msg->flags    = 0U;
-        msg->priority = (uint8_t)reg[2];
+        msg->priority = (uint8_t)reg[3];
         os_MessageQueuePut(mq, msg);
       }
     } while ((msg != NULL) && (mq->thread_list != NULL));
