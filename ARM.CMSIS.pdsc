@@ -4,7 +4,7 @@
   <name>CMSIS</name>
   <description>CMSIS (Cortex Microcontroller Software Interface Standard)</description>
   <vendor>ARM</vendor>
-  <!-- <license>CMSIS/CMSIS_END_USER_LICENCE_AGREEMENT.rtf</license> -->
+  <!-- <license>license.txt</license> -->
   <url>http://www.keil.com/pack/</url>
 
   <releases>

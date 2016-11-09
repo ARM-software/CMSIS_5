@@ -12,9 +12,8 @@ descriptions of a peripheral all the way down to the definition and purpose of a
 field in a memory mapped register. 
 
 CMSIS-SVD files are developed and maintained by silicon vendors.
-Silicon vendors manage their descriptions in a central, web-based Device Database. The CMSIS-SVD
-files are down-loadable via a public web interface once they were released by the silicon
-vendor. Tool vendors use CMSIS-SVD files for providing device-specific debug views of peripherals in 
+Silicon vendors distribute their descriptions as part of CMSIS Device Family Packs.
+Tool vendors use CMSIS-SVD files for providing device-specific debug views of peripherals in 
 their debugger. Last but not least, CMSIS-compliant device header files are generated from CMSIS-SVD
 files.
 
@@ -22,55 +21,28 @@ CMSIS-SVD Benefits
 ------------------
 - For Software Developers:
   - Consistency between device header file and what is being displayed by the debugger.
-  - Detailed information about peripherals, registers, fields, and bit values from within the debugger,
-  without the need to reference device documentation.
-  - Public access via a web interface to new and updated descriptions as they become available from silicon vendors.
+  - Detailed information about peripherals, registers, fields, and bit values as well as named 
+    interrupts from within the debugger, without the need to reference device documentation.
+  - Convenient access to new and updated descriptions as part of the silicon vendor's CMSIS Device
+    Family Packs as the packs are made availabl by silicon vendors.
   - Improved software development efficiency.
 
 - For Silicon Vendors:
-  - A tool vendor independent file format enables early device support by a wide range of toolchains with limited effort.
+  - A tool vendor independent file format enables early device support by a wide range of toolchains
+    with limited effort.
   - The XML-based format helps ease the integration into in-house design flows.
   - Automated generation of CMSIS compliant device header files.
-  - Full control throughout the life cycle of the CMSIS-SVD files from creation to maintenance via the web-based Device Database.
+  - Full control throughout the life cycle of the CMSIS-SVD files from creation to maintenance.
 
 - For Tool Vendors:
-  - Unified file format across silicon vendors helps the efficiency of supporting a wide range of new devices in a timely manner.
-  - Silicon vendors provide early review access to individuals ahead of the publishing date.
+  - Unified file format across silicon vendors helps the efficiency of supporting a wide range of 
+    devices in a timely manner.
+  - Silicon vendors can provide early review access to the device support via restricted access to
+    CMSIS Device Family Packs.
   - Updated descriptions are available over the web simplifying the maintenance of device support.
 
-
-
-The Web Infrastructure
-----------------------
-
-\image html "CMSIS_SVD_WEB_DATABASE.png" "CMSIS-SVD Management Processes"
-
-The diagram illustrates the management process steps for uploading, validating, reviewing, publishing, and downloading 
-CMSIS-SVD files. 
-
-- <b>Managing Files:</b>
-A CMSIS-SVD file is uploaded by a silicon vendor via the web interface (<a href="https://cmsis.arm.com/user/index.php" target="_blank">
-<b>Device Database</b></a>). The system performs a check against the CMSIS-SVD Schema and runs the SVDConv consistency checker. 
-Only if both checks were successful the file will be stored in the SVD Storage. Files can be added, replaced, and deleted. 
-
-- <b>Managing Devices:</b> 
-The silicon vendor creates an entry for each of his devices in the database by defining a name and associating it with a 
-CMSIS-SVD file from the SVD Storage. The publishing date set forth for a device is used by the system to determine
-when this device becomes visible in the public device database. Prior to the publishing date, the silicon vendor can
-grant review access to individuals for an individual device. Reviewers get notified by e-mail about a device being made
-available for review.
-
-- <b>Public Download:</b>
-Public access to the silicon vendor specific CMSIS-SVD download pages is provided from <a href="http://cmsis.arm.com" target="_blank">cmsis.arm.com</a> or
- <a href="http://www.arm.com/cmsis" target="_blank">www.arm.com/cmsis</a>. Select the CMSIS-SVD tab and select the Silicon Vendor of interest from the list.
-For the public download of the CMSIS-SVD files of published devices it is mandatory to:
-  - Be logged in on the ARM web site.
-  - Have accepted a silicon vendor specific End Users License Agreement (EULA).
-
-More information about the web infrastructure can be found in the \subpage svd_web_pg
-
 Language Specification and Conventions
-----------------------
+---------------------------------------
 - \ref svd_Format_pg
 
 
@@ -82,8 +54,7 @@ The following files relevant to CMSIS-SVD are present in the <b>ARM::CMSIS</b> P
 |File/Folder                   |Content                                                                
 |------------------------------|-----------------------------------------------------------------------
 |\b CMSIS\\Documentation\\SVD  | This documentation                                                    
-|\b CMSIS\\SVD                 | Exemplary SVD file (\ref svd_Example_pg "ARM_Example.svd") and generated header file (ARM_Example.h).
-
+|\b CMSIS\\Utilities           | Exemplary SVD file (\ref svd_Example_pg "ARM_Example.svd") and generated header file (ARM_Example.h).
 <p>&nbsp;</p>
 <hr>
 */
@@ -92,13 +63,12 @@ The following files relevant to CMSIS-SVD are present in the <b>ARM::CMSIS</b> P
 /**
 \page svd_revisionHistory Revision History
 
-From a schema perspective, CMSIS-SVD Version 1.1,1.2 and 1.3 are fully backward compatible to
+From a schema perspective, CMSIS-SVD Version 1.1, 1.2 and 1.3 are fully backward compatible to
 version 1.0. 
-
 
 <table class="cmtable" summary="Revision History table">
 <tr>
-  <th style="column-width:30pt;">Version</th>
+  <th>Version</th>
   <th>Description</th>
 </tr>
 <tr>
@@ -193,7 +163,8 @@ CMSIS-SVD files can be used to generate:
 <b>System Views</b>
 \n\n A number of tool vendors support the CMSIS-SVD format with their products.
   Refer to the tools documentation to find out how to use CMSIS-SVD descriptions with the debugger of your choice.
-  You can download the latest versions of available CMSIS-SVD files from the  \ref svd_web_public_pg on the ARM web.
+  Please regularly check for updates to the CMSIS Device Family Packs from the silicon vendor to
+  to use the latest versions of the CMSIS-SVD files.
   \n \n
   <b>Generated Debug Dialog:</b>
   \image html "SystemViewer_Generated.png" "uVision Debug Window generated from ARM_Example.svd"
@@ -201,14 +172,11 @@ CMSIS-SVD files can be used to generate:
 
 */
 
-
-
 /* ************************************************************************************************ */
 /**
 \page svd_Example_pg SVD File Example
 \verbinclude "ARM_Example.svd"
 */
-
 
 /* ************************************************************************************************ */
 /**
@@ -351,130 +319,6 @@ Code | Description             | Action
    Code snippet from the generated header file showing the structure for \b TIMER0.
    \n Compare to the code snippet above.
    \include "ARM_ExampleT0Struct.h"
-
-*/
-
-
-/* ************************************************************************************************ */
-/**
-\page svd_web_pg CMSIS-SVD Web Interface User Guide
-
-The CMSIS Web Interface provides functionalities for downloading and managing the CMSIS-SVD files.
-    - \subpage svd_web_public_pg - Users can download CMSIS-SVD files.
-    - \subpage svd_web_restricted_pg - Silicon Vendors can manage their devices and associated CMSIS-SVD files.
-    
-In any case, the ARM web page requires login credentials to grant access to the content. 
-    - Registration starts here: <a href="https://login.arm.com/register.php" target="_blank"><b>ARM Registration</b></a>.
-*/
-
-
-/* ************************************************************************************************ */
-/**
-\page svd_web_public_pg Public Download Area
-
-Public access to the Device Database is provided from <a href="http://cmsis.arm.com" target="_blank">cmsis.arm.com</a>. For the public download of the CMSIS-SVD files of published devices it is mandatory to:
-    - Be logged in on the ARM web site.
-    - Have accepted a silicon vendor specific End Users License Agreement (EULA).
-
-\section login_downl_sec Logging in
-   - Use your credentials to <a href="https://login.arm.com/login.php" target="_blank"><b>Login</b></a>.
-
-\section  open_downl_sec Opening the CMSIS-SVD Download page
-
-   \image html Access_SVD_Vendor.png "Access Silicon Vendor Device Database"
-
-   - Access the CMSIS webpage at <a href="http://cmsis.arm.com" target="_blank"><b>cmsis.arm.com</b></a>.
-   - Select the "CMSIS-SVD" tab.
-   - Click on a Silicon Vendor's name for getting redirected to the respective vendor device database.
- 
- 
-\section accept_EULA_sec Accepting the Silicon Vendor's License terms
-   On your first visit to a vendor database page you will be asked to review and accept the 
-   vendor-specific "End User License Agreement" (EULA).
-   If you do not accept the EULA, you will see the list of devices and associated CMSIS-SVD files,
-   but you will not be able to download any of the files.
-   Note, in case the EULA has changed, you will be asked to review and accept the EULA again.
-
-\section  downl_downl_sec Downloading CMSIS-SVD files
-
-   \image html CMSIS_SVD_Vendor_DD.png "Download Device Database Files"
-
-   - Select one, multiple, or all devices from the table.
-   - Click the "download" button.
-
-   You will be asked to open or save the zip archive file containing the files.
-   If you have selected multiple devices, the file \em contents.txt included in the archive will list the
-   mapping between devices and CMSIS-SVD files. Multiple devices can share the same CMSIS-SVD file.
-*/
-
-
-/* ************************************************************************************************ */
-/**
-\page svd_web_restricted_pg Restricted Management Area
-
-  Access to the CMSIS-SVD device database management system is restricted to:
-    - Silicon Vendors.
-    - Companies who have signed an agreement with ARM about using the CMSIS-SVD device database.
-    - ARM Cortex-M based microcontroller devices.
-
-\section sign_agreement_sec   Signing the agreement
-   - The Silicon Vendor contacts the ARM sales representative or sends an email to cmsis@arm.com requesting 
-   to contribute to the CMSIS-SVD Database. 
-   - An agreement needs to be signed between the Silicon Vendor and ARM
-   defining the terms of use and specifying the representatives authorized for managing the files and devices.
-   - The login e-mail addresses for www.arm.com get listed in the contract. The representatives need to ensure that
-   their login already exists. 
-   - As part of exercising the contract the representatives will be given CMSIS-SVD Upload
-   permissions in the system.
-
-\section  login_mgmnt_dd_sec  Logging in
-   - Use your credentials to <a href="https://login.arm.com/login.php" target="_blank"><b>Login</b></a>.
-
-\section open_mgmnt_ss_sec Opening the CMSIS-SVD Device Database page
-
-   \image html Access_SVD_DD_Manage.png "Management Access to Device Database"
-
-   - Access the CMSIS web page at <a href="http://cmsis.arm.com" target="_blank"><b>cmsis.arm.com</b></a>.
-   - Click the button "Device Database"
-   \note  If you do not see this button, you are either not logged in or you have not been granted CMSIS-SVD Upload
-   permissions.
-
-   
-\section manage_dd_entries_sec Managing the Device Database
-   The database lists microcontroller devices and their associated CMSIS-SVD files and, optionally, resource files.
-   Multiple devices may share the same CMSIS-SVD and the optional resource file. For this reason, files and devices are 
-   managed separately. Files need to be uploaded and have to pass the check against the CMSIS-SVD Schema as well as the
-   plausibility and consistency check by the SVDConv utility before they can be used to define a device. The SVDConv
-   checking is scheduled. Therefore, it can take up to 15 minutes before the file status gets updated.
-
-   \image html Manage_SVD_DD.png "Manage Device Database Entries" 
-
-    - a) Manage Files
-      - Add file: Select the CMSIS-SVD file and start the upload process. The schema check will run immediately
-        after the file upload is complete. If the check fails the file will not be stored and you are asked to  
-        upload a corrected file. The SVDConv check for this file is automatically scheduled and will take place
-        within 15 minutes. The status of the file will be updated and reports errors and warnings in a text file
-        that can be downloaded (click on error/warning respectively).
-      - Delete file: Files can only be deleted if they are not associated with a device otherwise the system will
-        list the devices the file is still associated with.
-      - Replace file: Replace files allows you to update a file without the need to edit the device definition.
-
-    - b) Manage Devices
-      \n New devices can be added or existing devices can be edited.
-      A device defines:
-       - Name of device
-       - Filename CMSIS-SVD
-       - Filename Resource zip archive
-       - Reviewer List
-       - Publishing Date <br>
-      A checkbox is in front of each device to enable and disable a device. A disabled device will not 
-      show in the vendor-specific download area.
-   
-    - c) Review Devices
-       \n Ask you reviewer for the login email address being used for the login on the ARM web. Add this email address
-       into the field, one email address per line.
-       You can add some text to the e-mail body however the email template already contains all relevant information
-       like the device name as well as a link to the device database.
 
 */
 
