@@ -24,6 +24,9 @@ mutex acquires/releases can be nested.
 - Mutex management functions cannot be called from interrupt service routines (ISR), unlike a binary semaphore that can be
   released from an ISR.
 
+\note 
+Refer to \ref mutexConfig for RTX5 configuration options.  
+  
 Working with Mutexes
 --------------------
 To use mutexes, you need to follow these steps for creating and using them:

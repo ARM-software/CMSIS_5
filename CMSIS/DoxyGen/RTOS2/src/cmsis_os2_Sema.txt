@@ -20,6 +20,9 @@ released with \ref osSemaphoreRelease incrementing the semaphore count.
 
 \note Semaphore tokens can be acquired from threads and released from threads and ISRs.
 
+\note 
+Refer to \ref semaphoreConfig for RTX5 configuration options.
+
 Working with Semaphores
 --------------------
 Follow these steps to create and use a semaphore:

@@ -13,13 +13,17 @@ code with the timer. The timer number is passed as a parameter to the callback f
 one-shot or a  periodic timer. A periodic timer repeats its operation until it is \ref osTimerDelete "deleted" or
 \ref osTimerStop "stopped". All timers can be \ref osTimerStart "started, restarted", or \ref osTimerStop "stopped".
 
-Timers are handled in the thread \b osTimerThread. Callback functions run under control of this thread and may use other
-CMSIS-RTOS API calls.
+\note RTX handles Timers in the thread \b osTimerThread. Callback functions run under control of this thread and may use other
+CMSIS-RTOS API calls. The thread is configured in \ref timerConfig.
 
 The figure below shows the behavior of a periodic timer. For one-shot timers, the timer stops after execution of the
 callback function.
 
 \image html "Timer.png" "Behavior of a Periodic Timer"
+
+\note 
+Refer to \ref timerConfig for RTX5 configuration options.
+
 
 Working with Timers
 --------------------

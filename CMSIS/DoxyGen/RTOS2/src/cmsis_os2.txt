@@ -573,6 +573,8 @@ The configuration options are explained on these pages:
 /**
 \page systemConfig System Configuration
 
+The system configuration covers system-wide settings for the global memory pool, tick frequency, ISR event buffer and round-robin thread switching.
+
 Global Dynamic Memory
 =====================
 See \ref GlobalMemoryPool.
@@ -590,8 +592,10 @@ The RTX functions (\ref CMSIS_RTOS_ISR_Calls), when called from and interrupt ha
 The scheduler is activated immediately after the IRQ handler has finished its execution to process the requests stored to the FIFO Queue buffer. The size of this buffer needed, depends on the number of functions, that are called within the interrupt handler.
 And insufficient queue size will be caught by \b os_Error, triggering the \b os_ErrorISRQueueOverflow case.
 
+<b>System Configuration Options</b>
+
 \image html config_wizard_system.png "RTX_Config.c: System Configuration"
-The system configuration covers system-wide settings for the global memory pool, tick frequency, ISR event buffer and round-robin thread switching.
+
 
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
@@ -602,8 +606,6 @@ Round-Robin Timeout [ms]               | \c OS_ROBIN_TIMEOUT      | Defines how 
 ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functions called from ISR store requests to this buffer. Default value is \token{16 entries}. Value range is \token{[4-256]} entries in multiples of \token{4}.
 
 
-
-
 */
 
 /* ========================================================================================================================== */
@@ -612,8 +614,8 @@ ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functio
 
 The CMSIS-RTOS RTX provides several parameters to configure the \ref CMSIS_RTOS_ThreadMgmt functions.
 
-\section stackConfig Configuration of Thread Count and Stack Space
-
+Configuration of Thread Count and Stack Space
+=============================================
 
 The CMSIS-RTOS RTX kernel uses a separate stack space for each thread and provides two methods for defining the stack requirements:
  - <b>Static allocation</b>: when \ref osThreadAttr_t::stack_mem and \ref osThreadAttr_t::stack_size specify a memory area which is used for the thread stack.
@@ -628,7 +630,31 @@ Before the RTX kernel is started by the \ref osKernelInitialize() function, the 
 The main stack is also used for:
  - user application calls to RTX functions in Thread mode using SVC calls
  - interrupt/exception handlers.
-
+ 
+Stack Overflow Checking
+=======================
+RTX5 implements a software stack overflow checking that traps stack overruns. Stack is used for return addresses and automatic variables and extensive usage or incorrect stack configuration may cause a stack overflow. Software stack overflow checking is controlled with the define \c OS_STACK_CHECK.
+ 
+If a stack overflow is detected, the function \b os_Error with error code \b os_ErrorStackUnderflow is called. By default, this function is implemented as endless loop and will practically stop code execution.
+ 
+Stack Usage Watermark
+=====================
+RTX5 initializes thread stack with watermark pattern (0xCC) when a thread is created. This allows the debugger to determine maximum stack usage for each thread. It is typically used during development but removed from the final application. Stack usage watermark is controlled with the define \c OS_STACK_WATERMARK.
+  
+Enabling this option significantly increases the execution time of \ref osThreadNew (depends on thread stack size).
+ 
+Processor Mode for Thread Execution
+===================================
+RTX5 allows to execute threads in unprivileged or privileged processor mode. The processor mode is controlled with the define \c OS_PRIVILEGE_MODE.
+ 
+In unprivileged processor mode, the software:
+ 
+- has limited access to the MSR and MRS instructions, and cannot use the CPS instruction.
+- cannot access the system timer, NVIC, or system control block.
+- might have restricted access to memory or peripherals.
+In privileged processor mode the software can use all the instructions and has access to all resources.
+  
+  
 <b>Thread Configuration Options</b>
 
 \image html config_wizard_threads.png "RTX_Config.c: Thread Configuration"
@@ -639,10 +665,10 @@ Option                                                   | \#define             
 Object specific Memory allocation                        | \c OS_THREAD_OBJ_MEM   | Enables object specific memory allocation. See \ref ObjectMemoryPool.
 Number of user Threads (total)                           | \c OS_THREAD_NUM       | Defines maximum number of user threads that can be active at the same time. Applies to user threads with system provided memory for control blocks. Default value is \token{6}. Value range is \token{[1-1000]}.
 Number of user Threads with user-provided Stack size  | \c OS_THREAD_USER_STACK_NUM     | Defines maximum number of user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1000]}.
-Total Stack size [bytes] for user Threads with user-provided Stack size    | \c OS_THREAD_USER_STACK_SIZE | Defines the combined stack size for user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1073741824]} bits, sepping \token{8} bits. 
-Default Thread Stack size [bytes]                        | \c OS_STACK_SIZE    | Defines stack size for threads with zero stack size specified. Default value is \token{200}. Value range is \token{[96-1073741824]} bits, sepping \token{8} bits. 
-Idle Thread Stack size [bytes]                           | \c OS_IDLE_THREAD_STACK_SIZE              | Defines stack size for Idle thread. Default value is \token{200}. Value range is \token{[72-1073741824]} bits, sepping \token{8} bits. 
-Stack overrun checking                                   | \c OS_STACK_CHECK   | Enable stack overrun checks at thread switch. Enabling this option increases slightly the execution time of a thread switch. If a stack overflow is detected at a thread switch, the function \b os_error with error code = 1 is called.  By default, this function is implemented as endless loop and will practically stop code execution.
+Total Stack size [bytes] for user Threads with user-provided Stack size    | \c OS_THREAD_USER_STACK_SIZE | Defines the combined stack size for user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1073741824]} Bytes, in multiples of \token{8}. 
+Default Thread Stack size [bytes]                        | \c OS_STACK_SIZE    | Defines stack size for threads with zero stack size specified. Default value is \token{200}. Value range is \token{[96-1073741824]} Bytes, in multiples of \token{8}. 
+Idle Thread Stack size [bytes]                           | \c OS_IDLE_THREAD_STACK_SIZE              | Defines stack size for Idle thread. Default value is \token{200}. Value range is \token{[72-1073741824]} bytes, in multiples of \token{8}. 
+Stack overrun checking                                   | \c OS_STACK_CHECK   | Enable stack overrun checks at thread switch. 
 Stack usage watermark                                    | \c OS_STACK_WATERMARK    | Initialize thread stack with watermark pattern for analyzing stack usage. Enabling this option increases significantly the execution time of thread creation.
 Processor mode for Thread execution                      | \c OS_PRIVILEGE_MODE     | Controls the processor mode. Default value is \token{Privileged} mode. Value range is \token{[0=Unprivileged; 1=Privileged]} mode.
 */
@@ -652,15 +678,28 @@ Processor mode for Thread execution                      | \c OS_PRIVILEGE_MODE 
 /**
 \page timerConfig Timer Configuration
 
-\image html config_wizard_timer.png "RTX_Config.c: Timer Configuration"
+The CMSIS-RTOS RTX provides several parameters to configure the \ref CMSIS_RTOS_TimerMgmt functions.
 
+Object-specific Memory Allocation
+=================================
+See \ref ObjectMemoryPool.
+
+User Timer Thread
+=================
+Callback functions called when a time period expires are executed by the osTimerThread.
+The priority of the Timer subsystem within the complete RTOS system is inherited from the priority of the osTimerThread. This is configured by \c OS_TIMER_THREAD_PRIO.
+Stack for callback functions is supplied by osTimerThread. \c OS_TIMER_THREAD_STACK_SIZE must satisfy the stack requirements of callback function with the highest stack usage. 
+
+<b>Timer Configuration Options</b>
+
+\image html config_wizard_timer.png "RTX_Config.c: Timer Configuration"
 
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
-Object specific Memory allocation      | \c OS_TIMER_OBJ_MEM      | Enables object specific memory allocation. See \ref ObjectMemoryPool.
+Object specific Memory allocation      | \c OS_TIMER_OBJ_MEM      | Enables object specific memory allocation. 
 Number of Timer objects                | \c OS_TIMER_NUM          | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[1-1000]}.
-Timer Thread Priority                  | \c OS_TIMER_THREAD_PRIO        | Defines priority for timer thread. Default value is \token{40}. Value range is \token{[8-48]}, stepping \token{8}. The numbers have the following priority correlation: \token{8=Low}; \token{16=Below Normal}; \token{24=Normal}; \token{32=Above Normal}; \token{40=High}; \token{48=Realtime} 
-Timer Thread Stack size [bytes]        | \c OS_TIMER_THREAD_STACK_SIZE  | Defines stack size for Timer thread. May be set to 0 when timers are not used. Default value is \token{200}. Value range is \token{[0-1073741824]}, stepping \token{8}.
+Timer Thread Priority                  | \c OS_TIMER_THREAD_PRIO        | Defines priority for timer thread. Default value is \token{40}. Value range is \token{[8-48]}, in multiples of \token{8}. The numbers have the following priority correlation: \token{8=Low}; \token{16=Below Normal}; \token{24=Normal}; \token{32=Above Normal}; \token{40=High}; \token{48=Realtime} 
+Timer Thread Stack size [bytes]        | \c OS_TIMER_THREAD_STACK_SIZE  | Defines stack size for Timer thread. May be set to 0 when timers are not used. Default value is \token{200}. Value range is \token{[0-1073741824]}, in multiples of \token{8}.
 Timer Callback Queue entries           | \c OS_TIMER_CB_QUEUE           | Number of concurrent active timer callback functions. May be set to 0 when timers are not used. Default value is \token{4}. Value range is \token{[0-256]}.
 */
 
@@ -668,6 +707,15 @@ Timer Callback Queue entries           | \c OS_TIMER_CB_QUEUE           | Number
 /**
 \page eventFlagsConfig Event Flags Configuration
 
+The CMSIS-RTOS RTX provides several parameters to configure the \ref CMSIS_RTOS_EventFlags functions.
+
+Object-specific Memory Allocation
+=================================
+See \ref ObjectMemoryPool.
+
+- When Object-specific Memory is used, the pool size for all Event objects is specified by \c OS_EVFLAGS_NUM.
+
+<b>Event Configuration Options</b>
 \image html config_wizard_eventFlags.png "RTX_Config.c: Event Flags Configuration"
 
 
@@ -682,6 +730,15 @@ Number of Event Flags objects          | \c OS_EVFLAGS_NUM        | Defines maxi
 /**
 \page mutexConfig Mutex Configuration
 
+The CMSIS-RTOS RTX provides several parameters to configure the \ref CMSIS_RTOS_MutexMgmt functions.
+
+Object-specific Memory Allocation
+=================================
+See \ref ObjectMemoryPool.
+
+- When Object-specific Memory is used, the pool size for all Mutex objects is specified by \c OS_MUTEX_NUM.
+
+<b>Mutex Configuration Options</b>
 \image html config_wizard_mutex.png "RTX_Config.c: Mutex Configuration"
 
 
@@ -696,6 +753,15 @@ Number of Mutex objects                | \c OS_MUTEX_NUM          | Defines maxi
 /**
 \page semaphoreConfig Semaphore Configuration
 
+The CMSIS-RTOS RTX provides several parameters to configure the \ref CMSIS_RTOS_SemaphoreMgmt functions.
+
+Object-specific Memory Allocation
+=================================
+See \ref ObjectMemoryPool.
+
+- When Object-specific Memory is used, the pool size for all Semaphore objects is specified by \c OS_SEMAPHORE_NUM.
+
+<b>Semaphore Configuration Options</b>
 \image html config_wizard_semaphore.png "RTX_Config.c: Semaphore Configuration"
 
 
@@ -710,6 +776,16 @@ Number of Semaphore objects            | \c OS_SEMAPHORE_NUM      | Defines maxi
 /**
 \page memPoolConfig Memory Pool Configuration
 
+The CMSIS-RTOS RTX provides several parameters to configure the \ref CMSIS_RTOS_PoolMgmt functions.
+
+Object-specific Memory Allocation
+=================================
+See \ref ObjectMemoryPool.
+
+- When Object-specific Memory is used, the number of pools for all MemoryPool objects is specified by \c OS_MEMPOOL_NUM. 
+- The total storage size reserved for all pools is configured in \c OS_MEMPOOL_DATA_SIZE.
+
+<b>Memory Pool Configuration Options</b>
 \image html config_wizard_memPool.png "RTX_Config.c: Memory Pool Configuration"
 
 
@@ -717,7 +793,7 @@ Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
 Object specific Memory allocation      | \c OS_MEMPOOL_OBJ_MEM    | Enables object specific memory allocation. See \ref ObjectMemoryPool.
 Number of Memory Pool objects          | \c OS_MEMPOOL_NUM        | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[0-1000]}.
-Data Storage Memory size [bytes]       | \c OS_MEMPOOL_DATA_SIZE  | Defines the combined data storage memory size. Applies to objects with system provided memory for data storage. Default value is \token{0}. Value range is \token{[0-1073741824]}, stepping \token{4}.
+Data Storage Memory size [bytes]       | \c OS_MEMPOOL_DATA_SIZE  | Defines the combined data storage memory size. Applies to objects with system provided memory for data storage. Default value is \token{0}. Value range is \token{[0-1073741824]}, in multiples of \token{4}.
 
 */
 
@@ -726,6 +802,16 @@ Data Storage Memory size [bytes]       | \c OS_MEMPOOL_DATA_SIZE  | Defines the 
 /**
 \page msgQueueConfig Message Queue Configuration
 
+The CMSIS-RTOS RTX provides several parameters to configure the \ref CMSIS_RTOS_Message functions.
+
+Object-specific Memory Allocation
+=================================
+See \ref ObjectMemoryPool.
+
+- When Object-specific Memory is used, the number of queues for all Message Queue objects is specified by \c OS_MSGQUEUE_NUM. 
+- The total storage size reserved for all queues is configured in \c OS_MSGQUEUE_DATA_SIZE.
+
+<b>MessageQueue Configuration Options</b>
 \image html config_wizard_msgQueue.png "RTX_Config.c: Message Queue Configuration"
 
 
@@ -733,7 +819,7 @@ Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
 Object specific Memory allocation      | \c OS_MSGQUEUE_OBJ_MEM   | Enables object specific memory allocation. See \ref ObjectMemoryPool.
 Number of Message Queue objects        | \c OS_MSGQUEUE_NUM       | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[0-1000]}.
-Data Storage Memory size [bytes]       | \c OS_MSGQUEUE_DATA_SIZE | Defines the combined data storage memory size. Applies to objects with system provided memory for data storage. Default value is \token{0}. Value range is \token{[0-1073741824]}, stepping \token{4}.
+Data Storage Memory size [bytes]       | \c OS_MSGQUEUE_DATA_SIZE | Defines the combined data storage memory size. Applies to objects with system provided memory for data storage. Default value is \token{0}. Value range is \token{[0-1073741824]}, in multiples of \token{4}.
 
 */
 
