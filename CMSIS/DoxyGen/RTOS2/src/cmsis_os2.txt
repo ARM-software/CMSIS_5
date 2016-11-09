@@ -555,7 +555,7 @@ The configuration file uses
 Depending on the development tool, the annotations might lead to a more user-friendly graphical representation of the settings. 
 The screenshot below shows the configuration file represented by the µVision Configuration Wizard:
 
-\image html config_wizard.png "RTX_Conf_CM.c in Configuration Wizard View"
+\image html config_wizard.png "RTX_Config.c in Configuration Wizard View"
 
 The configuration options are explained on these pages:
 - \subpage systemConfig
@@ -590,7 +590,7 @@ The RTX functions (\ref CMSIS_RTOS_ISR_Calls), when called from and interrupt ha
 The scheduler is activated immediately after the IRQ handler has finished its execution to process the requests stored to the FIFO Queue buffer. The size of this buffer needed, depends on the number of functions, that are called within the interrupt handler.
 And insufficient queue size will be caught by \b os_Error, triggering the \b os_ErrorISRQueueOverflow case.
 
-\image html config_wizard_system.png "RTX_Conf_CM.c: System Configuration"
+\image html config_wizard_system.png "RTX_Config.c: System Configuration"
 The system configuration covers system-wide settings for the global memory pool, tick frequency, ISR event buffer and round-robin thread switching.
 
 Name                                   | \#define                 | Description
@@ -610,32 +610,35 @@ ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functio
 /**
 \page threadConfig Thread Configuration
 
-The CMSIS-RTOS RTX provides several parameters to configure threads.
+The CMSIS-RTOS RTX provides several parameters to configure the \ref CMSIS_RTOS_ThreadMgmt functions.
 
 \section stackConfig Configuration of Thread Count and Stack Space
 
-\ref osThreadAttr_t is passed to osThreadNew to set the options of a thread.
 
-CMSIS-RTOS RTX defines two methods for defining the stack requirements:
- - when \a *stack_mem in \ref osThreadAttr_t is NULL, a fixed-size memory pool is used for the thread stack.  In this case, \b OS_STKSIZE specifies the stack size for the thread function.
- - when \a *stack_mem specifies a memory location, the thread stack provided there. The size of this user space is specified with \b stack_size. 
- 
-Stack memory for threads is configured either statically by Static Resources - Number of Threads (total). Static memory in the size of Number of Threads * Default Thread Stack size is reserved.
-Alternatively the memory is allocated on demand from the Dynamic Resources pool (configured by System Configuration - Dynamic Resources - Memory size [bytes] for Stack).
+The CMSIS-RTOS RTX kernel uses a separate stack space for each thread and provides two methods for defining the stack requirements:
+ - <b>Static allocation</b>: when \ref osThreadAttr_t::stack_mem and \ref osThreadAttr_t::stack_size specify a memory area which is used for the thread stack.
+ - <b>Dynamic allocation</b>: when \ref osThreadAttr_t is NULL or \ref osThreadAttr_t::stack_mem is NULL, the system allocates the stack memory from:
+    - \ref GlobalMemoryPool when “Object specific Memory allocation” is disabled or \ref osThreadAttr_t::stack_size is not 0. 
+    - \ref ObjectMemoryPool when “Object specific Memory allocation” is enabled and \ref osThreadAttr_t::stack_size is 0 (or \ref osThreadAttr_t is NULL).
+	
+\ref osThreadAttr_t is a parameter of the function \ref osThreadNew.
+	
+\note
+Before the RTX kernel is started by the \ref osKernelInitialize() function, the main stack defined in startup_<i>device</i>.s is used.
+The main stack is also used for:
+ - user application calls to RTX functions in Thread mode using SVC calls
+ - interrupt/exception handlers.
 
-The CMSIS-RTOS RTX kernel uses a separate stack for each thread it creates. However, before the kernel is started by the \ref osKernelInitialize() function, the main stack size that is configured in the file startup_<i>device</i>.s is used.
+<b>Thread Configuration Options</b>
 
-\image html config_wizard_threads.png "RTX_Conf_CM.c: Thread Configuration"
+\image html config_wizard_threads.png "RTX_Config.c: Thread Configuration"
 
-Main stack is also used when:
-- the user application calls the majority of RTX functions from Thread mode (ending up in an SVC call)
-- running from handlers (user interrupt of exception handlers like SVCm PendSV, Faults, etc.)
-
-Name                                                     | \#define               | Description
----------------------------------------------------------|------------------------|----------------------------------------------------------------
+<br> 
+Option                                                   | \#define               | Description
+:--------------------------------------------------------|:-----------------------|:---------------------------------------------------------------
 Object specific Memory allocation                        | \c OS_THREAD_OBJ_MEM   | Enables object specific memory allocation. See \ref ObjectMemoryPool.
-Number of user Threads (total)               | \c OS_THREAD_NUM       | Defines maximum number of user threads that can be active at the same time. Applies to user threads with system provided memory for control blocks. Default value is \token{6}. Value range is \token{[1-1000]}.
-Number of user Threads with user-provided Stack size | \c OS_THREAD_USER_STACK_NUM     | Defines maximum number of user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1000]}.
+Number of user Threads (total)                           | \c OS_THREAD_NUM       | Defines maximum number of user threads that can be active at the same time. Applies to user threads with system provided memory for control blocks. Default value is \token{6}. Value range is \token{[1-1000]}.
+Number of user Threads with user-provided Stack size  | \c OS_THREAD_USER_STACK_NUM     | Defines maximum number of user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1000]}.
 Total Stack size [bytes] for user Threads with user-provided Stack size    | \c OS_THREAD_USER_STACK_SIZE | Defines the combined stack size for user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1073741824]} bits, sepping \token{8} bits. 
 Default Thread Stack size [bytes]                        | \c OS_STACK_SIZE    | Defines stack size for threads with zero stack size specified. Default value is \token{200}. Value range is \token{[96-1073741824]} bits, sepping \token{8} bits. 
 Idle Thread Stack size [bytes]                           | \c OS_IDLE_THREAD_STACK_SIZE              | Defines stack size for Idle thread. Default value is \token{200}. Value range is \token{[72-1073741824]} bits, sepping \token{8} bits. 
@@ -649,7 +652,7 @@ Processor mode for Thread execution                      | \c OS_PRIVILEGE_MODE 
 /**
 \page timerConfig Timer Configuration
 
-\image html config_wizard_timer.png "RTX_Conf_CM.c: Timer Configuration"
+\image html config_wizard_timer.png "RTX_Config.c: Timer Configuration"
 
 
 Name                                   | \#define                 | Description
@@ -665,7 +668,7 @@ Timer Callback Queue entries           | \c OS_TIMER_CB_QUEUE           | Number
 /**
 \page eventFlagsConfig Event Flags Configuration
 
-\image html config_wizard_eventFlags.png "RTX_Conf_CM.c: Event Flags Configuration"
+\image html config_wizard_eventFlags.png "RTX_Config.c: Event Flags Configuration"
 
 
 Name                                   | \#define                 | Description
@@ -679,7 +682,7 @@ Number of Event Flags objects          | \c OS_EVFLAGS_NUM        | Defines maxi
 /**
 \page mutexConfig Mutex Configuration
 
-\image html config_wizard_mutex.png "RTX_Conf_CM.c: Mutex Configuration"
+\image html config_wizard_mutex.png "RTX_Config.c: Mutex Configuration"
 
 
 Name                                   | \#define                 | Description
@@ -693,7 +696,7 @@ Number of Mutex objects                | \c OS_MUTEX_NUM          | Defines maxi
 /**
 \page semaphoreConfig Semaphore Configuration
 
-\image html config_wizard_semaphore.png "RTX_Conf_CM.c: Semaphore Configuration"
+\image html config_wizard_semaphore.png "RTX_Config.c: Semaphore Configuration"
 
 
 Name                                   | \#define                 | Description
@@ -707,7 +710,7 @@ Number of Semaphore objects            | \c OS_SEMAPHORE_NUM      | Defines maxi
 /**
 \page memPoolConfig Memory Pool Configuration
 
-\image html config_wizard_memPool.png "RTX_Conf_CM.c: Memory Pool Configuration"
+\image html config_wizard_memPool.png "RTX_Config.c: Memory Pool Configuration"
 
 
 Name                                   | \#define                 | Description
@@ -723,7 +726,7 @@ Data Storage Memory size [bytes]       | \c OS_MEMPOOL_DATA_SIZE  | Defines the 
 /**
 \page msgQueueConfig Message Queue Configuration
 
-\image html config_wizard_msgQueue.png "RTX_Conf_CM.c: Message Queue Configuration"
+\image html config_wizard_msgQueue.png "RTX_Config.c: Message Queue Configuration"
 
 
 Name                                   | \#define                 | Description
