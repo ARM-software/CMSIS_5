@@ -432,9 +432,11 @@ If no language requirements are set ANSI C is assumed.
   </tr>
   <tr>
     <td>version</td>
-    <td>Version of the language standard (i.e. C90, C99, etc.). The setting will be reflected in the
-       compiler commandline</td>
-    <td>VersionType</td>
+    <td>\ref VersionType "Version" of the software pack required which can be:
+       - Minimum version (higher versions are accepted).
+       - Version range specified with <em>min_version</em><b>:</b><em>max_version</em>. <em>min_version</em> must be lower or equal than <em>max_version</em>. If <em>min_version</em> and <em>max_version</em> are equal the version must match.<br>
+    </td>	 
+    <td>\ref VersionType</td>
     <td>required</td>
   </tr>
 </table>
