@@ -12,6 +12,9 @@ allocated heap and do not suffer from fragmentation. Being thread-safe, they can
 data, you can share more complex objects between threads if compared to a \ref CMSIS_RTOS_Message. Memory pool management
 functions are used to define and manage such fixed-sized memory pools.
 
+\note 
+Refer to \ref memPoolConfig for RTX5 configuration options.
+
 Working with Memory Pools
 -------------------------
 Follow these steps to create and use a memory pool:

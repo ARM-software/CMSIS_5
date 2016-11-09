@@ -18,6 +18,9 @@ data to be passed can be of integer or pointer type:
 Compared to a \ref CMSIS_RTOS_PoolMgmt, message queues are less efficient in general, but solve a broader range of problems.
 Sometimes, threads do not have a common address space or the use of shared memory raises problems, such as mutual exclusion.
 
+\note 
+Refer to \ref msgQueueConfig for RTX5 configuration options.
+
 Working with Message Queues
 ---------------------------
 Follow these steps to create and use a message queue:

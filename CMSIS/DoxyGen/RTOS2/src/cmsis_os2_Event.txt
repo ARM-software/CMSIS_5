@@ -17,6 +17,9 @@ A thread
 
 When a thread wakes up and resumes execution, its signal flags are automatically cleared. 
 
+\note 
+Refer to \ref eventFlagsConfig for RTX5 configuration options.
+
 Working with Events
 --------------------
 Here is a simple example that shows how two thread can communicate with each others using event flags:
