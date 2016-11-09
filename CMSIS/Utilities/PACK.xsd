@@ -1210,7 +1210,7 @@
   <xs:simpleType name="ConditionVersionType">
     <xs:restriction base="xs:string">
      <!-- <xs:pattern value="[\.:\-_A-Za-z0-9]+"/> -->
-      <xs:pattern value="[0-9]+.[0-9]+.[0-9]*((:[0-9]+.[0-9]+.[0-9]+)|())"/>
+     <xs:pattern value="[0-9]+.[0-9]+((.[0-9]+)|())((:[0-9]+.[0-9]+((.[0-9]+)|()))|())"/>
     </xs:restriction>
   </xs:simpleType>
 

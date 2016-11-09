@@ -113,7 +113,7 @@ can only contain the following top level elements:
        for reporting project specific questions and problems
 - \ref element_package "\<license>" [optional]: path to a license document, relative to cpdsc file.
        Users are urged to review the terms and conditions of an example prior to using it.
-- \subpage cpdsc_requirements_pg "<requirements>" specifies required packs, compiler and
+- \ref element_requirements "<requirements>" specifies required packs, compiler and
         programming languages
 - \subpage cpdsc_create_pg "\<create>" contains the project details
 <p>&nbsp;</p>		
@@ -192,7 +192,7 @@ can only contain the following top level elements:
   </tr>
   <tr>
     <td>\ref element_requirements "requirements"</td>
-    <td>sections capturing requirements of the project regarding packs, compilers and languages</td>
+    <td>specifies required packs, compiler and programming languages for the project</td>
     <td>\ref element_requirements "RequirementsType"</td>
     <td><1></td>
   </tr>
@@ -209,242 +209,6 @@ can only contain the following top level elements:
 
 */
  
-/** 
-\page cpdsc_requirements_pg /package/requirements
-\anchor element_requirements
-
-There are three different requirement types. The packages section lists CMSIS Packs that have been
-used to configure the project. This includes the specifcation of a version range to ensure 
-compatibility. If no version is provided the latest installed version is used or if not yet installed
-the latest version available by the Pack Installer will be installed before resolving the 
-configuration.
-The compilers section specifies the toolchains that are supported by this example. If no compiler is
-specified it is assumed that any toolchain will work
-The languages section allows to specify requirements regarding language requirements like C99 Standard.
-If no language requirements are set ANSI C is assumed.
-
-\b Example requirements section:
-\code
-<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PACK.xsd"/>
-  ...
-  <requirements>
-    <packages>
-      <package name="STM32F4xx_DFP" vendor="Keil" version="2.8.0:2.8.0"/>
-    </packages>
-    <compilers>
-      <compiler name="ARMCC" version="5.0.0:5.99.0"/>
-    </compilers>
-    <languages>
-      <language name="C" version="C99"/>
-    </languages>
-  </requirements>
-  ...
-</package>
-\endcode
-
-\b /requirements
-<table class="cmtable" summary="Element: package">
-  <tr>
-    <th>Parents</th>
-    <th colspan="3">Element Chain</th>
-  </tr>
-  <tr>
-    <td>\ref element_package "package"</td>
-    <td colspan="3">\ref element_package</td>
-  </tr>
-  <tr>
-    <th>Attributes</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Use</th>
-  </tr>
-  <tr>
-    <th>Child Elements</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Occurrence</th>
-  </tr>
-  <tr>
-    <td>\ref element_packages "packages"</td>
-    <td>Section listing the software packs required for the project to build. Assuming latest versions
-    of downloadable packs if not specified.</td>
-    <td>\ref element_packages "PackagesType"</td>
-    <td><0..1></td>
-  </tr>
-  <tr>
-    <td>\ref element_compilers "compilers"</td>
-    <td>Section listing the compilers required for the project to build. Support for all compilers 
-    assumed when not specified</td>
-    <td>\ref element_compilers "CopmilersType"</td>
-    <td><0..1></td>
-  </tr>
-  <tr>
-    <td>\ref element_languages "languages"</td>
-    <td>Section listing the languages required for the project to build. Assuming ANSI C if not set</td>
-    <td>\ref element_languages "LanguagesType"</td>
-    <td><0..1></td>
-  </tr>
-</table>
-
-<p>&nbsp;</p>		
-<hr>
-
-\section element_compilers /package/requirements/compilers
-
-\b Example compilers section:
-\code
-<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PACK.xsd"/>
-  ...
-  <requirements>
-    <compilers>
-      <compiler name="ARMCC" version="5.0.0:5.99.0"/>
-    </compilers>
-  </requirements>
-  ...
-</package>
-\endcode
-
-\b /compiler
-<table class="cmtable" summary="Element: compiler">
-  <tr>
-    <th>Parents</th>
-    <th colspan="3">Element Chain</th>
-  </tr>
-  <tr>
-    <td>\ref element_requirements "requirements"</td>
-    <td colspan="3">\ref element_requirements</td>
-  </tr>
-  <tr>
-    <th>Attributes</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Use</th>
-  </tr>
-  <tr>
-    <td>name</td>
-    <td>Name of the \ref CompilerEnumType "compiler" (i.e. "ARMCC", "IAR")</td>
-    <td>\ref CompilerEnumType</td>
-    <td>required</td>
-  </tr>
-  <tr>
-    <td>version</td>
-    <td>\ref VersionType "Version range" of the supported compiler</td>
-    <td>\ref VersionType</td>
-    <td>required</td>
-  </tr>
-</table>
-
-
-<p>&nbsp;</p>		
-<hr>
-
-\section element_languages /package/requirements/languages
-
-\b Example languages section:
-\code
-<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PACK.xsd"/>
-  ...
-  <requirements>
-    <languages>
-      <language name="C" version="C99"/>
-    <languages>
-  </requirements>
-  ...
-</package>
-\endcode
-
-\b /language
-<table class="cmtable" summary="Element: language">
-  <tr>
-    <th>Parents</th>
-    <th colspan="3">Element Chain</th>
-  </tr>
-  <tr>
-    <td>\ref element_requirements "requirements"</td>
-    <td colspan="3">\ref element_requirements</td>
-  </tr>
-  <tr>
-    <th>Attributes</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Use</th>
-  </tr>
-  <tr>
-    <td>name</td>
-    <td>Name of the programming language (i.e. "C", "C++")</td>
-    <td>xs:string</td>
-    <td>required</td>
-  </tr>
-  <tr>
-    <td>version</td>
-    <td>Version of the language standard (i.e. C90, C99, etc.). The setting will be reflected in the
-       compiler commandline</td>
-    <td>\ref VersionType</td>
-    <td>required</td>
-  </tr>
-</table>
-
-<p>&nbsp;</p>		
-<hr>
-
-\section element_packages /package/requirements/packages
-
-\b Example packages section:
-\code
-<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PACK.xsd"/>
-  ...
-  <requirements>
-    <packages>
-      <package name="STM32F4xx_DFP" vendor="Keil" version="2.8.0:2.8.0"/>
-    </packages>
-  </requirements>
-  ...
-</package>
-\endcode
-
-\b /package
-<table class="cmtable" summary="Element: package">
-  <tr>
-    <th>Parents</th>
-    <th colspan="3">Element Chain</th>
-  </tr>
-  <tr>
-    <td>\ref element_packages "packages"</td>
-    <td colspan="3">\ref element_packages</td>
-  </tr>
-  <tr>
-    <th>Attributes</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Use</th>
-  </tr>
-  <tr>
-    <td>vendor</td>
-    <td>specify vendor of the package (e.g. "ARM")</td>
-    <td>RestrictedString</td>
-    <td>required</td>
-  </tr>
-  <tr>
-    <td>name</td>
-    <td>Name of the pack</td>
-    <td>RestrictedString</td>
-    <td>required</td>
-  </tr>
-  <tr>
-    <td>version</td>
-    <td>\ref VersionType "Version" of the software pack required which can be:
-       - Minimum version (higher versions are accepted).
-       - Version range specified with <em>min_version</em><b>:</b><em>max_version</em>. <em>min_version</em> must be lower or equal than <em>max_version</em>. If <em>min_version</em> and <em>max_version</em> are equal the version must match.<br>
-    </td>	 
-    <td>\ref VersionType</td>
-    <td>required</td>
-  </tr>
-</table>
-
-<p>&nbsp;</p>		
-<hr>
-
-*/
 
 /** 
 \page cpdsc_create_pg /package/create
@@ -536,42 +300,6 @@ The \<project> section: bundles a project within the create section and consists
     <td>section listing all files used for the project build which are not configured using components</td>
     <td>\ref element_project_files "ProjectFilesType"</td>
     <td><0..1></td>
-  </tr>
-  <tr>
-    <td>url</td>
-    <td>file location if generated, link to the PACK this file belongs to</td>
-    <td>xs:anyURI</td>
-    <td><1></td>
-  </tr>
-  <tr>
-    <td>supportContact</td>
-    <td>email or web page for reporting errors or problems related to this project</td>
-    <td>xs:string</td>
-    <td><0..1></td>
-  </tr>
-  <tr>
-    <td>license</td>
-    <td>reference to a license file relative to this CPDSC</td>
-    <td>xs:string</td>
-    <td><0..1></td>
-  </tr>
-  <tr>
-    <td>releases</td>
-    <td>release history and release notes for tracking changes to this project</td>
-    <td>\ref element_releases "ReleasesType"</td>
-    <td><1></td>
-  </tr>
-  <tr>
-    <td>\ref element_requirements "requirements"</td>
-    <td>sections capturing requirements of the project regarding packs, compilers and languages</td>
-    <td>\ref element_requirements "RequirementsType"</td>
-    <td><1></td>
-  </tr>
-  <tr>
-    <td>\ref element_create "create"</td>
-    <td>section capturing the project configuration</td>
-    <td>\ref element_create "CreateType"</td>
-    <td><1></td>
   </tr>
 </table>
 
@@ -1467,6 +1195,5 @@ tool since the grouping of files has no impact on the build by default.
 <hr>
 
 <hr>
-
 
 */
