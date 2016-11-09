@@ -531,9 +531,9 @@ osStatus svcKernelStart (void) {
   if (os_tsk.run->task_id == 0xFFU) {           // Idle Thread
     __set_PSP(os_tsk.run->tsk_stack + (8U*4U)); // Setup PSP
   }
-  if (os_tsk.new == NULL) {                     // Force context switch
-    os_tsk.new = os_tsk.run;
-    os_tsk.run = NULL;
+  if (os_tsk.next == NULL) {                    // Force context switch
+    os_tsk.next = os_tsk.run;
+    os_tsk.run  = NULL;
   }
 
   rt_sys_start();

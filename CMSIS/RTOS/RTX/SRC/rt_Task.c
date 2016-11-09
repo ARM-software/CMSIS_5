@@ -97,11 +97,11 @@ static void rt_init_context (P_TCB p_TCB, U8 priority, FUNCP task_body) {
 
 /*--------------------------- rt_switch_req ---------------------------------*/
 
-void rt_switch_req (P_TCB p_new) {
-  /* Switch to next task (identified by "p_new"). */
-  os_tsk.new   = p_new;
-  p_new->state = RUNNING;
-  DBG_TASK_SWITCH(p_new->task_id);
+void rt_switch_req (P_TCB p_next) {
+  /* Switch to next task (identified by "p_next"). */
+  os_tsk.next = p_next;
+  p_next->state = RUNNING;
+  DBG_TASK_SWITCH(p_next->task_id);
 }
 
 

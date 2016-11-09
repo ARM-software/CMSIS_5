@@ -143,7 +143,7 @@ SVC_Handler_Veneer
         STM     R12,{R0-R2}             ; Store return values
 
         LDR     R3,=__cpp(&os_tsk)
-        LDM     R3,{R1,R2}              ; os_tsk.run, os_tsk.new
+        LDM     R3,{R1,R2}              ; os_tsk.run, os_tsk.next
         CMP     R1,R2
 #ifdef  IFX_XMC4XXX
         PUSHEQ  {LR}
@@ -176,9 +176,9 @@ SVC_ContextSave
         POP     {R2,R3}
 
 SVC_ContextRestore
-        STR     R2,[R3]                 ; os_tsk.run = os_tsk.new
+        STR     R2,[R3]                 ; os_tsk.run = os_tsk.next
 
-        LDR     R12,[R2,#TCB_TSTACK]    ; os_tsk.new->tsk_stack
+        LDR     R12,[R2,#TCB_TSTACK]    ; os_tsk.next->tsk_stack
         LDMIA   R12!,{R4-R11}           ; Restore New Context
         LDRB    R0,[R2,#TCB_STACKF]     ; Stack Frame
         CMP     R0,#0                   ; Basic/Extended Stack Frame
@@ -236,7 +236,7 @@ Sys_Switch
         POP     {R4,LR}                 ; Restore EXC_RETURN
 
         LDR     R3,=__cpp(&os_tsk)
-        LDM     R3,{R1,R2}              ; os_tsk.run, os_tsk.new
+        LDM     R3,{R1,R2}              ; os_tsk.run, os_tsk.next
         CMP     R1,R2
 #ifdef  IFX_XMC4XXX
         PUSHEQ  {LR}
@@ -258,9 +258,9 @@ Sys_Switch
         BL      rt_stk_check            ; Check for Stack overflow
         POP     {R2,R3}
 
-        STR     R2,[R3]                 ; os_tsk.run = os_tsk.new
+        STR     R2,[R3]                 ; os_tsk.run = os_tsk.next
 
-        LDR     R12,[R2,#TCB_TSTACK]    ; os_tsk.new->tsk_stack
+        LDR     R12,[R2,#TCB_TSTACK]    ; os_tsk.next->tsk_stack
         LDMIA   R12!,{R4-R11}           ; Restore New Context
         LDRB    R0,[R2,#TCB_STACKF]     ; Stack Frame
         CMP     R0,#0                   ; Basic/Extended Stack Frame
