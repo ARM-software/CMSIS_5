@@ -8,108 +8,30 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.0.0-Beta16">
+    <release version="5.0.0-RC1">
+	  Changed open source license to Apache 2.0
       CMSIS_Core:
-       - Added Cortex-M23, Cortex-M33 support.
-       - Added ARMv8MML DSP devices.
-    </release>
-    <release version="5.0.0-Beta15">
-      Reworked conditions.
-    </release>
-    <release version="5.0.0-Beta14">
-      CMSIS-RTOS RTX 4.82 (see revision history for details)
-    </release>
-    <release version="5.0.0-Beta13" date="2016-10-21">
-      Interim Beta Release:
-      CMSIS-RTOS2 and RTX implementation:
-       - reworked API based on customer feedback
+       - Added support for Cortex-M23 and Cortex-M33.
+       - Added ARMv8-M device configurations for mainline and baseline.
+	   - Added CMSE support and thread context management for TrustZone for ARMv8-M
+       - Added cmsis_compiler.h to unify compiler behaviour.
+       - Updated function SCB_EnableICache (for Cortex-M7).
+       - Added functions: NVIC_GetEnableIRQ, SCB_GetFPUType
+      CMSIS-RTOS:
+        - bug fix in RTX 4.82 (see revision history for details)
+      CMSIS-RTOS2:
+        - new API including compatibility layer to CMSIS-RTOS
+		- reference implementation based on RTX5
+		- supports all Cortex-M variants including TrustZone for ARMv8-M
       CMSIS-SVD:
        - reworked SVD format documentation
-    </release>
-    <release version="5.0.0-Beta12" date="2016-09-29">
-      Interim Beta Release:
-      CMSIS-RTOS2 and RTX implementation:
-       - added context management API for ARMv8-M TrustZone
-       - added ARMv8-M support (ARMClang, GCC)
-      CMSIS-Core:
-       - Updated documentation
-       - Added new file cmsis_compiler.h.
-       - Deleted deprecated files core_cmfunc.h, core_cminstr.h, core_cmsimd.h.
-       - Reworked compiler specific include files.
-       - Reworked core dependent include files.
-       - Added __PACKED macro.
-      CMSIS-DSP:
-        - updated library projects
-      CMSIS-SVD:
        - removed SVD file database documentation as SVD files are distributed in packs
        - updated SVDConv for Win32 and Linux
-    </release>
-    <release version="5.0.0-Beta11">
-      CMSIS_Core:
-       - Added CMSE support to cmsis_gcc.h.
-    </release>
-    <release version="5.0.0-Beta10">
-      CMSIS-RTOS2:
-        - Added RTX5 component.
-    </release>
-    <release version="5.0.0-Beta9">
-      CMSIS_Core:
-       - Replaced macro __SAU_PRESENT with __SAU_REGION_PRESENT.
-       - Reworked SAU register and functions.
-    </release>
-    <release version="5.0.0-Beta8">
-      CMSIS-RTOS:
-        - API 2.0
-        - RTX 5.0.0-Alpha
-    </release>
-    <release version="5.0.0-Beta7">
-      CMSIS_Core:
-       - Added macro __ALIGNED.
-       - Updated function SCB_EnableICache.
-    </release>
-    <release version="5.0.0-Beta6">
-      CMSIS_Core:
-       - Added SCB_CFSR register bit definitions in core_*.h.
-       - Added NVIC_GetEnableIRQ function in core_*.h.
-       - Updated core instruction macros in cmsis_gcc.h.
-    </release>
-    <release version="5.0.0-Beta5">
-      CMSIS_DSP:
+      CMSIS-DSP:
        - Moved DSP libraries from CMSIS/DSP/Lib to CMSIS/Lib.
        - Added DSP libraries build projects to CMSIS pack.
     </release>
-    <release version="5.0.0-Beta4">
-      Updated ARMv8MML device files.
-       - changes ARMv8MML_FP to ARMv8MML_SP, ARMv8MML_DP.
-      Updated CMSIS core files.
-       - changes according "CMSIS-Core v8M CMSIS 5.0 feedback".
-    </release>
-    <release version="5.0.0-Beta3">
-      Updated CMSIS ARMv8M core / device files
-       - increased SAU regions to 8.
-       - moved TZ_SAU_Setup() to partition_#device#.h.
-    </release>
-    <release version="5.0.0-Beta2">
-      - renamed core_*.h to lower case.
-      - renamed ARM_v8M?L.svd to ARMv8M?L.svd.
-      - updated ARMv8M?L.svd.
-    </release>
-    <release version="5.0.0-Beta1">
-      - added function SCB_GetFPUType() to all CMSIS cores.
-      - renamed cmsis_armcc_v6.h to cmsis_armclang.h.
-      - updated CMSIS core files to V5.0
-      - updated CMSIS Core change log.
-      - updated CMSIS DSP_Lib change log.
-      - updated CMSIS DSP_Lib libraries.
-    </release>
-    <release version="5.0.0-Beta" date="2015-12-15">
-      Added ARMv8M support to CMSIS-Core.
-      - CMSIS-Core     5.0.0 Beta (see revision history for details)
-      - CMSIS-RTOS
-        -- API         1.02    (unchanged)
-        -- RTX         4.81.0  (see revision history for details)
-      - CMSIS-SVD      1.3.2   (see revision history for details)
-    </release>
+
     <release version="4.5.0" date="2015-10-28">
       - CMSIS-Core     4.30.0  (see revision history for details)
       - CMSIS-DAP      1.1.0   (unchanged)
@@ -2734,6 +2656,20 @@ ARMv8-M Mainline based device with TrustZone
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="uv" load="RTOS.uvmpw"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="RTOS2"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="TrustZone for ARMv8-M RTOS Security Tests"  doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/RTOS_Faults">
+      <description>Secure/non-secure RTOS example with security test cases and system recovery</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="RTOS_Faults.uvmpw"/>
       </project>
       <attributes>
         <component Cclass="CMSIS" Cgroup="CORE"/>
