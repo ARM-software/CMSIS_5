@@ -85,7 +85,6 @@ XCOPY /Q /S /Y ..\..\CMSIS\Utilities\ARM_Example.* %RELEASE_PATH%\CMSIS\SVD\*.*
 :: -- Utilities files 
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\CMSIS-SVD.xsd       %RELEASE_PATH%\CMSIS\Utilities\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PACK.xsd            %RELEASE_PATH%\CMSIS\Utilities\*.*
-XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PackChk.exe         %RELEASE_PATH%\CMSIS\Utilities\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Win32\*.*           %RELEASE_PATH%\CMSIS\Utilities\Win32\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Linux-gcc-4.4.4\*.* %RELEASE_PATH%\CMSIS\Utilities\Linux-gcc-4.4.4\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Linux-gcc-4.8.3\*.* %RELEASE_PATH%\CMSIS\Utilities\Linux-gcc-4.8.3\*.*
@@ -169,7 +168,7 @@ POPD
 
 
 :: Checking 
-PackChk.exe %RELEASE_PATH%\ARM.CMSIS.pdsc -n %RELEASE_PATH%\PackName.txt -x M353 -x M364
+Win32\PackChk.exe %RELEASE_PATH%\ARM.CMSIS.pdsc -n %RELEASE_PATH%\PackName.txt -x M353 -x M364
 
 :: --Check if PackChk.exe has completed successfully
 IF %errorlevel% neq 0 GOTO ErrPackChk
