@@ -72,15 +72,18 @@ File/Folder                  | Content
          -- added: \ref osKernelGetInfo, \ref osKernelGetState.\n
          -- added: \ref osKernelLock, \ref osKernelUnlock.\n
          -- added: \ref osKernelSuspend, \ref osKernelResume.\n
-         -- added: \ref osKernelGetTickCount.\n
+         -- added: \ref osKernelGetTickCount, \ref osKernelGetTickFreq.\n
          -- renamed osKernelSysTick to \ref osKernelGetSysTimerCount.\n
+         -- replaced osKernelSysTickFrequency with \ref osKernelGetSysTimerFreq.\n
         - Thread:\n
          -- extended number of thread priorities.\n
-         -- changed thread return value.\n
          -- replaced osThreadCreate with \ref osThreadNew.\n
+         -- added: \ref osThreadGetName.\n
          -- added: \ref osThreadGetState.\n
+         -- added: \ref osThreadGetStackSize, \ref osThreadGetStackSpace.\n
          -- added: \ref osThreadSuspend, \ref osThreadResume.\n
          -- added: \ref osThreadJoin, \ref osThreadDetach, \ref osThreadExit.\n
+         -- added: \ref osThreadGetCount, \ref osThreadEnumerate.\n
         - Signals:\n
          -- renamed osSignals to osThreadFlags.\n
          -- changed return value of Set/Clear/Wait functions.\n
@@ -93,21 +96,22 @@ File/Folder                  | Content
          -- deprecated: osWait.\n
         - Timer:\n
          -- replaced osTimerCreate with \ref osTimerNew.\n
-         -- added: \ref osTimerIsRunning.\n
+         -- added: \ref osTimerGetName, \ref osTimerIsRunning.\n
         - Mutex:\n
          -- extended: attributes (Recursive, Priority Inherit, Robust).\n
          -- replaced osMutexCreate with \ref osMutexNew.\n
          -- renamed osMutexWait to \ref osMutexAcquire.\n
-         -- added: \ref osMutexGetOwner.\n
+         -- added: \ref osMutexGetName, \ref osMutexGetOwner.\n
         - Semaphore:\n
          -- extended: maximum and initial token count.\n
          -- replaced osSemaphoreCreate with \ref osSemaphoreNew.\n
          -- renamed osSemaphoreWait to \ref osSemaphoreAcquire (changed return value).\n
-         -- added: \ref osSemaphoreGetCount.\n
+         -- added: \ref osSemaphoreGetName, \ref osSemaphoreGetCount.\n
         - Memory Pool:\n
          -- using osMemoryPool prefix instead of osPool.\n
          -- replaced osPoolCreate with \ref osMemoryPoolNew.\n
          -- extended: \ref osMemoryPoolAlloc (timeout).\n
+         -- added: \ref osMemoryPoolGetName.\n
          -- added: \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize.\n
          -- added: \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace.\n
          -- added: \ref osMemoryPoolDelete.\n
@@ -116,7 +120,8 @@ File/Folder                  | Content
          -- fixed size messages instead of a single 32-bit values.\n
          -- using osMessageQueue prefix instead of osMessage.\n
          -- replaced osMessageCreate with \ref osMessageQueueNew.\n
-         -- updated: \ref osMessageQueuePut, \ref osMessageQueueGet.\n 
+         -- updated: \ref osMessageQueuePut, \ref osMessageQueueGet.\n
+         -- added: \ref osMessageQueueGetName.\n         
          -- added: \ref osMessageQueueGetCapacity, \ref osMessageQueueGetMsgSize.\n
          -- added: \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace.\n
          -- added: \ref osMessageQueueReset, \ref osMessageQueueDelete.\n
@@ -602,7 +607,7 @@ Name                                   | \#define                 | Description
 Global Dynamic Memory size [bytes]     | \c OS_DYNAMIC_MEM_SIZE   | Defines the combined global dynamic memory size for the \ref GlobalMemoryPool. Default value is \token{4096}. Value range is \token{[0-1073741824]} bytes, in multiples of \token{8} bytes.
 Kernel Tick Frequency (Hz)             | \c OS_TICK_FREQ          | Defines base time unit for delays and timeouts in Hz. Default: 1000Hz = 1ms period.
 Round-Robin Thread switching           | \c OS_ROBIN_ENABLE       | Enables Round-Robin Thread switching.
-Round-Robin Timeout [ms]               | \c OS_ROBIN_TIMEOUT      | Defines how long a thread will execute before a thread switch. Default value is \token{5}. Value range is \token{[1-1000]}.
+Round-Robin Timeout                    | \c OS_ROBIN_TIMEOUT      | Defines how long a thread will execute before a thread switch. Default value is \token{5}. Value range is \token{[1-1000]}.
 ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functions called from ISR store requests to this buffer. Default value is \token{16 entries}. Value range is \token{[4-256]} entries in multiples of \token{4}.
 
 
@@ -663,7 +668,7 @@ In privileged processor mode the software can use all the instructions and has a
 Option                                                   | \#define               | Description
 :--------------------------------------------------------|:-----------------------|:---------------------------------------------------------------
 Object specific Memory allocation                        | \c OS_THREAD_OBJ_MEM   | Enables object specific memory allocation. See \ref ObjectMemoryPool.
-Number of user Threads (total)                           | \c OS_THREAD_NUM       | Defines maximum number of user threads that can be active at the same time. Applies to user threads with system provided memory for control blocks. Default value is \token{6}. Value range is \token{[1-1000]}.
+Number of user Threads (total)                           | \c OS_THREAD_NUM       | Defines maximum number of user threads that can be active at the same time. Applies to user threads with system provided memory for control blocks. Default value is \token{1}. Value range is \token{[1-1000]}.
 Number of user Threads with user-provided Stack size  | \c OS_THREAD_USER_STACK_NUM     | Defines maximum number of user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1000]}.
 Total Stack size [bytes] for user Threads with user-provided Stack size    | \c OS_THREAD_USER_STACK_SIZE | Defines the combined stack size for user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1073741824]} Bytes, in multiples of \token{8}. 
 Default Thread Stack size [bytes]                        | \c OS_STACK_SIZE    | Defines stack size for threads with zero stack size specified. Default value is \token{200}. Value range is \token{[96-1073741824]} Bytes, in multiples of \token{8}. 
@@ -686,9 +691,9 @@ See \ref ObjectMemoryPool.
 
 User Timer Thread
 =================
-Callback functions called when a time period expires are executed by the osTimerThread.
-The priority of the Timer subsystem within the complete RTOS system is inherited from the priority of the osTimerThread. This is configured by \c OS_TIMER_THREAD_PRIO.
-Stack for callback functions is supplied by osTimerThread. \c OS_TIMER_THREAD_STACK_SIZE must satisfy the stack requirements of callback function with the highest stack usage. 
+Callback functions called when a time period expires are executed by the os_TimerThread.
+The priority of the Timer subsystem within the complete RTOS system is inherited from the priority of the os_TimerThread. This is configured by \c OS_TIMER_THREAD_PRIO.
+Stack for callback functions is supplied by os_TimerThread. \c OS_TIMER_THREAD_STACK_SIZE must satisfy the stack requirements of callback function with the highest stack usage. 
 
 <b>Timer Configuration Options</b>
 
@@ -722,7 +727,7 @@ See \ref ObjectMemoryPool.
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
 Object specific Memory allocation      | \c OS_EVFLAGS_OBJ_MEM    | Enables object specific memory allocation. See \ref ObjectMemoryPool.
-Number of Event Flags objects          | \c OS_EVFLAGS_NUM        | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[0-1000]}.
+Number of Event Flags objects          | \c OS_EVFLAGS_NUM        | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[1-1000]}.
 */
 
 
@@ -745,7 +750,7 @@ See \ref ObjectMemoryPool.
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
 Object specific Memory allocation      | \c OS_MUTEX_OBJ_MEM      | Enables object specific memory allocation. See \ref ObjectMemoryPool.
-Number of Mutex objects                | \c OS_MUTEX_NUM          | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[0-1000]}.
+Number of Mutex objects                | \c OS_MUTEX_NUM          | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[1-1000]}.
 */
 
 
@@ -768,7 +773,7 @@ See \ref ObjectMemoryPool.
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
 Object specific Memory allocation      | \c OS_SEMAPHORE_OBJ_MEM  | Enables object specific memory allocation. See \ref ObjectMemoryPool.
-Number of Semaphore objects            | \c OS_SEMAPHORE_NUM      | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[0-1000]}.
+Number of Semaphore objects            | \c OS_SEMAPHORE_NUM      | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[1-1000]}.
 */
 
 
@@ -792,8 +797,8 @@ See \ref ObjectMemoryPool.
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
 Object specific Memory allocation      | \c OS_MEMPOOL_OBJ_MEM    | Enables object specific memory allocation. See \ref ObjectMemoryPool.
-Number of Memory Pool objects          | \c OS_MEMPOOL_NUM        | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[0-1000]}.
-Data Storage Memory size [bytes]       | \c OS_MEMPOOL_DATA_SIZE  | Defines the combined data storage memory size. Applies to objects with system provided memory for data storage. Default value is \token{0}. Value range is \token{[0-1073741824]}, in multiples of \token{4}.
+Number of Memory Pool objects          | \c OS_MEMPOOL_NUM        | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[1-1000]}.
+Data Storage Memory size [bytes]       | \c OS_MEMPOOL_DATA_SIZE  | Defines the combined data storage memory size. Applies to objects with system provided memory for data storage. Default value is \token{0}. Value range is \token{[0-1073741824]}, in multiples of \token{8}.
 
 */
 
@@ -818,8 +823,8 @@ See \ref ObjectMemoryPool.
 Name                                   | \#define                 | Description
 ---------------------------------------|--------------------------|----------------------------------------------------------------
 Object specific Memory allocation      | \c OS_MSGQUEUE_OBJ_MEM   | Enables object specific memory allocation. See \ref ObjectMemoryPool.
-Number of Message Queue objects        | \c OS_MSGQUEUE_NUM       | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[0-1000]}.
-Data Storage Memory size [bytes]       | \c OS_MSGQUEUE_DATA_SIZE | Defines the combined data storage memory size. Applies to objects with system provided memory for data storage. Default value is \token{0}. Value range is \token{[0-1073741824]}, in multiples of \token{4}.
+Number of Message Queue objects        | \c OS_MSGQUEUE_NUM       | Defines maximum number of objects that can be active at the same time. Applies to objects with system provided memory for control blocks. Value range is \token{[1-1000]}.
+Data Storage Memory size [bytes]       | \c OS_MSGQUEUE_DATA_SIZE | Defines the combined data storage memory size. Applies to objects with system provided memory for data storage. Default value is \token{0}. Value range is \token{[0-1073741824]}, in multiples of \token{8}.
 
 */
 
@@ -910,10 +915,14 @@ Overview of all CMSIS-RTOS C API v2 functions that are implemented in the \subpa
 
  - \ref CMSIS_RTOS_ThreadMgmt
    - \ref osThreadDetach : \copybrief osThreadDetach
+   - \ref osThreadEnumerate : \copybrief osThreadEnumerate
    - \ref osThreadExit : \copybrief osThreadExit
-   - \ref osThreadGetName : \copybrief osThreadGetName
+   - \ref osThreadGetCount : \copybrief osThreadGetCount
    - \ref osThreadGetId : \copybrief osThreadGetId
+   - \ref osThreadGetName : \copybrief osThreadGetName
    - \ref osThreadGetPriority : \copybrief osThreadGetPriority
+   - \ref osThreadGetStackSize : \copybrief osThreadGetStackSize
+   - \ref osThreadGetStackSpace : \copybrief osThreadGetStackSpace
    - \ref osThreadGetState : \copybrief osThreadGetState
    - \ref osThreadJoin : \copybrief osThreadJoin
    - \ref osThreadNew : \copybrief osThreadNew
@@ -929,12 +938,14 @@ Overview of all CMSIS-RTOS C API v2 functions that are implemented in the \subpa
 
  - \ref CMSIS_RTOS_TimerMgmt
    - \ref osTimerDelete : \copybrief osTimerDelete
+   - \ref osTimerGetName : \copybrief osTimerGetName
    - \ref osTimerIsRunning : \copybrief osTimerIsRunning
    - \ref osTimerNew : \copybrief osTimerNew
    - \ref osTimerStart : \copybrief osTimerStart
    - \ref osTimerStop : \copybrief osTimerStop
 
  - \ref CMSIS_RTOS_EventFlags
+   - \ref osEventFlagsGetName : \copybrief osEventFlagsGetName
    - \ref osEventFlagsNew : \copybrief osEventFlagsNew
    - \ref osEventFlagsDelete : \copybrief osEventFlagsDelete
    - \ref osEventFlagsSet : \copybrief osEventFlagsSet
@@ -954,6 +965,7 @@ Overview of all CMSIS-RTOS C API v2 functions that are implemented in the \subpa
    - \ref osMessageQueueGetCapacity : \copybrief osMessageQueueGetCapacity
    - \ref osMessageQueueGetCount : \copybrief osMessageQueueGetCount
    - \ref osMessageQueueGetMsgSize : \copybrief osMessageQueueGetMsgSize
+   - \ref osMessageQueueGetName : \copybrief osMessageQueueGetName
    - \ref osMessageQueueGetSpace : \copybrief osMessageQueueGetSpace
    - \ref osMessageQueueNew : \copybrief osMessageQueueNew
    - \ref osMessageQueuePut : \copybrief osMessageQueuePut
@@ -966,12 +978,14 @@ Overview of all CMSIS-RTOS C API v2 functions that are implemented in the \subpa
    - \ref osMemoryPoolGetBlockSize : \copybrief osMemoryPoolGetBlockSize
    - \ref osMemoryPoolGetCapacity : \copybrief osMemoryPoolGetCapacity
    - \ref osMemoryPoolGetCount : \copybrief osMemoryPoolGetCount
+   - \ref osMemoryPoolGetName : \copybrief osMemoryPoolGetName
    - \ref osMemoryPoolGetSpace : \copybrief osMemoryPoolGetSpace
    - \ref osMemoryPoolNew : \copybrief osMemoryPoolNew
 
  - \ref CMSIS_RTOS_MutexMgmt
    - \ref osMutexAcquire : \copybrief osMutexAcquire
    - \ref osMutexDelete : \copybrief osMutexDelete
+   - \ref osMutexGetName : \copybrief osMutexGetName
    - \ref osMutexGetOwner : \copybrief osMutexGetOwner
    - \ref osMutexNew : \copybrief osMutexNew
    - \ref osMutexRelease : \copybrief osMutexRelease
@@ -980,6 +994,7 @@ Overview of all CMSIS-RTOS C API v2 functions that are implemented in the \subpa
    - \ref osSemaphoreAcquire : \copybrief osSemaphoreAcquire
    - \ref osSemaphoreDelete : \copybrief osSemaphoreDelete
    - \ref osSemaphoreGetCount : \copybrief osSemaphoreGetCount
+   - \ref osSemaphoreGetName : \copybrief osSemaphoreGetName
    - \ref osSemaphoreNew : \copybrief osSemaphoreNew
    - \ref osSemaphoreRelease : \copybrief osSemaphoreRelease
 

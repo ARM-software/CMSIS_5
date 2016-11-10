@@ -323,6 +323,7 @@ Calling \ref osThreadGetState from an ISR will return \ref osThreadError.
 
 
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osStatus_t osThreadSetPriority (osThreadId_t thread_id, osPriority_t priority)
@@ -517,6 +518,14 @@ void ThreadTerminate_example (void) {
 */
 
 */
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osThreadGetStackSize (osThreadId_t thread_id)
+\details
+ 
+*/
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn uint32_t osThreadGetStackSpace (osThreadId_t thread_id); 
@@ -527,6 +536,20 @@ If this function is not implemented or stack checking is disabled it will return
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 Calling \ref osThreadGetStackSpace from an ISR will return 0. 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osThreadGetCount (void)
+\details
+ 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items)
+\details
+ 
 */
 
 /// @}

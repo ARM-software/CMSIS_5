@@ -13,7 +13,7 @@ code with the timer. The timer number is passed as a parameter to the callback f
 one-shot or a  periodic timer. A periodic timer repeats its operation until it is \ref osTimerDelete "deleted" or
 \ref osTimerStop "stopped". All timers can be \ref osTimerStart "started, restarted", or \ref osTimerStop "stopped".
 
-\note RTX handles Timers in the thread \b osTimerThread. Callback functions run under control of this thread and may use other
+\note RTX handles Timers in the thread \b os_TimerThread. Callback functions run under control of this thread and may use other
 CMSIS-RTOS API calls. The thread is configured in \ref timerConfig.
 
 The figure below shows the behavior of a periodic timer. For one-shot timers, the timer stops after execution of the
@@ -114,6 +114,15 @@ void TimerCreate_example (void)  {
 }
 \endcode
 */
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn const char *osTimerGetName (osTimerId_t timer_id)
+\details
+
+*/
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \fn osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t ticks)

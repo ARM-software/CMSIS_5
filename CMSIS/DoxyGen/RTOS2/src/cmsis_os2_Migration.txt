@@ -51,12 +51,11 @@ New function #osKernelGetInfo.
 
 \enddiv
 
-\div{mod}
-\func{uint32_t #osKernelGetTickCount (void)}
-\func{uint32_t osKernelSysTick (void)}
+\div{new}
+\func{uint64_t #osKernelGetTickCount (void)}
+\none
 \copybrief{osKernelGetTickCount}
- - The function \b osKernelGetTickCount replaces the RTOS v1 function \b osKernelSysTick.
-
+New function.
 \enddiv
 
 \div{new}
@@ -67,11 +66,12 @@ New function #osKernelGetInfo.
 
 \enddiv
 
-\div{new}
-\func{uint64_t #osKernelGetSysTimerCount (void)}
-\none
+\div{mod}
+\func{uint32_t #osKernelGetSysTimerCount (void)}
+\func{uint32_t osKernelSysTick (void)}
 \copybrief{osKernelGetSysTimerCount}
-New function.
+ - The function \b osKernelGetSysTimerCount replaces the RTOS v1 function \b osKernelSysTick.
+
 \enddiv
 
 \div{new}
@@ -141,9 +141,23 @@ New function.
 \enddiv
 
 \div{new}
+\func{uint32_t #osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items)}
+\none
+\copybrief{osThreadEnumerate}
+New function.
+\enddiv
+
+\div{new}
 \func{__NO_RETURN void #osThreadExit (void)}
 \none
 \copybrief{osThreadExit}
+New function.
+\enddiv
+
+\div{new}
+\func{uint32_t #osThreadGetCount (osThreadId_t thread_id)}
+\none
+\copybrief{osThreadGetCount}
 New function.
 \enddiv
 
@@ -169,6 +183,20 @@ New function.
  - Return type changed to #osPriority_t. 
  - Parameter type changed to #osThreadId_t.
 
+\enddiv
+
+\div{new}
+\func{uint32_t #osThreadGetStackSize (osThreadId_t thread_id)}
+\none
+\copybrief{osThreadGetStackSize}
+New function.
+\enddiv
+
+\div{new}
+\func{uint32_t #osThreadGetStackSpace (osThreadId_t thread_id)}
+\none
+\copybrief{osThreadGetStackSpace}
+New function.
 \enddiv
 
 \div{new}
@@ -218,11 +246,13 @@ New function.
 New function.
 \enddiv
 
-\div{new}
+\div{mod}
 \func{osStatus_t #osThreadTerminate (osThreadId_t thread_id)}
-\none
+\func{osStatus 	&nbsp; osThreadTerminate (osThreadId thread_id)} 
 \copybrief{osThreadTerminate}
-New function.
+ - Return type changed to #osStatus_t. 
+ - Parameter type changed to #osThreadId_t.
+
 \enddiv
 
 \div{mod}
@@ -251,12 +281,11 @@ Refer to \ref CMSIS_RTOS_Wait for details.
 
 \enddiv
 
-\div{mod}
+\div{new}
 \func{osStatus_t #osDelayUntil (uint64_t ticks)}
-\func{osStatus &nbsp; osDelayUntil (uint64_t timeout)}
+\none
 \copybrief{osDelayUntil}
- - The return type changed to #osStatus_t. 
-
+New function.
 \enddiv
 
 
@@ -276,6 +305,13 @@ Refer to \ref CMSIS_RTOS_TimerMgmt for details.
  - The return type changed to #osStatus_t. 
  - The parameter type has changed to #osTimerId_t.
 
+\enddiv
+
+\div{new}
+\func{const char *#osTimerGetName (osTimerId_t timer_id)}
+\none
+\copybrief{osTimerGetName}
+New function.
 \enddiv
 
 \div{new}
@@ -363,6 +399,13 @@ Refer to \ref CMSIS_RTOS_EventFlags for details about the new function.
 \func{int32_t #osEventFlagsClear (osEventFlagsId_t ef_id, int32_t flags)}
 \none
 \copybrief{osEventFlagsClear}
+New function.
+\enddiv
+
+\div{new}
+\func{const char *#osEventFlagsGetName ((osEventFlagsId_t ef_id)}
+\none
+\copybrief{osEventFlagsGetName}
 New function.
 \enddiv
 
@@ -488,6 +531,13 @@ New function.
 \enddiv
 
 \div{new}
+\func{const char *#osMessageQueueGetName ((osMessageQueueId_t mq_id)}
+\none
+\copybrief{osMessageQueueGetName}
+New function.
+\enddiv
+
+\div{new}
 \func{uint32_t #osMessageQueueGetSpace (osMessageQueueId_t mq_id)}
 \none
 \copybrief{osMessageQueueGetSpace}
@@ -573,6 +623,13 @@ New function.
 \func{uint32_t #osMemoryPoolGetCount (osMemoryPoolId_t mp_id)}
 \none
 \copybrief{osMemoryPoolGetCount}
+New function.
+\enddiv
+
+\div{new}
+\func{const char *#osMemoryPoolGetName ((osMemoryPoolId_t mp_id)}
+\none
+\copybrief{osMemoryPoolGetName}
 New function.
 \enddiv
 
@@ -675,6 +732,13 @@ Refer to \ref CMSIS_RTOS_MutexMgmt for details.
 \enddiv
 
 \div{new}
+\func{const char *#osMutexGetName ((osMutexId_t mutex_id)}
+\none
+\copybrief{osMutexGetName}
+New function.
+\enddiv
+
+\div{new}
 \func{osThreadId_t #osMutexGetOwner (osMutexId_t mutex_id)}
 \none
 \copybrief{osMutexGetOwner}
@@ -729,6 +793,13 @@ New function.
 \func{uint32_t #osSemaphoreGetCount (osSemaphoreId_t semaphore_id)}
 \none
 \copybrief{osSemaphoreGetCount}
+New function.
+\enddiv
+
+\div{new}
+\func{const char *#osSemaphoreGetName ((osSemaphoreId_t semaphore_id)}
+\none
+\copybrief{osSemaphoreGetName}
 New function.
 \enddiv
 
