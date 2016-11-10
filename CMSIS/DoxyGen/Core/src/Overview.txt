@@ -49,6 +49,8 @@ These manuals contain the programmers model and detailed information about the c
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0553a/DUI0553A_cortex_m4_dgug.pdf" target="_blank"><b>Cortex-M4 Devices Generic User Guide</b></a> (ARMv7-M architecture)
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646a/DUI0646A_cortex_m7_dgug.pdf" target="_blank"><b>Cortex-M7 Devices Generic User Guide</b></a> (ARMv7-M architecture)
 
+Reference manuals for \b Cortex-M23 and \b Cortex-M33 where not available at the time of release.
+
 \subsection ARMv8M ARMv8-M Architecture 
 
 ARMv8-M introduces two profiles \b Baseline (for power and area constrained applications) and \b Mainline (full-featured with optional SIMD, floating-point, and co-processor extensions).
