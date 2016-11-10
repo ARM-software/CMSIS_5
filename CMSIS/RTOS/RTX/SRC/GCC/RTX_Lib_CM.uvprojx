@@ -381,9 +381,9 @@
           <GroupName>HAL</GroupName>
           <Files>
             <File>
-              <FileName>SVC_Table.s</FileName>
+              <FileName>SVC_Table.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\SVC_Table.s</FilePath>
+              <FilePath>.\SVC_Table.S</FilePath>
             </File>
             <File>
               <FileName>HAL_CM.c</FileName>
@@ -391,14 +391,14 @@
               <FilePath>../HAL_CM.c</FilePath>
             </File>
             <File>
-              <FileName>HAL_CM0.s</FileName>
+              <FileName>HAL_CM0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM0.s</FilePath>
+              <FilePath>.\HAL_CM0.S</FilePath>
             </File>
             <File>
-              <FileName>HAL_CM3.s</FileName>
+              <FileName>HAL_CM3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM3.s</FilePath>
+              <FilePath>.\HAL_CM3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -431,9 +431,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>HAL_CM4.s</FileName>
+              <FileName>HAL_CM4.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM4.s</FilePath>
+              <FilePath>.\HAL_CM4.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -847,9 +847,9 @@
           <GroupName>HAL</GroupName>
           <Files>
             <File>
-              <FileName>SVC_Table.s</FileName>
+              <FileName>SVC_Table.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\SVC_Table.s</FilePath>
+              <FilePath>.\SVC_Table.S</FilePath>
             </File>
             <File>
               <FileName>HAL_CM.c</FileName>
@@ -857,14 +857,14 @@
               <FilePath>../HAL_CM.c</FilePath>
             </File>
             <File>
-              <FileName>HAL_CM0.s</FileName>
+              <FileName>HAL_CM0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM0.s</FilePath>
+              <FilePath>.\HAL_CM0.S</FilePath>
             </File>
             <File>
-              <FileName>HAL_CM3.s</FileName>
+              <FileName>HAL_CM3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM3.s</FilePath>
+              <FilePath>.\HAL_CM3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -897,9 +897,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>HAL_CM4.s</FileName>
+              <FileName>HAL_CM4.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM4.s</FilePath>
+              <FilePath>.\HAL_CM4.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1313,9 +1313,9 @@
           <GroupName>HAL</GroupName>
           <Files>
             <File>
-              <FileName>SVC_Table.s</FileName>
+              <FileName>SVC_Table.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\SVC_Table.s</FilePath>
+              <FilePath>.\SVC_Table.S</FilePath>
             </File>
             <File>
               <FileName>HAL_CM.c</FileName>
@@ -1323,9 +1323,9 @@
               <FilePath>../HAL_CM.c</FilePath>
             </File>
             <File>
-              <FileName>HAL_CM0.s</FileName>
+              <FileName>HAL_CM0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM0.s</FilePath>
+              <FilePath>.\HAL_CM0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1358,14 +1358,14 @@
               </FileOption>
             </File>
             <File>
-              <FileName>HAL_CM3.s</FileName>
+              <FileName>HAL_CM3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM3.s</FilePath>
+              <FilePath>.\HAL_CM3.S</FilePath>
             </File>
             <File>
-              <FileName>HAL_CM4.s</FileName>
+              <FileName>HAL_CM4.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM4.s</FilePath>
+              <FilePath>.\HAL_CM4.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1779,9 +1779,9 @@
           <GroupName>HAL</GroupName>
           <Files>
             <File>
-              <FileName>SVC_Table.s</FileName>
+              <FileName>SVC_Table.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\SVC_Table.s</FilePath>
+              <FilePath>.\SVC_Table.S</FilePath>
             </File>
             <File>
               <FileName>HAL_CM.c</FileName>
@@ -1789,9 +1789,9 @@
               <FilePath>../HAL_CM.c</FilePath>
             </File>
             <File>
-              <FileName>HAL_CM0.s</FileName>
+              <FileName>HAL_CM0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM0.s</FilePath>
+              <FilePath>.\HAL_CM0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1824,14 +1824,14 @@
               </FileOption>
             </File>
             <File>
-              <FileName>HAL_CM3.s</FileName>
+              <FileName>HAL_CM3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM3.s</FilePath>
+              <FilePath>.\HAL_CM3.S</FilePath>
             </File>
             <File>
-              <FileName>HAL_CM4.s</FileName>
+              <FileName>HAL_CM4.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM4.s</FilePath>
+              <FilePath>.\HAL_CM4.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2245,9 +2245,9 @@
           <GroupName>HAL</GroupName>
           <Files>
             <File>
-              <FileName>SVC_Table.s</FileName>
+              <FileName>SVC_Table.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\SVC_Table.s</FilePath>
+              <FilePath>.\SVC_Table.S</FilePath>
             </File>
             <File>
               <FileName>HAL_CM.c</FileName>
@@ -2255,9 +2255,9 @@
               <FilePath>../HAL_CM.c</FilePath>
             </File>
             <File>
-              <FileName>HAL_CM0.s</FileName>
+              <FileName>HAL_CM0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM0.s</FilePath>
+              <FilePath>.\HAL_CM0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2290,9 +2290,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>HAL_CM3.s</FileName>
+              <FileName>HAL_CM3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM3.s</FilePath>
+              <FilePath>.\HAL_CM3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2325,9 +2325,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>HAL_CM4.s</FileName>
+              <FileName>HAL_CM4.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM4.s</FilePath>
+              <FilePath>.\HAL_CM4.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2741,9 +2741,9 @@
           <GroupName>HAL</GroupName>
           <Files>
             <File>
-              <FileName>SVC_Table.s</FileName>
+              <FileName>SVC_Table.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\SVC_Table.s</FilePath>
+              <FilePath>.\SVC_Table.S</FilePath>
             </File>
             <File>
               <FileName>HAL_CM.c</FileName>
@@ -2751,9 +2751,9 @@
               <FilePath>../HAL_CM.c</FilePath>
             </File>
             <File>
-              <FileName>HAL_CM0.s</FileName>
+              <FileName>HAL_CM0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM0.s</FilePath>
+              <FilePath>.\HAL_CM0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2786,9 +2786,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>HAL_CM3.s</FileName>
+              <FileName>HAL_CM3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM3.s</FilePath>
+              <FilePath>.\HAL_CM3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2821,9 +2821,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>HAL_CM4.s</FileName>
+              <FileName>HAL_CM4.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM4.s</FilePath>
+              <FilePath>.\HAL_CM4.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3207,9 +3207,9 @@
           <GroupName>HAL</GroupName>
           <Files>
             <File>
-              <FileName>SVC_Table.s</FileName>
+              <FileName>SVC_Table.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\SVC_Table.s</FilePath>
+              <FilePath>.\SVC_Table.S</FilePath>
             </File>
             <File>
               <FileName>HAL_CM.c</FileName>
@@ -3217,9 +3217,9 @@
               <FilePath>../HAL_CM.c</FilePath>
             </File>
             <File>
-              <FileName>HAL_CM0.s</FileName>
+              <FileName>HAL_CM0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM0.s</FilePath>
+              <FilePath>.\HAL_CM0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3252,9 +3252,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>HAL_CM3.s</FileName>
+              <FileName>HAL_CM3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM3.s</FilePath>
+              <FilePath>.\HAL_CM3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3287,9 +3287,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>HAL_CM4.s</FileName>
+              <FileName>HAL_CM4.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM4.s</FilePath>
+              <FilePath>.\HAL_CM4.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3673,9 +3673,9 @@
           <GroupName>HAL</GroupName>
           <Files>
             <File>
-              <FileName>SVC_Table.s</FileName>
+              <FileName>SVC_Table.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\SVC_Table.s</FilePath>
+              <FilePath>.\SVC_Table.S</FilePath>
             </File>
             <File>
               <FileName>HAL_CM.c</FileName>
@@ -3683,9 +3683,9 @@
               <FilePath>../HAL_CM.c</FilePath>
             </File>
             <File>
-              <FileName>HAL_CM0.s</FileName>
+              <FileName>HAL_CM0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM0.s</FilePath>
+              <FilePath>.\HAL_CM0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3718,9 +3718,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>HAL_CM3.s</FileName>
+              <FileName>HAL_CM3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM3.s</FilePath>
+              <FilePath>.\HAL_CM3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3753,9 +3753,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>HAL_CM4.s</FileName>
+              <FileName>HAL_CM4.S</FileName>
               <FileType>2</FileType>
-              <FilePath>.\HAL_CM4.s</FilePath>
+              <FilePath>.\HAL_CM4.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>

@@ -336,14 +336,14 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_cm0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm0.S</FilePath>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_cm3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -376,9 +376,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_cm4f.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm4f.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -411,9 +411,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -446,9 +446,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mml.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -817,9 +817,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_cm0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -852,14 +852,14 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_cm3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm3.S</FilePath>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_cm4f.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm4f.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -892,9 +892,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -927,9 +927,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mml.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1345,9 +1345,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_cm0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1380,9 +1380,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_cm3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1415,14 +1415,14 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_cm4f.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm4f.S</FilePath>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1455,9 +1455,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mml.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1826,9 +1826,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_cm0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1861,9 +1861,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_cm3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1896,9 +1896,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_cm4f.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm4f.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1931,14 +1931,14 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
             </File>
             <File>
-              <FileName>irq_armv8mml.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2354,9 +2354,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_cm0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2389,9 +2389,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_cm3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2424,9 +2424,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_cm4f.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm4f.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2459,14 +2459,14 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
             </File>
             <File>
-              <FileName>irq_armv8mml.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2882,9 +2882,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_cm0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2917,9 +2917,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_cm3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2952,9 +2952,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_cm4f.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm4f.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2987,9 +2987,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3022,9 +3022,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mml.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3410,9 +3410,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_cm0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3445,9 +3445,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_cm3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3480,9 +3480,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_cm4f.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm4f.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3515,9 +3515,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3550,9 +3550,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mml.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3938,9 +3938,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_cm0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -3973,9 +3973,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_cm3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4008,9 +4008,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_cm4f.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm4f.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4043,9 +4043,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4078,9 +4078,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mml.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -4466,9 +4466,9 @@
           <GroupName>Handlers</GroupName>
           <Files>
             <File>
-              <FileName>irq_cm0.s</FileName>
+              <FileName>irq_cm0.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm0.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm0.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4501,9 +4501,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm3.s</FileName>
+              <FileName>irq_cm3.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm3.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm3.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4536,9 +4536,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_cm4f.s</FileName>
+              <FileName>irq_cm4f.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_cm4f.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_cm4f.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4571,9 +4571,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mbl.s</FileName>
+              <FileName>irq_armv8mbl.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mbl.S</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -4606,9 +4606,9 @@
               </FileOption>
             </File>
             <File>
-              <FileName>irq_armv8mml.s</FileName>
+              <FileName>irq_armv8mml.S</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Source\GCC\irq_armv8mml.s</FilePath>
+              <FilePath>..\..\..\Source\GCC\irq_armv8mml.S</FilePath>
             </File>
           </Files>
         </Group>

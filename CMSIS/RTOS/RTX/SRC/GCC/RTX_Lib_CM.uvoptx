@@ -1302,8 +1302,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\SVC_Table.s</PathWithFileName>
-      <FilenameWithoutPath>SVC_Table.s</FilenameWithoutPath>
+      <PathWithFileName>.\SVC_Table.S</PathWithFileName>
+      <FilenameWithoutPath>SVC_Table.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1326,8 +1326,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\HAL_CM0.s</PathWithFileName>
-      <FilenameWithoutPath>HAL_CM0.s</FilenameWithoutPath>
+      <PathWithFileName>.\HAL_CM0.S</PathWithFileName>
+      <FilenameWithoutPath>HAL_CM0.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1338,8 +1338,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\HAL_CM3.s</PathWithFileName>
-      <FilenameWithoutPath>HAL_CM3.s</FilenameWithoutPath>
+      <PathWithFileName>.\HAL_CM3.S</PathWithFileName>
+      <FilenameWithoutPath>HAL_CM3.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1350,8 +1350,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\HAL_CM4.s</PathWithFileName>
-      <FilenameWithoutPath>HAL_CM4.s</FilenameWithoutPath>
+      <PathWithFileName>.\HAL_CM4.S</PathWithFileName>
+      <FilenameWithoutPath>HAL_CM4.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

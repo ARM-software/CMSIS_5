@@ -1473,8 +1473,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\Source\GCC\irq_cm0.s</PathWithFileName>
-      <FilenameWithoutPath>irq_cm0.s</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\Source\GCC\irq_cm0.S</PathWithFileName>
+      <FilenameWithoutPath>irq_cm0.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1485,8 +1485,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\Source\GCC\irq_cm3.s</PathWithFileName>
-      <FilenameWithoutPath>irq_cm3.s</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\Source\GCC\irq_cm3.S</PathWithFileName>
+      <FilenameWithoutPath>irq_cm3.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1497,8 +1497,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\Source\GCC\irq_cm4f.s</PathWithFileName>
-      <FilenameWithoutPath>irq_cm4f.s</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\Source\GCC\irq_cm4f.S</PathWithFileName>
+      <FilenameWithoutPath>irq_cm4f.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1509,8 +1509,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\Source\GCC\irq_armv8mbl.s</PathWithFileName>
-      <FilenameWithoutPath>irq_armv8mbl.s</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\Source\GCC\irq_armv8mbl.S</PathWithFileName>
+      <FilenameWithoutPath>irq_armv8mbl.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1521,8 +1521,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\Source\GCC\irq_armv8mml.s</PathWithFileName>
-      <FilenameWithoutPath>irq_armv8mml.s</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\Source\GCC\irq_armv8mml.S</PathWithFileName>
+      <FilenameWithoutPath>irq_armv8mml.S</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
