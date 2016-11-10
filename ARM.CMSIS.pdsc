@@ -9,11 +9,11 @@
 
   <releases>
     <release version="5.0.0-RC1">
-	  Changed open source license to Apache 2.0
+      Changed open source license to Apache 2.0
       CMSIS_Core:
        - Added support for Cortex-M23 and Cortex-M33.
        - Added ARMv8-M device configurations for mainline and baseline.
-	   - Added CMSE support and thread context management for TrustZone for ARMv8-M
+       - Added CMSE support and thread context management for TrustZone for ARMv8-M
        - Added cmsis_compiler.h to unify compiler behaviour.
        - Updated function SCB_EnableICache (for Cortex-M7).
        - Added functions: NVIC_GetEnableIRQ, SCB_GetFPUType
@@ -21,8 +21,8 @@
         - bug fix in RTX 4.82 (see revision history for details)
       CMSIS-RTOS2:
         - new API including compatibility layer to CMSIS-RTOS
-		- reference implementation based on RTX5
-		- supports all Cortex-M variants including TrustZone for ARMv8-M
+        - reference implementation based on RTX5
+        - supports all Cortex-M variants including TrustZone for ARMv8-M
       CMSIS-SVD:
        - reworked SVD format documentation
        - removed SVD file database documentation as SVD files are distributed in packs
@@ -31,7 +31,6 @@
        - Moved DSP libraries from CMSIS/DSP/Lib to CMSIS/Lib.
        - Added DSP libraries build projects to CMSIS pack.
     </release>
-
     <release version="4.5.0" date="2015-10-28">
       - CMSIS-Core     4.30.0  (see revision history for details)
       - CMSIS-DAP      1.1.0   (unchanged)
@@ -2367,18 +2366,18 @@ ARMv8-M Mainline based device with TrustZone
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_FP_ARMCC"/>
         <!-- RTX sources (handlers GCC) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm0.s"         condition="CM0_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"         condition="CM3_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"         condition="CM4_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.s"        condition="CM4_FP_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.s"         condition="CM7_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.s"        condition="CM7_FP_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.s"    condition="CM23_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.s"    condition="CM33_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.s" condition="CM33_FP_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.s"    condition="ARMv8MBL_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.s"    condition="ARMv8MML_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.s" condition="ARMv8MML_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm0.S"         condition="CM0_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"         condition="CM3_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"         condition="CM4_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.S"        condition="CM4_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"         condition="CM7_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.S"        condition="CM7_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S"    condition="CM23_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM33_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="CM33_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S"    condition="ARMv8MBL_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="ARMv8MML_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="ARMv8MML_FP_GCC"/>
       </files>
     </component>
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.0.0" Capiversion="2.0" condition="RTOS2 RTX5 NS">
@@ -2432,12 +2431,12 @@ ARMv8-M Mainline based device with TrustZone
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="ARMv8MML_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="ARMv8MML_FP_ARMCC"/>
         <!-- RTX sources (GCC handlers) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.s"    condition="CM23_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.s"    condition="CM33_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.s" condition="CM33_FP_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.s"    condition="ARMv8MBL_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.s"    condition="ARMv8MML_GCC"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.s" condition="ARMv8MML_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.S"    condition="CM23_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.S"    condition="CM33_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.S" condition="CM33_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.S"    condition="ARMv8MBL_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.S"    condition="ARMv8MML_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.S" condition="ARMv8MML_FP_GCC"/>
       </files>
     </component>
 
