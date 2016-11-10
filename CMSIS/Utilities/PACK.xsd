@@ -1222,7 +1222,7 @@
     <!-- name of the package -->
     <xs:attribute name="name"    type="xs:string"            use="required"/>
     <!-- version or version range of the package -->
-    <xs:attribute name="version" type="ConditionVersionType" use="required"/>
+    <xs:attribute name="version" type="ConditionVersionType" use="optional"/>
   </xs:complexType>
   
   <!-- Package dependency section type (added in 1.4.4) -->
@@ -1250,7 +1250,7 @@
   <!-- CompilerType crates a unique toolchain ID, e.g. armcc 5.4.0 (added in 1.4.4) -->
   <xs:complexType name="CompilerType">
     <xs:attribute name="name"    type="CompilerEnumType" use="required"/>
-    <xs:attribute name="version" type="ConditionVersionType" use="required"/>
+    <xs:attribute name="version" type="xs:string" use="required"/>
   </xs:complexType>
 
   <!-- Compiler section type (added in 1.4.4) -->

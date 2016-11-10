@@ -169,7 +169,7 @@ POPD
 
 
 :: Checking 
-PackChk.exe %RELEASE_PATH%\ARM.CMSIS.pdsc -n %RELEASE_PATH%\PackName.txt -x M353
+PackChk.exe %RELEASE_PATH%\ARM.CMSIS.pdsc -n %RELEASE_PATH%\PackName.txt -x M353 -x M364
 
 :: --Check if PackChk.exe has completed successfully
 IF %errorlevel% neq 0 GOTO ErrPackChk
@@ -182,7 +182,9 @@ SET /P PackName=<PackName.txt
 DEL /Q PackName.txt
 
 :: Pack files
-7z.exe a %PackName% -tzip
+ECHO Creating pack file ...
+7z.exe a %PackName% -tzip > zip.log
+ECHO Packaging complete
 POPD
 GOTO End
 
@@ -191,9 +193,10 @@ ECHO PackChk.exe has encountered an error!
 EXIT /b
 
 :End
-ECHO removing temporary folders
+ECHO Removing temporary files and folders
 RMDIR /Q /S  %RELEASE_PATH%\CMSIS
 RMDIR /Q /S  %RELEASE_PATH%\Device
 DEL %RELEASE_PATH%\LICENSE.txt
+DEL %RELEASE_PATH%\zip.log
 
-ECHO PACK generation completed.
+ECHO gen_pack.bat completed successfully
