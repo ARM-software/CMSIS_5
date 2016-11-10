@@ -141,12 +141,12 @@
       <xs:enumeration value="Renesas:117"/>
       <xs:enumeration value="ROHM:103"/>
       <xs:enumeration value="Samsung:47"/>
+      <xs:enumeration value="Silergy Corp:139"/>
       <xs:enumeration value="Silicon Labs:21"/>
       <xs:enumeration value="SONiX:110"/>
       <xs:enumeration value="Spansion:100"/>
       <xs:enumeration value="STMicroelectronics:13"/>
       <xs:enumeration value="Sunrise Micro Devices:121"/>
-      <xs:enumeration value="Silergy Corp:139"/>
       <xs:enumeration value="TI:16"/>
       <xs:enumeration value="Texas Instruments:16"/>
       <xs:enumeration value="Toshiba:92"/>
