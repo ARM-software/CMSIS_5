@@ -146,6 +146,7 @@
       <xs:enumeration value="Spansion:100"/>
       <xs:enumeration value="STMicroelectronics:13"/>
       <xs:enumeration value="Sunrise Micro Devices:121"/>
+      <xs:enumeration value="Silergy Corp:139"/>
       <xs:enumeration value="TI:16"/>
       <xs:enumeration value="Texas Instruments:16"/>
       <xs:enumeration value="Toshiba:92"/>
