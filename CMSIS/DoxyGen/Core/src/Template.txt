@@ -64,8 +64,8 @@ ARMv8-M Mainline   | ARMv8MML          | ARMv8-M Mainline based device with Trus
 ARMv8-M Mainline   | ARMv8MML_DP       | ARMv8-M Mainline based device with TrustZone and double precision FPU 
 ARMv8-M Mainline   | ARMv8MML_SP       | ARMv8-M Mainline based device with TrustZone and single precision FPU 
 ARMv8-M Mainline   | ARMv8MML_DSP      | ARMv8-M Mainline based device with TrustZone and SIMD
-ARMv8-M Mainline   | ARMv8MML_DPS_DP   | ARMv8-M Mainline based device with TrustZone, SIMD, and double precision FPU 
-ARMv8-M Mainline   | ARMv8MML_DPS_SP   | ARMv8-M Mainline based device with TrustZone, SIMD, and single precision FPU 
+ARMv8-M Mainline   | ARMv8MML_DSP_DP   | ARMv8-M Mainline based device with TrustZone, SIMD, and double precision FPU 
+ARMv8-M Mainline   | ARMv8MML_DSP_SP   | ARMv8-M Mainline based device with TrustZone, SIMD, and single precision FPU 
 
 
 \section template_files_sec Template Files
