@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * main_ns.c      Non-secure main function - RTOS demo
+ * main_ns.c      Non-secure main function - Security attacks demo
  *
  * Version 1.0
  *    Initial Release
@@ -92,13 +92,6 @@ void ThreadB (void *argument)  {
 }
 
 
-
-static int callbackC (int val)  {
-	return (val);
-}
-
-static uint32_t incorrect_secure_call = 0;
-
 __attribute__((noreturn))
 void ThreadC (void *argument) {
   (void)argument;
@@ -108,13 +101,9 @@ void ThreadC (void *argument) {
 		if ((counterC % 0x10) == 0)  {
       osThreadFlagsSet (ThreadB_Id, 1);
     }
-		if (incorrect_secure_call == 1)  {
-			func2 (callbackC, 2);          /* this call is not allowed as ThreadC has no tzmodule set */
-		}
     osDelay(1U);
   }
 }
-
 
 
 /*
@@ -184,18 +173,12 @@ __NO_RETURN void play_dead( void )
   }
 }  
 
-/*
- * simulate an incorrect call from an RTOS thread to secure library
- */
-void secure_thread_call (void);
-void secure_thread_call (void)  {
-  incorrect_secure_call = 1;
-}
 
 typedef struct  {
   void ( *TestFunc )( void );
   const char *TestName;
 } TestCase_t;
+
 
 // array of test cases with test functions
 static const TestCase_t TestCases[] = {
@@ -203,8 +186,7 @@ static const TestCase_t TestCases[] = {
   { thread_stack_overflow, "stack overflow" },
   { div_by_zero,           "div by zero" },
   { getdata_attack,        "getdata attack" },
-  { play_dead,             "play dead" },
-	{ secure_thread_call,    "secure thread call" },
+  { play_dead,             "play dead" }
 };
 
 
@@ -213,12 +195,6 @@ IncidentLog_t IncidentLogCopy;
 
 extern volatile uint32_t TestCase;
 volatile uint32_t TestCase;
-
-extern volatile uint32_t i1;
-volatile uint32_t i1;
-
-extern volatile uint32_t i2;
-volatile uint32_t i2;
 
 
 /*
@@ -236,8 +212,6 @@ __NO_RETURN void ThreadD (void *argument) {
   while (1) {
     FeedWatchdog_s (WatchdogToken);
     osDelay (50);
-		i1 = sizeof (TestCases);
-		i2 = sizeof (TestCases[0]);
 
 		if (TestCase < (sizeof (TestCases) / sizeof(TestCases[0])))  {
       TestCases [TestCase].TestFunc ();               /* execute selected test */
@@ -263,4 +237,3 @@ int main (void) {
 
   for (;;);
 }
-

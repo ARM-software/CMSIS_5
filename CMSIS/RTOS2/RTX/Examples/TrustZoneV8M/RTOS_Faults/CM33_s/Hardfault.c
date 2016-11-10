@@ -29,7 +29,7 @@
 #include "IncidentLog_s.h"
 
 
-// \brief perfrom a system reset to restart the application
+// \brief perform a system reset to restart the application
 __NO_RETURN void PerformReset (void)    {
   __DSB( ) ;
   SCB->AIRCR = ( SCB->AIRCR & ~SCB_AIRCR_VECTKEY_Msk ) |
@@ -51,7 +51,7 @@ static volatile uint32_t stacked_lr;
 static volatile uint32_t stacked_pc;
 static volatile uint32_t stacked_psr;
 
-// \brief hardfault handler in C.
+// \brief Hardfault handler in C.
 // \param[in] hardfault_args address of stack frame
 void hard_fault_handler_c (uint32_t *hardfault_args) {
   IncidentReason_t Reason;
