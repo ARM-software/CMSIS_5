@@ -12,13 +12,7 @@ The Kernel Information and Control function group allows to:
   - start the RTOS kernel and thread switching.
   - check the execution status of the RTOS kernel.
 
-The function \b main is a special thread function that may be started at system initialization. In this case it has the
-initial priority \a osPriorityNormal.
-
-When reaching \b main, it is necessary to:
--# Call osKernelInitialize() to initialize the CMSIS-RTOS Kernel
--# Setup device peripherals and create other RTOS objects using the \b os*New functions.
--# Start the Kernel and begin thread switching by calling osKernelStart().
+\note The Kernel initialization for RTX5 is documented in \ref SystemStartup.
 
 <b>Code Example</b>
 \code{.c}
@@ -203,7 +197,7 @@ void os_idle_demon (void) {
 
   for (;;) {
   /* HERE: include optional user code to be executed when no task runs.*/
-    sleep = os_suspend();                      /* Suspend RTX thread scheduler */
+    sleep = osKernelSuspend();                      /* Suspend RTX thread scheduler */S
  
     if (sleep) {                               /* How long can we sleep?       */
       /* "sleep" is in RTX Timer Ticks which is 1ms in this configuration      */
@@ -217,7 +211,7 @@ void os_idle_demon (void) {
       sleep = tc;                              /* Adjust with cycles slept     */  
     }
  
-    os_resume(sleep);                          /* Resume thread scheduler      */
+    osKernelResume(sleep);                          /* Resume thread scheduler      */
   }
 }
 \endcode

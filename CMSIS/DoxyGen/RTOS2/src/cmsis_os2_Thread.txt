@@ -229,8 +229,6 @@ To prevent from a priority inversion, a CMSIS-RTOS compliant OS may optionally i
 A priority inversion occurs when a high priority thread is waiting for a resource or event that is controlled by a thread
 with a lower priority. 
 
-\note 
-Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -563,8 +561,8 @@ The following predefined bit masks can be assigned to set options for a thread o
 
 Bit Mask                |   Description
 :-----------------------|:-----------------------------------------
-osThreadJoinable        | Thread is created in a join-able state (default).
-osThreadDettached       | Thread is created in a detached state.
+osThreadJoinable        | Thread is created in a join-able state.
+osThreadDettached       | Thread is created in a detached state (default).
 
 \var osThreadAttr_t::cb_mem
 \details
