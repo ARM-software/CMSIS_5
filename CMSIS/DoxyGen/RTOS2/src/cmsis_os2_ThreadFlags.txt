@@ -24,7 +24,7 @@ static void EX_Signal_1 (void)  {
   int32_t      signals;
   osThreadId_t thread_id;
   
-  thread_id = osThreadCreate  (Thread, NULL, NULL);
+  thread_id = osThreadNew  (Thread, NULL, NULL);
   signals   = osThreadFlagsSet (event_id, 0x00000001ul);         // Send signals to the created thread
 }
 \endcode

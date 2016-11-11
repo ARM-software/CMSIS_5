@@ -62,20 +62,5 @@ exact time delay depends on the actual time elapsed since the last timer tick.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines". 
 
-<b>Code Example</b>
-\code{.c}
-#include "cmsis_os2.h"
- 
-void Thread_1 (void *arg)  {               // Thread function
-  osStatus_t status;                        // capture the return status
-  uint32_t   delayTime;                     // delay time in milliseconds
- 
-  delayTime = osKernelGetTime() + 2000;     // 2 seconds from now.
-  status = osDelay (delayTime);             // suspend thread execution
-  if (status != osOK) {
-    // handle error code
-  }  
-}
-\endcode
 */
 /// @}
