@@ -1850,7 +1850,7 @@ A field may define an \em enumeratedValue in order to make the display more intu
         <td>scaledNonNegativeInteger</td>
         <td>1..1</td>
     </tr>
-    <tr class="choice">
+    <tr class="choice" >
         <td colspan="4"><em>3. bitRangePattern</em></td>
     </tr>
     <tr  class="choice">
