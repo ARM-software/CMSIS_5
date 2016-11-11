@@ -730,8 +730,8 @@ Two timer peripheral descriptions are specified for the same memory block. No re
   </tr>
   <tr>
     <td>derivedFrom</td>
-    <td>Specify the name of a peripheral from which this peripheral will be derived. 
-        Values are inherited from the derived peripheral. Specified elements override inherited values.</td>
+    <td>Specify the peripheral name from which to inherit data.
+        Elements specified subsequently override inherited values. </td>
     <td>dimableIdentifierType</td>
     <td>0..1</td>
   </tr>
@@ -1100,8 +1100,14 @@ Note, you can also specify an array of a cluster using the \tagem{dim} element.
   </tr>
   <tr>
     <td>derivedFrom</td>
-    <td>Specifies the name of the cluster from which to inherit the data. Elements being specified 
-        underneath will override the inherited values.
+
+    <td>Specify the cluster name from which to inherit data.
+        Elements specified subsequently override inherited values. 
+        <br><b>Usage:</b>
+        - Always use the full qualifying path, which must start with the peripheral \tagem{name}, when deriving from another scope. 
+          (for example, in periperhal \token{B}, derive from \token{peripheralA.clusterX}). 
+        - You can use the cluster \tagem{name} when both clusters are in the same scope.
+        - No relative paths will work.
         <br><b>Remarks:</b> When deriving a cluster, it is mandatory to specify at least 
         the \tagem{name}, the \tagem{description}, and the \tagem{addressOffset}.</td>
     <td>registerType</td>
@@ -1332,8 +1338,16 @@ typedef struct {
   </tr>
   <tr>
     <td>derivedFrom</td>
-    <td>Specifies the name of the register from which to inherit the data. Elements being specified underneath will override the inherited values.
-        <br><b>Remarks:</b> When deriving a register, it is mandatory to specify at least the name, the description, and the addressOffset.</td>
+
+    <td>Specify the register name from which to inherit data.
+        Elements specified subsequently override inherited values. 
+        <br><b>Usage:</b>
+        - Always use the full qualifying path, which must start with the peripheral \tagem{name}, when deriving from another scope. 
+          (for example, in periperhal \token{B}, derive from \token{peripheralA.registerX}. 
+        - You can use the register \tagem{name} only when both registers are in the same scope.
+        - No relative paths will work.
+        <br><b>Remarks:</b> When deriving, it is mandatory to specify at least 
+        the \tagem{name}, the \tagem{description}, and the \tagem{addressOffset}.</td>
     <td>xs:Name</td>
     <td>0..1</td>
   </tr>
@@ -1737,7 +1751,15 @@ A field may define an \em enumeratedValue in order to make the display more intu
   </tr>
   <tr>
     <td>derivedFrom</td>
-    <td>The field is cloned from a previously defined field with a unique name.</td>
+    <td>Specify the field name from which to inherit data.
+        Elements specified subsequently override inherited values. 
+        <br><b>Usage:</b>
+        - Always use the full qualifying path, which must start with the peripheral \tagem{name}, when deriving from another scope. 
+          (for example, in periperhal \token{A} and \token{registerX}, derive from \token{peripheralA.registerYY.fieldYY}. 
+        - You can use the register \tagem{name} only when both registers are in the same scope.
+        - No relative paths will work.
+        <br><b>Remarks:</b> When deriving, it is mandatory to specify at least 
+        the \tagem{name} and \tagem{description}.</td>
     <td>xs:Name</td>
     <td>0..1</td>
   </tr>
