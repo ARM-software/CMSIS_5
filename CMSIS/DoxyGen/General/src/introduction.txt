@@ -186,10 +186,14 @@ In addition, each CMSIS component has its own release history:
     <tr>
       <td>5.0.0</td>
       <td>
-        Added <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>ARMv8-M architecture</b></a> support.
-        - CMSIS-CORE 5.0.0 adding support for ARMv8-M and Cortex-M23, Cortex-M33 processors
-	    - CMSIS-RTOS 2.0.0 new API with RTX 5.0.0 reference implementation
+        Added support for: <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>ARMv8-M architecture</b></a> including TrustZone for ARMv8-M and Cortex-M23, Cortex-M33 processors
+        - CMSIS-CORE 5.0.0 added support for ARMv8-M and Cortex-M23, Cortex-M33 processors
+        - CMSIS-Driver 2.04.0 (unchanged)
+        - CMSIS-DSP 1.4.9 minor corrections and performance improvements
+        - CMSIS-RTOS 2.0.0 new API with RTX 5.0.0 reference implementation and corrections in RTX 4.8.2
         - CMSIS-PACK 1.4.4 introducing CPDSC project description
+        - CMSIS-SVD 1.3.3 several enhancements and rework of documentation
+        - CMSIS-DAP 1.1.0 (unchanged)
       </td>
     </tr>
     <tr>
