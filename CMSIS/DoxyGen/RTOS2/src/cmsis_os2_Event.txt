@@ -10,7 +10,7 @@
 Events are used to trigger execution states between threads. The event flag management functions in CMSIS-RTOS allow you to control or wait for event flags. Each signal has up to 31 event flags (int32_t flags provides 31 bits).
 
 A thread
-- can wait for event flags to be set (using \ref osEventFlagsGet). Using this function, it enters the
+- can wait for event flags to be set (using \ref osEventFlagsWait). Using this function, it enters the
   \ref ThreadStates "BLOCKED" state. The \ref osEventFlagsGet parameter \a flags defines the signals that are required to put the thread back into \b READY state.
 - may set one or more flags in any other given thread (using \ref osEventFlagsSet).
 - may clear its own signals or the signals of other threads (using \ref osEventFlagsClear).
@@ -135,7 +135,7 @@ static void EX_Signal_1 (void)  {
   int32_t      signals;
   osThreadId_t thread_id;
   
-  thread_id = osThreadCreate  (Thread_2, NULL, NULL);
+  thread_id = osThreadNew     (Thread_2, NULL, NULL);
   signals   = osEventFlagsSet (event_id, 0x00000005);         // Send signals to the created thread
 }
 \endcode

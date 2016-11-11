@@ -68,64 +68,9 @@ File/Folder                  | Content
     <tr>
       <td>V2.0.0</td>
       <td>
-        - Kernel:\n
-         -- added: \ref osKernelGetInfo, \ref osKernelGetState.\n
-         -- added: \ref osKernelLock, \ref osKernelUnlock.\n
-         -- added: \ref osKernelSuspend, \ref osKernelResume.\n
-         -- added: \ref osKernelGetTickCount, \ref osKernelGetTickFreq.\n
-         -- renamed osKernelSysTick to \ref osKernelGetSysTimerCount.\n
-         -- replaced osKernelSysTickFrequency with \ref osKernelGetSysTimerFreq.\n
-        - Thread:\n
-         -- extended number of thread priorities.\n
-         -- replaced osThreadCreate with \ref osThreadNew.\n
-         -- added: \ref osThreadGetName.\n
-         -- added: \ref osThreadGetState.\n
-         -- added: \ref osThreadGetStackSize, \ref osThreadGetStackSpace.\n
-         -- added: \ref osThreadSuspend, \ref osThreadResume.\n
-         -- added: \ref osThreadJoin, \ref osThreadDetach, \ref osThreadExit.\n
-         -- added: \ref osThreadGetCount, \ref osThreadEnumerate.\n
-        - Signals:\n
-         -- renamed osSignals to osThreadFlags.\n
-         -- changed return value of Set/Clear/Wait functions.\n
-         -- Clear function limited to current running thread.\n
-         -- extended Wait function (options).\n
-         -- added: \ref osThreadFlagsGet.\n        
-        - Event Flags: added new independent object for handling Event Flags.\n
-        - Delay and Wait functions:\n
-         -- added: \ref osDelayUntil.\n
-         -- deprecated: osWait.\n
-        - Timer:\n
-         -- replaced osTimerCreate with \ref osTimerNew.\n
-         -- added: \ref osTimerGetName, \ref osTimerIsRunning.\n
-        - Mutex:\n
-         -- extended: attributes (Recursive, Priority Inherit, Robust).\n
-         -- replaced osMutexCreate with \ref osMutexNew.\n
-         -- renamed osMutexWait to \ref osMutexAcquire.\n
-         -- added: \ref osMutexGetName, \ref osMutexGetOwner.\n
-        - Semaphore:\n
-         -- extended: maximum and initial token count.\n
-         -- replaced osSemaphoreCreate with \ref osSemaphoreNew.\n
-         -- renamed osSemaphoreWait to \ref osSemaphoreAcquire (changed return value).\n
-         -- added: \ref osSemaphoreGetName, \ref osSemaphoreGetCount.\n
-        - Memory Pool:\n
-         -- using osMemoryPool prefix instead of osPool.\n
-         -- replaced osPoolCreate with \ref osMemoryPoolNew.\n
-         -- extended: \ref osMemoryPoolAlloc (timeout).\n
-         -- added: \ref osMemoryPoolGetName.\n
-         -- added: \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize.\n
-         -- added: \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace.\n
-         -- added: \ref osMemoryPoolDelete.\n
-         -- deprecated: osPoolCAlloc.\n
-        - Message Queue:\n
-         -- fixed size messages instead of a single 32-bit values.\n
-         -- using osMessageQueue prefix instead of osMessage.\n
-         -- replaced osMessageCreate with \ref osMessageQueueNew.\n
-         -- updated: \ref osMessageQueuePut, \ref osMessageQueueGet.\n
-         -- added: \ref osMessageQueueGetName.\n         
-         -- added: \ref osMessageQueueGetCapacity, \ref osMessageQueueGetMsgSize.\n
-         -- added: \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace.\n
-         -- added: \ref osMessageQueueReset, \ref osMessageQueueDelete.\n
-        - Mail Queue: deprecated (superseded by extended Message Queue functionality).\n
+        New API Version 2.0 available. 
+		- See \ref rtos_api2 for a detailed function reference.
+		- See \ref os2Migration for details on the migration process from API Version 1.
      </td>
     </tr>
     <tr>
