@@ -6,7 +6,7 @@
 \ingroup CMSIS_RTOS
 \brief Wait for a time period or unspecified events.
 \details 
-The Generic Wait function group provides means for a time delay and allow to wait for unspecified events.
+The Generic Wait function group provides means for a time delay.
 
 @{
 */
