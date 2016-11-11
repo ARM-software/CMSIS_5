@@ -8,7 +8,7 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.0.0-RC1">
+    <release version="5.0.0" date="2016-11-11">
       Changed open source license to Apache 2.0
       CMSIS_Core:
        - Added support for Cortex-M23 and Cortex-M33.
