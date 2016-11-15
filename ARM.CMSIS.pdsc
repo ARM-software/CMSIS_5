@@ -239,7 +239,7 @@ The Cortex-M4 processor is an entry-level 32-bit ARM Cortex processor designed f
     <family Dfamily="ARM Cortex M7" Dvendor="ARM:82">
       <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646b/index.html" title="Cortex-M7 Device Generic Users Guide"/>
       <description>
-The Cortex-M4 processor is an entry-level 32-bit ARM Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
+The Cortex-M7 processor is an entry-level 32-bit ARM Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
 - highly efficient ultra-low power operation
 - excellent code density
