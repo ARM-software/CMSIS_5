@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armcc.h
  * @brief    CMSIS Cortex-M Core Function/Instruction Header File
- * @version  V5.00
- * @date     27. September 2016
+ * @version  V5.01
+ * @date     15. November 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -31,7 +31,8 @@
 #endif
 
 /* CMSIS compiler control architecture macros */
-#if (defined (__TARGET_ARCH_6_M ) && (__TARGET_ARCH_6_M  == 1))
+#if ((defined (__TARGET_ARCH_6_M  ) && (__TARGET_ARCH_6_M   == 1)) || \
+     (defined (__TARGET_ARCH_6S_M ) && (__TARGET_ARCH_6S_M  == 1))   )
   #define __ARM_ARCH_6M__           1
 #endif
 

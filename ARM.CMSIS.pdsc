@@ -8,6 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.1-dev0">
+      CMSIS_Core:
+       - Updated cmsis_armcc.h: corrected macro __ARM_ARCH_6M__
+    </release>
     <release version="5.0.0" date="2016-11-11">
       Changed open source license to Apache 2.0
       CMSIS_Core:
