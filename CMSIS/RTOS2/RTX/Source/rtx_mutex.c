@@ -63,12 +63,12 @@ void os_MutexOwnerRelease (os_mutex_t *mutex_list) {
 //  ==== Service Calls ====
 
 //  Service Calls definitions
-SVC0_1(MutexNew,      osMutexId_t,  const osMutexAttr_t *)
-SVC0_1(MutexGetName,  const char *, osMutexId_t)
-SVC0_2(MutexAcquire,  osStatus_t,   osMutexId_t, uint32_t)
-SVC0_1(MutexRelease,  osStatus_t,   osMutexId_t)
-SVC0_1(MutexGetOwner, osThreadId_t, osMutexId_t)
-SVC0_1(MutexDelete,   osStatus_t,   osMutexId_t)
+SVC0_1M(MutexNew,      osMutexId_t,  const osMutexAttr_t *)
+SVC0_1 (MutexGetName,  const char *, osMutexId_t)
+SVC0_2 (MutexAcquire,  osStatus_t,   osMutexId_t, uint32_t)
+SVC0_1 (MutexRelease,  osStatus_t,   osMutexId_t)
+SVC0_1 (MutexGetOwner, osThreadId_t, osMutexId_t)
+SVC0_1 (MutexDelete,   osStatus_t,   osMutexId_t)
 
 /// Create and Initialize a Mutex object.
 /// \note API identical to osMutexNew
@@ -398,12 +398,7 @@ osMutexId_t osMutexNew (const osMutexAttr_t *attr) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }
-  if ((os_KernelGetState() == os_KernelReady) && IS_PRIVILEGED()) {
-    // Kernel Ready (not running) and in Privileged mode
-    return os_svcMutexNew(attr);
-  } else {
-    return  __svcMutexNew(attr);
-  }
+  return __svcMutexNew(attr);
 }
 
 /// Get name of a Mutex object.
@@ -411,7 +406,7 @@ const char *osMutexGetName (osMutexId_t mutex_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }
-  return  __svcMutexGetName(mutex_id);
+  return __svcMutexGetName(mutex_id);
 }
 
 /// Acquire a Mutex or timeout if it is locked.
@@ -419,7 +414,7 @@ osStatus_t osMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return osErrorISR;
   }
-  return  __svcMutexAcquire(mutex_id, timeout);
+  return __svcMutexAcquire(mutex_id, timeout);
 }
 
 /// Release a Mutex that was acquired by \ref osMutexAcquire.
@@ -427,7 +422,7 @@ osStatus_t osMutexRelease (osMutexId_t mutex_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return osErrorISR;
   }
-  return  __svcMutexRelease(mutex_id);
+  return __svcMutexRelease(mutex_id);
 }
 
 /// Get Thread which owns a Mutex object.
@@ -435,7 +430,7 @@ osThreadId_t osMutexGetOwner (osMutexId_t mutex_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }
-  return  __svcMutexGetOwner(mutex_id);
+  return __svcMutexGetOwner(mutex_id);
 }
 
 /// Delete a Mutex object.

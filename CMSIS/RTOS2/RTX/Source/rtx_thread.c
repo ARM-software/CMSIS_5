@@ -503,7 +503,7 @@ void os_ThreadPostProcess (os_thread_t *thread) {
 //  ==== Service Calls ====
 
 //  Service Calls definitions
-SVC0_3 (ThreadNew,           osThreadId_t,    os_thread_func_t, void *, const osThreadAttr_t *)
+SVC0_3M(ThreadNew,           osThreadId_t,    os_thread_func_t, void *, const osThreadAttr_t *)
 SVC0_1 (ThreadGetName,       const char *,    osThreadId_t)
 SVC0_0 (ThreadGetId,         osThreadId_t)
 SVC0_1 (ThreadGetState,      osThreadState_t, osThreadId_t)
@@ -1369,12 +1369,7 @@ osThreadId_t osThreadNew (os_thread_func_t func, void *argument, const osThreadA
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }
-  if ((os_KernelGetState() == os_KernelReady) && IS_PRIVILEGED()) {
-    // Kernel Ready (not running) and in Privileged mode
-    return os_svcThreadNew(func, argument, attr);
-  } else {
-    return  __svcThreadNew(func, argument, attr);
-  }
+  return __svcThreadNew(func, argument, attr);
 }
 
 /// Get name of a thread.
@@ -1382,7 +1377,7 @@ const char *osThreadGetName (osThreadId_t thread_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }
-  return  __svcThreadGetName(thread_id);
+  return __svcThreadGetName(thread_id);
 }
 
 /// Return the thread ID of the current running thread.
@@ -1517,7 +1512,7 @@ int32_t osThreadFlagsClear (int32_t flags) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return osErrorISR;
   }
-  return  __svcThreadFlagsClear(flags);
+  return __svcThreadFlagsClear(flags);
 }
 
 /// Get the current Thread Flags of current running thread.
@@ -1525,7 +1520,7 @@ int32_t osThreadFlagsGet (void) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return 0;
   }                               
-  return  __svcThreadFlagsGet();
+  return __svcThreadFlagsGet();
 }
 
 /// Wait for one or more Thread Flags of the current running thread to become signaled.
@@ -1533,5 +1528,5 @@ int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return osErrorISR;
   }
-  return  __svcThreadFlagsWait(flags, options, timeout);
+  return __svcThreadFlagsWait(flags, options, timeout);
 }

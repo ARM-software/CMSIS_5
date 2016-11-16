@@ -121,12 +121,12 @@ void os_SemaphorePostProcess (os_semaphore_t *semaphore) {
 //  ==== Service Calls ====
 
 //  Service Calls definitions
-SVC0_3(SemaphoreNew,      osSemaphoreId_t, uint32_t, uint32_t, const osSemaphoreAttr_t *)
-SVC0_1(SemaphoreGetName,  const char *,    osSemaphoreId_t)
-SVC0_2(SemaphoreAcquire,  osStatus_t,      osSemaphoreId_t, uint32_t)
-SVC0_1(SemaphoreRelease,  osStatus_t,      osSemaphoreId_t)
-SVC0_1(SemaphoreGetCount, uint32_t,        osSemaphoreId_t)
-SVC0_1(SemaphoreDelete,   osStatus_t,      osSemaphoreId_t)
+SVC0_3M(SemaphoreNew,      osSemaphoreId_t, uint32_t, uint32_t, const osSemaphoreAttr_t *)
+SVC0_1 (SemaphoreGetName,  const char *,    osSemaphoreId_t)
+SVC0_2 (SemaphoreAcquire,  osStatus_t,      osSemaphoreId_t, uint32_t)
+SVC0_1 (SemaphoreRelease,  osStatus_t,      osSemaphoreId_t)
+SVC0_1 (SemaphoreGetCount, uint32_t,        osSemaphoreId_t)
+SVC0_1 (SemaphoreDelete,   osStatus_t,      osSemaphoreId_t)
 
 /// Create and Initialize a Semaphore object.
 /// \note API identical to osSemaphoreNew
@@ -401,12 +401,7 @@ osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, cons
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }
-  if ((os_KernelGetState() == os_KernelReady) && IS_PRIVILEGED()) {
-    // Kernel Ready (not running) and in Privileged mode
-    return os_svcSemaphoreNew(max_count, initial_count, attr);
-  } else {
-    return  __svcSemaphoreNew(max_count, initial_count, attr);
-  }
+  return __svcSemaphoreNew(max_count, initial_count, attr);
 }
 
 /// Get name of a Semaphore object.
@@ -414,7 +409,7 @@ const char *osSemaphoreGetName (osSemaphoreId_t semaphore_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }
-  return  __svcSemaphoreGetName(semaphore_id);
+  return __svcSemaphoreGetName(semaphore_id);
 }
 
 /// Acquire a Semaphore token or timeout if no tokens are available.

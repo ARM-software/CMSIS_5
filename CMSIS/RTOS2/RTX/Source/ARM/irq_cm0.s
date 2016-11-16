@@ -52,10 +52,12 @@ SVC_Handler     PROC
                 CMP      R1,#0
                 BNE      SVC_User               ; Branch if not SVC 0
 
+                PUSH     {R0,LR}                ; Save PSP and EXC_RETURN
                 LDMIA    R0,{R0-R3}             ; Load function parameters from stack
                 BLX      R7                     ; Call service function
-                MRS      R3,PSP                 ; Get PSP
-                STMIA    R3!,{R0-R1}            ; Store function return values
+                POP      {R2,R3}                ; Restore PSP and EXC_RETURN
+                STMIA    R2!,{R0-R1}            ; Store function return values
+                MOV      LR,R3                  ; Set EXC_RETURN
 
 SVC_Context
                 LDR      R3,=os_Info+I_T_RUN_OFS; Load address of os_Info.run
@@ -63,7 +65,6 @@ SVC_Context
                 CMP      R1,R2                  ; Check if thread switch is required
                 BEQ      SVC_Exit               ; Branch when threads are the same
 
-                SUBS     R3,R3,#8
                 CMP      R1,#0
                 BEQ      SVC_ContextSwitch      ; Branch if running thread is deleted
 
@@ -79,6 +80,7 @@ SVC_ContextSave
                 STMIA    R0!,{R4-R7}            ; Save R8..R11
 
 SVC_ContextSwitch
+                SUBS     R3,R3,#8
                 STR      R2,[R3]                ; os_Info.thread.run: curr = next
 
 SVC_ContextRestore
@@ -93,10 +95,12 @@ SVC_ContextRestore
                 SUBS     R0,R0,#32              ; Adjust address
                 LDMIA    R0!,{R4-R7}            ; Restore R4..R7
 
-SVC_Exit
-                MOVS     R0,#~0xFFFFFFFD        ; Set EXC_RETURN value
-                MVNS     R0,R0
+                MOVS     R0,#~0xFFFFFFFD
+                MVNS     R0,R0                  ; Set EXC_RETURN value
                 BX       R0                     ; Exit from handler
+
+SVC_Exit
+                BX       LR                     ; Exit from handler
 
 SVC_User
                 PUSH     {R4,LR}                ; Save registers
@@ -124,7 +128,10 @@ PendSV_Handler  PROC
                 EXPORT   PendSV_Handler
                 IMPORT   os_PendSV_Handler
 
+                PUSH     {R0,LR}                ; Save EXC_RETURN
                 BL       os_PendSV_Handler
+                POP      {R0,R1}                ; Restore EXC_RETURN
+                MOV      LR,R1                  ; Set EXC_RETURN
                 B        SVC_Context
 
                 ALIGN
@@ -135,7 +142,10 @@ SysTick_Handler PROC
                 EXPORT   SysTick_Handler
                 IMPORT   os_Tick_Handler
 
+                PUSH     {R0,LR}                ; Save EXC_RETURN
                 BL       os_Tick_Handler
+                POP      {R0,R1}                ; Restore EXC_RETURN
+                MOV      LR,R1                  ; Set EXC_RETURN
                 B        SVC_Context
 
                 ALIGN

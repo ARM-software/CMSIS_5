@@ -222,16 +222,16 @@ void os_MessageQueuePostProcess (os_message_t *msg) {
 
 //  ==== Service Calls ====
 
-SVC0_3(MessageQueueNew,         osMessageQueueId_t, uint32_t, uint32_t, const osMessageQueueAttr_t *)
-SVC0_1(MessageQueueGetName,     const char *,       osMessageQueueId_t)
-SVC0_4(MessageQueuePut,         osStatus_t,         osMessageQueueId_t, const void *, uint8_t,   uint32_t)
-SVC0_4(MessageQueueGet,         osStatus_t,         osMessageQueueId_t,       void *, uint8_t *, uint32_t)
-SVC0_1(MessageQueueGetCapacity, uint32_t,           osMessageQueueId_t)
-SVC0_1(MessageQueueGetMsgSize,  uint32_t,           osMessageQueueId_t)
-SVC0_1(MessageQueueGetCount,    uint32_t,           osMessageQueueId_t)
-SVC0_1(MessageQueueGetSpace,    uint32_t,           osMessageQueueId_t)
-SVC0_1(MessageQueueReset,       osStatus_t,         osMessageQueueId_t)
-SVC0_1(MessageQueueDelete,      osStatus_t,         osMessageQueueId_t)
+SVC0_3M(MessageQueueNew,         osMessageQueueId_t, uint32_t, uint32_t, const osMessageQueueAttr_t *)
+SVC0_1 (MessageQueueGetName,     const char *,       osMessageQueueId_t)
+SVC0_4 (MessageQueuePut,         osStatus_t,         osMessageQueueId_t, const void *, uint8_t,   uint32_t)
+SVC0_4 (MessageQueueGet,         osStatus_t,         osMessageQueueId_t,       void *, uint8_t *, uint32_t)
+SVC0_1 (MessageQueueGetCapacity, uint32_t,           osMessageQueueId_t)
+SVC0_1 (MessageQueueGetMsgSize,  uint32_t,           osMessageQueueId_t)
+SVC0_1 (MessageQueueGetCount,    uint32_t,           osMessageQueueId_t)
+SVC0_1 (MessageQueueGetSpace,    uint32_t,           osMessageQueueId_t)
+SVC0_1 (MessageQueueReset,       osStatus_t,         osMessageQueueId_t)
+SVC0_1 (MessageQueueDelete,      osStatus_t,         osMessageQueueId_t)
 
 /// Create and Initialize a Message Queue object.
 /// \note API identical to osMessageQueueNew
@@ -777,12 +777,7 @@ osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, con
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }
-  if ((os_KernelGetState() == os_KernelReady) && IS_PRIVILEGED()) {
-    // Kernel Ready (not running) and in Privileged mode
-    return os_svcMessageQueueNew(msg_count, msg_size, attr);
-  } else {
-    return  __svcMessageQueueNew(msg_count, msg_size, attr);
-  }
+  return __svcMessageQueueNew(msg_count, msg_size, attr);
 }
 
 /// Get name of a Message Queue object.
@@ -790,7 +785,7 @@ const char *osMessageQueueGetName (osMessageQueueId_t mq_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }
-  return  __svcMessageQueueGetName(mq_id);
+  return __svcMessageQueueGetName(mq_id);
 }
 
 /// Put a Message into a Queue or timeout if Queue is full.

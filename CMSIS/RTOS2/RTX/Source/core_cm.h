@@ -114,6 +114,20 @@
 #define __SVC_INDIRECT(n) __svc_indirect_r7(n)
 #endif
 
+#if    (__FPU_USED == 1U)
+#define SVC_SETUP_PSP                                                          \
+  uint32_t control = __get_CONTROL();                                          \
+  if ((control & 2U) == 0U) {                                                  \
+    __set_PSP((__get_MSP() - ((control & 4U) ? 104U : 32U)) & ~7U);            \
+  }
+#else
+#define SVC_SETUP_PSP                                                          \
+  uint32_t control = __get_CONTROL();                                          \
+  if ((control & 2U) == 0U) {                                                  \
+    __set_PSP((__get_MSP() -                          32U)  & ~7U);            \
+  }
+#endif
+
 #define SVC0_0N(f,t)                                                           \
 __SVC_INDIRECT(0) t   _svc##f (t(*)());                                        \
                   t os_svc##f (void);                                          \
@@ -129,6 +143,17 @@ __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (void) {                                         \
   return _svc##f(os_svc##f);                                                   \
 }
+
+#define SVC0_0M(f,t)                                                           \
+__SVC_INDIRECT(0) t   _svc##f (t(*)());                                        \
+                  t os_svc##f (void);                                          \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (void) {                                         \
+  SVC_SETUP_PSP                                                                \
+  return _svc##f(os_svc##f);                                                   \
+}
+
+#define SVC0_0D SVC0_0
 
 #define SVC0_1N(f,t,t1)                                                        \
 __SVC_INDIRECT(0) t   _svc##f (t(*)(t1),t1);                                   \
@@ -146,11 +171,29 @@ __STATIC_INLINE   t  __svc##f (t1 a1) {                                        \
   return _svc##f(os_svc##f,a1);                                                \
 }
 
+#define SVC0_1M(f,t,t1)                                                        \
+__SVC_INDIRECT(0) t   _svc##f (t(*)(t1),t1);                                   \
+                  t os_svc##f (t1 a1);                                         \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1) {                                        \
+  SVC_SETUP_PSP                                                                \
+  return _svc##f(os_svc##f,a1);                                                \
+}
+
 #define SVC0_2(f,t,t1,t2)                                                      \
 __SVC_INDIRECT(0) t   _svc##f (t(*)(t1,t2),t1,t2);                             \
                   t os_svc##f (t1 a1, t2 a2);                                  \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2) {                                 \
+  return _svc##f(os_svc##f,a1,a2);                                             \
+}
+
+#define SVC0_2M(f,t,t1,t2)                                                     \
+__SVC_INDIRECT(0) t   _svc##f (t(*)(t1,t2),t1,t2);                             \
+                  t os_svc##f (t1 a1, t2 a2);                                  \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1, t2 a2) {                                 \
+  SVC_SETUP_PSP                                                                \
   return _svc##f(os_svc##f,a1,a2);                                             \
 }
 
@@ -162,11 +205,29 @@ __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3) {                          \
   return _svc##f(os_svc##f,a1,a2,a3);                                          \
 }
 
+#define SVC0_3M(f,t,t1,t2,t3)                                                  \
+__SVC_INDIRECT(0) t   _svc##f (t(*)(t1,t2,t3),t1,t2,t3);                       \
+                  t os_svc##f (t1 a1, t2 a2, t3 a3);                           \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3) {                          \
+  SVC_SETUP_PSP                                                                \
+  return _svc##f(os_svc##f,a1,a2,a3);                                          \
+}
+
 #define SVC0_4(f,t,t1,t2,t3,t4)                                                \
 __SVC_INDIRECT(0) t   _svc##f (t(*)(t1,t2,t3,t4),t1,t2,t3,t4);                 \
                   t os_svc##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
+  return _svc##f(os_svc##f,a1,a2,a3,a4);                                       \
+}
+
+#define SVC0_4M(f,t,t1,t2,t3,t4)                                               \
+__SVC_INDIRECT(0) t   _svc##f (t(*)(t1,t2,t3,t4),t1,t2,t3,t4);                 \
+                  t os_svc##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
+  SVC_SETUP_PSP                                                                \
   return _svc##f(os_svc##f,a1,a2,a3,a4);                                       \
 }
 
@@ -198,21 +259,76 @@ register uint32_t __rf   __ASM(SVC_RegF) = (uint32_t)f
 
 #define SVC_Out0
 #define SVC_Out1 "=r"(__r0)
+#define SVC_Out2 "=r"(__r0),"=r"(__r1)
 
-#define SVC_CL0 "r0","r1","r2","r3","lr","cc"
-#define SVC_CL1      "r1","r2","r3","lr","cc"
-#define SVC_CL2           "r2","r3","lr","cc"
-#define SVC_CL3                "r3","lr","cc"
-#define SVC_CL4                     "lr","cc"
+#define SVC_CL0
+#define SVC_CL1 "r1"
+#define SVC_CL2 "r0","r1"
 
 #define SVC_Call0(in, out, cl)                                                 \
   __ASM volatile ("svc 0" : out : in : cl)
+
+#if   ((__ARM_ARCH_7M__      == 1U) || \
+       (__ARM_ARCH_7EM__     == 1U) || \
+       (__ARM_ARCH_8M_MAIN__ == 1U))
+#if    (__FPU_USED == 1U)
+#define SVC_Call0M(in, out, cl)                                                \
+  register uint32_t val;                                                       \
+  __ASM volatile (                                                             \
+  ".syntax unified\n\t"                                                        \
+    "mrs   %[val],control\n\t"                                                 \
+    "tst   %[val],#2\n\t"                                                      \
+    "bne   0f\n\t"                                                             \
+    "tst   %[val],#4\n\t"                                                      \
+    "mrs   %[val],msp\n\t"                                                     \
+    "ite   eq\n\t"                                                             \
+    "subeq %[val],#32\n\t"                                                     \
+    "subne %[val],#104\n\t"                                                    \
+    "bic   %[val],#7\n\t"                                                      \
+    "msr   psp,%[val]\n\t"                                                     \
+  "0:\n\t"                                                                     \
+    "svc 0"                                                                    \
+  : out, [val] "=&l" (val) : in : cl)
+#else
+#define SVC_Call0M(in, out, cl)                                                \
+  register uint32_t val;                                                       \
+  __ASM volatile (                                                             \
+  ".syntax unified\n\t"                                                        \
+    "mrs   %[val],control\n\t"                                                 \
+    "tst   %[val],#2\n\t"                                                      \
+    "bne   0f\n\t"                                                             \
+    "mrs   %[val],msp\n\t"                                                     \
+    "subs  %[val],#32\n\t"                                                     \
+    "bic   %[val],#7\n\t"                                                      \
+    "msr   psp,%[val]\n\t"                                                     \
+  "0:\n\t"                                                                     \
+    "svc 0"                                                                    \
+  : out, [val] "=&l" (val) : in : cl)
+#endif
+#elif ((__ARM_ARCH_6M__      == 1U) || \
+       (__ARM_ARCH_8M_BASE__ == 1U))
+#define SVC_Call0M(in, out, cl)                                                \
+  register uint32_t val;                                                       \
+  __ASM volatile (                                                             \
+  ".syntax unified\n\t"                                                        \
+    "mrs   %[val],control\n\t"                                                 \
+    "lsls  %[val],#30\n\t"                                                     \
+    "bmi   0f\n\t"                                                             \
+    "mrs   %[val],msp\n\t"                                                     \
+    "subs  %[val],#32\n\t"                                                     \
+    "lsrs  %[val],#3\n\t"                                                      \
+    "lsls  %[val],#3\n\t"                                                      \
+    "msr   psp,%[val]\n\t"                                                     \
+  "0:\n\t"                                                                     \
+    "svc 0"                                                                    \
+  : out, [val] "=&l" (val) : in : cl)
+#endif
 
 #define SVC0_0N(f,t)                                                           \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (void) {                                            \
   SVC_ArgF(os_svc##f);                                                         \
-  SVC_Call0(SVC_In0, SVC_Out0, SVC_CL0);                                       \
+  SVC_Call0(SVC_In0, SVC_Out0, SVC_CL2);                                       \
 }
 
 #define SVC0_0(f,t)                                                            \
@@ -222,6 +338,25 @@ __STATIC_INLINE t __svc##f (void) {                                            \
   SVC_ArgF(os_svc##f);                                                         \
   SVC_Call0(SVC_In0, SVC_Out1, SVC_CL1);                                       \
   return (t) __r0;                                                             \
+}
+
+#define SVC0_0M(f,t)                                                           \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE t __svc##f (void) {                                            \
+  SVC_ArgN(0);                                                                 \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0M(SVC_In0, SVC_Out1, SVC_CL1);                                      \
+  return (t) __r0;                                                             \
+}
+
+#define SVC0_0D(f,t)                                                           \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE t __svc##f (void) {                                            \
+  SVC_ArgN(0);                                                                 \
+  SVC_ArgN(1);                                                                 \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0(SVC_In0, SVC_Out2, SVC_CL0);                                       \
+  return (((t) __r0) | (((t) __r1) << 32));                                    \
 }
 
 #define SVC0_1N(f,t,t1)                                                        \
@@ -241,13 +376,32 @@ __STATIC_INLINE t __svc##f (t1 a1) {                                           \
   return (t) __r0;                                                             \
 }
 
+#define SVC0_1M(f,t,t1)                                                        \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE t __svc##f (t1 a1) {                                           \
+  SVC_ArgR(0,a1);                                                              \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0M(SVC_In1, SVC_Out1, SVC_CL1);                                      \
+  return (t) __r0;                                                             \
+}
+
 #define SVC0_2(f,t,t1,t2)                                                      \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1, t2 a2) {                                    \
   SVC_ArgR(0,a1);                                                              \
   SVC_ArgR(1,a2);                                                              \
   SVC_ArgF(os_svc##f);                                                         \
-  SVC_Call0(SVC_In2, SVC_Out1, SVC_CL2);                                       \
+  SVC_Call0(SVC_In2, SVC_Out1, SVC_CL0);                                       \
+  return (t) __r0;                                                             \
+}
+
+#define SVC0_2M(f,t,t1,t2)                                                     \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE t __svc##f (t1 a1, t2 a2) {                                    \
+  SVC_ArgR(0,a1);                                                              \
+  SVC_ArgR(1,a2);                                                              \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0M(SVC_In2, SVC_Out1, SVC_CL0);                                      \
   return (t) __r0;                                                             \
 }
 
@@ -258,7 +412,18 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3) {                             \
   SVC_ArgR(1,a2);                                                              \
   SVC_ArgR(2,a3);                                                              \
   SVC_ArgF(os_svc##f);                                                         \
-  SVC_Call0(SVC_In3, SVC_Out1, SVC_CL3);                                       \
+  SVC_Call0(SVC_In3, SVC_Out1, SVC_CL0);                                       \
+  return (t) __r0;                                                             \
+}
+
+#define SVC0_3M(f,t,t1,t2,t3)                                                  \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3) {                             \
+  SVC_ArgR(0,a1);                                                              \
+  SVC_ArgR(1,a2);                                                              \
+  SVC_ArgR(2,a3);                                                              \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0M(SVC_In3, SVC_Out1, SVC_CL0);                                      \
   return (t) __r0;                                                             \
 }
 
@@ -270,7 +435,19 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
   SVC_ArgR(2,a3);                                                              \
   SVC_ArgR(3,a4);                                                              \
   SVC_ArgF(os_svc##f);                                                         \
-  SVC_Call0(SVC_In4, SVC_Out1, SVC_CL4);                                       \
+  SVC_Call0(SVC_In4, SVC_Out1, SVC_CL0);                                       \
+  return (t) __r0;                                                             \
+}
+
+#define SVC0_4M(f,t,t1,t2,t3,t4)                                               \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
+  SVC_ArgR(0,a1);                                                              \
+  SVC_ArgR(1,a2);                                                              \
+  SVC_ArgR(2,a3);                                                              \
+  SVC_ArgR(3,a4);                                                              \
+  SVC_ArgF(os_svc##f);                                                         \
+  SVC_Call0M(SVC_In4, SVC_Out1, SVC_CL0);                                      \
   return (t) __r0;                                                             \
 }
 

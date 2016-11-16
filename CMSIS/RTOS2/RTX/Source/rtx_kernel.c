@@ -78,15 +78,15 @@ static void os_KernelUnblock (void) {
 //  ==== Service Calls ====
 
 //  Service Calls definitions
-SVC0_0 (KernelInitialize,       osStatus_t)
+SVC0_0M(KernelInitialize,       osStatus_t)
 SVC0_3 (KernelGetInfo,          osStatus_t, osVersion_t *, char *, uint32_t)
-SVC0_0 (KernelStart,            osStatus_t)
+SVC0_0M(KernelStart,            osStatus_t)
 SVC0_0 (KernelLock,             uint32_t)
 SVC0_0N(KernelUnlock,           void)
 SVC0_0 (KernelSuspend,          uint32_t)
 SVC0_1N(KernelResume,           void, uint32_t)
 SVC0_0 (KernelGetState,         osKernelState_t)
-SVC0_0 (KernelGetTickCount,     uint64_t)
+SVC0_0D(KernelGetTickCount,     uint64_t)
 SVC0_0 (KernelGetTickFreq,      uint32_t)
 SVC0_0 (KernelGetSysTimerCount, uint32_t)
 SVC0_0 (KernelGetSysTimerFreq,  uint32_t)
@@ -202,15 +202,6 @@ osStatus_t os_svcKernelInitialize (void) {
   }
 #endif
 
-  // Create Idle Thread
-  os_Info.thread.idle = (os_thread_t *)(os_svcThreadNew(
-                                          os_IdleThread,
-                                          NULL,
-                                          os_Config.idle_thread_attr));
-  if (os_Info.thread.idle == NULL) {
-    return osError;
-  }
-
   // Initialize SVC and PendSV System Service Calls
   os_SVC_Initialize();
 
@@ -253,6 +244,14 @@ osStatus_t os_svcKernelStart (void) {
     return osError;
   }
 
+  // Create Idle Thread
+  if (os_Info.thread.idle == NULL) {
+    os_Info.thread.idle = os_svcThreadNew(os_IdleThread, NULL, os_Config.idle_thread_attr);
+    if (os_Info.thread.idle == NULL) {
+      return osError;
+    }
+  }
+
   // Switch to Ready Thread with highest Priority
   thread = os_ThreadListGet(&os_Info.thread.ready);
   if (thread == NULL) {
@@ -267,8 +266,6 @@ osStatus_t os_svcKernelStart (void) {
     // Unprivileged Thread mode & PSP
     __set_CONTROL(0x03U);
   }
-  __DSB();
-  __ISB();
 
   os_Info.kernel.sys_freq = SystemCoreClock;
 
@@ -431,11 +428,7 @@ osStatus_t osKernelInitialize (void) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return osErrorISR;
   }
-  if (IS_PRIVILEGED()) {
-    return os_svcKernelInitialize();
-  } else {
-    return  __svcKernelInitialize();
-  }
+  return __svcKernelInitialize();
 }
 
 ///  Get RTOS Kernel Information.
@@ -464,32 +457,8 @@ osKernelState_t osKernelGetState (void) {
 
 /// Start the RTOS Kernel scheduler.
 osStatus_t osKernelStart (void) {
-  osStatus_t status;
-  uint32_t   stack[8];
-
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return osErrorISR;
-  }
-  switch (__get_CONTROL() & 0x03U) {
-    case 0x00U:                                 // Privileged Thread mode & MSP
-#if ( (__ARM_ARCH_8M_MAIN__ == 1U) || \
-     ((__ARM_ARCH_8M_BASE__ == 1U) && (__DOMAIN_NS == 0U)))
-      __set_PSPLIM((uint32_t)stack);
-#endif
-      __set_PSP((uint32_t)(stack + 8));         // Initial PSP
-      __set_CONTROL(0x02U);                     // Set Privileged Thread mode & PSP
-      __DSB();
-      __ISB();
-      status = __svcKernelStart();
-      if (status != osOK) {
-        __set_CONTROL(0x00U);                   // Restore Privileged Thread mode & MSP
-      }
-      return status;
-    case 0x01U:                                 // Unprivileged Thread mode & MSP
-      return osError;
-    case 0x02U:                                 // Privileged Thread mode & PSP
-    case 0x03U:                                 // Unprivileged Thread mode & PSP
-      break;
   }
   return __svcKernelStart();
 }
@@ -529,7 +498,7 @@ void osKernelResume (uint32_t sleep_ticks) {
 /// Get the RTOS kernel tick count.
 uint64_t osKernelGetTickCount (void) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    return os_svcKernelGetTickCount();
+    return  0U;
   } else {
     return  __svcKernelGetTickCount();
   }
@@ -538,7 +507,7 @@ uint64_t osKernelGetTickCount (void) {
 /// Get the RTOS kernel tick frequency.
 uint32_t osKernelGetTickFreq (void) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    return os_svcKernelGetTickFreq();
+    return  0U;
   } else {
     return  __svcKernelGetTickFreq();
   }

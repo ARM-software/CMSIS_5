@@ -53,16 +53,18 @@ SVC_Handler:
         LDRB     R1,[R1,#-2]            // Load SVC number
         CBNZ     R1,SVC_User            // Branch if not SVC 0
 
+        PUSH     {R0,LR}                // Save PSP and EXC_RETURN
         LDM      R0,{R0-R3,R12}         // Load function parameters and address from stack
         BLX      R12                    // Call service function
-        MRS      R12,PSP                // Get PSP
+        POP      {R12,LR}               // Restore PSP and EXC_RETURN
         STM      R12,{R0-R1}            // Store function return values
 
 SVC_Context:
         LDR      R3,=os_Info+I_T_RUN_OFS// Load address of os_Info.run
         LDM      R3,{R1,R2}             // Load os_Info.thread.run: curr & next
         CMP      R1,R2                  // Check if thread switch is required
-        BEQ      SVC_Exit               // Branch when threads are the same
+        IT       EQ
+        BXEQ     LR                     // Exit when threads are the same
 
         CBZ      R1,SVC_ContextSwitch   // Branch if running thread is deleted
 
@@ -77,9 +79,9 @@ SVC_ContextRestore:
         LDR      R0,[R2,#TCB_SP_OFS]    // Load SP
         LDMIA    R0!,{R4-R11}           // Restore R4..R11
         MSR      PSP,R0                 // Set PSP
+        MVN      LR,#~0xFFFFFFFD        // Set EXC_RETURN value
 
 SVC_Exit:
-        MVN      LR,#~0xFFFFFFFD        // Set EXC_RETURN value
         BX       LR                     // Exit from handler
 
 SVC_User:
@@ -110,7 +112,9 @@ SVC_Done:
         .cantunwind
 PendSV_Handler:
 
+        PUSH     {R4,LR}                // Save EXC_RETURN
         BL       os_PendSV_Handler
+        POP      {R4,LR}                // Restore EXC_RETURN
         MRS      R12,PSP
         B        SVC_Context
 
@@ -125,7 +129,9 @@ PendSV_Handler:
         .cantunwind
 SysTick_Handler:
 
+        PUSH     {R4,LR}                // Save EXC_RETURN
         BL       os_Tick_Handler
+        POP      {R4,LR}                // Restore EXC_RETURN
         MRS      R12,PSP
         B        SVC_Context
 

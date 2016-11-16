@@ -156,13 +156,13 @@ void os_EventFlagsPostProcess (os_event_flags_t *ef) {
 //  ==== Service Calls ====
 
 //  Service Calls definitions
-SVC0_1(EventFlagsNew,     osEventFlagsId_t, const osEventFlagsAttr_t *)
-SVC0_1(EventFlagsGetName, const char *,     osEventFlagsId_t)
-SVC0_2(EventFlagsSet,     int32_t,          osEventFlagsId_t, int32_t)
-SVC0_2(EventFlagsClear,   int32_t,          osEventFlagsId_t, int32_t)
-SVC0_1(EventFlagsGet,     int32_t,          osEventFlagsId_t)
-SVC0_4(EventFlagsWait,    int32_t,          osEventFlagsId_t, int32_t, uint32_t, uint32_t)
-SVC0_1(EventFlagsDelete,  osStatus_t,       osEventFlagsId_t)
+SVC0_1M(EventFlagsNew,     osEventFlagsId_t, const osEventFlagsAttr_t *)
+SVC0_1 (EventFlagsGetName, const char *,     osEventFlagsId_t)
+SVC0_2 (EventFlagsSet,     int32_t,          osEventFlagsId_t, int32_t)
+SVC0_2 (EventFlagsClear,   int32_t,          osEventFlagsId_t, int32_t)
+SVC0_1 (EventFlagsGet,     int32_t,          osEventFlagsId_t)
+SVC0_4 (EventFlagsWait,    int32_t,          osEventFlagsId_t, int32_t, uint32_t, uint32_t)
+SVC0_1 (EventFlagsDelete,  osStatus_t,       osEventFlagsId_t)
 
 /// Create and Initialize an Event Flags object.
 /// \note API identical to osEventFlagsNew
@@ -487,12 +487,7 @@ osEventFlagsId_t osEventFlagsNew (const osEventFlagsAttr_t *attr) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }
-  if ((os_KernelGetState() == os_KernelReady) && IS_PRIVILEGED()) {
-    // Kernel Ready (not running) and in Privileged mode
-    return os_svcEventFlagsNew(attr);
-  } else {
-    return  __svcEventFlagsNew(attr);
-  }
+  return __svcEventFlagsNew(attr);
 }
 
 /// Get name of an Event Flags object.
@@ -500,7 +495,7 @@ const char *osEventFlagsGetName (osEventFlagsId_t ef_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }
-  return  __svcEventFlagsGetName(ef_id);
+  return __svcEventFlagsGetName(ef_id);
 }
 
 /// Set the specified Event Flags.
