@@ -332,6 +332,7 @@ __attribute__((section(".bss.os.msgqueue.mem")));
 // OS Configuration
 // ================
 
+__attribute__((section(".rodata")))
 const os_config_t os_Config = {
   0U   // Flags
 #if (OS_PRIVILEGE_MODE != 0)
@@ -441,6 +442,71 @@ extern const uint8_t *os_irq_cm_ref;
 __attribute__((weak))
 extern void * const os_UserSVC_Table[];
        void * const os_UserSVC_Table[1] = { (void *)0 };
+
+
+// OS Sections
+// ===========
+
+#if (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
+__asm (
+  ".weakref __os_thread_cb_start__,    .bss.os.thread.cb$$Base\n\t"
+  ".weakref __os_thread_cb_end__,      .bss.os.thread.cb$$Limit\n\t"
+  ".weakref __os_timer_cb_start__,     .bss.os.timer.cb$$Base\n\t"
+  ".weakref __os_timer_cb_end__,       .bss.os.timer.cb$$Limit\n\t"
+  ".weakref __os_evflags_cb_start__,   .bss.os.evflags.cb$$Base\n\t"
+  ".weakref __os_evflags_cb_end__,     .bss.os.evflags.cb$$Limit\n\t"
+  ".weakref __os_mutex_cb_start__,     .bss.os.mutex.cb$$Base\n\t"
+  ".weakref __os_mutex_cb_end__,       .bss.os.mutex.cb$$Limit\n\t"
+  ".weakref __os_semaphore_cb_start__, .bss.os.semaphore.cb$$Base\n\t"
+  ".weakref __os_semaphore_cb_end__,   .bss.os.semaphore.cb$$Limit\n\t"
+  ".weakref __os_mempool_cb_start__,   .bss.os.mempool.cb$$Base\n\t"
+  ".weakref __os_mempool_cb_end__,     .bss.os.mempool.cb$$Limit\n\t"
+  ".weakref __os_msgqueue_cb_start__,  .bss.os.msgqueue.cb$$Base\n\t"
+  ".weakref __os_msgqueue_cb_end__,    .bss.os.msgqueue.cb$$Limit\n\t"
+);
+#endif
+
+#if (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)) || \
+     defined (__GNUC__)
+
+extern __attribute__((weak)) uint32_t __os_thread_cb_start__;
+extern __attribute__((weak)) uint32_t __os_thread_cb_end__;
+extern __attribute__((weak)) uint32_t __os_timer_cb_start__;
+extern __attribute__((weak)) uint32_t __os_timer_cb_end__;
+extern __attribute__((weak)) uint32_t __os_evflags_cb_start__;
+extern __attribute__((weak)) uint32_t __os_evflags_cb_end__;
+extern __attribute__((weak)) uint32_t __os_mutex_cb_start__;
+extern __attribute__((weak)) uint32_t __os_mutex_cb_end__;
+extern __attribute__((weak)) uint32_t __os_semaphore_cb_start__;
+extern __attribute__((weak)) uint32_t __os_semaphore_cb_end__;
+extern __attribute__((weak)) uint32_t __os_mempool_cb_start__;
+extern __attribute__((weak)) uint32_t __os_mempool_cb_end__;
+extern __attribute__((weak)) uint32_t __os_msgqueue_cb_start__;
+extern __attribute__((weak)) uint32_t __os_msgqueue_cb_end__;
+
+__asm (".global os_cb_sections");
+
+extern const uint32_t os_cb_sections[];
+
+__attribute__((section(".rodata")))
+const uint32_t os_cb_sections[] = {
+  (uint32_t)&__os_thread_cb_start__,
+  (uint32_t)&__os_thread_cb_end__,
+  (uint32_t)&__os_timer_cb_start__,
+  (uint32_t)&__os_timer_cb_end__,
+  (uint32_t)&__os_evflags_cb_start__,
+  (uint32_t)&__os_evflags_cb_end__,
+  (uint32_t)&__os_mutex_cb_start__,
+  (uint32_t)&__os_mutex_cb_end__,
+  (uint32_t)&__os_semaphore_cb_start__,
+  (uint32_t)&__os_semaphore_cb_end__,
+  (uint32_t)&__os_mempool_cb_start__,
+  (uint32_t)&__os_mempool_cb_end__,
+  (uint32_t)&__os_msgqueue_cb_start__,
+  (uint32_t)&__os_msgqueue_cb_end__
+};
+
+#endif
 
 
 // OS Initialization
