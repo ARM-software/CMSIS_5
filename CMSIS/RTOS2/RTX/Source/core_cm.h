@@ -29,10 +29,6 @@
 #include "RTE_Components.h"
 #include CMSIS_device_header
 
-#if (defined (__CC_ARM) && !defined(__ARM_ARCH_7M__) && !defined(__ARM_ARCH_7EM__))
-#define __ARM_ARCH_6M__         1U
-#endif
-
 #ifndef __ARM_ARCH_6M__
 #define __ARM_ARCH_6M__         0U
 #endif
@@ -288,7 +284,7 @@ extern uint32_t SystemCoreClock;        // System Clock Frequency (Core Clock)
 
 /// Initialize SVC and PendSV System Service Calls
 __STATIC_INLINE void os_SVC_Initialize (void) {
-#if   (__ARM_ARCH_8M_MAIN__ == 1U)
+#if   ((__ARM_ARCH_8M_MAIN__ == 1U) || (defined(__CORTEX_M) && (__CORTEX_M == 7U)))
   uint32_t p, n;
 
   SCB->SHPR[10] = 0xFFU;
@@ -298,10 +294,11 @@ __STATIC_INLINE void os_SVC_Initialize (void) {
     n = p + 1U;
   }
   SCB->SHPR[7] = (uint8_t)(0xFEU << n);
-#elif (__ARM_ARCH_8M_BASE__ == 1U)
+#elif  (__ARM_ARCH_8M_BASE__ == 1U)
   SCB->SHPR[1] |= 0x00FF0000U;
   SCB->SHPR[0] |= (SCB->SHPR[1] << (8+1)) & 0xFC000000U;
-#elif ((__ARM_ARCH_7M__ == 1U) || (__ARM_ARCH_7EM__ == 1U))
+#elif ((__ARM_ARCH_7M__      == 1U) || \
+       (__ARM_ARCH_7EM__     == 1U))
   uint32_t p, n;
 
   SCB->SHP[10] = 0xFFU;
@@ -311,7 +308,7 @@ __STATIC_INLINE void os_SVC_Initialize (void) {
     n = p + 1U;
   }
   SCB->SHP[7] = (uint8_t)(0xFEU << n);
-#elif (__ARM_ARCH_6M__ == 1U)
+#elif  (__ARM_ARCH_6M__      == 1U)
   SCB->SHP[1] |= 0x00FF0000U;
   SCB->SHP[0] |= (SCB->SHP[1] << (8+1)) & 0xFC000000U;
 #endif
@@ -322,13 +319,14 @@ __STATIC_INLINE void os_SVC_Initialize (void) {
 __STATIC_INLINE void os_SysTick_Setup (uint32_t period) {
   SysTick->LOAD = period - 1U;
   SysTick->VAL  = 0U;
-#if   (__ARM_ARCH_8M_MAIN__ == 1U)
+#if   ((__ARM_ARCH_8M_MAIN__ == 1U) || (defined(__CORTEX_M) && (__CORTEX_M == 7U)))
   SCB->SHPR[11] = 0xFFU;
-#elif (__ARM_ARCH_8M_BASE__ == 1U)
+#elif  (__ARM_ARCH_8M_BASE__ == 1U)
   SCB->SHPR[1] |= 0xFF000000U;
-#elif ((__ARM_ARCH_7M__ == 1U) || (__ARM_ARCH_7EM__ == 1U))
+#elif ((__ARM_ARCH_7M__      == 1U) || \
+       (__ARM_ARCH_7EM__     == 1U))
   SCB->SHP[11]  = 0xFFU;
-#elif (__ARM_ARCH_6M__ == 1U)
+#elif  (__ARM_ARCH_6M__      == 1U)
   SCB->SHP[1]  |= 0xFF000000U;
 #endif
 }
