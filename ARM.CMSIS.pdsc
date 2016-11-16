@@ -11,6 +11,7 @@
     <release version="5.0.1-dev0">
       CMSIS_Core:
        - Updated cmsis_armcc.h: corrected macro __ARM_ARCH_6M__
+       - Updated template for secure main function (main_s.c) 
       CMSIS-RTOS2:
        - RTX 5.0.1 (see revision history for details) 
     </release>
@@ -1754,7 +1755,7 @@ ARMv8-M Mainline based device with TrustZone
         <file category="include" name="CMSIS/Include/"/>
         <file category="header"  name="CMSIS/Include/tz_context.h" condition="ARMv8-M TZ Device"/>
         <!-- Code template -->
-        <file category="sourceC" attr="template" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/main_s.c"     select="Secure mode 'main' module for ARMv8-M"/>
+        <file category="sourceC" attr="template" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/main_s.c"     version="1.1.0" select="Secure mode 'main' module for ARMv8-M"/>
         <file category="sourceC" attr="template" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/tz_context.c" select="RTOS Context Management (TrustZone for ARMv8-M)" />
       </files>
     </component>
