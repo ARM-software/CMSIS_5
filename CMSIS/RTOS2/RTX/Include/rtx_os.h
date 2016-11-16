@@ -38,8 +38,8 @@ extern "C"
 
 /// Kernel Information
 #define os_CMSIS_API         20000000   ///< API version (2.0.0)
-#define os_CMSIS_RTX         50000000   ///< Kernel version (5.0.0)
-#define os_KernelId       "RTX V5.0.0"  ///< Kernel identification string
+#define os_CMSIS_RTX         50000001   ///< Kernel version (5.0.0)
+#define os_KernelId       "RTX V5.0.1"  ///< Kernel identification string
 
 
 //  ==== Common definitions ====
