@@ -11,6 +11,8 @@
     <release version="5.0.1-dev0">
       CMSIS_Core:
        - Updated cmsis_armcc.h: corrected macro __ARM_ARCH_6M__
+      CMSIS-RTOS2:
+       - RTX 5.0.1 (see revision history for details) 
     </release>
     <release version="5.0.0" date="2016-11-11">
       Changed open source license to Apache 2.0
@@ -2193,7 +2195,7 @@ ARMv8-M Mainline based device with TrustZone
     </component>
 
     <!-- CMSIS-RTOS Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX5" Cversion="5.0.0" Capiversion="1.0" condition="RTOS RTX5">
+    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX5" Cversion="5.0.1" Capiversion="1.0" condition="RTOS RTX5">
       <description>CMSIS-RTOS RTX5 implementation for Cortex-M, SC000, and SC300</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2209,7 +2211,7 @@ ARMv8-M Mainline based device with TrustZone
     </component>
 
     <!-- CMSIS-RTOS2 Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.0.0" Capiversion="2.0" condition="RTOS2 RTX5">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.0.1" Capiversion="2.0" condition="RTOS2 RTX5">
       <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and ARMv8-M (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2267,7 +2269,7 @@ ARMv8-M Mainline based device with TrustZone
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library_NS" Cversion="5.0.0" Capiversion="2.0" condition="RTOS2 RTX5 NS">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library_NS" Cversion="5.0.1" Capiversion="2.0" condition="RTOS2 RTX5 NS">
       <description>CMSIS-RTOS2 RTX5 for ARMv8-M Non-Secure Domain (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2314,7 +2316,7 @@ ARMv8-M Mainline based device with TrustZone
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.0.0" Capiversion="2.0" condition="RTOS2 RTX5">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.0.1" Capiversion="2.0" condition="RTOS2 RTX5">
       <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and ARMv8-M (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2384,7 +2386,7 @@ ARMv8-M Mainline based device with TrustZone
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="ARMv8MML_FP_GCC"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.0.0" Capiversion="2.0" condition="RTOS2 RTX5 NS">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.0.1" Capiversion="2.0" condition="RTOS2 RTX5 NS">
       <description>CMSIS-RTOS2 RTX5 for ARMv8-M Non-Secure Domain (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
