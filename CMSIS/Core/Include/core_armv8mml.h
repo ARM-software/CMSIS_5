@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_armv8mml.h
  * @brief    CMSIS ARMv8MML Core Peripheral Access Layer Header File
- * @version  V5.00
- * @date     02. November 2016
+ * @version  V5.0.1
+ * @date     17. November 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -2128,6 +2128,8 @@ __STATIC_INLINE void NVIC_DisableIRQ(IRQn_Type IRQn)
   if ((int32_t)(IRQn) >= 0)
   {
     NVIC->ICER[(((uint32_t)(int32_t)IRQn) >> 5UL)] = (uint32_t)(1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL));
+    __DSB();
+    __ISB();
   }
 }
 
