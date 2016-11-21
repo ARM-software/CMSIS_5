@@ -9,7 +9,7 @@
   not use this file except in compliance with the License.
   You may obtain a copy of the License at
  
-  http://www.apache.org/licenses/LICENSE-2.0
+  www.apache.org/licenses/LICENSE-2.0
  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an AS IS BASIS, WITHOUT
@@ -17,14 +17,18 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        07. November 2016
-  $Revision:    1.4.7
+  $Date:        21. November 2016
+  $Revision:    1.4.8
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
   SchemaVersion=1.4
 
+  21. November 2016: 1.4.8
+  - added support for semantic versioning quality information in ConditionVersionType
+  - relaxed schema by making some more elements optional
+  
   07. November 2016: 1.4.7
   - added multiple version types to tighten the schema checking depending on context
   - added new generator sections for exe, web and eclipse based generators
@@ -969,7 +973,7 @@
   <xs:complexType name="ConditionType">
     <xs:sequence>
       <xs:element name="description" type="xs:string" minOccurs="0"/>
-      <xs:choice minOccurs="1" maxOccurs="unbounded">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="accept"  type="FilterType"/>
         <xs:element name="require" type="FilterType"/>
         <xs:element name="deny"    type="FilterType"/>
@@ -988,7 +992,7 @@
     <xs:attribute name="Cvendor"     type="xs:string"             use="optional"/>
     <xs:attribute name="Cbundle"     type="xs:string"             use="optional"/>
     <xs:attribute name="Cclass"      type="CclassType"            use="required"/>
-    <xs:attribute name="Cgroup"      type="CgroupType"            use="required"/>
+    <xs:attribute name="Cgroup"      type="CgroupType"            use="optional"/>
     <xs:attribute name="Csub"        type="CsubType"              use="optional"/>
     <xs:attribute name="Cvariant"    type="CvariantType"          use="optional"/>
     <xs:attribute name="Cversion"    type="ComponentVersionType"  use="optional"/>
@@ -1058,11 +1062,11 @@
      
   <xs:group name="BoardElementsGroup">
     <xs:choice>
-      <xs:element name="description"      type="xs:string"/>
-      <xs:element name="feature"          type="BoardFeatureType" maxOccurs="unbounded"></xs:element>
+      <xs:element name="description"      type="xs:string" minOccurs="0"/>
+      <xs:element name="feature"          type="BoardFeatureType" maxOccurs="unbounded"/>
       <xs:element name="mountedDevice"    type="BoardsDeviceType" maxOccurs="unbounded"/>
       <xs:element name="compatibleDevice" type="CompatibleDeviceType" maxOccurs="unbounded"/>
-      <xs:element name="image">
+      <xs:element name="image" minOccurs="0">
         <xs:complexType>
           <xs:attribute name="small"  type="xs:string"  use="optional"/>
           <xs:attribute name="large"  type="xs:string"  use="optional"/>
@@ -1071,8 +1075,8 @@
           <xs:attribute name="public" type="xs:boolean" use="optional" default="false"/>
         </xs:complexType>
       </xs:element>
-      <xs:element name="debugInterface" type="DebugInterfaceType" maxOccurs="unbounded"/>
-      <xs:element name="book" type="BoardsBookType" maxOccurs="unbounded"/>
+      <xs:element name="debugInterface" type="DebugInterfaceType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="book" type="BoardsBookType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:choice>
   </xs:group>
 
@@ -1211,7 +1215,7 @@
   <xs:simpleType name="ConditionVersionType">
     <xs:restriction base="xs:string">
      <!-- <xs:pattern value="[\.:\-_A-Za-z0-9]+"/> -->
-     <xs:pattern value="[0-9]+.[0-9]+((.[0-9]+)|())((:[0-9]+.[0-9]+((.[0-9]+)|()))|())"/>
+     <xs:pattern value="[0-9]+.[0-9]+((.[0-9]+)|())((\-[0-9A-Za-z_\-\.]+)|([_A-Za-z][0-9A-Za-z_\-\.]*)|())((\+[\-\._A-Za-z0-9]+)|())((:[0-9]+.[0-9]+((.[0-9]+)|()))|())((\-[0-9A-Za-z_\-\.]+)|([_A-Za-z][0-9A-Za-z_\-\.]*)|())((\+[\-\._A-Za-z0-9]+)|())"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -1778,7 +1782,7 @@
                   <xs:attribute name="isDefaultVariant" type="xs:boolean" use="optional"/>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="component" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="component" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
                     <!-- a component can be deprecated if it is no longer maintained-->
