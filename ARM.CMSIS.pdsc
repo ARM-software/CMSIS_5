@@ -8,8 +8,13 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.1-dev1">
+      All C module and header files: updated removing 'http://' within license header sections flagged by MISRA as comment within comment
+      PDSC: added new compatible devices to 'uVision Simulator' generic board description
+      CMSIS-Pack Schema: adding
+    </release>
     <release version="5.0.1-dev0">
-      CMSIS_Core:
+      CMSIS-Core:
        - Updated cmsis_armcc.h: corrected macro __ARM_ARCH_6M__
        - Updated template for secure main function (main_s.c) 
        - Updated template for Context Management for ARMv8-M TrustZone (tz_context.c)
@@ -2456,9 +2461,21 @@ ARMv8-M Mainline based device with TrustZone
       <mountedDevice    deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM0"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM0P"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM3"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM4"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM4_FP"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM7"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM7_SP"/>
-    </board>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM7_DP"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MBL"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML_SP"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML_DP"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM23"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_TZ"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_DSP_FP"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_DSP_FP_TZ"/>
+   </board>
   </boards>
 
   <examples>
