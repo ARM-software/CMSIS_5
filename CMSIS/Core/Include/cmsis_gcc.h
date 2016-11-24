@@ -51,7 +51,11 @@
   #define __WEAK                    __attribute__((weak))
 #endif
 #ifndef   __UNALIGNED_UINT32
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpacked"
+#pragma GCC diagnostic ignored "-Wattributes"
   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+#pragma GCC diagnostic pop
   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
 #endif
 #ifndef   __ALIGNED
