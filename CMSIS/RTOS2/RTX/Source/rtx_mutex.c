@@ -42,6 +42,7 @@ void osRtxMutexOwnerRelease (os_mutex_t *mutex_list) {
     if (mutex->attr & osMutexRobust) {
       // Clear Lock counter
       mutex->lock = 0U;
+      EvrRtxMutexReleased(mutex, 0U);
       // Check if Thread is waiting for a Mutex
       if (mutex->thread_list != NULL) {
         // Wakeup waiting Thread with highest Priority
@@ -53,6 +54,7 @@ void osRtxMutexOwnerRelease (os_mutex_t *mutex_list) {
         mutex->owner_prev   = NULL;
         thread->mutex_list  = mutex;
         mutex->lock = 1U;
+        EvrRtxMutexAcquired(mutex, 1U);
       }
     }
     mutex = mutex_list;
@@ -85,10 +87,12 @@ osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
     mutex     = attr->cb_mem;
     if (mutex != NULL) {
       if (((uint32_t)mutex & 3U) || (attr->cb_size < sizeof(os_mutex_t))) {
+        EvrRtxMutexError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
+        EvrRtxMutexError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
     }
@@ -106,6 +110,7 @@ osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
       mutex = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_mutex_t), 1U);
     }
     if (mutex == NULL) {
+      EvrRtxMutexError(NULL, osErrorNoMemory);
       return NULL;
     }
     flags = osRtxFlagSystemObject;
@@ -125,6 +130,8 @@ osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
   mutex->owner_next   = NULL;
   mutex->lock         = 0U;
 
+  EvrRtxMutexCreated(mutex);
+
   return mutex;
 }
 
@@ -135,13 +142,17 @@ const char *svcRtxMutexGetName (osMutexId_t mutex_id) {
 
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
+    EvrRtxMutexGetName(mutex, NULL);
     return NULL;
   }
 
   // Check object state
   if (mutex->state == osRtxObjectInactive) {
+    EvrRtxMutexGetName(mutex, NULL);
     return NULL;
   }
+
+  EvrRtxMutexGetName(mutex, mutex->name);
 
   return mutex->name;
 }
@@ -154,16 +165,19 @@ osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
 
   runnig_thread = osRtxThreadGetRunning();
   if (runnig_thread == NULL) {
+    EvrRtxMutexError(mutex, osRtxErrorKernelNotRunning);
     return osError;
   }
 
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
+    EvrRtxMutexError(mutex, osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (mutex->state == osRtxObjectInactive) {
+    EvrRtxMutexError(mutex, osErrorResource);
     return osErrorResource;
   }
 
@@ -175,6 +189,7 @@ osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
     mutex->owner_prev   = NULL;
     runnig_thread->mutex_list = mutex;
     mutex->lock = 1U;
+    EvrRtxMutexAcquired(mutex, mutex->lock);
     return osOK;
   }
 
@@ -182,9 +197,11 @@ osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
   if ((mutex->attr & osMutexRecursive) && (mutex->owner_thread == runnig_thread)) {
     // Increment lock counter
     if (mutex->lock == osRtxMutexLockLimit) {
+      EvrRtxMutexError(mutex, osRtxErrorMutexLockLimit);
       return osErrorResource;
     }
     mutex->lock++;
+    EvrRtxMutexAcquired(mutex, mutex->lock);
     return osOK;
   }
 
@@ -201,10 +218,13 @@ osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
     // Suspend current Thread
     osRtxThreadListPut((os_object_t*)mutex, runnig_thread);
     osRtxThreadWaitEnter(osRtxThreadWaitingMutex, timeout);
+    EvrRtxMutexAcquirePending(mutex, timeout);
     return osErrorTimeout;
   }
 
   // Mutex was not acquired
+  EvrRtxMutexNotAcquired(mutex);
+
   return osErrorResource;
 }
 
@@ -219,31 +239,37 @@ osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
 
   runnig_thread = osRtxThreadGetRunning();
   if (runnig_thread == NULL) {
+    EvrRtxMutexError(mutex, osRtxErrorKernelNotRunning);
     return osError;
   }
 
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
+    EvrRtxMutexError(mutex, osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (mutex->state == osRtxObjectInactive) {
+    EvrRtxMutexError(mutex, osErrorResource);
     return osErrorResource;
   }
 
   // Check if running Thread is not the owner
   if (mutex->owner_thread != runnig_thread) {
+    EvrRtxMutexError(mutex, osRtxErrorMutexNotOwned);
     return osErrorResource;
   }
 
   // Check if Mutex is not locked
   if (mutex->lock == 0U) {
+    EvrRtxMutexError(mutex, osRtxErrorMutexNotLocked);
     return osErrorResource;
   }
 
   // Decrement Lock counter
   mutex->lock--;
+  EvrRtxMutexReleased(mutex, mutex->lock);
 
   // Check Lock counter
   if (mutex->lock != 0U) {
@@ -286,6 +312,7 @@ osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
     mutex->owner_prev   = NULL;
     thread->mutex_list  = mutex;
     mutex->lock = 1U;
+    EvrRtxMutexAcquired(mutex, 1U);
   }
 
   osRtxThreadDispatch(NULL);
@@ -300,18 +327,23 @@ osThreadId_t svcRtxMutexGetOwner (osMutexId_t mutex_id) {
 
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
+    EvrRtxMutexGetOwner(mutex, NULL);
     return NULL;
   }
 
   // Check object state
   if (mutex->state == osRtxObjectInactive) {
+    EvrRtxMutexGetOwner(mutex, NULL);
     return NULL;
   }
 
   // Check if Mutex is not locked
   if (mutex->lock == 0U) {
+    EvrRtxMutexGetOwner(mutex, NULL);
     return NULL;
   }
+
+  EvrRtxMutexGetOwner(mutex, mutex->owner_thread);
 
   return mutex->owner_thread;
 }
@@ -326,11 +358,13 @@ osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
 
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
+    EvrRtxMutexError(mutex, osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (mutex->state == osRtxObjectInactive) {
+    EvrRtxMutexError(mutex, osErrorResource);
     return osErrorResource;
   }
 
@@ -390,6 +424,8 @@ osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
     }
   }
 
+  EvrRtxMutexDestroyed(mutex);
+
   return osOK;
 }
 
@@ -398,7 +434,9 @@ osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
 
 /// Create and Initialize a Mutex object.
 osMutexId_t osMutexNew (const osMutexAttr_t *attr) {
+  EvrRtxMutexNew(attr);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxMutexError(NULL, osErrorISR);
     return NULL;
   }
   return __svcMutexNew(attr);
@@ -407,6 +445,7 @@ osMutexId_t osMutexNew (const osMutexAttr_t *attr) {
 /// Get name of a Mutex object.
 const char *osMutexGetName (osMutexId_t mutex_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxMutexGetName(mutex_id, NULL);
     return NULL;
   }
   return __svcMutexGetName(mutex_id);
@@ -414,7 +453,9 @@ const char *osMutexGetName (osMutexId_t mutex_id) {
 
 /// Acquire a Mutex or timeout if it is locked.
 osStatus_t osMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
+  EvrRtxMutexAcquire(mutex_id, timeout);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxMutexError(mutex_id, osErrorISR);
     return osErrorISR;
   }
   return __svcMutexAcquire(mutex_id, timeout);
@@ -422,7 +463,9 @@ osStatus_t osMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
 
 /// Release a Mutex that was acquired by \ref osMutexAcquire.
 osStatus_t osMutexRelease (osMutexId_t mutex_id) {
+  EvrRtxMutexRelease(mutex_id);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxMutexError(mutex_id, osErrorISR);
     return osErrorISR;
   }
   return __svcMutexRelease(mutex_id);
@@ -431,6 +474,7 @@ osStatus_t osMutexRelease (osMutexId_t mutex_id) {
 /// Get Thread which owns a Mutex object.
 osThreadId_t osMutexGetOwner (osMutexId_t mutex_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxMutexGetOwner(mutex_id, NULL);
     return NULL;
   }
   return __svcMutexGetOwner(mutex_id);
@@ -438,7 +482,9 @@ osThreadId_t osMutexGetOwner (osMutexId_t mutex_id) {
 
 /// Delete a Mutex object.
 osStatus_t osMutexDelete (osMutexId_t mutex_id) {
+  EvrRtxMutexDelete(mutex_id);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxMutexError(mutex_id, osErrorISR);
     return osErrorISR;
   }
   return __svcMutexDelete(mutex_id);

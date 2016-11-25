@@ -52,6 +52,7 @@ osStatus_t svcRtxDelayUntil (uint32_t ticks_l, uint32_t ticks_h) {
 
   ticks -= osRtxInfo.kernel.tick;
   if (ticks >= 0xFFFFFFFFU) {
+    EvrRtxThreadError(NULL, osErrorParameter);
     return osErrorParameter;
   }
   if (ticks == 0U) {
@@ -68,7 +69,9 @@ osStatus_t svcRtxDelayUntil (uint32_t ticks_l, uint32_t ticks_h) {
 
 /// Wait for Timeout (Time Delay).
 osStatus_t osDelay (uint32_t ticks) {
+  EvrRtxThreadDelay(ticks);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxThreadError(NULL, osErrorISR);
     return osErrorISR;
   }
   return __svcDelay(ticks);
@@ -76,7 +79,9 @@ osStatus_t osDelay (uint32_t ticks) {
 
 /// Wait until specified time.
 osStatus_t osDelayUntil (uint64_t ticks) {
+  EvrRtxThreadDelayUntil(ticks);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxThreadError(NULL, osErrorISR);
     return osErrorISR;
   }
   return __svcDelayUntil((uint32_t)ticks, (uint32_t)(ticks >> 32));

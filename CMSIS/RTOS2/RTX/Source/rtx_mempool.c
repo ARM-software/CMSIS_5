@@ -58,6 +58,8 @@ uint32_t osRtxMemoryPoolInit (os_mp_info_t *mp_info, uint32_t block_count, uint3
   }
   *((void **)block_mem) = NULL;
 
+  EvrRtxMemoryBlockInit(mp_info, block_count, block_size, block_mem);
+
   return 1U;
 }
 
@@ -71,6 +73,7 @@ void *osRtxMemoryPoolAlloc (os_mp_info_t *mp_info) {
   void *block;
 
   if (mp_info == NULL) {
+    EvrRtxMemoryBlockAlloc(NULL, NULL);
     return NULL;
   }
 
@@ -98,6 +101,8 @@ void *osRtxMemoryPoolAlloc (os_mp_info_t *mp_info) {
   }
 #endif
 
+  EvrRtxMemoryBlockAlloc(mp_info, block);
+
   return block;
 }
 
@@ -112,6 +117,7 @@ osStatus_t osRtxMemoryPoolFree (os_mp_info_t *mp_info, void *block) {
   osStatus_t status;
 
   if ((mp_info == NULL) || (block < mp_info->block_base) || (block >= mp_info->block_lim)) {
+    EvrRtxMemoryBlockFree(mp_info, block, osErrorParameter);
     return osErrorParameter;
   }
 
@@ -139,6 +145,8 @@ osStatus_t osRtxMemoryPoolFree (os_mp_info_t *mp_info, void *block) {
   }
 #endif
 
+  EvrRtxMemoryBlockFree(mp_info, block, status);
+
   return status;
 }
 
@@ -160,6 +168,7 @@ void osRtxMemoryPoolPostProcess (os_memory_pool_t *mp) {
       // Wakeup waiting Thread with highest Priority
       thread = osRtxThreadListGet((os_object_t*)mp);
       osRtxThreadWaitExit(thread, (uint32_t)block, false);
+      EvrRtxMemoryPoolAllocated(mp, block);
     }
   }
 }
@@ -190,10 +199,12 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
 
   // Check parameters
   if ((block_count == 0U) || (block_size  == 0U)) {
+    EvrRtxMemoryPoolError(NULL, osErrorParameter);
     return NULL;
   }
   block_size = (block_size + 3U) & ~3UL;
   if ((__CLZ(block_count) + __CLZ(block_size)) < 32) {
+    EvrRtxMemoryPoolError(NULL, osErrorParameter);
     return NULL;
   }
 
@@ -207,19 +218,23 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
     mp_size = attr->mp_size;
     if (mp != NULL) {
       if (((uint32_t)mp & 3U) || (attr->cb_size < sizeof(os_memory_pool_t))) {
+        EvrRtxMemoryPoolError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
+        EvrRtxMemoryPoolError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
     }
     if (mp_mem != NULL) {
       if (((uint32_t)mp_mem & 3U) || (mp_size < size)) {
+        EvrRtxMemoryPoolError(NULL, osRtxErrorInvalidDataMemory);
         return NULL;
       }
     } else {
       if (mp_size != 0U) {
+        EvrRtxMemoryPoolError(NULL, osRtxErrorInvalidDataMemory);
         return NULL;
       }
     }
@@ -237,6 +252,7 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
       mp = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_memory_pool_t), 1U);
     }
     if (mp == NULL) {
+      EvrRtxMemoryPoolError(NULL, osErrorNoMemory);
       return NULL;
     }
     flags = osRtxFlagSystemObject;
@@ -248,6 +264,7 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
   if (mp_mem == NULL) {
     mp_mem = osRtxMemoryAlloc(osRtxInfo.mem.mp_data, size, 0U);
     if (mp_mem == NULL) {
+      EvrRtxMemoryPoolError(NULL, osErrorNoMemory);
       if (flags & osRtxFlagSystemObject) {
         if (osRtxInfo.mpi.memory_pool != NULL) {
           osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
@@ -272,6 +289,8 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
   // Register post ISR processing function
   osRtxInfo.post_process.memory_pool = osRtxMemoryPoolPostProcess;
 
+  EvrRtxMemoryPoolCreated(mp);
+
   return mp;
 }
 
@@ -282,13 +301,17 @@ const char *svcRtxMemoryPoolGetName (osMemoryPoolId_t mp_id) {
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+    EvrRtxMemoryPoolGetName(mp, NULL);
     return NULL;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
+    EvrRtxMemoryPoolGetName(mp, NULL);
     return NULL;
   }
+
+  EvrRtxMemoryPoolGetName(mp, mp->name);
 
   return mp->name;
 }
@@ -301,11 +324,13 @@ void *svcRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+    EvrRtxMemoryPoolError(mp, osErrorParameter);
     return NULL;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
+    EvrRtxMemoryPoolError(mp, osErrorResource);
     return NULL;
   }
 
@@ -317,7 +342,12 @@ void *svcRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
       // Suspend current Thread
       osRtxThreadListPut((os_object_t*)mp, osRtxThreadGetRunning());
       osRtxThreadWaitEnter(osRtxThreadWaitingMemoryPool, timeout);
+      EvrRtxMemoryPoolAllocPending(mp, timeout);
+    } else {
+      EvrRtxMemoryPoolAllocFailed(mp);
     }
+  } else {
+    EvrRtxMemoryPoolAllocated(mp, block);
   }
 
   return block;
@@ -332,17 +362,20 @@ osStatus_t svcRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+    EvrRtxMemoryPoolError(mp, osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
+    EvrRtxMemoryPoolError(mp, osErrorResource);
     return osErrorResource;
   }
 
   // Free memory
   status = osRtxMemoryPoolFree(&mp->mp_info, block);
   if (status == osOK) {
+    EvrRtxMemoryPoolDeallocated(mp, block);
     // Check if Thread is waiting to allocate memory
     if (mp->thread_list != NULL) {
       // Allocate memory
@@ -351,8 +384,11 @@ osStatus_t svcRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
         // Wakeup waiting Thread with highest Priority
         thread = osRtxThreadListGet((os_object_t*)mp);
         osRtxThreadWaitExit(thread, (uint32_t)block, true);
+        EvrRtxMemoryPoolAllocated(mp, block);
       }
     }
+  } else {
+    EvrRtxMemoryPoolFreeFailed(mp, block);
   }
 
   return status;
@@ -365,13 +401,17 @@ uint32_t svcRtxMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+    EvrRtxMemoryPoolGetCapacity(mp, 0U);
     return 0U;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
+    EvrRtxMemoryPoolGetCapacity(mp, 0U);
     return 0U;
   }
+
+  EvrRtxMemoryPoolGetCapacity(mp, mp->mp_info.max_blocks);
 
   return mp->mp_info.max_blocks;
 }
@@ -383,13 +423,17 @@ uint32_t svcRtxMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+    EvrRtxMemoryPoolGetBlockSize(mp, 0U);
     return 0U;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
+    EvrRtxMemoryPoolGetBlockSize(mp, 0U);
     return 0U;
   }
+
+  EvrRtxMemoryPoolGetBlockSize(mp, mp->mp_info.block_size);
 
   return mp->mp_info.block_size;
 }
@@ -401,13 +445,17 @@ uint32_t svcRtxMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+    EvrRtxMemoryPoolGetCount(mp, 0U);
     return 0U;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
+    EvrRtxMemoryPoolGetCount(mp, 0U);
     return 0U;
   }
+
+  EvrRtxMemoryPoolGetCount(mp, mp->mp_info.used_blocks);
 
   return mp->mp_info.used_blocks;
 }
@@ -419,13 +467,17 @@ uint32_t svcRtxMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+    EvrRtxMemoryPoolGetSpace(mp, 0U);
     return 0U;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
+    EvrRtxMemoryPoolGetSpace(mp, 0U);
     return 0U;
   }
+
+  EvrRtxMemoryPoolGetSpace(mp, mp->mp_info.max_blocks - mp->mp_info.used_blocks);
 
   return (mp->mp_info.max_blocks - mp->mp_info.used_blocks);
 }
@@ -438,11 +490,13 @@ osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+    EvrRtxMemoryPoolError(mp, osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
+    EvrRtxMemoryPoolError(mp, osErrorResource);
     return osErrorResource;
   }
 
@@ -472,6 +526,8 @@ osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
     }
   }
 
+  EvrRtxMemoryPoolDestroyed(mp);
+
   return osOK;
 }
 
@@ -487,16 +543,23 @@ void *isrRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool) || (timeout != 0U)) {
+    EvrRtxMemoryPoolError(mp, osErrorParameter);
     return NULL;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
+    EvrRtxMemoryPoolError(mp, osErrorResource);
     return NULL;
   }
 
   // Allocate memory
   block = osRtxMemoryPoolAlloc(&mp->mp_info);
+  if (block == NULL) {
+    EvrRtxMemoryPoolAllocFailed(mp);
+  } else {
+    EvrRtxMemoryPoolAllocated(mp, block);
+  }
 
   return block;
 }
@@ -510,11 +573,13 @@ osStatus_t isrRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+    EvrRtxMemoryPoolError(mp, osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
+    EvrRtxMemoryPoolError(mp, osErrorResource);
     return osErrorResource;
   }
 
@@ -523,6 +588,9 @@ osStatus_t isrRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
   if (status == osOK) {
     // Register post ISR processing
     osRtxPostProcess((os_object_t *)mp);
+    EvrRtxMemoryPoolDeallocated(mp, block);
+  } else {
+    EvrRtxMemoryPoolFreeFailed(mp, block);
   }
 
   return status;
@@ -533,7 +601,9 @@ osStatus_t isrRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
 
 /// Create and Initialize a Memory Pool object.
 osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, const osMemoryPoolAttr_t *attr) {
+  EvrRtxMemoryPoolNew(block_count, block_size, attr);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxMemoryPoolError(NULL, osErrorISR);
     return NULL;
   }
   return __svcMemoryPoolNew(block_count, block_size, attr);
@@ -542,6 +612,7 @@ osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, con
 /// Get name of a Memory Pool object.
 const char *osMemoryPoolGetName (osMemoryPoolId_t mp_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxMemoryPoolGetName(mp_id, NULL);
     return NULL;
   }
   return __svcMemoryPoolGetName(mp_id);
@@ -549,6 +620,7 @@ const char *osMemoryPoolGetName (osMemoryPoolId_t mp_id) {
 
 /// Allocate a memory block from a Memory Pool.
 void *osMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
+  EvrRtxMemoryPoolAlloc(mp_id, timeout);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return isrRtxMemoryPoolAlloc(mp_id, timeout);
   } else {
@@ -558,6 +630,7 @@ void *osMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
 
 /// Return an allocated memory block back to a Memory Pool.
 osStatus_t osMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
+  EvrRtxMemoryPoolFree(mp_id, block);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return isrRtxMemoryPoolFree(mp_id, block);
   } else {
@@ -603,7 +676,9 @@ uint32_t osMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
 
 /// Delete a Memory Pool object.
 osStatus_t osMemoryPoolDelete (osMemoryPoolId_t mp_id) {
+  EvrRtxMemoryPoolDelete(mp_id);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxMemoryPoolError(mp_id, osErrorISR);
     return osErrorISR;
   }
   return __svcMemoryPoolDelete(mp_id);

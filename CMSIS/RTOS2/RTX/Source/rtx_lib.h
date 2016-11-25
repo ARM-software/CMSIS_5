@@ -32,6 +32,7 @@
 #include "tz_context.h"                 // TrustZone Context API
 #include "cmsis_os2.h"                  // CMSIS RTOS API
 #include "rtx_os.h"                     // RTX OS definitions
+#include "rtx_evr.h"                    // RTX Event Recorder definitions
 
 
 //  ==== Library defines ====

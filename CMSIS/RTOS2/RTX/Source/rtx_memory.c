@@ -54,6 +54,7 @@ uint32_t osRtxMemoryInit (void *mem, uint32_t size) {
 
   if ((mem == NULL) || ((uint32_t)mem & 7U) || (size & 7U) ||
       (size < (sizeof(mem_head_t) + 2*sizeof(mem_block_t)))) {
+    EvrRtxMemoryInit(mem, size, 0U);
     return 0U;
   }
 
@@ -65,6 +66,8 @@ uint32_t osRtxMemoryInit (void *mem, uint32_t size) {
   ptr->next = (mem_block_t *)((uint32_t)mem + size - sizeof(mem_block_t));
   ptr->next->next = NULL;
   ptr->info = 0U;
+
+  EvrRtxMemoryInit(mem, size, 1U);
 
   return 1U;
 }
@@ -79,6 +82,7 @@ void *osRtxMemoryAlloc (void *mem, uint32_t size, uint32_t type) {
   uint32_t     hole_size;
 
   if ((mem == NULL) || (size == 0U) || (type & ~MB_INFO_TYPE_MASK)) {
+    EvrRtxMemoryAlloc(mem, size, type, NULL);
     return NULL;
   }
 
@@ -99,6 +103,7 @@ void *osRtxMemoryAlloc (void *mem, uint32_t size, uint32_t type) {
     p = p->next;
     if (p->next == NULL) {
       // Failed (end of list)
+      EvrRtxMemoryAlloc(mem, size, type, NULL);
       return NULL;
     }
   }
@@ -118,6 +123,8 @@ void *osRtxMemoryAlloc (void *mem, uint32_t size, uint32_t type) {
     ptr = (mem_block_t *)((uint32_t)p_new + sizeof(mem_block_t));
   }
 
+  EvrRtxMemoryAlloc(mem, size, type, ptr);
+
   return ptr;
 }
 
@@ -129,6 +136,7 @@ uint32_t osRtxMemoryFree (void *mem, void *block) {
   mem_block_t *p, *p_prev, *ptr;
 
   if ((mem == NULL) || (block == NULL)) {
+    EvrRtxMemoryFree(mem, block, 0U);
     return 0U;
   }
 
@@ -142,6 +150,7 @@ uint32_t osRtxMemoryFree (void *mem, void *block) {
     p = p->next;
     if (p == NULL) {
       // Not found
+      EvrRtxMemoryFree(mem, block, 0U);
       return 0U;
     }
   }
@@ -155,6 +164,8 @@ uint32_t osRtxMemoryFree (void *mem, void *block) {
     // Discard block from chained list
     p_prev->next = p->next;
   }
+
+  EvrRtxMemoryFree(mem, block, 1U);
 
   return 1U;
 }

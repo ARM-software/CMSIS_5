@@ -118,6 +118,7 @@ __NO_RETURN void osRtxTimerThread (void *argument) {
   for (;;) {
     status = osMessageQueueGet(osRtxInfo.timer.mq, &finfo, NULL, osWaitForever);
     if (status == osOK) {
+      EvrRtxTimerCallback(*(osTimerFunc_t)finfo.fp, finfo.arg);
       (*(osTimerFunc_t)finfo.fp)(finfo.arg);
     }
   }
@@ -144,6 +145,7 @@ osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argume
   if (osRtxInfo.timer.mq == NULL) {
     osRtxInfo.timer.mq = svcRtxMessageQueueNew(osRtxConfig.timer_mq_mcnt, sizeof(os_timer_finfo_t), osRtxConfig.timer_mq_attr);
     if (osRtxInfo.timer.mq == NULL) {
+      EvrRtxTimerError(NULL, osErrorResource);
       return NULL;
     }
   }
@@ -152,12 +154,14 @@ osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argume
   if (osRtxInfo.timer.thread == NULL) {
     osRtxInfo.timer.thread = svcRtxThreadNew(osRtxTimerThread, NULL, osRtxConfig.timer_thread_attr);
     if (osRtxInfo.timer.thread == NULL) {
+      EvrRtxTimerError(NULL, osErrorResource);
       return NULL;
     }
   }
 
   // Check parameters
   if ((func == NULL) || ((type != osTimerOnce) && (type != osTimerPeriodic))) {
+    EvrRtxTimerError(NULL, osErrorParameter);
     return NULL;
   }
 
@@ -167,10 +171,12 @@ osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argume
     timer = attr->cb_mem;
     if (timer != NULL) {
       if (((uint32_t)timer & 3U) || (attr->cb_size < sizeof(os_timer_t))) {
+        EvrRtxTimerError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
+        EvrRtxTimerError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
     }
@@ -187,6 +193,7 @@ osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argume
       timer = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_timer_t), 1U);
     }
     if (timer == NULL) {
+      EvrRtxTimerError(NULL, osErrorNoMemory);
       return NULL;
     }
     flags = osRtxFlagSystemObject;
@@ -207,6 +214,8 @@ osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argume
   timer->finfo.fp  = (void *)func;
   timer->finfo.arg = argument;
 
+  EvrRtxTimerCreated(timer);
+
   return timer;
 }
 
@@ -217,13 +226,17 @@ const char *svcRtxTimerGetName (osTimerId_t timer_id) {
 
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
+    EvrRtxTimerGetName(timer, NULL);
     return NULL;
   }
 
   // Check object state
   if (timer->state == osRtxObjectInactive) {
+    EvrRtxTimerGetName(timer, NULL);
     return NULL;
   }
+
+  EvrRtxTimerGetName(timer, timer->name);
 
   return timer->name;
 }
@@ -235,6 +248,7 @@ osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
 
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer) || (ticks == 0U)) {
+    EvrRtxTimerError(timer, osErrorParameter);
     return osErrorParameter;
   }
 
@@ -249,10 +263,13 @@ osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
       break;
     case osRtxTimerInactive:
     default:
+      EvrRtxTimerError(timer, osErrorResource);
       return osErrorResource;
   }
 
   TimerInsert(timer, ticks);
+
+  EvrRtxTimerStarted(timer);
 
   return osOK;
 }
@@ -264,17 +281,21 @@ osStatus_t svcRtxTimerStop (osTimerId_t timer_id) {
 
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
+    EvrRtxTimerError(timer, osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (timer->state != osRtxTimerRunning) {
+    EvrRtxTimerError(timer, osErrorResource);
     return osErrorResource;
   }
 
   timer->state = osRtxTimerStopped;
 
   TimerRemove(timer);
+
+  EvrRtxTimerStopped(timer);
 
   return osOK;
 }
@@ -286,14 +307,17 @@ uint32_t svcRtxTimerIsRunning (osTimerId_t timer_id) {
 
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
+    EvrRtxTimerIsRunning(timer, 0U);
     return 0U;
   }
 
   // Check object state
   if (timer->state == osRtxTimerRunning) {
+    EvrRtxTimerIsRunning(timer, 1U);
     return 1U;
   }
 
+  EvrRtxTimerIsRunning(timer, 0U);
   return 0U;
 }
 
@@ -304,6 +328,7 @@ osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
 
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
+    EvrRtxTimerError(timer, osErrorParameter);
     return osErrorParameter;
   }
 
@@ -316,6 +341,7 @@ osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
       break;
     case osRtxTimerInactive:
     default:
+      EvrRtxTimerError(timer, osErrorResource);
       return osErrorResource;
   }
 
@@ -331,6 +357,8 @@ osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
     }
   }
 
+  EvrRtxTimerDestroyed(timer);
+
   return osOK;
 }
 
@@ -339,7 +367,9 @@ osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
 
 /// Create and Initialize a timer.
 osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr) {
+  EvrRtxTimerNew(func, type, argument, attr);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxTimerError(NULL, osErrorISR);
     return NULL;
   }
   return __svcTimerNew(func, type, argument, attr);
@@ -348,6 +378,7 @@ osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, 
 /// Get name of a timer.
 const char *osTimerGetName (osTimerId_t timer_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxTimerGetName(timer_id, NULL);
     return NULL;
   }
   return __svcTimerGetName(timer_id);
@@ -355,7 +386,9 @@ const char *osTimerGetName (osTimerId_t timer_id) {
 
 /// Start or restart a timer.
 osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t ticks) {
+  EvrRtxTimerStart(timer_id, ticks);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxTimerError(timer_id, osErrorISR);
     return osErrorISR;
   }
   return __svcTimerStart(timer_id, ticks);
@@ -363,7 +396,9 @@ osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t ticks) {
 
 /// Stop a timer.
 osStatus_t osTimerStop (osTimerId_t timer_id) {
+  EvrRtxTimerStop(timer_id);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxTimerError(timer_id, osErrorISR);
     return osErrorISR;
   }
   return __svcTimerStop(timer_id);
@@ -372,6 +407,7 @@ osStatus_t osTimerStop (osTimerId_t timer_id) {
 /// Check if a timer is running.
 uint32_t osTimerIsRunning (osTimerId_t timer_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxTimerIsRunning(timer_id, 0U);
     return 0U;
   }
   return __svcTimerIsRunning(timer_id);
@@ -379,7 +415,9 @@ uint32_t osTimerIsRunning (osTimerId_t timer_id) {
 
 /// Delete a timer.
 osStatus_t osTimerDelete (osTimerId_t timer_id) {
+  EvrRtxTimerDelete(timer_id);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxTimerError(timer_id, osErrorISR);
     return osErrorISR;
   }
   return __svcTimerDelete(timer_id);

@@ -54,6 +54,46 @@
  
 //   </e>
  
+//   <h>Event Recording
+ 
+//     <q>Memory Management
+//     <i> Enables Memory Management events recording.
+#define OS_EVR_MEMORY               1
+ 
+//     <q>Kernel
+//     <i> Enables Kernel events recording.
+#define OS_EVR_KERNEL               1
+ 
+//     <q>Thread
+//     <i> Enables Thread events recording.
+#define OS_EVR_THREAD               1
+ 
+//     <q>Timer
+//     <i> Enables Timer events recording.
+#define OS_EVR_TIMER                1
+ 
+//     <q>Event Flags
+//     <i> Enables Event Flags events recording.
+#define OS_EVR_EVFLAGS              1
+ 
+//     <q>Mutex
+//     <i> Enables Mutex events recording.
+#define OS_EVR_MUTEX                1
+ 
+//     <q>Semaphore
+//     <i> Enables Semaphore events recording.
+#define OS_EVR_SEMAPHORE            1
+ 
+//     <q>Memory Pool
+//     <i> Enables Memory Pool events recording.
+#define OS_EVR_MEMPOOL              1
+ 
+//     <q>Message Queue
+//     <i> Enables Message Queue events recording.
+#define OS_EVR_MSGQUEUE             1
+ 
+//   </h>
+ 
 //   <o>ISR FIFO Queue 
 //      <4=>  4 entries    <8=>   8 entries   <12=>  12 entries   <16=>  16 entries
 //     <24=> 24 entries   <32=>  32 entries   <48=>  48 entries   <64=>  64 entries

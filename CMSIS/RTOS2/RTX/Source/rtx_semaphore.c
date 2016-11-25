@@ -113,6 +113,7 @@ void osRtxSemaphorePostProcess (os_semaphore_t *semaphore) {
       // Wakeup waiting Thread with highest Priority
       thread = osRtxThreadListGet((os_object_t*)semaphore);
       osRtxThreadWaitExit(thread, (uint32_t)osOK, false);
+      EvrRtxSemaphoreAcquired(semaphore);
     }
   }
 }
@@ -137,6 +138,7 @@ osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
 
   // Check parameters
   if ((max_count == 0U) || (max_count > osRtxSemaphoreTokenLimit) || (initial_count > max_count)) {
+    EvrRtxSemaphoreError(NULL, osErrorParameter);
     return NULL;
   }
 
@@ -146,10 +148,12 @@ osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
     semaphore = attr->cb_mem;
     if (semaphore != NULL) {
       if (((uint32_t)semaphore & 3U) || (attr->cb_size < sizeof(os_semaphore_t))) {
+        EvrRtxSemaphoreError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
+        EvrRtxSemaphoreError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
     }
@@ -166,6 +170,7 @@ osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
       semaphore = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_semaphore_t), 1U);
     }
     if (semaphore == NULL) {
+      EvrRtxSemaphoreError(NULL, osErrorNoMemory);
       return NULL;
     }
     flags = osRtxFlagSystemObject;
@@ -185,6 +190,8 @@ osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
   // Register post ISR processing function
   osRtxInfo.post_process.semaphore = osRtxSemaphorePostProcess;
 
+  EvrRtxSemaphoreCreated(semaphore);
+
   return semaphore;
 }
 
@@ -195,13 +202,17 @@ const char *svcRtxSemaphoreGetName (osSemaphoreId_t semaphore_id) {
 
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
+    EvrRtxSemaphoreGetName(semaphore, NULL);
     return NULL;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
+    EvrRtxSemaphoreGetName(semaphore, NULL);
     return NULL;
   }
+
+  EvrRtxSemaphoreGetName(semaphore, semaphore->name);
 
   return semaphore->name;
 }
@@ -213,11 +224,13 @@ osStatus_t svcRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeou
 
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
+    EvrRtxSemaphoreError(semaphore, osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
+    EvrRtxSemaphoreError(semaphore, osErrorResource);
     return osErrorResource;
   }
 
@@ -228,11 +241,15 @@ osStatus_t svcRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeou
       // Suspend current Thread
       osRtxThreadListPut((os_object_t*)semaphore, osRtxThreadGetRunning());
       osRtxThreadWaitEnter(osRtxThreadWaitingSemaphore, timeout);
+      EvrRtxSemaphoreAcquirePending(semaphore, timeout);
       return osErrorTimeout;
     } else {
+      EvrRtxSemaphoreNotAcquired(semaphore);
       return osErrorResource;
     }
   }
+
+  EvrRtxSemaphoreAcquired(semaphore);
 
   return osOK;
 }
@@ -245,24 +262,30 @@ osStatus_t svcRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
+    EvrRtxSemaphoreError(semaphore, osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
+    EvrRtxSemaphoreError(semaphore, osErrorResource);
     return osErrorResource;
   }
 
   // Check if Thread is waiting for a token
   if (semaphore->thread_list != NULL) {
+    EvrRtxSemaphoreReleased(semaphore);
     // Wakeup waiting Thread with highest Priority
     thread = osRtxThreadListGet((os_object_t*)semaphore);
     osRtxThreadWaitExit(thread, (uint32_t)osOK, true);
+    EvrRtxSemaphoreAcquired(semaphore);
   } else {
     // Try to release token
     if (SemaphoreTokenIncrement(semaphore) == 0U) {
+      EvrRtxSemaphoreError(semaphore, osRtxErrorSemaphoreCountLimit);
       return osErrorResource;
     }
+    EvrRtxSemaphoreReleased(semaphore);
   }
 
   return osOK;
@@ -275,13 +298,17 @@ uint32_t svcRtxSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
 
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
+    EvrRtxSemaphoreGetCount(semaphore, 0U);
     return 0U;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
+    EvrRtxSemaphoreGetCount(semaphore, 0U);
     return 0U;
   }
+
+  EvrRtxSemaphoreGetCount(semaphore, semaphore->tokens);
 
   return semaphore->tokens;
 }
@@ -294,11 +321,13 @@ osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
 
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
+    EvrRtxSemaphoreError(semaphore, osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
+    EvrRtxSemaphoreError(semaphore, osErrorResource);
     return osErrorResource;
   }
 
@@ -323,6 +352,8 @@ osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
     }
   }
 
+  EvrRtxSemaphoreDestroyed(semaphore);
+
   return osOK;
 }
 
@@ -337,19 +368,24 @@ osStatus_t isrRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeou
 
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore) || (timeout != 0U)) {
+    EvrRtxSemaphoreError(semaphore, osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
+    EvrRtxSemaphoreError(semaphore, osErrorResource);
     return osErrorResource;
   }
 
   // Try to acquire token
   if (SemaphoreTokenDecrement(semaphore) == 0U) {
     // No token available
+    EvrRtxSemaphoreNotAcquired(semaphore);
     return osErrorResource;
   }
+
+  EvrRtxSemaphoreAcquired(semaphore);
 
   return osOK;
 }
@@ -362,11 +398,13 @@ osStatus_t isrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
+    EvrRtxSemaphoreError(semaphore, osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
+    EvrRtxSemaphoreError(semaphore, osErrorResource);
     return osErrorResource;
   }
 
@@ -375,8 +413,11 @@ osStatus_t isrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
     // Register post ISR processing
     osRtxPostProcess((os_object_t *)semaphore);
   } else {
+    EvrRtxSemaphoreError(semaphore, osRtxErrorSemaphoreCountLimit);
     return osErrorResource;
   }
+
+  EvrRtxSemaphoreReleased(semaphore);
 
   return osOK;
 }
@@ -386,7 +427,9 @@ osStatus_t isrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 
 /// Create and Initialize a Semaphore object.
 osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr) {
+  EvrRtxSemaphoreNew(max_count, initial_count, attr);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxSemaphoreError(NULL, osErrorISR);
     return NULL;
   }
   return __svcSemaphoreNew(max_count, initial_count, attr);
@@ -395,6 +438,7 @@ osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, cons
 /// Get name of a Semaphore object.
 const char *osSemaphoreGetName (osSemaphoreId_t semaphore_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxSemaphoreGetName(semaphore_id, NULL);
     return NULL;
   }
   return __svcSemaphoreGetName(semaphore_id);
@@ -402,6 +446,7 @@ const char *osSemaphoreGetName (osSemaphoreId_t semaphore_id) {
 
 /// Acquire a Semaphore token or timeout if no tokens are available.
 osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
+  EvrRtxSemaphoreAcquire(semaphore_id, timeout);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return isrRtxSemaphoreAcquire(semaphore_id, timeout);
   } else {
@@ -411,6 +456,7 @@ osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
 
 /// Release a Semaphore token that was acquired by osSemaphoreAcquire.
 osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id) {
+  EvrRtxSemaphoreRelease(semaphore_id);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return isrRtxSemaphoreRelease(semaphore_id);
   } else {
@@ -429,7 +475,9 @@ uint32_t osSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
 
 /// Delete a Semaphore object.
 osStatus_t osSemaphoreDelete (osSemaphoreId_t semaphore_id) {
+  EvrRtxSemaphoreDelete(semaphore_id);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    EvrRtxSemaphoreError(semaphore_id, osErrorISR);
     return osErrorISR;
   }
   return __svcSemaphoreDelete(semaphore_id);
