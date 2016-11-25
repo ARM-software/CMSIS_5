@@ -126,7 +126,7 @@ __NO_RETURN void osRtxTimerThread (void *argument) {
 //  ==== Service Calls ====
 
 //  Service Calls definitions
-SVC0_4M(TimerNew,       osTimerId_t,  os_timer_func_t, osTimerType_t, void *, const osTimerAttr_t *)
+SVC0_4M(TimerNew,       osTimerId_t,  osTimerFunc_t, osTimerType_t, void *, const osTimerAttr_t *)
 SVC0_1 (TimerGetName,   const char *, osTimerId_t)
 SVC0_2 (TimerStart,     osStatus_t,   osTimerId_t, uint32_t)
 SVC0_1 (TimerStop,      osStatus_t,   osTimerId_t)
@@ -135,7 +135,7 @@ SVC0_1 (TimerDelete,    osStatus_t,   osTimerId_t)
 
 /// Create and Initialize a timer.
 /// \note API identical to osTimerNew
-osTimerId_t svcRtxTimerNew (os_timer_func_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr) {
+osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr) {
   os_timer_t *timer;
   uint8_t     flags;
   const char *name;
@@ -338,7 +338,7 @@ osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
 //  ==== Public API ====
 
 /// Create and Initialize a timer.
-osTimerId_t osTimerNew (os_timer_func_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr) {
+osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }

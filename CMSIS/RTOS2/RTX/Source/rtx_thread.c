@@ -503,7 +503,7 @@ void osRtxThreadPostProcess (os_thread_t *thread) {
 //  ==== Service Calls ====
 
 //  Service Calls definitions
-SVC0_3M(ThreadNew,           osThreadId_t,    os_thread_func_t, void *, const osThreadAttr_t *)
+SVC0_3M(ThreadNew,           osThreadId_t,    osThreadFunc_t, void *, const osThreadAttr_t *)
 SVC0_1 (ThreadGetName,       const char *,    osThreadId_t)
 SVC0_0 (ThreadGetId,         osThreadId_t)
 SVC0_1 (ThreadGetState,      osThreadState_t, osThreadId_t)
@@ -527,7 +527,7 @@ SVC0_3 (ThreadFlagsWait,     int32_t,         int32_t, uint32_t, uint32_t)
 
 /// Create a thread and add it to Active Threads.
 /// \note API identical to osThreadNew
-osThreadId_t svcRtxThreadNew (os_thread_func_t func, void *argument, const osThreadAttr_t *attr) {
+osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThreadAttr_t *attr) {
   os_thread_t  *thread;
   uint32_t      attr_bits;
   void         *stack_mem;
@@ -1351,7 +1351,7 @@ int32_t isrRtxThreadFlagsSet (osThreadId_t thread_id, int32_t flags) {
 //  ==== Public API ====
 
 /// Create a thread and add it to Active Threads.
-osThreadId_t osThreadNew (os_thread_func_t func, void *argument, const osThreadAttr_t *attr) {
+osThreadId_t osThreadNew (osThreadFunc_t func, void *argument, const osThreadAttr_t *attr) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return NULL;
   }

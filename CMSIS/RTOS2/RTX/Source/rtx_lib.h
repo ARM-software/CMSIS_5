@@ -115,8 +115,9 @@ extern osStatus_t       svcRtxKernelInitialize       (void);
 extern osStatus_t       svcRtxKernelGetInfo          (osVersion_t *version, char *id_buf, uint32_t id_size);
 extern osKernelState_t  svcRtxKernelGetState         (void);
 extern osStatus_t       svcRtxKernelStart            (void);
-extern uint32_t         svcRtxKernelLock             (void);
-extern void             svcRtxKernelUnlock           (void);
+extern int32_t          svcRtxKernelLock             (void);
+extern int32_t          svcRtxKernelUnlock           (void);
+extern int32_t          svcRtxKernelRestoreLock      (int32_t lock);
 extern uint32_t         svcRtxKernelSuspend          (void);
 extern void             svcRtxKernelResume           (uint32_t sleep_ticks);
 extern uint64_t         svcRtxKernelGetTickCount     (void);
@@ -125,7 +126,7 @@ extern uint32_t         svcRtxKernelGetSysTimerCount (void);
 extern uint32_t         svcRtxKernelGetSysTimerFreq  (void);
 
 // Thread Service Calls
-extern osThreadId_t     svcRtxThreadNew          (os_thread_func_t func, void *argument, const osThreadAttr_t *attr);
+extern osThreadId_t     svcRtxThreadNew          (osThreadFunc_t func, void *argument, const osThreadAttr_t *attr);
 extern const char *     svcRtxThreadGetName      (osThreadId_t thread_id);
 extern osThreadId_t     svcRtxThreadGetId        (void);
 extern osThreadState_t  svcRtxThreadGetState     (osThreadId_t thread_id);
@@ -152,7 +153,7 @@ extern osStatus_t       svcRtxDelay      (uint32_t ticks);
 extern osStatus_t       svcRtxDelayUntil (uint32_t ticks_l, uint32_t ticks_h);
 
 // Timer Service Calls
-extern osTimerId_t      svcRtxTimerNew       (os_timer_func_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr);
+extern osTimerId_t      svcRtxTimerNew       (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr);
 extern const char *     svcRtxTimerGetName   (osTimerId_t timer_id);
 extern osStatus_t       svcRtxTimerStart     (osTimerId_t timer_id, uint32_t ticks);
 extern osStatus_t       svcRtxTimerStop      (osTimerId_t timer_id);

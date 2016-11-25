@@ -81,8 +81,9 @@ static void KernelUnblock (void) {
 SVC0_0M(KernelInitialize,       osStatus_t)
 SVC0_3 (KernelGetInfo,          osStatus_t, osVersion_t *, char *, uint32_t)
 SVC0_0M(KernelStart,            osStatus_t)
-SVC0_0 (KernelLock,             uint32_t)
-SVC0_0N(KernelUnlock,           void)
+SVC0_0 (KernelLock,             int32_t)
+SVC0_0 (KernelUnlock,           int32_t)
+SVC0_1 (KernelRestoreLock,      int32_t, int32_t)
 SVC0_0 (KernelSuspend,          uint32_t)
 SVC0_1N(KernelResume,           void, uint32_t)
 SVC0_0 (KernelGetState,         osKernelState_t)
@@ -283,23 +284,53 @@ osStatus_t svcRtxKernelStart (void) {
 
 /// Lock the RTOS Kernel scheduler.
 /// \note API identical to osKernelLock
-uint32_t svcRtxKernelLock (void) {
+int32_t svcRtxKernelLock (void) {
 
+  if (osRtxInfo.kernel.state == osRtxKernelLocked) {
+    return 1;
+  }
   if (osRtxInfo.kernel.state == osRtxKernelRunning) {
     osRtxInfo.kernel.state = osRtxKernelLocked;
-    return 1U;
+    return 0;
   }
 
-  return 0U;
+  return osError;
 }
  
 /// Unlock the RTOS Kernel scheduler.
 /// \note API identical to osKernelUnlock
-void svcRtxKernelUnlock (void) {
+int32_t svcRtxKernelUnlock (void) {
 
   if (osRtxInfo.kernel.state == osRtxKernelLocked) {
     osRtxInfo.kernel.state = osRtxKernelRunning;
+    return 1;
   }
+  if (osRtxInfo.kernel.state == osRtxKernelRunning) {
+    return 0;
+  }
+
+  return osError;
+}
+
+/// Restore the RTOS Kernel scheduler lock state.
+/// \note API identical to osKernelRestoreLock
+int32_t svcRtxKernelRestoreLock (int32_t lock) {
+
+  if ((osRtxInfo.kernel.state == osRtxKernelRunning) || 
+      (osRtxInfo.kernel.state == osRtxKernelLocked)) {
+    switch (lock) {
+      case 1:
+        osRtxInfo.kernel.state = osRtxKernelLocked;
+        return 1;
+      case 0:
+        osRtxInfo.kernel.state = osRtxKernelRunning;
+        return 0;
+      default:
+        break;
+    }
+  }
+
+  return osError;
 }
 
 /// Suspend the RTOS Kernel scheduler.
@@ -467,19 +498,27 @@ osStatus_t osKernelStart (void) {
 }
 
 /// Lock the RTOS Kernel scheduler.
-uint32_t osKernelLock (void) {
+int32_t osKernelLock (void) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    return 0U;
+    return osErrorISR;
   }
   return __svcKernelLock();
 }
  
 /// Unlock the RTOS Kernel scheduler.
-void osKernelUnlock (void) {
+int32_t osKernelUnlock (void) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    return;
+    return osErrorISR;
   }
-  __svcKernelUnlock();
+  return __svcKernelUnlock();
+}
+
+/// Restore the RTOS Kernel scheduler lock state.
+int32_t osKernelRestoreLock (int32_t lock) {
+  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+    return osErrorISR;
+  }
+  return __svcKernelRestoreLock(lock);
 }
 
 /// Suspend the RTOS Kernel scheduler.
