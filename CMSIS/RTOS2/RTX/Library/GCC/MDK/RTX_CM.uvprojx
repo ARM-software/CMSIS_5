@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -240,9 +240,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-ffunction-sections</MiscControls>
-              <Define></Define>
+              <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -329,6 +329,11 @@
               <FileName>rtx_system.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Source\rtx_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtx_evr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Source\rtx_evr.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -497,7 +502,7 @@
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -721,9 +726,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-ffunction-sections</MiscControls>
-              <Define></Define>
+              <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -810,6 +815,11 @@
               <FileName>rtx_system.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Source\rtx_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtx_evr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Source\rtx_evr.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1025,7 +1035,7 @@
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1249,9 +1259,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffunction-sections</MiscControls>
-              <Define></Define>
+              <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -1338,6 +1348,11 @@
               <FileName>rtx_system.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Source\rtx_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtx_evr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Source\rtx_evr.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1506,7 +1521,7 @@
         <TargetCommonOption>
           <Device>ARMv8MBL</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("ARMV8MBL") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1730,9 +1745,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-march=armv8-m.base -ffunction-sections</MiscControls>
-              <Define></Define>
+              <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -1819,6 +1834,11 @@
               <FileName>rtx_system.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Source\rtx_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtx_evr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Source\rtx_evr.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2034,7 +2054,7 @@
         <TargetCommonOption>
           <Device>ARMv8MBL</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("ARMV8MBL") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -2258,9 +2278,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-march=armv8-m.base -ffunction-sections</MiscControls>
-              <Define>__DOMAIN_NS=1U</Define>
+              <Define>EVR_RTX_DISABLE __DOMAIN_NS=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -2347,6 +2367,11 @@
               <FileName>rtx_system.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Source\rtx_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtx_evr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Source\rtx_evr.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2562,7 +2587,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("ARMV8MML") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -2786,9 +2811,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-march=armv8-m.main -ffunction-sections</MiscControls>
-              <Define></Define>
+              <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -2875,6 +2900,11 @@
               <FileName>rtx_system.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Source\rtx_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtx_evr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Source\rtx_evr.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3090,7 +3120,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("ARMV8MML") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3314,9 +3344,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-march=armv8-m.main -ffunction-sections</MiscControls>
-              <Define>__DOMAIN_NS=1U</Define>
+              <Define>EVR_RTX_DISABLE __DOMAIN_NS=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -3403,6 +3433,11 @@
               <FileName>rtx_system.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Source\rtx_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtx_evr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Source\rtx_evr.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3618,7 +3653,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("ARMV8MML") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3842,9 +3877,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-march=armv8-m.main -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffunction-sections</MiscControls>
-              <Define></Define>
+              <Define>EVR_RTX_DISABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -3931,6 +3966,11 @@
               <FileName>rtx_system.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Source\rtx_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtx_evr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Source\rtx_evr.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4146,7 +4186,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("ARMV8MML") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -4370,9 +4410,9 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-march=armv8-m.main -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffunction-sections</MiscControls>
-              <Define>__DOMAIN_NS=1U</Define>
+              <Define>EVR_RTX_DISABLE __DOMAIN_NS=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Include</IncludePath>
+              <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -4459,6 +4499,11 @@
               <FileName>rtx_system.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Source\rtx_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtx_evr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Source\rtx_evr.c</FilePath>
             </File>
           </Files>
         </Group>
