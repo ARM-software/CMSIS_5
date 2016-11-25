@@ -35,7 +35,7 @@
         .equ     TCB_SM_OFS,  48        // TCB.stack_mem offset
         .equ     TCB_SP_OFS,  56        // TCB.SP offset
         .equ     TCB_SF_OFS,  34        // TCB.stack_frame offset
-        .equ     TCB_TZM_OFS, 60        // TCB.tz_memory offset
+        .equ     TCB_TZM_OFS, 64        // TCB.tz_memory offset
 
         .section ".rodata"
         .global  irqRtxLib              // Non weak library reference

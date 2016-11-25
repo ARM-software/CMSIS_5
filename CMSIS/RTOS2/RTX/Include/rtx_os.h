@@ -125,6 +125,7 @@ typedef struct osRtxThread_s {
   void                     *stack_mem;  ///< Stack Memory
   uint32_t                 stack_size;  ///< Stack Size
   uint32_t                         sp;  ///< Current Stack Pointer
+  uint32_t                thread_addr;  ///< Thread entry address
   uint32_t                  tz_memory;  ///< TrustZone Memory Identifier
 } osRtxThread_t;
 

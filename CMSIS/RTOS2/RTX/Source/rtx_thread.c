@@ -686,6 +686,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
   thread->stack_mem     = stack_mem;
   thread->stack_size    = stack_size;
   thread->sp            = (uint32_t)stack_mem + stack_size - 64U;
+  thread->thread_addr   = (uint32_t)func;
 #if (__DOMAIN_NS == 1U)
   thread->tz_memory     = tz_memory;
 #endif

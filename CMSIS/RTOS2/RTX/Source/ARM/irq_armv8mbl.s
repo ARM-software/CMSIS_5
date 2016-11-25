@@ -32,7 +32,7 @@ I_T_RUN_OFS     EQU      28                     ; osRtxInfo.thread.run offset
 TCB_SM_OFS      EQU      48                     ; TCB.stack_mem offset
 TCB_SP_OFS      EQU      56                     ; TCB.SP offset
 TCB_SF_OFS      EQU      34                     ; TCB.stack_frame offset
-TCB_TZM_OFS     EQU      60                     ; TCB.tz_memory offset
+TCB_TZM_OFS     EQU      64                     ; TCB.tz_memory offset
 
 
                 PRESERVE8
