@@ -34,28 +34,31 @@ SVC0_2(DelayUntil, osStatus_t, uint32_t, uint32_t)
 
 /// Wait for Timeout (Time Delay).
 /// \note API identical to osDelay
-osStatus_t os_svcDelay (uint32_t ticks) {
+osStatus_t svcRtxDelay (uint32_t ticks) {
 
   if (ticks == 0U) {
     return osOK;
   }
 
-  os_ThreadWaitEnter(os_ThreadWaitingDelay, ticks);
+  osRtxThreadWaitEnter(osRtxThreadWaitingDelay, ticks);
 
   return osOK;
 }
 
 /// Wait until specified time.
 /// \note API identical to osDelayUntil
-osStatus_t os_svcDelayUntil (uint32_t ticks_l, uint32_t ticks_h) {
+osStatus_t svcRtxDelayUntil (uint32_t ticks_l, uint32_t ticks_h) {
   uint64_t ticks = ((uint64_t)ticks_l) | ((uint64_t)ticks_h << 32);
 
-  ticks -= os_Info.kernel.tick;
+  ticks -= osRtxInfo.kernel.tick;
   if (ticks >= 0xFFFFFFFFU) {
-    return osError;
+    return osErrorParameter;
+  }
+  if (ticks == 0U) {
+    return osOK;
   }
 
-  os_ThreadWaitEnter(os_ThreadWaitingDelay, (uint32_t)ticks);
+  osRtxThreadWaitEnter(osRtxThreadWaitingDelay, (uint32_t)ticks);
 
   return osOK;
 }

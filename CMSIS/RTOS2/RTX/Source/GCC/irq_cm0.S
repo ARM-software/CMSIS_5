@@ -27,12 +27,12 @@
         .file    "irq_cm0.s"
         .syntax  unified
 
-        .equ     I_T_RUN_OFS, 28        // osInfo.thread.run offset
+        .equ     I_T_RUN_OFS, 28        // osRtxInfo.thread.run offset
         .equ     TCB_SP_OFS,  56        // TCB.SP offset
 
         .section ".rodata"
-        .global  os_irq_cm              // Non weak library reference
-os_irq_cm:
+        .global  irqRtxLib              // Non weak library reference
+irqRtxLib:
         .byte    0
 
 
@@ -63,8 +63,8 @@ SVC_Handler:
         MOV      LR,R3                  // Set EXC_RETURN
 
 SVC_Context:
-        LDR      R3,=os_Info+I_T_RUN_OFS// Load address of os_Info.run
-        LDMIA    R3!,{R1,R2}            // Load os_Info.thread.run: curr & next
+        LDR      R3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.run
+        LDMIA    R3!,{R1,R2}            // Load osRtxInfo.thread.run: curr & next
         CMP      R1,R2                  // Check if thread switch is required
         BEQ      SVC_Exit               // Branch when threads are the same
 
@@ -84,7 +84,7 @@ SVC_ContextSave:
 
 SVC_ContextSwitch:
         SUBS     R3,R3,#8
-        STR      R2,[R3]                // os_Info.thread.run: curr = next
+        STR      R2,[R3]                // osRtxInfo.thread.run: curr = next
 
 SVC_ContextRestore:
         LDR      R0,[R2,#TCB_SP_OFS]    // Load SP
@@ -107,7 +107,7 @@ SVC_Exit:
 
 SVC_User:
         PUSH     {R4,LR}                // Save registers
-        LDR      R2,=os_UserSVC_Table   // Load address of SVC table
+        LDR      R2,=osRtxUserSVC       // Load address of SVC table
         LDR      R3,[R2]                // Load SVC maximum number
         CMP      R1,R3                  // Check SVC number range
         BHI      SVC_Done               // Branch if out of range
@@ -135,7 +135,7 @@ SVC_Done:
 PendSV_Handler:
 
         PUSH     {R0,LR}                // Save EXC_RETURN
-        BL       os_PendSV_Handler
+        BL       osRtxPendSV_Handler    // Call osRtxPendSV_Handler
         POP      {R0,R1}                // Restore EXC_RETURN
         MOV      LR,R1                  // Set EXC_RETURN
         B        SVC_Context
@@ -152,7 +152,7 @@ PendSV_Handler:
 SysTick_Handler:
 
         PUSH     {R0,LR}                // Save EXC_RETURN
-        BL       os_Tick_Handler
+        BL       osRtxTick_Handler      // Call osRtxTick_Handler
         POP      {R0,R1}                // Restore EXC_RETURN
         MOV      LR,R1                  // Set EXC_RETURN
         B        SVC_Context

@@ -18,15 +18,15 @@
  * -----------------------------------------------------------------------------
  *
  * Project:     CMSIS-RTOS RTX
- * Title:       User SVC Table
+ * Title:       SVC User Table
  *
  * -----------------------------------------------------------------------------
  */
 
 #define USER_SVC_COUNT  0       // Number of user SVC functions
 
-extern void * const os_UserSVC_Table[1+USER_SVC_COUNT];
-       void * const os_UserSVC_Table[1+USER_SVC_COUNT] = {
+extern void * const osRtxUserSVC[1+USER_SVC_COUNT];
+       void * const osRtxUserSVC[1+USER_SVC_COUNT] = {
   (void *)USER_SVC_COUNT,
 //(void *)user_function1,
 // ...

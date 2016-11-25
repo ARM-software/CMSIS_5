@@ -255,30 +255,30 @@
 #include "rtx_os.h"
  
 // OS Idle Thread
-__NO_RETURN void os_IdleThread (void *argument) {
+__NO_RETURN void osRtxIdleThread (void *argument) {
   (void)argument;
 
   for (;;) {}
 }
  
 // OS Error Callback function
-uint32_t os_Error (uint32_t code, void *object_id) {
+uint32_t osRtxErrorNotify (uint32_t code, void *object_id) {
   (void)object_id;
 
   switch (code) {
-    case os_ErrorStackUnderflow:
+    case osRtxErrorStackUnderflow:
       // Stack underflow detected for thread (thread_id=object_id)
       break;
-    case os_ErrorISRQueueOverflow:
+    case osRtxErrorISRQueueOverflow:
       // ISR Queue overflow detected when inserting object (object_id)
       break;
-    case os_ErrorTimerQueueOverflow:
+    case osRtxErrorTimerQueueOverflow:
       // User Timer Callback Queue overflow detected for timer (timer_id=object_id)
       break;
-    case os_ErrorClibSpace:
+    case osRtxErrorClibSpace:
       // Standard C/C++ library libspace not available: increase OS_THREAD_LIBSPACE_NUM
       break;
-    case os_ErrorClibMutex:
+    case osRtxErrorClibMutex:
       // Standard C/C++ library mutex initialization failed
       break;
     default:

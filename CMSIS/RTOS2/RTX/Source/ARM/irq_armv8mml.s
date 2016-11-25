@@ -34,7 +34,7 @@ __FPU_USED      EQU      1
 __FPU_USED      EQU      0
                 ENDIF
 
-I_T_RUN_OFS     EQU      28                     ; osInfo.thread.run offset
+I_T_RUN_OFS     EQU      28                     ; osRtxInfo.thread.run offset
 TCB_SM_OFS      EQU      48                     ; TCB.stack_mem offset
 TCB_SP_OFS      EQU      56                     ; TCB.SP offset
 TCB_SF_OFS      EQU      34                     ; TCB.stack_frame offset
@@ -46,8 +46,8 @@ TCB_TZM_OFS     EQU      60                     ; TCB.tz_memory offset
 
 
                 AREA     |.constdata|, DATA, READONLY
-                EXPORT   os_irq_cm
-os_irq_cm       DCB      0                      ; Non weak library reference
+                EXPORT   irqRtxLib
+irqRtxLib       DCB      0                      ; Non weak library reference
 
 
                 AREA     |.text|, CODE, READONLY
@@ -55,8 +55,8 @@ os_irq_cm       DCB      0                      ; Non weak library reference
 
 SVC_Handler     PROC
                 EXPORT   SVC_Handler
-                IMPORT   os_UserSVC_Table
-                IMPORT   os_Info
+                IMPORT   osRtxUserSVC
+                IMPORT   osRtxInfo
                 IF       __DOMAIN_NS = 1
                 IMPORT   TZ_LoadContext_S
                 IMPORT   TZ_StoreContext_S
@@ -75,8 +75,8 @@ SVC_Handler     PROC
                 STM      R12,{R0-R1}            ; Store function return values
 
 SVC_Context
-                LDR      R3,=os_Info+I_T_RUN_OFS; Load address of os_Info.run
-                LDM      R3,{R1,R2}             ; Load os_Info.thread.run: curr & next
+                LDR      R3,=osRtxInfo+I_T_RUN_OFS; Load address of osRtxInfo.run
+                LDM      R3,{R1,R2}             ; Load osRtxInfo.thread.run: curr & next
                 CMP      R1,R2                  ; Check if thread switch is required
                 BXEQ     LR                     ; Exit when threads are the same
 
@@ -115,7 +115,7 @@ SVC_ContextSave2
                 STRB     LR,[R1,#TCB_SF_OFS]    ; Store stack frame information
 
 SVC_ContextSwitch
-                STR      R2,[R3]                ; os_Info.thread.run: curr = next
+                STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
 
 SVC_ContextRestore
                 IF       __DOMAIN_NS = 1
@@ -152,7 +152,7 @@ SVC_Exit
 
 SVC_User
                 PUSH     {R4,LR}                ; Save registers
-                LDR      R2,=os_UserSVC_Table   ; Load address of SVC table
+                LDR      R2,=osRtxUserSVC       ; Load address of SVC table
                 LDR      R3,[R2]                ; Load SVC maximum number
                 CMP      R1,R3                  ; Check SVC number range
                 BHI      SVC_Done               ; Branch if out of range
@@ -173,10 +173,10 @@ SVC_Done
 
 PendSV_Handler  PROC
                 EXPORT   PendSV_Handler
-                IMPORT   os_PendSV_Handler
+                IMPORT   osRtxPendSV_Handler
 
                 PUSH     {R4,LR}                ; Save EXC_RETURN
-                BL       os_PendSV_Handler      ; Call os_PendSV_Handler
+                BL       osRtxPendSV_Handler    ; Call osRtxPendSV_Handler
                 POP      {R4,LR}                ; Restore EXC_RETURN
                 B        Sys_Context
 
@@ -186,10 +186,10 @@ PendSV_Handler  PROC
 
 SysTick_Handler PROC
                 EXPORT   SysTick_Handler
-                IMPORT   os_Tick_Handler
+                IMPORT   osRtxTick_Handler
 
                 PUSH     {R4,LR}                ; Save EXC_RETURN
-                BL       os_Tick_Handler        ; Call os_Tick_Handler
+                BL       osRtxTick_Handler      ; Call osRtxTick_Handler
                 POP      {R4,LR}                ; Restore EXC_RETURN
                 B        Sys_Context
 
@@ -199,14 +199,14 @@ SysTick_Handler PROC
 
 Sys_Context     PROC
                 EXPORT   Sys_Context
-                IMPORT   os_Info
+                IMPORT   osRtxInfo
                 IF       __DOMAIN_NS = 1
                 IMPORT   TZ_LoadContext_S
                 IMPORT   TZ_StoreContext_S
                 ENDIF
 
-                LDR      R3,=os_Info+I_T_RUN_OFS; Load address of os_Info.run
-                LDM      R3,{R1,R2}             ; Load os_Info.thread.run: curr & next
+                LDR      R3,=osRtxInfo+I_T_RUN_OFS; Load address of osRtxInfo.run
+                LDM      R3,{R1,R2}             ; Load osRtxInfo.thread.run: curr & next
                 CMP      R1,R2                  ; Check if thread switch is required
                 BXEQ     LR                     ; Exit when threads are the same
 
@@ -235,7 +235,7 @@ Sys_ContextSave2
                 STRB     LR,[R1,#TCB_SF_OFS]    ; Store stack frame information
 
 Sys_ContextSwitch
-                STR      R2,[R3]                ; os_Info.run: curr = next
+                STR      R2,[R3]                ; osRtxInfo.run: curr = next
 
 Sys_ContextRestore
                 IF       __DOMAIN_NS = 1

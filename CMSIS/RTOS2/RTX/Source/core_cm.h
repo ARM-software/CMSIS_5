@@ -129,106 +129,106 @@
 #endif
 
 #define SVC0_0N(f,t)                                                           \
-__SVC_INDIRECT(0) t   _svc##f (t(*)());                                        \
-                  t os_svc##f (void);                                          \
+__SVC_INDIRECT(0) t    svc##f (t(*)());                                        \
+                  t svcRtx##f (void);                                          \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (void) {                                         \
-  _svc##f(os_svc##f);                                                          \
+  svc##f(svcRtx##f);                                                           \
 }
 
 #define SVC0_0(f,t)                                                            \
-__SVC_INDIRECT(0) t   _svc##f (t(*)());                                        \
-                  t os_svc##f (void);                                          \
+__SVC_INDIRECT(0) t    svc##f (t(*)());                                        \
+                  t svcRtx##f (void);                                          \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (void) {                                         \
-  return _svc##f(os_svc##f);                                                   \
+  return svc##f(svcRtx##f);                                                    \
 }
 
 #define SVC0_0M(f,t)                                                           \
-__SVC_INDIRECT(0) t   _svc##f (t(*)());                                        \
-                  t os_svc##f (void);                                          \
+__SVC_INDIRECT(0) t    svc##f (t(*)());                                        \
+                  t svcRtx##f (void);                                          \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (void) {                                         \
   SVC_SETUP_PSP                                                                \
-  return _svc##f(os_svc##f);                                                   \
+  return svc##f(svcRtx##f);                                                    \
 }
 
 #define SVC0_0D SVC0_0
 
 #define SVC0_1N(f,t,t1)                                                        \
-__SVC_INDIRECT(0) t   _svc##f (t(*)(t1),t1);                                   \
-                  t os_svc##f (t1 a1);                                         \
+__SVC_INDIRECT(0) t    svc##f (t(*)(t1),t1);                                   \
+                  t svcRtx##f (t1 a1);                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1) {                                        \
-  _svc##f(os_svc##f,a1);                                                       \
+  svc##f(svcRtx##f,a1);                                                        \
 }
 
 #define SVC0_1(f,t,t1)                                                         \
-__SVC_INDIRECT(0) t   _svc##f (t(*)(t1),t1);                                   \
-                  t os_svc##f (t1 a1);                                         \
+__SVC_INDIRECT(0) t    svc##f (t(*)(t1),t1);                                   \
+                  t svcRtx##f (t1 a1);                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1) {                                        \
-  return _svc##f(os_svc##f,a1);                                                \
+  return svc##f(svcRtx##f,a1);                                                 \
 }
 
 #define SVC0_1M(f,t,t1)                                                        \
-__SVC_INDIRECT(0) t   _svc##f (t(*)(t1),t1);                                   \
-                  t os_svc##f (t1 a1);                                         \
+__SVC_INDIRECT(0) t    svc##f (t(*)(t1),t1);                                   \
+                  t svcRtx##f (t1 a1);                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1) {                                        \
   SVC_SETUP_PSP                                                                \
-  return _svc##f(os_svc##f,a1);                                                \
+  return svc##f(svcRtx##f,a1);                                                 \
 }
 
 #define SVC0_2(f,t,t1,t2)                                                      \
-__SVC_INDIRECT(0) t   _svc##f (t(*)(t1,t2),t1,t2);                             \
-                  t os_svc##f (t1 a1, t2 a2);                                  \
+__SVC_INDIRECT(0) t    svc##f (t(*)(t1,t2),t1,t2);                             \
+                  t svcRtx##f (t1 a1, t2 a2);                                  \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2) {                                 \
-  return _svc##f(os_svc##f,a1,a2);                                             \
+  return svc##f(svcRtx##f,a1,a2);                                              \
 }
 
 #define SVC0_2M(f,t,t1,t2)                                                     \
-__SVC_INDIRECT(0) t   _svc##f (t(*)(t1,t2),t1,t2);                             \
-                  t os_svc##f (t1 a1, t2 a2);                                  \
+__SVC_INDIRECT(0) t    svc##f (t(*)(t1,t2),t1,t2);                             \
+                  t svcRtx##f (t1 a1, t2 a2);                                  \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2) {                                 \
   SVC_SETUP_PSP                                                                \
-  return _svc##f(os_svc##f,a1,a2);                                             \
+  return svc##f(svcRtx##f,a1,a2);                                              \
 }
 
 #define SVC0_3(f,t,t1,t2,t3)                                                   \
-__SVC_INDIRECT(0) t   _svc##f (t(*)(t1,t2,t3),t1,t2,t3);                       \
-                  t os_svc##f (t1 a1, t2 a2, t3 a3);                           \
+__SVC_INDIRECT(0) t    svc##f (t(*)(t1,t2,t3),t1,t2,t3);                       \
+                  t svcRtx##f (t1 a1, t2 a2, t3 a3);                           \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3) {                          \
-  return _svc##f(os_svc##f,a1,a2,a3);                                          \
+  return svc##f(svcRtx##f,a1,a2,a3);                                           \
 }
 
 #define SVC0_3M(f,t,t1,t2,t3)                                                  \
-__SVC_INDIRECT(0) t   _svc##f (t(*)(t1,t2,t3),t1,t2,t3);                       \
-                  t os_svc##f (t1 a1, t2 a2, t3 a3);                           \
+__SVC_INDIRECT(0) t    svc##f (t(*)(t1,t2,t3),t1,t2,t3);                       \
+                  t svcRtx##f (t1 a1, t2 a2, t3 a3);                           \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3) {                          \
   SVC_SETUP_PSP                                                                \
-  return _svc##f(os_svc##f,a1,a2,a3);                                          \
+  return svc##f(svcRtx##f,a1,a2,a3);                                           \
 }
 
 #define SVC0_4(f,t,t1,t2,t3,t4)                                                \
-__SVC_INDIRECT(0) t   _svc##f (t(*)(t1,t2,t3,t4),t1,t2,t3,t4);                 \
-                  t os_svc##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
+__SVC_INDIRECT(0) t    svc##f (t(*)(t1,t2,t3,t4),t1,t2,t3,t4);                 \
+                  t svcRtx##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
-  return _svc##f(os_svc##f,a1,a2,a3,a4);                                       \
+  return svc##f(svcRtx##f,a1,a2,a3,a4);                                        \
 }
 
 #define SVC0_4M(f,t,t1,t2,t3,t4)                                               \
-__SVC_INDIRECT(0) t   _svc##f (t(*)(t1,t2,t3,t4),t1,t2,t3,t4);                 \
-                  t os_svc##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
+__SVC_INDIRECT(0) t    svc##f (t(*)(t1,t2,t3,t4),t1,t2,t3,t4);                 \
+                  t svcRtx##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
   SVC_SETUP_PSP                                                                \
-  return _svc##f(os_svc##f,a1,a2,a3,a4);                                       \
+  return svc##f(svcRtx##f,a1,a2,a3,a4);                                        \
 }
 
 #else   // !defined(__CC_ARM)
@@ -327,7 +327,7 @@ register uint32_t __rf   __ASM(SVC_RegF) = (uint32_t)f
 #define SVC0_0N(f,t)                                                           \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (void) {                                            \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0(SVC_In0, SVC_Out0, SVC_CL2);                                       \
 }
 
@@ -335,7 +335,7 @@ __STATIC_INLINE t __svc##f (void) {                                            \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (void) {                                            \
   SVC_ArgN(0);                                                                 \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0(SVC_In0, SVC_Out1, SVC_CL1);                                       \
   return (t) __r0;                                                             \
 }
@@ -344,7 +344,7 @@ __STATIC_INLINE t __svc##f (void) {                                            \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (void) {                                            \
   SVC_ArgN(0);                                                                 \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0M(SVC_In0, SVC_Out1, SVC_CL1);                                      \
   return (t) __r0;                                                             \
 }
@@ -354,7 +354,7 @@ __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (void) {                                            \
   SVC_ArgN(0);                                                                 \
   SVC_ArgN(1);                                                                 \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0(SVC_In0, SVC_Out2, SVC_CL0);                                       \
   return (((t) __r0) | (((t) __r1) << 32));                                    \
 }
@@ -363,7 +363,7 @@ __STATIC_INLINE t __svc##f (void) {                                            \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1) {                                           \
   SVC_ArgR(0,a1);                                                              \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0(SVC_In1, SVC_Out0, SVC_CL1);                                       \
 }
 
@@ -371,7 +371,7 @@ __STATIC_INLINE t __svc##f (t1 a1) {                                           \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1) {                                           \
   SVC_ArgR(0,a1);                                                              \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0(SVC_In1, SVC_Out1, SVC_CL1);                                       \
   return (t) __r0;                                                             \
 }
@@ -380,7 +380,7 @@ __STATIC_INLINE t __svc##f (t1 a1) {                                           \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1) {                                           \
   SVC_ArgR(0,a1);                                                              \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0M(SVC_In1, SVC_Out1, SVC_CL1);                                      \
   return (t) __r0;                                                             \
 }
@@ -390,7 +390,7 @@ __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1, t2 a2) {                                    \
   SVC_ArgR(0,a1);                                                              \
   SVC_ArgR(1,a2);                                                              \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0(SVC_In2, SVC_Out1, SVC_CL0);                                       \
   return (t) __r0;                                                             \
 }
@@ -400,7 +400,7 @@ __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1, t2 a2) {                                    \
   SVC_ArgR(0,a1);                                                              \
   SVC_ArgR(1,a2);                                                              \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0M(SVC_In2, SVC_Out1, SVC_CL0);                                      \
   return (t) __r0;                                                             \
 }
@@ -411,7 +411,7 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3) {                             \
   SVC_ArgR(0,a1);                                                              \
   SVC_ArgR(1,a2);                                                              \
   SVC_ArgR(2,a3);                                                              \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0(SVC_In3, SVC_Out1, SVC_CL0);                                       \
   return (t) __r0;                                                             \
 }
@@ -422,7 +422,7 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3) {                             \
   SVC_ArgR(0,a1);                                                              \
   SVC_ArgR(1,a2);                                                              \
   SVC_ArgR(2,a3);                                                              \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0M(SVC_In3, SVC_Out1, SVC_CL0);                                      \
   return (t) __r0;                                                             \
 }
@@ -434,7 +434,7 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
   SVC_ArgR(1,a2);                                                              \
   SVC_ArgR(2,a3);                                                              \
   SVC_ArgR(3,a4);                                                              \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0(SVC_In4, SVC_Out1, SVC_CL0);                                       \
   return (t) __r0;                                                             \
 }
@@ -446,7 +446,7 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
   SVC_ArgR(1,a2);                                                              \
   SVC_ArgR(2,a3);                                                              \
   SVC_ArgR(3,a4);                                                              \
-  SVC_ArgF(os_svc##f);                                                         \
+  SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0M(SVC_In4, SVC_Out1, SVC_CL0);                                      \
   return (t) __r0;                                                             \
 }
@@ -460,7 +460,7 @@ extern uint32_t SystemCoreClock;        // System Clock Frequency (Core Clock)
 
 
 /// Initialize SVC and PendSV System Service Calls
-__STATIC_INLINE void os_SVC_Initialize (void) {
+__STATIC_INLINE void SVC_Initialize (void) {
 #if   ((__ARM_ARCH_8M_MAIN__ == 1U) || (defined(__CORTEX_M) && (__CORTEX_M == 7U)))
   uint32_t p, n;
 
@@ -493,7 +493,7 @@ __STATIC_INLINE void os_SVC_Initialize (void) {
 
 /// Setup SysTick Timer
 /// \param[in] period  Timer Load value
-__STATIC_INLINE void os_SysTick_Setup (uint32_t period) {
+__STATIC_INLINE void SysTick_Setup (uint32_t period) {
   SysTick->LOAD = period - 1U;
   SysTick->VAL  = 0U;
 #if   ((__ARM_ARCH_8M_MAIN__ == 1U) || (defined(__CORTEX_M) && (__CORTEX_M == 7U)))
@@ -510,37 +510,37 @@ __STATIC_INLINE void os_SysTick_Setup (uint32_t period) {
 
 /// Get SysTick Period
 /// \return    SysTick Period
-__STATIC_INLINE uint32_t os_SysTick_GetPeriod (void) {
+__STATIC_INLINE uint32_t SysTick_GetPeriod (void) {
   return (SysTick->LOAD + 1U);
 }
 
 /// Get SysTick Value
 /// \return    SysTick Value
-__STATIC_INLINE uint32_t os_SysTick_GetVal (void) {
+__STATIC_INLINE uint32_t SysTick_GetVal (void) {
   return (SysTick->LOAD - SysTick->VAL);
 }
 
 /// Get SysTick Overflow (Auto Clear)
 /// \return    SysTick Overflow flag
-__STATIC_INLINE uint32_t os_SysTick_GetOvf (void) {
+__STATIC_INLINE uint32_t SysTick_GetOvf (void) {
   return ((SysTick->CTRL >> 16) & 1U);
 }
 
 /// Enable SysTick Timer
-__STATIC_INLINE void os_SysTick_Enable (void) {
+__STATIC_INLINE void SysTick_Enable (void) {
   SysTick->CTRL = SysTick_CTRL_ENABLE_Msk     |
                   SysTick_CTRL_TICKINT_Msk    |
                   SysTick_CTRL_CLKSOURCE_Msk;
 }
 
 /// Disable SysTick Timer
-__STATIC_INLINE void os_SysTick_Disable (void) {
+__STATIC_INLINE void SysTick_Disable (void) {
   SysTick->CTRL = 0U;
 }
 
 /// Setup External Tick Timer Interrupt
 /// \param[in] irqn  Interrupt number
-__STATIC_INLINE void os_ExtTick_SetupIRQ (int32_t irqn) {
+__STATIC_INLINE void ExtTick_SetupIRQ (int32_t irqn) {
 #if    (__ARM_ARCH_8M_MAIN__ == 1U)
   NVIC->IPR[irqn] = 0xFFU;
 #elif  (__ARM_ARCH_8M_BASE__ == 1U)
@@ -557,46 +557,46 @@ __STATIC_INLINE void os_ExtTick_SetupIRQ (int32_t irqn) {
 
 /// Enable External Tick Timer Interrupt
 /// \param[in] irqn  Interrupt number
-__STATIC_INLINE void os_ExtTick_EnableIRQ (int32_t irqn) {
+__STATIC_INLINE void ExtTick_EnableIRQ (int32_t irqn) {
   NVIC->ISER[irqn >> 5] = 1U << (irqn & 0x1F);
 }
 
 /// Disable External Tick Timer Interrupt
 /// \param[in] irqn  Interrupt number
-__STATIC_INLINE void os_ExtTick_DisableIRQ (int32_t irqn) {
+__STATIC_INLINE void ExtTick_DisableIRQ (int32_t irqn) {
   NVIC->ICER[irqn >> 5] = 1U << (irqn & 0x1F);
 }
 
 /// Get Pending SV (Service Call) and ST (SysTick) Flags
 /// \return    Pending SV&ST Flags
-__STATIC_INLINE uint8_t os_GetPendSV_ST (void) {
+__STATIC_INLINE uint8_t GetPendSV_ST (void) {
   return ((uint8_t)((SCB->ICSR & (SCB_ICSR_PENDSVSET_Msk | SCB_ICSR_PENDSTSET_Msk)) >> 24));
 }
 
 /// Get Pending SV (Service Call) Flag
 /// \return    Pending SV Flag
-__STATIC_INLINE uint8_t os_GetPendSV (void) {
+__STATIC_INLINE uint8_t GetPendSV (void) {
   return ((uint8_t)((SCB->ICSR & (SCB_ICSR_PENDSVSET_Msk)) >> 24));
 }
 
 /// Clear Pending SV (Service Call) and ST (SysTick) Flags
-__STATIC_INLINE void os_ClrPendSV_ST (void) {
+__STATIC_INLINE void ClrPendSV_ST (void) {
   SCB->ICSR = SCB_ICSR_PENDSVCLR_Msk | SCB_ICSR_PENDSTCLR_Msk;
 }
 
 /// Clear Pending SV (Service Call) Flag
-__STATIC_INLINE void os_ClrPendSV (void) {
+__STATIC_INLINE void ClrPendSV (void) {
   SCB->ICSR = SCB_ICSR_PENDSVCLR_Msk;
 }
 
 /// Set Pending SV (Service Call) Flag
-__STATIC_INLINE void os_SetPendSV (void) {
+__STATIC_INLINE void SetPendSV (void) {
   SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
 }
 
 /// Set Pending Flags
 /// \param[in] flags  Flags to set
-__STATIC_INLINE void os_SetPendFlags (uint8_t flags) {
+__STATIC_INLINE void SetPendFlags (uint8_t flags) {
   SCB->ICSR = ((uint32_t)flags << 24);
 }
 
@@ -605,12 +605,12 @@ __STATIC_INLINE void os_SetPendFlags (uint8_t flags) {
 
 #if (__EXCLUSIVE_ACCESS == 1U)
 
-/// Exclusive Access Operation: Write (8-bit)
+/// Atomic Access Operation: Write (8-bit)
 /// \param[in]  mem             Memory address
 /// \param[in]  val             Value to write
 /// \return                     Previous value
 #if defined(__CC_ARM)
-static __asm    uint8_t os_exc_wr8 (uint8_t *mem, uint8_t val) {
+static __asm    uint8_t atomic_wr8 (uint8_t *mem, uint8_t val) {
   mov    r2,r0
 1
   ldrexb r0,[r2]
@@ -621,7 +621,7 @@ static __asm    uint8_t os_exc_wr8 (uint8_t *mem, uint8_t val) {
   bx     lr
 }
 #else
-__STATIC_INLINE uint8_t os_exc_wr8 (uint8_t *mem, uint8_t val) {
+__STATIC_INLINE uint8_t atomic_wr8 (uint8_t *mem, uint8_t val) {
   register uint32_t res;
   register uint8_t  ret;
 
@@ -644,12 +644,12 @@ __STATIC_INLINE uint8_t os_exc_wr8 (uint8_t *mem, uint8_t val) {
 }
 #endif
 
-/// Exclusive Access Operation: Set bits (32-bit)
+/// Atomic Access Operation: Set bits (32-bit)
 /// \param[in]  mem             Memory address
 /// \param[in]  bits            Bit mask
 /// \return                     New value
 #if defined(__CC_ARM)
-static __asm    uint32_t os_exc_set32 (uint32_t *mem, uint32_t bits) {
+static __asm    uint32_t atomic_set32 (uint32_t *mem, uint32_t bits) {
   mov   r2,r0
 1
   ldrex r0,[r2]
@@ -661,7 +661,7 @@ static __asm    uint32_t os_exc_set32 (uint32_t *mem, uint32_t bits) {
   bx     lr
 }
 #else
-__STATIC_INLINE uint32_t os_exc_set32 (uint32_t *mem, uint32_t bits) {
+__STATIC_INLINE uint32_t atomic_set32 (uint32_t *mem, uint32_t bits) {
   register uint32_t val, res;
   register uint32_t ret;
 
@@ -695,12 +695,12 @@ __STATIC_INLINE uint32_t os_exc_set32 (uint32_t *mem, uint32_t bits) {
 }
 #endif
 
-/// Exclusive Access Operation: Clear bits (32-bit)
+/// Atomic Access Operation: Clear bits (32-bit)
 /// \param[in]  mem             Memory address
 /// \param[in]  bits            Bit mask
 /// \return                     Previous value
 #if defined(__CC_ARM)
-static __asm    uint32_t os_exc_clr32 (uint32_t *mem, uint32_t bits) {
+static __asm    uint32_t atomic_clr32 (uint32_t *mem, uint32_t bits) {
   push  {r4,lr}
   mov   r2,r0
 1
@@ -713,7 +713,7 @@ static __asm    uint32_t os_exc_clr32 (uint32_t *mem, uint32_t bits) {
   pop   {r4,pc}
 }
 #else
-__STATIC_INLINE uint32_t os_exc_clr32 (uint32_t *mem, uint32_t bits) {
+__STATIC_INLINE uint32_t atomic_clr32 (uint32_t *mem, uint32_t bits) {
   register uint32_t val, res;
   register uint32_t ret;
 
@@ -747,12 +747,12 @@ __STATIC_INLINE uint32_t os_exc_clr32 (uint32_t *mem, uint32_t bits) {
 }
 #endif
 
-/// Exclusive Access Operation: Check if all specified bits (32-bit) are active and clear them
+/// Atomic Access Operation: Check if all specified bits (32-bit) are active and clear them
 /// \param[in]  mem             Memory address
 /// \param[in]  bits            Bit mask
 /// \return                     Active bits before clearing or 0 if not active
 #if defined(__CC_ARM)
-static __asm    uint32_t os_exc_chk32_all (uint32_t *mem, uint32_t bits) {
+static __asm    uint32_t atomic_chk32_all (uint32_t *mem, uint32_t bits) {
   push  {r4,lr}
   mov   r2,r0
 1
@@ -772,7 +772,7 @@ static __asm    uint32_t os_exc_chk32_all (uint32_t *mem, uint32_t bits) {
   pop   {r4,pc}
 }
 #else
-__STATIC_INLINE uint32_t os_exc_chk32_all (uint32_t *mem, uint32_t bits) {
+__STATIC_INLINE uint32_t atomic_chk32_all (uint32_t *mem, uint32_t bits) {
   register uint32_t val, res;
   register uint32_t ret;
 
@@ -814,12 +814,12 @@ __STATIC_INLINE uint32_t os_exc_chk32_all (uint32_t *mem, uint32_t bits) {
 }
 #endif
 
-/// Exclusive Access Operation: Check if any specified bits (32-bit) are active and clear them
+/// Atomic Access Operation: Check if any specified bits (32-bit) are active and clear them
 /// \param[in]  mem             Memory address
 /// \param[in]  bits            Bit mask
 /// \return                     Active bits before clearing or 0 if not active
 #if defined(__CC_ARM)
-static __asm    uint32_t os_exc_chk32_any (uint32_t *mem, uint32_t bits) {
+static __asm    uint32_t atomic_chk32_any (uint32_t *mem, uint32_t bits) {
   push  {r4,lr}
   mov   r2,r0
 1
@@ -838,7 +838,7 @@ static __asm    uint32_t os_exc_chk32_any (uint32_t *mem, uint32_t bits) {
   pop   {r4,pc}
 }
 #else
-__STATIC_INLINE uint32_t os_exc_chk32_any (uint32_t *mem, uint32_t bits) {
+__STATIC_INLINE uint32_t atomic_chk32_any (uint32_t *mem, uint32_t bits) {
   register uint32_t val, res;
   register uint32_t ret;
 
@@ -874,11 +874,11 @@ __STATIC_INLINE uint32_t os_exc_chk32_any (uint32_t *mem, uint32_t bits) {
 }
 #endif
 
-/// Exclusive Access Operation: Increment (32-bit)
+/// Atomic Access Operation: Increment (32-bit)
 /// \param[in]  mem             Memory address
 /// \return                     Previous value
 #if defined(__CC_ARM)
-static __asm    uint32_t os_exc_inc32 (uint32_t *mem) {
+static __asm    uint32_t atomic_inc32 (uint32_t *mem) {
   mov   r2,r0
 1
   ldrex r0,[r2]
@@ -890,7 +890,7 @@ static __asm    uint32_t os_exc_inc32 (uint32_t *mem) {
   bx     lr
 }
 #else
-__STATIC_INLINE uint32_t os_exc_inc32 (uint32_t *mem) {
+__STATIC_INLINE uint32_t atomic_inc32 (uint32_t *mem) {
   register uint32_t val, res;
   register uint32_t ret;
 
@@ -914,12 +914,12 @@ __STATIC_INLINE uint32_t os_exc_inc32 (uint32_t *mem) {
 }
 #endif
 
-/// Exclusive Access Operation: Increment (32-bit) if Less Than
+/// atomic Access Operation: Increment (32-bit) if Less Than
 /// \param[in]  mem             Memory address
 /// \param[in]  max             Maximum value
 /// \return                     Previous value
 #if defined(__CC_ARM)
-static __asm    uint32_t os_exc_inc32_lt (uint32_t *mem, uint32_t max) {
+static __asm    uint32_t atomic_inc32_lt (uint32_t *mem, uint32_t max) {
   push  {r4,lr}
   mov   r2,r0
 1
@@ -937,7 +937,7 @@ static __asm    uint32_t os_exc_inc32_lt (uint32_t *mem, uint32_t max) {
   pop   {r4,pc}
 }
 #else
-__STATIC_INLINE uint32_t os_exc_inc32_lt (uint32_t *mem, uint32_t max) {
+__STATIC_INLINE uint32_t atomic_inc32_lt (uint32_t *mem, uint32_t max) {
   register uint32_t val, res;
   register uint32_t ret;
 
@@ -967,12 +967,12 @@ __STATIC_INLINE uint32_t os_exc_inc32_lt (uint32_t *mem, uint32_t max) {
 }
 #endif
 
-/// Exclusive Access Operation: Increment (16-bit) if Less Than
+/// Atomic Access Operation: Increment (16-bit) if Less Than
 /// \param[in]  mem             Memory address
 /// \param[in]  max             Maximum value
 /// \return                     Previous value
 #if defined(__CC_ARM)
-static __asm    uint16_t os_exc_inc16_lt (uint16_t *mem, uint16_t max) {
+static __asm    uint16_t atomic_inc16_lt (uint16_t *mem, uint16_t max) {
   push   {r4,lr}
   mov    r2,r0
 1
@@ -990,7 +990,7 @@ static __asm    uint16_t os_exc_inc16_lt (uint16_t *mem, uint16_t max) {
   pop    {r4,pc}
 }
 #else
-__STATIC_INLINE uint16_t os_exc_inc16_lt (uint16_t *mem, uint16_t max) {
+__STATIC_INLINE uint16_t atomic_inc16_lt (uint16_t *mem, uint16_t max) {
   register uint32_t val, res;
   register uint16_t ret;
 
@@ -1020,12 +1020,12 @@ __STATIC_INLINE uint16_t os_exc_inc16_lt (uint16_t *mem, uint16_t max) {
 }
 #endif
 
-/// Exclusive Access Operation: Increment (16-bit) and clear on Limit
+/// Atomic Access Operation: Increment (16-bit) and clear on Limit
 /// \param[in]  mem             Memory address
 /// \param[in]  max             Maximum value
 /// \return                     Previous value
 #if defined(__CC_ARM)
-static __asm    uint16_t os_exc_inc16_lim (uint16_t *mem, uint16_t lim) {
+static __asm    uint16_t atomic_inc16_lim (uint16_t *mem, uint16_t lim) {
   push   {r4,lr}
   mov    r2,r0
 1
@@ -1042,7 +1042,7 @@ static __asm    uint16_t os_exc_inc16_lim (uint16_t *mem, uint16_t lim) {
   pop    {r4,pc}
 }
 #else
-__STATIC_INLINE uint16_t os_exc_inc16_lim (uint16_t *mem, uint16_t lim) {
+__STATIC_INLINE uint16_t atomic_inc16_lim (uint16_t *mem, uint16_t lim) {
   register uint32_t val, res;
   register uint16_t ret;
 
@@ -1071,11 +1071,11 @@ __STATIC_INLINE uint16_t os_exc_inc16_lim (uint16_t *mem, uint16_t lim) {
 }
 #endif
 
-/// Exclusive Access Operation: Decrement (32-bit) if Not Zero
+/// Atomic Access Operation: Decrement (32-bit) if Not Zero
 /// \param[in]  mem             Memory address
 /// \return                     Previous value
 #if defined(__CC_ARM)
-static __asm    uint32_t os_exc_dec32_nz (uint32_t *mem) {
+static __asm    uint32_t atomic_dec32_nz (uint32_t *mem) {
   mov   r2,r0
 1
   ldrex r0,[r2]
@@ -1091,7 +1091,7 @@ static __asm    uint32_t os_exc_dec32_nz (uint32_t *mem) {
   bx     lr
 }
 #else
-__STATIC_INLINE uint32_t os_exc_dec32_nz (uint32_t *mem) {
+__STATIC_INLINE uint32_t atomic_dec32_nz (uint32_t *mem) {
   register uint32_t val, res;
   register uint32_t ret;
 
@@ -1119,11 +1119,11 @@ __STATIC_INLINE uint32_t os_exc_dec32_nz (uint32_t *mem) {
 }
 #endif
 
-/// Exclusive Access Operation: Decrement (16-bit) if Not Zero
+/// Atomic Access Operation: Decrement (16-bit) if Not Zero
 /// \param[in]  mem             Memory address
 /// \return                     Previous value
 #if defined(__CC_ARM)
-static __asm    uint16_t os_exc_dec16_nz (uint16_t *mem) {
+static __asm    uint16_t atomic_dec16_nz (uint16_t *mem) {
   mov    r2,r0
 1
   ldrexh r0,[r2]
@@ -1139,7 +1139,7 @@ static __asm    uint16_t os_exc_dec16_nz (uint16_t *mem) {
   bx      lr
 }
 #else
-__STATIC_INLINE uint16_t os_exc_dec16_nz (uint16_t *mem) {
+__STATIC_INLINE uint16_t atomic_dec16_nz (uint16_t *mem) {
   register uint32_t val, res;
   register uint16_t ret;
 
@@ -1167,11 +1167,11 @@ __STATIC_INLINE uint16_t os_exc_dec16_nz (uint16_t *mem) {
 }
 #endif
 
-/// Exclusive Access Operation: Link Get
+/// Atomic Access Operation: Link Get
 /// \param[in]  root            Root address
 /// \return                     Link
 #if defined(__CC_ARM)
-static __asm    void *os_exc_link_get (void **root) {
+static __asm    void *atomic_link_get (void **root) {
   mov   r2,r0
 1
   ldrex r0,[r2]
@@ -1187,7 +1187,7 @@ static __asm    void *os_exc_link_get (void **root) {
   bx     lr
 }
 #else
-__STATIC_INLINE void *os_exc_link_get (void **root) {
+__STATIC_INLINE void *atomic_link_get (void **root) {
   register uint32_t val, res;
   register void    *ret;
 
@@ -1215,11 +1215,11 @@ __STATIC_INLINE void *os_exc_link_get (void **root) {
 }
 #endif
 
-/// Exclusive Access Operation: Link Put
+/// Atomic Access Operation: Link Put
 /// \param[in]  root            Root address
 /// \param[in]  lnk             Link
 #if defined(__CC_ARM)
-static __asm    void os_exc_link_put (void **root, void *link) {
+static __asm    void atomic_link_put (void **root, void *link) {
 1
   ldr   r2,[r0]
   str   r2,[r1]
@@ -1235,7 +1235,7 @@ static __asm    void os_exc_link_put (void **root, void *link) {
   bx    lr
 }
 #else
-__STATIC_INLINE void os_exc_link_put (void **root, void *link) {
+__STATIC_INLINE void atomic_link_put (void **root, void *link) {
   register uint32_t val1, val2, res;
 
   __ASM volatile (
