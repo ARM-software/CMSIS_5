@@ -24,6 +24,7 @@
  */
 
 #include "rtx_os.h"
+#include "RTX_Config.h"
 
 
 // System Configuration
@@ -62,19 +63,11 @@ __attribute__((section(".bss.os")));
 
 #if (OS_THREAD_OBJ_MEM != 0)
 
-#define OS_THREAD_DEF_STACK_NUM (OS_THREAD_NUM - OS_THREAD_USER_STACK_NUM)
-
-#if ((OS_THREAD_NUM == 0) || (OS_THREAD_NUM < OS_THREAD_USER_STACK_NUM))
+#if (OS_THREAD_NUM == 0)
 #error "Invalid number of user Threads!"
 #endif
 
-#if ((OS_THREAD_USER_STACK_NUM != 0) && (OS_THREAD_USER_STACK_SIZE == 0))
-#error "Total Stack size must not be zero!"
-#endif
-
-#if ((OS_THREAD_USER_STACK_SIZE != 0) && \
-   (((OS_THREAD_USER_STACK_SIZE & 7) != 0) || \
-     (OS_THREAD_USER_STACK_SIZE < (72*OS_THREAD_USER_STACK_NUM))))
+#if ((OS_THREAD_USER_STACK_SIZE != 0) && ((OS_THREAD_USER_STACK_SIZE & 7) != 0))
 #error "Invalid total Stack size!"
 #endif
 
