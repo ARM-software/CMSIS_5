@@ -100,6 +100,7 @@
         <tRSysVw>1</tRSysVw>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
+        <bEvRecOn>1</bEvRecOn>
         <nTsel>15</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
@@ -200,8 +201,8 @@
         </Mm>
       </MemoryWindow1>
       <ScvdPack>
-        <Filename>C:\Keil_v511\ARM\PACK\ARM\CMSIS\5.0.0-Beta16\CMSIS\RTOS2\RTX\RTX5.scvd</Filename>
-        <Type>ARM.CMSIS.5.0.0-Beta16</Type>
+        <Filename>C:\Keil\ARM\PACK\ARM\CMSIS\5.0.1-dev2\CMSIS\RTOS2\RTX\RTX5.scvd</Filename>
+        <Type>ARM.CMSIS.5.0.1-dev2</Type>
         <SubType>1</SubType>
       </ScvdPack>
       <Tracepoint>

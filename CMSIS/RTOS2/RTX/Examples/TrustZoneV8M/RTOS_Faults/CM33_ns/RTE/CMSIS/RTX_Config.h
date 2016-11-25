@@ -17,13 +17,16 @@
  *
  * -----------------------------------------------------------------------------
  *
- * $Revision:   V5.0.0
+ * $Revision:   V5.1.0
  *
  * Project:     CMSIS-RTOS RTX
- * Title:       RTX Configuration
+ * Title:       RTX Configuration definitions
  *
  * -----------------------------------------------------------------------------
  */
+ 
+#ifndef RTX_CONFIG_H_
+#define RTX_CONFIG_H_
  
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
  
@@ -51,6 +54,46 @@
  
 //   </e>
  
+//   <h>Event Recording
+ 
+//     <q>Memory Management
+//     <i> Enables Memory Management events recording.
+#define OS_EVR_MEMORY               1
+ 
+//     <q>Kernel
+//     <i> Enables Kernel events recording.
+#define OS_EVR_KERNEL               1
+ 
+//     <q>Thread
+//     <i> Enables Thread events recording.
+#define OS_EVR_THREAD               1
+ 
+//     <q>Timer
+//     <i> Enables Timer events recording.
+#define OS_EVR_TIMER                1
+ 
+//     <q>Event Flags
+//     <i> Enables Event Flags events recording.
+#define OS_EVR_EVFLAGS              1
+ 
+//     <q>Mutex
+//     <i> Enables Mutex events recording.
+#define OS_EVR_MUTEX                1
+ 
+//     <q>Semaphore
+//     <i> Enables Semaphore events recording.
+#define OS_EVR_SEMAPHORE            1
+ 
+//     <q>Memory Pool
+//     <i> Enables Memory Pool events recording.
+#define OS_EVR_MEMPOOL              1
+ 
+//     <q>Message Queue
+//     <i> Enables Message Queue events recording.
+#define OS_EVR_MSGQUEUE             1
+ 
+//   </h>
+ 
 //   <o>ISR FIFO Queue 
 //      <4=>  4 entries    <8=>   8 entries   <12=>  12 entries   <16=>  16 entries
 //     <24=> 24 entries   <32=>  32 entries   <48=>  48 entries   <64=>  64 entries
@@ -66,20 +109,21 @@
  
 //   <e>Object specific Memory allocation
 //   <i> Enables object specific memory allocation.
-#define OS_THREAD_OBJ_MEM           0
+#define OS_THREAD_OBJ_MEM           1
  
-//     <o>Number of user Threads (total) <1-1000>
+//     <o>Number of user Threads <1-1000>
 //     <i> Defines maximum number of user threads that can be active at the same time.
 //     <i> Applies to user threads with system provided memory for control blocks.
-#define OS_THREAD_NUM               1
+#define OS_THREAD_NUM               5
  
-//     <o>Number of user Threads with user-provided Stack size <0-1000>
-//     <i> Defines maximum number of user threads with user-provided stack size.
-//     <i> Default: 0
-#define OS_THREAD_USER_STACK_NUM    0
+//     <o>Number of user Threads with default Stack size <0-1000>
+//     <i> Defines maximum number of user threads with default stack size.
+//     <i> Applies to user threads with zero stack size specified.
+#define OS_THREAD_DEF_STACK_NUM     5
  
 //     <o>Total Stack size [bytes] for user Threads with user-provided Stack size <0-1073741824:8>
 //     <i> Defines the combined stack size for user threads with user-provided stack size.
+//     <i> Applies to user threads with user-provided stack size and system provided memory for stack.
 //     <i> Default: 0
 #define OS_THREAD_USER_STACK_SIZE   0
  
@@ -88,7 +132,7 @@
 //   <o>Default Thread Stack size [bytes] <96-1073741824:8>
 //   <i> Defines stack size for threads with zero stack size specified.
 //   <i> Default: 200
-#define OS_STACK_SIZE               200
+#define OS_STACK_SIZE               400
  
 //   <o>Idle Thread Stack size [bytes] <72-1073741824:8>
 //   <i> Defines stack size for Idle thread.
@@ -103,7 +147,7 @@
 //   <q>Stack usage watermark
 //   <i> Initialize thread stack with watermark pattern for analyzing stack usage.
 //   <i> Enabling this option increases significantly the execution time of thread creation.
-#define OS_STACK_WATERMARK          0
+#define OS_STACK_WATERMARK          1
  
 //   <o>Processor mode for Thread execution 
 //     <0=> Unprivileged mode 
@@ -252,40 +296,4 @@
  
 //------------- <<< end of configuration section >>> ---------------------------
  
-#include "rtx_os.h"
- 
-// OS Idle Thread
-__NO_RETURN void os_IdleThread (void *argument) {
-  (void)argument;
-
-  for (;;) {}
-}
- 
-// OS Error Callback function
-uint32_t os_Error (uint32_t code, void *object_id) {
-  (void)object_id;
-
-  switch (code) {
-    case os_ErrorStackUnderflow:
-      // Stack underflow detected for thread (thread_id=object_id)
-      break;
-    case os_ErrorISRQueueOverflow:
-      // ISR Queue overflow detected when inserting object (object_id)
-      break;
-    case os_ErrorTimerQueueOverflow:
-      // User Timer Callback Queue overflow detected for timer (timer_id=object_id)
-      break;
-    case os_ErrorClibSpace:
-      // Standard C/C++ library libspace not available: increase OS_THREAD_LIBSPACE_NUM
-      break;
-    case os_ErrorClibMutex:
-      // Standard C/C++ library mutex initialization failed
-      break;
-    default:
-      break;
-  }
-  for (;;) {}
-//return 0U;
-}
- 
-#include "rtx_config.h"
+#endif  // RTX_CONFIG_H_
