@@ -17,12 +17,16 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        20. October 2016
- * $Revision:    V2.0
+ * $Date:        25. November 2016
+ * $Revision:    V2.1
  *
  * Project:      CMSIS-RTOS2 API
  * Title:        cmsis_os2.h header file
  *
+ * Version 2.1
+ *    Support for critical and uncritical sections (nesting safe)
+ *    - updated: osKernelLock, osKernelUnlock
+ *    - added: osKernelRestoreLock
  * Version 2.0
  *    Initial Release
  *---------------------------------------------------------------------------*/
@@ -141,10 +145,10 @@ typedef enum {
 } osPriority_t;
  
 /// Entry point of a thread.
-typedef void (*os_thread_func_t) (void *argument);
+typedef void (*osThreadFunc_t) (void *argument);
  
 /// Entry point of a timer call back function.
-typedef void (*os_timer_func_t) (void *argument);
+typedef void (*osTimerFunc_t) (void *argument);
  
 /// Timer type.
 typedef enum {
@@ -299,11 +303,17 @@ osKernelState_t osKernelGetState (void);
 osStatus_t osKernelStart (void);
  
 /// Lock the RTOS Kernel scheduler.
-/// \return 0 already locked, 1 locked.
-uint32_t osKernelLock (void);
+/// \return previous lock state (1 - locked, 0 - not locked, error code if negative).
+int32_t osKernelLock (void);
  
 /// Unlock the RTOS Kernel scheduler.
-void osKernelUnlock (void);
+/// \return previous lock state (1 - locked, 0 - not locked, error code if negative).
+int32_t osKernelUnlock (void);
+ 
+/// Restore the RTOS Kernel scheduler lock state.
+/// \param[in]     lock          lock state obtained by \ref osKernelLock or \ref osKernelUnlock.
+/// \return new lock state (1 - locked, 0 - not locked, error code if negative).
+int32_t osKernelRestoreLock (int32_t lock);
  
 /// Suspend the RTOS Kernel scheduler.
 /// \return time in ticks, for how long the system can sleep or power-down.
@@ -337,7 +347,7 @@ uint32_t osKernelGetSysTimerFreq (void);
 /// \param[in]     argument      pointer that is passed to the thread function as start argument.
 /// \param[in]     attr          thread attributes; NULL: default values.
 /// \return thread ID for reference by other functions or NULL in case of error.
-osThreadId_t osThreadNew (os_thread_func_t func, void *argument, const osThreadAttr_t *attr);
+osThreadId_t osThreadNew (osThreadFunc_t func, void *argument, const osThreadAttr_t *attr);
  
 /// Get name of a thread.
 /// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
@@ -463,7 +473,7 @@ osStatus_t osDelayUntil (uint64_t ticks);
 /// \param[in]     argument      argument to the timer call back function.
 /// \param[in]     attr          timer attributes; NULL: default values.
 /// \return timer ID for reference by other functions or NULL in case of error.
-osTimerId_t osTimerNew (os_timer_func_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr);
+osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr);
  
 /// Get name of a timer.
 /// \param[in]     timer_id      timer ID obtained by \ref osTimerNew.
