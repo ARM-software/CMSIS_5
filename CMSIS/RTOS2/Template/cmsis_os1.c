@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        12. October 2016
- * $Revision:    V1.0
+ * $Date:        25. November 2016
+ * $Revision:    V1.1
  *
  * Project:      CMSIS-RTOS API V1
  * Title:        cmsis_os_v1.c V1 module file
@@ -36,7 +36,7 @@ osThreadId osThreadCreate (const osThreadDef_t *thread_def, void *argument) {
   if (thread_def == NULL) {
     return (osThreadId)NULL;
   }
-  return osThreadNew((os_thread_func_t)thread_def->pthread, argument, &thread_def->attr);
+  return osThreadNew((osThreadFunc_t)thread_def->pthread, argument, &thread_def->attr);
 }
 
 
@@ -105,7 +105,7 @@ osTimerId osTimerCreate (const osTimerDef_t *timer_def, os_timer_type type, void
   if (timer_def == NULL) {
     return (osTimerId)NULL;
   }
-  return osTimerNew((os_timer_func_t)timer_def->ptimer, type, argument, &timer_def->attr);
+  return osTimerNew((osTimerFunc_t)timer_def->ptimer, type, argument, &timer_def->attr);
 }
 
 
