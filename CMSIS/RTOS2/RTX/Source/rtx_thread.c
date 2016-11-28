@@ -633,9 +633,10 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
         if (stack_mem != NULL) {
           flags |= osRtxThreadFlagDefStack;
         }
+      } else {
+        stack_mem = osRtxMemoryAlloc(osRtxInfo.mem.stack, stack_size, 0U);
       }
-    }
-    if (stack_mem == NULL) {
+    } else {
       stack_mem = osRtxMemoryAlloc(osRtxInfo.mem.stack, stack_size, 0U);
     }
     if (stack_mem == NULL) {
