@@ -562,7 +562,7 @@ extern void EvrRtxThreadJoined (osThreadId_t thread_id);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_BLOCKED_DISABLE))
 extern void EvrRtxThreadBlocked (osThreadId_t thread_id, uint32_t timeout);
 #else
-#define EvrRtxThreadBlocked(thread, timeout)
+#define EvrRtxThreadBlocked(thread_id, timeout)
 #endif
 
 /**
@@ -573,7 +573,7 @@ extern void EvrRtxThreadBlocked (osThreadId_t thread_id, uint32_t timeout);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_UNBLOCKED_DISABLE))
 extern void EvrRtxThreadUnblocked (osThreadId_t thread_id, uint32_t ret_val);
 #else
-#define EvrRtxThreadUnblocked(thread, ret_val)
+#define EvrRtxThreadUnblocked(thread_id, ret_val)
 #endif
 
 /**
@@ -583,7 +583,7 @@ extern void EvrRtxThreadUnblocked (osThreadId_t thread_id, uint32_t ret_val);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_SWITCH_DISABLE))
 extern void EvrRtxThreadSwitch (osThreadId_t thread_id);
 #else
-#define EvrRtxThreadSwitch(thread)
+#define EvrRtxThreadSwitch(thread_id)
 #endif
 
 /**
@@ -629,7 +629,7 @@ extern void EvrRtxThreadGetCount (uint32_t count);
   \brief  Event on active threads enumerate (API)
   \param[in]  thread_array  pointer to array for retrieving thread IDs.
   \param[in]  array_items   maximum number of items in array for retrieving thread IDs.
-  \count[in]  count         number of enumerated threads.
+  \param[in]  count         number of enumerated threads.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_ENUMERATE_DISABLE))
 extern void EvrRtxThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items, uint32_t count);
