@@ -2,7 +2,7 @@
  * @file     core_cm4.h
  * @brief    CMSIS Cortex-M4 Core Peripheral Access Layer Header File
  * @version  V5.0.1
- * @date     17. November 2016
+ * @date     25. November 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -1540,7 +1540,7 @@ typedef struct
   @{
  */
 
-/* Memory mapping of Cortex-M4 Hardware */
+/* Memory mapping of Core Hardware */
 #define SCS_BASE            (0xE000E000UL)                            /*!< System Control Space Base Address */
 #define ITM_BASE            (0xE0000000UL)                            /*!< ITM Base Address */
 #define DWT_BASE            (0xE0001000UL)                            /*!< DWT Base Address */
@@ -1883,8 +1883,8 @@ __STATIC_INLINE void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGr
  */
 __STATIC_INLINE void __NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)
 {
-    uint32_t *vectors = (uint32_t *)SCB->VTOR;
-    vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET] = vector;
+  uint32_t *vectors = (uint32_t *)SCB->VTOR;
+  vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET] = vector;
 }
 
 
@@ -1898,8 +1898,8 @@ __STATIC_INLINE void __NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)
  */
 __STATIC_INLINE uint32_t __NVIC_GetVector(IRQn_Type IRQn)
 {
-    uint32_t *vectors = (uint32_t *)SCB->VTOR;
-    return vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET];
+  uint32_t *vectors = (uint32_t *)SCB->VTOR;
+  return vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET];
 }
 
 
