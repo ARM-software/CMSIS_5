@@ -4,87 +4,104 @@
 /**
 \page os2MigrationGuide RTX Migration Guide
 
-RTX5 supplies both API layers: CMSIS-RTOS v1 and CMSIS-RTOS v2. This allows a gradient transition from version 1 to 2.
-Depending on the phase a project is in its life cycly a level of migration is chosen.
+RTX5 supplies both API layers: CMSIS-RTOS v1 and CMSIS-RTOS v2. This allows a gradient transition from version 1 to 2. A
+modified v1 header and a special v1 compatibility module enable existing code to run on a v2 implementation with almost no
+modifications.
 
-- The first level of migration is to migrate to RTX5 without changing the API level.
-- The second level in the transition is to use Version 2 API functions and Version 1 API functions in mixed variation.
-- The third level is non-trivial and requires some additional development effort to migrate all API Version 1 calls to Version 2.
+Only a few incompatibilities and limitations exist:
+- Kernel startup\n
+  The function \c osKernelRunning has been deprecated. "main" was usually a running thread in v1 implementations, which is
+  not the case in v2 anymore. It was also possible to not even initialize and start the Kernel, but just to assume that
+  "main" was a running thread. Portable code would typically initialize the Kernel (\ref osKernelInitialize) and then start
+  the Kernel (\ref osKernelStart) or skip that part if \c osKernelRunning indicated that it is already running.\n
+  The example code below shows how to overcome this situation.
+- The function \c osWait is deprecated.
+- Error code incompatibility\n
+  CMSIS-RTOS v1 used two different error codes for invalid parameters: \c osErrorParameter and \c osErrorValue. The new
+  version only uses a common \ref osErrorParameter code. Therefore, code relying on osErrorValue is not compatible. The
+  following functions are affected:
+  - \ref osThreadSetPriority returns \ref osErrorParameter instead of osErrorValue when priority is out of range
+  - \ref osMemoryPoolFree (previously \c osPoolFree) returns \ref osErrorParameter instead of osErrorValue when block to be
+    returned is invalid
+- The \ref osDelay return code has changed from osErrorTimeout to \ref osOK.
+
+The level of migration depends on the project's phase in its life cycle:
+- The \ref MigL1 "first level" of migration is to migrate to RTX5 without changing the API level.
+- The \ref MigL2 "second level" in the transition is to use v2 API functions and v1 API functions in mixed variation.
+- The \ref MigL3 "third level" is the full transition to the API v2. It is non-trivial and requires some additional
+  development effort to migrate all API v1 calls to v2.
+
 
 \section MigL1 Level 1 Migration - Upgrade to RTX5 on API v1
 
-The Upgrade to RTX Version 5 from any version 4.x is simple using the API v1 compatibility layer. To configure this in an existing project the following steps are required:
+Upgrade to RTX Version 5 from any 4.x version using the API v1 compatibility layer. Configure an existing project as follows:
+
+- Open \b Manage \b Run-Time \b Environment window
+- Expand \b CMSIS software component.
+- Expand \b RTOS \b (API), uncheck \b Keil \b RTX, and select \b Keil \b RTX5.
+- Expand \b RTOS2 \b (API) and select \b Keil \b RTX5.
+- Resolve missing components.
 
 \image html "RTX5_Migrate1.PNG" "Component Selection for RTX5"
 
--# Open Manage Run-Time Environment window:
--# Expand CMSIS Software Component.
--# Expand RTOS (API) and deselect Keil RTX.
--# Select Keil RTX5 from the RTOS (API) group.
--# Resolve the missing components.
--# Click OK.
--# Expand CMSIS group in the Project window:
--# Open RTX_Config.c and adapt configuration to suit the application including:
-	- System Configuration->Global Dynamic Memory size
-	- Kernel Tick Frequency
-	- Thread Configuration->Default Thread Stack size
-	- Details are found in \ref config_rtx
--# Rename function int \b main (void) to void \b app_main (void *arg).
-Create new function int main (void) which implements at least:
-	- System initialization and configuration
-	- Update SystemCoreClock
-	- Initialize CMSIS-RTOS kernel
-	- Creates new thread app_main
-	- Start RTOS scheduler                       
+- Click OK.
+- Expand \b CMSIS group in the \b Project window:
+- Open \b %RTX_Config.h and adapt the configuration to suit the application including (refer to \ref config_rtx5):
+  - System Configuration->Global Dynamic Memory size
+  - Kernel Tick Frequency
+  - Thread Configuration->Default Thread Stack size
+- Rename function <tt>int main (void)</tt> to <tt>void app_main (void *arg)</tt>.
+- Create a new function <tt>int main (void)</tt> which implements at least:
+  - System initialization and configuration
+  - Update SystemCoreClock
+  - Initialize CMSIS-RTOS kernel
+  - Creates new thread app_main
+  - Start RTOS scheduler                       
 
-<b>Example - Application Main Thread</b>		
-\code{.c}		
+<b>Example - Application Main Thread</b>
+\code
 /* Renamed main() function */
-void app_main (void *arg) {
-
-  while (1) {
-    /* .. */
-    ;
-  }
+void app_main (void const *argument) {
+  // contents of old "main"
 }
-
-/* New main function to start app_main */	
+ 
+osThreadDef(app_main, osPriorityNormal, 1, 0);
+ 
 int main (void) {
-  Init_Hardware();
-
   // System Initialization
   SystemCoreClockUpdate();
   // ...
-  osKernelInitialize();                 // Initialize CMSIS-RTOS
-  osThreadNew(app_main, NULL, NULL);    // Create application main thread
-  if (osKernelGetState() == osKernelReady) {
-    osKernelStart();                    // Start thread execution
-  }
-  while(1);
-}		
+  osKernelInitialize();
+  osThreadCreate(osThread(app_main), NULL);
+  osKernelStart();
+  for (;;);
+}
 \endcode
 
 \note In RTOS API v1 all timings were specified in milliseconds. RTX5 defines all times in kernel ticks.
-To match both it is recommended to set the Kernel Tick Frequency to 1000Hz in the \ref systemConfig.
+To match both it is recommended to set the Kernel Tick Frequency to 1000 Hz in the \ref systemConfig.
 
-To validate the correct operation of your RTOS after migration you can temporarily integrate the \ref rtosValidation component into your project. 			
+To validate the correct operation of your RTOS after migration you can temporarily integrate the \ref rtosValidation
+component into your project.
+
 
 \section MigL2 Level 2 Migration - Use API v2 and v1 alongside in RTX5
 
-Implementing new features in your project is ideally done using the new API. Both API versions are offered in RTX5 and can exist along-side.
+Implementing new features in your project is ideally done using the new API. Both API versions are offered in RTX5 and can
+exist along-side.
  
 The component selection is identical to Migration Level 1.
 
 Include "cmsis_os2.h" in all modules where access to API v2 functions is required.
 
-\code{.c}
+\code
 #include "cmsis_os.h"                   // ARM::CMSIS:RTOS:Keil RTX5
 #include "cmsis_os2.h"                  // ARM::CMSIS:RTOS2:Keil RTX5
 \endcode
 
 The following snippet shows how threads - created with both API versions - live along-side:
 
-\code{.c}
+\code
 /*----------------------------------------------------------------------------
  *      Thread 4 'phaseD': Phase D output   - API v2 thread
  *---------------------------------------------------------------------------*/
@@ -122,7 +139,7 @@ void app_main (void *argument) {
   tid_phaseD = osThreadNew(phaseD, NULL, NULL);
   /* Create the API v1 thread */
   tid_clock  = osThreadCreate(osThread(clock),  NULL);
-	 
+ 
   osThreadFlagsSet(tid_phaseA, 0x0001);          /* set signal to phaseA thread   */
  
   osDelay(osWaitForever);
@@ -132,30 +149,33 @@ void app_main (void *argument) {
  
 The full example "RTX5 Migration" is part of the CMSIS5 pack and available from the pack installer.
 
+
 \section MigL3 Level 3 Migration - Full transition to API v2
 Migrating fully to APIv2 reduces the overhead of the translation layer and simplifies the project.
 There is some effort to replace and re-test all API Version 1 calls.
 The following steps are recommended as a rough guide-line:
--# Open Manage Run-Time Environment window:
--# Expand CMSIS Software Component:
--# Expand RTOS (API) Software Component and de-select Keil RTX5
--# Click OK
--# Remove all occurances of
-	\code{.c}
-	#include "cmsis_os.h"  
-	\endcode
--# Identify all references to the API v1 and replace with the appropriate calls in v2. You might want to use the Error List window in uVision to identify the related code passages quickly. 
+- Open Manage Run-Time Environment window:
+- Expand CMSIS Software Component:
+- Expand RTOS (API) Software Component and de-select Keil RTX5
+- Click OK
+- Exchange all occurrences of
+  \code
+  #include "cmsis_os.h"  
+  \endcode
+  with
+  \code
+  #include "cmsis_os2.h"  
+  \endcode
+- Identify all references to the API v1 and replace with the appropriate calls in v2. You might want to use the Error List
+  window in uVision to identify the related code passages quickly. 
 
 \note See \ref os2MigrationFunctions for details in differences.
 
 Generally there are now longer os*Def macros to declare OS objects. 
 
-\note Signal Events have been replaced. Use the functions listed under Thread Flags and Event Flags instead. 
-\note The Mail Queue RTOS v1 functions have been deprecated. Use the functionality of the Message Queue instead. Differences are listed under \ref mig_msgQueue.
- 
- 
-\todo Kernel Ticks needs to be added to SystemConfig documentation
- 
+\note
+- Signal Events have been replaced. Use the functions listed under Thread Flags and Event Flags instead. 
+- The Mail Queue RTOS v1 functions have been deprecated. Use the functionality of the Message Queue instead. Differences are
+  listed under \ref mig_msgQueue.
 */
-
  
