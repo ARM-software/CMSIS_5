@@ -5,22 +5,22 @@
 \ingroup CMSIS_RTOS CMSIS_RTOSv2
 \brief Define, create, and control thread functions.
 \details 
-The Thread Management function group allows defining, creating, and controlling thread functions in the system. The function
-\b main is a special thread function that is started at system initialization and has the initial priority
-\a osPriorityNormal.
+The Thread Management function group allows defining, creating, and controlling thread functions in the system.
 
+\note Thread management functions cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 \anchor ThreadStates
+Thread states
+-------------
 Threads can be in the following states:
 
- - \b RUNNING: The thread that is currently running is in the \b RUNNING state. Only one thread at a time can be in this state.
-
- - \b READY: Threads which are ready to run are in the \b READY state. Once the \b RUNNING thread has terminated, or is \b BLOCKED, the next \b READY thread with the highest priority becomes the \b RUNNING thread.
- 
- - \b BLOCKED: Threads that are blocked either delayed, waiting for an event to occur or suspended are in the \b BLOCKED state.
- 
- - \b TERMINATED: When \ref osThreadTerminate is called, and threads that joined are in \b TERMINATED state. When all joined threads have terminated, resources are released an the threads are in state \b INACTIVE. 
- 
+ - \b RUNNING: The thread that is currently running is in the \b RUNNING state. Only one thread at a time can be in this
+   state.
+ - \b READY: Threads which are ready to run are in the \b READY state. Once the \b RUNNING thread has terminated, or is
+   \b BLOCKED, the next \b READY thread with the highest priority becomes the \b RUNNING thread.
+ - \b BLOCKED: Threads that are blocked either delayed, waiting for an event to occur or suspended are in the \b BLOCKED
+   state.
+ - \b TERMINATED: When \ref osThreadTerminate is called, threads are \b TERMINATED with resources not yet released. 
  - \b INACTIVE: Threads that are not created or have been terminated with all resources released are in the \b INACTIVE state.
  
 \image html "ThreadStatus.png" "Thread State and State Transitions"
@@ -47,9 +47,10 @@ The following examples show various scenarios to create threads:
  
 <b>Example 1 - Create a simple thread</b> 
 
-Create a thread out of the function thread1 using all default values for thread attributes and memory from the \ref GlobalMemoryPool.
+Create a thread out of the function thread1 using all default values for thread attributes and memory from the
+\ref GlobalMemoryPool.
  
-\code{.c}
+\code
 __NO_RETURN void thread1 (void *argument) {
   // ...
   for (;;) {}
@@ -70,32 +71,33 @@ Similar to the simple thread all attributes are default. The stack is dynamicall
  
 \ref osThreadAttr_t.stack_size is used to pass the stack size in Bytes to osThreadNew.
 
-\code{.c}
+\code
 __NO_RETURN void thread1 (void *argument) {
   // ...
   for (;;) {}
 }
  
 const osThreadAttr_t thread1_attr = {
-  .stack_size = 1024;    // Create the thread stack with a size of 1024 bytes
-}
+  .stack_size = 1024                             // Create the thread stack with a size of 1024 bytes
+};
  
 int main (void) {
   ;  
-  osThreadNew(thread1, NULL, &thread1_attr);    // Create thread with custom sized stack memory
+  osThreadNew(thread1, NULL, &thread1_attr);     // Create thread with custom sized stack memory
   ;
 }
 \endcode
 
 <b>Example 3 - Create thread with statically allocated stack</b>
  
-Similar to the simple thread all attributes are default. The stack is statically allocated using the uint64_t array thread1_stk_1. This allocates 64*8 Bytes (=512 Bytes) with an alignment of 8 Bytes (mandatory for Cortex-M stack memory). 
+Similar to the simple thread all attributes are default. The stack is statically allocated using the \c uint64_t array
+\c thread1_stk_1. This allocates 64*8 Bytes (=512 Bytes) with an alignment of 8 Bytes (mandatory for Cortex-M stack memory). 
  
 \ref osThreadAttr_t.stack_mem holds a pointer to the stacks lowest address. 
  
 \ref osThreadAttr_t.stack_size is used to pass the stack size in Bytes to osThreadNew.
 
-\code{.c}
+\code
 __NO_RETURN void thread1 (void *argument) {
   // ...
   for (;;) {}
@@ -104,9 +106,9 @@ __NO_RETURN void thread1 (void *argument) {
 static uint64_t thread1_stk_1[64];
  
 const osThreadAttr_t thread1_attr = {
-  .stack_mem  = &thread1_stk_1[0];
-  .stack_size = sizeof(thread1_stk_1);
-}
+  .stack_mem  = &thread1_stk_1[0],
+  .stack_size = sizeof(thread1_stk_1)
+};
  
 int main (void) {
   ;  
@@ -118,34 +120,23 @@ int main (void) {
 <b>Example 4 - Thread with statically allocated task control block</b>
  
 Typically this method is chosen together with a statically allocated stack as shown in Example 2. 
-os_<i>object</i>Size macros supply the size of OS objects. 
-RTX5 has the following internal definitions to determine the size of OS objects:
-\code{.c}
-#define os_ThreadCbSize         sizeof(os_thread_t)
-#define os_TimerCbSize          sizeof(os_timer_t)
-#define os_EventFlagsCbSize     sizeof(os_event_flags_t)
-#define os_MutexCbSize          sizeof(os_mutex_t)
-#define os_SemaphoreCbSize      sizeof(os_semaphore_t)
-#define os_MemoryPoolCbSize     sizeof(os_memory_pool_t)
-#define os_MessageQueueCbSize   sizeof(os_message_queue_t)
-\endcode 
+\code 
+#include "cmsis_os2.h"
  
-Include "rtx_os.h" to access these macros.
- 
-\code{.c} 
-#include "rtx_os.h"     //required for os_ThreadCbSize macro definition
- 
+//include rtx_os.h for types of RTX objects
+#include "rtx_os.h"
+
 __NO_RETURN void thread1 (void *argument) {
   // ...
   for (;;) {}
 }
  
-static os_thread_t thread1_tcb;
+static osRtxThread_t thread1_tcb;
  
 const osThreadAttr_t thread1_attr = {
-  .cb_mem  = &thread1_tcb;
-  .cb_size = os_ThreadCbSize;
-}
+  .cb_mem  = &thread1_tcb,
+  .cb_size = sizeof(thread1_tcb),
+};
  
 int main (void) {
   ;
@@ -156,7 +147,8 @@ int main (void) {
 
 <b>Example 5 - Create thread with a different priority</b> 
  
-The default priority of RTX is \ref osPriorityNormal. Often you want to run a task with a higher or lower priority. Using the \ref osThreadAttr_t control structure you can set any inital priority required.
+The default priority of RTX is \ref osPriorityNormal. Often you want to run a task with a higher or lower priority. Using the
+\ref osThreadAttr_t control structure you can set any initial priority required.
 
 \code
 __NO_RETURN void thread1 (void *argument) {
@@ -165,8 +157,8 @@ __NO_RETURN void thread1 (void *argument) {
 }
  
 const osThreadAttr_t thread1_attr = {
-  .priority = osPriorityHigh  //Set initial thread priority to high   
-} 
+  .priority = osPriorityHigh            //Set initial thread priority to high   
+};
  
 int main (void) {
   ;
@@ -177,33 +169,35 @@ int main (void) {
 
 <b>Example 6 - Joinable threads</b>
  
-In this example a master thread creates four threads with the \ref osThreadJoinable attribute. These will do some work and return using the osThreadExit call after finished. \ref osThreadJoin is used to synchronize the thread termination. 
+In this example a master thread creates four threads with the \ref osThreadJoinable attribute. These will do some work and
+return using the \ref osThreadExit call after finished. \ref osThreadJoin is used to synchronize the thread termination. 
 
 
-\code{.c} 
+\code 
 __NO_RETURN void worker (void *argument) {     
     ; // work a lot on data[] 
-	osDelay(1000);       
-	osThreadExit();
+    osDelay(1000);       
+    osThreadExit();
 }
  
 __NO_RETURN void thread1 (void *argument) {
-  osThreadAttr_t worker_attr = {0};
+  osThreadAttr_t worker_attr;
   osThreadId_t worker_ids[4];
   uint8_t data[4][10];
- 
-  worker_attr.attr_bits = osThreadJoinable; 
+
+  memset(&worker_attr, 0, sizeof(worker_attr));
+  worker_attr.attr_bits = osThreadJoinable;
   
   worker_ids[0] = osThreadNew(worker, &data[0][0], &worker_attr);    
   worker_ids[1] = osThreadNew(worker, &data[1][0], &worker_attr);    
   worker_ids[2] = osThreadNew(worker, &data[2][0], &worker_attr);    
   worker_ids[3] = osThreadNew(worker, &data[3][0], &worker_attr);    
- 	
+ 
   osThreadJoin(worker_ids[0]);
   osThreadJoin(worker_ids[1]);
   osThreadJoin(worker_ids[2]);
   osThreadJoin(worker_ids[3]);
- 		
+ 
   osThreadExit(); 
 }
 \endcode
@@ -214,8 +208,10 @@ __NO_RETURN void thread1 (void *argument) {
 /**
 \enum osThreadState_t
 \details
-
+State of a thread as retrieved by \ref osThreadGetState. In case \b osThreadGetState fails or if it is called from an ISR, it
+will return \c osThreadError, otherwise it returns the thread state.
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \enum osPriority_t
@@ -225,38 +221,37 @@ The \b osPriority_t value specifies the priority for a thread. The default threa
 If a Thread is active that has a higher priority than the currently executing thread, then a thread switch occurs immediately
 to execute the new task.
 
-To prevent from a priority inversion, a CMSIS-RTOS compliant OS may optionally implement a <b>priority inheritance</b> method.
-A priority inversion occurs when a high priority thread is waiting for a resource or event that is controlled by a thread
-with a lower priority. 
+To prevent from a priority inversion, a CMSIS-RTOS compliant OS may optionally implement a <b>priority inheritance</b>
+method. A priority inversion occurs when a high priority thread is waiting for a resource or event that is controlled by a
+thread with a lower priority.
 
-
+\note Priority inheritance only applies to mutexes.
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\typedef void (*os_thread_func_t) (void *argument)
+\typedef void (*osThreadFunc_t) (void *argument)
 \details
-
-
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \typedef osThreadId_t
-
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \struct osThreadAttr_t
-
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \def osThreadJoinable
 \details
 
 See \ref osThreadJoin.
-
-
 */
+
 /**
 \def osThreadDetached
 \details
@@ -266,40 +261,53 @@ A thread in this state cannot be joined using \ref osThreadJoin.
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn osThreadId_t osThreadNew (os_thread_func_t func, void *argument, const osThreadAttr_t *attr)
+\fn osThreadId_t osThreadNew (osThreadFunc_t func, void *argument, const osThreadAttr_t *attr)
 \details
+The function \b osThreadNew starts a thread function by adding it to the list of active threads and sets it to state
+\b READY. Arguments for the thread function are passed using the parameter pointer \a *argument. When the priority of the
+created thread function is higher than the current \b RUNNING thread, the created thread function starts instantly and
+becomes the new \b RUNNING thread. Thread attributes are defined with the parameter pointer \a attr. Attributes include
+settings for thread priority, stack size, or memory allocation.
 
-Start a thread function by adding it to the Active Threads list and set it to state \b READY. Arguments for the thread function are passed
-using the parameter pointer \em *argument. When the priority of the created thread function is higher than the current \b RUNNING thread, 
-the created thread function starts instantly and becomes the new \b RUNNING thread. Thread attributes are defined with the parameter pointer \em attr.
-Attributes include settings for thread priority, stack size, or memory allocation.
+The function \b osThreadNew returns the pointer to the thread object identifier or \token{NULL} in case of an error.
 
-\note
-Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn const char *osThreadGetName (osThreadId_t thread_id)
 \details
+The function \b osThreadGetName returns the pointer to the name string of the thread identified by parameter \a thread_id or
+\token{NULL} in case of an error.
 
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+void ThreadGetName_example (void)  {
+  char id;                                           // id for the currently running thread
+   
+  id = osThreadGetName ();
+  if (id == NULL) {
+    // Failed to get the thread name; not in a thread
+  }
+}
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osThreadId_t osThreadGetId (void)
 \details
+The function \b osThreadGetId returns the thread object ID of the currently running thread or NULL in case of an error.
 
-Get the thread ID of the current running thread.
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
-\note
-Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-<b>Code Example:</b>
-\code{.c}
+<b>Code Example</b>
+\code
 void ThreadGetId_example (void)  {
-  osThreadId id;                                           // id for the currently running thread
+  osThreadId_t id;                                           // id for the currently running thread
    
   id = osThreadGetId ();
   if (id == NULL) {
@@ -312,55 +320,43 @@ void ThreadGetId_example (void)  {
 /**
 \fn osThreadState_t osThreadGetState (osThreadId_t thread_id)
 \details
-
-Return the state of the thread identified by parameter \em thread_id.
-See \ref osThreadState_t for possible states.
+The function \b osThreadGetState returns the state of the thread identified by parameter \a thread_id. In case it fails or
+if it is called from an ISR, it will return \c osThreadError, otherwise it returns the thread state (refer to
+\ref osThreadState_t for the list of thread states).
  
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-Calling \ref osThreadGetState from an ISR will return \ref osThreadError.
-
-
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osStatus_t osThreadSetPriority (osThreadId_t thread_id, osPriority_t priority)
 \details
+The function \b osThreadSetPriority changes the priority of an active thread specified by the parameter \a thread_id to the
+priority specified by the parameter \a priority. 
 
-Change the priority of an active thread.
-
-\ref osStatus_t return values:
+Possible \ref osStatus_t return values:
     - \em osOK: the priority of the specified thread has been changed successfully.
-    - \em osErrorParameter: the value of the parameter \em thread_id or parameter \em priority is incorrect.
-    - \em osErrorResource: parameter \em thread_id refers to a thread that is not an active thread.
+    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid or \a priority is incorrect.
+    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
     - \em osErrorISR: the function \b osThreadSetPriority cannot be called from interrupt service routines.
 
-
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-Calling \ref osThreadSetPriority from an ISR will return \ref osErrorISR. 
-
-<b>Code Example:</b>
-\code{.c}
+<b>Code Example</b>
+\code
 #include "cmsis_os2.h"
  
-void Thread_1 (void const *arg)  {                         // Thread function
-  osThreadId_t id;                                         // id for the currently running thread
-  osStatus   status;                                       // status of the executed function
+void Thread_1 (void const *arg)  {                          // Thread function
+  osThreadId_t id;                                          // id for the currently running thread
+  osStatus_t   status;                                      // status of the executed function
    
   :  
-  id = osThreadGetId ();                                   // Obtain ID of current running thread
+  id = osThreadGetId ();                                    // Obtain ID of current running thread
    
-  if (id != NULL) {
-    status = osThreadSetPriority (id, osPriorityBelowNormal);
-    if (status == osOK)  {
-      // Thread priority changed to BelowNormal
-    }
-    else {
-      // Failed to set the priority
-    }
+  status = osThreadSetPriority (id, osPriorityBelowNormal); // Set thread priority
+  if (status == osOK)  {
+    // Thread priority changed to BelowNormal
   }
-  else  {
-    // Failed to get the id
+  else {
+    // Failed to set the priority
   }
   :  
 }
@@ -370,14 +366,15 @@ void Thread_1 (void const *arg)  {                         // Thread function
 /**
 \fn osPriority_t osThreadGetPriority (osThreadId_t thread_id)
 \details
+The function \b osThreadGetPriority returns the priority of an active thread specified by the parameter \a thread_id.
 
-Get the priority of an active thread. In case of failure, the value \b osPriorityError is returned.
+Possible \ref osPriority_t return values:
+    - \em priority: the priority of the specified thread.
+    - \em osPriorityError: priority cannot be determined or is illegal.
+    - \em osPriorityErrorISR: the function \b osThreadGetPriority cannot be called from interrupt service routines.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-Calling \ref osThreadGetPriority from an ISR will return \ref osErrorISR. 
-
-<b>Code Example:</b>
-\code{.c}
+<b>Code Example</b>
+\code
 #include "cmsis_os2.h"
  
 void Thread_1 (void const *arg)  {                         // Thread function
@@ -385,13 +382,7 @@ void Thread_1 (void const *arg)  {                         // Thread function
   osPriority_t priority;                                   // thread priority
    
   id = osThreadGetId ();                                   // Obtain ID of current running thread
-   
-  if (id != NULL)  {
-    priority = osThreadGetPriority (id);
-  }
-  else  {
-    // Failed to get the id
-  }
+  priority = osThreadGetPriority (id);                     // Obtain the thread priority
 }
 \endcode
 */
@@ -399,15 +390,16 @@ void Thread_1 (void const *arg)  {                         // Thread function
 /**
 \fn osStatus_t osThreadYield (void)
 \details
+The function \b osThreadYield passes control to the next thread that is in the \b READY state. If there is no other thread in
+state \b READY, then the current thread continues execution and no thread switching occurs.
 
-Pass control to the next thread that is in state \b READY. If there is no other thread in state \b READY, 
-then the current thread continues execution and no thread switching occurs.
+Possible \ref osStatus_t return values:
+    - \em osOK: control has been passed to the next thread successfully.
+    - \em osError: an unspecified error has occurred.
+    - \em osErrorISR: the function \b osThreadYield cannot be called from interrupt service routines.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-Calling \ref osThreadYield from an ISR will return \ref osErrorISR. 
-
-<b>Code Example:</b>
-\code{.c}
+<b>Code Example</b>
+\code
 #include "cmsis_os2.h"
  
 void Thread_1 (void const *arg)  {                         // Thread function
@@ -416,7 +408,7 @@ void Thread_1 (void const *arg)  {                         // Thread function
   while (1)  {
     status = osThreadYield();                              // 
     if (status != osOK)  {
-      // thread switch not occurred, not in a thread function
+      // an error occurred
     }
   }
 }
@@ -426,128 +418,163 @@ void Thread_1 (void const *arg)  {                         // Thread function
 /**
 \fn osStatus_t osThreadSuspend (osThreadId_t thread_id)
 \details
-Suspends execution of the thread identified by parameter \em thread_id. Thread is put into the state \em Blocked (\ref osThreadBlocked).
-The thread is not executed until restarted with the function \ref osThreadResume.
+The function \b osThreadSuspend suspends the execution of the thread identified by parameter \em thread_id. The thread is put
+into the \em BLOCKED state (\ref osThreadBlocked). The thread is not executed until restarted with the function
+\ref osThreadResume. Threads that are already \em BLOCKED are suspended and become ready after they are resumed.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-Calling \ref osThreadSuspend from an ISR will return \ref osErrorISR. 
-
-
+Possible \ref osStatus_t return values:
+    - \em osOK: the thread has been suspended successfully.
+    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
+    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
+    - \em osErrorISR: the function \b osThreadSuspend cannot be called from interrupt service routines.
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osStatus_t osThreadResume (osThreadId_t thread_id)
 \details
-Forces a thread in BLOCKED state, specified with \em thread_id, to resume operation. 
-Functions that will put a thread into BLOCKED state are:
+The function \b osThreadResume forces a thread (specified with \em thread_id) in \em BLOCKED state to resume operation. 
+
+Functions that will put a thread into \em BLOCKED state are:
 \ref osEventFlagsWait and \ref osThreadFlagsWait,
 \ref osDelay and \ref osDelayUntil,
 \ref osMutexAcquire and \ref osSemaphoreAcquire,
 \ref osMessageQueueGet,
+\ref osMemoryPoolAlloc,
 \ref osThreadJoin,
 \ref osThreadSuspend.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-Calling \ref osThreadResume from an ISR will return \ref osErrorISR. 
-
-
+Possible \ref osStatus_t return values:
+    - \em osOK: the thread has been resumed successfully.
+    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
+    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
+    - \em osErrorISR: the function \b osThreadResume cannot be called from interrupt service routines.
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osStatus_t osThreadDetach (osThreadId_t thread_id)
 \details
-Changes the attribute of a thread specified in \em thread_id to \ref osThreadDetached. Detached threads are not joinable with \ref osThreadJoin. 
-When a detached thread is terminated all resources are returned to the system. The behaviour of \ref osThreadDetach on an already detached thread is undefined.
+The function \b osThreadDetach changes the attribute of a thread (specified by \em thread_id) to \ref osThreadDetached.
+Detached threads are not joinable with \ref osThreadJoin. When a detached thread is terminated, all resources are returned to
+the system. The behavior of \ref osThreadDetach on an already detached thread is undefined.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-Calling \ref osThreadDetach from an ISR will return \ref osErrorISR. 
+Possible \ref osStatus_t return values:
+    - \em osOK: the attribute of the specified thread has been changed to detached successfully.
+    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
+    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
+    - \em osErrorISR: the function \b osThreadDetach cannot be called from interrupt service routines.
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osStatus_t osThreadJoin (osThreadId_t thread_id)
 \details
-Waits for the thread specified by \em thread_id to terminate. 
-If that thread has already terminated, then \ref osThreadJoin returns immediately.  
-The thread referred to by thread_id must joinable. By default threads are created with the attribute \ref osThreadJoinable. The thread may not have been detached by \ref osThreadDetach.
+The function \b osThreadJoin waits for the thread specified by \em thread_id to terminate. If that thread has already
+terminated, then \ref osThreadJoin returns immediately. The thread must be joinable. By default threads are created with the
+attribute \ref osThreadJoinable.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-Calling \ref osThreadJoin from an ISR will return \ref osErrorISR. 
-
-\todo See Example 6
-
+Possible \ref osStatus_t return values:
+    - \em osOK: if the thread has already been terminated and joined or once the thread has been terminated and the join
+      operations succeeds.
+    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
+    - \em osErrorResource: parameter \em thread_id is \token{NULL} or refers to a thread that is not an active thread or the
+      thread is not joinable.
+    - \em osErrorISR: the function \b osThreadJoin cannot be called from interrupt service routines.
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn __NO_RETURN void osThreadExit (void)
 \details
 
-osThreadExit terminates the calling thread. This allows the thread to be synchronized with osThreadJoin. 
+The function \b osThreadExit terminates the calling thread. This allows the thread to be synchronized with \ref osThreadJoin.
 
+\b Code \b Example
+\code
+__NO_RETURN void worker (void *argument) {
+  // do something
+  osDelay(1000);
+  osThreadExit();
+}
+\endcode
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osStatus_t osThreadTerminate (osThreadId_t thread_id)
 \details
-Remove the thread function from the active thread list. If the thread is currently /b RUNNING the execution stops and the thread terminates.
+The function \b osThreadTerminate removes the thread specified by parameter \a thread_id from the list of active threads. If
+the thread is currently \b RUNNING, the thread terminates and the execution continues with the next \b READY thread. If no
+such thread exists, the function will not terminate the running thread, but return \em osErrorResource.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-Calling \ref osThreadTerminate from an ISR will return \ref osErrorISR. 
+Possible \ref osStatus_t return values:
+    - \em osOK: the specified thread has been removed from the active thread list successfully.
+    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
+    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state or no
+      other \b READY thread exists.
+    - \em osErrorISR: the function \b osThreadTerminate cannot be called from interrupt service routines.
 
+<b>Code Example</b>
 \code
 #include "cmsis_os2.h"
  
-void Thread_1 (void c*arg);                           // function prototype for Thread_1
-
+void Thread_1 (void *arg);                             // function prototype for Thread_1
+ 
 void ThreadTerminate_example (void) {
   osStatus_t status;
   osThreadId_t id;
  
   id = osThreadNew (Thread_1, NULL, NULL);             // create the thread
-  :  
+                                                       // do something
   status = osThreadTerminate (id);                     // stop the thread
   if (status == osOK) {
-    // Thread was terminated successfully
-  }
+                                                       // Thread was terminated successfully
+    }
   else {
-    // Failed to terminate a thread
-  }
+                                                       // Failed to terminate a thread
+    }
 }
 \endcode
-*/
-
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn uint32_t osThreadGetStackSize (osThreadId_t thread_id)
 \details
- 
+The function \b osThreadGetStackSize returns the stack size of the thread specified by parameter \a thread_id. In case of an
+error, it returns \token{0}.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn uint32_t osThreadGetStackSpace (osThreadId_t thread_id); 
 \details
-
-osThreadGetStackSpace returns the size of unused stack space for the thread passed in thread_id.
-If this function is not implemented or stack checking is disabled it will return 0.
+The function \b osThreadGetStackSpace returns the size of unused stack space for the thread specified by parameter
+\a thread_id. Stack watermark recording during execution needs to be enabled (refer to \ref threadConfig). In case of an
+error, it returns \token{0}.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-Calling \ref osThreadGetStackSpace from an ISR will return 0. 
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn uint32_t osThreadGetCount (void)
 \details
- 
+The function \b osThreadGetCount returns the number of active threads or \token{0} in case of an error.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items)
+\fn uint32_t osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items)
 \details
- 
+The function \b osThreadEnumerate returns the number of enumerated threads or \token{0} in case of an error.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /// @}
@@ -562,7 +589,7 @@ The following predefined bit masks can be assigned to set options for a thread o
 Bit Mask                |   Description
 :-----------------------|:-----------------------------------------
 osThreadJoinable        | Thread is created in a join-able state.
-osThreadDettached       | Thread is created in a detached state (default).
+osThreadDetached        | Thread is created in a detached state (default).
 
 \var osThreadAttr_t::cb_mem
 \details
@@ -592,10 +619,11 @@ Specify \token{NULL} to use the kernel memory management.
 
 \var osThreadAttr_t::tz_module
 \details
-TrustZone Thread Context Management Identifier to allocate context memory for threads. The RTOS kernel that runs in non-secure state calls the interface functions defined by the header file TZ_context.h. See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZone RTOS Context Management</a>.
+TrustZone Thread Context Management Identifier to allocate context memory for threads. The RTOS kernel that runs in
+non-secure state calls the interface functions defined by the header file TZ_context.h.
+See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZone RTOS Context Management</a>.
 
 \var osThreadAttr_t::stack_size
 \details
 The size of the stack specified by \ref stack_mem in Bytes.
-
 */

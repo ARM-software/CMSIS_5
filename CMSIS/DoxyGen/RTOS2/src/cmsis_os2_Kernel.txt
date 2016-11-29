@@ -5,26 +5,42 @@
 \ingroup CMSIS_RTOS
 \brief Provide version/system information and start the RTOS Kernel.
 \details 
-The Kernel Information and Control function group allows to:
+The kernel Information and Control function group allows to:
   - obtain information about the system and the underlying kernel.
   - obtain version information about the CMSIS-RTOS API.
   - initialize of the RTOS kernel for creating objects.
   - start the RTOS kernel and thread switching.
   - check the execution status of the RTOS kernel.
 
-\note The Kernel initialization for RTX5 is documented in \ref SystemStartup.
+\note The kernel information and control functions cannot be called from
+\ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note The kernel initialization for RTX5 is documented in \ref SystemStartup.
 
 <b>Code Example</b>
-\code{.c}
+\code
+/*----------------------------------------------------------------------------
+ * Application main thread
+ *---------------------------------------------------------------------------*/
+void app_main (void *argument) {
+ 
+  // ...
+  for (;;) {}
+}
+ 
 int main (void) {
-  osKernelInitialize ();                    // initialize CMSIS-RTOS
  
-  // initialize peripherals here
+  // System Initialization
+  SystemCoreClockUpdate();
+#ifdef RTE_Compiler_EventRecorder
+  // Initialize and start Event Recorder
+  EventRecorderInitialize(EventRecordError, 1U);
+#endif
+  // ...
  
-  // create 'thread' functions that start executing,
-  // example: tid_name = osThreadNew(thread, NULL, NULL);
- 
-  osKernelStart ();                         // start thread execution 
+  osKernelInitialize();                 // Initialize CMSIS-RTOS
+  osThreadNew(app_main, NULL, NULL);    // Create application main thread
+  osKernelStart();                      // Start thread execution
+  for (;;) {}
 }
 \endcode
 @{
@@ -33,32 +49,34 @@ int main (void) {
 /**
 \struct osVersion_t
 \details
-Identifies the underlying RTOS kernel and API version number. 
-The Version is represented in a combined decimal number in the format: major.minor.rev: mmnnnrrrr 
+Identifies the underlying RTOS kernel and API version number. The version is represented in a combined decimal number in the
+format: major.minor.rev: mmnnnrrrr 
 
-Use \ref osKernelGetInfo to retrieve the version numbers
-
+Use \ref osKernelGetInfo to retrieve the version numbers.
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \enum osKernelState_t
 \details
-State of the Kernel. Can be retrieved by \ref osKernelGetState.
+State of the kernel as retrieved by \ref osKernelGetState. In case \b osKernelGetState fails or if it is called from an ISR,
+it will return \c osKernelError, otherwise it returns the kernel state.
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osStatus_t osKernelInitialize (void)
 \details
+The function \b osKernelInitialize initializes the RTOS Kernel. Before it is successfully executed, no RTOS function may be called.
  
-\return Returns \ref osStatus_t with \ref osOK in case of success. 
-\return Returns \ref osError if an internal error prevents the kernel initialization.
- 
-Initialize the RTOS Kernel. Before osKernelInitialize is successfully executed no RTOS function may be called.
- 
-The RTOS kernel does not start thread switching until the function osKernelStart is called.
- 
-<b> Code Example:</b>
-\code{.c}
+Possible \ref osStatus_t return values:
+- \em osOK in case of success.
+- \em osError if an unspecific error occurred.
+- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+- \em osErrorNoMemory if no memory could be reserved for the operation.
+
+<b> Code Example</b>
+\code
 #include "RTE_Components.h"
 #include  CMSIS_device_header
 #include "cmsis_os2.h"
@@ -73,7 +91,7 @@ void app_main (void *argument) {
 }
  
 int main (void) {
-
+ 
   // System Initialization
   SystemCoreClockUpdate();
   // ...
@@ -84,47 +102,54 @@ int main (void) {
   for (;;) {}
 }
 \endcode
-
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osStatus_t osKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size)
 \details
-Retrieve API and kernel version of the underlying RTOS kernel and a human readable identifier string for the kernel.
- 
-<b>Code Example:</b>
-\code{.c}
+The function \b  osKernelGetInfo retrieves the API and kernel version of the underlying RTOS kernel and a human readable identifier string for the kernel.
+
+Possible \ref osStatus_t return values:
+- \em osOK in case of success.
+- \em osError if an unspecific error occurred.
+- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+
+<b>Code Example</b>
+\code
 void info (void) {
   char infobuf[100];
   osVersion_t osv;
   osStatus_t status;
-	
-  status = osKernelGetInfo(&osv, infobuf, 100);
+ 
+  status = osKernelGetInfo(&osv, infobuf, sizeof(infobuf));
   if(status == osOK) {
     printf("Kernel Information: %s\r\n", infobuf);
-		printf("Kernel Version    : %d\r\n", osv.kernel);
-		printf("Kernel API Version: %d\r\n", osv.api);
-	}		
+    printf("Kernel Version    : %d\r\n", osv.kernel);
+    printf("Kernel API Version: %d\r\n", osv.api);
+  }
 }
 \endcode
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osKernelState_t osKernelGetState (void)
 \details
-\return The state of the kernel is represented in the \ref osKernelState_t enum. \ref osKernelGetState can be safely called before the RTOS is initialized.
+The function \b osKernelGetState returns the current state of the kernel and can be safely called before the RTOS is initialized. In case it fails or if it is called from an ISR, it will return \c osKernelError, otherwise it returns the kernel state (refer to \ref osKernelState_t for the list of kernel states).
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-Calling \ref osKernelGetState from an ISR will return \ref osKernelError. 
- 
-<b>Code Example:</b>
-\code{.c}
+Possible \ref osKernelState_t return values:
+- \ref osKernelError if an unspecific error occurred or it has been called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+- the actual kernel state otherwise.
+
+<b>Code Example</b>
+\code
 int main (void) {
   // System Initialization
   SystemCoreClockUpdate();
   // ...
   if(osKernelGetState() == osKernelInactive) {     // Is the kernel initialized?
-     osKernelInitialize();                          // Initialize CMSIS-RTOS kernel		 
+     osKernelInitialize();                         // Initialize CMSIS-RTOS kernel
   }
   ;
 }
@@ -135,25 +160,27 @@ int main (void) {
 /**
 \fn osStatus_t osKernelStart (void)
 \details
-Start the RTOS Kernel and begin thread switching.
-The function osKernelStart will not return to its calling function in case of success.
+The function \b osKernelStart starts the RTOS kernel and begins thread switching. It will not return to its calling function in case of success.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines". Calling \ref osKernelStart from an ISR will return \ref osErrorISR.
+Possible \ref osStatus_t return values:
+- \em osOK in case of success.
+- \em osError if an unspecific error occurred.
+- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
  
-<b>Code Example:</b>
-\code{.c}
+<b>Code Example</b>
+\code
 int main (void) {
   // System Initialization
   SystemCoreClockUpdate();
   // ...
-	if(osKernelGetState() == osKernelInactive) { 
-    osKernelInitialize();                        	 
-	}
-   ; // ... Start Threads
+  if(osKernelGetState() == osKernelInactive) {
+    osKernelInitialize();
+  }
+  ; // ... Start Threads
   if (osKernelGetState() == osKernelReady) {        // If kernel is ready to run...
     osKernelStart();                                // ... start thread execution
-  }
-
+    }
+  
   while(1);                                         // only reached in case of error
 }
 \endcode
@@ -161,57 +188,145 @@ int main (void) {
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn uint32_t osKernelLock (void)
+\fn int32_t osKernelLock (void)
 \details
-Allows to lock all task switches. 
-<b>Code Example:</b>
-\code{.c}
-uint32_t lock;
+The function \b osKernelLock allows to lock all task switches. It returns the previous value of the lock state (\token{1} if
+it was locked, \token{0} if it was unlocked), or a negative number representing an error code otherwise (refer to
+\ref osStatus_t).
 
-lock = osKernelLock();
-…
-if (lock) {
-  osKernelUnlock();
-}
+<b>Code Example</b>
+\code
+  uint32_t state = osKernelLock();
+  // ... critical code
+  osKernelRestore(state);
 \endcode
-
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn void osKernelUnlock (void)
+\fn int32_t osKernelUnlock (void)
 \details
-Resumes from \ref osKernelLock.
+The function \b osKernelUnlock resumes from \ref osKernelLock. It returns the previous value of the lock state (\token{1} if
+it was locked, \token{0} if it was unlocked), or a negative number representing an error code otherwise (refer to
+\ref osStatus_t).
+
+<b>Code Example</b>
+\code
+  uint32_t sl = osKernelLock();
+  // ... critical code
+  {
+    unint32_t su = osKernelUnlock();
+    // ... uncritical code
+    osKernelRestoreLock(su);
+  }
+  // ... critical code
+  osKernelRestoreLock(sl);
+\endcode
 */
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t osKernelRestoreLock (int32_t lock)
+\details
+The function \b osKernelRestoreLock restores the previous lock state after \ref osKernelLock or \ref osKernelUnlock.
+
+The argument \a lock specifies the lock state as obtained by \ref osKernelLock or \ref osKernelUnlock.
+
+The function returns the new value of the lock state (\token{1} if it was locked, \token{0} if it was unlocked), or a
+negative number representing an error code otherwise (refer to \ref osStatus_t).
+
+<b>Code Example</b>
+\code
+  uint32_t sl = osKernelLock();
+  // ... critical code
+  {
+    unint32_t su = osKernelUnlock();
+    // ... uncritical code
+    osKernelRestoreLock(su);
+  }
+  // ... critical code
+  osKernelRestoreLock(sl);
+\endcode
+*/
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn uint32_t osKernelSuspend (void)
 \details
-CMSIS-RTOS provides extension for tick-less operation which is useful for applications that use extensively low-power modes where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to derive timer intervals. The functions osKernelSuspend and osKernelResume control the tick-less operation.
+CMSIS-RTOS provides extension for tick-less operation which is useful for applications that use extensively low-power modes
+where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to derive
+timer intervals. The function \b osKernelSuspend suspends the RTX kernel scheduler and thus enables sleep modes.
 
-<b>Code Example:</b>
-\code{.c}
-void os_idle_demon (void) {
-  /* The idle demon is a system thread, running when no other thread is       */
-  /* ready to run.                                                            */
+<b>Code Example</b>
+\code
+void osRtxIdleThread (void) {
+                                               /* The idle thread is running
+                                                  when no other thread is ready
+                                                  to run.                      */
   unsigned int sleep;
-
+ 
   for (;;) {
-  /* HERE: include optional user code to be executed when no task runs.*/
-    sleep = osKernelSuspend();                      /* Suspend RTX thread scheduler */S
+                                               /* HERE: include optional user
+                                                  code to be executed when no
+                                                  task runs.                   */
+    sleep = osKernelSuspend();                 /* Suspend RTX thread scheduler */
  
     if (sleep) {                               /* How long can we sleep?       */
-      /* "sleep" is in RTX Timer Ticks which is 1ms in this configuration      */
+                                               /* "sleep" is in RTX Timer Ticks
+                                                  which is 1ms in this
+                                                  configuration                */
        
-      /* Setup wake-up e.g. watchdog */
+                                               /* Setup wake-up e.g. watchdog  */
  
-      /* Enter Power-down mode */
       __WFE();                                 /* Enter Power-down mode        */
       
-      /* After Wake-up */
+                                               /* After Wake-up                */
       sleep = tc;                              /* Adjust with cycles slept     */  
     }
  
-    osKernelResume(sleep);                          /* Resume thread scheduler      */
+    osKernelResume(sleep);                     /* Resume thread scheduler      */
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn void osKernelResume (uint32_t sleep_ticks)
+\details
+CMSIS-RTOS provides extension for tick-less operation which is useful for applications that use extensively low-power modes
+where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to derive
+timer intervals. The function \b osKernelResume enables the RTX kernel scheduler and thus wakes up the system from sleep
+mode.
+
+<b>Code Example</b>
+\code
+void osRtxIdleThread (void) {
+                                               /* The idle thread is running
+                                                  when no other thread is ready
+                                                  to run.                      */
+  unsigned int sleep;
+ 
+  for (;;) {
+                                               /* HERE: include optional user
+                                                  code to be executed when no
+                                                  task runs.                   */
+    sleep = osKernelSuspend();                 /* Suspend RTX thread scheduler */
+ 
+    if (sleep) {                               /* How long can we sleep?       */
+                                               /* "sleep" is in RTX Timer Ticks
+                                                  which is 1ms in this
+                                                  configuration                */
+       
+                                               /* Setup wake-up e.g. watchdog  */
+ 
+      __WFE();                                 /* Enter Power-down mode        */
+      
+                                               /* After Wake-up                */
+      sleep = tc;                              /* Adjust with cycles slept     */  
+    }
+ 
+    osKernelResume(sleep);                     /* Resume thread scheduler      */
   }
 }
 \endcode
@@ -219,34 +334,30 @@ void os_idle_demon (void) {
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn void osKernelResume (uint32_t sleep_ticks)
-\details
-See \ref osKernelSuspend.
-
-*/
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
 \fn uint64_t osKernelGetTickCount (void)
 \details
-
+The function \b osKernelGetTickCount returns the current RTOS kernel tick count or \token{0} in case of a failure.
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn uint32_t osKernelGetTickFreq (void)
 \details
-
+The function \b osKernelGetTickFreq returns the frequency of the current RTOS kernel tick or \token{0} in case of a failure.
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn uint32_t osKernelGetSysTimerCount (void)
 \details
- 
+The function \b osKernelGetSysTimerCount returns the current RTOS kernel system timer as a 32-bit value or \token{0} in case of a failure.
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn uint32_t osKernelGetSysTimerFreq (void)
 \details
-
+The function \b osKernelGetSysTimerFreq returns the frequency of the current RTOS kernel system timer or \token{0} in case of a failure.
 */
 /// @}
 
@@ -266,7 +377,7 @@ The kernel is initialized and running.
 
 \var osKernelState_t::osKernelLocked
 \details
-The kernel was locked with \ref osKernelLock. The function \ref osKernelUnlock unlocks it.
+The kernel was locked with \ref osKernelLock. The functions \ref osKernelUnlock or \ref osKernelRestoreLock unlocks it.
 
 \var osKernelState_t::osKernelSuspended
 \details
@@ -274,7 +385,7 @@ The kernel was suspended using \ref osKernelSuspend. The function \ref osKernelR
 
 \var osKernelState_t::osKernelError
 \details
-An error occurred. The kernel error handler should have been called in this state.
+An error occurred.
 
 \var osKernelState_t::osKernelReserved
 \details

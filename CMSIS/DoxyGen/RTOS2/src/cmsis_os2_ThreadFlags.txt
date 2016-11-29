@@ -1,4 +1,3 @@
-
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 //  ==== Thread Flags Management ====
 /** 
@@ -7,64 +6,68 @@
 \brief Synchronize threads using flags.
 \details
 Thread Flags are a more specialized version of the Event Flags. See \ref CMSIS_RTOS_EventFlags.
-While Event Flags can be used to globally signal a number of threads, thread flags are only send to a single specific thread. Every thread instance can receive thread flags without any additional allocation of a thread flags object.
+While Event Flags can be used to globally signal a number of threads, thread flags are only send to a single specific thread.
+Every thread instance can receive thread flags without any additional allocation of a thread flags object.
+
+\note Thread flag management functions cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines", except
+for \ref osThreadFlagsSet.
 
 @{
 */
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn int32_t osThreadFlagsSet (osThreadId_t thread_id, int32_t flags ) 	
-Set the thread flags for a thread instance specified by \em thread_id. This function may be used also within interrupt service routines. 
-The threads waiting for the flag set will be notified to resume from BLOCKED state.
 
-<b>Code Example</b>
-\code{.c}
-void Thread (void *arg);
- 
-static void EX_Signal_1 (void)  {
-  int32_t      signals;
-  osThreadId_t thread_id;
-  
-  thread_id = osThreadNew  (Thread, NULL, NULL);
-  signals   = osThreadFlagsSet (event_id, 0x00000001ul);         // Send signals to the created thread
-}
-\endcode
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \fn int32_t osThreadFlagsSet (osThreadId_t thread_id, int32_t flags )
+The function \b osThreadFlagsSet sets the thread flags for a thread specified by parameter \em thread_id. It returns the
+flags set, or a negative number representing an error code otherwise (refer to \ref osStatus_t). This function may
+be used also within interrupt service routines. Threads waiting for a flag to be set will resume from \em BLOCKED state.
 */
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** \fn osStatus osThreadFlagsClear (int32_t flags)
-\details
-Clear the specified event flags set for the a calling thread. 
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=======osThreadFlagsClear==8=========9=========0=========1====*/
+/** \fn int32_t osThreadFlagsClear (int32_t flags)
+\details
+The function \b osThreadFlagsClear clears the specified flags for the currently running thread. It returns the
+flags before clearing, or a negative number representing an error code otherwise (refer to \ref osStatus_t).
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \fn int32_t osThreadFlagsGet (void)
 \details
-Return the event flags currently set for the calling thread. 
- 
+The function \b osThreadFlagsGet returns the flags currently set for the currently running thread, or a negative number
+representing an error code otherwise (refer to \ref osStatus_t). 
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \fn int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout)
-Suspend the execution of the current \b RUNNING thread until any or all specified thread flags with the parameter \a flags are set.
-The \em options parameter specifies the wait condition. 
+The function \b osThreadFlagsWait suspends the execution of the currently \b RUNNING thread until any or all of the thread
+flags specified with the parameter \a flags are set. When these thread flags are already set, the function returns instantly.
+Otherwise the thread is put into the state \b BLOCKED. The function the returns flags before clearing, or a negative number
+representing an error code otherwise (refer to \ref osStatus_t).
 
-|Option              |													     |
+The parameter \em options specifies the wait condition:
+|Option              |                                                       |
 |--------------------|-------------------------------------------------------|
 |\b osFlagsWaitAny   |   Wait for any flag (default).                        |
 |\b osFlagsWaitAll   |   Wait for all flags.                                 |
 |\b osFlagsNoClear   |   Do not clear flags which have been specified to wait for.  |
 
-If osFlagsNoClear is set in the options \ref osThreadFlagsClear can be used to clear flags manually.
+If \c osFlagsNoClear is set in the options \ref osThreadFlagsClear can be used to clear flags manually.
 
-When these thread flags are already set, the function returns instantly. Otherwise the thread is put into the state \b BLOCKED. 
+The parameter \ref CMSIS_RTOS_TimeOutValue "timeout" represents a number of timer ticks and is an upper bound. The
+exact time delay depends on the actual time elapsed since the last timer tick. 
 
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
-\code{.c}
+\code
 #include "cmsis_os2.h"
  
 void Thread (void* arg) {
-;
-  osThreadFlagsWait (0x00000001ul, NULL, osWaitForever); //Wait forever until event 0x01 is set.
-;
+  ;
+  osThreadFlagsWait (0x00000001U, osFlagsWaitAny, osWaitForever); //Wait forever until event 0x01 is set.
+  ;
 }
 \endcode
 */

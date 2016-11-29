@@ -1,5 +1,3 @@
-
-
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 //  ==== Message Queue Management ====
 /** 
@@ -18,40 +16,18 @@ data to be passed can be of integer or pointer type:
 Compared to a \ref CMSIS_RTOS_PoolMgmt, message queues are less efficient in general, but solve a broader range of problems.
 Sometimes, threads do not have a common address space or the use of shared memory raises problems, such as mutual exclusion.
 
-\note 
-Refer to \ref msgQueueConfig for RTX5 configuration options.
-
-Working with Message Queues
----------------------------
-Follow these steps to create and use a message queue:
--# Setup the message queue:
-\code{.c}
-osMessageQueueId_t MsgQ_Id;                                       // Define a message queue ID
-\endcode
--# Then, create the message queue in a thread:
-\code{.c}
-MsgQId_Isr = osMessageQueueNew (16, sizeof(uint32_t), NULL);      // Instance a message queue for 16 elements of uint32_t
-\endcode
--# Fill the message queue with data:
-\code{.c}
-uint32_t data = 512;
- 
-osMessageQueuePut(MsgQ_Id, data, 0, 0);
-\endcode
--# From the receiving thread access the data using:
-\code{.c}
-uint32_t msg;
-osMessageQueueGet(MsgQ_Id, &msg, NULL, 0);
-\endcode
-
+\note The functions \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity,
+\ref osMessageQueueGetMsgSize, \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace can be called from
+\ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note Refer to \ref msgQueueConfig for RTX5 configuration options.
 @{
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \def osMessageQueueId_t
 \details
-
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \struct osMessageQueueAttr_t
@@ -63,13 +39,30 @@ Attributes structure for message queue.
 /** 
 \fn osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, const osMessageQueueAttr_t *attr)
 \details
+The function \b osMessageQueueNew creates and initializes a message queue object and returns the pointer to the message queue
+object identifier or \token{NULL} in case of an error.
 
+The parameter \a msg_count specifies the maximum number of messages om the queue.
+
+The parameter \a msg_size sets message size in bytes.
+
+The parameter \a attr specifies additional message queue attributes. Default attributes will be used if set to \token{NULL}.
+
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+
+Refer to \ref osMessageQueuePut
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn const char *osMessageQueueGetName (osMessageQueueId_t mq_id)
 \details
+The function \b osMessageQueueGetName returns the pointer to the name string of the message queue identified by parameter \a
+mq_id or \token{NULL} in case of an error.
 
+\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 */
@@ -77,29 +70,50 @@ Attributes structure for message queue.
 /** 
 \fn osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout);
 \details
+The blocking function \b osMessageQueuePut puts a message into the the message queue specified by parameter \a mq_id.
+
+The parameter \a msg_ptr points to the buffer with the message to be put into the queue.
+
+The parameter \a msg_prio defines the message priority (higher numbers indicate a higher priority).
+
+The parameter \a timeout specifies how long the system waits to put the message into the queue. While the system waits, the
+thread that is calling this function is put into the \b BLOCKED state. The parameter \ref CMSIS_RTOS_TimeOutValue "timeout"
+can have the following values:
+ - when \a timeout is \token{0}, the function returns instantly.
+ - when \a timeout is set to \b osWaitForever the function will wait for an infinite time until the message is delivered.
+ - all other values specify a time in kernel ticks for a timeout.
+
+Possible \ref osStatus_t return values:
+ - \em osOK: the message has been put into the queue.
+ - \em osErrorTimeout: the message could not be put into the queue in the given time.
+ - \em osErrorResource: not enough space in the queue.
+ - \em osErrorParameter: the parameter \a mq_id is incorrect, non-zero timeout specified in an ISR.
+
+\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
+\token{0}.
+
 <b>Code Example:</b>
-\code{.c}
-
-#include "cmsis_os2.h"                                           // CMSIS RTOS header file
-
+\code
+#include "cmsis_os2.h"                                             // CMSIS RTOS header file
+ 
 /*----------------------------------------------------------------------------
  *      Message Queue creation & usage
  *---------------------------------------------------------------------------*/
   
-void Thread_MsgQueue1 (void *argument);                   // thread function 1
-void Thread_MsgQueue2 (void *argument);                   // thread function 2
-osThreadId_t tid_Thread_MsgQueue1;                                // thread id 1
-osThreadId_t tid_Thread_MsgQueue2;                                // thread id 2
+void Thread_MsgQueue1 (void *argument);                            // thread function 1
+void Thread_MsgQueue2 (void *argument);                            // thread function 2
+osThreadId_t tid_Thread_MsgQueue1;                                 // thread id 1
+osThreadId_t tid_Thread_MsgQueue2;                                 // thread id 2
  
-#define MSGQUEUE_OBJECTS      16                                // number of Message Queue Objects
+#define MSGQUEUE_OBJECTS      16                                   // number of Message Queue Objects
  
-typedef struct {                                                // object data type
+typedef struct {                                                   // object data type
   uint8_t Buf[32];
   uint8_t Idx;
 } MSGQUEUE_OBJ_t;
  
-osMemoryPoolId_t mpid_MemPool2;                                         // memory pool id
-osMessageQueueId_t mid_MsgQueue;                                      // message queue id
+osMemoryPoolId_t mpid_MemPool2;                                    // memory pool id
+osMessageQueueId_t mid_MsgQueue;                                   // message queue id
  
 int Init_MsgQueue (void) {
   
@@ -124,7 +138,7 @@ void Thread_MsgQueue1 (void *argument) {
     pMsg->Buf[0] = 0x55;                                           // do some work...
     pMsg->Idx    = 0;
     osMessageQueuePut (mid_MsgQueue, &pMsg, NULL, NULL);
-    osThreadYield ();                                             // suspend thread
+    osThreadYield ();                                              // suspend thread
   }
 }
  
@@ -134,55 +148,110 @@ void Thread_MsgQueue2 (void *argument) {
 
   while (1) {
     ; // Insert thread code here...
-    status = osMessageQueueGet (mid_MsgQueue, &pMsg, NULL, NULL);     // wait for message
+    status = osMessageQueueGet (mid_MsgQueue, &pMsg, NULL, NULL);  // wait for message
     if (status == osOK) {
         ; // process data
     }
   }
 }
 \endcode
-
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \fn osStatus_t osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout)
 \details
+The function \b osMessageQueueGet retrieves a message from the message queue specified by the parameter \a mq_id and saves it
+to the buffer pointed to by the parameter \a msg_ptr.
 
+The parameter \a msg_prio is a pointer to the buffer containing the message priority or token{NULL}.
+
+The parameter \a timeout specifies how long the system waits to retrieve the message from the queue. While the system waits,
+the thread that is calling this function is put into the \b BLOCKED state. The parameter
+\ref CMSIS_RTOS_TimeOutValue "timeout" can have the following values:
+ - when \a timeout is \token{0}, the function returns instantly.
+ - when \a timeout is set to \b osWaitForever the function will wait for an infinite time until the message is retrieved.
+ - all other values specify a time in kernel ticks for a timeout.
+
+Possible \ref osStatus_t return values:
+ - \em osOK: the message has been retrieved from the queue.
+ - \em osErrorTimeout: the message could not be retrieved from the queue in the given time.
+ - \em osErrorResource: nothing to get from  the queue.
+ - \em osErrorParameter: the parameter \a mq_id is incorrect, non-zero timeout specified in an ISR.
+
+\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
+\token{0}.
+
+<b>Code Example</b>
+
+Refer to \ref osMessageQueuePut
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \fn uint32_t osMessageQueueGetCapacity (osMessageQueueId_t mq_id)
 \details
+The function \b osMessageQueueGetCapacity returns the maximum number of messages in the message queue object specified by
+parameter \a mq_id or \token{0} in case of an error.
 
+\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \fn uint32_t osMessageQueueGetMsgSize (osMessageQueueId_t mq_id)
 \details
+The function \b osMessageQueueGetMsgSize returns the maximum message size in bytes for the message queue object specified by
+parameter \a mq_id or \token{0} in case of an error.
 
+\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \fn uint32_t osMessageQueueGetCount (osMessageQueueId_t mq_id)
 \details
+The function \b osMessageQueueGetCount returns the number of queued messages in the message queue object specified by
+parameter \a mq_id or \token{0} in case of an error.
 
+\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \fn uint32_t osMessageQueueGetSpace (osMessageQueueId_t mq_id)
 \details
+The function \b osMessageQueueGetSpace returns the number available slots for messages in the message queue object specified
+by parameter \a mq_id or \token{0} in case of an error.
 
+\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \fn osStatus_t osMessageQueueReset (osMessageQueueId_t mq_id)
 \details
+The function \b osMessageQueueReset resets the message queue specified by the parameter \a mq_id.
 
+Possible \ref osStatus_t return values:
+ - \em osOK: the message queue has been rest.
+ - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid.
+ - \em osErrorResource: the message queue specified by parameter \a mq_id is in an invalid message queue state.
+ - \em osErrorISR: \b osMessageQueueReset cannot be called from interrupt service routines.
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \fn osStatus_t osMessageQueueDelete (osMessageQueueId_t mq_id)
 \details
+The function \b osMessageQueueDelete deletes a message queue object specified by parameter \a mq_id. It releases internal
+memory obtained for message queue handling. After this call, the \a mq_id is no longer valid and cannot be used. The
+message queue may be created again using the function \ref osMessageQueueNew.
 
+Possible \ref osStatus_t return values:
+ - \em osOK: the message queue object has been deleted.
+ - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid.
+ - \em osErrorResource: the message queue specified by parameter \a mq_id is in an invalid message queue state.
+ - \em osErrorISR: \b osMessageQueueDelete cannot be called from interrupt service routines.
 */
 /// @}

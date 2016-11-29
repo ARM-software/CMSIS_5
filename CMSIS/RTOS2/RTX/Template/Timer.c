@@ -1,38 +1,34 @@
-
 #include "cmsis_os2.h"                                           // CMSIS RTOS header file
-
+ 
 /*----------------------------------------------------------------------------
  *      Timer: Sample timer functions
  *---------------------------------------------------------------------------*/
  
-
 /*----- One-Shoot Timer Example -----*/
 static void Timer1_Callback (void const *arg);                  // prototype for timer callback function
-
-osTimerId_t tim_id1;                                           // timer id
+ 
+osTimerId_t tim_id1;                                            // timer id
 static uint32_t  exec1;                                         // argument for the timer call back function
 
 // One-Shoot Timer Function
 static void Timer1_Callback (void const *arg) {
   // add user code here
 }
-
-
+ 
 /*----- Periodic Timer Example -----*/
 static void Timer2_Callback (void const *arg);                  // prototype for timer callback function
-
-osTimerId_t tim_id2;                                                // timer id
+ 
+osTimerId_t tim_id2;                                            // timer id
 static uint32_t  exec2;                                         // argument for the timer call back function
-
+ 
 // Periodic Timer Example
 static void Timer2_Callback (void const *arg) {
   // add user code here
 }
-
-
+ 
 // Example: Create and Start timers
 int Init_Timers (void) {
-  osStatus_t status;                                              // function return status
+  osStatus_t status;                                            // function return status
  
   // Create one-shoot timer
   exec1 = 1;
@@ -55,5 +51,5 @@ int Init_Timers (void) {
       return -1;
     }
   }
-	return NULL;
+  return NULL;
 }

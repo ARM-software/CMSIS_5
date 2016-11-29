@@ -633,7 +633,7 @@ Attributes of the CMSIS-RTOS RTX implementation:
 
 The following sections provide further details:
  - \subpage theory : provides general information about the operation of CMSIS-RTOS RTX.
- - \subpage files : explains the directories and files that are supplied as part of CMSIS-RTOS RTX.
+ - \subpage dirstructfiles : explains the directories and files that are supplied as part of CMSIS-RTOS RTX.
  - \subpage technicalData : lists hardware requirements and limitations such as number of concurrent threads.
  - \subpage misraCompliance : describes the violations to the MISRA standard.
  - \subpage using : Provides instructions for writing and debugging applications with CMSIS-RTOS RTX. 
@@ -744,7 +744,7 @@ case that they are called from an ISR context.
 
 /* ========================================================================================================================== */
 /** 
-\page files Directory Structure and File Overview
+\page dirstructfiles Directory Structure and File Overview
 
 The following section provides an overview of the directory structure and the files that are relevant for the user's for
 CMSIS-RTOS RTX.
