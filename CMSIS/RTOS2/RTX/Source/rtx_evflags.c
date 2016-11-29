@@ -379,13 +379,13 @@ int32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t op
 
   // Check if timeout is specified
   if (timeout != 0U) {
+    EvrRtxEventFlagsWaitPending(ef, flags, options, timeout);
     // Store waiting flags and options
     running_thread->wait_flags = flags;
     running_thread->flags_options = (uint8_t)options;
     // Suspend current Thread
     osRtxThreadListPut((os_object_t*)ef, running_thread);
     osRtxThreadWaitEnter(osRtxThreadWaitingEventFlags, timeout);
-    EvrRtxEventFlagsWaitPending(ef, flags, options, timeout);
     return osErrorTimeout;
   }
 

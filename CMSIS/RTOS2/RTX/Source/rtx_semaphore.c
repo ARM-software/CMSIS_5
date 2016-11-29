@@ -238,10 +238,10 @@ osStatus_t svcRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeou
   if (SemaphoreTokenDecrement(semaphore) == 0U) {
     // No token available
     if (timeout != 0U) {
+      EvrRtxSemaphoreAcquirePending(semaphore, timeout);
       // Suspend current Thread
       osRtxThreadListPut((os_object_t*)semaphore, osRtxThreadGetRunning());
       osRtxThreadWaitEnter(osRtxThreadWaitingSemaphore, timeout);
-      EvrRtxSemaphoreAcquirePending(semaphore, timeout);
       return osErrorTimeout;
     } else {
       EvrRtxSemaphoreNotAcquired(semaphore);

@@ -123,11 +123,11 @@ void osRtxTick_Handler (void) {
   osRtxSysTimerAckIRQ();
   osRtxInfo.kernel.tick++;
 
-  // Process Thread Delays
-  osRtxThreadDelayTick();
-
   // Process Timers
   osRtxTimerTick();
+
+  // Process Thread Delays
+  osRtxThreadDelayTick();
 
   osRtxThreadDispatch(NULL);
 

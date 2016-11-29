@@ -714,6 +714,15 @@ extern void EvrRtxThreadFlagsWaitPending (int32_t flags, uint32_t options, uint3
 #endif
 
 /**
+  \brief  Event on wait timeout for thread flags (Op)
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_WAIT_TIMEOUT_DISABLE))
+extern void EvrRtxThreadFlagsWaitTimeout (void);
+#else
+#define EvrRtxThreadFlagsWaitTimeout()
+#endif
+
+/**
   \brief  Event on successful wait for thread flags (Op)
   \param[in]  flags         flags to wait for.
   \param[in]  options       flags options (osFlagsXxxx).
@@ -755,6 +764,16 @@ extern void EvrRtxThreadDelayUntil (uint64_t ticks);
 #else
 #define EvrRtxThreadDelayUntil(ticks)
 #endif
+
+/**
+  \brief  Event on completed wait (Op)
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_DELAY_COMPLETED_DISABLE))
+extern void EvrRtxThreadDelayCompleted (void);
+#else
+#define EvrRtxThreadDelayCompleted()
+#endif
+
 
 
 //  ==== Timer Events ====
@@ -1014,6 +1033,16 @@ extern void EvrRtxEventFlagsWaitPending (osEventFlagsId_t ef_id, int32_t flags, 
 #endif
 
 /**
+  \brief  Event on wait timeout for event flags (Op)
+  \param[in]  ef_id         event flags ID obtained by \ref osEventFlagsNew.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_WAIT_TIMEOUT_DISABLE))
+extern void EvrRtxEventFlagsWaitTimeout (osEventFlagsId_t ef_id);
+#else
+#define EvrRtxEventFlagsWaitTimeout(ef_id)
+#endif
+
+/**
   \brief  Event on successful wait for event flags (Op)
   \param[in]  ef_id         event flags ID obtained by \ref osEventFlagsNew.
   \param[in]  flags         flags to wait for.
@@ -1123,6 +1152,16 @@ extern void EvrRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout);
 extern void EvrRtxMutexAcquirePending (osMutexId_t mutex_id, uint32_t timeout);
 #else
 #define EvrRtxMutexAcquirePending(mutex_id, timeout);
+#endif
+
+/**
+  \brief  Event on mutex acquire timeout (Op)
+  \param[in]  mutex_id  mutex ID obtained by \ref osMutexNew.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_MUTEX != 0) && !defined(EVR_RTX_MUTEX_ACQUIRE_TIMEOUT_DISABLE))
+extern void EvrRtxMutexAcquireTimeout (osMutexId_t mutex_id);
+#else
+#define EvrRtxMutexAcquireTimeout(mutex_id)
 #endif
 
 /**
@@ -1268,6 +1307,16 @@ extern void EvrRtxSemaphoreAcquirePending (osSemaphoreId_t semaphore_id, uint32_
 #endif
 
 /**
+  \brief  Event on semaphore acquire timeout (Op)
+  \param[in]  semaphore_id  semaphore ID obtained by \ref osSemaphoreNew.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_SEMAPHORE != 0) && !defined(EVR_RTX_SEMAPHORE_ACQUIRE_TIMEOUT_DISABLE))
+extern void EvrRtxSemaphoreAcquireTimeout (osSemaphoreId_t semaphore_id);
+#else
+#define EvrRtxSemaphoreAcquireTimeout(semaphore_id)
+#endif
+
+/**
   \brief  Event on successful semaphore acquire (Op)
   \param[in]  semaphore_id  semaphore ID obtained by \ref osSemaphoreNew.
 */
@@ -1405,6 +1454,16 @@ extern void EvrRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout);
 extern void EvrRtxMemoryPoolAllocPending (osMemoryPoolId_t mp_id, uint32_t timeout);
 #else
 #define EvrRtxMemoryPoolAllocPending(mp_id, timeout)
+#endif
+
+/**
+  \brief  Event on memory pool allocation timeout (Op)
+  \param[in]  mp_id         memory pool ID obtained by \ref osMemoryPoolNew.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_MEMPOOL != 0) && !defined(EVR_RTX_MEMORY_POOL_ALLOC_TIMEOUT_DISABLE))
+extern void EvrRtxMemoryPoolAllocTimeout (osMemoryPoolId_t mp_id);
+#else
+#define EvrRtxMemoryPoolAllocTimeout(mp_id)
 #endif
 
 /**
@@ -1598,6 +1657,16 @@ extern void EvrRtxMessageQueuePutPending (osMessageQueueId_t mq_id, const void *
 #endif
 
 /**
+  \brief  Event on message put timeout (Op)
+  \param[in]  mq_id         message queue ID obtained by \ref osMessageQueueNew.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_MSGQUEUE != 0) && !defined(EVR_RTX_MESSAGE_QUEUE_PUT_TIMEOUT_DISABLE))
+extern void EvrRtxMessageQueuePutTimeout (osMessageQueueId_t mq_id);
+#else
+#define EvrRtxMessageQueuePutTimeout(mq_id)
+#endif
+
+/**
   \brief  Event on pending message insert (Op)
   \param[in]  mq_id         message queue ID obtained by \ref osMessageQueueNew.
   \param[in]  msg_ptr       pointer to buffer with message to put into a queue.
@@ -1653,6 +1722,16 @@ extern void EvrRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint
 extern void EvrRtxMessageQueueGetPending (osMessageQueueId_t mq_id, void *msg_ptr, uint32_t timeout);
 #else
 #define EvrRtxMessageQueueGetPending(mq_id, msg_ptr, timeout)
+#endif
+
+/**
+  \brief  Event on message get timeout (Op)
+  \param[in]  mq_id         message queue ID obtained by \ref osMessageQueueNew.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_MSGQUEUE != 0) && !defined(EVR_RTX_MESSAGE_QUEUE_GET_TIMEOUT_DISABLE))
+extern void EvrRtxMessageQueueGetTimeout (osMessageQueueId_t mq_id);
+#else
+#define EvrRtxMessageQueueGetTimeout(mq_id)
 #endif
 
 /**

@@ -215,10 +215,10 @@ osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
         osRtxThreadListSort(mutex->owner_thread);
       }
     }
+    EvrRtxMutexAcquirePending(mutex, timeout);
     // Suspend current Thread
     osRtxThreadListPut((os_object_t*)mutex, runnig_thread);
     osRtxThreadWaitEnter(osRtxThreadWaitingMutex, timeout);
-    EvrRtxMutexAcquirePending(mutex, timeout);
     return osErrorTimeout;
   }
 

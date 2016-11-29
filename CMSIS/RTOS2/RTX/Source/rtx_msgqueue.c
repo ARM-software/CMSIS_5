@@ -422,6 +422,7 @@ osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
   } else {
     // No memory available
     if (timeout != 0U) {
+      EvrRtxMessageQueuePutPending(mq, msg_ptr, timeout);
       // Suspend current Thread
       osRtxThreadListPut((os_object_t*)mq, osRtxThreadGetRunning());
       osRtxThreadWaitEnter(osRtxThreadWaitingMessagePut, timeout);
@@ -429,7 +430,6 @@ osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
       reg = (uint32_t *)(__get_PSP());
       reg[2] = (uint32_t)msg_ptr;
       reg[3] = (uint32_t)msg_prio;
-      EvrRtxMessageQueuePutPending(mq, msg_ptr, timeout);
       return osErrorTimeout;
     } else {
       EvrRtxMessageQueueNotInserted(mq, msg_ptr);
@@ -478,6 +478,7 @@ osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
   } else {
     // No Message available
     if (timeout != 0U) {
+      EvrRtxMessageQueueGetPending(mq, msg_ptr, timeout);
       // Suspend current Thread
       osRtxThreadListPut((os_object_t*)mq, osRtxThreadGetRunning());
       osRtxThreadWaitEnter(osRtxThreadWaitingMessageGet, timeout);
@@ -485,7 +486,6 @@ osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
       reg = (uint32_t *)(__get_PSP());
       reg[2] = (uint32_t)msg_ptr;
       reg[3] = (uint32_t)msg_prio;
-      EvrRtxMessageQueueGetPending(mq, msg_ptr, timeout);
       return osErrorTimeout;
     } else {
       EvrRtxMessageQueueNotRetrieved(mq, msg_ptr);

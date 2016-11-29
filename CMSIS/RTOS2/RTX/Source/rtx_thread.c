@@ -173,6 +173,16 @@ os_thread_t *osRtxThreadListGet (volatile os_object_t *object) {
   return thread;
 }
 
+/// Retrieve Thread list root.
+/// \param[in]  thread          thread object.
+void *osRtxThreadListRoot (os_thread_t *thread) {
+
+  while ((thread != NULL) && (thread->id == osRtxIdThread)) {
+    thread = thread->thread_prev;
+  }
+  return ((void *)thread);
+}
+
 /// Re-sort a Thread in linked Object list by Priority (Highest at Head).
 /// \param[in]  thread          thread object.
 void osRtxThreadListSort (os_thread_t *thread) {
@@ -323,6 +333,35 @@ void osRtxThreadDelayTick (void) {
 
   if (thread->delay == 0U) {
     do {
+      switch (thread->state) {
+        case osRtxThreadWaitingDelay:
+          EvrRtxThreadDelayCompleted();
+          break;
+        case osRtxThreadWaitingThreadFlags:
+          EvrRtxThreadFlagsWaitTimeout();
+          break;
+        case osRtxThreadWaitingEventFlags:
+          EvrRtxEventFlagsWaitTimeout((osEventFlagsId_t)osRtxThreadListRoot(thread));
+          break;
+        case osRtxThreadWaitingMutex:
+          EvrRtxMutexAcquireTimeout((osMutexId_t)osRtxThreadListRoot(thread));
+          break;
+        case osRtxThreadWaitingSemaphore:
+          EvrRtxSemaphoreAcquireTimeout((osSemaphoreId_t)osRtxThreadListRoot(thread));
+          break;
+        case osRtxThreadWaitingMemoryPool:
+          EvrRtxMemoryPoolAllocTimeout((osMemoryPoolId_t)osRtxThreadListRoot(thread));
+          break;
+        case osRtxThreadWaitingMessageGet:
+          EvrRtxMessageQueueGetTimeout((osMessageQueueId_t)osRtxThreadListRoot(thread));
+          break;
+        case osRtxThreadWaitingMessagePut:
+          EvrRtxMessageQueuePutTimeout((osMessageQueueId_t)osRtxThreadListRoot(thread));
+          break;
+        default:
+          break;
+      }
+      EvrRtxThreadUnblocked(thread, (osRtxThreadRegPtr(thread))[0]);
       osRtxThreadListRemove(thread);
       osRtxThreadReadyPut(thread);
       thread = thread->delay_next;
@@ -428,6 +467,8 @@ void osRtxThreadDispatch (os_thread_t *thread) {
 void osRtxThreadWaitExit (os_thread_t *thread, uint32_t ret_val, bool dispatch) {
   uint32_t *reg;
 
+  EvrRtxThreadUnblocked(thread, ret_val);
+
   reg = osRtxThreadRegPtr(thread);
   reg[0] = ret_val;
 
@@ -437,8 +478,6 @@ void osRtxThreadWaitExit (os_thread_t *thread, uint32_t ret_val, bool dispatch) 
   } else {
     osRtxThreadReadyPut(thread);
   }
-
-  EvrRtxThreadUnblocked(thread, ret_val);
 }
 
 /// Enter Thread wait state.
@@ -462,12 +501,12 @@ bool osRtxThreadWaitEnter (uint8_t state, uint32_t timeout) {
     return false;
   }
 
+  EvrRtxThreadBlocked(thread, timeout);
+
   thread->state = state;
   osRtxThreadDelayInsert(thread, timeout);
   thread = osRtxThreadListGet(&osRtxInfo.thread.ready);
   osRtxThreadSwitch(thread);
-
-  EvrRtxThreadBlocked(thread, timeout);
 
   return true;
 }
@@ -937,7 +976,6 @@ osStatus_t svcRtxThreadSuspend (osThreadId_t thread_id) {
         EvrRtxThreadError(thread, osErrorResource);
         return osErrorResource;
       }
-      osRtxThreadSwitch(osRtxThreadListGet(&osRtxInfo.thread.ready));
       break;
     case osRtxThreadReady:
       osRtxThreadListRemove(thread);
@@ -953,13 +991,17 @@ osStatus_t svcRtxThreadSuspend (osThreadId_t thread_id) {
       return osErrorResource;
   }
 
+  EvrRtxThreadSuspended(thread);
+
+  if (thread->state == osRtxThreadRunning) {
+    osRtxThreadSwitch(osRtxThreadListGet(&osRtxInfo.thread.ready));
+  }
+
   // Update Thread State and put it into Delay list
   thread->state = osRtxThreadBlocked;
   thread->thread_prev = NULL;
   thread->thread_next = NULL;
   osRtxThreadDelayInsert(thread, osWaitForever);
-
-  EvrRtxThreadSuspended(thread);
 
   return osOK;
 }
@@ -981,12 +1023,12 @@ osStatus_t svcRtxThreadResume (osThreadId_t thread_id) {
     return osErrorResource;
   }
 
+  EvrRtxThreadResumed(thread);
+
   // Wakeup Thread
   osRtxThreadListRemove(thread);
   osRtxThreadDelayRemove(thread);
   osRtxThreadDispatch(thread);
-
-  EvrRtxThreadResumed(thread);
 
   return osOK;
 }
@@ -1087,11 +1129,11 @@ osStatus_t svcRtxThreadJoin (osThreadId_t thread_id) {
     osRtxThreadListUnlink(&osRtxInfo.thread.terminate_list, thread);
     osRtxThreadFree(thread);
   } else {
+    EvrRtxThreadJoinPending(thread);
     // Suspend current Thread
     if (osRtxThreadWaitEnter(osRtxThreadWaitingJoin, osWaitForever)) {
       thread->thread_join = osRtxThreadGetRunning();
     }
-    EvrRtxThreadJoinPending(thread);
     return osErrorResource;
   }
 
@@ -1400,11 +1442,11 @@ int32_t svcRtxThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout
   // Check if timeout is specified
   if (timeout != 0U) {
     // Store waiting flags and options
+    EvrRtxThreadFlagsWaitPending(flags, options, timeout);
     thread->wait_flags = flags;
     thread->flags_options = (uint8_t)options;
     // Suspend current Thread
     osRtxThreadWaitEnter(osRtxThreadWaitingThreadFlags, timeout);
-    EvrRtxThreadFlagsWaitPending(flags, options, timeout);
     return osErrorTimeout;
   }
 

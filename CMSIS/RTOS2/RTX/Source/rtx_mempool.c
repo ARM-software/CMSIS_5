@@ -50,6 +50,8 @@ uint32_t osRtxMemoryPoolInit (os_mp_info_t *mp_info, uint32_t block_count, uint3
   mp_info->block_free  = block_mem;
   mp_info->block_lim   = (uint8_t *)block_mem + (block_count * block_size);
 
+  EvrRtxMemoryBlockInit(mp_info, block_count, block_size, block_mem);
+
   // Link all free blocks
   while (--block_count) {
     block = (uint8_t *)block_mem + block_size;
@@ -57,8 +59,6 @@ uint32_t osRtxMemoryPoolInit (os_mp_info_t *mp_info, uint32_t block_count, uint3
     block_mem = block;
   }
   *((void **)block_mem) = NULL;
-
-  EvrRtxMemoryBlockInit(mp_info, block_count, block_size, block_mem);
 
   return 1U;
 }
@@ -339,10 +339,10 @@ void *svcRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
   if (block == NULL) {
     // No memory available
     if (timeout != 0U) {
+      EvrRtxMemoryPoolAllocPending(mp, timeout);
       // Suspend current Thread
       osRtxThreadListPut((os_object_t*)mp, osRtxThreadGetRunning());
       osRtxThreadWaitEnter(osRtxThreadWaitingMemoryPool, timeout);
-      EvrRtxMemoryPoolAllocPending(mp, timeout);
     } else {
       EvrRtxMemoryPoolAllocFailed(mp);
     }

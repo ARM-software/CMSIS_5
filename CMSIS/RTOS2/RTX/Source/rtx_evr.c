@@ -115,10 +115,12 @@
 #define EvtRtxThreadFlagsGet                EventID(EventLevelAPI,    EvtRtxThreadNo, 0x22U)
 #define EvtRtxThreadFlagsWait               EventID(EventLevelAPI,    EvtRtxThreadNo, 0x23U)
 #define EvtRtxThreadFlagsWaitPending        EventID(EventLevelOp,     EvtRtxThreadNo, 0x24U)
-#define EvtRtxThreadFlagsWaitCompleted      EventID(EventLevelOp,     EvtRtxThreadNo, 0x25U)
-#define EvtRtxThreadFlagsWaitNotCompleted   EventID(EventLevelOp,     EvtRtxThreadNo, 0x26U)
-#define EvtRtxThreadDelay                   EventID(EventLevelAPI,    EvtRtxThreadNo, 0x27U)
-#define EvtRtxThreadDelayUntil              EventID(EventLevelAPI,    EvtRtxThreadNo, 0x28U)
+#define EvtRtxThreadFlagsWaitTimeout        EventID(EventLevelOp,     EvtRtxThreadNo, 0x25U)
+#define EvtRtxThreadFlagsWaitCompleted      EventID(EventLevelOp,     EvtRtxThreadNo, 0x26U)
+#define EvtRtxThreadFlagsWaitNotCompleted   EventID(EventLevelOp,     EvtRtxThreadNo, 0x27U)
+#define EvtRtxThreadDelay                   EventID(EventLevelAPI,    EvtRtxThreadNo, 0x28U)
+#define EvtRtxThreadDelayUntil              EventID(EventLevelAPI,    EvtRtxThreadNo, 0x29U)
+#define EvtRtxThreadDelayCompleted          EventID(EventLevelOp,     EvtRtxThreadNo, 0x2AU)
 
 /// Event IDs for "RTX Timer"
 #define EvtRtxTimerError                    EventID(EventLevelError,  EvtRtxTimerNo, 0x00U)
@@ -150,10 +152,11 @@
 #define EvtRtxEventFlagsGet                 EventID(EventLevelAPI,    EvtRtxEventFlagsNo, 0x0AU)
 #define EvtRtxEventFlagsWait                EventID(EventLevelAPI,    EvtRtxEventFlagsNo, 0x0BU)
 #define EvtRtxEventFlagsWaitPending         EventID(EventLevelOp,     EvtRtxEventFlagsNo, 0x0CU)
-#define EvtRtxEventFlagsWaitCompleted       EventID(EventLevelOp,     EvtRtxEventFlagsNo, 0x0DU)
-#define EvtRtxEventFlagsWaitNotCompleted    EventID(EventLevelOp,     EvtRtxEventFlagsNo, 0x0EU)
-#define EvtRtxEventFlagsDelete              EventID(EventLevelAPI,    EvtRtxEventFlagsNo, 0x0FU)
-#define EvtRtxEventFlagsDestroyed           EventID(EventLevelOp,     EvtRtxEventFlagsNo, 0x10U)
+#define EvtRtxEventFlagsWaitTimeout         EventID(EventLevelOp,     EvtRtxEventFlagsNo, 0x0DU)
+#define EvtRtxEventFlagsWaitCompleted       EventID(EventLevelOp,     EvtRtxEventFlagsNo, 0x0EU)
+#define EvtRtxEventFlagsWaitNotCompleted    EventID(EventLevelOp,     EvtRtxEventFlagsNo, 0x0FU)
+#define EvtRtxEventFlagsDelete              EventID(EventLevelAPI,    EvtRtxEventFlagsNo, 0x10U)
+#define EvtRtxEventFlagsDestroyed           EventID(EventLevelOp,     EvtRtxEventFlagsNo, 0x11U)
 
 /// Event IDs for "RTX Mutex"
 #define EvtRtxMutexError                    EventID(EventLevelError,  EvtRtxMutexNo, 0x00U)
@@ -164,13 +167,14 @@
 #define EvtRtxMutexGetName_Detail           EventID(EventLevelDetail, EvtRtxMutexNo, 0x05U)
 #define EvtRtxMutexAcquire                  EventID(EventLevelAPI,    EvtRtxMutexNo, 0x06U)
 #define EvtRtxMutexAcquirePending           EventID(EventLevelError,  EvtRtxMutexNo, 0x07U)
-#define EvtRtxMutexAcquired                 EventID(EventLevelOp,     EvtRtxMutexNo, 0x08U)
-#define EvtRtxMutexNotAcquired              EventID(EventLevelOp,     EvtRtxMutexNo, 0x09U)
-#define EvtRtxMutexRelease                  EventID(EventLevelAPI,    EvtRtxMutexNo, 0x0AU)
-#define EvtRtxMutexReleased                 EventID(EventLevelOp,     EvtRtxMutexNo, 0x0BU)
-#define EvtRtxMutexGetOwner                 EventID(EventLevelAPI,    EvtRtxMutexNo, 0x0CU)
-#define EvtRtxMutexDelete                   EventID(EventLevelAPI,    EvtRtxMutexNo, 0x0DU)
-#define EvtRtxMutexDestroyed                EventID(EventLevelOp,     EvtRtxMutexNo, 0x0EU)
+#define EvtRtxMutexAcquireTimeout           EventID(EventLevelError,  EvtRtxMutexNo, 0x08U)
+#define EvtRtxMutexAcquired                 EventID(EventLevelOp,     EvtRtxMutexNo, 0x09U)
+#define EvtRtxMutexNotAcquired              EventID(EventLevelOp,     EvtRtxMutexNo, 0x0AU)
+#define EvtRtxMutexRelease                  EventID(EventLevelAPI,    EvtRtxMutexNo, 0x0BU)
+#define EvtRtxMutexReleased                 EventID(EventLevelOp,     EvtRtxMutexNo, 0x0CU)
+#define EvtRtxMutexGetOwner                 EventID(EventLevelAPI,    EvtRtxMutexNo, 0x0DU)
+#define EvtRtxMutexDelete                   EventID(EventLevelAPI,    EvtRtxMutexNo, 0x0EU)
+#define EvtRtxMutexDestroyed                EventID(EventLevelOp,     EvtRtxMutexNo, 0x0FU)
 
 /// Event IDs for "RTX Semaphore"
 #define EvtRtxSemaphoreError                EventID(EventLevelError,  EvtRtxSemaphoreNo, 0x00U)
@@ -181,13 +185,14 @@
 #define EvtRtxSemaphoreGetName_Detail       EventID(EventLevelDetail, EvtRtxSemaphoreNo, 0x05U)
 #define EvtRtxSemaphoreAcquire              EventID(EventLevelAPI,    EvtRtxSemaphoreNo, 0x06U)
 #define EvtRtxSemaphoreAcquirePending       EventID(EventLevelOp,     EvtRtxSemaphoreNo, 0x07U)
-#define EvtRtxSemaphoreAcquired             EventID(EventLevelOp,     EvtRtxSemaphoreNo, 0x08U)
-#define EvtRtxSemaphoreNotAcquired          EventID(EventLevelOp,     EvtRtxSemaphoreNo, 0x09U)
-#define EvtRtxSemaphoreRelease              EventID(EventLevelAPI,    EvtRtxSemaphoreNo, 0x0AU)
-#define EvtRtxSemaphoreReleased             EventID(EventLevelOp,     EvtRtxSemaphoreNo, 0x0BU)
-#define EvtRtxSemaphoreGetCount             EventID(EventLevelAPI,    EvtRtxSemaphoreNo, 0x0CU)
-#define EvtRtxSemaphoreDelete               EventID(EventLevelAPI,    EvtRtxSemaphoreNo, 0x0DU)
-#define EvtRtxSemaphoreDestroyed            EventID(EventLevelOp,     EvtRtxSemaphoreNo, 0x0EU)
+#define EvtRtxSemaphoreAcquireTimeout       EventID(EventLevelOp,     EvtRtxSemaphoreNo, 0x08U)
+#define EvtRtxSemaphoreAcquired             EventID(EventLevelOp,     EvtRtxSemaphoreNo, 0x09U)
+#define EvtRtxSemaphoreNotAcquired          EventID(EventLevelOp,     EvtRtxSemaphoreNo, 0x0AU)
+#define EvtRtxSemaphoreRelease              EventID(EventLevelAPI,    EvtRtxSemaphoreNo, 0x0BU)
+#define EvtRtxSemaphoreReleased             EventID(EventLevelOp,     EvtRtxSemaphoreNo, 0x0CU)
+#define EvtRtxSemaphoreGetCount             EventID(EventLevelAPI,    EvtRtxSemaphoreNo, 0x0DU)
+#define EvtRtxSemaphoreDelete               EventID(EventLevelAPI,    EvtRtxSemaphoreNo, 0x0EU)
+#define EvtRtxSemaphoreDestroyed            EventID(EventLevelOp,     EvtRtxSemaphoreNo, 0x0FU)
 
 /// Event IDs for "RTX Memory Pool"
 #define EvtRtxMemoryPoolError               EventID(EventLevelError,  EvtRtxMemoryPoolNo, 0x00U)
@@ -198,17 +203,18 @@
 #define EvtRtxMemoryPoolGetName_Detail      EventID(EventLevelDetail, EvtRtxMemoryPoolNo, 0x05U)
 #define EvtRtxMemoryPoolAlloc               EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x06U)
 #define EvtRtxMemoryPoolAllocPending        EventID(EventLevelOp,     EvtRtxMemoryPoolNo, 0x07U)
-#define EvtRtxMemoryPoolAllocated           EventID(EventLevelOp,     EvtRtxMemoryPoolNo, 0x08U)
-#define EvtRtxMemoryPoolAllocFailed         EventID(EventLevelOp,     EvtRtxMemoryPoolNo, 0x09U)
-#define EvtRtxMemoryPoolFree                EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x0AU)
-#define EvtRtxMemoryPoolDeallocated         EventID(EventLevelOp,     EvtRtxMemoryPoolNo, 0x0BU)
-#define EvtRtxMemoryPoolFreeFailed          EventID(EventLevelOp,     EvtRtxMemoryPoolNo, 0x0CU)
-#define EvtRtxMemoryPoolGetCapacity         EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x0DU)
-#define EvtRtxMemoryPoolGetBlockSize        EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x0EU)
-#define EvtRtxMemoryPoolGetCount            EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x0FU)
-#define EvtRtxMemoryPoolGetSpace            EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x10U)
-#define EvtRtxMemoryPoolDelete              EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x11U)
-#define EvtRtxMemoryPoolDestroyed           EventID(EventLevelOp,     EvtRtxMemoryPoolNo, 0x12U)
+#define EvtRtxMemoryPoolAllocTimeout        EventID(EventLevelOp,     EvtRtxMemoryPoolNo, 0x08U)
+#define EvtRtxMemoryPoolAllocated           EventID(EventLevelOp,     EvtRtxMemoryPoolNo, 0x09U)
+#define EvtRtxMemoryPoolAllocFailed         EventID(EventLevelOp,     EvtRtxMemoryPoolNo, 0x0AU)
+#define EvtRtxMemoryPoolFree                EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x0BU)
+#define EvtRtxMemoryPoolDeallocated         EventID(EventLevelOp,     EvtRtxMemoryPoolNo, 0x0CU)
+#define EvtRtxMemoryPoolFreeFailed          EventID(EventLevelOp,     EvtRtxMemoryPoolNo, 0x0DU)
+#define EvtRtxMemoryPoolGetCapacity         EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x0EU)
+#define EvtRtxMemoryPoolGetBlockSize        EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x0FU)
+#define EvtRtxMemoryPoolGetCount            EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x10U)
+#define EvtRtxMemoryPoolGetSpace            EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x11U)
+#define EvtRtxMemoryPoolDelete              EventID(EventLevelAPI,    EvtRtxMemoryPoolNo, 0x12U)
+#define EvtRtxMemoryPoolDestroyed           EventID(EventLevelOp,     EvtRtxMemoryPoolNo, 0x13U)
 
 /// Event IDs for "RTX Message Queue"
 #define EvtRtxMessageQueueError             EventID(EventLevelError,  EvtRtxMessageQueueNo, 0x00U)
@@ -219,21 +225,23 @@
 #define EvtRtxMessageQueueGetName_Detail    EventID(EventLevelDetail, EvtRtxMessageQueueNo, 0x05U)
 #define EvtRtxMessageQueuePut               EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x06U)
 #define EvtRtxMessageQueuePutPending        EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x07U)
-#define EvtRtxMessageQueueInsertPending     EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x08U)
-#define EvtRtxMessageQueueInserted          EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x09U)
-#define EvtRtxMessageQueueNotInserted       EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x0AU)
-#define EvtRtxMessageQueueGet               EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x0BU)
-#define EvtRtxMessageQueueGetPending        EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x0CU)
-#define EvtRtxMessageQueueRetrieved         EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x0DU)
-#define EvtRtxMessageQueueNotRetrieved      EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x0EU)
-#define EvtRtxMessageQueueGetCapacity       EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x0FU)
-#define EvtRtxMessageQueueGetMsgSize        EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x10U)
-#define EvtRtxMessageQueueGetCount          EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x11U)
-#define EvtRtxMessageQueueGetSpace          EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x12U)
-#define EvtRtxMessageQueueReset             EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x13U)
-#define EvtRtxMessageQueueResetDone         EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x14U)
-#define EvtRtxMessageQueueDelete            EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x15U)
-#define EvtRtxMessageQueueDestroyed         EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x16U)
+#define EvtRtxMessageQueuePutTimeout        EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x08U)
+#define EvtRtxMessageQueueInsertPending     EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x09U)
+#define EvtRtxMessageQueueInserted          EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x0AU)
+#define EvtRtxMessageQueueNotInserted       EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x0BU)
+#define EvtRtxMessageQueueGet               EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x0CU)
+#define EvtRtxMessageQueueGetPending        EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x0DU)
+#define EvtRtxMessageQueueGetTimeout        EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x0EU)
+#define EvtRtxMessageQueueRetrieved         EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x0FU)
+#define EvtRtxMessageQueueNotRetrieved      EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x10U)
+#define EvtRtxMessageQueueGetCapacity       EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x11U)
+#define EvtRtxMessageQueueGetMsgSize        EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x12U)
+#define EvtRtxMessageQueueGetCount          EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x13U)
+#define EvtRtxMessageQueueGetSpace          EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x14U)
+#define EvtRtxMessageQueueReset             EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x15U)
+#define EvtRtxMessageQueueResetDone         EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x16U)
+#define EvtRtxMessageQueueDelete            EventID(EventLevelAPI,    EvtRtxMessageQueueNo, 0x17U)
+#define EvtRtxMessageQueueDestroyed         EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x18U)
 
 #endif  // RTE_Compiler_EventRecorder
 
@@ -910,6 +918,14 @@ __WEAK void EvrRtxThreadFlagsWaitPending (int32_t flags, uint32_t options, uint3
 }
 #endif
 
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_WAIT_TIMEOUT_DISABLE))
+__WEAK void EvrRtxThreadFlagsWaitTimeout (void) {
+#if defined(RTE_Compiler_EventRecorder)
+  EventRecord2(EvtRtxThreadFlagsWaitTimeout, 0U, 0U);
+#endif
+}
+#endif
+
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_WAIT_COMPLETED_DISABLE))
 __WEAK void EvrRtxThreadFlagsWaitCompleted (int32_t flags, uint32_t options, int32_t thread_flags) {
 #if defined(RTE_Compiler_EventRecorder)
@@ -949,6 +965,14 @@ __WEAK void EvrRtxThreadDelayUntil (uint64_t ticks) {
   EventRecord2(EvtRtxThreadDelayUntil, (uint32_t)ticks, (uint32_t)(ticks >> 32));
 #else
   (void)ticks;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_DELAY_COMPLETED_DISABLE))
+__WEAK void EvrRtxThreadDelayCompleted (void) {
+#if defined(RTE_Compiler_EventRecorder)
+  EventRecord2(EvtRtxThreadDelayCompleted, 0U, 0U);
 #endif
 }
 #endif
@@ -1222,6 +1246,16 @@ __WEAK void EvrRtxEventFlagsWaitPending (osEventFlagsId_t ef_id, int32_t flags, 
 }
 #endif
 
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_WAIT_TIMEOUT_DISABLE))
+__WEAK void EvrRtxEventFlagsWaitTimeout (osEventFlagsId_t ef_id) {
+#if defined(RTE_Compiler_EventRecorder)
+  EventRecord2(EvtRtxEventFlagsWaitTimeout, (uint32_t)ef_id, 0U);
+#else
+  (void)ef_id;
+#endif
+}
+#endif
+
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_WAIT_COMPLETED_DISABLE))
 __WEAK void EvrRtxEventFlagsWaitCompleted (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, int32_t event_flags) {
 #if defined(RTE_Compiler_EventRecorder)
@@ -1336,6 +1370,16 @@ __WEAK void EvrRtxMutexAcquirePending (osMutexId_t mutex_id, uint32_t timeout) {
 #else
   (void)mutex_id;
   (void)timeout;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_MUTEX != 0) && !defined(EVR_RTX_MUTEX_ACQUIRE_TIMEOUT_DISABLE))
+__WEAK void EvrRtxMutexAcquireTimeout (osMutexId_t mutex_id) {
+#if defined(RTE_Compiler_EventRecorder)
+  EventRecord2(EvtRtxMutexAcquireTimeout, (uint32_t)mutex_id, 0U);
+#else
+  (void)mutex_id;
 #endif
 }
 #endif
@@ -1488,6 +1532,16 @@ __WEAK void EvrRtxSemaphoreAcquirePending (osSemaphoreId_t semaphore_id, uint32_
 }
 #endif
 
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_SEMAPHORE != 0) && !defined(EVR_RTX_SEMAPHORE_ACQUIRE_TIMEOUT_DISABLE))
+__WEAK void EvrRtxSemaphoreAcquireTimeout (osSemaphoreId_t semaphore_id) {
+#if defined(RTE_Compiler_EventRecorder)
+  EventRecord2(EvtRtxSemaphoreAcquireTimeout, (uint32_t)semaphore_id, 0U);
+#else
+  (void)semaphore_id;
+#endif
+}
+#endif
+
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_SEMAPHORE != 0) && !defined(EVR_RTX_SEMAPHORE_ACQUIRED_DISABLE))
 __WEAK void EvrRtxSemaphoreAcquired (osSemaphoreId_t semaphore_id) {
 #if defined(RTE_Compiler_EventRecorder)
@@ -1578,7 +1632,7 @@ __WEAK void EvrRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size, cons
 #if defined(RTE_Compiler_EventRecorder)
   EventRecord4(EvtRtxMemoryPoolNew, block_count, block_size, (uint32_t)attr, 0U);
   if (attr != NULL) {
-    EventRecordData(EvtRtxMemoryPoolNew, attr, sizeof (osMemoryPoolAttr_t));
+    EventRecordData(EvtRtxMemoryPoolNew_Detail, attr, sizeof (osMemoryPoolAttr_t));
   }
 #else
   (void)block_count;
@@ -1630,6 +1684,16 @@ __WEAK void EvrRtxMemoryPoolAllocPending (osMemoryPoolId_t mp_id, uint32_t timeo
 #else
   (void)mp_id;
   (void)timeout;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_MEMPOOL != 0) && !defined(EVR_RTX_MEMORY_POOL_ALLOC_TIMEOUT_DISABLE))
+__WEAK void EvrRtxMemoryPoolAllocTimeout (osMemoryPoolId_t mp_id) {
+#if defined(RTE_Compiler_EventRecorder)
+  EventRecord2(EvtRtxMemoryPoolAllocTimeout, (uint32_t)mp_id, 0U);
+#else
+  (void)mp_id;
 #endif
 }
 #endif
@@ -1830,6 +1894,16 @@ __WEAK void EvrRtxMessageQueuePutPending (osMessageQueueId_t mq_id, const void *
 }
 #endif
 
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_MSGQUEUE != 0) && !defined(EVR_RTX_MESSAGE_QUEUE_PUT_TIMEOUT_DISABLE))
+__WEAK void EvrRtxMessageQueuePutTimeout (osMessageQueueId_t mq_id) {
+#if defined(RTE_Compiler_EventRecorder)
+  EventRecord2(EvtRtxMessageQueuePutTimeout, (uint32_t)mq_id, 0U);
+#else
+  (void)mq_id;
+#endif
+}
+#endif
+
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_MSGQUEUE != 0) && !defined(EVR_RTX_MESSAGE_QUEUE_INSERT_PENDING_DISABLE))
 __WEAK void EvrRtxMessageQueueInsertPending (osMessageQueueId_t mq_id, const void *msg_ptr) {
 #if defined(RTE_Compiler_EventRecorder)
@@ -1884,6 +1958,16 @@ __WEAK void EvrRtxMessageQueueGetPending (osMessageQueueId_t mq_id, void *msg_pt
   (void)mq_id;
   (void)msg_ptr;
   (void)timeout;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_MSGQUEUE != 0) && !defined(EVR_RTX_MESSAGE_QUEUE_GET_TIMEOUT_DISABLE))
+__WEAK void EvrRtxMessageQueueGetTimeout (osMessageQueueId_t mq_id) {
+#if defined(RTE_Compiler_EventRecorder)
+  EventRecord2(EvtRtxMessageQueueGetTimeout, (uint32_t)mq_id, 0U);
+#else
+  (void)mq_id;
 #endif
 }
 #endif

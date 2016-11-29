@@ -64,6 +64,7 @@ __STATIC_INLINE void         osRtxThreadSetRunning (os_thread_t *thread) { osRtx
 // Thread Library functions
 extern void         osRtxThreadListPut     (volatile os_object_t *object, os_thread_t *thread);
 extern os_thread_t *osRtxThreadListGet     (volatile os_object_t *object);
+extern void        *osRtxThreadListRoot    (os_thread_t  *thread);
 extern void         osRtxThreadListSort    (os_thread_t  *thread);
 extern void         osRtxThreadListRemove  (os_thread_t  *thread);
 extern void         osRtxThreadListUnlink  (os_thread_t **thread_list, os_thread_t *thread);

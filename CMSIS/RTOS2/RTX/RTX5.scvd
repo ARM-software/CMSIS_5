@@ -173,7 +173,6 @@
 
       <var name="obj_name"   type="uint8_t"  info="Object name string" size="66" />
       <var name="cb_valid"   type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
-      <var name="cb_id"      type="uint8_t"  info="Component View ID"/>
 
       <var name="ex_delay"   type="uint32_t" info="Calculated execution delay"/>
 
@@ -471,6 +470,23 @@
     </typedef>
 
     <!-- Helper typedefs -->
+    <typedef name="rtx_sections_t" info="RTX Control Block Sections Info Structure" size="56">
+      <member name="thread_cb_start"    type="uint32_t" offset="0"  info="Thread control block section start"/>
+      <member name="thread_cb_end"      type="uint32_t" offset="4"  info="Thread control block section end"/>
+      <member name="timer_cb_start"     type="uint32_t" offset="8"  info="Timer control block section start"/>
+      <member name="timer_cb_end"       type="uint32_t" offset="12" info="Timer control block section end"/>
+      <member name="evflags_cb_start"   type="uint32_t" offset="16" info="Event flags control block section start"/>
+      <member name="evflags_cb_end"     type="uint32_t" offset="20" info="Event flags control block section end"/>
+      <member name="mutex_cb_start"     type="uint32_t" offset="24" info="Mutex control block section start"/>
+      <member name="mutex_cb_end"       type="uint32_t" offset="28" info="Mutex control block section end"/>
+      <member name="semaphore_cb_start" type="uint32_t" offset="32" info="Semaphore control block section start"/>
+      <member name="semaphore_cb_end"   type="uint32_t" offset="36" info="Semaphore control block section end"/>
+      <member name="mempool_cb_start"   type="uint32_t" offset="40" info="Memory pool control block section start"/>
+      <member name="mempool_cb_end"     type="uint32_t" offset="44" info="Memory pool control block section end"/>
+      <member name="msgqueue_cb_start"  type="uint32_t" offset="48" info="Message queue control block section start"/>
+      <member name="msgqueue_cb_end"    type="uint32_t" offset="52" info="Message queue control block section end"/>
+    </typedef>
+
     <typedef name="rtx_t" info="Various RTX Definitions" size="8">
       <member name="status" type="int32_t" offset="0" info="RTX5 operations status">
         <enum name="osOK"                          value="0"   info="Operation completed successfully"/>
@@ -527,6 +543,14 @@
       <var name="sp"   type="uint32_t" value="0" />
       <var name="addr" type="uint32_t" value="0" />
 
+      <var name="TCB_Rd" type="uint32_t" value="0" />
+      <var name="CCB_Rd" type="uint32_t" value="0" />
+      <var name="SCB_Rd" type="uint32_t" value="0" />
+      <var name="MCB_Rd" type="uint32_t" value="0" />
+      <var name="ECB_Rd" type="uint32_t" value="0" />
+      <var name="PCB_Rd" type="uint32_t" value="0" />
+      <var name="QCB_Rd" type="uint32_t" value="0" />
+
       <var name="RTX_En" type="uint8_t" value="0" />
       <var name="TCB_En" type="uint8_t" value="0" />
       <var name="CCB_En" type="uint8_t" value="0" />
@@ -542,15 +566,6 @@
       <readlist name="os_Info"   type="osRtxInfo_t"   symbol="osRtxInfo"   count="1" init="1"/>
       <readlist name="os_Config" type="osRtxConfig_t" symbol="osRtxConfig" count="1" init="1"/>
 
-      <!-- Read statically allocated control blocks -->
-      <readlist name="cfg_mp_thread"    cond="os_Config.mpi_thread"        type="osRtxMpInfo_t" offset="os_Config.mpi_thread"        const="1" count="1" init="1"/>
-      <readlist name="cfg_mp_timer"     cond="os_Config.mpi_timer"         type="osRtxMpInfo_t" offset="os_Config.mpi_timer"         const="1" count="1" init="1"/>
-      <readlist name="cfg_mp_events"    cond="os_Config.mpi_event_flags"   type="osRtxMpInfo_t" offset="os_Config.mpi_event_flags"   const="1" count="1" init="1"/>
-      <readlist name="cfg_mp_mutex"     cond="os_Config.mpi_mutex"         type="osRtxMpInfo_t" offset="os_Config.mpi_mutex"         const="1" count="1" init="1"/>
-      <readlist name="cfg_mp_semaphore" cond="os_Config.mpi_semaphore"     type="osRtxMpInfo_t" offset="os_Config.mpi_semaphore"     const="1" count="1" init="1"/>
-      <readlist name="cfg_mp_mpool"     cond="os_Config.mpi_memory_pool"   type="osRtxMpInfo_t" offset="os_Config.mpi_memory_pool"   const="1" count="1" init="1"/>
-      <readlist name="cfg_mp_mqueue"    cond="os_Config.mpi_message_queue" type="osRtxMpInfo_t" offset="os_Config.mpi_message_queue" const="1" count="1" init="1"/>
-
       <calc cond="((os_Info.version / 10000000) == 5) &amp;&amp; (os_Info.kernel_state &gt; 0) &amp;&amp; (os_Info.kernel_state &lt; 5)">
         RTX_En = 1;
       </calc>
@@ -565,37 +580,78 @@
       <!-- Read ISR FIFO queue -->
       <read name="ISR_FIFO" cond="RTX_En" type="uint32_t" offset="os_Config.isr_queue_data" size="os_Config.isr_queue_max"/>
 
+      <!-- Read control block sections info structure -->
+      <readlist name="cb_Sections" cond="__Symbol_exists (&quot;os_cb_sections&quot;)" type="rtx_sections_t" symbol="os_cb_sections" count="1" init="1"/>
+
+      <!-- Determine section sizes -->
+      <calc cond="RTX_En &amp;&amp; __Symbol_exists (&quot;os_cb_sections&quot;)">
+        TCB_Rd = cb_Sections.thread_cb_end    - cb_Sections.thread_cb_start;
+        CCB_Rd = cb_Sections.timer_cb_end     - cb_Sections.timer_cb_start;
+        ECB_Rd = cb_Sections.evflags_cb_end   - cb_Sections.evflags_cb_start;
+        MCB_Rd = cb_Sections.mutex_cb_end     - cb_Sections.mutex_cb_start;
+        SCB_Rd = cb_Sections.semaphore_cb_end - cb_Sections.semaphore_cb_start;
+        PCB_Rd = cb_Sections.mempool_cb_end   - cb_Sections.mempool_cb_start;
+        QCB_Rd = cb_Sections.msgqueue_cb_end  - cb_Sections.msgqueue_cb_start;
+      </calc>
+
+      <!-- Determine number of control blocks to read -->
+      <calc cond="TCB_Rd"> TCB_Rd /= 68; </calc>
+      <calc cond="CCB_Rd"> CCB_Rd /= 32; </calc>
+      <calc cond="ECB_Rd"> ECB_Rd /= 16; </calc>
+      <calc cond="MCB_Rd"> MCB_Rd /= 28; </calc>
+      <calc cond="SCB_Rd"> SCB_Rd /= 16; </calc>
+      <calc cond="PCB_Rd"> PCB_Rd /= 36; </calc>
+      <calc cond="QCB_Rd"> QCB_Rd /= 52; </calc>
+
+      <!-- Read object control blocks using sections info -->
+      <readlist name="TCB" cond="TCB_Rd" type="osRtxThread_t"       offset="cb_Sections.thread_cb_start"    count="TCB_Rd"/>
+      <readlist name="CCB" cond="CCB_Rd" type="osRtxTimer_t"        offset="cb_Sections.timer_cb_start"     count="CCB_Rd"/>
+      <readlist name="ECB" cond="ECB_Rd" type="osRtxEventFlags_t"   offset="cb_Sections.evflags_cb_start"   count="ECB_Rd"/>
+      <readlist name="MCB" cond="MCB_Rd" type="osRtxMutex_t"        offset="cb_Sections.mutex_cb_start"     count="MCB_Rd"/>
+      <readlist name="PCB" cond="PCB_Rd" type="osRtxMemoryPool_t"   offset="cb_Sections.mempool_cb_start"   count="PCB_Rd"/>
+      <readlist name="SCB" cond="SCB_Rd" type="osRtxSemaphore_t"    offset="cb_Sections.semaphore_cb_start" count="SCB_Rd"/>
+      <readlist name="QCB" cond="QCB_Rd" type="osRtxMessageQueue_t" offset="cb_Sections.msgqueue_cb_start"  count="QCB_Rd"/>
+
+      <!-- Read statically allocated control blocks -->
+      <readlist name="cfg_mp_thread"    cond="os_Config.mpi_thread"        type="osRtxMpInfo_t" offset="os_Config.mpi_thread"        const="1" count="1" init="1"/>
+      <readlist name="cfg_mp_timer"     cond="os_Config.mpi_timer"         type="osRtxMpInfo_t" offset="os_Config.mpi_timer"         const="1" count="1" init="1"/>
+      <readlist name="cfg_mp_events"    cond="os_Config.mpi_event_flags"   type="osRtxMpInfo_t" offset="os_Config.mpi_event_flags"   const="1" count="1" init="1"/>
+      <readlist name="cfg_mp_mutex"     cond="os_Config.mpi_mutex"         type="osRtxMpInfo_t" offset="os_Config.mpi_mutex"         const="1" count="1" init="1"/>
+      <readlist name="cfg_mp_semaphore" cond="os_Config.mpi_semaphore"     type="osRtxMpInfo_t" offset="os_Config.mpi_semaphore"     const="1" count="1" init="1"/>
+      <readlist name="cfg_mp_mpool"     cond="os_Config.mpi_memory_pool"   type="osRtxMpInfo_t" offset="os_Config.mpi_memory_pool"   const="1" count="1" init="1"/>
+      <readlist name="cfg_mp_mqueue"    cond="os_Config.mpi_message_queue" type="osRtxMpInfo_t" offset="os_Config.mpi_message_queue" const="1" count="1" init="1"/>
+
       <!-- Read idle and timer thread control blocks -->
-      <readlist name="TCB" cond="RTX_En &amp;&amp; os_Info.thread_idle"  type="osRtxThread_t" offset="os_Info.thread_idle"  count="1" />
-      <readlist name="TCB" cond="RTX_En &amp;&amp; os_Info.timer_thread" type="osRtxThread_t" offset="os_Info.timer_thread" count="1" />
+      <readlist name="TCB" cond="RTX_En &amp;&amp; (TCB_Rd == 0) &amp;&amp; os_Info.thread_idle"  type="osRtxThread_t" offset="os_Info.thread_idle"  count="1" />
+      <readlist name="TCB" cond="RTX_En &amp;&amp; (TCB_Rd == 0) &amp;&amp; os_Info.timer_thread" type="osRtxThread_t" offset="os_Info.timer_thread" count="1" />
 
       <!-- Read thread control blocks (MPI) -->
-      <readlist name="mp_thread" cond="RTX_En &amp;&amp; os_Info.mpi_thread" type="osRtxMpInfo_t" offset="os_Info.mpi_thread"   count="1" init="1"/>
-      <readlist name="TCB"       cond="RTX_En &amp;&amp; os_Info.mpi_thread" type="osRtxThread_t" offset="mp_thread.block_base" count="mp_thread.max_blocks" />
+      <readlist name="mp_thread" cond="RTX_En &amp;&amp; (TCB_Rd == 0) &amp;&amp; os_Info.mpi_thread" type="osRtxMpInfo_t" offset="os_Info.mpi_thread"   count="1" init="1"/>
+      <readlist name="TCB"       cond="RTX_En &amp;&amp; (TCB_Rd == 0) &amp;&amp; os_Info.mpi_thread" type="osRtxThread_t" offset="mp_thread.block_base" count="mp_thread.max_blocks" />
 
       <!-- Read timer control blocks (MPI) -->
-      <readlist name="mp_timer" cond="RTX_En &amp;&amp; os_Info.mpi_timer" type="osRtxMpInfo_t" offset="os_Info.mpi_timer"   count="1" init="1"/>
-      <readlist name="CCB"      cond="RTX_En &amp;&amp; os_Info.mpi_timer" type="osRtxTimer_t"  offset="mp_timer.block_base" count="mp_timer.max_blocks" />
+      <readlist name="mp_timer" cond="RTX_En &amp;&amp; (CCB_Rd == 0) &amp;&amp; os_Info.mpi_timer" type="osRtxMpInfo_t" offset="os_Info.mpi_timer"   count="1" init="1"/>
+      <readlist name="CCB"      cond="RTX_En &amp;&amp; (CCB_Rd == 0) &amp;&amp; os_Info.mpi_timer" type="osRtxTimer_t"  offset="mp_timer.block_base" count="mp_timer.max_blocks" />
 
       <!-- Read event flags control blocks (MPI) -->
-      <readlist name="mp_events" cond="RTX_En &amp;&amp; os_Info.mpi_event_flags" type="osRtxMpInfo_t"     offset="os_Info.mpi_event_flags" count="1" init="1"/>
-      <readlist name="ECB"       cond="RTX_En &amp;&amp; os_Info.mpi_event_flags" type="osRtxEventFlags_t" offset="mp_events.block_base"    count="mp_events.max_blocks" />
+      <readlist name="mp_events" cond="RTX_En &amp;&amp; (ECB_Rd == 0) &amp;&amp; os_Info.mpi_event_flags" type="osRtxMpInfo_t"     offset="os_Info.mpi_event_flags" count="1" init="1"/>
+      <readlist name="ECB"       cond="RTX_En &amp;&amp; (ECB_Rd == 0) &amp;&amp; os_Info.mpi_event_flags" type="osRtxEventFlags_t" offset="mp_events.block_base"    count="mp_events.max_blocks" />
 
       <!-- Read mutex control blocks (MPI) -->
-      <readlist name="mp_mutex" cond="RTX_En &amp;&amp; os_Info.mpi_mutex" type="osRtxMpInfo_t" offset="os_Info.mpi_mutex"   count="1" init="1"/>
-      <readlist name="MCB"      cond="RTX_En &amp;&amp; os_Info.mpi_mutex" type="osRtxMutex_t"  offset="mp_mutex.block_base" count="mp_mutex.max_blocks" />
+      <readlist name="mp_mutex" cond="RTX_En &amp;&amp; (MCB_Rd == 0) &amp;&amp; os_Info.mpi_mutex" type="osRtxMpInfo_t" offset="os_Info.mpi_mutex"   count="1" init="1"/>
+      <readlist name="MCB"      cond="RTX_En &amp;&amp; (MCB_Rd == 0) &amp;&amp; os_Info.mpi_mutex" type="osRtxMutex_t"  offset="mp_mutex.block_base" count="mp_mutex.max_blocks" />
 
       <!-- Read semaphore control blocks (MPI) -->
-      <readlist name="mp_semaphore" cond="RTX_En &amp;&amp; os_Info.mpi_semaphore" type="osRtxMpInfo_t"    offset="os_Info.mpi_semaphore"   count="1" init="1"/>
-      <readlist name="SCB"          cond="RTX_En &amp;&amp; os_Info.mpi_semaphore" type="osRtxSemaphore_t" offset="mp_semaphore.block_base" count="mp_semaphore.max_blocks" />
+      <readlist name="mp_semaphore" cond="RTX_En &amp;&amp; (SCB_Rd == 0) &amp;&amp; os_Info.mpi_semaphore" type="osRtxMpInfo_t"    offset="os_Info.mpi_semaphore"   count="1" init="1"/>
+      <readlist name="SCB"          cond="RTX_En &amp;&amp; (SCB_Rd == 0) &amp;&amp; os_Info.mpi_semaphore" type="osRtxSemaphore_t" offset="mp_semaphore.block_base" count="mp_semaphore.max_blocks" />
 
       <!-- Read memory pool control blocks (MPI) -->
-      <readlist name="mp_mpool" cond="RTX_En &amp;&amp; os_Info.mpi_memory_pool" type="osRtxMpInfo_t"     offset="os_Info.mpi_memory_pool" count="1" init="1"/>
-      <readlist name="PCB"      cond="RTX_En &amp;&amp; os_Info.mpi_memory_pool" type="osRtxMemoryPool_t" offset="mp_mpool.block_base"     count="mp_mpool.max_blocks" />
+      <readlist name="mp_mpool" cond="RTX_En &amp;&amp; (PCB_Rd == 0) &amp;&amp; os_Info.mpi_memory_pool" type="osRtxMpInfo_t"     offset="os_Info.mpi_memory_pool" count="1" init="1"/>
+      <readlist name="PCB"      cond="RTX_En &amp;&amp; (PCB_Rd == 0) &amp;&amp; os_Info.mpi_memory_pool" type="osRtxMemoryPool_t" offset="mp_mpool.block_base"     count="mp_mpool.max_blocks" />
 
       <!-- Read message queue control blocks (MPI) -->
-      <readlist name="mp_mqueue" cond="RTX_En &amp;&amp; os_Info.mpi_message_queue" type="osRtxMpInfo_t"       offset="os_Info.mpi_message_queue" count="1" init="1"/>
-      <readlist name="QCB"       cond="RTX_En &amp;&amp; os_Info.mpi_message_queue" type="osRtxMessageQueue_t" offset="mp_mqueue.block_base"      count="mp_mqueue.max_blocks" />
+      <readlist name="mp_mqueue" cond="RTX_En &amp;&amp; (QCB_Rd == 0) &amp;&amp; os_Info.mpi_message_queue" type="osRtxMpInfo_t"       offset="os_Info.mpi_message_queue" count="1" init="1"/>
+      <readlist name="QCB"       cond="RTX_En &amp;&amp; (QCB_Rd == 0) &amp;&amp; os_Info.mpi_message_queue" type="osRtxMessageQueue_t" offset="mp_mqueue.block_base"      count="mp_mqueue.max_blocks" />
 
       <!-- Read common memory pool block info (MEM) -->
       <readlist name="mem_bl" cond="RTX_En &amp;&amp; os_Info.mem_common" type="mem_block_t" offset="os_Info.mem_common + 8" next="next"/>
@@ -635,44 +691,6 @@
       <list name="i" start="0" limit="TCB._count">
         <calc>
           TCB[i].cb_valid = (TCB[i].id == 1) &amp;&amp; (TCB[i].state != 0) &amp;&amp; (TCB[i].sp != 0);
-          TCB[i].cb_id = 2;
-        </calc>
-        <calc cond="TCB[i]._addr == os_Info.timer_thread">
-          TCB[i].cb_id = 1;
-
-          TCB[i].obj_name[0]  = ',';
-          TCB[i].obj_name[1]  = ' ';
-          TCB[i].obj_name[2]  = 'T';
-          TCB[i].obj_name[3]  = 'i';
-          TCB[i].obj_name[4]  = 'm';
-          TCB[i].obj_name[5]  = 'e';
-          TCB[i].obj_name[6]  = 'r';
-          TCB[i].obj_name[7]  = ' ';
-          TCB[i].obj_name[8]  = 'T';
-          TCB[i].obj_name[9]  = 'h';
-          TCB[i].obj_name[10] = 'r';
-          TCB[i].obj_name[11] = 'e';
-          TCB[i].obj_name[12] = 'a';
-          TCB[i].obj_name[13] = 'd';
-          TCB[i].obj_name[14] = '\0';
-        </calc>
-        <calc cond="TCB[i]._addr == os_Info.thread_idle">
-          TCB[i].cb_id = 0;
-
-          TCB[i].obj_name[0]  = ',';
-          TCB[i].obj_name[1]  = ' ';
-          TCB[i].obj_name[2]  = 'I';
-          TCB[i].obj_name[3]  = 'd';
-          TCB[i].obj_name[4]  = 'l';
-          TCB[i].obj_name[5]  = 'e';
-          TCB[i].obj_name[6]  = ' ';
-          TCB[i].obj_name[7]  = 'T';
-          TCB[i].obj_name[8]  = 'h';
-          TCB[i].obj_name[9]  = 'r';
-          TCB[i].obj_name[10] = 'e';
-          TCB[i].obj_name[11] = 'a';
-          TCB[i].obj_name[12] = 'd';
-          TCB[i].obj_name[13] = '\0';
         </calc>
 
         <!-- Determine stack usage -->
@@ -716,7 +734,7 @@
         </list>
 
         <!-- Read name string -->
-        <calc cond="(TCB[i].name != 0) &amp;&amp; (TCB[i].cb_id &gt; 1)">
+        <calc cond="(TCB[i].name != 0)">
           TCB[i].obj_name[0] = ',';
           TCB[i].obj_name[1] = ' ';
         </calc>
@@ -1018,7 +1036,94 @@
         <!-- Threads -->
         <item cond="TCB_En" property="Threads" value="">
           <list name="i" start="0" limit="TCB._count">
-            <item cond="TCB[i].cb_valid" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority]">
+            <item cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0)" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority]">
+              <item property="State"        value="%E[TCB[i].state &amp; 0x07]"/>
+              <item property="Priority"     value="%E[TCB[i].priority]"/>
+              <item property="Attributes"   value="%E[TCB[i].attr &amp; 0x01]"/>
+
+              <item property="Waiting" value="%E[TCB[i].state], Timeout: osWaitForever" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay == -1)">
+                <!-- Wait Thread Flags -->
+                <item cond="TCB[i].state == 0x33" property="id: %x[TCB[i].thread_prev]" value=""/>
+
+                <list cond="TCB[i].state == 0x43" name="n" start="0" limit="ECB._count">
+                  <!-- Wait Event Flags -->
+                  <item cond="TCB[i].thread_prev == ECB[n]._addr" property="id: %x[ECB[n]._addr]%t[ECB[n].obj_name]" value=""/>
+                </list>
+
+                <list cond="TCB[i].state == 0x53" name="n" start="0" limit="MCB._count">
+                  <!-- Wait Mutex -->
+                  <item cond="TCB[i].thread_prev == MCB[n]._addr" property="id: %x[MCB[n]._addr]%t[MCB[n].obj_name]" value=""/>
+                </list>
+
+                <list cond="TCB[i].state == 0x63" name="n" start="0" limit="SCB._count">
+                  <!-- Wait Semaphore -->
+                  <item cond="TCB[i].thread_prev == SCB[n]._addr" property="id: %x[SCB[n]._addr]%t[SCB[n].obj_name]" value=""/>
+                </list>
+
+                <list cond="TCB[i].state == 0x73" name="n" start="0" limit="PCB._count">
+                  <!-- Wait Memory Pool -->
+                  <item cond="TCB[i].thread_prev == PCB[n]._addr" property="id: %x[PCB[n]._addr]%t[PCB[n].obj_name]" value=""/>
+                </list>
+
+                <list cond="(TCB[i].state == 0x83) || (TCB[i].state == 0x84)" name="n" start="0" limit="QCB._count">
+                  <!-- Wait Message Queue -->
+                  <item cond="TCB[i].thread_prev == QCB[n]._addr" property="id: %x[QCB[n]._addr]%t[QCB[n].obj_name]" value=""/>
+                </list>
+              </item>
+
+              <item property="Waiting" value="%E[TCB[i].state], Timeout: %d[TCB[i].ex_delay]" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay != -1)">
+                <!-- Wait Thread Flags -->
+                <item cond="TCB[i].state == 0x33" property="id: %x[TCB[i].thread_prev]" value=""/>
+
+                <list cond="TCB[i].state == 0x43" name="n" start="0" limit="ECB._count">
+                  <!-- Wait Event Flags -->
+                  <item cond="TCB[i].thread_prev == ECB[n]._addr" property="id: %x[ECB[n]._addr]%t[ECB[n].obj_name]" value=""/>
+                </list>
+
+                <list cond="TCB[i].state == 0x53" name="n" start="0" limit="MCB._count">
+                  <!-- Wait Mutex -->
+                  <item cond="TCB[i].thread_prev == MCB[n]._addr" property="id: %x[MCB[n]._addr]%t[MCB[n].obj_name]" value=""/>
+                </list>
+
+                <list cond="TCB[i].state == 0x63" name="n" start="0" limit="SCB._count">
+                  <!-- Wait Semaphore -->
+                  <item cond="TCB[i].thread_prev == SCB[n]._addr" property="id: %x[SCB[n]._addr]%t[SCB[n].obj_name]" value=""/>
+                </list>
+
+                <list cond="TCB[i].state == 0x73" name="n" start="0" limit="PCB._count">
+                  <!-- Wait Memory Pool -->
+                  <item cond="TCB[i].thread_prev == PCB[n]._addr" property="id: %x[PCB[n]._addr]%t[PCB[n].obj_name]" value=""/>
+                </list>
+
+                <list cond="(TCB[i].state == 0x83) || (TCB[i].state == 0x84)" name="n" start="0" limit="QCB._count">
+                  <!-- Wait Message Queue -->
+                  <item cond="TCB[i].thread_prev == QCB[n]._addr" property="id: %x[QCB[n]._addr]%t[QCB[n].obj_name]" value=""/>
+                </list>
+              </item>
+
+              <item property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]" cond="stack_wmark != 0">
+                <item property="Used"  value="%d[TCB[i].stack_curb]"/>
+                <item property="Max"   value="%d[TCB[i].stack_maxb]"/>
+                <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
+                <item property="Limit" value="%x[TCB[i].stack_mem]"/>
+                <item property="Size"  value="%d[TCB[i].stack_size]"/>
+              </item>
+
+              <item property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]" cond="stack_wmark == 0">
+                <item property="Used"  value="%d[TCB[i].stack_curb]"/>
+                <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
+                <item property="Limit" value="%x[TCB[i].stack_mem]"/>
+                <item property="Size"  value="%d[TCB[i].stack_size]"/>
+              </item>
+
+              <item property="Stack Overrun" value="Overrun detected" cond="TCB[i].stack_over != 0"/>
+              <item property="Flags" value="%x[TCB[i].thread_flags]"/>
+              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1]"                   cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) == 0)"/>
+              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1], osFlagsAutoClear" cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) != 0)"/>
+              <item property="TrustZone ID" value="%d[TCB[i].tz_memory]" cond="TCB[i].tz_memory"/>
+            </item>
+
+            <item cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0)" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority]">
               <item property="State"        value="%E[TCB[i].state &amp; 0x07]"/>
               <item property="Priority"     value="%E[TCB[i].priority]"/>
               <item property="Attributes"   value="%E[TCB[i].attr &amp; 0x01]"/>
@@ -1283,7 +1388,7 @@
     <event id="0xF100 + 0x03" level="API"    property="KernelGetInfo"             value="version=%x[val1], id_buf=%x[val2], id_size=%d[val3]" info="osKernelGetInfo function was called."/>
     <event id="0xF100 + 0x04" level="Op"     property="KernelInfoRetrieved"       value="version=%x[val1], id_buf=%x[val2]" info="Kernel information was retrieved."/>
     <event id="0xF100 + 0x05" level="Detail" property="KernelInfoRetrieved"       value="id_buf=%t[val1]" info="Kernel ID as ASCII string."/>
-    <event id="0xF100 + 0x06" level="API"    property="KernelGetState"            value="state=%E[val1, os_Info:kernel_state]" info="osKernelGetState function was called and state was retrieved."/>
+    <event id="0xF100 + 0x06" level="API"    property="KernelGetState"            value="state=%E[val1, osRtxInfo_t:kernel_state]" info="osKernelGetState function was called and state was retrieved."/>
     <event id="0xF100 + 0x07" level="API"    property="KernelStart"               value="" info="osKernelStart function was called."/>
     <event id="0xF100 + 0x08" level="Op"     property="KernelStarted"             value="" info="Kernel execution was started."/>
     <event id="0xF100 + 0x09" level="API"    property="KernelLock"                value="" info="osKernelLock function was called."/>
@@ -1296,7 +1401,7 @@
     <event id="0xF100 + 0x10" level="Op"     property="KernelSuspended"           value="sleep_ticks=%d[val1]" info="Kernel execution was suspended."/>
     <event id="0xF100 + 0x11" level="API"    property="KernelResume"              value="sleep_ticks=%d[val1]" info="osKernelResume function was called."/>
     <event id="0xF100 + 0x12" level="Op"     property="KernelResumed"             value="" info="Kernel execution was resumed."/>
-    <event id="0xF100 + 0x13" level="API"    property="KernelGetTickCount"        value="count=%d[((uint64)val2 &lt;&lt; 32) | val1]" info="osKernelGetTickCount function was called."/>
+    <event id="0xF100 + 0x13" level="API"    property="KernelGetTickCount"        value="count=%d[((uint64_t)val2 &lt;&lt; 32) | val1]" info="osKernelGetTickCount function was called."/>
     <event id="0xF100 + 0x14" level="API"    property="KernelGetTickFreq"         value="freq=%d[val1]" info="osKernelGetTickFreq function was called."/>
     <event id="0xF100 + 0x15" level="API"    property="KernelGetSysTimerCount"    value="count=%d[val1]" info="osKernelGetSysTimerCount function was called."/>
     <event id="0xF100 + 0x16" level="API"    property="KernelGetSysTimerFreq"     value="freq=%d[va1]" info="osKernelGetSysTimerFreq function was called."/>
@@ -1311,8 +1416,8 @@
     <event id="0xF200 + 0x07" level="API"    property="ThreadGetState"              value="thread_id=%x[val1], state=%E[val2, rtx_t:thread_state]" info="osThreadGetState function was called and thread state was retrieved."/>
     <event id="0xF200 + 0x08" level="API"    property="ThreadGetStackSize"          value="thread_id=%x[val1], stack_size=%d[val2]" info="osThreadGetStackSize function was called and thread stack size was retrieved."/>
     <event id="0xF200 + 0x09" level="API"    property="ThreadGetStackSpace"         value="thread_id=%x[val1], stack_space=%d[val2]" info="osThreadGetStackSpace function was called and thread stack space was retrieved."/>
-    <event id="0xF200 + 0x0A" level="API"    property="ThreadSetPriority"           value="thread_id=%x[val1], priority=%E[val1, osRtxThread_t:priority]" info="osThreadSetPriority function was called."/>
-    <event id="0xF200 + 0x0B" level="API"    property="ThreadGetPriority"           value="thread_id=%x[val1], priority=%E[val1, osRtxThread_t:priority]" info="osThreadGetPriority function was called and thread priority was retrieved."/>
+    <event id="0xF200 + 0x0A" level="API"    property="ThreadSetPriority"           value="thread_id=%x[val1], priority=%E[val2, osRtxThread_t:priority]" info="osThreadSetPriority function was called."/>
+    <event id="0xF200 + 0x0B" level="API"    property="ThreadGetPriority"           value="thread_id=%x[val1], priority=%E[val2, osRtxThread_t:priority]" info="osThreadGetPriority function was called and thread priority was retrieved."/>
     <event id="0xF200 + 0x0C" level="API"    property="ThreadYield"                 value="" info="osThreadYield function was called."/>
     <event id="0xF200 + 0x0D" level="API"    property="ThreadSuspend"               value="thread_id=%x[val1]" info="osThreadSuspend function was called."/>
     <event id="0xF200 + 0x0E" level="Op"     property="ThreadSuspended"             value="thread_id=%x[val1]" info="Thread execution was suspended."/>
@@ -1323,9 +1428,9 @@
     <event id="0xF200 + 0x13" level="API"    property="ThreadJoin"                  value="thread_id=%x[val1]" info="osThreadJoin function was called."/>
     <event id="0xF200 + 0x14" level="Op"     property="ThreadJoinPending"           value="thread_id=%x[val1]" info="Thread join is pending."/>
     <event id="0xF200 + 0x15" level="Op"     property="ThreadJoined"                value="thread_id=%x[val1]" info="Thread joined."/>
-    <event id="0xF200 + 0x16" level="Op"     property="ThreadBlocked"               value="thread=%x[val1], timeout=%d[val2]" info="Current running thread execution was blocked."/>
-    <event id="0xF200 + 0x17" level="Op"     property="ThreadUnblocked"             value="thread=%x[val1], ret_val=%E[val2, rtx_t:status]" info="Thread execution was unblocked."/>
-    <event id="0xF200 + 0x18" level="Op"     property="ThreadSwitch"                value="thread=%x[val1]" info="Switched execution of the current running thread."/>
+    <event id="0xF200 + 0x16" level="Op"     property="ThreadBlocked"               value="thread_id=%x[val1], timeout=%d[val2]" info="Current running thread execution was blocked."/>
+    <event id="0xF200 + 0x17" level="Op"     property="ThreadUnblocked"             value="thread_id=%x[val1], ret_val=%E[val2, rtx_t:status]" info="Thread execution was unblocked."/>
+    <event id="0xF200 + 0x18" level="Op"     property="ThreadSwitch"                value="thread_id=%x[val1]" info="Switched execution of the current running thread."/>
     <event id="0xF200 + 0x19" level="API"    property="ThreadExit"                  value="" info="osThreadExit function was called."/>
     <event id="0xF200 + 0x1A" level="API"    property="ThreadTerminate"             value="thread_id=%x[val1]" info="osThreadTerminate function was called."/>
     <event id="0xF200 + 0x1B" level="Op"     property="ThreadDestroyed"             value="thread_id=%x[val1]" info="Thread execution was terminated."/>
@@ -1338,10 +1443,12 @@
     <event id="0xF200 + 0x22" level="API"    property="ThreadFlagsGet"              value="thread_flags=%x[val1]" info="osThreadFlagsGet function was called and thread flags were retrieved."/>
     <event id="0xF200 + 0x23" level="API"    property="ThreadFlagsWait"             value="flags=%x[val1], options=%x[val2], timeout=%d[val3]" info="osThreadFlagsWait function was called."/>
     <event id="0xF200 + 0x24" level="Op"     property="ThreadFlagsWaitPending"      value="flags=%x[val1], options=%x[val2], timeout=%d[val3]" info="Waiting for thread flags to become signaled."/>
-    <event id="0xF200 + 0x25" level="Op"     property="ThreadFlagsWaitCompleted"    value="flags=%x[val1], options=%x[val2], thread_flags=%x[val3]" info="Wait for thread flags completed."/>
-    <event id="0xF200 + 0x26" level="Op"     property="ThreadFlagsWaitNotCompleted" value="flags=%x[val1], options=%x[val2]" info="Wait for thread flags not completed."/>
-    <event id="0xF200 + 0x27" level="API"    property="Delay"                       value="ticks=%d[val1]" info="osDelay function was called."/>
-    <event id="0xF200 + 0x28" level="API"    property="DelayUntil"                  value="ticks=%d[((uint64)val2 &lt;&lt; 32) | val1]" info="osDelayUntil function was called."/>
+    <event id="0xF200 + 0x25" level="Op"     property="ThreadFlagsWaitTimeout"      value="" info="Waiting for thread flags timed out."/>
+    <event id="0xF200 + 0x26" level="Op"     property="ThreadFlagsWaitCompleted"    value="flags=%x[val1], options=%x[val2], thread_flags=%x[val3]" info="Wait for thread flags completed."/>
+    <event id="0xF200 + 0x27" level="Op"     property="ThreadFlagsWaitNotCompleted" value="flags=%x[val1], options=%x[val2]" info="Wait for thread flags not completed."/>
+    <event id="0xF200 + 0x28" level="API"    property="Delay"                       value="ticks=%d[val1]" info="osDelay function was called."/>
+    <event id="0xF200 + 0x29" level="API"    property="DelayUntil"                  value="ticks=%d[((uint64_t)val2 &lt;&lt; 32) | val1]" info="osDelayUntil function was called."/>
+    <event id="0xF200 + 0x2A" level="Op"     property="DelayCompleted"              value="" info="osDelay/osDelayUntil completed."/>
 
     <event id="0xF300 + 0x00" level="Error"  property="TimerError"     value="timer_id=%x[val1], status=%E[val2, rtx_t:status]" info="Timer error occurred."/>
     <event id="0xF300 + 0x01" level="Op"     property="TimerCallback"  value="func=%S[val1], argument=%x[val2]" info="Timer callback function was called."/>
@@ -1371,10 +1478,11 @@
     <event id="0xF400 + 0x0A" level="API"    property="EventFlagsGet"              value="ef_id=%x[val1], event_flags=%x[val2]" info="osEventFlagsGet function was called and current event flags were retrieved."/>
     <event id="0xF400 + 0x0B" level="API"    property="EventFlagsWait"             value="ef_id=%x[val1], flags=%x[val2], options=%x[val3], timeout=%d[val4]" info="osEventFlagsWait function was called."/>
     <event id="0xF400 + 0x0C" level="Op"     property="EventFlagsWaitPending"      value="ef_id=%x[val1], flags=%x[val2], options=%x[val3], timeout=%d[val4]" info="Event flags wait is pending."/>
-    <event id="0xF400 + 0x0D" level="Op"     property="EventFlagsWaitCompleted"    value="ef_id=%x[val1], flags=%x[val2], options=%x[val3], event_flags=%x[val4]" info="Event flags wait completed."/>
-    <event id="0xF400 + 0x0E" level="Op"     property="EventFlagsWaitNotCompleted" value="ef_id=%x[val1], flags=%x[val2], options=%x[val3]" info="Event flags wait not completed."/>
-    <event id="0xF400 + 0x0F" level="API"    property="EventFlagsDelete"           value="ef_id=%x[val1]" info="osEventFlagsDelete function was called."/>
-    <event id="0xF400 + 0x10" level="Op"     property="EventFlagsDestroyed"        value="ef_id=%x[val1]" info="Event flags object was deleted."/>
+    <event id="0xF400 + 0x0D" level="Op"     property="EventFlagsWaitTimeout"      value="ef_id=%x[val1]" info="Event flags wait timed out."/>
+    <event id="0xF400 + 0x0E" level="Op"     property="EventFlagsWaitCompleted"    value="ef_id=%x[val1], flags=%x[val2], options=%x[val3], event_flags=%x[val4]" info="Event flags wait completed."/>
+    <event id="0xF400 + 0x0F" level="Op"     property="EventFlagsWaitNotCompleted" value="ef_id=%x[val1], flags=%x[val2], options=%x[val3]" info="Event flags wait not completed."/>
+    <event id="0xF400 + 0x10" level="API"    property="EventFlagsDelete"           value="ef_id=%x[val1]" info="osEventFlagsDelete function was called."/>
+    <event id="0xF400 + 0x11" level="Op"     property="EventFlagsDestroyed"        value="ef_id=%x[val1]" info="Event flags object was deleted."/>
 
     <event id="0xF500 + 0x00" level="Error"  property="MutexError"          value="mutex_id=%x[val1], status=%E[val2, rtx_t:status]" info="Mutex error occurred."/>
     <event id="0xF500 + 0x01" level="API"    property="MutexNew"            value="attr=%x[val1]" info="osMutexNew function was called"/>
@@ -1384,13 +1492,14 @@
     <event id="0xF500 + 0x05" level="Detail" property="MutexGetName"        value="name=%t[val1]" info="Mutex object name as ASCII string."/>
     <event id="0xF500 + 0x06" level="API"    property="MutexAcquire"        value="mutex_id=%x[val1], timeout=%d[val2]" info="osMutexAcquire function was called."/>
     <event id="0xF500 + 0x07" level="Op"     property="MutexAcquirePending" value="mutex_id=%x[val1], timeout=%d[val2]" info="Mutex object acquire is pending."/>
-    <event id="0xF500 + 0x08" level="Op"     property="MutexAcquired"       value="mutex_id=%x[val1], lock=%d[val2]" info="Mutex object was acquired."/>
-    <event id="0xF500 + 0x09" level="Op"     property="MutexNotAcquired"    value="mutex_id=%x[val1]" info="Mutex object was not acquired."/>
-    <event id="0xF500 + 0x0A" level="API"    property="MutexRelease"        value="mutex_id=%x[val1]" info="osMutexRelease function was called."/>
-    <event id="0xF500 + 0x0B" level="Op"     property="MutexReleased"       value="mutex_id=%x[val1], lock=%d[val2]" info="Mutex object was released."/>
-    <event id="0xF500 + 0x0C" level="API"    property="MutexGetOwner"       value="mutex_id=%x[val1], thread_id=%x[val2]" info="osMutexGetOwner function was called and mutex owner thread was retrieved."/>
-    <event id="0xF500 + 0x0D" level="API"    property="MutexDelete"         value="mutex_id=%x[val1]" info="osMutexDelete function was called."/>
-    <event id="0xF500 + 0x0E" level="Op"     property="MutexDestroyed"      value="mutex_id=%x[val1]" info="Mutex object was deleted."/>
+    <event id="0xF500 + 0x08" level="Op"     property="MutexAcquireTimeout" value="mutex_id=%x[val1]" info="Mutex object acquire timed out."/>
+    <event id="0xF500 + 0x09" level="Op"     property="MutexAcquired"       value="mutex_id=%x[val1], lock=%d[val2]" info="Mutex object was acquired."/>
+    <event id="0xF500 + 0x0A" level="Op"     property="MutexNotAcquired"    value="mutex_id=%x[val1]" info="Mutex object was not acquired."/>
+    <event id="0xF500 + 0x0B" level="API"    property="MutexRelease"        value="mutex_id=%x[val1]" info="osMutexRelease function was called."/>
+    <event id="0xF500 + 0x0C" level="Op"     property="MutexReleased"       value="mutex_id=%x[val1], lock=%d[val2]" info="Mutex object was released."/>
+    <event id="0xF500 + 0x0D" level="API"    property="MutexGetOwner"       value="mutex_id=%x[val1], thread_id=%x[val2]" info="osMutexGetOwner function was called and mutex owner thread was retrieved."/>
+    <event id="0xF500 + 0x0E" level="API"    property="MutexDelete"         value="mutex_id=%x[val1]" info="osMutexDelete function was called."/>
+    <event id="0xF500 + 0x0F" level="Op"     property="MutexDestroyed"      value="mutex_id=%x[val1]" info="Mutex object was deleted."/>
 
     <event id="0xF600 + 0x00" level="Error"  property="SemaphoreError"          value="semaphore_id=%x[val1], status=%E[val2, rtx_t:status]" info="Semaphore error occurred."/>
     <event id="0xF600 + 0x01" level="API"    property="SemaphoreNew"            value="max_count=%d[val1], initial_count=%d[val2], attr=%x[val3]" info="osSemaphoreNew function was called."/>
@@ -1400,13 +1509,14 @@
     <event id="0xF600 + 0x05" level="Detail" property="SemaphoreGetName"        value="name=%t[val1]" info="Semaphore object name as ASCII string."/>
     <event id="0xF600 + 0x06" level="API"    property="SemaphoreAcquire"        value="semaphore_id=%x[val1], timeout=%d[val2]" info="osSemaphoreAcquire function was called."/>
     <event id="0xF600 + 0x07" level="Op"     property="SemaphoreAcquirePending" value="semaphore_id=%x[val1], timeout=%d[val2]" info="Semaphore object acquire is pending."/>
-    <event id="0xF600 + 0x08" level="Op"     property="SemaphoreAcquired"       value="semaphore_id=%x[val1]" info="Semaphore object was acquired."/>
-    <event id="0xF600 + 0x09" level="Op"     property="SemaphoreNotAcquired"    value="semaphore_id=%x[val1]" info="Semaphore object was not acquired."/>
-    <event id="0xF600 + 0x0A" level="API"    property="SemaphoreRelease"        value="semaphore_id=%x[val1]" info="osSemaphoreRelease function was called."/>
-    <event id="0xF600 + 0x0B" level="Op"     property="SemaphoreReleased"       value="semaphore_id=%x[val1]" info="Semaphore object was released."/>
-    <event id="0xF600 + 0x0C" level="API"    property="SemaphoreGetCount"       value="semaphore_id=%x[val1], count=%d[val2]" info="osSemaphoreGetCount function was called and current number of available tokens was retrieved."/>
-    <event id="0xF600 + 0x0D" level="API"    property="SemaphoreDelete"         value="semaphore_id=%x[val1]" info="osSemaphoreDelete function was called."/>
-    <event id="0xF600 + 0x0E" level="Op"     property="SemaphoreDestroyed"      value="semaphore_id=%x[val1]" info="Semaphore object was deleted."/>
+    <event id="0xF600 + 0x08" level="Op"     property="SemaphoreAcquireTimeout" value="semaphore_id=%x[val1]" info="Semaphore object acquire timed out."/>
+    <event id="0xF600 + 0x09" level="Op"     property="SemaphoreAcquired"       value="semaphore_id=%x[val1]" info="Semaphore object was acquired."/>
+    <event id="0xF600 + 0x0A" level="Op"     property="SemaphoreNotAcquired"    value="semaphore_id=%x[val1]" info="Semaphore object was not acquired."/>
+    <event id="0xF600 + 0x0B" level="API"    property="SemaphoreRelease"        value="semaphore_id=%x[val1]" info="osSemaphoreRelease function was called."/>
+    <event id="0xF600 + 0x0C" level="Op"     property="SemaphoreReleased"       value="semaphore_id=%x[val1]" info="Semaphore object was released."/>
+    <event id="0xF600 + 0x0D" level="API"    property="SemaphoreGetCount"       value="semaphore_id=%x[val1], count=%d[val2]" info="osSemaphoreGetCount function was called and current number of available tokens was retrieved."/>
+    <event id="0xF600 + 0x0E" level="API"    property="SemaphoreDelete"         value="semaphore_id=%x[val1]" info="osSemaphoreDelete function was called."/>
+    <event id="0xF600 + 0x0F" level="Op"     property="SemaphoreDestroyed"      value="semaphore_id=%x[val1]" info="Semaphore object was deleted."/>
 
     <event id="0xF700 + 0x00" level="Error"  property="MemoryPoolError"        value="mp_id=%x[val1], status=%E[val2, rtx_t:status]" info="Memory pool error occurred."/>
     <event id="0xF700 + 0x01" level="API"    property="MemoryPoolNew"          value="block_count=%d[val1], block_size=%d[val2], attr=%x[val3]" info="osMemoryPoolNew function was called."/>
@@ -1416,17 +1526,18 @@
     <event id="0xF700 + 0x05" level="Detail" property="MemoryPoolGetName"      value="name=%t[val1]" info="Memory pool object name as ASCII string."/>
     <event id="0xF700 + 0x06" level="API"    property="MemoryPoolAlloc"        value="mp_id=%x[val1], timeout=%d[val2]" info="osMemoryPoolAlloc function was called."/>
     <event id="0xF700 + 0x07" level="Op"     property="MemoryPoolAllocPending" value="mp_id=%x[val1], timeout=%d[val2]" info="Memory pool allocation is pending."/>
-    <event id="0xF700 + 0x08" level="Op"     property="MemoryPoolAllocated"    value="mp_id=%x[val1], block=%x[val2]" info="Memory pool was allocated."/>
-    <event id="0xF700 + 0x09" level="Op"     property="MemoryPoolAllocFailed"  value="mp_id=%x[val1]" info="Memory pool was not allocated."/>
-    <event id="0xF700 + 0x0A" level="API"    property="MemoryPoolFree"         value="mp_id=%x[val1], block=%x[val2]" info="osMemoryPoolFree function was called."/>
-    <event id="0xF700 + 0x0B" level="Op"     property="MemoryPoolDeallocated"  value="mp_id=%x[val1], block=%x[val2]" info="Memory pool was deallocated."/>
-    <event id="0xF700 + 0x0C" level="Op"     property="MemoryPoolFreeFailed"   value="mp_id=%x[val1], block=%x[val2]" info="Memory pool was not deallocated."/>
-    <event id="0xF700 + 0x0D" level="API"    property="MemoryPoolGetCapacity"  value="mp_id=%x[val1], capacity=%d[val2]" info="osMemoryPoolGetCapacity function was called and maximum number of memory blocks was retrieved."/>
-    <event id="0xF700 + 0x0E" level="API"    property="MemoryPoolGetBlockSize" value="mp_id=%x[val1], block_size=%d[val2]" info="osMemoryPoolGetBlockSize function was called and memory block size was retrieved."/>
-    <event id="0xF700 + 0x0F" level="API"    property="MemoryPoolGetCount"     value="mp_id=%x[val1], count=%d[val2]" info="osMemoryPoolGetCount function was called and number of used memory blocks was retrieved."/>
-    <event id="0xF700 + 0x10" level="API"    property="MemoryPoolGetSpace"     value="mp_id=%x[val1], space=%d[val2]" info="osMemoryPoolGetSpace function was called and number of available memory blocks was retrieved."/>
-    <event id="0xF700 + 0x11" level="API"    property="MemoryPoolDelete"       value="mp_id=%x[val1]" info="osMemoryPoolDelete function was called."/>
-    <event id="0xF700 + 0x12" level="Op"     property="MemoryPoolDestroyed"    value="mp_id=%x[val1]" info="Memory pool object was deleted."/>
+    <event id="0xF700 + 0x08" level="Op"     property="MemoryPoolAllocTimeout" value="mp_id=%x[val1]" info="Memory pool allocation timed out."/>
+    <event id="0xF700 + 0x09" level="Op"     property="MemoryPoolAllocated"    value="mp_id=%x[val1], block=%x[val2]" info="Memory pool was allocated."/>
+    <event id="0xF700 + 0x0A" level="Op"     property="MemoryPoolAllocFailed"  value="mp_id=%x[val1]" info="Memory pool was not allocated."/>
+    <event id="0xF700 + 0x0B" level="API"    property="MemoryPoolFree"         value="mp_id=%x[val1], block=%x[val2]" info="osMemoryPoolFree function was called."/>
+    <event id="0xF700 + 0x0C" level="Op"     property="MemoryPoolDeallocated"  value="mp_id=%x[val1], block=%x[val2]" info="Memory pool was deallocated."/>
+    <event id="0xF700 + 0x0D" level="Op"     property="MemoryPoolFreeFailed"   value="mp_id=%x[val1], block=%x[val2]" info="Memory pool was not deallocated."/>
+    <event id="0xF700 + 0x0E" level="API"    property="MemoryPoolGetCapacity"  value="mp_id=%x[val1], capacity=%d[val2]" info="osMemoryPoolGetCapacity function was called and maximum number of memory blocks was retrieved."/>
+    <event id="0xF700 + 0x0F" level="API"    property="MemoryPoolGetBlockSize" value="mp_id=%x[val1], block_size=%d[val2]" info="osMemoryPoolGetBlockSize function was called and memory block size was retrieved."/>
+    <event id="0xF700 + 0x10" level="API"    property="MemoryPoolGetCount"     value="mp_id=%x[val1], count=%d[val2]" info="osMemoryPoolGetCount function was called and number of used memory blocks was retrieved."/>
+    <event id="0xF700 + 0x11" level="API"    property="MemoryPoolGetSpace"     value="mp_id=%x[val1], space=%d[val2]" info="osMemoryPoolGetSpace function was called and number of available memory blocks was retrieved."/>
+    <event id="0xF700 + 0x12" level="API"    property="MemoryPoolDelete"       value="mp_id=%x[val1]" info="osMemoryPoolDelete function was called."/>
+    <event id="0xF700 + 0x13" level="Op"     property="MemoryPoolDestroyed"    value="mp_id=%x[val1]" info="Memory pool object was deleted."/>
 
     <event id="0xF800 + 0x00" level="Error"  property="MessageQueueError"         value="mq_id=%x[val1], status=%E[val2, rtx_t:status]" info="Message queue error occurred."/>
     <event id="0xF800 + 0x01" level="API"    property="MessageQueueNew"           value="msg_count=%d[val1], msg_size=%d[val2], attr=%x[val3]" info="osMessageQueueNew function was called."/>
@@ -1436,21 +1547,23 @@
     <event id="0xF800 + 0x05" level="Detail" property="MessageQueueGetName"       value="name=%t[val1]" info="Message queue object name as ASCII string."/>
     <event id="0xF800 + 0x06" level="API"    property="MessageQueuePut"           value="mq_id=%x[val1], msg_ptr=%x[val2], msg_prio=%d[val3], timeout=%d[val4]" info="osMessageQueuePut function was called."/>
     <event id="0xF800 + 0x07" level="Op"     property="MessageQueuePutPending"    value="mq_id=%x[val1], msg_ptr=%x[val2], timeout=%d[val3]" info="Message put is pending."/>
-    <event id="0xF800 + 0x08" level="Op"     property="MessageQueueInsertPending" value="mq_id=%x[val1], msg_ptr=%x[val2]" info="Message insert is pending."/>
-    <event id="0xF800 + 0x09" level="Op"     property="MessageQueueInserted"      value="mq_id=%x[val1], msg_ptr=%x[val2]" info="Message was inserted."/>
-    <event id="0xF800 + 0x0A" level="Op"     property="MessageQueueNotInserted"   value="mq_id=%x[val1], msg_ptr=%x[val2]" info="Message was not inserted"/>
-    <event id="0xF800 + 0x0B" level="API"    property="MessageQueueGet"           value="mq_id=%x[val1], msg_ptr=%x[val2], msg_prio=%d[val3], timeout=%d[val4]" info="osMessageQueueGet function was called."/>
-    <event id="0xF800 + 0x0C" level="Op"     property="MessageQueueGetPending"    value="mq_id=%x[val1], msg_ptr=%x[val2], timeout=%d[val3]" info="Message get is pending."/>
-    <event id="0xF800 + 0x0D" level="Op"     property="MessageQueueRetrieved"     value="mq_id=%x[val1], msg_ptr=%x[val2]" info="Message was retrieved."/>
-    <event id="0xF800 + 0x0E" level="Op"     property="MessageQueueNotRetrieved"  value="mq_id=%x[val1], msg_ptr=%x[val2]" info="Message was not retrieved."/>
-    <event id="0xF800 + 0x0F" level="API"    property="MessageQueueGetCapacity"   value="mq_id=%x[val1], capacity=%d[val2]" info="osMessageQueueGetCapacity function was called and maximum number of messages was retrieved."/>
-    <event id="0xF800 + 0x10" level="API"    property="MessageQueueGetMsgSize"    value="mq_id=%x[val1], msg_size=%d[val2]" info="osMessageQueueGetMsgSize function was called and maximum message size was retrieved."/>
-    <event id="0xF800 + 0x11" level="API"    property="MessageQueueGetCount"      value="mq_id=%x[val1], count=%d[val2]" info="osMessageQueueGetCount function was called and number of queued messages was retrieved."/>
-    <event id="0xF800 + 0x12" level="API"    property="MessageQueueGetSpace"      value="mq_id=%x[val1], space=%d[val2]" info="osMessageQueueGetSpace function was called and number of available message slots was retrieved."/>
-    <event id="0xF800 + 0x13" level="API"    property="MessageQueueReset"         value="mq_id=%x[val1]" info="osMessageQueueReset function was called."/>
-    <event id="0xF800 + 0x14" level="Op"     property="MessageQueueResetDone"     value="mq_id=%x[val1]" info="Message queue was reset."/>
-    <event id="0xF800 + 0x15" level="API"    property="MessageQueueDelete"        value="mq_id=%x[val1]" info="osMessageQueueDelete function was called."/>
-    <event id="0xF800 + 0x16" level="Op"     property="MessageQueueDestroyed"     value="mq_id=%x[val1]" info="Message queue object was deleted."/>
+    <event id="0xF800 + 0x08" level="Op"     property="MessageQueuePutTimeout"    value="mq_id=%x[val1]" info="Message put timed out."/>
+    <event id="0xF800 + 0x09" level="Op"     property="MessageQueueInsertPending" value="mq_id=%x[val1], msg_ptr=%x[val2]" info="Message insert is pending."/>
+    <event id="0xF800 + 0x0A" level="Op"     property="MessageQueueInserted"      value="mq_id=%x[val1], msg_ptr=%x[val2]" info="Message was inserted."/>
+    <event id="0xF800 + 0x0B" level="Op"     property="MessageQueueNotInserted"   value="mq_id=%x[val1], msg_ptr=%x[val2]" info="Message was not inserted"/>
+    <event id="0xF800 + 0x0C" level="API"    property="MessageQueueGet"           value="mq_id=%x[val1], msg_ptr=%x[val2], msg_prio=%x[val3], timeout=%d[val4]" info="osMessageQueueGet function was called."/>
+    <event id="0xF800 + 0x0D" level="Op"     property="MessageQueueGetPending"    value="mq_id=%x[val1], msg_ptr=%x[val2], timeout=%d[val3]" info="Message get is pending."/>
+    <event id="0xF800 + 0x0E" level="Op"     property="MessageQueueGetTimeout"    value="mq_id=%x[val1]" info="Message get timed out."/>
+    <event id="0xF800 + 0x0F" level="Op"     property="MessageQueueRetrieved"     value="mq_id=%x[val1], msg_ptr=%x[val2]" info="Message was retrieved."/>
+    <event id="0xF800 + 0x10" level="Op"     property="MessageQueueNotRetrieved"  value="mq_id=%x[val1], msg_ptr=%x[val2]" info="Message was not retrieved."/>
+    <event id="0xF800 + 0x11" level="API"    property="MessageQueueGetCapacity"   value="mq_id=%x[val1], capacity=%d[val2]" info="osMessageQueueGetCapacity function was called and maximum number of messages was retrieved."/>
+    <event id="0xF800 + 0x12" level="API"    property="MessageQueueGetMsgSize"    value="mq_id=%x[val1], msg_size=%d[val2]" info="osMessageQueueGetMsgSize function was called and maximum message size was retrieved."/>
+    <event id="0xF800 + 0x13" level="API"    property="MessageQueueGetCount"      value="mq_id=%x[val1], count=%d[val2]" info="osMessageQueueGetCount function was called and number of queued messages was retrieved."/>
+    <event id="0xF800 + 0x14" level="API"    property="MessageQueueGetSpace"      value="mq_id=%x[val1], space=%d[val2]" info="osMessageQueueGetSpace function was called and number of available message slots was retrieved."/>
+    <event id="0xF800 + 0x15" level="API"    property="MessageQueueReset"         value="mq_id=%x[val1]" info="osMessageQueueReset function was called."/>
+    <event id="0xF800 + 0x16" level="Op"     property="MessageQueueResetDone"     value="mq_id=%x[val1]" info="Message queue was reset."/>
+    <event id="0xF800 + 0x17" level="API"    property="MessageQueueDelete"        value="mq_id=%x[val1]" info="osMessageQueueDelete function was called."/>
+    <event id="0xF800 + 0x18" level="Op"     property="MessageQueueDestroyed"     value="mq_id=%x[val1]" info="Message queue object was deleted."/>
 
   </events>
 </component_viewer>
