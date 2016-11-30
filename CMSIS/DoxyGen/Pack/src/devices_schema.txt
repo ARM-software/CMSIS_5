@@ -3285,7 +3285,7 @@ for details on the allowed syntax of the block contents.
 </table>
 
 <b>Atomic Blocks:</b>
-- Do not use debug access results for subsequent accesses in the same atomic block.
+- Within an atomic block a variable must no longer be used as an r-value after a result from a target access has been assigned to it.
 - Support for atomic blocks is highly debugger dependent. Keep them as short and simple as possible
 to address a wide range of debuggers.
 - <b>Query</b> and <b>Sequence</b> debug access functions must not be used in an atomic block.
