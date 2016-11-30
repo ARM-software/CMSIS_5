@@ -3748,6 +3748,66 @@ debug access variables which are evaluated for the function call.
       
     </td>
   </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>QueryValue("message", default)</pre></td>
+    <td>
+      Query input value from user. The sequence execution stalls until the user has entered a value or canceled the query.
+      This function returns the <b>default</b> value if the user canceled the query or if the debugger runs in a batch mode.<br>
+      <br>
+      <b>Parameters:</b><br>
+      - message: A constant string with the query message to display. It must not be an expression and it must be
+                 enclosed by quotes.
+      - default: The default value to return if the user cancels the query or if the debugger runs in batch mode.
+
+      <b>Return Value:</b><br>
+      The queried value.
+
+    </td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>Message(type, "format", ...)</pre></td>
+    <td>
+      Outputs a message to a log window.<br>
+      <br>
+      <b>Parameters:</b><br>
+      - type: Message type. Can be one of:
+        - \token{0} : <b>Info</b>, outputs an informative message.
+        - \token{1} : <b>Warning</b>, outputs a warning.
+        - \token{2} : <b>Error</b>, outputs an error. Sequence execution aborts.
+      - format: A constant string with the message format. It must not be an expression and it must be
+                 enclosed by quotes. The string has the following format:<br>
+                 \code
+                 %[flags][width][.precision]specifier
+                 \endcode
+        - Specifiers:
+          - \token{\%u}: 64-bit unsigned decimal integer.
+          - \token{\%x}: 64-bit unsigned hexadecimal integer, lower case letters.
+          - \token{\%X}: 64-bit unsigned hexadecimal integer, upper case letters.
+          - \token{\%o}: 64-bit unsigned octal integer.
+          - \token{\%b}: 64-bit unsigned binary integer.
+          - \token{\%f}: 64-bit floating point value.
+          - \token{\%s}: Constant character string. Must not be an expression.
+          - \token{\%\%}: Print \token{\%} character.
+        - Flags:
+          - \token{0}: Pad the displayed value with zeros instead of spaces if padding is required by
+                       the \token{width} option.
+        - Width: Minimum number of displayed characters. If \token{width} is less than the number of characters
+                         of the value, then the value is padded with spaces to the left.
+        - .Precision:
+          - <b>Integer</b>: Minimum number of displayed digits. Padded with zeros to the left if the
+                             value has less digits than specified with \token{.precision}.
+          - <b>Floating Point</b>: Number of displayed digits after decimal point. Defaults to \token{6}
+                                    if not specified.
+          - <b>Constant String</b>: Maximum number of displayed characters.
+      - ... : Additional function parameters to replace format string specifiers. Each parameter can be
+             a constant string, or an expression that resolves to an unsigned 64-bit integer. A parameter
+             type must match the corresponding specifier type.
+
+      <b>Return Value:</b><br>
+      Always returns \token{0}.
+
+    </td>
+  </tr>
 </table>
 
 \note
