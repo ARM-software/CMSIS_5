@@ -426,6 +426,12 @@ Once the target application generates event information, it can be viewed in the
 */
 
 /**
+\fn void EvrRtxThreadFlagsWaitTimeout (void)
+\details
+
+*/
+
+/**
 \fn void EvrRtxThreadFlagsWaitCompleted (int32_t flags, uint32_t options, int32_t thread_flags)
 \details
 
@@ -445,6 +451,12 @@ Once the target application generates event information, it can be viewed in the
 
 /**
 \fn void EvrRtxThreadDelayUntil (uint64_t ticks)
+\details
+
+*/
+
+/**
+\fn void EvrRtxThreadDelayCompleted (void)
 \details
 
 */
@@ -610,6 +622,12 @@ Once the target application generates event information, it can be viewed in the
 */
 
 /**
+\fn void EvrRtxEventFlagsWaitTimeout (osEventFlagsId_t ef_id);
+\details
+
+*/
+
+/**
 \fn void EvrRtxEventFlagsWaitCompleted (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, int32_t event_flags)
 \details
 
@@ -676,6 +694,12 @@ Once the target application generates event information, it can be viewed in the
 
 /**
 \fn void EvrRtxMutexAcquirePending (osMutexId_t mutex_id, uint32_t timeout)
+\details
+
+*/
+
+/**
+\fn void EvrRtxMutexAcquireTimeout (osMutexId_t mutex_id)
 \details
 
 */
@@ -770,6 +794,12 @@ Once the target application generates event information, it can be viewed in the
 */
 
 /**
+\fn void EvrRtxSemaphoreAcquireTimeout (osSemaphoreId_t semaphore_id)
+\details
+
+*/
+
+/**
 \fn void EvrRtxSemaphoreAcquired (osSemaphoreId_t semaphore_id)
 \details
 
@@ -854,6 +884,12 @@ Once the target application generates event information, it can be viewed in the
 
 /**
 \fn void EvrRtxMemoryPoolAllocPending (osMemoryPoolId_t mp_id, uint32_t timeout)
+\details
+
+*/
+
+/**
+\fn void EvrRtxMemoryPoolAllocTimeout (osMemoryPoolId_t mp_id)
 \details
 
 */
@@ -972,6 +1008,12 @@ Once the target application generates event information, it can be viewed in the
 */
 
 /**
+\fn void EvrRtxMessageQueuePutTimeout (osMessageQueueId_t mq_id)
+\details
+
+*/
+
+/**
 \fn void EvrRtxMessageQueueInsertPending (osMessageQueueId_t mq_id, const void *msg_ptr)
 \details
 
@@ -991,6 +1033,12 @@ Once the target application generates event information, it can be viewed in the
 
 /**
 \fn void EvrRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout)
+\details
+
+*/
+
+/**
+\fn void EvrRtxMessageQueueGetPending (osMessageQueueId_t mq_id, void *msg_ptr, uint32_t timeout)
 \details
 
 */
