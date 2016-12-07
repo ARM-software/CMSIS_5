@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_cm33.h
  * @brief    CMSIS Cortex-M33 Core Peripheral Access Layer Header File
- * @version  V5.0.1
- * @date     25. November 2016
+ * @version  V5.0.2
+ * @date     07. December 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -786,6 +786,12 @@ typedef struct
 #define SCB_DFSR_HALTED_Msk                (1UL /*<< SCB_DFSR_HALTED_Pos*/)               /*!< SCB DFSR: HALTED Mask */
 
 /* SCB Non-Secure Access Control Register Definitions */
+#define SCB_NSACR_CP11_Pos                 11U                                            /*!< SCB NSACR: CP11 Position */
+#define SCB_NSACR_CP11_Msk                 (1UL << SCB_NSACR_CP11_Pos)                    /*!< SCB NSACR: CP11 Mask */
+
+#define SCB_NSACR_CP10_Pos                 10U                                            /*!< SCB NSACR: CP10 Position */
+#define SCB_NSACR_CP10_Msk                 (1UL << SCB_NSACR_CP10_Pos)                    /*!< SCB NSACR: CP10 Mask */
+
 #define SCB_NSACR_CPn_Pos                   0U                                            /*!< SCB NSACR: CPn Position */
 #define SCB_NSACR_CPn_Msk                  (1UL /*<< SCB_NSACR_CPn_Pos*/)                 /*!< SCB NSACR: CPn Mask */
 
