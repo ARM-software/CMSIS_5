@@ -8,10 +8,13 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.1-dev3">
+      Updated ARMv8M Mainline FPU settings in partition*.h
+    </release>
     <release version="5.0.1-dev2">
       CMSIS-RTOS2:
        - API 2.1   (see revision history for details)
-       - RTX 5.1.0 (see revision history for details) 
+       - RTX 5.1.0 (see revision history for details)
     </release>
     <release version="5.0.1-dev1">
       All C module and header files: updated removing 'http://' within license header sections flagged by MISRA as comment within comment
@@ -21,10 +24,10 @@
     <release version="5.0.1-dev0">
       CMSIS-Core:
        - Updated cmsis_armcc.h: corrected macro __ARM_ARCH_6M__
-       - Updated template for secure main function (main_s.c) 
+       - Updated template for secure main function (main_s.c)
        - Updated template for Context Management for ARMv8-M TrustZone (tz_context.c)
       CMSIS-RTOS2:
-       - RTX 5.0.1 (see revision history for details) 
+       - RTX 5.0.1 (see revision history for details)
     </release>
     <release version="5.0.0" date="2016-11-11">
       Changed open source license to Apache 2.0
@@ -286,7 +289,7 @@ The Cortex-M7 processor is an entry-level 32-bit ARM Cortex processor designed f
       <!--book name="Device/ARM/Documents/??_dgug.pdf"       title="?? Device Generic Users Guide"/-->
       <description>
 The ARM Cortex-M23 is based on the ARMv8-M baseline architecture.
-It is the smallest and most energy efficient ARM processor with ARM TrustZone technology. 
+It is the smallest and most energy efficient ARM processor with ARM TrustZone technology.
 Cortex-M23 is the ideal processor for constrained embedded applications requiring efficient security.
       </description>
       <debug svd="Device/ARM/SVD/ARMCM23.svd"/>
@@ -311,7 +314,7 @@ Cortex-M23 is the ideal processor for constrained embedded applications requirin
     <family Dfamily="ARM Cortex M33" Dvendor="ARM:82">
       <!--book name="Device/ARM/Documents/??_dgug.pdf"       title="?? Device Generic Users Guide"/-->
       <description>
-The ARM Cortex-M33 is the most configurable of all Cortex-M processors. It is a full featured microcontroller 
+The ARM Cortex-M33 is the most configurable of all Cortex-M processors. It is a full featured microcontroller
 class processor based on the ARMv8-M mainline architecture with ARM TrustZone security.
       </description>
       <debug svd="Device/ARM/SVD/ARMCM33.svd"/>
@@ -1773,7 +1776,7 @@ ARMv8-M Mainline based device with TrustZone
 
     <!-- CMSIS-Startup components -->
     <!-- Cortex-M0 -->
-    <component Cclass="Device" Cgroup="Startup" Cversion="1.0.1" condition="ARMCM0 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.1" condition="ARMCM0 CMSIS">
       <description>System and Startup for Generic ARM Cortex-M0 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1799,7 +1802,7 @@ ARMv8-M Mainline based device with TrustZone
     </component>
 
     <!-- Cortex-M0+ -->
-    <component Cclass="Device" Cgroup="Startup" Cversion="1.0.1" condition="ARMCM0+ CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.1" condition="ARMCM0+ CMSIS">
       <description>System and Startup for Generic ARM Cortex-M0+ device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1825,7 +1828,7 @@ ARMv8-M Mainline based device with TrustZone
     </component>
 
     <!-- Cortex-M3 -->
-    <component Cclass="Device" Cgroup="Startup" Cversion="1.0.1" condition="ARMCM3 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.1" condition="ARMCM3 CMSIS">
       <description>System and Startup for Generic ARM Cortex-M3 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1851,7 +1854,7 @@ ARMv8-M Mainline based device with TrustZone
     </component>
 
     <!-- Cortex-M4 -->
-    <component Cclass="Device" Cgroup="Startup" Cversion="1.0.1" condition="ARMCM4 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.1" condition="ARMCM4 CMSIS">
       <description>System and Startup for Generic ARM Cortex-M4 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1877,7 +1880,7 @@ ARMv8-M Mainline based device with TrustZone
     </component>
 
     <!-- Cortex-M7 -->
-    <component Cclass="Device" Cgroup="Startup" Cversion="1.0.1" condition="ARMCM7 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.1" condition="ARMCM7 CMSIS">
       <description>System and Startup for Generic ARM Cortex-M7 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1932,36 +1935,36 @@ ARMv8-M Mainline based device with TrustZone
     </component>
 
     <!-- Cortex-M33 -->
-    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMCM33 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.1.0" condition="ARMCM33 CMSIS">
       <description>System and Startup for Generic ARM Cortex-M33 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCM33/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/ARM/startup_ARMCM33.s" version="1.0.0" attr="config" condition="ARMCC"/>
-        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/GCC/startup_ARMCM33.S" version="1.0.0" attr="config" condition="GCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"        version="1.0.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"      version="1.0.0" attr="config" condition="ARMCC GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/ARM/startup_ARMCM33.s"         version="1.0.0" attr="config" condition="ARMCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/GCC/startup_ARMCM33.S"         version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"                version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"              version="1.0.0" attr="config" condition="ARMCC GCC"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.1.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMCM33 CMSIS GCC">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.1.0" condition="ARMCM33 CMSIS GCC">
       <description>System and Startup for Generic ARM Cortex-M33 device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCM33/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/GCC/startup_ARMCM33.c" version="1.0.0" attr="config" condition="GCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"        version="1.0.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"      version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/GCC/startup_ARMCM33.c"         version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"                version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"              version="1.0.0" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.1.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>
     </component>
 
     <!-- Cortex-SC000 -->
-    <component Cclass="Device" Cgroup="Startup" Cversion="1.0.1" condition="ARMSC000 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.1" condition="ARMSC000 CMSIS">
       <description>System and Startup for Generic ARM SC000 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -1987,7 +1990,7 @@ ARMv8-M Mainline based device with TrustZone
     </component>
 
     <!-- Cortex-SC300 -->
-    <component Cclass="Device" Cgroup="Startup" Cversion="1.0.1" condition="ARMSC300 CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.1" condition="ARMSC300 CMSIS">
       <description>System and Startup for Generic ARM SC300 device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2013,7 +2016,7 @@ ARMv8-M Mainline based device with TrustZone
     </component>
 
     <!-- ARMv8MBL -->
-    <component Cclass="Device" Cgroup="Startup" Cversion="1.0.0" condition="ARMv8MBL CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMv8MBL CMSIS">
       <description>System and Startup for Generic ARM ARMv8MBL device</description>
       <files>
         <!-- include folder / device header file -->
@@ -2042,31 +2045,31 @@ ARMv8-M Mainline based device with TrustZone
     </component>
 
     <!-- ARMv8MML -->
-    <component Cclass="Device" Cgroup="Startup" Cversion="1.0.0" condition="ARMv8MML CMSIS">
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.1.0" condition="ARMv8MML CMSIS">
       <description>System and Startup for Generic ARM ARMv8MML device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMv8MML/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceAsm"    name="Device/ARM/ARMv8MML/Source/ARM/startup_ARMv8MML.s" version="1.0.0" attr="config" condition="ARMCC"/>
-        <file category="sourceAsm"    name="Device/ARM/ARMv8MML/Source/GCC/startup_ARMv8MML.S" version="1.0.0" attr="config" condition="GCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"         version="1.0.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"      version="1.0.0" attr="config" condition="ARMCC GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMv8MML/Source/ARM/startup_ARMv8MML.s"         version="1.0.0" attr="config" condition="ARMCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMv8MML/Source/GCC/startup_ARMv8MML.S"         version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"                 version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"              version="1.0.0" attr="config" condition="ARMCC GCC"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.1.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMv8MML CMSIS GCC">
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.1.0" condition="ARMv8MML CMSIS GCC">
       <description>System and Startup for Generic ARM ARMv8MML device</description>
       <files>
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMv8MML/Include/"/>
         <!-- startup / system file -->
-        <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/GCC/startup_ARMv8MML.c" version="1.0.0" attr="config" condition="GCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"         version="1.0.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"      version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/GCC/startup_ARMv8MML.c"         version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"                 version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/system_ARMv8MML.c"              version="1.0.0" attr="config"/>
         <!-- SAU configuration -->
-        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
+        <file category="header"       name="Device/ARM/ARMv8MML/Include/Template/partition_ARMv8MML.h" version="1.1.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>
     </component>
 
