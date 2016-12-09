@@ -43,7 +43,7 @@ representing an error code otherwise (refer to \ref osStatus_t).
 /** \fn int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout)
 The function \b osThreadFlagsWait suspends the execution of the currently \b RUNNING thread until any or all of the thread
 flags specified with the parameter \a flags are set. When these thread flags are already set, the function returns instantly.
-Otherwise the thread is put into the state \b BLOCKED. The function the returns flags before clearing, or a negative number
+Otherwise the thread is put into the state \b BLOCKED. The function then returns flags before clearing, or a negative number
 representing an error code otherwise (refer to \ref osStatus_t).
 
 The parameter \em options specifies the wait condition:
