@@ -218,7 +218,7 @@ extern void EvrRtxKernelLock (void);
 
 /**
   \brief  Event on successful RTOS Kernel scheduler lock (Op)
-  \param[in]  lock          previous lock state (1 - locked, 0 - not locked, error code if negative).
+  \param[in]  lock          previous lock state (1 - locked, 0 - not locked).
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_LOCKED_DISABLE))
 extern void EvrRtxKernelLocked (int32_t lock);
@@ -237,7 +237,7 @@ extern void EvrRtxKernelUnlock (void);
 
 /**
   \brief  Event on successful RTOS Kernel scheduler unlock (Op)
-  \param[in]  lock          previous lock state (1 - locked, 0 - not locked, error code if negative).
+  \param[in]  lock          previous lock state (1 - locked, 0 - not locked).
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_UNLOCKED_DISABLE))
 extern void EvrRtxKernelUnlocked (int32_t lock);
@@ -257,7 +257,7 @@ extern void EvrRtxKernelRestoreLock (int32_t lock);
 
 /**
   \brief  Event on successful RTOS Kernel scheduler lock state restore (Op)
-  \param[in]  lock          new lock state (1 - locked, 0 - not locked, error code if negative).
+  \param[in]  lock          new lock state (1 - locked, 0 - not locked).
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_LOCK_RESTORED_DISABLE))
 extern void EvrRtxKernelLockRestored (int32_t lock);
@@ -286,7 +286,7 @@ extern void EvrRtxKernelSuspended (uint32_t sleep_ticks);
 
 /**
   \brief  Event on RTOS Kernel scheduler resume (API)
-  \param[in]  sleep_ticks   time in ticks for how long the system was in sleep or power-down mode.
+  \param[in]  sleep_ticks   time in ticks, for how long the system was in sleep or power-down mode.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_RESUME_DISABLE))
 extern void EvrRtxKernelResume (uint32_t sleep_ticks);
@@ -651,7 +651,7 @@ extern void EvrRtxThreadFlagsSet (osThreadId_t thread_id, int32_t flags);
 /**
   \brief  Event on successful thread flags set (Op)
   \param[in]  thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
-  \param[in]  thread_flags  thread flags after setting or error code if negative.
+  \param[in]  thread_flags  thread flags after setting
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_SET_DONE_DISABLE))
 extern void EvrRtxThreadFlagsSetDone (osThreadId_t thread_id, int32_t thread_flags);
@@ -671,7 +671,7 @@ extern void EvrRtxThreadFlagsClear (int32_t flags);
 
 /**
   \brief  Event on successful thread flags clear (Op)
-  \param[in]  thread_flags  thread flags before clearing or error code if negative.
+  \param[in]  thread_flags  thread flags before clearing
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_CLEAR_DONE_DISABLE))
 extern void EvrRtxThreadFlagsClearDone (int32_t thread_flags);
@@ -965,7 +965,7 @@ extern void EvrRtxEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags);
 /**
   \brief  Event on successful event flags set (Op)
   \param[in]  ef_id         event flags ID obtained by \ref osEventFlagsNew.
-  \param[in]  event_flags   event flags after setting or error code if negative.
+  \param[in]  event_flags   event flags after setting
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_SET_DONE_DISABLE))
 extern void EvrRtxEventFlagsSetDone (osEventFlagsId_t ef_id, int32_t event_flags);
@@ -987,7 +987,7 @@ extern void EvrRtxEventFlagsClear (osEventFlagsId_t ef_id, int32_t flags);
 /**
   \brief  Event on successful event flags clear (Op)
   \param[in]  ef_id         event flags ID obtained by \ref osEventFlagsNew.
-  \param[in]  event_flags   event flags before clearing or error code if negative.
+  \param[in]  event_flags   event flags before clearing
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_CLEAR_DONE_DISABLE))
 extern void EvrRtxEventFlagsClearDone (osEventFlagsId_t ef_id, int32_t event_flags);

@@ -546,17 +546,17 @@ uint32_t svcRtxMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
 
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
-    EvrRtxMessageQueueGetCapacity(mq, 0U);
+    EvrRtxMessageQueueGetMsgSize(mq, 0U);
     return 0U;
   }
 
   // Check object state
   if (mq->state == osRtxObjectInactive) {
-    EvrRtxMessageQueueGetCapacity(mq, 0U);
+    EvrRtxMessageQueueGetMsgSize(mq, 0U);
     return 0U;
   }
 
-  EvrRtxMessageQueueGetCapacity(mq, mq->msg_size);
+  EvrRtxMessageQueueGetMsgSize(mq, mq->msg_size);
 
   return mq->msg_size;
 }
