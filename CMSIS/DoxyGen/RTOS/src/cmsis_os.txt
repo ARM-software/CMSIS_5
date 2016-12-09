@@ -1178,7 +1178,7 @@ Main stack is also used when:
 
 |Name                                                               |\#define         |Description|
 |-------------------------------------------------------------------|-----------------|-----------|
-|Number of concurrent running user threads                          |\c OS_TASKCNT    |Indicates the maximum number of threads that will run at the same time (including main).|
+|Number of concurrent running user threads                          |\c OS_TASKCNT    |Indicates the maximum number of threads that will run at the same time (including main and osTimerThread (if OS_TIMERS set to 1)).|
 |Default Thread stack size [bytes]                                  |\c OS_STKSIZE    |Specifies the default stack size (in words) for threads that are defined with osThreadDef \a stacksz = 0.|
 |Main Thread stack size [bytes]                                     |\c OS_MAINSTKSIZE|Is the stack requirement (in words) for the main function that is started by default as an RTOS thread.|
 |Number of threads with user-provided stack size                    |\c OS_PRIVCNT    |Indicates the number of threads that are defined with \ref osThreadDef \a stacksz != 0 (excluding main). \a stacksz specifies the stack size requirement of that thread.|
