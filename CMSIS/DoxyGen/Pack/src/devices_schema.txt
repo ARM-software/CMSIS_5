@@ -3780,12 +3780,18 @@ debug access variables which are evaluated for the function call.
                  %[flags][width][.precision]specifier
                  \endcode
         - Specifiers:
-          - \token{\%u}: 64-bit unsigned decimal integer.
-          - \token{\%x}: 64-bit unsigned hexadecimal integer, lower case letters.
-          - \token{\%X}: 64-bit unsigned hexadecimal integer, upper case letters.
-          - \token{\%o}: 64-bit unsigned octal integer.
-          - \token{\%b}: 64-bit unsigned binary integer.
-          - \token{\%f}: 64-bit floating point value.
+          - \token{\%u}: 32-bit unsigned decimal integer.
+          - \token{\%llu}: 64-bit unsigned decimal integer.
+          - \token{\%x}: 32-bit unsigned hexadecimal integer, lower case letters.
+          - \token{\%llx}: 64-bit unsigned hexadecimal integer, lower case letters.
+          - \token{\%X}: 32-bit unsigned hexadecimal integer, upper case letters.
+          - \token{\%llX}: 64-bit unsigned hexadecimal integer, upper case letters.
+          - \token{\%o}: 32-bit unsigned octal integer.
+          - \token{\%llo}: 64-bit unsigned octal integer.
+          - \token{\%b}: 32-bit unsigned binary integer.
+          - \token{\%llb}: 64-bit unsigned binary integer.
+          - \token{\%f}: Single-precision (32-bit) floating point value.
+          - \token{\%Lf}: Double-precision (64-bit) floating point value.
           - \token{\%s}: Constant character string. Must not be an expression.
           - \token{\%\%}: Print \token{\%} character.
         - Flags:
@@ -3805,6 +3811,25 @@ debug access variables which are evaluated for the function call.
 
       <b>Return Value:</b><br>
       Always returns \token{0}.
+
+      \note
+      For 32-bit specifiers the <b>Message</b> command must print the lower 32 Bit of a 64 Bit debug access variable.
+
+    </td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>LoadDebugInfo("file")</pre></td>
+    <td>
+      Loads DWARF debug information from an application executable.<br>
+      <br>
+      <b>Parameters:</b><br>
+      - file: A constant string with the path to the executable. The path must be relative to the
+              root folder of the pack and use the format <b>path/name.extension</b>. It must not be 
+              an expression and it must be enclosed by quotes.
+              
+      <b>Return Value:</b><br>
+      Returns \token{0} after successful debug information load.<br>
+      Returns \token{1} if debug information load failed.
 
     </td>
   </tr>
