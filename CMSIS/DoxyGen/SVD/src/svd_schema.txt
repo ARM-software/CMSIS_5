@@ -823,9 +823,8 @@ Two timer peripheral descriptions are specified for the same memory block. No re
   </tr>
   <tr>
     <td>headerStructName</td>
-    <td>The header file generator uses the name of a peripheral as the base name for the C structure type. If this element is specfied,
-	    then this string is used instead of the peripheral name. This is particularly useful when multiple peripherals get derived from a peripheral description
-		and a generic type name shall be used.</td>
+    <td>Specify the base name of C structures. The headerfile generator uses the name of a peripheral as the base name for the C structure type. 
+        If \tagem{headerStructName} element is specfied, then this string is used instead of the peripheral name; useful when multiple peripherals get derived and a generic type name should be used.</td>
     <td>dimableIdentifierType </td>
     <td>0..1 </td>
   </tr>	
@@ -2003,6 +2002,13 @@ can provide reference manual level details within the debugger.
     <td>0..1</td>
   </tr>
   <tr>
+    <td>headerEnumName</td>
+    <td>Identifier for the enumeration section. Overwrites the hierarchical enumeration type in the device header file. 
+        User is responsible for uniqueness across description.</td>
+    <td>identifierType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
     <td>usage</td>
     <td>Possible values are \token{read<em>,</em> write<em>, or</em> read-write}. 
         This allows specifying two different enumerated values depending whether it is to be used 
@@ -2262,7 +2268,12 @@ making source code more readable, the system view in the debugger becomes more i
   </tr>
   <tr>
     <td>headerEnumName</td>
-    <td>Specify the name of the enumeration.</td>
+    <td>Specify the base name of enumerations.  Overwrites the hierarchical enumeration type in the device header file. 
+        User is responsible for uniqueness across description.
+        The headerfile generator uses the name of a peripheral or cluster as the base name for enumeration types. 
+        If \tagem{headerEnumName} element is specfied, then this string is used.
+
+</td>
     <td>identifierType</td>
     <td>0..1 </td>
   </tr>
