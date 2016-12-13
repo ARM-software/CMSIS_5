@@ -154,7 +154,7 @@ is set for all registers unless redefined at a lower level.
     <td>series</td>
     <td>Specify the name of the device series. </td>
     <td>xs:string </td>
-    <td>1..1 </td>
+    <td>0..1 </td>
   </tr>
   <tr>
     <td>version</td>
@@ -931,14 +931,6 @@ have at least one address block. If a peripheral is derived form another periphe
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>addressBlock</td>
-    <td>Specifies an address range uniquely mapped to this peripheral. A peripheral must 
-        have at least one address block, but may allocate multiple distinct address ranges. 
-        If a peripheral is derived form another peripheral, the addressBlock is not mandatory.</td>
-    <td>addressBlockType</td>
-    <td>1..*</td>
-  </tr>
-  <tr>
     <td>offset</td>
     <td>Specifies the start address of an address block relative to the peripheral \em baseAddress.</td>
     <td>scaledNonNegativeInteger </td>
@@ -1713,7 +1705,7 @@ The bit-field \b BIT1, described as a test field, has the size of \token{8} bits
     <td>\refelem{field}</td>
     <td>Define the bit-field properties of a register.</td>
     <td>fieldType </td>
-    <td>1..1 </td>
+    <td>1..* </td>
   </tr>
 </table>
 
