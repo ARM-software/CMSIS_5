@@ -1078,16 +1078,16 @@
           <item property="Kernel ID"    value="RTX V%d[V_Major].%d[V_Minor].%d[V_Patch]" cond="RTX_En != 0"/>
           <item property="Kernel State" value="osKernelInactive"         cond="RTX_En == 0"/>
           <item property="Kernel State" value="%E[os_Info.kernel_state]" cond="RTX_En != 0"/>
-          <item property="Kernel Tick Count"      value="%d[os_Info.kernel_tick]"     cond="RTX_En != 0" />
-          <item property="Kernel Tick Frequency"  value="%d[os_Config.tick_freq]" />          
+          <item property="Kernel Tick Count"      value="%d[os_Info.kernel_tick]"     cond="RTX_En != 0"/>
+          <item property="Kernel Tick Frequency"  value="%d[os_Config.tick_freq]"     cond="RTX_En != 0" />          
           <item property="System Timer Frequency" value="%d[os_Info.kernel_sys_freq]" cond="RTX_En != 0" />
-          <item property="Round Robin"            value="Disabled"                      cond="os_Config.robin_timeout == 0" />
-          <item property="Round Robin Tick Count" value="%d[os_Info.thread_robin_tick]" cond="(os_Config.robin_timeout > 0) &amp;&amp; (RTX_En != 0)" />
-          <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]"   cond="os_Config.robin_timeout > 0" />
-          <item property="Global Dynamic Memory" value="Base: %x[os_Config.mem_common_addr], Size: %d[os_Config.mem_common_size]"/>
-          <item property="Stack Overrun Check"   value="%t[stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" />
-          <item property="Stack Usage Watermark" value="%t[stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" />
-          <item property="Default Thread Stack Size" value="%d[os_Config.thread_stack_size]" />
+          <item property="Round Robin"            value="Disabled"                      cond="(os_Config.robin_timeout == 0) &amp;&amp; (RTX_En != 0)" />
+          <item property="Round Robin Tick Count" value="%d[os_Info.thread_robin_tick]" cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
+          <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]"   cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
+          <item property="Global Dynamic Memory" value="Base: %x[os_Config.mem_common_addr], Size: %d[os_Config.mem_common_size]" cond="RTX_En != 0"/>
+          <item property="Stack Overrun Check"   value="%t[stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
+          <item property="Stack Usage Watermark" value="%t[stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
+          <item property="Default Thread Stack Size" value="%d[os_Config.thread_stack_size]" cond="RTX_En != 0"/>
 
           <item property="ISR FIFO Queue" value="Size: %d[os_Info.isr_queue_max], Used: %d[os_Info.isr_queue_cnt]" cond="RTX_En">
             <list name="i" start="0" limit="os_Info.isr_queue_cnt">
