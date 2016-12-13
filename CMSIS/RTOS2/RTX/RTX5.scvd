@@ -621,12 +621,22 @@
 
       <var name="StaticMp_En" type="uint8_t" value="0" />
 
+      <var name="V_Major" type="uint32_t" value="0"/>
+      <var name="V_Minor" type="uint32_t" value="0"/>
+      <var name="V_Patch" type="uint32_t" value="0"/>
+
       <!-- Read main OS information and configuration structures -->
       <readlist name="os_Info"   type="osRtxInfo_t"   symbol="osRtxInfo"   count="1" init="1"/>
       <readlist name="os_Config" type="osRtxConfig_t" symbol="osRtxConfig" count="1" init="1"/>
 
       <calc cond="((os_Info.version / 10000000) == 5) &amp;&amp; (os_Info.kernel_state &gt; 0) &amp;&amp; (os_Info.kernel_state &lt; 5)">
         RTX_En = 1;
+      </calc>
+      
+      <calc cond="RTX_En">
+        V_Major =  os_Info.version / 10000000;
+        V_Minor = (os_Info.version / 10000) % 1000;
+        V_Patch =  os_Info.version % 10000;
       </calc>
 
       <calc cond="RTX_En &amp;&amp; (os_Config.mpi_thread || os_Config.mpi_timer || os_Config.mpi_event_flags || os_Config.mpi_mutex || os_Config.mpi_semaphore || os_Config.mpi_memory_pool || os_Config.mpi_message_queue)">
@@ -1065,12 +1075,15 @@
       <out name="RTX RTOS">
         <!-- System -->
         <item property="System" value="">
+          <item property="Kernel ID"    value="RTX V%d[V_Major].%d[V_Minor].%d[V_Patch]" cond="RTX_En != 0"/>
           <item property="Kernel State" value="osKernelInactive"         cond="RTX_En == 0"/>
           <item property="Kernel State" value="%E[os_Info.kernel_state]" cond="RTX_En != 0"/>
-          <item property="Kernel Tick Frequency" value="%d[os_Config.tick_freq]" />
-          <item property="Round Robin"         value="Disabled"                      cond="os_Config.robin_timeout == 0" />
-          <item property="Round Robin Tick"    value="%d[os_Info.thread_robin_tick]" cond="(os_Config.robin_timeout > 0) &amp;&amp; (RTX_En != 0)" />
-          <item property="Round Robin Timeout" value="%d[os_Config.robin_timeout]"   cond="os_Config.robin_timeout > 0" />
+          <item property="Kernel Tick Count"      value="%d[os_Info.kernel_tick]"     cond="RTX_En != 0" />
+          <item property="Kernel Tick Frequency"  value="%d[os_Config.tick_freq]" />          
+          <item property="System Timer Frequency" value="%d[os_Info.kernel_sys_freq]" cond="RTX_En != 0" />
+          <item property="Round Robin"            value="Disabled"                      cond="os_Config.robin_timeout == 0" />
+          <item property="Round Robin Tick Count" value="%d[os_Info.thread_robin_tick]" cond="(os_Config.robin_timeout > 0) &amp;&amp; (RTX_En != 0)" />
+          <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]"   cond="os_Config.robin_timeout > 0" />
           <item property="Global Dynamic Memory" value="Base: %x[os_Config.mem_common_addr], Size: %d[os_Config.mem_common_size]"/>
           <item property="Stack Overrun Check"   value="%t[stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" />
           <item property="Stack Usage Watermark" value="%t[stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" />
