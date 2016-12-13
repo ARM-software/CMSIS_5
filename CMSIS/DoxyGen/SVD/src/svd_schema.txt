@@ -931,7 +931,7 @@ have at least one address block. If a peripheral is derived form another periphe
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>offset</td>
+    <td>offset </td>
     <td>Specifies the start address of an address block relative to the peripheral \em baseAddress.</td>
     <td>scaledNonNegativeInteger </td>
     <td>1..1</td>
