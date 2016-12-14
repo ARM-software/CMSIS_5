@@ -1,25 +1,25 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_cfft_radix4_f32.c    
-*    
-* Description:	Radix-4 Decimation in Frequency CFFT & CIFFT Floating point processing function    
-*    
-*    
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+*
+* $Date:        19. March 2015
+* $Revision:    V.1.4.5 a
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_cfft_radix4_f32.c
+*
+* Description:  Radix-4 Decimation in Frequency CFFT & CIFFT Floating point processing function
+*
+*
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*  
-* Redistribution and use in source and binary forms, with or without 
+*
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -28,7 +28,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -36,7 +36,7 @@
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.    
+* POSSIBILITY OF SUCH DAMAGE.
 * -------------------------------------------------------------------- */
 
 #include "arm_math.h"
@@ -47,21 +47,21 @@ uint16_t fftSize,
 uint16_t bitRevFactor,
 uint16_t * pBitRevTab);
 
-/**    
-* @ingroup groupTransforms    
+/**
+* @ingroup groupTransforms
 */
 
-/* ----------------------------------------------------------------------    
-** Internal helper function used by the FFTs    
+/* ----------------------------------------------------------------------
+** Internal helper function used by the FFTs
 ** ------------------------------------------------------------------- */
 
-/*    
-* @brief  Core function for the floating-point CFFT butterfly process.   
-* @param[in, out] *pSrc            points to the in-place buffer of floating-point data type.   
-* @param[in]      fftLen           length of the FFT.   
-* @param[in]      *pCoef           points to the twiddle coefficient buffer.   
-* @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.   
-* @return none.   
+/*
+* @brief  Core function for the floating-point CFFT butterfly process.
+* @param[in, out] *pSrc            points to the in-place buffer of floating-point data type.
+* @param[in]      fftLen           length of the FFT.
+* @param[in]      *pCoef           points to the twiddle coefficient buffer.
+* @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
+* @return none.
 */
 
 void arm_radix4_butterfly_f32(
@@ -76,7 +76,7 @@ uint16_t twidCoefModifier)
    uint32_t i0, i1, i2, i3;
    uint32_t n1, n2, j, k;
 
-#ifndef ARM_MATH_CM0_FAMILY_FAMILY
+#ifndef ARM_MATH_CM0_FAMILY
 
    /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -176,7 +176,7 @@ uint16_t twidCoefModifier)
       Yc12_out = Yc12C_out * co2;
       Xd12_out = Xd12C_out * co3;
       Yd12_out = Yd12C_out * co3;
-         
+
       /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
       //Xb12_out -= Yb12C_out * si1;
       p0 = Yb12C_out * si1;
@@ -195,7 +195,7 @@ uint16_t twidCoefModifier)
       /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
       //Yd12_out += Xd12C_out * si3;
       p5 = Xd12C_out * si3;
-      
+
       Xb12_out += p0;
       Yb12_out -= p1;
       Xc12_out += p2;
@@ -256,7 +256,7 @@ uint16_t twidCoefModifier)
 
          /*  Twiddle coefficients index modifier */
          ia1 += twidCoefModifier;
-      
+
          i0 = j;
          do
          {
@@ -318,7 +318,7 @@ uint16_t twidCoefModifier)
             Yc12_out = Yc12C_out * co2;
             Xd12_out = Xd12C_out * co3;
             Yd12_out = Yd12C_out * co3;
-         
+
             /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
             //Xb12_out -= Yb12C_out * si1;
             p0 = Yb12C_out * si1;
@@ -337,7 +337,7 @@ uint16_t twidCoefModifier)
             /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
             //Yd12_out += Xd12C_out * si3;
             p5 = Xd12C_out * si3;
-            
+
             Xb12_out += p0;
             Yb12_out -= p1;
             Xc12_out += p2;
@@ -425,7 +425,7 @@ uint16_t twidCoefModifier)
       a6 = (Xaminusc - Ybminusd);
       /* yd' = (ya+xb-yc-xd) */
       a7 = (Xbminusd + Yaminusc);
-   
+
       ptr1[0] = a0;
       ptr1[1] = a1;
       ptr1[2] = a2;
@@ -546,7 +546,7 @@ uint16_t twidCoefModifier)
 
             /* yd' = (ya+xb-yc-xd)co3 - (xa-yb-xc+yd)(si3) */
             pSrc[(2u * i3) + 1u] = (s2 * co3) - (r2 * si3);
-         
+
             i0 += n1;
          } while( i0 < fftLen);
          j++;
@@ -554,18 +554,18 @@ uint16_t twidCoefModifier)
       twidCoefModifier <<= 2u;
    }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY_FAMILY */
+#endif /* #ifndef ARM_MATH_CM0_FAMILY */
 
 }
 
-/*    
-* @brief  Core function for the floating-point CIFFT butterfly process.   
-* @param[in, out] *pSrc            points to the in-place buffer of floating-point data type.   
-* @param[in]      fftLen           length of the FFT.   
-* @param[in]      *pCoef           points to twiddle coefficient buffer.   
-* @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.   
-* @param[in]      onebyfftLen      value of 1/fftLen.   
-* @return none.   
+/*
+* @brief  Core function for the floating-point CIFFT butterfly process.
+* @param[in, out] *pSrc            points to the in-place buffer of floating-point data type.
+* @param[in]      fftLen           length of the FFT.
+* @param[in]      *pCoef           points to twiddle coefficient buffer.
+* @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
+* @param[in]      onebyfftLen      value of 1/fftLen.
+* @return none.
 */
 
 void arm_radix4_butterfly_inverse_f32(
@@ -580,7 +580,7 @@ float32_t onebyfftLen)
    uint32_t i0, i1, i2, i3;
    uint32_t n1, n2, j, k;
 
-#ifndef ARM_MATH_CM0_FAMILY_FAMILY
+#ifndef ARM_MATH_CM0_FAMILY
 
    float32_t xaIn, yaIn, xbIn, ybIn, xcIn, ycIn, xdIn, ydIn;
    float32_t Xaplusc, Xbplusd, Yaplusc, Ybplusd, Xaminusc, Xbminusd, Yaminusc,
@@ -681,7 +681,7 @@ float32_t onebyfftLen)
       Yc12_out = Yc12C_out * co2;
       Xd12_out = Xd12C_out * co3;
       Yd12_out = Yd12C_out * co3;
-   
+
       /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
       //Xb12_out -= Yb12C_out * si1;
       p0 = Yb12C_out * si1;
@@ -700,7 +700,7 @@ float32_t onebyfftLen)
       /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
       //Yd12_out += Xd12C_out * si3;
       p5 = Xd12C_out * si3;
-      
+
       Xb12_out -= p0;
       Yb12_out += p1;
       Xc12_out -= p2;
@@ -841,7 +841,7 @@ float32_t onebyfftLen)
             /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
             //Yd12_out += Xd12C_out * si3;
             p5 = Xd12C_out * si3;
-            
+
             Xb12_out -= p0;
             Yb12_out += p1;
             Xc12_out -= p2;
@@ -914,7 +914,7 @@ float32_t onebyfftLen)
 
       /* (yb-yd) */
       Ybminusd = ybIn - ydIn;
-      
+
       /* xa' = (xa+xb+xc+xd) * onebyfftLen */
       a0 = (Xaplusc + Xbplusd);
       /* ya' = (ya+yb+yc+yd) * onebyfftLen */
@@ -931,7 +931,7 @@ float32_t onebyfftLen)
       a6 = (Xaminusc + Ybminusd);
       /* yd' = (ya-xb-yc+xd) * onebyfftLen */
       a7 = (Yaminusc - Xbminusd);
-   
+
       p0 = a0 * onebyfftLen;
       p1 = a1 * onebyfftLen;
       p2 = a2 * onebyfftLen;
@@ -940,7 +940,7 @@ float32_t onebyfftLen)
       p5 = a5 * onebyfftLen;
       p6 = a6 * onebyfftLen;
       p7 = a7 * onebyfftLen;
-   
+
       /* xa' = (xa+xb+xc+xd) * onebyfftLen */
       ptr1[0] = p0;
       /* ya' = (ya+yb+yc+yd) * onebyfftLen */
@@ -1072,7 +1072,7 @@ float32_t onebyfftLen)
 
             /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
             pSrc[(2u * i3) + 1u] = (s2 * co3) + (r2 * si3);
-         
+
             i0 += n1;
          } while( i0 < fftLen);
          j++;
@@ -1160,22 +1160,22 @@ float32_t onebyfftLen)
       pSrc[(2u * i3) + 1u] = s2 * onebyfftLen;
    }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY_FAMILY */
+#endif /* #ifndef ARM_MATH_CM0_FAMILY */
 }
 
-/**    
-* @addtogroup ComplexFFT    
-* @{    
+/**
+* @addtogroup ComplexFFT
+* @{
 */
 
-/**    
-* @details    
-* @brief Processing function for the floating-point Radix-4 CFFT/CIFFT.   
+/**
+* @details
+* @brief Processing function for the floating-point Radix-4 CFFT/CIFFT.
 * @deprecated Do not use this function.  It has been superseded by \ref arm_cfft_f32 and will be removed
 * in the future.
-* @param[in]      *S    points to an instance of the floating-point Radix-4 CFFT/CIFFT structure.   
-* @param[in, out] *pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place.   
-* @return none.   
+* @param[in]      *S    points to an instance of the floating-point Radix-4 CFFT/CIFFT structure.
+* @param[in, out] *pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place.
+* @return none.
 */
 
 void arm_cfft_radix4_f32(
@@ -1204,7 +1204,7 @@ float32_t * pSrc)
 
 }
 
-/**    
-* @} end of ComplexFFT group    
+/**
+* @} end of ComplexFFT group
 */
 
