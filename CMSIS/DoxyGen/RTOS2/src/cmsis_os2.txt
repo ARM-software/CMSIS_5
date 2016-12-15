@@ -19,7 +19,7 @@ concurrently.
 Applications frequently require several concurrent activities. CMSIS-RTOS2 can manage multiple concurrent activities at the
 time when they are needed. Each activity gets a separate thread which executes a specific task and this simplifies the
 overall program structure. The CMSIS-RTOS2 system is scalable and additional threads can be added easily at a later time.
-Threads have a priority allowing faster execution of time-critical parts of an user application.
+Threads have a priority allowing faster execution of time-critical parts of a user application.
 
 The CMSIS-RTOS2 offers services needed in many real-time applications, for example, periodical activation of timer functions, 
 memory management, and message exchange between threads with time limits.
