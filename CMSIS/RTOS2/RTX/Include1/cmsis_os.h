@@ -834,8 +834,8 @@ const osMailQDef_t os_mailQ_def_##name = \
 static void              *os_mail_p_##name[2]  __attribute__((section(".bss.os"))); \
 static osRtxMemoryPool_t   os_mail_mp_cb_##name __attribute__((section(".bss.os.mempool.cb"))); \
 static osRtxMessageQueue_t os_mail_mq_cb_##name __attribute__((section(".bss.os.msgqueue.cb"))); \
-static uint32_t os_mail_mp_data_##name[osRtxMemoryPoolMemSize  ((queue_sz),sizeof(type))/4] __attribute__((section(".bss.os.mempool.mem"))); \
-static uint32_t os_mail_mq_data_##name[osRtxMessageQueueMemSize((queue_sz),sizeof(type))/4] __attribute__((section(".bss.os.msgqueue.mem"))); \
+static uint32_t os_mail_mp_data_##name[osRtxMemoryPoolMemSize  ((queue_sz),sizeof(type) )/4] __attribute__((section(".bss.os.mempool.mem"))); \
+static uint32_t os_mail_mq_data_##name[osRtxMessageQueueMemSize((queue_sz),sizeof(void*))/4] __attribute__((section(".bss.os.msgqueue.mem"))); \
 const osMailQDef_t os_mailQ_def_##name = \
 { (queue_sz), sizeof(type), (&os_mail_p_##name), \
   { NULL, 0U, (&os_mail_mp_cb_##name), osRtxMemoryPoolCbSize, \
