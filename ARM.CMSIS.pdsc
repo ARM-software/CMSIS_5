@@ -8,6 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.1-dev4">
+      DSP:
+       - preparation for ARMv8M DSP libraries.
+    </release>
     <release version="5.0.1-dev3">
       Updated ARMv8M Mainline FPU settings in partition*.h
     </release>

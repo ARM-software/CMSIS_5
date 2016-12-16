@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2016 ARM Limited. All rights reserved.
 *
-* $Date:        22. October 2016
-* $Revision:    V1.4.5 e
+* $Date:        28. October 2016
+* $Revision:    V1.4.5 f
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_math.h
@@ -300,8 +300,10 @@
 
 #if defined(ARM_MATH_CM7)
   #include "core_cm7.h"
+  #define ARM_MATH_DSP
 #elif defined (ARM_MATH_CM4)
   #include "core_cm4.h"
+  #define ARM_MATH_DSP
 #elif defined (ARM_MATH_CM3)
   #include "core_cm3.h"
 #elif defined (ARM_MATH_CM0)
@@ -310,8 +312,16 @@
 #elif defined (ARM_MATH_CM0PLUS)
   #include "core_cm0plus.h"
   #define ARM_MATH_CM0_FAMILY
+#elif defined (ARM_MATH_ARMV8MBL)
+  #include "core_armv8mbl.h"
+  #define ARM_MATH_CM0_FAMILY
+#elif defined (ARM_MATH_ARMV8MML)
+  #include "core_armv8mml.h"
+  #if (defined (__DSP_PRESENT) && (__DSP_PRESENT == 1))
+    #define ARM_MATH_DSP
+  #endif
 #else
-  #error "Define according the used Cortex core ARM_MATH_CM7, ARM_MATH_CM4, ARM_MATH_CM3, ARM_MATH_CM0PLUS or ARM_MATH_CM0"
+  #error "Define according the used Cortex core ARM_MATH_CM7, ARM_MATH_CM4, ARM_MATH_CM3, ARM_MATH_CM0PLUS, ARM_MATH_CM0, ARM_MATH_ARMV8MBL, ARM_MATH_ARMV8MML"
 #endif
 
 #undef  __CMSIS_GENERIC         /* enable NVIC and Systick functions */
@@ -331,7 +341,7 @@ extern "C"
 #define DELTA_Q15          0x5
 #define INDEX_MASK         0x0000003F
 #ifndef PI
-#define PI                 3.14159265358979f
+  #define PI               3.14159265358979f
 #endif
 
   /**
@@ -458,7 +468,8 @@ extern "C"
 #define _SIMD32_OFFSET(addr)  (*(__SIMD32_TYPE *)  (addr))
 #define __SIMD64(addr)        (*(int64_t **) & (addr))
 
-#if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY)
+/* #if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
+#if !defined (ARM_MATH_DSP)
   /**
    * @brief definition to pack two 16 bit values.
    */
@@ -467,8 +478,8 @@ extern "C"
 #define __PKHTB(ARG1, ARG2, ARG3) ( (((int32_t)(ARG1) <<    0) & (int32_t)0xFFFF0000) | \
                                     (((int32_t)(ARG2) >> ARG3) & (int32_t)0x0000FFFF)  )
 
-#endif
-
+/* #endif // defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
+#endif /* !defined (ARM_MATH_DSP) */
 
    /**
    * @brief definition to pack four 8 bit values.
@@ -713,7 +724,8 @@ extern "C"
   /*
    * @brief C custom defined intrinsic function for M3 and M0 processors
    */
-#if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY)
+/* #if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
+#if !defined (ARM_MATH_DSP)
 
   /*
    * @brief C custom defined QADD8 for M3 and M0 processors
@@ -1042,7 +1054,34 @@ extern "C"
     return (sum + (int32_t) (((int64_t) x * y) >> 32));
   }
 
-#endif /* defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
+#if 0
+  /*
+   * @brief C custom defined PKHBT for unavailable DSP extension
+   */
+  CMSIS_INLINE __STATIC_INLINE uint32_t __PKHBT(
+  uint32_t x,
+  uint32_t y,
+  uint32_t leftshift)
+  {
+    return ( ((x             ) & 0x0000FFFFUL) |
+             ((y << leftshift) & 0xFFFF0000UL)  );
+  }
+
+  /*
+   * @brief C custom defined PKHTB for unavailable DSP extension
+   */
+  CMSIS_INLINE __STATIC_INLINE uint32_t __PKHTB(
+  uint32_t x,
+  uint32_t y,
+  uint32_t rightshift)
+  {
+    return ( ((x              ) & 0xFFFF0000UL) |
+             ((y >> rightshift) & 0x0000FFFFUL)  );
+  }
+#endif
+
+/* #endif // defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
+#endif /* !defined (ARM_MATH_DSP) */
 
 
   /**

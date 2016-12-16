@@ -1,8 +1,8 @@
 ;/* ----------------------------------------------------------------------
 ;* Copyright (C) 2010-2015 ARM Limited. All rights reserved.
 ;*
-;* $Date:       21. December 2015 
-;* $Revision: 	V.1.4.5 a
+;* $Date:       02. November 2015 
+;* $Revision: 	V.1.4.5 b
 ;*
 ;* Project: 	CMSIS DSP Library
 ;* Title:	    arm_bitreversal2.S
@@ -99,7 +99,7 @@
 	.type   arm_bitreversal_32, %function
 #endif
 
-#if defined(ARM_MATH_CM0) || defined(ARM_MATH_CM0PLUS)
+#if defined(ARM_MATH_CM0) || defined(ARM_MATH_CM0PLUS) || defined(ARM_MATH_ARMV8MBL)
 
 arm_bitreversal_32 PROC
 	ADDS     r3,r1,#1
