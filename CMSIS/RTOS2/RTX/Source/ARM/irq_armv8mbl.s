@@ -7,7 +7,7 @@
 ; * not use this file except in compliance with the License.
 ; * You may obtain a copy of the License at
 ; *
-; * http://www.apache.org/licenses/LICENSE-2.0
+; * www.apache.org/licenses/LICENSE-2.0
 ; *
 ; * Unless required by applicable law or agreed to in writing, software
 ; * distributed under the License is distributed on an AS IS BASIS, WITHOUT
@@ -28,11 +28,11 @@
 __DOMAIN_NS     EQU      0
                 ENDIF
 
-I_T_RUN_OFS     EQU      28                     ; osInfo.thread.run offset
+I_T_RUN_OFS     EQU      28                     ; osRtxInfo.thread.run offset
 TCB_SM_OFS      EQU      48                     ; TCB.stack_mem offset
 TCB_SP_OFS      EQU      56                     ; TCB.SP offset
 TCB_SF_OFS      EQU      34                     ; TCB.stack_frame offset
-TCB_TZM_OFS     EQU      60                     ; TCB.tz_memory offset
+TCB_TZM_OFS     EQU      64                     ; TCB.tz_memory offset
 
 
                 PRESERVE8
@@ -40,8 +40,8 @@ TCB_TZM_OFS     EQU      60                     ; TCB.tz_memory offset
 
 
                 AREA     |.constdata|, DATA, READONLY
-                EXPORT   os_irq_cm
-os_irq_cm       DCB      0                      ; Non weak library reference
+                EXPORT   irqRtxLib
+irqRtxLib       DCB      0                      ; Non weak library reference
 
 
                 AREA     |.text|, CODE, READONLY
@@ -49,35 +49,48 @@ os_irq_cm       DCB      0                      ; Non weak library reference
 
 SVC_Handler     PROC
                 EXPORT   SVC_Handler
-                IMPORT   os_UserSVC_Table
-                IMPORT   os_Info
+                IMPORT   osRtxUserSVC
+                IMPORT   osRtxInfo
                 IF       __DOMAIN_NS = 1
                 IMPORT   TZ_LoadContext_S
+                IMPORT   TZ_StoreContext_S
                 ENDIF
 
                 MRS      R0,PSP                 ; Get PSP
                 LDR      R1,[R0,#24]            ; Load saved PC from stack
                 SUBS     R1,R1,#2               ; Point to SVC instruction
                 LDRB     R1,[R1]                ; Load SVC number
-                CBNZ     R1,SVC_User            ; Branch if not SVC 0
+                CMP      R1,#0
+                BNE      SVC_User               ; Branch if not SVC 0
 
                 PUSH     {R0,LR}                ; Save PSP and EXC_RETURN
                 LDM      R0,{R0-R3}             ; Load function parameters from stack
                 BLX      R7                     ; Call service function
-                POP      {R1,R2}                ; Restore PSP and EXC_RETURN
-                STR      R0,[R1]                ; Store function return value
-                MOV      R0,R1                  ; Save PSP
-                MOV      LR,R2                  ; Set EXC_RETURN
+                POP      {R2,R3}                ; Restore PSP and EXC_RETURN
+                STMIA    R2!,{R0-R1}            ; Store function return values
+                MOV      LR,R3                  ; Set EXC_RETURN
 
 SVC_Context
-                LDR      R3,=os_Info+I_T_RUN_OFS; Load address of os_Info.run
-                LDMIA    R3!,{R1,R2}            ; Load os_Info.thread.run: curr & next
+                LDR      R3,=osRtxInfo+I_T_RUN_OFS; Load address of osRtxInfo.run
+                LDMIA    R3!,{R1,R2}            ; Load osRtxInfo.thread.run: curr & next
                 CMP      R1,R2                  ; Check if thread switch is required
                 BEQ      SVC_Exit               ; Branch when threads are the same
 
                 CBZ      R1,SVC_ContextSwitch   ; Branch if running thread is deleted
 
 SVC_ContextSave
+                IF       __DOMAIN_NS = 1
+                LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
+                CBZ      R0,SVC_ContextSave1    ; Branch if there is no secure context
+                PUSH     {R1,R2,R3,R7}          ; Save registers
+                MOV      R7,LR                  ; Get EXC_RETURN
+                BL       TZ_StoreContext_S      ; Store secure context
+                MOV      LR,R7                  ; Set EXC_RETURN
+                POP      {R1,R2,R3,R7}          ; Restore registers
+                ENDIF
+
+SVC_ContextSave1
+                MRS      R0,PSP                 ; Get PSP
                 SUBS     R0,R0,#32              ; Adjust PSP
                 STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
                 STMIA    R0!,{R4-R7}            ; Save R4..R7
@@ -87,13 +100,14 @@ SVC_ContextSave
                 MOV      R7,R11
                 STMIA    R0!,{R4-R7}            ; Save R8..R11
 
+SVC_ContextSave2
                 MOV      R0,LR                  ; Get EXC_RETURN
                 ADDS     R1,R1,#TCB_SF_OFS      ; Adjust address
                 STRB     R0,[R1]                ; Store stack frame information
 
 SVC_ContextSwitch
                 SUBS     R3,R3,#8               ; Adjust address
-                STR      R2,[R3]                ; os_Info.thread.run: curr = next
+                STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
 
 SVC_ContextRestore
                 IF       __DOMAIN_NS = 1
@@ -141,7 +155,7 @@ SVC_Exit
 
 SVC_User
                 PUSH     {R4,LR}                ; Save registers
-                LDR      R2,=os_UserSVC_Table   ; Load address of SVC table
+                LDR      R2,=osRtxUserSVC       ; Load address of SVC table
                 LDR      R3,[R2]                ; Load SVC maximum number
                 CMP      R1,R3                  ; Check SVC number range
                 BHI      SVC_Done               ; Branch if out of range
@@ -163,10 +177,10 @@ SVC_Done
 
 PendSV_Handler  PROC
                 EXPORT   PendSV_Handler
-                IMPORT   os_PendSV_Handler
+                IMPORT   osRtxPendSV_Handler
 
                 PUSH     {R0,LR}                ; Save EXC_RETURN
-                BL       os_PendSV_Handler      ; Call os_PendSV_Handler
+                BL       osRtxPendSV_Handler    ; Call osRtxPendSV_Handler
                 POP      {R0,R1}                ; Restore EXC_RETURN
                 MOV      LR,R1                  ; Set EXC_RETURN
                 B        Sys_Context
@@ -177,10 +191,10 @@ PendSV_Handler  PROC
 
 SysTick_Handler PROC
                 EXPORT   SysTick_Handler
-                IMPORT   os_Tick_Handler
+                IMPORT   osRtxTick_Handler
 
                 PUSH     {R0,LR}                ; Save EXC_RETURN
-                BL       os_Tick_Handler        ; Call os_Tick_Handler
+                BL       osRtxTick_Handler      ; Call osRtxTick_Handler
                 POP      {R0,R1}                ; Restore EXC_RETURN
                 MOV      LR,R1                  ; Set EXC_RETURN
                 B        Sys_Context
@@ -191,28 +205,28 @@ SysTick_Handler PROC
 
 Sys_Context     PROC
                 EXPORT   Sys_Context
-                IMPORT   os_Info
+                IMPORT   osRtxInfo
                 IF       __DOMAIN_NS = 1
                 IMPORT   TZ_LoadContext_S
                 IMPORT   TZ_StoreContext_S
                 ENDIF
 
-                LDR      R3,=os_Info+I_T_RUN_OFS; Load address of os_Info.run
-                LDM      R3!,{R1,R2}            ; Load os_Info.thread.run: curr & next
+                LDR      R3,=osRtxInfo+I_T_RUN_OFS; Load address of osRtxInfo.run
+                LDM      R3!,{R1,R2}            ; Load osRtxInfo.thread.run: curr & next
                 CMP      R1,R2                  ; Check if thread switch is required
                 BEQ      Sys_ContextExit        ; Branch when threads are the same
 
 Sys_ContextSave
                 IF       __DOMAIN_NS = 1
-                MOV      R0,LR                  ; Get EXC_RETURN
-                LSLS     R0,R0,#25              ; Check domain of interrupted thread
-                BPL      Sys_ContextSave1       ; Branch if non-secure
-                MOV      R0,LR                  ; Get EXC_RETURN
-                PUSH     {R0,R1,R2,R3}          ; Save registers
                 LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
+                CBZ      R0,Sys_ContextSave1    ; Branch if there is no secure context
+                PUSH     {R1,R2,R3,R7}          ; Save registers
+                MOV      R7,LR                  ; Get EXC_RETURN
                 BL       TZ_StoreContext_S      ; Store secure context
-                POP      {R0,R1,R2,R3}          ; Restore registers
-                MOV      LR,R0                  ; Set EXC_RETURN
+                MOV      LR,R7                  ; Set EXC_RETURN
+                POP      {R1,R2,R3,R7}          ; Restore registers
+                LSLS     R7,R7,#25              ; Check domain of interrupted thread
+                BMI      Sys_ContextSave1       ; Branch if secure
                 MRS      R0,PSP                 ; Get PSP
                 STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
                 B        Sys_ContextSave2
@@ -236,7 +250,7 @@ Sys_ContextSave2
 
 Sys_ContextSwitch
                 SUBS     R3,R3,#8               ; Adjust address
-                STR      R2,[R3]                ; os_Info.run: curr = next
+                STR      R2,[R3]                ; osRtxInfo.run: curr = next
 
 Sys_ContextRestore
                 IF       __DOMAIN_NS = 1

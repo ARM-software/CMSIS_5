@@ -7,7 +7,7 @@
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        20. October 2016
- * $Revision:    V2.0
+ * $Date:        25. November 2016
+ * $Revision:    V2.1
  *
  * Project:      CMSIS-RTOS API
  * Title:        cmsis_os.h template header file
@@ -112,13 +112,17 @@
  *     - added: osMessageQueueReset, osMessageQueueDelete
  *    Mail Queue: 
  *     - deprecated (superseded by extended Message Queue functionality)
+ * Version 2.1
+ *    Support for critical and uncritical sections (nesting safe)
+ *    - updated: osKernelLock, osKernelUnlock
+ *    - added: osKernelRestoreLock
  *---------------------------------------------------------------------------*/
  
 #ifndef CMSIS_OS_H_
 #define CMSIS_OS_H_
  
 /// \b osCMSIS identifies the CMSIS-RTOS API version.
-#define osCMSIS             0x20000U    ///< API version (main[31:16].sub[15:0])
+#define osCMSIS             0x20001U    ///< API version (main[31:16].sub[15:0])
  
 /// \note CAN BE CHANGED: \b osCMSIS_KERNEL identifies the underlying RTOS kernel and version number.
 #define osCMSIS_KERNEL      0x10000U    ///< RTOS identification and version (main[31:16].sub[15:0])

@@ -61,7 +61,7 @@ extern struct OS_TSK os_tsk;
 extern struct OS_TCB os_idle_TCB;
 
 /* Functions */
-extern void      rt_switch_req (P_TCB p_new);
+extern void      rt_switch_req (P_TCB p_next);
 extern void      rt_dispatch   (P_TCB next_TCB);
 extern void      rt_block      (U16 timeout, U8 block_state);
 extern void      rt_tsk_pass   (void);

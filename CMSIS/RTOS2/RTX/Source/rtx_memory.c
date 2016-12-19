@@ -7,7 +7,7 @@
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
@@ -48,23 +48,26 @@ typedef struct mem_block_s {
 /// \param[in]  mem             pointer to memory pool.
 /// \param[in]  size            size of a memory pool in bytes.
 /// \return 1 - success, 0 - failure.
-uint32_t os_MemoryInit (void *mem, uint32_t size) {
+uint32_t osRtxMemoryInit (void *mem, uint32_t size) {
   mem_head_t  *head;
   mem_block_t *ptr;
 
-  if ((mem == NULL) || ((uint32_t)mem & 3U) || (size & 3U) ||
-      (size < (sizeof(mem_head_t) + sizeof(mem_block_t) + sizeof(mem_block_t *)))) {
+  if ((mem == NULL) || ((uint32_t)mem & 7U) || (size & 7U) ||
+      (size < (sizeof(mem_head_t) + 2*sizeof(mem_block_t)))) {
+    EvrRtxMemoryInit(mem, size, 0U);
     return 0U;
   }
 
   head = (mem_head_t *)mem;
   head->size = size;
-  head->used = sizeof(mem_head_t) + sizeof(mem_block_t *);
+  head->used = sizeof(mem_head_t) + sizeof(mem_block_t);
 
   ptr = (mem_block_t *)((uint32_t)mem + sizeof(mem_head_t));
-  ptr->next = (mem_block_t *)((uint32_t)mem + size - sizeof(mem_block_t *));
+  ptr->next = (mem_block_t *)((uint32_t)mem + size - sizeof(mem_block_t));
   ptr->next->next = NULL;
   ptr->info = 0U;
+
+  EvrRtxMemoryInit(mem, size, 1U);
 
   return 1U;
 }
@@ -74,18 +77,19 @@ uint32_t os_MemoryInit (void *mem, uint32_t size) {
 /// \param[in]  size            size of a memory block in bytes.
 /// \param[in]  type            memory block type: 0 - generic, 1 - control block
 /// \return allocated memory block or NULL in case of no memory is available.
-void *os_MemoryAlloc (void *mem, uint32_t size, uint32_t type) {
+void *osRtxMemoryAlloc (void *mem, uint32_t size, uint32_t type) {
   mem_block_t *p, *p_new, *ptr;
   uint32_t     hole_size;
 
   if ((mem == NULL) || (size == 0U) || (type & ~MB_INFO_TYPE_MASK)) {
+    EvrRtxMemoryAlloc(mem, size, type, NULL);
     return NULL;
   }
 
   // Add header to size
   size += sizeof(mem_block_t);
-  // Make sure that block is 4-byte aligned
-  size = (size + 3U) & ~((uint32_t)3U);
+  // Make sure that block is 8-byte aligned
+  size = (size + 7U) & ~((uint32_t)7U);
 
   // Search for hole big enough
   p = (mem_block_t *)((uint32_t)mem + sizeof(mem_head_t));
@@ -99,6 +103,7 @@ void *os_MemoryAlloc (void *mem, uint32_t size, uint32_t type) {
     p = p->next;
     if (p->next == NULL) {
       // Failed (end of list)
+      EvrRtxMemoryAlloc(mem, size, type, NULL);
       return NULL;
     }
   }
@@ -118,6 +123,8 @@ void *os_MemoryAlloc (void *mem, uint32_t size, uint32_t type) {
     ptr = (mem_block_t *)((uint32_t)p_new + sizeof(mem_block_t));
   }
 
+  EvrRtxMemoryAlloc(mem, size, type, ptr);
+
   return ptr;
 }
 
@@ -125,10 +132,11 @@ void *os_MemoryAlloc (void *mem, uint32_t size, uint32_t type) {
 /// \param[in]  mem             pointer to memory pool.
 /// \param[in]  block           memory block to be returned to the memory pool.
 /// \return 1 - success, 0 - failure.
-uint32_t os_MemoryFree (void *mem, void *block) {
+uint32_t osRtxMemoryFree (void *mem, void *block) {
   mem_block_t *p, *p_prev, *ptr;
 
   if ((mem == NULL) || (block == NULL)) {
+    EvrRtxMemoryFree(mem, block, 0U);
     return 0U;
   }
 
@@ -142,6 +150,7 @@ uint32_t os_MemoryFree (void *mem, void *block) {
     p = p->next;
     if (p == NULL) {
       // Not found
+      EvrRtxMemoryFree(mem, block, 0U);
       return 0U;
     }
   }
@@ -156,5 +165,7 @@ uint32_t os_MemoryFree (void *mem, void *block) {
     p_prev->next = p->next;
   }
 
-  return 0U;
+  EvrRtxMemoryFree(mem, block, 1U);
+
+  return 1U;
 }

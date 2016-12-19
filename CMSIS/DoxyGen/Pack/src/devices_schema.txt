@@ -41,7 +41,7 @@ and finalizing with the information on the device level.
     <!-- family level -->
     <family Dfamily="STM32F2" Dvendor="STMicroelectronics:13">
       <processor Dcore="Cortex-M3" DcoreVersion="r2p1"
-                 Dfpu="0" Dmpu="1" Dendian="Little-endian" Dclock="120000000"/>
+                 Dfpu="NO_FPU" Dmpu="MPU" Dendian="Little-endian" Dclock="120000000"/>
 
       <compile   header="Device/Include/stm32f2xx.h" define="STM32F2XX"/>
       <debug     svd="SVD/STM32F20x.svd"/>
@@ -1443,7 +1443,7 @@ all processors, no processor must be specified in \elem{Pname}.
   <devices>
     <family Dfamily="STM32F4" Dvendor="STMicroelectronics:13">
       <processor Dcore="Cortex-M4" DcoreVersion="r0p1"
-                 Dfpu="1" Dmpu="1" Dendian="Little-endian" Dclock="168000000"/>
+                 Dfpu="FPU" Dmpu="MPU" Dendian="Little-endian" Dclock="168000000"/>
       ...
     </family>
   </devices>
@@ -1830,24 +1830,76 @@ These values can be used in the elements:
     <td>SecurCore <a href="http://www.arm.com/products/processors/securcore/sc300.php" target="_blank">SC300</a> based on technology of Cortex-M3.</td>
   </tr>
   <tr>
+    <td class="XML-Token">ARMV8MBL</td>
+    <td>Processor <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank">ARMV8MBL</a> compliant with the ARMv8-M Baseline Architecture.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">ARMV8MML</td>
+    <td>Processor <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank">ARMV8MML</a> compliant with the ARMv8-M Mainline Architecture.</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Cortex-R4</td>
-    <td>ARM Cortex-R4 processor based device</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r4.php" target="_blank">ARM Cortex-R4</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-R5</td>
-    <td>ARM Cortex-R5 processor based device</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r5.php" target="_blank">ARM Cortex-R5</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-R7</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r7.php" target="_blank">ARM Cortex-R7</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-R8</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r8.php" target="_blank">ARM Cortex-R8</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-A5</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a5.php" target="_blank">ARM Cortex-A5</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-A7</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a7.php" target="_blank">ARM Cortex-A7</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A8</td>
-    <td>ARM Cortex-A8 processor based device</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a8.php" target="_blank">ARM Cortex-A8</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A9</td>
-    <td>ARM Cortex-A9 processor based device</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a9.php" target="_blank">ARM Cortex-A9</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A15</td>
-    <td>ARM Cortex-A15 processor based device</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a15.php" target="_blank">ARM Cortex-A15</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-A17</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a17.php" target="_blank">ARM Cortex-A17</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-A32</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a32.php" target="_blank">ARM Cortex-A32</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-A35</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a35.php" target="_blank">ARM Cortex-A35</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-A53</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a53.php" target="_blank">ARM Cortex-A53</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-A57</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a57.php" target="_blank">ARM Cortex-A57</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-A72</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a72.php" target="_blank">ARM Cortex-A72</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-A73</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a73.php" target="_blank">ARM Cortex-A73</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">*</td>
@@ -1943,6 +1995,33 @@ The values can be used in the elements:
 </table>
 
 <p>&nbsp;</p>		
+
+\anchor DsecureEnum <b>Table: Software Model Secure </b>
+
+The table shows predefined values that identify whether an application will run in secure mode.
+The values can be used in the elements:
+- \ref element_accept  
+- \ref element_require 
+- \ref element_deny  
+- \ref element_processor
+
+<table class="cmtable" summary="Enumeration: DsecureEnum">
+  <tr>
+    <th>Dsecure=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">Secure</td>
+    <td>Application is built to run in secure mode</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Non-secure</td>
+    <td>Application is built to run in non-secure mode</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>		
+
 
 \anchor DdspEnum <b>Table: Device implements DSP Instructions</b>
 
@@ -3206,7 +3285,7 @@ for details on the allowed syntax of the block contents.
 </table>
 
 <b>Atomic Blocks:</b>
-- Do not use debug access results for subsequent accesses in the same atomic block.
+- Within an atomic block a variable must no longer be used as an r-value after a result from a target access has been assigned to it.
 - Support for atomic blocks is highly debugger dependent. Keep them as short and simple as possible
 to address a wide range of debuggers.
 - <b>Query</b> and <b>Sequence</b> debug access functions must not be used in an atomic block.
@@ -3667,6 +3746,91 @@ debug access variables which are evaluated for the function call.
       - Yes    : \token{3}
       - No     : \token{4}
       
+    </td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>QueryValue("message", default)</pre></td>
+    <td>
+      Query input value from user. The sequence execution stalls until the user has entered a value or canceled the query.
+      This function returns the <b>default</b> value if the user canceled the query or if the debugger runs in a batch mode.<br>
+      <br>
+      <b>Parameters:</b><br>
+      - message: A constant string with the query message to display. It must not be an expression and it must be
+                 enclosed by quotes.
+      - default: The default value to return if the user cancels the query or if the debugger runs in batch mode.
+
+      <b>Return Value:</b><br>
+      The queried value.
+
+    </td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>Message(type, "format", ...)</pre></td>
+    <td>
+      Outputs a message to a log window.<br>
+      <br>
+      <b>Parameters:</b><br>
+      - type: Message type. Can be one of:
+        - \token{0} : <b>Info</b>, outputs an informative message.
+        - \token{1} : <b>Warning</b>, outputs a warning.
+        - \token{2} : <b>Error</b>, outputs an error. Sequence execution aborts.
+      - format: A constant string with the message format. It must not be an expression and it must be
+                 enclosed by quotes. The string has the following format:<br>
+                 \code
+                 %[flags][width][.precision]specifier
+                 \endcode
+        - Specifiers:
+          - \token{\%u}: 32-bit unsigned decimal integer.
+          - \token{\%llu}: 64-bit unsigned decimal integer.
+          - \token{\%x}: 32-bit unsigned hexadecimal integer, lower case letters.
+          - \token{\%llx}: 64-bit unsigned hexadecimal integer, lower case letters.
+          - \token{\%X}: 32-bit unsigned hexadecimal integer, upper case letters.
+          - \token{\%llX}: 64-bit unsigned hexadecimal integer, upper case letters.
+          - \token{\%o}: 32-bit unsigned octal integer.
+          - \token{\%llo}: 64-bit unsigned octal integer.
+          - \token{\%b}: 32-bit unsigned binary integer.
+          - \token{\%llb}: 64-bit unsigned binary integer.
+          - \token{\%f}: Single-precision (32-bit) floating point value.
+          - \token{\%Lf}: Double-precision (64-bit) floating point value.
+          - \token{\%s}: Constant character string. Must not be an expression.
+          - \token{\%\%}: Print \token{\%} character.
+        - Flags:
+          - \token{0}: Pad the displayed value with zeros instead of spaces if padding is required by
+                       the \token{width} option.
+        - Width: Minimum number of displayed characters. If \token{width} is less than the number of characters
+                         of the value, then the value is padded with spaces to the left.
+        - .Precision:
+          - <b>Integer</b>: Minimum number of displayed digits. Padded with zeros to the left if the
+                             value has less digits than specified with \token{.precision}.
+          - <b>Floating Point</b>: Number of displayed digits after decimal point. Defaults to \token{6}
+                                    if not specified.
+          - <b>Constant String</b>: Maximum number of displayed characters.
+      - ... : Additional function parameters to replace format string specifiers. Each parameter can be
+             a constant string, or an expression that resolves to an unsigned 64-bit integer. A parameter
+             type must match the corresponding specifier type.
+
+      <b>Return Value:</b><br>
+      Always returns \token{0}.
+
+      \note
+      For 32-bit specifiers the <b>Message</b> command must print the lower 32 Bit of a 64 Bit debug access variable.
+
+    </td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>LoadDebugInfo("file")</pre></td>
+    <td>
+      Loads DWARF debug information from an application executable.<br>
+      <br>
+      <b>Parameters:</b><br>
+      - file: A constant string with the path to the executable. The path must be relative to the
+              root folder of the pack and use the format <b>path/name.extension</b>. It must not be 
+              an expression and it must be enclosed by quotes.
+              
+      <b>Return Value:</b><br>
+      Returns \token{0} after successful debug information load.<br>
+      Returns \token{1} if debug information load failed.
+
     </td>
   </tr>
 </table>

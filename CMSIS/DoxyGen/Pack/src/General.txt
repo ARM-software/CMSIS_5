@@ -67,6 +67,30 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <th>Version</th>
     <th>Description</th>
   </tr>
+    <tr>
+    <td>1.4.7</td>
+    <td>Modifications compared to Version 1.4.6
+- added multiple version types to tighten the schema checking depending on context
+- added new generator sections for exe, web and eclipse based generators in \<generator>
+- added new processor attributes Dtz = Trustzone and Ddsp = DSP instructions for ARMv8-M
+- added new attributes Dtz, Ddsp, Dsecure to conditions \<require>, \<deny>, \<accept>
+- added new processors Cortex-M23 and Cortex-M33 and other in DcoreEnum
+- added new attribute public to books and images to indicate public use of documents and board images
+    </td>
+  </tr>
+  <tr>
+    <td>1.4.6</td>
+    <td>Modifications compared to Version 1.4.5
+- refined Dname string pattern restriction (RestrictedStringDname)
+    </td>
+  </tr>
+  <tr>
+    <td>1.4.5</td>
+    <td>Modifications compared to Version 1.4.4
+- added: Punits to ProcessorType
+- added: Punit to DebugType
+    </td>
+  </tr>
   <tr>
     <td>1.4.4</td>
     <td>Modifications compared to Version 1.4.3

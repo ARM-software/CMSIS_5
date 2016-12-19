@@ -75,13 +75,13 @@ Add a \ref element_device "<devices>" section in the PDSC file with the followin
         <processor  Dclock="50000000"/>
         <!-- *************************  Device 'MVCM3110'  ***************************** -->
         <device Dname="MVCM3110">
-          <memory     id="IROM1"                      start="0x00000000"  size="0x4000"     startup="1"   default="1"/>
-          <memory     id="IRAM1"                      start="0x20000000"  size="0x0800"     init   ="0"   default="1"/>
+          <memory     name="IROM1"  access="rx"       start="0x00000000"  size="0x4000"     startup="1"   default="1"/>
+          <memory     name="IRAM1"  access="rw"       start="0x20000000"  size="0x0800"     init   ="0"   default="1"/>
         </device>
         <!-- *************************  Device 'MVCM3120'  ***************************** -->
         <device Dname="MVCM3120">
-          <memory     id="IROM1"                      start="0x00000000"  size="0x8000"     startup="1"   default="1"/>
-          <memory     id="IRAM1"                      start="0x20000000"  size="0x1000"     init   ="0"   default="1"/>
+          <memory     name="IROM1"  access="rx"        start="0x00000000"  size="0x8000"     startup="1"   default="1"/>
+          <memory     name="IRAM1"  access="rx"        start="0x20000000"  size="0x1000"     init   ="0"   default="1"/>
         </device>
       </subFamily>
       <!-- ************************  Sub Family 'MVCM3200'  **************************** -->
@@ -89,13 +89,13 @@ Add a \ref element_device "<devices>" section in the PDSC file with the followin
         <processor  Dclock="100000000"/>
         <!-- *************************  Device 'MVCM3250'  ***************************** -->
         <device Dname="MVCM3250">
-          <memory     id="IROM1"                      start="0x00000000"  size="0x4000"     startup="1"   default="1"/>
-          <memory     id="IRAM1"                      start="0x20000000"  size="0x0800"     init   ="0"   default="1"/>
+          <memory     name="IROM1"  access="rx"         start="0x00000000"  size="0x4000"     startup="1"   default="1"/>
+          <memory     name="IRAM1"  access="rw"         start="0x20000000"  size="0x0800"     init   ="0"   default="1"/>
         </device>
         <!-- *************************  Device 'MVCM3260'  ***************************** -->
         <device Dname="MVCM3260">
-          <memory     id="IROM1"                      start="0x00000000"  size="0x8000"     startup="1"   default="1"/>
-          <memory     id="IRAM1"                      start="0x20000000"  size="0x1000"     init   ="0"   default="1"/>
+          <memory     name="IROM1"  access="rx"         start="0x00000000"  size="0x8000"     startup="1"   default="1"/>
+          <memory     name="IRAM1"  access="rw"         start="0x20000000"  size="0x1000"     init   ="0"   default="1"/>
         </device>
       </subFamily>
     </family>

@@ -2,7 +2,7 @@
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler specific macros, functions, instructions
  * @version  V5.00
- * @date     14. October 2016
+ * @date     09. November 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -13,7 +13,7 @@
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
@@ -52,7 +52,6 @@
  * IAR Compiler
  */
 #elif defined ( __ICCARM__ )
-  #include <cmsis_iar.h>
 
   #ifndef   __ASM
     #define __ASM                     __asm
@@ -63,6 +62,9 @@
   #ifndef   __STATIC_INLINE
     #define __STATIC_INLINE           static inline
   #endif
+
+  #include <cmsis_iar.h>
+
   #ifndef   __NO_RETURN
     #define __NO_RETURN               __noreturn
   #endif

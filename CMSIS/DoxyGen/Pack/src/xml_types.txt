@@ -281,7 +281,7 @@ The following  Default Debug Access Sequences are implemented:
       __var DHCSR_Addr = SCS_Addr + 0xDF0;
     
       // Execute SYSRESETREQ via AIRCR
-      Write32(AIRCR_Addr, 0xA05F0004);
+      Write32(AIRCR_Addr, 0x05FA0004);
     </block>
 
     <!-- Reset Recovery: Wait for DHCSR.S_RESET_ST bit to clear on read -->
@@ -306,7 +306,7 @@ The following  Default Debug Access Sequences are implemented:
       __var DHCSR_Addr = SCS_Addr + 0xDF0;
     
       // Execute VECTRESET via AIRCR
-      Write32(AIRCR_Addr, 0xA05F0001);
+      Write32(AIRCR_Addr, 0x05FA0001);
     </block>
     
     <!-- Reset Recovery: Wait for DHCSR.S_RESET_ST bit to clear on read -->

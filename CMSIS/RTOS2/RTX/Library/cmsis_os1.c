@@ -7,7 +7,7 @@
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        12. October 2016
- * $Revision:    V1.0
+ * $Date:        25. November 2016
+ * $Revision:    V1.1
  *
  * Project:      CMSIS-RTOS API V1
  * Title:        cmsis_os_v1.c V1 module file
@@ -37,7 +37,7 @@ osThreadId osThreadCreate (const osThreadDef_t *thread_def, void *argument) {
   if (thread_def == NULL) {
     return NULL;
   }
-  return osThreadNew((os_thread_func_t)thread_def->pthread, argument, &thread_def->attr);
+  return osThreadNew((osThreadFunc_t)thread_def->pthread, argument, &thread_def->attr);
 }
 #endif
 
@@ -71,7 +71,7 @@ int32_t osSignalClear (osThreadId thread_id, int32_t signals) {
   return flags;
 }
 
-osEvent osSignalWait (int32_t signals, uint32_t millisec) {
+os_InRegs osEvent osSignalWait (int32_t signals, uint32_t millisec) {
   osEvent event;
   int32_t flags;
 
@@ -112,7 +112,7 @@ osTimerId osTimerCreate (const osTimerDef_t *timer_def, os_timer_type type, void
   if (timer_def == NULL) {
     return NULL;
   }
-  return osTimerNew((os_timer_func_t)timer_def->ptimer, type, argument, &timer_def->attr);
+  return osTimerNew((osTimerFunc_t)timer_def->ptimer, type, argument, &timer_def->attr);
 }
 #endif
 
@@ -217,7 +217,7 @@ osStatus osMessagePut (osMessageQId queue_id, uint32_t info, uint32_t millisec) 
   return osMessageQueuePut(queue_id, &info, 0U, millisec);
 }
 
-osEvent osMessageGet (osMessageQId queue_id, uint32_t millisec) {
+os_InRegs osEvent osMessageGet (osMessageQId queue_id, uint32_t millisec) {
   osStatus_t status;
   osEvent    event;
   uint32_t   message;
@@ -323,7 +323,7 @@ osStatus osMailPut (osMailQId queue_id, const void *mail) {
   return osMessageQueuePut(ptr->mq_id, &mail, 0U, 0U);
 }
 
-osEvent osMailGet (osMailQId queue_id, uint32_t millisec) {
+os_InRegs osEvent osMailGet (osMailQId queue_id, uint32_t millisec) {
   os_mail_queue_t *ptr = (os_mail_queue_t *)queue_id;
   osStatus_t       status;
   osEvent          event;

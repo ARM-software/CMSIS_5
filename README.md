@@ -1,22 +1,23 @@
 # CMSIS Version 5
 
-CMSIS Version 5.0.0 is now available as beta release, but will need further refinement as we are reviewing the feedback that we have got via various channels. We are scheduling the final release for November 2016.
+CMSIS Version 5.0.0 release is now available.
 
-This GitHub repository reflects our current development stage and is constantly updated.
+This GitHub repository development branch reflects our current state of development and is constantly updated.
 
-The [pre-built documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
+The [pre-built documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) for the 5.0.0 release 
+is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
 
 Use *Issues* to provide feedback and report problems for CMSIS Version 5. Note that this repository gives our users and partners contiguous access to the CMSIS development. It allows you to review the work and provide feedback or create pull requests for contributions.
 
 ## Implemented Enhancements
- - Support for ARMv8-M Architecture (Mainline and Baseline)
+ - Support for ARMv8-M Architecture (Mainline and Baseline) as well as devices Cortex-M23 and Cortex-M33
 
- - CMSIS-RTOS API and RTX reference implementation with several enhancements:
+ - CMSIS-RTOS Version 2 API and RTX reference implementation with several enhancements:
      - Dynamic object creation, Flag events, C API, additional thread and timer functions
 
-## Futher Planned Enhancements
  - CMSIS-RTOS API Secure and Non-Secure support, multi-processor support
 
+## Futher Planned Enhancements
  - Improvements for Cortex-A / M hybrid devices (focus on Cortex-M interaction)
 
  - CMSIS-Pack 
@@ -35,6 +36,7 @@ For further details see also the [Slides of the Embedded World CMSIS Partner Mee
 | CMSIS/DSP       | CMSIS-DSP related files                        |
 | CMSIS/RTOS      | RTOS v1 related files (for Cortex-M)           |
 | CMSIS/RTOS2     | RTOS v2 related files (for Cortex-M & ARMv8-M) |
+| CMSIS/Pack      | CMSIS-Pack examples and tutorials              |
 | CMSIS/DoxyGen   | Source of the documentation                    |
 | CMSIS/Utilities | Utility programs                               |
 

@@ -58,7 +58,8 @@ found under the ARM.CMSIS.*.Pack in the .\\CMSIS\\Utilities-directory.
 The \ref packFormat is structured using grouping elements and contains the following top level elements:
  - \subpage pdsc_package_pg "<package>": describes package related information like vendor, package name, description, version. Is the root element. 
  - \subpage element_keywords "<keywords>": lists keywords to search for packages. Can be used for search engines. 
- - \subpage element_releases "<releases>": lists release versions with descriptions. 
+ - \subpage element_releases "<releases>": lists release versions with descriptions.
+ - \subpage element_requirements_pg "<requirements>": lists required packs, compiler, programming language standards and their version or version range.
  - \subpage element_taxonomy "<taxonomy>": lists description elements that define component classes and component group names. 
  - \subpage pdsc_apis_pg "<apis>": describes Application Programming Interfaces (API) Specifications contained in the \ref cp_SWComponents "Software Pack".
  - \subpage pdsc_generators_pg "<generators>": specifies the tools that have been used to generate the PDSC file.
@@ -208,6 +209,14 @@ assists searching for packages.
     <td>ReleasesGroup</td>
     <td>1..1 </td>
   </tr>
+  <tr>
+    <td>\ref element_requirements "requirements"</td>
+    <td>Specifies other CMSIS-Packs, programming languages and compiler as well as their respective version
+        or version range required by the components in this pack.
+    </td>
+    <td>RequirementsType</td>
+    <td>0..1 </td>
+  </td>
   <tr>
     <td>\ref element_keywords "keywords"</td>
     <td>Defines keywords that might be used to find a \ref cp_SWComponents "Software Pack". Keywords may be also exported to web page to provide information for search engines, such as Google.</td>
@@ -500,6 +509,246 @@ The latest release version is always listed on top.
 
 <p>&nbsp;</p>
 <hr>
+*/
+
+/** 
+\page element_requirements_pg /package/requirements
+\anchor element_requirements
+
+There are three different requirement types:
+ - The \c \<packages\> section lists CMSIS Packs that have been used to configure the project. This includes the specification
+   of a \c version range to ensure compatibility. If no version is provided, the latest installed version is used. If not yet
+   installed, the latest available version will be installed before resolving the configuration.
+ - The \c \<compilers\> section specifies the toolchains that are supported by this example. The required compiler version is
+   specified using the \c version element. If no compiler is specified, it is assumed that any toolchain will work.
+ - The \c \<languages\> section allows to specify requirements regarding the programming language, for example C99 standard.
+   If no language requirements are set, ANSI C is assumed.
+
+\b Example requirements section:
+\code
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PACK.xsd"/>
+  ...
+  <requirements>
+    <packages>
+      <package name="STM32F4xx_DFP" vendor="Keil" version="2.8.0:2.8.0"/>
+    </packages>
+    <compilers>
+      <compiler name="ARMCC" version="5.0.0:5.99.0"/>
+    </compilers>
+    <languages>
+      <language name="C" version="99"/>
+    </languages>
+  </requirements>
+  ...
+</package>
+\endcode
+
+\b /requirements
+<table class="cmtable" summary="Element: package">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_package "package"</td>
+    <td colspan="3">\ref element_package</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\ref element_packages "packages"</td>
+    <td>List of software packs required for the project to build.</td>
+    <td>\ref element_packages "PackagesType"</td>
+    <td><0..1></td>
+  </tr>
+  <tr>
+    <td>\ref element_compilers "compilers"</td>
+    <td>List of compilers required for the project to build. Support for all compilers is assumed when not specified.</td>
+    <td>\ref element_compilers "CompilersType"</td>
+    <td><0..1></td>
+  </tr>
+  <tr>
+    <td>\ref element_languages "languages"</td>
+    <td>List of language standards required for the project to build. Assuming ANSI C if not set.</td>
+    <td>\ref element_languages "LanguagesType"</td>
+    <td><0..1></td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>		
+<hr>
+
+\section element_packages /package/requirements/packages
+
+\b Example packages section:
+\code
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PACK.xsd"/>
+  ...
+  <requirements>
+    <packages>
+      <package name="STM32F4xx_DFP" vendor="Keil" version="2.8.0:2.8.0"/>
+    </packages>
+  </requirements>
+  ...
+</package>
+\endcode
+
+\b /package
+<table class="cmtable" summary="Element: package">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_packages "packages"</td>
+    <td colspan="3">\ref element_packages</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>vendor</td>
+    <td>specify vendor of the package (e.g. "ARM")</td>
+    <td>RestrictedString</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>Name of the pack</td>
+    <td>RestrictedString</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>version</td>
+    <td>\ref VersionType "Version" of the required software pack which can be:
+       - Minimum version (higher versions are accepted).
+       - Version range specified with <em>min_version</em><b>:</b><em>max_version</em>. <em>min_version</em> must be lower or
+         equal than <em>max_version</em>. If <em>min_version</em> and <em>max_version</em> are equal, the version must match.
+       - If no version is specified, the latest available version is assumed.
+    </td>	 
+   <td>\ref VersionType</td>
+    <td>optional</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>		
+<hr>
+
+\section element_compilers /package/requirements/compilers
+
+\b Example compilers section:
+\code
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PACK.xsd"/>
+  ...
+  <requirements>
+    <compilers>
+      <compiler name="ARMCC" version="5.0.0:5.99.0"/>
+    </compilers>
+  </requirements>
+  ...
+</package>
+\endcode
+
+\b /compiler
+<table class="cmtable" summary="Element: compiler">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_requirements "requirements"</td>
+    <td colspan="3">\ref element_requirements</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>Name of the required \ref CompilerEnumType "compiler" (i.e. "ARMCC", "IAR")</td>
+    <td>\ref CompilerEnumType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>version</td>
+    <td>\ref VersionType "Version" of the required compiler which can be:
+       - Minimum version (higher versions are accepted).
+       - Version range specified with <em>min_version</em><b>:</b><em>max_version</em>. <em>min_version</em> must be lower or
+         equal than <em>max_version</em>. If <em>min_version</em> and <em>max_version</em> are equal, the version must match.
+         <br>
+    </td>	 
+    <td>\ref VersionType</td>
+    <td>required</td>
+  </tr>
+</table>
+
+
+<p>&nbsp;</p>		
+<hr>
+
+\section element_languages /package/requirements/languages
+
+\b Example languages section:
+\code
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PACK.xsd"/>
+  ...
+  <requirements>
+    <languages>
+      <language name="C" version="99"/>
+    <languages>
+  </requirements>
+  ...
+</package>
+\endcode
+
+\b /language
+<table class="cmtable" summary="Element: language">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_requirements "requirements"</td>
+    <td colspan="3">\ref element_requirements</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>Name of the programming language (i.e. "C", "C++")</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>version</td>
+    <td>Version of the language standard (i.e. 90, 99, etc.). The setting will be reflected in the compiler commandline.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>		
+<hr>
+
 */
 
 /**************************************************************************************************/

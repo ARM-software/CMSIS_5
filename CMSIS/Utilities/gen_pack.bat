@@ -40,7 +40,7 @@ MKDIR %RELEASE_PATH%
 COPY ..\..\ARM.CMSIS.pdsc %RELEASE_PATH%\ARM.CMSIS.pdsc
 
 :: Copy LICENSE file
-COPY ..\..\LICENSE %RELEASE_PATH%\LICENSE
+COPY ..\..\LICENSE.txt %RELEASE_PATH%\LICENSE.txt
 
 :: Copy Device folder
 XCOPY /Q /S /Y ..\..\Device\*.* %RELEASE_PATH%\Device\*.*
@@ -85,7 +85,6 @@ XCOPY /Q /S /Y ..\..\CMSIS\Utilities\ARM_Example.* %RELEASE_PATH%\CMSIS\SVD\*.*
 :: -- Utilities files 
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\CMSIS-SVD.xsd       %RELEASE_PATH%\CMSIS\Utilities\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PACK.xsd            %RELEASE_PATH%\CMSIS\Utilities\*.*
-XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PackChk.exe         %RELEASE_PATH%\CMSIS\Utilities\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Win32\*.*           %RELEASE_PATH%\CMSIS\Utilities\Win32\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Linux-gcc-4.4.4\*.* %RELEASE_PATH%\CMSIS\Utilities\Linux-gcc-4.4.4\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Linux-gcc-4.8.3\*.* %RELEASE_PATH%\CMSIS\Utilities\Linux-gcc-4.8.3\*.*
@@ -169,7 +168,7 @@ POPD
 
 
 :: Checking 
-PackChk.exe %RELEASE_PATH%\ARM.CMSIS.pdsc -n %RELEASE_PATH%\PackName.txt -x M353
+Win32\PackChk.exe %RELEASE_PATH%\ARM.CMSIS.pdsc -n %RELEASE_PATH%\PackName.txt -x M353 -x M364
 
 :: --Check if PackChk.exe has completed successfully
 IF %errorlevel% neq 0 GOTO ErrPackChk
@@ -182,7 +181,9 @@ SET /P PackName=<PackName.txt
 DEL /Q PackName.txt
 
 :: Pack files
-7z.exe a %PackName% -tzip
+ECHO Creating pack file ...
+7z.exe a %PackName% -tzip > zip.log
+ECHO Packaging complete
 POPD
 GOTO End
 
@@ -191,9 +192,10 @@ ECHO PackChk.exe has encountered an error!
 EXIT /b
 
 :End
-ECHO removing temporary folders
+ECHO Removing temporary files and folders
 RMDIR /Q /S  %RELEASE_PATH%\CMSIS
 RMDIR /Q /S  %RELEASE_PATH%\Device
-DEL %RELEASE_PATH%\LICENSE
+DEL %RELEASE_PATH%\LICENSE.txt
+DEL %RELEASE_PATH%\zip.log
 
-ECHO PACK generation completed.
+ECHO gen_pack.bat completed successfully

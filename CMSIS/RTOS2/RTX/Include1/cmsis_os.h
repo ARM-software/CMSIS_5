@@ -7,7 +7,7 @@
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        20. October 2016
- * $Revision:    V2.0
+ * $Date:        25. November 2016
+ * $Revision:    V2.1
  *
  * Project:      CMSIS-RTOS API
  * Title:        cmsis_os.h RTX header file
@@ -112,16 +112,20 @@
  *     - added: osMessageQueueReset, osMessageQueueDelete
  *    Mail Queue: 
  *     - deprecated (superseded by extended Message Queue functionality)
+ * Version 2.1
+ *    Support for critical and uncritical sections (nesting safe)
+ *    - updated: osKernelLock, osKernelUnlock
+ *    - added: osKernelRestoreLock
  *---------------------------------------------------------------------------*/
  
 #ifndef CMSIS_OS_H_
 #define CMSIS_OS_H_
  
-#define osCMSIS             0x20000U    ///< API version (main[31:16].sub[15:0])
+#define osCMSIS             0x20001U    ///< API version (main[31:16].sub[15:0])
  
-#define osCMSIS_RTX         0x50000U    ///< RTOS identification and version (main[31:16].sub[15:0])
+#define osCMSIS_RTX         0x50001U    ///< RTOS identification and version (main[31:16].sub[15:0])
  
-#define osKernelSystemId   "RTX V5.0"   ///< RTOS identification string
+#define osKernelSystemId   "RTX V5.1"   ///< RTOS identification string
  
 #define osFeature_MainThread  0         ///< main thread      1=main can be thread, 0=not available
 #define osFeature_Signals     31U       ///< maximum number of Signal Flags available per thread
@@ -131,6 +135,14 @@
 #define osFeature_Pool        1         ///< Memory Pools:    1=available, 0=not available
 #define osFeature_MessageQ    1         ///< Message Queues:  1=available, 0=not available
 #define osFeature_MailQ       1         ///< Mail Queues:     1=available, 0=not available
+ 
+#if   defined(__CC_ARM)
+#define os_InRegs __value_in_regs
+#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+#define os_InRegs __attribute__((value_in_regs))
+#else
+#define os_InRegs
+#endif
  
 #if (osCMSIS >= 0x20000U)
 #include "cmsis_os2.h"
@@ -429,12 +441,12 @@ const osThreadDef_t os_thread_def_##name = \
 #else
 #define osThreadDef(name, priority, instances, stacksz) \
 static uint64_t os_thread_stack##name[(stacksz)?(((stacksz+7)/8)):1] __attribute__((section(".bss.os.thread.stack"))); \
-static os_thread_t os_thread_cb_##name __attribute__((section(".bss.os.thread.cb"))); \
+static osRtxThread_t os_thread_cb_##name __attribute__((section(".bss.os.thread.cb"))); \
 const osThreadDef_t os_thread_def_##name = \
 { (name), \
   { NULL, osThreadDetached, \
     (instances == 1) ? (&os_thread_cb_##name) : NULL,\
-    (instances == 1) ? os_ThreadCbSize : 0U, \
+    (instances == 1) ? osRtxThreadCbSize : 0U, \
     ((stacksz) && (instances == 1)) ? (&os_thread_stack##name) : NULL, \
     8*((stacksz+7)/8), \
     (priority), 0U, 0U } }
@@ -505,7 +517,7 @@ int32_t osSignalClear (osThreadId thread_id, int32_t signals);
 /// \param[in]     signals       wait until all specified signal flags set or 0 for any single signal flag.
 /// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return event flag information or error code.
-osEvent osSignalWait (int32_t signals, uint32_t millisec);
+os_InRegs osEvent osSignalWait (int32_t signals, uint32_t millisec);
  
  
 //  ==== Generic Wait Functions ====
@@ -522,7 +534,7 @@ osStatus osDelay (uint32_t millisec);
 /// Wait for Signal, Message, Mail, or Timeout.
 /// \param[in] millisec          \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out
 /// \return event that contains signal, message, or mail information or error code.
-osEvent osWait (uint32_t millisec);
+os_InRegs osEvent osWait (uint32_t millisec);
  
 #endif  // Generic Wait available
  
@@ -541,9 +553,9 @@ extern const osTimerDef_t os_timer_def_##name
 const osTimerDef_t os_timer_def_##name = { (function) }
 #else
 #define osTimerDef(name, function) \
-static os_timer_t os_timer_cb_##name __attribute__((section(".bss.os.timer.cb"))); \
+static osRtxTimer_t os_timer_cb_##name __attribute__((section(".bss.os.timer.cb"))); \
 const osTimerDef_t os_timer_def_##name = \
-{ (function), { NULL, 0U, (&os_timer_cb_##name), os_TimerCbSize } }
+{ (function), { NULL, 0U, (&os_timer_cb_##name), osRtxTimerCbSize } }
 #endif
 #endif
  
@@ -595,9 +607,9 @@ extern const osMutexDef_t os_mutex_def_##name
 const osMutexDef_t os_mutex_def_##name = { 0 }
 #else
 #define osMutexDef(name) \
-static os_mutex_t os_mutex_cb_##name __attribute__((section(".bss.os.mutex.cb"))); \
+static osRtxMutex_t os_mutex_cb_##name __attribute__((section(".bss.os.mutex.cb"))); \
 const osMutexDef_t os_mutex_def_##name = \
-{ NULL, osMutexRecursive | osMutexPrioInherit | osMutexRobust, (&os_mutex_cb_##name), os_MutexCbSize }
+{ NULL, osMutexRecursive | osMutexPrioInherit | osMutexRobust, (&os_mutex_cb_##name), osRtxMutexCbSize }
 #endif
 #endif
  
@@ -651,9 +663,9 @@ extern const osSemaphoreDef_t os_semaphore_def_##name
 const osSemaphoreDef_t os_semaphore_def_##name = { 0 }
 #else
 #define osSemaphoreDef(name) \
-static os_semaphore_t os_semaphore_cb_##name __attribute__((section(".bss.os.semaphore.cb"))); \
+static osRtxSemaphore_t os_semaphore_cb_##name __attribute__((section(".bss.os.semaphore.cb"))); \
 const osSemaphoreDef_t os_semaphore_def_##name = \
-{ NULL, 0U, (&os_semaphore_cb_##name), os_SemaphoreCbSize }
+{ NULL, 0U, (&os_semaphore_cb_##name), osRtxSemaphoreCbSize }
 #endif
 #endif
  
@@ -709,11 +721,11 @@ const osPoolDef_t os_pool_def_##name = \
 { (no), sizeof(type), NULL }
 #else
 #define osPoolDef(name, no, type) \
-static os_memory_pool_t os_mp_cb_##name __attribute__((section(".bss.os.mempool.cb"))); \
-static uint32_t os_mp_data_##name[os_MemoryPoolMemSize((no),sizeof(type))/4] __attribute__((section(".bss.os.mempool.mem"))); \
+static osRtxMemoryPool_t os_mp_cb_##name __attribute__((section(".bss.os.mempool.cb"))); \
+static uint32_t os_mp_data_##name[osRtxMemoryPoolMemSize((no),sizeof(type))/4] __attribute__((section(".bss.os.mempool.mem"))); \
 const osPoolDef_t os_pool_def_##name = \
 { (no), sizeof(type), \
-  { NULL, 0U, (&os_mp_cb_##name), os_MemoryPoolCbSize, \
+  { NULL, 0U, (&os_mp_cb_##name), osRtxMemoryPoolCbSize, \
               (&os_mp_data_##name), sizeof(os_mp_data_##name) } }
 #endif
 #endif
@@ -765,11 +777,11 @@ const osMessageQDef_t os_messageQ_def_##name = \
 { (queue_sz), NULL }
 #else
 #define osMessageQDef(name, queue_sz, type) \
-static os_message_queue_t os_mq_cb_##name __attribute__((section(".bss.os.msgqueue.cb"))); \
-static uint32_t os_mq_data_##name[os_MessageQueueMemSize((queue_sz),sizeof(uint32_t))/4] __attribute__((section(".bss.os.msgqueue.mem"))); \
+static osRtxMessageQueue_t os_mq_cb_##name __attribute__((section(".bss.os.msgqueue.cb"))); \
+static uint32_t os_mq_data_##name[osRtxMessageQueueMemSize((queue_sz),sizeof(uint32_t))/4] __attribute__((section(".bss.os.msgqueue.mem"))); \
 const osMessageQDef_t os_messageQ_def_##name = \
 { (queue_sz), \
-  { NULL, 0U, (&os_mq_cb_##name), os_MessageQueueCbSize, \
+  { NULL, 0U, (&os_mq_cb_##name), osRtxMessageQueueCbSize, \
               (&os_mq_data_##name), sizeof(os_mq_data_##name) } }
 #endif
 #endif
@@ -796,7 +808,7 @@ osStatus osMessagePut (osMessageQId queue_id, uint32_t info, uint32_t millisec);
 /// \param[in]     queue_id      message queue ID obtained with \ref osMessageCreate.
 /// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return event information that includes status code.
-osEvent osMessageGet (osMessageQId queue_id, uint32_t millisec);
+os_InRegs osEvent osMessageGet (osMessageQId queue_id, uint32_t millisec);
  
 #endif  // Message Queue available
  
@@ -820,15 +832,15 @@ const osMailQDef_t os_mailQ_def_##name = \
 #else
 #define osMailQDef(name, queue_sz, type) \
 static void              *os_mail_p_##name[2]  __attribute__((section(".bss.os"))); \
-static os_memory_pool_t   os_mail_mp_cb_##name __attribute__((section(".bss.os.mempool.cb"))); \
-static os_message_queue_t os_mail_mq_cb_##name __attribute__((section(".bss.os.msgqueue.cb"))); \
-static uint32_t os_mail_mp_data_##name[os_MemoryPoolMemSize  ((queue_sz),sizeof(type))/4] __attribute__((section(".bss.os.mempool.mem"))); \
-static uint32_t os_mail_mq_data_##name[os_MessageQueueMemSize((queue_sz),sizeof(type))/4] __attribute__((section(".bss.os.msgqueue.mem"))); \
+static osRtxMemoryPool_t   os_mail_mp_cb_##name __attribute__((section(".bss.os.mempool.cb"))); \
+static osRtxMessageQueue_t os_mail_mq_cb_##name __attribute__((section(".bss.os.msgqueue.cb"))); \
+static uint32_t os_mail_mp_data_##name[osRtxMemoryPoolMemSize  ((queue_sz),sizeof(type) )/4] __attribute__((section(".bss.os.mempool.mem"))); \
+static uint32_t os_mail_mq_data_##name[osRtxMessageQueueMemSize((queue_sz),sizeof(void*))/4] __attribute__((section(".bss.os.msgqueue.mem"))); \
 const osMailQDef_t os_mailQ_def_##name = \
 { (queue_sz), sizeof(type), (&os_mail_p_##name), \
-  { NULL, 0U, (&os_mail_mp_cb_##name), os_MemoryPoolCbSize, \
+  { NULL, 0U, (&os_mail_mp_cb_##name), osRtxMemoryPoolCbSize, \
               (&os_mail_mp_data_##name), sizeof(os_mail_mp_data_##name) }, \
-  { NULL, 0U, (&os_mail_mq_cb_##name), os_MessageQueueCbSize, \
+  { NULL, 0U, (&os_mail_mq_cb_##name), osRtxMessageQueueCbSize, \
               (&os_mail_mq_data_##name), sizeof(os_mail_mq_data_##name) } }
 #endif
 #endif
@@ -866,7 +878,7 @@ osStatus osMailPut (osMailQId queue_id, const void *mail);
 /// \param[in]     queue_id      mail queue ID obtained with \ref osMailCreate.
 /// \param[in]     millisec      \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 /// \return event information that includes status code.
-osEvent osMailGet (osMailQId queue_id, uint32_t millisec);
+os_InRegs osEvent osMailGet (osMailQId queue_id, uint32_t millisec);
  
 /// Free a memory block by returning it to a mail memory pool.
 /// \param[in]     queue_id      mail queue ID obtained with \ref osMailCreate.
