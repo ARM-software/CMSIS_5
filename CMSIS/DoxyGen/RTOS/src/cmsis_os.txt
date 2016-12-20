@@ -1615,7 +1615,7 @@ The tutorial is available as a Software Pack from
 <a href="http://www.keil.com/dd2/pack" target="_blank">http://www.keil.com/dd2/pack</a>. On the page, browse to \b Hitex and
 select the Pack described as "An Introduction to using CMSIS RTOS for Cortex-M Microcontrollers". Download and install the
 Pack which contains all example projects referenced in the
-<a class="el" href="../CMSIS_RTOS_Tutorial.pdf">CMSIS_RTOS_Tutorial.pdf</a>.
+<a class="el" href="CMSIS_RTOS_Tutorial.pdf">CMSIS_RTOS_Tutorial.pdf</a>.
 */
 
 
