@@ -231,7 +231,158 @@ __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
   return svc##f(svcRtx##f,a1,a2,a3,a4);                                        \
 }
 
-#else   // !defined(__CC_ARM)
+#elif defined(__ICCARM__)
+
+#if   ((__ARM_ARCH_7M__      == 1U) || \
+       (__ARM_ARCH_7EM__     == 1U) || \
+       (__ARM_ARCH_8M_MAIN__ == 1U))
+#define SVC_Setup(f)                                                           \
+  __asm(                                                                       \
+    "mov r12,%0\n"                                                             \
+    :: "r"(&f): "r12"                                                          \
+  );
+#elif ((__ARM_ARCH_6M__      == 1U) || \
+       (__ARM_ARCH_8M_BASE__ == 1U))
+#define SVC_Setup(f)                                                           \
+  __asm(                                                                       \
+    "mov r7,%0\n"                                                              \
+    :: "r"(&f): "r7"                                                           \
+  );
+#endif
+
+#define STRINGIFY(a) #a
+#define __SVC_INDIRECT(n) _Pragma(STRINGIFY(swi_number = n)) __swi
+
+#if    (__FPU_USED == 1U)
+#define SVC_SETUP_PSP                                                          \
+  uint32_t control = __get_CONTROL();                                          \
+  if ((control & 2U) == 0U) {                                                  \
+    __set_PSP((__get_MSP() - ((control & 4U) ? 104U : 32U)) & ~7U);            \
+  }
+#else
+#define SVC_SETUP_PSP                                                          \
+  uint32_t control = __get_CONTROL();                                          \
+  if ((control & 2U) == 0U) {                                                  \
+    __set_PSP((__get_MSP() -                          32U)  & ~7U);            \
+  }
+#endif
+
+#define SVC0_0N(f,t)                                                           \
+__SVC_INDIRECT(0) t    svc##f ();                                              \
+                  t svcRtx##f (void);                                          \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (void) {                                         \
+  SVC_Setup(svcRtx##f);                                                        \
+  svc##f();                                                                    \
+}
+
+#define SVC0_0(f,t)                                                            \
+__SVC_INDIRECT(0) t    svc##f ();                                              \
+                  t svcRtx##f (void);                                          \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (void) {                                         \
+  SVC_Setup(svcRtx##f);                                                        \
+  return svc##f();                                                             \
+}
+
+#define SVC0_0M(f,t)                                                           \
+__SVC_INDIRECT(0) t    svc##f ();                                              \
+                  t svcRtx##f (void);                                          \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (void) {                                         \
+  SVC_SETUP_PSP                                                                \
+  SVC_Setup(svcRtx##f);                                                        \
+  return svc##f();                                                             \
+}
+
+#define SVC0_0D SVC0_0
+
+#define SVC0_1N(f,t,t1)                                                        \
+__SVC_INDIRECT(0) t    svc##f (t1 a1);                                         \
+                  t svcRtx##f (t1 a1);                                         \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1) {                                        \
+  SVC_Setup(svcRtx##f);                                                        \
+  svc##f(a1);                                                                  \
+}
+
+#define SVC0_1(f,t,t1)                                                         \
+__SVC_INDIRECT(0) t    svc##f (t1 a1);                                         \
+                  t svcRtx##f (t1 a1);                                         \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1) {                                        \
+  SVC_Setup(svcRtx##f);                                                        \
+  return svc##f(a1);                                                           \
+}
+
+#define SVC0_1M(f,t,t1)                                                        \
+__SVC_INDIRECT(0) t    svc##f (t1 a1);                                         \
+                  t svcRtx##f (t1 a1);                                         \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1) {                                        \
+  SVC_SETUP_PSP                                                                \
+  SVC_Setup(svcRtx##f);                                                        \
+  return svc##f(a1);                                                           \
+}
+
+#define SVC0_2(f,t,t1,t2)                                                      \
+__SVC_INDIRECT(0) t    svc##f (t1 a1, t2 a2);                                  \
+                  t svcRtx##f (t1 a1, t2 a2);                                  \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1, t2 a2) {                                 \
+  SVC_Setup(svcRtx##f);                                                        \
+  return svc##f(a1,a2);                                                        \
+}
+
+#define SVC0_2M(f,t,t1,t2)                                                     \
+__SVC_INDIRECT(0) t    svc##f (t1 a1, t2 a2);                                  \
+                  t svcRtx##f (t1 a1, t2 a2);                                  \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1, t2 a2) {                                 \
+  SVC_SETUP_PSP                                                                \
+  SVC_Setup(svcRtx##f);                                                        \
+  return svc##f(a1,a2);                                                        \
+}
+
+#define SVC0_3(f,t,t1,t2,t3)                                                   \
+__SVC_INDIRECT(0) t    svc##f (t1 a1, t2 a2, t3 a3);                           \
+                  t svcRtx##f (t1 a1, t2 a2, t3 a3);                           \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3) {                          \
+  SVC_Setup(svcRtx##f);                                                        \
+  return svc##f(a1,a2,a3);                                                     \
+}
+
+#define SVC0_3M(f,t,t1,t2,t3)                                                  \
+__SVC_INDIRECT(0) t    svc##f (t1 a1, t2 a2, t3 a3);                           \
+                  t svcRtx##f (t1 a1, t2 a2, t3 a3);                           \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3) {                          \
+  SVC_SETUP_PSP                                                                \
+  SVC_Setup(svcRtx##f);                                                        \
+  return svc##f(a1,a2,a3);                                                     \
+}
+
+#define SVC0_4(f,t,t1,t2,t3,t4)                                                \
+__SVC_INDIRECT(0) t    svc##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
+                  t svcRtx##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
+  SVC_Setup(svcRtx##f);                                                        \
+  return svc##f(a1,a2,a3,a4);                                                  \
+}
+
+#define SVC0_4M(f,t,t1,t2,t3,t4)                                               \
+__SVC_INDIRECT(0) t    svc##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
+                  t svcRtx##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
+__attribute__((always_inline))                                                 \
+__STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
+  SVC_SETUP_PSP                                                                \
+  SVC_Setup(svcRtx##f);                                                        \
+  return svc##f(a1,a2,a3,a4);                                                  \
+}
+
+#else   // !(defined(__CC_ARM) || defined(__ICCARM__))
 
 #if   ((__ARM_ARCH_7M__      == 1U) || \
        (__ARM_ARCH_7EM__     == 1U) || \
@@ -451,7 +602,7 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
   return (t) __r0;                                                             \
 }
 
-#endif  // !defined(__CC_ARM)
+#endif
 
 
 //  ==== Core Peripherals functions ====
@@ -517,7 +668,8 @@ __STATIC_INLINE uint32_t SysTick_GetPeriod (void) {
 /// Get SysTick Value
 /// \return    SysTick Value
 __STATIC_INLINE uint32_t SysTick_GetVal (void) {
-  return (SysTick->LOAD - SysTick->VAL);
+  uint32_t load = SysTick->LOAD;
+  return  (load - SysTick->VAL);
 }
 
 /// Get SysTick Overflow (Auto Clear)
@@ -622,16 +774,24 @@ static __asm    uint8_t atomic_wr8 (uint8_t *mem, uint8_t val) {
 }
 #else
 __STATIC_INLINE uint8_t atomic_wr8 (uint8_t *mem, uint8_t val) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
   register uint8_t  ret;
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldrexb %[ret],[%[mem]]\n\t"
     "strexb %[res],%[val],[%[mem]]\n\t"
     "cbz    %[res],2f\n\t"
-    "b       1b\n\t"
+    "b       1b\n"
   "2:"
   : [ret] "=&l" (ret),
     [res] "=&l" (res)
@@ -662,11 +822,19 @@ static __asm    uint32_t atomic_set32 (uint32_t *mem, uint32_t bits) {
 }
 #else
 __STATIC_INLINE uint32_t atomic_set32 (uint32_t *mem, uint32_t bits) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t val, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
   register uint32_t ret;
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldrex %[val],[%[mem]]\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
@@ -677,7 +845,7 @@ __STATIC_INLINE uint32_t atomic_set32 (uint32_t *mem, uint32_t bits) {
 #endif
     "strex %[res],%[ret],[%[mem]]\n\t"
     "cbz   %[res],2f\n\t"
-    "b     1b\n\t"
+    "b     1b\n"
   "2:"
   : [ret]  "=&l" (ret),
     [val]  "=&l" (val),
@@ -714,11 +882,19 @@ static __asm    uint32_t atomic_clr32 (uint32_t *mem, uint32_t bits) {
 }
 #else
 __STATIC_INLINE uint32_t atomic_clr32 (uint32_t *mem, uint32_t bits) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t val, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
   register uint32_t ret;
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
@@ -729,7 +905,7 @@ __STATIC_INLINE uint32_t atomic_clr32 (uint32_t *mem, uint32_t bits) {
 #endif
     "strex %[res],%[val],[%[mem]]\n\t"
     "cbz   %[res],2f\n\t"
-    "b     1b\n\t"
+    "b     1b\n"
   "2:"
   : [ret]  "=&l" (ret),
     [val]  "=&l" (val),
@@ -773,11 +949,19 @@ static __asm    uint32_t atomic_chk32_all (uint32_t *mem, uint32_t bits) {
 }
 #else
 __STATIC_INLINE uint32_t atomic_chk32_all (uint32_t *mem, uint32_t bits) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t val, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
   register uint32_t ret;
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
@@ -790,7 +974,7 @@ __STATIC_INLINE uint32_t atomic_chk32_all (uint32_t *mem, uint32_t bits) {
     "beq   2f\n\t"
     "clrex\n\t"
     "movs  %[ret],#0\n\t"
-    "b     3f\n\t"
+    "b     3f\n"
   "2:\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
     "mov   %[val],%[ret]\n\t"
@@ -800,7 +984,7 @@ __STATIC_INLINE uint32_t atomic_chk32_all (uint32_t *mem, uint32_t bits) {
 #endif
     "strex %[res],%[val],[%[mem]]\n\t"
     "cbz   %[res],3f\n\t"
-    "b     1b\n\t"
+    "b     1b\n"
   "3:"
   : [ret]  "=&l" (ret),
     [val]  "=&l" (val),
@@ -839,18 +1023,26 @@ static __asm    uint32_t atomic_chk32_any (uint32_t *mem, uint32_t bits) {
 }
 #else
 __STATIC_INLINE uint32_t atomic_chk32_any (uint32_t *mem, uint32_t bits) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t val, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
   register uint32_t ret;
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
     "tst   %[ret],%[bits]\n\t"
     "bne   2f\n\t"
     "clrex\n\t"
     "movs  %[ret],#0\n\t"
-    "b     3f\n\t"
+    "b     3f\n"
   "2:\n\t"
 #if (__ARM_ARCH_8M_BASE__ == 1U)
     "mov   %[val],%[ret]\n\t"
@@ -860,7 +1052,7 @@ __STATIC_INLINE uint32_t atomic_chk32_any (uint32_t *mem, uint32_t bits) {
 #endif
     "strex %[res],%[val],[%[mem]]\n\t"
     "cbz   %[res],3f\n\t"
-    "b     1b\n\t"
+    "b     1b\n"
   "3:"
   : [ret]  "=&l" (ret),
     [val]  "=&l" (val),
@@ -891,17 +1083,25 @@ static __asm    uint32_t atomic_inc32 (uint32_t *mem) {
 }
 #else
 __STATIC_INLINE uint32_t atomic_inc32 (uint32_t *mem) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t val, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
   register uint32_t ret;
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
     "adds  %[val],%[ret],#1\n\t"
     "strex %[res],%[val],[%[mem]]\n\t"
     "cbz   %[res],2f\n\t"
-    "b     1b\n\t"
+    "b     1b\n"
   "2:"
   : [ret] "=&l" (ret),
     [val] "=&l" (val),
@@ -938,22 +1138,30 @@ static __asm    uint32_t atomic_inc32_lt (uint32_t *mem, uint32_t max) {
 }
 #else
 __STATIC_INLINE uint32_t atomic_inc32_lt (uint32_t *mem, uint32_t max) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t val, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
   register uint32_t ret;
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
     "cmp   %[max],%[ret]\n\t"
     "bhi    2f\n\t"
     "clrex\n\t"
-    "b      3f\n\t"
+    "b      3f\n"
   "2:\n\t"
     "adds  %[val],%[ret],#1\n\t"
     "strex %[res],%[val],[%[mem]]\n\t"
     "cbz   %[res],3f\n\t"
-    "b     1b\n\t"
+    "b     1b\n"
   "3:"
   : [ret] "=&l" (ret),
     [val] "=&l" (val),
@@ -991,22 +1199,30 @@ static __asm    uint16_t atomic_inc16_lt (uint16_t *mem, uint16_t max) {
 }
 #else
 __STATIC_INLINE uint16_t atomic_inc16_lt (uint16_t *mem, uint16_t max) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t val, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
   register uint16_t ret;
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldrexh %[ret],[%[mem]]\n\t"
     "cmp    %[max],%[ret]\n\t"
     "bhi    2f\n\t"
     "clrex\n\t"
-    "b      3f\n\t"
+    "b      3f\n"
   "2:\n\t"
     "adds   %[val],%[ret],#1\n\t"
     "strexh %[res],%[val],[%[mem]]\n\t"
     "cbz    %[res],3f\n\t"
-    "b      1b\n\t"
+    "b      1b\n"
   "3:"
   : [ret] "=&l" (ret),
     [val] "=&l" (val),
@@ -1043,21 +1259,29 @@ static __asm    uint16_t atomic_inc16_lim (uint16_t *mem, uint16_t lim) {
 }
 #else
 __STATIC_INLINE uint16_t atomic_inc16_lim (uint16_t *mem, uint16_t lim) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t val, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
   register uint16_t ret;
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldrexh %[ret],[%[mem]]\n\t"
     "adds   %[val],%[ret],#1\n\t"
     "cmp    %[lim],%[val]\n\t"
     "bhi    2f\n\t"
-    "movs   %[val],#0\n\t"
+    "movs   %[val],#0\n"
   "2:\n\t"
     "strexh %[res],%[val],[%[mem]]\n\t"
     "cbz    %[res],3f\n\t"
-    "b      1b\n\t"
+    "b      1b\n"
   "3:"
   : [ret] "=&l" (ret),
     [val] "=&l" (val),
@@ -1092,21 +1316,29 @@ static __asm    uint32_t atomic_dec32_nz (uint32_t *mem) {
 }
 #else
 __STATIC_INLINE uint32_t atomic_dec32_nz (uint32_t *mem) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t val, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
   register uint32_t ret;
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldrex %[ret],[%[mem]]\n\t"
     "cbnz  %[ret],2f\n\t"
     "clrex\n\t"
-    "b     3f\n\t"
+    "b     3f\n"
   "2:\n\t"
     "subs  %[val],%[ret],#1\n\t"
     "strex %[res],%[val],[%[mem]]\n\t"
     "cbz   %[res],3f\n\t"
-    "b     1b\n\t"
+    "b     1b\n"
   "3:"
   : [ret] "=&l" (ret),
     [val] "=&l" (val),
@@ -1140,21 +1372,29 @@ static __asm    uint16_t atomic_dec16_nz (uint16_t *mem) {
 }
 #else
 __STATIC_INLINE uint16_t atomic_dec16_nz (uint16_t *mem) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t val, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
   register uint16_t ret;
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldrexh %[ret],[%[mem]]\n\t"
     "cbnz   %[ret],2f\n\t"
     "clrex\n\t"
-    "b      3f\n\t"
+    "b      3f\n"
   "2:\n\t"
     "subs   %[val],%[ret],#1\n\t"
     "strexh %[res],%[val],[%[mem]]\n\t"
     "cbz    %[res],3f\n\t"
-    "b      1b\n\t"
+    "b      1b\n"
   "3:"
   : [ret] "=&l" (ret),
     [val] "=&l" (val),
@@ -1188,21 +1428,29 @@ static __asm    void *atomic_link_get (void **root) {
 }
 #else
 __STATIC_INLINE void *atomic_link_get (void **root) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t val, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
   register void    *ret;
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldrex %[ret],[%[root]]\n\t"
     "cbnz  %[ret],2f\n\t"
     "clrex\n\t"
-    "b     3f\n\t"
+    "b     3f\n"
   "2:\n\t"
     "ldr   %[val],[%[ret]]\n\t"
     "strex %[res],%[val],[%[root]]\n\t"
     "cbz   %[res],3f\n\t"
-    "b     1b\n\t"
+    "b     1b\n"
   "3:"
   : [ret]  "=&l" (ret),
     [val]  "=&l" (val),
@@ -1236,10 +1484,18 @@ static __asm    void atomic_link_put (void **root, void *link) {
 }
 #else
 __STATIC_INLINE void atomic_link_put (void **root, void *link) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
   register uint32_t val1, val2, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
 
   __ASM volatile (
+#ifndef __ICCARM__
   ".syntax unified\n\t"
+#endif
   "1:\n\t"
     "ldr   %[val1],[%[root]]\n\t"
     "str   %[val1],[%[link]]\n\t"
@@ -1250,7 +1506,7 @@ __STATIC_INLINE void atomic_link_put (void **root, void *link) {
     "bne   1b\n\t"
     "strex %[res],%[link],[%[root]]\n\t"
     "cbz   %[res],2f\n\t"
-    "b     1b\n\t"
+    "b     1b\n"
   "2:"
   : [val1] "=&l" (val1),
     [val2] "=&l" (val2),
