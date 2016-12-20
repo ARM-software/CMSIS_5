@@ -1743,13 +1743,13 @@ ARMv8-M Mainline based device with TrustZone
     <condition id="RTOS RTX5">
       <description>Components required for RTOS RTX5</description>
       <require condition="ARMv6_7_8-M Device"/>
-      <require condition="ARMCC GCC"/>
+      <require condition="ARMCC GCC IAR"/>
       <require Cclass="CMSIS"  Cgroup="RTOS2" Csub="Keil RTX5"/>
     </condition>
     <condition id="RTOS2 RTX5">
       <description>Components required for RTOS2 RTX5</description>
       <require condition="ARMv6_7_8-M Device"/>
-      <require condition="ARMCC GCC"/>
+      <require condition="ARMCC GCC IAR"/>
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
     </condition>
@@ -2290,6 +2290,13 @@ ARMv8-M Mainline based device with TrustZone
         <file category="library" condition="ARMv8MBL_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <!-- IAR -->
+        <file category="library" condition="CM0_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM0.a"      src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM3_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_FP_LE_IAR"        name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM4F.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM7_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM7_FP_LE_IAR"        name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM4F.a"     src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library_NS" Cversion="5.1.0" Capiversion="2.1" condition="RTOS2 RTX5 NS">
@@ -2415,6 +2422,13 @@ ARMv8-M Mainline based device with TrustZone
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S"    condition="ARMv8MBL_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="ARMv8MML_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="ARMv8MML_FP_GCC"/>
+        <!-- RTX sources (handlers IAR) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm0.s"         condition="CM0_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"         condition="CM3_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"         condition="CM4_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm4f.s"        condition="CM4_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"         condition="CM7_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm4f.s"        condition="CM7_FP_IAR"/>
       </files>
     </component>
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.1.0" Capiversion="2.1" condition="RTOS2 RTX5 NS">
