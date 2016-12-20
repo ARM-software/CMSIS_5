@@ -535,8 +535,8 @@ Parameter \em event                       |     Bit   | Description
 \ref ARM_I2C_EVENT_TRANSFER_INCOMPLETE    | 1UL << 1  | Occurs together with \ref ARM_I2C_EVENT_TRANSFER_DONE when less data is transferred then requested.
 \ref ARM_I2C_EVENT_SLAVE_TRANSMIT         | 1UL << 2  | Occurs when addressed as Slave Transmitter and \ref ARM_I2C_SlaveTransmit has not been started.
 \ref ARM_I2C_EVENT_SLAVE_RECEIVE          | 1UL << 3  | Occurs when addressed as Slave Receiver and \ref ARM_I2C_SlaveReceive has not been started.
-\ref ARM_I2C_EVENT_GENERAL_CALL           | 1UL << 4  | Indicates General Call in slave mode together with \ref ARM_I2C_EVENT_TRANSFER_DONE, \ref ARM_I2C_EVENT_SLAVE_TRANSMIT and \ref ARM_I2C_EVENT_SLAVE_RECEIVE.
-\ref ARM_I2C_EVENT_ADDRESS_NACK           | 1UL << 5  | Occurs in master mode when address is not acknowledged from slave.
+\ref ARM_I2C_EVENT_ADDRESS_NACK           | 1UL << 4  | Occurs in master mode when address is not acknowledged from slave.
+\ref ARM_I2C_EVENT_GENERAL_CALL           | 1UL << 5  | Indicates General Call in slave mode together with \ref ARM_I2C_EVENT_TRANSFER_DONE, \ref ARM_I2C_EVENT_SLAVE_TRANSMIT and \ref ARM_I2C_EVENT_SLAVE_RECEIVE.
 \ref ARM_I2C_EVENT_ARBITRATION_LOST       | 1UL << 6  | Occurs in master mode when arbitration is lost.
 \ref ARM_I2C_EVENT_BUS_ERROR              | 1UL << 7  | Occurs when bus error is detected.
 \ref ARM_I2C_EVENT_BUS_CLEAR              | 1UL << 8  | Occurs after \ref ARM_I2C_BUS_CLEAR Control operation has finished.
