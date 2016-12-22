@@ -2,6 +2,16 @@
 \page ChangeLog_pg  Change Log
 
 <hr>
+<b>Version 1.4.10 (no source code change [still labeled 1.4.5])</b>
+
+Modified arm_sin_cos_f32.c
+- corrected \ref arm_sin_cos_f32() for negative numbers smaller than e-4f.
+
+Modified arm_var_f32.c
+- improved  numerical stability for \ref arm_var_f32().
+
+
+<hr>
 <b>Version 1.4.9 (no source code change [still labeled 1.4.5]) 2016/09/26</b>
 
 Modified arm_mat_mult_fast_q15.c, arm_mat_mult_fast_q31.c
