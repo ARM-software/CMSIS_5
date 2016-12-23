@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2016 ARM Limited. All rights reserved.
 *
-* $Date:        28. October 2016
+* $Date:        23. December 2016
 * $Revision:    V1.4.5 f
 *
 * Project:      CMSIS DSP Library
@@ -352,7 +352,6 @@ extern "C"
 #define FAST_MATH_Q31_SHIFT   (32 - 10)
 #define FAST_MATH_Q15_SHIFT   (16 - 10)
 #define CONTROLLER_Q31_SHIFT  (32 - 9)
-#define TABLE_SIZE  256
 #define TABLE_SPACING_Q31     0x400000
 #define TABLE_SPACING_Q15     0x80
 
