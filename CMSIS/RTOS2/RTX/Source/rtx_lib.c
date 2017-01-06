@@ -23,6 +23,7 @@
  * -----------------------------------------------------------------------------
  */
 
+#include "cmsis_compiler.h"
 #include "rtx_os.h"
 #include "RTX_Config.h"
 
@@ -325,6 +326,7 @@ __attribute__((section(".bss.os.msgqueue.mem")));
 // OS Configuration
 // ================
 
+__USED
 __attribute__((section(".rodata")))
 const osRtxConfig_t osRtxConfig = {
   0U   // Flags
@@ -432,7 +434,7 @@ extern const uint8_t *irqRtxLibRef;
        const uint8_t *irqRtxLibRef = &irqRtxLib;
 
 // Default User SVC Table
-__attribute__((weak))
+__WEAK
 extern void * const osRtxUserSVC[];
        void * const osRtxUserSVC[1] = { (void *)0 };
 
@@ -509,6 +511,7 @@ const uint32_t os_cb_sections[] = {
     (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 
 #ifndef __MICROLIB
+__WEAK
 void _platform_post_stackheap_init (void);
 void _platform_post_stackheap_init (void) {
   osKernelInitialize();
@@ -517,6 +520,7 @@ void _platform_post_stackheap_init (void) {
 
 #elif defined (__GNUC__)
 
+__WEAK
 void software_init_hook (void);
 void software_init_hook (void) {
   osKernelInitialize();
