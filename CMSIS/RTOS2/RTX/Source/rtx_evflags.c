@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -32,11 +32,11 @@
 /// \param[in]  ef              event flags object.
 /// \param[in]  flags           specifies the flags to set.
 /// \return event flags after setting.
-static int32_t EventFlagsSet (os_event_flags_t *ef, int32_t flags) {
+static uint32_t EventFlagsSet (os_event_flags_t *ef, uint32_t flags) {
 #if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
-  int32_t  event_flags;
+  uint32_t event_flags;
 
 #if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
@@ -48,7 +48,7 @@ static int32_t EventFlagsSet (os_event_flags_t *ef, int32_t flags) {
     __enable_irq();
   }
 #else
-  event_flags = (int32_t)atomic_set32((uint32_t *)&ef->event_flags, (uint32_t)flags);
+  event_flags = atomic_set32(&ef->event_flags, flags);
 #endif
 
   return event_flags;
@@ -58,11 +58,11 @@ static int32_t EventFlagsSet (os_event_flags_t *ef, int32_t flags) {
 /// \param[in]  ef              event flags object.
 /// \param[in]  flags           specifies the flags to clear.
 /// \return event flags before clearing.
-static int32_t EventFlagsClear (os_event_flags_t *ef, int32_t flags) {
+static uint32_t EventFlagsClear (os_event_flags_t *ef, uint32_t flags) {
 #if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
-  int32_t  event_flags;
+  uint32_t event_flags;
 
 #if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
@@ -74,7 +74,7 @@ static int32_t EventFlagsClear (os_event_flags_t *ef, int32_t flags) {
     __enable_irq();
   }
 #else
-  event_flags = (int32_t)atomic_clr32((uint32_t *)&ef->event_flags, (uint32_t)flags);
+  event_flags = atomic_clr32(&ef->event_flags, flags);
 #endif
 
   return event_flags;
@@ -85,11 +85,11 @@ static int32_t EventFlagsClear (os_event_flags_t *ef, int32_t flags) {
 /// \param[in]  flags           specifies the flags to check.
 /// \param[in]  options         specifies flags options (osFlagsXxxx).
 /// \return event flags before clearing or 0 if specified flags have not been set.
-static int32_t EventFlagsCheck (os_event_flags_t *ef, int32_t flags, uint32_t options) {
+static uint32_t EventFlagsCheck (os_event_flags_t *ef, uint32_t flags, uint32_t options) {
 #if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask;
 #endif
-  int32_t  event_flags;
+  uint32_t event_flags;
 
   if ((options & osFlagsNoClear) == 0U) {
 #if (__EXCLUSIVE_ACCESS == 0U)
@@ -98,8 +98,8 @@ static int32_t EventFlagsCheck (os_event_flags_t *ef, int32_t flags, uint32_t op
 
     event_flags = ef->event_flags;
     if ((((options & osFlagsWaitAll) != 0U) && ((event_flags & flags) != flags)) ||
-        (((options & osFlagsWaitAll) == 0U) && ((event_flags & flags) == 0))) {
-      event_flags = 0;
+        (((options & osFlagsWaitAll) == 0U) && ((event_flags & flags) == 0U))) {
+      event_flags = 0U;
     } else {
       ef->event_flags &= ~flags;
     }
@@ -109,16 +109,16 @@ static int32_t EventFlagsCheck (os_event_flags_t *ef, int32_t flags, uint32_t op
     }
 #else
     if ((options & osFlagsWaitAll) != 0U) {
-      event_flags = (int32_t)atomic_chk32_all((uint32_t *)&ef->event_flags, (uint32_t)flags);
+      event_flags = atomic_chk32_all(&ef->event_flags, flags);
     } else {
-      event_flags = (int32_t)atomic_chk32_any((uint32_t *)&ef->event_flags, (uint32_t)flags);
+      event_flags = atomic_chk32_any(&ef->event_flags, flags);
     }
 #endif
   } else {
     event_flags = ef->event_flags;
     if ((((options & osFlagsWaitAll) != 0U) && ((event_flags & flags) != flags)) ||
-        (((options & osFlagsWaitAll) == 0U) && ((event_flags & flags) == 0))) {
-      event_flags = 0;
+        (((options & osFlagsWaitAll) == 0U) && ((event_flags & flags) == 0U))) {
+      event_flags = 0U;
     }
   }
 
@@ -133,7 +133,7 @@ static int32_t EventFlagsCheck (os_event_flags_t *ef, int32_t flags, uint32_t op
 void osRtxEventFlagsPostProcess (os_event_flags_t *ef) {
   os_thread_t *thread;
   os_thread_t *thread_next;
-  int32_t      event_flags;
+  uint32_t     event_flags;
 
   if (ef->state == osRtxObjectInactive) {
     return;
@@ -144,9 +144,9 @@ void osRtxEventFlagsPostProcess (os_event_flags_t *ef) {
   while (thread != NULL) {
     thread_next = thread->thread_next;
     event_flags = EventFlagsCheck(ef, thread->wait_flags, thread->flags_options);
-    if (event_flags > 0) {
+    if (event_flags != 0U) {
       osRtxThreadListRemove(thread);
-      osRtxThreadWaitExit(thread, (uint32_t)event_flags, false);
+      osRtxThreadWaitExit(thread, event_flags, false);
       EvrRtxEventFlagsWaitCompleted(ef, thread->wait_flags, thread->flags_options, event_flags);
     }
     thread = thread_next;
@@ -159,10 +159,10 @@ void osRtxEventFlagsPostProcess (os_event_flags_t *ef) {
 //  Service Calls definitions
 SVC0_1M(EventFlagsNew,     osEventFlagsId_t, const osEventFlagsAttr_t *)
 SVC0_1 (EventFlagsGetName, const char *,     osEventFlagsId_t)
-SVC0_2 (EventFlagsSet,     int32_t,          osEventFlagsId_t, int32_t)
-SVC0_2 (EventFlagsClear,   int32_t,          osEventFlagsId_t, int32_t)
-SVC0_1 (EventFlagsGet,     int32_t,          osEventFlagsId_t)
-SVC0_4 (EventFlagsWait,    int32_t,          osEventFlagsId_t, int32_t, uint32_t, uint32_t)
+SVC0_2 (EventFlagsSet,     uint32_t,         osEventFlagsId_t, uint32_t)
+SVC0_2 (EventFlagsClear,   uint32_t,         osEventFlagsId_t, uint32_t)
+SVC0_1 (EventFlagsGet,     uint32_t,         osEventFlagsId_t)
+SVC0_4 (EventFlagsWait,    uint32_t,         osEventFlagsId_t, uint32_t, uint32_t, uint32_t)
 SVC0_1 (EventFlagsDelete,  osStatus_t,       osEventFlagsId_t)
 
 /// Create and Initialize an Event Flags object.
@@ -214,7 +214,7 @@ osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
   ef->flags       = flags;
   ef->name        = name;
   ef->thread_list = NULL;
-  ef->event_flags = 0;
+  ef->event_flags = 0U;
 
   // Register post ISR processing function
   osRtxInfo.post_process.event_flags = osRtxEventFlagsPostProcess;
@@ -248,24 +248,24 @@ const char *svcRtxEventFlagsGetName (osEventFlagsId_t ef_id) {
 
 /// Set the specified Event Flags.
 /// \note API identical to osEventFlagsSet
-int32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags) {
+uint32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
   os_thread_t      *thread;
   os_thread_t      *thread_next;
-  int32_t           event_flags;
-  int32_t           event_flags0;
+  uint32_t          event_flags;
+  uint32_t          event_flags0;
 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
-      ((uint32_t)flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
+      (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
     EvrRtxEventFlagsError(ef, osErrorParameter);
-    return osErrorParameter;
+    return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsError(ef, osErrorResource);
-    return osErrorResource;
+    return ((uint32_t)osErrorResource);
   }
 
   // Set Event Flags
@@ -276,14 +276,14 @@ int32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags) {
   while (thread != NULL) {
     thread_next = thread->thread_next;
     event_flags0 = EventFlagsCheck(ef, thread->wait_flags, thread->flags_options);
-    if (event_flags0 > 0) {
+    if (event_flags0 != 0U) {
       if ((thread->flags_options & osFlagsNoClear) == 0U) {
         event_flags = event_flags0 & ~thread->wait_flags;
       } else {
         event_flags = event_flags0;
       }
       osRtxThreadListRemove(thread);
-      osRtxThreadWaitExit(thread, (uint32_t)event_flags0, false);
+      osRtxThreadWaitExit(thread, event_flags0, false);
       EvrRtxEventFlagsWaitCompleted(ef, thread->wait_flags, thread->flags_options, event_flags0);
     }
     thread = thread_next;
@@ -297,21 +297,21 @@ int32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags) {
 
 /// Clear the specified Event Flags.
 /// \note API identical to osEventFlagsClear
-int32_t svcRtxEventFlagsClear (osEventFlagsId_t ef_id, int32_t flags) {
+uint32_t svcRtxEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
-  int32_t           event_flags;
+  uint32_t          event_flags;
 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
-      ((uint32_t)flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
+      (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
     EvrRtxEventFlagsError(ef, osErrorParameter);
-    return osErrorParameter;
+    return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsError(ef, osErrorResource);
-    return osErrorResource;
+    return ((uint32_t)osErrorResource);
   }
 
   // Clear Event Flags
@@ -324,19 +324,19 @@ int32_t svcRtxEventFlagsClear (osEventFlagsId_t ef_id, int32_t flags) {
 
 /// Get the current Event Flags.
 /// \note API identical to osEventFlagsGet
-int32_t svcRtxEventFlagsGet (osEventFlagsId_t ef_id) {
+uint32_t svcRtxEventFlagsGet (osEventFlagsId_t ef_id) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags)) {
-    EvrRtxEventFlagsGet(ef, 0);
-    return 0;
+    EvrRtxEventFlagsGet(ef, 0U);
+    return 0U;
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
-    EvrRtxEventFlagsGet(ef, 0);
-    return 0;
+    EvrRtxEventFlagsGet(ef, 0U);
+    return 0U;
   }
 
   EvrRtxEventFlagsGet(ef, ef->event_flags);
@@ -346,33 +346,33 @@ int32_t svcRtxEventFlagsGet (osEventFlagsId_t ef_id) {
 
 /// Wait for one or more Event Flags to become signaled.
 /// \note API identical to osEventFlagsWait
-int32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout) {
+uint32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
   os_thread_t      *running_thread;
-  int32_t           event_flags;
+  uint32_t          event_flags;
 
   running_thread = osRtxThreadGetRunning();
   if (running_thread == NULL) {
     EvrRtxEventFlagsError(ef, osRtxErrorKernelNotRunning);
-    return osError;
+    return ((uint32_t)osError);
   }
 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
-      ((uint32_t)flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
+      (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
     EvrRtxEventFlagsError(ef, osErrorParameter);
-    return osErrorParameter;
+    return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsError(ef, osErrorResource);
-    return osErrorResource;
+    return ((uint32_t)osErrorResource);
   }
 
   // Check Event Flags
   event_flags = EventFlagsCheck(ef, flags, options);
-  if (event_flags > 0) {
+  if (event_flags != 0U) {
     EvrRtxEventFlagsWaitCompleted(ef, flags, options, event_flags);
     return event_flags;
   }
@@ -386,12 +386,12 @@ int32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t op
     // Suspend current Thread
     osRtxThreadListPut((os_object_t*)ef, running_thread);
     osRtxThreadWaitEnter(osRtxThreadWaitingEventFlags, timeout);
-    return osErrorTimeout;
+    return ((uint32_t)osErrorTimeout);
   }
 
   EvrRtxEventFlagsWaitNotCompleted(ef, flags, options);
 
-  return osErrorResource;
+  return ((uint32_t)osErrorResource);
 }
 
 /// Delete an Event Flags object.
@@ -444,21 +444,21 @@ osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
 /// Set the specified Event Flags.
 /// \note API identical to osEventFlagsSet
 __STATIC_INLINE
-int32_t isrRtxEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags) {
+uint32_t isrRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
-  int32_t           event_flags;
+  uint32_t          event_flags;
 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
-      ((uint32_t)flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
+      (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
     EvrRtxEventFlagsError(ef, osErrorParameter);
-    return osErrorParameter;
+    return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsError(ef, osErrorResource);
-    return osErrorResource;
+    return ((uint32_t)osErrorResource);
   }
 
   // Set Event Flags
@@ -475,33 +475,33 @@ int32_t isrRtxEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags) {
 /// Wait for one or more Event Flags to become signaled.
 /// \note API identical to osEventFlagsWait
 __STATIC_INLINE
-int32_t isrRtxEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout) {
+uint32_t isrRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
-  int32_t           event_flags;
+  uint32_t          event_flags;
 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) || (timeout != 0U) ||
-      ((uint32_t)flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
+      (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
     EvrRtxEventFlagsError(ef, osErrorParameter);
-    return osErrorParameter;
+    return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsError(ef, osErrorResource);
-    return osErrorResource;
+    return ((uint32_t)osErrorResource);
   }
 
   // Check Event Flags
   event_flags = EventFlagsCheck(ef, flags, options);
-  if (event_flags > 0) {
+  if (event_flags != 0U) {
     EvrRtxEventFlagsWaitCompleted(ef, flags, options, event_flags);
-    return event_flags;
+    return ((uint32_t)event_flags);
   }
 
   EvrRtxEventFlagsWaitNotCompleted(ef, flags, options);
 
-  return osErrorResource;
+  return ((uint32_t)osErrorResource);
 }
 
 
@@ -527,7 +527,7 @@ const char *osEventFlagsGetName (osEventFlagsId_t ef_id) {
 }
 
 /// Set the specified Event Flags.
-int32_t osEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags) {
+uint32_t osEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
   EvrRtxEventFlagsSet(ef_id, flags);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return isrRtxEventFlagsSet(ef_id, flags);
@@ -537,7 +537,7 @@ int32_t osEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags) {
 }
 
 /// Clear the specified Event Flags.
-int32_t osEventFlagsClear (osEventFlagsId_t ef_id, int32_t flags) {
+uint32_t osEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
   EvrRtxEventFlagsClear(ef_id, flags);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return svcRtxEventFlagsClear(ef_id, flags);
@@ -547,7 +547,7 @@ int32_t osEventFlagsClear (osEventFlagsId_t ef_id, int32_t flags) {
 }
 
 /// Get the current Event Flags.
-int32_t osEventFlagsGet (osEventFlagsId_t ef_id) {
+uint32_t osEventFlagsGet (osEventFlagsId_t ef_id) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return svcRtxEventFlagsGet(ef_id);
   } else {
@@ -556,7 +556,7 @@ int32_t osEventFlagsGet (osEventFlagsId_t ef_id) {
 }
 
 /// Wait for one or more Event Flags to become signaled.
-int32_t osEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout) {
+uint32_t osEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout) {
   EvrRtxEventFlagsWait(ef_id, flags, options, timeout);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return isrRtxEventFlagsWait(ef_id, flags, options, timeout);

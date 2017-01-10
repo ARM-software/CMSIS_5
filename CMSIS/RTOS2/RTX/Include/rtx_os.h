@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -119,8 +119,8 @@ typedef struct osRtxThread_s {
   int8_t                priority_base;  ///< Base Priority
   uint8_t                 stack_frame;  ///< Stack Frame (EXC_RETURN[7..0])
   uint8_t               flags_options;  ///< Thread/Event Flags Options
-  int32_t                  wait_flags;  ///< Waiting Thread/Event Flags
-  int32_t                thread_flags;  ///< Thread Flags
+  uint32_t                 wait_flags;  ///< Waiting Thread/Event Flags
+  uint32_t               thread_flags;  ///< Thread Flags
   struct osRtxMutex_s     *mutex_list;  ///< Link pointer to list of owned Mutexes
   void                     *stack_mem;  ///< Stack Memory
   uint32_t                 stack_size;  ///< Stack Size
@@ -171,7 +171,7 @@ typedef struct osRtxEventFlags_s {
   uint8_t                    reserved;
   const char                    *name;  ///< Object Name
   osRtxThread_t          *thread_list;  ///< Waiting Threads List
-  int32_t                 event_flags;  ///< Event Flags
+  uint32_t                event_flags;  ///< Event Flags
 } osRtxEventFlags_t;
  
  
