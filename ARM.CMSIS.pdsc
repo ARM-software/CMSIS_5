@@ -2246,8 +2246,8 @@ ARMv8-M Mainline based device with TrustZone
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.1.0"/>
-        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.1.1"/>
+        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.1"/>
 
         <!-- RTX templates -->
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.0.0" select="CMSIS-RTOS2 'main' function"/>
@@ -2316,8 +2316,8 @@ ARMv8-M Mainline based device with TrustZone
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.1.0"/>
-        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.1.1"/>
+        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.1"/>
 
         <!-- RTX templates -->
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.0.0" select="CMSIS-RTOS2 'main' function"/>
@@ -2367,8 +2367,8 @@ ARMv8-M Mainline based device with TrustZone
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.1.0"/>
-        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.1.1"/>
+        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.1"/>
 
         <!-- RTX templates -->
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.0.0" select="CMSIS-RTOS2 'main' function"/>
@@ -2449,8 +2449,8 @@ ARMv8-M Mainline based device with TrustZone
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.1.0"/>
-        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.1.1"/>
+        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.1"/>
 
         <!-- RTX templates -->
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.0.0" select="CMSIS-RTOS2 'main' function"/>
