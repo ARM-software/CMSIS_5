@@ -344,6 +344,8 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
   register uint32_t __regfpscr         __ASM("fpscr");
   __regfpscr = (fpscr);
+#else
+  (void)fpscr;
 #endif
 }
 
