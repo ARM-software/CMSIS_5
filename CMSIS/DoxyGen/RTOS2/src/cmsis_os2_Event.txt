@@ -8,7 +8,7 @@
 \brief Synchronize threads using event flags.
 \details 
 The event flags management functions in CMSIS-RTOS allow you to control or wait for event flags. Each signal has up to 31
-event flags (int32_t flags provides 31 bits).
+event flags.
 
 A thread
 - can wait for event flags to be set (using \ref osEventFlagsWait). Using this function, it enters the
@@ -32,11 +32,11 @@ Here is a simple example that shows how two thread can communicate with each oth
 The following steps are required to use event flags:
 -# In the thread that is supposed to send  a event with id sig1_id, call the wait function:
 \code
-osEventFlagsSet (sig1_id, 0x0001U); // 
+osEventFlagsSet (sig1_id, 0x0001U); // set the signal 0x0001U for thread tid_thread1
 \endcode
 -# In another thread (or threads) that are supposed wait for the event:
 \code
-osEventFlagsGet (sig1_id, 0x0001U, NULL, osWaitForever);    // set the signal 0x0001U for thread tid_thread1
+osEventFlagsGet (sig1_id, 0x0001U, NULL, osWaitForever);
 osDelay (1000);                       // wait for 1 second
 \endcode
 
