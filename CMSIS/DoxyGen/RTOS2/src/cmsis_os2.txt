@@ -78,6 +78,16 @@ File/Folder                  | Content
       <th>Description</th>
     </tr>
     <tr>
+      <td>V2.1.0</td>
+      <td>
+        Support for critical and uncritical sections (nesting safe): 
+         - updated: osKernelLock, osKernelUnlock
+         - added: osKernelRestoreLock
+        Updated Thread and Event Flags:
+         - changed flags parameter and return type from int32_t to uint32_t
+     </td>
+    </tr>
+    <tr>
       <td>V2.0.0</td>
       <td>
         New API Version 2.0 available. 
@@ -131,6 +141,16 @@ File/Folder                  | Content
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>V5.1.0</td>
+      <td>
+       Based on CMSIS-RTOS API V2.1.\n
+       Added support for Event recording.\n
+       Added support for IAR compiler.\n
+       Configuration file split into .h and .c file.\n
+       osRtx name-space for RTX specific symbols.\n
+      </td>
     </tr>
     <tr>
       <td>V5.0.0</td>
@@ -547,7 +567,7 @@ Examples:
 \section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
 
 The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
-  - \ref osKernelGetTickCount, \ref osKernelGetTickFreq
+  - \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
   - \ref osThreadFlagsSet
   - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
   - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
