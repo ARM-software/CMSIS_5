@@ -80,11 +80,11 @@ File/Folder                  | Content
     <tr>
       <td>V2.1.0</td>
       <td>
-        Support for critical and uncritical sections (nesting safe): 
-         - updated: osKernelLock, osKernelUnlock
-         - added: osKernelRestoreLock
-        Updated Thread and Event Flags:
-         - changed flags parameter and return type from int32_t to uint32_t
+        Support for critical and uncritical sections (nesting safe):\n 
+         - updated: osKernelLock, osKernelUnlock\n
+         - added: osKernelRestoreLock\n
+        Updated Thread and Event Flags:\n
+         - changed flags parameter and return type from int32_t to uint32_t\n
      </td>
     </tr>
     <tr>
