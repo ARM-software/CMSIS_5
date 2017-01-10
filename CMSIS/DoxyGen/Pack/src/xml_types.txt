@@ -114,13 +114,13 @@ The following  Default Debug Access Sequences are implemented:
           // Enter SWD Line Reset State
           DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  // &gt; 50 cycles SWDIO/TMS High
           DAP_SWJ_Sequence(3,  0x00);                // At least 2 idle cycles (SWDIO/TMS Low)
-      </block>
+        </block>
       
       </control>
     
       <control if="!isSWJ">
       
-        <block>
+        <block atomic="1">
           // Enter SWD Line Reset State
           DAP_SWJ_Sequence(51, 0x0007FFFFFFFFFFFF);  // &gt; 50 cycles SWDIO/TMS High
           DAP_SWJ_Sequence(3,  0x00);                // At least 2 idle cycles (SWDIO/TMS Low)
@@ -335,7 +335,7 @@ The following  Default Debug Access Sequences are implemented:
 
     <control if="canReadPins">
     
-      <!-- Assert nRESET line and wait for recovery -->
+      <!-- Assert nRESET line and wait max. 1s for recovery -->
       <control while="(DAP_SWJ_Pins(nReset, nReset, 0) &amp; nReset) == 0" timeout="1000000"/>
       
     </control>
@@ -348,7 +348,7 @@ The following  Default Debug Access Sequences are implemented:
       </block>
       
       <!-- Wait 100ms for recovery if nRESET not readable -->
-      <control while="1" timeout="1000000"/>
+      <control while="1" timeout="100000"/>
       
     </control>
     
@@ -385,11 +385,11 @@ The following  Default Debug Access Sequences are implemented:
       canReadPins = (DAP_SWJ_Pins(nReset, nReset, 0) != 0xFFFFFFFF);
     </block>
 
-    <!-- Wait for nRESET to recover from reset if readable-->
+    <!-- Wait max. 1s for nRESET to recover from reset if readable-->
     <control if="canReadPins" while="(DAP_SWJ_Pins(nReset, nReset, 0) &amp; nReset) == 0" timeout="1000000"/>
     
     <!-- Wait 100ms for recovery if nRESET not readable -->
-    <control if="!canReadPins" while="1" timeout="1000000"/>
+    <control if="!canReadPins" while="1" timeout="100000"/>
   
   </sequence>
         
