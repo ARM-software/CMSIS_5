@@ -128,7 +128,7 @@
             TEMPLATE_DO_ARR_DESC(                                          \
                   M_idx, uint8_t, M, filtering_Ms                          \
                   ,                                                        \
-                  if(blockSize % M == 0)                                   \
+                  if (blockSize % M == 0)                                   \
                   {                                                        \
                      /* Display test parameter values */                   \
                      JTEST_DUMP_STRF("Block Size: %d\n"                    \

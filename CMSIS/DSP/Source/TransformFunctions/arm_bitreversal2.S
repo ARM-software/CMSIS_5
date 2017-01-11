@@ -1,13 +1,13 @@
 ;/* ----------------------------------------------------------------------
 ;* Copyright (C) 2010-2015 ARM Limited. All rights reserved.
 ;*
-;* $Date:       02. November 2015 
-;* $Revision: 	V.1.4.5 b
+;* $Date:       03. January 2017
+;* $Revision:   V.1.5.0
 ;*
-;* Project: 	CMSIS DSP Library
-;* Title:	    arm_bitreversal2.S
+;* Project:     CMSIS DSP Library
+;* Title:       arm_bitreversal2.S
 ;*
-;* Description:	This is the arm_bitreversal_32 function done in
+;* Description: This is the arm_bitreversal_32 function done in
 ;*              assembly for maximum speed.  This function is called
 ;*              after doing an fft to reorder the output.  The function
 ;*              is loop unrolled by 2. arm_bitreversal_16 as well.

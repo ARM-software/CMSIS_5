@@ -31,7 +31,7 @@ void ref_fir_sparse_f32(
   readIndex = ((int32_t) S->stateIndex - (int32_t) blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -52,7 +52,7 @@ void ref_fir_sparse_f32(
 
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform Multiplications and store in destination buffer */
     *pOut++ = *px++ * coeff;
@@ -64,7 +64,7 @@ void ref_fir_sparse_f32(
   /* Loop over the number of taps. */
   tapCnt = (uint32_t) numTaps - 1u;
 
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     /* Load the coefficient value and
      * increment the coefficient buffer for the next set of state values */
@@ -74,7 +74,7 @@ void ref_fir_sparse_f32(
     readIndex = ((int32_t) S->stateIndex - (int32_t) blockSize) - *pTapDelay++;
 
     /* Wraparound of readIndex */
-    if(readIndex < 0)
+    if (readIndex < 0)
     {
       readIndex += (int32_t) delaySize;
     }
@@ -95,7 +95,7 @@ void ref_fir_sparse_f32(
 
     blkCnt = blockSize;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Perform Multiply-Accumulate */
       *pOut++ += *px++ * coeff;
@@ -141,7 +141,7 @@ void ref_fir_sparse_q31(
   readIndex = (int32_t) (S->stateIndex - blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -162,7 +162,7 @@ void ref_fir_sparse_q31(
   
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform Multiplications and store in the destination buffer */
     *pOut++ = (q31_t) (((q63_t) * px++ * coeff) >> 32);
@@ -174,7 +174,7 @@ void ref_fir_sparse_q31(
   /* Loop over the number of taps. */
   tapCnt = (uint32_t) numTaps - 1u;
 
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     /* Load the coefficient value and           
      * increment the coefficient buffer for the next set of state values */
@@ -184,7 +184,7 @@ void ref_fir_sparse_q31(
     readIndex = (int32_t) (S->stateIndex - blockSize) - *pTapDelay++;
 
     /* Wraparound of readIndex */
-    if(readIndex < 0)
+    if (readIndex < 0)
     {
       readIndex += (int32_t) delaySize;
     }
@@ -205,7 +205,7 @@ void ref_fir_sparse_q31(
 
     blkCnt = blockSize;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Perform Multiply-Accumulate */
       out = *pOut;
@@ -226,7 +226,7 @@ void ref_fir_sparse_q31(
   /* Output is converted into 1.31 format. */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     in = *pOut << 1;
     *pOut++ = in;
@@ -270,7 +270,7 @@ void ref_fir_sparse_q15(
   readIndex = (S->stateIndex - blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -290,7 +290,7 @@ void ref_fir_sparse_q15(
 
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform multiplication and store in the scratch buffer */
     *pScratchOut++ = ((q31_t) * px++ * coeff);
@@ -302,7 +302,7 @@ void ref_fir_sparse_q15(
   /* Loop over the number of taps. */
   tapCnt = (uint32_t) numTaps - 1u;
 
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     /* Load the coefficient value and           
      * increment the coefficient buffer for the next set of state values */
@@ -312,7 +312,7 @@ void ref_fir_sparse_q15(
     readIndex = (S->stateIndex - blockSize) - *pTapDelay++;
 
     /* Wraparound of readIndex */
-    if(readIndex < 0)
+    if (readIndex < 0)
     {
       readIndex += (int32_t) delaySize;
     }
@@ -332,7 +332,7 @@ void ref_fir_sparse_q15(
 
     blkCnt = blockSize;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Perform Multiply-Accumulate */
       *pScratchOut++ += (q31_t) * px++ * coeff;
@@ -350,7 +350,7 @@ void ref_fir_sparse_q15(
   /* Loop over the blockSize. */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     *pOut++ = (q15_t) __SSAT(*pScr2++ >> 15, 16);
     blkCnt--;
@@ -392,7 +392,7 @@ void ref_fir_sparse_q7(
   readIndex = ((int32_t) S->stateIndex - (int32_t) blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -413,7 +413,7 @@ void ref_fir_sparse_q7(
   /* Loop over the blockSize */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform multiplication and store in the scratch buffer */
     *pScratchOut++ = ((q31_t) * px++ * coeff);
@@ -425,7 +425,7 @@ void ref_fir_sparse_q7(
   /* Loop over the number of taps. */
   tapCnt = (uint32_t) numTaps - 1u;
 
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     /* Load the coefficient value and           
      * increment the coefficient buffer for the next set of state values */
@@ -435,7 +435,7 @@ void ref_fir_sparse_q7(
     readIndex = ((int32_t) S->stateIndex - (int32_t) blockSize) - *pTapDelay++;
 
     /* Wraparound of readIndex */
-    if(readIndex < 0)
+    if (readIndex < 0)
     {
       readIndex += (int32_t) delaySize;
     }
@@ -456,7 +456,7 @@ void ref_fir_sparse_q7(
     /* Loop over the blockSize */
     blkCnt = blockSize;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Perform Multiply-Accumulate */
       in = *pScratchOut + ((q31_t) * px++ * coeff);
@@ -475,7 +475,7 @@ void ref_fir_sparse_q7(
   /* Loop over the blockSize. */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     *pOut++ = (q7_t) __SSAT(*pScr2++ >> 7, 8);
 

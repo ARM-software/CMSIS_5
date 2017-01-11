@@ -1,24 +1,24 @@
-/* ----------------------------------------------------------------------      
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved. 
-*      
-* $Date:        19. March 2015
-* $Revision: 	V.1.4.5
-*      
-* Project:      CMSIS DSP Library 
-* Title:	    arm_mat_cmplx_mult_f32.c      
-*      
-* Description:  Floating-point matrix multiplication.      
-*      
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+*
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_mat_cmplx_mult_f32.c
+*
+* Description:  Floating-point matrix multiplication.
+*
 * Target Processor:          Cortex-M4/Cortex-M3/Cortex-M0
 *
-* Redistribution and use in source and binary forms, with or without 
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -27,7 +27,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -35,39 +35,39 @@
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.    
+* POSSIBILITY OF SUCH DAMAGE.
 * -------------------------------------------------------------------- */
 #include "arm_math.h"
 
-/**      
- * @ingroup groupMatrix      
+/**
+ * @ingroup groupMatrix
  */
 
-/**      
- * @defgroup CmplxMatrixMult  Complex Matrix Multiplication     
- *     
- * Complex Matrix multiplication is only defined if the number of columns of the      
- * first matrix equals the number of rows of the second matrix.      
- * Multiplying an <code>M x N</code> matrix with an <code>N x P</code> matrix results      
- * in an <code>M x P</code> matrix.      
- * When matrix size checking is enabled, the functions check: (1) that the inner dimensions of      
- * <code>pSrcA</code> and <code>pSrcB</code> are equal; and (2) that the size of the output      
- * matrix equals the outer dimensions of <code>pSrcA</code> and <code>pSrcB</code>.      
+/**
+ * @defgroup CmplxMatrixMult  Complex Matrix Multiplication
+ *
+ * Complex Matrix multiplication is only defined if the number of columns of the
+ * first matrix equals the number of rows of the second matrix.
+ * Multiplying an <code>M x N</code> matrix with an <code>N x P</code> matrix results
+ * in an <code>M x P</code> matrix.
+ * When matrix size checking is enabled, the functions check: (1) that the inner dimensions of
+ * <code>pSrcA</code> and <code>pSrcB</code> are equal; and (2) that the size of the output
+ * matrix equals the outer dimensions of <code>pSrcA</code> and <code>pSrcB</code>.
  */
 
 
-/**      
- * @addtogroup CmplxMatrixMult      
- * @{      
+/**
+ * @addtogroup CmplxMatrixMult
+ * @{
  */
 
-/**      
- * @brief Floating-point Complex matrix multiplication.      
- * @param[in]       *pSrcA points to the first input complex matrix structure      
- * @param[in]       *pSrcB points to the second input complex matrix structure      
- * @param[out]      *pDst points to output complex matrix structure      
- * @return     		The function returns either      
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.      
+/**
+ * @brief Floating-point Complex matrix multiplication.
+ * @param[in]       *pSrcA points to the first input complex matrix structure
+ * @param[in]       *pSrcB points to the second input complex matrix structure
+ * @param[out]      *pDst points to output complex matrix structure
+ * @return     		The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
  */
 
 arm_status arm_mat_cmplx_mult_f32(
@@ -98,7 +98,7 @@ arm_status arm_mat_cmplx_mult_f32(
 
 
   /* Check for matrix mismatch condition */
-  if((pSrcA->numCols != pSrcB->numRows) ||
+  if ((pSrcA->numCols != pSrcB->numRows) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
   {
 
@@ -119,7 +119,7 @@ arm_status arm_mat_cmplx_mult_f32(
       /* For every row wise process, the column loop counter is to be initiated */
       col = numColsB;
 
-      /* For every row wise process, the pIn2 pointer is set      
+      /* For every row wise process, the pIn2 pointer is set
        ** to the starting address of the pSrcB data */
       pIn2 = pSrcB->pData;
 
@@ -142,7 +142,7 @@ arm_status arm_mat_cmplx_mult_f32(
         colCnt = numColsA >> 2;
 
         /* matrix multiplication        */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
 
           /* Reading real part of complex matrix A */
@@ -219,11 +219,11 @@ arm_status arm_mat_cmplx_mult_f32(
           colCnt--;
         }
 
-        /* If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.      
+        /* If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.
          ** No loop unrolling is used. */
         colCnt = numColsA % 0x4u;
 
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           a1 = *pIn1;
@@ -259,7 +259,7 @@ arm_status arm_mat_cmplx_mult_f32(
         /* Decrement the column loop counter */
         col--;
 
-      } while(col > 0u);
+      } while (col > 0u);
 
       /* Update the pointer pInA to point to the  starting address of the next row */
       i = i + numColsB;
@@ -268,7 +268,7 @@ arm_status arm_mat_cmplx_mult_f32(
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    } while (row > 0u);
 
     /* Set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
@@ -278,6 +278,6 @@ arm_status arm_mat_cmplx_mult_f32(
   return (status);
 }
 
-/**      
- * @} end of MatrixMult group      
+/**
+ * @} end of MatrixMult group
  */

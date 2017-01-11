@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2016 ARM Limited. All rights reserved.
 *
-* $Date:        26. October 2016
-* $Revision:    V.1.4.5 a
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_mat_mult_fast_q15.c
@@ -117,7 +117,7 @@ arm_status arm_mat_mult_fast_q15(
 
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch condition */
-  if((pSrcA->numCols != pSrcB->numRows) ||
+  if ((pSrcA->numCols != pSrcB->numRows) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -137,7 +137,7 @@ arm_status arm_mat_mult_fast_q15(
 
       /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
        ** a second loop below computes the remaining 1 to 3 samples. */
-      while(col > 0u)
+      while (col > 0u)
       {
 #ifndef UNALIGNED_SUPPORT_DISABLE
         /* Read two elements from the row */
@@ -248,7 +248,7 @@ arm_status arm_mat_mult_fast_q15(
        ** No loop unrolling is used. */
       col = numColsB % 0x4u;
 
-      while(col > 0u)
+      while (col > 0u)
       {
         /* Read and store the input element in the destination */
         *px = *pInB++;
@@ -265,7 +265,7 @@ arm_status arm_mat_mult_fast_q15(
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    } while (row > 0u);
 
     /* Reset the variables for the usage in the following multiplication process */
     row = numRowsA;
@@ -280,7 +280,7 @@ arm_status arm_mat_mult_fast_q15(
 
     /* The following loop performs the dot-product of each row in pSrcA with each column in pSrcB */
     /* row loop */
-    while(row > 0u)
+    while (row > 0u)
     {
       /* For every row wise process, the column loop counter is to be initiated */
       col = numColsB;
@@ -319,7 +319,7 @@ arm_status arm_mat_mult_fast_q15(
 #endif
 
         /* matrix multiplication */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
 #ifndef UNALIGNED_SUPPORT_DISABLE
@@ -376,7 +376,7 @@ arm_status arm_mat_mult_fast_q15(
 #else
         colCnt = numColsA % 0x4u;
 
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           sum += (q31_t) (*pInA++) * (*pInB++);
@@ -441,7 +441,7 @@ arm_status arm_mat_mult_fast_q15(
         colCnt = numColsA >> 2;
 
         /* matrix multiplication */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           inA1 = *__SIMD32(pInA)++;
           inA2 = *__SIMD32(pInA)++;
@@ -456,7 +456,7 @@ arm_status arm_mat_mult_fast_q15(
         }
 
         colCnt = numColsA & 3u;
-        while(colCnt > 0u) {
+        while (colCnt > 0u) {
           sum += (q31_t) (*pInA++) * (*pInB++);
           colCnt--;
         }
@@ -494,7 +494,7 @@ arm_status arm_mat_mult_fast_q15(
         colCnt = numColsA >> 2;
 
         /* matrix multiplication */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           inA1 = *__SIMD32(pInA)++;
           inA2 = *__SIMD32(pInA)++;
@@ -509,7 +509,7 @@ arm_status arm_mat_mult_fast_q15(
         }
 
         colCnt = numColsA & 3u;
-        while(colCnt > 0u) {
+        while (colCnt > 0u) {
           sum += (q31_t) (*pInA++) * (*pInB++);
           colCnt--;
         }

@@ -97,7 +97,7 @@ typedef struct JTEST_FW_struct
     do                                                                  \
     {                                                                   \
         JTEST_FW.str_buffer = JTEST_FW_STR_BUFFER;                      \
-    } while(0)
+    } while (0)
 
 /* Debugger Action-triggering Macros */
 /*--------------------------------------------------------------------------------*/
@@ -109,7 +109,7 @@ typedef struct JTEST_FW_struct
     do                                          \
     {                                           \
         action_name();                          \
-    } while(0)
+    } while (0)
 
 /**
  *  Trigger the "Test Start" action in the Keil Debugger.
@@ -147,7 +147,7 @@ typedef struct JTEST_FW_struct
         JTEST_CLEAR_BUFFER(buf_name);           \
         strcpy(JTEST_FW.buf_name, (value));     \
         JTEST_TRIGGER_ACTION(action);           \
-    } while(0)
+    } while (0)
 
 /**
  *  Trigger the "Exit Framework" action in the Keil Debugger.
@@ -156,7 +156,7 @@ typedef struct JTEST_FW_struct
     do                                          \
     {                                           \
         JTEST_TRIGGER_ACTION(exit_fw);          \
-    } while(0)
+    } while (0)
 
 
 /* Buffer Manipulation Macros */
@@ -169,7 +169,7 @@ typedef struct JTEST_FW_struct
     do                                                  \
     {                                                   \
         memset(JTEST_FW.buf_name, 0, JTEST_BUF_SIZE);   \
-    } while(0)
+    } while (0)
 
 /**
  *  Clear the memory needed for the JTEST_FW's string buffer.
@@ -198,7 +198,7 @@ typedef struct JTEST_FW_struct
         JTEST_CLEAR_STR_BUFFER();                                       \
         sprintf(JTEST_FW.str_buffer,format_str, __VA_ARGS__);           \
         jtest_dump_str_segments();                                      \
-    } while(0)
+    } while (0)
 
 /* Pass/Fail Macros */
 /*--------------------------------------------------------------------------------*/
@@ -228,7 +228,7 @@ typedef struct JTEST_FW_struct
     do                                          \
     {                                           \
         JTEST_CURRENT_GROUP_PTR() = group_ptr;  \
-    } while(0)
+    } while (0)
 
 /*--------------------------------------------------------------------------------*/
 /* Declare Global Variables */

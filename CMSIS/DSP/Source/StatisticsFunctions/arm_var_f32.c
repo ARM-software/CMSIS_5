@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        22. December 2016
-* $Revision:    V.1.4.5 a
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_var_f32.c
@@ -84,7 +84,7 @@ void arm_var_f32(
     float32_t * pInput = pSrc;
     float32_t sum = 0.0f;
     float32_t fSum = 0.0f;
-    #if !defined(ARM_MATH_CM0_FAMILY) && !defined(ARM_MATH_CM3_FAMILY)
+    #if defined(ARM_MATH_DSP)
     float32_t in1, in2, in3, in4;
     #endif
 
@@ -94,7 +94,7 @@ void arm_var_f32(
         return;
     }
 
-    #if !defined(ARM_MATH_CM0_FAMILY) && !defined(ARM_MATH_CM3_FAMILY)
+    #if defined(ARM_MATH_DSP)
         /* Run the below code for Cortex-M4 and Cortex-M7 */
 
         /*loop Unrolling */
@@ -145,7 +145,7 @@ void arm_var_f32(
 
     pInput = pSrc;
 
-    #if !defined(ARM_MATH_CM0_FAMILY) && !defined(ARM_MATH_CM3_FAMILY)
+    #if defined(ARM_MATH_DSP)
 
         /*loop Unrolling */
         blkCnt = blockSize >> 2u;

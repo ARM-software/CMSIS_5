@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        26. October 2016
-* $Revision:    V.1.4.5 a
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_mat_mult_fast_q31.c
@@ -96,7 +96,7 @@ arm_status arm_mat_mult_fast_q31(
   arm_status status;                             /* status of matrix multiplication */
   q31_t inA1, inB1;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
   q31_t sum2, sum3, sum4;
   q31_t inA2, inB2;
@@ -108,7 +108,7 @@ arm_status arm_mat_mult_fast_q31(
 #ifdef ARM_MATH_MATRIX_CHECK
 
   /* Check for matrix mismatch condition */
-  if((pSrcA->numCols != pSrcB->numRows) ||
+  if ((pSrcA->numCols != pSrcB->numRows) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -121,14 +121,14 @@ arm_status arm_mat_mult_fast_q31(
 
     px = pDst->pData;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
     row = row >> 1;
     px2 = px + numColsB;
 #endif
 
     /* The following loop performs the dot-product of each row in pSrcA with each column in pSrcB */
     /* row loop */
-    while(row > 0u)
+    while (row > 0u)
     {
 
       /* For every row wise process, the column loop counter is to be initiated */
@@ -140,7 +140,7 @@ arm_status arm_mat_mult_fast_q31(
 
       j = 0u;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
       col = col >> 1;
 #endif
 
@@ -154,7 +154,7 @@ arm_status arm_mat_mult_fast_q31(
         pInA = pSrcA->pData + i;
         pInB  = pSrcB->pData + j;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
         sum2 = 0;
         sum3 = 0;
         sum4 = 0;
@@ -165,10 +165,10 @@ arm_status arm_mat_mult_fast_q31(
 #endif
 
         /* matrix multiplication */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
           inA1 = *pInA++;
           inB1 = pInB[0];
           inA2 = *pInA2++;
@@ -212,7 +212,7 @@ arm_status arm_mat_mult_fast_q31(
 #ifdef ARM_MATH_CM0_FAMILY
         /* If the columns of pSrcA is not a multiple of 4, compute any remaining output samples here. */
         colCnt = numColsA % 0x4u;
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           sum = __SMMLA(*pInA++, *pInB, sum);
           pInB += numColsB;
@@ -224,7 +224,7 @@ arm_status arm_mat_mult_fast_q31(
         /* Convert the result from 2.30 to 1.31 format and store in destination buffer */
         *px++  = sum << 1;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
         *px++  = sum2 << 1;
         *px2++ = sum3 << 1;
         *px2++ = sum4 << 1;
@@ -238,7 +238,7 @@ arm_status arm_mat_mult_fast_q31(
 
       i = i + numColsA;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
       i = i + numColsA;
       px = px2 + (numColsB & 1u);
       px2 = px + numColsB;
@@ -251,7 +251,7 @@ arm_status arm_mat_mult_fast_q31(
 
     /* Compute any remaining odd row/column below */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
     /* Compute remaining output column */
     if (numColsB & 1u) {
@@ -277,7 +277,7 @@ arm_status arm_mat_mult_fast_q31(
         colCnt = numColsA >> 2;
 
         /* matrix multiplication */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           inA1 = *pInA++;
           inA2 = *pInA++;
@@ -302,7 +302,7 @@ arm_status arm_mat_mult_fast_q31(
         }
 
         colCnt = numColsA & 3u;
-        while(colCnt > 0u) {
+        while (colCnt > 0u) {
           sum = __SMMLA(*pInA++, *pInB, sum);
           pInB += numColsB;
           colCnt--;
@@ -341,7 +341,7 @@ arm_status arm_mat_mult_fast_q31(
         colCnt = numColsA >> 2;
 
         /* matrix multiplication */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           inA1 = *pInA++;
           inA2 = *pInA++;
@@ -366,7 +366,7 @@ arm_status arm_mat_mult_fast_q31(
         }
 
         colCnt = numColsA & 3u;
-        while(colCnt > 0u) {
+        while (colCnt > 0u) {
           sum = __SMMLA(*pInA++, *pInB, sum);
           pInB += numColsB;
           colCnt--;
@@ -381,7 +381,7 @@ arm_status arm_mat_mult_fast_q31(
       }
     }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;

@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        22. December 2016
-* $Revision:    V.1.4.5 a
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_sin_cos_f32.c
@@ -57,6 +57,8 @@
  *
  * The floating point function also allows values that are out of the usual range. When this happens, the function will
  * take extra time to adjust the input value to the range of [-180 180].
+ *
+ * The result is accurate to 5 digits after the decimal point.
  *
  * The implementation is based on table lookup using 360 values together with linear interpolation.
  * The steps used are:

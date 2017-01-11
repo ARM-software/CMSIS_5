@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        19. March 2015
-* $Revision:    V.1.4.5
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_std_q31.c
@@ -84,13 +84,13 @@ void arm_std_q31(
   uint32_t blkCnt;                               /* loop counter */
   q63_t sumOfSquares = 0;                        /* Accumulator */
 
-  if(blockSize == 1u)
+  if (blockSize == 1u)
   {
     *pResult = 0;
     return;
   }
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /*loop Unrolling */
@@ -98,7 +98,7 @@ void arm_std_q31(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1])  */
     /* Compute Sum of squares of the input samples
@@ -124,7 +124,7 @@ void arm_std_q31(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute Sum of squares of the input samples
@@ -147,7 +147,7 @@ void arm_std_q31(
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute Sum of squares of the input samples
@@ -167,7 +167,7 @@ void arm_std_q31(
    * and then store the result in a temporary variable, meanOfSquares. */
   meanOfSquares = sumOfSquares / (q63_t)(blockSize - 1u);
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 
   /* Compute square of mean */
   squareOfMean = sum * sum / (q63_t)(blockSize * (blockSize - 1u));

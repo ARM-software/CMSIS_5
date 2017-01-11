@@ -26,7 +26,7 @@
         TEST_ASSERT_EQUAL(                          \
             statistics_idx_fut,                     \
             statistics_idx_ref);                    \
-    } while(0)                                      \
+    } while (0)                                      \
 
 /*
  * Comparison SNR thresholds for the data types used in statistics_tests.
@@ -54,7 +54,7 @@
             output_type,                                \
             STATISTICS_SNR_THRESHOLD_##output_type      \
             );                                          \
-    } while(0)
+    } while (0)
 
 
 

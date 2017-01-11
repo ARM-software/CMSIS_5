@@ -1,24 +1,24 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015
-* $Revision: 	V.1.4.5
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_fir_sparse_q31.c    
-*    
-* Description:	Q31 sparse FIR filter processing function.   
-*    
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+*
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_fir_sparse_q31.c
+*
+* Description:  Q31 sparse FIR filter processing function.
+*
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*  
-* Redistribution and use in source and binary forms, with or without 
+*
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -27,7 +27,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -35,32 +35,32 @@
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.    
+* POSSIBILITY OF SUCH DAMAGE.
 * ------------------------------------------------------------------- */
 #include "arm_math.h"
 
 
-/**    
- * @addtogroup FIR_Sparse    
- * @{    
+/**
+ * @addtogroup FIR_Sparse
+ * @{
  */
 
-/**   
- * @brief Processing function for the Q31 sparse FIR filter.   
- * @param[in]  *S          points to an instance of the Q31 sparse FIR structure.   
- * @param[in]  *pSrc       points to the block of input data.   
- * @param[out] *pDst       points to the block of output data   
- * @param[in]  *pScratchIn points to a temporary buffer of size blockSize.   
- * @param[in]  blockSize   number of input samples to process per call.   
- * @return none.   
- *    
- * <b>Scaling and Overflow Behavior:</b>    
- * \par    
- * The function is implemented using an internal 32-bit accumulator.   
- * The 1.31 x 1.31 multiplications are truncated to 2.30 format.   
- * This leads to loss of precision on the intermediate multiplications and provides only a single guard bit.    
- * If the accumulator result overflows, it wraps around rather than saturate.   
- * In order to avoid overflows the input signal or coefficients must be scaled down by log2(numTaps) bits.   
+/**
+ * @brief Processing function for the Q31 sparse FIR filter.
+ * @param[in]  *S          points to an instance of the Q31 sparse FIR structure.
+ * @param[in]  *pSrc       points to the block of input data.
+ * @param[out] *pDst       points to the block of output data
+ * @param[in]  *pScratchIn points to a temporary buffer of size blockSize.
+ * @param[in]  blockSize   number of input samples to process per call.
+ * @return none.
+ *
+ * <b>Scaling and Overflow Behavior:</b>
+ * \par
+ * The function is implemented using an internal 32-bit accumulator.
+ * The 1.31 x 1.31 multiplications are truncated to 2.30 format.
+ * This leads to loss of precision on the intermediate multiplications and provides only a single guard bit.
+ * If the accumulator result overflows, it wraps around rather than saturate.
+ * In order to avoid overflows the input signal or coefficients must be scaled down by log2(numTaps) bits.
  */
 
 void arm_fir_sparse_q31(
@@ -96,7 +96,7 @@ void arm_fir_sparse_q31(
   readIndex = (int32_t) (S->stateIndex - blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -116,15 +116,15 @@ void arm_fir_sparse_q31(
   pOut = pDst;
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  /* Loop over the blockSize. Unroll by a factor of 4.    
+  /* Loop over the blockSize. Unroll by a factor of 4.
    * Compute 4 Multiplications at a time. */
   blkCnt = blockSize >> 2;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform Multiplications and store in the destination buffer */
     *pOut++ = (q31_t) (((q63_t) * px++ * coeff) >> 32);
@@ -136,11 +136,11 @@ void arm_fir_sparse_q31(
     blkCnt--;
   }
 
-  /* If the blockSize is not a multiple of 4,    
+  /* If the blockSize is not a multiple of 4,
    * compute the remaining samples */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform Multiplications and store in the destination buffer */
     *pOut++ = (q31_t) (((q63_t) * px++ * coeff) >> 32);
@@ -149,7 +149,7 @@ void arm_fir_sparse_q31(
     blkCnt--;
   }
 
-  /* Load the coefficient value and    
+  /* Load the coefficient value and
    * increment the coefficient buffer for the next set of state values */
   coeff = *pCoeffs++;
 
@@ -157,7 +157,7 @@ void arm_fir_sparse_q31(
   readIndex = (int32_t) (S->stateIndex - blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -165,7 +165,7 @@ void arm_fir_sparse_q31(
   /* Loop over the number of taps. */
   tapCnt = (uint32_t) numTaps - 2u;
 
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     /* Working pointer for state buffer is updated */
     py = pState;
@@ -181,11 +181,11 @@ void arm_fir_sparse_q31(
     /* Working pointer for scratch buffer of output values */
     pOut = pDst;
 
-    /* Loop over the blockSize. Unroll by a factor of 4.    
+    /* Loop over the blockSize. Unroll by a factor of 4.
      * Compute 4 MACS at a time. */
     blkCnt = blockSize >> 2;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       out = *pOut;
       out += ((q63_t) * px++ * coeff) >> 32;
@@ -207,11 +207,11 @@ void arm_fir_sparse_q31(
       blkCnt--;
     }
 
-    /* If the blockSize is not a multiple of 4,    
+    /* If the blockSize is not a multiple of 4,
      * compute the remaining samples */
     blkCnt = blockSize % 0x4u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Perform Multiply-Accumulate */
       out = *pOut;
@@ -222,7 +222,7 @@ void arm_fir_sparse_q31(
       blkCnt--;
     }
 
-    /* Load the coefficient value and    
+    /* Load the coefficient value and
      * increment the coefficient buffer for the next set of state values */
     coeff = *pCoeffs++;
 
@@ -230,7 +230,7 @@ void arm_fir_sparse_q31(
     readIndex = (int32_t) (S->stateIndex - blockSize) - *pTapDelay++;
 
     /* Wraparound of readIndex */
-    if(readIndex < 0)
+    if (readIndex < 0)
     {
       readIndex += (int32_t) delaySize;
     }
@@ -238,9 +238,9 @@ void arm_fir_sparse_q31(
     /* Decrement the tap loop counter */
     tapCnt--;
   }
-	
+
 	/* Compute last tap without the final read of pTapDelay */
-	
+
 	/* Working pointer for state buffer is updated */
 	py = pState;
 
@@ -255,11 +255,11 @@ void arm_fir_sparse_q31(
 	/* Working pointer for scratch buffer of output values */
 	pOut = pDst;
 
-	/* Loop over the blockSize. Unroll by a factor of 4.    
+	/* Loop over the blockSize. Unroll by a factor of 4.
 	 * Compute 4 MACS at a time. */
 	blkCnt = blockSize >> 2;
 
-	while(blkCnt > 0u)
+	while (blkCnt > 0u)
 	{
 		out = *pOut;
 		out += ((q63_t) * px++ * coeff) >> 32;
@@ -281,11 +281,11 @@ void arm_fir_sparse_q31(
 		blkCnt--;
 	}
 
-	/* If the blockSize is not a multiple of 4,    
+	/* If the blockSize is not a multiple of 4,
 	 * compute the remaining samples */
 	blkCnt = blockSize % 0x4u;
 
-	while(blkCnt > 0u)
+	while (blkCnt > 0u)
 	{
 		/* Perform Multiply-Accumulate */
 		out = *pOut;
@@ -294,17 +294,17 @@ void arm_fir_sparse_q31(
 
 		/* Decrement the loop counter */
 		blkCnt--;
-	}	
+	}
 
   /* Working output pointer is updated */
   pOut = pDst;
 
   /* Output is converted into 1.31 format. */
-  /* Loop over the blockSize. Unroll by a factor of 4.    
+  /* Loop over the blockSize. Unroll by a factor of 4.
    * process 4 output samples at a time. */
   blkCnt = blockSize >> 2;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     in = *pOut << 1;
     *pOut++ = in;
@@ -319,11 +319,11 @@ void arm_fir_sparse_q31(
     blkCnt--;
   }
 
-  /* If the blockSize is not a multiple of 4,    
+  /* If the blockSize is not a multiple of 4,
    * process the remaining output samples */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     in = *pOut << 1;
     *pOut++ = in;
@@ -337,7 +337,7 @@ void arm_fir_sparse_q31(
   /* Run the below code for Cortex-M0 */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform Multiplications and store in the destination buffer */
     *pOut++ = (q31_t) (((q63_t) * px++ * coeff) >> 32);
@@ -346,7 +346,7 @@ void arm_fir_sparse_q31(
     blkCnt--;
   }
 
-  /* Load the coefficient value and           
+  /* Load the coefficient value and
    * increment the coefficient buffer for the next set of state values */
   coeff = *pCoeffs++;
 
@@ -354,7 +354,7 @@ void arm_fir_sparse_q31(
   readIndex = (int32_t) (S->stateIndex - blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -362,7 +362,7 @@ void arm_fir_sparse_q31(
   /* Loop over the number of taps. */
   tapCnt = (uint32_t) numTaps - 2u;
 
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     /* Working pointer for state buffer is updated */
     py = pState;
@@ -380,7 +380,7 @@ void arm_fir_sparse_q31(
 
     blkCnt = blockSize;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Perform Multiply-Accumulate */
       out = *pOut;
@@ -391,7 +391,7 @@ void arm_fir_sparse_q31(
       blkCnt--;
     }
 
-    /* Load the coefficient value and           
+    /* Load the coefficient value and
      * increment the coefficient buffer for the next set of state values */
     coeff = *pCoeffs++;
 
@@ -399,7 +399,7 @@ void arm_fir_sparse_q31(
     readIndex = (int32_t) (S->stateIndex - blockSize) - *pTapDelay++;
 
     /* Wraparound of readIndex */
-    if(readIndex < 0)
+    if (readIndex < 0)
     {
       readIndex += (int32_t) delaySize;
     }
@@ -407,9 +407,9 @@ void arm_fir_sparse_q31(
     /* Decrement the tap loop counter */
     tapCnt--;
   }
-	
-	/* Compute last tap without the final read of pTapDelay */	
-	
+
+	/* Compute last tap without the final read of pTapDelay */
+
 	/* Working pointer for state buffer is updated */
 	py = pState;
 
@@ -426,7 +426,7 @@ void arm_fir_sparse_q31(
 
 	blkCnt = blockSize;
 
-	while(blkCnt > 0u)
+	while (blkCnt > 0u)
 	{
 		/* Perform Multiply-Accumulate */
 		out = *pOut;
@@ -443,7 +443,7 @@ void arm_fir_sparse_q31(
   /* Output is converted into 1.31 format. */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     in = *pOut << 1;
     *pOut++ = in;
@@ -452,10 +452,10 @@ void arm_fir_sparse_q31(
     blkCnt--;
   }
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*   #if defined (ARM_MATH_DSP) */
 
 }
 
-/**    
- * @} end of FIR_Sparse group    
+/**
+ * @} end of FIR_Sparse group
  */

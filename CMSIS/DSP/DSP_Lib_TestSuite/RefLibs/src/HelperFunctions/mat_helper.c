@@ -54,7 +54,7 @@ void ref_cofact(float32_t *pSrc, float32_t *pDst, float32_t *temp, uint32_t size
 {
    int p, q, m, n, i, j;
 	
-	 if(size == 1)
+	 if (size == 1)
 	 {
 		 pDst[0] = 1;
 		 return;
@@ -151,7 +151,7 @@ void ref_cofact64(float64_t *pSrc, float64_t *pDst, float64_t *temp, uint32_t si
 {
    int p, q, m, n, i, j;
 	
-	 if(size == 1)
+	 if (size == 1)
 	 {
 		 pDst[0] = 1;
 		 return;

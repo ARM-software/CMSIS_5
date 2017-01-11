@@ -8,6 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.1-dev5">
+      DSP:
+       - updated to version V1.5.0.
+    </release>
     <release version="5.0.1-dev4">
       DSP:
        - preparation for ARMv8M DSP libraries.
@@ -2079,7 +2083,7 @@ ARMv8-M Mainline based device with TrustZone
 
 
     <!-- CMSIS-DSP component -->
-    <component Cclass="CMSIS" Cgroup="DSP" Cversion="1.4.6" condition="CMSIS DSP">
+    <component Cclass="CMSIS" Cgroup="DSP" Cversion="1.5.0" condition="CMSIS DSP">
       <description>CMSIS-DSP Library for Cortex-M, SC000, and SC300</description>
       <files>
         <!-- CPU independent -->

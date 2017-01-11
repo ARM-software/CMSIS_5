@@ -31,7 +31,7 @@ void ref_biquad_cascade_df2T_f32(
 
       sample = blockSize;
 
-      while(sample > 0u)
+      while (sample > 0u)
       {
          /* Read the input */
          Xn = *pIn++;
@@ -66,7 +66,7 @@ void ref_biquad_cascade_df2T_f32(
       /* decrement the loop counter */
       stage--;
 
-   } while(stage > 0u);
+   } while (stage > 0u);
 }
 
 
@@ -103,7 +103,7 @@ void ref_biquad_cascade_stereo_df2T_f32(
 
         sample = blockSize;
 
-        while(sample > 0u)
+        while (sample > 0u)
         {
             /* Read the input */
             Xn1a = *pIn++; //Channel a
@@ -145,7 +145,7 @@ void ref_biquad_cascade_stereo_df2T_f32(
         /* decrement the loop counter */
         stage--;
 
-    } while(stage > 0u);
+    } while (stage > 0u);
 	
 }
 
@@ -180,7 +180,7 @@ void ref_biquad_cascade_df2T_f64(
 
       sample = blockSize;
 
-      while(sample > 0u)
+      while (sample > 0u)
       {
          /* Read the input */
          Xn = *pIn++;
@@ -215,7 +215,7 @@ void ref_biquad_cascade_df2T_f64(
       /* decrement the loop counter */
       stage--;
 
-   } while(stage > 0u);
+   } while (stage > 0u);
 }
 
 void ref_biquad_cascade_df1_f32(
@@ -255,7 +255,7 @@ void ref_biquad_cascade_df1_f32(
 
     sample = blockSize;
 
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -297,7 +297,7 @@ void ref_biquad_cascade_df1_f32(
     /* decrement the loop counter */
     stage--;
 
-  } while(stage > 0u);
+  } while (stage > 0u);
 }
 
 void ref_biquad_cas_df1_32x64_q31(
@@ -338,7 +338,7 @@ void ref_biquad_cas_df1_32x64_q31(
 
     sample = blockSize;
 
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -386,7 +386,7 @@ void ref_biquad_cas_df1_32x64_q31(
     *pState++ = Yn1;
     *pState++ = Yn2;
 
-  } while(--stage);
+  } while (--stage);
 }
 
 void ref_biquad_cascade_df1_q31(
@@ -428,7 +428,7 @@ void ref_biquad_cascade_df1_q31(
 
     sample = blockSize;
 
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -480,7 +480,7 @@ void ref_biquad_cascade_df1_q31(
     *pState++ = Yn1;
     *pState++ = Yn2;
 
-  } while(--stage);
+  } while (--stage);
 }
 
 
@@ -518,7 +518,7 @@ void ref_biquad_cascade_df1_fast_q31(
 		
     sample = blockSize;
 
-   while(sample > 0u)
+   while (sample > 0u)
    {
       /* Read the input */
       Xn = *pIn++;
@@ -559,7 +559,7 @@ void ref_biquad_cascade_df1_fast_q31(
     *pState++ = Yn1;
     *pState++ = Yn2;
 
-  } while(--stage);
+  } while (--stage);
 }
 
 void ref_biquad_cascade_df1_fast_q15(
@@ -597,7 +597,7 @@ void ref_biquad_cascade_df1_fast_q15(
 
     sample = blockSize;
 
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -634,7 +634,7 @@ void ref_biquad_cascade_df1_fast_q15(
     *pState++ = Yn1;
     *pState++ = Yn2;
 
-  } while(--stage);
+  } while (--stage);
 }
 
 void ref_biquad_cascade_df1_q15(
@@ -672,7 +672,7 @@ void ref_biquad_cascade_df1_q15(
 
     sample = blockSize;
 
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -709,5 +709,5 @@ void ref_biquad_cascade_df1_q15(
     *pState++ = Yn1;
     *pState++ = Yn2;
 
-  } while(--stage);
+  } while (--stage);
 }

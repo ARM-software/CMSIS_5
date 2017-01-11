@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        07. September 2015
-* $Revision:    V.1.4.5 a
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_cos_q15.c
@@ -69,7 +69,7 @@ q15_t arm_cos_q15(
 
   /* add 0.25 (pi/2) to read sine table */
   x = (uint16_t)x + 0x2000;
-  if(x < 0)
+  if (x < 0)
   {   /* convert negative numbers to corresponding positive ones */
       x = (uint16_t)x + 0x8000;
   }

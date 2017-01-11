@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        19. March 2015
-* $Revision:    V.1.4.5 a
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_cfft_radix4_f32.c
@@ -47,8 +47,64 @@ uint16_t fftSize,
 uint16_t bitRevFactor,
 uint16_t * pBitRevTab);
 
+void arm_radix4_butterfly_f32(
+float32_t * pSrc,
+uint16_t fftLen,
+float32_t * pCoef,
+uint16_t twidCoefModifier);
+
+void arm_radix4_butterfly_inverse_f32(
+float32_t * pSrc,
+uint16_t fftLen,
+float32_t * pCoef,
+uint16_t twidCoefModifier,
+float32_t onebyfftLen);
+
+
 /**
 * @ingroup groupTransforms
+*/
+
+/**
+* @addtogroup ComplexFFT
+* @{
+*/
+
+/**
+* @details
+* @brief Processing function for the floating-point Radix-4 CFFT/CIFFT.
+* @deprecated Do not use this function.  It has been superseded by \ref arm_cfft_f32 and will be removed
+* in the future.
+* @param[in]      *S    points to an instance of the floating-point Radix-4 CFFT/CIFFT structure.
+* @param[in, out] *pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place.
+* @return none.
+*/
+
+void arm_cfft_radix4_f32(
+  const arm_cfft_radix4_instance_f32 * S,
+  float32_t * pSrc)
+{
+   if (S->ifftFlag == 1u)
+   {
+      /*  Complex IFFT radix-4  */
+      arm_radix4_butterfly_inverse_f32(pSrc, S->fftLen, S->pTwiddle, S->twidCoefModifier, S->onebyfftLen);
+   }
+   else
+   {
+      /*  Complex FFT radix-4  */
+      arm_radix4_butterfly_f32(pSrc, S->fftLen, S->pTwiddle, S->twidCoefModifier);
+   }
+
+   if (S->bitReverseFlag == 1u)
+   {
+      /*  Bit Reversal */
+      arm_bitreversal_f32(pSrc, S->fftLen, S->bitRevFactor, S->pBitRevTable);
+   }
+
+}
+
+/**
+* @} end of ComplexFFT group
 */
 
 /* ----------------------------------------------------------------------
@@ -76,7 +132,7 @@ uint16_t twidCoefModifier)
    uint32_t i0, i1, i2, i3;
    uint32_t n1, n2, j, k;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
    /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -228,7 +284,7 @@ uint16_t twidCoefModifier)
       i0++;
 
    }
-   while(--j);
+   while (--j);
 
    twidCoefModifier <<= 2u;
 
@@ -364,9 +420,9 @@ uint16_t twidCoefModifier)
             pSrc[(2u * i3) + 1u] = Yd12_out;
 
             i0 += n1;
-         } while(i0 < fftLen);
+         } while (i0 < fftLen);
          j++;
-      } while(j <= (n2 - 1u));
+      } while (j <= (n2 - 1u));
       twidCoefModifier <<= 2u;
    }
 
@@ -437,7 +493,7 @@ uint16_t twidCoefModifier)
 
       /* increment pointer by 8 */
       ptr1 += 8u;
-   } while(--j);
+   } while (--j);
 
 #else
 
@@ -548,13 +604,13 @@ uint16_t twidCoefModifier)
             pSrc[(2u * i3) + 1u] = (s2 * co3) - (r2 * si3);
 
             i0 += n1;
-         } while( i0 < fftLen);
+         } while ( i0 < fftLen);
          j++;
-      } while(j <= (n2 - 1u));
+      } while (j <= (n2 - 1u));
       twidCoefModifier <<= 2u;
    }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 
 }
 
@@ -580,7 +636,7 @@ float32_t onebyfftLen)
    uint32_t i0, i1, i2, i3;
    uint32_t n1, n2, j, k;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
    float32_t xaIn, yaIn, xbIn, ybIn, xcIn, ycIn, xdIn, ydIn;
    float32_t Xaplusc, Xbplusd, Yaplusc, Ybplusd, Xaminusc, Xbminusd, Yaminusc,
@@ -732,7 +788,7 @@ float32_t onebyfftLen)
       /*  Updating input index */
       i0 = i0 + 1u;
 
-   } while(--j);
+   } while (--j);
 
    twidCoefModifier <<= 2u;
 
@@ -868,9 +924,9 @@ float32_t onebyfftLen)
             pSrc[(2u * i3) + 1u] = Yd12_out;
 
             i0 += n1;
-         } while(i0 < fftLen);
+         } while (i0 < fftLen);
          j++;
-      } while(j <= (n2 - 1u));
+      } while (j <= (n2 - 1u));
       twidCoefModifier <<= 2u;
    }
    /*  Initializations of last stage */
@@ -961,7 +1017,7 @@ float32_t onebyfftLen)
       /* increment source pointer by 8 for next calculations */
       ptr1 = ptr1 + 8u;
 
-   } while(--j);
+   } while (--j);
 
 #else
 
@@ -1074,9 +1130,9 @@ float32_t onebyfftLen)
             pSrc[(2u * i3) + 1u] = (s2 * co3) + (r2 * si3);
 
             i0 += n1;
-         } while( i0 < fftLen);
+         } while ( i0 < fftLen);
          j++;
-      } while(j <= (n2 - 1u));
+      } while (j <= (n2 - 1u));
       twidCoefModifier <<= 2u;
    }
    /*  Initializations of last stage */
@@ -1160,51 +1216,7 @@ float32_t onebyfftLen)
       pSrc[(2u * i3) + 1u] = s2 * onebyfftLen;
    }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 }
 
-/**
-* @addtogroup ComplexFFT
-* @{
-*/
-
-/**
-* @details
-* @brief Processing function for the floating-point Radix-4 CFFT/CIFFT.
-* @deprecated Do not use this function.  It has been superseded by \ref arm_cfft_f32 and will be removed
-* in the future.
-* @param[in]      *S    points to an instance of the floating-point Radix-4 CFFT/CIFFT structure.
-* @param[in, out] *pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place.
-* @return none.
-*/
-
-void arm_cfft_radix4_f32(
-const arm_cfft_radix4_instance_f32 * S,
-float32_t * pSrc)
-{
-
-   if(S->ifftFlag == 1u)
-   {
-      /*  Complex IFFT radix-4  */
-      arm_radix4_butterfly_inverse_f32(pSrc, S->fftLen, S->pTwiddle,
-      S->twidCoefModifier, S->onebyfftLen);
-   }
-   else
-   {
-      /*  Complex FFT radix-4  */
-      arm_radix4_butterfly_f32(pSrc, S->fftLen, S->pTwiddle,
-      S->twidCoefModifier);
-   }
-
-   if(S->bitReverseFlag == 1u)
-   {
-      /*  Bit Reversal */
-      arm_bitreversal_f32(pSrc, S->fftLen, S->bitRevFactor, S->pBitRevTable);
-   }
-
-}
-
-/**
-* @} end of ComplexFFT group
-*/
 

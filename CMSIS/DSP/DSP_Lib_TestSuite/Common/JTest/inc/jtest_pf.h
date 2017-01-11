@@ -38,7 +38,7 @@
     do                                                  \
     {                                                   \
         ((struct_pf_ptr)->xxx) += (amount);             \
-    } while(0)
+    } while (0)
 
 /**
  *  Specialization of the #JTEST_PF_INC_XXX macro to increment the passed
@@ -68,7 +68,7 @@
     do                                          \
     {                                           \
         ((struct_pf_ptr)->xxx) = UINT32_C(0);   \
-    } while(0)
+    } while (0)
 
 /**
  *  Specialization of #JTEST_PF_RESET_XXX for the 'passed' member.

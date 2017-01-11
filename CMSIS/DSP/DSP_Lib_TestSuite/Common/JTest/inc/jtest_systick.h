@@ -101,7 +101,7 @@
                                                             \
         /* Disable the SysTick module. */                   \
         (systick_ptr)->CTRL = UINT32_C(0x000000);           \
-    } while(0)
+    } while (0)
 
 /**
  *  Start the SysTick timer, sourced by the processor clock.
@@ -112,7 +112,7 @@
         (systick_ptr)->CTRL =                               \
             SysTick_CTRL_ENABLE_Msk |                       \
             SysTick_CTRL_CLKSOURCE_Msk; /* Internal clk*/   \
-    } while(0)
+    } while (0)
 
 /**
  *  Evaluate to the current value of the SysTick timer.

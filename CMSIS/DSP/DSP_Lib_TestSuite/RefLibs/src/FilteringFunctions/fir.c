@@ -17,7 +17,7 @@ void ref_fir_f32(
    /* pStateCurnt points to the location where the new input data should be written */
    pStateCurnt = &(S->pState[(numTaps - 1u)]);
 
-   while(blockSize > 0u)
+   while (blockSize > 0u)
    {
       /* Copy one sample at a time into state buffer */
       *pStateCurnt++ = *pSrc++;
@@ -71,7 +71,7 @@ void ref_fir_q31(
    /* pStateCurnt points to the location where the new input data should be written */
    pStateCurnt = &(S->pState[(numTaps - 1u)]);
 
-   while(blockSize > 0u)
+   while (blockSize > 0u)
    {
       /* Copy one sample at a time into state buffer */
       *pStateCurnt++ = *pSrc++;
@@ -125,7 +125,7 @@ void ref_fir_fast_q31(
    /* pStateCurnt points to the location where the new input data should be written */
    pStateCurnt = &(S->pState[(numTaps - 1u)]);
 
-   while(blockSize > 0u)
+   while (blockSize > 0u)
    {
       /* Copy one sample at a time into state buffer */
       *pStateCurnt++ = *pSrc++;
@@ -179,7 +179,7 @@ void ref_fir_q15(
    /* pStateCurnt points to the location where the new input data should be written */
    pStateCurnt = &(S->pState[(numTaps - 1u)]);
 
-   while(blockSize > 0u)
+   while (blockSize > 0u)
    {
       /* Copy one sample at a time into state buffer */
       *pStateCurnt++ = *pSrc++;
@@ -233,7 +233,7 @@ void ref_fir_fast_q15(
    /* pStateCurnt points to the location where the new input data should be written */
    pStateCurnt = &(S->pState[(numTaps - 1u)]);
 
-   while(blockSize > 0u)
+   while (blockSize > 0u)
    {
       /* Copy one sample at a time into state buffer */
       *pStateCurnt++ = *pSrc++;
@@ -287,7 +287,7 @@ void ref_fir_q7(
    /* pStateCurnt points to the location where the new input data should be written */
    pStateCurnt = &(S->pState[(numTaps - 1u)]);
 
-   while(blockSize > 0u)
+   while (blockSize > 0u)
    {
       /* Copy one sample at a time into state buffer */
       *pStateCurnt++ = *pSrc++;

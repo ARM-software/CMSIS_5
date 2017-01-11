@@ -28,7 +28,7 @@
     do                                                                  \
     {                                                                   \
         COMPLEX_MATH_COMPARE_RE_INTERFACE(block_size * 2, output_type); \
-    } while(0)
+    } while (0)
 
 
 /*
@@ -65,7 +65,7 @@
             output_type,                                        \
             COMPLEX_MATH_SNR_THRESHOLD_##output_type            \
             );                                                  \
-    } while(0)
+    } while (0)
 
 /**
  *  Specification of #COMPLEX_MATH_SNR_COMPARE_INTERFACE() for real outputs.
@@ -101,7 +101,7 @@
             COMPLEX_MATH_SNR_COMPARE_OUT_INTERFACE(block_size,  \
                                                    output_type, \
                                                    b);          \
-        } while(0)
+        } while (0)
 
 
 /*--------------------------------------------------------------------------------*/

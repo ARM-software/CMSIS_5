@@ -1,24 +1,24 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015
-* $Revision: 	V.1.4.5
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_mat_add_q31.c    
-*    
-* Description:	Q31 matrix addition    
-*    
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+*
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_mat_add_q31.c
+*
+* Description:  Q31 matrix addition
+*
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*  
-* Redistribution and use in source and binary forms, with or without 
+*
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -27,7 +27,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -35,32 +35,32 @@
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.     
+* POSSIBILITY OF SUCH DAMAGE.
 * -------------------------------------------------------------------- */
 
 #include "arm_math.h"
 
-/**      
- * @ingroup groupMatrix      
+/**
+ * @ingroup groupMatrix
  */
 
-/**      
- * @addtogroup MatrixAdd      
- * @{      
+/**
+ * @addtogroup MatrixAdd
+ * @{
  */
 
-/**      
- * @brief Q31 matrix addition.      
- * @param[in]       *pSrcA points to the first input matrix structure      
- * @param[in]       *pSrcB points to the second input matrix structure      
- * @param[out]      *pDst points to output matrix structure      
- * @return     		The function returns either      
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.      
- *      
- * <b>Scaling and Overflow Behavior:</b>      
- * \par      
- * The function uses saturating arithmetic.      
- * Results outside of the allowable Q31 range [0x80000000 0x7FFFFFFF] will be saturated.      
+/**
+ * @brief Q31 matrix addition.
+ * @param[in]       *pSrcA points to the first input matrix structure
+ * @param[in]       *pSrcB points to the second input matrix structure
+ * @param[out]      *pDst points to output matrix structure
+ * @return     		The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ *
+ * <b>Scaling and Overflow Behavior:</b>
+ * \par
+ * The function uses saturating arithmetic.
+ * Results outside of the allowable Q31 range [0x80000000 0x7FFFFFFF] will be saturated.
  */
 
 arm_status arm_mat_add_q31(
@@ -73,12 +73,12 @@ arm_status arm_mat_add_q31(
   q31_t *pOut = pDst->pData;                     /* output data matrix pointer */
   q31_t inA1, inB1;                              /* temporary variables */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
   q31_t inA2, inB2;                              /* temporary variables */
   q31_t out1, out2;                              /* temporary variables */
 
-#endif //      #ifndef ARM_MATH_CM0_FAMILY
+#endif //      #if defined (ARM_MATH_DSP)
 
   uint32_t numSamples;                           /* total number of elements in the matrix  */
   uint32_t blkCnt;                               /* loop counters */
@@ -86,7 +86,7 @@ arm_status arm_mat_add_q31(
 
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch condition */
-  if((pSrcA->numRows != pSrcB->numRows) ||
+  if ((pSrcA->numRows != pSrcB->numRows) ||
      (pSrcA->numCols != pSrcB->numCols) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcA->numCols != pDst->numCols))
   {
@@ -99,7 +99,7 @@ arm_status arm_mat_add_q31(
     /* Total number of samples in the input matrix */
     numSamples = (uint32_t) pSrcA->numRows * pSrcA->numCols;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
     /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -107,9 +107,9 @@ arm_status arm_mat_add_q31(
     blkCnt = numSamples >> 2u;
 
 
-    /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+    /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) + B(m,n) */
       /* Add, saturate and then store the results in the destination buffer. */
@@ -164,7 +164,7 @@ arm_status arm_mat_add_q31(
       blkCnt--;
     }
 
-    /* If the numSamples is not a multiple of 4, compute any remaining output samples here.      
+    /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
     blkCnt = numSamples % 0x4u;
 
@@ -176,9 +176,9 @@ arm_status arm_mat_add_q31(
     blkCnt = numSamples;
 
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) + B(m,n) */
       /* Add, saturate and then store the results in the destination buffer. */
@@ -202,6 +202,6 @@ arm_status arm_mat_add_q31(
   return (status);
 }
 
-/**      
- * @} end of MatrixAdd group      
+/**
+ * @} end of MatrixAdd group
  */

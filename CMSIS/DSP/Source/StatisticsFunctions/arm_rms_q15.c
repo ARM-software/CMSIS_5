@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        19. March 2015
-* $Revision:    V.1.4.5
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_rms_q15.c
@@ -74,7 +74,7 @@ void arm_rms_q15(
 {
   q63_t sum = 0;                                 /* accumulator */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   q31_t in;                                      /* temporary variable to store the input value */
@@ -86,7 +86,7 @@ void arm_rms_q15(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute sum of the squares and then store the results in a temporary variable, sum */
@@ -103,7 +103,7 @@ void arm_rms_q15(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute sum of the squares and then store the results in a temporary variable, sum */
@@ -127,7 +127,7 @@ void arm_rms_q15(
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute sum of the squares and then store the results in a temporary variable, sum */
@@ -142,7 +142,7 @@ void arm_rms_q15(
   /* Store the result in the destination */
   arm_sqrt_q15(__SSAT((sum / (q63_t)blockSize) >> 15, 16), pResult);
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 
 }
 

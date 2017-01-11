@@ -73,7 +73,7 @@ float arm_snr_f32(float *pRef, float *pTest, uint32_t buffSize)
 	  test =   (int *)(&pRef[i]);
       temp =  *test;
 
-	  if(temp == 0x7FC00000)
+	  if (temp == 0x7FC00000)
 	  {
 	  		return(0);
 	  }
@@ -82,7 +82,7 @@ float arm_snr_f32(float *pRef, float *pTest, uint32_t buffSize)
 	  test =   (int *)(&pTest[i]);
       temp =  *test;
 
-	  if(temp == 0x7FC00000)
+	  if (temp == 0x7FC00000)
 	  {
 	  		return(0);
 	  }
@@ -94,7 +94,7 @@ float arm_snr_f32(float *pRef, float *pTest, uint32_t buffSize)
 	test =   (int *)(&EnergyError);
     temp =  *test;
 
-    if(temp == 0x7FC00000)
+    if (temp == 0x7FC00000)
     {
   		return(0);
     }
@@ -174,7 +174,7 @@ uint32_t arm_compare_fixed_q15(q15_t *pIn, q15_t *pOut, uint32_t numSamples)
   	diff = pIn[i] - pOut[i];
   	diffCrnt = (diff > 0) ? diff : -diff;
 
-	if(diffCrnt > maxDiff)
+	if (diffCrnt > maxDiff)
 	{
 		maxDiff = diffCrnt;
 	}
@@ -202,7 +202,7 @@ uint32_t arm_compare_fixed_q31(q31_t *pIn, q31_t * pOut, uint32_t numSamples)
   	diff = pIn[i] - pOut[i];
   	diffCrnt = (diff > 0) ? diff : -diff;
 
-	if(diffCrnt > maxDiff)
+	if (diffCrnt > maxDiff)
 	{
 		maxDiff = diffCrnt;
 	}
@@ -449,11 +449,11 @@ void arm_clip_f32 (float *pIn, uint32_t numSamples)
 
   for (i = 0; i < numSamples; i++)
     {
-      if(pIn[i] > 1.0f)
+      if (pIn[i] > 1.0f)
 	  {
 	    pIn[i] = 1.0;
 	  }
-	  else if( pIn[i] < -1.0f)
+	  else if ( pIn[i] < -1.0f)
 	  {
 	    pIn[i] = -1.0;
 	  }

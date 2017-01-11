@@ -8,7 +8,7 @@ void ref_shift_q31(
 {
 	uint32_t i;
 	
-	if(shiftBits < 0)
+	if (shiftBits < 0)
 	{
 		for(i=0;i<blockSize;i++)
 		{
@@ -32,7 +32,7 @@ void ref_shift_q15(
 {
 	uint32_t i;
 	
-	if(shiftBits < 0)
+	if (shiftBits < 0)
 	{
 		for(i=0;i<blockSize;i++)
 		{
@@ -56,7 +56,7 @@ void ref_shift_q7(
 {
 	uint32_t i;
 	
-	if(shiftBits < 0)
+	if (shiftBits < 0)
 	{
 		for(i=0;i<blockSize;i++)
 		{

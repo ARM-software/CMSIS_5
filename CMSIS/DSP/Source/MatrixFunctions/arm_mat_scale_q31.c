@@ -1,24 +1,24 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015
-* $Revision: 	V.1.4.5
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_mat_scale_q31.c    
-*    
-* Description:	Multiplies a Q31 matrix by a scalar.    
-*    
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+*
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_mat_scale_q31.c
+*
+* Description:  Multiplies a Q31 matrix by a scalar.
+*
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*  
-* Redistribution and use in source and binary forms, with or without 
+*
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -27,7 +27,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -39,29 +39,29 @@
 
 #include "arm_math.h"
 
-/**        
- * @ingroup groupMatrix        
+/**
+ * @ingroup groupMatrix
  */
 
-/**        
- * @addtogroup MatrixScale        
- * @{        
+/**
+ * @addtogroup MatrixScale
+ * @{
  */
 
-/**        
- * @brief Q31 matrix scaling.        
- * @param[in]       *pSrc points to input matrix        
- * @param[in]       scaleFract fractional portion of the scale factor        
- * @param[in]       shift number of bits to shift the result by        
- * @param[out]      *pDst points to output matrix structure        
- * @return     		The function returns either        
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.        
- *        
- * @details        
- * <b>Scaling and Overflow Behavior:</b>        
- * \par        
- * The input data <code>*pSrc</code> and <code>scaleFract</code> are in 1.31 format.        
- * These are multiplied to yield a 2.62 intermediate result and this is shifted with saturation to 1.31 format.        
+/**
+ * @brief Q31 matrix scaling.
+ * @param[in]       *pSrc points to input matrix
+ * @param[in]       scaleFract fractional portion of the scale factor
+ * @param[in]       shift number of bits to shift the result by
+ * @param[out]      *pDst points to output matrix structure
+ * @return     		The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ *
+ * @details
+ * <b>Scaling and Overflow Behavior:</b>
+ * \par
+ * The input data <code>*pSrc</code> and <code>scaleFract</code> are in 1.31 format.
+ * These are multiplied to yield a 2.62 intermediate result and this is shifted with saturation to 1.31 format.
  */
 
 arm_status arm_mat_scale_q31(
@@ -78,7 +78,7 @@ arm_status arm_mat_scale_q31(
   arm_status status;                             /* status of matrix scaling      */
   q31_t in1, in2, out1;                          /* temporary variabels */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
   q31_t in3, in4, out2, out3, out4;              /* temporary variables */
 
@@ -86,7 +86,7 @@ arm_status arm_mat_scale_q31(
 
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch  */
-  if((pSrc->numRows != pDst->numRows) || (pSrc->numCols != pDst->numCols))
+  if ((pSrc->numRows != pDst->numRows) || (pSrc->numCols != pDst->numCols))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
     status = ARM_MATH_SIZE_MISMATCH;
@@ -97,16 +97,16 @@ arm_status arm_mat_scale_q31(
     /* Total number of samples in the input matrix */
     numSamples = (uint32_t) pSrc->numRows * pSrc->numCols;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
     /* Run the below code for Cortex-M4 and Cortex-M3 */
 
     /* Loop Unrolling */
     blkCnt = numSamples >> 2u;
 
-    /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+    /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) * k */
       /* Read values from input */
@@ -126,10 +126,10 @@ arm_status arm_mat_scale_q31(
       out2 = in2 << totShift;
 
       /* saturate the results. */
-      if(in1 != (out1 >> totShift))
+      if (in1 != (out1 >> totShift))
         out1 = 0x7FFFFFFF ^ (in1 >> 31);
 
-      if(in2 != (out2 >> totShift))
+      if (in2 != (out2 >> totShift))
         out2 = 0x7FFFFFFF ^ (in2 >> 31);
 
       out3 = in3 << totShift;
@@ -138,10 +138,10 @@ arm_status arm_mat_scale_q31(
       *pOut = out1;
       *(pOut + 1) = out2;
 
-      if(in3 != (out3 >> totShift))
+      if (in3 != (out3 >> totShift))
         out3 = 0x7FFFFFFF ^ (in3 >> 31);
 
-      if(in4 != (out4 >> totShift))
+      if (in4 != (out4 >> totShift))
         out4 = 0x7FFFFFFF ^ (in4 >> 31);
 
 
@@ -157,7 +157,7 @@ arm_status arm_mat_scale_q31(
       blkCnt--;
     }
 
-    /* If the numSamples is not a multiple of 4, compute any remaining output samples here.    
+    /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
     blkCnt = numSamples % 0x4u;
 
@@ -168,9 +168,9 @@ arm_status arm_mat_scale_q31(
     /* Initialize blkCnt with number of samples */
     blkCnt = numSamples;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) * k */
       /* Scale, saturate and then store the results in the destination buffer. */
@@ -180,7 +180,7 @@ arm_status arm_mat_scale_q31(
 
       out1 = in2 << totShift;
 
-      if(in2 != (out1 >> totShift))
+      if (in2 != (out1 >> totShift))
         out1 = 0x7FFFFFFF ^ (in2 >> 31);
 
       *pOut++ = out1;
@@ -197,6 +197,6 @@ arm_status arm_mat_scale_q31(
   return (status);
 }
 
-/**        
- * @} end of MatrixScale group        
+/**
+ * @} end of MatrixScale group
  */

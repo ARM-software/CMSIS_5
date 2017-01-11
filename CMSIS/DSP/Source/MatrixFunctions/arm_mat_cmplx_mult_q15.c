@@ -1,24 +1,24 @@
-/* ----------------------------------------------------------------------      
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved. 
-*      
-* $Date:        19. March 2015
-* $Revision: 	V.1.4.5
-*      
-* Project:      CMSIS DSP Library 
-* Title:	    arm_cmplx_mat_mult_q15.c      
-*      
-* Description:	 Q15 complex matrix multiplication.      
-*      
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+*
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_cmplx_mat_mult_q15.c
+*
+* Description:  Q15 complex matrix multiplication.
+*
 * Target Processor:          Cortex-M4/Cortex-M3/Cortex-M0
 *
-* Redistribution and use in source and binary forms, with or without 
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -27,7 +27,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -35,51 +35,51 @@
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.  
+* POSSIBILITY OF SUCH DAMAGE.
 * -------------------------------------------------------------------- */
 #include "arm_math.h"
 
-/**      
- * @ingroup groupMatrix      
+/**
+ * @ingroup groupMatrix
  */
 
-/**      
- * @addtogroup CmplxMatrixMult      
- * @{      
+/**
+ * @addtogroup CmplxMatrixMult
+ * @{
  */
 
 
-/**      
- * @brief Q15 Complex matrix multiplication      
- * @param[in]       *pSrcA points to the first input complex matrix structure      
- * @param[in]       *pSrcB points to the second input complex matrix structure      
- * @param[out]      *pDst points to output complex matrix structure      
- * @param[in]		*pScratch points to the array for storing intermediate results     
- * @return     		The function returns either      
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.         
- *  
- * \par Conditions for optimum performance  
- *  Input, output and state buffers should be aligned by 32-bit  
- *  
- * \par Restrictions  
- *  If the silicon does not support unaligned memory access enable the macro UNALIGNED_SUPPORT_DISABLE  
- *	In this case input, output, scratch buffers should be aligned by 32-bit  
- *  
- * @details      
- * <b>Scaling and Overflow Behavior:</b>      
- *      
- * \par      
- * The function is implemented using a 64-bit internal accumulator. The inputs to the      
- * multiplications are in 1.15 format and multiplications yield a 2.30 result.      
- * The 2.30 intermediate      
- * results are accumulated in a 64-bit accumulator in 34.30 format. This approach      
- * provides 33 guard bits and there is no risk of overflow. The 34.30 result is then      
- * truncated to 34.15 format by discarding the low 15 bits and then saturated to      
- * 1.15 format.      
- *      
- * \par      
- * Refer to <code>arm_mat_mult_fast_q15()</code> for a faster but less precise version of this function.      
- *      
+/**
+ * @brief Q15 Complex matrix multiplication
+ * @param[in]       *pSrcA points to the first input complex matrix structure
+ * @param[in]       *pSrcB points to the second input complex matrix structure
+ * @param[out]      *pDst points to output complex matrix structure
+ * @param[in]		*pScratch points to the array for storing intermediate results
+ * @return     		The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ *
+ * \par Conditions for optimum performance
+ *  Input, output and state buffers should be aligned by 32-bit
+ *
+ * \par Restrictions
+ *  If the silicon does not support unaligned memory access enable the macro UNALIGNED_SUPPORT_DISABLE
+ *	In this case input, output, scratch buffers should be aligned by 32-bit
+ *
+ * @details
+ * <b>Scaling and Overflow Behavior:</b>
+ *
+ * \par
+ * The function is implemented using a 64-bit internal accumulator. The inputs to the
+ * multiplications are in 1.15 format and multiplications yield a 2.30 result.
+ * The 2.30 intermediate
+ * results are accumulated in a 64-bit accumulator in 34.30 format. This approach
+ * provides 33 guard bits and there is no risk of overflow. The 34.30 result is then
+ * truncated to 34.15 format by discarding the low 15 bits and then saturated to
+ * 1.15 format.
+ *
+ * \par
+ * Refer to <code>arm_mat_mult_fast_q15()</code> for a faster but less precise version of this function.
+ *
  */
 
 
@@ -115,7 +115,7 @@ arm_status arm_mat_cmplx_mult_q15(
 
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch condition */
-  if((pSrcA->numCols != pSrcB->numRows) ||
+  if ((pSrcA->numCols != pSrcB->numRows) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -133,9 +133,9 @@ arm_status arm_mat_cmplx_mult_q15(
       /* The pointer px is set to starting address of the column being processed */
       px = pSrcBT + i;
 
-      /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.      
+      /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
        ** a second loop below computes the remaining 1 to 3 samples. */
-      while(col > 0u)
+      while (col > 0u)
       {
 #ifdef UNALIGNED_SUPPORT_DISABLE
         /* Read two elements from the row */
@@ -178,11 +178,11 @@ arm_status arm_mat_cmplx_mult_q15(
         col--;
       }
 
-      /* If the columns of pSrcB is not a multiple of 4, compute any remaining output samples here.      
+      /* If the columns of pSrcB is not a multiple of 4, compute any remaining output samples here.
        ** No loop unrolling is used. */
       col = numColsB % 0x4u;
 
-      while(col > 0u)
+      while (col > 0u)
       {
         /* Read two elements from the row */
         in = *pInB++;
@@ -228,11 +228,11 @@ arm_status arm_mat_cmplx_mult_q15(
         col--;
       }
 
-      /* If the columns of pSrcB is not a multiple of 4, compute any remaining output samples here.      
+      /* If the columns of pSrcB is not a multiple of 4, compute any remaining output samples here.
        ** No loop unrolling is used. */
       col = numColsB % 0x4u;
 
-      while(col > 0u)
+      while (col > 0u)
       {
         /* Read two elements from the row */
         in = *__SIMD32(pInB)++;
@@ -252,7 +252,7 @@ arm_status arm_mat_cmplx_mult_q15(
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    } while (row > 0u);
 
     /* Reset the variables for the usage in the following multiplication process */
     row = numRowsA;
@@ -266,7 +266,7 @@ arm_status arm_mat_cmplx_mult_q15(
       /* For every row wise process, the column loop counter is to be initiated */
       col = numColsB;
 
-      /* For every row wise process, the pIn2 pointer is set      
+      /* For every row wise process, the pIn2 pointer is set
        ** to the starting address of the transposed pSrcB data */
       pInB = pSrcBT;
 
@@ -285,7 +285,7 @@ arm_status arm_mat_cmplx_mult_q15(
 
 
         /* matrix multiplication */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
 
@@ -357,7 +357,7 @@ arm_status arm_mat_cmplx_mult_q15(
         }
 
         /* process odd column samples */
-        if((numColsA & 0x1u) > 0u)
+        if ((numColsA & 0x1u) > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
 
@@ -402,14 +402,14 @@ arm_status arm_mat_cmplx_mult_q15(
         /* Decrement the column loop counter */
         col--;
 
-      } while(col > 0u);
+      } while (col > 0u);
 
       i = i + numColsA;
 
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    } while (row > 0u);
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
@@ -419,6 +419,6 @@ arm_status arm_mat_cmplx_mult_q15(
   return (status);
 }
 
-/**      
- * @} end of MatrixMult group      
+/**
+ * @} end of MatrixMult group
  */

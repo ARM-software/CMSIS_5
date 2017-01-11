@@ -1,24 +1,24 @@
-/* ----------------------------------------------------------------------   
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.   
-*   
-* $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
-*   
-* Project: 	    CMSIS DSP Library   
-* Title:	    arm_cfft_radix4_init_f32.c   
-*   
-* Description:	Radix-4 Decimation in Frequency Floating-point CFFT & CIFFT Initialization function   
-*   
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+*
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_cfft_radix2_init_f32.c
+*
+* Description:  Radix-2 Decimation in Frequency Floating-point CFFT & CIFFT Initialization function
+*
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*  
-* Redistribution and use in source and binary forms, with or without 
+*
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -27,7 +27,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -35,43 +35,43 @@
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.  
+* POSSIBILITY OF SUCH DAMAGE.
 * -------------------------------------------------------------------- */
 
 
 #include "arm_math.h"
 #include "arm_common_tables.h"
 
-/**   
- * @ingroup groupTransforms   
+/**
+ * @ingroup groupTransforms
  */
 
-/**   
- * @addtogroup ComplexFFT   
- * @{   
+/**
+ * @addtogroup ComplexFFT
+ * @{
  */
 
-/**   
-* @brief  Initialization function for the floating-point CFFT/CIFFT.  
+/**
+* @brief  Initialization function for the floating-point CFFT/CIFFT.
 * @deprecated Do not use this function.  It has been superseded by \ref arm_cfft_f32 and will be removed
 * in the future.
-* @param[in,out] *S             points to an instance of the floating-point CFFT/CIFFT structure.  
-* @param[in]     fftLen         length of the FFT.  
-* @param[in]     ifftFlag       flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform.  
-* @param[in]     bitReverseFlag flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output.  
-* @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLen</code> is not a supported value.  
-*   
-* \par Description:  
-* \par   
-* The parameter <code>ifftFlag</code> controls whether a forward or inverse transform is computed.   
-* Set(=1) ifftFlag for calculation of CIFFT otherwise  CFFT is calculated  
-* \par   
-* The parameter <code>bitReverseFlag</code> controls whether output is in normal order or bit reversed order.   
-* Set(=1) bitReverseFlag for output to be in normal order otherwise output is in bit reversed order.   
-* \par   
-* The parameter <code>fftLen</code>	Specifies length of CFFT/CIFFT process. Supported FFT Lengths are 16, 64, 256, 1024.   
-* \par   
-* This Function also initializes Twiddle factor table pointer and Bit reversal table pointer.   
+* @param[in,out] *S             points to an instance of the floating-point CFFT/CIFFT structure.
+* @param[in]     fftLen         length of the FFT.
+* @param[in]     ifftFlag       flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) transform.
+* @param[in]     bitReverseFlag flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output.
+* @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLen</code> is not a supported value.
+*
+* \par Description:
+* \par
+* The parameter <code>ifftFlag</code> controls whether a forward or inverse transform is computed.
+* Set(=1) ifftFlag for calculation of CIFFT otherwise  CFFT is calculated
+* \par
+* The parameter <code>bitReverseFlag</code> controls whether output is in normal order or bit reversed order.
+* Set(=1) bitReverseFlag for output to be in normal order otherwise output is in bit reversed order.
+* \par
+* The parameter <code>fftLen</code>	Specifies length of CFFT/CIFFT process. Supported FFT Lengths are 16, 64, 256, 1024.
+* \par
+* This Function also initializes Twiddle factor table pointer and Bit reversal table pointer.
 */
 arm_status arm_cfft_radix2_init_f32(
   arm_cfft_radix2_instance_f32 * S,
@@ -200,6 +200,6 @@ arm_status arm_cfft_radix2_init_f32(
   return (status);
 }
 
-/**   
- * @} end of ComplexFFT group   
+/**
+ * @} end of ComplexFFT group
  */

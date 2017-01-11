@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        19. March 2015
-* $Revision:    V.1.4.5a
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_mat_mult_q15.c
@@ -84,7 +84,7 @@ arm_status arm_mat_mult_q15(
 {
   q63_t sum;                                     /* accumulator */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -113,7 +113,7 @@ arm_status arm_mat_mult_q15(
 
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch condition */
-  if((pSrcA->numCols != pSrcB->numRows) ||
+  if ((pSrcA->numCols != pSrcB->numRows) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -133,7 +133,7 @@ arm_status arm_mat_mult_q15(
 
       /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
        ** a second loop below computes the remaining 1 to 3 samples. */
-      while(col > 0u)
+      while (col > 0u)
       {
 #ifndef UNALIGNED_SUPPORT_DISABLE
 
@@ -248,7 +248,7 @@ arm_status arm_mat_mult_q15(
        ** No loop unrolling is used. */
       col = numColsB % 0x4u;
 
-      while(col > 0u)
+      while (col > 0u)
       {
         /* Read and store the input element in the destination */
         *px = *pInB++;
@@ -265,7 +265,7 @@ arm_status arm_mat_mult_q15(
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    } while (row > 0u);
 
     /* Reset the variables for the usage in the following multiplication process */
     row = numRowsA;
@@ -297,7 +297,7 @@ arm_status arm_mat_mult_q15(
 
 
         /* matrix multiplication */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
 #ifndef UNALIGNED_SUPPORT_DISABLE
@@ -342,7 +342,7 @@ arm_status arm_mat_mult_q15(
         /* process remaining column samples */
         colCnt = numColsA & 3u;
 
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           sum += *pInA++ * *pInB++;
@@ -358,14 +358,14 @@ arm_status arm_mat_mult_q15(
         /* Decrement the column loop counter */
         col--;
 
-      } while(col > 0u);
+      } while (col > 0u);
 
       i = i + numColsA;
 
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    } while (row > 0u);
 
 #else
 
@@ -386,7 +386,7 @@ arm_status arm_mat_mult_q15(
 #ifdef ARM_MATH_MATRIX_CHECK
 
   /* Check for matrix mismatch condition */
-  if((pSrcA->numCols != pSrcB->numRows) ||
+  if ((pSrcA->numCols != pSrcB->numRows) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -423,7 +423,7 @@ arm_status arm_mat_mult_q15(
         colCnt = numColsA;
 
         /* matrix multiplication */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           /* Perform the multiply-accumulates */
@@ -444,7 +444,7 @@ arm_status arm_mat_mult_q15(
         /* Update the pointer pIn2 to point to the  starting address of the next column */
         pIn2 = pInB + (numColsB - col);
 
-      } while(col > 0u);
+      } while (col > 0u);
 
       /* Update the pointer pSrcA to point to the  starting address of the next row */
       i = i + numColsB;
@@ -453,9 +453,9 @@ arm_status arm_mat_mult_q15(
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    } while (row > 0u);
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
   }

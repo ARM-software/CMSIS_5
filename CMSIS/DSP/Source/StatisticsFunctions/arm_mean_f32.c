@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        19. March 2015
-* $Revision:    V.1.4.5
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_mean_f32.c
@@ -79,7 +79,7 @@ void arm_mean_f32(
   float32_t sum = 0.0f;                          /* Temporary result storage */
   uint32_t blkCnt;                               /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   float32_t in1, in2, in3, in4;
@@ -89,7 +89,7 @@ void arm_mean_f32(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
     in1 = *pSrc++;
@@ -116,9 +116,9 @@ void arm_mean_f32(
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
     sum += *pSrc++;

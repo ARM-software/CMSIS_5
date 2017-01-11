@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2016 ARM Limited. All rights reserved.
 *
-* $Date:        23. December 2016
-* $Revision:    V1.4.5 f
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_math.h
@@ -567,7 +567,7 @@ extern "C"
     uint32_t count = 0;
     uint32_t mask = 0x80000000;
 
-    while((data & mask) == 0)
+    while ((data & mask) == 0)
     {
       count += 1u;
       mask = mask >> 1u;
@@ -591,7 +591,7 @@ extern "C"
     uint32_t index, i;
     uint32_t signBits;
 
-    if(in > 0)
+    if (in > 0)
     {
       signBits = ((uint32_t) (__CLZ( in) - 1));
     }
@@ -642,7 +642,7 @@ extern "C"
     uint32_t index = 0, i = 0;
     uint32_t signBits = 0;
 
-    if(in > 0)
+    if (in > 0)
     {
       signBits = ((uint32_t)(__CLZ( in) - 17));
     }
@@ -697,11 +697,11 @@ extern "C"
       posMax = posMax * 2;
     }
 
-    if(x > 0)
+    if (x > 0)
     {
       posMax = (posMax - 1);
 
-      if(x > posMax)
+      if (x > posMax)
       {
         x = posMax;
       }
@@ -710,7 +710,7 @@ extern "C"
     {
       negMin = -posMax;
 
-      if(x < negMin)
+      if (x < negMin)
       {
         x = negMin;
       }
@@ -1797,7 +1797,7 @@ extern "C"
   typedef struct
   {
     q15_t A0;           /**< The derived gain, A0 = Kp + Ki + Kd . */
-#ifdef ARM_MATH_CM0_FAMILY
+#if !defined (ARM_MATH_DSP)
     q15_t A1;
     q15_t A2;
 #else
@@ -4940,7 +4940,7 @@ void arm_rfft_fast_f32(
     q63_t acc;
     q15_t out;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
     __SIMD32_TYPE *vstate;
 
     /* Implementation of PID controller */
@@ -5504,12 +5504,12 @@ void arm_rfft_fast_f32(
     /* Calculation of index */
     i = (int32_t) ((x - S->x1) / xSpacing);
 
-    if(i < 0)
+    if (i < 0)
     {
       /* Iniatilize output for below specified range as least output value of table */
       y = pYData[0];
     }
-    else if((uint32_t)i >= S->nValues)
+    else if ((uint32_t)i >= S->nValues)
     {
       /* Iniatilize output for above specified range as last output value of table */
       y = pYData[S->nValues - 1];
@@ -5562,11 +5562,11 @@ void arm_rfft_fast_f32(
     /* Index value calculation */
     index = ((x & (q31_t)0xFFF00000) >> 20);
 
-    if(index >= (int32_t)(nValues - 1))
+    if (index >= (int32_t)(nValues - 1))
     {
       return (pYData[nValues - 1]);
     }
-    else if(index < 0)
+    else if (index < 0)
     {
       return (pYData[0]);
     }
@@ -5620,11 +5620,11 @@ void arm_rfft_fast_f32(
     /* Index value calculation */
     index = ((x & (int32_t)0xFFF00000) >> 20);
 
-    if(index >= (int32_t)(nValues - 1))
+    if (index >= (int32_t)(nValues - 1))
     {
       return (pYData[nValues - 1]);
     }
-    else if(index < 0)
+    else if (index < 0)
     {
       return (pYData[0]);
     }
@@ -5681,7 +5681,7 @@ void arm_rfft_fast_f32(
     }
     index = (x >> 20) & 0xfff;
 
-    if(index >= (nValues - 1))
+    if (index >= (nValues - 1))
     {
       return (pYData[nValues - 1]);
     }
@@ -5806,7 +5806,7 @@ void arm_rfft_fast_f32(
   float32_t in,
   float32_t * pOut)
   {
-    if(in >= 0.0f)
+    if (in >= 0.0f)
     {
 
 #if   (__FPU_USED == 1) && defined ( __CC_ARM   )
@@ -5881,7 +5881,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* copy the input sample to the circular buffer */
       circBuffer[wOffset] = *src;
@@ -5891,7 +5891,7 @@ void arm_rfft_fast_f32(
 
       /* Circularly update wOffset.  Watch out for positive and negative value */
       wOffset += bufferInc;
-      if(wOffset >= L)
+      if (wOffset >= L)
         wOffset -= L;
 
       /* Decrement the loop counter */
@@ -5929,7 +5929,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* copy the sample from the circular buffer to the destination buffer */
       *dst = circBuffer[rOffset];
@@ -5937,7 +5937,7 @@ void arm_rfft_fast_f32(
       /* Update the input pointer */
       dst += dstInc;
 
-      if(dst == (int32_t *) dst_end)
+      if (dst == (int32_t *) dst_end)
       {
         dst = dst_base;
       }
@@ -5945,7 +5945,7 @@ void arm_rfft_fast_f32(
       /* Circularly update rOffset.  Watch out for positive and negative value  */
       rOffset += bufferInc;
 
-      if(rOffset >= L)
+      if (rOffset >= L)
       {
         rOffset -= L;
       }
@@ -5981,7 +5981,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* copy the input sample to the circular buffer */
       circBuffer[wOffset] = *src;
@@ -5991,7 +5991,7 @@ void arm_rfft_fast_f32(
 
       /* Circularly update wOffset.  Watch out for positive and negative value */
       wOffset += bufferInc;
-      if(wOffset >= L)
+      if (wOffset >= L)
         wOffset -= L;
 
       /* Decrement the loop counter */
@@ -6029,7 +6029,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* copy the sample from the circular buffer to the destination buffer */
       *dst = circBuffer[rOffset];
@@ -6037,7 +6037,7 @@ void arm_rfft_fast_f32(
       /* Update the input pointer */
       dst += dstInc;
 
-      if(dst == (q15_t *) dst_end)
+      if (dst == (q15_t *) dst_end)
       {
         dst = dst_base;
       }
@@ -6045,7 +6045,7 @@ void arm_rfft_fast_f32(
       /* Circularly update wOffset.  Watch out for positive and negative value */
       rOffset += bufferInc;
 
-      if(rOffset >= L)
+      if (rOffset >= L)
       {
         rOffset -= L;
       }
@@ -6081,7 +6081,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* copy the input sample to the circular buffer */
       circBuffer[wOffset] = *src;
@@ -6091,7 +6091,7 @@ void arm_rfft_fast_f32(
 
       /* Circularly update wOffset.  Watch out for positive and negative value */
       wOffset += bufferInc;
-      if(wOffset >= L)
+      if (wOffset >= L)
         wOffset -= L;
 
       /* Decrement the loop counter */
@@ -6129,7 +6129,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* copy the sample from the circular buffer to the destination buffer */
       *dst = circBuffer[rOffset];
@@ -6137,7 +6137,7 @@ void arm_rfft_fast_f32(
       /* Update the input pointer */
       dst += dstInc;
 
-      if(dst == (q7_t *) dst_end)
+      if (dst == (q7_t *) dst_end)
       {
         dst = dst_base;
       }
@@ -6145,7 +6145,7 @@ void arm_rfft_fast_f32(
       /* Circularly update rOffset.  Watch out for positive and negative value */
       rOffset += bufferInc;
 
-      if(rOffset >= L)
+      if (rOffset >= L)
       {
         rOffset -= L;
       }
@@ -6826,7 +6826,7 @@ void arm_rfft_fast_f32(
 
     /* Care taken for table outside boundary */
     /* Returns zero output when values are outside table boundary */
-    if(xIndex < 0 || xIndex > (S->numRows - 1) || yIndex < 0 || yIndex > (S->numCols - 1))
+    if (xIndex < 0 || xIndex > (S->numRows - 1) || yIndex < 0 || yIndex > (S->numCols - 1))
     {
       return (0);
     }
@@ -6900,7 +6900,7 @@ void arm_rfft_fast_f32(
 
     /* Care taken for table outside boundary */
     /* Returns zero output when values are outside table boundary */
-    if(rI < 0 || rI > (S->numRows - 1) || cI < 0 || cI > (S->numCols - 1))
+    if (rI < 0 || rI > (S->numRows - 1) || cI < 0 || cI > (S->numCols - 1))
     {
       return (0);
     }
@@ -6974,7 +6974,7 @@ void arm_rfft_fast_f32(
 
     /* Care taken for table outside boundary */
     /* Returns zero output when values are outside table boundary */
-    if(rI < 0 || rI > (S->numRows - 1) || cI < 0 || cI > (S->numCols - 1))
+    if (rI < 0 || rI > (S->numRows - 1) || cI < 0 || cI > (S->numCols - 1))
     {
       return (0);
     }
@@ -7052,7 +7052,7 @@ void arm_rfft_fast_f32(
 
     /* Care taken for table outside boundary */
     /* Returns zero output when values are outside table boundary */
-    if(rI < 0 || rI > (S->numRows - 1) || cI < 0 || cI > (S->numCols - 1))
+    if (rI < 0 || rI > (S->numRows - 1) || cI < 0 || cI > (S->numCols - 1))
     {
       return (0);
     }

@@ -21,7 +21,7 @@ void ref_fir_decimate_f32(
   /* Total number of output samples to be computed */
   blkCnt = blockSize / S->M;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -29,7 +29,7 @@ void ref_fir_decimate_f32(
     do
     {
       *pStateCurnt++ = *pSrc++;
-    } while(--i);
+    } while (--i);
 
     /* Set accumulator to zero */
     sum0 = 0.0f;
@@ -67,7 +67,7 @@ void ref_fir_decimate_f32(
   i = numTaps - 1u;
 
   /* copy data */
-  while(i > 0u)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -97,7 +97,7 @@ void ref_fir_decimate_q31(
   /* Total number of output samples to be computed */
   blkCnt = blockSize / S->M;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -106,7 +106,7 @@ void ref_fir_decimate_q31(
     {
       *pStateCurnt++ = *pSrc++;
 
-    } while(--i);
+    } while (--i);
 
     /* Set accumulator to zero */
     sum0 = 0;
@@ -144,7 +144,7 @@ void ref_fir_decimate_q31(
   i = numTaps - 1u;
 
   /* copy data */
-  while(i > 0u)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -174,7 +174,7 @@ void ref_fir_decimate_fast_q31(
   /* Total number of output samples to be computed */
   blkCnt = blockSize / S->M;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -183,7 +183,7 @@ void ref_fir_decimate_fast_q31(
     {
       *pStateCurnt++ = *pSrc++;
 
-    } while(--i);
+    } while (--i);
 
     /* Set accumulator to zero */
     sum0 = 0;
@@ -221,7 +221,7 @@ void ref_fir_decimate_fast_q31(
   i = numTaps - 1u;
 
   /* copy data */
-  while(i > 0u)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -251,7 +251,7 @@ void ref_fir_decimate_q15(
   /* Total number of output samples to be computed */
   blkCnt = blockSize / S->M;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -260,7 +260,7 @@ void ref_fir_decimate_q15(
     {
       *pStateCurnt++ = *pSrc++;
 
-    } while(--i);
+    } while (--i);
 
     /* Set accumulator to zero */
     sum0 = 0;
@@ -298,7 +298,7 @@ void ref_fir_decimate_q15(
   i = numTaps - 1u;
 
   /* copy data */
-  while(i > 0u)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -328,7 +328,7 @@ void ref_fir_decimate_fast_q15(
   /* Total number of output samples to be computed */
   blkCnt = blockSize / S->M;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -337,7 +337,7 @@ void ref_fir_decimate_fast_q15(
     {
       *pStateCurnt++ = *pSrc++;
 
-    } while(--i);
+    } while (--i);
 
     /* Set accumulator to zero */
     sum0 = 0;
@@ -375,7 +375,7 @@ void ref_fir_decimate_fast_q15(
   i = numTaps - 1u;
 
   /* copy data */
-  while(i > 0u)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
 

@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        21. September 2015
-* $Revision:    V.1.4.5 a
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_sin_f32.c
@@ -94,7 +94,7 @@ float32_t arm_sin_f32(
   if ((x < 0.0f) && (x >= -1.9e-7f)) {
      return x;
   }
-   
+
   /* input x is in radians */
   /* Scale the input to [0 1] range from [0 2*PI] , divide input by 2*pi */
   in = x * 0.159154943092f;
@@ -103,7 +103,7 @@ float32_t arm_sin_f32(
   n = (int32_t) in;
 
   /* Make negative values towards -infinity */
-  if(x < 0.0f)
+  if (x < 0.0f)
   {
     n--;
   }

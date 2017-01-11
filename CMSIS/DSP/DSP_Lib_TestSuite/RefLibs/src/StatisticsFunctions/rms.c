@@ -37,7 +37,7 @@ void ref_rms_q31(
   /* GCC M0 problem: __aeabi_f2iz(QNAN) returns not 0 */
   help_float = (sqrtf((float)tmp2 / 2147483648.0f) * 2147483648.0f);
   /* Checking for a NAN value in help_float */
-  if(((*((int *)(&help_float))) & 0x7FC00000) == 0x7FC00000) {
+  if (((*((int *)(&help_float))) & 0x7FC00000) == 0x7FC00000) {
       help_float = 0;
   }
   *pResult = (q31_t)(help_float);

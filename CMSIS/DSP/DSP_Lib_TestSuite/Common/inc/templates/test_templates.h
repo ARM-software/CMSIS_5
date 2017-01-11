@@ -45,7 +45,7 @@
     do {                                                    \
         TEST_CALL_FUT(fut, fut_args);                       \
         TEST_CALL_REF(ref, ref_args);                       \
-    } while(0)
+    } while (0)
 
 /**
  *  This macro eats a variable number of arguments and evaluates to a null
@@ -69,7 +69,7 @@
         {                                               \
             return JTEST_TEST_FAILED;                   \
         }                                               \
-    } while(0)
+    } while (0)
 
 /**
  *  Assert that the two entities are equal.
@@ -81,7 +81,7 @@
         {                                               \
             return JTEST_TEST_FAILED;                   \
         }                                               \
-    } while(0)
+    } while (0)
 
 /**
  *  Convert elements to from src_type to float.
@@ -93,7 +93,7 @@
             src_ptr,                                                    \
             dst_ptr,                                                    \
             block_size);                                                \
-        } while(0)                                                      \
+        } while (0)                                                      \
 
 /**
  *  Convert elements to from float to dst_type .
@@ -105,7 +105,7 @@
             src_ptr,                                                    \
             dst_ptr,                                                    \
             block_size);                                                \
-    } while(0)                                                          \
+    } while (0)                                                          \
 
 /**
  *  Assert that the SNR between a reference and test sample is above a given
@@ -115,12 +115,12 @@
     do                                                              \
     {                                                               \
         float32_t snr = arm_snr_f32(ref_ptr, tst_ptr, block_size);  \
-        if( snr <= threshold)                                       \
+        if ( snr <= threshold)                                       \
         {                                                           \
             JTEST_DUMP_STRF("SNR: %f\n", snr);                      \
             return JTEST_TEST_FAILED;                               \
         }                                                           \
-    } while(0)                                                      \
+    } while (0)                                                      \
 
 /**
  *  Assert that the SNR between a reference and test sample is above a given
@@ -130,12 +130,12 @@
     do                                                              \
     {                                                               \
         float64_t snr = arm_snr_f64(ref_ptr, tst_ptr, block_size);  \
-        if( snr <= threshold)                                       \
+        if ( snr <= threshold)                                       \
         {                                                           \
             JTEST_DUMP_STRF("SNR: %f\n", snr);                      \
             return JTEST_TEST_FAILED;                               \
         }                                                           \
-    } while(0)                                                      \
+    } while (0)                                                      \
 
 /**
  *  Compare test and reference elements by converting to float and
@@ -163,7 +163,7 @@
                             tst_dst_ptr,                        \
                             block_size,                         \
                             threshold);                         \
-        } while(0)
+        } while (0)
 
 /**
  *  Execute statements only if the combination of block size, function type
@@ -178,13 +178,13 @@
                                 input_arr_desc, body)       \
     do                                                      \
     {                                                       \
-        if(block_size * sizeof(fn_type_spec) <=             \
+        if (block_size * sizeof(fn_type_spec) <=             \
            ARR_DESC_BYTES(input_arr_desc))                  \
         {                                                   \
             JTEST_DUMP_STRF("Block Size: %"PRIu32"\n", block_size); \
             body;                                           \
         }                                                   \
-    } while(0)                                              \
+    } while (0)                                              \
 
 /**
  *  Template for tests that rely on one input buffer and a blocksize parameter.
@@ -224,7 +224,7 @@
                                                                         \
         return JTEST_TEST_PASSED;                                       \
                                                                         \
-    } while(0)
+    } while (0)
 
 /**
  *  Template for tests that rely on an input buffer and an element.
@@ -253,7 +253,7 @@
                                                                         \
                     compare_interface(output_type)));                   \
             return JTEST_TEST_PASSED;                                   \
-        } while(0)
+        } while (0)
 
 /**
  *  Template for tests that rely on an input buffer, an element, and a blocksize
@@ -289,7 +289,7 @@
                                 input_data_ptr, elt, block_size));  \
                         compare_interface(block_size, output_type))))); \
         return JTEST_TEST_PASSED;                                   \
-    } while(0)
+    } while (0)
 
 /**
  *  Template for tests that rely on an input buffer, two elements, and a blocksize
@@ -329,7 +329,7 @@
                                         input_data_ptr, elt1, elt2, block_size)); \
                                 compare_interface(block_size, output_type)))))); \
             return JTEST_TEST_PASSED;                                   \
-        } while(0)
+        } while (0)
 
 /**
  *  Template for tests that rely on two input buffers and a blocksize parameter.
@@ -368,7 +368,7 @@
                                                                         \
                     compare_interface(block_size, output_type))));      \
         return JTEST_TEST_PASSED;                                       \
-    } while(0)
+    } while (0)
 
 /**
  *  Test template that uses a single element.
@@ -392,7 +392,7 @@
                 /* a block_size. Pass a dummy value 1.*/        \
                 compare_interface(1, output_type));             \
             return JTEST_TEST_PASSED;                           \
-        } while(0)
+        } while (0)
 
 /**
  *  Test template that iterates over two sets of elements in parallel.
@@ -424,7 +424,7 @@
                 /* a block_size. Pass a dummy value 1.*/        \
                 compare_interface(1, output_type));             \
             return JTEST_TEST_PASSED;                           \
-        } while(0)
+        } while (0)
 
 /**
  *  Test template that uses an element and a block size.
@@ -453,6 +453,6 @@
                             elt, block_size));                      \
                     compare_interface(block_size, output_type)));   \
             return JTEST_TEST_PASSED;                               \
-        } while(0)
+        } while (0)
 
 #endif /* _TEST_TEMPLATES_H_ */
