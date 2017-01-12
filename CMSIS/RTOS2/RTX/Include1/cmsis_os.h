@@ -18,7 +18,7 @@
  * ----------------------------------------------------------------------
  *
  * $Date:        10. January 2017
- * $Revision:    V2.1
+ * $Revision:    V2.1.0
  *
  * Project:      CMSIS-RTOS API
  * Title:        cmsis_os.h RTX header file
@@ -40,7 +40,7 @@
  *    Control functions for short timeouts in microsecond resolution:
  *    Added: osKernelSysTick, osKernelSysTickFrequency, osKernelSysTickMicroSec
  *    Removed: osSignalGet 
- * Version 2.0
+ * Version 2.0.0
  *    OS objects creation without macros (dynamic creation and resource allocation):
  *     - added: osXxxxNew functions which replace osXxxxCreate
  *     - added: osXxxxAttr_t structures
@@ -112,7 +112,7 @@
  *     - added: osMessageQueueReset, osMessageQueueDelete
  *    Mail Queue: 
  *     - deprecated (superseded by extended Message Queue functionality)
- * Version 2.1
+ * Version 2.1.0
  *    Support for critical and uncritical sections (nesting safe):
  *    - updated: osKernelLock, osKernelUnlock
  *    - added: osKernelRestoreLock
