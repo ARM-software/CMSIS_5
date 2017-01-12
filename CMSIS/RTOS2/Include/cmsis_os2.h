@@ -18,18 +18,18 @@
  * ----------------------------------------------------------------------
  *
  * $Date:        10. January 2017
- * $Revision:    V2.1
+ * $Revision:    V2.1.0
  *
  * Project:      CMSIS-RTOS2 API
  * Title:        cmsis_os2.h header file
  *
- * Version 2.1
+ * Version 2.1.0
  *    Support for critical and uncritical sections (nesting safe):
  *    - updated: osKernelLock, osKernelUnlock
  *    - added: osKernelRestoreLock
  *    Updated Thread and Event Flags:
  *    - changed flags parameter and return type from int32_t to uint32_t
- * Version 2.0
+ * Version 2.0.0
  *    Initial Release
  *---------------------------------------------------------------------------*/
  
