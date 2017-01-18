@@ -135,7 +135,7 @@ void CreateEvent (void)  {
 \details
 The function \b osEventFlagsSet sets the event flags specified by the parameter \a flags in an event flags object specified
 by parameter \a ef_id. All threads waiting for the flag set will be notified to resume from \em BLOCKED state. The function
-returns the event flags after setting or an error code if highest bit is set (refer to \ref osStatus_t).
+returns the event flags after setting or an error code if highest bit is set (refer to \ref osFlagsErrorXxxx).
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -146,7 +146,7 @@ returns the event flags after setting or an error code if highest bit is set (re
 \details
 The function \b osEventFlagsClear clears the event flags specified by the parameter \a flags in an event flags object
 specified by parameter \a ef_id. The function returns the event flags before clearing or an error code if highest bit is set
-(refer to \ref osStatus_t).
+(refer to \ref osFlagsErrorXxxx).
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -168,7 +168,7 @@ The function \b osEventFlagsGet returns the event flags currently set in an even
 The function \b osEventFlagsWait suspends the execution of the currently \b RUNNING thread until any or all event flags
 specified by the parameter \a flags in the event object specified by parameter \a ef_id are set. When these event flags are
 already set, the function returns instantly. Otherwise, the thread is put into the state \em BLOCKED. The function returns
-the event flags before clearing or an error code if highest bit is set (refer to \ref osStatus_t).
+the event flags before clearing or an error code if highest bit is set (refer to \ref osFlagsErrorXxxx).
 
 The \em options parameter specifies the wait condition:
 |Option              |                                                       |
