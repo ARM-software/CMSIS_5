@@ -727,9 +727,13 @@ several threads. Threads are not really executed concurrently, but are timed whe
 into time slices and RTX5 assigns a time slice to each thread. Because the time slice is typically short (only a few
 milliseconds), it appears as though threads execute simultaneously.
 
-Threads execute for the duration of their time slice (unless the thread's time slice is given up). Then, RTX switches to the
-next thread that is in \b READY state and has the same priority. If no other task with the same priority is ready to run, the
-current running task resumes it execution.
+Round-robin thread switching functions as follows:
+- the tick is preloaded with the timeout value when a thread switch occurs
+- the tick is decremented (if not already zero) each system tick if the same thread is still executing
+- when the tick reaches 0 it indicates that a timeout has occurred. If there is another thread ready with same priority, then the system switches to that thread and the tick is preloaded with timeout again.
+
+In other word, threads execute for the duration of their time slice (unless the thread's time slice is given up). Then, RTX switches to the next thread that is in \b READY state and has the same priority. If no other thread with the same priority is ready to run, the
+current running thread resumes it execution.
 
 \subsection systemConfig_isr_fifo ISR FIFO Queue
 The RTX functions (\ref CMSIS_RTOS_ISR_Calls), when called from and interrupt handler, store the request type and optional
