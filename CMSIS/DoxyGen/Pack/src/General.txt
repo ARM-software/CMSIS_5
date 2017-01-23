@@ -44,6 +44,10 @@ The following sections give you more details on the basics:
  - \ref createPackUtil caters to programs that are useful during the creation of a Pack.
  - \ref packFormat describes all XML elements that can be used in a PDSC file.
  - \ref configWizard can be used to create GUI-like elements in development tools for configuration files.
+ - \ref flashAlgorithm are used to erase or download applications to Flash devices.
+ - \ref coresight_setup allow to create tool-agnostic debug and trace configurations
+ - \ref cpdsc_pg is a environment/tool independent definition of a software project. This helps to create only one set of
+   example projects that can be used by many different tool vendors.
  
 <hr>
 

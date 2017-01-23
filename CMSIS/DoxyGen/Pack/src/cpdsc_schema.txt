@@ -1,7 +1,7 @@
 /**
-\page cpdsc_pg Project Description (*.CPDSC) Format  (new)
+\page cpdsc_pg Project Description (*.CPDSC) Format
 
-The purpose of this file format is the environment/tool independant definition of a software
+The purpose of this file format is the environment/tool independent definition of a software
 project. Environment specific project formats shall be derived from this description in a one time
 creation step. The CPDSC file is considered static and there is no expectation to keep the projects
 synchronized.
@@ -9,7 +9,7 @@ synchronized.
 driven by code generators.
 
 The scope of the project description includes:
-- CMSIS run time ennvironment configuration (RTE)
+- CMSIS run time environment configuration (RTE)
 - Project build including linker script generation
 - Flash programming
 - Basic configuration of the debug adapter
@@ -405,7 +405,7 @@ The \<project> section: bundles a project within the create section and consists
   </tr>  
   <tr>
     <td>Dendian</td>
-    <td>Selects the endianess to be used for the project. Note that selecting an endianess that is
+    <td>Selects the endianness to be used for the project. Note that selecting an endianness that is
     not supported by the device, will result in a build that will not run on the device.</td>
     <td>\ref DendianEnum "DendianEnum"</td>
     <td>optional</td>
