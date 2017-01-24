@@ -99,6 +99,7 @@
     <xs:restriction base="xs:token">
       <xs:enumeration value="ABOV Semiconductor:126"/>
       <xs:enumeration value="Actel:56"/>
+      <xs:enumeration value="Active-Semi:140"/>
       <xs:enumeration value="Altera:85"/>
       <xs:enumeration value="Altium:65"/>
       <xs:enumeration value="Ambiq Micro:120"/>
