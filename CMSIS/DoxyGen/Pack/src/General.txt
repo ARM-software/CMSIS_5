@@ -48,7 +48,8 @@ The following sections give you more details on the basics:
  - \ref coresight_setup allow to create tool-agnostic debug and trace configurations
  - \ref cpdsc_pg is a environment/tool independent definition of a software project. This helps to create only one set of
    example projects that can be used by many different tool vendors.
- 
+ - \ref packIndexFile
+   
 <hr>
 
 CMSIS-Pack in ARM::CMSIS Pack
@@ -75,7 +76,7 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <td>1.4.8</td>
     <td>Modifications compared to Version 1.4.7
 - added Toptions attribute for use in conditions
-
+- added Pack Index File Specification
     </td>
   </tr>
   <tr>
