@@ -471,6 +471,7 @@ ARMv8-M Mainline based device with TrustZone
       <description>CMSIS-RTOS API for Cortex-M, SC000, and SC300</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/RTOS2/html/index.html"/>
+        <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
       </files>
     </api>
     <api Cclass="CMSIS Driver" Cgroup="USART" Capiversion="2.2.0" exclusive="0">
@@ -2246,7 +2247,6 @@ ARMv8-M Mainline based device with TrustZone
         <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/>
 
         <!-- RTX header files -->
-        <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
@@ -2316,7 +2316,6 @@ ARMv8-M Mainline based device with TrustZone
         <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/>
 
         <!-- RTX header files -->
-        <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
@@ -2367,7 +2366,6 @@ ARMv8-M Mainline based device with TrustZone
         <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/>
 
         <!-- RTX header files -->
-        <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
@@ -2449,7 +2447,6 @@ ARMv8-M Mainline based device with TrustZone
         <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/>
 
         <!-- RTX header files -->
-        <file category="header" name="CMSIS/RTOS2/Include/cmsis_os2.h"/>
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
