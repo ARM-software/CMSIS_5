@@ -71,7 +71,14 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <th>Version</th>
     <th>Description</th>
   </tr>
-    <tr>
+  <tr>
+    <td>1.4.8</td>
+    <td>Modifications compared to Version 1.4.7
+- added Toptions attribute for use in conditions
+
+    </td>
+  </tr>
+  <tr>
     <td>1.4.7</td>
     <td>Modifications compared to Version 1.4.6
 - added multiple version types to tighten the schema checking depending on context
