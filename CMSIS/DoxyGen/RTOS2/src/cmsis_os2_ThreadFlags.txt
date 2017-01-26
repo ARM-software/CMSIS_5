@@ -67,11 +67,11 @@ exact time delay depends on the actual time elapsed since the last timer tick.
  
 void Thread (void* arg) {
   ;
-  osThreadFlagsWait (0x00000001U, osFlagsWaitAny, osWaitForever); // Wait forever until event 0x01 is set.
+  osThreadFlagsWait (0x00000001U, osFlagsWaitAny, osWaitForever); // Wait forever until thread flag 1 is set.
   ;
-  osThreadFlagsWait (0x00000003U, osFlagsWaitAny, osWaitForever); // Wait forever until either event 0x00 or 0x01 is set.
+  osThreadFlagsWait (0x00000003U, osFlagsWaitAny, osWaitForever); // Wait forever until either thread flag 0 or 1 is set.
   ;
-  osThreadFlagsWait (0x00000003U, osFlagsWaitAll, 10); // Wait for 10 timer ticks until event 0x00 and 0x01 are set. Timeout afterwards.
+  osThreadFlagsWait (0x00000003U, osFlagsWaitAll, 10); // Wait for 10 timer ticks until thread flags 0 and 1 are set. Timeout afterwards.
   ;
   osThreadFlagsWait (0x00000003U, osFlagsWaitAll | osFlagsNoClear, osWaitForever); // Same as the above, but the flags will not be cleared.
 }
