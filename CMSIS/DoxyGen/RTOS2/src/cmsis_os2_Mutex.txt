@@ -69,7 +69,7 @@ or \token{NULL} in case of an error.
 The parameter \a attr sets the mutex object attributes (refer to \ref osMutexAttr_t). Default attributes will be used if set
 to \token{NULL}.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -102,7 +102,7 @@ void CreateMutex (void)  {
 The function \b osMutexGetName returns the pointer to the name string of the mutex identified by parameter \a mutex_id or
 \token{NULL} in case of an error.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -126,6 +126,8 @@ Possible \ref osStatus_t return values:
  - \em osErrorResource: the mutex specified by parameter \a mutex_id is in an invalid mutex state or the mutex could not be
    obtained when no \a timeout was specified.
  - \em osErrorISR: cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -160,6 +162,8 @@ Possible \ref osStatus_t return values:
    obtained before/the current thread is not the owner of the mutex.
  - \em osErrorISR: \b osMutexRelease cannot be called from interrupt service routines.
 
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
 <b>Code Example</b>
 \code
 #include "cmsis_os2.h"
@@ -185,6 +189,8 @@ osStatus_t status;
 \details
 The function \b osMutexGetOwner returns the thread object ID of the thread that acquired a mutex specified by parameter \a
 mutex_id. In case of an error or if the mutex is not owned by the thread, it returns \token{NULL}.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -200,6 +206,8 @@ Possible \ref osStatus_t return values:
  - \em osErrorParameter: parameter \em mutex_id is \token{NULL} or invalid.
  - \em osErrorResource: the mutex specified by parameter \a mutex_id is in an invalid mutex state.
  - \em osErrorISR: \b osMutexDelete cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code

@@ -75,6 +75,8 @@ Possible \ref osStatus_t return values:
 - \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
 - \em osErrorNoMemory if no memory could be reserved for the operation.
 
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
 <b> Code Example</b>
 \code
 #include "RTE_Components.h"
@@ -115,6 +117,8 @@ Possible \ref osStatus_t return values:
 - \em osError if an unspecific error occurred.
 - \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
 
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
 <b>Code Example</b>
 \code
 void info (void) {
@@ -136,11 +140,16 @@ void info (void) {
 /**
 \fn osKernelState_t osKernelGetState (void)
 \details
-The function \b osKernelGetState returns the current state of the kernel and can be safely called before the RTOS is initialized. In case it fails or if it is called from an ISR, it will return \c osKernelError, otherwise it returns the kernel state (refer to \ref osKernelState_t for the list of kernel states).
+The function \b osKernelGetState returns the current state of the kernel and can be safely called before the RTOS is
+initialized. In case it fails or if it is called from an ISR, it will return \c osKernelError, otherwise it returns the
+kernel state (refer to \ref osKernelState_t for the list of kernel states).
 
 Possible \ref osKernelState_t return values:
-- \ref osKernelError if an unspecific error occurred or it has been called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+- \ref osKernelError if an unspecific error occurred or it has been called from an
+  \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
 - the actual kernel state otherwise.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -167,6 +176,8 @@ Possible \ref osStatus_t return values:
 - \em osError if an unspecific error occurred.
 - \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
  
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
 <b>Code Example</b>
 \code
 int main (void) {
@@ -194,6 +205,8 @@ The function \b osKernelLock allows to lock all task switches. It returns the pr
 it was locked, \token{0} if it was unlocked), or a negative number representing an error code otherwise (refer to
 \ref osStatus_t).
 
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
 <b>Code Example</b>
 \code
   uint32_t state = osKernelLock();
@@ -209,6 +222,8 @@ it was locked, \token{0} if it was unlocked), or a negative number representing 
 The function \b osKernelUnlock resumes from \ref osKernelLock. It returns the previous value of the lock state (\token{1} if
 it was locked, \token{0} if it was unlocked), or a negative number representing an error code otherwise (refer to
 \ref osStatus_t).
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -235,6 +250,8 @@ The argument \a lock specifies the lock state as obtained by \ref osKernelLock o
 The function returns the new value of the lock state (\token{1} if it was locked, \token{0} if it was unlocked), or a
 negative number representing an error code otherwise (refer to \ref osStatus_t).
 
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
 <b>Code Example</b>
 \code
   uint32_t sl = osKernelLock();
@@ -256,6 +273,8 @@ negative number representing an error code otherwise (refer to \ref osStatus_t).
 CMSIS-RTOS provides extension for tick-less operation which is useful for applications that use extensively low-power modes
 where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to derive
 timer intervals. The function \b osKernelSuspend suspends the RTX kernel scheduler and thus enables sleep modes.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -299,6 +318,8 @@ where the SysTick timer is also disabled. To provide a time-tick in such power-s
 timer intervals. The function \b osKernelResume enables the RTX kernel scheduler and thus wakes up the system from sleep
 mode.
 
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
 <b>Code Example</b>
 \code
 void osRtxIdleThread (void) {
@@ -337,6 +358,8 @@ void osRtxIdleThread (void) {
 \fn uint64_t osKernelGetTickCount (void)
 \details
 The function \b osKernelGetTickCount returns the current RTOS kernel tick count or \token{0} in case of a failure.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -344,6 +367,8 @@ The function \b osKernelGetTickCount returns the current RTOS kernel tick count 
 \fn uint32_t osKernelGetTickFreq (void)
 \details
 The function \b osKernelGetTickFreq returns the frequency of the current RTOS kernel tick or \token{0} in case of a failure.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -351,6 +376,8 @@ The function \b osKernelGetTickFreq returns the frequency of the current RTOS ke
 \fn uint32_t osKernelGetSysTimerCount (void)
 \details
 The function \b osKernelGetSysTimerCount returns the current RTOS kernel system timer as a 32-bit value or \token{0} in case of a failure.
+
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -358,6 +385,8 @@ The function \b osKernelGetSysTimerCount returns the current RTOS kernel system 
 \fn uint32_t osKernelGetSysTimerFreq (void)
 \details
 The function \b osKernelGetSysTimerFreq returns the frequency of the current RTOS kernel system timer or \token{0} in case of a failure.
+
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /// @}
 
