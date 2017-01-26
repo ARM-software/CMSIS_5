@@ -281,7 +281,7 @@ The function \b osThreadNew returns the pointer to the thread object identifier 
 The function \b osThreadGetName returns the pointer to the name string of the thread identified by parameter \a thread_id or
 \token{NULL} in case of an error.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -302,7 +302,7 @@ void ThreadGetName_example (void)  {
 \details
 The function \b osThreadGetId returns the thread object ID of the currently running thread or NULL in case of an error.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -324,7 +324,7 @@ The function \b osThreadGetState returns the state of the thread identified by p
 if it is called from an ISR, it will return \c osThreadError, otherwise it returns the thread state (refer to
 \ref osThreadState_t for the list of thread states).
  
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -339,6 +339,8 @@ Possible \ref osStatus_t return values:
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid or \a priority is incorrect.
     - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
     - \em osErrorISR: the function \b osThreadSetPriority cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -370,8 +372,10 @@ The function \b osThreadGetPriority returns the priority of an active thread spe
 
 Possible \ref osPriority_t return values:
     - \em priority: the priority of the specified thread.
-    - \em osPriorityError: priority cannot be determined or is illegal.
-    - \em osPriorityErrorISR: the function \b osThreadGetPriority cannot be called from interrupt service routines.
+    - \em osPriorityError: priority cannot be determined or is illegal. It is also returned when the function is called from
+      \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -397,6 +401,8 @@ Possible \ref osStatus_t return values:
     - \em osOK: control has been passed to the next thread successfully.
     - \em osError: an unspecified error has occurred.
     - \em osErrorISR: the function \b osThreadYield cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -427,6 +433,8 @@ Possible \ref osStatus_t return values:
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
     - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
     - \em osErrorISR: the function \b osThreadSuspend cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -449,6 +457,8 @@ Possible \ref osStatus_t return values:
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
     - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
     - \em osErrorISR: the function \b osThreadResume cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -464,6 +474,8 @@ Possible \ref osStatus_t return values:
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
     - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
     - \em osErrorISR: the function \b osThreadDetach cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -481,6 +493,8 @@ Possible \ref osStatus_t return values:
     - \em osErrorResource: parameter \em thread_id is \token{NULL} or refers to a thread that is not an active thread or the
       thread is not joinable.
     - \em osErrorISR: the function \b osThreadJoin cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -489,6 +503,8 @@ Possible \ref osStatus_t return values:
 \details
 
 The function \b osThreadExit terminates the calling thread. This allows the thread to be synchronized with \ref osThreadJoin.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 \b Code \b Example
 \code
@@ -514,6 +530,8 @@ Possible \ref osStatus_t return values:
     - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state or no
       other \b READY thread exists.
     - \em osErrorISR: the function \b osThreadTerminate cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -545,7 +563,7 @@ void ThreadTerminate_example (void) {
 The function \b osThreadGetStackSize returns the stack size of the thread specified by parameter \a thread_id. In case of an
 error, it returns \token{0}.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -556,7 +574,7 @@ The function \b osThreadGetStackSpace returns the size of unused stack space for
 \a thread_id. Stack watermark recording during execution needs to be enabled (refer to \ref threadConfig). In case of an
 error, it returns \token{0}.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -565,7 +583,7 @@ error, it returns \token{0}.
 \details
 The function \b osThreadGetCount returns the number of active threads or \token{0} in case of an error.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -574,7 +592,7 @@ The function \b osThreadGetCount returns the number of active threads or \token{
 \details
 The function \b osThreadEnumerate returns the number of enumerated threads or \token{0} in case of an error.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /// @}
@@ -625,5 +643,5 @@ See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZon
 
 \var osThreadAttr_t::stack_size
 \details
-The size of the stack specified by \ref stack_mem in Bytes.
+The size of the stack in Bytes.
 */

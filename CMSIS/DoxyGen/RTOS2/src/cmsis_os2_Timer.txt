@@ -87,7 +87,7 @@ The parameter \a attr sets the timer attributes (refer to \ref osTimerAttr_t). D
 
 The function \b osTimerNew returns the pointer to the timer object identifier or \token{NULL} in case of an error.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -129,7 +129,7 @@ void TimerCreate_example (void)  {
 The function \b osTimerGetName returns the pointer to the name string of the timer identified by parameter \a timer_id or
 \token{NULL} in case of an error.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -144,6 +144,8 @@ Possible \ref osStatus_t return values:
  - \em osErrorISR: \b osTimerStart cannot be called from interrupt service routines.
  - \em osErrorParameter: parameter \a timer_id is either \token{NULL} or invalid or \a ticks is incorrect.
  - \em osErrorResource: the timer specified by parameter \a timer_id is in an invalid timer state.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -186,7 +188,9 @@ Possible \ref osStatus_t return values:
  - \em osOK: the specified timer has been stopped.
  - \em osErrorISR: \b osTimerStop cannot be called from interrupt service routines.
  - \em osErrorParameter: parameter \a timer_id is either \token{NULL} or invalid.
- - \em osErrorResource: the timer specified by parameter \a timer_id is in an invalid timer state.
+ - \em osErrorResource: the timer specified by parameter \a timer_id is not running (you can only stop a running timer).
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -223,7 +227,7 @@ void TimerStop_example (void)  {
 the function \b osTimerIsRunning checks whether a timer specified by parameter \a timer_id is running. It returns \token{1}
 if the timer is running and \token{0} if the timer is stopped or an error occurred.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -237,6 +241,8 @@ Possible \ref osStatus_t return values:
  - \em osErrorISR: \b osTimerDelete cannot be called from interrupt service routines.
  - \em osErrorParameter: parameter \a timer_id is either \token{NULL} or invalid.
  - \em osErrorResource: the timer specified by parameter \a timer_id is in an invalid timer state.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code

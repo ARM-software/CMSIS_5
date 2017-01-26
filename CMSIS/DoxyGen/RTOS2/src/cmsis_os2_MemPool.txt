@@ -44,7 +44,7 @@ The parameter \a block_size sets memory size in bytes.
 
 The parameter \a attr specifies additional memory pool attributes. Default attributes will be used if set to \token{NULL}.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -54,7 +54,7 @@ The parameter \a attr specifies additional memory pool attributes. Default attri
 The function \b osMemoryPoolGetName returns the pointer to the name string of the memory pool identified by parameter \a
 mp_id or \token{NULL} in case of an error.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -71,7 +71,7 @@ the following values:
  - when \a timeout is set to \b osWaitForever the function will wait for an infinite time until the memory is allocated.
  - all other values specify a time in kernel ticks for a timeout.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
+\note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
 */
 
@@ -87,7 +87,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorParameter: parameter \a mp_id is \token{NULL} or invalid.
  - \em osErrorResource: the memory pool specified by parameter \a mp_id is in an invalid memory pool state.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -97,7 +97,7 @@ Possible \ref osStatus_t return values:
 The function \b osMemoryPoolGetCapacity returns the maximum number of memory blocks in the memory pool object specified by
 parameter \a mp_id or \token{0} in case of an error.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -107,7 +107,7 @@ parameter \a mp_id or \token{0} in case of an error.
 The function \b osMemoryPoolGetBlockSize returns the memory block size in bytes in the memory pool object specified by
 parameter \a mp_id or \token{0} in case of an error.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -117,7 +117,7 @@ parameter \a mp_id or \token{0} in case of an error.
 The function \b osMemoryPoolGetCount returns the number of memory blocks used in the memory pool object specified by
 parameter \a mp_id or \token{0} in case of an error.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -127,7 +127,7 @@ parameter \a mp_id or \token{0} in case of an error.
 The function \b osMemoryPoolGetSpace returns the number of memory blocks available in the memory pool object specified by
 parameter \a mp_id or \token{0} in case of an error.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -143,5 +143,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorParameter: parameter \a mp_id is \token{NULL} or invalid.
  - \em osErrorResource: the memory pool specified by parameter \a mp_id is in an invalid memory pool state.
  - \em osErrorISR: \b osMemoryPoolDelete cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /// @}
