@@ -23,6 +23,8 @@ Possible \ref osStatus_t return values:
  - \em osOK: the time delay is executed.
  - \em osErrorISR: \ref osDelay cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
 <b>Code Example</b>
 \code
 #include "cmsis_os2.h"
@@ -47,6 +49,8 @@ Possible \ref osStatus_t return values:
  - \em osOK: the time delay is executed.
  - \em osParameter: the time is either in the past or cannot be handled (out of bounds).
  - \em osErrorISR: \ref osDelayUntil cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code

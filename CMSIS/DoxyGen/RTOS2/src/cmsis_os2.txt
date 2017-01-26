@@ -80,11 +80,12 @@ File/Folder                  | Content
     <tr>
       <td>V2.1.0</td>
       <td>
-        Support for critical and uncritical sections (nesting safe):\n 
-         - updated: osKernelLock, osKernelUnlock\n
-         - added: osKernelRestoreLock\n
-        Updated Thread and Event Flags:\n
-         - changed flags parameter and return type from int32_t to uint32_t\n
+        Support for critical and uncritical sections (nesting safe):
+         - updated: osKernelLock, osKernelUnlock
+         - added: osKernelRestoreLock
+         
+        Updated Thread and Event Flags:
+         - changed flags parameter and return type from int32_t to uint32_t
      </td>
     </tr>
     <tr>
@@ -145,11 +146,11 @@ File/Folder                  | Content
     <tr>
       <td>V5.1.0</td>
       <td>
-       Based on CMSIS-RTOS API V2.1.\n
-       Added support for Event recording.\n
-       Added support for IAR compiler.\n
-       Configuration file split into .h and .c file.\n
-       osRtx name-space for RTX specific symbols.\n
+       - Based on CMSIS-RTOS API V2.1.
+       - Added support for Event recording.
+       - Added support for IAR compiler.
+       - Configuration file split into .h and .c file.
+       - osRtx name-space for RTX specific symbols.
       </td>
     </tr>
     <tr>
