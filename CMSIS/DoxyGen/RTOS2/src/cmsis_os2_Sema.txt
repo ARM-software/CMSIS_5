@@ -83,7 +83,7 @@ The parameter \em initial_count sets the initial number of available tokens.
 
 The parameter \em attr specifies additional semaphore attributes. Default attributes will be used if set to \token{NULL}.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -144,7 +144,7 @@ void Thread_Semaphore (void *argument)
 The function \b osSemaphoreGetName returns the pointer to the name string of the semaphore identified by parameter \a
 semaphore_id or \token{NULL} in case of an error.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -168,7 +168,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorResource: the token could not be obtained when no \a timeout was specified.
  - \em osErrorParameter: the parameter \a semaphore_id is incorrect.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
+\note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
  
 <b>Code Example</b>
@@ -188,7 +188,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorResource: the maximum token count has been reached.
  - \em osErrorParameter: the parameter \a semaphore_id is incorrect.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 
@@ -201,6 +201,8 @@ Refer to \ref osSemaphoreNew.
 \details
 The function \b osSemaphoreGetCount returns the count of available semaphores of the semaphore object specified by parameter
 \a semaphore_id. In case of an error, it returns \token{0}.
+
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -216,5 +218,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorParameter: the parameter \a semaphore_id is \token{NULL} or invalid.
  - \em osErrorResource: the semaphore specified by parameter \em semaphore_id is in an invalid semaphore state.
  - \em osErrorISR: \b osSemaphoreDelete cannot be called from interrupt service routines.
- */
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+*/
 /// @}
