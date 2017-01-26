@@ -2,6 +2,16 @@
 \page ChangeLog_pg  Change Log
 
 <hr>
+<b>Version 1.5.0</b>
+
+Modified arm_math.h
+- removed macro TABLE_SIZE.
+- changed preprocessor conditions to select functions instead of SIMD instruction for Cortex-M3.
+
+Modified arm_const_structs.c
+- Added structure instances for the RFFT functions (equivalent to CFFT structures).
+
+<hr>
 <b>Version 1.4.10 (no source code change [still labeled 1.4.5])</b>
 
 Modified arm_sin_cos_f32.c
