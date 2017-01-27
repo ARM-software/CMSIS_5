@@ -1,6 +1,6 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page cp_Packs Create Software Packs
+\page cp_Packs Software Packs Overview
 
 The <b>CMSIS-Pack</b> format is used to deliver a Software Pack and is aimed to be scalable for future requirements.
 It provides a management process and supports a tool independent distribution for:
@@ -35,6 +35,60 @@ It provides a management process and supports a tool independent distribution fo
    good starting point for implementing his application. 
 
 
+\section PackFilenames Pack Conventions
+
+All files that belong to a \ref cp_SWComponents "Software Pack" are compressed into a *.PACK file using a standard
+<a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29" target="_blank">ZIP file format</a>.
+The content of each \ref cp_SWComponents "Software Pack" is described in the Pack Description (*.PDSC) file that is part of
+each \b Pack. Refer to \ref packFormat for more information. 
+
+\subsection pack_filename Pack File Name
+
+A \ref cp_SWComponents "Software Pack" must have a unique filename following this naming convention:
+<b>\<vendor\>.\<name\>.\<version\>.pack</b>.
+
+\b Where:
+ - <b>\<vendor\></b> is name of the supplier or vendor of the \ref cp_SWComponents "Software Pack".
+ - <b>\<name\></b> is name of the \ref cp_SWComponents "Software Pack". It is the vendor's responsibility to ensure unique package names.
+ - <b>\<version\></b>specifies the version number of the \ref cp_SWComponents "Software Pack".
+ - <b>.pack</b> is the file extension identifying a \ref cp_SWComponents "Software Pack".
+
+\note
+- The XML elements \elem{vendor}, \elem{name}, and \elem{version} are declared in the \ref Filenames "PDSC" file.
+- \elem{vendor} and \elem{name} \em must \em not contain spaces.
+
+The PDSC file needs to reside at the top-level of the Pack file, using it as the root directory for all file references.
+
+
+\subsection pack_Cclass Software Component Cclasses
+
+If you add a software component in the PDSC file, you have to specify a component class (CClass), component group (Cgroup),
+and the component's version number (Cversion). For more information refer to \ref cp_Components.
+
+If applicable, try to map the \b Cclass of your software component to one of the following predefined or already well
+established classes:
+- Board Support: Generic interfaces for evaluation and development boards
+- CMSIS: <i>Cortex Microcontroller Software Interface Standard</i> components
+- CMSIS Driver: Unified device drivers compliant to the CMSIS-Driver specification
+- Compiler: ARM Compiler software extensions
+- Data Exchange: Software components for data exchange
+- Device: Startup and system setup components
+- File System*: File drive support and file system
+- Graphics*: Graphical libraries for user interfaces
+- Network*: Network stack using Internet protocols
+- RTOS*: Real-time operating systems
+- Safety: Components for testing application software against safety standards
+- Security*: Encryption for secure communication or storage
+- USB*: Universal Serial Bus stack
+- Wireless*: Communication stacks such as Bluetooth, WiFi, and ZigBee
+
+Classes with a * should always be used together with a \ref Component_Bundle "bundle" to avoid conflicts with other software
+components.
+
+If you wish to standardize a new Cclass, please send an inquiry to cmsis@arm.com or raise an issue on the public 
+<a href="https://github.com/ARM-software/CMSIS_5/issues">CMSIS GitHub development repository</a>.
+
+
 \section cp_PackSteps Steps to Create a Pack
 
 The following image shows the basic steps that are required to create a Software Pack:
@@ -54,29 +108,8 @@ The page \ref createPack_DFP adds information on the additional requirements tha
 elaborate on the content specific to a BSP.
 
 
-\section PackFilenames Pack Conventions
-
-All files that belong to a \ref cp_SWComponents "Software Pack" are compressed into a *.PACK file using a standard
-<a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29" target="_blank">ZIP file format</a>.
-The content of each \ref cp_SWComponents "Software Pack" is described in the Pack Description (*.PDSC) file that is part of each
-\b Pack. Refer to \ref packFormat for more information. 
-
-A \ref cp_SWComponents "Software Pack" must have a unique filename following this naming convention:
-<b>\<vendor\>.\<name\>.\<version\>.pack</b>.
-
-\b Where:
- - <b>\<vendor\></b> is name of the supplier or vendor of the \ref cp_SWComponents "Software Pack".
- - <b>\<name\></b> is name of the \ref cp_SWComponents "Software Pack". It is the vendor's responsibility to ensure unique package names.
- - <b>\<version\></b>specifies the version number of the \ref cp_SWComponents "Software Pack".
- - <b>.pack</b> is the file extension identifying a \ref cp_SWComponents "Software Pack".
-
-\note
-- The XML elements \elem{vendor}, \elem{name}, and \elem{version} are declared in the \ref Filenames "PDSC" file.
-- \elem{vendor} and \elem{name} \em must \em not contain spaces.
-
-The PDSC file needs to reside at the top-level of the Pack file, using it as the root directory for all file references.
-
 \section PackTutorials Pack Tutorial
+
 The <b>ARM::CMSIS</b> Pack contains tutorials that are explained on the following pages. In the \b \\CMSIS\\Pack\\Tutorials
 directory the following three ZIP files are available:
 |ZIP File                           |Documentation        
