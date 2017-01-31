@@ -232,7 +232,9 @@ This element bundles one project.
   </create>
 </package>
 \endcode
+
 \n
+                                   
 <table class="cmtable" summary="Element: project">
   <tr>
     <th>Parents</th>
@@ -322,7 +324,7 @@ This element describes the hardware target, including memory layout, debug probe
   </create>
 </package>
 \endcode
-\n
+
 <table class="cmtable" summary="Element: target">
   <tr>
     <th>Parents</th>

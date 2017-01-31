@@ -232,9 +232,8 @@ TAB_SIZE               = 8
 
 ALIASES                = "token{1}=<span class=\"XML-Token\">\1</span>" \
                          "elem{1}=\b \<\1>" \
-                         "tagem{1}=<em>\<\1\></em>" \
-                         "refelem{1}=\ref element_\1 \"\1\"" \
-                         "delim=<p>&nbsp;<p> <hr>"
+                         tagem{1}=<em>\<\1\></em> \
+                         "refelem{1}=\ref element_\1 \"\1\""
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only).
 # A mapping has the form "name=value". For example adding "class=itcl::class"

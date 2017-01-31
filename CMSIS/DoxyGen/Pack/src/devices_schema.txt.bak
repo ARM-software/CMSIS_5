@@ -4007,12 +4007,6 @@ Describes a patch a debugger shall apply when reading data from the device.
     <td>optional</td>
   </tr>
   <tr>
-    <td>address</td>
-    <td>The address for which to apply the patch.</td>
-    <td>NonNegativeInteger</td>
-    <td>required</td>
-  </tr>
-  <tr>
     <td>__dp</td>
     <td>
       The debug port ID to apply the patch for. The allowed values are defined by the <b>__dp</b> attribute of <b>debugport</b>
@@ -4028,6 +4022,12 @@ Describes a patch a debugger shall apply when reading data from the device.
       for the data patch is set to the default <b>__ap</b> of this <b>debug</b> section.
     <td>xs:unsignedInt</td>
     <td>optional</td>
+  </tr>
+  <tr>
+    <td>address</td>
+    <td>The address for which to apply the patch.</td>
+    <td>NonNegativeInteger</td>
+    <td>required</td>
   </tr>
   <tr>
     <td>value</td>

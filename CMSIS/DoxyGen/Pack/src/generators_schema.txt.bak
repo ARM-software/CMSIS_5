@@ -241,7 +241,7 @@ generator element must exist.
   <tr>
     <td>gpdsc</td>
     <td>Path and name of the GPDSC that the generator creates and updates. The path is either absolute or relative to the
-	    working directory. If no explicit gpdsc file is provided, then a gpdsc file named after the project with extension gpdsc in
+	    working directory. If no explicit gpdsc file is provided a gpdsc file named after the project with extension gpdsc in
 		the working directory is assumed (\c \<project>.gpdsc).
     </td>
     <td>xs:string</td>

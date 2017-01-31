@@ -215,8 +215,8 @@ assists searching for packages.
     <td>0..1 </td>
   </td>
   <tr>
-    <td>create</td>
-    <td>Use only when creating CMSIS software projects. Refer to \ref cpdsc_pg for details.</td>
+    <td>\ref cpdsc_pg "create"</td>
+    <td> Use only when creating CMSIS software projects. Refer to \ref cpdsc_pg for details.</td>
     <td>CreateType</td>
     <td>0..1 </td>
   </tr>

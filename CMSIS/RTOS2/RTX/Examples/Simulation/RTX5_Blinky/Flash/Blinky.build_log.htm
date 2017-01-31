@@ -1,0 +1,87 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.21.1.40
+Copyright (C) 2016 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Bruno Arm Arm Flex license: MDK-ARM Professional: 25000 user(s) (mdk_pro) Operation stops: 30 Apr 2017
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Professional: 25000 user(s)  Version: 5.21.1.10
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 4 (build 422)
+Assembler:       Armasm.exe V5.06 update 4 (build 422)
+Linker/Locator:  ArmLink.exe V5.06 update 4 (build 422)
+Library Manager: ArmAr.exe V5.06 update 4 (build 422)
+Hex Converter:   FromElf.exe V5.06 update 4 (build 422)
+CPU DLL:         SARMCM3.DLL V5.21.1.10
+Dialog DLL:      DCM.DLL V1.13.9.0
+Target DLL:      UL2CM3.DLL V1.158.14.0
+Dialog DLL:      TCM.DLL V1.15.8.0
+ 
+<h2>Project:</h2>
+C:\CMSIS_github_tmp\CMSIS_5\CMSIS\RTOS2\RTX\Examples\Simulation\RTX5_Blinky\Blinky.uvprojx
+Project File Date:  10/25/2016
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 4 (build 422)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'Simulation'
+compiling retarget_io.c...
+compiling RTX_Config.c...
+assembling startup_ARMCM3.s...
+compiling Blinky.c...
+compiling system_ARMCM3.c...
+linking...
+Program Size: Code=7368 RO-data=440 RW-data=7864 ZI-data=1024  
+".\Flash\Blinky.axf" - 0 Error(s), 0 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.0.0-Beta14.pack
+                ::CMSIS:RTOS2:2.0 (API)
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: RTOS2 Version: 2.0
+   * Component: CORE Version: 5.0.0
+   * Component: Startup Version: 1.0.1
+   * Component: Keil RTX5 Variant: Release Version: 5.0.0-Alpha
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.ARM_Compiler.1.2.0-Dev8.pack
+                Keil.ARM Compiler::Compiler:I/O:STDOUT:ITM:1.1.0
+                Keil ARM Compiler extensions
+   * Component: STDOUT Variant: ITM Version: 1.1.0
+
+<h2>Collection of Component include folders:</h2>
+  C:\CMSIS_github_tmp\CMSIS_5\CMSIS\RTOS2\RTX\Examples\Simulation\RTX5_Blinky\RTE\_Simulation
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\Include
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\Include
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\RTX\Include
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\Device\ARM\ARMCM3\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ::CMSIS:RTOS2:2.0 (API)
+
+   * Component: ARM::CMSIS:CORE:5.0.0
+
+   * Component: ARM::Device:Startup:1.0.1
+      Include file:  Device\ARM\ARMCM3\Include\ARMCM3.h
+      Source file:   Device\ARM\ARMCM3\Source\ARM\startup_ARMCM3.s
+      Source file:   Device\ARM\ARMCM3\Source\system_ARMCM3.c
+
+   * Component: ARM::CMSIS:RTOS2:Keil RTX5:Release:5.0.0-Alpha
+      Include file:  CMSIS\RTOS2\Include\cmsis_os2.h
+      Include file:  CMSIS\RTOS2\RTX\Include\rtx_os.h
+      Source file:   CMSIS\RTOS2\RTX\Config\RTX_Config.c
+      Source file:   CMSIS\RTOS2\RTX\Template\main.c
+      Source file:   CMSIS\RTOS2\RTX\Source\user_svc.c
+      Library file:  CMSIS\RTOS2\RTX\Library\ARM\RTX_CM3.lib
+
+   * Component: Keil.ARM Compiler::Compiler:I/O:STDOUT:ITM:1.1.0
+      Source file:   Source\retarget_io.c
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>

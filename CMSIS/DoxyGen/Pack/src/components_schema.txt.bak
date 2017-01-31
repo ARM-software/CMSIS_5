@@ -589,7 +589,7 @@ The file purpose is defined through the <b>category</b> attribute. The <b>name</
   </tr>
   <tr>
     <td>\ref element_files "files"</td>
-    <td colspan="3">\ref element_gen_project_files "/package/generators/generator/project_files"</td>
+    <td colspan="3">\ref element_gen_project_files "/package/generators/generator/project/files"</td>
   </tr>
   <tr>
     <th>Attributes</th>

@@ -37,15 +37,15 @@ The figure above shows the following use cases for Software Packs:
 
 The following sections give you more details on the basics:
  - \subpage cp_Packs explains the steps required for creating a Software Pack in general.
- - \subpage cp_SWComponents gives detailed information on the contents of the PDSC file.
- - \subpage createPack_DFP describes additional requirements of Device Family Packs (DFPs).
- - \subpage createPackBoard covers the creation of Board Support Packs (BSPs).
- - \subpage pack_Example explains the Software Pack example that is part of the CMSIS Pack in more detail.
- - \subpage createPackPublish shows the options for publishing a Pack.
- - \subpage createPackUtil caters to programs that are useful during the creation of a Pack.
- - \subpage packFormat describes all XML elements that can be used in a PDSC file.
- - \subpage cpdsc_pg describes all XML elements that can be used to create a software example project.
- - \subpage configWizard can be used to create GUI-like elements in development tools for configuration files.
+ - \ref cp_SWComponents gives detailed information on the contents of the PDSC file.
+ - \ref createPack_DFP describes additional requirements of Device Family Packs (DFPs).
+ - \ref createPackBoard covers the creation of Board Support Packs (BSPs).
+ - \ref pack_Example explains the Software Pack example that is part of the CMSIS Pack in more detail.
+ - \ref createPackPublish shows the options for publishing a Pack.
+ - \ref createPackUtil caters to programs that are useful during the creation of a Pack.
+ - \ref packFormat describes all XML elements that can be used in a PDSC file.
+ - \ref cpdsc_pg describes all XML elements that can be used to create a software example project.
+ - \ref configWizard can be used to create GUI-like elements in development tools for configuration files.
  
 <hr>
 
