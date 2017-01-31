@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,17 +17,19 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        25. November 2016
- * $Revision:    V2.1
+ * $Date:        10. January 2017
+ * $Revision:    V2.1.0
  *
  * Project:      CMSIS-RTOS2 API
  * Title:        cmsis_os2.h header file
  *
- * Version 2.1
- *    Support for critical and uncritical sections (nesting safe)
+ * Version 2.1.0
+ *    Support for critical and uncritical sections (nesting safe):
  *    - updated: osKernelLock, osKernelUnlock
  *    - added: osKernelRestoreLock
- * Version 2.0
+ *    Updated Thread and Event Flags:
+ *    - changed flags parameter and return type from int32_t to uint32_t
+ * Version 2.0.0
  *    Initial Release
  *---------------------------------------------------------------------------*/
  
@@ -152,37 +154,45 @@ typedef void (*osTimerFunc_t) (void *argument);
  
 /// Timer type.
 typedef enum {
-  osTimerOnce             = 0,          ///< One-shot timer.
-  osTimerPeriodic         = 1           ///< Repeating timer.
+  osTimerOnce               = 0,          ///< One-shot timer.
+  osTimerPeriodic           = 1           ///< Repeating timer.
 } osTimerType_t;
  
 /// Timeout value.
-#define osWaitForever       0xFFFFFFFFU ///< Wait forever timeout value.
+#define osWaitForever         0xFFFFFFFFU ///< Wait forever timeout value.
  
 /// Flags options (\ref osThreadFlagsWait and \ref osEventFlagsWait).
-#define osFlagsWaitAny      0x00000000U ///< Wait for any flag (default).
-#define osFlagsWaitAll      0x00000001U ///< Wait for all flags.
-#define osFlagsNoClear      0x00000002U ///< Do not clear flags which have been specified to wait for.
+#define osFlagsWaitAny        0x00000000U ///< Wait for any flag (default).
+#define osFlagsWaitAll        0x00000001U ///< Wait for all flags.
+#define osFlagsNoClear        0x00000002U ///< Do not clear flags which have been specified to wait for.
+ 
+/// Flags errors (returned by osThreadFlagsXxxx and osEventFlagsXxxx).
+#define osFlagsError          0x80000000U ///< Error indicator.
+#define osFlagsErrorUnknown   0xFFFFFFFFU ///< osError (-1).
+#define osFlagsErrorTimeout   0xFFFFFFFEU ///< osErrorTimeout (-2).
+#define osFlagsErrorResource  0xFFFFFFFDU ///< osErrorResource (-3).
+#define osFlagsErrorParameter 0xFFFFFFFCU ///< osErrorParameter (-4).
+#define osFlagsErrorISR       0xFFFFFFFAU ///< osErrorISR (-6).
  
 /// Thread attributes (attr_bits in \ref osThreadAttr_t).
-#define osThreadDetached    0x00000000U ///< Thread created in detached state (default)
-#define osThreadJoinable    0x00000001U ///< Thread created in joinable state
+#define osThreadDetached      0x00000000U ///< Thread created in detached state (default)
+#define osThreadJoinable      0x00000001U ///< Thread created in joinable state
  
 /// Mutex attributes (attr_bits in \ref osMutexAttr_t).
-#define osMutexRecursive    0x00000001U ///< Recursive mutex.
-#define osMutexPrioInherit  0x00000002U ///< Priority inherit protocol.
-#define osMutexRobust       0x00000008U ///< Robust mutex.
+#define osMutexRecursive      0x00000001U ///< Recursive mutex.
+#define osMutexPrioInherit    0x00000002U ///< Priority inherit protocol.
+#define osMutexRobust         0x00000008U ///< Robust mutex.
  
 /// Status code values returned by CMSIS-RTOS functions.
 typedef enum {
-  osOK                    =  0,         ///< Operation completed successfully.
-  osError                 = -1,         ///< Unspecified RTOS error: run-time error but no other error message fits.
-  osErrorTimeout          = -2,         ///< Operation not completed within the timeout period.
-  osErrorResource         = -3,         ///< Resource not available.
-  osErrorParameter        = -4,         ///< Parameter error.
-  osErrorNoMemory         = -5,         ///< System is out of memory: it was impossible to allocate or reserve memory for the operation.
-  osErrorISR              = -6,         ///< Not allowed in ISR context: the function cannot be called from interrupt service routines.
-  osStatusReserved        = 0x7FFFFFFF  ///< Prevents enum down-size compiler optimization.
+  osOK                      =  0,         ///< Operation completed successfully.
+  osError                   = -1,         ///< Unspecified RTOS error: run-time error but no other error message fits.
+  osErrorTimeout            = -2,         ///< Operation not completed within the timeout period.
+  osErrorResource           = -3,         ///< Resource not available.
+  osErrorParameter          = -4,         ///< Parameter error.
+  osErrorNoMemory           = -5,         ///< System is out of memory: it was impossible to allocate or reserve memory for the operation.
+  osErrorISR                = -6,         ///< Not allowed in ISR context: the function cannot be called from interrupt service routines.
+  osStatusReserved          = 0x7FFFFFFF  ///< Prevents enum down-size compiler optimization.
 } osStatus_t;
  
  
@@ -432,24 +442,24 @@ uint32_t osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items);
 /// Set the specified Thread Flags of a thread.
 /// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
 /// \param[in]     flags         specifies the flags of the thread that shall be set.
-/// \return thread flags after setting or error code if negative.
-int32_t osThreadFlagsSet (osThreadId_t thread_id, int32_t flags);
+/// \return thread flags after setting or error code if highest bit set.
+uint32_t osThreadFlagsSet (osThreadId_t thread_id, uint32_t flags);
  
 /// Clear the specified Thread Flags of current running thread.
 /// \param[in]     flags         specifies the flags of the thread that shall be cleared.
-/// \return thread flags before clearing or error code if negative.
-int32_t osThreadFlagsClear (int32_t flags);
+/// \return thread flags before clearing or error code if highest bit set.
+uint32_t osThreadFlagsClear (uint32_t flags);
  
 /// Get the current Thread Flags of current running thread.
 /// \return current thread flags.
-int32_t osThreadFlagsGet (void);
+uint32_t osThreadFlagsGet (void);
  
 /// Wait for one or more Thread Flags of the current running thread to become signaled.
 /// \param[in]     flags         specifies the flags to wait for.
 /// \param[in]     options       specifies flags options (osFlagsXxxx).
 /// \param[in]     timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
-/// \return thread flags before clearing or error code if negative.
-int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout);
+/// \return thread flags before clearing or error code if highest bit set.
+uint32_t osThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout);
  
  
 //  ==== Generic Wait Functions ====
@@ -517,27 +527,27 @@ const char *osEventFlagsGetName (osEventFlagsId_t ef_id);
 /// Set the specified Event Flags.
 /// \param[in]     ef_id         event flags ID obtained by \ref osEventFlagsNew.
 /// \param[in]     flags         specifies the flags that shall be set.
-/// \return event flags after setting or error code if negative.
-int32_t osEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags);
+/// \return event flags after setting or error code if highest bit set.
+uint32_t osEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags);
  
 /// Clear the specified Event Flags.
 /// \param[in]     ef_id         event flags ID obtained by \ref osEventFlagsNew.
 /// \param[in]     flags         specifies the flags that shall be cleared.
-/// \return event flags before clearing or error code if negative.
-int32_t osEventFlagsClear (osEventFlagsId_t ef_id, int32_t flags);
+/// \return event flags before clearing or error code if highest bit set.
+uint32_t osEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags);
  
 /// Get the current Event Flags.
 /// \param[in]     ef_id         event flags ID obtained by \ref osEventFlagsNew.
 /// \return current event flags.
-int32_t osEventFlagsGet (osEventFlagsId_t ef_id);
+uint32_t osEventFlagsGet (osEventFlagsId_t ef_id);
  
 /// Wait for one or more Event Flags to become signaled.
 /// \param[in]     ef_id         event flags ID obtained by \ref osEventFlagsNew.
 /// \param[in]     flags         specifies the flags to wait for.
 /// \param[in]     options       specifies flags options (osFlagsXxxx).
 /// \param[in]     timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
-/// \return event flags before clearing or error code if negative.
-int32_t osEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout);
+/// \return event flags before clearing or error code if highest bit set.
+uint32_t osEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout);
  
 /// Delete an Event Flags object.
 /// \param[in]     ef_id         event flags ID obtained by \ref osEventFlagsNew.

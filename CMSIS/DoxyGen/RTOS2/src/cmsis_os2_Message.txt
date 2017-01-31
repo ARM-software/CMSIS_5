@@ -48,7 +48,7 @@ The parameter \a msg_size sets message size in bytes.
 
 The parameter \a attr specifies additional message queue attributes. Default attributes will be used if set to \token{NULL}.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 
@@ -62,7 +62,7 @@ Refer to \ref osMessageQueuePut
 The function \b osMessageQueueGetName returns the pointer to the name string of the message queue identified by parameter \a
 mq_id or \token{NULL} in case of an error.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 */
@@ -89,7 +89,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorResource: not enough space in the queue.
  - \em osErrorParameter: the parameter \a mq_id is incorrect, non-zero timeout specified in an ISR.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
+\note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
 
 <b>Code Example:</b>
@@ -179,7 +179,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorResource: nothing to get from  the queue.
  - \em osErrorParameter: the parameter \a mq_id is incorrect, non-zero timeout specified in an ISR.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
+\note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
 
 <b>Code Example</b>
@@ -194,7 +194,7 @@ Refer to \ref osMessageQueuePut
 The function \b osMessageQueueGetCapacity returns the maximum number of messages in the message queue object specified by
 parameter \a mq_id or \token{0} in case of an error.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -204,7 +204,7 @@ parameter \a mq_id or \token{0} in case of an error.
 The function \b osMessageQueueGetMsgSize returns the maximum message size in bytes for the message queue object specified by
 parameter \a mq_id or \token{0} in case of an error.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -214,7 +214,7 @@ parameter \a mq_id or \token{0} in case of an error.
 The function \b osMessageQueueGetCount returns the number of queued messages in the message queue object specified by
 parameter \a mq_id or \token{0} in case of an error.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -224,7 +224,7 @@ parameter \a mq_id or \token{0} in case of an error.
 The function \b osMessageQueueGetSpace returns the number available slots for messages in the message queue object specified
 by parameter \a mq_id or \token{0} in case of an error.
 
-\note Can be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -238,6 +238,8 @@ Possible \ref osStatus_t return values:
  - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid.
  - \em osErrorResource: the message queue specified by parameter \a mq_id is in an invalid message queue state.
  - \em osErrorISR: \b osMessageQueueReset cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -253,5 +255,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid.
  - \em osErrorResource: the message queue specified by parameter \a mq_id is in an invalid message queue state.
  - \em osErrorISR: \b osMessageQueueDelete cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /// @}

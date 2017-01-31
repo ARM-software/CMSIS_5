@@ -81,6 +81,13 @@ The CMSIS-CORE \ref templates_pg supplied by ARM have been tested and verified w
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.0.1</td>
+      <td>
+         Added: macro \ref \__PACKED_STRUCT. \n
+         Added: uVisor support. \n
+      </td>
+    </tr>
+    <tr>
       <td>V5.00</td>
       <td>
 	     Added: Cortex-M23, Cortex-M33 support.\n	 
