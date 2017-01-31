@@ -137,7 +137,7 @@ int32_t main(void)
   /* Calculates maxValue and returns corresponding BIN value */
   arm_max_f32(testOutput, fftSize, &maxValue, &testIndex);
 
-  if(testIndex !=  refIndex)
+  if (testIndex !=  refIndex)
   {
     status = ARM_MATH_TEST_FAILURE;
   }
@@ -147,12 +147,12 @@ int32_t main(void)
   ** This denotes a test failure
   ** ------------------------------------------------------------------- */
 
-  if( status != ARM_MATH_SUCCESS)
+  if ( status != ARM_MATH_SUCCESS)
   {
-    while(1);
+    while (1);
   }
 
-  while(1);                             /* main function does not return */
+  while (1);                             /* main function does not return */
 }
 
  /** \endlink */

@@ -8,7 +8,7 @@ void ref_rfft_f32(
 {
 	uint32_t i;
 	
-	if(S->ifftFlagR)
+	if (S->ifftFlagR)
 	{
 		for(i=0;i<S->fftLenReal*2;i++)
 		{
@@ -43,7 +43,7 @@ void ref_rfft_f32(
 		 break;
 	}
 	
-	if(S->ifftFlagR)
+	if (S->ifftFlagR)
 	{
 		//throw away the imaginary part which should be all zeros
 		for(i=0;i<S->fftLenReal;i++)
@@ -60,7 +60,7 @@ void ref_rfft_fast_f32(
 {
 	uint32_t i,j;
 	
-	if(ifftFlag)
+	if (ifftFlag)
 	{
 		for(i=0;i<S->fftLenRFFT;i++)
 		{
@@ -122,7 +122,7 @@ void ref_rfft_fast_f32(
 		 break;
 	}
 	
-	if(ifftFlag)
+	if (ifftFlag)
 	{
 		//throw away the imaginary part which should be all zeros
 		for(i=0;i<S->fftLenRFFT;i++)
@@ -145,7 +145,7 @@ void ref_rfft_q31(
 	uint32_t i;
 	float32_t *fDst = (float32_t*)pDst;
 	
-	if(S->ifftFlagR)
+	if (S->ifftFlagR)
 	{
 		for(i=0;i<S->fftLenReal*2;i++)
 		{
@@ -200,7 +200,7 @@ void ref_rfft_q31(
 		 break;
 	}
 	
-	if(S->ifftFlagR)
+	if (S->ifftFlagR)
 	{
 		//throw away the imaginary part which should be all zeros		
 		for(i=0;i<S->fftLenReal;i++)
@@ -228,7 +228,7 @@ void ref_rfft_q15(
 	float32_t *fDst = (float32_t*)pDst;
 	
 	
-	if(S->ifftFlagR)
+	if (S->ifftFlagR)
 	{
 		for(i=0;i<S->fftLenReal*2;i++)
 		{
@@ -284,7 +284,7 @@ void ref_rfft_q15(
 		 break;
 	}
 	
-	if(S->ifftFlagR)
+	if (S->ifftFlagR)
 	{
 		//throw away the imaginary part which should be all zeros
 		for(i=0;i<S->fftLenReal;i++)

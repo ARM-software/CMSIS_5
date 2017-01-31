@@ -11,7 +11,7 @@ void ref_max_f32(
 	
 	for(i=0;i<blockSize;i++)
 	{
-		if(max < pSrc[i])
+		if (max < pSrc[i])
 		{
 			max = pSrc[i];
 			ind = i;
@@ -32,7 +32,7 @@ void ref_max_q31(
 	
 	for(i=0;i<blockSize;i++)
 	{
-		if(max < pSrc[i])
+		if (max < pSrc[i])
 		{
 			max = pSrc[i];
 			ind = i;
@@ -53,7 +53,7 @@ void ref_max_q15(
 	
 	for(i=0;i<blockSize;i++)
 	{
-		if(max < pSrc[i])
+		if (max < pSrc[i])
 		{
 			max = pSrc[i];
 			ind = i;
@@ -74,7 +74,7 @@ void ref_max_q7(
 	
 	for(i=0;i<blockSize;i++)
 	{
-		if(max < pSrc[i])
+		if (max < pSrc[i])
 		{
 			max = pSrc[i];
 			ind = i;

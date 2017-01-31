@@ -1,15 +1,15 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
-* Project: 	    CMSIS DSP Library
-* Title:	    arm_const_structs.h
+* Project:      CMSIS DSP Library
+* Title:        arm_const_structs.h
 *
-* Description:	This file has constant structs that are initialized for
-*              user convenience.  For example, some can be given as
-*              arguments to the arm_cfft_f32() function.
+* Description:  This file has constant structs that are initialized for
+*               user convenience.  For example, some can be given as
+*               arguments to the arm_cfft_f32() function.
 *
 * Target Processor: Cortex-M4/Cortex-M3
 *

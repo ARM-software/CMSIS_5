@@ -1,25 +1,25 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_cfft_radix4_q15.c    
-*    
-* Description:	This file has function definition of Radix-4 FFT & IFFT function and    
-*				In-place bit reversal using bit reversal table    
-*    
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+*
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_cfft_radix4_q15.c
+*
+* Description: This file has function definition of Radix-4 FFT & IFFT function and
+*              In-place bit reversal using bit reversal table
+*
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*  
-* Redistribution and use in source and binary forms, with or without 
+*
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -28,7 +28,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -36,7 +36,7 @@
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.     
+* POSSIBILITY OF SUCH DAMAGE.
 * -------------------------------------------------------------------- */
 
 #include "arm_math.h"
@@ -60,52 +60,50 @@ void arm_bitreversal_q15(
   uint16_t bitRevFactor,
   uint16_t * pBitRevTab);
 
-/**    
- * @ingroup groupTransforms    
+/**
+ * @ingroup groupTransforms
  */
 
-/**    
- * @addtogroup ComplexFFT    
- * @{    
+/**
+ * @addtogroup ComplexFFT
+ * @{
  */
 
 
-/**    
- * @details    
- * @brief Processing function for the Q15 CFFT/CIFFT.   
+/**
+ * @details
+ * @brief Processing function for the Q15 CFFT/CIFFT.
  * @deprecated Do not use this function.  It has been superseded by \ref arm_cfft_q15 and will be removed
- * @param[in]      *S    points to an instance of the Q15 CFFT/CIFFT structure.   
- * @param[in, out] *pSrc points to the complex data buffer. Processing occurs in-place.   
- * @return none.   
- *     
- * \par Input and output formats:    
- * \par    
- * Internally input is downscaled by 2 for every stage to avoid saturations inside CFFT/CIFFT process.   
- * Hence the output format is different for different FFT sizes.    
- * The input and output formats for different FFT sizes and number of bits to upscale are mentioned in the tables below for CFFT and CIFFT:   
- * \par   
- * \image html CFFTQ15.gif "Input and Output Formats for Q15 CFFT"    
- * \image html CIFFTQ15.gif "Input and Output Formats for Q15 CIFFT"    
+ * @param[in]      *S    points to an instance of the Q15 CFFT/CIFFT structure.
+ * @param[in, out] *pSrc points to the complex data buffer. Processing occurs in-place.
+ * @return none.
+ *
+ * \par Input and output formats:
+ * \par
+ * Internally input is downscaled by 2 for every stage to avoid saturations inside CFFT/CIFFT process.
+ * Hence the output format is different for different FFT sizes.
+ * The input and output formats for different FFT sizes and number of bits to upscale are mentioned in the tables below for CFFT and CIFFT:
+ * \par
+ * \image html CFFTQ15.gif "Input and Output Formats for Q15 CFFT"
+ * \image html CIFFTQ15.gif "Input and Output Formats for Q15 CIFFT"
  */
 
 void arm_cfft_radix4_q15(
   const arm_cfft_radix4_instance_q15 * S,
   q15_t * pSrc)
 {
-  if(S->ifftFlag == 1u)
+  if (S->ifftFlag == 1u)
   {
     /*  Complex IFFT radix-4  */
-    arm_radix4_butterfly_inverse_q15(pSrc, S->fftLen, S->pTwiddle,
-                                     S->twidCoefModifier);
+    arm_radix4_butterfly_inverse_q15(pSrc, S->fftLen, S->pTwiddle, S->twidCoefModifier);
   }
   else
   {
     /*  Complex FFT radix-4  */
-    arm_radix4_butterfly_q15(pSrc, S->fftLen, S->pTwiddle,
-                             S->twidCoefModifier);
+    arm_radix4_butterfly_q15(pSrc, S->fftLen, S->pTwiddle, S->twidCoefModifier);
   }
 
-  if(S->bitReverseFlag == 1u)
+  if (S->bitReverseFlag == 1u)
   {
     /*  Bit Reversal */
     arm_bitreversal_q15(pSrc, S->fftLen, S->bitRevFactor, S->pBitRevTable);
@@ -113,51 +111,51 @@ void arm_cfft_radix4_q15(
 
 }
 
-/**    
- * @} end of ComplexFFT group    
+/**
+ * @} end of ComplexFFT group
  */
 
-/*    
-* Radix-4 FFT algorithm used is :    
-*    
-* Input real and imaginary data:    
-* x(n) = xa + j * ya    
-* x(n+N/4 ) = xb + j * yb    
-* x(n+N/2 ) = xc + j * yc    
-* x(n+3N 4) = xd + j * yd    
-*    
-*    
-* Output real and imaginary data:    
-* x(4r) = xa'+ j * ya'    
-* x(4r+1) = xb'+ j * yb'    
-* x(4r+2) = xc'+ j * yc'    
-* x(4r+3) = xd'+ j * yd'    
-*    
-*    
-* Twiddle factors for radix-4 FFT:    
-* Wn = co1 + j * (- si1)    
-* W2n = co2 + j * (- si2)    
-* W3n = co3 + j * (- si3)    
-    
-* The real and imaginary output values for the radix-4 butterfly are    
-* xa' = xa + xb + xc + xd    
-* ya' = ya + yb + yc + yd    
-* xb' = (xa+yb-xc-yd)* co1 + (ya-xb-yc+xd)* (si1)    
-* yb' = (ya-xb-yc+xd)* co1 - (xa+yb-xc-yd)* (si1)    
-* xc' = (xa-xb+xc-xd)* co2 + (ya-yb+yc-yd)* (si2)    
-* yc' = (ya-yb+yc-yd)* co2 - (xa-xb+xc-xd)* (si2)    
-* xd' = (xa-yb-xc+yd)* co3 + (ya+xb-yc-xd)* (si3)    
-* yd' = (ya+xb-yc-xd)* co3 - (xa-yb-xc+yd)* (si3)    
-*    
+/*
+* Radix-4 FFT algorithm used is :
+*
+* Input real and imaginary data:
+* x(n) = xa + j * ya
+* x(n+N/4 ) = xb + j * yb
+* x(n+N/2 ) = xc + j * yc
+* x(n+3N 4) = xd + j * yd
+*
+*
+* Output real and imaginary data:
+* x(4r) = xa'+ j * ya'
+* x(4r+1) = xb'+ j * yb'
+* x(4r+2) = xc'+ j * yc'
+* x(4r+3) = xd'+ j * yd'
+*
+*
+* Twiddle factors for radix-4 FFT:
+* Wn = co1 + j * (- si1)
+* W2n = co2 + j * (- si2)
+* W3n = co3 + j * (- si3)
+
+* The real and imaginary output values for the radix-4 butterfly are
+* xa' = xa + xb + xc + xd
+* ya' = ya + yb + yc + yd
+* xb' = (xa+yb-xc-yd)* co1 + (ya-xb-yc+xd)* (si1)
+* yb' = (ya-xb-yc+xd)* co1 - (xa+yb-xc-yd)* (si1)
+* xc' = (xa-xb+xc-xd)* co2 + (ya-yb+yc-yd)* (si2)
+* yc' = (ya-yb+yc-yd)* co2 - (xa-xb+xc-xd)* (si2)
+* xd' = (xa-yb-xc+yd)* co3 + (ya+xb-yc-xd)* (si3)
+* yd' = (ya+xb-yc-xd)* co3 - (xa-yb-xc+yd)* (si3)
+*
 */
 
-/**    
- * @brief  Core function for the Q15 CFFT butterfly process.   
- * @param[in, out] *pSrc16          points to the in-place buffer of Q15 data type.   
- * @param[in]      fftLen           length of the FFT.   
- * @param[in]      *pCoef16         points to twiddle coefficient buffer.   
- * @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.   
- * @return none.   
+/**
+ * @brief  Core function for the Q15 CFFT butterfly process.
+ * @param[in, out] *pSrc16          points to the in-place buffer of Q15 data type.
+ * @param[in]      fftLen           length of the FFT.
+ * @param[in]      *pCoef16         points to twiddle coefficient buffer.
+ * @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
+ * @return none.
  */
 
 void arm_radix4_butterfly_q15(
@@ -167,7 +165,7 @@ void arm_radix4_butterfly_q15(
   uint32_t twidCoefModifier)
 {
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -199,7 +197,7 @@ void arm_radix4_butterfly_q15(
 
   /* Index for input read and output write */
   j = n2;
-  
+
   pSi0 = pSrc16;
   pSi1 = pSi0 + 2 * n2;
   pSi2 = pSi1 + 2 * n2;
@@ -364,7 +362,7 @@ void arm_radix4_butterfly_q15(
     /*  Twiddle coefficients index modifier */
     ic = ic + twidCoefModifier;
 
-  } while(--j);
+  } while (--j);
   /* data is in 4.11(q11) format */
 
   /* end of first stage process */
@@ -392,7 +390,7 @@ void arm_radix4_butterfly_q15(
 
       /*  Twiddle coefficients index modifier */
       ic = ic + twidCoefModifier;
-      
+
       pSi0 = pSrc16 + 2 * j;
       pSi1 = pSi0 + 2 * n2;
       pSi2 = pSi1 + 2 * n2;
@@ -613,7 +611,7 @@ void arm_radix4_butterfly_q15(
 
 #endif /*      #ifndef ARM_MATH_BIG_ENDIAN     */
 
-  } while(--j);
+  } while (--j);
 
   /* end of last stage process */
 
@@ -780,7 +778,7 @@ void arm_radix4_butterfly_q15(
     /*  Updating input index */
     i0 = i0 + 1u;
 
-  } while(--j);
+  } while (--j);
   /* data is in 4.11(q11) format */
 
   /* end of first stage process */
@@ -1023,58 +1021,58 @@ void arm_radix4_butterfly_q15(
   /* output is in 7.9(q9) format for the 64 point  */
   /* output is in 5.11(q11) format for the 16 point  */
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 
 }
 
 
-/**    
- * @brief  Core function for the Q15 CIFFT butterfly process.   
- * @param[in, out] *pSrc16          points to the in-place buffer of Q15 data type.   
- * @param[in]      fftLen           length of the FFT.   
- * @param[in]      *pCoef16         points to twiddle coefficient buffer.   
- * @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.   
- * @return none.   
+/**
+ * @brief  Core function for the Q15 CIFFT butterfly process.
+ * @param[in, out] *pSrc16          points to the in-place buffer of Q15 data type.
+ * @param[in]      fftLen           length of the FFT.
+ * @param[in]      *pCoef16         points to twiddle coefficient buffer.
+ * @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
+ * @return none.
  */
 
-/*    
-* Radix-4 IFFT algorithm used is :    
-*    
-* CIFFT uses same twiddle coefficients as CFFT function    
-*  x[k] = x[n] + (j)k * x[n + fftLen/4] + (-1)k * x[n+fftLen/2] + (-j)k * x[n+3*fftLen/4]    
-*    
-*    
-* IFFT is implemented with following changes in equations from FFT    
-*    
-* Input real and imaginary data:    
-* x(n) = xa + j * ya    
-* x(n+N/4 ) = xb + j * yb    
-* x(n+N/2 ) = xc + j * yc    
-* x(n+3N 4) = xd + j * yd    
-*    
-*    
-* Output real and imaginary data:    
-* x(4r) = xa'+ j * ya'    
-* x(4r+1) = xb'+ j * yb'    
-* x(4r+2) = xc'+ j * yc'    
-* x(4r+3) = xd'+ j * yd'    
-*    
-*    
-* Twiddle factors for radix-4 IFFT:    
-* Wn = co1 + j * (si1)    
-* W2n = co2 + j * (si2)    
-* W3n = co3 + j * (si3)    
-    
-* The real and imaginary output values for the radix-4 butterfly are    
-* xa' = xa + xb + xc + xd    
-* ya' = ya + yb + yc + yd    
-* xb' = (xa-yb-xc+yd)* co1 - (ya+xb-yc-xd)* (si1)    
-* yb' = (ya+xb-yc-xd)* co1 + (xa-yb-xc+yd)* (si1)    
-* xc' = (xa-xb+xc-xd)* co2 - (ya-yb+yc-yd)* (si2)    
-* yc' = (ya-yb+yc-yd)* co2 + (xa-xb+xc-xd)* (si2)    
-* xd' = (xa+yb-xc-yd)* co3 - (ya-xb-yc+xd)* (si3)    
-* yd' = (ya-xb-yc+xd)* co3 + (xa+yb-xc-yd)* (si3)    
-*    
+/*
+* Radix-4 IFFT algorithm used is :
+*
+* CIFFT uses same twiddle coefficients as CFFT function
+*  x[k] = x[n] + (j)k * x[n + fftLen/4] + (-1)k * x[n+fftLen/2] + (-j)k * x[n+3*fftLen/4]
+*
+*
+* IFFT is implemented with following changes in equations from FFT
+*
+* Input real and imaginary data:
+* x(n) = xa + j * ya
+* x(n+N/4 ) = xb + j * yb
+* x(n+N/2 ) = xc + j * yc
+* x(n+3N 4) = xd + j * yd
+*
+*
+* Output real and imaginary data:
+* x(4r) = xa'+ j * ya'
+* x(4r+1) = xb'+ j * yb'
+* x(4r+2) = xc'+ j * yc'
+* x(4r+3) = xd'+ j * yd'
+*
+*
+* Twiddle factors for radix-4 IFFT:
+* Wn = co1 + j * (si1)
+* W2n = co2 + j * (si2)
+* W3n = co3 + j * (si3)
+
+* The real and imaginary output values for the radix-4 butterfly are
+* xa' = xa + xb + xc + xd
+* ya' = ya + yb + yc + yd
+* xb' = (xa-yb-xc+yd)* co1 - (ya+xb-yc-xd)* (si1)
+* yb' = (ya+xb-yc-xd)* co1 + (xa-yb-xc+yd)* (si1)
+* xc' = (xa-xb+xc-xd)* co2 - (ya-yb+yc-yd)* (si2)
+* yc' = (ya-yb+yc-yd)* co2 + (xa-xb+xc-xd)* (si2)
+* xd' = (xa+yb-xc-yd)* co3 - (ya-xb-yc+xd)* (si3)
+* yd' = (ya-xb-yc+xd)* co3 + (xa+yb-xc-yd)* (si3)
+*
 */
 
 void arm_radix4_butterfly_inverse_q15(
@@ -1084,7 +1082,7 @@ void arm_radix4_butterfly_inverse_q15(
   uint32_t twidCoefModifier)
 {
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -1116,7 +1114,7 @@ void arm_radix4_butterfly_inverse_q15(
 
   /* Index for input read and output write */
   j = n2;
-  
+
   pSi0 = pSrc16;
   pSi1 = pSi0 + 2 * n2;
   pSi2 = pSi1 + 2 * n2;
@@ -1279,7 +1277,7 @@ void arm_radix4_butterfly_inverse_q15(
     /*  Twiddle coefficients index modifier */
     ic = ic + twidCoefModifier;
 
-  } while(--j);
+  } while (--j);
   /* data is in 4.11(q11) format */
 
   /* end of first stage process */
@@ -1307,7 +1305,7 @@ void arm_radix4_butterfly_inverse_q15(
 
       /*  Twiddle coefficients index modifier */
       ic = ic + twidCoefModifier;
-      
+
       pSi0 = pSrc16 + 2 * j;
       pSi1 = pSi0 + 2 * n2;
       pSi2 = pSi1 + 2 * n2;
@@ -1528,7 +1526,7 @@ void arm_radix4_butterfly_inverse_q15(
 
 #endif /*      #ifndef ARM_MATH_BIG_ENDIAN     */
 
-  } while(--j);
+  } while (--j);
 
   /* end of last stage  process */
 
@@ -1683,7 +1681,7 @@ void arm_radix4_butterfly_inverse_q15(
     /*  Updating input index */
     i0 = i0 + 1u;
 
-  } while(--j);
+  } while (--j);
 
   /*  End of first stage process */
 
@@ -1919,6 +1917,6 @@ void arm_radix4_butterfly_inverse_q15(
   /* output is in 7.9(q9) format for the 64 point  */
   /* output is in 5.11(q11) format for the 16 point  */
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 
 }

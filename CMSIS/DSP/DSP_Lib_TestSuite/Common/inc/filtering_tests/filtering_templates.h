@@ -45,7 +45,7 @@
             output_type,                                    \
             FILTERING_SNR_THRESHOLD_##output_type           \
             );                                              \
-    } while(0)                                              
+    } while (0)                                              
 
 /**
  *  Compare reference and fut outputs starting at some offset using SNR.
@@ -61,7 +61,7 @@
             block_size,                                     		\
             FILTERING_SNR_THRESHOLD_##output_type           		\
             );                                              		\
-    } while(0)                                              
+    } while (0)                                              
 		
 /*--------------------------------------------------------------------------------*/
 /* Input Interfaces */

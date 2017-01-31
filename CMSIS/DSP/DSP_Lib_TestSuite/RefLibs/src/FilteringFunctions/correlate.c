@@ -34,13 +34,13 @@ void ref_correlate_f32(
   /* Calculate the length of the remaining sequence */
   tot = srcALen + srcBLen - 2u;
 
-  if(srcALen > srcBLen)
+  if (srcALen > srcBLen)
   {
     /* Calculating the number of zeros to be padded to the output */
     /* Initialise the pointer after zero padding */
     pDst += srcALen - srcBLen;
   }
-  else if(srcALen < srcBLen)
+  else if (srcALen < srcBLen)
   {
     /* Initialization to inputB pointer */
     pIn1 = pSrcB;
@@ -70,14 +70,14 @@ void ref_correlate_f32(
     for (j = 0u; j <= i; j++)
     {
       /* Check the array limitations */
-      if((i - j < srcBLen) && (j < srcALen))
+      if ((i - j < srcBLen) && (j < srcALen))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += pIn1[j] * pIn2[-((int32_t)i - j)];
       }
     }
     /* Store the output in the destination buffer */
-    if(inv == 1)
+    if (inv == 1)
       *pDst-- = sum;
     else
       *pDst++ = sum;
@@ -101,7 +101,7 @@ void ref_correlate_q31(
   /* Calculate the length of the remaining sequence */
   tot = ((srcALen + srcBLen) - 2u);
 
-  if(srcALen > srcBLen)
+  if (srcALen > srcBLen)
   {
     /* Calculating the number of zeros to be padded to the output */
     j = srcALen - srcBLen;
@@ -110,7 +110,7 @@ void ref_correlate_q31(
     pDst += j;
   }
 
-  else if(srcALen < srcBLen)
+  else if (srcALen < srcBLen)
   {
     /* Initialization to inputB pointer */
     pIn1 = pSrcB;
@@ -141,14 +141,14 @@ void ref_correlate_q31(
     for (j = 0u; j <= i; j++)
     {
       /* Check the array limitations */
-      if((((i - j) < srcBLen) && (j < srcALen)))
+      if ((((i - j) < srcBLen) && (j < srcALen)))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += ((q63_t) pIn1[j] * pIn2[-((int32_t) i - j)]);
       }
     }
     /* Store the output in the destination buffer */
-    if(inv == 1)
+    if (inv == 1)
       *pDst-- = (q31_t)(sum >> 31u);
     else
       *pDst++ = (q31_t)(sum >> 31u);
@@ -172,7 +172,7 @@ void ref_correlate_fast_q31(
   /* Calculate the length of the remaining sequence */
   tot = ((srcALen + srcBLen) - 2u);
 
-  if(srcALen > srcBLen)
+  if (srcALen > srcBLen)
   {
     /* Calculating the number of zeros to be padded to the output */
     j = srcALen - srcBLen;
@@ -181,7 +181,7 @@ void ref_correlate_fast_q31(
     pDst += j;
   }
 
-  else if(srcALen < srcBLen)
+  else if (srcALen < srcBLen)
   {
     /* Initialization to inputB pointer */
     pIn1 = pSrcB;
@@ -212,7 +212,7 @@ void ref_correlate_fast_q31(
     for (j = 0u; j <= i; j++)
     {
       /* Check the array limitations */
-      if((((i - j) < srcBLen) && (j < srcALen)))
+      if ((((i - j) < srcBLen) && (j < srcALen)))
       {
         /* z[i] += x[i-j] * y[j] */
         sum = (q31_t) ((((q63_t) sum << 32) +
@@ -220,7 +220,7 @@ void ref_correlate_fast_q31(
       }
     }
     /* Store the output in the destination buffer */
-    if(inv == 1)
+    if (inv == 1)
       *pDst-- = (q31_t)(sum << 1u);
     else
       *pDst++ = (q31_t)(sum << 1u);
@@ -244,7 +244,7 @@ void ref_correlate_q15(
   /* Calculate the length of the remaining sequence */
   tot = ((srcALen + srcBLen) - 2u);
 
-  if(srcALen > srcBLen)
+  if (srcALen > srcBLen)
   {
     /* Calculating the number of zeros to be padded to the output */
     j = srcALen - srcBLen;
@@ -253,7 +253,7 @@ void ref_correlate_q15(
     pDst += j;
   }
 
-  else if(srcALen < srcBLen)
+  else if (srcALen < srcBLen)
   {
     /* Initialization to inputB pointer */
     pIn1 = pSrcB;
@@ -284,14 +284,14 @@ void ref_correlate_q15(
     for (j = 0u; j <= i; j++)
     {
       /* Check the array limitations */
-      if((((i - j) < srcBLen) && (j < srcALen)))
+      if ((((i - j) < srcBLen) && (j < srcALen)))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += ((q31_t) pIn1[j] * pIn2[-((int32_t) i - j)]);
       }
     }
     /* Store the output in the destination buffer */
-    if(inv == 1)
+    if (inv == 1)
       *pDst-- = (q15_t) ref_sat_q15(sum >> 15u);
     else
       *pDst++ = (q15_t) ref_sat_q15(sum >> 15u);
@@ -315,7 +315,7 @@ void ref_correlate_fast_q15(
   /* Calculate the length of the remaining sequence */
   tot = ((srcALen + srcBLen) - 2u);
 
-  if(srcALen > srcBLen)
+  if (srcALen > srcBLen)
   {
     /* Calculating the number of zeros to be padded to the output */
     j = srcALen - srcBLen;
@@ -324,7 +324,7 @@ void ref_correlate_fast_q15(
     pDst += j;
   }
 
-  else if(srcALen < srcBLen)
+  else if (srcALen < srcBLen)
   {
     /* Initialization to inputB pointer */
     pIn1 = pSrcB;
@@ -355,14 +355,14 @@ void ref_correlate_fast_q15(
     for (j = 0u; j <= i; j++)
     {
       /* Check the array limitations */
-      if((((i - j) < srcBLen) && (j < srcALen)))
+      if ((((i - j) < srcBLen) && (j < srcALen)))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += ((q31_t) pIn1[j] * pIn2[-((int32_t) i - j)]);
       }
     }
     /* Store the output in the destination buffer */
-    if(inv == 1)
+    if (inv == 1)
       *pDst-- = (q15_t)(sum >> 15u);
     else
       *pDst++ = (q15_t)(sum >> 15u);
@@ -387,7 +387,7 @@ void ref_correlate_fast_opt_q15(
   /* Calculate the length of the remaining sequence */
   tot = ((srcALen + srcBLen) - 2u);
 
-  if(srcALen > srcBLen)
+  if (srcALen > srcBLen)
   {
     /* Calculating the number of zeros to be padded to the output */
     j = srcALen - srcBLen;
@@ -396,7 +396,7 @@ void ref_correlate_fast_opt_q15(
     pDst += j;
   }
 
-  else if(srcALen < srcBLen)
+  else if (srcALen < srcBLen)
   {
     /* Initialization to inputB pointer */
     pIn1 = pSrcB;
@@ -427,14 +427,14 @@ void ref_correlate_fast_opt_q15(
     for (j = 0u; j <= i; j++)
     {
       /* Check the array limitations */
-      if((((i - j) < srcBLen) && (j < srcALen)))
+      if ((((i - j) < srcBLen) && (j < srcALen)))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += ((q31_t) pIn1[j] * pIn2[-((int32_t) i - j)]);
       }
     }
     /* Store the output in the destination buffer */
-    if(inv == 1)
+    if (inv == 1)
       *pDst-- = (q15_t) ref_sat_q15(sum >> 15u);
     else
       *pDst++ = (q15_t) ref_sat_q15(sum >> 15u);
@@ -458,7 +458,7 @@ void ref_correlate_q7(
   /* Calculate the length of the remaining sequence */
   tot = ((srcALen + srcBLen) - 2u);
 
-  if(srcALen > srcBLen)
+  if (srcALen > srcBLen)
   {
     /* Calculating the number of zeros to be padded to the output */
     j = srcALen - srcBLen;
@@ -467,7 +467,7 @@ void ref_correlate_q7(
     pDst += j;
   }
 
-  else if(srcALen < srcBLen)
+  else if (srcALen < srcBLen)
   {
     /* Initialization to inputB pointer */
     pIn1 = pSrcB;
@@ -498,14 +498,14 @@ void ref_correlate_q7(
     for (j = 0u; j <= i; j++)
     {
       /* Check the array limitations */
-      if((((i - j) < srcBLen) && (j < srcALen)))
+      if ((((i - j) < srcBLen) && (j < srcALen)))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += ((q15_t) pIn1[j] * pIn2[-((int32_t) i - j)]);
       }
     }
     /* Store the output in the destination buffer */
-    if(inv == 1)
+    if (inv == 1)
       *pDst-- = (q7_t) __SSAT((sum >> 7u), 8u);
     else
       *pDst++ = (q7_t) __SSAT((sum >> 7u), 8u);

@@ -61,6 +61,6 @@ typedef struct JTEST_GROUP_struct
     {                                           \
         JTEST_PF_RESET_PASSED(group_ptr);       \
         JTEST_PF_RESET_FAILED(group_ptr);       \
-    } while(0)
+    } while (0)
 
 #endif /* _JTEST_GROUP_H_ */

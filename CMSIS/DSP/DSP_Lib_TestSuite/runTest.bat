@@ -21,9 +21,9 @@ for %%a in ( ^
  cortexM7lfdp ^
  ARMv8MBLl ^
  ARMv8MMLl ^
- ARMv8MBLlfsp ^
- ARMv8MBLlfdp ^
- ARMv8MBLld ^
+ ARMv8MMLlfsp ^
+ ARMv8MMLlfdp ^
+ ARMv8MMLld ^
  ARMv8MMLldfsp ^
  ARMv8MMLldfdp ^
            ) do if %2==%%a goto checkParam3

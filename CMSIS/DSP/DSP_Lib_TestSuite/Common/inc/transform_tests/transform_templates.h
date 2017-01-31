@@ -40,7 +40,7 @@
             output_type,                                \
             TRANSFORM_SNR_THRESHOLD_##output_type       \
             );                                          \
-    } while(0)
+    } while (0)
     
 /**
  *  Compare the outputs from the function under test and the reference
@@ -59,7 +59,7 @@
             output_type,                                 \
             DCT4_TRANSFORM_SNR_THRESHOLD_##output_type   \
             );                                           \
-    } while(0)                                           \
+    } while (0)                                           \
 
 /**
  *  Specialization on #TRANSFORM_SNR_COMPARE_INTERFACE() to fix the block_size
@@ -88,7 +88,7 @@
             transform_fft_input_ref,            \
             input_ptr,                          \
             bytes);                             \
-    } while(0)
+    } while (0)
 
 /**
  * This macro copys data from the input_ptr into input arrays. It also creates
@@ -128,7 +128,7 @@
             transform_fft_input_ref,                                             \
             transform_fft_input_fut,                                             \
             bytes * 2);                                                          \
-    } while(0)
+    } while (0)
 
 /**
  * This macro copys data from the input_ptr into the in-place input arrays.
@@ -154,7 +154,7 @@
         for(i=0;i<bytes/sizeof(type);i++) {                         \
             *((type*)transform_fft_inplace_input_fut + i) >>= 1;    \
             *((type*)transform_fft_inplace_input_ref + i) >>= 1;}   \
-    } while(0)
+    } while (0)
 
 /**
  * This macro copys data from the input_ptr into the in-place input arrays.
@@ -175,7 +175,7 @@
             transform_fft_inplace_input_ref,        \
             input_ptr,                              \
             bytes);                                 \
-    } while(0)
+    } while (0)
 
 
 #endif /* _TRANSFORM_TEMPLATES_H_ */

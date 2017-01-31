@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        19. March 2015
-* $Revision:    V.1.4.5
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_max_f32.c
@@ -73,7 +73,7 @@ void arm_max_f32(
   float32_t * pResult,
   uint32_t * pIndex)
 {
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   float32_t maxVal1, maxVal2, out;               /* Temporary variables to store the output value. */
@@ -89,14 +89,14 @@ void arm_max_f32(
   /* Loop unrolling */
   blkCnt = (blockSize - 1u) >> 2u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Initialize maxVal to the next consecutive values one by one */
     maxVal1 = *pSrc++;
     maxVal2 = *pSrc++;
 
     /* compare for the maximum value */
-    if(out < maxVal1)
+    if (out < maxVal1)
     {
       /* Update the maximum value and its index */
       out = maxVal1;
@@ -104,7 +104,7 @@ void arm_max_f32(
     }
 
     /* compare for the maximum value */
-    if(out < maxVal2)
+    if (out < maxVal2)
     {
       /* Update the maximum value and its index */
       out = maxVal2;
@@ -116,7 +116,7 @@ void arm_max_f32(
     maxVal2 = *pSrc++;
 
     /* compare for the maximum value */
-    if(out < maxVal1)
+    if (out < maxVal1)
     {
       /* Update the maximum value and its index */
       out = maxVal1;
@@ -124,7 +124,7 @@ void arm_max_f32(
     }
 
     /* compare for the maximum value */
-    if(out < maxVal2)
+    if (out < maxVal2)
     {
       /* Update the maximum value and its index */
       out = maxVal2;
@@ -153,15 +153,15 @@ void arm_max_f32(
 
   blkCnt = (blockSize - 1u);
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Initialize maxVal to the next consecutive values one by one */
     maxVal1 = *pSrc++;
 
     /* compare for the maximum value */
-    if(out < maxVal1)
+    if (out < maxVal1)
     {
       /* Update the maximum value and it's index */
       out = maxVal1;

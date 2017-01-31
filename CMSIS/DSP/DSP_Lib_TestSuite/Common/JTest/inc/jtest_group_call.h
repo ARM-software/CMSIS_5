@@ -22,7 +22,7 @@
         JTEST_DUMP_STR("Group Name:\n");                            \
         JTEST_DUMP_STR(JTEST_GROUP_STRUCT_NAME(group_fn).name_str); \
         JTEST_GROUP_STRUCT_NAME(group_fn).group_fn_ptr();           \
-    } while(0)
+    } while (0)
 
 
 /**
@@ -42,7 +42,7 @@
                                (group_ptr)->passed);                    \
         JTEST_GROUP_INC_FAILED(parent_group_ptr,                        \
                                (group_ptr)->failed);                    \
-    } while(0)
+    } while (0)
 
 /**
  *  Update the #JTEST_FW's pass/fail information using the current
@@ -53,7 +53,7 @@
     {                                                           \
         JTEST_FW_INC_PASSED((group_ptr)->passed);               \
         JTEST_FW_INC_FAILED((group_ptr)->failed);               \
-    } while(0)
+    } while (0)
 
 /**
  *  Update the enclosing context with the current #JTEST_GROUP_t's pass/fail
@@ -74,7 +74,7 @@
             JTEST_GROUP_UPDATE_FW_PF(                               \
                 group_ptr);                                         \
         }                                                           \
-    } while(0)
+    } while (0)
 
 /**
  *  Dump the results of running the #JTEST_GROUP_t to the Keil Debugger.
@@ -90,7 +90,7 @@
                 (group_ptr)->passed + (group_ptr)->failed,              \
                 (group_ptr)->passed,                                    \
                 (group_ptr)->failed);                                   \
-        } while(0)
+        } while (0)
 
 /**
  *  Call the #JTEST_GROUP_t associated with the identifier group_fn.
@@ -121,6 +121,6 @@
                                                                         \
             /* Restore the previously current group */                  \
             JTEST_SET_CURRENT_GROUP(__jtest_temp_group_ptr);            \
-        } while(0)
+        } while (0)
 
 #endif /* _JTEST_GROUP_CALL_H_ */

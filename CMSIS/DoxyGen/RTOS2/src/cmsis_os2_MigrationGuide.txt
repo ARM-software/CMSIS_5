@@ -171,7 +171,7 @@ The following steps are recommended as a rough guide-line:
 
 \note See \ref os2MigrationFunctions for details in differences.
 
-Generally there are now longer os*Def macros to declare OS objects. 
+Generally there are no longer os*Def macros to declare OS objects. 
 
 \note
 - Signal Events have been replaced. Use the functions listed under Thread Flags and Event Flags instead. 

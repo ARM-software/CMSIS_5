@@ -23,7 +23,7 @@ void ref_fir_interpolate_f32(
   blkCnt = blockSize;
 
   /* Loop over the blockSize. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -31,7 +31,7 @@ void ref_fir_interpolate_f32(
     /* Loop over the Interpolation factor. */
     i = S->L;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* Set accumulator to zero */
       sum = 0.0f;
@@ -45,7 +45,7 @@ void ref_fir_interpolate_f32(
       /* Loop over the polyPhase length */
       tapCnt = phaseLen;
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
         /* Perform the multiply-accumulate */
         sum += *ptr1++ * *ptr2;
@@ -81,7 +81,7 @@ void ref_fir_interpolate_f32(
 
   tapCnt = phaseLen - 1u;
 
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -118,7 +118,7 @@ void ref_fir_interpolate_q31(
   blkCnt = blockSize;
 
   /* Loop over the blockSize. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -126,7 +126,7 @@ void ref_fir_interpolate_q31(
     /* Loop over the Interpolation factor. */
     i = S->L;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* Set accumulator to zero */
       sum = 0;
@@ -139,7 +139,7 @@ void ref_fir_interpolate_q31(
 
       tapCnt = phaseLen;
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
         /* Read the coefficient */
         c0 = *(ptr2);
@@ -182,7 +182,7 @@ void ref_fir_interpolate_q31(
   tapCnt = phaseLen - 1u;
 
   /* copy data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -216,7 +216,7 @@ void ref_fir_interpolate_q15(
   blkCnt = blockSize;
 
   /* Loop over the blockSize. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -224,7 +224,7 @@ void ref_fir_interpolate_q15(
     /* Loop over the Interpolation factor. */
     i = S->L;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* Set accumulator to zero */
       sum = 0;
@@ -238,7 +238,7 @@ void ref_fir_interpolate_q15(
       /* Loop over the polyPhase length */
       tapCnt = (uint32_t)phaseLen;
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
         /* Read the coefficient */
         c0 = *ptr2;
@@ -280,7 +280,7 @@ void ref_fir_interpolate_q15(
 
   i = (uint32_t) phaseLen - 1u;
 
-  while(i > 0u)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
 

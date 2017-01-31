@@ -17,10 +17,10 @@ void jtest_dump_str_segments(void)
     {
         JTEST_TRIGGER_ACTION(dump_str);
 
-        if(seg_idx < JTEST_STR_MAX_OUTPUT_SEGMENTS)
+        if (seg_idx < JTEST_STR_MAX_OUTPUT_SEGMENTS)
         {
             memmove_idx = 0;
-            while(memmove_idx < (seg_cnt - seg_idx -1) )
+            while (memmove_idx < (seg_cnt - seg_idx -1) )
             {
                 memmove(
                     JTEST_FW.str_buffer+

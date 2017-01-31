@@ -18,7 +18,7 @@ void ref_fir_lattice_f32(
 
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* f0(n) = x(n) */
     fcurr = *pSrc++;
@@ -48,7 +48,7 @@ void ref_fir_lattice_f32(
     stageCnt = (numStages - 1u);
 
     /* stage loop */
-    while(stageCnt > 0u)
+    while (stageCnt > 0u)
     {
       /* read g2(n) from state buffer */
       gcurr = *px;
@@ -94,7 +94,7 @@ void ref_fir_lattice_q31(
 
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* f0(n) = x(n) */
     fcurr = *pSrc++;
@@ -123,7 +123,7 @@ void ref_fir_lattice_q31(
     stageCnt = (numStages - 1u);
 
     /* stage loop */
-    while(stageCnt > 0u)
+    while (stageCnt > 0u)
     {
       /* read g2(n) from state buffer */
       gcurr = *px;
@@ -171,7 +171,7 @@ void ref_fir_lattice_q15(
 
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* f0(n) = x(n) */
     fcurnt = *pSrc++;
@@ -205,7 +205,7 @@ void ref_fir_lattice_q15(
     stageCnt = (numStages - 1u);
 
     /* stage loop */
-    while(stageCnt > 0u)
+    while (stageCnt > 0u)
     {
       /* read g1(n-1) from state buffer */
       gcurnt = *px;

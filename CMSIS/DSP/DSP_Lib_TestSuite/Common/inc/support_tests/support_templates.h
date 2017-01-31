@@ -22,7 +22,7 @@
             support_output_ref.data_ptr,        \
             support_output_fut.data_ptr,        \
             block_size * sizeof(output_type));  \
-    } while(0)                                  \
+    } while (0)                                  \
 
 /*--------------------------------------------------------------------------------*/
 /* Input Interfaces */

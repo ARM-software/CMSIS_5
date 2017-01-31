@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        21. September 2015
-* $Revision:    V.1.4.5 a
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_cos_f32.c
@@ -96,7 +96,7 @@ float32_t arm_cos_f32(
   n = (int32_t) in;
 
   /* Make negative values towards -infinity */
-  if(in < 0.0f)
+  if (in < 0.0f)
   {
     n--;
   }

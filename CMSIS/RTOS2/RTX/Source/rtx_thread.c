@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -32,11 +32,11 @@
 /// \param[in]  thread          thread object.
 /// \param[in]  flags           specifies the flags to set.
 /// \return thread flags after setting.
-static int32_t ThreadFlagsSet (os_thread_t *thread, int32_t flags) {
+static uint32_t ThreadFlagsSet (os_thread_t *thread, uint32_t flags) {
 #if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
-  int32_t  thread_flags;
+  uint32_t thread_flags;
 
 #if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
@@ -48,7 +48,7 @@ static int32_t ThreadFlagsSet (os_thread_t *thread, int32_t flags) {
     __enable_irq();
   }
 #else
-  thread_flags = (int32_t)atomic_set32((uint32_t *)&thread->thread_flags, (uint32_t)flags);
+  thread_flags = atomic_set32(&thread->thread_flags, flags);
 #endif
 
   return thread_flags;
@@ -58,11 +58,11 @@ static int32_t ThreadFlagsSet (os_thread_t *thread, int32_t flags) {
 /// \param[in]  thread          thread object.
 /// \param[in]  flags           specifies the flags to clear.
 /// \return thread flags before clearing.
-static int32_t ThreadFlagsClear (os_thread_t *thread, int32_t flags) {
+static uint32_t ThreadFlagsClear (os_thread_t *thread, uint32_t flags) {
 #if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask = __get_PRIMASK();
 #endif
-  int32_t  thread_flags;
+  uint32_t thread_flags;
 
 #if (__EXCLUSIVE_ACCESS == 0U)
   __disable_irq();
@@ -74,7 +74,7 @@ static int32_t ThreadFlagsClear (os_thread_t *thread, int32_t flags) {
     __enable_irq();
   }
 #else
-  thread_flags = (int32_t)atomic_clr32((uint32_t *)&thread->thread_flags, (uint32_t)flags);
+  thread_flags = atomic_clr32(&thread->thread_flags, flags);
 #endif
 
   return thread_flags;
@@ -85,11 +85,11 @@ static int32_t ThreadFlagsClear (os_thread_t *thread, int32_t flags) {
 /// \param[in]  flags           specifies the flags to check.
 /// \param[in]  options         specifies flags options (osFlagsXxxx).
 /// \return thread flags before clearing or 0 if specified flags have not been set.
-static int32_t ThreadFlagsCheck (os_thread_t *thread, int32_t flags, uint32_t options) {
+static uint32_t ThreadFlagsCheck (os_thread_t *thread, uint32_t flags, uint32_t options) {
 #if (__EXCLUSIVE_ACCESS == 0U)
   uint32_t primask;
 #endif
-  int32_t  thread_flags;
+  uint32_t thread_flags;
 
   if ((options & osFlagsNoClear) == 0U) {
 #if (__EXCLUSIVE_ACCESS == 0U)
@@ -98,8 +98,8 @@ static int32_t ThreadFlagsCheck (os_thread_t *thread, int32_t flags, uint32_t op
 
     thread_flags = thread->thread_flags;
     if ((((options & osFlagsWaitAll) != 0U) && ((thread_flags & flags) != flags)) ||
-        (((options & osFlagsWaitAll) == 0U) && ((thread_flags & flags) == 0))) {
-      thread_flags = 0;
+        (((options & osFlagsWaitAll) == 0U) && ((thread_flags & flags) == 0U))) {
+      thread_flags = 0U;
     } else {
       thread->thread_flags &= ~flags;
     }
@@ -109,16 +109,16 @@ static int32_t ThreadFlagsCheck (os_thread_t *thread, int32_t flags, uint32_t op
     }
 #else
     if ((options & osFlagsWaitAll) != 0U) {
-      thread_flags = (int32_t)atomic_chk32_all((uint32_t *)&thread->thread_flags, (uint32_t)flags);
+      thread_flags = atomic_chk32_all(&thread->thread_flags, flags);
     } else {
-      thread_flags = (int32_t)atomic_chk32_any((uint32_t *)&thread->thread_flags, (uint32_t)flags);
+      thread_flags = atomic_chk32_any(&thread->thread_flags, flags);
     }
 #endif
   } else {
     thread_flags = thread->thread_flags;
     if ((((options & osFlagsWaitAll) != 0U) && ((thread_flags & flags) != flags)) ||
-        (((options & osFlagsWaitAll) == 0U) && ((thread_flags & flags) == 0))) {
-      thread_flags = 0;
+        (((options & osFlagsWaitAll) == 0U) && ((thread_flags & flags) == 0U))) {
+      thread_flags = 0U;
     }
   }
 
@@ -527,7 +527,7 @@ __WEAK void osRtxThreadStackCheck (void) {
 /// Thread post ISR processing.
 /// \param[in]  thread          thread object.
 void osRtxThreadPostProcess (os_thread_t *thread) {
-  int32_t thread_flags;
+  uint32_t thread_flags;
 
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadTerminated)) {
@@ -537,8 +537,8 @@ void osRtxThreadPostProcess (os_thread_t *thread) {
   // Check if Thread is waiting for Thread Flags
   if (thread->state == osRtxThreadWaitingThreadFlags) {
     thread_flags = ThreadFlagsCheck(thread, thread->wait_flags, thread->flags_options);
-    if (thread_flags > 0) {
-      osRtxThreadWaitExit(thread, (uint32_t)thread_flags, false);
+    if (thread_flags != 0U) {
+      osRtxThreadWaitExit(thread, thread_flags, false);
       EvrRtxThreadFlagsWaitCompleted(thread->wait_flags, thread->flags_options, thread_flags);
     }
   }
@@ -565,10 +565,10 @@ SVC0_0N(ThreadExit,          void)
 SVC0_1 (ThreadTerminate,     osStatus_t,      osThreadId_t)
 SVC0_0 (ThreadGetCount,      uint32_t)
 SVC0_2 (ThreadEnumerate,     uint32_t,        osThreadId_t *, uint32_t)
-SVC0_2 (ThreadFlagsSet,      int32_t,         osThreadId_t, int32_t)
-SVC0_1 (ThreadFlagsClear,    int32_t,         int32_t)
-SVC0_0 (ThreadFlagsGet,      int32_t)
-SVC0_3 (ThreadFlagsWait,     int32_t,         int32_t, uint32_t, uint32_t)
+SVC0_2 (ThreadFlagsSet,      uint32_t,        osThreadId_t, uint32_t)
+SVC0_1 (ThreadFlagsClear,    uint32_t,        uint32_t)
+SVC0_0 (ThreadFlagsGet,      uint32_t)
+SVC0_3 (ThreadFlagsWait,     uint32_t,        uint32_t, uint32_t, uint32_t)
 
 /// Create a thread and add it to Active Threads.
 /// \note API identical to osThreadNew
@@ -735,8 +735,8 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
   thread->priority_base = (int8_t)priority;
   thread->stack_frame   = STACK_FRAME_INIT;
   thread->flags_options = 0U;
-  thread->wait_flags    = 0;
-  thread->thread_flags  = 0;
+  thread->wait_flags    = 0U;
+  thread->thread_flags  = 0U;
   thread->mutex_list    = NULL;
   thread->stack_mem     = stack_mem;
   thread->stack_size    = stack_size;
@@ -1317,23 +1317,23 @@ uint32_t svcRtxThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items
 
 /// Set the specified Thread Flags of a thread.
 /// \note API identical to osThreadFlagsSet
-int32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, int32_t flags) {
+uint32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
   os_thread_t *thread = (os_thread_t *)thread_id;
-  int32_t      thread_flags;
-  int32_t      thread_flags0;
+  uint32_t     thread_flags;
+  uint32_t     thread_flags0;
 
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread) ||
-      ((uint32_t)flags & ~((1U << osRtxThreadFlagsLimit) - 1U))) {
+      (flags & ~((1U << osRtxThreadFlagsLimit) - 1U))) {
     EvrRtxThreadError(thread, osErrorParameter);
-    return osErrorParameter;
+    return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadTerminated)) {
     EvrRtxThreadError(thread, osErrorResource);
-    return osErrorResource;
+    return ((uint32_t)osErrorResource);
   }
 
   // Set Thread Flags
@@ -1342,13 +1342,13 @@ int32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, int32_t flags) {
   // Check if Thread is waiting for Thread Flags
   if (thread->state == osRtxThreadWaitingThreadFlags) {
     thread_flags0 = ThreadFlagsCheck(thread, thread->wait_flags, thread->flags_options);
-    if (thread_flags0 > 0) {
+    if (thread_flags0 != 0U) {
       if ((thread->flags_options & osFlagsNoClear) == 0U) {
         thread_flags = thread_flags0 & ~thread->wait_flags;
       } else {
         thread_flags = thread_flags0;
       }
-      osRtxThreadWaitExit(thread, (uint32_t)thread_flags0, true);
+      osRtxThreadWaitExit(thread, thread_flags0, true);
       EvrRtxThreadFlagsWaitCompleted(thread->wait_flags, thread->flags_options, thread_flags0);
     }
   }
@@ -1360,27 +1360,27 @@ int32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, int32_t flags) {
 
 /// Clear the specified Thread Flags of current running thread.
 /// \note API identical to osThreadFlagsClear
-int32_t svcRtxThreadFlagsClear (int32_t flags) {
+uint32_t svcRtxThreadFlagsClear (uint32_t flags) {
   os_thread_t *thread;
-  int32_t      thread_flags;
+  uint32_t     thread_flags;
 
   thread = osRtxThreadGetRunning();
   if (thread == NULL) {
     EvrRtxThreadError(NULL, osRtxErrorKernelNotRunning);
-    return osError;
+    return ((uint32_t)osError);
   }
 
   // Check parameters
-  if ((uint32_t)flags & ~((1U << osRtxThreadFlagsLimit) - 1U)) {
+  if (flags & ~((1U << osRtxThreadFlagsLimit) - 1U)) {
     EvrRtxThreadError(thread, osErrorParameter);
-    return osErrorParameter;
+    return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadTerminated)) {
     EvrRtxThreadError(thread, osErrorResource);
-    return osErrorResource;
+    return ((uint32_t)osErrorResource);
   }
 
   // Clear Thread Flags
@@ -1393,20 +1393,20 @@ int32_t svcRtxThreadFlagsClear (int32_t flags) {
 
 /// Get the current Thread Flags of current running thread.
 /// \note API identical to osThreadFlagsGet
-int32_t svcRtxThreadFlagsGet (void) {
+uint32_t svcRtxThreadFlagsGet (void) {
   os_thread_t *thread;
 
   thread = osRtxThreadGetRunning();
   if (thread == NULL) {
-    EvrRtxThreadFlagsGet(0);
-    return 0;
+    EvrRtxThreadFlagsGet(0U);
+    return 0U;
   }
 
   // Check object state
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadTerminated)) {
-    EvrRtxThreadFlagsGet(0);
-    return 0;
+    EvrRtxThreadFlagsGet(0U);
+    return 0U;
   }
 
   EvrRtxThreadFlagsGet(thread->thread_flags);
@@ -1416,25 +1416,25 @@ int32_t svcRtxThreadFlagsGet (void) {
 
 /// Wait for one or more Thread Flags of the current running thread to become signaled.
 /// \note API identical to osThreadFlagsWait
-int32_t svcRtxThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout) {
+uint32_t svcRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout) {
   os_thread_t *thread;
-  int32_t      thread_flags;
+  uint32_t     thread_flags;
 
   thread = osRtxThreadGetRunning();
   if (thread == NULL) {
     EvrRtxThreadError(NULL, osRtxErrorKernelNotRunning);
-    return osError;
+    return ((uint32_t)osError);
   }
 
   // Check parameters
-  if ((uint32_t)flags & ~((1U << osRtxThreadFlagsLimit) - 1U)) {
+  if (flags & ~((1U << osRtxThreadFlagsLimit) - 1U)) {
     EvrRtxThreadError(thread, osErrorParameter);
-    return osErrorParameter;
+    return ((uint32_t)osErrorParameter);
   }
 
   // Check Thread Flags
   thread_flags = ThreadFlagsCheck(thread, flags, options);
-  if (thread_flags > 0) {
+  if (thread_flags != 0U) {
     EvrRtxThreadFlagsWaitCompleted(flags, options, thread_flags);
     return thread_flags;
   }
@@ -1447,12 +1447,12 @@ int32_t svcRtxThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout
     thread->flags_options = (uint8_t)options;
     // Suspend current Thread
     osRtxThreadWaitEnter(osRtxThreadWaitingThreadFlags, timeout);
-    return osErrorTimeout;
+    return ((uint32_t)osErrorTimeout);
   }
 
   EvrRtxThreadFlagsWaitNotCompleted(flags, options);
 
-  return osErrorResource;
+  return ((uint32_t)osErrorResource);
 }
 
 
@@ -1461,22 +1461,22 @@ int32_t svcRtxThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout
 /// Set the specified Thread Flags of a thread.
 /// \note API identical to osThreadFlagsSet
 __STATIC_INLINE
-int32_t isrRtxThreadFlagsSet (osThreadId_t thread_id, int32_t flags) {
+uint32_t isrRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
   os_thread_t *thread = (os_thread_t *)thread_id;
-  int32_t      thread_flags;
+  uint32_t     thread_flags;
 
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread) ||
-      ((uint32_t)flags & ~((1U << osRtxThreadFlagsLimit) - 1U))) {
+      (flags & ~((1U << osRtxThreadFlagsLimit) - 1U))) {
     EvrRtxThreadError(thread, osErrorParameter);
-    return osErrorParameter;
+    return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadTerminated)) {
     EvrRtxThreadError(thread, osErrorResource);
-    return osErrorResource;
+    return ((uint32_t)osErrorResource);
   }
 
   // Set Thread Flags
@@ -1654,7 +1654,7 @@ uint32_t osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items) {
 }
 
 /// Set the specified Thread Flags of a thread.
-int32_t osThreadFlagsSet (osThreadId_t thread_id, int32_t flags) {
+uint32_t osThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
   EvrRtxThreadFlagsSet(thread_id, flags);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return isrRtxThreadFlagsSet(thread_id, flags);
@@ -1664,30 +1664,30 @@ int32_t osThreadFlagsSet (osThreadId_t thread_id, int32_t flags) {
 }
 
 /// Clear the specified Thread Flags of current running thread.
-int32_t osThreadFlagsClear (int32_t flags) {
+uint32_t osThreadFlagsClear (uint32_t flags) {
   EvrRtxThreadFlagsClear(flags);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     EvrRtxThreadError(NULL, osErrorISR);
-    return osErrorISR;
+    return ((uint32_t)osErrorISR);
   }
   return __svcThreadFlagsClear(flags);
 }
 
 /// Get the current Thread Flags of current running thread.
-int32_t osThreadFlagsGet (void) {
+uint32_t osThreadFlagsGet (void) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxThreadFlagsGet(0);
-    return 0;
+    EvrRtxThreadFlagsGet(0U);
+    return 0U;
   }
   return __svcThreadFlagsGet();
 }
 
 /// Wait for one or more Thread Flags of the current running thread to become signaled.
-int32_t osThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout) {
+uint32_t osThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout) {
   EvrRtxThreadFlagsWait(flags, options, timeout);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     EvrRtxThreadError(NULL, osErrorISR);
-    return osErrorISR;
+    return ((uint32_t)osErrorISR);
   }
   return __svcThreadFlagsWait(flags, options, timeout);
 }

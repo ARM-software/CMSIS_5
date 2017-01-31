@@ -49,7 +49,82 @@ Reference:
  - \ref osThreadFlagsWait
 */
 
+/// @}
+/**
+\addtogroup flags_error_codes Flags Functions Error Codes
+\ingroup CMSIS_RTOS_Definitions
+\brief Constants used by \ref CMSIS_RTOS_ThreadFlagsMgmt and \ref CMSIS_RTOS_EventFlags to return error codes.
+\details In case of an error, flags functions (\ref CMSIS_RTOS_ThreadFlagsMgmt and
+\ref CMSIS_RTOS_EventFlags) return error codes. To indicate that an error has occurred, the highest bit of
+the return value is be set. You can check the exact error using the codes shown below.
+@{
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsErrorUnknown
+\details Generic error. It is returned when no other error can be applied. 
+
+Reference: 
+ - \ref osThreadFlagsSet
+ - \ref osThreadFlagsClear
+ - \ref osThreadFlagsWait
+ - \ref osEventFlagsSet
+ - \ref osEventFlagsClear
+ - \ref osEventFlagsWait
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsErrorTimeout
+\details This error is returned if a timeout was specified and the specified flags were not set, when the
+timeout occurred.
+
+Reference: 
+ - \ref osThreadFlagsSet
+ - \ref osThreadFlagsClear
+ - \ref osThreadFlagsWait
+ - \ref osEventFlagsSet
+ - \ref osEventFlagsClear
+ - \ref osEventFlagsWait
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsErrorResource
+\details This error is returned when you try to get a flag that was not set \a and timeout 0 was
+specified. Is also returned when the specified object identifier is corrupt or invalid.
+
+Reference: 
+ - \ref osThreadFlagsSet
+ - \ref osThreadFlagsClear
+ - \ref osThreadFlagsWait
+ - \ref osEventFlagsSet
+ - \ref osEventFlagsClear
+ - \ref osEventFlagsWait
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsErrorParameter
+\details This error is returned when a given parameter is wrong.
+
+Reference: 
+ - \ref osThreadFlagsSet
+ - \ref osThreadFlagsClear
+ - \ref osThreadFlagsWait
+ - \ref osEventFlagsSet
+ - \ref osEventFlagsClear
+ - \ref osEventFlagsWait
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** \def osFlagsErrorISR
+\details This error is returned when a non-ISR-callable function was called from an ISR.
+
+Reference: 
+ - \ref osThreadFlagsSet
+ - \ref osThreadFlagsClear
+ - \ref osThreadFlagsWait
+ - \ref osEventFlagsSet
+ - \ref osEventFlagsClear
+ - \ref osEventFlagsWait
+*/
+
 /// @} 
-
-
-
+ 

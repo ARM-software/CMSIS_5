@@ -78,6 +78,17 @@ File/Folder                  | Content
       <th>Description</th>
     </tr>
     <tr>
+      <td>V2.1.0</td>
+      <td>
+        Support for critical and uncritical sections (nesting safe):
+         - updated: osKernelLock, osKernelUnlock
+         - added: osKernelRestoreLock
+         
+        Updated Thread and Event Flags:
+         - changed flags parameter and return type from int32_t to uint32_t
+     </td>
+    </tr>
+    <tr>
       <td>V2.0.0</td>
       <td>
         New API Version 2.0 available. 
@@ -131,6 +142,16 @@ File/Folder                  | Content
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>V5.1.0</td>
+      <td>
+       - Based on CMSIS-RTOS API V2.1.
+       - Added support for Event recording.
+       - Added support for IAR compiler.
+       - Configuration file split into .h and .c file.
+       - osRtx name-space for RTX specific symbols.
+      </td>
     </tr>
     <tr>
       <td>V5.0.0</td>
@@ -547,7 +568,7 @@ Examples:
 \section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
 
 The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
-  - \ref osKernelGetTickCount, \ref osKernelGetTickFreq
+  - \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
   - \ref osThreadFlagsSet
   - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
   - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
@@ -707,9 +728,13 @@ several threads. Threads are not really executed concurrently, but are timed whe
 into time slices and RTX5 assigns a time slice to each thread. Because the time slice is typically short (only a few
 milliseconds), it appears as though threads execute simultaneously.
 
-Threads execute for the duration of their time slice (unless the thread's time slice is given up). Then, RTX switches to the
-next thread that is in \b READY state and has the same priority. If no other task with the same priority is ready to run, the
-current running task resumes it execution.
+Round-robin thread switching functions as follows:
+- the tick is preloaded with the timeout value when a thread switch occurs
+- the tick is decremented (if not already zero) each system tick if the same thread is still executing
+- when the tick reaches 0 it indicates that a timeout has occurred. If there is another thread ready with same priority, then the system switches to that thread and the tick is preloaded with timeout again.
+
+In other word, threads execute for the duration of their time slice (unless the thread's time slice is given up). Then, RTX switches to the next thread that is in \b READY state and has the same priority. If no other thread with the same priority is ready to run, the
+current running thread resumes it execution.
 
 \subsection systemConfig_isr_fifo ISR FIFO Queue
 The RTX functions (\ref CMSIS_RTOS_ISR_Calls), when called from and interrupt handler, store the request type and optional
@@ -1270,6 +1295,7 @@ Overview of all CMSIS-RTOS C API v2 functions that are implemented in the \subpa
 
 The following CMSIS-RTOS2 functions can be called from threads and \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines"
 (ISR):
+   - \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
    - \ref osThreadFlagsSet
    - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
    - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount

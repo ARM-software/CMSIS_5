@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        19. March 2015
-* $Revision:    V.1.4.5
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_std_q15.c
@@ -78,20 +78,20 @@ void arm_std_q15(
   q31_t meanOfSquares, squareOfMean;             /* square of mean and mean of square */
   uint32_t blkCnt;                               /* loop counter */
   q63_t sumOfSquares = 0;                        /* Accumulator */
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
   q31_t in;                                      /* input value */
   q15_t in1;                                     /* input value */
 #else
   q15_t in;                                      /* input value */
 #endif
 
-  if(blockSize == 1u)
+  if (blockSize == 1u)
   {
     *pResult = 0;
     return;
   }
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /*loop Unrolling */
@@ -99,7 +99,7 @@ void arm_std_q15(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1])  */
     /* Compute Sum of squares of the input samples
@@ -121,7 +121,7 @@ void arm_std_q15(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute Sum of squares of the input samples
@@ -151,7 +151,7 @@ void arm_std_q15(
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute Sum of squares of the input samples
@@ -178,7 +178,7 @@ void arm_std_q15(
   /* Compute standard deviation and store the result to the destination */
   arm_sqrt_q15(__SSAT((meanOfSquares - squareOfMean) >> 15u, 16u), pResult);
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 }
 
 /**

@@ -57,7 +57,7 @@ q15_t ref_pid_q15(
 	q15_t out;
 	q15_t A1, A2;
 	
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
    
 #ifndef  ARM_MATH_BIG_ENDIAN
 	A2 = S->A1 >> 16;

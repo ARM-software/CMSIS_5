@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -23,6 +23,7 @@
  * -----------------------------------------------------------------------------
  */
 
+#include "cmsis_compiler.h"
 #include "rtx_os.h"
 #include "RTX_Config.h"
 
@@ -325,6 +326,7 @@ __attribute__((section(".bss.os.msgqueue.mem")));
 // OS Configuration
 // ================
 
+__USED
 __attribute__((section(".rodata")))
 const osRtxConfig_t osRtxConfig = {
   0U   // Flags
@@ -432,7 +434,7 @@ extern const uint8_t *irqRtxLibRef;
        const uint8_t *irqRtxLibRef = &irqRtxLib;
 
 // Default User SVC Table
-__attribute__((weak))
+__WEAK
 extern void * const osRtxUserSVC[];
        void * const osRtxUserSVC[1] = { (void *)0 };
 
@@ -460,7 +462,7 @@ __asm (
 #endif
 
 #if (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)) || \
-     defined (__GNUC__)
+    (defined(__GNUC__) && !defined(__CC_ARM))
 
 extern __attribute__((weak)) uint32_t __os_thread_cb_start__;
 extern __attribute__((weak)) uint32_t __os_thread_cb_end__;
@@ -509,14 +511,16 @@ const uint32_t os_cb_sections[] = {
     (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 
 #ifndef __MICROLIB
+__WEAK
 void _platform_post_stackheap_init (void);
 void _platform_post_stackheap_init (void) {
   osKernelInitialize();
 }
 #endif
 
-#elif defined (__GNUC__)
+#elif defined(__GNUC__)
 
+__WEAK
 void software_init_hook (void);
 void software_init_hook (void) {
   osKernelInitialize();
@@ -589,6 +593,7 @@ void *__user_perthread_libspace (void) {
 typedef void *mutex;
 
 // Initialize mutex
+__USED
 int _mutex_initialize(mutex *m);
 int _mutex_initialize(mutex *m) {
   *m = osMutexNew(NULL);
@@ -600,6 +605,7 @@ int _mutex_initialize(mutex *m) {
 }
 
 // Acquire mutex
+__USED
 void _mutex_acquire(mutex *m);
 void _mutex_acquire(mutex *m) {
   if (os_kernel_is_active()) {
@@ -608,6 +614,7 @@ void _mutex_acquire(mutex *m) {
 }
 
 // Release mutex
+__USED
 void _mutex_release(mutex *m);
 void _mutex_release(mutex *m) {
   if (os_kernel_is_active()) {
@@ -616,6 +623,7 @@ void _mutex_release(mutex *m) {
 }
 
 // Free mutex
+__USED
 void _mutex_free(mutex *m);
 void _mutex_free(mutex *m) {
   osMutexDelete(*m);

@@ -32,7 +32,7 @@
                 &rfft_inst_ref,                                         \
                 (uint32_t) fftlen, ifft_flag, 1u);                      \
                                                                         \
-            if(ifft_flag)                                               \
+            if (ifft_flag)                                               \
             {                                                           \
                TRANSFORM_PREPARE_INVERSE_INPUTS(                        \
                    transform_fft_##suffix##_inputs,                     \

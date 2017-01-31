@@ -231,17 +231,17 @@ int32_t main(void)
 
   /* Compare the SNR with threshold to test whether the
      computed output is matched with the reference output values. */
-  if( snr > SNR_THRESHOLD)
+  if ( snr > SNR_THRESHOLD)
   {
     status = ARM_MATH_SUCCESS;
   }
 
-  if( status != ARM_MATH_SUCCESS)
+  if ( status != ARM_MATH_SUCCESS)
   {
-    while(1);
+    while (1);
   }
 
-  while(1);                             /* main function does not return */
+  while (1);                             /* main function does not return */
 }
 
  /** \endlink */

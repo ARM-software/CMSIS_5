@@ -17,13 +17,16 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        21. November 2016
+  $Date:        25. Januar 2017
   $Revision:    1.4.8
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
   SchemaVersion=1.4
+
+  25. January 2017: 1.4.9
+  - added Toptions attribute for usee in conditions
 
   21. November 2016: 1.4.8
   - added support for semantic versioning quality information in ConditionVersionType
@@ -99,6 +102,7 @@
     <xs:restriction base="xs:token">
       <xs:enumeration value="ABOV Semiconductor:126"/>
       <xs:enumeration value="Actel:56"/>
+      <xs:enumeration value="Active-Semi:140"/>
       <xs:enumeration value="Altera:85"/>
       <xs:enumeration value="Altium:65"/>
       <xs:enumeration value="Ambiq Micro:120"/>
@@ -886,6 +890,16 @@
       <xs:enumeration value="*"/>
     </xs:restriction>
   </xs:simpleType>
+
+  <!-- compiler specific options/mode -->
+  <xs:simpleType name="CompilerOptionsEnumType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="AC5"/>
+      <xs:enumeration value="AC6"/>
+      <xs:enumeration value="AC6LTO"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
   <!-- compiler output enumeration -->
   <xs:simpleType name="CompilerOutputType">
     <xs:restriction base="xs:token">
@@ -894,8 +908,6 @@
       <xs:enumeration value="*"/>
     </xs:restriction>
   </xs:simpleType>
-
-  
 
   <xs:complexType name="FilterType">
     <xs:attribute name="Dfamily"     type="xs:string"/> <!-- deprecated as they are too weak for filtering -->
@@ -920,6 +932,8 @@
     <xs:attribute name="Cversion"    type="ConditionVersionType"/>
     <xs:attribute name="Capiversion" type="ConditionVersionType"/>
     <xs:attribute name="Tcompiler"   type="CompilerEnumType"/>
+    <!-- Toptions can only be used in combination with Tcompiler and the strings are predefined by the specification -->
+    <xs:attribute name="Toptions"    type="CompilerOptionsEnumType"/>
     <xs:attribute name="Toutput"     type="CompilerOutputType"/>
     <xs:attribute name="condition"   type="xs:string"/>
   </xs:complexType>

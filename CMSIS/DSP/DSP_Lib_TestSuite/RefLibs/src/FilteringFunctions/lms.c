@@ -26,7 +26,7 @@ void ref_lms_f32(
 
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy the new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -202,7 +202,7 @@ void ref_lms_q31(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       acc += (q63_t)(*px++) * (*pb++);
@@ -241,7 +241,7 @@ void ref_lms_q31(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       coef = (q31_t)(((q63_t) alpha * (*px++)) >> 32);
@@ -264,7 +264,7 @@ void ref_lms_q31(
   tapCnt = numTaps - 1;
 
   /* Copy the data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -331,7 +331,7 @@ void ref_lms_norm_q31(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       acc += ((q63_t) (*px++)) * (*pb++);
@@ -372,7 +372,7 @@ void ref_lms_norm_q31(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       /* coef is in 2.30 format */
@@ -408,7 +408,7 @@ void ref_lms_norm_q31(
   tapCnt = numTaps - 1;
 
   /* Copy the remaining q31_t data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -462,7 +462,7 @@ void ref_lms_q15(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       acc += (q63_t)((q31_t)(*px++) * (*pb++));
@@ -504,7 +504,7 @@ void ref_lms_q15(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       coef = (q31_t) * pb + (((q31_t) alpha * (*px++)) >> 15);
@@ -526,7 +526,7 @@ void ref_lms_q15(
   tapCnt = numTaps - 1;
 
   /* Copy the data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -594,7 +594,7 @@ void ref_lms_norm_q15(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       acc += (q31_t)*px++ * (*pb++);
@@ -653,7 +653,7 @@ void ref_lms_norm_q15(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       coef = *pb + (((q31_t)w * (*px++)) >> 15);
@@ -685,7 +685,7 @@ void ref_lms_norm_q15(
   tapCnt = numTaps - 1;
 
   /* copy data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 

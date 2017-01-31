@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -643,7 +643,7 @@ extern void EvrRtxThreadEnumerate (osThreadId_t *thread_array, uint32_t array_it
   \param[in]   flags         flags of the thread that shall be set.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_SET_DISABLE))
-extern void EvrRtxThreadFlagsSet (osThreadId_t thread_id, int32_t flags);
+extern void EvrRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags);
 #else
 #define EvrRtxThreadFlagsSet(thread_id, flags)
 #endif
@@ -654,7 +654,7 @@ extern void EvrRtxThreadFlagsSet (osThreadId_t thread_id, int32_t flags);
   \param[in]  thread_flags  thread flags after setting
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_SET_DONE_DISABLE))
-extern void EvrRtxThreadFlagsSetDone (osThreadId_t thread_id, int32_t thread_flags);
+extern void EvrRtxThreadFlagsSetDone (osThreadId_t thread_id, uint32_t thread_flags);
 #else
 #define EvrRtxThreadFlagsSetDone(thread_id, thread_flags)
 #endif
@@ -664,7 +664,7 @@ extern void EvrRtxThreadFlagsSetDone (osThreadId_t thread_id, int32_t thread_fla
   \param[in]  flags         flags of the thread that shall be cleared.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_CLEAR_DISABLE))
-extern void EvrRtxThreadFlagsClear (int32_t flags);
+extern void EvrRtxThreadFlagsClear (uint32_t flags);
 #else
 #define EvrRtxThreadFlagsClear(flags)
 #endif
@@ -674,7 +674,7 @@ extern void EvrRtxThreadFlagsClear (int32_t flags);
   \param[in]  thread_flags  thread flags before clearing
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_CLEAR_DONE_DISABLE))
-extern void EvrRtxThreadFlagsClearDone (int32_t thread_flags);
+extern void EvrRtxThreadFlagsClearDone (uint32_t thread_flags);
 #else
 #define EvrRtxThreadFlagsClearDone(thread_flags)
 #endif
@@ -684,7 +684,7 @@ extern void EvrRtxThreadFlagsClearDone (int32_t thread_flags);
   \param[in]  thread_flags  current thread flags.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_GET_DISABLE))
-extern void EvrRtxThreadFlagsGet (int32_t thread_flags);
+extern void EvrRtxThreadFlagsGet (uint32_t thread_flags);
 #else
 #define EvrRtxThreadFlagsGet(thread_flags)
 #endif
@@ -696,7 +696,7 @@ extern void EvrRtxThreadFlagsGet (int32_t thread_flags);
   \param[in]  timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_WAIT_DISABLE))
-extern void EvrRtxThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout);
+extern void EvrRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout);
 #else
 #define EvrRtxThreadFlagsWait(flags, options, timeout)
 #endif
@@ -708,7 +708,7 @@ extern void EvrRtxThreadFlagsWait (int32_t flags, uint32_t options, uint32_t tim
   \param[in]  timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_WAIT_PENDING_DISABLE))
-extern void EvrRtxThreadFlagsWaitPending (int32_t flags, uint32_t options, uint32_t timeout);
+extern void EvrRtxThreadFlagsWaitPending (uint32_t flags, uint32_t options, uint32_t timeout);
 #else
 #define EvrRtxThreadFlagsWaitPending(flags, options, timeout)
 #endif
@@ -729,7 +729,7 @@ extern void EvrRtxThreadFlagsWaitTimeout (void);
   \param[in]  thread_flags  thread flags before clearing
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_WAIT_COMPLETED_DISABLE))
-extern void EvrRtxThreadFlagsWaitCompleted (int32_t flags, uint32_t options, int32_t thread_flags);
+extern void EvrRtxThreadFlagsWaitCompleted (uint32_t flags, uint32_t options, uint32_t thread_flags);
 #else
 #define EvrRtxThreadFlagsWaitCompleted(flags, options, thread_flags)
 #endif
@@ -740,7 +740,7 @@ extern void EvrRtxThreadFlagsWaitCompleted (int32_t flags, uint32_t options, int
   \param[in]  options       flags options (osFlagsXxxx).
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FLAGS_WAIT_NOT_COMPLETED_DISABLE))
-extern void EvrRtxThreadFlagsWaitNotCompleted (int32_t flags, uint32_t options);
+extern void EvrRtxThreadFlagsWaitNotCompleted (uint32_t flags, uint32_t options);
 #else
 #define EvrRtxThreadFlagsWaitNotCompleted(flags, options)
 #endif
@@ -957,7 +957,7 @@ extern void EvrRtxEventFlagsGetName (osEventFlagsId_t ef_id, const char *name);
   \param[in]  flags         flags that shall be set.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_SET_DISABLE))
-extern void EvrRtxEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags);
+extern void EvrRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags);
 #else
 #define EvrRtxEventFlagsSet(ef_id, flags)
 #endif
@@ -968,7 +968,7 @@ extern void EvrRtxEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags);
   \param[in]  event_flags   event flags after setting
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_SET_DONE_DISABLE))
-extern void EvrRtxEventFlagsSetDone (osEventFlagsId_t ef_id, int32_t event_flags);
+extern void EvrRtxEventFlagsSetDone (osEventFlagsId_t ef_id, uint32_t event_flags);
 #else
 #define EvrRtxEventFlagsSetDone(ef_id, event_flags)
 #endif
@@ -979,7 +979,7 @@ extern void EvrRtxEventFlagsSetDone (osEventFlagsId_t ef_id, int32_t event_flags
   \param[in]  flags         flags that shall be cleared.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_CLEAR_DISABLE))
-extern void EvrRtxEventFlagsClear (osEventFlagsId_t ef_id, int32_t flags);
+extern void EvrRtxEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags);
 #else
 #define EvrRtxEventFlagsClear(ef_id, flags)
 #endif
@@ -990,7 +990,7 @@ extern void EvrRtxEventFlagsClear (osEventFlagsId_t ef_id, int32_t flags);
   \param[in]  event_flags   event flags before clearing
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_CLEAR_DONE_DISABLE))
-extern void EvrRtxEventFlagsClearDone (osEventFlagsId_t ef_id, int32_t event_flags);
+extern void EvrRtxEventFlagsClearDone (osEventFlagsId_t ef_id, uint32_t event_flags);
 #else
 #define EvrRtxEventFlagsClearDone(ef_id, event_flags)
 #endif
@@ -1001,7 +1001,7 @@ extern void EvrRtxEventFlagsClearDone (osEventFlagsId_t ef_id, int32_t event_fla
   \param[in]  event_flags   current event flags.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_GET_DISABLE))
-extern void EvrRtxEventFlagsGet (osEventFlagsId_t ef_id, int32_t event_flags);
+extern void EvrRtxEventFlagsGet (osEventFlagsId_t ef_id, uint32_t event_flags);
 #else
 #define EvrRtxEventFlagsGet(ef_id, event_flags)
 #endif
@@ -1014,7 +1014,7 @@ extern void EvrRtxEventFlagsGet (osEventFlagsId_t ef_id, int32_t event_flags);
   \param[in]  timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_WAIT_DISABLE))
-extern void EvrRtxEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout);
+extern void EvrRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout);
 #else
 #define EvrRtxEventFlagsWait(ef_id, flags, options, timeout)
 #endif
@@ -1027,7 +1027,7 @@ extern void EvrRtxEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_
   \param[in]  timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_WAIT_PENDING_DISABLE))
-extern void EvrRtxEventFlagsWaitPending (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout);
+extern void EvrRtxEventFlagsWaitPending (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout);
 #else
 #define EvrRtxEventFlagsWaitPending(ef_id, flags, options, timeout)
 #endif
@@ -1050,7 +1050,7 @@ extern void EvrRtxEventFlagsWaitTimeout (osEventFlagsId_t ef_id);
   \param[in]  event_flags   event flags before clearing or 0 if specified flags have not been set.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_WAIT_COMPLETED_DISABLE))
-extern void EvrRtxEventFlagsWaitCompleted (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, int32_t event_flags);
+extern void EvrRtxEventFlagsWaitCompleted (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t event_flags);
 #else
 #define EvrRtxEventFlagsWaitCompleted(ef_id, flags, options, event_flags)
 #endif
@@ -1062,7 +1062,7 @@ extern void EvrRtxEventFlagsWaitCompleted (osEventFlagsId_t ef_id, int32_t flags
   \param[in]  options       flags options (osFlagsXxxx).
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_EVFLAGS != 0) && !defined(EVR_RTX_EVENT_FLAGS_WAIT_NOT_COMPLETED_DISABLE))
-extern void EvrRtxEventFlagsWaitNotCompleted (osEventFlagsId_t ef_id, int32_t flags, uint32_t options);
+extern void EvrRtxEventFlagsWaitNotCompleted (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options);
 #else
 #define EvrRtxEventFlagsWaitNotCompleted(ef_id, flags, options)
 #endif

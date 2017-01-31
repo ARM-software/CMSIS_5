@@ -44,7 +44,7 @@
             output_content_type,                                        \
             MATRIX_SNR_THRESHOLD                                        \
             );                                                          \
-    } while(0)
+    } while (0)
 
 /**
  *  Compare the outputs from the function under test and the reference
@@ -60,7 +60,7 @@
             ((output_type *) &matrix_output_ref)->numCols,              \
             MATRIX_SNR_THRESHOLD                                        \
             );                                                          \
-    } while(0)
+    } while (0)
 
 /*--------------------------------------------------------------------------------*/
 /* Input Interfaces */
@@ -169,7 +169,7 @@
             ((input_type)(matrix_a_ptr))->numRows;          \
         ((input_type) &matrix_output_ref)->numCols =        \
             ((input_type)(matrix_a_ptr))->numCols;          \
-    } while(0)
+    } while (0)
 
 #define MATRIX_TEST_CONFIG_MULTIPLICATIVE_OUTPUT(input_type,    \
                                                  matrix_a_ptr,  \
@@ -184,7 +184,7 @@
             ((input_type)(matrix_a_ptr))->numRows;              \
         ((input_type) &matrix_output_ref)->numCols =            \
             ((input_type)(matrix_b_ptr))->numCols;              \
-    } while(0)
+    } while (0)
 
 #define MATRIX_TEST_CONFIG_SAMESIZE_OUTPUT(input_type,  \
                                            matrix_ptr)  \
@@ -198,7 +198,7 @@
             ((input_type)(matrix_ptr))->numRows;        \
         ((input_type) &matrix_output_ref)->numCols =    \
             ((input_type)(matrix_ptr))->numCols;        \
-    } while(0)
+    } while (0)
 
 #define MATRIX_TEST_CONFIG_TRANSPOSE_OUTPUT(input_type,     \
                                             matrix_ptr)     \
@@ -212,7 +212,7 @@
                 ((input_type)(matrix_ptr))->numCols;        \
             ((input_type) &matrix_output_ref)->numCols =    \
                 ((input_type)(matrix_ptr))->numRows;        \
-        } while(0)
+        } while (0)
 
 /*--------------------------------------------------------------------------------*/
 /* TEST Templates */
@@ -235,7 +235,7 @@
                          (int)input->numRows,                           \
                          (int)input->numCols);                          \
                                                                         \
-            if(dim_validation_interface(input_type,                     \
+            if (dim_validation_interface(input_type,                     \
                                         input)) {                       \
                 output_config_interface(input_type,                     \
                                         input);                         \
@@ -252,12 +252,12 @@
                                                                         \
                 /* If dimensions are known bad, the fut should */       \
                 /* detect it. */                                        \
-                if( matrix_test_retval != ARM_MATH_SIZE_MISMATCH) {     \
+                if ( matrix_test_retval != ARM_MATH_SIZE_MISMATCH) {     \
                     return JTEST_TEST_FAILED;                           \
                 }                                                       \
             });                                                         \
         return JTEST_TEST_PASSED;                                       \
-    } while(0)
+    } while (0)
 
 
 #define MATRIX_TEST_TEMPLATE_ELT2(arr_desc_inputs_a,                    \
@@ -284,7 +284,7 @@
                      (int)input_b->numRows,                             \
                      (int)input_b->numCols);                            \
                                                                         \
-            if(dim_validation_interface(input_type,                     \
+            if (dim_validation_interface(input_type,                     \
                                         input_a,                        \
                                         input_b)) {                     \
                                                                         \
@@ -305,12 +305,12 @@
                                                                         \
                 /* If dimensions are known bad, the fut should */       \
                 /* detect it. */                                        \
-                if( matrix_test_retval != ARM_MATH_SIZE_MISMATCH) {     \
+                if ( matrix_test_retval != ARM_MATH_SIZE_MISMATCH) {     \
                     return JTEST_TEST_FAILED;                           \
                 }                                                       \
             });                                                         \
         return JTEST_TEST_PASSED;                                       \
-    } while(0)
+    } while (0)
 
 /**
  *  Specialization of #MATRIX_TEST_TEMPLATE_ELT2() for matrix tests.

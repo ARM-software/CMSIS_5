@@ -1,24 +1,24 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_bitreversal.c    
-*    
-* Description:	This file has common tables like Bitreverse, reciprocal etc which are used across different functions    
-*    
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+*
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_bitreversal.c
+*
+* Description:  This file has common tables like Bitreverse, reciprocal etc which are used across different functions
+*
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*  
-* Redistribution and use in source and binary forms, with or without 
+*
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -27,7 +27,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -35,19 +35,19 @@
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.  
+* POSSIBILITY OF SUCH DAMAGE.
 * -------------------------------------------------------------------- */
 
 #include "arm_math.h"
 #include "arm_common_tables.h"
 
-/*    
-* @brief  In-place bit reversal function.   
-* @param[in, out] *pSrc        points to the in-place buffer of floating-point data type.   
-* @param[in]      fftSize      length of the FFT.   
-* @param[in]      bitRevFactor bit reversal modifier that supports different size FFTs with the same bit reversal table.   
-* @param[in]      *pBitRevTab  points to the bit reversal table.   
-* @return none.   
+/*
+* @brief  In-place bit reversal function.
+* @param[in, out] *pSrc        points to the in-place buffer of floating-point data type.
+* @param[in]      fftSize      length of the FFT.
+* @param[in]      bitRevFactor bit reversal modifier that supports different size FFTs with the same bit reversal table.
+* @param[in]      *pBitRevTab  points to the bit reversal table.
+* @return none.
 */
 
 void arm_bitreversal_f32(
@@ -68,7 +68,7 @@ uint16_t * pBitRevTab)
    /* Bit Reversal Implementation */
    for (i = 0u; i <= (fftLenBy2 - 2u); i += 2u)
    {
-      if(i < j)
+      if (i < j)
       {
          /*  pSrc[i] <-> pSrc[j]; */
          in = pSrc[2u * i];
@@ -113,13 +113,13 @@ uint16_t * pBitRevTab)
 
 
 
-/*    
-* @brief  In-place bit reversal function.   
-* @param[in, out] *pSrc        points to the in-place buffer of Q31 data type.   
-* @param[in]      fftLen       length of the FFT.   
-* @param[in]      bitRevFactor bit reversal modifier that supports different size FFTs with the same bit reversal table   
-* @param[in]      *pBitRevTab  points to bit reversal table.   
-* @return none.   
+/*
+* @brief  In-place bit reversal function.
+* @param[in, out] *pSrc        points to the in-place buffer of Q31 data type.
+* @param[in]      fftLen       length of the FFT.
+* @param[in]      bitRevFactor bit reversal modifier that supports different size FFTs with the same bit reversal table
+* @param[in]      *pBitRevTab  points to bit reversal table.
+* @return none.
 */
 
 void arm_bitreversal_q31(
@@ -139,7 +139,7 @@ uint16_t * pBitRevTable)
    /* Bit Reversal Implementation */
    for (i = 0u; i <= (fftLenBy2 - 2u); i += 2u)
    {
-      if(i < j)
+      if (i < j)
       {
          /*  pSrc[i] <-> pSrc[j]; */
          in = pSrc[2u * i];
@@ -184,13 +184,13 @@ uint16_t * pBitRevTable)
 
 
 
-/*    
-   * @brief  In-place bit reversal function.   
-   * @param[in, out] *pSrc        points to the in-place buffer of Q15 data type.   
-   * @param[in]      fftLen       length of the FFT.   
-   * @param[in]      bitRevFactor bit reversal modifier that supports different size FFTs with the same bit reversal table   
-   * @param[in]      *pBitRevTab  points to bit reversal table.   
-   * @return none.   
+/*
+   * @brief  In-place bit reversal function.
+   * @param[in, out] *pSrc        points to the in-place buffer of Q15 data type.
+   * @param[in]      fftLen       length of the FFT.
+   * @param[in]      bitRevFactor bit reversal modifier that supports different size FFTs with the same bit reversal table
+   * @param[in]      *pBitRevTab  points to bit reversal table.
+   * @return none.
 */
 
 void arm_bitreversal_q15(
@@ -212,7 +212,7 @@ uint16_t * pBitRevTab)
    /* Bit Reversal Implementation */
    for (i = 0u; i <= (fftLenBy2 - 2u); i += 2u)
    {
-      if(i < j)
+      if (i < j)
       {
          /*  pSrc[i] <-> pSrc[j]; */
          /*  pSrc[i+1u] <-> pSrc[j+1u] */

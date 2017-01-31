@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -145,10 +145,10 @@ extern void             svcRtxThreadExit         (void);
 extern osStatus_t       svcRtxThreadTerminate    (osThreadId_t thread_id);
 extern uint32_t         svcRtxThreadGetCount     (void);
 extern uint32_t         svcRtxThreadEnumerate    (osThreadId_t *thread_array, uint32_t array_items);
-extern int32_t          svcRtxThreadFlagsSet     (osThreadId_t thread_id, int32_t flags);
-extern int32_t          svcRtxThreadFlagsClear   (int32_t flags);
-extern int32_t          svcRtxThreadFlagsGet     (void);
-extern int32_t          svcRtxThreadFlagsWait    (int32_t flags, uint32_t options, uint32_t timeout);
+extern uint32_t         svcRtxThreadFlagsSet     (osThreadId_t thread_id, uint32_t flags);
+extern uint32_t         svcRtxThreadFlagsClear   (uint32_t flags);
+extern uint32_t         svcRtxThreadFlagsGet     (void);
+extern uint32_t         svcRtxThreadFlagsWait    (uint32_t flags, uint32_t options, uint32_t timeout);
 
 // Delay Service Calls
 extern osStatus_t       svcRtxDelay      (uint32_t ticks);
@@ -165,10 +165,10 @@ extern osStatus_t       svcRtxTimerDelete    (osTimerId_t timer_id);
 // Event Flags Service Calls
 extern osEventFlagsId_t svcRtxEventFlagsNew     (const osEventFlagsAttr_t *attr);
 extern const char *     svcRtxEventFlagsGetName (osEventFlagsId_t ef_id);
-extern int32_t          svcRtxEventFlagsSet     (osEventFlagsId_t ef_id, int32_t flags);
-extern int32_t          svcRtxEventFlagsClear   (osEventFlagsId_t ef_id, int32_t flags);
-extern int32_t          svcRtxEventFlagsGet     (osEventFlagsId_t ef_id);
-extern int32_t          svcRtxEventFlagsWait    (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout);
+extern uint32_t         svcRtxEventFlagsSet     (osEventFlagsId_t ef_id, uint32_t flags);
+extern uint32_t         svcRtxEventFlagsClear   (osEventFlagsId_t ef_id, uint32_t flags);
+extern uint32_t         svcRtxEventFlagsGet     (osEventFlagsId_t ef_id);
+extern uint32_t         svcRtxEventFlagsWait    (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout);
 extern osStatus_t       svcRtxEventFlagsDelete  (osEventFlagsId_t ef_id);
 
 // Mutex Service Calls

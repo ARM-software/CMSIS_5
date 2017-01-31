@@ -70,7 +70,6 @@ The \ref packFormat is structured using grouping elements and contains the follo
    It allows making components and files conditional.
  - \subpage pdsc_components_pg "<components>": lists the software components contained in the \ref cp_SWComponents "Software Pack".
  - \subpage pdsc_examples_pg "<examples>": specifies example projects contained in the PACK.
- - \subpage pdsc_SequenceNameEnum_pg "<sequence>": specifies sequences of debugger commands.
 
 \section PDSC_Example Example of a *.PDSC File
 

@@ -41,7 +41,7 @@ extern const char * JTEST_CYCLE_STRF;
                         STR(fn_call),                   \
                         (JTEST_SYSTICK_INITIAL_VALUE -  \
                          __jtest_cycle_end_count));     \
-    } while(0)
+    } while (0)
 */
 #define JTEST_COUNT_CYCLES(fn_call)                     \
     do                                                  \
@@ -60,6 +60,6 @@ extern const char * JTEST_CYCLE_STRF;
         JTEST_DUMP_STRF(JTEST_CYCLE_STRF,               \
                         (JTEST_SYSTICK_INITIAL_VALUE -  \
                          __jtest_cycle_end_count));     \
-    } while(0)
+    } while (0)
 
 #endif /* _JTEST_CYCLE_H_ */

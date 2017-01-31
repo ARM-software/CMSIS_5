@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        19. March 2015
-* $Revision:    V.1.4.5 a
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_biquad_cascade_df1_q31.c
@@ -90,7 +90,7 @@ void arm_biquad_cascade_df1_q31(
   uint32_t sample, stage = S->numStages;         /*  loop counters                     */
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
   q31_t acc_l, acc_h;                            /*  temporary output variables    */
 
@@ -121,7 +121,7 @@ void arm_biquad_cascade_df1_q31(
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -261,7 +261,7 @@ void arm_biquad_cascade_df1_q31(
      ** No loop unrolling is used. */
     sample = (blockSize & 0x3u);
 
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -313,7 +313,7 @@ void arm_biquad_cascade_df1_q31(
     *pState++ = Yn1;
     *pState++ = Yn2;
 
-  } while(--stage);
+  } while (--stage);
 
 #else
 
@@ -340,7 +340,7 @@ void arm_biquad_cascade_df1_q31(
 
     sample = blockSize;
 
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -392,9 +392,9 @@ void arm_biquad_cascade_df1_q31(
     *pState++ = Yn1;
     *pState++ = Yn2;
 
-  } while(--stage);
+  } while (--stage);
 
-#endif /*  #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*  #if defined (ARM_MATH_DSP) */
 }
 
 

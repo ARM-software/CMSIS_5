@@ -36,17 +36,22 @@ The figure above shows the following use cases for Software Packs:
 \note A Software Pack can address multiple use cases at the same time!
 
 The following sections give you more details on the basics:
- - \subpage cp_Packs explains the steps required for creating a Software Pack in general.
- - \subpage cp_SWComponents gives detailed information on the contents of the PDSC file.
- - \subpage createPack_DFP describes additional requirements of Device Family Packs (DFPs).
- - \subpage createPackBoard covers the creation of Board Support Packs (BSPs).
- - \subpage pack_Example explains the Software Pack example that is part of the CMSIS Pack in more detail.
- - \subpage createPackPublish shows the options for publishing a Pack.
- - \subpage createPackUtil caters to programs that are useful during the creation of a Pack.
- - \subpage packFormat describes all XML elements that can be used in a PDSC file.
- - \subpage cpdsc_pg describes all XML elements that can be used to create a software example project.
- - \subpage configWizard can be used to create GUI-like elements in development tools for configuration files.
- 
+
+ - \ref cp_Packs explains the steps required for creating a Software Pack in general.
+ - \ref cp_SWComponents gives detailed information on the contents of the PDSC file.
+ - \ref createPack_DFP describes additional requirements of Device Family Packs (DFPs).
+ - \ref createPackBoard covers the creation of Board Support Packs (BSPs).
+ - \ref pack_Example explains the Software Pack example that is part of the CMSIS Pack in more detail.
+ - \ref createPackPublish shows the options for publishing a Pack.
+ - \ref createPackUtil caters to programs that are useful during the creation of a Pack.
+ - \ref packFormat describes all XML elements that can be used in a PDSC file.
+ - \ref configWizard can be used to create GUI-like elements in development tools for configuration files.
+ - \ref flashAlgorithm are used to erase or download applications to Flash devices.
+ - \ref coresight_setup allow to create tool-agnostic debug and trace configurations
+ - \ref cpdsc_pg is a environment/tool independent definition of a software project. This helps to create only one set of
+   example projects that can be used by many different tool vendors.
+ - \ref packIndexFile
+
 <hr>
 
 CMSIS-Pack in ARM::CMSIS Pack
@@ -69,7 +74,14 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <th>Version</th>
     <th>Description</th>
   </tr>
-    <tr>
+  <tr>
+    <td>1.4.8</td>
+    <td>Modifications compared to Version 1.4.7
+- added Toptions attribute for use in conditions
+- added Pack Index File Specification
+    </td>
+  </tr>
+  <tr>
     <td>1.4.7</td>
     <td>Modifications compared to Version 1.4.6
 - added multiple version types to tighten the schema checking depending on context

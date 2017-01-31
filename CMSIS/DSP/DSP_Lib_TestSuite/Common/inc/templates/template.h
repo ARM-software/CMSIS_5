@@ -15,7 +15,7 @@
         loop_def {                              \
             body;                               \
         }                                       \
-    } while(0)
+    } while (0)
 
 /**
  *  Template for looping over an array-like sequence.
@@ -31,7 +31,7 @@
             for(iter_idx = 0; iter_idx < (arr_length); ++iter_idx),     \
             iter_elem_setup;                                            \
             body);                                                      \
-    } while(0)
+    } while (0)
 
 /**
  *  Template for looping over the contents of an array.
@@ -43,7 +43,7 @@
             iter_idx, type, arr, arr_length,                            \
             type iter_elem = (arr)[iter_idx],                           \
             body);                                                      \
-    } while(0)
+    } while (0)
 
 /**
  *  Template for looping over the contents of an #ARR_DESC.
@@ -55,7 +55,7 @@
             iter_idx, type, arr_desc, (arr_desc).element_count,         \
             type iter_elem = ARR_DESC_ELT(type, iter_idx, &(arr_desc)), \
             body);                                                      \
-    } while(0)
+    } while (0)
 
 /*--------------------------------------------------------------------------------*/
 /* Test Definition */
@@ -70,7 +70,7 @@
             setup;                              \
             body;                               \
             teardown;                           \
-        } while(0)
+        } while (0)
 
 /**
  *  Template for calling a function.

@@ -22,6 +22,6 @@
     do                                                              \
     {                                                               \
         (struct_ptr)->attribute = (value);                          \
-    } while(0)
+    } while (0)
 
 #endif /* _JTEST_UTIL_H_ */

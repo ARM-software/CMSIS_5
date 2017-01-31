@@ -13,6 +13,7 @@ typical content of a DFP is:
   - One or more \ref cp_SVD "System View Description Files" describing the programmer's view of the device's
     peripherals.
   - \ref cp_FlashProgrammingAlgorithm for erasing and downloading code into on-chip Flash.
+  - \ref cp_debugdescription enable tool-agnostic debug and trace configurations.
   - \ref cp_Examples "Example Projects" that show the usage of the device and its peripherals.
   - \ref cp_CodeTemplates "User Code Templates" that can be used as a starting point for application development.
 
@@ -376,6 +377,9 @@ Programming Algorithms included in your project (either for a new project or by 
 \note The page \ref flashAlgorithm gives more information on the subject.
 </li>
 </ol>
+
+
+\section cp_debugdescription Debug Descriptions
 
 
 \section cp_DeviceProperties Device Properties

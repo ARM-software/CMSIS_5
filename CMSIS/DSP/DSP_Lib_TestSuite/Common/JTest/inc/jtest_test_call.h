@@ -24,7 +24,7 @@
         JTEST_DUMP_STR("Function Under Test:\n");                       \
         JTEST_DUMP_STR(JTEST_TEST_STRUCT_NAME(test_fn).fut_str);        \
         retval = JTEST_TEST_STRUCT_NAME(test_fn).test_fn_ptr();         \
-    } while(0)
+    } while (0)
 
 /**
  *  Update the enclosing #JTEST_GROUP_t's pass/fail information based on
@@ -45,7 +45,7 @@
         } else {                                                    \
             JTEST_GROUP_INC_FAILED(JTEST_CURRENT_GROUP_PTR(), 1);   \
         }                                                           \
-    } while(0)
+    } while (0)
 
 /**
  *  Update the #JTEST_FW with pass/fail information based on test_retval.
@@ -62,7 +62,7 @@
         } else {                                                    \
             JTEST_FW_INC_FAILED(1);                                 \
         }                                                           \
-    } while(0)
+    } while (0)
 
 /**
  *  Update the enclosing JTEST_GROUP_t's pass/fail information, or the
@@ -74,13 +74,13 @@
     do                                                                  \
     {                                                                   \
         /* Update pass-fail information */                              \
-        if(JTEST_CURRENT_GROUP_PTR() /* Non-null */)                    \
+        if (JTEST_CURRENT_GROUP_PTR() /* Non-null */)                    \
         {                                                               \
             JTEST_TEST_UPDATE_PARENT_GROUP_PF(test_retval);             \
         } else {                                                        \
             JTEST_TEST_UPDATE_FW_PF(test_retval);                       \
         }                                                               \
-    } while(0)
+    } while (0)
 
 /**
  *  Dump the results of the test to the Keil Debugger.
@@ -94,7 +94,7 @@
             } else {                                \
                 JTEST_DUMP_STR("Test Failed\n");      \
             }                                       \
-        } while(0)
+        } while (0)
 
 /**
  *  Call the #JTEST_TEST_t assocaited with the identifier test_fn.
@@ -116,6 +116,6 @@
             JTEST_TEST_DUMP_RESULTS(__jtest_test_ret);                  \
             JTEST_ACT_TEST_END();                                       \
         }                                                               \
-    } while(0)
+    } while (0)
 
 #endif /* _JTEST_TEST_CALL_H_ */

@@ -20,7 +20,7 @@ void ref_conv_f32(
     for (j = 0; j <= i; j++)
     {
       /* Check the array limitations */
-      if((i - j < srcBLen) && (j < srcALen))
+      if ((i - j < srcBLen) && (j < srcALen))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += pSrcB[i - j] * pSrcA[j];
@@ -65,7 +65,7 @@ void ref_conv_q31(
     for (j = 0; j <= i; j++)
     {
       /* Check the array limitations */
-      if((i - j < srcBLen) && (j < srcALen))
+      if ((i - j < srcBLen) && (j < srcALen))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += (q63_t) pSrcA[j] * (pSrcB[i - j]);
@@ -97,7 +97,7 @@ void ref_conv_fast_q31(
     for (j = 0; j <= i; j++)
     {
       /* Check the array limitations */
-      if((i - j < srcBLen) && (j < srcALen))
+      if ((i - j < srcBLen) && (j < srcALen))
       {
         /* z[i] += x[i-j] * y[j] */
 				sum = (q31_t) ((((q63_t)sum << 32) +
@@ -158,7 +158,7 @@ void ref_conv_q15(
     for (j = 0; j <= i; j++)
     {
       /* Check the array limitations */
-      if((i - j < srcBLen) && (j < srcALen))
+      if ((i - j < srcBLen) && (j < srcALen))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += (q31_t)pSrcA[j] * pSrcB[i - j];
@@ -194,7 +194,7 @@ arm_status ref_conv_partial_fast_opt_q15(
     for (j = 0; j <= i; j++)
     {
       /* Check the array limitations */
-      if((i - j < srcBLen) && (j < srcALen))
+      if ((i - j < srcBLen) && (j < srcALen))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += (q31_t)pSrcA[j] * pSrcB[i - j];
@@ -228,7 +228,7 @@ void ref_conv_fast_q15(
     for (j = 0; j <= i; j++)
     {
       /* Check the array limitations */
-      if((i - j < srcBLen) && (j < srcALen))
+      if ((i - j < srcBLen) && (j < srcALen))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += (q31_t)pSrcA[j] * pSrcB[i - j];
@@ -262,7 +262,7 @@ void ref_conv_fast_opt_q15(
     for (j = 0; j <= i; j++)
     {
       /* Check the array limitations */
-      if((i - j < srcBLen) && (j < srcALen))
+      if ((i - j < srcBLen) && (j < srcALen))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += (q31_t)pSrcA[j] * pSrcB[i - j];
@@ -323,7 +323,7 @@ void ref_conv_q7(
     for (j = 0; j <= i; j++)
     {
       /* Check the array limitations */
-      if((i - j < srcBLen) && (j < srcALen))
+      if ((i - j < srcBLen) && (j < srcALen))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += (q15_t)pSrcA[j] * pSrcB[i - j];

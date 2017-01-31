@@ -29,7 +29,7 @@ void ref_scale_q31(
 	for(i=0;i<blockSize;i++)
 	{
 		temp = ((q63_t) pSrc[i] * scaleFract) >> 32;
-		if(sign)
+		if (sign)
 			pDst[i] = temp >> -kShift;
 		else
 			pDst[i] = ref_sat_q31( (q63_t)temp << kShift );

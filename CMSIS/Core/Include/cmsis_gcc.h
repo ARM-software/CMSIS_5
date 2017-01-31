@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
- * @brief    CMSIS Cortex-M Core Function/Instruction Header File
- * @version  V5.00
- * @date     28. October 2016
+ * @brief    CMSIS compiler GCC header file
+ * @version  V5.0.1
+ * @date     30. January 2017
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -47,7 +47,7 @@
 #ifndef   __USED
   #define __USED                    __attribute__((used))
 #endif
-#ifndef   _WEAK
+#ifndef   __WEAK
   #define __WEAK                    __attribute__((weak))
 #endif
 #ifndef   __UNALIGNED_UINT32
@@ -63,6 +63,9 @@
 #endif
 #ifndef   __PACKED
   #define __PACKED                  __attribute__((packed, aligned(1)))
+#endif
+#ifndef   __PACKED_STRUCT
+  #define __PACKED_STRUCT           struct __attribute__((packed, aligned(1)))
 #endif
 
 
@@ -501,8 +504,8 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_FAULTMASK_NS(uint32
            (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    ) */
 
 
-#if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1U)) || \
-     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1U))    )
+#if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
 
 /**
   \brief   Get Process Stack Pointer Limit
@@ -616,8 +619,8 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t 
 }
 #endif
 
-#endif /* ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1U)) || \
-           (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1U))    ) */
+#endif /* ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+           (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    ) */
 
 
 #if ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
@@ -634,9 +637,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
   uint32_t result;
 
-  __ASM volatile ("");                                 /* Empty asm statement works as a scheduling barrier */
   __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
-  __ASM volatile ("");
   return(result);
 #else
    return(0U);
@@ -653,9 +654,9 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 {
 #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
-  __ASM volatile ("");                                           /* Empty asm statement works as a scheduling barrier */
-  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc");
-  __ASM volatile ("");
+  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc", "memory");
+#else
+  (void)fpscr;
 #endif
 }
 

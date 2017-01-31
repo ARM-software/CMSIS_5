@@ -262,7 +262,7 @@
             <TextAddressRange></TextAddressRange>
             <DataAddressRange></DataAddressRange>
             <BSSAddressRange></BSSAddressRange>
-            <IncludeLibs>arm_cortex_math -larm_cortex_ref</IncludeLibs>
+            <IncludeLibs>arm_math -larm_ref</IncludeLibs>
             <IncludeDir>.\Lib</IncludeDir>
             <Misc>-Wl,--gc-sections</Misc>
             <ScatterFile>..\..\Common\platform\GCC\ARMCMx.ld</ScatterFile>
@@ -986,7 +986,7 @@
             <TextAddressRange></TextAddressRange>
             <DataAddressRange></DataAddressRange>
             <BSSAddressRange></BSSAddressRange>
-            <IncludeLibs>arm_cortex_math -larm_cortex_ref</IncludeLibs>
+            <IncludeLibs>arm_math -larm_ref</IncludeLibs>
             <IncludeDir>.\Lib</IncludeDir>
             <Misc>-Wl,--gc-sections</Misc>
             <ScatterFile>..\..\Common\platform\GCC\ARMCMx.ld</ScatterFile>
@@ -1710,7 +1710,7 @@
             <TextAddressRange></TextAddressRange>
             <DataAddressRange></DataAddressRange>
             <BSSAddressRange></BSSAddressRange>
-            <IncludeLibs>arm_cortex_math -larm_cortex_ref</IncludeLibs>
+            <IncludeLibs>arm_math -larm_ref</IncludeLibs>
             <IncludeDir>.\Lib</IncludeDir>
             <Misc>-Wl,--gc-sections</Misc>
             <ScatterFile>..\..\Common\platform\GCC\ARMCMx.ld</ScatterFile>
@@ -3158,7 +3158,7 @@
             <TextAddressRange></TextAddressRange>
             <DataAddressRange></DataAddressRange>
             <BSSAddressRange></BSSAddressRange>
-            <IncludeLibs>arm_cortex_math -larm_cortex_ref</IncludeLibs>
+            <IncludeLibs>arm_math -larm_ref</IncludeLibs>
             <IncludeDir>.\Lib</IncludeDir>
             <Misc>-Wl,--gc-sections</Misc>
             <ScatterFile>..\..\Common\platform\GCC\ARMCMx.ld</ScatterFile>
@@ -3882,7 +3882,7 @@
             <TextAddressRange></TextAddressRange>
             <DataAddressRange></DataAddressRange>
             <BSSAddressRange></BSSAddressRange>
-            <IncludeLibs>arm_cortex_math -larm_cortex_ref</IncludeLibs>
+            <IncludeLibs>arm_math -larm_ref</IncludeLibs>
             <IncludeDir>.\Lib</IncludeDir>
             <Misc>-Wl,--gc-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard</Misc>
             <ScatterFile>..\..\Common\platform\GCC\ARMCMx.ld</ScatterFile>
@@ -4606,7 +4606,7 @@
             <TextAddressRange></TextAddressRange>
             <DataAddressRange></DataAddressRange>
             <BSSAddressRange></BSSAddressRange>
-            <IncludeLibs>arm_cortex_math -larm_cortex_ref</IncludeLibs>
+            <IncludeLibs>arm_math -larm_ref</IncludeLibs>
             <IncludeDir>.\Lib</IncludeDir>
             <Misc>-Wl,--gc-sections -mfpu=fpv5-d16 -mfloat-abi=hard</Misc>
             <ScatterFile>..\..\Common\platform\GCC\ARMCMx.ld</ScatterFile>

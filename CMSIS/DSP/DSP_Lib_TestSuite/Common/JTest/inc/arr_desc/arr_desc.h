@@ -136,7 +136,7 @@ typedef struct ARR_DESC_struct
                      (arr_desc_ptr)->underlying_size,   \
                      bytes)                             \
             );                                          \
-    } while(0)
+    } while (0)
 
 /**
  *  Perform a memcpy of 'bytes' bytes from the source #ARR_DESC_t to the
@@ -150,7 +150,7 @@ typedef struct ARR_DESC_struct
                BOUND(0,                                             \
                      (arr_desc_dest_ptr)->underlying_size,          \
                      bytes));                                       \
-    } while(0)
+    } while (0)
 
 /**
  *  Evaluate to true if the source #ARR_DESC_t contents will fit into the
@@ -170,7 +170,7 @@ typedef struct ARR_DESC_struct
 #define ARR_DESC_COPY(arr_desc_dest_ptr, arr_desc_src_ptr)      \
     do                                                          \
     {                                                           \
-        if(ARR_DESC_COPYABLE(arr_desc_dest_ptr,                 \
+        if (ARR_DESC_COPYABLE(arr_desc_dest_ptr,                 \
                              arr_desc_src_ptr))                 \
         {                                                       \
             ARR_DESC_MEMCPY(arr_desc_dest_ptr,                  \
@@ -182,7 +182,7 @@ typedef struct ARR_DESC_struct
             (arr_desc_dest_ptr)->element_size =                 \
                 (arr_desc_src_ptr)->element_size;               \
         }                                                       \
-    } while(0)
+    } while (0)
 
 /**
  *  Compare the data in two #ARR_DESC_t structs for the specified number of

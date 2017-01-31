@@ -45,7 +45,7 @@
             output_type,                                            \
             BASIC_MATH_SNR_THRESHOLD_##output_type                  \
             );                                                      \
-    } while(0)
+    } while (0)
 
 
 /**
@@ -65,7 +65,7 @@
             output_type,                                                \
             BASIC_MATH_SNR_THRESHOLD_##output_type                      \
             );                                                          \
-    } while(0)
+    } while (0)
 
 
 

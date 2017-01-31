@@ -1,24 +1,24 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015
-* $Revision: 	V.1.4.5
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_cmplx_mult_cmplx_q31.c    
-*    
-* Description:	Q31 complex-by-complex multiplication    
-*    
+/* ----------------------------------------------------------------------
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+*
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
+*
+* Project:      CMSIS DSP Library
+* Title:        arm_cmplx_mult_cmplx_q31.c
+*
+* Description:  Q31 complex-by-complex multiplication
+*
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*  
-* Redistribution and use in source and binary forms, with or without 
+*
+* Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
 * are met:
 *   - Redistributions of source code must retain the above copyright
 *     notice, this list of conditions and the following disclaimer.
 *   - Redistributions in binary form must reproduce the above copyright
 *     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
+*     the documentation and/or other materials provided with the
 *     distribution.
 *   - Neither the name of ARM LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
@@ -27,7 +27,7 @@
 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
 * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
 * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
 * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
@@ -35,33 +35,33 @@
 * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE. 
+* POSSIBILITY OF SUCH DAMAGE.
 * -------------------------------------------------------------------- */
 
 #include "arm_math.h"
 
-/**    
- * @ingroup groupCmplxMath    
+/**
+ * @ingroup groupCmplxMath
  */
 
-/**    
- * @addtogroup CmplxByCmplxMult    
- * @{    
+/**
+ * @addtogroup CmplxByCmplxMult
+ * @{
  */
 
 
-/**    
- * @brief  Q31 complex-by-complex multiplication    
- * @param[in]  *pSrcA points to the first input vector    
- * @param[in]  *pSrcB points to the second input vector    
- * @param[out]  *pDst  points to the output vector    
- * @param[in]  numSamples number of complex samples in each vector    
- * @return none.    
- *    
- * <b>Scaling and Overflow Behavior:</b>    
- * \par    
- * The function implements 1.31 by 1.31 multiplications and finally output is converted into 3.29 format.    
- * Input down scaling is not required.    
+/**
+ * @brief  Q31 complex-by-complex multiplication
+ * @param[in]  *pSrcA points to the first input vector
+ * @param[in]  *pSrcB points to the second input vector
+ * @param[out]  *pDst  points to the output vector
+ * @param[in]  numSamples number of complex samples in each vector
+ * @return none.
+ *
+ * <b>Scaling and Overflow Behavior:</b>
+ * \par
+ * The function implements 1.31 by 1.31 multiplications and finally output is converted into 3.29 format.
+ * Input down scaling is not required.
  */
 
 void arm_cmplx_mult_cmplx_q31(
@@ -75,16 +75,16 @@ void arm_cmplx_mult_cmplx_q31(
   q31_t mul1, mul2, mul3, mul4;
   q31_t out1, out2;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /* loop Unrolling */
   blkCnt = numSamples >> 2u;
 
-  /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+  /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
@@ -184,11 +184,11 @@ void arm_cmplx_mult_cmplx_q31(
     blkCnt--;
   }
 
-  /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
+  /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
   blkCnt = numSamples % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
@@ -226,9 +226,9 @@ void arm_cmplx_mult_cmplx_q31(
   /* loop Unrolling */
   blkCnt = numSamples >> 1u;
 
-  /* First part of the processing with loop unrolling.  Compute 2 outputs at a time.     
+  /* First part of the processing with loop unrolling.  Compute 2 outputs at a time.
    ** a second loop below computes the remaining 1 sample. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
@@ -282,11 +282,11 @@ void arm_cmplx_mult_cmplx_q31(
     blkCnt--;
   }
 
-  /* If the blockSize is not a multiple of 2, compute any remaining output samples here.     
+  /* If the blockSize is not a multiple of 2, compute any remaining output samples here.
    ** No loop unrolling is used. */
   blkCnt = numSamples % 0x2u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
@@ -317,10 +317,10 @@ void arm_cmplx_mult_cmplx_q31(
     blkCnt--;
   }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 
 }
 
-/**    
- * @} end of CmplxByCmplxMult group    
+/**
+ * @} end of CmplxByCmplxMult group
  */

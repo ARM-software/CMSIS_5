@@ -169,15 +169,7 @@ The \c Cclass, \c Cgroup, \c Csub, \c Cvariant and \c Cversion attributes are us
 PACK to identify a component. A component vendor must ensure that the combination \c Cclass, \c Cgroup, \c Csub and
 \c Cversion is unique and not used by multiple components within the same Pack.
 
-The following \c Cclass names have a special meaning:
-- \b Board \b Support usually contains board specific drivers for external peripheral devices.
-- \b CMSIS contains general CMSIS components like the CORE, DSP extensions, RTOSes (e.g. Keil RTX)
-- \b Device contains startup files for the target device
-- \b CMSIS \b Driver contain CMSIS-Driver conform peripheral drivers for the target device. These will be listed below the
-  respective \c Cgroup API entries (for example <b>Ethernet (API)</b>)
-- \b File \b System, \b Graphics, \b Network, and \b USB contain middleware to support these components
-
-Other \c Cclass names can be freely assigned to software components.
+For a list of established Cclasses, refer to \ref pack_Cclass.
 
 In case multiple interdependent components (belonging to the same \c Cclass) form part of a solution, these can be grouped
 in a so called \ref cp_Bundles "bundle". 

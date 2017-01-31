@@ -8,7 +8,7 @@ void ref_std_f32(
 	uint32_t i;
 	float32_t sum=0, sumsq=0;
 	
-	if(blockSize == 1)
+	if (blockSize == 1)
 	{
 		*pResult = 0;
 		return;
@@ -31,7 +31,7 @@ void ref_std_q31(
 	q63_t sum=0, sumsq=0;
 	q31_t in;
 	
-	if(blockSize == 1)
+	if (blockSize == 1)
 	{
 		*pResult = 0;
 		return;
@@ -57,7 +57,7 @@ void ref_std_q15(
 	q31_t sum=0;
 	q63_t sumsq=0;
 	
-	if(blockSize == 1)
+	if (blockSize == 1)
 	{
 		*pResult = 0;
 		return;

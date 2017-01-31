@@ -121,7 +121,7 @@ void ref_cfft_q31(
 		 break;
 	}
 	
-	if(ifftFlag)
+	if (ifftFlag)
 	{
 		for(i=0;i<S->fftLen*2;i++)
 		{
@@ -199,7 +199,7 @@ void ref_cfft_q15(
 		 break;
 	}
 	
-	if(ifftFlag)
+	if (ifftFlag)
 	{
 		for(i=0;i<S->fftLen*2;i++)
 		{
@@ -313,7 +313,7 @@ void ref_cfft_radix2_q31(
 		 break;
 	}
 	
-	if(S->ifftFlag)
+	if (S->ifftFlag)
 	{
 		for(i=0;i<S->fftLen*2;i++)
 		{
@@ -389,7 +389,7 @@ void ref_cfft_radix2_q15(
 		 break;
 	}
 	
-	if(S->ifftFlag)
+	if (S->ifftFlag)
 	{
 		for(i=0;i<S->fftLen*2;i++)
 		{
@@ -503,7 +503,7 @@ void ref_cfft_radix4_q31(
 		 break;
 	}
 	
-	if(S->ifftFlag)
+	if (S->ifftFlag)
 	{
 		for(i=0;i<S->fftLen*2;i++)
 		{
@@ -579,7 +579,7 @@ void ref_cfft_radix4_q15(
 		 break;
 	}
 	
-	if(S->ifftFlag)
+	if (S->ifftFlag)
 	{
 		for(i=0;i<S->fftLen*2;i++)
 		{

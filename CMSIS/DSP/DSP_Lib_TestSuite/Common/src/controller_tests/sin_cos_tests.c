@@ -12,8 +12,17 @@
 ARR_DESC_DEFINE(float32_t,
                 arm_sin_cos_degrees_f32,
                 9,
-                CURLY(0  ,  17,  45, 90,
-                      180, 360, 362, -73, -191.111));
+                CURLY(
+                    0,
+                    17,
+                    45,
+                    90,
+                    180,
+                    360,
+                    362,
+                    -73,
+                    -191.111
+                      ));
 
 /* The Q31 version of the function maps numbers in the range [-1, 0.9999999]
  * to degrees in the range [-180, 179]*/
@@ -28,7 +37,7 @@ ARR_DESC_DEFINE(q31_t,
                     0xf7badafa,
                     0x285954a1,
                     0xb9d09511
-                    ));
+                      ));
 
 /*--------------------------------------------------------------------------------*/
 /* Output Variables */
@@ -49,7 +58,7 @@ float32_t cos_val_ref = 0;
   Function to test correctness of sin_cos output by comparing it with reference library
 */
 #define COMPARISON_INTERFACE(type, threshold)                           \
-    if( (ABS((type) sin_val_ref - (type) sin_val_fut) >                 \
+    if ( (ABS((type) sin_val_ref - (type) sin_val_fut) >                 \
          (type) threshold ) ||                                          \
         (ABS((type) cos_val_ref - (type) cos_val_fut) >                 \
          (type) threshold))                                             \

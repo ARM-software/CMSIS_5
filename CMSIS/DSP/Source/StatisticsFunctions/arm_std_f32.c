@@ -1,8 +1,8 @@
 /* ----------------------------------------------------------------------
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
-* $Date:        19. March 2015
-* $Revision:    V.1.4.5
+* $Date:        03. January 2017
+* $Revision:    V.1.5.0
 *
 * Project:      CMSIS DSP Library
 * Title:        arm_std_f32.c
@@ -84,20 +84,20 @@ void arm_std_f32(
   float32_t sumOfSquares = 0.0f;                 /* Sum of squares */
   float32_t in;                                  /* input value */
   uint32_t blkCnt;                               /* loop counter */
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
   float32_t meanOfSquares, mean, squareOfMean;   /* Temporary variables */
 #else
   float32_t squareOfSum;                         /* Square of Sum */
   float32_t var;                                 /* Temporary varaince storage */
 #endif
 
-  if(blockSize == 1u)
+  if (blockSize == 1u)
   {
     *pResult = 0;
     return;
   }
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /*loop Unrolling */
@@ -105,7 +105,7 @@ void arm_std_f32(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1])  */
     /* Compute Sum of squares of the input samples
@@ -131,7 +131,7 @@ void arm_std_f32(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute Sum of squares of the input samples
@@ -164,7 +164,7 @@ void arm_std_f32(
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute Sum of squares of the input samples
@@ -190,7 +190,7 @@ void arm_std_f32(
   /* Compute standard deviation and then store the result to the destination */
   arm_sqrt_f32(var, pResult);
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined (ARM_MATH_DSP) */
 }
 
 /**

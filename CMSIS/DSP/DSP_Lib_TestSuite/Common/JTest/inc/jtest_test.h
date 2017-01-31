@@ -77,7 +77,7 @@ typedef struct JTEST_TEST_struct
     do                                                                       \
     {                                                                        \
         JTEST_TEST_FLAG(jtest_test_ptr, flag_name) = JTEST_TEST_FLAG_##xxx ; \
-    } while(0)
+    } while (0)
 
 /**
  *  Specification of #JTEST_TEST_XXX_FLAG to set #JTEST_TEST_t flags.

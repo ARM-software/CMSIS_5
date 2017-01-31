@@ -384,9 +384,10 @@ This element describes the hardware target, including memory layout, debug probe
   </tr>  
   <tr>
     <td>Dendian</td>
-    <td>Selects the endianess to be used for the project. Note that selecting an endianess that is
+
+    <td>Selects the endianness to be used for the project. Note that selecting an endianness that is
     not supported by the device, will result in a build that will not run on the device.
-    Use predefined values from the table \ref DendianEnum "Endianness".</td>
+    Use predefined values from the table \ref DendianEnum "DendianEnum".</td>
     <td>DendianEnum</td>
     <td>optional</td>
   </tr>

@@ -23,5 +23,5 @@ int main(void)
     JTEST_GROUP_CALL(all_tests); /* Run all tests. */
 
     JTEST_ACT_EXIT_FW();        /* Exit test framework.  */
-    while(1);                   /* Never return. */
+    while (1);                   /* Never return. */
 }
