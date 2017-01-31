@@ -1,35 +1,0 @@
-Dependencies for Project 'Blinky', Target 'Simulation': (DO NOT MODIFY !)
-F (.\Blinky.c)(0x5808D43D)(-c --cpu Cortex-M3 -D__MICROLIB --li -g -O0 --apcs=interwork -IC:\CMSIS_github_tmp\CMSIS_5\CMSIS\RTOS2\RTX\Examples\Simulation\RTX5_Blinky\RTE\_Simulation-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\RTX\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\Device\ARM\ARMCM3\Include-D__UVISION_VERSION="521" -D_RTE_ -DARMCM3-o .\flash\blinky.o --omf_browse .\flash\blinky.crf --depend .\flash\blinky.d)
-I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x57F66928)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\Device\ARM\ARMCM3\Include\ARMCM3.h)(0x580E471C)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\Include\core_cm3.h)(0x580E4718)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F66928)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\Include\cmsis_compiler.h)(0x580E4718)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\Include\cmsis_armcc.h)(0x580E4718)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\Device\ARM\ARMCM3\Include\system_ARMCM3.h)(0x580E471C)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\Include\cmsis_os2.h)(0x580E471C)
-I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x57F66928)
-F (.\Abstract.txt)(0x57D7F13B)()
-F (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\RTX\Library\ARM\RTX_CM3.lib)(0x580E471C)()
-F (RTE\CMSIS\RTX_Config.c)(0x5808D43D)(-c --cpu Cortex-M3 -D__MICROLIB --li -g -O0 --apcs=interwork -IC:\CMSIS_github_tmp\CMSIS_5\CMSIS\RTOS2\RTX\Examples\Simulation\RTX5_Blinky\RTE\_Simulation-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\RTX\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\Device\ARM\ARMCM3\Include-D__UVISION_VERSION="521" -D_RTE_ -DARMCM3-o .\flash\rtx_config.o --omf_browse .\flash\rtx_config.crf --depend .\flash\rtx_config.d)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\RTX\Include\rtx_os.h)(0x580E471C)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F66928)
-I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x57F66928)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\Include\cmsis_os2.h)(0x580E471C)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\RTX\Include\rtx_config.h)(0x580E471C)
-F (C:\Keil_v5\ARM\PACK\Keil\ARM_Compiler\1.2.0-Dev8\Source\retarget_io.c)(0x57C3E7C6)(-c --cpu Cortex-M3 -D__MICROLIB --li -g -O0 --apcs=interwork -IC:\CMSIS_github_tmp\CMSIS_5\CMSIS\RTOS2\RTX\Examples\Simulation\RTX5_Blinky\RTE\_Simulation-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\RTX\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\Device\ARM\ARMCM3\Include-D__UVISION_VERSION="521" -D_RTE_ -DARMCM3-o .\flash\retarget_io.o --omf_browse .\flash\retarget_io.crf --depend .\flash\retarget_io.d)
-I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x57F66928)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F66928)
-I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x57F66928)
-I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x57F66928)
-I (C:\Keil_v5\ARM\ARMCC\include\assert.h)(0x57F66926)
-I (C:\Keil_v5\ARM\ARMCC\include\rt_sys.h)(0x57F66928)
-I (C:\CMSIS_github_tmp\CMSIS_5\CMSIS\RTOS2\RTX\Examples\Simulation\RTX5_Blinky\RTE\_Simulation\RTE_Components.h)(0x580F4271)
-F (RTE\Device\ARMCM3\startup_ARMCM3.s)(0x57D7F13B)(--cpu Cortex-M3 --li -g --apcs=interwork --pd "__MICROLIB SETA 1"-IC:\CMSIS_github_tmp\CMSIS_5\CMSIS\RTOS2\RTX\Examples\Simulation\RTX5_Blinky\RTE\_Simulation-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\RTX\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\Device\ARM\ARMCM3\Include--pd "__UVISION_VERSION SETA 521" --pd "_RTE_ SETA 1" --pd "ARMCM3 SETA 1"--list .\flash\startup_armcm3.lst --xref -o .\flash\startup_armcm3.o --depend .\flash\startup_armcm3.d)
-F (RTE\Device\ARMCM3\system_ARMCM3.c)(0x57D7F13B)(-c --cpu Cortex-M3 -D__MICROLIB --li -g -O0 --apcs=interwork -IC:\CMSIS_github_tmp\CMSIS_5\CMSIS\RTOS2\RTX\Examples\Simulation\RTX5_Blinky\RTE\_Simulation-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\RTOS2\RTX\Include-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\Device\ARM\ARMCM3\Include-D__UVISION_VERSION="521" -D_RTE_ -DARMCM3-o .\flash\system_armcm3.o --omf_browse .\flash\system_armcm3.crf --depend .\flash\system_armcm3.d)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\Device\ARM\ARMCM3\Include\ARMCM3.h)(0x580E471C)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\Include\core_cm3.h)(0x580E4718)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F66928)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\Include\cmsis_compiler.h)(0x580E4718)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\CMSIS\Include\cmsis_armcc.h)(0x580E4718)
-I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta14\Device\ARM\ARMCM3\Include\system_ARMCM3.h)(0x580E471C)
