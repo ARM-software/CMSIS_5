@@ -1351,16 +1351,24 @@ The CMSIS-RTOS RTX provides system-wide settings for:
  
 \section RoundRobin Settings for Round-Robin Thread Switching
 
-CMSIS-RTOS RTX may be configured to use Round-Robin Multitasking thread switching. Round-Robin allows quasi-parallel
-execution of several threads. Threads are not really executed concurrently but are time-sliced where the available CPU time
-is divided into time slices and CMSIS-RTOS RTX assigns a time slice to each thread. Because the time slice is typically short
-(only a few milliseconds) it appears as though threads execute simultaneously.
+CMSIS-RTOS RTX may be configured to use round-robin multitasking thread switching. Round-robin allows quasi-parallel
+execution of several threads of the \a same priority. Threads are not really executed concurrently, but are scheduled where
+the available CPU time is divided into time slices and CMSIS-RTOS RTX assigns a time slice to each thread. Because the time
+slice is typically short (only a few milliseconds), it appears as though threads execute simultaneously.
 
-Threads execute for the duration of their time-slice (unless the thread's time slice is given up). Then, CMSIS-RTOS RTX
-switches to the next thread that is ready to run and has the same priority. If no other task with the same priority is ready
-to run, the current running task resumes it execution.
+Round-robin thread switching functions as follows:
+- the tick is preloaded with the timeout value when a thread switch occurs
+- the tick is decremented (if not already zero) each system tick if the same thread is still executing
+- when the tick reaches 0 it indicates that a timeout has occurred. If there is another thread ready with the \a same
+  priority, then the system switches to that thread and the tick is preloaded with timeout again.
 
-Round-Robin Multitasking is controlled with the <b>\#define OS_ROBIN</b>. The time-slice period is configured (in RTX Timer
+In other words, threads execute for the duration of their time slice (unless a thread's time slice is given up). Then, RTX
+switches to the next thread that is in \b READY state and has the same priority. If no other thread with the same priority is
+ready to run, the current running thread resumes it execution.
+
+\note When switching to higher priority threads, the round-robin timeout value is reset.
+
+Round-Robin multitasking is controlled with the <b>\#define OS_ROBIN</b>. The time slice period is configured (in RTX Timer
 ticks) with the <b>\#define OS_ROBINTOUT</b>.
 
 <b>Code Example:</b>

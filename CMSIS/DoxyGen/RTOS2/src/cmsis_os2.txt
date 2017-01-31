@@ -722,19 +722,29 @@ ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functio
 \subsection systemConfig_glob_mem Global dynamic memory
 Refer to \ref GlobalMemoryPool.
 
+
 \subsection systemConfig_rr Round-Robin Thread Switching
+
 RTX5 may be configured to use round-robin multitasking thread switching. Round-robin allows quasi-parallel execution of
-several threads. Threads are not really executed concurrently, but are timed where the available CPU time is divided
-into time slices and RTX5 assigns a time slice to each thread. Because the time slice is typically short (only a few
-milliseconds), it appears as though threads execute simultaneously.
+several threads of the \a same priority. Threads are not really executed concurrently, but are scheduled where the available
+CPU time is divided into time slices and RTX5 assigns a time slice to each thread. Because the time slice is typically short
+(only a few milliseconds), it appears as though threads execute simultaneously.
 
 Round-robin thread switching functions as follows:
 - the tick is preloaded with the timeout value when a thread switch occurs
 - the tick is decremented (if not already zero) each system tick if the same thread is still executing
-- when the tick reaches 0 it indicates that a timeout has occurred. If there is another thread ready with same priority, then the system switches to that thread and the tick is preloaded with timeout again.
+- when the tick reaches 0 it indicates that a timeout has occurred. If there is another thread ready with the \a same
+  priority, then the system switches to that thread and the tick is preloaded with timeout again.
 
-In other word, threads execute for the duration of their time slice (unless the thread's time slice is given up). Then, RTX switches to the next thread that is in \b READY state and has the same priority. If no other thread with the same priority is ready to run, the
-current running thread resumes it execution.
+In other words, threads execute for the duration of their time slice (unless a thread's time slice is given up). Then, RTX
+switches to the next thread that is in \b READY state and has the same priority. If no other thread with the same priority is
+ready to run, the current running thread resumes it execution.
+
+\note When switching to higher priority threads, the round-robin timeout value is reset.
+
+Round-Robin multitasking is controlled with the <b>\#define OS_ROBIN_ENABLE</b>. The time slice period is configured (in RTX
+timer ticks) with the <b>\#define OS_ROBIN_TIMEOUT</b>.
+
 
 \subsection systemConfig_isr_fifo ISR FIFO Queue
 The RTX functions (\ref CMSIS_RTOS_ISR_Calls), when called from and interrupt handler, store the request type and optional
