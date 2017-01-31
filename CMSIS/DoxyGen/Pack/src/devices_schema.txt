@@ -585,13 +585,13 @@ Multiple \<device> elements can be defined.
   </tr>
   <tr>
     <td>\ref element_feature "feature"</td>
-    <td>Specify features specific to this device.</td>
+    <td>Specify the features of this device.</td>
     <td>FeatureType</td>
     <td>0..*</td>
   </tr>
   <tr>
     <td>\ref element_feature "environment"</td>
-    <td>???</td>
+    <td>Specify tool options.</td>
     <td>EnvironmentType</td>
     <td>0..*</td>
   </tr>
@@ -632,9 +632,6 @@ Multiple \<device> elements can be defined.
     <td>0..*</td>
   </tr>
 </table>
-
-\todo environment element
-
 
 \delim
 
@@ -1500,7 +1497,7 @@ all processors, no processor must be specified in \elem{Pname}.
   </tr>
   <tr>
     <td>Punits</td>
-    <td>Specifies the number of processor units in a symmetric multi-processor core (MPCore). Defaults to singel-core CPU (\token{1}) when left empty.</td>
+    <td>Specifies the number of processor units in a symmetric multi-processor core (MPCore). Defaults to single-core CPU (\token{1}) when left empty.</td>
     <td>InstancesType</td>
     <td>optional</td>
   </tr>
@@ -4409,27 +4406,90 @@ Defines a device variant. The element is optional. Can exist multiple times.
     <th>Occurrence</th>
   </tr>
   <tr>
+    <td>\ref element_processor "processor"</td>
+    <td>Specify processors that are specific to this device.</td>
+    <td>ProcessorType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_debugconfig "debugconfig"</td>
+    <td>Specify default settings for the debug connection specific to this device.</td>
+    <td>DebugConfigType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_compile "compile"</td>
+    <td>Specify compile or translate options specific to this device.</td>
+    <td>CompileType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_memory "memory"</td>
+    <td>Specify memory areas that specific to this device.</td>
+    <td>MemoryType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_algorithm "algorithm"</td>
+    <td>Specify Flash programming algorithms that can be used by this device.</td>
+    <td>AlgorithmType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
     <td>\ref element_book "book"</td>
-    <td>List books that are specific to this variant.</td>
+    <td>Specify documents specific to this device.</td>
     <td>BookType</td>
     <td>0..*</td>
   </tr>
   <tr>
     <td>\ref element_description "description"</td>
-    <td>Device description.</td>
+    <td>Description specific to this device.</td>
     <td>DescriptionType</td>
     <td>0..*</td>
   </tr>
   <tr>
     <td>\ref element_feature "feature"</td>
-    <td>Define features for this device variant.</td>
+    <td>Specify the features of this device.</td>
     <td>FeatureType</td>
     <td>0..*</td>
   </tr>
+  <tr>
+    <td>\ref element_feature "environment"</td>
+    <td>Specify tool options.</td>
+    <td>EnvironmentType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_debugport "debugport"</td>
+    <td>Describe a debug port specific to this device.</td>
+    <td>DebugPortType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_debug "debug"</td>
+    <td>Specify debug options specific to this device.</td>
+    <td>DebugType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_trace "trace"</td>
+    <td>Specify trace options specific to this device.</td>
+    <td>TraceType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_debugvars "debugvars"</td>
+    <td>Define debug access variables for user-defined settings specific to this device.</td>
+    <td>DebugVarsType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_sequences "sequences"</td>
+    <td>Describe debug access sequences specific to this device.</td>
+    <td>SequencesType</td>
+    <td>0..1</td>
+  </tr>
 </table>
 
-\todo add all elements that belong to DevicePropertiesGroup.
-
 \delim
-
 */

@@ -1,14 +1,14 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page createPackPublish Publish a Pack
-There are multiple ways to distribute a Software Pack:
+There are multiple ways to distribute a software pack:
 
 \section cp_LocalInstallation Local Installation
-The easiest way to distribute a Software Pack is attaching it to an email or using other means of electronic distribution
-(for example using a company internal file server). The installation of a Software Pack is usually triggered by
-double-clicking the PACK file. The Pack management tool is invoked and the Pack is installed on the local machine. After
-installation, the Pack will be shown in the list of installed Packs (tool dependent). If the PDSC file does not contain a
-valid \c \<url\> element, a manual installation is required to update a Software Pack. Otherwise, Pack management tools can
+The easiest way to distribute a software pack is attaching it to an email or using other means of electronic distribution
+(for example using a company internal file server). The installation of a software pack is usually triggered by
+double-clicking the PACK file. The pack management tool is invoked and the Pack is installed on the local machine. After
+installation, the pack will be shown in the list of installed packs (tool dependent). If the PDSC file does not contain a
+valid \c \<url\> element, a manual installation is required to update a software pack. Otherwise, pack management tools can
 check for updates on the server or the local machine that is specified by \c \<url\>.
 
 \image html LocalInstallation.png "Local installation and update from URL"
@@ -19,45 +19,45 @@ check for updates on the server or the local machine that is specified by \c \<u
 
 \section cp_WebDownload Web Download
 
-Any web server can be used to host a Software Pack (specified by the \c \<url\> element in the PDSC file). At this location,
-at least two files need to be present (refer to \ref PackFilenames):
--# \elem{vendor}.\elem{name}.pdsc
--# \elem{vendor}.\elem{name}.\elem{version}.pack, where \elem{version} refers to the latest version specified in the PDSC file.
+Any web server can be used to host a software pack (specified by the \c \<url\> element in the PDSC file). At this location,
+the following files can be present:
+-# \elem{vendor}.\elem{name}.pdsc [required]: pack description file.
+-# \elem{vendor}.\elem{name}.\elem{version}.pack [required]: pack file where \elem{version} refers to the latest version
+   specified in the PDSC file.
+-# \elem{vendor}.pidx [optional]: list with all packs hosted and maintained by the vendor (refer to \ref pidxFile)
+-# \elem{vendor}.vidx [optional]: list of package index files known to the vendor (refer to \ref vidxFile)
 
 All previous versions listed in the \elem{releases} section of the PDSC file should be present in that folder as well. This
-will enable customers to revert updates or to be able to download a specific version of a Software Pack (for code
+will enable customers to revert updates or to be able to download a specific version of a software pack (for code
 maintenance purposes for example).
 
-Depending on the Pack management tool, a Pack Index Server might be in place that gathers information about published Packs
-in an index file. This information is then used in the management tool to retrieve version information and to trigger
-updates of Packs within the development environment.
- 
+\image html WebInstallation.png "Web installation and update"
+
 \note
 - It is important to understand how the \<url\> element works. If you specify a URL, for example
-  <a href="http://www.keil.com/pack/" target="_blank">http://www.keil.com/pack</a>,
+  <a href="http://www.keil.com/pack/" target="_blank">www.keil.com/pack</a>,
   then you have to make the PDSC file and the corresponding PACK file(s) available for download at that exact location.
   The naming of the files follow the standard naming rules. For example, the ARM::CMSIS PDSC and Pack files are available
   here:\n
-  <a href="http://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">http://www.keil.com/pack/ARM.CMSIS.pdsc</a> and \n
-  <a href="http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack</a> and \n
-  <a href="http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack</a> and ... \n
+  <a href="http://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">www.keil.com/pack/ARM.CMSIS.pdsc</a> and \n
+  <a href="http://www.keil.com/pack/ARM.CMSIS.5.0.1.pack" target="_blank">www.keil.com/pack/ARM.CMSIS.5.0.1.pack</a> and \n
+  <a href="http://www.keil.com/pack/ARM.CMSIS.5.0.0.pack" target="_blank">www.keil.com/pack/ARM.CMSIS.5.0.0.pack</a> and ... \n
   At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned PACK files,
   but at least the latest one.
 - If the URL or the PDSC/PACK files become unavailable (temporarily or permanently), users will not be able to retrieve
   updates.
 - Do not replace PDSC/PACK files without updating the version number because the Pack management tools will not recognize
   the update unless the version has been changed.
-- Older PACKs should remain available.
-
-\image html WebInstallation.png "Web installation and update"
+- Older packs should remain available.
 
 
 \section cp_KeilComPack Publishing on www.keil.com/pack
 
-ARM tries to maintain a list of all available Software Packs. If a Software Pack is intended to be on that list, its PDSC
-file needs to be sent to to the following email address: cmsis@arm.com. The PDSC file will be manually XML validated. The
-following content will be processed in order to generate the web site and index file
-(<a class=el href="www.keil.com/pack/index.idx" target="_blank">www.keil.com/pack/index.idx</a>):
+ARM maintains a list of available software packs. If you wish to add your packs to that list, send either your vendor.pidx
+file or your PDSC file to the following email address: <a href="mailto:CMSIS@arm.com">CMSIS@arm.com</a>. The PIDX file will
+be processed and all referenced PDSC files will be validated. The following content will be processed in order to generate
+the web site (<a href="http://www.keil.com/dd2/pack">www.keil.com/dd2/pack</a>) and index file
+(<a href="http://www.keil.com/pack/index.pidx">www.keil.com/pack/index.pidx</a>):
 - Version
 - Release Notes
 - Devices
@@ -65,6 +65,6 @@ following content will be processed in order to generate the web site and index 
 - Examples
 - Software Components
 
-Please allow up to seven working days for the process. If the file contains any errors, you will be notified. Otherwise, it
-will be uploaded to <a class=el href="www.keil.com/pack" target="_blank">www.keil.com/pack</a>.
+Please allow up to seven working days for the process. If the files contain any errors, you will be notified. Otherwise, the
+information is added to the index server.
 */
