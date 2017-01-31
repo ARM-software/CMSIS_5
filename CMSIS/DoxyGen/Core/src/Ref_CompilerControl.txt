@@ -228,14 +228,32 @@ Specifies that a type must have the smallest possible alignment.
  
 <b> Code Example:</b>
 \code
-struct __PACKED {
-  uint8_t  len;
-  uint8_t  type;
-  uint16_t langid;
-} desc_langid;
+struct foo {
+  uint8_t  u8;
+  uint32_t u32[2] __PACKED;
+};
 \endcode
 
 */
 #define __PACKED
+
+/**************************************************************************************************/
+/**
+\def __PACKED_STRUCT
+\brief Request smallest possible alignment for a structure.
+\details
+Specifies that a structure must have the smallest possible alignment.
+ 
+<b> Code Example:</b>
+\code
+__PACKED_STRUCT foo {
+  uint8_t   u8;
+  uint32_t  u32;
+  uint16_t  u16;
+};
+\endcode
+
+*/
+#define __PACKED_STRUCT
 
 /** @} */ /** end of compiler_conntrol_gr **/
