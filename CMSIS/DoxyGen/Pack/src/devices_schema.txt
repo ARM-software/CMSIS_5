@@ -1435,7 +1435,7 @@ Specifies attributes of the device processor. The element can occur on various l
 Elements of multi-processor devices can be associated with a specific processor using the attribute \elem{Pname}. If the information is relevant to
 all processors, no processor must be specified in \elem{Pname}. 
 
-\b Example
+\b Example \b 1
 \code
 <package>
   ...
@@ -1448,6 +1448,20 @@ all processors, no processor must be specified in \elem{Pname}.
   </devices>
   ...
 </package>
+\endcode
+
+\b Example \b 2
+\code
+<device name="MCIMX7D">
+  ...
+  <processor Dcore="Cortex-A7" DcoreVersion="r0p5" Pname="Cortex-A7" Punits="2" />
+  <processor Dcore="Cortex-M4" DcoreVersion="r0p1" Pname="Cortex-M4"/>
+  ...
+  <debug   Pname="Cortex-A7" Punit="0" svd="SVD/iMX7D_A7.svd" __dp="0" __ap="1" address="0x80070000"/> 
+  <debug   Pname="Cortex-A7" Punit="1" svd="SVD/iMX7D_A7.svd" __dp="0" __ap="1" address="0x80072000"/>
+  <debug   Pname="Cortex-M4"           svd="SVD/iMX7D_M4.svd" __dp="0" __ap="4"/>
+  ...
+</device>
 \endcode
 
 <p>&nbsp;</p>		
@@ -1484,8 +1498,9 @@ all processors, no processor must be specified in \elem{Pname}.
     <td>RestrictedString</td>
     <td>optional</td>
   </tr>
+  <tr>
     <td>Punits</td>
-    <td>Specify the number of processing units in a multi-processor core. Defaults to \token{1} when left empty.</td>
+    <td>Specifies the number of processor units in a symmetric multi-processor core (MPCore). Defaults to singel-core CPU (\token{1}) when left empty.</td>
     <td>InstancesType</td>
     <td>optional</td>
   </tr>
@@ -1565,6 +1580,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.abov.co.kr/en/</td>
   </tr>
   <tr>
+    <td class="XML-Token">Active-Semi:140</td>
+    <td>Active-Semi</td>
+    <td>http://www.active-semi.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Ambiq Micro:120</td>
     <td>Ambiq Micro</td>
     <td>http://www.ambiqmicro.com</td>
@@ -1600,9 +1620,9 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.dialog-semiconductor.com</td>
   </tr>
   <tr>
-    <td class="XML-Token">Freescale:78</td>
-    <td>Freescale</td>
-    <td>http://www.freescale.com</td>
+    <td class="XML-Token">Elmos Semiconductor AG:138</td>
+    <td>Elmos Semiconductor AG</td>
+    <td>http://www.elmos.com</td>
   </tr>
   <tr>
     <td class="XML-Token">Generic:5</td>
@@ -1628,6 +1648,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">Lapis Semiconductor:10</td>
     <td>Lapis Semiconductor</td>
     <td>http://www.lapis-semi.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Linear Technolgy:136</td>
+    <td>Linear Technolgy</td>
+    <td>http://www.linear.com/</td>
   </tr>
   <tr>
     <td class="XML-Token">Maxim:23</td>
@@ -1657,7 +1682,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">MindMotion:132</td>
     <td>MindMotion</td>
-    <td>//http://www.mindmotion.com.cn</td>
+    <td>http://www.mindmotion.com.cn</td>
   </tr>
   <tr>
     <td class="XML-Token">Nordic Semiconductor:54</td>
@@ -1705,6 +1730,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.samsung.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Silergy Corp:139</td>
+    <td>Silergy Corporation</td>
+    <td>http://silergy.com/</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Silicon Labs:21</td>
     <td>Silicon Labs</td>
     <td>http://www.silabs.com</td>
@@ -1740,9 +1770,14 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.wiznet.co.kr</td>
   </tr>
   <tr>
-    <td class="XML-Token">Xinnova</td>
+    <td class="XML-Token">Xinnova:135</td>
     <td>Xinnova Technology</td>
     <td>http://www.xinnovatech.com/en</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Zilog:89</td>
+    <td>Zilog</td>
+    <td>https://zilog.com/</td>
   </tr>
 </table>
 
@@ -1804,18 +1839,9 @@ These values can be used in the elements:
     <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m1.php" target="_blank">ARM Cortex-M1</a> processor based device</td>
   </tr>
   <tr>
-    <td class="XML-Token">Cortex-M23</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" target="_blank">ARM Cortex-M23</a> processor based device</td>
-  </tr>
-  <tr>
     <td class="XML-Token">Cortex-M3</td>
     <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m3.php" target="_blank">ARM Cortex-M3</a> processor based device</td>
   </tr>
-  <tr>
-    <td class="XML-Token">Cortex-M33</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" target="_blank">ARM Cortex-M33</a> processor based device</td>
-  </tr>
-
   <tr>
     <td class="XML-Token">Cortex-M4</td>
     <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m4-processor.php" target="_blank">ARM Cortex-M4</a> processor based device</td>
@@ -1823,6 +1849,14 @@ These values can be used in the elements:
   <tr>
     <td class="XML-Token">Cortex-M7</td>
     <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m7-processor.php" target="_blank">ARM Cortex-M7</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-M23</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" target="_blank">ARM Cortex-M23</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-M33</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" target="_blank">ARM Cortex-M33</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">SC000</td>
@@ -2959,146 +2993,6 @@ Refer to \ref usage_of_sequences for details.<br>
 </table>
 
 
-<p>&nbsp;</p>		
-
-\anchor sequences_names <b>Table: Pre-defined Debug Access Sequences</b>
-
-The following table list the Pre-defined Debug Access Sequences.
-For sequences that are not specified in a <b>sequence</b> element \ref default_sequences are executed.
-Refer to \ref usage_of_sequences Usage for more information about the execution of these sequences.
-
-<table class="cmtable" summary="Enumeration: SequenceNameEnum">
-  <tr>
-    <th>name=</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref DebugPortSetup</td>
-    <td>Prepare the target debug port for connection; is executed before acquiring access to the debug port.<br>
-	May include for example an SWJ-DP switch sequence as defined in the ARM Debug Interface (ADI) Architecture Specification.<br>
-    <b>This sequence must not contain debug port/access port register and target memory accesses other than:</b>
-    - <b>Reading the \em DPIDR debug port register to release an SWD connection from its line reset.</b>
-    - <b>Writing the \em TARGETSEL debug port register (SWD protocol v2).</b>
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref DebugPortStart</td>
-    <td>Connect to the target debug port and power it up; is executed after DebugPortSetup.<br>
-	The parent <b>debugport</b> is default debug port for this sequence.<br>
-    <b>This sequence must not contain access port register and target memory accesses.</b></td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref DebugPortStop</td>
-    <td>Power down and disconnect from target debug port.<br>
-    Executed as last step during target disconnect unless another debugger connection to this port is active. The parent
-    <b>debugport</b> is default debug port for this sequence.<br>
-    <b>This sequence must not contain access port register and target memory accesses.</b></td>
-  </tr>
-  <tr>
-    <td class="XML-Token">DebugDeviceUnlock</td>
-    <td>Check if the device is in a locked state and unlock it. Use <b>query</b> command elements
-    for user confirmation.<br>
-    Executed after having powered up the debug port.</td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref DebugCoreStart</td>
-    <td>Initialize core debug system.<br>
-    Executed after having connected and powered up the default debug port for the connection.</td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref DebugCoreStop</td>
-    <td>Uninitialize core debug system.<br>
-    Executed as last step during disconnect before powering down any debug ports no longer required for
-    concurrent connections.</td>
-  </tr>
-  <tr>
-    <td class="XML-Token">DebugCodeMemRemap</td>
-    <td>Remap memory to execution location.<br>
-    Executed before verifying memory content after flash programming. This is required to replicate a memory remap of a device bootloader (that is not executed during debug connection).
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetSystem</td>
-    <td>Execute a system-wide reset via software mechanisms.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetProcessor</td>
-    <td>Execute a processor reset via software mechanisms.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetHardware</td>
-    <td>Execute a system-wide reset via the dedicated debugger reset line, for example, nRST.
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetHardwareAssert</td>
-    <td>Assert a system-wide reset via the dedicated debugger reset line, for example,  nRST.
-  </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetHardwareDeassert</td>
-    <td>Deassert a system-wide reset via the dedicated debugger reset line,  for example,  nRST.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetCatchSet</td>
-    <td>Executed before a target reset to configure the vector catch to stop code execution after the reset.<br>
-    The implementation of <b>ResetCatchSet</b> requires an implementation of <b>ResetCatchClear</b>
-    to free any hardware resources used for stopping the core.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetCatchClear</td>
-    <td>Executed after a target reset to free hardware resources allocated by <b>ResetCatchSet</b>.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">FlashEraseDone</td>
-    <td>
-    Executed after erasing flash memory.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">FlashProgramDone</td>
-    <td>
-    Eexecuted after programming flash memory.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">TraceStart</td>
-    <td>Enable target trace capture.<br>
-    Executed before the debugger powers up and configures standard CoreSight trace components,  for example,  after the initial target connection
-    as well as after a system-wide reset.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">TraceStop</td>
-    <td>Disable target trace capture.<br>
-    Executed after the debugger disabled and powered down standard CoreSight trace components.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">RecoverySupportStart</td>
-    <td>Executed before step or run command to support recovery from a lost target connection,  for example,  after a low power mode.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">RecoverySupportStop</td>
-    <td>Executed after step or run command in context of the <b>RecoverySupportStart</b> sequence.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">RecoveryAcknowledge</td>
-    <td>Debugger acknowledge after recovering from a lost target connection. Can be executed independently
-    from a <b>RecoverySupportStart</b> sequence.
-    </td>
-  </tr>
-</table>
-
-<p>&nbsp;</p>
-<hr>
-
 \section element_seq_control /package/devices/family/.../sequences/sequence/control
 
 Describes flow control like <b>if</b> and <b>while</b> blocks for debug access sequences.
@@ -3864,7 +3758,7 @@ Describes configuration settings, default values, and patches for data accesses 
 elements can be defined which are either specific to a processor identified by attribute <b>Pname</b>, or which apply
 to all connections.
 
-\b Example
+\b Example \b 1
 \code
 <family Dfamily="LPC4300 Series" Dvendor="NXP:11">
   ...
@@ -3877,6 +3771,20 @@ to all connections.
   </debug>
   ...
 </family>
+\endcode
+
+\b Example \b 2
+\code
+<device name="MCIMX7D">
+  ...
+  <processor Dcore="Cortex-A7" DcoreVersion="r0p5" Pname="Cortex-A7" Punits="2" />
+  <processor Dcore="Cortex-M4" DcoreVersion="r0p1" Pname="Cortex-M4"/>
+  ...
+  <debug   Pname="Cortex-A7" Punit="0" svd="SVD/iMX7D_A7.svd" __dp="0" __ap="1" address="0x80070000"/> 
+  <debug   Pname="Cortex-A7" Punit="1" svd="SVD/iMX7D_A7.svd" __dp="0" __ap="1" address="0x80072000"/>
+  <debug   Pname="Cortex-M4"           svd="SVD/iMX7D_M4.svd" __dp="0" __ap="4"/>
+  ...
+</device>
 \endcode
 
 <p>&nbsp;</p>		
@@ -3928,6 +3836,17 @@ to all connections.
     <td>optional</td>
   </tr>
   <tr>
+    <td>address</td>
+    <td>
+      Base "address" of the CPU debug block referenced by "Pname" (and "Punit" in an MPCore system). Use in combination
+      with attributes "_dp" and "_ap". Mandatory if multiple CPU debug blocks are accessible via a single AP. Optional
+      if an AP hosts a single CPU debug block. Then a debugger can determine its base address in by analyzing the ROM
+      table behind __dp and __ap.
+    </td>
+    <td>NonNegativeInteger</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <td>svd</td>
     <td>The system viewer description (*.SVD) file to load for this debug connection. The file path is relative
     to the package base folder.</td>
@@ -3947,6 +3866,25 @@ to all connections.
     <td>optional</td>
   </tr>
   <tr>
+    <td>Punit</td>
+    <td>
+      Use "Punit" in addition to "Pname" to select a specific processor unit of a symmetric MPCore that the \<debug\>
+      configuration applies to. "Punit" is a '0'-based index and must be less than "Punits" of \<processor\>. If
+      "Punit" is not specified, the \<debug\> configuration applies to all processor units of the MPCore.
+    </td>
+    <td>xs:unsignedInt</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>defaultResetSequence</td>
+    <td>
+      Specifies the debug sequence that is to be used for the device. Refer to \ref writing_sequences for more
+      information.
+    </td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <th>Child&nbsp;Elements</th>
     <th>Description</th>
     <th>Type</th>
@@ -3959,8 +3897,6 @@ to all connections.
     <td>0..*</td>
   </tr>
 </table>
-
-\todo missing: attributes "address", "Pname","defaultResetSequence", "Punit", "lax"
 
 \delim
 
