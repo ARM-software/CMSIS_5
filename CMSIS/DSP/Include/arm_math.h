@@ -1,42 +1,30 @@
 /* ----------------------------------------------------------------------
-* Copyright (C) 2010-2016 ARM Limited. All rights reserved.
-*
-* $Date:        03. January 2017
-* $Revision:    V.1.5.0
-*
-* Project:      CMSIS DSP Library
-* Title:        arm_math.h
-*
-* Description:  Public header file for CMSIS DSP Library
-*
-* Target Processor: Cortex-M7/Cortex-M4/Cortex-M3/Cortex-M0
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions
-* are met:
-*   - Redistributions of source code must retain the above copyright
-*     notice, this list of conditions and the following disclaimer.
-*   - Redistributions in binary form must reproduce the above copyright
-*     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the
-*     distribution.
-*   - Neither the name of ARM LIMITED nor the names of its contributors
-*     may be used to endorse or promote products derived from this
-*     software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-* ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.
+ * Project:      CMSIS DSP Library
+ * Title:        arm_math.h
+ * Description:  Public header file for CMSIS DSP Library
+ *
+ * $Date:        27. January 2017
+ * $Revision:    V.1.5.1
+ *
+ * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
+/*
+ * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 /**
    \mainpage CMSIS DSP Software Library
@@ -66,26 +54,34 @@
    * ------------
    *
    * The library installer contains prebuilt versions of the libraries in the <code>Lib</code> folder.
-   * - arm_cortexM7lfdp_math.lib (Little endian and Double Precision Floating Point Unit on Cortex-M7)
-   * - arm_cortexM7bfdp_math.lib (Big endian and Double Precision Floating Point Unit on Cortex-M7)
-   * - arm_cortexM7lfsp_math.lib (Little endian and Single Precision Floating Point Unit on Cortex-M7)
-   * - arm_cortexM7bfsp_math.lib (Big endian and Single Precision Floating Point Unit on Cortex-M7)
-   * - arm_cortexM7l_math.lib (Little endian on Cortex-M7)
-   * - arm_cortexM7b_math.lib (Big endian on Cortex-M7)
-   * - arm_cortexM4lf_math.lib (Little endian and Floating Point Unit on Cortex-M4)
-   * - arm_cortexM4bf_math.lib (Big endian and Floating Point Unit on Cortex-M4)
-   * - arm_cortexM4l_math.lib (Little endian on Cortex-M4)
-   * - arm_cortexM4b_math.lib (Big endian on Cortex-M4)
-   * - arm_cortexM3l_math.lib (Little endian on Cortex-M3)
-   * - arm_cortexM3b_math.lib (Big endian on Cortex-M3)
-   * - arm_cortexM0l_math.lib (Little endian on Cortex-M0 / Cortex-M0+)
-   * - arm_cortexM0b_math.lib (Big endian on Cortex-M0 / Cortex-M0+)
+   * - arm_cortexM7lfdp_math.lib (Cortex-M7, Little endian, Double Precision Floating Point Unit)
+   * - arm_cortexM7bfdp_math.lib (Cortex-M7, Big endian, Double Precision Floating Point Unit)
+   * - arm_cortexM7lfsp_math.lib (Cortex-M7, Little endian, Single Precision Floating Point Unit)
+   * - arm_cortexM7bfsp_math.lib (Cortex-M7, Big endian and Single Precision Floating Point Unit on)
+   * - arm_cortexM7l_math.lib (Cortex-M7, Little endian)
+   * - arm_cortexM7b_math.lib (Cortex-M7, Big endian)
+   * - arm_cortexM4lf_math.lib (Cortex-M4, Little endian, Floating Point Unit)
+   * - arm_cortexM4bf_math.lib (Cortex-M4, Big endian, Floating Point Unit)
+   * - arm_cortexM4l_math.lib (Cortex-M4, Little endian)
+   * - arm_cortexM4b_math.lib (Cortex-M4, Big endian)
+   * - arm_cortexM3l_math.lib (Cortex-M3, Little endian)
+   * - arm_cortexM3b_math.lib (Cortex-M3, Big endian)
+   * - arm_cortexM0l_math.lib (Cortex-M0 / Cortex-M0+, Little endian)
+   * - arm_cortexM0b_math.lib (Cortex-M0 / Cortex-M0+, Big endian)
+   * - arm_ARMv8MBLl_math.lib (ARMv8M Baseline, Little endian)
+   * - arm_ARMv8MMLl_math.lib (ARMv8M Mainline, Little endian)
+   * - arm_ARMv8MMLlfsp_math.lib (ARMv8M Mainline, Little endian, Single Precision Floating Point Unit)
+   * - arm_ARMv8MMLld_math.lib (ARMv8M Mainline, Little endian, DSP instructions)
+   * - arm_ARMv8MMLldfsp_math.lib (ARMv8M Mainline, Little endian, DSP instructions, Single Precision Floating Point Unit)
    *
    * The library functions are declared in the public file <code>arm_math.h</code> which is placed in the <code>Include</code> folder.
    * Simply include this file and link the appropriate library in the application and begin calling the library functions. The Library supports single
-   * public header file <code> arm_math.h</code> for Cortex-M7/M4/M3/M0/M0+ with little endian and big endian. Same header file will be used for floating point unit(FPU) variants.
+   * public header file <code> arm_math.h</code> for Cortex-M cores with little endian and big endian. Same header file will be used for floating point unit(FPU) variants.
    * Define the appropriate pre processor MACRO ARM_MATH_CM7 or ARM_MATH_CM4 or  ARM_MATH_CM3 or
    * ARM_MATH_CM0 or ARM_MATH_CM0PLUS depending on the target processor in the application.
+   * For ARMv8M cores define pre processor MACRO ARM_MATH_ARMV8MBL or ARM_MATH_ARMV8MML.
+   * Set Pre processor MACRO __DSP_PRESENT if ARMv8M Mainline core supports DSP instructions.
+   * 
    *
    * Examples
    * --------
@@ -134,9 +130,18 @@
    * and ARM_MATH_CM0 for building library on Cortex-M0 target, ARM_MATH_CM0PLUS for building library on Cortex-M0+ target, and
    * ARM_MATH_CM7 for building the library on cortex-M7.
    *
+   * - ARM_MATH_ARMV8MxL:
+   *
+   * Define macro ARM_MATH_ARMV8MBL for building the library on ARMv8M Baseline target, ARM_MATH_ARMV8MBL for building library
+   * on ARMv8M Mainline target.
+   *
    * - __FPU_PRESENT:
    *
-   * Initialize macro __FPU_PRESENT = 1 when building on FPU supported Targets. Enable this macro for M4bf and M4lf libraries
+   * Initialize macro __FPU_PRESENT = 1 when building on FPU supported Targets. Enable this macro for floating point libraries.
+   *
+   * - __DSP_PRESENT:
+   *
+   * Initialize macro __DSP_PRESENT = 1 when ARMv8M Mainline core supports DSP instructions.
    *
    * <hr>
    * CMSIS-DSP in ARM::CMSIS Pack
