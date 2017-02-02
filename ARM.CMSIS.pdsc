@@ -8,6 +8,12 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.1-dev6">
+      DSP:
+       - updated to version V1.5.1.
+       - changed copyrigth note.
+       - added ARMv8M DSP libraries.
+    </release>
     <release version="5.0.1-dev5">
       DSP:
        - updated to version V1.5.0.
@@ -333,21 +339,33 @@ class processor based on the ARMv8-M mainline architecture with ARM TrustZone se
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"          default="1"/-->
 
       <device Dname="ARMCM33">
+        <description>
+no DSP Instructions, no Floating Point Unit, no TrustZone
+        </description>
         <processor Dcore="Cortex-M33" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="NO_TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM33/Include/ARMCM33.h" define="ARMCM33"/>
       </device>
 
       <device Dname="ARMCM33_TZ">
+        <description>
+no DSP Instructions, no Floating Point Unit, TrustZone
+        </description>
         <processor Dcore="Cortex-M33" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM33/Include/ARMCM33_TZ.h" define="ARMCM33_TZ"/>
       </device>
 
       <device Dname="ARMCM33_DSP_FP">
+        <description>
+DSP Instructions, Single Precision Floating Point Unit, no TrustZone
+        </description>
         <processor Dcore="Cortex-M33" DcoreVersion="r0p0" Dfpu="SP_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="NO_TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM33/Include/ARMCM33_DSP_FP.h" define="ARMCM33_DSP_FP"/>
       </device>
 
       <device Dname="ARMCM33_DSP_FP_TZ">
+        <description>
+DSP Instructions, Single Precision Floating Point Unit, TrustZone
+        </description>
         <processor Dcore="Cortex-M33" DcoreVersion="r0p0" Dfpu="SP_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM33/Include/ARMCM33_DSP_FP_TZ.h" define="ARMCM33_DSP_FP_TZ"/>
       </device>
@@ -426,31 +444,49 @@ ARMv8-M Mainline based device with TrustZone
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
 
       <device Dname="ARMv8MML">
+        <description>
+no DSP Instructions, no Floating Point Unit, TrustZone
+        </description>
         <processor Dcore="ARMV8MML" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML.h" define="ARMv8MML"/>
       </device>
 
       <device Dname="ARMv8MML_DSP">
+        <description>
+DSP Instructions, no Floating Point Unit, TrustZone
+        </description>
         <processor Dcore="ARMV8MML" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_DSP.h" define="ARMv8MML_DSP"/>
       </device>
 
       <device Dname="ARMv8MML_SP">
+        <description>
+no DSP Instructions, Single Precision Floating Point Unit, TrustZone
+        </description>
         <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="SP_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_SP.h" define="ARMv8MML_SP"/>
       </device>
 
       <device Dname="ARMv8MML_DSP_SP">
+        <description>
+DSP Instructions, Single Precision Floating Point Unit, TrustZone
+        </description>
         <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="SP_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_DSP_SP.h" define="ARMv8MML_DSP_SP"/>
       </device>
 
       <device Dname="ARMv8MML_DP">
+        <description>
+no DSP Instructions, Double Precision Floating Point Unit, TrustZone
+        </description>
         <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_DP.h" define="ARMv8MML_DP"/>
       </device>
 
       <device Dname="ARMv8MML_DSP_DP">
+        <description>
+DSP Instructions, Double Precision Floating Point Unit, TrustZone
+        </description>
         <processor Dcore="ARMV8MML" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMv8MML/Include/ARMv8MML_DSP_DP.h" define="ARMv8MML_DSP_DP"/>
       </device>
@@ -673,21 +709,9 @@ ARMv8-M Mainline based device with TrustZone
       <description>Cortex-M33 processor based device</description>
       <require Dcore="Cortex-M33" Dfpu="NO_FPU"/>
     </condition>
-    <condition id="CM33_DSP">
-      <description>Cortex-M33 processor based device with DSP extension</description>
-      <require Dcore="Cortex-M33" Dfpu="NO_FPU" Ddsp="DSP"/>
-    </condition>
     <condition id="CM33_FP">
       <description>Cortex-M33 processor based device using Floating Point Unit</description>
       <require Dcore="Cortex-M33" Dfpu="SP_FPU"/>
-    </condition>
-    <condition id="CM33_SP">
-      <description>Cortex-M33 processor based device using Floating Point Unit (SP)</description>
-      <require Dcore="Cortex-M33" Dfpu="SP_FPU" Ddsp="NO_DSP"/>
-    </condition>
-    <condition id="CM33_DSP_SP">
-      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP)</description>
-      <require Dcore="Cortex-M33" Dfpu="SP_FPU" Ddsp="DSP"/>
     </condition>
     <condition id="ARMv8MBL">
       <description>ARMv8-M Baseline processor based device</description>
@@ -697,30 +721,44 @@ ARMv8-M Mainline based device with TrustZone
       <description>ARMv8-M Mainline processor based device</description>
       <require Dcore="ARMV8MML" Dfpu="NO_FPU"/>
     </condition>
-    <condition id="ARMv8MML_DSP">
-      <description>ARMv8-M Mainline processor based device with DSP extension</description>
-      <require Dcore="ARMV8MML" Dfpu="NO_FPU" Ddsp="DSP"/>
-    </condition>
     <condition id="ARMv8MML_FP">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit</description>
       <accept Dcore="ARMV8MML" Dfpu="SP_FPU"/>
       <accept Dcore="ARMV8MML" Dfpu="DP_FPU"/>
     </condition>
-    <condition id="ARMv8MML_SP">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP)</description>
-      <require Dcore="ARMV8MML" Dfpu="SP_FPU"/>
+
+    <condition id="CM33_NODSP_NOFPU">
+      <description>CM33, no DSP, no FPU</description>
+      <require Dcore="Cortex-M33" Ddsp="NO_DSP" Dfpu="NO_FPU"/>
+    </condition>
+    <condition id="CM33_DSP_NOFPU">
+      <description>CM33, DSP, no FPU</description>
+      <require Dcore="Cortex-M33" Ddsp="DSP" Dfpu="NO_FPU"/>
+    </condition>
+    <condition id="CM33_NODSP_SP">
+      <description>CM33, no DSP, SP FPU</description>
+      <require Dcore="Cortex-M33" Ddsp="NO_DSP" Dfpu="SP_FPU"/>
+    </condition>
+    <condition id="CM33_DSP_SP">
+      <description>CM33, DSP, SP FPU</description>
+      <require Dcore="Cortex-M33" Ddsp="DSP" Dfpu="SP_FPU"/>
+    </condition>
+
+    <condition id="ARMv8MML_NODSP_NOFPU">
+      <description>ARMv8MML, no DSP, no FPU</description>
+      <require Dcore="ARMV8MML" Ddsp="NO_DSP" Dfpu="NO_FPU"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_NOFPU">
+      <description>ARMv8MML, DSP, no FPU</description>
+      <require Dcore="ARMV8MML" Ddsp="DSP" Dfpu="NO_FPU"/>
+    </condition>
+    <condition id="ARMv8MML_NODSP_SP">
+      <description>ARMv8MML, no DSP, SP FPU</description>
+      <require Dcore="ARMV8MML" Ddsp="NO_DSP" Dfpu="SP_FPU"/>
     </condition>
     <condition id="ARMv8MML_DSP_SP">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP)</description>
-      <require Dcore="ARMV8MML" Dfpu="SP_FPU" Ddsp="DSP"/>
-    </condition>
-    <condition id="ARMv8MML_DP">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP)</description>
-      <require Dcore="ARMV8MML" Dfpu="DP_FPU"/>
-    </condition>
-    <condition id="ARMv8MML_DSP_DP">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP)</description>
-      <require Dcore="ARMV8MML" Dfpu="DP_FPU" Ddsp="DSP"/>
+      <description>ARMv8MML, DSP, SP FPU</description>
+      <require Dcore="ARMV8MML" Ddsp="DSP" Dfpu="SP_FPU"/>
     </condition>
 
     <!-- ARMCC compiler -->
@@ -908,22 +946,6 @@ ARMv8-M Mainline based device with TrustZone
       <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM33_DSP_ARMCC">
-      <description>Cortex-M33 processor based device with DSP extension for the ARM Compiler</description>
-      <require condition="CM33_DSP"/>
-      <require Tcompiler="ARMCC"/>
-    </condition>
-    <condition id="CM33_DSP_LE_ARMCC">
-      <description>Cortex-M33 processor based device with DSP extension in little endian mode for the ARM Compiler</description>
-      <require condition="CM33_DSP_ARMCC"/>
-      <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="CM33_DSP_BE_ARMCC">
-      <description>Cortex-M33 processor based device with DSP extension in big endian mode for the ARM Compiler</description>
-      <require condition="CM33_DSP_ARMCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
-
     <condition id="CM33_FP_ARMCC">
       <description>Cortex-M33 processor based device using Floating Point Unit for the ARM Compiler</description>
       <require condition="CM33_FP"/>
@@ -940,36 +962,45 @@ ARMv8-M Mainline based device with TrustZone
       <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM33_SP_ARMCC">
-      <description>Cortex-M33 processor based device using Floating Point Unit (SP) for the ARM Compiler</description>
-      <require condition="CM33_SP"/>
+    <condition id="CM33_NODSP_NOFPU_ARMCC">
+      <description>CM33, no DSP, no FPU, ARM Compiler</description>
+      <require condition="CM33_NODSP_NOFPU"/>
       <require Tcompiler="ARMCC"/>
     </condition>
-    <condition id="CM33_SP_LE_ARMCC">
-      <description>Cortex-M33 processor based device using Floating Point Unit (SP) in little endian mode for the ARM Compiler</description>
-      <require condition="CM33_SP_ARMCC"/>
-      <require Dendian="Little-endian"/>
+    <condition id="CM33_DSP_NOFPU_ARMCC">
+      <description>CM33, DSP, no FPU, ARM Compiler</description>
+      <require condition="CM33_DSP_NOFPU"/>
+      <require Tcompiler="ARMCC"/>
     </condition>
-    <condition id="CM33_SP_BE_ARMCC">
-      <description>Cortex-M33 processor based device using Floating Point Unit (SP) in big endian mode for the ARM Compiler</description>
-      <require condition="CM33_SP_ARMCC"/>
-      <require Dendian="Big-endian"/>
+    <condition id="CM33_NODSP_SP_ARMCC">
+      <description>CM33, no DSP, SP FPU, ARM Compiler</description>
+      <require condition="CM33_NODSP_SP"/>
+      <require Tcompiler="ARMCC"/>
     </condition>
-
     <condition id="CM33_DSP_SP_ARMCC">
-      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP) for the ARM Compiler</description>
+      <description>CM33, DSP, SP FPU, ARM Compiler</description>
       <require condition="CM33_DSP_SP"/>
       <require Tcompiler="ARMCC"/>
     </condition>
-    <condition id="CM33_DSP_SP_LE_ARMCC">
-      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP) in little endian mode for the ARM Compiler</description>
-      <require condition="CM33_DSP_SP_ARMCC"/>
+    <condition id="CM33_NODSP_NOFPU_LE_ARMCC">
+      <description>CM33, little endian, no DSP, no FPU, ARM Compiler</description>
+      <require condition="CM33_NODSP_NOFPU_ARMCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="CM33_DSP_SP_BE_ARMCC">
-      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP) in big endian mode for the ARM Compiler</description>
+    <condition id="CM33_DSP_NOFPU_LE_ARMCC">
+      <description>CM33, little endian, DSP, no FPU, ARM Compiler</description>
+      <require condition="CM33_DSP_NOFPU_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_NODSP_SP_LE_ARMCC">
+      <description>CM33, little endian, no DSP, SP FPU, ARM Compiler</description>
+      <require condition="CM33_NODSP_SP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_DSP_SP_LE_ARMCC">
+      <description>CM33, little endian, DSP, SP FPU, ARM Compiler</description>
       <require condition="CM33_DSP_SP_ARMCC"/>
-      <require Dendian="Big-endian"/>
+      <require Dendian="Little-endian"/>
     </condition>
 
     <condition id="ARMv8MBL_ARMCC">
@@ -1004,22 +1035,6 @@ ARMv8-M Mainline based device with TrustZone
       <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="ARMv8MML_DSP_ARMCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension for the ARM Compiler</description>
-      <require condition="ARMv8MML_DSP"/>
-      <require Tcompiler="ARMCC"/>
-    </condition>
-    <condition id="ARMv8MML_DSP_LE_ARMCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension in little endian mode for the ARM Compiler</description>
-      <require condition="ARMv8MML_DSP_ARMCC"/>
-      <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="ARMv8MML_DSP_BE_ARMCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension in big endian mode for the ARM Compiler</description>
-      <require condition="ARMv8MML_DSP_ARMCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
-
     <condition id="ARMv8MML_FP_ARMCC">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit for the ARM Compiler</description>
       <require condition="ARMv8MML_FP"/>
@@ -1036,68 +1051,45 @@ ARMv8-M Mainline based device with TrustZone
       <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="ARMv8MML_SP_ARMCC">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP) for the ARM Compiler</description>
-      <require condition="ARMv8MML_SP"/>
+    <condition id="ARMv8MML_NODSP_NOFPU_ARMCC">
+      <description>ARMv8MML, no DSP, no FPU, ARM Compiler</description>
+      <require condition="ARMv8MML_NODSP_NOFPU"/>
       <require Tcompiler="ARMCC"/>
     </condition>
-    <condition id="ARMv8MML_SP_LE_ARMCC">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP) in little endian mode for the ARM Compiler</description>
-      <require condition="ARMv8MML_SP_ARMCC"/>
-      <require Dendian="Little-endian"/>
+    <condition id="ARMv8MML_DSP_NOFPU_ARMCC">
+      <description>ARMv8MML, DSP, no FPU, ARM Compiler</description>
+      <require condition="ARMv8MML_DSP_NOFPU"/>
+      <require Tcompiler="ARMCC"/>
     </condition>
-    <condition id="ARMv8MML_SP_BE_ARMCC">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP) in big endian mode for the ARM Compiler</description>
-      <require condition="ARMv8MML_SP_ARMCC"/>
-      <require Dendian="Big-endian"/>
+    <condition id="ARMv8MML_NODSP_SP_ARMCC">
+      <description>ARMv8MML, no DSP, SP FPU, ARM Compiler</description>
+      <require condition="ARMv8MML_NODSP_SP"/>
+      <require Tcompiler="ARMCC"/>
     </condition>
-
     <condition id="ARMv8MML_DSP_SP_ARMCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP) for the ARM Compiler</description>
+      <description>ARMv8MML, DSP, SP FPU, ARM Compiler</description>
       <require condition="ARMv8MML_DSP_SP"/>
       <require Tcompiler="ARMCC"/>
     </condition>
+    <condition id="ARMv8MML_NODSP_NOFPU_LE_ARMCC">
+      <description>ARMv8MML, little endian, no DSP, no FPU, ARM Compiler</description>
+      <require condition="ARMv8MML_NODSP_NOFPU_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_NOFPU_LE_ARMCC">
+      <description>ARMv8MML, little endian, DSP, no FPU, ARM Compiler</description>
+      <require condition="ARMv8MML_DSP_NOFPU_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_NODSP_SP_LE_ARMCC">
+      <description>ARMv8MML, little endian, no DSP, SP FPU, ARM Compiler</description>
+      <require condition="ARMv8MML_NODSP_SP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
     <condition id="ARMv8MML_DSP_SP_LE_ARMCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP) in little endian mode for the ARM Compiler</description>
+      <description>ARMv8MML, little endian, DSP, SP FPU, ARM Compiler</description>
       <require condition="ARMv8MML_DSP_SP_ARMCC"/>
       <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="ARMv8MML_DSP_SP_BE_ARMCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP) in big endian mode for the ARM Compiler</description>
-      <require condition="ARMv8MML_DSP_SP_ARMCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
-
-    <condition id="ARMv8MML_DP_ARMCC">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP) for the ARM Compiler</description>
-      <require condition="ARMv8MML_DP"/>
-      <require Tcompiler="ARMCC"/>
-    </condition>
-    <condition id="ARMv8MML_DP_LE_ARMCC">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP) in little endian mode for the ARM Compiler</description>
-      <require condition="ARMv8MML_DP_ARMCC"/>
-      <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="ARMv8MML_DP_BE_ARMCC">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP) in big endian mode for the ARM Compiler</description>
-      <require condition="ARMv8MML_DP_ARMCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
-
-    <condition id="ARMv8MML_DSP_DP_ARMCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP) for the ARM Compiler</description>
-      <require condition="ARMv8MML_DSP_DP"/>
-      <require Tcompiler="ARMCC"/>
-    </condition>
-    <condition id="ARMv8MML_DSP_DP_LE_ARMCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP) in little endian mode for the ARM Compiler</description>
-      <require condition="ARMv8MML_DSP_DP_ARMCC"/>
-      <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="ARMv8MML_DSP_DP_BE_ARMCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP) in big endian mode for the ARM Compiler</description>
-      <require condition="ARMv8MML_DSP_DP_ARMCC"/>
-      <require Dendian="Big-endian"/>
     </condition>
 
     <!-- GCC compiler -->
@@ -1285,22 +1277,6 @@ ARMv8-M Mainline based device with TrustZone
       <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM33_DSP_GCC">
-      <description>Cortex-M33 processor based device with DSP extension for the GCC Compiler</description>
-      <require condition="CM33_DSP"/>
-      <require Tcompiler="GCC"/>
-    </condition>
-    <condition id="CM33_DSP_LE_GCC">
-      <description>Cortex-M33 processor based device with DSP extension in little endian mode for the GCC Compiler</description>
-      <require condition="CM33_DSP_GCC"/>
-      <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="CM33_DSP_BE_GCC">
-      <description>Cortex-M33 processor based device with DSP extension in big endian mode for the GCC Compiler</description>
-      <require condition="CM33_DSP_GCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
-
     <condition id="CM33_FP_GCC">
       <description>Cortex-M33 processor based device using Floating Point Unit for the GCC Compiler</description>
       <require condition="CM33_FP"/>
@@ -1317,36 +1293,45 @@ ARMv8-M Mainline based device with TrustZone
       <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="CM33_SP_GCC">
-      <description>Cortex-M33 processor based device using Floating Point Unit (SP) for the GCC Compiler</description>
-      <require condition="CM33_SP"/>
+    <condition id="CM33_NODSP_NOFPU_GCC">
+      <description>CM33, no DSP, no FPU, GCC Compiler</description>
+      <require condition="CM33_NODSP_NOFPU"/>
       <require Tcompiler="GCC"/>
     </condition>
-    <condition id="CM33_SP_LE_GCC">
-      <description>Cortex-M33 processor based device using Floating Point Unit (SP) in little endian mode for the GCC Compiler</description>
-      <require condition="CM33_SP_GCC"/>
-      <require Dendian="Little-endian"/>
+    <condition id="CM33_DSP_NOFPU_GCC">
+      <description>CM33, DSP, no FPU, GCC Compiler</description>
+      <require condition="CM33_DSP_NOFPU"/>
+      <require Tcompiler="GCC"/>
     </condition>
-    <condition id="CM33_SP_BE_GCC">
-      <description>Cortex-M33 processor based device using Floating Point Unit (SP) in big endian mode for the GCC Compiler</description>
-      <require condition="CM33_SP_GCC"/>
-      <require Dendian="Big-endian"/>
+    <condition id="CM33_NODSP_SP_GCC">
+      <description>CM33, no DSP, SP FPU, GCC Compiler</description>
+      <require condition="CM33_NODSP_SP"/>
+      <require Tcompiler="GCC"/>
     </condition>
-
     <condition id="CM33_DSP_SP_GCC">
-      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP) for the GCC Compiler</description>
+      <description>CM33, DSP, SP FPU, GCC Compiler</description>
       <require condition="CM33_DSP_SP"/>
       <require Tcompiler="GCC"/>
     </condition>
-    <condition id="CM33_DSP_SP_LE_GCC">
-      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP) in little endian mode for the GCC Compiler</description>
-      <require condition="CM33_DSP_SP_GCC"/>
+    <condition id="CM33_NODSP_NOFPU_LE_GCC">
+      <description>CM33, little endian, no DSP, no FPU, GCC Compiler</description>
+      <require condition="CM33_NODSP_NOFPU_GCC"/>
       <require Dendian="Little-endian"/>
     </condition>
-    <condition id="CM33_DSP_SP_BE_GCC">
-      <description>Cortex-M33 processor based device with DSP extension using Floating Point Unit (SP) in big endian mode for the GCC Compiler</description>
+    <condition id="CM33_DSP_NOFPU_LE_GCC">
+      <description>CM33, little endian, DSP, no FPU, GCC Compiler</description>
+      <require condition="CM33_DSP_NOFPU_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_NODSP_SP_LE_GCC">
+      <description>CM33, little endian, no DSP, SP FPU, GCC Compiler</description>
+      <require condition="CM33_NODSP_SP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_DSP_SP_LE_GCC">
+      <description>CM33, little endian, DSP, SP FPU, GCC Compiler</description>
       <require condition="CM33_DSP_SP_GCC"/>
-      <require Dendian="Big-endian"/>
+      <require Dendian="Little-endian"/>
     </condition>
 
     <condition id="ARMv8MBL_GCC">
@@ -1381,22 +1366,6 @@ ARMv8-M Mainline based device with TrustZone
       <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="ARMv8MML_DSP_GCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension for the GCC Compiler</description>
-      <require condition="ARMv8MML_DSP"/>
-      <require Tcompiler="GCC"/>
-    </condition>
-    <condition id="ARMv8MML_DSP_LE_GCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension in little endian mode for the GCC Compiler</description>
-      <require condition="ARMv8MML_DSP_GCC"/>
-      <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="ARMv8MML_DSP_BE_GCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension in big endian mode for the GCC Compiler</description>
-      <require condition="ARMv8MML_DSP_GCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
-
     <condition id="ARMv8MML_FP_GCC">
       <description>ARMv8-M Mainline processor based device using Floating Point Unit for the GCC Compiler</description>
       <require condition="ARMv8MML_FP"/>
@@ -1413,68 +1382,45 @@ ARMv8-M Mainline based device with TrustZone
       <require Dendian="Big-endian"/>
     </condition>
 
-    <condition id="ARMv8MML_SP_GCC">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP) for the GCC Compiler</description>
-      <require condition="ARMv8MML_SP"/>
+    <condition id="ARMv8MML_NODSP_NOFPU_GCC">
+      <description>ARMv8MML, no DSP, no FPU, GCC Compiler</description>
+      <require condition="ARMv8MML_NODSP_NOFPU"/>
       <require Tcompiler="GCC"/>
     </condition>
-    <condition id="ARMv8MML_SP_LE_GCC">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP) in little endian mode for the GCC Compiler</description>
-      <require condition="ARMv8MML_SP_GCC"/>
-      <require Dendian="Little-endian"/>
+    <condition id="ARMv8MML_DSP_NOFPU_GCC">
+      <description>ARMv8MML, DSP, no FPU, GCC Compiler</description>
+      <require condition="ARMv8MML_DSP_NOFPU"/>
+      <require Tcompiler="GCC"/>
     </condition>
-    <condition id="ARMv8MML_SP_BE_GCC">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (SP) in big endian mode for the GCC Compiler</description>
-      <require condition="ARMv8MML_SP_GCC"/>
-      <require Dendian="Big-endian"/>
+    <condition id="ARMv8MML_NODSP_SP_GCC">
+      <description>ARMv8MML, no DSP, SP FPU, GCC Compiler</description>
+      <require condition="ARMv8MML_NODSP_SP"/>
+      <require Tcompiler="GCC"/>
     </condition>
-
     <condition id="ARMv8MML_DSP_SP_GCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP) for the GCC Compiler</description>
+      <description>ARMv8MML, DSP, SP FPU, GCC Compiler</description>
       <require condition="ARMv8MML_DSP_SP"/>
       <require Tcompiler="GCC"/>
     </condition>
+    <condition id="ARMv8MML_NODSP_NOFPU_LE_GCC">
+      <description>ARMv8MML, little endian, no DSP, no FPU, GCC Compiler</description>
+      <require condition="ARMv8MML_NODSP_NOFPU_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_NOFPU_LE_GCC">
+      <description>ARMv8MML, little endian, DSP, no FPU, GCC Compiler</description>
+      <require condition="ARMv8MML_DSP_NOFPU_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_NODSP_SP_LE_GCC">
+      <description>ARMv8MML, little endian, no DSP, SP FPU, GCC Compiler</description>
+      <require condition="ARMv8MML_NODSP_SP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
     <condition id="ARMv8MML_DSP_SP_LE_GCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP) in little endian mode for the GCC Compiler</description>
+      <description>ARMv8MML, little endian, DSP, SP FPU, GCC Compiler</description>
       <require condition="ARMv8MML_DSP_SP_GCC"/>
       <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="ARMv8MML_DSP_SP_BE_GCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (SP) in big endian mode for the GCC Compiler</description>
-      <require condition="ARMv8MML_DSP_SP_GCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
-
-    <condition id="ARMv8MML_DP_GCC">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP) for the GCC Compiler</description>
-      <require condition="ARMv8MML_DP"/>
-      <require Tcompiler="GCC"/>
-    </condition>
-    <condition id="ARMv8MML_DP_LE_GCC">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP) in little endian mode for the GCC Compiler</description>
-      <require condition="ARMv8MML_DP_GCC"/>
-      <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="ARMv8MML_DP_BE_GCC">
-      <description>ARMv8-M Mainline processor based device using Floating Point Unit (DP) in big endian mode for the GCC Compiler</description>
-      <require condition="ARMv8MML_DP_GCC"/>
-      <require Dendian="Big-endian"/>
-    </condition>
-
-    <condition id="ARMv8MML_DSP_DP_GCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP) for the GCC Compiler</description>
-      <require condition="ARMv8MML_DSP_DP"/>
-      <require Tcompiler="GCC"/>
-    </condition>
-    <condition id="ARMv8MML_DSP_DP_LE_GCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP) in little endian mode for the GCC Compiler</description>
-      <require condition="ARMv8MML_DSP_DP_GCC"/>
-      <require Dendian="Little-endian"/>
-    </condition>
-    <condition id="ARMv8MML_DSP_DP_BE_GCC">
-      <description>ARMv8-M Mainline processor based device with DSP extension using Floating Point Unit (DP) in big endian mode for the GCC Compiler</description>
-      <require condition="ARMv8MML_DSP_DP_GCC"/>
-      <require Dendian="Big-endian"/>
     </condition>
 
     <!-- IAR compiler -->
@@ -1731,10 +1677,10 @@ ARMv8-M Mainline based device with TrustZone
 
     <!-- CMSIS DSP -->
     <condition id="CMSIS DSP">
-      <description>CMSIS DSP Library is for ARM Cortex-M Devices only and is prebuild for one of the compilers ARMCC, GCC or IAR</description>
-      <require condition="ARMv6_7-M Device"/>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
+      <description>Components required for DSP</description>
+      <require condition="ARMv6_7_8-M Device"/>
       <require condition="ARMCC GCC"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
 
     <!-- RTOS RTX -->
@@ -2107,18 +2053,20 @@ ARMv8-M Mainline based device with TrustZone
         <file category="library" condition="CM7_SP_BE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM7bfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
         <file category="library" condition="CM7_DP_LE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM7lfdp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
         <file category="library" condition="CM7_DP_BE_ARMCC"          name="CMSIS/Lib/ARM/arm_cortexM7bfdp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
-<!--
-        <file category="library" condition="CM23_LE_ARMCC"            name="CMSIS/Lib/ARM/arm_ARMv8MBLl_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM33_LE_ARMCC"            name="CMSIS/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM33_DSP_LE_ARMCC"        name="CMSIS/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM33_SP_LE_ARMCC"         name="CMSIS/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="CM33_DSP_SP_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="ARMv8MBL_LE_ARMCC"        name="CMSIS/Lib/ARM/arm_ARMv8MBLl_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="ARMv8MML_LE_ARMCC"        name="CMSIS/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="ARMv8MML_DSP_LE_ARMCC"    name="CMSIS/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="ARMv8MML_SP_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
-        <file category="library" condition="ARMv8MML_DSP_SP_LE_ARMCC" name="CMSIS/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP_Lib/Source/ARM"/>
--->
+
+        <file category="library" condition="CM23_LE_ARMCC"                  name="CMSIS/Lib/ARM/arm_ARMv8MBLl_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM33_NODSP_NOFPU_LE_ARMCC"      name="CMSIS/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM33_DSP_NOFPU_LE_ARMCC"        name="CMSIS/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM33_NODSP_SP_LE_ARMCC"         name="CMSIS/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="CM33_DSP_SP_LE_ARMCC"           name="CMSIS/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="ARMv8MBL_LE_ARMCC"              name="CMSIS/Lib/ARM/arm_ARMv8MBLl_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="ARMv8MML_NODSP_NOFPU_LE_ARMCC"  name="CMSIS/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="ARMv8MML_DSP_NOFPU_LE_ARMCC"    name="CMSIS/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="ARMv8MML_NODSP_SP_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/>
+        <file category="library" condition="ARMv8MML_DSP_SP_LE_ARMCC"       name="CMSIS/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP_Lib/Source/ARM"/>
+        <!--file category="library" condition="ARMv8MML_DP_NOFPU_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_ARMv8MMLlfdp_math.lib"   src="CMSIS/DSP_Lib/Source/ARM"/-->
+        <!--file category="library" condition="ARMv8MML_DSP_DP_LE_ARMCC"       name="CMSIS/Lib/ARM/arm_ARMv8MMLldfdp_math.lib"  src="CMSIS/DSP_Lib/Source/ARM"/-->
+
         <!-- GCC -->
         <file category="library" condition="CM0_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM0l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
         <file category="library" condition="CM3_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM3l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
@@ -2127,18 +2075,20 @@ ARMv8-M Mainline based device with TrustZone
         <file category="library" condition="CM7_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM7l_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
         <file category="library" condition="CM7_SP_LE_GCC"            name="CMSIS/Lib/GCC/libarm_cortexM7lfsp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
         <file category="library" condition="CM7_DP_LE_GCC"            name="CMSIS/Lib/GCC/libarm_cortexM7lfdp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
-<!--
-        <file category="library" condition="CM23_LE_GCC"              name="CMSIS/Lib/GCC/libarm_ARMv8MBLl_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM33_LE_GCC"              name="CMSIS/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM33_DSP_LE_GCC"          name="CMSIS/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM33_SP_LE_GCC"           name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="CM33_DSP_SP_LE_GCC"       name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="ARMv8MBL_LE_GCC"          name="CMSIS/Lib/GCC/libarm_ARMv8MBLl_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="ARMv8MML_LE_GCC"          name="CMSIS/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="ARMv8MML_DSP_LE_GCC"      name="CMSIS/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="ARMv8MML_SP_LE_GCC"       name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
-        <file category="library" condition="ARMv8MML_DSP_SP_LE_GCC"   name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP_Lib/Source/GCC"/>
--->
+
+        <file category="library" condition="CM23_LE_GCC"                    name="CMSIS/Lib/GCC/libarm_ARMv8MBLl_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM33_NODSP_NOFPU_LE_GCC"        name="CMSIS/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM33_DSP_NOFPU_LE_GCC"          name="CMSIS/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM33_NODSP_SP_LE_GCC"           name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="CM33_DSP_SP_LE_GCC"             name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="ARMv8MBL_LE_GCC"                name="CMSIS/Lib/GCC/libarm_ARMv8MBLl_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="ARMv8MML_NODSP_NOFPU_LE_GCC"    name="CMSIS/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="ARMv8MML_DSP_NOFPU_LE_GCC"      name="CMSIS/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="ARMv8MML_NODSP_SP_LE_GCC"       name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/>
+        <file category="library" condition="ARMv8MML_DSP_SP_LE_GCC"         name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP_Lib/Source/GCC"/>
+        <!--file category="library" condition="ARMv8MML_DP_NOFPU_LE_GCC"       name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/-->
+        <!--file category="library" condition="ARMv8MML_DSP_DP_LE_GCC"         name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfdp_math.a" src="CMSIS/DSP_Lib/Source/GCC"/-->
+
       </files>
     </component>
 
