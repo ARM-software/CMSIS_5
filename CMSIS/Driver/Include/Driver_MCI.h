@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,22 +15,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        16. May 2014
- * $Revision:    V2.02
+ * $Date:        2. Feb 2017
+ * $Revision:    V2.3
  *
  * Project:      MCI (Memory Card Interface) Driver definitions
  */
 
 /* History:
- *  Version 2.02
+ *  Version 2.3
+ *    ARM_MCI_STATUS made volatile
+ *  Version 2.2
  *    Added timeout and error flags to ARM_MCI_STATUS
  *    Added support for controlling optional RST_n pin (eMMC)
  *    Removed explicit Clock Control (ARM_MCI_CONTROL_CLOCK)
  *    Removed event ARM_MCI_EVENT_BOOT_ACK_TIMEOUT
- *  Version 2.01
+ *  Version 2.1
  *    Decoupled SPI mode from MCI driver
  *    Replaced function ARM_MCI_CardSwitchRead with ARM_MCI_ReadCD and ARM_MCI_ReadWP
- *  Version 2.00
+ *  Version 2.0
  *    Added support for:
  *      SD UHS-I (Ultra High Speed)
  *      SD I/O Interrupt
@@ -67,7 +69,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_MCI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,02)  /* API version */
+#define ARM_MCI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
 
 
 /****** MCI Send Command Flags *****/
@@ -166,7 +168,7 @@ extern "C"
 /**
 \brief MCI Status
 */
-typedef struct _ARM_MCI_STATUS {
+typedef volatile struct _ARM_MCI_STATUS {
   uint32_t command_active   : 1;        ///< Command active flag
   uint32_t command_timeout  : 1;        ///< Command timeout flag (cleared on start of next command)
   uint32_t command_error    : 1;        ///< Command error flag (cleared on start of next command)
@@ -175,6 +177,7 @@ typedef struct _ARM_MCI_STATUS {
   uint32_t transfer_error   : 1;        ///< Transfer error flag (cleared on start of next command)
   uint32_t sdio_interrupt   : 1;        ///< SD I/O Interrupt flag (cleared on start of monitoring)
   uint32_t ccs              : 1;        ///< CCS flag (cleared on start of next command)
+  uint32_t reserved         : 24;
 } ARM_MCI_STATUS;
 
 
@@ -321,6 +324,7 @@ typedef struct _ARM_MCI_CAPABILITIES {
   uint32_t rst_n             : 1;       ///< Supports RST_n Pin Control (eMMC)
   uint32_t ccs               : 1;       ///< Supports Command Completion Signal (CCS) for CE-ATA
   uint32_t ccs_timeout       : 1;       ///< Supports Command Completion Signal (CCS) timeout for CE-ATA
+  uint32_t reserved          : 3;
 } ARM_MCI_CAPABILITIES;
 
 

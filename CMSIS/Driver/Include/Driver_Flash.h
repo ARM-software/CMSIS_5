@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -14,10 +14,17 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * $Date:        2. Feb 2017
+ * $Revision:    V2.1
+ *
+ * Project:      Flash Driver definitions
  */
 
 /* History:
- *  Version 2.00
+ *  Version 2.1
+ *    ARM_FLASH_STATUS made volatile
+ *  Version 2.0
  *    Renamed driver NOR -> Flash (more generic)
  *    Non-blocking operation
  *    Added Events, Status and Capabilities
@@ -40,7 +47,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_FLASH_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,00)  /* API version */
+#define ARM_FLASH_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,1)  /* API version */
 
 
 #define _ARM_Driver_Flash_(n)      Driver_Flash##n
@@ -73,9 +80,10 @@ typedef struct _ARM_FLASH_INFO {
 /**
 \brief Flash Status
 */
-typedef struct _ARM_FLASH_STATUS {
-  uint32_t busy  : 1;                   ///< Flash busy flag
-  uint32_t error : 1;                   ///< Read/Program/Erase error flag (cleared on start of next operation)
+typedef volatile struct _ARM_FLASH_STATUS {
+  uint32_t busy     : 1;                ///< Flash busy flag
+  uint32_t error    : 1;                ///< Read/Program/Erase error flag (cleared on start of next operation)
+  uint32_t reserved : 30;
 } ARM_FLASH_STATUS;
 
 
@@ -168,6 +176,7 @@ typedef struct _ARM_FLASH_CAPABILITIES {
   uint32_t event_ready  : 1;            ///< Signal Flash Ready event
   uint32_t data_width   : 2;            ///< Data width: 0=8-bit, 1=16-bit, 2=32-bit
   uint32_t erase_chip   : 1;            ///< Supports EraseChip operation
+  uint32_t reserved     : 28;
 } ARM_FLASH_CAPABILITIES;
 
 

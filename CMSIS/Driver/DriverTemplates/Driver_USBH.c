@@ -29,7 +29,7 @@ static const ARM_DRIVER_VERSION usbh_driver_version = {
 };
 
 /* Driver Capabilities */
-static const ARM_USBD_CAPABILITIES usbd_driver_capabilities = {
+static const ARM_USBH_CAPABILITIES usbd_driver_capabilities = {
     0x0001, /* Root HUB available Ports Mask   */
     0,      /* Automatic SPLIT packet handling */
     0,      /* Signal Connect event */
@@ -155,16 +155,14 @@ void ARM_USBH_SignalEndpointEvent(ARM_USBH_EP_HANDLE ep_hndl, uint32_t event)
 
 /* USB Host HCI (OHCI/EHCI) Driver */
 
-#define ARM_USBH_HCI_DRV_VERSION    ARM_DRIVER_VERSION_MAJOR_MINOR(2, 0) /* driver version */
-
 /* Driver Version */
 static const ARM_DRIVER_VERSION usbh_hci_driver_version = { 
-    ARM_USBH_HCI_API_VERSION,
-    ARM_USBH_HCI_DRV_VERSION
+    ARM_USBH_API_VERSION,
+    ARM_USBH_DRV_VERSION
 };
 
 /* Driver Capabilities */
-static const ARM_USBD_CAPABILITIES usbh_hci_driver_capabilities = {
+static const ARM_USBH_HCI_CAPABILITIES usbh_hci_driver_capabilities = {
     0x0001  /* Root HUB available Ports Mask   */
 };
 
@@ -180,7 +178,7 @@ ARM_USBH_HCI_CAPABILITIES ARM_USBH_HCI_GetCapabilities(void)
 {
 }
 
-int32_t ARM_USBH_HCI_Initialize(ARM_USBH_HCI_Interrupt_t *cb_interrupt)
+int32_t ARM_USBH_HCI_Initialize(ARM_USBH_HCI_Interrupt_t cb_interrupt)
 {
 }
 

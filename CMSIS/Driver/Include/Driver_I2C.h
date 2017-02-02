@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,18 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        9. May 2014
- * $Revision:    V2.02
+ * $Date:        2. Feb 2017
+ * $Revision:    V2.3
  *
  * Project:      I2C (Inter-Integrated Circuit) Driver definitions
  */
 
 /* History:
- *  Version 2.02
+ *  Version 2.3
+ *    ARM_I2C_STATUS made volatile
+ *  Version 2.2
  *    Removed function ARM_I2C_MasterTransfer in order to simplify drivers
  *      and added back parameter "xfer_pending" to functions
  *      ARM_I2C_MasterTransmit and ARM_I2C_MasterReceive
- *  Version 2.01
+ *  Version 2.1
  *    Added function ARM_I2C_MasterTransfer and removed parameter "xfer_pending"
  *      from functions ARM_I2C_MasterTransmit and ARM_I2C_MasterReceive
  *    Added function ARM_I2C_GetDataCount
@@ -35,7 +37,7 @@
  *      with event ARM_I2C_EVENT_TRANSFER_DONE
  *    Added event ARM_I2C_EVENT_TRANSFER_INCOMPLETE
  *    Removed parameter "arg" from function ARM_I2C_SignalEvent
- *  Version 2.00
+ *  Version 2.0
  *    New simplified driver:
  *      complexity moved to upper layer (especially data handling)
  *      more unified API for different communication interfaces
@@ -58,7 +60,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_I2C_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,02)  /* API version */
+#define ARM_I2C_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
 
 
 /****** I2C Control Codes *****/
@@ -77,20 +79,21 @@ extern "C"
 
 /****** I2C Address Flags *****/
 
-#define ARM_I2C_ADDRESS_10BIT           0x0400      ///< 10-bit address flag
-#define ARM_I2C_ADDRESS_GC              0x8000      ///< General Call flag
+#define ARM_I2C_ADDRESS_10BIT           (0x0400)    ///< 10-bit address flag
+#define ARM_I2C_ADDRESS_GC              (0x8000)    ///< General Call flag
 
 
 /**
 \brief I2C Status
 */
-typedef struct _ARM_I2C_STATUS {
+typedef volatile struct _ARM_I2C_STATUS {
   uint32_t busy             : 1;        ///< Busy flag
   uint32_t mode             : 1;        ///< Mode: 0=Slave, 1=Master
   uint32_t direction        : 1;        ///< Direction: 0=Transmitter, 1=Receiver
   uint32_t general_call     : 1;        ///< General Call indication (cleared on start of next Slave operation)
   uint32_t arbitration_lost : 1;        ///< Master lost arbitration (cleared on start of next Master operation)
   uint32_t bus_error        : 1;        ///< Bus error detected (cleared on start of next Master/Slave operation)
+  uint32_t reserved         : 26;
 } ARM_I2C_STATUS;
 
 
@@ -185,6 +188,7 @@ typedef void (*ARM_I2C_SignalEvent_t) (uint32_t event);  ///< Pointer to \ref AR
 */
 typedef struct _ARM_I2C_CAPABILITIES {
   uint32_t address_10_bit : 1;          ///< supports 10-bit addressing
+  uint32_t reserved       : 31;
 } ARM_I2C_CAPABILITIES;
 
 

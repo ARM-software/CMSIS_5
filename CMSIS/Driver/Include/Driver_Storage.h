@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2016, ARM Limited, All Rights Reserved
+ * Copyright (c) 2006-2017, ARM Limited, All Rights Reserved
  * SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -24,7 +24,7 @@ extern "C" {
 
 #include "Driver_Common.h"
 
-#define ARM_STORAGE_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,00)  /* API version */
+#define ARM_STORAGE_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,1)  /* API version */
 
 
 #define _ARM_Driver_Storage_(n)      Driver_Storage##n
@@ -161,9 +161,10 @@ typedef struct _ARM_STORAGE_INFO {
 /**
 \brief Operating status of the storage controller.
 */
-typedef struct _ARM_STORAGE_STATUS {
-  uint32_t busy  : 1;                   ///< Controller busy flag
-  uint32_t error : 1;                   ///< Read/Program/Erase error flag (cleared on start of next operation)
+typedef volatile struct _ARM_STORAGE_STATUS {
+  uint32_t busy     : 1;                ///< Controller busy flag
+  uint32_t error    : 1;                ///< Read/Program/Erase error flag (cleared on start of next operation)
+  uint32_t reserved : 30;
 } ARM_STORAGE_STATUS;
 
 /**
