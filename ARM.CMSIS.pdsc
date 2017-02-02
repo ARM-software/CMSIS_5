@@ -172,6 +172,7 @@
     <description Cclass="Network">Network Stack using Internet Protocols</description>
     <description Cclass="USB">Universal Serial Bus Stack</description>
     <description Cclass="Compiler">ARM Compiler Software Extensions</description>
+    <description Cclass="RTOS">Real-time Operating System</description>
   </taxonomy>
 
   <devices>
