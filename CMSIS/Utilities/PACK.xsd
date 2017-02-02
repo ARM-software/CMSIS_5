@@ -184,14 +184,16 @@
     <xs:restriction base="xs:string">
       <xs:minLength value="3"/>
       <xs:maxLength value="32"/>
+      <xs:pattern value="\S(.*\S)?"></xs:pattern>
     </xs:restriction>
   </xs:simpleType>
 
-  <!-- Component Group Name Type -->
+  <!-- Component Group Name Type (no leading or trailing spaces allowed) -->
   <xs:simpleType name="CgroupType">
     <xs:restriction base="xs:string">
       <xs:minLength value="3"/>
       <xs:maxLength value="32"/>
+      <xs:pattern value="\S(.*\S)?"></xs:pattern>
     </xs:restriction>
   </xs:simpleType>
 
@@ -200,6 +202,7 @@
     <xs:restriction base="xs:string">
       <xs:minLength value="0"/>
       <xs:maxLength value="32"/>
+      <xs:pattern value="\S(.*\S)?"></xs:pattern>
     </xs:restriction>
   </xs:simpleType>
 
@@ -208,6 +211,7 @@
     <xs:restriction base="xs:string">
       <xs:minLength value="3"/>
       <xs:maxLength value="32"/>
+      <xs:pattern value="\S(.*\S)?"></xs:pattern>
     </xs:restriction>
   </xs:simpleType>
 
