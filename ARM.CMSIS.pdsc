@@ -13,6 +13,8 @@
        - updated to version V1.5.1.
        - changed copyrigth note.
        - added ARMv8M DSP libraries.
+       PACK:
+       - added taxonomy for Cclass RTOS
     </release>
     <release version="5.0.1-dev5">
       DSP:

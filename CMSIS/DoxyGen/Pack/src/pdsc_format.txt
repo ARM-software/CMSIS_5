@@ -830,6 +830,7 @@ and group \token{Startup} is defined for the device-specific CMSIS-CORE files.
     <description Cclass="Graphics">Graphical User Interface</description>
     <description Cclass="Network">Network Stack using Internet Protocols</description>
     <description Cclass="USB">Universal Serial Bus Stack</description>
+    <description Cclass="RTOS">Realtime Operating System</description>
   </taxonomy>
 \endcode
 
@@ -952,6 +953,14 @@ The table lists predefined Component Classes.
   <tr>
     <td class="XML-Token">USB</td>
     <td>Components implementing some kind of USB interfaces (e.g. Host and Device interfaces)</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Compiler</td>
+    <td>Components implementing Compiler specific interfaces (e.g. Retargeting)</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">RTOS</td>
+    <td>Components implementing some kind of Real-time Operating System (e.g. FreeRTOS, Micrium Real Time Kernel)</td>
   </tr>
 </table>
 
