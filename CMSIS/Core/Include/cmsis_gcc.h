@@ -2,7 +2,7 @@
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler GCC header file
  * @version  V5.0.1
- * @date     30. January 2017
+ * @date     02. February 2017
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
@@ -230,7 +230,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PSP_NS(void)
  */
 __attribute__((always_inline)) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
 {
-  __ASM volatile ("MSR psp, %0" : : "r" (topOfProcStack) : "sp");
+  __ASM volatile ("MSR psp, %0" : : "r" (topOfProcStack) : );
 }
 
 
@@ -242,7 +242,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_PSP(uint32_t topOfProc
  */
 __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PSP_NS(uint32_t topOfProcStack)
 {
-  __ASM volatile ("MSR psp_ns, %0" : : "r" (topOfProcStack) : "sp");
+  __ASM volatile ("MSR psp_ns, %0" : : "r" (topOfProcStack) : );
 }
 #endif
 
@@ -284,7 +284,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_MSP_NS(void)
  */
 __attribute__((always_inline)) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
 {
-  __ASM volatile ("MSR msp, %0" : : "r" (topOfMainStack) : "sp");
+  __ASM volatile ("MSR msp, %0" : : "r" (topOfMainStack) : );
 }
 
 
@@ -296,7 +296,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_MSP(uint32_t topOfMain
  */
 __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
 {
-  __ASM volatile ("MSR msp_ns, %0" : : "r" (topOfMainStack) : "sp");
+  __ASM volatile ("MSR msp_ns, %0" : : "r" (topOfMainStack) : );
 }
 #endif
 
