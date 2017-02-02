@@ -2030,7 +2030,7 @@ DSP Instructions, Double Precision Floating Point Unit, TrustZone
 
 
     <!-- CMSIS-DSP component -->
-    <component Cclass="CMSIS" Cgroup="DSP" Cversion="1.5.0" condition="CMSIS DSP">
+    <component Cclass="CMSIS" Cgroup="DSP" Cversion="1.5.1" condition="CMSIS DSP">
       <description>CMSIS-DSP Library for Cortex-M, SC000, and SC300</description>
       <files>
         <!-- CPU independent -->
