@@ -80,11 +80,14 @@ File/Folder                  | Content
     <tr>
       <td>V2.1.0</td>
       <td>
+        Updated configuration files: RTX_Config.h for the configuration settings and RTX_config.c for
+        implementing the \ref rtx5_specific.
+        
         Support for critical and uncritical sections (nesting safe):
-         - updated: osKernelLock, osKernelUnlock
-         - added: osKernelRestoreLock
+         - updated: \ref osKernelLock, \ref osKernelUnlock
+         - added: \ref osKernelRestoreLock
          
-        Updated Thread and Event Flags:
+        Updated \ref CMSIS_RTOS_ThreadFlagsMgmt "Thread Flags" and \ref CMSIS_RTOS_EventFlags "Event Flags":
          - changed flags parameter and return type from int32_t to uint32_t
      </td>
     </tr>
@@ -1350,7 +1353,7 @@ or libraries require no modifications when using on a different CMSIS-RTOS2 impl
 */
 
 /** 
-\addtogroup rtx5_specific RTX5 Specifics
+\addtogroup rtx5_specific RTX5 Specific API
 \brief This section describes CMSIS-RTOS RTX5 specifics.
 \details
 The RTX5 kernel can be customized for different application requirements:
