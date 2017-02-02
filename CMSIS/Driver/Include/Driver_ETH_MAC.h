@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,16 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        30. May 2014
- * $Revision:    V2.01
+ * $Date:        2. Feb 2017
+ * $Revision:    V2.1
  *
  * Project:      Ethernet MAC (Media Access Control) Driver definitions
  */
 
 /* History:
- *  Version 2.01
+ *  Version 2.1
  *    Added ARM_ETH_MAC_SLEEP Control
- *  Version 2.00
+ *  Version 2.0
  *    Changed MAC Address handling:
  *      moved from ARM_ETH_MAC_Initialize
  *      to new functions ARM_ETH_MAC_GetMacAddress and ARM_ETH_MAC_SetMacAddress
@@ -59,7 +59,7 @@ extern "C"
 
 #include "Driver_ETH.h"
 
-#define ARM_ETH_MAC_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,01)  /* API version */
+#define ARM_ETH_MAC_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,1)  /* API version */
 
 
 #define _ARM_Driver_ETH_MAC_(n)      Driver_ETH_MAC##n
@@ -274,6 +274,7 @@ typedef struct _ARM_ETH_MAC_CAPABILITIES {
   uint32_t event_tx_frame           : 1;        ///< 1 = callback event \ref ARM_ETH_MAC_EVENT_TX_FRAME generated
   uint32_t event_wakeup             : 1;        ///< 1 = wakeup event \ref ARM_ETH_MAC_EVENT_WAKEUP generated
   uint32_t precision_timer          : 1;        ///< 1 = Precision Timer supported
+  uint32_t reserved                 : 15;
 } ARM_ETH_MAC_CAPABILITIES;
 
 

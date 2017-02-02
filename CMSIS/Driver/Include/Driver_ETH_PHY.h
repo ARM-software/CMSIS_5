@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,14 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        7. Mar 2014
- * $Revision:    V2.00
+ * $Date:        2. Feb 2017
+ * $Revision:    V2.1
  *
  * Project:      Ethernet PHY (Physical Transceiver) Driver definitions
  */
 
 /* History:
- *  Version 2.00
+ *  Version 2.1
+ *    ARM_ETH_LINK_INFO made volatile
+ *  Version 2.0
  *    changed parameter "mode" in function ARM_ETH_PHY_SetMode
  *    Changed prefix ARM_DRV -> ARM_DRIVER
  *    Changed return values of some functions to int32_t
@@ -42,7 +44,7 @@ extern "C"
 
 #include "Driver_ETH.h"
 
-#define ARM_ETH_PHY_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,00)  /* API version */
+#define ARM_ETH_PHY_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,1)  /* API version */
 
 
 #define _ARM_Driver_ETH_PHY_(n)      Driver_ETH_PHY##n

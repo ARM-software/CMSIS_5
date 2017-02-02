@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,16 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        30. May 2014
- * $Revision:    V2.01
+ * $Date:        2. Feb 2017
+ * $Revision:    V2.2
  *
  * Project:      NAND Flash Driver definitions
  */
 
 /* History:
- *  Version 2.01
+ *  Version 2.2
+ *    ARM_NAND_STATUS made volatile
+ *  Version 2.1
  *    Updated ARM_NAND_ECC_INFO structure and ARM_NAND_ECC_xxx definitions
- *  Version 2.00
+ *  Version 2.0
  *    New simplified driver:
  *      complexity moved to upper layer (command agnostic)
  *    Added support for:
@@ -49,7 +51,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_NAND_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,01)  /* API version */
+#define ARM_NAND_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,2)  /* API version */
 
 
 /****** NAND Device Power *****/
@@ -188,9 +190,10 @@ typedef struct _ARM_NAND_ECC_INFO {
 /**
 \brief NAND Status
 */
-typedef struct _ARM_NAND_STATUS {
+typedef volatile struct _ARM_NAND_STATUS {
   uint32_t busy      : 1;               ///< Driver busy flag
   uint32_t ecc_error : 1;               ///< ECC error detected (cleared on next Read/WriteData or ExecuteSequence)
+  uint32_t reserved  : 30;
 } ARM_NAND_STATUS;
 
 
@@ -372,6 +375,7 @@ typedef struct _ARM_NAND_CAPABILITIES {
   uint32_t driver_strength_18  : 1;     ///< Supports Driver Strength 2.0x = 18 Ohms
   uint32_t driver_strength_25  : 1;     ///< Supports Driver Strength 1.4x = 25 Ohms
   uint32_t driver_strength_50  : 1;     ///< Supports Driver Strength 0.7x = 50 Ohms
+  uint32_t reserved            : 2;
 } ARM_NAND_CAPABILITIES;
 
 

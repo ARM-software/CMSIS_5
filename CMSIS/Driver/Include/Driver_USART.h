@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,19 +15,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        24. Nov 2014
- * $Revision:    V2.02
+ * $Date:        2. Feb 2017
+ * $Revision:    V2.3
  *
  * Project:      USART (Universal Synchronous Asynchronous Receiver Transmitter)
  *               Driver definitions
  */
 
 /* History:
- *  Version 2.02
+ *  Version 2.3
+ *    ARM_USART_STATUS and ARM_USART_MODEM_STATUS made volatile
+ *  Version 2.2
  *    Corrected ARM_USART_CPOL_Pos and ARM_USART_CPHA_Pos definitions 
- *  Version 2.01
+ *  Version 2.1
  *    Removed optional argument parameter from Signal Event
- *  Version 2.00
+ *  Version 2.0
  *    New simplified driver:
  *      complexity moved to upper layer (especially data handling)
  *      more unified API for different communication interfaces
@@ -60,7 +62,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_USART_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,02)  /* API version */
+#define ARM_USART_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,3)  /* API version */
 
 
 /****** USART Control Codes *****/
@@ -150,7 +152,7 @@ extern "C"
 /**
 \brief USART Status
 */
-typedef struct _ARM_USART_STATUS {
+typedef volatile struct _ARM_USART_STATUS {
   uint32_t tx_busy          : 1;        ///< Transmitter busy flag
   uint32_t rx_busy          : 1;        ///< Receiver busy flag
   uint32_t tx_underflow     : 1;        ///< Transmit data underflow detected (cleared on start of next send operation)
@@ -158,6 +160,7 @@ typedef struct _ARM_USART_STATUS {
   uint32_t rx_break         : 1;        ///< Break detected on receive (cleared on start of next receive operation)
   uint32_t rx_framing_error : 1;        ///< Framing error detected on receive (cleared on start of next receive operation)
   uint32_t rx_parity_error  : 1;        ///< Parity error detected on receive (cleared on start of next receive operation)
+  uint32_t reserved         : 25;
 } ARM_USART_STATUS;
 
 /**
@@ -173,11 +176,12 @@ typedef enum _ARM_USART_MODEM_CONTROL {
 /**
 \brief USART Modem Status
 */
-typedef struct _ARM_USART_MODEM_STATUS {
-  uint32_t cts : 1;                     ///< CTS state: 1=Active, 0=Inactive
-  uint32_t dsr : 1;                     ///< DSR state: 1=Active, 0=Inactive
-  uint32_t dcd : 1;                     ///< DCD state: 1=Active, 0=Inactive
-  uint32_t ri  : 1;                     ///< RI  state: 1=Active, 0=Inactive
+typedef volatile struct _ARM_USART_MODEM_STATUS {
+  uint32_t cts      : 1;                ///< CTS state: 1=Active, 0=Inactive
+  uint32_t dsr      : 1;                ///< DSR state: 1=Active, 0=Inactive
+  uint32_t dcd      : 1;                ///< DCD state: 1=Active, 0=Inactive
+  uint32_t ri       : 1;                ///< RI  state: 1=Active, 0=Inactive
+  uint32_t reserved : 28;
 } ARM_USART_MODEM_STATUS;
 
 
@@ -304,6 +308,7 @@ typedef struct _ARM_USART_CAPABILITIES {
   uint32_t event_dsr          : 1;      ///< Signal DSR change event: \ref ARM_USART_EVENT_DSR
   uint32_t event_dcd          : 1;      ///< Signal DCD change event: \ref ARM_USART_EVENT_DCD
   uint32_t event_ri           : 1;      ///< Signal RI change event: \ref ARM_USART_EVENT_RI
+  uint32_t reserved           : 11;
 } ARM_USART_CAPABILITIES;
 
 

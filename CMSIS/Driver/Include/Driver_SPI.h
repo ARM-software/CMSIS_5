@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,16 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        17. Apr 2014
- * $Revision:    V2.01
+ * $Date:        2. Feb 2017
+ * $Revision:    V2.2
  *
  * Project:      SPI (Serial Peripheral Interface) Driver definitions
  */
 
 /* History:
- *  Version 2.01
+ *  Version 2.2
+ *    ARM_SPI_STATUS made volatile
+ *  Version 2.1
  *    Renamed status flag "tx_rx_busy" to "busy"
- *  Version 2.00
+ *  Version 2.0
  *    New simplified driver:
  *      complexity moved to upper layer (especially data handling)
  *      more unified API for different communication interfaces
@@ -52,7 +54,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_SPI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,01)  /* API version */
+#define ARM_SPI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,2)  /* API version */
 
 
 /****** SPI Control Codes *****/
@@ -125,10 +127,11 @@ extern "C"
 /**
 \brief SPI Status
 */
-typedef struct _ARM_SPI_STATUS {
+typedef volatile struct _ARM_SPI_STATUS {
   uint32_t busy       : 1;              ///< Transmitter/Receiver busy flag
   uint32_t data_lost  : 1;              ///< Data lost: Receive overflow / Transmit underflow (cleared on start of transfer operation)
   uint32_t mode_fault : 1;              ///< Mode fault detected; optional (cleared on start of transfer operation)
+  uint32_t reserved   : 29;
 } ARM_SPI_STATUS;
 
 
@@ -214,6 +217,7 @@ typedef struct _ARM_SPI_CAPABILITIES {
   uint32_t ti_ssi           : 1;        ///< supports TI Synchronous Serial Interface
   uint32_t microwire        : 1;        ///< supports Microwire Interface
   uint32_t event_mode_fault : 1;        ///< Signal Mode Fault event: \ref ARM_SPI_EVENT_MODE_FAULT
+  uint32_t reserved         : 28;
 } ARM_SPI_CAPABILITIES;
 
 

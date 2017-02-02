@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -14,14 +14,21 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+  *
+ * $Date:        2. Feb 2017
+ * $Revision:    V2.2
+ *
+ * Project:      USB Host Driver definitions
+*/
 
 /* History:
- *  Version 2.01
+ *  Version 2.2
+ *    ARM_USBH_PORT_STATE made volatile
+ *  Version 2.1
  *    Renamed structure ARM_USBH_EP_HANDLE to ARM_USBH_PIPE_HANDLE
  *    Renamed functions ARM_USBH_Endpoint... to ARM_USBH_Pipe...
  *    Renamed function ARM_USBH_SignalEndpointEvent to ARM_USBH_SignalPipeEvent
- *  Version 2.00
+ *  Version 2.0
  *    Replaced function ARM_USBH_PortPowerOnOff with ARM_USBH_PortVbusOnOff
  *    Changed function ARM_USBH_EndpointCreate parameters
  *    Replaced function ARM_USBH_EndpointConfigure with ARM_USBH_EndpointModify
@@ -49,16 +56,17 @@ extern "C"
 
 #include "Driver_USB.h"
 
-#define ARM_USBH_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,01)  /* API version */
+#define ARM_USBH_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,2)  /* API version */
 
 
 /**
 \brief USB Host Port State
 */
-typedef struct _ARM_USBH_PORT_STATE {
+typedef volatile struct _ARM_USBH_PORT_STATE {
   uint32_t connected   : 1;             ///< USB Host Port connected flag
   uint32_t overcurrent : 1;             ///< USB Host Port overcurrent flag
   uint32_t speed       : 2;             ///< USB Host Port speed setting (ARM_USB_SPEED_xxx)
+  uint32_t reserved    : 28;
 } ARM_USBH_PORT_STATE;
 
 /**
@@ -285,6 +293,7 @@ typedef struct _ARM_USBH_CAPABILITIES {
   uint32_t event_connect      :  1;     ///< Signal Connect event
   uint32_t event_disconnect   :  1;     ///< Signal Disconnect event
   uint32_t event_overcurrent  :  1;     ///< Signal Overcurrent event
+  uint32_t reserved           : 13;
 } ARM_USBH_CAPABILITIES;
 
 
@@ -383,6 +392,7 @@ typedef void (*ARM_USBH_HCI_Interrupt_t) (void);  ///< Pointer to Interrupt Hand
 */
 typedef struct _ARM_USBH_HCI_CAPABILITIES {
   uint32_t port_mask : 15;              ///< Root HUB available Ports Mask
+  uint32_t reserved  : 17;
 } ARM_USBH_HCI_CAPABILITIES;
 
 

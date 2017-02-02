@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,14 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        9. Dec 2014
- * $Revision:    V1.00
+ * $Date:        2. Feb 2017
+ * $Revision:    V1.1
  *
  * Project:      SAI (Serial Audio Interface) Driver definitions
  */
 
 /* History:
- *  Version 1.00
+ *  Version 1.1
+ *    ARM_SAI_STATUS made volatile
+ *  Version 1.0
  *    Initial release
  */
 
@@ -36,7 +38,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_SAI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,00)  /* API version */
+#define ARM_SAI_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,1)  /* API version */
 
 
 /****** SAI Control Codes *****/
@@ -181,12 +183,13 @@ extern "C"
 /**
 \brief SAI Status
 */
-typedef struct _ARM_SAI_STATUS {
+typedef volatile struct _ARM_SAI_STATUS {
   uint32_t tx_busy          : 1;        ///< Transmitter busy flag
   uint32_t rx_busy          : 1;        ///< Receiver busy flag
   uint32_t tx_underflow     : 1;        ///< Transmit data underflow detected (cleared on start of next send operation)
   uint32_t rx_overflow      : 1;        ///< Receive data overflow detected (cleared on start of next receive operation)
   uint32_t frame_error      : 1;        ///< Sync Frame error detected (cleared on start of next send/receive operation)
+  uint32_t reserved         : 27;
 } ARM_SAI_STATUS;
 
 
@@ -277,6 +280,7 @@ typedef struct _ARM_SAI_CAPABILITIES {
   uint32_t companding            : 1;   ///< supports Companding
   uint32_t mclk_pin              : 1;   ///< supports MCLK (Master Clock) pin
   uint32_t event_frame_error     : 1;   ///< supports Frame error event: \ref ARM_SAI_EVENT_FRAME_ERROR
+  uint32_t reserved              : 21;
 } ARM_SAI_CAPABILITIES;
 
 

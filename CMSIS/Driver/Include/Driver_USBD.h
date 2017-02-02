@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,16 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        3. Jun 2014
- * $Revision:    V2.01
+ * $Date:        2. Feb 2017
+ * $Revision:    V2.2
  *
  * Project:      USB Device Driver definitions
  */
 
 /* History:
- *  Version 2.01
+ *  Version 2.2
+ *    ARM_USBD_STATE made volatile
+ *  Version 2.1
  *    Added ARM_USBD_ReadSetupPacket function
- *  Version 2.00
+ *  Version 2.0
  *    Removed ARM_USBD_DeviceConfigure function
  *    Removed ARM_USBD_SET_ADDRESS_STAGE parameter from ARM_USBD_DeviceSetAddress function
  *    Removed ARM_USBD_EndpointReadStart function
@@ -49,16 +51,17 @@ extern "C"
 
 #include "Driver_USB.h"
 
-#define ARM_USBD_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,01)  /* API version */
+#define ARM_USBD_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,2)  /* API version */
 
 
 /**
 \brief USB Device State
 */
-typedef struct _ARM_USBD_STATE {
-  uint32_t vbus   : 1;                  ///< USB Device VBUS flag
-  uint32_t speed  : 2;                  ///< USB Device speed setting (ARM_USB_SPEED_xxx)
-  uint32_t active : 1;                  ///< USB Device active flag
+typedef volatile struct _ARM_USBD_STATE {
+  uint32_t vbus     : 1;                ///< USB Device VBUS flag
+  uint32_t speed    : 2;                ///< USB Device speed setting (ARM_USB_SPEED_xxx)
+  uint32_t active   : 1;                ///< USB Device active flag
+  uint32_t reserved : 28;
 } ARM_USBD_STATE;
 
 
@@ -230,6 +233,7 @@ typedef struct _ARM_USBD_CAPABILITIES {
   uint32_t vbus_detection  : 1;         ///< VBUS detection
   uint32_t event_vbus_on   : 1;         ///< Signal VBUS On event
   uint32_t event_vbus_off  : 1;         ///< Signal VBUS Off event
+  uint32_t reserved        : 29;
 } ARM_USBD_CAPABILITIES;
 
 

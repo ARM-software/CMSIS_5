@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2015-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,14 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        7. December 2015
- * $Revision:    V1.00
+ * $Date:        2. Feb 2017
+ * $Revision:    V1.1
  *
  * Project:      CAN (Controller Area Network) Driver definitions
  */
 
 /* History:
- *  Version 1.00
+ *  Version 1.1
+ *    ARM_CAN_STATUS made volatile
+ *  Version 1.0
  *    Initial release
  */
 
@@ -36,7 +38,7 @@ extern "C"
 
 #include "Driver_Common.h"
 
-#define ARM_CAN_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,0)/* API version */
+#define ARM_CAN_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,1)  /* API version */
 
 
 /****** CAN Bitrate selection codes *****/
@@ -107,6 +109,7 @@ typedef struct _ARM_CAN_OBJ_CAPABILITIES {
   uint32_t range_filtering  : 1;        ///< Object supports range identifier filtering
   uint32_t mask_filtering   : 1;        ///< Object supports mask identifier filtering
   uint32_t message_depth    : 8;        ///< Number of messages buffers (FIFO) for that object
+  uint32_t reserved         : 16;
 } ARM_CAN_OBJ_CAPABILITIES;
 
 /****** CAN Control Function Operation codes *****/
@@ -135,6 +138,7 @@ typedef struct _ARM_CAN_MSG_INFO {
   uint32_t brs              : 1;        ///< Flexible data-rate format with bitrate switch 
   uint32_t esi              : 1;        ///< Flexible data-rate format error state indicator
   uint32_t dlc              : 4;        ///< Data length code
+  uint32_t reserved         : 24;
 } ARM_CAN_MSG_INFO;
 
 /****** CAN specific error code *****/
@@ -155,16 +159,17 @@ typedef struct _ARM_CAN_MSG_INFO {
 #define ARM_CAN_LEC_STUFF_ERROR        (2U)             ///< Last error code: Bit stuffing error
 #define ARM_CAN_LEC_CRC_ERROR          (3U)             ///< Last error code: CRC error
 #define ARM_CAN_LEC_FORM_ERROR         (4U)             ///< Last error code: Illegal fixed-form bit
-#define ARM_CAN_LEC_ACK_ERROR          (5U)             ///< Last error code: Acknowledgement error
+#define ARM_CAN_LEC_ACK_ERROR          (5U)             ///< Last error code: Acknowledgment error
 
 /**
 \brief CAN Status
 */
-typedef struct _ARM_CAN_STATUS {
+typedef volatile struct _ARM_CAN_STATUS {
   uint32_t unit_state       : 4;        ///< Unit bus state
   uint32_t last_error_code  : 4;        ///< Last error code
   uint32_t tx_error_count   : 8;        ///< Transmitter error count
   uint32_t rx_error_count   : 8;        ///< Receiver error count
+  uint32_t reserved         : 8;
 } ARM_CAN_STATUS;
 
 
@@ -326,6 +331,7 @@ typedef struct _ARM_CAN_CAPABILITIES {
   uint32_t monitor_mode           : 1;  ///< Support for bus monitoring mode (set by \ref ARM_CAN_SetMode)
   uint32_t internal_loopback      : 1;  ///< Support for internal loopback mode (set by \ref ARM_CAN_SetMode)
   uint32_t external_loopback      : 1;  ///< Support for external loopback mode (set by \ref ARM_CAN_SetMode)
+  uint32_t reserved               : 18;
 } ARM_CAN_CAPABILITIES;
 
 
