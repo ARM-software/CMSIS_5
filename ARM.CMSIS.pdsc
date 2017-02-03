@@ -8,42 +8,22 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.0.1-dev6">
-      DSP:
-       - updated to version V1.5.1.
-       - changed copyrigth note.
-       - added ARMv8M DSP libraries.
-       PACK:
-       - added taxonomy for Cclass RTOS
-    </release>
-    <release version="5.0.1-dev5">
-      DSP:
-       - updated to version V1.5.0.
-    </release>
-    <release version="5.0.1-dev4">
-      DSP:
-       - preparation for ARMv8M DSP libraries.
-    </release>
-    <release version="5.0.1-dev3">
-      Updated ARMv8M Mainline FPU settings in partition*.h
-    </release>
-    <release version="5.0.1-dev2">
+    <release version="5.0.1" date="2017-02-03">
+      Package Description:
+      - added taxonomy for Cclass RTOS
       CMSIS-RTOS2:
-       - API 2.1   (see revision history for details)
-       - RTX 5.1.0 (see revision history for details)
-    </release>
-    <release version="5.0.1-dev1">
-      All C module and header files: updated removing 'http://' within license header sections flagged by MISRA as comment within comment
-      PDSC: added new compatible devices to 'uVision Simulator' generic board description
-      CMSIS-Pack Schema: adding
-    </release>
-    <release version="5.0.1-dev0">
-      CMSIS-Core:
-       - Updated cmsis_armcc.h: corrected macro __ARM_ARCH_6M__
-       - Updated template for secure main function (main_s.c)
-       - Updated template for Context Management for ARMv8-M TrustZone (tz_context.c)
-      CMSIS-RTOS2:
-       - RTX 5.0.1 (see revision history for details)
+      - API 2.1   (see revision history for details)
+      - RTX 5.1.0 (see revision history for details)
+      CMSIS-Core: 5.0.1 (see revision history for details)
+      - Added __PACKED_STRUCT macro
+      - Added uVisior support
+      - Updated cmsis_armcc.h: corrected macro __ARM_ARCH_6M__
+      - Updated template for secure main function (main_s.c)
+      - Updated template for Context Management for ARMv8-M TrustZone (tz_context.c)
+      CMSIS-DSP: 1.5.1 (see revision history for details)
+      - added ARMv8M DSP libraries.
+      CMSIS-PACK:1.4.9 (see revision history for details)
+      - added Pack Index File specification and schema file
     </release>
     <release version="5.0.0" date="2016-11-11">
       Changed open source license to Apache 2.0

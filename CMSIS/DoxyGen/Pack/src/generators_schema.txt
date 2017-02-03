@@ -46,39 +46,60 @@ generated and included and maintained as part of the project.
 \code{.xml}
 <?xml version="1.0" encoding="UTF-8"?>
 
-<package schemaVersion="1.4" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PACK.xsd">
+<package xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="1.0" xs:noNamespaceSchemaLocation="PACK.xsd">
   <vendor>Keil</vendor>
-  <name>MDK-Middleware</name>
-  <description>Middleware for Keil MDK-Professional and MDK-Plus</description>
-  <!-- web download link -->
-  <url>http://www.keil.com/pack/</url>
+  <name>FrameworkCubeMX</name>
+  <description>STM32CubeMX generated pack description</description>
+  <url>project-path</url>
   <releases>
     <release version="1.0.0">
-      Initial release
+     - Generated: 08/11/2016 09:20:21
     </release>
   </releases>
   <generators>
-    <generator id = "MyGen">
-      <gpdsc name ="$P/RTE/MyGen/myGen.gpdsc"/>
+    <generator id="STM32CubeMX" Gvendor="STMicroelectronics" Gtool="STM32CubeMX" Gversion="4.10.0">
+      <description>STM32CubeMX Environment</description>
+      <select Dname="STM32F746NGHx" Dvendor="STMicroelectronics:13"/>
       <exe>
-        <command host = "win">MyGen.bat</command>
-        <command host = "linux">MyGen.script</command>
+        <command host = "win">$SMDK/CubeMX/STM32CubeMXLauncher.exe</command>
+        <command host = "linux">$SMDK/CubeMX/STM32CubeMXLauncher</command>
         <argument>$P/RTE/MyGen/myGen.gpdsc</argument>
-        <argument host="linux" switch="--device=">#D</argument>
-        <argument host="win" switch="/device=">#D</argument>
-        </exe>
- 
-      <eclipse plugin="com.mygen.plugin" class="com.mygen.plugin.generator.launcher" method="launch" >
-        <argument>#D</argument>
-        <argument>$P/RTE/MyGen/myGen.gpdsc</argument>
-      </eclipse>
- 
-      <web url="http://mygen.com/mygen">
-        <argument  switch="device">#D</argument>
-        <argument  switch="gpdsc">$P/RTE/MyGen/myGen.gpdsc</argument>
-      </web>
+        <argument>#D.ioc</argument>
+      </exe>
+      <workingDir>$PRTE/Device/STM32F746NGHx</workingDir>
+      <project_files>
+        <file category="source" name="STCubeGenerated/Src/main.c" />
+        <file category="header" name="STCubeGenerated/Inc/stm32f7xx_it.h"/>
+        <file category="source" name="STCubeGenerated/Src/stm32f7xx_it.c"/>
+      </project_files>
     </generator>
   </generators>
+  <taxonomy>
+    <description Cclass="Device" Cgroup="STM32Cube Framework" generator="STM32CubeMX">STM32Cube Framework</description>
+  </taxonomy>
+  <conditions>
+    <condition id="STCubeMX">
+      <description>Condition to include CMSIS core and Device Startup components</description>
+      <require Dvendor="STMicroelectronics:13" Dname="STM32F7*"/>
+      <require Cclass="CMSIS"  Cgroup="CORE"          Csub=""/>
+      <require Cclass="Device" Cgroup="Startup"/>
+      <require Cclass="Device" Cgroup="STM32Cube HAL" Csub="Common"/>
+      <require Cclass="Device" Cgroup="STM32Cube HAL" Csub="GPIO"/>
+    </condition>
+  </conditions>
+  <components>
+    <component generator="STM32CubeMX" Cvendor="Keil" Cclass="Device" Cgroup="STM32Cube Framework" Csub="STM32CubeMX" Cversion="1.0.0" condition="STCubeMX">
+      <description>Configuration via STM32CubeMX</description>
+      <RTE_Components_h>
+        #define RTE_DEVICE_FRAMEWORK_CUBE_MX
+      </RTE_Components_h>
+      <files>
+        <file category="header" name="MX_Device.h"/>
+        <file category="header" name="STCubeGenerated/Inc/stm32f7xx_hal_conf.h"/>
+        <file category="source" name="STCubeGenerated/Src/stm32f7xx_hal_msp.c"/>
+      </files>
+    </component>
+  </components>
 </package>
 \endcode
 <p>&nbsp;</p>		
