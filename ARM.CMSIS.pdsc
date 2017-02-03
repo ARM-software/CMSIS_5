@@ -1699,7 +1699,7 @@ ARMv8-M Mainline based device with TrustZone
 
   <components>
     <!-- CMSIS-Core component -->
-    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.0.0"  condition="ARMv6_7_8-M Device" >
+    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.0.1"  condition="ARMv6_7_8-M Device" >
       <description>CMSIS-CORE for Cortex-M, SC000, SC300, ARMv8-M</description>
       <files>
         <!-- CPU independent -->
