@@ -184,6 +184,17 @@ In addition, each CMSIS component has its own release history:
       <th>Description</th>
     </tr>
     <tr>
+      <td>5.0.1</td>
+      <td>
+        - CMSIS-Core 5.0.1 added __PACKED_STRUCT macro and uVisor support
+        - CMSIS-Driver 2.05 updated all typedefs related to status now being volatile.
+        - CMSIS-DSP 1.5.1 added ARMv8M DSP libraries
+        - CMSIS-RTOS 2.1.0 added support for critical and uncritical sections
+        - CMSIS-PACK 1.4.8 add Pack Index File specification
+        - CMSIS-SVD 1.3.3 (unchanged)
+        - CMSIS-DAP 1.1.0 (unchanged)     
+      </td>
+    <tr>
       <td>5.0.0</td>
       <td>
         Added support for: <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>ARMv8-M architecture</b></a> including TrustZone for ARMv8-M and Cortex-M23, Cortex-M33 processors
