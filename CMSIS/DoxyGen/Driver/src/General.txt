@@ -61,10 +61,17 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
       <th>Description</th>
     </tr>
     <tr>
+      <td>2.05</td>
+      <td>Modifications compared to Version 2.04:
+ - Changed: All typedefs related to status have been made volatile. 
+      </td>
+    </tr>
+    <tr>
       <td>2.04</td>
       <td>Modifications compared to Version 2.03:
  - Added: template files for CAN interface driver.
       </td>
+    </tr>
     <tr>
       <td>2.03</td>
       <td>Modifications compared to Version 2.02:
