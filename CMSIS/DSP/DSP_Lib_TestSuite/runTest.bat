@@ -1,8 +1,6 @@
 @echo off
 
-SET TMP=C:\Temp
-SET TEMP=C:\Temp
-SET UVEXE=C:\Keil\UV4\UV4.EXE
+set UVEXE=C:\Keil_v5\UV4\UV4.EXE
 
 if .%1==. goto help
 for %%a in (ARM GCC) do if %1==%%a goto checkParam2

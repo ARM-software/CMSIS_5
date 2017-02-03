@@ -8,7 +8,7 @@
   <Extensions>
     <cExt>*.c</cExt>
     <aExt>*.s*; *.src; *.a*</aExt>
-    <oExt>*.obj</oExt>
+    <oExt>*.obj; *.o</oExt>
     <lExt>*.lib</lExt>
     <tExt>*.txt; *.h; *.inc</tExt>
     <pExt>*.plm</pExt>
@@ -81,20 +81,20 @@
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
+        <sRbox>1</sRbox>
         <tLdApp>0</tLdApp>
         <tGomain>0</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
@@ -117,11 +117,6 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M0_MDK" -L"armcortexm0ct" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M0_MDK.exe" -MF -MA</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>ARMRTXEVENTFLAGS</Key>
           <Name>-L70 -Z18 -C0 -M0 -T1</Name>
         </SetRegEntry>
@@ -132,28 +127,23 @@
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DLGUARM</Key>
+          <Key>ARMDBGFLAGS</Key>
           <Name></Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O143 -S8 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(0BA01477) -L00(4) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
+          <Key>DLGUARM</Key>
+          <Name>(105=-1,-1,-1,-1,0)(106=-1,-1,-1,-1,0)(107=-1,-1,-1,-1,0)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DbgFM</Key>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M0_MDK" -L"armcortexm0ct" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M0_MDK.exe" -MF -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>-U -O142 -S0 -C0 -P00 -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -162,7 +152,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
+        <periodic>0</periodic>
         <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -189,11 +179,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -257,20 +248,20 @@
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
+        <sRbox>1</sRbox>
         <tLdApp>0</tLdApp>
         <tGomain>0</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
@@ -298,38 +289,8 @@
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>ARMRTXEVENTFLAGS</Key>
-          <Name>-L70 -Z18 -C0 -M0 -T1</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGUARM</Key>
-          <Name></Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>-U -O142 -S0 -C0 -P00 -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -338,13 +299,13 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
-        <aLwin>1</aLwin>
+        <periodic>0</periodic>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
         <aPa>0</aPa>
-        <viewmode>1</viewmode>
+        <viewmode>0</viewmode>
         <vrSel>0</vrSel>
         <aSym>0</aSym>
         <aTbox>0</aTbox>
@@ -365,11 +326,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -433,20 +395,20 @@
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
+        <sRbox>1</sRbox>
         <tLdApp>0</tLdApp>
         <tGomain>0</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
@@ -474,38 +436,8 @@
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>ARMRTXEVENTFLAGS</Key>
-          <Name>-L70 -Z18 -C0 -M0 -T1</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGUARM</Key>
-          <Name></Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>-U -O142 -S0 -C0 -P00 -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=312,196,546,733,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -514,13 +446,13 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
-        <aLwin>1</aLwin>
+        <periodic>0</periodic>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
         <aPa>0</aPa>
-        <viewmode>1</viewmode>
+        <viewmode>0</viewmode>
         <vrSel>0</vrSel>
         <aSym>0</aSym>
         <aTbox>0</aTbox>
@@ -541,11 +473,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -609,20 +542,20 @@
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
+        <sRbox>1</sRbox>
         <tLdApp>0</tLdApp>
         <tGomain>0</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
@@ -645,16 +578,6 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M4_MDK" -L"armcortexm4ct" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M4_MDK.exe" -MF -MA</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>ARMRTXEVENTFLAGS</Key>
           <Name>-L70 -Z18 -C0 -M0 -T1</Name>
         </SetRegEntry>
@@ -665,23 +588,23 @@
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DLGUARM</Key>
+          <Key>ARMDBGFLAGS</Key>
           <Name></Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>DLGUARM</Key>
+          <Name>(105=-1,-1,-1,-1,0)(106=-1,-1,-1,-1,0)(107=-1,-1,-1,-1,0)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DbgFM</Key>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M4_MDK" -L"armcortexm4ct" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M4_MDK.exe" -MF -MA</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>-UV0998FBE -O142 -S9 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(4BA00477) -L00(4) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=2393,275,2627,812,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -690,7 +613,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
+        <periodic>0</periodic>
         <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -717,11 +640,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -785,20 +709,20 @@
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
+        <sRbox>1</sRbox>
         <tLdApp>0</tLdApp>
         <tGomain>0</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
@@ -821,43 +745,33 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M7_MDK" -L"armcortexm7ct" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M7_MDK.exe" -MF -MA</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>ARMRTXEVENTFLAGS</Key>
           <Name>-L70 -Z18 -C0 -M0 -T1</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGUARM</Key>
-          <Name></Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(5BA02477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>-U -O142 -S0 -C0 -P00 -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=312,196,546,733,0)(1012=-1,-1,-1,-1,0)</Name>
+          <Name>(1010=-1,-1,-1,-1,0)(6017=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(6016=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
+          <Name></Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DLGUARM</Key>
+          <Name>(105=-1,-1,-1,-1,0)(106=-1,-1,-1,-1,0)(107=-1,-1,-1,-1,0)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DbgFM</Key>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M7_MDK" -L"armcortexm7ct" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M7_MDK.exe" -MF -MA</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>UL2CM3</Key>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -866,7 +780,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
+        <periodic>0</periodic>
         <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -893,11 +807,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -961,20 +876,20 @@
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
+        <sRbox>1</sRbox>
         <tLdApp>0</tLdApp>
         <tGomain>0</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
@@ -997,43 +912,33 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M7_MDK" -L"armcortexm7ct" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M7_MDK.exe" -MF -MA</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(5BA02477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGUARM</Key>
-          <Name></Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>ARMRTXEVENTFLAGS</Key>
           <Name>-L70 -Z18 -C0 -M0 -T1</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>-UV0998FBE -O143 -S9 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(0BA02477) -L00(4) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=2586,155,2996,701,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=2393,275,2627,812,0)(1012=-1,-1,-1,-1,0)</Name>
+          <Key>DLGTARM</Key>
+          <Name>(1010=-1,-1,-1,-1,0)(6017=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(6016=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
+          <Name></Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DLGUARM</Key>
+          <Name>(105=-1,-1,-1,-1,0)(106=-1,-1,-1,-1,0)(107=-1,-1,-1,-1,0)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DbgFM</Key>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M7_MDK" -L"armcortexm7ct" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M7_MDK.exe" -MF -MA</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>UL2CM3</Key>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -1042,7 +947,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
+        <periodic>0</periodic>
         <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -1069,11 +974,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -1137,20 +1043,20 @@
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
+        <sRbox>1</sRbox>
         <tLdApp>0</tLdApp>
         <tGomain>0</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
@@ -1178,38 +1084,8 @@
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMRTXEVENTFLAGS</Key>
-          <Name>-L70 -Z18 -C0 -M0 -T1</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=2313,171,2547,708,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGUARM</Key>
-          <Name></Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>-UV0998FBE -O206 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=2393,275,2627,812,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -1218,13 +1094,13 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
-        <aLwin>1</aLwin>
+        <periodic>0</periodic>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
         <aPa>0</aPa>
-        <viewmode>1</viewmode>
+        <viewmode>0</viewmode>
         <vrSel>0</vrSel>
         <aSym>0</aSym>
         <aTbox>0</aTbox>
@@ -1245,11 +1121,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -1313,20 +1190,20 @@
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
+        <sRbox>1</sRbox>
         <tLdApp>0</tLdApp>
-        <tGomain>1</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <tGomain>0</tGomain>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
@@ -1349,28 +1226,13 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DbgFMv8M</Key>
-          <Name>-I -S -L"cpu0" -O4102 -C0 -MC".\FVP\MPS2_AEMv8M\FVP_MPS2_AEMv8M_MDK.exe" -MF"..\ARMv8MBL_config.txt" -MA</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0  -FC1000 -FD20000000</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMRTXEVENTFLAGS</Key>
-          <Name>-L70 -Z18 -C0 -M0 -T1</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>DLGTARM</Key>
           <Name>(6010=-1,-1,-1,-1,0)(6018=-1,-1,-1,-1,0)(6019=-1,-1,-1,-1,0)(6008=-1,-1,-1,-1,0)(6009=-1,-1,-1,-1,0)(6014=-1,-1,-1,-1,0)(6015=-1,-1,-1,-1,0)(6003=-1,-1,-1,-1,0)(6000=-1,-1,-1,-1,0)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>ARMDBGFLAGS</Key>
+          <Name></Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -1379,18 +1241,13 @@
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>-UV0998FBE -O206 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
+          <Key>DbgFMv8M</Key>
+          <Name>-I -S -L"cpu0" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M23_MDK.exe" -MF"..\ARMCM23_config.txt" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=2393,275,2627,812,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
+          <Key>UL2V8M</Key>
+          <Name>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -1399,7 +1256,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
+        <periodic>0</periodic>
         <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -1426,11 +1283,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -1494,20 +1352,20 @@
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
+        <sRbox>1</sRbox>
         <tLdApp>0</tLdApp>
-        <tGomain>1</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <tGomain>0</tGomain>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
@@ -1531,47 +1389,12 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFMv8M</Key>
-          <Name>-I -S -L"cpu0" -O4102 -C0 -MC".\FVP\MPS2_AEMv8M\FVP_MPS2_AEMv8M_MDK.exe" -MF"..\ARMv8MML_config.txt" -MA</Name>
+          <Name>-I -S -L"cpu0" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M33_MDK.exe" -MF"..\ARMCM33_config.txt" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0  -FC1000 -FD20000000</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMRTXEVENTFLAGS</Key>
-          <Name>-L70 -Z18 -C0 -M0 -T1</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGTARM</Key>
-          <Name>(6010=-1,-1,-1,-1,0)(6018=-1,-1,-1,-1,0)(6019=-1,-1,-1,-1,0)(6008=-1,-1,-1,-1,0)(6009=-1,-1,-1,-1,0)(6014=-1,-1,-1,-1,0)(6015=-1,-1,-1,-1,0)(6003=-1,-1,-1,-1,0)(6000=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGUARM</Key>
-          <Name>(105=-1,-1,-1,-1,0)(106=-1,-1,-1,-1,0)(107=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>-UV0998FBE -O206 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=2393,275,2627,812,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
+          <Name>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -1580,13 +1403,13 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
-        <aLwin>1</aLwin>
+        <periodic>0</periodic>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
         <aPa>0</aPa>
-        <viewmode>1</viewmode>
+        <viewmode>0</viewmode>
         <vrSel>0</vrSel>
         <aSym>0</aSym>
         <aTbox>0</aTbox>
@@ -1607,11 +1430,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -1675,20 +1499,20 @@
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
+        <sRbox>1</sRbox>
         <tLdApp>0</tLdApp>
-        <tGomain>1</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <tGomain>0</tGomain>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
@@ -1711,28 +1535,13 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DbgFMv8M</Key>
-          <Name>-I -S -L"cpu0" -O4102 -C0 -MC".\FVP\MPS2_AEMv8M\FVP_MPS2_AEMv8M_MDK.exe" -MF"..\ARMv8MML_config.txt" -MA</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0  -FC1000 -FD20000000</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMRTXEVENTFLAGS</Key>
-          <Name>-L70 -Z18 -C0 -M0 -T1</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>DLGTARM</Key>
           <Name>(6010=-1,-1,-1,-1,0)(6018=-1,-1,-1,-1,0)(6019=-1,-1,-1,-1,0)(6008=-1,-1,-1,-1,0)(6009=-1,-1,-1,-1,0)(6014=-1,-1,-1,-1,0)(6015=-1,-1,-1,-1,0)(6003=-1,-1,-1,-1,0)(6000=-1,-1,-1,-1,0)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>ARMDBGFLAGS</Key>
+          <Name></Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -1741,18 +1550,13 @@
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>-UV0998FBE -O206 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
+          <Key>DbgFMv8M</Key>
+          <Name>-I -S -L"cpu0" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M33_MDK.exe" -MF"..\ARMCM33_FP_config.txt" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=2393,275,2627,812,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
+          <Key>UL2V8M</Key>
+          <Name>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -1761,7 +1565,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
+        <periodic>0</periodic>
         <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -1788,25 +1592,26 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
   <Target>
-    <TargetName>ARMv8MMLlfdp</TargetName>
+    <TargetName>ARMv8MMLlfdp.DoNotUse</TargetName>
     <ToolsetNumber>0x3</ToolsetNumber>
     <ToolsetName>ARM-GNU</ToolsetName>
     <TargetOption>
       <CLKARM>12000000</CLKARM>
       <OPTTT>
-        <gFlags>1</gFlags>
+        <gFlags>0</gFlags>
         <BeepAtEnd>1</BeepAtEnd>
-        <RunSim>0</RunSim>
-        <RunTarget>1</RunTarget>
+        <RunSim>1</RunSim>
+        <RunTarget>0</RunTarget>
         <RunAbUc>0</RunAbUc>
       </OPTTT>
       <OPTHX>
@@ -1848,35 +1653,35 @@
         <LExpSel>0</LExpSel>
       </OPTXL>
       <OPTFL>
-        <tvExp>1</tvExp>
+        <tvExp>0</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
       <CpuCode>7</CpuCode>
       <DebugOpt>
-        <uSim>0</uSim>
-        <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <uSim>1</uSim>
+        <uTrg>0</uTrg>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
-        <tLdApp>0</tLdApp>
-        <tGomain>1</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <sRbox>1</sRbox>
+        <tLdApp>1</tLdApp>
+        <tGomain>0</tGomain>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
         <bEvRecOn>1</bEvRecOn>
-        <nTsel>15</nTsel>
+        <nTsel>-1</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -1886,69 +1691,22 @@
         <tDllPa></tDllPa>
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
-        <tIfile>..\..\Common\JTest\jtest_FVP.ini</tIfile>
-        <pMon>BIN\DbgFMv8M.DLL</pMon>
+        <tIfile></tIfile>
+        <pMon></pMon>
       </DebugOpt>
-      <TargetDriverDllRegistry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DbgFMv8M</Key>
-          <Name>-I -S -L"cpu0" -O4102 -C0 -MC".\FVP\MPS2_AEMv8M\FVP_MPS2_AEMv8M_MDK.exe" -MF"..\ARMv8MML_config.txt" -MA</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0  -FC1000 -FD20000000</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMRTXEVENTFLAGS</Key>
-          <Name>-L70 -Z18 -C0 -M0 -T1</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGTARM</Key>
-          <Name>(6010=-1,-1,-1,-1,0)(6018=-1,-1,-1,-1,0)(6019=-1,-1,-1,-1,0)(6008=-1,-1,-1,-1,0)(6009=-1,-1,-1,-1,0)(6014=-1,-1,-1,-1,0)(6015=-1,-1,-1,-1,0)(6003=-1,-1,-1,-1,0)(6000=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGUARM</Key>
-          <Name>(105=-1,-1,-1,-1,0)(106=-1,-1,-1,-1,0)(107=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>-UV0998FBE -O206 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=2393,275,2627,812,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
-        </SetRegEntry>
-      </TargetDriverDllRegistry>
       <Breakpoint/>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
-        <aLwin>1</aLwin>
+        <periodic>0</periodic>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
         <aPa>0</aPa>
-        <viewmode>1</viewmode>
+        <viewmode>0</viewmode>
         <vrSel>0</vrSel>
         <aSym>0</aSym>
         <aTbox>0</aTbox>
@@ -1969,11 +1727,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -2037,20 +1796,20 @@
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
+        <sRbox>1</sRbox>
         <tLdApp>0</tLdApp>
-        <tGomain>1</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <tGomain>0</tGomain>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
@@ -2073,28 +1832,13 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DbgFMv8M</Key>
-          <Name>-I -S -L"cpu0" -O4102 -C0 -MC".\FVP\MPS2_AEMv8M\FVP_MPS2_AEMv8M_MDK.exe" -MF"..\ARMv8MML_config.txt" -MA</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0  -FC1000 -FD20000000</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMRTXEVENTFLAGS</Key>
-          <Name>-L70 -Z18 -C0 -M0 -T1</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>DLGTARM</Key>
           <Name>(6010=-1,-1,-1,-1,0)(6018=-1,-1,-1,-1,0)(6019=-1,-1,-1,-1,0)(6008=-1,-1,-1,-1,0)(6009=-1,-1,-1,-1,0)(6014=-1,-1,-1,-1,0)(6015=-1,-1,-1,-1,0)(6003=-1,-1,-1,-1,0)(6000=-1,-1,-1,-1,0)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>ARMDBGFLAGS</Key>
+          <Name></Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -2103,18 +1847,13 @@
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>-UV0998FBE -O206 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
+          <Key>DbgFMv8M</Key>
+          <Name>-I -S -L"cpu0" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M33_MDK.exe" -MF"..\ARMCM33_DSP_config.txt" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=2393,275,2627,812,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
+          <Key>UL2V8M</Key>
+          <Name>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -2123,7 +1862,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
+        <periodic>0</periodic>
         <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -2150,11 +1889,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -2218,20 +1958,20 @@
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
+        <sRbox>1</sRbox>
         <tLdApp>0</tLdApp>
-        <tGomain>1</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <tGomain>0</tGomain>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
@@ -2254,28 +1994,13 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DbgFMv8M</Key>
-          <Name>-I -S -L"cpu0" -O4102 -C0 -MC".\FVP\MPS2_AEMv8M\FVP_MPS2_AEMv8M_MDK.exe" -MF"..\ARMv8MML_config.txt" -MA</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0  -FC1000 -FD20000000</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMRTXEVENTFLAGS</Key>
-          <Name>-L70 -Z18 -C0 -M0 -T1</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>DLGTARM</Key>
           <Name>(6010=-1,-1,-1,-1,0)(6018=-1,-1,-1,-1,0)(6019=-1,-1,-1,-1,0)(6008=-1,-1,-1,-1,0)(6009=-1,-1,-1,-1,0)(6014=-1,-1,-1,-1,0)(6015=-1,-1,-1,-1,0)(6003=-1,-1,-1,-1,0)(6000=-1,-1,-1,-1,0)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>ARMDBGFLAGS</Key>
+          <Name></Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -2284,18 +2009,13 @@
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>-UV0998FBE -O206 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
+          <Key>DbgFMv8M</Key>
+          <Name>-I -S -L"cpu0" -O4102 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M33_MDK.exe" -MF"..\ARMCM33_DSP_FP_config.txt" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=2393,275,2627,812,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
+          <Key>UL2V8M</Key>
+          <Name>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -2304,7 +2024,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
+        <periodic>0</periodic>
         <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -2331,25 +2051,26 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
   <Target>
-    <TargetName>ARMv8MMLldfdp</TargetName>
+    <TargetName>ARMv8MMLldfdp.DoNotUse</TargetName>
     <ToolsetNumber>0x3</ToolsetNumber>
     <ToolsetName>ARM-GNU</ToolsetName>
     <TargetOption>
       <CLKARM>12000000</CLKARM>
       <OPTTT>
-        <gFlags>1</gFlags>
+        <gFlags>0</gFlags>
         <BeepAtEnd>1</BeepAtEnd>
-        <RunSim>0</RunSim>
-        <RunTarget>1</RunTarget>
+        <RunSim>1</RunSim>
+        <RunTarget>0</RunTarget>
         <RunAbUc>0</RunAbUc>
       </OPTTT>
       <OPTHX>
@@ -2391,35 +2112,35 @@
         <LExpSel>0</LExpSel>
       </OPTXL>
       <OPTFL>
-        <tvExp>1</tvExp>
+        <tvExp>0</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
       <CpuCode>7</CpuCode>
       <DebugOpt>
-        <uSim>0</uSim>
-        <uTrg>1</uTrg>
-        <sLdApp>0</sLdApp>
-        <sGomain>0</sGomain>
-        <sRbreak>0</sRbreak>
-        <sRwatch>0</sRwatch>
-        <sRmem>0</sRmem>
+        <uSim>1</uSim>
+        <uTrg>0</uTrg>
+        <sLdApp>1</sLdApp>
+        <sGomain>1</sGomain>
+        <sRbreak>1</sRbreak>
+        <sRwatch>1</sRwatch>
+        <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
-        <sRbox>0</sRbox>
-        <tLdApp>0</tLdApp>
-        <tGomain>1</tGomain>
-        <tRbreak>0</tRbreak>
-        <tRwatch>0</tRwatch>
-        <tRmem>0</tRmem>
+        <sRbox>1</sRbox>
+        <tLdApp>1</tLdApp>
+        <tGomain>0</tGomain>
+        <tRbreak>1</tRbreak>
+        <tRwatch>1</tRwatch>
+        <tRmem>1</tRmem>
         <tRfunc>0</tRfunc>
-        <tRbox>0</tRbox>
+        <tRbox>1</tRbox>
         <tRtrace>1</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
         <bEvRecOn>1</bEvRecOn>
-        <nTsel>15</nTsel>
+        <nTsel>-1</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -2429,69 +2150,22 @@
         <tDllPa></tDllPa>
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
-        <tIfile>..\..\Common\JTest\jtest_FVP.ini</tIfile>
-        <pMon>BIN\DbgFMv8M.DLL</pMon>
+        <tIfile></tIfile>
+        <pMon></pMon>
       </DebugOpt>
-      <TargetDriverDllRegistry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DbgFMv8M</Key>
-          <Name>-I -S -L"cpu0" -O4102 -C0 -MC".\FVP\MPS2_AEMv8M\FVP_MPS2_AEMv8M_MDK.exe" -MF"..\ARMv8MBL_config.txt" -MA</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2V8M</Key>
-          <Name>UL2V8M(-S0 -C0 -P0 -FD20000000 -FC1000)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ULP2CM3</Key>
-          <Name>-UP0003JBE -O207 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMRTXEVENTFLAGS</Key>
-          <Name>-L70 -Z18 -C0 -M0 -T1</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=2313,171,2547,708,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGUARM</Key>
-          <Name></Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>-UV0998FBE -O206 -S9 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BD11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=2393,275,2627,812,0)(1012=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ARMDBGFLAGS</Key>
-          <Name>-T0</Name>
-        </SetRegEntry>
-      </TargetDriverDllRegistry>
       <Breakpoint/>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
+        <periodic>0</periodic>
         <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
         <aPa>0</aPa>
-        <viewmode>1</viewmode>
+        <viewmode>0</viewmode>
         <vrSel>0</vrSel>
         <aSym>0</aSym>
         <aTbox>0</aTbox>
@@ -2512,17 +2186,18 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
   <Group>
     <GroupName>Libraries</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

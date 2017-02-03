@@ -14,7 +14,7 @@
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M0") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -130,7 +130,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -240,7 +240,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
               <Define>ARM_MATH_CM0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -738,7 +738,7 @@
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -854,7 +854,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -964,7 +964,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
               <Define>ARM_MATH_CM3</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -1462,7 +1462,7 @@
         <TargetCommonOption>
           <Device>ARMCM4</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1578,7 +1578,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -1688,7 +1688,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
               <Define>ARM_MATH_CM4</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -2186,7 +2186,7 @@
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -2302,7 +2302,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -2412,7 +2412,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_CM4 __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -2910,7 +2910,7 @@
         <TargetCommonOption>
           <Device>ARMCM7</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3026,7 +3026,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -3136,7 +3136,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
               <Define>ARM_MATH_CM7</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -3634,7 +3634,7 @@
         <TargetCommonOption>
           <Device>ARMCM7_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3750,7 +3750,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -3860,7 +3860,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_CM7 __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -4358,7 +4358,7 @@
         <TargetCommonOption>
           <Device>ARMCM7_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(DFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -4474,7 +4474,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -4584,7 +4584,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_CM7 __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -5082,7 +5082,7 @@
         <TargetCommonOption>
           <Device>ARMv8MBL</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MBL") TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -5308,7 +5308,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.base</MiscControls>
               <Define>ARM_MATH_ARMV8MBL</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMv8MBL\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -5806,7 +5806,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -6032,7 +6032,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main</MiscControls>
               <Define>ARM_MATH_ARMV8MML</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMv8MML\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -6530,7 +6530,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") FPU3(SFPU) TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -6756,7 +6756,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_ARMV8MML __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMv8MML\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -7247,14 +7247,14 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>ARMv8MMLlfdp</TargetName>
+      <TargetName>ARMv8MMLlfdp.DoNotUse</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMv8MML_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") FPU3(DFPU) TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -7480,7 +7480,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_ARMV8MML __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMv8MML\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -7978,7 +7978,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML_DSP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -8204,7 +8204,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp</MiscControls>
               <Define>ARM_MATH_ARMV8MML __DSP_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMv8MML\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -8702,7 +8702,7 @@
         <TargetCommonOption>
           <Device>ARMv8MML_DSP_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") FPU3(SFPU) DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -8928,7 +8928,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_ARMV8MML __DSP_PRESENT=1U __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMv8MML\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -9419,14 +9419,14 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>ARMv8MMLldfdp</TargetName>
+      <TargetName>ARMv8MMLldfdp.DoNotUse</TargetName>
       <ToolsetNumber>0x3</ToolsetNumber>
       <ToolsetName>ARM-GNU</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMv8MML_DSP_DP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.0.0</PackID>
+          <PackID>ARM.CMSIS.5.0.1-dev6</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("ARMV8MML") FPU3(DFPU) DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -9652,7 +9652,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_ARMV8MML __DSP_PRESENT=1U __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMCM0\Include;..\..\..\..\Device\ARM\ARMCM3\Include;..\..\..\..\Device\ARM\ARMCM4\Include;..\..\..\..\Device\ARM\ARMCM7\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
+              <IncludePath>..\..\..\Include;..\..\..\..\Device\ARM\ARMv8MML\Include;..\..\RefLibs\inc;..\..\Common\JTest\inc;..\..\Common\JTest\inc\arr_desc;..\..\Common\inc;..\..\Common\inc\templates;..\..\Common\inc\basic_math_tests;..\..\Common\inc\complex_math_tests;..\..\Common\inc\statistics_tests;..\..\Common\inc\matrix_tests;..\..\Common\inc\support_tests;..\..\Common\inc\controller_tests;..\..\Common\inc\transform_tests;..\..\Common\inc\fast_math_tests;..\..\Common\inc\filtering_tests;..\..\Common\inc\intrinsics_tests</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -10143,5 +10143,11 @@
       </Groups>
     </Target>
   </Targets>
+
+  <RTE>
+    <apis/>
+    <components/>
+    <files/>
+  </RTE>
 
 </Project>

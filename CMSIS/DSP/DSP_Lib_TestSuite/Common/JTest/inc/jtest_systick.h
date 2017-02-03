@@ -45,36 +45,6 @@
   #warning "no appropriate header file found!"
 #endif
 
-#if 0
-#if defined (ARM_MATH_ARMV8MBL)
-    #include "ARMv8MBL.h"
-#elif defined (ARM_MATH_CM7)
-  #if defined (ARMCM7)
-    #include "ARMCM7.h"
-  #elif defined (ARMCM7_SP)
-    #include "ARMCM7_SP.h"
-  #elif defined (ARMCM7_DP)
-    #include "ARMCM7_DP.h"
-  #else
-    #error device not specified!
-  #endif
-#elif defined (ARM_MATH_CM4)
-  #if defined (ARMCM4)
-    #include "ARMCM4.h"
-  #elif defined (ARMCM4_FP)
-    #include "ARMCM4_FP.h"
-  #else
-    #error device not specified!
-  #endif
-#elif defined (ARM_MATH_CM3)
-    #include "ARMCM3.h"
-#elif defined (ARM_MATH_CM0)
-    #include "ARMCM0.h"
-#else
-    #error device not specified! Set ARM_MATH_xxx
-#endif
-#endif
-
 /*--------------------------------------------------------------------------------*/
 /* Macros and Defines */
 /*--------------------------------------------------------------------------------*/

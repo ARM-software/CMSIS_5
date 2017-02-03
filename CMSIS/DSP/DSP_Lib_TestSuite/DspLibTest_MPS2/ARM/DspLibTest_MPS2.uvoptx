@@ -184,11 +184,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -355,11 +356,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -526,11 +528,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -697,11 +700,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -868,11 +872,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -1039,11 +1044,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -1215,11 +1221,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -1319,8 +1326,13 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>CMSIS_AGDI_V8M</Key>
+          <Name>-X"MPS2 CMSIS-DAP" -U000000000000 -O654 -S8 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(0BA05477) -L00(0) -TO0 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>ULP2V8M</Key>
-          <Name>-UP0003JBE -O142 -S9 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(0BA05477) -L00(4) -TO0 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
+          <Name>-UP0003JBE -O398 -S14 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(0BA04477) -L00(4) -TO0 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -1396,11 +1408,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -1501,7 +1514,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>ULP2V8M</Key>
-          <Name>-UP0003JBE -O206 -S8 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BE12477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
+          <Name>-UP0003JBE -O398 -S14 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(0BA04477) -L00(4) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -1582,11 +1595,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -1687,7 +1701,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>ULP2V8M</Key>
-          <Name>-UP0003JBE -O206 -S8 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BE12477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
+          <Name>-UP0003JBE -O398 -S14 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(0BA04477) -L00(4) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -1768,16 +1782,17 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
   <Target>
-    <TargetName>ARMv8MMLlfdp</TargetName>
+    <TargetName>ARMv8MMLlfdpDoNotUse</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -1954,11 +1969,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -2059,7 +2075,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>ULP2V8M</Key>
-          <Name>-UP0003JBE -O206 -S8 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BE12477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
+          <Name>-UP0003JBE -O398 -S14 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(0BA04477) -L00(4) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -2140,11 +2156,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
@@ -2244,8 +2261,13 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>CMSIS_AGDI_V8M</Key>
+          <Name>-X"MPS2 CMSIS-DAP" -U000000000000 -O142 -S8 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(0BA05477) -L00(0) -TO0 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>ULP2V8M</Key>
-          <Name>-UP0003JBE -O206 -S8 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(0BE12477) -L00(0) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
+          <Name>-UP0003JBE -O398 -S14 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(0BA04477) -L00(4) -TO18 -TC10000000 -TP11 -TDX0 -TDD0 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN0</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -2326,16 +2348,17 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 
   <Target>
-    <TargetName>ARMv8MMLldfdp</TargetName>
+    <TargetName>ARMv8MMLldfdpDoNotUse</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -2507,11 +2530,12 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <Lin2Executable></Lin2Executable>
-      <Lin2ConfigFile></Lin2ConfigFile>
-      <bLin2Auto>0</bLin2Auto>
       <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
     </TargetOption>
   </Target>
 

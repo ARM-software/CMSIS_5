@@ -1,8 +1,6 @@
 @echo off
 
-SET TMP=C:\Temp
-SET TEMP=C:\Temp
-SET UVEXE=C:\Keil\UV4\UV4.EXE
+set UVEXE=C:\Keil_v5\UV4\UV4.EXE
 set CURDIR=%CD%
 
 if .%1==. goto help
@@ -20,7 +18,7 @@ goto err
 :buildARM
 :buildGCC
 cd .\RefLibs\%1
-REM @echo on
+
 echo   Building DSP Reference Library for Cortex-M0 Little Endian
 %UVEXE% -rb -j0  RefLibs.uvprojx -t "cortexM0l"    -o "RefLib_cortexM0l_build.log"
 
@@ -30,16 +28,16 @@ echo   Building DSP Reference Library for Cortex-M3 Little Endian
 echo   Building DSP Reference Library for Cortex-M4 Little Endian
 %UVEXE% -rb -j0  RefLibs.uvprojx -t "cortexM4l"    -o "RefLib_cortexM4l_build.log"
 
-echo   Building DSP Reference Library for Cortex-M4 with FPU Little Endian
+echo   Building DSP Reference Library for Cortex-M4 Little Endian with single precision FPU
 %UVEXE% -rb -j0  RefLibs.uvprojx -t "cortexM4lf"   -o "RefLib_cortexM4lf_build.log"
 
 echo   Building DSP Reference Library for Cortex-M7 Little Endian
 %UVEXE% -rb -j0 RefLibs.uvprojx -t "cortexM7l"     -o "RefLib_cortexM7l_build.log"
 
-echo   Building DSP Reference Library for Cortex-M7 with single precision FPU Little Endian
+echo   Building DSP Reference Library for Cortex-M7 Little Endian with single precision FPU
 %UVEXE% -rb -j0 RefLibs.uvprojx -t "cortexM7lfsp"  -o "RefLib_cortexM7lfsp_build.log"
 
-echo   Building DSP Reference Library for Cortex-M7 with double precision FPU Little Endian
+echo   Building DSP Reference Library for Cortex-M7 Little Endian with double precision FPU
 %UVEXE% -rb -j0 RefLibs.uvprojx -t "cortexM7lfdp"  -o "RefLib_cortexM7lfdp_build.log"
 
 echo   Building DSP Reference Library for ARMv8-M Baseline Little Endian
@@ -48,21 +46,21 @@ echo   Building DSP Reference Library for ARMv8-M Baseline Little Endian
 echo   Building DSP Reference Library for ARMv8-M Mainline Little Endian
 %UVEXE% -rb -j0 RefLibs.uvprojx -t "ARMv8MMLl"     -o "RefLib_ARMv8MMLl_build.log"
 
-echo   Building DSP Reference Library for ARMv8-M Mainline with single precision FPU Little Endian
+echo   Building DSP Reference Library for ARMv8-M Mainline Little Endian with single precision FPU
 %UVEXE% -rb -j0 RefLibs.uvprojx -t "ARMv8MMLlfsp"  -o "RefLib_ARMv8MMLlfsp_build.log"
 
-echo   Building DSP Reference Library for ARMv8-M Mainline with double precision FPU Little Endian
-%UVEXE% -rb -j0 RefLibs.uvprojx -t "ARMv8MMLlfdp"  -o "RefLib_ARMv8MMLlfdp_build.log"
+REM echo   Building DSP Reference Library for ARMv8-M Mainline Little Endian with double precision FPU
+REM %UVEXE% -rb -j0 RefLibs.uvprojx -t "ARMv8MMLlfdp"  -o "RefLib_ARMv8MMLlfdp_build.log"
 
-echo   Building DSP Reference Library for ARMv8-M Mainline with DSP Little Endian
+echo   Building DSP Reference Library for ARMv8-M Mainline Little Endian with DSP instructions
 %UVEXE% -rb -j0 RefLibs.uvprojx -t "ARMv8MMLld"    -o "RefLib_ARMv8MMLld_build.log"
 
-echo   Building DSP Reference Library for ARMv8-M Mainline with DSP, single precision FPU Little Endian
+echo   Building DSP Reference Library for ARMv8-M Mainline Little Endian with DSP instructions, single precision FPU
 %UVEXE% -rb -j0 RefLibs.uvprojx -t "ARMv8MMLldfsp" -o "RefLib_ARMv8MMLldfsp_build.log"
 
-echo   Building DSP Reference Library for ARMv8-M Mainline with DSP, double precision FPU Little Endian
-%UVEXE% -rb -j0 RefLibs.uvprojx -t "ARMv8MMLldfdp" -o "RefLib_ARMv8MMLldfdp_build.log"
-REM @echo off
+REM echo   Building DSP Reference Library for ARMv8-M Mainline Little Endian with DSP instructions, double precision FPU
+REM %UVEXE% -rb -j0 RefLibs.uvprojx -t "ARMv8MMLldfdp" -o "RefLib_ARMv8MMLldfdp_build.log"
+
 
 REM big endian libraries are skipped!
 
@@ -75,16 +73,16 @@ REM %UVEXE% -rb -j0  RefLibs.uvprojx -t"cortexM3b"    -o "RefLib_cortexM3b_build
 REM echo   Building DSP Reference Library for Cortex-M4 Big Endian
 REM %UVEXE% -rb -j0  RefLibs.uvprojx -t"cortexM4b"    -o "RefLib_cortexM4b_build.log"
 
-REM echo   Building DSP Reference Library for Cortex-M4 with FPU Big Endian
+REM echo   Building DSP Reference Library for Cortex-M4 Big Endian Big Endian with single precision FPU
 REM %UVEXE% -rb -j0  RefLibs.uvprojx -t"cortexM4bf"   -o "RefLib_cortexM4bf_build.log"
 
 REM echo   Building DSP Reference Library for Cortex-M7 Big Endian
 REM %UVEXE% -rb -j0 RefLibs.uvprojx -t "cortexM7b"    -o "RefLib_cortexM7b_build.log"
 
-REM echo   Building DSP Reference Library for Cortex-M7 with single precision FPU Big Endian
+REM echo   Building DSP Reference Library for Cortex-M7 Big Endian with single precision FPU
 REM %UVEXE% -rb -j0 RefLibs.uvprojx -t "cortexM7bfsp" -o "RefLib_cortexM7bfsp_build.log"
 
-REM echo   Building DSP Reference Library for Cortex-M7 with double precision FPU Big Endian
+REM echo   Building DSP Reference Library for Cortex-M7 Big Endian with double precision FPU
 REM %UVEXE% -rb -j0 RefLibs.uvprojx -t "cortexM7bfdp" -o "RefLib_cortexM7bfdp_build.log"
 
 goto deleteIntermediateFiles
@@ -92,7 +90,7 @@ goto deleteIntermediateFiles
 
 :deleteIntermediateFiles
 echo.
-ECHO   Deleting intermediate files
+echo   Deleting intermediate files
 rmdir /S /Q IntermediateFiles
 del /Q *.bak
 del /Q *.dep
