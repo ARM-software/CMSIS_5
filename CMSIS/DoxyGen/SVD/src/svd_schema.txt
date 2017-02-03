@@ -1747,7 +1747,7 @@ A field may define an \em enumeratedValue in order to make the display more intu
         <br><b>Usage:</b>
         - Always use the full qualifying path, which must start with the peripheral \tagem{name}, when deriving from another scope. 
           (for example, in periperhal \token{A} and \token{registerX}, derive from \token{peripheralA.registerYY.fieldYY}. 
-        - You can use the register \tagem{name} only when both registers are in the same scope.
+        - You can use the field \tagem{name} only when both fields are in the same scope.
         - No relative paths will work.
         <br><b>Remarks:</b> When deriving, it is mandatory to specify at least 
         the \tagem{name} and \tagem{description}.</td>
