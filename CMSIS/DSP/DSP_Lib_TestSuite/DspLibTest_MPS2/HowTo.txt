@@ -18,7 +18,7 @@ Used Debugger:
   IoT Kit:
     ULINKpro, JTAG, 25MHz, HW Reset
   other:
-    ULINKpro,     ,      , Autodetect
+    ULINKpro, JTAG, 25MHz, Autodetect
 
 Memory Settings:
   IoT Kit:
