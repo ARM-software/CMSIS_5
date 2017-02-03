@@ -2,7 +2,7 @@
  * @file     cmsis_armcc.h
  * @brief    CMSIS compiler ARMCC (ARM compiler V5) header file
  * @version  V5.0.1
- * @date     30. January 2017
+ * @date     03. February 2017
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
@@ -74,7 +74,7 @@
   #define __ALIGNED(x)              __attribute__((aligned(x)))
 #endif
 #ifndef   __PACKED
-  #define __PACKED                  __packed
+  #define __PACKED                  __attribute__((packed))
 #endif
 #ifndef   __PACKED_STRUCT
   #define __PACKED_STRUCT           __packed struct
