@@ -2447,6 +2447,7 @@ ARMv8-M Mainline based device with TrustZone
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML_SP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMv8MML_DP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM23"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM23_TZ"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_TZ"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_DSP_FP"/>

@@ -1060,6 +1060,7 @@
       <xs:enumeration value="schematic"/>
       <xs:enumeration value="overview"/>
       <xs:enumeration value="manual"/>
+      <xs:enumeration value="layout"/>
       <xs:enumeration value="other"/>
     </xs:restriction>
   </xs:simpleType>
