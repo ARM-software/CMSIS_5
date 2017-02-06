@@ -375,7 +375,7 @@ typedef struct _ARM_NAND_CAPABILITIES {
   uint32_t driver_strength_18  : 1;     ///< Supports Driver Strength 2.0x = 18 Ohms
   uint32_t driver_strength_25  : 1;     ///< Supports Driver Strength 1.4x = 25 Ohms
   uint32_t driver_strength_50  : 1;     ///< Supports Driver Strength 0.7x = 50 Ohms
-  uint32_t reserved            : 2;
+  uint32_t reserved            : 2;     ///< Reserved (must be zero)
 } ARM_NAND_CAPABILITIES;
 
 

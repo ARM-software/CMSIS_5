@@ -274,7 +274,7 @@ typedef struct _ARM_ETH_MAC_CAPABILITIES {
   uint32_t event_tx_frame           : 1;        ///< 1 = callback event \ref ARM_ETH_MAC_EVENT_TX_FRAME generated
   uint32_t event_wakeup             : 1;        ///< 1 = wakeup event \ref ARM_ETH_MAC_EVENT_WAKEUP generated
   uint32_t precision_timer          : 1;        ///< 1 = Precision Timer supported
-  uint32_t reserved                 : 15;
+  uint32_t reserved                 : 15;       ///< Reserved (must be zero)
 } ARM_ETH_MAC_CAPABILITIES;
 
 

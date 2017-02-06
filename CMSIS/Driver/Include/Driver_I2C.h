@@ -188,7 +188,7 @@ typedef void (*ARM_I2C_SignalEvent_t) (uint32_t event);  ///< Pointer to \ref AR
 */
 typedef struct _ARM_I2C_CAPABILITIES {
   uint32_t address_10_bit : 1;          ///< supports 10-bit addressing
-  uint32_t reserved       : 31;
+  uint32_t reserved       : 31;         ///< Reserved (must be zero)
 } ARM_I2C_CAPABILITIES;
 
 

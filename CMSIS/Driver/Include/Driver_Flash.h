@@ -176,7 +176,7 @@ typedef struct _ARM_FLASH_CAPABILITIES {
   uint32_t event_ready  : 1;            ///< Signal Flash Ready event
   uint32_t data_width   : 2;            ///< Data width: 0=8-bit, 1=16-bit, 2=32-bit
   uint32_t erase_chip   : 1;            ///< Supports EraseChip operation
-  uint32_t reserved     : 28;
+  uint32_t reserved     : 28;           ///< Reserved (must be zero)
 } ARM_FLASH_CAPABILITIES;
 
 

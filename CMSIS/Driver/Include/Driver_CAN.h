@@ -109,7 +109,7 @@ typedef struct _ARM_CAN_OBJ_CAPABILITIES {
   uint32_t range_filtering  : 1;        ///< Object supports range identifier filtering
   uint32_t mask_filtering   : 1;        ///< Object supports mask identifier filtering
   uint32_t message_depth    : 8;        ///< Number of messages buffers (FIFO) for that object
-  uint32_t reserved         : 16;
+  uint32_t reserved         : 16;       ///< Reserved (must be zero)
 } ARM_CAN_OBJ_CAPABILITIES;
 
 /****** CAN Control Function Operation codes *****/
@@ -331,7 +331,7 @@ typedef struct _ARM_CAN_CAPABILITIES {
   uint32_t monitor_mode           : 1;  ///< Support for bus monitoring mode (set by \ref ARM_CAN_SetMode)
   uint32_t internal_loopback      : 1;  ///< Support for internal loopback mode (set by \ref ARM_CAN_SetMode)
   uint32_t external_loopback      : 1;  ///< Support for external loopback mode (set by \ref ARM_CAN_SetMode)
-  uint32_t reserved               : 18;
+  uint32_t reserved               : 18; ///< Reserved (must be zero)
 } ARM_CAN_CAPABILITIES;
 
 

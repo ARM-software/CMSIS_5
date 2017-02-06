@@ -293,7 +293,7 @@ typedef struct _ARM_USBH_CAPABILITIES {
   uint32_t event_connect      :  1;     ///< Signal Connect event
   uint32_t event_disconnect   :  1;     ///< Signal Disconnect event
   uint32_t event_overcurrent  :  1;     ///< Signal Overcurrent event
-  uint32_t reserved           : 13;
+  uint32_t reserved           : 13;     ///< Reserved (must be zero)
 } ARM_USBH_CAPABILITIES;
 
 
@@ -392,7 +392,7 @@ typedef void (*ARM_USBH_HCI_Interrupt_t) (void);  ///< Pointer to Interrupt Hand
 */
 typedef struct _ARM_USBH_HCI_CAPABILITIES {
   uint32_t port_mask : 15;              ///< Root HUB available Ports Mask
-  uint32_t reserved  : 17;
+  uint32_t reserved  : 17;              ///< Reserved (must be zero)
 } ARM_USBH_HCI_CAPABILITIES;
 
 

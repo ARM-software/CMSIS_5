@@ -217,7 +217,7 @@ typedef struct _ARM_SPI_CAPABILITIES {
   uint32_t ti_ssi           : 1;        ///< supports TI Synchronous Serial Interface
   uint32_t microwire        : 1;        ///< supports Microwire Interface
   uint32_t event_mode_fault : 1;        ///< Signal Mode Fault event: \ref ARM_SPI_EVENT_MODE_FAULT
-  uint32_t reserved         : 28;
+  uint32_t reserved         : 28;       ///< Reserved (must be zero)
 } ARM_SPI_CAPABILITIES;
 
 
