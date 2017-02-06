@@ -324,7 +324,7 @@ typedef struct _ARM_MCI_CAPABILITIES {
   uint32_t rst_n             : 1;       ///< Supports RST_n Pin Control (eMMC)
   uint32_t ccs               : 1;       ///< Supports Command Completion Signal (CCS) for CE-ATA
   uint32_t ccs_timeout       : 1;       ///< Supports Command Completion Signal (CCS) timeout for CE-ATA
-  uint32_t reserved          : 3;
+  uint32_t reserved          : 3;       ///< Reserved (must be zero)
 } ARM_MCI_CAPABILITIES;
 
 

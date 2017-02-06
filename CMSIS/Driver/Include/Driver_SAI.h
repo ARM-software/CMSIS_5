@@ -280,7 +280,7 @@ typedef struct _ARM_SAI_CAPABILITIES {
   uint32_t companding            : 1;   ///< supports Companding
   uint32_t mclk_pin              : 1;   ///< supports MCLK (Master Clock) pin
   uint32_t event_frame_error     : 1;   ///< supports Frame error event: \ref ARM_SAI_EVENT_FRAME_ERROR
-  uint32_t reserved              : 21;
+  uint32_t reserved              : 21;  ///< Reserved (must be zero)
 } ARM_SAI_CAPABILITIES;
 
 

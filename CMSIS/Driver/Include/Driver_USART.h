@@ -308,7 +308,7 @@ typedef struct _ARM_USART_CAPABILITIES {
   uint32_t event_dsr          : 1;      ///< Signal DSR change event: \ref ARM_USART_EVENT_DSR
   uint32_t event_dcd          : 1;      ///< Signal DCD change event: \ref ARM_USART_EVENT_DCD
   uint32_t event_ri           : 1;      ///< Signal RI change event: \ref ARM_USART_EVENT_RI
-  uint32_t reserved           : 11;
+  uint32_t reserved           : 11;     ///< Reserved (must be zero)
 } ARM_USART_CAPABILITIES;
 
 

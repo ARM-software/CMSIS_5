@@ -233,7 +233,7 @@ typedef struct _ARM_USBD_CAPABILITIES {
   uint32_t vbus_detection  : 1;         ///< VBUS detection
   uint32_t event_vbus_on   : 1;         ///< Signal VBUS On event
   uint32_t event_vbus_off  : 1;         ///< Signal VBUS Off event
-  uint32_t reserved        : 29;
+  uint32_t reserved        : 29;        ///< Reserved (must be zero)
 } ARM_USBD_CAPABILITIES;
 
 

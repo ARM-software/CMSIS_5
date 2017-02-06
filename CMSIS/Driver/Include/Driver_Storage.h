@@ -180,7 +180,7 @@ typedef struct _ARM_STORAGE_CAPABILITIES {
                                   ///    operations synchronously as necessary (in which case they
                                   ///    return a positive error code to indicate synchronous completion).
   uint32_t erase_all        :  1; ///< Supports EraseAll operation.
-  uint32_t reserved         : 30;
+  uint32_t reserved         : 30; ///< Reserved (must be zero)
 } ARM_STORAGE_CAPABILITIES;
 
 /**
