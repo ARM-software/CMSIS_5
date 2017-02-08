@@ -17,8 +17,8 @@ var NAVTREEINDEX =
 [
 "ChangeLog_pg.html",
 "group__LMS.html#ga6a0abfe6041253a6f91c63b383a64257",
-"structarm__biquad__cascade__df2T__instance__f64.html",
-"structarm__lms__norm__instance__q31.html"
+"structarm__biquad__cascade__df2T__instance__f64.html#ad55380ff835b533aa5168f836db8a4de",
+"structarm__lms__norm__instance__q31.html#a28e4c085af69c9c3e2e95dacf8004c3e"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -9,7 +9,8 @@ var group__usbh__hci__gr =
       [ "PortVbusOnOff", "group__usbh__hci__gr.html#ab859fb9f73a60ffa1ce71ed961d4744f", null ]
     ] ],
     [ "ARM_USBH_HCI_CAPABILITIES", "group__usbh__hci__gr.html#structARM__USBH__HCI__CAPABILITIES", [
-      [ "port_mask", "group__usbh__hci__gr.html#ac37c09b54483c2a1e41fa8a976721fc4", null ]
+      [ "port_mask", "group__usbh__hci__gr.html#ac37c09b54483c2a1e41fa8a976721fc4", null ],
+      [ "reserved", "group__usbh__hci__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_USBH_HCI_Interrupt_t", "group__usbh__hci__gr.html#gac60df9d1f2b3a769f2c30141800a9806", null ],
     [ "ARM_USBH_HCI_GetVersion", "group__usbh__hci__gr.html#ga10109d0c2a9a128225b5e893d3f72d08", null ],

@@ -8,9 +8,10 @@ var group__CMSIS__RTOS__EventFlags =
     ] ],
     [ "osEventFlagsId_t", "group__CMSIS__RTOS__EventFlags.html#gafdbab933146d6d81d7cca7287e267a50", null ],
     [ "osEventFlagsNew", "group__CMSIS__RTOS__EventFlags.html#gab14b1caeb12ffa42cce1bfe889cd07df", null ],
-    [ "osEventFlagsSet", "group__CMSIS__RTOS__EventFlags.html#ga565979fc5fabe3c1fa1d7047284eef9f", null ],
-    [ "osEventFlagsClear", "group__CMSIS__RTOS__EventFlags.html#ga662afd893b626d1b438101c952d94a30", null ],
-    [ "osEventFlagsGet", "group__CMSIS__RTOS__EventFlags.html#ga88f2e283933a6c34975d30906d050e16", null ],
-    [ "osEventFlagsWait", "group__CMSIS__RTOS__EventFlags.html#gab8641c24cce707f71b18f1a04c5d52da", null ],
-    [ "osEventFlagsDelete", "group__CMSIS__RTOS__EventFlags.html#ga7c4acf2fb0d506ec82905dee53fb5435", null ]
+    [ "osEventFlagsSet", "group__CMSIS__RTOS__EventFlags.html#ga33b71d14cecf90b4e72639dd19f23a5e", null ],
+    [ "osEventFlagsClear", "group__CMSIS__RTOS__EventFlags.html#ga93bf258ca0007c6641fbe8e4f2b8a1e5", null ],
+    [ "osEventFlagsGet", "group__CMSIS__RTOS__EventFlags.html#ga8bda3185f46bfd278cea8a6cf357677d", null ],
+    [ "osEventFlagsWait", "group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e", null ],
+    [ "osEventFlagsDelete", "group__CMSIS__RTOS__EventFlags.html#ga7c4acf2fb0d506ec82905dee53fb5435", null ],
+    [ "osEventFlagsGetName", "group__CMSIS__RTOS__EventFlags.html#ga59f4ddf0ee8c395b1672bb978d1cfc88", null ]
 ];

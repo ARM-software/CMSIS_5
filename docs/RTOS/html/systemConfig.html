@@ -118,9 +118,16 @@ $(document).ready(function(){initNavTree('systemConfig.html','');});
 </ul>
 <h1><a class="anchor" id="RoundRobin"></a>
 Settings for Round-Robin Thread Switching</h1>
-<p>CMSIS-RTOS RTX may be configured to use Round-Robin Multitasking thread switching. Round-Robin allows quasi-parallel execution of several threads. Threads are not really executed concurrently but are time-sliced where the available CPU time is divided into time slices and CMSIS-RTOS RTX assigns a time slice to each thread. Because the time slice is typically short (only a few milliseconds) it appears as though threads execute simultaneously.</p>
-<p>Threads execute for the duration of their time-slice (unless the thread's time slice is given up). Then, CMSIS-RTOS RTX switches to the next thread that is ready to run and has the same priority. If no other task with the same priority is ready to run, the current running task resumes it execution.</p>
-<p>Round-Robin Multitasking is controlled with the <b>#define OS_ROBIN</b>. The time-slice period is configured (in RTX Timer ticks) with the <b>#define OS_ROBINTOUT</b>.</p>
+<p>CMSIS-RTOS RTX may be configured to use round-robin multitasking thread switching. Round-robin allows quasi-parallel execution of several threads of the <em>same</em> priority. Threads are not really executed concurrently, but are scheduled where the available CPU time is divided into time slices and CMSIS-RTOS RTX assigns a time slice to each thread. Because the time slice is typically short (only a few milliseconds), it appears as though threads execute simultaneously.</p>
+<p>Round-robin thread switching functions as follows:</p>
+<ul>
+<li>the tick is preloaded with the timeout value when a thread switch occurs</li>
+<li>the tick is decremented (if not already zero) each system tick if the same thread is still executing</li>
+<li>when the tick reaches 0 it indicates that a timeout has occurred. If there is another thread ready with the <em>same</em> priority, then the system switches to that thread and the tick is preloaded with timeout again.</li>
+</ul>
+<p>In other words, threads execute for the duration of their time slice (unless a thread's time slice is given up). Then, RTX switches to the next thread that is in <b>READY</b> state and has the same priority. If no other thread with the same priority is ready to run, the current running thread resumes it execution.</p>
+<dl class="section note"><dt>Note</dt><dd>When switching to higher priority threads, the round-robin timeout value is reset.</dd></dl>
+<p>Round-Robin multitasking is controlled with the <b>#define OS_ROBIN</b>. The time slice period is configured (in RTX Timer ticks) with the <b>#define OS_ROBINTOUT</b>.</p>
 <p><b>Code Example:</b></p>
 <p>The following example shows a simple CMSIS-RTOS RTX program that uses Round-Robin Multitasking. The two threads in this program are counter loops. RTX starts executing job 1, which is the function named job1. This function creates another task called job2. After job1 executes for its time slice, RTX switches to job2. After job2 executes for its time slice, RTX switches back to job1. This process repeats indefinitely.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os_8h.html">cmsis_os.h</a>&quot;</span>                      <span class="comment">// CMSIS-RTOS header file</span></div>
@@ -175,7 +182,7 @@ ISR FIFO Queue size</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtxImplementation.html">RTX Implementation</a></li><li class="navelem"><a class="el" href="configure.html">Configure RTX</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:44 for CMSIS-RTOS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:02 for CMSIS-RTOS by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

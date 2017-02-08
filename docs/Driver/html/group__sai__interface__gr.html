@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.04</span>
+   &#160;<span id="projectnumber">Version 2.05</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -633,6 +633,12 @@ supports MCLK (Master Clock) pin </td></tr>
 event_frame_error: 1</td>
 <td class="fielddoc">
 supports Frame error event: <a class="el" href="group__SAI__events.html#ga6ffcf96fe404b48421a57fbd122b26bc">ARM_SAI_EVENT_FRAME_ERROR</a> </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="aa43c4c21b173ada1b6b7568956f0d650"></a>uint32_t</td>
+<td class="fieldname">
+reserved: 21</td>
+<td class="fielddoc">
+Reserved (must be zero) </td></tr>
 </table>
 
 </div>
@@ -684,6 +690,12 @@ Receive data overflow detected (cleared on start of next receive operation) </td
 frame_error: 1</td>
 <td class="fielddoc">
 Sync Frame error detected (cleared on start of next send/receive operation) </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="aa43c4c21b173ada1b6b7568956f0d650"></a>uint32_t</td>
+<td class="fieldname">
+reserved: 27</td>
+<td class="fielddoc">
+</td></tr>
 </table>
 
 </div>
@@ -1244,7 +1256,7 @@ The parameter <em>arg2</em> provides, depending on the operation and/or <em>arg1
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:24 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:44 for CMSIS-Driver by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

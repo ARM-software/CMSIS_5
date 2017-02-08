@@ -13,7 +13,7 @@ var group__CMSIS__RTOS__ThreadMgmt =
     ] ],
     [ "osThreadJoinable", "group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe", null ],
     [ "osThreadDetached", "group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f", null ],
-    [ "os_thread_func_t", "group__CMSIS__RTOS__ThreadMgmt.html#ga9bc566f11f9296c8aba81741425f83be", null ],
+    [ "osThreadFunc_t", "group__CMSIS__RTOS__ThreadMgmt.html#gadd51f99a6eb50b94eee75f27cae815eb", null ],
     [ "osThreadId_t", "group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7", null ],
     [ "osThreadState_t", "group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820d", [
       [ "osThreadInactive", "cmsis__os2_8h.html#gad3dc89e942e38d9f3af858a0269a820da7d7d4f719a1be6daa63a251563585fdd", null ],
@@ -79,7 +79,7 @@ var group__CMSIS__RTOS__ThreadMgmt =
       [ "osPriorityError", "cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342ecae35f5e2f9c64ad346822521b643bdea4", null ],
       [ "osPriorityReserved", "cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342ecac86c171f8d466cced0cb1b03bb03343b", null ]
     ] ],
-    [ "osThreadNew", "group__CMSIS__RTOS__ThreadMgmt.html#ga8c59d9c5fcd0d286ad2a0f24dead8e6a", null ],
+    [ "osThreadNew", "group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f", null ],
     [ "osThreadGetName", "group__CMSIS__RTOS__ThreadMgmt.html#gac3230f3a55a297514b013ebf38f27e0a", null ],
     [ "osThreadGetId", "group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da", null ],
     [ "osThreadGetState", "group__CMSIS__RTOS__ThreadMgmt.html#gacc0a98b42f0a5928e12dc91dc76866b9", null ],
@@ -92,8 +92,8 @@ var group__CMSIS__RTOS__ThreadMgmt =
     [ "osThreadJoin", "group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487", null ],
     [ "osThreadExit", "group__CMSIS__RTOS__ThreadMgmt.html#gaddaa452dd7610e4096647a566d3556fc", null ],
     [ "osThreadTerminate", "group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a", null ],
-    [ "osThreadGetStackSize", "group__CMSIS__RTOS__ThreadMgmt.html#gab78ec937f0303ec0189ee3c9ae8f3296", null ],
+    [ "osThreadGetStackSize", "group__CMSIS__RTOS__ThreadMgmt.html#gab9f8bd715d671c6ee27644867bc1bf65", null ],
     [ "osThreadGetStackSpace", "group__CMSIS__RTOS__ThreadMgmt.html#ga9c83bd5dd8de329701775d6ef7012720", null ],
     [ "osThreadGetCount", "group__CMSIS__RTOS__ThreadMgmt.html#ga495b3f812224e7301f23a691793765db", null ],
-    [ "osThreadEnumerate", "group__CMSIS__RTOS__ThreadMgmt.html#gaa91ff7486b0c0cef247388648c764873", null ]
+    [ "osThreadEnumerate", "group__CMSIS__RTOS__ThreadMgmt.html#ga5606604d56e21ece1a654664be877439", null ]
 ];

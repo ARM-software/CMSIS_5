@@ -28,12 +28,14 @@ var group__usbh__host__gr =
       [ "auto_split", "group__usbh__host__gr.html#a37eab684b9a8aa496bfec9fede42fe27", null ],
       [ "event_connect", "group__usbh__host__gr.html#ae76b779cb9fdf447b20c8b6beed2d534", null ],
       [ "event_disconnect", "group__usbh__host__gr.html#ab83941051cac8e19807b887354dc42fc", null ],
-      [ "event_overcurrent", "group__usbh__host__gr.html#acd3087b3a4a7691595dd75568c12d696", null ]
+      [ "event_overcurrent", "group__usbh__host__gr.html#acd3087b3a4a7691595dd75568c12d696", null ],
+      [ "reserved", "group__usbh__host__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_USBH_PORT_STATE", "group__usbh__host__gr.html#structARM__USBH__PORT__STATE", [
       [ "connected", "group__usbh__host__gr.html#abf1a0792d6af28877b0abd141d5524ac", null ],
       [ "overcurrent", "group__usbh__host__gr.html#ae4b5761b8d095bee008a94856ceca46b", null ],
-      [ "speed", "group__usbh__host__gr.html#a220859a8b5da0232739a11cbe7f79fc5", null ]
+      [ "speed", "group__usbh__host__gr.html#a220859a8b5da0232739a11cbe7f79fc5", null ],
+      [ "reserved", "group__usbh__host__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_USBH_PIPE_HANDLE", "group__usbh__host__gr.html#ga2e4d0ebd0851ba7bf364ae1d8948672c", null ],
     [ "ARM_USBH_SignalPortEvent_t", "group__usbh__host__gr.html#ga61edcbb6ee863fe87abee488d78e1051", null ],

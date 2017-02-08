@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -127,11 +127,11 @@ Functions</h2></td></tr>
 <p>Computes the inverse of a matrix.</p>
 <p>The inverse is defined only if the input matrix is square and non-singular (the determinant is non-zero). The function checks that the input and output matrices are square and of the same size.</p>
 <p>Matrix inversion is numerically sensitive and the CMSIS DSP library only supports matrix inversion of floating-point matrices.</p>
-<dl class="section user"><dt>Algorithm </dt><dd>The Gauss-Jordan method is used to find the inverse. The algorithm performs a sequence of elementary row-operations until it reduces the input matrix to an identity matrix. Applying the same sequence of elementary row-operations to an identity matrix yields the inverse matrix. If the input matrix is singular, then the algorithm terminates and returns error status <code>ARM_MATH_SINGULAR</code>. <div class="image">
+<dl class="section user"><dt>Algorithm</dt><dd>The Gauss-Jordan method is used to find the inverse. The algorithm performs a sequence of elementary row-operations until it reduces the input matrix to an identity matrix. Applying the same sequence of elementary row-operations to an identity matrix yields the inverse matrix. If the input matrix is singular, then the algorithm terminates and returns error status <code>ARM_MATH_SINGULAR</code>. <div class="image">
 <img src="MatrixInverse.gif" alt="MatrixInverse.gif"/>
 <div class="caption">
 Matrix Inverse of a 3 x 3 matrix using Gauss-Jordan Method</div></div>
- </dd></dl>
+</dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga542be7aabbf7a2297a4b62cf212910e3"></a>
 <div class="memitem">
@@ -212,7 +212,7 @@ Matrix Inverse of a 3 x 3 matrix using Gauss-Jordan Method</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

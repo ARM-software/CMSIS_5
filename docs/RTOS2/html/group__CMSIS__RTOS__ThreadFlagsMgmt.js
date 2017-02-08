@@ -1,7 +1,7 @@
 var group__CMSIS__RTOS__ThreadFlagsMgmt =
 [
-    [ "osThreadFlagsSet", "group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6a4ff8198f272cd841e967e367889baa", null ],
-    [ "osThreadFlagsClear", "group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6c1337952ff1dcb483d7e56c236b221e", null ],
-    [ "osThreadFlagsGet", "group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga817323c214ffed88ddff3fd7dfe0f02c", null ],
-    [ "osThreadFlagsWait", "group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga996e246da972e122bc6df453dfc6a9dd", null ]
+    [ "osThreadFlagsSet", "group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9", null ],
+    [ "osThreadFlagsClear", "group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga656abc1c862c5b9a2b13584c42cc0bfa", null ],
+    [ "osThreadFlagsGet", "group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga85c8d2c89466e25abbcb545d9ddd71ba", null ],
+    [ "osThreadFlagsWait", "group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b", null ]
 ];

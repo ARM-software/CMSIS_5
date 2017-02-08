@@ -5,7 +5,7 @@ var NAVTREE =
       [ "Motivation", "index.html#Motivation", null ],
       [ "Coding Rules", "index.html#CodingRules", null ],
       [ "Validation", "index.html#Validation", null ],
-      [ "Licence", "index.html#License", null ],
+      [ "License", "index.html#License", null ],
       [ "ARM::CMSIS Pack", "index.html#CM_Pack_Content", null ]
     ] ],
     [ "Revision History", "cm_revisionHistory.html", null ]

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.04</span>
+   &#160;<span id="projectnumber">Version 2.05</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -130,7 +130,7 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a1d02c71e603ea569af1755251b1d179f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__I2C_8h.html#a1d02c71e603ea569af1755251b1d179f">ARM_I2C_API_VERSION</a>&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,02)  /* API version */</td></tr>
+<tr class="memitem:a1d02c71e603ea569af1755251b1d179f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Driver__I2C_8h.html#a1d02c71e603ea569af1755251b1d179f">ARM_I2C_API_VERSION</a>&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,3)  /* API version */</td></tr>
 <tr class="separator:a1d02c71e603ea569af1755251b1d179f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga69d130b9f8aa34d6df5334ab67c74307"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__i2c__control__codes.html#ga69d130b9f8aa34d6df5334ab67c74307">ARM_I2C_OWN_ADDRESS</a>&#160;&#160;&#160;(0x01)</td></tr>
 <tr class="memdesc:ga69d130b9f8aa34d6df5334ab67c74307"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Own Slave Address; arg = address.  <a href="group__i2c__control__codes.html#ga69d130b9f8aa34d6df5334ab67c74307">More...</a><br/></td></tr>
@@ -156,10 +156,10 @@ Macros</h2></td></tr>
 <tr class="memitem:ga10aae5a8c7fcc90e514c5fb7393056ec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__i2c__bus__speed__ctrls.html#ga10aae5a8c7fcc90e514c5fb7393056ec">ARM_I2C_BUS_SPEED_HIGH</a>&#160;&#160;&#160;(0x04)</td></tr>
 <tr class="memdesc:ga10aae5a8c7fcc90e514c5fb7393056ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">High Speed (3.4MHz)  <a href="group__i2c__bus__speed__ctrls.html#ga10aae5a8c7fcc90e514c5fb7393056ec">More...</a><br/></td></tr>
 <tr class="separator:ga10aae5a8c7fcc90e514c5fb7393056ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16be1861b90774bf062feab2dbb829a4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__i2c__address__flags.html#ga16be1861b90774bf062feab2dbb829a4">ARM_I2C_ADDRESS_10BIT</a>&#160;&#160;&#160;0x0400</td></tr>
+<tr class="memitem:ga16be1861b90774bf062feab2dbb829a4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__i2c__address__flags.html#ga16be1861b90774bf062feab2dbb829a4">ARM_I2C_ADDRESS_10BIT</a>&#160;&#160;&#160;(0x0400)</td></tr>
 <tr class="memdesc:ga16be1861b90774bf062feab2dbb829a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">10-bit address flag  <a href="group__i2c__address__flags.html#ga16be1861b90774bf062feab2dbb829a4">More...</a><br/></td></tr>
 <tr class="separator:ga16be1861b90774bf062feab2dbb829a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga337f4f1aa082e9b593b2dcd43c50134e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__i2c__address__flags.html#ga337f4f1aa082e9b593b2dcd43c50134e">ARM_I2C_ADDRESS_GC</a>&#160;&#160;&#160;0x8000</td></tr>
+<tr class="memitem:ga337f4f1aa082e9b593b2dcd43c50134e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__i2c__address__flags.html#ga337f4f1aa082e9b593b2dcd43c50134e">ARM_I2C_ADDRESS_GC</a>&#160;&#160;&#160;(0x8000)</td></tr>
 <tr class="memdesc:ga337f4f1aa082e9b593b2dcd43c50134e"><td class="mdescLeft">&#160;</td><td class="mdescRight">General Call flag.  <a href="group__i2c__address__flags.html#ga337f4f1aa082e9b593b2dcd43c50134e">More...</a><br/></td></tr>
 <tr class="separator:ga337f4f1aa082e9b593b2dcd43c50134e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5992dc0f6e839c4d066cfa83d535f30d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__I2C__events.html#ga5992dc0f6e839c4d066cfa83d535f30d">ARM_I2C_EVENT_TRANSFER_DONE</a>&#160;&#160;&#160;(1UL &lt;&lt; 0)</td></tr>
@@ -202,7 +202,7 @@ Typedefs</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_I2C_API_VERSION&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,02)  /* API version */</td>
+          <td class="memname">#define ARM_I2C_API_VERSION&#160;&#160;&#160;<a class="el" href="Driver__Common_8h.html#a43c7ca1eb0786d818624246c09932a74">ARM_DRIVER_VERSION_MAJOR_MINOR</a>(2,3)  /* API version */</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -215,7 +215,7 @@ Typedefs</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7151b3cc910409bb744bd274374c738d.html">Driver</a></li><li class="navelem"><a class="el" href="dir_9c39448ea46a8e15f1aabc7dec307fcf.html">Include</a></li><li class="navelem"><a class="el" href="Driver__I2C_8h.html">Driver_I2C.h</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:23 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:43 for CMSIS-Driver by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

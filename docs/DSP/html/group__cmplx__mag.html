@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -129,10 +129,10 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Computes the magnitude of the elements of a complex data vector.</p>
 <p>The <code>pSrc</code> points to the source data and <code>pDst</code> points to the where the result should be written. <code>numSamples</code> specifies the number of complex samples in the input array and the data is stored in an interleaved fashion (real, imag, real, imag, ...). The input array has a total of <code>2*numSamples</code> values; the output array has a total of <code>numSamples</code> values. The underlying algorithm is used:</p>
-<pre>    
-for(n=0; n&lt;numSamples; n++) {    
-    pDst[n] = sqrt(pSrc[(2*n)+0]^2 + pSrc[(2*n)+1]^2);    
-}    
+<pre>
+for(n=0; n&lt;numSamples; n++) {
+    pDst[n] = sqrt(pSrc[(2*n)+0]^2 + pSrc[(2*n)+1]^2);
+}
 </pre><p>There are separate functions for floating-point, Q15, and Q31 data types. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gae45024c497392cde2ae358a76d435213"></a>
@@ -221,7 +221,7 @@ for(n=0; n&lt;numSamples; n++) {
 <p><b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function implements 1.15 by 1.15 multiplications and finally output is converted into 2.14 format. </dd></dl>
 
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, and <a class="el" href="group__SQRT.html#ga5abe5ca724f3e15849662b03752c1238">arm_sqrt_q15()</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__math_8h.html#a2eed05660fedbe3fbd0b6dbb1315cfc3">__SMUAD()</a>, and <a class="el" href="group__SQRT.html#ga5abe5ca724f3e15849662b03752c1238">arm_sqrt_q15()</a>.</p>
 
 </div>
 </div>
@@ -275,7 +275,7 @@ for(n=0; n&lt;numSamples; n++) {
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

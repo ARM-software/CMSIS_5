@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -137,36 +137,36 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>This set of functions implements Finite Impulse Response (FIR) lattice filters for Q15, Q31 and floating-point data types. Lattice filters are used in a variety of adaptive filter applications. The filter structure is feedforward and the net impulse response is finite length. The functions operate on blocks of input and output data and each call to the function processes <code>blockSize</code> samples through the filter. <code>pSrc</code> and <code>pDst</code> point to input and output arrays containing <code>blockSize</code> values.</p>
-<dl class="section user"><dt>Algorithm: </dt><dd><div class="image">
+<dl class="section user"><dt>Algorithm:</dt><dd><div class="image">
 <img src="FIRLattice.gif" alt="FIRLattice.gif"/>
 <div class="caption">
 Finite Impulse Response Lattice filter</div></div>
- The following difference equation is implemented: <pre>    
-    f0[n] = g0[n] = x[n]    
-    fm[n] = fm-1[n] + km * gm-1[n-1] for m = 1, 2, ...M    
-    gm[n] = km * fm-1[n] + gm-1[n-1] for m = 1, 2, ...M    
-    y[n] = fM[n]    
+ The following difference equation is implemented: <pre>
+    f0[n] = g0[n] = x[n]
+    fm[n] = fm-1[n] + km * gm-1[n-1] for m = 1, 2, ...M
+    gm[n] = km * fm-1[n] + gm-1[n-1] for m = 1, 2, ...M
+    y[n] = fM[n]
  </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to tha array of reflection coefficients of size <code>numStages</code>. Reflection Coefficients are stored in the following order. </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>    
-    {k1, k2, ..., kM}    
+<dl class="section user"><dt></dt><dd><pre>
+    {k1, k2, ..., kM}
  </pre> where M is number of stages </dd></dl>
-<dl class="section user"><dt></dt><dd><code>pState</code> points to a state array of size <code>numStages</code>. The state variables (g values) hold previous inputs and are stored in the following order. <pre>    
-    {g0[n], g1[n], g2[n] ...gM-1[n]}    
+<dl class="section user"><dt></dt><dd><code>pState</code> points to a state array of size <code>numStages</code>. The state variables (g values) hold previous inputs and are stored in the following order. <pre>
+    {g0[n], g1[n], g2[n] ...gM-1[n]}
  </pre> The state variables are updated after each block of data is processed; the coefficients are untouched. </dd></dl>
-<dl class="section user"><dt>Instance Structure </dt><dd>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter. Coefficient arrays may be shared among several instances while state variable arrays cannot be shared. There are separate instance structure declarations for each of the 3 supported data types.</dd></dl>
-<dl class="section user"><dt>Initialization Functions </dt><dd>There is also an associated initialization function for each data type. The initialization function performs the following operations:<ul>
+<dl class="section user"><dt>Instance Structure</dt><dd>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter. Coefficient arrays may be shared among several instances while state variable arrays cannot be shared. There are separate instance structure declarations for each of the 3 supported data types.</dd></dl>
+<dl class="section user"><dt>Initialization Functions</dt><dd>There is also an associated initialization function for each data type. The initialization function performs the following operations:<ul>
 <li>Sets the values of the internal structure fields.</li>
 <li>Zeros out the values in the state buffer. To do this manually without calling the init function, assign the follow subfields of the instance structure: numStages, pCoeffs, pState. Also set all of the values in pState to zero.</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros and then manually initialize the instance structure as follows: <pre>    
-<a class="el" href="structarm__fir__lattice__instance__f32.html" title="Instance structure for the floating-point FIR lattice filter. ">arm_fir_lattice_instance_f32</a> S = {numStages, pState, pCoeffs};    
-<a class="el" href="structarm__fir__lattice__instance__q31.html" title="Instance structure for the Q31 FIR lattice filter. ">arm_fir_lattice_instance_q31</a> S = {numStages, pState, pCoeffs};    
-<a class="el" href="structarm__fir__lattice__instance__q15.html" title="Instance structure for the Q15 FIR lattice filter. ">arm_fir_lattice_instance_q15</a> S = {numStages, pState, pCoeffs};    
+<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros and then manually initialize the instance structure as follows: <pre>
+<a class="el" href="structarm__fir__lattice__instance__f32.html" title="Instance structure for the floating-point FIR lattice filter. ">arm_fir_lattice_instance_f32</a> S = {numStages, pState, pCoeffs};
+<a class="el" href="structarm__fir__lattice__instance__q31.html" title="Instance structure for the Q31 FIR lattice filter. ">arm_fir_lattice_instance_q31</a> S = {numStages, pState, pCoeffs};
+<a class="el" href="structarm__fir__lattice__instance__q15.html" title="Instance structure for the Q15 FIR lattice filter. ">arm_fir_lattice_instance_q15</a> S = {numStages, pState, pCoeffs};
  </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where <code>numStages</code> is the number of stages in the filter; <code>pState</code> is the address of the state buffer; <code>pCoeffs</code> is the address of the coefficient buffer. </dd></dl>
-<dl class="section user"><dt>Fixed-Point Behavior </dt><dd>Care must be taken when using the fixed-point versions of the FIR Lattice filter functions. In particular, the overflow and saturation behavior of the accumulator used in each function must be considered. Refer to the function specific documentation below for usage guidelines. </dd></dl>
+<dl class="section user"><dt>Fixed-Point Behavior</dt><dd>Care must be taken when using the fixed-point versions of the FIR Lattice filter functions. In particular, the overflow and saturation behavior of the accumulator used in each function must be considered. Refer to the function specific documentation below for usage guidelines. </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gae63a45a63a11a65f2eae8b8b1fe370a8"></a>
 <div class="memitem">
@@ -414,7 +414,7 @@ Finite Impulse Response Lattice filter</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
 
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="structarm__fir__lattice__instance__q15.html#a38b179138d6a6c9cac4f8f79b6fd5357">arm_fir_lattice_instance_q15::numStages</a>, <a class="el" href="structarm__fir__lattice__instance__q15.html#a78f872826140069cf67836fff87360bc">arm_fir_lattice_instance_q15::pCoeffs</a>, and <a class="el" href="structarm__fir__lattice__instance__q15.html#a37b90dea2bc3ee7c9951a9fe74db0cbb">arm_fir_lattice_instance_q15::pState</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#aa505179349146cf6186640b4c8b47714">__PKHBT</a>, <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="structarm__fir__lattice__instance__q15.html#a38b179138d6a6c9cac4f8f79b6fd5357">arm_fir_lattice_instance_q15::numStages</a>, <a class="el" href="structarm__fir__lattice__instance__q15.html#a78f872826140069cf67836fff87360bc">arm_fir_lattice_instance_q15::pCoeffs</a>, and <a class="el" href="structarm__fir__lattice__instance__q15.html#a37b90dea2bc3ee7c9951a9fe74db0cbb">arm_fir_lattice_instance_q15::pState</a>.</p>
 
 </div>
 </div>
@@ -465,7 +465,7 @@ Finite Impulse Response Lattice filter</div></div>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
 <p><b>Scaling and Overflow Behavior:</b> In order to avoid overflows the input signal must be scaled down by 2*log2(numStages) bits. </p>
 
-<p>References <a class="el" href="structarm__fir__lattice__instance__q31.html#a9f3773bbb76bc5a8a5ee9d37786bf478">arm_fir_lattice_instance_q31::numStages</a>, <a class="el" href="structarm__fir__lattice__instance__q31.html#a66c3364bf5863cd45e05f1652c3dc522">arm_fir_lattice_instance_q31::pCoeffs</a>, and <a class="el" href="structarm__fir__lattice__instance__q31.html#a08fe9494ab7cd336b791e9657adadcf6">arm_fir_lattice_instance_q31::pState</a>.</p>
+<p>References <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="structarm__fir__lattice__instance__q31.html#a9f3773bbb76bc5a8a5ee9d37786bf478">arm_fir_lattice_instance_q31::numStages</a>, <a class="el" href="structarm__fir__lattice__instance__q31.html#a66c3364bf5863cd45e05f1652c3dc522">arm_fir_lattice_instance_q31::pCoeffs</a>, and <a class="el" href="structarm__fir__lattice__instance__q31.html#a08fe9494ab7cd336b791e9657adadcf6">arm_fir_lattice_instance_q31::pState</a>.</p>
 
 </div>
 </div>
@@ -474,7 +474,7 @@ Finite Impulse Response Lattice filter</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

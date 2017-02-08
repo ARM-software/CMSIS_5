@@ -10,6 +10,7 @@ var group__compiler__conntrol__gr =
     [ "__INLINE", "group__compiler__conntrol__gr.html#gade2d8d7118f8ff49547f60aa0c3382bb", null ],
     [ "__NO_RETURN", "group__compiler__conntrol__gr.html#ga153a4a31b276a9758959580538720a51", null ],
     [ "__PACKED", "group__compiler__conntrol__gr.html#gabe8996d3d985ee1529475443cc635bf1", null ],
+    [ "__PACKED_STRUCT", "group__compiler__conntrol__gr.html#ga4dbb70fab85207c27b581ecb6532b314", null ],
     [ "__STATIC_INLINE", "group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c", null ],
     [ "__UNALIGNED_UINT32", "group__compiler__conntrol__gr.html#ga27fd2ec6767ca1ab66d36b5cc0103268", null ],
     [ "__USED", "group__compiler__conntrol__gr.html#ga3e40e4c553fc11588f7a4c2a19e789e0", null ],

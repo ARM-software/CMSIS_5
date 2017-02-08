@@ -1,15 +1,20 @@
 var NAVTREE =
 [
   [ "CMSIS-RTOS2", "index.html", [
-    [ "Revision History", "rtos_revisionHistory.html", null ],
-    [ "RTX v5 Implementation", "rtx5_impl.html", "rtx5_impl" ],
-    [ "Configure RTX v5", "config_rtx.html", "config_rtx" ],
-    [ "Create an RTX Project", "cre_rtx_proj.html", null ],
-    [ "Migration from API v1 to API v2", "os2Migration.html", "os2Migration" ],
+    [ "Revision History", "rtos_revisionHistory.html", [
+      [ "CMSIS-RTOS API Version 2", "rtos_revisionHistory.html#GenRTOS2Rev", null ],
+      [ "CMSIS-RTOS RTX Version 5", "rtos_revisionHistory.html#RTX5RevisionHistory", null ]
+    ] ],
+    [ "Generic RTOS Interface", "genRTOS2IF.html", [
+      [ "Using a CMSIS-RTOS2 Implementation", "genRTOS2IF.html#usingOS2", null ],
+      [ "cmsis_os2.h header file", "genRTOS2IF.html#cmsis_os2_h", null ]
+    ] ],
+    [ "Function Overview", "functionOverview.html", "functionOverview" ],
     [ "RTOS Validation", "rtosValidation.html", [
       [ "Sample Test Output", "rtosValidation.html#test_output", null ]
     ] ],
-    [ "Function Overview", "functionOverview.html", "functionOverview" ],
+    [ "Migration from API v1 to API v2", "os2Migration.html", "os2Migration" ],
+    [ "RTX v5 Implementation", "rtx5_impl.html", "rtx5_impl" ],
     [ "Reference", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", "annotated" ],
     [ "Data Structure Index", "classes.html", null ],
@@ -22,8 +27,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"CMSIS_RTOS_ISR_Calls.html",
-"group__CMSIS__RTOS__TimerMgmt.html#gabd7a89356da7717293eb0bc5d87b8ac9"
+"annotated.html",
+"group__CMSIS__RTOS__ThreadMgmt.html#gab9f8bd715d671c6ee27644867bc1bf65",
+"group__rtx__evr__semaphore.html#gad46ee88b57aed4c666aec773560aebad"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

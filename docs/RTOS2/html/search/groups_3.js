@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['generic_20wait_20functions',['Generic Wait Functions',['../group__CMSIS__RTOS__Wait.html',1,'']]]
+  ['flags_20functions_20error_20codes',['Flags Functions Error Codes',['../group__flags__error__codes.html',1,'']]],
+  ['functions',['Functions',['../group__rtx5__specific__functions.html',1,'']]]
 ];

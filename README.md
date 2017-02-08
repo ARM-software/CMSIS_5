@@ -1,10 +1,10 @@
 # CMSIS Version 5
 
-CMSIS Version 5.0.0 release is now available.
+CMSIS Version 5.0.1 release is now available.
 
 This GitHub repository development branch reflects our current state of development and is constantly updated.
 
-The [pre-built documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) for the 5.0.0 release 
+The [pre-built documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) for the 5.0.1 release 
 is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
 
 Use *Issues* to provide feedback and report problems for CMSIS Version 5. Note that this repository gives our users and partners contiguous access to the CMSIS development. It allows you to review the work and provide feedback or create pull requests for contributions.

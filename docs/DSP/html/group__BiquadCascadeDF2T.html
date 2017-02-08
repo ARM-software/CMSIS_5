@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -138,63 +138,63 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>This set of functions implements arbitrary order recursive (IIR) filters using a transposed direct form II structure. The filters are implemented as a cascade of second order Biquad sections. These functions provide a slight memory savings as compared to the direct form I Biquad filter functions. Only floating-point data is supported.</p>
 <p>This function operate on blocks of input and output data and each call to the function processes <code>blockSize</code> samples through the filter. <code>pSrc</code> points to the array of input data and <code>pDst</code> points to the array of output data. Both arrays contain <code>blockSize</code> values.</p>
-<dl class="section user"><dt>Algorithm </dt><dd>Each Biquad stage implements a second order filter using the difference equation: <pre>       
-   y[n] = b0 * x[n] + d1       
-   d1 = b1 * x[n] + a1 * y[n] + d2       
-   d2 = b2 * x[n] + a2 * y[n]       
+<dl class="section user"><dt>Algorithm</dt><dd>Each Biquad stage implements a second order filter using the difference equation: <pre>
+   y[n] = b0 * x[n] + d1
+   d1 = b1 * x[n] + a1 * y[n] + d2
+   d2 = b2 * x[n] + a2 * y[n]
 </pre> where d1 and d2 represent the two state values.</dd></dl>
 <dl class="section user"><dt></dt><dd>A Biquad filter using a transposed Direct Form II structure is shown below. <div class="image">
 <img src="BiquadDF2Transposed.gif" alt="BiquadDF2Transposed.gif"/>
 <div class="caption">
 Single transposed Direct Form II Biquad</div></div>
- Coefficients <code>b0, b1, and b2 </code> multiply the input signal <code>x[n]</code> and are referred to as the feedforward coefficients. Coefficients <code>a1</code> and <code>a2</code> multiply the output signal <code>y[n]</code> and are referred to as the feedback coefficients. Pay careful attention to the sign of the feedback coefficients. Some design tools flip the sign of the feedback coefficients: <pre>       
-   y[n] = b0 * x[n] + d1;       
-   d1 = b1 * x[n] - a1 * y[n] + d2;       
-   d2 = b2 * x[n] - a2 * y[n];       
+Coefficients <code>b0, b1, and b2 </code> multiply the input signal <code>x[n]</code> and are referred to as the feedforward coefficients. Coefficients <code>a1</code> and <code>a2</code> multiply the output signal <code>y[n]</code> and are referred to as the feedback coefficients. Pay careful attention to the sign of the feedback coefficients. Some design tools flip the sign of the feedback coefficients: <pre>
+   y[n] = b0 * x[n] + d1;
+   d1 = b1 * x[n] - a1 * y[n] + d2;
+   d2 = b2 * x[n] - a2 * y[n];
 </pre> In this case the feedback coefficients <code>a1</code> and <code>a2</code> must be negated when used with the CMSIS DSP Library.</dd></dl>
 <dl class="section user"><dt></dt><dd>Higher order filters are realized as a cascade of second order sections. <code>numStages</code> refers to the number of second order stages used. For example, an 8th order filter would be realized with <code>numStages=4</code> second order stages. A 9th order filter would be realized with <code>numStages=5</code> second order stages with the coefficients for one of the stages configured as a first order filter (<code>b2=0</code> and <code>a2=0</code>).</dd></dl>
-<dl class="section user"><dt></dt><dd><code>pState</code> points to the state variable array. Each Biquad stage has 2 state variables <code>d1</code> and <code>d2</code>. The state variables are arranged in the <code>pState</code> array as: <pre>       
-    {d11, d12, d21, d22, ...}       
+<dl class="section user"><dt></dt><dd><code>pState</code> points to the state variable array. Each Biquad stage has 2 state variables <code>d1</code> and <code>d2</code>. The state variables are arranged in the <code>pState</code> array as: <pre>
+    {d11, d12, d21, d22, ...}
 </pre> where <code>d1x</code> refers to the state variables for the first Biquad and <code>d2x</code> refers to the state variables for the second Biquad. The state array has a total length of <code>2*numStages</code> values. The state variables are updated after each block of data is processed; the coefficients are untouched.</dd></dl>
 <dl class="section user"><dt></dt><dd>The CMSIS library contains Biquad filters in both Direct Form I and transposed Direct Form II. The advantage of the Direct Form I structure is that it is numerically more robust for fixed-point data types. That is why the Direct Form I structure supports Q15 and Q31 data types. The transposed Direct Form II structure, on the other hand, requires a wide dynamic range for the state variables <code>d1</code> and <code>d2</code>. Because of this, the CMSIS library only has a floating-point version of the Direct Form II Biquad. The advantage of the Direct Form II Biquad is that it requires half the number of state variables, 2 rather than 4, per Biquad stage.</dd></dl>
-<dl class="section user"><dt>Instance Structure </dt><dd>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter. Coefficient arrays may be shared among several instances while state variable arrays cannot be shared.</dd></dl>
-<dl class="section user"><dt>Init Functions </dt><dd>There is also an associated initialization function. The initialization function performs following operations:<ul>
+<dl class="section user"><dt>Instance Structure</dt><dd>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter. Coefficient arrays may be shared among several instances while state variable arrays cannot be shared.</dd></dl>
+<dl class="section user"><dt>Init Functions</dt><dd>There is also an associated initialization function. The initialization function performs following operations:<ul>
 <li>Sets the values of the internal structure fields.</li>
 <li>Zeros out the values in the state buffer. To do this manually without calling the init function, assign the follow subfields of the instance structure: numStages, pCoeffs, pState. Also set all of the values in pState to zero.</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. For example, to statically initialize the instance structure use <pre>       
-    <a class="el" href="structarm__biquad__cascade__df2T__instance__f32.html" title="Instance structure for the floating-point transposed direct form II Biquad cascade filter...">arm_biquad_cascade_df2T_instance_f32</a> S1 = {numStages, pState, pCoeffs};       
+<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. For example, to statically initialize the instance structure use <pre>
+    <a class="el" href="structarm__biquad__cascade__df2T__instance__f32.html" title="Instance structure for the floating-point transposed direct form II Biquad cascade filter...">arm_biquad_cascade_df2T_instance_f32</a> S1 = {numStages, pState, pCoeffs};
 </pre> where <code>numStages</code> is the number of Biquad stages in the filter; <code>pState</code> is the address of the state buffer. <code>pCoeffs</code> is the address of the coefficient buffer;</dd></dl>
 <p>This set of functions implements arbitrary order recursive (IIR) filters using a transposed direct form II structure. The filters are implemented as a cascade of second order Biquad sections. These functions provide a slight memory savings as compared to the direct form I Biquad filter functions. Only floating-point data is supported.</p>
 <p>This function operate on blocks of input and output data and each call to the function processes <code>blockSize</code> samples through the filter. <code>pSrc</code> points to the array of input data and <code>pDst</code> points to the array of output data. Both arrays contain <code>blockSize</code> values.</p>
-<dl class="section user"><dt>Algorithm </dt><dd>Each Biquad stage implements a second order filter using the difference equation: <pre>       
-   y[n] = b0 * x[n] + d1       
-   d1 = b1 * x[n] + a1 * y[n] + d2       
-   d2 = b2 * x[n] + a2 * y[n]       
+<dl class="section user"><dt>Algorithm</dt><dd>Each Biquad stage implements a second order filter using the difference equation: <pre>
+   y[n] = b0 * x[n] + d1
+   d1 = b1 * x[n] + a1 * y[n] + d2
+   d2 = b2 * x[n] + a2 * y[n]
 </pre> where d1 and d2 represent the two state values.</dd></dl>
 <dl class="section user"><dt></dt><dd>A Biquad filter using a transposed Direct Form II structure is shown below. <div class="image">
 <img src="BiquadDF2Transposed.gif" alt="BiquadDF2Transposed.gif"/>
 <div class="caption">
 Single transposed Direct Form II Biquad</div></div>
- Coefficients <code>b0, b1, and b2 </code> multiply the input signal <code>x[n]</code> and are referred to as the feedforward coefficients. Coefficients <code>a1</code> and <code>a2</code> multiply the output signal <code>y[n]</code> and are referred to as the feedback coefficients. Pay careful attention to the sign of the feedback coefficients. Some design tools flip the sign of the feedback coefficients: <pre>       
-   y[n] = b0 * x[n] + d1;       
-   d1 = b1 * x[n] - a1 * y[n] + d2;       
-   d2 = b2 * x[n] - a2 * y[n];       
+Coefficients <code>b0, b1, and b2 </code> multiply the input signal <code>x[n]</code> and are referred to as the feedforward coefficients. Coefficients <code>a1</code> and <code>a2</code> multiply the output signal <code>y[n]</code> and are referred to as the feedback coefficients. Pay careful attention to the sign of the feedback coefficients. Some design tools flip the sign of the feedback coefficients: <pre>
+   y[n] = b0 * x[n] + d1;
+   d1 = b1 * x[n] - a1 * y[n] + d2;
+   d2 = b2 * x[n] - a2 * y[n];
 </pre> In this case the feedback coefficients <code>a1</code> and <code>a2</code> must be negated when used with the CMSIS DSP Library.</dd></dl>
 <dl class="section user"><dt></dt><dd>Higher order filters are realized as a cascade of second order sections. <code>numStages</code> refers to the number of second order stages used. For example, an 8th order filter would be realized with <code>numStages=4</code> second order stages. A 9th order filter would be realized with <code>numStages=5</code> second order stages with the coefficients for one of the stages configured as a first order filter (<code>b2=0</code> and <code>a2=0</code>).</dd></dl>
-<dl class="section user"><dt></dt><dd><code>pState</code> points to the state variable array. Each Biquad stage has 2 state variables <code>d1</code> and <code>d2</code>. The state variables are arranged in the <code>pState</code> array as: <pre>       
-    {d11, d12, d21, d22, ...}       
+<dl class="section user"><dt></dt><dd><code>pState</code> points to the state variable array. Each Biquad stage has 2 state variables <code>d1</code> and <code>d2</code>. The state variables are arranged in the <code>pState</code> array as: <pre>
+    {d11, d12, d21, d22, ...}
 </pre> where <code>d1x</code> refers to the state variables for the first Biquad and <code>d2x</code> refers to the state variables for the second Biquad. The state array has a total length of <code>2*numStages</code> values. The state variables are updated after each block of data is processed; the coefficients are untouched.</dd></dl>
 <dl class="section user"><dt></dt><dd>The CMSIS library contains Biquad filters in both Direct Form I and transposed Direct Form II. The advantage of the Direct Form I structure is that it is numerically more robust for fixed-point data types. That is why the Direct Form I structure supports Q15 and Q31 data types. The transposed Direct Form II structure, on the other hand, requires a wide dynamic range for the state variables <code>d1</code> and <code>d2</code>. Because of this, the CMSIS library only has a floating-point version of the Direct Form II Biquad. The advantage of the Direct Form II Biquad is that it requires half the number of state variables, 2 rather than 4, per Biquad stage.</dd></dl>
-<dl class="section user"><dt>Instance Structure </dt><dd>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter. Coefficient arrays may be shared among several instances while state variable arrays cannot be shared.</dd></dl>
-<dl class="section user"><dt>Init Functions </dt><dd>There is also an associated initialization function. The initialization function performs following operations:<ul>
+<dl class="section user"><dt>Instance Structure</dt><dd>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter. Coefficient arrays may be shared among several instances while state variable arrays cannot be shared.</dd></dl>
+<dl class="section user"><dt>Init Functions</dt><dd>There is also an associated initialization function. The initialization function performs following operations:<ul>
 <li>Sets the values of the internal structure fields.</li>
 <li>Zeros out the values in the state buffer. To do this manually without calling the init function, assign the follow subfields of the instance structure: numStages, pCoeffs, pState. Also set all of the values in pState to zero.</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. For example, to statically initialize the instance structure use <pre>       
-    <a class="el" href="structarm__biquad__cascade__df2T__instance__f64.html" title="Instance structure for the floating-point transposed direct form II Biquad cascade filter...">arm_biquad_cascade_df2T_instance_f64</a> S1 = {numStages, pState, pCoeffs};       
+<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. For example, to statically initialize the instance structure use <pre>
+    <a class="el" href="structarm__biquad__cascade__df2T__instance__f64.html" title="Instance structure for the floating-point transposed direct form II Biquad cascade filter...">arm_biquad_cascade_df2T_instance_f64</a> S1 = {numStages, pState, pCoeffs};
 </pre> where <code>numStages</code> is the number of Biquad stages in the filter; <code>pState</code> is the address of the state buffer. <code>pCoeffs</code> is the address of the coefficient buffer; </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga114f373fbc16a314e9f293c7c7649c7f"></a>
@@ -343,8 +343,8 @@ Single transposed Direct Form II Biquad</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
 <p><b>Coefficient and State Ordering:</b> </p>
-<dl class="section user"><dt></dt><dd>The coefficients are stored in the array <code>pCoeffs</code> in the following order: <pre>    
-    {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}    
+<dl class="section user"><dt></dt><dd>The coefficients are stored in the array <code>pCoeffs</code> in the following order: <pre>
+    {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}
 </pre></dd></dl>
 <dl class="section user"><dt></dt><dd>where <code>b1x</code> and <code>a1x</code> are the coefficients for the first stage, <code>b2x</code> and <code>a2x</code> are the coefficients for the second stage, and so on. The <code>pCoeffs</code> array contains a total of <code>5*numStages</code> values.</dd></dl>
 <dl class="section user"><dt></dt><dd>The <code>pState</code> is a pointer to state array. Each Biquad stage has 2 state variables <code>d1,</code> and <code>d2</code>. The 2 state variables for stage 1 are first, then the 2 state variables for stage 2, and so on. The state array has a total length of <code>2*numStages</code> values. The state variables are updated after each block of data is processed; the coefficients are untouched. </dd></dl>
@@ -399,8 +399,8 @@ Single transposed Direct Form II Biquad</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
 <p><b>Coefficient and State Ordering:</b> </p>
-<dl class="section user"><dt></dt><dd>The coefficients are stored in the array <code>pCoeffs</code> in the following order: <pre>    
-    {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}    
+<dl class="section user"><dt></dt><dd>The coefficients are stored in the array <code>pCoeffs</code> in the following order: <pre>
+    {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}
 </pre></dd></dl>
 <dl class="section user"><dt></dt><dd>where <code>b1x</code> and <code>a1x</code> are the coefficients for the first stage, <code>b2x</code> and <code>a2x</code> are the coefficients for the second stage, and so on. The <code>pCoeffs</code> array contains a total of <code>5*numStages</code> values.</dd></dl>
 <dl class="section user"><dt></dt><dd>The <code>pState</code> is a pointer to state array. Each Biquad stage has 2 state variables <code>d1,</code> and <code>d2</code>. The 2 state variables for stage 1 are first, then the 2 state variables for stage 2, and so on. The state array has a total length of <code>2*numStages</code> values. The state variables are updated after each block of data is processed; the coefficients are untouched. </dd></dl>
@@ -506,8 +506,8 @@ Single transposed Direct Form II Biquad</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
 <p><b>Coefficient and State Ordering:</b> </p>
-<dl class="section user"><dt></dt><dd>The coefficients are stored in the array <code>pCoeffs</code> in the following order: <pre>    
-    {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}    
+<dl class="section user"><dt></dt><dd>The coefficients are stored in the array <code>pCoeffs</code> in the following order: <pre>
+    {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}
 </pre></dd></dl>
 <dl class="section user"><dt></dt><dd>where <code>b1x</code> and <code>a1x</code> are the coefficients for the first stage, <code>b2x</code> and <code>a2x</code> are the coefficients for the second stage, and so on. The <code>pCoeffs</code> array contains a total of <code>5*numStages</code> values.</dd></dl>
 <dl class="section user"><dt></dt><dd>The <code>pState</code> is a pointer to state array. Each Biquad stage has 2 state variables <code>d1,</code> and <code>d2</code> for each channel. The 2 state variables for stage 1 are first, then the 2 state variables for stage 2, and so on. The state array has a total length of <code>2*numStages</code> values. The state variables are updated after each block of data is processed; the coefficients are untouched. </dd></dl>
@@ -521,7 +521,7 @@ Single transposed Direct Form II Biquad</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

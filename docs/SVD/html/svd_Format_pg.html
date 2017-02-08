@@ -149,7 +149,7 @@ Default values for register attributes like register size, reset value, and acce
 <li><b>Vendor Extensions:</b> The CMSIS-SVD format includes a section named <em>&lt;vendorExtensions&gt;</em> positioned after the closing tag <em>&lt;/peripherals&gt;</em>. This allows silicon vendors and tool partners to extend the description beyond the current specification.</li>
 </ul>
 <p><b>Multiple Instantiation</b></p>
-<p>CMSIS-SVD supports the reuse of whole sections of the description. The attribute <em>derivedFrom</em> for <a class="el" href="elem_peripherals.html#elem_peripheral">peripheral</a>, <a class="el" href="elem_registers.html#elem_register">register</a>, and <a class="el" href="elem_registers.html#elem_field">field</a> specifies the source of the section to be copied from. Individual tags can be used to redefine specific elements within a copied section. In case the name of the description source is not unique, the name needs to be qualified hierarchically until the element composite name becomes unique. Hierarchies are separated by a dot. For example, <em>&lt;peripheral name&gt;.&lt;register name&gt;.&lt;field name&gt;</em>.</p>
+<p>CMSIS-SVD supports the reuse of whole sections of the description. The attribute <em>derivedFrom</em> for <a class="el" href="elem_peripherals.html#elem_peripheral">peripheral</a>, <a class="el" href="elem_registers.html#elem_register">register</a>, and <a class="el" href="elem_registers.html#elem_field">field</a> specifies the source of the section to be copied from. Individual tags can be used to redefine specific elements within a copied section.</p>
 <p><b>Array of Elements</b></p>
 <p>A powerfull construct in data structures of the C programming language is the array. An array is a series of data elements of the same type selected via an index. CMSIS-SVD supports arrays for <a class="el" href="elem_peripherals.html#elem_peripheral">peripheral</a>, <a class="el" href="elem_registers.html#elem_cluster">cluster</a>, and <a class="el" href="elem_registers.html#elem_register">register</a>.</p>
 <p><b>Peripheral Grouping</b></p>
@@ -162,7 +162,7 @@ Default values for register attributes like register size, reset value, and acce
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:47 for CMSIS-SVD by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:05 for CMSIS-SVD by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

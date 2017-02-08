@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -108,8 +108,7 @@ $(document).ready(function(){initNavTree('group__groupTransforms.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Content</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Content</a>  </div>
   <div class="headertitle">
 <div class="title">Transform Functions</div>  </div>
 </div><!--header-->
@@ -119,138 +118,18 @@ $(document).ready(function(){initNavTree('group__groupTransforms.html','');});
 Content</h2></td></tr>
 <tr class="memitem:group__ComplexFFT"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ComplexFFT.html">Complex FFT Functions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__Radix8__CFFT__CIFFT"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Radix8__CFFT__CIFFT.html">Radix-8 Complex FFT Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__DCT4__IDCT4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DCT4__IDCT4.html">DCT Type IV Functions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__Fast"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Fast.html">Real FFT Functions</a></td></tr>
+<tr class="memitem:group__RealFFT"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFT.html">Real FFT Functions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__CFFT__CIFFT"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CFFT__CIFFT.html">Complex FFT Tables</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__RealFFT"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFT.html">RealFFT</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gae239ddf995d1607115f9e84d5c069b9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__groupTransforms.html#gae239ddf995d1607115f9e84d5c069b9c">arm_radix4_butterfly_f32</a> (<a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, uint16_t fftLen, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pCoef, uint16_t twidCoefModifier)</td></tr>
-<tr class="separator:gae239ddf995d1607115f9e84d5c069b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6cfdb6bdc66b13732ef2351caf98fdbb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__groupTransforms.html#ga6cfdb6bdc66b13732ef2351caf98fdbb">arm_split_rfft_f32</a> (<a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, uint32_t fftLen, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pATable, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pBTable, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pDst, uint32_t modifier)</td></tr>
-<tr class="memdesc:ga6cfdb6bdc66b13732ef2351caf98fdbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Core Real FFT process.  <a href="#ga6cfdb6bdc66b13732ef2351caf98fdbb">More...</a><br/></td></tr>
-<tr class="separator:ga6cfdb6bdc66b13732ef2351caf98fdbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gae239ddf995d1607115f9e84d5c069b9c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void arm_radix4_butterfly_f32 </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
-          <td class="paramname"><em>pSrc</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>fftLen</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
-          <td class="paramname"><em>pCoef</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>twidCoefModifier</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Referenced by <a class="el" href="group__ComplexFFT.html#ga521f670cd9c571bc61aff9bec89f4c26">arm_cfft_radix4_f32()</a>, and <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ga6cfdb6bdc66b13732ef2351caf98fdbb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void arm_split_rfft_f32 </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
-          <td class="paramname"><em>pSrc</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>fftLen</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
-          <td class="paramname"><em>pATable</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
-          <td class="paramname"><em>pBTable</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
-          <td class="paramname"><em>pDst</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>modifier</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>end of RealFFT group </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrc</td><td>points to the input buffer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">fftLen</td><td>length of FFT. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pATable</td><td>points to the twiddle Coef A buffer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*pBTable</td><td>points to the twiddle Coef B buffer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to the output buffer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">modifier</td><td>twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
-
-<p>Referenced by <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

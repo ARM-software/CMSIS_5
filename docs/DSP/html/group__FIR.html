@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -150,8 +150,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>This set of functions implements Finite Impulse Response (FIR) filters for Q7, Q15, Q31, and floating-point data types. Fast versions of Q15 and Q31 are also provided. The functions operate on blocks of input and output data and each call to the function processes <code>blockSize</code> samples through the filter. <code>pSrc</code> and <code>pDst</code> points to input and output arrays containing <code>blockSize</code> values.</p>
-<dl class="section user"><dt>Algorithm: </dt><dd>The FIR filter algorithm is based upon a sequence of multiply-accumulate (MAC) operations. Each filter coefficient <code>b[n]</code> is multiplied by a state variable which equals a previous input sample <code>x[n]</code>. <pre>  
-    y[n] = b[0] * x[n] + b[1] * x[n-1] + b[2] * x[n-2] + ...+ b[numTaps-1] * x[n-numTaps+1]  
+<dl class="section user"><dt>Algorithm:</dt><dd>The FIR filter algorithm is based upon a sequence of multiply-accumulate (MAC) operations. Each filter coefficient <code>b[n]</code> is multiplied by a state variable which equals a previous input sample <code>x[n]</code>. <pre>
+    y[n] = b[0] * x[n] + b[1] * x[n-1] + b[2] * x[n-2] + ...+ b[numTaps-1] * x[n-numTaps+1]
  </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd><div class="image">
 <img src="FIR.gif" alt="FIR.gif"/>
@@ -159,28 +159,28 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 Finite Impulse Response filter</div></div>
  </dd></dl>
 <dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to a coefficient array of size <code>numTaps</code>. Coefficients are stored in time reversed order. </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>  
-    {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}  
+<dl class="section user"><dt></dt><dd><pre>
+    {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
  </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd><code>pState</code> points to a state array of size <code>numTaps + blockSize - 1</code>. Samples in the state buffer are stored in the following order. </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>  
-    {x[n-numTaps+1], x[n-numTaps], x[n-numTaps-1], x[n-numTaps-2]....x[0], x[1], ..., x[blockSize-1]}  
+<dl class="section user"><dt></dt><dd><pre>
+    {x[n-numTaps+1], x[n-numTaps], x[n-numTaps-1], x[n-numTaps-2]....x[0], x[1], ..., x[blockSize-1]}
  </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>Note that the length of the state buffer exceeds the length of the coefficient array by <code>blockSize-1</code>. The increased state buffer length allows circular addressing, which is traditionally used in the FIR filters, to be avoided and yields a significant speed improvement. The state variables are updated after each block of data is processed; the coefficients are untouched. </dd></dl>
-<dl class="section user"><dt>Instance Structure </dt><dd>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter. Coefficient arrays may be shared among several instances while state variable arrays cannot be shared. There are separate instance structure declarations for each of the 4 supported data types.</dd></dl>
-<dl class="section user"><dt>Initialization Functions </dt><dd>There is also an associated initialization function for each data type. The initialization function performs the following operations:<ul>
+<dl class="section user"><dt>Instance Structure</dt><dd>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter. Coefficient arrays may be shared among several instances while state variable arrays cannot be shared. There are separate instance structure declarations for each of the 4 supported data types.</dd></dl>
+<dl class="section user"><dt>Initialization Functions</dt><dd>There is also an associated initialization function for each data type. The initialization function performs the following operations:<ul>
 <li>Sets the values of the internal structure fields.</li>
 <li>Zeros out the values in the state buffer. To do this manually without calling the init function, assign the follow subfields of the instance structure: numTaps, pCoeffs, pState. Also set all of the values in pState to zero.</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. The code below statically initializes each of the 4 different data type filter instance structures <pre>  
-<a class="el" href="structarm__fir__instance__f32.html" title="Instance structure for the floating-point FIR filter. ">arm_fir_instance_f32</a> S = {numTaps, pState, pCoeffs};  
-<a class="el" href="structarm__fir__instance__q31.html" title="Instance structure for the Q31 FIR filter. ">arm_fir_instance_q31</a> S = {numTaps, pState, pCoeffs};  
-<a class="el" href="structarm__fir__instance__q15.html" title="Instance structure for the Q15 FIR filter. ">arm_fir_instance_q15</a> S = {numTaps, pState, pCoeffs};  
-<a class="el" href="structarm__fir__instance__q7.html" title="Instance structure for the Q7 FIR filter. ">arm_fir_instance_q7</a> S =  {numTaps, pState, pCoeffs};  
+<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. The code below statically initializes each of the 4 different data type filter instance structures <pre>
+<a class="el" href="structarm__fir__instance__f32.html" title="Instance structure for the floating-point FIR filter. ">arm_fir_instance_f32</a> S = {numTaps, pState, pCoeffs};
+<a class="el" href="structarm__fir__instance__q31.html" title="Instance structure for the Q31 FIR filter. ">arm_fir_instance_q31</a> S = {numTaps, pState, pCoeffs};
+<a class="el" href="structarm__fir__instance__q15.html" title="Instance structure for the Q15 FIR filter. ">arm_fir_instance_q15</a> S = {numTaps, pState, pCoeffs};
+<a class="el" href="structarm__fir__instance__q7.html" title="Instance structure for the Q7 FIR filter. ">arm_fir_instance_q7</a> S =  {numTaps, pState, pCoeffs};
  </pre></dd></dl>
 <p>where <code>numTaps</code> is the number of filter coefficients in the filter; <code>pState</code> is the address of the state buffer; <code>pCoeffs</code> is the address of the coefficient buffer.</p>
-<dl class="section user"><dt>Fixed-Point Behavior </dt><dd>Care must be taken when using the fixed-point versions of the FIR filter functions. In particular, the overflow and saturation behavior of the accumulator used in each function must be considered. Refer to the function specific documentation below for usage guidelines. </dd></dl>
+<dl class="section user"><dt>Fixed-Point Behavior</dt><dd>Care must be taken when using the fixed-point versions of the FIR filter functions. In particular, the overflow and saturation behavior of the accumulator used in each function must be considered. Refer to the function specific documentation below for usage guidelines. </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gae8fb334ea67eb6ecbd31824ddc14cd6a"></a>
 <div class="memitem">
@@ -283,7 +283,7 @@ Finite Impulse Response filter</div></div>
 <dl class="section user"><dt></dt><dd>This fast version uses a 32-bit accumulator with 2.30 format. The accumulator maintains full precision of the intermediate multiplication results but provides only a single guard bit. Thus, if the accumulator result overflows it wraps around and distorts the result. In order to avoid overflows completely the input signal must be scaled down by log2(numTaps) bits. The 2.30 accumulator is then truncated to 2.15 format and saturated to yield the 1.15 result.</dd></dl>
 <dl class="section user"><dt></dt><dd>Refer to the function <code><a class="el" href="group__FIR.html#ga262d173058d6f80fdf60404ba262a8f5" title="Processing function for the Q15 FIR filter. ">arm_fir_q15()</a></code> for a slower implementation of this function which uses 64-bit accumulation to avoid wrap around distortion. Both the slow and the fast versions use the same instance structure. Use the function <code><a class="el" href="group__FIR.html#gae2a50f692f41ba57e44ed0719b1368bd" title="Initialization function for the Q15 FIR filter. ">arm_fir_init_q15()</a></code> to initialize the filter structure. </dd></dl>
 
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__math_8h.html#af0d54ec57b936994a34f073d0049ea3f">_SIMD32_OFFSET</a>, <a class="el" href="structarm__fir__instance__q15.html#a0e46f93cf51bfb18b1be808be9c5bfc9">arm_fir_instance_q15::numTaps</a>, <a class="el" href="structarm__fir__instance__q15.html#a6d16db16a5f8f0db54938f2967244d9e">arm_fir_instance_q15::pCoeffs</a>, and <a class="el" href="structarm__fir__instance__q15.html#aa8d25f44f45b6a6c4cf38c31569b8a01">arm_fir_instance_q15::pState</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#aa505179349146cf6186640b4c8b47714">__PKHBT</a>, <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__math_8h.html#aa611fdbf6c56c46553701d6596a79aaf">__SMLAD()</a>, <a class="el" href="arm__math_8h.html#a7fc670277db1ad9ac34d52d771c7c305">__SMLADX()</a>, <a class="el" href="arm__math_8h.html#af0d54ec57b936994a34f073d0049ea3f">_SIMD32_OFFSET</a>, <a class="el" href="structarm__fir__instance__q15.html#a0e46f93cf51bfb18b1be808be9c5bfc9">arm_fir_instance_q15::numTaps</a>, <a class="el" href="structarm__fir__instance__q15.html#a6d16db16a5f8f0db54938f2967244d9e">arm_fir_instance_q15::pCoeffs</a>, and <a class="el" href="structarm__fir__instance__q15.html#aa8d25f44f45b6a6c4cf38c31569b8a01">arm_fir_instance_q15::pState</a>.</p>
 
 </div>
 </div>
@@ -393,8 +393,8 @@ Finite Impulse Response filter</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
 <p><b>Description:</b> </p>
-<dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>    
-   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}    
+<dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>
+   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
 </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd><code>pState</code> points to the array of state variables. <code>pState</code> is of length <code>numTaps+blockSize-1</code> samples, where <code>blockSize</code> is the number of input samples processed by each call to <code><a class="el" href="group__FIR.html#gae8fb334ea67eb6ecbd31824ddc14cd6a" title="Processing function for the floating-point FIR filter. ">arm_fir_f32()</a></code>. </dd></dl>
 
@@ -457,16 +457,16 @@ Finite Impulse Response filter</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>numTaps</code> is not greater than or equal to 4 and even.</dd></dl>
 <p><b>Description:</b> </p>
-<dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>    
-   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}    
-</pre> Note that <code>numTaps</code> must be even and greater than or equal to 4. To implement an odd length filter simply increase <code>numTaps</code> by 1 and set the last coefficient to zero. For example, to implement a filter with <code>numTaps=3</code> and coefficients <pre>    
-    {0.3, -0.8, 0.3}    
-</pre> set <code>numTaps=4</code> and use the coefficients: <pre>    
-    {0.3, -0.8, 0.3, 0}.    
-</pre> Similarly, to implement a two point filter <pre>    
-    {0.3, -0.3}    
-</pre> set <code>numTaps=4</code> and use the coefficients: <pre>    
-    {0.3, -0.3, 0, 0}.    
+<dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>
+   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
+</pre> Note that <code>numTaps</code> must be even and greater than or equal to 4. To implement an odd length filter simply increase <code>numTaps</code> by 1 and set the last coefficient to zero. For example, to implement a filter with <code>numTaps=3</code> and coefficients <pre>
+    {0.3, -0.8, 0.3}
+</pre> set <code>numTaps=4</code> and use the coefficients: <pre>
+    {0.3, -0.8, 0.3, 0}.
+</pre> Similarly, to implement a two point filter <pre>
+    {0.3, -0.3}
+</pre> set <code>numTaps=4</code> and use the coefficients: <pre>
+    {0.3, -0.3, 0, 0}.
 </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd><code>pState</code> points to the array of state variables. <code>pState</code> is of length <code>numTaps+blockSize</code>, when running on Cortex-M4 and Cortex-M3 and is of length <code>numTaps+blockSize-1</code>, when running on Cortex-M0 where <code>blockSize</code> is the number of input samples processed by each call to <code><a class="el" href="group__FIR.html#ga262d173058d6f80fdf60404ba262a8f5" title="Processing function for the Q15 FIR filter. ">arm_fir_q15()</a></code>. </dd></dl>
 
@@ -527,8 +527,8 @@ Finite Impulse Response filter</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
 <p><b>Description:</b> </p>
-<dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>    
-   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}    
+<dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>
+   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
 </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd><code>pState</code> points to the array of state variables. <code>pState</code> is of length <code>numTaps+blockSize-1</code> samples, where <code>blockSize</code> is the number of input samples processed by each call to <code><a class="el" href="group__FIR.html#gaadd938c68ab08967cbb5fc696f384bb5" title="Processing function for the Q31 FIR filter. ">arm_fir_q31()</a></code>. </dd></dl>
 
@@ -589,8 +589,8 @@ Finite Impulse Response filter</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
 <p><b>Description:</b> </p>
-<dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>    
-   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}    
+<dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>
+   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
 </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd><code>pState</code> points to the array of state variables. <code>pState</code> is of length <code>numTaps+blockSize-1</code> samples, where <code>blockSize</code> is the number of input samples processed by each call to <code><a class="el" href="group__FIR.html#ga31c91a0bf0962327ef8f626fae68ea32" title="Processing function for the Q7 FIR filter. ">arm_fir_q7()</a></code>. </dd></dl>
 
@@ -643,12 +643,12 @@ Finite Impulse Response filter</div></div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Restrictions </dt><dd>If the silicon does not support unaligned memory access enable the macro UNALIGNED_SUPPORT_DISABLE In this case input, output, state buffers should be aligned by 32-bit</dd></dl>
+<dl class="section user"><dt>Restrictions</dt><dd>If the silicon does not support unaligned memory access enable the macro UNALIGNED_SUPPORT_DISABLE In this case input, output, state buffers should be aligned by 32-bit</dd></dl>
 <p><b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function is implemented using a 64-bit internal accumulator. Both coefficients and state variables are represented in 1.15 format and multiplications yield a 2.30 result. The 2.30 intermediate results are accumulated in a 64-bit accumulator in 34.30 format. There is no risk of internal overflow with this approach and the full precision of intermediate multiplications is preserved. After all additions have been performed, the accumulator is truncated to 34.15 format by discarding low 15 bits. Lastly, the accumulator is saturated to yield a result in 1.15 format.</dd></dl>
 <dl class="section user"><dt></dt><dd>Refer to the function <code><a class="el" href="group__FIR.html#gac7d35e9472e49ccd88800f37f3476bd3" title="Processing function for the fast Q15 FIR filter for Cortex-M3 and Cortex-M4. ">arm_fir_fast_q15()</a></code> for a faster but less precise implementation of this function. </dd></dl>
 
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__math_8h.html#af0d54ec57b936994a34f073d0049ea3f">_SIMD32_OFFSET</a>, <a class="el" href="structarm__fir__instance__q15.html#a0e46f93cf51bfb18b1be808be9c5bfc9">arm_fir_instance_q15::numTaps</a>, <a class="el" href="structarm__fir__instance__q15.html#a6d16db16a5f8f0db54938f2967244d9e">arm_fir_instance_q15::pCoeffs</a>, and <a class="el" href="structarm__fir__instance__q15.html#aa8d25f44f45b6a6c4cf38c31569b8a01">arm_fir_instance_q15::pState</a>.</p>
+<p>References <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="structarm__fir__instance__q15.html#a0e46f93cf51bfb18b1be808be9c5bfc9">arm_fir_instance_q15::numTaps</a>, <a class="el" href="structarm__fir__instance__q15.html#a6d16db16a5f8f0db54938f2967244d9e">arm_fir_instance_q15::pCoeffs</a>, and <a class="el" href="structarm__fir__instance__q15.html#aa8d25f44f45b6a6c4cf38c31569b8a01">arm_fir_instance_q15::pState</a>.</p>
 
 </div>
 </div>
@@ -762,7 +762,7 @@ Finite Impulse Response filter</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.0.0</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -111,27 +111,24 @@ $(document).ready(function(){initNavTree('rtx5_impl.html','');});
 <div class="title">RTX v5 Implementation </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The RTX version 5 implements the CMSIS-RTOS API v2 as native RTOS interface for Cortex-M processor-based devices. A translation layer to CMSIS-RTOS API v1 is provided and with minimal effort RTX version 5 can be used in applications that where previously based on RTX version 4 and CMSIS-RTOS v1.</p>
-<p><b>Theory of Operation</b></p>
-<p>This section describes the internal operations of RTX version 5:</p>
+<div class="textblock"><p>Keil RTX version 5 (RTX5) implements the CMSIS-RTOS2 as a native RTOS interface for ARM Cortex-M processor-based devices. A translation layer to CMSIS-RTOS API v1 is provided. Therefore, RTX5 can be used in applications that where previously based on RTX version 4 and CMSIS-RTOS version 1 with minimal effort.</p>
+<p>The following sections provide further details:</p>
 <ul>
-<li><a class="el" href="SystemStartup.html">System Startup</a> describes the C/C++ library initialization process.</li>
-<li><a class="el" href="MemoryAllocation.html">Memory Allocation</a> describes the resource management in the target system.</li>
-<li><a class="el" href="ThreadStack.html">Thread Stack Management</a> explains how RTX manages the stack memory for threads.</li>
-<li><a class="el" href="lowPower.html">Low-Power Operation</a> explains how to utilize power saving modes of Cortex-M devices.</li>
-<li><a class="el" href="KernelTimer.html">RTX Kernel Timer Tick</a> explains the options for time delays and timeouts.</li>
-<li><a class="el" href="CMSIS_RTOS_TimeOutValue.html">Timeout Value</a> explains behaviour of timeouts including <span class="XML-Token">0</span>=no wait and <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>.</li>
-<li><a class="el" href="TickLess.html">Tick-less Low-Power Operation</a> enables ultra-low power operation with custom timer.</li>
-<li><a class="el" href="CMSIS_RTOS_ISR_Calls.html">Calls from Interrupt Service Routines</a> lists the functions calls that are supported from interrupt context.</li>
+<li><a class="el" href="cre_rtx_proj.html">Create an RTX5 Project</a> explains how to setup an RTX v5 project in Keil MDK.</li>
+<li><a class="el" href="theory_of_operation.html">Theory of Operation</a> provides general information about the operation of CMSIS-RTOS RTX v5.</li>
+<li><a class="el" href="config_rtx5.html">Configure RTX v5</a> describes configuration parameters of CMSIS-RTOS RTX v5.</li>
+<li><a class="el" href="creating_RTX5_LIB.html">Building the RTX5 Library</a> explains how to build your own CMSIS-RTOS RTX v5 library.</li>
+<li><a class="el" href="dirstructfiles5.html">Directory Structure and File Overview</a> explains the directories and files that are supplied as part of CMSIS-RTOS RTX v5.</li>
+<li><a class="el" href="technicalData5.html">Technical Data</a> lists microcontroller hardware requirements and limitations such as number of concurrent threads.</li>
+<li><a class="el" href="misraCompliance5.html">MISRA-C Compliance Exceptions</a> describes the violations to the MISRA standard. </li>
 </ul>
-<p>Many aspects of the kernel are configurable and the configuration options are mentioned where applicable. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:45 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:03 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

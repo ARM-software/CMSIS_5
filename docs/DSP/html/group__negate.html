@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -131,8 +131,8 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Negates the elements of a vector.</p>
-<pre>        
-    pDst[n] = -pSrc[n],   0 &lt;= n &lt; blockSize.        
+<pre>
+    pDst[n] = -pSrc[n],   0 &lt;= n &lt; blockSize.
 </pre><p>The functions support in-place computation allowing the source and destination pointers to reference the same memory buffer. There are separate functions for floating-point, Q7, Q15, and Q31 data types. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga2e169c4de6cc6e3ba4be9473531e6657"></a>
@@ -216,11 +216,11 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Conditions for optimum performance </dt><dd>Input and output buffers should be aligned by 32-bit</dd></dl>
+<dl class="section user"><dt>Conditions for optimum performance</dt><dd>Input and output buffers should be aligned by 32-bit</dd></dl>
 <p><b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. The Q15 value -1 (0x8000) will be saturated to the maximum allowable positive value 0x7FFF. </dd></dl>
 
-<p>References <a class="el" href="arm__math_8h.html#af0d54ec57b936994a34f073d0049ea3f">_SIMD32_OFFSET</a>, and <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#a6e4703dc08d1b82eab7f5ef96edb59bb">__QSUB16()</a>, <a class="el" href="arm__math_8h.html#af0d54ec57b936994a34f073d0049ea3f">_SIMD32_OFFSET</a>, and <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
 
 </div>
 </div>
@@ -265,7 +265,7 @@ Functions</h2></td></tr>
 <p><b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. The Q31 value -1 (0x80000000) will be saturated to the maximum allowable positive value 0x7FFFFFFF. </dd></dl>
 
-<p>References <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#a15e896d0146c280e600d00f609832350">__QSUB()</a>, and <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
 
 </div>
 </div>
@@ -310,7 +310,7 @@ Functions</h2></td></tr>
 <p><b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. The Q7 value -1 (0x80) will be saturated to the maximum allowable positive value 0x7F. </dd></dl>
 
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, and <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#a4690314b420f463093f1a2f68b5fb143">__QSUB8()</a>, <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, and <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
 
 </div>
 </div>
@@ -319,7 +319,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

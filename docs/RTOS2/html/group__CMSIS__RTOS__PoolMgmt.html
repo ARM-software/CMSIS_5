@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.0.0</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -138,9 +138,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gab414a1e138205a55820acfa277c8f386"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab414a1e138205a55820acfa277c8f386">osMemoryPoolGetName</a> (<a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a> mp_id)</td></tr>
 <tr class="memdesc:gab414a1e138205a55820acfa277c8f386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get name of a Memory Pool object.  <a href="#gab414a1e138205a55820acfa277c8f386">More...</a><br/></td></tr>
 <tr class="separator:gab414a1e138205a55820acfa277c8f386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga97e6ef509bc774398eeedf6c21c1ff95"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga97e6ef509bc774398eeedf6c21c1ff95">osMemoryPoolAlloc</a> (<a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a> mp_id, uint32_t timeout)</td></tr>
-<tr class="memdesc:ga97e6ef509bc774398eeedf6c21c1ff95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a memory block from a Memory Pool.  <a href="#ga97e6ef509bc774398eeedf6c21c1ff95">More...</a><br/></td></tr>
-<tr class="separator:ga97e6ef509bc774398eeedf6c21c1ff95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ead54e99ccb8f112356c88f99d38fbe"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a> (<a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a> mp_id, uint32_t timeout)</td></tr>
+<tr class="memdesc:ga8ead54e99ccb8f112356c88f99d38fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a memory block from a Memory Pool.  <a href="#ga8ead54e99ccb8f112356c88f99d38fbe">More...</a><br/></td></tr>
+<tr class="separator:ga8ead54e99ccb8f112356c88f99d38fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabb4f4560daa6d1f8c8789082ee186d16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16">osMemoryPoolFree</a> (<a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a> mp_id, void *block)</td></tr>
 <tr class="memdesc:gabb4f4560daa6d1f8c8789082ee186d16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return an allocated memory block back to a Memory Pool.  <a href="#gabb4f4560daa6d1f8c8789082ee186d16">More...</a><br/></td></tr>
 <tr class="separator:gabb4f4560daa6d1f8c8789082ee186d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,30 +163,9 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p><b>Memory</b> <b>pools</b> are fixed-size blocks of memory that are thread-safe. They operate much faster than the dynamically allocated heap and do not suffer from fragmentation. Being thread-safe, they can be accessed from threads and ISRs alike.</p>
 <p><b>Shared</b> <b>memory</b> is one of the basic models to exchange information between threads. Using memory pools for exchanging data, you can share more complex objects between threads if compared to a <a class="el" href="group__CMSIS__RTOS__Message.html">Message Queue</a>. Memory pool management functions are used to define and manage such fixed-sized memory pools.</p>
-<dl class="section note"><dt>Note</dt><dd>Refer to <a class="el" href="memPoolConfig.html">Memory Pool Configuration</a> for RTX5 configuration options.</dd></dl>
-<h2>Working with Memory Pools </h2>
-<p>Follow these steps to create and use a memory pool:</p>
-<ol type="1">
-<li>Declare a data structure that combines a number of elements: <div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line">  uint32_t length;</div>
-<div class="line">  uint32_t width;</div>
-<div class="line">  uint32_t height;</div>
-<div class="line">  uint32_t weight;</div>
-<div class="line">} properties_t;</div>
-</div><!-- fragment --></li>
-<li>Declare a memory pool of these objects as a block of memory: <div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a>  object_pool_id;                 <span class="comment">// Memory pool ID</span></div>
-</div><!-- fragment --></li>
-<li>Then, create the memory pool in a thread: <div class="fragment"><div class="line">object_pool_id = <a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#ga497ced5d72dc5cd405c4c418516220dc">osMemoryPoolNew</a>(16, <span class="keyword">sizeof</span>(properties_t), NULL);</div>
-</div><!-- fragment --></li>
-<li>Allocate the pool within a thread and fill it with data: <div class="fragment"><div class="line">properties_t *object_data;</div>
-<div class="line"> object_data = (properties_t *) osPoolAlloc(object_pool_id);</div>
-<div class="line"> </div>
-<div class="line">object_data-&gt;length = 100;</div>
-<div class="line">object_data-&gt;width  = 10;</div>
-<div class="line">object_data-&gt;height = 23;</div>
-<div class="line">object_data-&gt;weight = 1000;</div>
-</div><!-- fragment --> </li>
-</ol>
+<dl class="section note"><dt>Note</dt><dd>The functions <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16">osMemoryPoolFree</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gad696e94bfbe28f0b6613f9303fdf6a37">osMemoryPoolGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab2bf059b7fa7679c3cccdaeec60b6c0e">osMemoryPoolGetBlockSize</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga958a9449bff8c95ce213de98eef5739d">osMemoryPoolGetCount</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga0394cffa9479a7994e3b03c79c1cb909">osMemoryPoolGetSpace</a> can be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
+<dd>
+Refer to <a class="el" href="config_rtx5.html#memPoolConfig">Memory Pool Configuration</a> for RTX5 configuration options. </dd></dl>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structosMemoryPoolAttr__t" id="structosMemoryPoolAttr__t"></a>
 <div class="memitem">
@@ -291,7 +270,12 @@ size of provided memory for data storage </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>memory pool ID for reference by other functions or NULL in case of error. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>memory pool ID for reference by other functions or NULL in case of error.</dd></dl>
+<p>The function <b>osMemoryPoolNew</b> creates and initializes a memory pool object and returns the pointer to the memory pool object identifier or <span class="XML-Token">NULL</span> in case of an error.</p>
+<p>The parameter <em>block_count</em> specifies the maximum number of memory blocks in the pool.</p>
+<p>The parameter <em>block_size</em> sets memory size in bytes.</p>
+<p>The parameter <em>attr</em> specifies additional memory pool attributes. Default attributes will be used if set to <span class="XML-Token">NULL</span>.</p>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
 </div>
@@ -314,16 +298,18 @@ size of provided memory for data storage </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>name as NULL terminated string. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>name as NULL terminated string.</dd></dl>
+<p>The function <b>osMemoryPoolGetName</b> returns the pointer to the name string of the memory pool identified by parameter <em>mp_id</em> or <span class="XML-Token">NULL</span> in case of an error.</p>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga97e6ef509bc774398eeedf6c21c1ff95"></a>
+<a class="anchor" id="ga8ead54e99ccb8f112356c88f99d38fbe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">*void * osMemoryPoolAlloc </td>
+          <td class="memname">void * osMemoryPoolAlloc </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a>&#160;</td>
           <td class="paramname"><em>mp_id</em>, </td>
@@ -344,11 +330,19 @@ size of provided memory for data storage </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">mp_id</td><td>memory pool ID obtained by <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga497ced5d72dc5cd405c4c418516220dc">osMemoryPoolNew</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td><a class="el" href="CMSIS_RTOS_TimeOutValue.html">Timeout Value</a> or 0 in case of no time-out. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td><a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">Timeout Value</a> or 0 in case of no time-out. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>address of the allocated memory block or NULL in case of no memory is available. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>address of the allocated memory block or NULL in case of no memory is available.</dd></dl>
+<p>The blocking function <b>osMemoryPoolAlloc</b> allocates the memory pool parameter <em>mp_id</em> and returns a pointer to the address of the allocated memory or <span class="XML-Token">0</span> in case of an error.</p>
+<p>The parameter <em>timeout</em> specifies how long the system waits to allocate the memory. While the system waits, the thread that is calling this function is put into the <b>BLOCKED</b> state. The parameter <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">timeout</a> can have the following values:</p>
+<ul>
+<li>when <em>timeout</em> is <span class="XML-Token">0</span>, the function returns instantly.</li>
+<li>when <em>timeout</em> is set to <b>osWaitForever</b> the function will wait for an infinite time until the memory is allocated.</li>
+<li>all other values specify a time in kernel ticks for a timeout.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>May be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> if the parameter <em>timeout</em> is set to <span class="XML-Token">0</span>. </dd></dl>
 
 </div>
 </div>
@@ -382,7 +376,15 @@ size of provided memory for data storage </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
+<p>The function <b>osMemoryPoolFree</b> frees the memory pool block specified by the parameter <em>block</em> in the memory pool object specified by the parameter <em>mp_id</em>.</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<ul>
+<li><em>osOK:</em> the memory has been freed.</li>
+<li><em>osErrorParameter:</em> parameter <em>mp_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
+<li><em>osErrorResource:</em> the memory pool specified by parameter <em>mp_id</em> is in an invalid memory pool state.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
 </div>
@@ -405,7 +407,9 @@ size of provided memory for data storage </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>maximum number of memory blocks. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>maximum number of memory blocks.</dd></dl>
+<p>The function <b>osMemoryPoolGetCapacity</b> returns the maximum number of memory blocks in the memory pool object specified by parameter <em>mp_id</em> or <span class="XML-Token">0</span> in case of an error.</p>
+<dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
 </div>
@@ -428,7 +432,9 @@ size of provided memory for data storage </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>memory block size in bytes. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>memory block size in bytes.</dd></dl>
+<p>The function <b>osMemoryPoolGetBlockSize</b> returns the memory block size in bytes in the memory pool object specified by parameter <em>mp_id</em> or <span class="XML-Token">0</span> in case of an error.</p>
+<dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
 </div>
@@ -451,7 +457,9 @@ size of provided memory for data storage </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>number of memory blocks used. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>number of memory blocks used.</dd></dl>
+<p>The function <b>osMemoryPoolGetCount</b> returns the number of memory blocks used in the memory pool object specified by parameter <em>mp_id</em> or <span class="XML-Token">0</span> in case of an error.</p>
+<dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
 </div>
@@ -474,7 +482,9 @@ size of provided memory for data storage </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>number of memory blocks available. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>number of memory blocks available.</dd></dl>
+<p>The function <b>osMemoryPoolGetSpace</b> returns the number of memory blocks available in the memory pool object specified by parameter <em>mp_id</em> or <span class="XML-Token">0</span> in case of an error.</p>
+<dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
 </div>
@@ -497,7 +507,16 @@ size of provided memory for data storage </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
+<p>The function <b>osMemoryPoolDelete</b> deletes a memory pool object specified by parameter <em>mp_id</em>. It releases internal memory obtained for memory pool handling. After this call, the <em>mp_id</em> is no longer valid and cannot be used. The memory pool may be created again using the function <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga497ced5d72dc5cd405c4c418516220dc">osMemoryPoolNew</a>.</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<ul>
+<li><em>osOK:</em> the memory pool object has been deleted.</li>
+<li><em>osErrorParameter:</em> parameter <em>mp_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
+<li><em>osErrorResource:</em> the memory pool specified by parameter <em>mp_id</em> is in an invalid memory pool state.</li>
+<li><em>osErrorISR:</em> <b>osMemoryPoolDelete</b> cannot be called from interrupt service routines.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
 </div>
@@ -506,7 +525,7 @@ size of provided memory for data storage </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:45 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

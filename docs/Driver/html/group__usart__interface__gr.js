@@ -40,7 +40,8 @@ var group__usart__interface__gr =
       [ "event_cts", "group__usart__interface__gr.html#a4ebe5ddec8d99a63843f2a3c70ac85f9", null ],
       [ "event_dsr", "group__usart__interface__gr.html#aefdb61f16498d650b5a7f5f9b62779df", null ],
       [ "event_dcd", "group__usart__interface__gr.html#a7c1dd043d0db9738d6b5fa8d89211446", null ],
-      [ "event_ri", "group__usart__interface__gr.html#ab55f90aec5f909ff3a75bf36e61312ea", null ]
+      [ "event_ri", "group__usart__interface__gr.html#ab55f90aec5f909ff3a75bf36e61312ea", null ],
+      [ "reserved", "group__usart__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_USART_STATUS", "group__usart__interface__gr.html#structARM__USART__STATUS", [
       [ "tx_busy", "group__usart__interface__gr.html#a2c6d2b67fba3f3e084e96a6bc7fcac6b", null ],
@@ -49,13 +50,15 @@ var group__usart__interface__gr =
       [ "rx_overflow", "group__usart__interface__gr.html#ac403aefd9bce8b0172e1996c0f3dd8aa", null ],
       [ "rx_break", "group__usart__interface__gr.html#aa5e3fa74f444688f9e727ffc1e988e5d", null ],
       [ "rx_framing_error", "group__usart__interface__gr.html#af1d1cfd8b231843d5cc23e6a2b1ca8d0", null ],
-      [ "rx_parity_error", "group__usart__interface__gr.html#affb21b610e2d0d71727702441c238f4f", null ]
+      [ "rx_parity_error", "group__usart__interface__gr.html#affb21b610e2d0d71727702441c238f4f", null ],
+      [ "reserved", "group__usart__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_USART_MODEM_STATUS", "group__usart__interface__gr.html#structARM__USART__MODEM__STATUS", [
       [ "cts", "group__usart__interface__gr.html#a0a4ccfb729b3a40a5fd611021268c262", null ],
       [ "dsr", "group__usart__interface__gr.html#a437895b17519a16f920ae07461dd67d2", null ],
       [ "dcd", "group__usart__interface__gr.html#aa56a9ad6e266df78157f0e04feb4b78c", null ],
-      [ "ri", "group__usart__interface__gr.html#aa6cf03b82235bedc0acf00acb46130fb", null ]
+      [ "ri", "group__usart__interface__gr.html#aa6cf03b82235bedc0acf00acb46130fb", null ],
+      [ "reserved", "group__usart__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_USART_SignalEvent_t", "group__usart__interface__gr.html#gaa578c3829eea207e9e48df6cb6f038a1", null ],
     [ "ARM_USART_MODEM_CONTROL", "group__usart__interface__gr.html#ga7b89d709f048b6a956aa211f63e75f6f", [

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.0.0</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -108,6 +108,7 @@ $(document).ready(function(){initNavTree('group__CMSIS__RTOS__Definitions.html',
 
 <div class="header">
   <div class="summary">
+<a href="#groups">Content</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
@@ -118,13 +119,19 @@ $(document).ready(function(){initNavTree('group__CMSIS__RTOS__Definitions.html',
 <p>Constants and enumerations used by many CMSIS-RTOS functions.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Content</h2></td></tr>
+<tr class="memitem:group__flags__error__codes"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a></td></tr>
+<tr class="memdesc:group__flags__error__codes"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constants used by <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html">Thread Flags</a> and <a class="el" href="group__CMSIS__RTOS__EventFlags.html">Event Flags</a> to return error codes. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga9eb9a7a797a42e4b55eb171ecc609ddb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>&#160;&#160;&#160;0xFFFFFFFFU</td></tr>
 <tr class="memdesc:ga9eb9a7a797a42e4b55eb171ecc609ddb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout value.  <a href="#ga9eb9a7a797a42e4b55eb171ecc609ddb">More...</a><br/></td></tr>
 <tr class="separator:ga9eb9a7a797a42e4b55eb171ecc609ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga18e63587b8450d5b8798b6f6ec04e012"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012">osFlagsWaitAny</a>&#160;&#160;&#160;0x00000000U</td></tr>
-<tr class="memdesc:ga18e63587b8450d5b8798b6f6ec04e012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags options (<a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga996e246da972e122bc6df453dfc6a9dd">osThreadFlagsWait</a> and <a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab8641c24cce707f71b18f1a04c5d52da">osEventFlagsWait</a>).  <a href="#ga18e63587b8450d5b8798b6f6ec04e012">More...</a><br/></td></tr>
+<tr class="memdesc:ga18e63587b8450d5b8798b6f6ec04e012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags options (<a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> and <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a>).  <a href="#ga18e63587b8450d5b8798b6f6ec04e012">More...</a><br/></td></tr>
 <tr class="separator:ga18e63587b8450d5b8798b6f6ec04e012"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8b6f562736fbfb5428940e0c017dec24"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga8b6f562736fbfb5428940e0c017dec24">osFlagsWaitAll</a>&#160;&#160;&#160;0x00000001U</td></tr>
 <tr class="memdesc:ga8b6f562736fbfb5428940e0c017dec24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for all flags.  <a href="#ga8b6f562736fbfb5428940e0c017dec24">More...</a><br/></td></tr>
@@ -169,13 +176,13 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Wait forever timeout value.</p>
-<p>A special <a class="el" href="CMSIS_RTOS_TimeOutValue.html">Timeout Value</a> that informs the RTOS to wait infinite until a resource becomes available. It applies to the following functions:</p>
+<p>A special <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">Timeout Value</a> that informs the RTOS to wait infinite until a resource becomes available. It applies to the following functions:</p>
 <ul>
-<li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga996e246da972e122bc6df453dfc6a9dd">osThreadFlagsWait</a> : Wait for one or more Thread Flags of the current running thread to become signaled.</li>
-<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab8641c24cce707f71b18f1a04c5d52da">osEventFlagsWait</a> : Wait for one or more Event Flags to become signaled.</li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> : Wait for one or more Thread Flags of the current running thread to become signaled.</li>
+<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a> : Wait for one or more Event Flags to become signaled.</li>
 <li><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924">osMutexAcquire</a> : Acquire a Mutex or timeout if it is locked.</li>
 <li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a> : Acquire a Semaphore token or timeout if no tokens are available.</li>
-<li><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga97e6ef509bc774398eeedf6c21c1ff95">osMemoryPoolAlloc</a> : Allocate a memory block from a Memory Pool.</li>
+<li><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a> : Allocate a memory block from a Memory Pool.</li>
 <li><a class="el" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a> : Put a Message into a Queue or timeout if Queue is full.</li>
 <li><a class="el" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a> : Get a Message from a Queue or timeout if Queue is empty. </li>
 </ul>
@@ -194,8 +201,8 @@ Enumerations</h2></td></tr>
 <p>Wait for any flag (default).</p>
 <p>Reference:</p>
 <ul>
-<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab8641c24cce707f71b18f1a04c5d52da">osEventFlagsWait</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga996e246da972e122bc6df453dfc6a9dd">osThreadFlagsWait</a> </li>
+<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> </li>
 </ul>
 
 </div>
@@ -211,8 +218,8 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>Reference:</p>
 <ul>
-<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab8641c24cce707f71b18f1a04c5d52da">osEventFlagsWait</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga996e246da972e122bc6df453dfc6a9dd">osThreadFlagsWait</a> </li>
+<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> </li>
 </ul>
 
 </div>
@@ -228,8 +235,8 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>Reference:</p>
 <ul>
-<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab8641c24cce707f71b18f1a04c5d52da">osEventFlagsWait</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga996e246da972e122bc6df453dfc6a9dd">osThreadFlagsWait</a> </li>
+<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> </li>
 </ul>
 
 </div>
@@ -279,7 +286,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:45 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

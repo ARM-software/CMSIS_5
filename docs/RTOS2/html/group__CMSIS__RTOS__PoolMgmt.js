@@ -11,7 +11,7 @@ var group__CMSIS__RTOS__PoolMgmt =
     [ "osMemoryPoolId_t", "group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960", null ],
     [ "osMemoryPoolNew", "group__CMSIS__RTOS__PoolMgmt.html#ga497ced5d72dc5cd405c4c418516220dc", null ],
     [ "osMemoryPoolGetName", "group__CMSIS__RTOS__PoolMgmt.html#gab414a1e138205a55820acfa277c8f386", null ],
-    [ "osMemoryPoolAlloc", "group__CMSIS__RTOS__PoolMgmt.html#ga97e6ef509bc774398eeedf6c21c1ff95", null ],
+    [ "osMemoryPoolAlloc", "group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe", null ],
     [ "osMemoryPoolFree", "group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16", null ],
     [ "osMemoryPoolGetCapacity", "group__CMSIS__RTOS__PoolMgmt.html#gad696e94bfbe28f0b6613f9303fdf6a37", null ],
     [ "osMemoryPoolGetBlockSize", "group__CMSIS__RTOS__PoolMgmt.html#gab2bf059b7fa7679c3cccdaeec60b6c0e", null ],

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -142,44 +142,44 @@ Functions</h2></td></tr>
 <img src="LMS.gif" alt="LMS.gif"/>
 <div class="caption">
 Internal structure of the Least Mean Square filter</div></div>
-<p>The functions operate on blocks of data and each call to the function processes <code>blockSize</code> samples through the filter. <code>pSrc</code> points to input signal, <code>pRef</code> points to reference signal, <code>pOut</code> points to output signal and <code>pErr</code> points to error signal. All arrays contain <code>blockSize</code> values.</p>
+<p> The functions operate on blocks of data and each call to the function processes <code>blockSize</code> samples through the filter. <code>pSrc</code> points to input signal, <code>pRef</code> points to reference signal, <code>pOut</code> points to output signal and <code>pErr</code> points to error signal. All arrays contain <code>blockSize</code> values.</p>
 <p>The functions operate on a block-by-block basis. Internally, the filter coefficients <code>b[n]</code> are updated on a sample-by-sample basis. The convergence of the LMS filter is slower compared to the normalized LMS algorithm.</p>
-<dl class="section user"><dt>Algorithm: </dt><dd>The output signal <code>y[n]</code> is computed by a standard FIR filter: <pre>    
-     y[n] = b[0] * x[n] + b[1] * x[n-1] + b[2] * x[n-2] + ...+ b[numTaps-1] * x[n-numTaps+1]    
+<dl class="section user"><dt>Algorithm:</dt><dd>The output signal <code>y[n]</code> is computed by a standard FIR filter: <pre>
+     y[n] = b[0] * x[n] + b[1] * x[n-1] + b[2] * x[n-2] + ...+ b[numTaps-1] * x[n-numTaps+1]
  </pre></dd></dl>
-<dl class="section user"><dt></dt><dd>The error signal equals the difference between the reference signal <code>d[n]</code> and the filter output: <pre>    
-     e[n] = d[n] - y[n].    
+<dl class="section user"><dt></dt><dd>The error signal equals the difference between the reference signal <code>d[n]</code> and the filter output: <pre>
+     e[n] = d[n] - y[n].
  </pre></dd></dl>
-<dl class="section user"><dt></dt><dd>After each sample of the error signal is computed, the filter coefficients <code>b[k]</code> are updated on a sample-by-sample basis: <pre>    
-     b[k] = b[k] + e[n] * mu * x[n-k],  for k=0, 1, ..., numTaps-1    
+<dl class="section user"><dt></dt><dd>After each sample of the error signal is computed, the filter coefficients <code>b[k]</code> are updated on a sample-by-sample basis: <pre>
+     b[k] = b[k] + e[n] * mu * x[n-k],  for k=0, 1, ..., numTaps-1
  </pre> where <code>mu</code> is the step size and controls the rate of coefficient convergence. </dd></dl>
 <dl class="section user"><dt></dt><dd>In the APIs, <code>pCoeffs</code> points to a coefficient array of size <code>numTaps</code>. Coefficients are stored in time reversed order. </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>    
-    {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}    
+<dl class="section user"><dt></dt><dd><pre>
+    {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
  </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd><code>pState</code> points to a state array of size <code>numTaps + blockSize - 1</code>. Samples in the state buffer are stored in the order: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>    
-    {x[n-numTaps+1], x[n-numTaps], x[n-numTaps-1], x[n-numTaps-2]....x[0], x[1], ..., x[blockSize-1]}    
+<dl class="section user"><dt></dt><dd><pre>
+    {x[n-numTaps+1], x[n-numTaps], x[n-numTaps-1], x[n-numTaps-2]....x[0], x[1], ..., x[blockSize-1]}
  </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>Note that the length of the state buffer exceeds the length of the coefficient array by <code>blockSize-1</code> samples. The increased state buffer length allows circular addressing, which is traditionally used in FIR filters, to be avoided and yields a significant speed improvement. The state variables are updated after each block of data is processed. </dd></dl>
-<dl class="section user"><dt>Instance Structure </dt><dd>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter and coefficient and state arrays cannot be shared among instances. There are separate instance structure declarations for each of the 3 supported data types.</dd></dl>
-<dl class="section user"><dt>Initialization Functions </dt><dd>There is also an associated initialization function for each data type. The initialization function performs the following operations:<ul>
+<dl class="section user"><dt>Instance Structure</dt><dd>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter and coefficient and state arrays cannot be shared among instances. There are separate instance structure declarations for each of the 3 supported data types.</dd></dl>
+<dl class="section user"><dt>Initialization Functions</dt><dd>There is also an associated initialization function for each data type. The initialization function performs the following operations:<ul>
 <li>Sets the values of the internal structure fields.</li>
 <li>Zeros out the values in the state buffer. To do this manually without calling the init function, assign the follow subfields of the instance structure: numTaps, pCoeffs, mu, postShift (not for f32), pState. Also set all of the values in pState to zero.</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. The code below statically initializes each of the 3 different data type filter instance structures <pre>    
-    <a class="el" href="structarm__lms__instance__f32.html" title="Instance structure for the floating-point LMS filter. ">arm_lms_instance_f32</a> S = {numTaps, pState, pCoeffs, mu};    
-    <a class="el" href="structarm__lms__instance__q31.html" title="Instance structure for the Q31 LMS filter. ">arm_lms_instance_q31</a> S = {numTaps, pState, pCoeffs, mu, postShift};    
-    <a class="el" href="structarm__lms__instance__q15.html" title="Instance structure for the Q15 LMS filter. ">arm_lms_instance_q15</a> S = {numTaps, pState, pCoeffs, mu, postShift};    
+<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. The code below statically initializes each of the 3 different data type filter instance structures <pre>
+    <a class="el" href="structarm__lms__instance__f32.html" title="Instance structure for the floating-point LMS filter. ">arm_lms_instance_f32</a> S = {numTaps, pState, pCoeffs, mu};
+    <a class="el" href="structarm__lms__instance__q31.html" title="Instance structure for the Q31 LMS filter. ">arm_lms_instance_q31</a> S = {numTaps, pState, pCoeffs, mu, postShift};
+    <a class="el" href="structarm__lms__instance__q15.html" title="Instance structure for the Q15 LMS filter. ">arm_lms_instance_q15</a> S = {numTaps, pState, pCoeffs, mu, postShift};
  </pre> where <code>numTaps</code> is the number of filter coefficients in the filter; <code>pState</code> is the address of the state buffer; <code>pCoeffs</code> is the address of the coefficient buffer; <code>mu</code> is the step size parameter; and <code>postShift</code> is the shift applied to coefficients.</dd></dl>
-<dl class="section user"><dt>Fixed-Point Behavior: </dt><dd>Care must be taken when using the Q15 and Q31 versions of the LMS filter. The following issues must be considered:<ul>
+<dl class="section user"><dt>Fixed-Point Behavior:</dt><dd>Care must be taken when using the Q15 and Q31 versions of the LMS filter. The following issues must be considered:<ul>
 <li>Scaling of coefficients</li>
 <li>Overflow and saturation</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt>Scaling of Coefficients: </dt><dd>Filter coefficients are represented as fractional values and coefficients are restricted to lie in the range <code>[-1 +1)</code>. The fixed-point functions have an additional scaling parameter <code>postShift</code>. At the output of the filter's accumulator is a shift register which shifts the result by <code>postShift</code> bits. This essentially scales the filter coefficients by <code>2^postShift</code> and allows the filter coefficients to exceed the range <code>[+1 -1)</code>. The value of <code>postShift</code> is set by the user based on the expected gain through the system being modeled.</dd></dl>
-<dl class="section user"><dt>Overflow and Saturation: </dt><dd>Overflow and saturation behavior of the fixed-point Q15 and Q31 versions are described separately as part of the function specific documentation below. </dd></dl>
+<dl class="section user"><dt>Scaling of Coefficients:</dt><dd>Filter coefficients are represented as fractional values and coefficients are restricted to lie in the range <code>[-1 +1)</code>. The fixed-point functions have an additional scaling parameter <code>postShift</code>. At the output of the filter's accumulator is a shift register which shifts the result by <code>postShift</code> bits. This essentially scales the filter coefficients by <code>2^postShift</code> and allows the filter coefficients to exceed the range <code>[+1 -1)</code>. The value of <code>postShift</code> is set by the user based on the expected gain through the system being modeled.</dd></dl>
+<dl class="section user"><dt>Overflow and Saturation:</dt><dd>Overflow and saturation behavior of the fixed-point Q15 and Q31 versions are described separately as part of the function specific documentation below. </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gae266d009e682180421601627c79a3843"></a>
 <div class="memitem">
@@ -305,8 +305,8 @@ Internal structure of the Least Mean Square filter</div></div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
-<dl class="section user"><dt>Description: </dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>    
-   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}    
+<dl class="section user"><dt>Description:</dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>
+   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
 </pre> The initial filter coefficients serve as a starting point for the adaptive filter. <code>pState</code> points to an array of length <code>numTaps+blockSize-1</code> samples, where <code>blockSize</code> is the number of input samples processed by each call to <code><a class="el" href="group__LMS.html#gae266d009e682180421601627c79a3843" title="Processing function for floating-point LMS filter. ">arm_lms_f32()</a></code>. </dd></dl>
 
 <p>References <a class="el" href="structarm__lms__instance__f32.html#ae2af43d74c93dba16b876e10c97a5b99">arm_lms_instance_f32::mu</a>, <a class="el" href="structarm__lms__instance__f32.html#af73880d9009982f5d14529869494ec3d">arm_lms_instance_f32::numTaps</a>, <a class="el" href="structarm__lms__instance__f32.html#a4795c6f7d3f17cec15c2fd09f66edd1a">arm_lms_instance_f32::pCoeffs</a>, and <a class="el" href="structarm__lms__instance__f32.html#aaf94285be2f99b5b9af40bea8dcb14b9">arm_lms_instance_f32::pState</a>.</p>
@@ -379,8 +379,8 @@ Internal structure of the Least Mean Square filter</div></div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Description: </dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>    
-   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}    
+<dl class="section user"><dt>Description:</dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>
+   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
 </pre> The initial filter coefficients serve as a starting point for the adaptive filter. <code>pState</code> points to the array of state variables and size of array is <code>numTaps+blockSize-1</code> samples, where <code>blockSize</code> is the number of input samples processed by each call to <code><a class="el" href="group__LMS.html#gacde16c17eb75979f81b34e2e2a58c7ac" title="Processing function for Q15 LMS filter. ">arm_lms_q15()</a></code>. </dd></dl>
 
 <p>References <a class="el" href="structarm__lms__instance__q15.html#aae46129d7cfd7f1c162cc502ed0a9d49">arm_lms_instance_q15::mu</a>, <a class="el" href="structarm__lms__instance__q15.html#a0078e894f805af1b360369e619fb57b3">arm_lms_instance_q15::numTaps</a>, <a class="el" href="structarm__lms__instance__q15.html#a42f95368b94898eb82608e1113d18cab">arm_lms_instance_q15::pCoeffs</a>, <a class="el" href="structarm__lms__instance__q15.html#acca5fbaef4a52ae411de24c9a0b929cf">arm_lms_instance_q15::postShift</a>, and <a class="el" href="structarm__lms__instance__q15.html#a9a575ff82c1e68cbb583083439260d08">arm_lms_instance_q15::pState</a>.</p>
@@ -453,8 +453,8 @@ Internal structure of the Least Mean Square filter</div></div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Description: </dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>    
-   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}    
+<dl class="section user"><dt>Description:</dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>
+   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
 </pre> The initial filter coefficients serve as a starting point for the adaptive filter. <code>pState</code> points to an array of length <code>numTaps+blockSize-1</code> samples, where <code>blockSize</code> is the number of input samples processed by each call to <code><a class="el" href="group__LMS.html#ga6a0abfe6041253a6f91c63b383a64257" title="Processing function for Q31 LMS filter. ">arm_lms_q31()</a></code>. </dd></dl>
 
 <p>References <a class="el" href="structarm__lms__instance__q31.html#acb6ca9996b3c5f740d5d6c8e9f4f1d46">arm_lms_instance_q31::mu</a>, <a class="el" href="structarm__lms__instance__q31.html#ac0d84f7d054555931ef8a62511fbcb8a">arm_lms_instance_q31::numTaps</a>, <a class="el" href="structarm__lms__instance__q31.html#a4afe56e991a5416adfd462aa88bda500">arm_lms_instance_q31::pCoeffs</a>, <a class="el" href="structarm__lms__instance__q31.html#a4705a8f0011bb9166e09bf5bd51e595e">arm_lms_instance_q31::postShift</a>, and <a class="el" href="structarm__lms__instance__q31.html#a206d47b49de6f357f933ebe61520753c">arm_lms_instance_q31::pState</a>.</p>
@@ -520,10 +520,10 @@ Internal structure of the Least Mean Square filter</div></div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Scaling and Overflow Behavior: </dt><dd>The function is implemented using a 64-bit internal accumulator. Both coefficients and state variables are represented in 1.15 format and multiplications yield a 2.30 result. The 2.30 intermediate results are accumulated in a 64-bit accumulator in 34.30 format. There is no risk of internal overflow with this approach and the full precision of intermediate multiplications is preserved. After all additions have been performed, the accumulator is truncated to 34.15 format by discarding low 15 bits. Lastly, the accumulator is saturated to yield a result in 1.15 format.</dd></dl>
+<dl class="section user"><dt>Scaling and Overflow Behavior:</dt><dd>The function is implemented using a 64-bit internal accumulator. Both coefficients and state variables are represented in 1.15 format and multiplications yield a 2.30 result. The 2.30 intermediate results are accumulated in a 64-bit accumulator in 34.30 format. There is no risk of internal overflow with this approach and the full precision of intermediate multiplications is preserved. After all additions have been performed, the accumulator is truncated to 34.15 format by discarding low 15 bits. Lastly, the accumulator is saturated to yield a result in 1.15 format.</dd></dl>
 <dl class="section user"><dt></dt><dd>In this filter, filter coefficients are updated for each sample and the updation of filter cofficients are saturted. </dd></dl>
 
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="structarm__lms__instance__q15.html#aae46129d7cfd7f1c162cc502ed0a9d49">arm_lms_instance_q15::mu</a>, <a class="el" href="structarm__lms__instance__q15.html#a0078e894f805af1b360369e619fb57b3">arm_lms_instance_q15::numTaps</a>, <a class="el" href="structarm__lms__instance__q15.html#a42f95368b94898eb82608e1113d18cab">arm_lms_instance_q15::pCoeffs</a>, <a class="el" href="structarm__lms__instance__q15.html#acca5fbaef4a52ae411de24c9a0b929cf">arm_lms_instance_q15::postShift</a>, and <a class="el" href="structarm__lms__instance__q15.html#a9a575ff82c1e68cbb583083439260d08">arm_lms_instance_q15::pState</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__math_8h.html#a7aed02041f489a4f65dbd7093073d94e">__SMLALD()</a>, <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="structarm__lms__instance__q15.html#aae46129d7cfd7f1c162cc502ed0a9d49">arm_lms_instance_q15::mu</a>, <a class="el" href="structarm__lms__instance__q15.html#a0078e894f805af1b360369e619fb57b3">arm_lms_instance_q15::numTaps</a>, <a class="el" href="structarm__lms__instance__q15.html#a42f95368b94898eb82608e1113d18cab">arm_lms_instance_q15::pCoeffs</a>, <a class="el" href="structarm__lms__instance__q15.html#acca5fbaef4a52ae411de24c9a0b929cf">arm_lms_instance_q15::postShift</a>, and <a class="el" href="structarm__lms__instance__q15.html#a9a575ff82c1e68cbb583083439260d08">arm_lms_instance_q15::pState</a>.</p>
 
 </div>
 </div>
@@ -586,7 +586,7 @@ Internal structure of the Least Mean Square filter</div></div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Scaling and Overflow Behavior: </dt><dd>The function is implemented using an internal 64-bit accumulator. The accumulator has a 2.62 format and maintains full precision of the intermediate multiplication results but provides only a single guard bit. Thus, if the accumulator result overflows it wraps around rather than clips. In order to avoid overflows completely the input signal must be scaled down by log2(numTaps) bits. The reference signal should not be scaled down. After all multiply-accumulates are performed, the 2.62 accumulator is shifted and saturated to 1.31 format to yield the final result. The output signal and error signal are in 1.31 format.</dd></dl>
+<dl class="section user"><dt>Scaling and Overflow Behavior:</dt><dd>The function is implemented using an internal 64-bit accumulator. The accumulator has a 2.62 format and maintains full precision of the intermediate multiplication results but provides only a single guard bit. Thus, if the accumulator result overflows it wraps around rather than clips. In order to avoid overflows completely the input signal must be scaled down by log2(numTaps) bits. The reference signal should not be scaled down. After all multiply-accumulates are performed, the 2.62 accumulator is shifted and saturated to 1.31 format to yield the final result. The output signal and error signal are in 1.31 format.</dd></dl>
 <dl class="section user"><dt></dt><dd>In this filter, filter coefficients are updated for each sample and the updation of filter cofficients are saturted. </dd></dl>
 
 <p>References <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math_8h.html#a9a94b78de0f083bd8fadf3c3abe40431">clip_q63_to_q31()</a>, <a class="el" href="structarm__lms__instance__q31.html#acb6ca9996b3c5f740d5d6c8e9f4f1d46">arm_lms_instance_q31::mu</a>, <a class="el" href="structarm__lms__instance__q31.html#ac0d84f7d054555931ef8a62511fbcb8a">arm_lms_instance_q31::numTaps</a>, <a class="el" href="structarm__lms__instance__q31.html#a4afe56e991a5416adfd462aa88bda500">arm_lms_instance_q31::pCoeffs</a>, <a class="el" href="structarm__lms__instance__q31.html#a4705a8f0011bb9166e09bf5bd51e595e">arm_lms_instance_q31::postShift</a>, and <a class="el" href="structarm__lms__instance__q31.html#a206d47b49de6f357f933ebe61520753c">arm_lms_instance_q31::pState</a>.</p>
@@ -598,7 +598,7 @@ Internal structure of the Least Mean Square filter</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

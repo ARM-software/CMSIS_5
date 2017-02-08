@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Mutexes</title>
-<title>CMSIS-RTOS2: Mutexes</title>
+<title>Mutex Management</title>
+<title>CMSIS-RTOS2: Mutex Management</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.0.0</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -113,7 +113,7 @@ $(document).ready(function(){initNavTree('group__CMSIS__RTOS__MutexMgmt.html',''
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Mutexes<div class="ingroups"><a class="el" href="group__CMSIS__RTOS.html">CMSIS-RTOS2 API</a></div></div>  </div>
+<div class="title">Mutex Management<div class="ingroups"><a class="el" href="group__CMSIS__RTOS.html">CMSIS-RTOS2 API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -170,25 +170,10 @@ Functions</h2></td></tr>
 <img src="Mutex.png" alt="Mutex.png"/>
 <div class="caption">
 CMSIS-RTOS Mutex</div></div>
-<p> A mutex is a special version of a <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html">semaphore</a>. Like the semaphore, it is a container for tokens. But instead of being able to have multiple tokens, a mutex can only carry one (representing the resource). Thus, a mutex token is binary and bounded. The advantage of a mutex is that it introduces thread ownership. When a thread acquires a mutex and becomes its owner, subsequent mutex acquires from that thread will succeed immediately without any latency. Thus, mutex acquires/releases can be nested.</p>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>Mutex management functions cannot be called from interrupt service routines (ISR), unlike a binary semaphore that can be released from an ISR.</li>
-</ul>
-</dd>
+<p> A mutex is a special version of a <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html">semaphore</a>. Like the semaphore, it is a container for tokens. But instead of being able to have multiple tokens, a mutex can only carry one (representing the resource). Thus, a mutex token is binary and bounded. The advantage of a mutex is that it introduces thread ownership. When a thread acquires a mutex and becomes its owner, subsequent mutex acquires from that thread will succeed immediately without any latency (if <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">osMutexRecursive</a> is specified). Thus, mutex acquires/releases can be nested.</p>
+<dl class="section note"><dt>Note</dt><dd>Mutex management functions cannot be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> (ISR), unlike a binary semaphore that can be released from an ISR. </dd>
 <dd>
-Refer to <a class="el" href="mutexConfig.html">Mutex Configuration</a> for RTX5 configuration options.</dd></dl>
-<h2>Working with Mutexes </h2>
-<p>To use mutexes, you need to follow these steps for creating and using them:</p>
-<ol type="1">
-<li>Declare the mutex container and initialize the mutex: <div class="fragment"><div class="line">osMutexId  (uart_mutex_id); <span class="comment">// Mutex ID</span></div>
-</div><!-- fragment --></li>
-<li>Create the mutex in a thread: <div class="fragment"><div class="line">uart_mutex_id = <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a>(NULL);</div>
-</div><!-- fragment --></li>
-<li>Acquire the mutex when peripheral access is required: <div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924">osMutexAcquire</a>(uart_mutex_id, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>);</div>
-</div><!-- fragment --></li>
-<li>When finished with the peripheral access, release the mutex: <div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gaea629705703580ff58776bf73c8db915">osMutexRelease</a>(uart_mutex_id);</div>
-</div><!-- fragment --> </li>
-</ol>
+Refer to <a class="el" href="config_rtx5.html#mutexConfig">Mutex Configuration</a> for RTX5 configuration options. </dd></dl>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structosMutexAttr__t" id="structosMutexAttr__t"></a>
 <div class="memitem">
@@ -206,17 +191,8 @@ Refer to <a class="el" href="mutexConfig.html">Mutex Configuration</a> for RTX5 
 <td class="fieldname">
 name</td>
 <td class="fielddoc">
-name of the mutex <p>String with a human readable name of the mutex object.</p>
-<div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mid_Thread_Mutex;               <span class="comment">// mutex id</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">const</span> <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a> Thread_Mutex_attr = {</div>
-<div class="line">  <span class="stringliteral">&quot;myThreadMutex&quot;</span>,</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">osMutexRecursive</a> | <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga40fba270cb31a977b3bd551d41eb9599">osMutexPrioInherit</a>,    <span class="comment">// attr_bits</span></div>
-<div class="line">  NULL,                                     <span class="comment">// memory for control block   </span></div>
-<div class="line">  NULL                                      <span class="comment">// size for control block</span></div>
-<div class="line">  };</div>
-<div class="line">mid_Mutex = <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a> (&amp;Thread_Mutex_attr);</div>
-</div><!-- fragment --> </td></tr>
+name of the mutex <p>String with a human readable name of the mutex object. </p>
+</td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a6e93b49cb79c12f768d72580c7731f30"></a>uint32_t</td>
 <td class="fieldname">
@@ -334,16 +310,24 @@ size of provided memory for control block <p>The size of the memory block passed
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>mutex ID for reference by other functions or NULL in case of error.</dd></dl>
-<p>Create and initialize a Mutex object.</p>
-<dl class="section note"><dt>Note</dt><dd>Cannot be called from <a class="el" href="CMSIS_RTOS_ISR_Calls.html">Interrupt Service Routines</a>.</dd></dl>
+<p>The function <b>osMutexNew</b> creates and initializes a new mutex object and returns the pointer to the mutex object identifier or <span class="XML-Token">NULL</span> in case of an error.</p>
+<p>The parameter <em>attr</em> sets the mutex object attributes (refer to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a>). Default attributes will be used if set to <span class="XML-Token">NULL</span>.</p>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line">  </div>
 <div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id;  </div>
 <div class="line">  </div>
+<div class="line"><span class="keyword">const</span> <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a> Thread_Mutex_attr = {</div>
+<div class="line">  <span class="stringliteral">&quot;myThreadMutex&quot;</span>,                          <span class="comment">// human readable mutex name</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">osMutexRecursive</a> | <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga40fba270cb31a977b3bd551d41eb9599">osMutexPrioInherit</a>,    <span class="comment">// attr_bits</span></div>
+<div class="line">  NULL,                                     <span class="comment">// memory for control block   </span></div>
+<div class="line">  NULL                                      <span class="comment">// size for control block</span></div>
+<div class="line">  };</div>
+<div class="line">  </div>
 <div class="line"><span class="keywordtype">void</span> CreateMutex (<span class="keywordtype">void</span>)  {</div>
 <div class="line"> </div>
-<div class="line">  mutex_id = <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a>(NULL);</div>
+<div class="line">  mutex_id = <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a>(&amp;Thread_Mutex_attr);</div>
 <div class="line">  <span class="keywordflow">if</span> (mutex_id != NULL)  {</div>
 <div class="line">    <span class="comment">// Mutex object created</span></div>
 <div class="line">  }   </div>
@@ -370,7 +354,9 @@ size of provided memory for control block <p>The size of the memory block passed
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>name as NULL terminated string. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>name as NULL terminated string.</dd></dl>
+<p>The function <b>osMutexGetName</b> returns the pointer to the name string of the mutex identified by parameter <em>mutex_id</em> or <span class="XML-Token">NULL</span> in case of an error.</p>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
 </div>
@@ -400,27 +386,27 @@ size of provided memory for control block <p>The size of the memory block passed
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">mutex_id</td><td>mutex ID obtained by <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td><a class="el" href="CMSIS_RTOS_TimeOutValue.html">Timeout Value</a> or 0 in case of no time-out. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td><a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">Timeout Value</a> or 0 in case of no time-out. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>Wait until a Mutex becomes available. If no other thread has obtained the Mutex, the function instantly returns and blocks the mutex object.</p>
-<p>The argument <em>timeout</em> specifies how long the system waits for a mutex. While the system waits the thread that is calling this function is put into the state <b>BLOCKED</b>. The <em>timeout</em> timeout can have the following values:</p>
+<p>The blocking function <b>osMutexAcquire</b> waits until a mutex object specified by parameter <em>mutex_id</em> becomes available. If no other thread has obtained the mutex, the function instantly returns and blocks the mutex object.</p>
+<p>The parameter <em>timeout</em> specifies how long the system waits to acquire the mutex. While the system waits, the thread that is calling this function is put into the <b>BLOCKED</b> state. The parameter <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">timeout</a> can have the following values:</p>
 <ul>
-<li>when <em>timeout</em> is 0, the function returns instantly.</li>
+<li>when <em>timeout</em> is <span class="XML-Token">0</span>, the function returns instantly.</li>
 <li>when <em>timeout</em> is set to <b>osWaitForever</b> the function will wait for an infinite time until the mutex becomes available.</li>
 <li>all other values specify a time in kernel ticks for a timeout.</li>
 </ul>
-<p><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> the mutex has been obtained.</li>
-<li><em>osErrorTimeoutResource:</em> the mutex could not be obtained in the given time.</li>
-<li><em>osErrorResource:</em> the mutex could not be obtained when no timeout was specified.</li>
-<li><em>osErrorParameter:</em> the parameter <em>mutex_id</em> is incorrect.</li>
+<li><em>osErrorTimeout:</em> the mutex could not be obtained in the given time.</li>
+<li><em>osErrorParameter:</em> parameter <em>mutex_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
+<li><em>osErrorResource:</em> the mutex specified by parameter <em>mutex_id</em> is in an invalid mutex state or the mutex could not be obtained when no <em>timeout</em> was specified.</li>
 <li><em>osErrorISR:</em> cannot be called from interrupt service routines.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>Cannot be called from <a class="el" href="CMSIS_RTOS_ISR_Calls.html">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line">  </div>
@@ -459,19 +445,19 @@ size of provided memory for control block <p>The size of the memory block passed
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>Release a Mutex that was obtained with <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924">osMutexAcquire</a>. Other threads that currently wait for the same mutex will be now put into the state <b>READY</b>.</p>
-<p><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<p>The function <b>osMutexRelease</b> releases a mutex specified by parameter <em>mutex_id</em>. Other threads that currently wait for this mutex will be put into the <b>READY</b> state.</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> the mutex has been correctly released.</li>
-<li><em>osErrorResource:</em> the mutex was not obtained before.</li>
-<li><em>osErrorParameter:</em> the parameter <em>mutex_id</em> is incorrect.</li>
-<li><em>osErrorISR:</em> <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gaea629705703580ff58776bf73c8db915">osMutexRelease</a> cannot be called from interrupt service routines.</li>
+<li><em>osErrorParameter:</em> parameter <em>mutex_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
+<li><em>osErrorResource:</em> the mutex specified by parameter <em>mutex_id</em> is in an invalid mutex state or the mutex was not obtained before/the current thread is not the owner of the mutex.</li>
+<li><em>osErrorISR:</em> <b>osMutexRelease</b> cannot be called from interrupt service routines.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>Cannot be called from <a class="el" href="CMSIS_RTOS_ISR_Calls.html">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line">  </div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id;                                        <span class="comment">// Mutex id populated by the function CreateMutex()</span></div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id;                                        <span class="comment">// Mutex id populated by the function osMutexNew()</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> ReleaseMutex (<a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id)  {</div>
 <div class="line"><a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> status;</div>
@@ -506,7 +492,8 @@ size of provided memory for control block <p>The size of the memory block passed
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>thread ID of owner thread or NULL when mutex was not acquired.</dd></dl>
-<p>Returns the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> of the thread that acquired a mutex. </p>
+<p>The function <b>osMutexGetOwner</b> returns the thread object ID of the thread that acquired a mutex specified by parameter <em>mutex_id</em>. In case of an error or if the mutex is not owned by the thread, it returns <span class="XML-Token">NULL</span>.</p>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
 </div>
@@ -530,19 +517,19 @@ size of provided memory for control block <p>The size of the memory block passed
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>Delete a Mutex object. The function releases internal memory obtained for Mutex handling. After this call the <em>mutex_id</em> is no longer valid and cannot be used. The Mutex may be created again using the function <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a>.</p>
-<p><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<p>The function <b>osMutexDelete</b> deletes a mutex object specified by parameter <em>mutex_id</em>. It releases internal memory obtained for mutex handling. After this call, the <em>mutex_id</em> is no longer valid and cannot be used. The mutex may be created again using the function <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a>.</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> the mutex object has been deleted.</li>
-<li><em>osErrorISR:</em> <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabee73ad227ba4587d3db12ef9bd582bc">osMutexDelete</a> cannot be called from interrupt service routines.</li>
-<li><em>osErrorResource:</em> all tokens have already been released.</li>
-<li><em>osErrorParameter:</em> the parameter <em>mutex_id</em> is incorrect.</li>
+<li><em>osErrorParameter:</em> parameter <em>mutex_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
+<li><em>osErrorResource:</em> the mutex specified by parameter <em>mutex_id</em> is in an invalid mutex state.</li>
+<li><em>osErrorISR:</em> <b>osMutexDelete</b> cannot be called from interrupt service routines.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>Cannot be called from <a class="el" href="CMSIS_RTOS_ISR_Calls.html">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line">  </div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id;                                        <span class="comment">// Mutex id populated by the function CreateMutex()</span></div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id;                            <span class="comment">// Mutex id populated by the function osMutexNew()</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> DeleteMutex (<a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id)  {</div>
 <div class="line"><a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> status;</div>
@@ -562,7 +549,7 @@ size of provided memory for control block <p>The size of the memory block passed
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:45 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

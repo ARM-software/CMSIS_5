@@ -22,7 +22,11 @@ var pdsc_devices_pg =
       [ "/package/devices/family/.../sequences", "pdsc_family_pg.html#element_sequences", null ],
       [ "/package/devices/family/.../sequences/sequence", "pdsc_family_pg.html#element_sequence", null ],
       [ "/package/devices/family/.../sequences/sequence/control", "pdsc_family_pg.html#element_seq_control", null ],
-      [ "/package/devices/family/.../sequences/sequence/block", "pdsc_family_pg.html#element_seq_block", null ],
+      [ "/package/devices/family/.../sequences/sequence/block", "pdsc_family_pg.html#element_seq_block", [
+        [ "Debug access syntax rules", "pdsc_family_pg.html#DebugSyntaxRules", null ],
+        [ "Expression rules", "pdsc_family_pg.html#ExpressionType", null ],
+        [ "Debug access functions", "pdsc_family_pg.html#DebugFunctions", null ]
+      ] ],
       [ "/package/devices/family/.../debug", "pdsc_family_pg.html#element_debug", null ],
       [ "/package/devices/family/.../debug/datapatch", "pdsc_family_pg.html#element_dbg_datapatch", null ],
       [ "/package/devices/family/.../trace", "pdsc_family_pg.html#element_trace", null ],

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.0.0</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -179,15 +179,20 @@ Kernel Information and Control</h1>
 <li>Return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>.</li>
 </ul>
 </div><div class="mod"> </div><hr/>
-<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga2b6994cb35bcbd7052b92106db61c71f" title="Lock the RTOS Kernel scheduler. ">osKernelLock</a> (void)</code> <br/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12" title="Lock the RTOS Kernel scheduler. ">osKernelLock</a> (void)</code> <br/>
  <em>none</em> <br/>
  <br/>
  Lock the RTOS Kernel scheduler. <br/>
  New function. </div><hr/>
-<div class="new"> <code>void <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced" title="Resume the RTOS Kernel scheduler. ">osKernelResume</a> (uint32_t sleep_time)</code> <br/>
+<div class="new"> <code>int32_t <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gaf401728b4657456198c33fe75f8d6720" title="Unlock the RTOS Kernel scheduler. ">osKernelUnlock</a> (void)</code> <br/>
  <em>none</em> <br/>
  <br/>
- Resume the RTOS Kernel scheduler. <br/>
+ Unlock the RTOS Kernel scheduler. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>void <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae7d0a71b9586cbbb49fcbdf6a04f0289" title="Restore the RTOS Kernel scheduler lock state. ">osKernelRestoreLock</a> (void)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Restore the RTOS Kernel scheduler lock state. <br/>
  New function. </div><hr/>
 <div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221" title="Start the RTOS Kernel scheduler. ">osKernelStart</a> (void)</code> <br/>
  <code>osStatus &#160; osKernelStart (void)</code> <br/>
@@ -203,10 +208,10 @@ Kernel Information and Control</h1>
  <br/>
  Suspend the RTOS Kernel scheduler. <br/>
  New function. </div><hr/>
-<div class="new"> <code>void <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga8294a1dd26e0aa6abafd9ed91d96c7da" title="Unlock the RTOS Kernel scheduler. ">osKernelUnlock</a> (void)</code> <br/>
+<div class="new"> <code>void <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced" title="Resume the RTOS Kernel scheduler. ">osKernelResume</a> (uint32_t sleep_time)</code> <br/>
  <em>none</em> <br/>
  <br/>
- Unlock the RTOS Kernel scheduler. <br/>
+ Resume the RTOS Kernel scheduler. <br/>
  New function. </div><h1><a class="anchor" id="mig_threadMgmt"></a>
 Thread Management</h1>
 <hr/>
@@ -215,7 +220,7 @@ Thread Management</h1>
  <br/>
  Detach a thread (thread storage can be reclaimed when thread terminates). <br/>
  New function. </div><hr/>
-<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa91ff7486b0c0cef247388648c764873" title="Enumerate active threads. ">osThreadEnumerate</a> (osThreadId_t *thread_array, uint32_t array_items)</code> <br/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5606604d56e21ece1a654664be877439" title="Enumerate active threads. ">osThreadEnumerate</a> (osThreadId_t *thread_array, uint32_t array_items)</code> <br/>
  <em>none</em> <br/>
  <br/>
  Enumerate active threads. <br/>
@@ -254,7 +259,7 @@ Thread Management</h1>
 <li>Parameter type changed to <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a>.</li>
 </ul>
 </div><div class="mod"> </div><hr/>
-<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gab78ec937f0303ec0189ee3c9ae8f3296" title="Get stack size of a thread. ">osThreadGetStackSize</a> (osThreadId_t thread_id)</code> <br/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gab9f8bd715d671c6ee27644867bc1bf65" title="Get stack size of a thread. ">osThreadGetStackSize</a> (osThreadId_t thread_id)</code> <br/>
  <em>none</em> <br/>
  <br/>
  Get stack size of a thread. <br/>
@@ -274,7 +279,7 @@ Thread Management</h1>
  <br/>
  Wait for specified thread to terminate. <br/>
  New function. </div><hr/>
-<div class="mod"> <code>osThreadId_t <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8c59d9c5fcd0d286ad2a0f24dead8e6a" title="Create a thread and add it to Active Threads. ">osThreadNew</a> (os_thread_func_t function, void *argument, const <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t" title="Attributes structure for thread. ">osThreadAttr_t</a> *attr)</code> <br/>
+<div class="mod"> <code>osThreadId_t <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f" title="Create a thread and add it to Active Threads. ">osThreadNew</a> (osThreadFunc_t function, void *argument, const <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t" title="Attributes structure for thread. ">osThreadAttr_t</a> *attr)</code> <br/>
  <code>osThreadId &#160; osThreadCreate (const osThreadDef_t *thread_def, void *argument)</code> <br/>
  <br/>
  Create a thread and add it to Active Threads. <br/>
@@ -323,7 +328,68 @@ Thread Management</h1>
 <ul>
 <li>Return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e" title="Status code values returned by CMSIS-RTOS functions. ">osStatus_t</a>.</li>
 </ul>
-</div><div class="mod"> </div><h1><a class="anchor" id="mig_wait"></a>
+</div><div class="mod"> </div><h1><a class="anchor" id="mig_threadFlags"></a>
+Thread Flags</h1>
+<p>New section to synchronize threads using flags. Thread flags and the more flexible <a class="el" href="os2MigrationFunctions.html#mig_eventFlags">Event Flags</a> are replacing the RTOS v1 <b>Signal Events</b>. Refer to <a class="el" href="os2MigrationFunctions.html#mig_signalEvents">Signal Events</a> for a list of deprecated functions. Refer to <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html">Thread Flags</a> for details.</p>
+<hr/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9" title="Set the specified Thread Flags of a thread. ">osThreadFlagsSet</a> (osThreadId_t thread_id, uint32_t flags)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Set the specified Thread Flags of a thread. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga656abc1c862c5b9a2b13584c42cc0bfa" title="Clear the specified Thread Flags of current running thread. ">osThreadFlagsClear</a> (uint32_t flags)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Clear the specified Thread Flags of current running thread. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga85c8d2c89466e25abbcb545d9ddd71ba" title="Get the current Thread Flags of current running thread. ">osThreadFlagsGet</a> (void)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Get the current Thread Flags of current running thread. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b" title="Wait for one or more Thread Flags of the current running thread to become signaled. ">osThreadFlagsWait</a> (uint32_t flags, uint32_t options, uint32_t timeout)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Wait for one or more Thread Flags of the current running thread to become signaled. <br/>
+ New function. </div><h1><a class="anchor" id="mig_eventFlags"></a>
+Event Flags</h1>
+<p>New section to synchronize events using flags. Event flags and thread flags are replacing the RTOS v1 <b>Signal Events</b>. All functions listed in the RTOS v1 <b>Signal Events</b> have been deprecated. Refer to <a class="el" href="os2MigrationFunctions.html#mig_signalEvents">Signal Events</a> for a list of deprecated functions. Refer to <a class="el" href="group__CMSIS__RTOS__EventFlags.html">Event Flags</a> for details about the new function.</p>
+<hr/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga93bf258ca0007c6641fbe8e4f2b8a1e5" title="Clear the specified Event Flags. ">osEventFlagsClear</a> (osEventFlagsId_t ef_id, uint32_t flags)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Clear the specified Event Flags. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga59f4ddf0ee8c395b1672bb978d1cfc88" title="Get name of an Event Flags object. ">osEventFlagsGetName</a> ((osEventFlagsId_t ef_id)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Get name of an Event Flags object. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga7c4acf2fb0d506ec82905dee53fb5435" title="Delete an Event Flags object. ">osEventFlagsDelete</a> (osEventFlagsId_t ef_id)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Delete an Event Flags object. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga8bda3185f46bfd278cea8a6cf357677d" title="Get the current Event Flags. ">osEventFlagsGet</a> (osEventFlagsId_t ef_id)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Get the current Event Flags. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>osEventFlagsId_t <a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab14b1caeb12ffa42cce1bfe889cd07df" title="Create and Initialize an Event Flags object. ">osEventFlagsNew</a> (const <a class="el" href="group__CMSIS__RTOS__EventFlags.html#structosEventFlagsAttr__t" title="Attributes structure for event flags. ">osEventFlagsAttr_t</a> *attr)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Create and Initialize an Event Flags object. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga33b71d14cecf90b4e72639dd19f23a5e" title="Set the specified Event Flags. ">osEventFlagsSet</a> (osEventFlagsId_t ef_id, uint32_t flags)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Set the specified Event Flags. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e" title="Wait for one or more Event Flags to become signaled. ">osEventFlagsWait</a> (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Wait for one or more Event Flags to become signaled. <br/>
+ New function. </div><h1><a class="anchor" id="mig_wait"></a>
 Generic Wait Functions</h1>
 <p>Refer to <a class="el" href="group__CMSIS__RTOS__Wait.html">Generic Wait Functions</a> for details.</p>
 <hr/>
@@ -340,7 +406,11 @@ Generic Wait Functions</h1>
  <em>none</em> <br/>
  <br/>
  Wait until specified time. <br/>
- New function. </div><h1><a class="anchor" id="mig_timer"></a>
+ New function. </div><hr/>
+<div class="del"> <em>none</em> <br/>
+ <code>osEvent osWait (uint32_t millisec)</code> <br/>
+ <br/>
+Deprecated. </div><h1><a class="anchor" id="mig_timer"></a>
 Timer Management</h1>
 <p>Refer to <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html">Timer Management</a> for details.</p>
 <hr/>
@@ -364,7 +434,7 @@ Timer Management</h1>
  <br/>
  Check if a timer is running. <br/>
  New function. </div><hr/>
-<div class="mod"> <code>osTimerId_t <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaa97051bc38904990633e45a93cefcf38" title="Create and Initialize a timer. ">osTimerNew</a> (os_timer_func_t func, osTimerType_t type, void *argument, const <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#structosTimerAttr__t" title="Attributes structure for timer. ">osTimerAttr_t</a> *attr)</code> <br/>
+<div class="mod"> <code>osTimerId_t <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec" title="Create and Initialize a timer. ">osTimerNew</a> (osTimerFunc_t func, osTimerType_t type, void *argument, const <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#structosTimerAttr__t" title="Attributes structure for timer. ">osTimerAttr_t</a> *attr)</code> <br/>
  <code>osTimerId &#160; osTimerCreate (const osTimerDef_t *timer_def, os_timer_type type, void *argument)</code> <br/>
  <br/>
  Create and Initialize a timer. <br/>
@@ -394,85 +464,180 @@ Timer Management</h1>
 <li>The return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e" title="Status code values returned by CMSIS-RTOS functions. ">osStatus_t</a>.</li>
 <li>The parameter type has changed to <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a>.</li>
 </ul>
-</div><div class="mod"> </div><h1><a class="anchor" id="mig_signalEvents"></a>
-Signal Events</h1>
-<p>The section RTOS v1 <b>Signal Events</b> has been deprecated. Use the functions listed under <a class="el" href="os2MigrationFunctions.html#mig_threadFlags">Thread Flags</a> and <a class="el" href="os2MigrationFunctions.html#mig_eventFlags">Event Flags</a> instead.</p>
+</div><div class="mod"> </div><h1><a class="anchor" id="mig_mutex"></a>
+Mutexes</h1>
+<p>Refer to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html">Mutex Management</a> for details.</p>
 <hr/>
-<div class="del"> <em>none</em> <br/>
- <code>int32_t osSignalClear (osThreadId thread_id, int32_t signals)</code> <br/>
+<div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924" title="Acquire a Mutex or timeout if it is locked. ">osMutexAcquire</a> (osMutexId_t mutex_id, uint32_t timeout)</code> <br/>
+ <code>osStatus &#160; osMutexWait (osMutexId mutex_id, uint32_t timeout)</code> <br/>
  <br/>
-Deprecated. </div><hr/>
-<div class="del"> <em>none</em> <br/>
- <code>int32_t osSignalSet (osThreadId thread_id, int32_t signals)</code> <br/>
+ Acquire a Mutex or timeout if it is locked. <br/>
+</p>
+<ul>
+<li>The function <b>osMutexAcquire</b> replaces the RTOS v1 function <b>osMutexWait</b>.</li>
+<li>Return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>.</li>
+<li>First parameter type changed to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a>.</li>
+</ul>
+</div><div class="mod"> </div><hr/>
+<div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabee73ad227ba4587d3db12ef9bd582bc" title="Delete a Mutex object. ">osMutexDelete</a> (osMutexId_t mutex_id)</code> <br/>
+ <code>osStatus &#160; osMutexDelete (osMutexId mutex_id)</code> <br/>
  <br/>
-Deprecated. </div><hr/>
-<div class="del"> <em>none</em> <br/>
- <code>osEvent osSignalWait (int32_t signals, uint32_t timeout)</code> <br/>
+ Delete a Mutex object. <br/>
+</p>
+<ul>
+<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>.</li>
+<li>The parameter type changed to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a>.</li>
+</ul>
+</div><div class="mod"> </div><hr/>
+<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga00b5e58cd247a412d1afd18732d8b752" title="Get name of a Mutex object. ">osMutexGetName</a> ((osMutexId_t mutex_id)</code> <br/>
+ <em>none</em> <br/>
  <br/>
-Deprecated. </div><h1><a class="anchor" id="mig_eventFlags"></a>
-Event Flags</h1>
-<p>New section to synchronize events using flags. Event flags and thread flags are replacing the RTOS v1 <b>Signal Events</b>. All functions listed in the RTOS v1 <b>Signal Events</b> have been deprecated. Refer to <a class="el" href="os2MigrationFunctions.html#mig_signalEvents">Signal Events</a> for a list of deprecated functions. Refer to <a class="el" href="group__CMSIS__RTOS__EventFlags.html">Event Flags</a> for details about the new function.</p>
+ Get name of a Mutex object. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>osThreadId_t <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga7f9a7666df0978738cd570cb700b83fb" title="Get Thread which owns a Mutex object. ">osMutexGetOwner</a> (osMutexId_t mutex_id)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Get Thread which owns a Mutex object. <br/>
+ New function. </div><hr/>
+<div class="mod"> <code>osMutexId_t <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8" title="Create and Initialize a Mutex object. ">osMutexNew</a> (const <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t" title="Attributes structure for mutex. ">osMutexAttr_t</a> *attr)</code> <br/>
+ <code>osMutexId &#160; osMutexCreate (const osMutexDef_t *mutex_def)</code> <br/>
+ <br/>
+ Create and Initialize a Mutex object. <br/>
+</p>
+<ul>
+<li>The function <b>osMutexNew</b> replaces the RTOS v1 function <b>osMutexCreate</b>.</li>
+<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a>.</li>
+<li>The parameter type changed to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a>.</li>
+</ul>
+</div><div class="mod"> </div><hr/>
+<div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gaea629705703580ff58776bf73c8db915" title="Release a Mutex that was acquired by osMutexAcquire. ">osMutexRelease</a> (osMutexId_t mutex_id)</code> <br/>
+ <code>osStatus &#160; osMutexRelease (osMutexId mutex_id)</code> <br/>
+ <br/>
+ Release a Mutex that was acquired by <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924">osMutexAcquire</a>. <br/>
+</p>
+<ul>
+<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>.</li>
+<li>The parameter type changed to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a>.</li>
+</ul>
+</div><div class="mod"> </div><h1><a class="anchor" id="mig_sem"></a>
+Semaphores</h1>
+<p>Refer to <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html">Semaphores</a> for details.</p>
 <hr/>
-<div class="new"> <code>int32_t <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga662afd893b626d1b438101c952d94a30" title="Clear the specified Event Flags. ">osEventFlagsClear</a> (osEventFlagsId_t ef_id, int32_t flags)</code> <br/>
+<div class="new"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b" title="Acquire a Semaphore token or timeout if no tokens are available. ">osSemaphoreAcquire</a> (osSemaphoreId_t semaphore_id, uint32_t timeout)</code> <br/>
  <em>none</em> <br/>
  <br/>
- Clear the specified Event Flags. <br/>
+ Acquire a Semaphore token or timeout if no tokens are available. <br/>
+ New function. Replaces <code>osSemaphoreWait</code>. </div><hr/>
+<div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga81258ce9c67fa89f07cc49d2e136cd88" title="Delete a Semaphore object. ">osSemaphoreDelete</a> (osSemaphoreId_t semaphore_id)</code> <br/>
+ <code>osStatus &#160; osSemaphoreDelete (osSemaphoreId semaphore_id)</code> <br/>
+ <br/>
+ Delete a Semaphore object. <br/>
+</p>
+<ul>
+<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e" title="Status code values returned by CMSIS-RTOS functions. ">osStatus_t</a>.</li>
+<li>The parameter type has changed to <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a>.</li>
+</ul>
+</div><div class="mod"> </div><hr/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7559d4dff3cda9992fc5ab5de3e74c70" title="Get current Semaphore token count. ">osSemaphoreGetCount</a> (osSemaphoreId_t semaphore_id)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Get current Semaphore token count. <br/>
  New function. </div><hr/>
-<div class="new"> <code>const char *<a class="el" href="cmsis__os2_8h.html#a1f4f2e033c41d492f66c29a1670b52a2" title="Get name of an Event Flags object. ">osEventFlagsGetName</a> ((osEventFlagsId_t ef_id)</code> <br/>
+<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga9586952051f00285f1482dbe6695bbc4" title="Get name of a Semaphore object. ">osSemaphoreGetName</a> ((osSemaphoreId_t semaphore_id)</code> <br/>
  <em>none</em> <br/>
  <br/>
- Get name of an Event Flags object. <br/>
+ Get name of a Semaphore object. <br/>
  New function. </div><hr/>
-<div class="new"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga7c4acf2fb0d506ec82905dee53fb5435" title="Delete an Event Flags object. ">osEventFlagsDelete</a> (osEventFlagsId_t ef_id)</code> <br/>
- <em>none</em> <br/>
+<div class="mod"> <code>osSemaphoreId_t <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a" title="Create and Initialize a Semaphore object. ">osSemaphoreNew</a> (uint32_t max_count, uint32_t initial_count, const <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#structosSemaphoreAttr__t" title="Attributes structure for semaphore. ">osSemaphoreAttr_t</a> *attr)</code> <br/>
+ <code>osSemaphoreId &#160; osSemaphoreCreate (const osSemaphoreDef_t *semaphore_def, int32_t count)</code> <br/>
  <br/>
- Delete an Event Flags object. <br/>
- New function. </div><hr/>
-<div class="new"> <code>int32_t <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga88f2e283933a6c34975d30906d050e16" title="Get the current Event Flags. ">osEventFlagsGet</a> (osEventFlagsId_t ef_id)</code> <br/>
- <em>none</em> <br/>
+ Create and Initialize a Semaphore object. <br/>
+</p>
+<ul>
+<li>The function <b>osSemaphoreNew</b> replaces the RTOS v1 function <b>osSemaphoreCreate</b>.</li>
+<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a>.</li>
+<li>The parameter list and types have changed.</li>
+</ul>
+</div><div class="mod"> </div><hr/>
+<div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6" title="Release a Semaphore token that was acquired by osSemaphoreAcquire. ">osSemaphoreRelease</a> (osSemaphoreId_t semaphore_id)</code> <br/>
+ <code>osStatus &#160; osSemaphoreRelease (osSemaphoreId semaphore_id)</code> <br/>
  <br/>
- Get the current Event Flags. <br/>
- New function. </div><hr/>
-<div class="new"> <code>osEventFlagsId_t <a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab14b1caeb12ffa42cce1bfe889cd07df" title="Create and Initialize an Event Flags object. ">osEventFlagsNew</a> (const <a class="el" href="group__CMSIS__RTOS__EventFlags.html#structosEventFlagsAttr__t" title="Attributes structure for event flags. ">osEventFlagsAttr_t</a> *attr)</code> <br/>
- <em>none</em> <br/>
+ Release a Semaphore token that was acquired by <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>. <br/>
+</p>
+<ul>
+<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e" title="Status code values returned by CMSIS-RTOS functions. ">osStatus_t</a>.</li>
+<li>The parameter type has changed to <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a>.</li>
+</ul>
+</div><div class="mod"> </div><hr/>
+<div class="del"> <em>none</em> <br/>
+ <code>int32_t osSemaphoreWait (osSemaphoreId semaphore_id, uint32_t timeout)</code> <br/>
  <br/>
- Create and Initialize an Event Flags object. <br/>
- New function. </div><hr/>
-<div class="new"> <code>int32_t <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga565979fc5fabe3c1fa1d7047284eef9f" title="Set the specified Event Flags. ">osEventFlagsSet</a> (osEventFlagsId_t ef_id, int32_t flags)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Set the specified Event Flags. <br/>
- New function. </div><hr/>
-<div class="new"> <code>int32_t <a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab8641c24cce707f71b18f1a04c5d52da" title="Wait for one or more Event Flags to become signaled. ">osEventFlagsWait</a> (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Wait for one or more Event Flags to become signaled. <br/>
- New function. </div><h1><a class="anchor" id="mig_threadFlags"></a>
-Thread Flags</h1>
-<p>New section to synchronize threads using flags. Thread flags and the more flexible <a class="el" href="os2MigrationFunctions.html#mig_eventFlags">Event Flags</a> are replacing the RTOS v1 <b>Signal Events</b>. Refer to <a class="el" href="os2MigrationFunctions.html#mig_signalEvents">Signal Events</a> for a list of deprecated functions. Refer to <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html">Thread Flags</a> for details.</p>
+Deprecated. Replaced by <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b" title="Acquire a Semaphore token or timeout if no tokens are available. ">osSemaphoreAcquire</a>. </div><h1><a class="anchor" id="mig_memPool"></a>
+Memory Pool</h1>
 <hr/>
-<div class="new"> <code>int32_t <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6a4ff8198f272cd841e967e367889baa" title="Set the specified Thread Flags of a thread. ">osThreadFlagsSet</a> (osThreadId_t thread_id, int32_t flags)</code> <br/>
+<div class="mod"> <code>void * <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe" title="Allocate a memory block from a Memory Pool. ">osMemoryPoolAlloc</a> (osMemoryPoolId_t mp_id, uint32_t timeout)</code> <br/>
+ <code>void * osPoolAlloc &#160;(osPoolId pool_id)</code> <br/>
+ <br/>
+ Allocate a memory block from a Memory Pool. <br/>
+</p>
+<ul>
+<li>The function <b>osMemoryPoolAlloc</b> replaces both RTOS v1 functions <b>osPoolAlloc</b>.</li>
+<li>The parameter list and types changed.</li>
+</ul>
+</div><div class="mod"> </div><hr/>
+<div class="new"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8c39e7e5cd2b9eda907466808e59d62e" title="Delete a Memory Pool object. ">osMemoryPoolDelete</a> (osMemoryPoolId_t mp_id)</code> <br/>
  <em>none</em> <br/>
  <br/>
- Set the specified Thread Flags of a thread. <br/>
+ Delete a Memory Pool object. <br/>
  New function. </div><hr/>
-<div class="new"> <code>int32_t <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6c1337952ff1dcb483d7e56c236b221e" title="Clear the specified Thread Flags of current running thread. ">osThreadFlagsClear</a> (int32_t flags)</code> <br/>
+<div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16" title="Return an allocated memory block back to a Memory Pool. ">osMemoryPoolFree</a> (osMemoryPoolId_t mp_id, void * block)</code> <br/>
+ <code>osStatus &#160; osPoolFree (osPoolId pool_id, void * block)</code> <br/>
+ <br/>
+ Return an allocated memory block back to a Memory Pool. <br/>
+</p>
+<ul>
+<li>The function <b>osMemoryPoolFree</b> replaces the RTOS v1 function <b>osPoolFree</b>.</li>
+<li>The first parameter type <b>osMemoryPoolId_t</b> replaces the ROTS v1 type <b>osPoolId</b>.</li>
+</ul>
+</div><div class="mod"> </div><hr/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab2bf059b7fa7679c3cccdaeec60b6c0e" title="Get memory block size in a Memory Pool. ">osMemoryPoolGetBlockSize</a> (osMemoryPoolId_t mp_id)</code> <br/>
  <em>none</em> <br/>
  <br/>
- Clear the specified Thread Flags of current running thread. <br/>
+ Get memory block size in a Memory Pool. <br/>
  New function. </div><hr/>
-<div class="new"> <code>int32_t <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga817323c214ffed88ddff3fd7dfe0f02c" title="Get the current Thread Flags of current running thread. ">osThreadFlagsGet</a> (void)</code> <br/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gad696e94bfbe28f0b6613f9303fdf6a37" title="Get maximum number of memory blocks in a Memory Pool. ">osMemoryPoolGetCapacity</a> (osMemoryPoolId_t mp_id)</code> <br/>
  <em>none</em> <br/>
  <br/>
- Get the current Thread Flags of current running thread. <br/>
+ Get maximum number of memory blocks in a Memory Pool. <br/>
  New function. </div><hr/>
-<div class="new"> <code>int32_t <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga996e246da972e122bc6df453dfc6a9dd" title="Wait for one or more Thread Flags of the current running thread to become signaled. ">osThreadFlagsWait</a> (int32_t flags, uint32_t options, uint32_t timeout)</code> <br/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga958a9449bff8c95ce213de98eef5739d" title="Get number of memory blocks used in a Memory Pool. ">osMemoryPoolGetCount</a> (osMemoryPoolId_t mp_id)</code> <br/>
  <em>none</em> <br/>
  <br/>
- Wait for one or more Thread Flags of the current running thread to become signaled. <br/>
- New function. </div><h1><a class="anchor" id="mig_msgQueue"></a>
+ Get number of memory blocks used in a Memory Pool. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab414a1e138205a55820acfa277c8f386" title="Get name of a Memory Pool object. ">osMemoryPoolGetName</a> ((osMemoryPoolId_t mp_id)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Get name of a Memory Pool object. <br/>
+ New function. </div><hr/>
+<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga0394cffa9479a7994e3b03c79c1cb909" title="Get number of memory blocks available in a Memory Pool. ">osMemoryPoolGetSpace</a> (osMemoryPoolId_t mp_id)</code> <br/>
+ <em>none</em> <br/>
+ <br/>
+ Get number of memory blocks available in a Memory Pool. <br/>
+ New function. </div><hr/>
+<div class="mod"> <code>osMemoryPoolId_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga497ced5d72dc5cd405c4c418516220dc" title="Create and Initialize a Memory Pool object. ">osMemoryPoolNew</a> (uint32_t block_count, uint32_t block_size, const <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#structosMemoryPoolAttr__t" title="Attributes structure for memory pool. ">osMemoryPoolAttr_t</a> *attr)</code> <br/>
+ <code>osPoolId &#160; &#160; &#160; &#160; osPoolCreate (const osPoolDef_t * pool_def)</code> <br/>
+ <br/>
+ Get number of memory blocks available in a Memory Pool. <br/>
+</p>
+<ul>
+<li>The function <b>osMemoryPoolNew</b> replaces the RTOS v1 function <b>osPoolCreate</b>.</li>
+<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a>.</li>
+<li>Parameter list and parameter types have changed.</li>
+</ul>
+</div><div class="mod"> </div><h1><a class="anchor" id="mig_msgQueue"></a>
 Message Queue</h1>
-<p>Refer to <a class="el" href="group__CMSIS__RTOS__Message.html">Message Queue</a> for details.</p>
+<p>In general, messages are now using fixed size memory instead of being 32-bit values. Refer to <a class="el" href="group__CMSIS__RTOS__Message.html">Message Queue</a> for details.</p>
 <hr/>
 <div class="new"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__Message.html#gaba987f665444e0d83fa6a3a68bc72abe" title="Delete a Message Queue object. ">osMessageQueueDelete</a> (osMessageQueueId_t mq_id)</code> <br/>
  <em>none</em> <br/>
@@ -541,71 +706,7 @@ Message Queue</h1>
  <em>none</em> <br/>
  <br/>
  Reset a Message Queue to initial empty state. <br/>
- New function. </div><h1><a class="anchor" id="mig_memPool"></a>
-Memory Pool</h1>
-<hr/>
-<div class="mod"> <code>void * <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga97e6ef509bc774398eeedf6c21c1ff95" title="Allocate a memory block from a Memory Pool. ">osMemoryPoolAlloc</a> (osMemoryPoolId_t mp_id, uint32_t timeout)</code> <br/>
- <code>void * osPoolAlloc &#160;(osPoolId pool_id)</code> <br/>
- <code>void * osPoolCAlloc (osPoolId pool_id)</code> <br/>
- <br/>
- Allocate a memory block from a Memory Pool. <br/>
-</p>
-<ul>
-<li>The function <b>osMemoryPoolAlloc</b> replaces both RTOS v1 functions <b>osPoolAlloc</b> and <b>osPoolCAlloc</b>.</li>
-<li>The parameter list and types changed.</li>
-</ul>
-</div><div class="mod"> </div><hr/>
-<div class="new"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8c39e7e5cd2b9eda907466808e59d62e" title="Delete a Memory Pool object. ">osMemoryPoolDelete</a> (osMemoryPoolId_t mp_id)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Delete a Memory Pool object. <br/>
- New function. </div><hr/>
-<div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16" title="Return an allocated memory block back to a Memory Pool. ">osMemoryPoolFree</a> (osMemoryPoolId_t mp_id, void * block)</code> <br/>
- <code>osStatus &#160; osPoolFree (osPoolId pool_id, void * block)</code> <br/>
- <br/>
- Return an allocated memory block back to a Memory Pool. <br/>
-</p>
-<ul>
-<li>The function <b>osMemoryPoolFree</b> replaces the RTOS v1 function <b>osPoolFree</b>.</li>
-<li>The first parameter type <b>osMemoryPoolId_t</b> replaces the ROTS v1 type <b>osPoolId</b>.</li>
-</ul>
-</div><div class="mod"> </div><hr/>
-<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab2bf059b7fa7679c3cccdaeec60b6c0e" title="Get memory block size in a Memory Pool. ">osMemoryPoolGetBlockSize</a> (osMemoryPoolId_t mp_id)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Get memory block size in a Memory Pool. <br/>
- New function. </div><hr/>
-<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gad696e94bfbe28f0b6613f9303fdf6a37" title="Get maximum number of memory blocks in a Memory Pool. ">osMemoryPoolGetCapacity</a> (osMemoryPoolId_t mp_id)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Get maximum number of memory blocks in a Memory Pool. <br/>
- New function. </div><hr/>
-<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga958a9449bff8c95ce213de98eef5739d" title="Get number of memory blocks used in a Memory Pool. ">osMemoryPoolGetCount</a> (osMemoryPoolId_t mp_id)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Get number of memory blocks used in a Memory Pool. <br/>
- New function. </div><hr/>
-<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab414a1e138205a55820acfa277c8f386" title="Get name of a Memory Pool object. ">osMemoryPoolGetName</a> ((osMemoryPoolId_t mp_id)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Get name of a Memory Pool object. <br/>
- New function. </div><hr/>
-<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga0394cffa9479a7994e3b03c79c1cb909" title="Get number of memory blocks available in a Memory Pool. ">osMemoryPoolGetSpace</a> (osMemoryPoolId_t mp_id)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Get number of memory blocks available in a Memory Pool. <br/>
- New function. </div><hr/>
-<div class="mod"> <code>osMemoryPoolId_t <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga497ced5d72dc5cd405c4c418516220dc" title="Create and Initialize a Memory Pool object. ">osMemoryPoolNew</a> (uint32_t block_count, uint32_t block_size, const <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#structosMemoryPoolAttr__t" title="Attributes structure for memory pool. ">osMemoryPoolAttr_t</a> *attr)</code> <br/>
- <code>osPoolId &#160; &#160; &#160; &#160; osPoolCreate (const osPoolDef_t * pool_def)</code> <br/>
- <br/>
- Get number of memory blocks available in a Memory Pool. <br/>
-</p>
-<ul>
-<li>The function <b>osMemoryPoolNew</b> replaces the RTOS v1 function <b>osPoolCreate</b>.</li>
-<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a>.</li>
-<li>Parameter list and parameter types have changed.</li>
-</ul>
-</div><div class="mod"> </div><h1><a class="anchor" id="mig_mailQueue"></a>
+ New function. </div><h1><a class="anchor" id="mig_mailQueue"></a>
 Mail Queue</h1>
 <p>The <b>Mail Queue</b> RTOS v1 functions have been deprecated. Use the functionality of the <a class="el" href="group__CMSIS__RTOS__Message.html">Message Queue</a> instead. Differences are listed under <a class="el" href="os2MigrationFunctions.html#mig_msgQueue">Message Queue</a>.</p>
 <hr/>
@@ -632,113 +733,20 @@ Deprecated. </div><hr/>
 <div class="del"> <em>none</em> <br/>
  <code>osStatus osMailPut (osMailQId queue_id, void *mail)</code> <br/>
  <br/>
-Deprecated. </div><h1><a class="anchor" id="mig_mutex"></a>
-Mutexes</h1>
-<p>Refer to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html">Mutexes</a> for details.</p>
+Deprecated. </div><h1><a class="anchor" id="mig_signalEvents"></a>
+Signal Events</h1>
+<p>The section RTOS v1 <b>Signal Events</b> has been deprecated. Use the functions listed under <a class="el" href="os2MigrationFunctions.html#mig_threadFlags">Thread Flags</a> instead.</p>
 <hr/>
-<div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924" title="Acquire a Mutex or timeout if it is locked. ">osMutexAcquire</a> (osMutexId_t mutex_id, uint32_t timeout)</code> <br/>
- <code>osStatus &#160; osMutexWait (osMutexId mutex_id, uint32_t timeout)</code> <br/>
- <br/>
- Acquire a Mutex or timeout if it is locked. <br/>
-</p>
-<ul>
-<li>The function <b>osMutexAcquire</b> replaces the RTOS v1 function <b>osMutexWait</b>.</li>
-<li>Return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>.</li>
-<li>First parameter type changed to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a>.</li>
-</ul>
-</div><div class="mod"> </div><hr/>
-<div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabee73ad227ba4587d3db12ef9bd582bc" title="Delete a Mutex object. ">osMutexDelete</a> (osMutexId_t mutex_id)</code> <br/>
- <code>osStatus &#160; osMutexDelete (osMutexId mutex_id)</code> <br/>
- <br/>
- Delete a Mutex object. <br/>
-</p>
-<ul>
-<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>.</li>
-<li>The parameter type changed to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a>.</li>
-</ul>
-</div><div class="mod"> </div><hr/>
-<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga00b5e58cd247a412d1afd18732d8b752" title="Get name of a Mutex object. ">osMutexGetName</a> ((osMutexId_t mutex_id)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Get name of a Mutex object. <br/>
- New function. </div><hr/>
-<div class="new"> <code>osThreadId_t <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga7f9a7666df0978738cd570cb700b83fb" title="Get Thread which owns a Mutex object. ">osMutexGetOwner</a> (osMutexId_t mutex_id)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Get Thread which owns a Mutex object. <br/>
- New function. </div><hr/>
-<div class="mod"> <code>osMutexId_t <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8" title="Create and Initialize a Mutex object. ">osMutexNew</a> (const <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t" title="Attributes structure for mutex. ">osMutexAttr_t</a> *attr)</code> <br/>
- <code>osMutexId &#160; osMutexCreate (const osMutexDef_t *mutex_def)</code> <br/>
- <br/>
- Create and Initialize a Mutex object. <br/>
-</p>
-<ul>
-<li>The function <b>osMutexNew</b> replaces the RTOS v1 function <b>osMutexCreate</b>.</li>
-<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a>.</li>
-<li>The parameter type changed to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a>.</li>
-</ul>
-</div><div class="mod"> </div><hr/>
-<div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gaea629705703580ff58776bf73c8db915" title="Release a Mutex that was acquired by osMutexAcquire. ">osMutexRelease</a> (osMutexId_t mutex_id)</code> <br/>
- <code>osStatus &#160; osMutexRelease (osMutexId mutex_id)</code> <br/>
- <br/>
- Release a Mutex that was acquired by <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924">osMutexAcquire</a>. <br/>
-</p>
-<ul>
-<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>.</li>
-<li>The parameter type changed to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a>.</li>
-</ul>
-</div><div class="mod"> </div><h1><a class="anchor" id="mig_sem"></a>
-Semaphores</h1>
-<p>Refer to <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html">Semaphores</a> for details.</p>
-<hr/>
-<div class="new"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b" title="Acquire a Semaphore token or timeout if no tokens are available. ">osSemaphoreAcquire</a> (osSemaphoreId_t semaphore_id, uint32_t timeout)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Acquire a Semaphore token or timeout if no tokens are available. <br/>
- New function. </div><hr/>
-<div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga81258ce9c67fa89f07cc49d2e136cd88" title="Delete a Semaphore object. ">osSemaphoreDelete</a> (osSemaphoreId_t semaphore_id)</code> <br/>
- <code>osStatus &#160; osSemaphoreDelete (osSemaphoreId semaphore_id)</code> <br/>
- <br/>
- Delete a Semaphore object. <br/>
-</p>
-<ul>
-<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e" title="Status code values returned by CMSIS-RTOS functions. ">osStatus_t</a>.</li>
-<li>The parameter type has changed to <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a>.</li>
-</ul>
-</div><div class="mod"> </div><hr/>
-<div class="new"> <code>uint32_t <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7559d4dff3cda9992fc5ab5de3e74c70" title="Get current Semaphore token count. ">osSemaphoreGetCount</a> (osSemaphoreId_t semaphore_id)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Get current Semaphore token count. <br/>
- New function. </div><hr/>
-<div class="new"> <code>const char *<a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga9586952051f00285f1482dbe6695bbc4" title="Get name of a Semaphore object. ">osSemaphoreGetName</a> ((osSemaphoreId_t semaphore_id)</code> <br/>
- <em>none</em> <br/>
- <br/>
- Get name of a Semaphore object. <br/>
- New function. </div><hr/>
-<div class="mod"> <code>osSemaphoreId_t <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a" title="Create and Initialize a Semaphore object. ">osSemaphoreNew</a> (uint32_t max_count, uint32_t initial_count, const <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#structosSemaphoreAttr__t" title="Attributes structure for semaphore. ">osSemaphoreAttr_t</a> *attr)</code> <br/>
- <code>osSemaphoreId &#160; osSemaphoreCreate (const osSemaphoreDef_t *semaphore_def, int32_t count)</code> <br/>
- <br/>
- Create and Initialize a Semaphore object. <br/>
-</p>
-<ul>
-<li>The function <b>osSemaphoreNew</b> replaces the RTOS v1 function <b>osSemaphoreCreate</b>.</li>
-<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a>.</li>
-<li>The parameter list and types have changed.</li>
-</ul>
-</div><div class="mod"> </div><hr/>
-<div class="mod"> <code>osStatus_t <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6" title="Release a Semaphore token that was acquired by osSemaphoreAcquire. ">osSemaphoreRelease</a> (osSemaphoreId_t semaphore_id)</code> <br/>
- <code>osStatus &#160; osSemaphoreRelease (osSemaphoreId semaphore_id)</code> <br/>
- <br/>
- Release a Semaphore token that was acquired by <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>. <br/>
-</p>
-<ul>
-<li>The return type changed to <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e" title="Status code values returned by CMSIS-RTOS functions. ">osStatus_t</a>.</li>
-<li>The parameter type has changed to <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a>.</li>
-</ul>
-</div><div class="mod"> </div><hr/>
 <div class="del"> <em>none</em> <br/>
- <code>int32_t osSemaphoreWait (osSemaphoreId semaphore_id, uint32_t timeout)</code> <br/>
+ <code>int32_t osSignalClear (osThreadId thread_id, int32_t signals)</code> <br/>
+ <br/>
+Deprecated. </div><hr/>
+<div class="del"> <em>none</em> <br/>
+ <code>int32_t osSignalSet (osThreadId thread_id, int32_t signals)</code> <br/>
+ <br/>
+Deprecated. </div><hr/>
+<div class="del"> <em>none</em> <br/>
+ <code>osEvent osSignalWait (int32_t signals, uint32_t timeout)</code> <br/>
  <br/>
 Deprecated. </div> </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -746,7 +754,7 @@ Deprecated. </div> </div></div><!-- contents -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="os2Migration.html">Migration from API v1 to API v2</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:45 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

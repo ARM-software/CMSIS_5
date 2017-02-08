@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -326,8 +326,6 @@ Macros</h2></td></tr>
 <tr class="separator:a34716b73c631e65e8dd855e08384ecb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaff6d2358c4ada8de838a279254ab550"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#aaff6d2358c4ada8de838a279254ab550">CONTROLLER_Q31_SHIFT</a></td></tr>
 <tr class="separator:aaff6d2358c4ada8de838a279254ab550"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a032503e76d6f69bc67e99e909c8125da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a032503e76d6f69bc67e99e909c8125da">TABLE_SIZE</a></td></tr>
-<tr class="separator:a032503e76d6f69bc67e99e909c8125da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8407c9e1347d10e3bcf0a7014f1fb2ff"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a8407c9e1347d10e3bcf0a7014f1fb2ff">TABLE_SPACING_Q31</a></td></tr>
 <tr class="separator:a8407c9e1347d10e3bcf0a7014f1fb2ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60b0142af7be007902142add27919b82"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a60b0142af7be007902142add27919b82">TABLE_SPACING_Q15</a></td></tr>
@@ -347,6 +345,11 @@ Macros</h2></td></tr>
 <tr class="separator:af0d54ec57b936994a34f073d0049ea3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1b053da364f9fd82ca1a381df7590b6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#ad1b053da364f9fd82ca1a381df7590b6">__SIMD64</a>(addr)</td></tr>
 <tr class="separator:ad1b053da364f9fd82ca1a381df7590b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa505179349146cf6186640b4c8b47714"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#aa505179349146cf6186640b4c8b47714">__PKHBT</a>(ARG1, ARG2, ARG3)</td></tr>
+<tr class="memdesc:aa505179349146cf6186640b4c8b47714"><td class="mdescLeft">&#160;</td><td class="mdescRight">definition to pack two 16 bit values.  <a href="#aa505179349146cf6186640b4c8b47714">More...</a><br/></td></tr>
+<tr class="separator:aa505179349146cf6186640b4c8b47714"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4be483b8d98e977a69baf4a292a76fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#ac4be483b8d98e977a69baf4a292a76fe">__PKHTB</a>(ARG1, ARG2, ARG3)</td></tr>
+<tr class="separator:ac4be483b8d98e977a69baf4a292a76fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ebff224ad44c217fde9f530342e2960"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a3ebff224ad44c217fde9f530342e2960">__PACKq7</a>(v0, v1, v2, v3)</td></tr>
 <tr class="memdesc:a3ebff224ad44c217fde9f530342e2960"><td class="mdescLeft">&#160;</td><td class="mdescRight">definition to pack four 8 bit values.  <a href="#a3ebff224ad44c217fde9f530342e2960">More...</a><br/></td></tr>
 <tr class="separator:a3ebff224ad44c217fde9f530342e2960"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -415,6 +418,75 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a39e9e34c2784ff8cf026430d1d84f54e">arm_recip_q15</a> (<a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> in, <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *dst, <a class="el" href="arm__math_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pRecipTable)</td></tr>
 <tr class="memdesc:a39e9e34c2784ff8cf026430d1d84f54e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to Calculates 1/in (reciprocal) value of Q15 Data type.  <a href="#a39e9e34c2784ff8cf026430d1d84f54e">More...</a><br/></td></tr>
 <tr class="separator:a39e9e34c2784ff8cf026430d1d84f54e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a937a37e831677294ecde7195ec9d68ee"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a937a37e831677294ecde7195ec9d68ee">__QADD8</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:a937a37e831677294ecde7195ec9d68ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4690314b420f463093f1a2f68b5fb143"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a4690314b420f463093f1a2f68b5fb143">__QSUB8</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:a4690314b420f463093f1a2f68b5fb143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08bea9cb2c311d925224c0d6829edb8c"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a08bea9cb2c311d925224c0d6829edb8c">__QADD16</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:a08bea9cb2c311d925224c0d6829edb8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3d7aff37a4472f1f2bc88eb3b97b526"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#af3d7aff37a4472f1f2bc88eb3b97b526">__SHADD16</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:af3d7aff37a4472f1f2bc88eb3b97b526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e4703dc08d1b82eab7f5ef96edb59bb"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a6e4703dc08d1b82eab7f5ef96edb59bb">__QSUB16</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:a6e4703dc08d1b82eab7f5ef96edb59bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0987d147320a596bbdb537d70b23de73"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a0987d147320a596bbdb537d70b23de73">__SHSUB16</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:a0987d147320a596bbdb537d70b23de73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad6f7afa72d784b95e6357c215a919bb"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#aad6f7afa72d784b95e6357c215a919bb">__QASX</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:aad6f7afa72d784b95e6357c215a919bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af60f220d422ebc524411f712544feecf"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#af60f220d422ebc524411f712544feecf">__SHASX</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:af60f220d422ebc524411f712544feecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a391f5f1d2e7cefaccfece0a49141ad47"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a391f5f1d2e7cefaccfece0a49141ad47">__QSAX</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:a391f5f1d2e7cefaccfece0a49141ad47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbfbf3cfac1971b4b380c0cde120a85b"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#abbfbf3cfac1971b4b380c0cde120a85b">__SHSAX</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:abbfbf3cfac1971b4b380c0cde120a85b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7375d1deba32929dc97008bfa7085d46"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a7375d1deba32929dc97008bfa7085d46">__SMUSDX</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:a7375d1deba32929dc97008bfa7085d46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c58d7b4648a973d91e27544bc190e60"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a9c58d7b4648a973d91e27544bc190e60">__SMUADX</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:a9c58d7b4648a973d91e27544bc190e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9f3cfbfb0f12975ab91ddb179160dcb"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#ab9f3cfbfb0f12975ab91ddb179160dcb">__QADD</a> (int32_t x, int32_t y)</td></tr>
+<tr class="separator:ab9f3cfbfb0f12975ab91ddb179160dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15e896d0146c280e600d00f609832350"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a15e896d0146c280e600d00f609832350">__QSUB</a> (int32_t x, int32_t y)</td></tr>
+<tr class="separator:a15e896d0146c280e600d00f609832350"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa611fdbf6c56c46553701d6596a79aaf"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#aa611fdbf6c56c46553701d6596a79aaf">__SMLAD</a> (uint32_t x, uint32_t y, uint32_t sum)</td></tr>
+<tr class="separator:aa611fdbf6c56c46553701d6596a79aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fc670277db1ad9ac34d52d771c7c305"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a7fc670277db1ad9ac34d52d771c7c305">__SMLADX</a> (uint32_t x, uint32_t y, uint32_t sum)</td></tr>
+<tr class="separator:a7fc670277db1ad9ac34d52d771c7c305"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d61b7d886888f9f1f35c079eb5d01c9"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a5d61b7d886888f9f1f35c079eb5d01c9">__SMLSDX</a> (uint32_t x, uint32_t y, uint32_t sum)</td></tr>
+<tr class="separator:a5d61b7d886888f9f1f35c079eb5d01c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aed02041f489a4f65dbd7093073d94e"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a7aed02041f489a4f65dbd7093073d94e">__SMLALD</a> (uint32_t x, uint32_t y, uint64_t sum)</td></tr>
+<tr class="separator:a7aed02041f489a4f65dbd7093073d94e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bdab9022ab56e30f6346a043050dfc4"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a3bdab9022ab56e30f6346a043050dfc4">__SMLALDX</a> (uint32_t x, uint32_t y, uint64_t sum)</td></tr>
+<tr class="separator:a3bdab9022ab56e30f6346a043050dfc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eed05660fedbe3fbd0b6dbb1315cfc3"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a2eed05660fedbe3fbd0b6dbb1315cfc3">__SMUAD</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:a2eed05660fedbe3fbd0b6dbb1315cfc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b293f62ad7eb225fa9ce0f39458eba3"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a6b293f62ad7eb225fa9ce0f39458eba3">__SMUSD</a> (uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:a6b293f62ad7eb225fa9ce0f39458eba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9f7f02a5e0ad5642026dbd0da7418db"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#ac9f7f02a5e0ad5642026dbd0da7418db">__SXTB16</a> (uint32_t x)</td></tr>
+<tr class="separator:ac9f7f02a5e0ad5642026dbd0da7418db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0162015f6d3458e2934a265481460ec4"><td class="memItemLeft" align="right" valign="top">CMSIS_INLINE __STATIC_INLINE <br class="typebreak"/>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__math_8h.html#a0162015f6d3458e2934a265481460ec4">__SMMLA</a> (int32_t x, int32_t y, int32_t sum)</td></tr>
+<tr class="separator:a0162015f6d3458e2934a265481460ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga31c91a0bf0962327ef8f626fae68ea32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR.html#ga31c91a0bf0962327ef8f626fae68ea32">arm_fir_q7</a> (const <a class="el" href="structarm__fir__instance__q7.html">arm_fir_instance_q7</a> *S, <a class="el" href="arm__math_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pSrc, <a class="el" href="arm__math_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
 <tr class="memdesc:ga31c91a0bf0962327ef8f626fae68ea32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the Q7 FIR filter.  <a href="group__FIR.html#ga31c91a0bf0962327ef8f626fae68ea32">More...</a><br/></td></tr>
 <tr class="separator:ga31c91a0bf0962327ef8f626fae68ea32"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -626,7 +698,6 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="memdesc:gabaeab5646aeea9844e6d42ca8c73fe3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the Q31 RFFT/RIFFT.  <a href="group__RealFFT.html#gabaeab5646aeea9844e6d42ca8c73fe3a">More...</a><br/></td></tr>
 <tr class="separator:gabaeab5646aeea9844e6d42ca8c73fe3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga10717ee326bf50832ef1c25b85a23068"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32</a> (<a class="el" href="structarm__rfft__instance__f32.html">arm_rfft_instance_f32</a> *S, <a class="el" href="structarm__cfft__radix4__instance__f32.html">arm_cfft_radix4_instance_f32</a> *S_CFFT, uint32_t fftLenReal, uint32_t ifftFlagR, uint32_t bitReverseFlag)</td></tr>
-<tr class="memdesc:ga10717ee326bf50832ef1c25b85a23068"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization function for the floating-point RFFT/RIFFT.  <a href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">More...</a><br/></td></tr>
 <tr class="separator:ga10717ee326bf50832ef1c25b85a23068"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3df1766d230532bc068fc4ed69d0fcdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32</a> (const <a class="el" href="structarm__rfft__instance__f32.html">arm_rfft_instance_f32</a> *S, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pDst)</td></tr>
 <tr class="memdesc:ga3df1766d230532bc068fc4ed69d0fcdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the floating-point RFFT/RIFFT.  <a href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">More...</a><br/></td></tr>
@@ -1350,6 +1421,74 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
+<a class="anchor" id="aa505179349146cf6186640b4c8b47714"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __PKHBT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ARG1, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ARG2, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ARG3&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__BasicAbs.html#ga39f92964c9b649ba252e26ebe7b95594">arm_abs_q15()</a>, <a class="el" href="group__BiquadCascadeDF1.html#gaffb9792c0220882efd4c58f3c6a05fd7">arm_biquad_cascade_df1_fast_q15()</a>, <a class="el" href="group__BiquadCascadeDF1.html#gadd66a0aefdc645031d607b0a5b37a942">arm_biquad_cascade_df1_q15()</a>, <a class="el" href="group__CmplxByRealMult.html#ga3bd8889dcb45980e1d3e53344df54e85">arm_cmplx_mult_real_q15()</a>, <a class="el" href="group__Conv.html#gaf16f490d245391ec18a42adc73d6d749">arm_conv_fast_opt_q15()</a>, <a class="el" href="group__Conv.html#gad75ca978ce906e04abdf86a8d76306d4">arm_conv_fast_q15()</a>, <a class="el" href="group__Conv.html#gac77dbcaef5c754cac27eab96c4753a3c">arm_conv_opt_q15()</a>, <a class="el" href="group__Conv.html#ga4c7cf073e89d6d57cc4e711f078c3f68">arm_conv_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga3de9c4ddcc7886de25b70d875099a8d9">arm_conv_partial_fast_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga1e4d43385cb62262a78c6752fe1fafb2">arm_conv_partial_fast_q15()</a>, <a class="el" href="group__PartialConv.html#ga834b23b4ade8682beeb55778399101f8">arm_conv_partial_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga3707e16af1435b215840006a7ab0c98f">arm_conv_partial_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga209a2a913a0c5e5679c5988da8f46b03">arm_conv_partial_q15()</a>, <a class="el" href="group__Conv.html#gaccd6a89b0ff7a94df64610598e6e6893">arm_conv_q15()</a>, <a class="el" href="group__Corr.html#ga40a0236b17220e8e22a22b5bc1c53c6b">arm_correlate_fast_opt_q15()</a>, <a class="el" href="group__Corr.html#gac8de3da44f58e86c2c86156276ca154f">arm_correlate_fast_q15()</a>, <a class="el" href="group__Corr.html#gad71c0ec70ec69edbc48563d9a5f68451">arm_correlate_opt_q15()</a>, <a class="el" href="group__Corr.html#ga746e8857cafe33ec5d6780729c18c311">arm_correlate_opt_q7()</a>, <a class="el" href="group__Fill.html#ga76b21c32a3783a2b3334d930a646e5d8">arm_fill_q15()</a>, <a class="el" href="group__FIR.html#gac7d35e9472e49ccd88800f37f3476bd3">arm_fir_fast_q15()</a>, <a class="el" href="group__FIR__Lattice.html#gabb0ab07fd313b4d863070c3ddca51542">arm_fir_lattice_q15()</a>, <a class="el" href="group__FIR__Sparse.html#ga2bffda2e156e72427e19276cd9c3d3cc">arm_fir_sparse_q15()</a>, <a class="el" href="group__IIR__Lattice.html#gaeb9e9599a288832ed123183eaa8b294a">arm_iir_lattice_q15()</a>, <a class="el" href="group__MatrixScale.html#ga7521769e2cf1c3d9c4656138cd2ae2ca">arm_mat_scale_q15()</a>, <a class="el" href="group__BasicMult.html#gafb0778d27ed98a2a6f2ecb7d48cc8c75">arm_mult_q15()</a>, <a class="el" href="group__offset.html#gab4c1d2391b599549e5a06fdfbc2747bf">arm_offset_q15()</a>, <a class="el" href="group__PID.html#ga2cb1e3d3ebb167348fdabec74653d5c3">arm_pid_init_q15()</a>, <a class="el" href="group__q15__to__x.html#ga8fb31855ff8cce09c2ec9308f48ded69">arm_q15_to_q7()</a>, <a class="el" href="group__q7__to__x.html#gabc02597fc3f01033daf43ec0547a2f78">arm_q7_to_q15()</a>, <a class="el" href="group__scale.html#gafaac0e1927daffeb68a42719b53ea780">arm_scale_q15()</a>, <a class="el" href="group__shift.html#gaa1757e53279780107acc92cf100adb61">arm_shift_q15()</a>, and <a class="el" href="arm__rfft__q15_8c.html#aa72a531dd15a53570dddaf01b62158f4">arm_split_rifft_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac4be483b8d98e977a69baf4a292a76fe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __PKHTB</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ARG1, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ARG2, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ARG3&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__q15__to__x.html#ga8fb31855ff8cce09c2ec9308f48ded69">arm_q15_to_q7()</a>, <a class="el" href="group__q31__to__x.html#ga901dede4661365c9e7c630d3eb31c32c">arm_q31_to_q15()</a>, and <a class="el" href="group__q7__to__x.html#gabc02597fc3f01033daf43ec0547a2f78">arm_q7_to_q15()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a9de2e0a5785be82866bcb96012282248"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1364,7 +1503,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="group__BasicAdd.html#gabb51285a41f511670bbff62fc0e1bf62">arm_add_q15()</a>, <a class="el" href="group__BasicAdd.html#gaed633f415a7840a66861debca2dfb96b">arm_add_q7()</a>, <a class="el" href="group__BiquadCascadeDF1.html#gaffb9792c0220882efd4c58f3c6a05fd7">arm_biquad_cascade_df1_fast_q15()</a>, <a class="el" href="group__BiquadCascadeDF1.html#gadd66a0aefdc645031d607b0a5b37a942">arm_biquad_cascade_df1_q15()</a>, <a class="el" href="group__cmplx__conj.html#gaf47689ae07962acaecb8ddde556df4a4">arm_cmplx_conj_q15()</a>, <a class="el" href="group__cmplx__mag.html#ga0a4a8f77a6a51d9b3f3b9d729f85b7a4">arm_cmplx_mag_q15()</a>, <a class="el" href="group__cmplx__mag__squared.html#ga45537f576102d960d467eb722b8431f2">arm_cmplx_mag_squared_q15()</a>, <a class="el" href="group__CmplxByRealMult.html#ga3bd8889dcb45980e1d3e53344df54e85">arm_cmplx_mult_real_q15()</a>, <a class="el" href="group__Conv.html#gaf16f490d245391ec18a42adc73d6d749">arm_conv_fast_opt_q15()</a>, <a class="el" href="group__Conv.html#gad75ca978ce906e04abdf86a8d76306d4">arm_conv_fast_q15()</a>, <a class="el" href="group__Conv.html#gac77dbcaef5c754cac27eab96c4753a3c">arm_conv_opt_q15()</a>, <a class="el" href="group__Conv.html#ga4c7cf073e89d6d57cc4e711f078c3f68">arm_conv_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga3de9c4ddcc7886de25b70d875099a8d9">arm_conv_partial_fast_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga1e4d43385cb62262a78c6752fe1fafb2">arm_conv_partial_fast_q15()</a>, <a class="el" href="group__PartialConv.html#ga834b23b4ade8682beeb55778399101f8">arm_conv_partial_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga3707e16af1435b215840006a7ab0c98f">arm_conv_partial_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga209a2a913a0c5e5679c5988da8f46b03">arm_conv_partial_q15()</a>, <a class="el" href="group__Conv.html#gaccd6a89b0ff7a94df64610598e6e6893">arm_conv_q15()</a>, <a class="el" href="group__copy.html#ga872ca4cfc18c680b8991ccd569a5fda0">arm_copy_q15()</a>, <a class="el" href="group__copy.html#ga467579beda492aa92797529d794c88fb">arm_copy_q7()</a>, <a class="el" href="group__Corr.html#ga40a0236b17220e8e22a22b5bc1c53c6b">arm_correlate_fast_opt_q15()</a>, <a class="el" href="group__Corr.html#gac8de3da44f58e86c2c86156276ca154f">arm_correlate_fast_q15()</a>, <a class="el" href="group__Corr.html#gad71c0ec70ec69edbc48563d9a5f68451">arm_correlate_opt_q15()</a>, <a class="el" href="group__Corr.html#ga746e8857cafe33ec5d6780729c18c311">arm_correlate_opt_q7()</a>, <a class="el" href="group__Corr.html#ga5ec96b8e420d68b0e626df0812274d46">arm_correlate_q15()</a>, <a class="el" href="group__dot__prod.html#ga436d5bed28a4b73b24acbde436a3044b">arm_dot_prod_q15()</a>, <a class="el" href="group__dot__prod.html#ga9c3293a50ac7ec8ba928bf8e3aaea6c1">arm_dot_prod_q7()</a>, <a class="el" href="group__Fill.html#ga76b21c32a3783a2b3334d930a646e5d8">arm_fill_q15()</a>, <a class="el" href="group__Fill.html#ga0465cf326ada039ed792f94b033d9ec5">arm_fill_q7()</a>, <a class="el" href="group__FIR__decimate.html#ga3f434c9a5d3b4e68061feac0714ea2ac">arm_fir_decimate_fast_q15()</a>, <a class="el" href="group__FIR__decimate.html#gab8bef6d0f6a26fdbfce9485727713ce5">arm_fir_decimate_q15()</a>, <a class="el" href="group__FIR.html#gac7d35e9472e49ccd88800f37f3476bd3">arm_fir_fast_q15()</a>, <a class="el" href="group__FIR__Interpolate.html#ga7962b5f9636e54899f75d0c5936800b5">arm_fir_interpolate_q15()</a>, <a class="el" href="group__FIR__Lattice.html#gabb0ab07fd313b4d863070c3ddca51542">arm_fir_lattice_q15()</a>, <a class="el" href="group__FIR.html#ga262d173058d6f80fdf60404ba262a8f5">arm_fir_q15()</a>, <a class="el" href="group__FIR__Sparse.html#ga2bffda2e156e72427e19276cd9c3d3cc">arm_fir_sparse_q15()</a>, <a class="el" href="group__FIR__Sparse.html#gae86c145efc2d9ec32dc6d8c1ad2ccb3c">arm_fir_sparse_q7()</a>, <a class="el" href="group__IIR__Lattice.html#gaeb9e9599a288832ed123183eaa8b294a">arm_iir_lattice_q15()</a>, <a class="el" href="group__LMS__NORM.html#gad47486a399dedb0bc85a5990ec5cf981">arm_lms_norm_q15()</a>, <a class="el" href="group__LMS.html#gacde16c17eb75979f81b34e2e2a58c7ac">arm_lms_q15()</a>, <a class="el" href="group__MatrixAdd.html#ga147e90b7c12a162735ab8824127a33ee">arm_mat_add_q15()</a>, <a class="el" href="group__CmplxMatrixMult.html#ga63066615e7d6f6a44f4358725092419e">arm_mat_cmplx_mult_q15()</a>, <a class="el" href="group__MatrixMult.html#ga08f37d93a5bfef0c5000dc5e0a411f93">arm_mat_mult_fast_q15()</a>, <a class="el" href="group__MatrixMult.html#ga7521d59196189bb6dde26e8cdfb66e21">arm_mat_mult_q15()</a>, <a class="el" href="group__MatrixSub.html#gaf647776a425b7f9dd0aca3e11d81f02f">arm_mat_sub_q15()</a>, <a class="el" href="group__MatrixTrans.html#ga4f4f821cc695fd0ef9061d702e08050a">arm_mat_trans_q15()</a>, <a class="el" href="group__mean.html#gac882495d5f098819fd3939c1ef7795b3">arm_mean_q15()</a>, <a class="el" href="group__mean.html#gaebc707ee539020357c25da4c75b52eb7">arm_mean_q7()</a>, <a class="el" href="group__BasicMult.html#gafb0778d27ed98a2a6f2ecb7d48cc8c75">arm_mult_q15()</a>, <a class="el" href="group__BasicMult.html#ga16677275ed83ff0878da531e875c27ef">arm_mult_q7()</a>, <a class="el" href="group__negate.html#gaae78fc079a43bdaa3055f9b32e2a1f4c">arm_negate_q7()</a>, <a class="el" href="group__offset.html#gab4c1d2391b599549e5a06fdfbc2747bf">arm_offset_q15()</a>, <a class="el" href="group__offset.html#ga00bd9cc17c5bf905e76c91ad50886393">arm_offset_q7()</a>, <a class="el" href="group__power.html#ga7050c04b7515e01a75c38f1abbaf71ba">arm_power_q15()</a>, <a class="el" href="group__power.html#gaf969c85c5655e3d72d7b99ff188f92c9">arm_power_q7()</a>, <a class="el" href="group__q15__to__x.html#ga7ba2d87366990ad5380439e2b4a4c0a5">arm_q15_to_q31()</a>, <a class="el" href="group__q15__to__x.html#ga8fb31855ff8cce09c2ec9308f48ded69">arm_q15_to_q7()</a>, <a class="el" href="group__q31__to__x.html#ga901dede4661365c9e7c630d3eb31c32c">arm_q31_to_q15()</a>, <a class="el" href="group__q31__to__x.html#ga7f297d1a7d776805395095fdb24a8071">arm_q31_to_q7()</a>, <a class="el" href="group__q7__to__x.html#gabc02597fc3f01033daf43ec0547a2f78">arm_q7_to_q15()</a>, <a class="el" href="group__q7__to__x.html#gad8958cd3cb7f521466168b46a25b7908">arm_q7_to_q31()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>, <a class="el" href="group__RMS.html#gaf5b836b72dda9e5dfbbd17c7906fd13f">arm_rms_q15()</a>, <a class="el" href="group__scale.html#gafaac0e1927daffeb68a42719b53ea780">arm_scale_q15()</a>, <a class="el" href="group__scale.html#gabc9fd3d37904c58df56492b351d21fb0">arm_scale_q7()</a>, <a class="el" href="group__shift.html#gaa1757e53279780107acc92cf100adb61">arm_shift_q15()</a>, <a class="el" href="group__shift.html#ga47295d08a685f7de700a48dafb4db6fb">arm_shift_q7()</a>, <a class="el" href="arm__rfft__q15_8c.html#a7c2a21793586f9a69c42140665550e09">arm_split_rfft_q15()</a>, <a class="el" href="arm__rfft__q15_8c.html#aa72a531dd15a53570dddaf01b62158f4">arm_split_rifft_q15()</a>, <a class="el" href="group__STD.html#gaf9d27afa9928ff28a63cd98ea9218a72">arm_std_q15()</a>, <a class="el" href="group__BasicSub.html#ga997a8ee93088d15bda23c325d455b588">arm_sub_q15()</a>, <a class="el" href="group__BasicSub.html#gab09941de7dfeb247e5c29b406a435fcc">arm_sub_q7()</a>, and <a class="el" href="group__variance.html#ga79dce009ed2de28a125aeb3f19631654">arm_var_q15()</a>.</p>
+<p>Referenced by <a class="el" href="group__BasicAdd.html#gabb51285a41f511670bbff62fc0e1bf62">arm_add_q15()</a>, <a class="el" href="group__BasicAdd.html#gaed633f415a7840a66861debca2dfb96b">arm_add_q7()</a>, <a class="el" href="group__BiquadCascadeDF1.html#gaffb9792c0220882efd4c58f3c6a05fd7">arm_biquad_cascade_df1_fast_q15()</a>, <a class="el" href="group__BiquadCascadeDF1.html#gadd66a0aefdc645031d607b0a5b37a942">arm_biquad_cascade_df1_q15()</a>, <a class="el" href="group__cmplx__conj.html#gaf47689ae07962acaecb8ddde556df4a4">arm_cmplx_conj_q15()</a>, <a class="el" href="group__cmplx__mag.html#ga0a4a8f77a6a51d9b3f3b9d729f85b7a4">arm_cmplx_mag_q15()</a>, <a class="el" href="group__cmplx__mag__squared.html#ga45537f576102d960d467eb722b8431f2">arm_cmplx_mag_squared_q15()</a>, <a class="el" href="group__CmplxByRealMult.html#ga3bd8889dcb45980e1d3e53344df54e85">arm_cmplx_mult_real_q15()</a>, <a class="el" href="group__Conv.html#gaf16f490d245391ec18a42adc73d6d749">arm_conv_fast_opt_q15()</a>, <a class="el" href="group__Conv.html#gad75ca978ce906e04abdf86a8d76306d4">arm_conv_fast_q15()</a>, <a class="el" href="group__Conv.html#gac77dbcaef5c754cac27eab96c4753a3c">arm_conv_opt_q15()</a>, <a class="el" href="group__Conv.html#ga4c7cf073e89d6d57cc4e711f078c3f68">arm_conv_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga3de9c4ddcc7886de25b70d875099a8d9">arm_conv_partial_fast_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga1e4d43385cb62262a78c6752fe1fafb2">arm_conv_partial_fast_q15()</a>, <a class="el" href="group__PartialConv.html#ga834b23b4ade8682beeb55778399101f8">arm_conv_partial_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga3707e16af1435b215840006a7ab0c98f">arm_conv_partial_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga209a2a913a0c5e5679c5988da8f46b03">arm_conv_partial_q15()</a>, <a class="el" href="group__Conv.html#gaccd6a89b0ff7a94df64610598e6e6893">arm_conv_q15()</a>, <a class="el" href="group__copy.html#ga872ca4cfc18c680b8991ccd569a5fda0">arm_copy_q15()</a>, <a class="el" href="group__copy.html#ga467579beda492aa92797529d794c88fb">arm_copy_q7()</a>, <a class="el" href="group__Corr.html#ga40a0236b17220e8e22a22b5bc1c53c6b">arm_correlate_fast_opt_q15()</a>, <a class="el" href="group__Corr.html#gac8de3da44f58e86c2c86156276ca154f">arm_correlate_fast_q15()</a>, <a class="el" href="group__Corr.html#gad71c0ec70ec69edbc48563d9a5f68451">arm_correlate_opt_q15()</a>, <a class="el" href="group__Corr.html#ga746e8857cafe33ec5d6780729c18c311">arm_correlate_opt_q7()</a>, <a class="el" href="group__Corr.html#ga5ec96b8e420d68b0e626df0812274d46">arm_correlate_q15()</a>, <a class="el" href="group__dot__prod.html#ga436d5bed28a4b73b24acbde436a3044b">arm_dot_prod_q15()</a>, <a class="el" href="group__dot__prod.html#ga9c3293a50ac7ec8ba928bf8e3aaea6c1">arm_dot_prod_q7()</a>, <a class="el" href="group__Fill.html#ga76b21c32a3783a2b3334d930a646e5d8">arm_fill_q15()</a>, <a class="el" href="group__Fill.html#ga0465cf326ada039ed792f94b033d9ec5">arm_fill_q7()</a>, <a class="el" href="group__FIR__decimate.html#ga3f434c9a5d3b4e68061feac0714ea2ac">arm_fir_decimate_fast_q15()</a>, <a class="el" href="group__FIR.html#gac7d35e9472e49ccd88800f37f3476bd3">arm_fir_fast_q15()</a>, <a class="el" href="group__FIR__Lattice.html#gabb0ab07fd313b4d863070c3ddca51542">arm_fir_lattice_q15()</a>, <a class="el" href="group__FIR__Sparse.html#ga2bffda2e156e72427e19276cd9c3d3cc">arm_fir_sparse_q15()</a>, <a class="el" href="group__FIR__Sparse.html#gae86c145efc2d9ec32dc6d8c1ad2ccb3c">arm_fir_sparse_q7()</a>, <a class="el" href="group__IIR__Lattice.html#gaeb9e9599a288832ed123183eaa8b294a">arm_iir_lattice_q15()</a>, <a class="el" href="group__LMS__NORM.html#gad47486a399dedb0bc85a5990ec5cf981">arm_lms_norm_q15()</a>, <a class="el" href="group__LMS.html#gacde16c17eb75979f81b34e2e2a58c7ac">arm_lms_q15()</a>, <a class="el" href="group__MatrixAdd.html#ga147e90b7c12a162735ab8824127a33ee">arm_mat_add_q15()</a>, <a class="el" href="group__CmplxMatrixMult.html#ga63066615e7d6f6a44f4358725092419e">arm_mat_cmplx_mult_q15()</a>, <a class="el" href="group__MatrixMult.html#ga08f37d93a5bfef0c5000dc5e0a411f93">arm_mat_mult_fast_q15()</a>, <a class="el" href="group__MatrixMult.html#ga7521d59196189bb6dde26e8cdfb66e21">arm_mat_mult_q15()</a>, <a class="el" href="group__MatrixSub.html#gaf647776a425b7f9dd0aca3e11d81f02f">arm_mat_sub_q15()</a>, <a class="el" href="group__MatrixTrans.html#ga4f4f821cc695fd0ef9061d702e08050a">arm_mat_trans_q15()</a>, <a class="el" href="group__mean.html#gac882495d5f098819fd3939c1ef7795b3">arm_mean_q15()</a>, <a class="el" href="group__mean.html#gaebc707ee539020357c25da4c75b52eb7">arm_mean_q7()</a>, <a class="el" href="group__BasicMult.html#gafb0778d27ed98a2a6f2ecb7d48cc8c75">arm_mult_q15()</a>, <a class="el" href="group__BasicMult.html#ga16677275ed83ff0878da531e875c27ef">arm_mult_q7()</a>, <a class="el" href="group__negate.html#gaae78fc079a43bdaa3055f9b32e2a1f4c">arm_negate_q7()</a>, <a class="el" href="group__offset.html#gab4c1d2391b599549e5a06fdfbc2747bf">arm_offset_q15()</a>, <a class="el" href="group__offset.html#ga00bd9cc17c5bf905e76c91ad50886393">arm_offset_q7()</a>, <a class="el" href="group__power.html#ga7050c04b7515e01a75c38f1abbaf71ba">arm_power_q15()</a>, <a class="el" href="group__power.html#gaf969c85c5655e3d72d7b99ff188f92c9">arm_power_q7()</a>, <a class="el" href="group__q15__to__x.html#ga7ba2d87366990ad5380439e2b4a4c0a5">arm_q15_to_q31()</a>, <a class="el" href="group__q15__to__x.html#ga8fb31855ff8cce09c2ec9308f48ded69">arm_q15_to_q7()</a>, <a class="el" href="group__q31__to__x.html#ga901dede4661365c9e7c630d3eb31c32c">arm_q31_to_q15()</a>, <a class="el" href="group__q31__to__x.html#ga7f297d1a7d776805395095fdb24a8071">arm_q31_to_q7()</a>, <a class="el" href="group__q7__to__x.html#gabc02597fc3f01033daf43ec0547a2f78">arm_q7_to_q15()</a>, <a class="el" href="group__q7__to__x.html#gad8958cd3cb7f521466168b46a25b7908">arm_q7_to_q31()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>, <a class="el" href="group__RMS.html#gaf5b836b72dda9e5dfbbd17c7906fd13f">arm_rms_q15()</a>, <a class="el" href="group__scale.html#gafaac0e1927daffeb68a42719b53ea780">arm_scale_q15()</a>, <a class="el" href="group__scale.html#gabc9fd3d37904c58df56492b351d21fb0">arm_scale_q7()</a>, <a class="el" href="group__shift.html#gaa1757e53279780107acc92cf100adb61">arm_shift_q15()</a>, <a class="el" href="group__shift.html#ga47295d08a685f7de700a48dafb4db6fb">arm_shift_q7()</a>, <a class="el" href="arm__rfft__q15_8c.html#a7c2a21793586f9a69c42140665550e09">arm_split_rfft_q15()</a>, <a class="el" href="arm__rfft__q15_8c.html#aa72a531dd15a53570dddaf01b62158f4">arm_split_rifft_q15()</a>, <a class="el" href="group__STD.html#gaf9d27afa9928ff28a63cd98ea9218a72">arm_std_q15()</a>, <a class="el" href="group__BasicSub.html#ga997a8ee93088d15bda23c325d455b588">arm_sub_q15()</a>, <a class="el" href="group__BasicSub.html#gab09941de7dfeb247e5c29b406a435fcc">arm_sub_q7()</a>, and <a class="el" href="group__variance.html#ga79dce009ed2de28a125aeb3f19631654">arm_var_q15()</a>.</p>
 
 </div>
 </div>
@@ -1418,7 +1557,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="arm__cfft__q15_8c.html#abe669acc8db57d1fb9b1e2bba30f2224">arm_cfft_radix4by2_inverse_q15()</a>, <a class="el" href="arm__cfft__q15_8c.html#af1d4a751153857c173511e0c77ab4fa9">arm_cfft_radix4by2_q15()</a>, <a class="el" href="group__Conv.html#gaf16f490d245391ec18a42adc73d6d749">arm_conv_fast_opt_q15()</a>, <a class="el" href="group__Conv.html#gad75ca978ce906e04abdf86a8d76306d4">arm_conv_fast_q15()</a>, <a class="el" href="group__Conv.html#gac77dbcaef5c754cac27eab96c4753a3c">arm_conv_opt_q15()</a>, <a class="el" href="group__Conv.html#ga4c7cf073e89d6d57cc4e711f078c3f68">arm_conv_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga3de9c4ddcc7886de25b70d875099a8d9">arm_conv_partial_fast_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga1e4d43385cb62262a78c6752fe1fafb2">arm_conv_partial_fast_q15()</a>, <a class="el" href="group__PartialConv.html#ga834b23b4ade8682beeb55778399101f8">arm_conv_partial_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga3707e16af1435b215840006a7ab0c98f">arm_conv_partial_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga209a2a913a0c5e5679c5988da8f46b03">arm_conv_partial_q15()</a>, <a class="el" href="group__Conv.html#gaccd6a89b0ff7a94df64610598e6e6893">arm_conv_q15()</a>, <a class="el" href="group__Corr.html#ga40a0236b17220e8e22a22b5bc1c53c6b">arm_correlate_fast_opt_q15()</a>, <a class="el" href="group__Corr.html#gac8de3da44f58e86c2c86156276ca154f">arm_correlate_fast_q15()</a>, <a class="el" href="group__Corr.html#gad71c0ec70ec69edbc48563d9a5f68451">arm_correlate_opt_q15()</a>, <a class="el" href="group__Corr.html#ga746e8857cafe33ec5d6780729c18c311">arm_correlate_opt_q7()</a>, <a class="el" href="group__Corr.html#ga5ec96b8e420d68b0e626df0812274d46">arm_correlate_q15()</a>, <a class="el" href="group__FIR.html#gac7d35e9472e49ccd88800f37f3476bd3">arm_fir_fast_q15()</a>, <a class="el" href="group__FIR.html#ga262d173058d6f80fdf60404ba262a8f5">arm_fir_q15()</a>, <a class="el" href="group__MatrixScale.html#ga7521769e2cf1c3d9c4656138cd2ae2ca">arm_mat_scale_q15()</a>, <a class="el" href="group__negate.html#ga0239a833d72cf00290b9723c394e5042">arm_negate_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a91ff93fa10757b3872680fec4835c412">arm_radix2_butterfly_inverse_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a521780ba2fd3450cbf02784e38859699">arm_radix2_butterfly_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, and <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>.</p>
+<p>Referenced by <a class="el" href="arm__cfft__q15_8c.html#abe669acc8db57d1fb9b1e2bba30f2224">arm_cfft_radix4by2_inverse_q15()</a>, <a class="el" href="arm__cfft__q15_8c.html#af1d4a751153857c173511e0c77ab4fa9">arm_cfft_radix4by2_q15()</a>, <a class="el" href="group__Conv.html#gaf16f490d245391ec18a42adc73d6d749">arm_conv_fast_opt_q15()</a>, <a class="el" href="group__Conv.html#gad75ca978ce906e04abdf86a8d76306d4">arm_conv_fast_q15()</a>, <a class="el" href="group__Conv.html#gac77dbcaef5c754cac27eab96c4753a3c">arm_conv_opt_q15()</a>, <a class="el" href="group__Conv.html#ga4c7cf073e89d6d57cc4e711f078c3f68">arm_conv_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga3de9c4ddcc7886de25b70d875099a8d9">arm_conv_partial_fast_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga1e4d43385cb62262a78c6752fe1fafb2">arm_conv_partial_fast_q15()</a>, <a class="el" href="group__PartialConv.html#ga834b23b4ade8682beeb55778399101f8">arm_conv_partial_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga3707e16af1435b215840006a7ab0c98f">arm_conv_partial_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga209a2a913a0c5e5679c5988da8f46b03">arm_conv_partial_q15()</a>, <a class="el" href="group__Conv.html#gaccd6a89b0ff7a94df64610598e6e6893">arm_conv_q15()</a>, <a class="el" href="group__Corr.html#ga40a0236b17220e8e22a22b5bc1c53c6b">arm_correlate_fast_opt_q15()</a>, <a class="el" href="group__Corr.html#gac8de3da44f58e86c2c86156276ca154f">arm_correlate_fast_q15()</a>, <a class="el" href="group__Corr.html#gad71c0ec70ec69edbc48563d9a5f68451">arm_correlate_opt_q15()</a>, <a class="el" href="group__Corr.html#ga746e8857cafe33ec5d6780729c18c311">arm_correlate_opt_q7()</a>, <a class="el" href="group__Corr.html#ga5ec96b8e420d68b0e626df0812274d46">arm_correlate_q15()</a>, <a class="el" href="group__FIR.html#gac7d35e9472e49ccd88800f37f3476bd3">arm_fir_fast_q15()</a>, <a class="el" href="group__MatrixScale.html#ga7521769e2cf1c3d9c4656138cd2ae2ca">arm_mat_scale_q15()</a>, <a class="el" href="group__negate.html#ga0239a833d72cf00290b9723c394e5042">arm_negate_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a91ff93fa10757b3872680fec4835c412">arm_radix2_butterfly_inverse_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a521780ba2fd3450cbf02784e38859699">arm_radix2_butterfly_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, and <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>.</p>
 
 </div>
 </div>
@@ -1755,18 +1894,6 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a class="anchor" id="a032503e76d6f69bc67e99e909c8125da"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TABLE_SIZE</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a60b0142af7be007902142add27919b82"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1901,6 +2028,680 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ab9f3cfbfb0f12975ab91ddb179160dcb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE int32_t __QADD </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>References <a class="el" href="arm__math_8h.html#a9a94b78de0f083bd8fadf3c3abe40431">clip_q63_to_q31()</a>.</p>
+
+<p>Referenced by <a class="el" href="group__BasicAdd.html#ga24d6c3f7f8b9fae4847c0c3f26a39a3b">arm_add_q31()</a>, <a class="el" href="group__clarke.html#ga0c69ebd2855ce6d34008eff808881e78">arm_clarke_q31()</a>, <a class="el" href="group__IIR__Lattice.html#ga123b26fa9156cd8d3622dd85931741ed">arm_iir_lattice_q31()</a>, <a class="el" href="group__inv__park.html#ga6e00d7320aa4a85686716af8b763e08a">arm_inv_park_q31()</a>, <a class="el" href="group__MatrixAdd.html#ga7d9d7d81a0832a17b831aad1e4a5dc16">arm_mat_add_q31()</a>, <a class="el" href="group__offset.html#gac84ec42cbbebc5c197a87d0221819acf">arm_offset_q31()</a>, <a class="el" href="group__park.html#ga5630ed3715091f2795ee10df34672523">arm_park_q31()</a>, and <a class="el" href="group__PID.html#gad9d88485234fa9460b1ce9e64989ac86">arm_pid_init_q31()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a08bea9cb2c311d925224c0d6829edb8c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __QADD16 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__BasicAdd.html#gabb51285a41f511670bbff62fc0e1bf62">arm_add_q15()</a>, <a class="el" href="group__MatrixAdd.html#ga147e90b7c12a162735ab8824127a33ee">arm_mat_add_q15()</a>, <a class="el" href="group__offset.html#gab4c1d2391b599549e5a06fdfbc2747bf">arm_offset_q15()</a>, <a class="el" href="group__PID.html#ga2cb1e3d3ebb167348fdabec74653d5c3">arm_pid_init_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a91ff93fa10757b3872680fec4835c412">arm_radix2_butterfly_inverse_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a521780ba2fd3450cbf02784e38859699">arm_radix2_butterfly_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, and <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a937a37e831677294ecde7195ec9d68ee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __QADD8 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__BasicAdd.html#gaed633f415a7840a66861debca2dfb96b">arm_add_q7()</a>, and <a class="el" href="group__offset.html#ga00bd9cc17c5bf905e76c91ad50886393">arm_offset_q7()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aad6f7afa72d784b95e6357c215a919bb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __QASX </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__cmplx__conj.html#gaf47689ae07962acaecb8ddde556df4a4">arm_cmplx_conj_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, and <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a391f5f1d2e7cefaccfece0a49141ad47"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __QSAX </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__cmplx__conj.html#gaf47689ae07962acaecb8ddde556df4a4">arm_cmplx_conj_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, and <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a15e896d0146c280e600d00f609832350"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE int32_t __QSUB </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>References <a class="el" href="arm__math_8h.html#a9a94b78de0f083bd8fadf3c3abe40431">clip_q63_to_q31()</a>.</p>
+
+<p>Referenced by <a class="el" href="group__BasicAbs.html#ga59eafcdcdb52da60d37f20aec6ff4577">arm_abs_q31()</a>, <a class="el" href="arm__cfft__q15_8c.html#abe669acc8db57d1fb9b1e2bba30f2224">arm_cfft_radix4by2_inverse_q15()</a>, <a class="el" href="group__cmplx__conj.html#gafecc94879a383c5208ec3ef99485e4b5">arm_cmplx_conj_q31()</a>, <a class="el" href="group__IIR__Lattice.html#ga123b26fa9156cd8d3622dd85931741ed">arm_iir_lattice_q31()</a>, <a class="el" href="group__inv__clarke.html#ga50768ebd8b71e8988dbb804cc03a742d">arm_inv_clarke_q31()</a>, <a class="el" href="group__inv__park.html#ga6e00d7320aa4a85686716af8b763e08a">arm_inv_park_q31()</a>, <a class="el" href="group__MatrixSub.html#ga39f42e0e3b7f115fbb909d6ff4e1329d">arm_mat_sub_q31()</a>, <a class="el" href="group__negate.html#ga2784c6887686a73dc7c364e2e41c776c">arm_negate_q31()</a>, <a class="el" href="group__park.html#ga5630ed3715091f2795ee10df34672523">arm_park_q31()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a91ff93fa10757b3872680fec4835c412">arm_radix2_butterfly_inverse_q15()</a>, and <a class="el" href="group__BasicSub.html#ga28aa6908d092752144413e21933dc878">arm_sub_q31()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6e4703dc08d1b82eab7f5ef96edb59bb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __QSUB16 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__BasicAbs.html#ga39f92964c9b649ba252e26ebe7b95594">arm_abs_q15()</a>, <a class="el" href="arm__cfft__q15_8c.html#abe669acc8db57d1fb9b1e2bba30f2224">arm_cfft_radix4by2_inverse_q15()</a>, <a class="el" href="arm__cfft__q15_8c.html#af1d4a751153857c173511e0c77ab4fa9">arm_cfft_radix4by2_q15()</a>, <a class="el" href="group__MatrixSub.html#gaf647776a425b7f9dd0aca3e11d81f02f">arm_mat_sub_q15()</a>, <a class="el" href="group__negate.html#ga0239a833d72cf00290b9723c394e5042">arm_negate_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a91ff93fa10757b3872680fec4835c412">arm_radix2_butterfly_inverse_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a521780ba2fd3450cbf02784e38859699">arm_radix2_butterfly_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>, and <a class="el" href="group__BasicSub.html#ga997a8ee93088d15bda23c325d455b588">arm_sub_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4690314b420f463093f1a2f68b5fb143"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __QSUB8 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__BasicAbs.html#gadc30985e33fbf96802a5a7954dece3b1">arm_abs_q7()</a>, <a class="el" href="group__negate.html#gaae78fc079a43bdaa3055f9b32e2a1f4c">arm_negate_q7()</a>, and <a class="el" href="group__BasicSub.html#gab09941de7dfeb247e5c29b406a435fcc">arm_sub_q7()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af3d7aff37a4472f1f2bc88eb3b97b526"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __SHADD16 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="arm__cfft__q15_8c.html#abe669acc8db57d1fb9b1e2bba30f2224">arm_cfft_radix4by2_inverse_q15()</a>, <a class="el" href="arm__cfft__q15_8c.html#af1d4a751153857c173511e0c77ab4fa9">arm_cfft_radix4by2_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a91ff93fa10757b3872680fec4835c412">arm_radix2_butterfly_inverse_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a521780ba2fd3450cbf02784e38859699">arm_radix2_butterfly_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, and <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af60f220d422ebc524411f712544feecf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __SHASX </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, and <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abbfbf3cfac1971b4b380c0cde120a85b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __SHSAX </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, and <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0987d147320a596bbdb537d70b23de73"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __SHSUB16 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, and <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa611fdbf6c56c46553701d6596a79aaf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __SMLAD </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__BiquadCascadeDF1.html#gaffb9792c0220882efd4c58f3c6a05fd7">arm_biquad_cascade_df1_fast_q15()</a>, <a class="el" href="group__Conv.html#gaf16f490d245391ec18a42adc73d6d749">arm_conv_fast_opt_q15()</a>, <a class="el" href="group__Conv.html#gad75ca978ce906e04abdf86a8d76306d4">arm_conv_fast_q15()</a>, <a class="el" href="group__Conv.html#ga4c7cf073e89d6d57cc4e711f078c3f68">arm_conv_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga3de9c4ddcc7886de25b70d875099a8d9">arm_conv_partial_fast_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga1e4d43385cb62262a78c6752fe1fafb2">arm_conv_partial_fast_q15()</a>, <a class="el" href="group__PartialConv.html#ga3707e16af1435b215840006a7ab0c98f">arm_conv_partial_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga8567259fe18396dd972242c41741ebf4">arm_conv_partial_q7()</a>, <a class="el" href="group__Conv.html#gae2070cb792a167e78dbad8d06b97cdab">arm_conv_q7()</a>, <a class="el" href="group__Corr.html#ga40a0236b17220e8e22a22b5bc1c53c6b">arm_correlate_fast_opt_q15()</a>, <a class="el" href="group__Corr.html#gac8de3da44f58e86c2c86156276ca154f">arm_correlate_fast_q15()</a>, <a class="el" href="group__Corr.html#ga746e8857cafe33ec5d6780729c18c311">arm_correlate_opt_q7()</a>, <a class="el" href="group__Corr.html#ga284ddcc49e4ac532d52a70d0383c5992">arm_correlate_q7()</a>, <a class="el" href="group__dot__prod.html#ga9c3293a50ac7ec8ba928bf8e3aaea6c1">arm_dot_prod_q7()</a>, <a class="el" href="group__FIR__decimate.html#ga3f434c9a5d3b4e68061feac0714ea2ac">arm_fir_decimate_fast_q15()</a>, <a class="el" href="group__FIR.html#gac7d35e9472e49ccd88800f37f3476bd3">arm_fir_fast_q15()</a>, <a class="el" href="group__MatrixMult.html#ga08f37d93a5bfef0c5000dc5e0a411f93">arm_mat_mult_fast_q15()</a>, <a class="el" href="group__power.html#gaf969c85c5655e3d72d7b99ff188f92c9">arm_power_q7()</a>, <a class="el" href="arm__rfft__q15_8c.html#a7c2a21793586f9a69c42140665550e09">arm_split_rfft_q15()</a>, and <a class="el" href="arm__rfft__q15_8c.html#aa72a531dd15a53570dddaf01b62158f4">arm_split_rifft_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7fc670277db1ad9ac34d52d771c7c305"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __SMLADX </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__Conv.html#gaf16f490d245391ec18a42adc73d6d749">arm_conv_fast_opt_q15()</a>, <a class="el" href="group__Conv.html#gad75ca978ce906e04abdf86a8d76306d4">arm_conv_fast_q15()</a>, <a class="el" href="group__Conv.html#ga4c7cf073e89d6d57cc4e711f078c3f68">arm_conv_opt_q7()</a>, <a class="el" href="group__PartialConv.html#ga3de9c4ddcc7886de25b70d875099a8d9">arm_conv_partial_fast_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga1e4d43385cb62262a78c6752fe1fafb2">arm_conv_partial_fast_q15()</a>, <a class="el" href="group__PartialConv.html#ga3707e16af1435b215840006a7ab0c98f">arm_conv_partial_opt_q7()</a>, <a class="el" href="group__Corr.html#ga40a0236b17220e8e22a22b5bc1c53c6b">arm_correlate_fast_opt_q15()</a>, <a class="el" href="group__Corr.html#gac8de3da44f58e86c2c86156276ca154f">arm_correlate_fast_q15()</a>, <a class="el" href="group__Corr.html#ga746e8857cafe33ec5d6780729c18c311">arm_correlate_opt_q7()</a>, <a class="el" href="group__FIR.html#gac7d35e9472e49ccd88800f37f3476bd3">arm_fir_fast_q15()</a>, and <a class="el" href="arm__rfft__q15_8c.html#a7c2a21793586f9a69c42140665550e09">arm_split_rfft_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7aed02041f489a4f65dbd7093073d94e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint64_t __SMLALD </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>sum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__BiquadCascadeDF1.html#gadd66a0aefdc645031d607b0a5b37a942">arm_biquad_cascade_df1_q15()</a>, <a class="el" href="group__Conv.html#gac77dbcaef5c754cac27eab96c4753a3c">arm_conv_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga834b23b4ade8682beeb55778399101f8">arm_conv_partial_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga209a2a913a0c5e5679c5988da8f46b03">arm_conv_partial_q15()</a>, <a class="el" href="group__Conv.html#gaccd6a89b0ff7a94df64610598e6e6893">arm_conv_q15()</a>, <a class="el" href="group__Corr.html#gad71c0ec70ec69edbc48563d9a5f68451">arm_correlate_opt_q15()</a>, <a class="el" href="group__Corr.html#ga5ec96b8e420d68b0e626df0812274d46">arm_correlate_q15()</a>, <a class="el" href="group__dot__prod.html#ga436d5bed28a4b73b24acbde436a3044b">arm_dot_prod_q15()</a>, <a class="el" href="group__IIR__Lattice.html#gaeb9e9599a288832ed123183eaa8b294a">arm_iir_lattice_q15()</a>, <a class="el" href="group__LMS__NORM.html#gad47486a399dedb0bc85a5990ec5cf981">arm_lms_norm_q15()</a>, <a class="el" href="group__LMS.html#gacde16c17eb75979f81b34e2e2a58c7ac">arm_lms_q15()</a>, <a class="el" href="group__MatrixMult.html#ga7521d59196189bb6dde26e8cdfb66e21">arm_mat_mult_q15()</a>, <a class="el" href="group__PID.html#gad466471a6b0f8fc570b8b8fc34ac79fa">arm_pid_q15()</a>, <a class="el" href="group__power.html#ga7050c04b7515e01a75c38f1abbaf71ba">arm_power_q15()</a>, <a class="el" href="group__RMS.html#gaf5b836b72dda9e5dfbbd17c7906fd13f">arm_rms_q15()</a>, <a class="el" href="group__STD.html#gaf9d27afa9928ff28a63cd98ea9218a72">arm_std_q15()</a>, and <a class="el" href="group__variance.html#ga79dce009ed2de28a125aeb3f19631654">arm_var_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3bdab9022ab56e30f6346a043050dfc4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint64_t __SMLALDX </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>sum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__Conv.html#gac77dbcaef5c754cac27eab96c4753a3c">arm_conv_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga834b23b4ade8682beeb55778399101f8">arm_conv_partial_opt_q15()</a>, <a class="el" href="group__PartialConv.html#ga209a2a913a0c5e5679c5988da8f46b03">arm_conv_partial_q15()</a>, <a class="el" href="group__Conv.html#gaccd6a89b0ff7a94df64610598e6e6893">arm_conv_q15()</a>, <a class="el" href="group__Corr.html#gad71c0ec70ec69edbc48563d9a5f68451">arm_correlate_opt_q15()</a>, and <a class="el" href="group__Corr.html#ga5ec96b8e420d68b0e626df0812274d46">arm_correlate_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5d61b7d886888f9f1f35c079eb5d01c9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __SMLSDX </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="arm__rfft__q15_8c.html#aa72a531dd15a53570dddaf01b62158f4">arm_split_rifft_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0162015f6d3458e2934a265481460ec4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE int32_t __SMMLA </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>sum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__MatrixMult.html#ga2785e8c1b785348b0c439b56aaf585a3">arm_mat_mult_fast_q31()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2eed05660fedbe3fbd0b6dbb1315cfc3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __SMUAD </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__BiquadCascadeDF1.html#gaffb9792c0220882efd4c58f3c6a05fd7">arm_biquad_cascade_df1_fast_q15()</a>, <a class="el" href="group__BiquadCascadeDF1.html#gadd66a0aefdc645031d607b0a5b37a942">arm_biquad_cascade_df1_q15()</a>, <a class="el" href="arm__cfft__q15_8c.html#af1d4a751153857c173511e0c77ab4fa9">arm_cfft_radix4by2_q15()</a>, <a class="el" href="group__cmplx__mag.html#ga0a4a8f77a6a51d9b3f3b9d729f85b7a4">arm_cmplx_mag_q15()</a>, <a class="el" href="group__cmplx__mag__squared.html#ga45537f576102d960d467eb722b8431f2">arm_cmplx_mag_squared_q15()</a>, <a class="el" href="group__PID.html#gad466471a6b0f8fc570b8b8fc34ac79fa">arm_pid_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a521780ba2fd3450cbf02784e38859699">arm_radix2_butterfly_q15()</a>, and <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9c58d7b4648a973d91e27544bc190e60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __SMUADX </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__BiquadCascadeDF1.html#gaffb9792c0220882efd4c58f3c6a05fd7">arm_biquad_cascade_df1_fast_q15()</a>, <a class="el" href="group__BiquadCascadeDF1.html#gadd66a0aefdc645031d607b0a5b37a942">arm_biquad_cascade_df1_q15()</a>, <a class="el" href="arm__cfft__q15_8c.html#abe669acc8db57d1fb9b1e2bba30f2224">arm_cfft_radix4by2_inverse_q15()</a>, <a class="el" href="group__CmplxMatrixMult.html#ga63066615e7d6f6a44f4358725092419e">arm_mat_cmplx_mult_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a91ff93fa10757b3872680fec4835c412">arm_radix2_butterfly_inverse_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, and <a class="el" href="arm__rfft__q15_8c.html#aa72a531dd15a53570dddaf01b62158f4">arm_split_rifft_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6b293f62ad7eb225fa9ce0f39458eba3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __SMUSD </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="arm__cfft__q15_8c.html#abe669acc8db57d1fb9b1e2bba30f2224">arm_cfft_radix4by2_inverse_q15()</a>, <a class="el" href="group__CmplxMatrixMult.html#ga63066615e7d6f6a44f4358725092419e">arm_mat_cmplx_mult_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a91ff93fa10757b3872680fec4835c412">arm_radix2_butterfly_inverse_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#aad04e8439d17dab5617bf1be268bb391">arm_radix4_butterfly_inverse_q15()</a>, <a class="el" href="arm__rfft__q15_8c.html#a7c2a21793586f9a69c42140665550e09">arm_split_rfft_q15()</a>, and <a class="el" href="arm__rfft__q15_8c.html#aa72a531dd15a53570dddaf01b62158f4">arm_split_rifft_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7375d1deba32929dc97008bfa7085d46"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __SMUSDX </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="arm__cfft__q15_8c.html#af1d4a751153857c173511e0c77ab4fa9">arm_cfft_radix4by2_q15()</a>, <a class="el" href="arm__cfft__radix2__q15_8c.html#a521780ba2fd3450cbf02784e38859699">arm_radix2_butterfly_q15()</a>, <a class="el" href="arm__cfft__radix4__q15_8c.html#a2d01d2045f280c32036da97d33c52440">arm_radix4_butterfly_q15()</a>, and <a class="el" href="arm__rfft__q15_8c.html#a7c2a21793586f9a69c42140665550e09">arm_split_rfft_q15()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac9f7f02a5e0ad5642026dbd0da7418db"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CMSIS_INLINE __STATIC_INLINE uint32_t __SXTB16 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__dot__prod.html#ga9c3293a50ac7ec8ba928bf8e3aaea6c1">arm_dot_prod_q7()</a>, <a class="el" href="group__power.html#gaf969c85c5655e3d72d7b99ff188f92c9">arm_power_q7()</a>, and <a class="el" href="group__q7__to__x.html#gabc02597fc3f01033daf43ec0547a2f78">arm_q7_to_q15()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="af4d2359037b7360329ef9dd6836d1353"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2432,7 +3233,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="group__BasicAdd.html#ga24d6c3f7f8b9fae4847c0c3f26a39a3b">arm_add_q31()</a>, <a class="el" href="group__CmplxByRealMult.html#ga715e4bb8e945b8ca51ec5237611697ce">arm_cmplx_mult_real_q31()</a>, <a class="el" href="group__float__to__x.html#ga177704107f94564e9abe4daaa36f4554">arm_float_to_q31()</a>, <a class="el" href="group__IIR__Lattice.html#ga123b26fa9156cd8d3622dd85931741ed">arm_iir_lattice_q31()</a>, <a class="el" href="group__LMS__NORM.html#ga7128775e99817c183a7d7ad34e8b6e05">arm_lms_norm_q31()</a>, <a class="el" href="group__LMS.html#ga6a0abfe6041253a6f91c63b383a64257">arm_lms_q31()</a>, <a class="el" href="group__CmplxMatrixMult.html#gaaf3c0b171ca8412c77bab9fa90804737">arm_mat_cmplx_mult_q31()</a>, <a class="el" href="group__MatrixMult.html#ga2ec612a8c2c4916477fb9bc1ab548a6e">arm_mat_mult_q31()</a>, <a class="el" href="group__BasicMult.html#ga3528c0f54a0607acc603f0490d3ca6c6">arm_mult_q31()</a>, <a class="el" href="group__offset.html#gac84ec42cbbebc5c197a87d0221819acf">arm_offset_q31()</a>, <a class="el" href="group__PID.html#gad9d88485234fa9460b1ce9e64989ac86">arm_pid_init_q31()</a>, <a class="el" href="arm__math_8h.html#a71f6bee1ce1bb896739401ce962a7e6a">arm_recip_q31()</a>, <a class="el" href="group__RMS.html#gae33015fda23fc44e7ead5e5ed7e8d314">arm_rms_q31()</a>, <a class="el" href="group__shift.html#ga387dd8b7b87377378280978f16cdb13d">arm_shift_q31()</a>, <a class="el" href="group__SinCos.html#gae9e4ddebff9d4eb5d0a093e28e0bc504">arm_sin_cos_q31()</a>, and <a class="el" href="group__BasicSub.html#ga28aa6908d092752144413e21933dc878">arm_sub_q31()</a>.</p>
+<p>Referenced by <a class="el" href="arm__math_8h.html#ab9f3cfbfb0f12975ab91ddb179160dcb">__QADD()</a>, <a class="el" href="arm__math_8h.html#a15e896d0146c280e600d00f609832350">__QSUB()</a>, <a class="el" href="group__BasicAdd.html#ga24d6c3f7f8b9fae4847c0c3f26a39a3b">arm_add_q31()</a>, <a class="el" href="group__CmplxByRealMult.html#ga715e4bb8e945b8ca51ec5237611697ce">arm_cmplx_mult_real_q31()</a>, <a class="el" href="group__float__to__x.html#ga177704107f94564e9abe4daaa36f4554">arm_float_to_q31()</a>, <a class="el" href="group__IIR__Lattice.html#ga123b26fa9156cd8d3622dd85931741ed">arm_iir_lattice_q31()</a>, <a class="el" href="group__LMS__NORM.html#ga7128775e99817c183a7d7ad34e8b6e05">arm_lms_norm_q31()</a>, <a class="el" href="group__LMS.html#ga6a0abfe6041253a6f91c63b383a64257">arm_lms_q31()</a>, <a class="el" href="group__CmplxMatrixMult.html#gaaf3c0b171ca8412c77bab9fa90804737">arm_mat_cmplx_mult_q31()</a>, <a class="el" href="group__MatrixMult.html#ga2ec612a8c2c4916477fb9bc1ab548a6e">arm_mat_mult_q31()</a>, <a class="el" href="group__BasicMult.html#ga3528c0f54a0607acc603f0490d3ca6c6">arm_mult_q31()</a>, <a class="el" href="group__offset.html#gac84ec42cbbebc5c197a87d0221819acf">arm_offset_q31()</a>, <a class="el" href="group__PID.html#gad9d88485234fa9460b1ce9e64989ac86">arm_pid_init_q31()</a>, <a class="el" href="arm__math_8h.html#a71f6bee1ce1bb896739401ce962a7e6a">arm_recip_q31()</a>, <a class="el" href="group__RMS.html#gae33015fda23fc44e7ead5e5ed7e8d314">arm_rms_q31()</a>, <a class="el" href="group__shift.html#ga387dd8b7b87377378280978f16cdb13d">arm_shift_q31()</a>, <a class="el" href="group__SinCos.html#gae9e4ddebff9d4eb5d0a093e28e0bc504">arm_sin_cos_q31()</a>, and <a class="el" href="group__BasicSub.html#ga28aa6908d092752144413e21933dc878">arm_sub_q31()</a>.</p>
 
 </div>
 </div>
@@ -2470,7 +3271,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_650d82db24a6311fa7658fced19ae149.html">DSP</a></li><li class="navelem"><a class="el" href="dir_a60f901a1a7665a0737ec2a3f2ba0d4e.html">Include</a></li><li class="navelem"><a class="el" href="arm__math_8h.html">arm_math.h</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:32 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

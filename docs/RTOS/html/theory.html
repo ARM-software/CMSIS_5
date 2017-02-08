@@ -156,7 +156,7 @@ CMSIS-RTOS RTX Threads</h1>
 <p>At startup time, the CMSIS-RTOS RTX creates the following threads:</p>
 <ul>
 <li><b>main</b> : the 'main' function of the application code is started as thread with the <a class="el" href="cmsis__os_8h.html#ga7f2b42f1983b9107775ec2a1c69a849aa45a2895ad30c79fb97de18cac7cc19f1">osPriorityNormal</a>.</li>
-<li><b>os_idle_demon</b> : this thread executes when no other thread is in <b>RUNNING</b> state. The code of that thread is provided in the <a class="el" href="files.html#RTX_Conf_CM">RTX_Conf_CM.c</a> file and is typically used to put the system into a power-saving mode.</li>
+<li><b>os_idle_demon</b> : this thread executes when no other thread is in <b>RUNNING</b> state. The code of that thread is provided in the <a class="el" href="dirstructfiles.html#RTX_Conf_CM">RTX_Conf_CM.c</a> file and is typically used to put the system into a power-saving mode.</li>
 <li><b>osTimerThread</b> : this thread executes the <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html">Timer Management</a> callback functions. This thread can be disabled; refer to <a class="el" href="systemConfig.html#UserTimer">User Timer Management</a> for configuration options.</li>
 </ul>
 <h1><a class="anchor" id="PriorityInversion"></a>
@@ -182,7 +182,7 @@ Function calls from Interrupt Service Routines (ISR)</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtxImplementation.html">RTX Implementation</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:44 for CMSIS-RTOS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:02 for CMSIS-RTOS by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

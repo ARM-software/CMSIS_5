@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.7</span>
+   &#160;<span id="projectnumber">Version 1.4.9</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -114,25 +114,29 @@ $(document).ready(function(){initNavTree('pdsc_generators_pg.html','');});
 <p>A generator can be associated with a component by it's name. Selecting the component will automatically include the files provided by the generator in the project. If the specified GPDSC file is not present, the generator command is executed by the environment to generate the files and GPDSC. In this way project specific configurations can be made, files being generated and included and maintained as part of the project.</p>
 <p><a class="anchor" id="pdsc_generators_gen_sec"></a><b>Example</b> Generator Section </p>
 <div class="fragment"><div class="line">&lt;generators&gt;</div>
-<div class="line">  &lt;generator <span class="keywordtype">id</span>=<span class="stringliteral">&quot;STM32CubeMX&quot;</span> Gvendor=<span class="stringliteral">&quot;STMicroelectronics&quot;</span> Gtool=<span class="stringliteral">&quot;STM32CubeMX&quot;</span> Gversion=<span class="stringliteral">&quot;4.10.0&quot;</span>&gt;</div>
-<div class="line">    &lt;description&gt;STM32CubeMX Environment&lt;/description&gt;</div>
-<div class="line">    &lt;select Dname=<span class="stringliteral">&quot;STM32F746NGHx&quot;</span> Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span>/&gt;</div>
-<div class="line">    &lt;command&gt;$SMDK/CubeMX/STM32CubeMXLauncher&lt;/command&gt;</div>
-<div class="line">    &lt;workingDir&gt;$PRTE/Device/STM32F746NGHx&lt;/workingDir&gt;</div>
-<div class="line">    &lt;project_files&gt;</div>
-<div class="line">      &lt;file category=<span class="stringliteral">&quot;source&quot;</span> name=<span class="stringliteral">&quot;STCubeGenerated/Src/main.c&quot;</span> /&gt;</div>
-<div class="line">      &lt;file category=<span class="stringliteral">&quot;header&quot;</span> name=<span class="stringliteral">&quot;STCubeGenerated/Inc/stm32f7xx_it.h&quot;</span>/&gt;</div>
-<div class="line">      &lt;file category=<span class="stringliteral">&quot;source&quot;</span> name=<span class="stringliteral">&quot;STCubeGenerated/Src/stm32f7xx_it.c&quot;</span>/&gt;</div>
-<div class="line">    &lt;/project_files&gt;</div>
+<div class="line">  &lt;generator <span class="keywordtype">id</span> = <span class="stringliteral">&quot;MyGen&quot;</span>&gt;</div>
+<div class="line">    &lt;gpdsc name =<span class="stringliteral">&quot;$P/RTE/MyGen/myGen.gpdsc&quot;</span>/&gt;</div>
+<div class="line">    &lt;exe&gt;</div>
+<div class="line">      &lt;command host = <span class="stringliteral">&quot;win&quot;</span>&gt;MyGen.bat&lt;/command&gt;</div>
+<div class="line">      &lt;command host = <span class="stringliteral">&quot;linux&quot;</span>&gt;MyGen.script&lt;/command&gt;</div>
+<div class="line">      &lt;argument&gt;$P/RTE/MyGen/myGen.gpdsc&lt;/argument&gt;</div>
+<div class="line">      &lt;argument host=<span class="stringliteral">&quot;linux&quot;</span> <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;--device=&quot;</span>&gt;#D&lt;/argument&gt;</div>
+<div class="line">      &lt;argument host=<span class="stringliteral">&quot;win&quot;</span>   <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;/device=&quot;</span>&gt;#D&lt;/argument&gt;</div>
+<div class="line">    &lt;/exe&gt;</div>
+<div class="line">     </div>
+<div class="line">    &lt;eclipse plugin=<span class="stringliteral">&quot;com.mygen.plugin&quot;</span> <span class="keyword">class</span>=<span class="stringliteral">&quot;com.mygen.plugin.generator.launcher&quot;</span> method=<span class="stringliteral">&quot;launch&quot;</span> &gt;</div>
+<div class="line">      &lt;argument&gt;#D&lt;/argument&gt;</div>
+<div class="line">      &lt;argument&gt;$P/RTE/MyGen/myGen.gpdsc&lt;/argument&gt;</div>
+<div class="line">    &lt;/eclipse&gt;</div>
+<div class="line">     </div>
+<div class="line">    &lt;web url=<span class="stringliteral">&quot;http://mygen.com/mygen&quot;</span>&gt;</div>
+<div class="line">      &lt;argument <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;device&quot;</span>&gt;#D&lt;/argument&gt;</div>
+<div class="line">      &lt;argument <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;gpdsc&quot;</span>&gt;$P/RTE/MyGen/myGen.gpdsc&lt;/argument&gt;</div>
+<div class="line">    &lt;/web&gt;</div>
 <div class="line">  &lt;/generator&gt;</div>
 <div class="line">&lt;/generators&gt;</div>
 </div><!-- fragment --><p><a class="anchor" id="pdsc_generators_gpdsc"></a><b>Example</b> Generator Package Description File (gpdsc) </p>
-<div class="fragment"><div class="line">&lt;?xml version=<span class="stringliteral">&quot;1.0&quot;</span> encoding=<span class="stringliteral">&quot;UTF-8&quot;</span> standalone=<span class="stringliteral">&quot;no&quot;</span>?&gt;</div>
-<div class="line">&lt;!-- ******************************************************************************</div>
-<div class="line">   File Name   : FrameworkCubeMX.gpdsc</div>
-<div class="line">   Date        : 02/09/2015 14:27:06</div>
-<div class="line">   Description : Generator PDSC File generated by STM32CubeMX (DO NOT EDIT!)</div>
-<div class="line">                                                                                --&gt;</div>
+<div class="fragment"><div class="line">&lt;?xml version=<span class="stringliteral">&quot;1.0&quot;</span> encoding=<span class="stringliteral">&quot;UTF-8&quot;</span>?&gt;</div>
 <div class="line"></div>
 <div class="line">&lt;<span class="keyword">package </span>xmlns:xs=&quot;http:<span class="comment">//www.w3.org/2001/XMLSchema-instance&quot; schemaVersion=&quot;1.0&quot; xs:noNamespaceSchemaLocation=&quot;PACK.xsd&quot;&gt;</span></div>
 <div class="line">  &lt;vendor&gt;Keil&lt;/vendor&gt;</div>
@@ -141,14 +145,19 @@ $(document).ready(function(){initNavTree('pdsc_generators_pg.html','');});
 <div class="line">  &lt;url&gt;project-path&lt;/url&gt;</div>
 <div class="line">  &lt;releases&gt;</div>
 <div class="line">    &lt;release version=&quot;1.0.0&quot;&gt;</div>
-<div class="line">     - Generated: 02/09/2015 14:27:06</div>
+<div class="line">     - Generated: 08/11/2016 09:20:21</div>
 <div class="line">    &lt;/release&gt;</div>
 <div class="line">  &lt;/releases&gt;</div>
 <div class="line">  &lt;generators&gt;</div>
 <div class="line">    &lt;generator id=&quot;STM32CubeMX&quot; Gvendor=&quot;STMicroelectronics&quot; Gtool=&quot;STM32CubeMX&quot; Gversion=&quot;4.10.0&quot;&gt;</div>
 <div class="line">      &lt;description&gt;STM32CubeMX Environment&lt;/description&gt;</div>
 <div class="line">      &lt;select Dname=&quot;STM32F746NGHx&quot; Dvendor=&quot;STMicroelectronics:13&quot;/&gt;</div>
-<div class="line">      &lt;command&gt;$SMDK/CubeMX/STM32CubeMXLauncher&lt;/command&gt;</div>
+<div class="line">      &lt;exe&gt;</div>
+<div class="line">        &lt;command host = &quot;win&quot;&gt;$SMDK/CubeMX/STM32CubeMXLauncher.exe&lt;/command&gt;</div>
+<div class="line">        &lt;command host = &quot;linux&quot;&gt;$SMDK/CubeMX/STM32CubeMXLauncher&lt;/command&gt;</div>
+<div class="line">        &lt;argument&gt;$P/RTE/MyGen/myGen.gpdsc&lt;/argument&gt;</div>
+<div class="line">        &lt;argument&gt;#D.ioc&lt;/argument&gt;</div>
+<div class="line">      &lt;/exe&gt;</div>
 <div class="line">      &lt;workingDir&gt;$PRTE/Device/STM32F746NGHx&lt;/workingDir&gt;</div>
 <div class="line">      &lt;project_files&gt;</div>
 <div class="line">        &lt;file category=&quot;source&quot; name=&quot;STCubeGenerated/Src/main.c&quot; /&gt;</div>
@@ -241,15 +250,21 @@ $(document).ready(function(){initNavTree('pdsc_generators_pg.html','');});
 <tr>
 <td>workingDir </td><td>Directory to be set as current directory before launching the <code>&lt;command&gt;</code>. This is either an absolute or relative path to PDSC or GPDSC file. If not specified, the current directory is the directory of the project configured by the environment.  </td><td>xs:string </td><td>0..1  </td></tr>
 <tr>
-<td>command </td><td>Invocation command for the generator tool (for an example see <a class="el" href="pdsc_generators_pg.html#pdsc_generators_gen_sec">top of the page</a>). Command line options should be passed via <code>arguments</code>.  </td><td>xs:string </td><td>0..1  </td></tr>
+<td>command </td><td><span class="XML-Token">Deprecated; use exe, web and/or eclipse</span>. Invocation command for the generator tool.  </td><td>xs:string </td><td>0..1  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_generators_pg.html#element_gen_arguments">arguments</a> </td><td>Section for command line arguments of the format <code>&lt;argument</code> <code>switch="-data"&gt;myFileName&lt;/argument&gt;</code>. Path information for files can be specified absolute or relative to the location (path) of the GPDSC file.  </td><td><a class="el" href="pdsc_generators_pg.html#element_gen_arguments">GeneratorCommandArgumentsType</a> </td><td>0..1  </td></tr>
+<td>arguments </td><td><span class="XML-Token">Deprecated; use argument tags under exe, web and/or eclipse</span>. </td><td>GeneratorCommandArgumentsType </td><td>0..1  </td></tr>
 <tr>
-<td>gpdsc </td><td>Path and name of the GPDSC that the generator creates and updates. The path is either absolute or relative to the working directory. If no explicit gpdsc file is provided a gpdsc file named after the project with extension gpdsc in the working directory is assumed (<code>&lt;project&gt;</code>.gpdsc).  </td><td>xs:string </td><td>0..1  </td></tr>
+<td>gpdsc </td><td>Path and name of the GPDSC that the generator creates and updates. The path is either absolute or relative to the working directory. If no explicit gpdsc file is provided, then a gpdsc file named after the project with extension gpdsc in the working directory is assumed (<code>&lt;project&gt;</code>.gpdsc).  </td><td>xs:string </td><td>0..1  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_generators_pg.html#element_gen_exe">exe</a> </td><td>Section to specify a binary/executable to generate the GPDSC file.  </td><td>xs:string </td><td>0..1  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_generators_pg.html#element_gen_eclipse">eclipse</a> </td><td>Section to specify an Eclipse plug-in to generate the GPDSC file.  </td><td>xs:string </td><td>0..1  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_generators_pg.html#element_gen_web">web</a> </td><td>Section to specify a web page to generate the GPDSC file.  </td><td>xs:string </td><td>0..1  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_generators_pg.html#element_gen_project_files">project_files</a> </td><td>Grouping element for all project files generated by the tool. </td><td>group </td><td>0..1  </td></tr>
 <tr>
-<td><a class="el" href="cpdsc_files_pg.html#element_files">files</a> </td><td>Grouping element for generator tool files. </td><td>group </td><td>0..1  </td></tr>
+<td><a class="el" href="pdsc_components_pg.html#element_files">files</a> </td><td>Grouping element for generator tool files. </td><td>group </td><td>0..1  </td></tr>
 <tr>
 <td>extensions </td><td>Generator vendor specific section ignored by other tools </td><td>N/A </td><td>0..1  </td></tr>
 </table>
@@ -283,21 +298,19 @@ $(document).ready(function(){initNavTree('pdsc_generators_pg.html','');});
 </table>
 <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_gen_arguments"></a>
-/package/generators/generator/arguments</h1>
-<p>This element contains information about the <b>arguments</b> passed along the <code>&lt;command&gt;</code> string.</p>
+<h1><a class="anchor" id="element_gen_exe"></a>
+/package/generators/generator/exe</h1>
+<p>This element contains information about the generation binary/executable.</p>
 <p><b>Example:</b> </p>
-<div class="fragment"><div class="line">&lt;generators&gt;</div>
-<div class="line">  &lt;generator <span class="keywordtype">id</span>=<span class="stringliteral">&quot;DAVE3&quot;</span>&gt;</div>
-<div class="line">    ...</div>
-<div class="line">    &lt;command&gt;%DAVE3%/eclipse/DAVE-3.1.6.exe&lt;/command&gt;</div>
-<div class="line">    &lt;arguments&gt;</div>
-<div class="line">      ...</div>
-<div class="line">    &lt;/arguments&gt;</div>
-<div class="line">  &lt;/generator&gt;</div>
-<div class="line">&lt;/generators&gt;</div>
+<div class="fragment"><div class="line">&lt;exe&gt;</div>
+<div class="line">  &lt;command host = <span class="stringliteral">&quot;win&quot;</span>&gt;MyGen.bat&lt;/command&gt;</div>
+<div class="line">  &lt;command host = <span class="stringliteral">&quot;linux&quot;</span>&gt;MyGen.script&lt;/command&gt;</div>
+<div class="line">  &lt;argument&gt;$P/RTE/MyGen/myGen.gpdsc&lt;/argument&gt;</div>
+<div class="line">  &lt;argument host=<span class="stringliteral">&quot;linux&quot;</span> <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;--device=&quot;</span>&gt;#D&lt;/argument&gt;</div>
+<div class="line">  &lt;argument host=<span class="stringliteral">&quot;win&quot;</span>   <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;/device=&quot;</span>&gt;#D&lt;/argument&gt;</div>
+<div class="line">&lt;/exe&gt;</div>
 </div><!-- fragment --> <p>&#160;</p>
-<table  class="cmtable" summary="Element: Arguments">
+<table  class="cmtable" summary="Element: Exe">
 <tr>
 <th>Parent </th><th colspan="3">Chain  </th></tr>
 <tr>
@@ -305,29 +318,126 @@ $(document).ready(function(){initNavTree('pdsc_generators_pg.html','');});
 <tr>
 <th>Child&#160;Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="pdsc_generators_pg.html#element_gen_argument">argument</a> </td><td>Arguments passed along with the <code>&lt;command&gt;</code>. </td><td><a class="el" href="pdsc_generators_pg.html#element_gen_argument">GeneratorCommandArgumentType</a> </td><td>required  </td></tr>
+<td><a class="el" href="pdsc_generators_pg.html#element_gen_command">command</a> </td><td>Invocation command for the generator tool. Command line options should be passed via <code>&lt;arguments&gt;</code>. </td><td><a class="el" href="pdsc_generators_pg.html#element_gen_command">GeneratorCommandType</a> </td><td>1..4  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_generators_pg.html#element_gen_argument">argument</a> </td><td>Arguments passed along with the <code>&lt;command&gt;</code> of the format <code>&lt;argument</code> <code>switch="-data"&gt;myFileName&lt;/argument&gt;</code>. Path information for files can be specified absolute or relative to the location (path) of the GPDSC file. </td><td><a class="el" href="pdsc_generators_pg.html#element_gen_argument">GeneratorCommandArgumentType</a> </td><td>1..*  </td></tr>
+</table>
+<p>&#160;</p>
+<hr/>
+<h1><a class="anchor" id="element_gen_eclipse"></a>
+/package/generators/generator/eclipse</h1>
+<p>This element contains information about the Eclipse based generation tool.</p>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">&lt;eclipse plugin=<span class="stringliteral">&quot;com.mygen.plugin&quot;</span> <span class="keyword">class</span>=<span class="stringliteral">&quot;com.mygen.plugin.generator.launcher&quot;</span> method=<span class="stringliteral">&quot;launch&quot;</span> &gt;</div>
+<div class="line">  &lt;argument&gt;#D&lt;/argument&gt;</div>
+<div class="line">  &lt;argument&gt;$P/RTE/MyGen/myGen.gpdsc&lt;/argument&gt;</div>
+<div class="line">&lt;/eclipse&gt;</div>
+</div><!-- fragment --> <p>&#160;</p>
+<table  class="cmtable" summary="Element: Eclipse">
+<tr>
+<th>Parent </th><th colspan="3">Chain  </th></tr>
+<tr>
+<td><a class="el" href="pdsc_generators_pg.html#element_generator">generator</a> </td><td colspan="3"><a class="el" href="pdsc_generators_pg.html#element_generator">/package/generators/generator</a>  </td></tr>
+<tr>
+<th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
+<tr>
+<td>plugin </td><td>Name of the plugin. </td><td>xs:string </td><td>required  </td></tr>
+<tr>
+<td>class </td><td>Plugin's class name. </td><td>xs:string </td><td>required  </td></tr>
+<tr>
+<td>method </td><td>Method used to launch the plugin. </td><td>xs:string </td><td>required  </td></tr>
+<tr>
+<th>Child&#160;Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
+<tr>
+<td><a class="el" href="pdsc_generators_pg.html#element_gen_argument">argument</a> </td><td>Arguments passed to the plugin. </td><td><a class="el" href="pdsc_generators_pg.html#element_gen_argument">GeneratorCommandArgumentType</a> </td><td>1..*  </td></tr>
+</table>
+<p>&#160;</p>
+<hr/>
+<h1><a class="anchor" id="element_gen_web"></a>
+/package/generators/generator/web</h1>
+<p>This element contains information about the web generation application.</p>
+<p><b>Example:</b> </p>
+<div class="fragment"><div class="line">&lt;web url=<span class="stringliteral">&quot;http://mygen.com/mygen&quot;</span>&gt;</div>
+<div class="line">  &lt;argument <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;device&quot;</span>&gt;#D&lt;/argument&gt;</div>
+<div class="line">  &lt;argument <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;gpdsc&quot;</span>&gt;$P/RTE/MyGen/myGen.gpdsc&lt;/argument&gt;</div>
+<div class="line">&lt;/web&gt;</div>
+</div><!-- fragment --> <p>&#160;</p>
+<table  class="cmtable" summary="Element: Web">
+<tr>
+<th>Parent </th><th colspan="3">Chain  </th></tr>
+<tr>
+<td><a class="el" href="pdsc_generators_pg.html#element_generator">generator</a> </td><td colspan="3"><a class="el" href="pdsc_generators_pg.html#element_generator">/package/generators/generator</a>  </td></tr>
+<tr>
+<th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
+<tr>
+<td>url </td><td>Specifies the URL of the web service. </td><td>URL </td><td>required  </td></tr>
+<tr>
+<th>Child&#160;Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
+<tr>
+<td><a class="el" href="pdsc_generators_pg.html#element_gen_argument">argument</a> </td><td>Arguments passed along to the web service. </td><td><a class="el" href="pdsc_generators_pg.html#element_gen_argument">GeneratorCommandArgumentType</a> </td><td>0..*  </td></tr>
+</table>
+<p>&#160;</p>
+<hr/>
+<h1><a class="anchor" id="element_gen_command"></a>
+/package/generators/generator/.../command</h1>
+<p>This element describes a single command line for launching the generator. Arguments should be passed along with an <a class="el" href="pdsc_generators_pg.html#element_gen_argument">argument</a>.</p>
+<p><b>Example</b> </p>
+<div class="fragment"><div class="line">&lt;exe&gt;</div>
+<div class="line">  &lt;command host = <span class="stringliteral">&quot;win&quot;</span>&gt;MyGen.bat&lt;/command&gt;</div>
+<div class="line">  &lt;command host = <span class="stringliteral">&quot;linux&quot;</span>&gt;MyGen.script&lt;/command&gt;</div>
+<div class="line">  &lt;argument&gt;$P/RTE/MyGen/myGen.gpdsc&lt;/argument&gt;</div>
+<div class="line">  &lt;argument host=<span class="stringliteral">&quot;linux&quot;</span> <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;--device=&quot;</span>&gt;#D&lt;/argument&gt;</div>
+<div class="line">  &lt;argument host=<span class="stringliteral">&quot;win&quot;</span>   <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;/device=&quot;</span>&gt;#D&lt;/argument&gt;</div>
+<div class="line">&lt;/exe&gt;</div>
+</div><!-- fragment --><p>&#160;</p>
+<table  class="cmtable" summary="Element: Generator Command Argument">
+<tr>
+<th>Parent </th><th colspan="3">Element Chain  </th></tr>
+<tr>
+<td><a class="el" href="pdsc_generators_pg.html#element_gen_exe">exe</a> </td><td colspan="3"><a class="el" href="pdsc_generators_pg.html#element_gen_exe">/package/generators/generator/exe</a>  </td></tr>
+<tr>
+<th>Current </th><th>Description </th><th colspan="2">Type  </th></tr>
+<tr>
+<td>command </td><td>generator command line </td><td colspan="2">xs:string  </td></tr>
+<tr>
+<th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
+<tr>
+<td>host </td><td>Specifies the host operating system. Possible values are <code>all</code>, <code>win</code>, <code>linux</code>, <code>mac</code>, <code>other</code>. Only available with element <a class="el" href="pdsc_generators_pg.html#element_gen_exe">exe</a>. </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
 <h1><a class="anchor" id="element_gen_argument"></a>
-/package/generators/generator/arguments/argument</h1>
-<p>This element describes a single command line argument passed along with <code>&lt;command&gt;</code> for launching the generator. The argument is split up in a switch value pair. The switch is passed as an attribute and the value as the element value. Both <code>switch</code> and <code>element</code> values are of type xs:string.</p>
+/package/generators/generator/.../argument</h1>
+<p>This element describes one or multiple arguments passed along with the parent element.</p>
 <p><b>Example</b> </p>
 <div class="fragment"><div class="line">&lt;generators&gt;</div>
-<div class="line">  &lt;generator <span class="keywordtype">id</span>=<span class="stringliteral">&quot;STM32CubeMX&quot;</span>&gt;</div>
-<div class="line">    &lt;arguments&gt;</div>
-<div class="line">      &lt;argument <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;-data&quot;</span>&gt;$PRTE/Device/STM32F746NGHx&lt;/argument&gt;</div>
-<div class="line">      ...</div>
-<div class="line">    &lt;/arguments&gt;</div>
-<div class="line">    ...</div>
-<div class="line">  &lt;/generator&gt;</div>
+<div class="line">    &lt;generator <span class="keywordtype">id</span> = <span class="stringliteral">&quot;MyGen&quot;</span>&gt;</div>
+<div class="line">      &lt;gpdsc name =<span class="stringliteral">&quot;$P/RTE/MyGen/myGen.gpdsc&quot;</span>/&gt;</div>
+<div class="line">      &lt;exe&gt;</div>
+<div class="line">        &lt;command host = <span class="stringliteral">&quot;win&quot;</span>&gt;MyGen.bat&lt;/command&gt;</div>
+<div class="line">        &lt;command host = <span class="stringliteral">&quot;linux&quot;</span>&gt;MyGen.script&lt;/command&gt;</div>
+<div class="line">        &lt;argument&gt;$P/RTE/MyGen/myGen.gpdsc&lt;/argument&gt;</div>
+<div class="line">        &lt;argument host=<span class="stringliteral">&quot;linux&quot;</span> <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;--device=&quot;</span>&gt;#D&lt;/argument&gt;</div>
+<div class="line">        &lt;argument host=<span class="stringliteral">&quot;win&quot;</span>   <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;/device=&quot;</span>&gt;#D&lt;/argument&gt;</div>
+<div class="line">      &lt;/exe&gt;</div>
+<div class="line"> </div>
+<div class="line">      &lt;eclipse plugin=<span class="stringliteral">&quot;com.mygen.plugin&quot;</span> <span class="keyword">class</span>=<span class="stringliteral">&quot;com.mygen.plugin.generator.launcher&quot;</span> method=<span class="stringliteral">&quot;launch&quot;</span> &gt;</div>
+<div class="line">        &lt;argument&gt;#D&lt;/argument&gt;</div>
+<div class="line">        &lt;argument&gt;$P/RTE/MyGen/myGen.gpdsc&lt;/argument&gt;</div>
+<div class="line">      &lt;/eclipse &gt;</div>
+<div class="line"> </div>
+<div class="line">      &lt;web url=<span class="stringliteral">&quot;http://mygen.com/mygen&quot;</span>&gt;</div>
+<div class="line">        &lt;argument <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;device&quot;</span>&gt;#D&lt;/argument&gt;</div>
+<div class="line">        &lt;argument <span class="keywordflow">switch</span>=<span class="stringliteral">&quot;gpdsc&quot;</span>&gt;$P/RTE/MyGen/myGen.gpdsc&lt;/argument&gt;</div>
+<div class="line">      &lt;/web&gt;</div>
+<div class="line">    &lt;/generator&gt;</div>
 <div class="line">&lt;/generators&gt;</div>
 </div><!-- fragment --><p>&#160;</p>
 <table  class="cmtable" summary="Element: Generator Command Argument">
 <tr>
 <th>Parent </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="pdsc_generators_pg.html#element_gen_arguments">arguments</a> </td><td colspan="3"><a class="el" href="pdsc_generators_pg.html#element_gen_arguments">/package/generators/generator/arguments</a>  </td></tr>
+<td><a class="el" href="pdsc_generators_pg.html#element_gen_exe">exe</a>, <a class="el" href="pdsc_generators_pg.html#element_gen_eclipse">eclipse</a>, <a class="el" href="pdsc_generators_pg.html#element_gen_web">web</a> </td><td colspan="3"><a class="el" href="pdsc_generators_pg.html#element_gen_exe">/package/generators/generator/exe</a>, <a class="el" href="pdsc_generators_pg.html#element_gen_eclipse">/package/generators/generator/eclipse</a>, <a class="el" href="pdsc_generators_pg.html#element_gen_web">/package/generators/generator/web</a>  </td></tr>
 <tr>
 <th>Current </th><th>Description </th><th colspan="2">Type  </th></tr>
 <tr>
@@ -335,7 +445,9 @@ $(document).ready(function(){initNavTree('pdsc_generators_pg.html','');});
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
-<td>switch </td><td>Specifies the command line switch separated from the argument value. </td><td>xs:string </td><td>optional  </td></tr>
+<td>host </td><td>Specifies the host operating system. Possible values are <code>all</code>, <code>win</code>, <code>linux</code>, <code>mac</code>, <code>other</code>. Only available with element <a class="el" href="pdsc_generators_pg.html#element_gen_command">command</a>. </td><td>xs:string </td><td>optional  </td></tr>
+<tr>
+<td>switch </td><td>Specifies the command line switch separated from the argument value. Not available with element <a class="el" href="pdsc_generators_pg.html#element_gen_eclipse">eclipse</a>. </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -430,7 +542,7 @@ $(document).ready(function(){initNavTree('pdsc_generators_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:43 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

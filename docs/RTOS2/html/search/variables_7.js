@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['stack_5fmem',['stack_mem',['../group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43',1,'osThreadAttr_t']]],
-  ['stack_5fsize',['stack_size',['../group__CMSIS__RTOS__ThreadMgmt.html#aacbc9a219f2d6870e9ce89bb93f975c9',1,'osThreadAttr_t']]]
+  ['kernel',['kernel',['../group__CMSIS__RTOS__KernelCtrl.html#ad8075d3f42141346ae2c56389358f9e7',1,'osVersion_t::kernel()'],['../rtx__os_8h.html#a72d4e2550fcee67cc139fca04505a903',1,'osRtxInfo_t::kernel()']]]
 ];

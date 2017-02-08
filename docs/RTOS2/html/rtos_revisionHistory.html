@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.0.0</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -111,9 +111,23 @@ $(document).ready(function(){initNavTree('rtos_revisionHistory.html','');});
 <div class="title">Revision History </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><table  class="cmtable" summary="Revision History">
+<div class="textblock"><h1><a class="anchor" id="GenRTOS2Rev"></a>
+CMSIS-RTOS API Version 2</h1>
+<table  class="cmtable" summary="Revision History">
 <tr>
 <th>Version </th><th>Description  </th></tr>
+<tr>
+<td>V2.1.0 </td><td><p class="starttd">Updated configuration files: RTX_Config.h for the configuration settings and RTX_config.c for implementing the <a class="el" href="group__rtx5__specific.html">RTX5 Specific API</a>.</p>
+<p>Support for critical and uncritical sections (nesting safe):</p>
+<ul>
+<li>updated: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gaf401728b4657456198c33fe75f8d6720">osKernelUnlock</a></li>
+<li>added: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae7d0a71b9586cbbb49fcbdf6a04f0289">osKernelRestoreLock</a></li>
+</ul>
+<p class="endtd">Updated <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html">Thread Flags</a> and <a class="el" href="group__CMSIS__RTOS__EventFlags.html">Event Flags</a>:</p>
+<ul>
+<li>changed flags parameter and return type from int32_t to uint32_t   </li>
+</ul>
+</td></tr>
 <tr>
 <td>V2.0.0 </td><td>New API Version 2.0 available.<ul>
 <li>See <a class="el" href="functionOverview.html#rtos_api2">CMSIS-RTOS2</a> for a detailed function reference.</li>
@@ -122,7 +136,7 @@ $(document).ready(function(){initNavTree('rtos_revisionHistory.html','');});
 </td></tr>
 <tr>
 <td>V1.02 - only documentation changes </td><td>Added: Overview of the <a class="el" href="rtosValidation.html">CMSIS-RTOS Validation</a> Software Pack.<br/>
- Clarified: Behavior of <a class="el" href="CMSIS_RTOS_TimeOutValue.html">Timeout Value</a>.   </td></tr>
+ Clarified: Behavior of <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">Timeout Value</a>.   </td></tr>
 <tr>
 <td>V1.02 </td><td>Added: New control functions for short timeouts in microsecond resolution <b>osKernelSysTick</b>, <b>osKernelSysTickFrequency</b>, <b>osKernelSysTickMicroSec</b>.<br/>
  Removed: osSignalGet.   </td></tr>
@@ -130,7 +144,7 @@ $(document).ready(function(){initNavTree('rtos_revisionHistory.html','');});
 <td>V1.01 </td><td>Added capabilities for C++, kernel initialization and object deletion.<br/>
  Prepared for C++ class interface. In this context to <em>const</em> attribute has been moved from osXxxxDef_t typedefs to the osXxxxDef macros.<br/>
  Added: <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad0001dd74721ab461789324806db2453">osTimerDelete</a>, <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabee73ad227ba4587d3db12ef9bd582bc">osMutexDelete</a>, <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga81258ce9c67fa89f07cc49d2e136cd88">osSemaphoreDelete</a>.<br/>
- Added: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a> that prepares the Kernel for object creation.<br/>
+ Added: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a> that prepares the kernel for object creation.<br/>
    </td></tr>
 <tr>
 <td>V1.00 </td><td>First official Release.<br/>
@@ -141,13 +155,31 @@ $(document).ready(function(){initNavTree('rtos_revisionHistory.html','');});
 <tr>
 <td>V0.02 </td><td>Preview Release.  </td></tr>
 </table>
+<h1><a class="anchor" id="RTX5RevisionHistory"></a>
+CMSIS-RTOS RTX Version 5</h1>
+<table  class="cmtable" summary="Revision History">
+<tr>
+<th>Version </th><th>Description  </th></tr>
+<tr>
+<td>V5.1.0 </td><td><ul>
+<li>Based on CMSIS-RTOS API V2.1.</li>
+<li>Added support for Event recording.</li>
+<li>Added support for IAR compiler.</li>
+<li>Configuration file split into .h and .c file.</li>
+<li>osRtx name-space for RTX specific symbols.   </li>
+</ul>
+</td></tr>
+<tr>
+<td>V5.0.0 </td><td>Initial release compliant to CMSIS-RTOS2.<br/>
+   </td></tr>
+</table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:45 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:03 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

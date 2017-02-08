@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -124,34 +124,34 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>This function implements a high precision Biquad cascade filter which operates on Q31 data values. The filter coefficients are in 1.31 format and the state variables are in 1.63 format. The double precision state variables reduce quantization noise in the filter and provide a cleaner output. These filters are particularly useful when implementing filters in which the singularities are close to the unit circle. This is common for low pass or high pass filters with very low cutoff frequencies.</p>
 <p>The function operates on blocks of input and output data and each call to the function processes <code>blockSize</code> samples through the filter. <code>pSrc</code> and <code>pDst</code> points to input and output arrays containing <code>blockSize</code> Q31 values.</p>
-<dl class="section user"><dt>Algorithm </dt><dd>Each Biquad stage implements a second order filter using the difference equation: <pre>    
-    y[n] = b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]    
+<dl class="section user"><dt>Algorithm</dt><dd>Each Biquad stage implements a second order filter using the difference equation: <pre>
+    y[n] = b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]
 </pre> A Direct Form I algorithm is used with 5 coefficients and 4 state variables per stage. <div class="image">
 <img src="Biquad.gif" alt="Biquad.gif"/>
 <div class="caption">
 Single Biquad filter stage</div></div>
- Coefficients <code>b0, b1, and b2 </code> multiply the input signal <code>x[n]</code> and are referred to as the feedforward coefficients. Coefficients <code>a1</code> and <code>a2</code> multiply the output signal <code>y[n]</code> and are referred to as the feedback coefficients. Pay careful attention to the sign of the feedback coefficients. Some design tools use the difference equation <pre>    
-    y[n] = b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] - a1 * y[n-1] - a2 * y[n-2]    
+Coefficients <code>b0, b1, and b2 </code> multiply the input signal <code>x[n]</code> and are referred to as the feedforward coefficients. Coefficients <code>a1</code> and <code>a2</code> multiply the output signal <code>y[n]</code> and are referred to as the feedback coefficients. Pay careful attention to the sign of the feedback coefficients. Some design tools use the difference equation <pre>
+    y[n] = b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] - a1 * y[n-1] - a2 * y[n-2]
 </pre> In this case the feedback coefficients <code>a1</code> and <code>a2</code> must be negated when used with the CMSIS DSP Library.</dd></dl>
 <dl class="section user"><dt></dt><dd>Higher order filters are realized as a cascade of second order sections. <code>numStages</code> refers to the number of second order stages used. For example, an 8th order filter would be realized with <code>numStages=4</code> second order stages. <div class="image">
 <img src="BiquadCascade.gif" alt="BiquadCascade.gif"/>
 <div class="caption">
 8th order filter using a cascade of Biquad stages</div></div>
- A 9th order filter would be realized with <code>numStages=5</code> second order stages with the coefficients for one of the stages configured as a first order filter (<code>b2=0</code> and <code>a2=0</code>).</dd></dl>
-<dl class="section user"><dt></dt><dd>The <code>pState</code> points to state variables array . Each Biquad stage has 4 state variables <code>x[n-1], x[n-2], y[n-1],</code> and <code>y[n-2]</code> and each state variable in 1.63 format to improve precision. The state variables are arranged in the array as: <pre>    
-    {x[n-1], x[n-2], y[n-1], y[n-2]}    
+A 9th order filter would be realized with <code>numStages=5</code> second order stages with the coefficients for one of the stages configured as a first order filter (<code>b2=0</code> and <code>a2=0</code>).</dd></dl>
+<dl class="section user"><dt></dt><dd>The <code>pState</code> points to state variables array . Each Biquad stage has 4 state variables <code>x[n-1], x[n-2], y[n-1],</code> and <code>y[n-2]</code> and each state variable in 1.63 format to improve precision. The state variables are arranged in the array as: <pre>
+    {x[n-1], x[n-2], y[n-1], y[n-2]}
 </pre></dd></dl>
 <dl class="section user"><dt></dt><dd>The 4 state variables for stage 1 are first, then the 4 state variables for stage 2, and so on. The state array has a total length of <code>4*numStages</code> values of data in 1.63 format. The state variables are updated after each block of data is processed; the coefficients are untouched.</dd></dl>
-<dl class="section user"><dt>Instance Structure </dt><dd>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter. Coefficient arrays may be shared among several instances while state variable arrays cannot be shared.</dd></dl>
-<dl class="section user"><dt>Init Function </dt><dd>There is also an associated initialization function which performs the following operations:<ul>
+<dl class="section user"><dt>Instance Structure</dt><dd>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter. Coefficient arrays may be shared among several instances while state variable arrays cannot be shared.</dd></dl>
+<dl class="section user"><dt>Init Function</dt><dd>There is also an associated initialization function which performs the following operations:<ul>
 <li>Sets the values of the internal structure fields.</li>
 <li>Zeros out the values in the state buffer. To do this manually without calling the init function, assign the follow subfields of the instance structure: numStages, pCoeffs, postShift, pState. Also set all of the values in pState to zero.</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. For example, to statically initialize the filter instance structure use <pre>    
-    <a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html" title="Instance structure for the high precision Q31 Biquad cascade filter. ">arm_biquad_cas_df1_32x64_ins_q31</a> S1 = {numStages, pState, pCoeffs, postShift};    
+<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. For example, to statically initialize the filter instance structure use <pre>
+    <a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html" title="Instance structure for the high precision Q31 Biquad cascade filter. ">arm_biquad_cas_df1_32x64_ins_q31</a> S1 = {numStages, pState, pCoeffs, postShift};
 </pre> where <code>numStages</code> is the number of Biquad stages in the filter; <code>pState</code> is the address of the state buffer; <code>pCoeffs</code> is the address of the coefficient buffer; <code>postShift</code> shift to be applied which is described in detail below. </dd></dl>
-<dl class="section user"><dt>Fixed-Point Behavior </dt><dd>Care must be taken while using Biquad Cascade 32x64 filter function. Following issues must be considered:<ul>
+<dl class="section user"><dt>Fixed-Point Behavior</dt><dd>Care must be taken while using Biquad Cascade 32x64 filter function. Following issues must be considered:<ul>
 <li>Scaling of coefficients</li>
 <li>Filter gain</li>
 <li>Overflow and saturation</li>
@@ -161,10 +161,10 @@ Single Biquad filter stage</div></div>
 <img src="BiquadPostshift.gif" alt="BiquadPostshift.gif"/>
 <div class="caption">
 Fixed-point Biquad with shift by postShift bits after accumulator</div></div>
- This essentially scales the filter coefficients by <code>2^postShift</code>. For example, to realize the coefficients <pre>    
-   {1.5, -0.8, 1.2, 1.6, -0.9}    
-</pre> set the Coefficient array to: <pre>    
-   {0.75, -0.4, 0.6, 0.8, -0.45}    
+This essentially scales the filter coefficients by <code>2^postShift</code>. For example, to realize the coefficients <pre>
+   {1.5, -0.8, 1.2, 1.6, -0.9}
+</pre> set the Coefficient array to: <pre>
+   {0.75, -0.4, 0.6, 0.8, -0.45}
 </pre> and set <code>postShift=1</code></dd></dl>
 <dl class="section user"><dt></dt><dd>The second thing to keep in mind is the gain through the filter. The frequency response of a Biquad filter is a function of its coefficients. It is possible for the gain through the filter to exceed 1.0 meaning that the filter increases the amplitude of certain frequencies. This means that an input signal with amplitude &lt; 1.0 may result in an output &gt; 1.0 and these are saturated or overflowed based on the implementation of the filter. To avoid this behavior the filter needs to be scaled down such that its peak gain &lt; 1.0 or the input signal must be scaled down so that the combination of input and filter are never overflowed.</dd></dl>
 <dl class="section user"><dt></dt><dd>The third item to consider is the overflow and saturation behavior of the fixed-point Q31 version. This is described in the function specific documentation below. </dd></dl>
@@ -222,11 +222,11 @@ Fixed-point Biquad with shift by postShift bits after accumulator</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
 <p><b>Coefficient and State Ordering:</b></p>
-<dl class="section user"><dt></dt><dd>The coefficients are stored in the array <code>pCoeffs</code> in the following order: <pre>    
-    {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}    
+<dl class="section user"><dt></dt><dd>The coefficients are stored in the array <code>pCoeffs</code> in the following order: <pre>
+    {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}
 </pre> where <code>b1x</code> and <code>a1x</code> are the coefficients for the first stage, <code>b2x</code> and <code>a2x</code> are the coefficients for the second stage, and so on. The <code>pCoeffs</code> array contains a total of <code>5*numStages</code> values.</dd></dl>
-<dl class="section user"><dt></dt><dd>The <code>pState</code> points to state variables array and size of each state variable is 1.63 format. Each Biquad stage has 4 state variables <code>x[n-1], x[n-2], y[n-1],</code> and <code>y[n-2]</code>. The state variables are arranged in the state array as: <pre>    
-    {x[n-1], x[n-2], y[n-1], y[n-2]}    
+<dl class="section user"><dt></dt><dd>The <code>pState</code> points to state variables array and size of each state variable is 1.63 format. Each Biquad stage has 4 state variables <code>x[n-1], x[n-2], y[n-1],</code> and <code>y[n-2]</code>. The state variables are arranged in the state array as: <pre>
+    {x[n-1], x[n-2], y[n-1], y[n-2]}
 </pre> The 4 state variables for stage 1 are first, then the 4 state variables for stage 2, and so on. The state array has a total length of <code>4*numStages</code> values. The state variables are updated after each block of data is processed; the coefficients are untouched. </dd></dl>
 
 <p>References <a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html#ad7cb9a9f5df8f4fcfc7a0b633672e574">arm_biquad_cas_df1_32x64_ins_q31::numStages</a>, <a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html#a490462d6ebe0fecfb6acbf51bed22ecf">arm_biquad_cas_df1_32x64_ins_q31::pCoeffs</a>, <a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html#a8e9d58e8dba5aa3b2fc4f36d2ed07996">arm_biquad_cas_df1_32x64_ins_q31::postShift</a>, and <a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html#a4c899cdfaf2bb955323e93637bd662e0">arm_biquad_cas_df1_32x64_ins_q31::pState</a>.</p>
@@ -294,7 +294,7 @@ Fixed-point Biquad with shift by postShift bits after accumulator</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

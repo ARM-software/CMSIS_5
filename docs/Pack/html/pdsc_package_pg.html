@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.7</span>
+   &#160;<span id="projectnumber">Version 1.4.9</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -174,9 +174,11 @@ $(document).ready(function(){initNavTree('pdsc_package_pg.html','');});
 <tr>
 <td>license </td><td>Path to a license document. </td><td>xs:string  </td><td>0..1   </td></tr>
 <tr>
-<td><a class="el" href="element_releases.html">releases</a> </td><td>Version release history with brief information about a <a class="el" href="cp_SWComponents.html">Software Pack</a>. </td><td>ReleasesGroup </td><td>1..1   </td></tr>
-<tr>
 <td><a class="el" href="element_requirements_pg.html#element_requirements">requirements</a> </td><td>Specifies other CMSIS-Packs, programming languages and compiler as well as their respective version or version range required by the components in this pack.  </td><td>RequirementsType </td><td>0..1   </td></tr>
+<tr>
+<td>create </td><td>Use only when creating CMSIS software projects. Refer to <a class="el" href="cpdsc_pg.html">Project Description (*.CPDSC) Format</a> for details. </td><td>CreateType </td><td>0..1   </td></tr>
+<tr>
+<td><a class="el" href="element_releases.html">releases</a> </td><td>Version release history with brief information about a <a class="el" href="cp_SWComponents.html">Software Pack</a>. </td><td>ReleasesGroup </td><td>1..1   </td></tr>
 <tr>
 <td><a class="el" href="element_keywords.html">keywords</a> </td><td>Defines keywords that might be used to find a <a class="el" href="cp_SWComponents.html">Software Pack</a>. Keywords may be also exported to web page to provide information for search engines, such as Google. </td><td>group </td><td>0..1   </td></tr>
 <tr>
@@ -253,7 +255,7 @@ $(document).ready(function(){initNavTree('pdsc_package_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:43 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

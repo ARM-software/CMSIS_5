@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -118,8 +118,8 @@ $(document).ready(function(){initNavTree('arm__cfft__radix4__f32_8c.html','');})
 Functions</h2></td></tr>
 <tr class="memitem:a3d4062fdfa6aaa3f51f41cab868e508b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__cfft__radix4__f32_8c.html#a3d4062fdfa6aaa3f51f41cab868e508b">arm_bitreversal_f32</a> (<a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, uint16_t <a class="el" href="arm__fft__bin__example__f32_8c.html#a9b500899c581f6df3ffc0a9f3a9ef6aa">fftSize</a>, uint16_t bitRevFactor, uint16_t *pBitRevTab)</td></tr>
 <tr class="separator:a3d4062fdfa6aaa3f51f41cab868e508b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae239ddf995d1607115f9e84d5c069b9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__groupTransforms.html#gae239ddf995d1607115f9e84d5c069b9c">arm_radix4_butterfly_f32</a> (<a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, uint16_t fftLen, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pCoef, uint16_t twidCoefModifier)</td></tr>
-<tr class="separator:gae239ddf995d1607115f9e84d5c069b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae239ddf995d1607115f9e84d5c069b9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__cfft__radix4__f32_8c.html#ae239ddf995d1607115f9e84d5c069b9c">arm_radix4_butterfly_f32</a> (<a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, uint16_t fftLen, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pCoef, uint16_t twidCoefModifier)</td></tr>
+<tr class="separator:ae239ddf995d1607115f9e84d5c069b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a78df6e4bbf080624f2b6349224ec93"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__cfft__radix4__f32_8c.html#a2a78df6e4bbf080624f2b6349224ec93">arm_radix4_butterfly_inverse_f32</a> (<a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, uint16_t fftLen, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pCoef, uint16_t twidCoefModifier, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> onebyfftLen)</td></tr>
 <tr class="separator:a2a78df6e4bbf080624f2b6349224ec93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga521f670cd9c571bc61aff9bec89f4c26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ComplexFFT.html#ga521f670cd9c571bc61aff9bec89f4c26">arm_cfft_radix4_f32</a> (const <a class="el" href="structarm__cfft__radix4__instance__f32.html">arm_cfft_radix4_instance_f32</a> *S, <a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc)</td></tr>
@@ -164,6 +164,47 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Referenced by <a class="el" href="group__ComplexFFT.html#ga521f670cd9c571bc61aff9bec89f4c26">arm_cfft_radix4_f32()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae239ddf995d1607115f9e84d5c069b9c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_radix4_butterfly_f32 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>fftLen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pCoef</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>twidCoefModifier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>end of ComplexFFT group </p>
+
+<p>Referenced by <a class="el" href="group__ComplexFFT.html#ga521f670cd9c571bc61aff9bec89f4c26">arm_cfft_radix4_f32()</a>, and <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a>.</p>
 
 </div>
 </div>
@@ -219,7 +260,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_650d82db24a6311fa7658fced19ae149.html">DSP</a></li><li class="navelem"><a class="el" href="dir_cf3b734d050ceea02fbfb06f215bbc8f.html">Source</a></li><li class="navelem"><a class="el" href="dir_f93595924be31e3058e32faa649f9f3e.html">TransformFunctions</a></li><li class="navelem"><a class="el" href="arm__cfft__radix4__f32_8c.html">arm_cfft_radix4_f32.c</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:31 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:50 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

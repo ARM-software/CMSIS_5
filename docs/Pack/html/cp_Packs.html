@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Create Software Packs</title>
-<title>CMSIS-Pack: Create Software Packs</title>
+<title>Software Packs Overview</title>
+<title>CMSIS-Pack: Software Packs Overview</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.7</span>
+   &#160;<span id="projectnumber">Version 1.4.9</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('cp_Packs.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Create Software Packs </div>  </div>
+<div class="title">Software Packs Overview </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>The <b>CMSIS-Pack</b> format is used to deliver a Software Pack and is aimed to be scalable for future requirements. It provides a management process and supports a tool independent distribution for:</p>
@@ -141,22 +141,11 @@ $(document).ready(function(){initNavTree('cp_Packs.html','');});
 </li>
 <li><a class="el" href="cp_SWComponents.html#cp_CodeTemplates">User Code Templates</a> help to understand the basic concepts of a software component better and to give the user a good starting point for implementing his application.</li>
 </ul>
-<h1><a class="anchor" id="cp_PackSteps"></a>
-Steps to Create a Pack</h1>
-<p>The following image shows the basic steps that are required to create a Software Pack:</p>
-<div class="image">
-<img src="PackCreateSteps.png" alt="PackCreateSteps.png"/>
-</div>
-<ol type="1">
-<li><b>Produce input:</b> Create the files that will be delivered with the Pack.</li>
-<li><b>Organize files:</b> Use directories to separate the content of the Pack.</li>
-<li><b>Create PDSC file:</b> The XML based PDSC file can be created using any text editor. Editors that can validate XML code against a schema file help to find bugs early in the Pack development stage.</li>
-<li><b>Generate PACK:</b> Any compression tool supporting the ZIP format can be used to create a PACK file. <a class="el" href="packChk.html">packChk.exe</a> is helpful for the validation of the contents of a Pack.</li>
-</ol>
-<p>The following pages will show how to create a Software Pack from scratch. The page <a class="el" href="cp_SWComponents.html">Pack with Software Components</a> will start with a simple Pack containing only the PDSC file and a single software component and will then explain further elements of a Pack in more detail. The page <a class="el" href="createPack_DFP.html">Pack with Device Support</a> adds information on the additional requirements that a DFP has, while <a class="el" href="createPackBoard.html">Pack with Board Support</a> will elaborate on the content specific to a BSP.</p>
 <h1><a class="anchor" id="PackFilenames"></a>
 Pack Conventions</h1>
 <p>All files that belong to a <a class="el" href="cp_SWComponents.html">Software Pack</a> are compressed into a *.PACK file using a standard <a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29" target="_blank">ZIP file format</a>. The content of each <a class="el" href="cp_SWComponents.html">Software Pack</a> is described in the Pack Description (*.PDSC) file that is part of each <b>Pack</b>. Refer to <a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a> for more information.</p>
+<h2><a class="anchor" id="pack_filename"></a>
+Pack File Name</h2>
 <p>A <a class="el" href="cp_SWComponents.html">Software Pack</a> must have a unique filename following this naming convention: <b>&lt;vendor&gt;.&lt;name&gt;.&lt;version&gt;.pack</b>.</p>
 <p><b>Where:</b> </p>
 <ul>
@@ -171,6 +160,41 @@ Pack Conventions</h1>
 </ul>
 </dd></dl>
 <p>The PDSC file needs to reside at the top-level of the Pack file, using it as the root directory for all file references.</p>
+<h2><a class="anchor" id="pack_Cclass"></a>
+Software Component Cclasses</h2>
+<p>If you add a software component in the PDSC file, you have to specify a component class (CClass), component group (Cgroup), and the component's version number (Cversion). For more information refer to <a class="el" href="cp_SWComponents.html#cp_Components">Software Components</a>.</p>
+<p>If applicable, try to map the <b>Cclass</b> of your software component to one of the following predefined or already well established classes:</p>
+<ul>
+<li>Board Support: Generic interfaces for evaluation and development boards</li>
+<li>CMSIS: <em>Cortex Microcontroller Software Interface Standard</em> components</li>
+<li>CMSIS Driver: Unified device drivers compliant to the CMSIS-Driver specification</li>
+<li>Compiler: ARM Compiler software extensions</li>
+<li>Data Exchange: Software components for data exchange</li>
+<li>Device: Startup and system setup components</li>
+<li>File System*: File drive support and file system</li>
+<li>Graphics*: Graphical libraries for user interfaces</li>
+<li>Network*: Network stack using Internet protocols</li>
+<li>RTOS*: Real-time operating systems</li>
+<li>Safety: Components for testing application software against safety standards</li>
+<li>Security*: Encryption for secure communication or storage</li>
+<li>USB*: Universal Serial Bus stack</li>
+<li>Wireless*: Communication stacks such as Bluetooth, WiFi, and ZigBee</li>
+</ul>
+<p>Classes with a * should always be used together with a <a class="el" href="pdsc_components_pg.html#Component_Bundle">bundle</a> to avoid conflicts with other software components.</p>
+<p>If you wish to standardize a new Cclass, please send an inquiry to <a href="#" onclick="location.href='mai'+'lto:'+'cms'+'is'+'@ar'+'m.'+'com'; return false;">cmsis<span style="display: none;">.nosp@m.</span>@arm<span style="display: none;">.nosp@m.</span>.com</a> or raise an issue on the public <a href="https://github.com/ARM-software/CMSIS_5/issues">CMSIS GitHub development repository</a>.</p>
+<h1><a class="anchor" id="cp_PackSteps"></a>
+Steps to Create a Pack</h1>
+<p>The following image shows the basic steps that are required to create a Software Pack:</p>
+<div class="image">
+<img src="PackCreateSteps.png" alt="PackCreateSteps.png"/>
+</div>
+<ol type="1">
+<li><b>Produce input:</b> Create the files that will be delivered with the Pack.</li>
+<li><b>Organize files:</b> Use directories to separate the content of the Pack.</li>
+<li><b>Create PDSC file:</b> The XML based PDSC file can be created using any text editor. Editors that can validate XML code against a schema file help to find bugs early in the Pack development stage.</li>
+<li><b>Generate PACK:</b> Any compression tool supporting the ZIP format can be used to create a PACK file. <a class="el" href="packChk.html">packChk.exe</a> is helpful for the validation of the contents of a Pack.</li>
+</ol>
+<p>The following pages will show how to create a Software Pack from scratch. The page <a class="el" href="cp_SWComponents.html">Pack with Software Components</a> will start with a simple Pack containing only the PDSC file and a single software component and will then explain further elements of a Pack in more detail. The page <a class="el" href="createPack_DFP.html">Pack with Device Support</a> adds information on the additional requirements that a DFP has, while <a class="el" href="createPackBoard.html">Pack with Board Support</a> will elaborate on the content specific to a BSP.</p>
 <h1><a class="anchor" id="PackTutorials"></a>
 Pack Tutorial</h1>
 <p>The <b>ARM::CMSIS</b> Pack contains tutorials that are explained on the following pages. In the <b>\CMSIS\Pack\Tutorials</b> directory the following three ZIP files are available: </p>
@@ -189,7 +213,7 @@ Pack Tutorial</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:43 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

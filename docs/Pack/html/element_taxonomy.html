@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.7</span>
+   &#160;<span id="projectnumber">Version 1.4.9</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -147,6 +147,7 @@ $(document).ready(function(){initNavTree('element_taxonomy.html','');});
 <div class="line">  &lt;description Cclass=<span class="stringliteral">&quot;Graphics&quot;</span>&gt;Graphical User Interface&lt;/description&gt;</div>
 <div class="line">  &lt;description Cclass=<span class="stringliteral">&quot;Network&quot;</span>&gt;Network Stack <span class="keyword">using</span> Internet Protocols&lt;/description&gt;</div>
 <div class="line">  &lt;description Cclass=<span class="stringliteral">&quot;USB&quot;</span>&gt;Universal Serial Bus Stack&lt;/description&gt;</div>
+<div class="line">  &lt;description Cclass=<span class="stringliteral">&quot;RTOS&quot;</span>&gt;Realtime Operating System&lt;/description&gt;</div>
 <div class="line">&lt;/taxonomy&gt;</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>You <b>must</b> <b>not</b> use Windows or Linux <a href="http://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words" target="_blank">reserved characters</a> for <em>Cclass</em>, <em>Cgrouop</em>, and <em>Csub</em> names! Some development tools use these names to create a directory structure for the software components in projects. Reserved characters are: <pre class="fragment">&lt; (less than)
 &gt; (greater than)
@@ -188,6 +189,7 @@ $(document).ready(function(){initNavTree('element_taxonomy.html','');});
 <li><a class="el" href="pdsc_components_pg.html#element_bundle">/package/components/bundle</a></li>
 <li><a class="el" href="pdsc_apis_pg.html#element_api">/package/apis/api</a></li>
 <li><a class="el" href="element_taxonomy.html#element_taxonomyDescription">/package/taxonomy/description</a></li>
+<li><a class="el" href="cpdsc_pg.html#element_project_component">/package/create/project/select/component</a></li>
 </ul>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line">&lt;... Cclass=<span class="stringliteral">&quot;CMSIS&quot;</span> ...&gt;</div>
@@ -212,6 +214,10 @@ $(document).ready(function(){initNavTree('element_taxonomy.html','');});
 <td class="XML-Token">Network </td><td>Components implementing some kind of Network Communications (e.g. TCP/IP Stack)  </td></tr>
 <tr>
 <td class="XML-Token">USB </td><td>Components implementing some kind of USB interfaces (e.g. Host and Device interfaces)  </td></tr>
+<tr>
+<td class="XML-Token">Compiler </td><td>Components implementing Compiler specific interfaces (e.g. Retargeting)  </td></tr>
+<tr>
+<td class="XML-Token">RTOS </td><td>Components implementing some kind of Real-time Operating System (e.g. FreeRTOS, Micrium Real Time Kernel)  </td></tr>
 </table>
 <p>&#160;</p>
 <p><a class="anchor" id="CgroupType"></a><b>Table: Component Groups</b></p>
@@ -228,6 +234,7 @@ $(document).ready(function(){initNavTree('element_taxonomy.html','');});
 <li><a class="el" href="pdsc_components_pg.html#element_component">/package/components/.../component</a></li>
 <li><a class="el" href="pdsc_apis_pg.html#element_api">/package/apis/api</a></li>
 <li><a class="el" href="element_taxonomy.html#element_taxonomyDescription">/package/taxonomy/description</a></li>
+<li><a class="el" href="cpdsc_pg.html#element_project_component">/package/create/project/select/component</a></li>
 </ul>
 <p>The table lists predefined values for the Component Class <b>Cclass="CMSIS"</b>. No other Component Groups have been defined so far. </p>
 <table  class="cmtable" summary="Predefined Cgroup names for Component Class CMSIS">
@@ -247,7 +254,7 @@ $(document).ready(function(){initNavTree('element_taxonomy.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:43 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

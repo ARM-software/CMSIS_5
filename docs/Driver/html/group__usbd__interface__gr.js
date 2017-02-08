@@ -25,12 +25,14 @@ var group__usbd__interface__gr =
     [ "ARM_USBD_CAPABILITIES", "group__usbd__interface__gr.html#structARM__USBD__CAPABILITIES", [
       [ "vbus_detection", "group__usbd__interface__gr.html#a6673fc1aa13f62122ecf51e52a605c6e", null ],
       [ "event_vbus_on", "group__usbd__interface__gr.html#a53f95b9ecb7c84197947e7542501c7d3", null ],
-      [ "event_vbus_off", "group__usbd__interface__gr.html#a72d905bc20735bafda40d73c91829709", null ]
+      [ "event_vbus_off", "group__usbd__interface__gr.html#a72d905bc20735bafda40d73c91829709", null ],
+      [ "reserved", "group__usbd__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_USBD_STATE", "group__usbd__interface__gr.html#structARM__USBD__STATE", [
       [ "vbus", "group__usbd__interface__gr.html#aa961d5fb2bd3d2960578f1ac3b903070", null ],
       [ "speed", "group__usbd__interface__gr.html#a220859a8b5da0232739a11cbe7f79fc5", null ],
-      [ "active", "group__usbd__interface__gr.html#ab22b96a3efad48f5a542f46c1b224800", null ]
+      [ "active", "group__usbd__interface__gr.html#ab22b96a3efad48f5a542f46c1b224800", null ],
+      [ "reserved", "group__usbd__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_USBD_SignalDeviceEvent_t", "group__usbd__interface__gr.html#ga7c1878799699ddd34cec696da499f7bd", null ],
     [ "ARM_USBD_SignalEndpointEvent_t", "group__usbd__interface__gr.html#gaae754763700fc5059a6bde57ea2d4e2c", null ],

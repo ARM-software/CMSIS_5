@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.7</span>
+   &#160;<span id="projectnumber">Version 1.4.9</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -110,10 +110,10 @@ $(document).ready(function(){initNavTree('createPackPublish.html','');});
 <div class="title">Publish a Pack </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>There are multiple ways to distribute a Software Pack:</p>
+<div class="textblock"><p>There are multiple ways to distribute a software pack:</p>
 <h1><a class="anchor" id="cp_LocalInstallation"></a>
 Local Installation</h1>
-<p>The easiest way to distribute a Software Pack is attaching it to an email or using other means of electronic distribution (for example using a company internal file server). The installation of a Software Pack is usually triggered by double-clicking the PACK file. The Pack management tool is invoked and the Pack is installed on the local machine. After installation, the Pack will be shown in the list of installed Packs (tool dependent). If the PDSC file does not contain a valid <code>&lt;url&gt;</code> element, a manual installation is required to update a Software Pack. Otherwise, Pack management tools can check for updates on the server or the local machine that is specified by <code>&lt;url&gt;</code>.</p>
+<p>The easiest way to distribute a software pack is attaching it to an email or using other means of electronic distribution (for example using a company internal file server). The installation of a software pack is usually triggered by double-clicking the PACK file. The pack management tool is invoked and the Pack is installed on the local machine. After installation, the pack will be shown in the list of installed packs (tool dependent). If the PDSC file does not contain a valid <code>&lt;url&gt;</code> element, a manual installation is required to update a software pack. Otherwise, pack management tools can check for updates on the server or the local machine that is specified by <code>&lt;url&gt;</code>.</p>
 <div class="image">
 <img src="LocalInstallation.png" alt="LocalInstallation.png"/>
 <div class="caption">
@@ -121,31 +121,32 @@ Local installation and update from URL</div></div>
  <dl class="section note"><dt>Note</dt><dd>For automatic updates on a local machine, specify the <code>&lt;url&gt;</code> using the <a href="https://en.wikipedia.org/wiki/File_URI_scheme" target="_blank">file URI scheme</a>.</dd></dl>
 <h1><a class="anchor" id="cp_WebDownload"></a>
 Web Download</h1>
-<p>Any web server can be used to host a Software Pack (specified by the <code>&lt;url&gt;</code> element in the PDSC file). At this location, at least two files need to be present (refer to <a class="el" href="cp_Packs.html#PackFilenames">Pack Conventions</a>):</p>
+<p>Any web server can be used to host a software pack (specified by the <code>&lt;url&gt;</code> element in the PDSC file). At this location, the following files can be present:</p>
 <ol type="1">
-<li><b>&lt;vendor&gt;</b>.<b>&lt;name&gt;</b>.pdsc</li>
-<li><b>&lt;vendor&gt;</b>.<b>&lt;name&gt;</b>.<b>&lt;version&gt;</b>.pack, where <b>&lt;version&gt;</b> refers to the latest version specified in the PDSC file.</li>
+<li><b>&lt;vendor&gt;</b>.<b>&lt;name&gt;</b>.pdsc [required]: pack description file.</li>
+<li><b>&lt;vendor&gt;</b>.<b>&lt;name&gt;</b>.<b>&lt;version&gt;</b>.pack [required]: pack file where <b>&lt;version&gt;</b> refers to the latest version specified in the PDSC file.</li>
+<li><b>&lt;vendor&gt;</b>.pidx [optional]: list with all packs hosted and maintained by the vendor (refer to <a class="el" href="packIndexFile.html#pidxFile">Package Index File (pidx)</a>)</li>
+<li><b>&lt;vendor&gt;</b>.vidx [optional]: list of package index files known to the vendor (refer to <a class="el" href="packIndexFile.html#vidxFile">Vendor Index File (vidx)</a>)</li>
 </ol>
-<p>All previous versions listed in the <b>&lt;releases&gt;</b> section of the PDSC file should be present in that folder as well. This will enable customers to revert updates or to be able to download a specific version of a Software Pack (for code maintenance purposes for example).</p>
-<p>Depending on the Pack management tool, a Pack Index Server might be in place that gathers information about published Packs in an index file. This information is then used in the management tool to retrieve version information and to trigger updates of Packs within the development environment.</p>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>It is important to understand how the &lt;url&gt; element works. If you specify a URL, for example <a href="http://www.keil.com/pack/" target="_blank">http://www.keil.com/pack</a>, then you have to make the PDSC file and the corresponding PACK file(s) available for download at that exact location. The naming of the files follow the standard naming rules. For example, the ARM::CMSIS PDSC and Pack files are available here:<br/>
- <a href="http://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">http://www.keil.com/pack/ARM.CMSIS.pdsc</a> and <br/>
- <a href="http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack</a> and <br/>
- <a href="http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack</a> and ... <br/>
- At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned PACK files, but at least the latest one.</li>
-<li>If the URL or the PDSC/PACK files become unavailable (temporarily or permanently), users will not be able to retrieve updates.</li>
-<li>Do not replace PDSC/PACK files without updating the version number because the Pack management tools will not recognize the update unless the version has been changed.</li>
-<li>Older PACKs should remain available.</li>
-</ul>
-</dd></dl>
+<p>All previous versions listed in the <b>&lt;releases&gt;</b> section of the PDSC file should be present in that folder as well. This will enable customers to revert updates or to be able to download a specific version of a software pack (for code maintenance purposes for example).</p>
 <div class="image">
 <img src="WebInstallation.png" alt="WebInstallation.png"/>
 <div class="caption">
 Web installation and update</div></div>
+ <dl class="section note"><dt>Note</dt><dd><ul>
+<li>It is important to understand how the &lt;url&gt; element works. If you specify a URL, for example <a href="http://www.keil.com/pack/" target="_blank">www.keil.com/pack</a>, then you have to make the PDSC file and the corresponding PACK file(s) available for download at that exact location. The naming of the files follow the standard naming rules. For example, the ARM::CMSIS PDSC and Pack files are available here:<br/>
+ <a href="http://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">www.keil.com/pack/ARM.CMSIS.pdsc</a> and <br/>
+ <a href="http://www.keil.com/pack/ARM.CMSIS.5.0.1.pack" target="_blank">www.keil.com/pack/ARM.CMSIS.5.0.1.pack</a> and <br/>
+ <a href="http://www.keil.com/pack/ARM.CMSIS.5.0.0.pack" target="_blank">www.keil.com/pack/ARM.CMSIS.5.0.0.pack</a> and ... <br/>
+ At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned PACK files, but at least the latest one.</li>
+<li>If the URL or the PDSC/PACK files become unavailable (temporarily or permanently), users will not be able to retrieve updates.</li>
+<li>Do not replace PDSC/PACK files without updating the version number because the Pack management tools will not recognize the update unless the version has been changed.</li>
+<li>Older packs should remain available.</li>
+</ul>
+</dd></dl>
 <h1><a class="anchor" id="cp_KeilComPack"></a>
 Publishing on www.keil.com/pack</h1>
-<p>ARM tries to maintain a list of all available Software Packs. If a Software Pack is intended to be on that list, its PDSC file needs to be sent to to the following email address: <a href="#" onclick="location.href='mai'+'lto:'+'cms'+'is'+'@ar'+'m.'+'com'; return false;">cmsis<span style="display: none;">.nosp@m.</span>@arm<span style="display: none;">.nosp@m.</span>.com</a>. The PDSC file will be manually XML validated. The following content will be processed in order to generate the web site and index file (<a href="www.keil.com/pack/index.idx" class="el" target="_blank">www.keil.com/pack/index.idx</a>):</p>
+<p>ARM maintains a list of available software packs. If you wish to add your packs to that list, send either your vendor.pidx file or your PDSC file to the following email address: <a href="#" onclick="location.href='mai'+'lto:'+'CMS'+'IS'+'@ar'+'m.'+'com'; return false;">CMSIS@arm.com</a>. The PIDX file will be processed and all referenced PDSC files will be validated. The following content will be processed in order to generate the web site (<a href="http://www.keil.com/dd2/pack">www.keil.com/dd2/pack</a>) and index file (<a href="http://www.keil.com/pack/index.pidx">www.keil.com/pack/index.pidx</a>):</p>
 <ul>
 <li>Version</li>
 <li>Release Notes</li>
@@ -154,13 +155,13 @@ Publishing on www.keil.com/pack</h1>
 <li>Examples</li>
 <li>Software Components</li>
 </ul>
-<p>Please allow up to seven working days for the process. If the file contains any errors, you will be notified. Otherwise, it will be uploaded to <a href="www.keil.com/pack" class="el" target="_blank">www.keil.com/pack</a>. </p>
+<p>Please allow up to seven working days for the process. If the files contain any errors, you will be notified. Otherwise, the information is added to the index server. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:43 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

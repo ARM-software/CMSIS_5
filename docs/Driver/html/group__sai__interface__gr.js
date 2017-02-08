@@ -27,14 +27,16 @@ var group__sai__interface__gr =
       [ "mono_mode", "group__sai__interface__gr.html#a8d92817d8662211abda2d747c52ff4a9", null ],
       [ "companding", "group__sai__interface__gr.html#a77e4d8466d2bde30e6583b9ad8ba8c82", null ],
       [ "mclk_pin", "group__sai__interface__gr.html#a12554e2522a0c611e8a26c9e536554eb", null ],
-      [ "event_frame_error", "group__sai__interface__gr.html#acc06ba75f18af9862d171426abc3273e", null ]
+      [ "event_frame_error", "group__sai__interface__gr.html#acc06ba75f18af9862d171426abc3273e", null ],
+      [ "reserved", "group__sai__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_SAI_STATUS", "group__sai__interface__gr.html#structARM__SAI__STATUS", [
       [ "tx_busy", "group__sai__interface__gr.html#a2c6d2b67fba3f3e084e96a6bc7fcac6b", null ],
       [ "rx_busy", "group__sai__interface__gr.html#a9f5baee58ed41b382628a82a0b1cbcb4", null ],
       [ "tx_underflow", "group__sai__interface__gr.html#a048f45e9d2257a21821f81d9edd17b72", null ],
       [ "rx_overflow", "group__sai__interface__gr.html#ac403aefd9bce8b0172e1996c0f3dd8aa", null ],
-      [ "frame_error", "group__sai__interface__gr.html#a1b4f69a2caf19ef9fd75cf27ae3932f9", null ]
+      [ "frame_error", "group__sai__interface__gr.html#a1b4f69a2caf19ef9fd75cf27ae3932f9", null ],
+      [ "reserved", "group__sai__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_SAI_SignalEvent_t", "group__sai__interface__gr.html#gad8ca8e2459e540928f6315b3df6da0ee", null ],
     [ "ARM_SAI_GetVersion", "group__sai__interface__gr.html#ga786b1970a788a4dfc6156b42364e52f8", null ],

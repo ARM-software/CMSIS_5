@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -132,7 +132,7 @@ Functions</h2></td></tr>
 <img src="MatrixAddition.gif" alt="MatrixAddition.gif"/>
 <div class="caption">
 Addition of two 3 x 3 matrices</div></div>
-<p>The functions check to make sure that <code>pSrcA</code>, <code>pSrcB</code>, and <code>pDst</code> have the same number of rows and columns. </p>
+<p> The functions check to make sure that <code>pSrcA</code>, <code>pSrcB</code>, and <code>pDst</code> have the same number of rows and columns. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga04bbf64a5f9c9e57dd1efb26a768aba1"></a>
 <div class="memitem">
@@ -218,7 +218,7 @@ Addition of two 3 x 3 matrices</div></div>
 <p><b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q15 range [0x8000 0x7FFF] will be saturated. </dd></dl>
 
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__q15.html#acbbce67ba058d8e1c867c71d57288c97">arm_matrix_instance_q15::numCols</a>, <a class="el" href="structarm__matrix__instance__q15.html#a9bac6ed54be287c4d4f01a1a28be65f5">arm_matrix_instance_q15::numRows</a>, <a class="el" href="structarm__matrix__instance__q15.html#a6da33a5553e634787d0f515cf8d724af">arm_matrix_instance_q15::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#a08bea9cb2c311d925224c0d6829edb8c">__QADD16()</a>, <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__q15.html#acbbce67ba058d8e1c867c71d57288c97">arm_matrix_instance_q15::numCols</a>, <a class="el" href="structarm__matrix__instance__q15.html#a9bac6ed54be287c4d4f01a1a28be65f5">arm_matrix_instance_q15::numRows</a>, <a class="el" href="structarm__matrix__instance__q15.html#a6da33a5553e634787d0f515cf8d724af">arm_matrix_instance_q15::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
 
 </div>
 </div>
@@ -263,7 +263,7 @@ Addition of two 3 x 3 matrices</div></div>
 <p><b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q31 range [0x80000000 0x7FFFFFFF] will be saturated. </dd></dl>
 
-<p>References <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__q31.html#abd161da7614eda927157f18b698074b1">arm_matrix_instance_q31::numCols</a>, <a class="el" href="structarm__matrix__instance__q31.html#a63bacac158a821c8cfc06088d251598c">arm_matrix_instance_q31::numRows</a>, <a class="el" href="structarm__matrix__instance__q31.html#a09a64267c0579fef086efc9059741e56">arm_matrix_instance_q31::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#ab9f3cfbfb0f12975ab91ddb179160dcb">__QADD()</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a>, <a class="el" href="arm__math_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>, <a class="el" href="structarm__matrix__instance__q31.html#abd161da7614eda927157f18b698074b1">arm_matrix_instance_q31::numCols</a>, <a class="el" href="structarm__matrix__instance__q31.html#a63bacac158a821c8cfc06088d251598c">arm_matrix_instance_q31::numRows</a>, <a class="el" href="structarm__matrix__instance__q31.html#a09a64267c0579fef086efc9059741e56">arm_matrix_instance_q31::pData</a>, and <a class="el" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>.</p>
 
 </div>
 </div>
@@ -272,7 +272,7 @@ Addition of two 3 x 3 matrices</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

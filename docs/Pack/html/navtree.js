@@ -3,9 +3,12 @@ var NAVTREE =
   [ "CMSIS-Pack", "index.html", [
     [ "Software Pack Use Cases", "index.html#SWPackVariants", null ],
     [ "Revision History of CMSIS-Pack", "pack_revisionHistory.html", null ],
-    [ "Create Software Packs", "cp_Packs.html", [
+    [ "Software Packs Overview", "cp_Packs.html", [
+      [ "Pack Conventions", "cp_Packs.html#PackFilenames", [
+        [ "Pack File Name", "cp_Packs.html#pack_filename", null ],
+        [ "Software Component Cclasses", "cp_Packs.html#pack_Cclass", null ]
+      ] ],
       [ "Steps to Create a Pack", "cp_Packs.html#cp_PackSteps", null ],
-      [ "Pack Conventions", "cp_Packs.html#PackFilenames", null ],
       [ "Pack Tutorial", "cp_Packs.html#PackTutorials", null ]
     ] ],
     [ "Pack with Software Components", "cp_SWComponents.html", [
@@ -26,6 +29,7 @@ var NAVTREE =
       [ "System and Startup Files", "createPack_DFP.html#cp_System_Startp", null ],
       [ "System View Description File", "createPack_DFP.html#cp_SVD", null ],
       [ "Flash Programming Algorithms", "createPack_DFP.html#cp_FlashProgrammingAlgorithm", null ],
+      [ "Debug Descriptions", "createPack_DFP.html#cp_debugdescription", null ],
       [ "Device Properties", "createPack_DFP.html#cp_DeviceProperties", [
         [ "Device Specific Software Components", "createPack_DFP.html#cp_DeviceSWComp", null ]
       ] ]
@@ -48,7 +52,30 @@ var NAVTREE =
       [ "Tool-specific display", "configWizard.html#configWizard_display", null ]
     ] ],
     [ "Flash Programming Algorithms", "flashAlgorithm.html", "flashAlgorithm" ],
-    [ "Project Description (*.CPDSC) Format  (new)", "cpdsc_pg.html", "cpdsc_pg" ]
+    [ "Simplifying debug setup using debug descriptions", "coresight_setup.html", "coresight_setup" ],
+    [ "Project Description (*.CPDSC) Format", "cpdsc_pg.html", [
+      [ "Definition of CMSIS project", "cpdsc_pg.html#cpdsc_definition", null ],
+      [ "CPDSC top level structure", "cpdsc_pg.html#cpdsc_structure", null ],
+      [ "/package (for CPDSC)", "cpdsc_pg.html#element_package_cpdsc", null ],
+      [ "/package/create", "cpdsc_pg.html#cpdsc_create_pg", null ],
+      [ "/package/create/project", "cpdsc_pg.html#element_project", null ],
+      [ "/package/create/project/target", "cpdsc_pg.html#cpdsc_target_pg", null ],
+      [ "/package/create/project/target/algorithm", "cpdsc_pg.html#element_target_algorithm", null ],
+      [ "/package/create/project/target/debugProbe", "cpdsc_pg.html#element_debugProbe", null ],
+      [ "/package/create/project/target/memory", "cpdsc_pg.html#element_target_memory", null ],
+      [ "/package/create/project/target/output", "cpdsc_pg.html#element_output", null ],
+      [ "/package/create/project/select", "cpdsc_pg.html#cpdsc_select_pg", null ],
+      [ "/package/create/project/select/component", "cpdsc_pg.html#element_project_component", null ],
+      [ "/package/create/project/select/component/file", "cpdsc_pg.html#element_component_file", null ],
+      [ "/package/create/project/files", "cpdsc_pg.html#cpdsc_files_pg", null ],
+      [ "/package/project/create/files/.../file", "cpdsc_pg.html#element_project_file", null ],
+      [ "/package/create/project/files/.../group", "cpdsc_pg.html#element_project_group", null ]
+    ] ],
+    [ "CMSIS-Pack Index Files", "packIndexFile.html", [
+      [ "Package Index File (pidx)", "packIndexFile.html#pidxFile", null ],
+      [ "Vendor Index File (vidx)", "packIndexFile.html#vidxFile", null ],
+      [ "CMSIS-Pack Index Schema File", "packIndexFile.html#packIndexSchema", null ]
+    ] ]
   ] ]
 ];
 

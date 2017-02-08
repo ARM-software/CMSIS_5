@@ -20,5 +20,6 @@ var group__usart__interface__gr_structARM__USART__CAPABILITIES =
     [ "event_cts", "group__usart__interface__gr.html#a4ebe5ddec8d99a63843f2a3c70ac85f9", null ],
     [ "event_dsr", "group__usart__interface__gr.html#aefdb61f16498d650b5a7f5f9b62779df", null ],
     [ "event_dcd", "group__usart__interface__gr.html#a7c1dd043d0db9738d6b5fa8d89211446", null ],
-    [ "event_ri", "group__usart__interface__gr.html#ab55f90aec5f909ff3a75bf36e61312ea", null ]
+    [ "event_ri", "group__usart__interface__gr.html#ab55f90aec5f909ff3a75bf36e61312ea", null ],
+    [ "reserved", "group__usart__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
 ];

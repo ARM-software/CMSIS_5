@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.04</span>
+   &#160;<span id="projectnumber">Version 2.05</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -569,6 +569,12 @@ Master/Slave connected via I2C interface</div></div>
 address_10_bit: 1</td>
 <td class="fielddoc">
 supports 10-bit addressing </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="aa43c4c21b173ada1b6b7568956f0d650"></a>uint32_t</td>
+<td class="fieldname">
+reserved: 31</td>
+<td class="fielddoc">
+Reserved (must be zero) </td></tr>
 </table>
 
 </div>
@@ -638,6 +644,12 @@ Master lost arbitration (cleared on start of next Master operation) </td></tr>
 bus_error: 1</td>
 <td class="fielddoc">
 Bus error detected (cleared on start of next Master/Slave operation) </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="aa43c4c21b173ada1b6b7568956f0d650"></a>uint32_t</td>
+<td class="fieldname">
+reserved: 26</td>
+<td class="fielddoc">
+</td></tr>
 </table>
 
 </div>
@@ -1231,9 +1243,9 @@ The parameter <em>arg</em> provides, depending on the operation, additional info
 <tr>
 <td align="left"><a class="el" href="group__I2C__events.html#gabd875b57ce39dadd849c53b885ad6661">ARM_I2C_EVENT_SLAVE_RECEIVE</a> </td><td align="center">1UL &lt;&lt; 3 </td><td align="left">Occurs when addressed as Slave Receiver and <a class="el" href="group__i2c__interface__gr.html#gae3c9abccd1d377385d3d4cfe29035164">ARM_I2C_SlaveReceive</a> has not been started. </td></tr>
 <tr>
-<td align="left"><a class="el" href="group__I2C__events.html#ga3ab54410b6410ed3a58762ff0c0d68b9">ARM_I2C_EVENT_GENERAL_CALL</a> </td><td align="center">1UL &lt;&lt; 4 </td><td align="left">Indicates General Call in slave mode together with <a class="el" href="group__I2C__events.html#ga5992dc0f6e839c4d066cfa83d535f30d">ARM_I2C_EVENT_TRANSFER_DONE</a>, <a class="el" href="group__I2C__events.html#gacfbbec9af083d35e8ea87ad16e9c6ec2">ARM_I2C_EVENT_SLAVE_TRANSMIT</a> and <a class="el" href="group__I2C__events.html#gabd875b57ce39dadd849c53b885ad6661">ARM_I2C_EVENT_SLAVE_RECEIVE</a>. </td></tr>
+<td align="left"><a class="el" href="group__I2C__events.html#ga98b815769634d9578526b43589caa017">ARM_I2C_EVENT_ADDRESS_NACK</a> </td><td align="center">1UL &lt;&lt; 4 </td><td align="left">Occurs in master mode when address is not acknowledged from slave. </td></tr>
 <tr>
-<td align="left"><a class="el" href="group__I2C__events.html#ga98b815769634d9578526b43589caa017">ARM_I2C_EVENT_ADDRESS_NACK</a> </td><td align="center">1UL &lt;&lt; 5 </td><td align="left">Occurs in master mode when address is not acknowledged from slave. </td></tr>
+<td align="left"><a class="el" href="group__I2C__events.html#ga3ab54410b6410ed3a58762ff0c0d68b9">ARM_I2C_EVENT_GENERAL_CALL</a> </td><td align="center">1UL &lt;&lt; 5 </td><td align="left">Indicates General Call in slave mode together with <a class="el" href="group__I2C__events.html#ga5992dc0f6e839c4d066cfa83d535f30d">ARM_I2C_EVENT_TRANSFER_DONE</a>, <a class="el" href="group__I2C__events.html#gacfbbec9af083d35e8ea87ad16e9c6ec2">ARM_I2C_EVENT_SLAVE_TRANSMIT</a> and <a class="el" href="group__I2C__events.html#gabd875b57ce39dadd849c53b885ad6661">ARM_I2C_EVENT_SLAVE_RECEIVE</a>. </td></tr>
 <tr>
 <td align="left"><a class="el" href="group__I2C__events.html#gac9000f44a578e2117d64dbc2093cec6d">ARM_I2C_EVENT_ARBITRATION_LOST</a> </td><td align="center">1UL &lt;&lt; 6 </td><td align="left">Occurs in master mode when arbitration is lost. </td></tr>
 <tr>
@@ -1249,7 +1261,7 @@ The parameter <em>arg</em> provides, depending on the operation, additional info
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:23 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:44 for CMSIS-Driver by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__nvic__trustzone__functions.html#gade6a8784339946fdd50575d7e65a3268":[7,10,1,6],
 "group__nvic__trustzone__functions.html#gaedea4c16dd4a0b792c7e9d1da4c49295":[7,10,1,2],
 "group__nvic__trustzone__functions.html#gaf5f578628bc8b7154b29577f6f6a87fd":[7,10,1,7],
 "group__peripheral__gr.html":[7,1],

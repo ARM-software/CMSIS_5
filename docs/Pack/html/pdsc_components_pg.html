@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.7</span>
+   &#160;<span id="projectnumber">Version 1.4.9</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -351,7 +351,7 @@ RTE_Components.h</h1>
 <tr>
 <td>RTE_Components_h </td><td>Source code that is copied into the file <a class="el" href="pdsc_components_pg.html#RTE_Components_h">RTE_Components.h</a> when the component is included into a software project. </td><td>xs:string  </td><td>0..1   </td></tr>
 <tr>
-<td><a class="el" href="cpdsc_files_pg.html#element_files">files</a> </td><td>Grouping element for all files that are part of this component. </td><td>group </td><td>1  </td></tr>
+<td><a class="el" href="pdsc_components_pg.html#element_files">files</a> </td><td>Grouping element for all files that are part of this component. </td><td>group </td><td>1  </td></tr>
 </table>
 <p>&#160;</p>
 <p><a class="anchor" id="CsubType"></a><b>Component Subgroups</b></p>
@@ -369,7 +369,7 @@ RTE_Components.h</h1>
 </div><!-- fragment --><p>&#160;</p>
 <hr/>
 <h1><a class="anchor" id="element_files"></a>
-element_files</h1>
+/package/.../files</h1>
 <p>The group <b>files</b> can appear in various PACK elements. This group is the frame for defining individual file properties.</p>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line">&lt;package&gt;</div>
@@ -439,13 +439,13 @@ element_files</h1>
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="cpdsc_files_pg.html#element_files">files</a> </td><td colspan="3"><a class="el" href="cpdsc_files_pg.html#element_files">/package/apis/api/files</a>  </td></tr>
+<td><a class="el" href="pdsc_components_pg.html#element_files">files</a> </td><td colspan="3"><a class="el" href="pdsc_components_pg.html#element_files">/package/apis/api/files</a>  </td></tr>
 <tr>
-<td><a class="el" href="cpdsc_files_pg.html#element_files">files</a> </td><td colspan="3"><a class="el" href="cpdsc_files_pg.html#element_files">/package/components/component/files</a>  </td></tr>
+<td><a class="el" href="pdsc_components_pg.html#element_files">files</a> </td><td colspan="3"><a class="el" href="pdsc_components_pg.html#element_files">/package/components/component/files</a>  </td></tr>
 <tr>
-<td><a class="el" href="cpdsc_files_pg.html#element_files">files</a> </td><td colspan="3"><a class="el" href="cpdsc_files_pg.html#element_files">/package/components/bundle/component/files</a>  </td></tr>
+<td><a class="el" href="pdsc_components_pg.html#element_files">files</a> </td><td colspan="3"><a class="el" href="pdsc_components_pg.html#element_files">/package/components/bundle/component/files</a>  </td></tr>
 <tr>
-<td><a class="el" href="cpdsc_files_pg.html#element_files">files</a> </td><td colspan="3"><a class="el" href="pdsc_generators_pg.html#element_gen_project_files">/package/generators/generator/project_files</a>  </td></tr>
+<td><a class="el" href="pdsc_components_pg.html#element_files">files</a> </td><td colspan="3"><a class="el" href="pdsc_generators_pg.html#element_gen_project_files">/package/generators/generator/project_files</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -477,11 +477,17 @@ element_files</h1>
 </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>Header files with the attribute <span class="XML-Token">config</span> must be located in a directory within the pack that is not otherwise specified as an "include folder" of this or any other component's files of the category "header" or "include". For example: <pre class="fragment">&lt;file category="header"  name="src/config/user_config.h" attr="config" version="1.0.0" /&gt;
-</pre> Config files are copied into the project folder and are adopted specifically for that project but chances are that due to the include path search order of the compiler, the unmodified header file in the pack repository is found first and used by the compiler (creating unexpected results).</dd></dl>
+</pre> Config files are copied into the project folder and are adopted specifically for that project. Due to the include path search order of the compiler, chances exist that the unmodified header file in the pack repository is found first and used by the compiler (creating unexpected results).</dd></dl>
 <p>&#160;</p>
 <p><a class="anchor" id="FileCategoryEnum"></a><b>Table: File Categories</b></p>
-<p>File category types define the use of component files within the application. Typically these files are added to the project and processed by the build tools.</p>
-<p>The table lists the predefined values for a file category. These values can be use also in the element <a class="el" href="pdsc_generators_pg.html#element_gen_file">/package/generators/generator/files/file</a>. </p>
+<p>File category types define the use of component files within the application. Typically, these files are added to the project and processed by the build tools.</p>
+<p>File categories are used in the following elements:</p>
+<ul>
+<li><a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a></li>
+<li><a class="el" href="pdsc_generators_pg.html#element_gen_file">/package/generators/generator/files/file</a></li>
+<li><a class="el" href="cpdsc_pg.html#element_component_file">/package/create/project/select/component/file</a></li>
+</ul>
+<p>The table lists the predefined values for a file category. </p>
 <table  class="cmtable" summary="Type: FileCategoryEnum">
 <tr>
 <th>category= </th><th>Description  </th></tr>
@@ -520,7 +526,7 @@ element_files</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:43 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

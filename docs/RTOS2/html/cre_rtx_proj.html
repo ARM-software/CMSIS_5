@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Create an RTX Project</title>
-<title>CMSIS-RTOS2: Create an RTX Project</title>
+<title>Create an RTX5 Project</title>
+<title>CMSIS-RTOS2: Create an RTX5 Project</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.0.0</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -108,18 +108,19 @@ $(document).ready(function(){initNavTree('cre_rtx_proj.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Create an RTX Project </div>  </div>
+<div class="title">Create an RTX5 Project </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Example projects using CMSIS-RTOS RTX are available for various development boards. To make use of these examples, you need to install a Device Family Pack in µVision and use Pack Installer to open a CMSIS-RTOS2 Blinky project. If you wish to start a CMSIS-RTOS RTX5 from scratch, follow these steps:</p>
+<div class="textblock"><p>The steps to create a microcontroller application using RTX5 are:</p>
 <ul>
-<li>Create a new project and select a device.</li>
-<li><p class="startli">In the Manage Run-Time Environment window that opens, select <b>CMSIS::CORE</b> and <b>CMSIS::RTOS2 (API)::Keil RTX5</b>. If the <b>Validation Output</b> requires other components to be present, try to use the <b>Resolve</b> button:</p>
+<li>Create a new project and select a microcontroller device.</li>
+<li><p class="startli">In the Manage Run-Time Environment window, select <b>CMSIS::CORE</b> and <b>CMSIS::RTOS2 (API)::Keil RTX5</b>. You can choose to either add RTX as a library (Variant: <b>Library</b>) or to add the full source code (Variant: <b>Source</b> - required if using the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a>):</p>
 <div class="image">
 <img src="manage_rte_output.png" alt="manage_rte_output.png"/>
 </div>
 </li>
-<li><p class="startli">Click <b>OK</b>. In the <b>Project</b> window, you will see the files that have been automatically added to you project, such as <b>RTX_Config.c</b> and the system and startup files:</p>
+<li>If the <b>Validation Output</b> requires other components to be present, try to use the <b>Resolve</b> button.</li>
+<li><p class="startli">Click <b>OK</b>. In the <b>Project</b> window, you will see the files that have been automatically added to you project, such as <b>RTX_Config.h</b>, <b>RTX_Config.c</b>, the library or the source code files, as well as the system and startup files:</p>
 <div class="image">
 <img src="project_window.png" alt="project_window.png"/>
 </div>
@@ -129,15 +130,31 @@ $(document).ready(function(){initNavTree('cre_rtx_proj.html','');});
 <img src="add_item.png" alt="add_item.png"/>
 </div>
 </li>
-<li>Finally, <a class="el" href="config_rtx.html">configure</a> RTX to the application's needs using the <b>RTX_Config.c</b> file. </li>
+<li><a class="el" href="config_rtx5.html">Configure</a> RTX5 to the application's needs using the <b>RTX_Config.h</b> file.</li>
 </ul>
+<h1><a class="anchor" id="cre_rtx_proj_specifics"></a>
+Add support for RTX specific functions</h1>
+<p>If you require some of the <a class="el" href="group__rtx5__specific.html">RTX specific functions</a> in your application code, #include the <a class="el" href="theory_of_operation.html#rtx_os_h">header file rtx_os.h</a>. This enables <a class="el" href="theory_of_operation.html#lowPower">low-power</a> and <a class="el" href="theory_of_operation.html#TickLess">tick-less</a> operation modes.</p>
+<h1><a class="anchor" id="cre_rtx_proj_er"></a>
+Add Event Recorder Visibility</h1>
+<ul>
+<li>To use the Event Recorder together with RTX5, select the software component <b>Compiler:Event Recorder</b>.</li>
+<li>Select the <b>Source</b> variant of the software component <b>CMSIS:RTOS2 (API):Keil RTX5</b>. <div class="image">
+<img src="event_recorder_rte.png" alt="event_recorder_rte.png"/>
+<div class="caption">
+Component selection for Event Recorder</div></div>
+</li>
+<li>Call the function <b>EventRecorderInitialize()</b> in your application code (ideally in <code>main()</code>).</li>
+<li>Build the application code and download it to the debug hardware.</li>
+</ul>
+<p>Once the target application generates event information, it can be viewed in the µVision debugger using the <b>Event</b> <b>Recorder</b>. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:45 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:03 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

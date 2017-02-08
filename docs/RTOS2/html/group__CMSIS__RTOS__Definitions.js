@@ -1,5 +1,6 @@
 var group__CMSIS__RTOS__Definitions =
 [
+    [ "Flags Functions Error Codes", "group__flags__error__codes.html", "group__flags__error__codes" ],
     [ "osWaitForever", "group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb", null ],
     [ "osFlagsWaitAny", "group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012", null ],
     [ "osFlagsWaitAll", "group__CMSIS__RTOS__Definitions.html#ga8b6f562736fbfb5428940e0c017dec24", null ],

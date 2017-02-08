@@ -28,13 +28,15 @@ var group__can__interface__gr =
       [ "restricted_mode", "group__can__interface__gr.html#a93008ac105806db484e78e0582ca118c", null ],
       [ "monitor_mode", "group__can__interface__gr.html#a176f42e68d9cba86b3594c40044b86c6", null ],
       [ "internal_loopback", "group__can__interface__gr.html#af19cdbb26d3496ed7dd63a59a7c7711f", null ],
-      [ "external_loopback", "group__can__interface__gr.html#a2b76df7e4bfbdd9866cc906415e626c9", null ]
+      [ "external_loopback", "group__can__interface__gr.html#a2b76df7e4bfbdd9866cc906415e626c9", null ],
+      [ "reserved", "group__can__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_CAN_STATUS", "group__can__interface__gr.html#structARM__CAN__STATUS", [
       [ "unit_state", "group__can__interface__gr.html#a96ec94acab56690b3801e3c5fbd09fa2", null ],
       [ "last_error_code", "group__can__interface__gr.html#a2171ea8dff5e4b54e84728aa134854b6", null ],
       [ "tx_error_count", "group__can__interface__gr.html#a8941505f6f3ebd69825c4382184c580f", null ],
-      [ "rx_error_count", "group__can__interface__gr.html#ab7e8b863b379b786ad1af935aa3ef2e8", null ]
+      [ "rx_error_count", "group__can__interface__gr.html#ab7e8b863b379b786ad1af935aa3ef2e8", null ],
+      [ "reserved", "group__can__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_CAN_MSG_INFO", "group__can__interface__gr.html#structARM__CAN__MSG__INFO", [
       [ "id", "group__can__interface__gr.html#abaabdc509cdaba7df9f56c6c76f3ae19", null ],
@@ -42,7 +44,8 @@ var group__can__interface__gr =
       [ "edl", "group__can__interface__gr.html#ab6883964c9d4bdf60616684e8d2459df", null ],
       [ "brs", "group__can__interface__gr.html#a3539c043c5868c59f76c736fe2bcadf4", null ],
       [ "esi", "group__can__interface__gr.html#ada78e3124de6adf5a5d212f9ebc4bbe0", null ],
-      [ "dlc", "group__can__interface__gr.html#a811fbb0cb2c2263b1a7440a7e9d78239", null ]
+      [ "dlc", "group__can__interface__gr.html#a811fbb0cb2c2263b1a7440a7e9d78239", null ],
+      [ "reserved", "group__can__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_CAN_OBJ_CAPABILITIES", "group__can__interface__gr.html#structARM__CAN__OBJ__CAPABILITIES", [
       [ "tx", "group__can__interface__gr.html#a9706173b2ed538efeb5ee4a952e2272f", null ],
@@ -53,7 +56,8 @@ var group__can__interface__gr =
       [ "exact_filtering", "group__can__interface__gr.html#a886337af58da4f995529eba228fb9b7a", null ],
       [ "range_filtering", "group__can__interface__gr.html#a96dcf869f4adc9cec686630082c7c60a", null ],
       [ "mask_filtering", "group__can__interface__gr.html#a2aa0e772d6cb8c30bb76ce1324423464", null ],
-      [ "message_depth", "group__can__interface__gr.html#a5a782fc223b0ea5034c6676eaec6f2d4", null ]
+      [ "message_depth", "group__can__interface__gr.html#a5a782fc223b0ea5034c6676eaec6f2d4", null ],
+      [ "reserved", "group__can__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_CAN_SignalUnitEvent_t", "group__can__interface__gr.html#gaac07b9fdf614bf439414f5417aaa376e", null ],
     [ "ARM_CAN_SignalObjectEvent_t", "group__can__interface__gr.html#ga7ceceac3e9aa0981c5cacfab88efb4eb", null ],

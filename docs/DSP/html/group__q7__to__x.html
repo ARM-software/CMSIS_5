@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -166,10 +166,10 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Description: </dt><dd></dd></dl>
+<dl class="section user"><dt>Description:</dt><dd></dd></dl>
 <p>The equation used for the conversion process is:</p>
-<pre>    
-        pDst[n] = (float32_t) pSrc[n] / 128;   0 &lt;= n &lt; blockSize.    
+<pre>
+        pDst[n] = (float32_t) pSrc[n] / 128;   0 &lt;= n &lt; blockSize.
 </pre> 
 <p>References <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
 
@@ -213,12 +213,12 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Description: </dt><dd></dd></dl>
+<dl class="section user"><dt>Description:</dt><dd></dd></dl>
 <p>The equation used for the conversion process is:</p>
-<pre>    
-        pDst[n] = (q15_t) pSrc[n] &lt;&lt; 8;   0 &lt;= n &lt; blockSize.    
+<pre>
+        pDst[n] = (q15_t) pSrc[n] &lt;&lt; 8;   0 &lt;= n &lt; blockSize.
 </pre> 
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, and <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#aa505179349146cf6186640b4c8b47714">__PKHBT</a>, <a class="el" href="arm__math_8h.html#ac4be483b8d98e977a69baf4a292a76fe">__PKHTB</a>, <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, <a class="el" href="arm__math_8h.html#ac9f7f02a5e0ad5642026dbd0da7418db">__SXTB16()</a>, and <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
 
 </div>
 </div>
@@ -260,10 +260,10 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Description: </dt><dd></dd></dl>
+<dl class="section user"><dt>Description:</dt><dd></dd></dl>
 <p>The equation used for the conversion process is:</p>
-<pre>    
-        pDst[n] = (q31_t) pSrc[n] &lt;&lt; 24;   0 &lt;= n &lt; blockSize.   
+<pre>
+        pDst[n] = (q31_t) pSrc[n] &lt;&lt; 24;   0 &lt;= n &lt; blockSize.
 </pre> 
 <p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, and <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
 
@@ -274,7 +274,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

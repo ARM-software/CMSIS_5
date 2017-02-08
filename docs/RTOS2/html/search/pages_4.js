@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['low_2dpower_20operation',['Low-Power Operation',['../lowPower.html',1,'rtx5_impl']]]
+  ['generic_20rtos_20interface',['Generic RTOS Interface',['../genRTOS2IF.html',1,'index']]]
 ];

@@ -7,10 +7,10 @@ var rtxImplementation =
       [ "Priority Inversion on Resource Sharing", "theory.html#PriorityInversion", null ],
       [ "Function calls from Interrupt Service Routines (ISR)", "theory.html#isr_function_calls", null ]
     ] ],
-    [ "Directory Structure and File Overview", "files.html", [
-      [ "CMSIS-RTOS RTX Directory Structure", "files.html#Folders", null ],
-      [ "CMSIS-RTOS RTX Library Files", "files.html#libFiles", null ],
-      [ "Configuration File RTX_Conf_CM.c", "files.html#RTX_Conf_CM", null ]
+    [ "Directory Structure and File Overview", "dirstructfiles.html", [
+      [ "CMSIS-RTOS RTX Directory Structure", "dirstructfiles.html#Folders", null ],
+      [ "CMSIS-RTOS RTX Library Files", "dirstructfiles.html#libFiles", null ],
+      [ "Configuration File RTX_Conf_CM.c", "dirstructfiles.html#RTX_Conf_CM", null ]
     ] ],
     [ "Technical Data", "technicalData.html", [
       [ "osWait", "technicalData.html#osWait", null ]

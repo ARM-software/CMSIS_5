@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.04</span>
+   &#160;<span id="projectnumber">Version 2.05</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -580,6 +580,12 @@ supports Microwire Interface </td></tr>
 event_mode_fault: 1</td>
 <td class="fielddoc">
 Signal Mode Fault event: <a class="el" href="group__SPI__events.html#ga7eaa229003689aa18598273490b3e630">ARM_SPI_EVENT_MODE_FAULT</a>. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="aa43c4c21b173ada1b6b7568956f0d650"></a>uint32_t</td>
+<td class="fieldname">
+reserved: 28</td>
+<td class="fielddoc">
+Reserved (must be zero) </td></tr>
 </table>
 
 </div>
@@ -619,6 +625,12 @@ Data lost: Receive overflow / Transmit underflow (cleared on start of transfer o
 mode_fault: 1</td>
 <td class="fielddoc">
 Mode fault detected; optional (cleared on start of transfer operation) </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="aa43c4c21b173ada1b6b7568956f0d650"></a>uint32_t</td>
+<td class="fieldname">
+reserved: 29</td>
+<td class="fielddoc">
+</td></tr>
 </table>
 
 </div>
@@ -1159,7 +1171,7 @@ when Slave  </td><td>Set the Slave Select mode for the master to <b>Not used</b>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:24 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:44 for CMSIS-Driver by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -131,8 +131,8 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Element-by-element addition of two vectors.</p>
-<pre>        
-    pDst[n] = pSrcA[n] + pSrcB[n],   0 &lt;= n &lt; blockSize.        
+<pre>
+    pDst[n] = pSrcA[n] + pSrcB[n],   0 &lt;= n &lt; blockSize.
 </pre><p>There are separate functions for floating-point, Q7, Q15, and Q31 data types. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga6a904a547413b10565dd1d251c6bafbd"></a>
@@ -235,7 +235,7 @@ Functions</h2></td></tr>
 <p><b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q15 range [0x8000 0x7FFF] will be saturated. </dd></dl>
 
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, and <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#a08bea9cb2c311d925224c0d6829edb8c">__QADD16()</a>, <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, and <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
 
 </div>
 </div>
@@ -287,7 +287,7 @@ Functions</h2></td></tr>
 <p><b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q31 range[0x80000000 0x7FFFFFFF] will be saturated. </dd></dl>
 
-<p>References <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, and <a class="el" href="arm__math_8h.html#a9a94b78de0f083bd8fadf3c3abe40431">clip_q63_to_q31()</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#ab9f3cfbfb0f12975ab91ddb179160dcb">__QADD()</a>, <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, and <a class="el" href="arm__math_8h.html#a9a94b78de0f083bd8fadf3c3abe40431">clip_q63_to_q31()</a>.</p>
 
 </div>
 </div>
@@ -339,7 +339,7 @@ Functions</h2></td></tr>
 <p><b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q7 range [0x80 0x7F] will be saturated. </dd></dl>
 
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, and <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#a937a37e831677294ecde7195ec9d68ee">__QADD8()</a>, <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>, and <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>.</p>
 
 </div>
 </div>
@@ -348,7 +348,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['semaphore_20configuration',['Semaphore Configuration',['../semaphoreConfig.html',1,'config_rtx']]],
-  ['system_20configuration',['System Configuration',['../systemConfig.html',1,'config_rtx']]],
-  ['system_20startup',['System Startup',['../SystemStartup.html',1,'rtx5_impl']]]
+  ['technical_20data',['Technical Data',['../technicalData5.html',1,'rtx5_impl']]],
+  ['theory_20of_20operation',['Theory of Operation',['../theory_of_operation.html',1,'rtx5_impl']]]
 ];

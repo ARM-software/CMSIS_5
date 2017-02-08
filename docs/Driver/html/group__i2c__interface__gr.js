@@ -18,7 +18,8 @@ var group__i2c__interface__gr =
       [ "GetStatus", "group__i2c__interface__gr.html#ad4b47653bc47cdb02965dd311e88b96a", null ]
     ] ],
     [ "ARM_I2C_CAPABILITIES", "group__i2c__interface__gr.html#structARM__I2C__CAPABILITIES", [
-      [ "address_10_bit", "group__i2c__interface__gr.html#a4ffaaf168a9f43e98d710abff5861ed5", null ]
+      [ "address_10_bit", "group__i2c__interface__gr.html#a4ffaaf168a9f43e98d710abff5861ed5", null ],
+      [ "reserved", "group__i2c__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_I2C_STATUS", "group__i2c__interface__gr.html#structARM__I2C__STATUS", [
       [ "busy", "group__i2c__interface__gr.html#a50c88f3c1d787773e2ac1b59533f034a", null ],
@@ -26,7 +27,8 @@ var group__i2c__interface__gr =
       [ "direction", "group__i2c__interface__gr.html#a2148ffb99828aeaced6a5655502434ac", null ],
       [ "general_call", "group__i2c__interface__gr.html#ab65804439f6f5beda8da30381b0ad22d", null ],
       [ "arbitration_lost", "group__i2c__interface__gr.html#ab3e3c8eeeae7fbe3c51dcb3d4104af24", null ],
-      [ "bus_error", "group__i2c__interface__gr.html#a43b1d210c48f4361c5054ba69bcae702", null ]
+      [ "bus_error", "group__i2c__interface__gr.html#a43b1d210c48f4361c5054ba69bcae702", null ],
+      [ "reserved", "group__i2c__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_I2C_SignalEvent_t", "group__i2c__interface__gr.html#ga24277c48248a09b0dd7f12bbe22ce13c", null ],
     [ "ARM_I2C_GetVersion", "group__i2c__interface__gr.html#ga956bd87590c7fb6e23609a0abfb5412c", null ],

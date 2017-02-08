@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['message_20queue',['Message Queue',['../group__CMSIS__RTOS__Message.html',1,'']]],
-  ['mutexes',['Mutexes',['../group__CMSIS__RTOS__MutexMgmt.html',1,'']]],
-  ['memory_20pool',['Memory Pool',['../group__CMSIS__RTOS__PoolMgmt.html',1,'']]]
+  ['kernel_20information_20and_20control',['Kernel Information and Control',['../group__CMSIS__RTOS__KernelCtrl.html',1,'']]],
+  ['kernel_20functions',['Kernel Functions',['../group__rtx__evr__kernel.html',1,'']]]
 ];

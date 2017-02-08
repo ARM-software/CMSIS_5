@@ -15,5 +15,6 @@ var group__eth__mac__interface__gr_structARM__ETH__MAC__CAPABILITIES =
     [ "event_rx_frame", "group__eth__mac__interface__gr.html#a8c8f1ac2bf053a9bac98c476646a6018", null ],
     [ "event_tx_frame", "group__eth__mac__interface__gr.html#a1b4af3590d59ea4f8e845b4239a4e445", null ],
     [ "event_wakeup", "group__eth__mac__interface__gr.html#a7536d9b9818b20b6974a712e0449439b", null ],
-    [ "precision_timer", "group__eth__mac__interface__gr.html#a881a863974d32f95d7829f768ac47aa2", null ]
+    [ "precision_timer", "group__eth__mac__interface__gr.html#a881a863974d32f95d7829f768ac47aa2", null ],
+    [ "reserved", "group__eth__mac__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
 ];

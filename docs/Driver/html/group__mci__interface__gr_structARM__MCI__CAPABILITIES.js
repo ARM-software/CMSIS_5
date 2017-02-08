@@ -28,5 +28,6 @@ var group__mci__interface__gr_structARM__MCI__CAPABILITIES =
     [ "mmc_boot", "group__mci__interface__gr.html#a072a194948489d4dbd2409b94fdca56b", null ],
     [ "rst_n", "group__mci__interface__gr.html#a2e8bd27f2c5c3093c4fec557890b97d4", null ],
     [ "ccs", "group__mci__interface__gr.html#a13c956ba993083f1e59379968e2badbe", null ],
-    [ "ccs_timeout", "group__mci__interface__gr.html#a9739c230a13b46482feb5475d257e482", null ]
+    [ "ccs_timeout", "group__mci__interface__gr.html#a9739c230a13b46482feb5475d257e482", null ],
+    [ "reserved", "group__mci__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
 ];

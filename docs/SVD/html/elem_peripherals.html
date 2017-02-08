@@ -179,7 +179,7 @@ $(document).ready(function(){initNavTree('elem_peripherals.html','');});
 <tr>
 <th style="white-space:nowrap">Attributes </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td>derivedFrom </td><td>Specify the name of a peripheral from which this peripheral will be derived. Values are inherited from the derived peripheral. Specified elements override inherited values. </td><td>dimableIdentifierType </td><td>0..1  </td></tr>
+<td>derivedFrom </td><td>Specify the peripheral name from which to inherit data. Elements specified subsequently override inherited values.  </td><td>dimableIdentifierType </td><td>0..1  </td></tr>
 <tr>
 <th style="white-space:nowrap">Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr class="group1">
@@ -209,7 +209,7 @@ $(document).ready(function(){initNavTree('elem_peripherals.html','');});
 <tr>
 <td>appendToName  </td><td>Define a string as suffix. All register names of this peripheral get this suffix. </td><td>identifierType  </td><td>0..1   </td></tr>
 <tr>
-<td>headerStructName </td><td>The header file generator uses the name of a peripheral as the base name for the C structure type. If this element is specfied, then this string is used instead of the peripheral name. This is particularly useful when multiple peripherals get derived from a peripheral description and a generic type name shall be used. </td><td>dimableIdentifierType  </td><td>0..1   </td></tr>
+<td>headerStructName </td><td>Specify the base name of C structures. The headerfile generator uses the name of a peripheral as the base name for the C structure type. If <em>&lt;headerStructName&gt;</em> element is specfied, then this string is used instead of the peripheral name; useful when multiple peripherals get derived and a generic type name should be used. </td><td>dimableIdentifierType  </td><td>0..1   </td></tr>
 <tr>
 <td>disableCondition  </td><td>Define a C-language compliant logical expression returning a TRUE or FALSE result. If TRUE, refreshing the display for this peripheral is disabled and related accesses by the debugger are suppressed. <br/>
  <br/>
@@ -250,9 +250,7 @@ $(document).ready(function(){initNavTree('elem_peripherals.html','');});
 <tr>
 <th style="white-space:nowrap">Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td>addressBlock </td><td>Specifies an address range uniquely mapped to this peripheral. A peripheral must have at least one address block, but may allocate multiple distinct address ranges. If a peripheral is derived form another peripheral, the addressBlock is not mandatory. </td><td>addressBlockType </td><td>1..*  </td></tr>
-<tr>
-<td>offset </td><td>Specifies the start address of an address block relative to the peripheral <em>baseAddress</em>. </td><td>scaledNonNegativeInteger  </td><td>1..1  </td></tr>
+<td>offset  </td><td>Specifies the start address of an address block relative to the peripheral <em>baseAddress</em>. </td><td>scaledNonNegativeInteger  </td><td>1..1  </td></tr>
 <tr>
 <td>size </td><td>Specifies the number of addressUnitBits being covered by this address block. The end address of an address block results from the sum of baseAddress, offset, and (size - 1). </td><td>scaledNonNegativeInteger  </td><td>1..1  </td></tr>
 <tr>
@@ -291,7 +289,7 @@ $(document).ready(function(){initNavTree('elem_peripherals.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="svd_Format_pg.html">SVD Description (*.svd) Format</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:47 for CMSIS-SVD by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:05 for CMSIS-SVD by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

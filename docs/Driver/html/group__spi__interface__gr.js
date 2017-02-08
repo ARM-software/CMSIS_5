@@ -20,12 +20,14 @@ var group__spi__interface__gr =
       [ "simplex", "group__spi__interface__gr.html#af244e2c2facf6414e3886495ee6b40bc", null ],
       [ "ti_ssi", "group__spi__interface__gr.html#a8053c540e5d531b692224bdc2463f36a", null ],
       [ "microwire", "group__spi__interface__gr.html#a9b4e858eb1d414128994742bf121f94c", null ],
-      [ "event_mode_fault", "group__spi__interface__gr.html#a309619714f0c4febaa497ebdb9b7e3ca", null ]
+      [ "event_mode_fault", "group__spi__interface__gr.html#a309619714f0c4febaa497ebdb9b7e3ca", null ],
+      [ "reserved", "group__spi__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_SPI_STATUS", "group__spi__interface__gr.html#structARM__SPI__STATUS", [
       [ "busy", "group__spi__interface__gr.html#a50c88f3c1d787773e2ac1b59533f034a", null ],
       [ "data_lost", "group__spi__interface__gr.html#a9675630df67587ecd171c7ef12b9d22a", null ],
-      [ "mode_fault", "group__spi__interface__gr.html#aeaf54ec655b7a64b9e88578c5f39d4e3", null ]
+      [ "mode_fault", "group__spi__interface__gr.html#aeaf54ec655b7a64b9e88578c5f39d4e3", null ],
+      [ "reserved", "group__spi__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_SPI_SignalEvent_t", "group__spi__interface__gr.html#gafde9205364241ee81290adc0481c6640", null ],
     [ "ARM_SPI_GetVersion", "group__spi__interface__gr.html#gad5db9209ef1d64a7915a7278d6a402c8", null ],

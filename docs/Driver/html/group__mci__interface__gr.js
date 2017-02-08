@@ -49,7 +49,8 @@ var group__mci__interface__gr =
       [ "mmc_boot", "group__mci__interface__gr.html#a072a194948489d4dbd2409b94fdca56b", null ],
       [ "rst_n", "group__mci__interface__gr.html#a2e8bd27f2c5c3093c4fec557890b97d4", null ],
       [ "ccs", "group__mci__interface__gr.html#a13c956ba993083f1e59379968e2badbe", null ],
-      [ "ccs_timeout", "group__mci__interface__gr.html#a9739c230a13b46482feb5475d257e482", null ]
+      [ "ccs_timeout", "group__mci__interface__gr.html#a9739c230a13b46482feb5475d257e482", null ],
+      [ "reserved", "group__mci__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_MCI_STATUS", "group__mci__interface__gr.html#structARM__MCI__STATUS", [
       [ "command_active", "group__mci__interface__gr.html#aa22ef7c7597e90835bd67d5795ba757e", null ],
@@ -59,7 +60,8 @@ var group__mci__interface__gr =
       [ "transfer_timeout", "group__mci__interface__gr.html#a598ae4a196316d6dcb97d07fd337ecdd", null ],
       [ "transfer_error", "group__mci__interface__gr.html#a21d4bc1a03e161bd33693619039a6afa", null ],
       [ "sdio_interrupt", "group__mci__interface__gr.html#a61e2a440b27d7d22c866ad4427f4b825", null ],
-      [ "ccs", "group__mci__interface__gr.html#a13c956ba993083f1e59379968e2badbe", null ]
+      [ "ccs", "group__mci__interface__gr.html#a13c956ba993083f1e59379968e2badbe", null ],
+      [ "reserved", "group__mci__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_MCI_SignalEvent_t", "group__mci__interface__gr.html#ga0d14651f6788c1ffd81544602565faf1", null ],
     [ "ARM_MCI_GetVersion", "group__mci__interface__gr.html#ga3418183015dbf3025b94eebaedb00ab1", null ],

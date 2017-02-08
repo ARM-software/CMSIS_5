@@ -8,7 +8,8 @@ var group__nand__interface__gr =
     [ "NAND Sequence Execution Codes", "group__nand__driver__seq__exec__codes.html", "group__nand__driver__seq__exec__codes" ],
     [ "ARM_NAND_STATUS", "group__nand__interface__gr.html#structARM__NAND__STATUS", [
       [ "busy", "group__nand__interface__gr.html#a50c88f3c1d787773e2ac1b59533f034a", null ],
-      [ "ecc_error", "group__nand__interface__gr.html#a7707d2200a3bf8f49b148ffc8ded7636", null ]
+      [ "ecc_error", "group__nand__interface__gr.html#a7707d2200a3bf8f49b148ffc8ded7636", null ],
+      [ "reserved", "group__nand__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_DRIVER_NAND", "group__nand__interface__gr.html#structARM__DRIVER__NAND", [
       [ "GetVersion", "group__nand__interface__gr.html#a8834b281da48583845c044a81566c1b3", null ],
@@ -51,7 +52,8 @@ var group__nand__interface__gr =
       [ "ddr2_timing_mode", "group__nand__interface__gr.html#a6d9b66da0e56d04d545e0bb6841891b2", null ],
       [ "driver_strength_18", "group__nand__interface__gr.html#ae672b2a65dd3d0b93812c088491c4552", null ],
       [ "driver_strength_25", "group__nand__interface__gr.html#ae87c19872b838dac7d3136a3fd466f6a", null ],
-      [ "driver_strength_50", "group__nand__interface__gr.html#aef3d6e1522a6cf7fb87fd113dcd43ad5", null ]
+      [ "driver_strength_50", "group__nand__interface__gr.html#aef3d6e1522a6cf7fb87fd113dcd43ad5", null ],
+      [ "reserved", "group__nand__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_NAND_ECC_INFO", "group__nand__interface__gr.html#structARM__NAND__ECC__INFO", [
       [ "type", "group__nand__interface__gr.html#ad44b615021ed3ccb734fcaf583ef4a03", null ],

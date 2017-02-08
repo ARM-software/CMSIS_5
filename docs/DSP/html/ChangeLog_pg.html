@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -112,6 +112,31 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><hr/>
+<p> <b>Version 1.5.1</b></p>
+<p>Changed copyrigth note.</p>
+<p>Added ARMv8M DSP libraries.</p>
+<hr/>
+<p> <b>Version 1.5.0</b></p>
+<p>Modified <a class="el" href="arm__math_8h.html">arm_math.h</a></p>
+<ul>
+<li>removed macro TABLE_SIZE.</li>
+<li>changed preprocessor conditions to select functions instead of SIMD instruction for Cortex-M3.</li>
+</ul>
+<p>Modified <a class="el" href="arm__const__structs_8c.html">arm_const_structs.c</a></p>
+<ul>
+<li>Added structure instances for the RFFT functions (equivalent to CFFT structures).</li>
+</ul>
+<hr/>
+<p> <b>Version 1.4.10 (no source code change [still labeled 1.4.5])</b></p>
+<p>Modified <a class="el" href="arm__sin__cos__f32_8c.html">arm_sin_cos_f32.c</a></p>
+<ul>
+<li>corrected <a class="el" href="group__SinCos.html#ga4420d45c37d58c310ef9ae1b5fe58020">arm_sin_cos_f32()</a> for negative numbers smaller than e-4f.</li>
+</ul>
+<p>Modified <a class="el" href="arm__var__f32_8c.html">arm_var_f32.c</a></p>
+<ul>
+<li>improved numerical stability for <a class="el" href="group__variance.html#ga393f26c5a3bfa05624fb8d32232a6d96">arm_var_f32()</a>.</li>
+</ul>
+<hr/>
 <p> <b>Version 1.4.9 (no source code change [still labeled 1.4.5]) 2016/09/26</b></p>
 <p>Modified <a class="el" href="arm__mat__mult__fast__q15_8c.html">arm_mat_mult_fast_q15.c</a>, <a class="el" href="arm__mat__mult__fast__q31_8c.html">arm_mat_mult_fast_q31.c</a></p>
 <ul>
@@ -391,7 +416,7 @@ Documentation
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

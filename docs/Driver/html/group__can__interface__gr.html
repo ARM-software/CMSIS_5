@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.04</span>
+   &#160;<span id="projectnumber">Version 2.05</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -798,6 +798,12 @@ Support for internal loopback mode (set by <a class="el" href="group__can__inter
 external_loopback: 1</td>
 <td class="fielddoc">
 Support for external loopback mode (set by <a class="el" href="group__can__interface__gr.html#ga28226a6e223f9b95b4dafb7c2f48a855">ARM_CAN_SetMode</a>) </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="aa43c4c21b173ada1b6b7568956f0d650"></a>uint32_t</td>
+<td class="fieldname">
+reserved: 18</td>
+<td class="fielddoc">
+Reserved (must be zero) </td></tr>
 </table>
 
 </div>
@@ -843,6 +849,12 @@ Transmitter error count. </td></tr>
 rx_error_count: 8</td>
 <td class="fielddoc">
 Receiver error count. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="aa43c4c21b173ada1b6b7568956f0d650"></a>uint32_t</td>
+<td class="fieldname">
+reserved: 8</td>
+<td class="fielddoc">
+</td></tr>
 </table>
 
 </div>
@@ -906,6 +918,12 @@ Flexible data-rate format error state indicator. </td></tr>
 dlc: 4</td>
 <td class="fielddoc">
 Data length code. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="aa43c4c21b173ada1b6b7568956f0d650"></a>uint32_t</td>
+<td class="fieldname">
+reserved: 24</td>
+<td class="fielddoc">
+</td></tr>
 </table>
 
 </div>
@@ -990,6 +1008,12 @@ Object supports mask identifier filtering. </td></tr>
 message_depth: 8</td>
 <td class="fielddoc">
 Number of messages buffers (FIFO) for that object. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="aa43c4c21b173ada1b6b7568956f0d650"></a>uint32_t</td>
+<td class="fieldname">
+reserved: 16</td>
+<td class="fielddoc">
+Reserved (must be zero) </td></tr>
 </table>
 
 </div>
@@ -1920,7 +1944,7 @@ The parameter <em>event</em> indicates object event that occurred during driver 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:23 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:44 for CMSIS-Driver by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

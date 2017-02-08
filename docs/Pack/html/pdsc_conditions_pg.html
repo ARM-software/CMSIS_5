@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.7</span>
+   &#160;<span id="projectnumber">Version 1.4.9</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -272,6 +272,15 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <tr>
 <td>Tcompiler </td><td>Specifies a compiler toolchain (ARMCC, GCC, IAR, Tasking, ...). Use predefined values as listed in table <a class="el" href="pdsc_conditions_pg.html#CompilerEnumType">Compiler Types</a>. </td><td>CompilerEnumType </td><td>optional  </td></tr>
 <tr>
+<td>Toptions </td><td><p class="starttd">Specifies compiler specific options being active. For <em>Tcompiler="ARMCC"</em> available Toptions are:</p>
+<ul>
+<li><b>AC5</b>: ARM Compiler Version 5 is in used</li>
+<li><b>AC6</b>: ARM Compiler Version 6 (aka: ARM Clang 6) is in use</li>
+<li><b>AC6LTO</b>: ARM Compiler Version 6 with Link Time Optimization (aka: LTO) is in use</li>
+</ul>
+<p class="endtd">This attribute can be used to select compatible libraries for the selected compiler version or optimization mode.  </p>
+</td><td>CompilerEnumType </td><td>optional  </td></tr>
+<tr>
 <td>condition </td><td>Refers to another condition identified through the attribute <em><b>id</b>.</em>  </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 <p><b>*)</b> Wild-cards can be used to match names with the following definitions:</p>
@@ -312,7 +321,7 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:43 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

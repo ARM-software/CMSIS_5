@@ -20,5 +20,6 @@ var group__nand__interface__gr_structARM__NAND__CAPABILITIES =
     [ "ddr2_timing_mode", "group__nand__interface__gr.html#a6d9b66da0e56d04d545e0bb6841891b2", null ],
     [ "driver_strength_18", "group__nand__interface__gr.html#ae672b2a65dd3d0b93812c088491c4552", null ],
     [ "driver_strength_25", "group__nand__interface__gr.html#ae87c19872b838dac7d3136a3fd466f6a", null ],
-    [ "driver_strength_50", "group__nand__interface__gr.html#aef3d6e1522a6cf7fb87fd113dcd43ad5", null ]
+    [ "driver_strength_50", "group__nand__interface__gr.html#aef3d6e1522a6cf7fb87fd113dcd43ad5", null ],
+    [ "reserved", "group__nand__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
 ];

@@ -8,5 +8,6 @@ var group__can__interface__gr_structARM__CAN__OBJ__CAPABILITIES =
     [ "exact_filtering", "group__can__interface__gr.html#a886337af58da4f995529eba228fb9b7a", null ],
     [ "range_filtering", "group__can__interface__gr.html#a96dcf869f4adc9cec686630082c7c60a", null ],
     [ "mask_filtering", "group__can__interface__gr.html#a2aa0e772d6cb8c30bb76ce1324423464", null ],
-    [ "message_depth", "group__can__interface__gr.html#a5a782fc223b0ea5034c6676eaec6f2d4", null ]
+    [ "message_depth", "group__can__interface__gr.html#a5a782fc223b0ea5034c6676eaec6f2d4", null ],
+    [ "reserved", "group__can__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
 ];

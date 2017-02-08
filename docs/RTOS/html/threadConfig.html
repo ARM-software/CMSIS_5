@@ -134,7 +134,7 @@ Configuration of Thread count and Stack Space</h1>
 <tr>
 <th>Name </th><th>#define </th><th>Description  </th></tr>
 <tr>
-<td>Number of concurrent running user threads </td><td><code>OS_TASKCNT</code> </td><td>Indicates the maximum number of threads that will run at the same time (including main). </td></tr>
+<td>Number of concurrent running user threads </td><td><code>OS_TASKCNT</code> </td><td>Indicates the maximum number of threads that will run at the same time (including main and osTimerThread (if OS_TIMERS set to 1)). </td></tr>
 <tr>
 <td>Default Thread stack size [bytes] </td><td><code>OS_STKSIZE</code> </td><td>Specifies the default stack size (in words) for threads that are defined with osThreadDef <em>stacksz</em> = 0. </td></tr>
 <tr>
@@ -180,7 +180,7 @@ Processor Mode for Thread Execution</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtxImplementation.html">RTX Implementation</a></li><li class="navelem"><a class="el" href="configure.html">Configure RTX</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:44 for CMSIS-RTOS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:02 for CMSIS-RTOS by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

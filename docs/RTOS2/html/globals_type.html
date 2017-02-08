@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.0.0</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -81,6 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="globals.html"><span>All</span></a></li>
       <li><a href="globals_func.html"><span>Functions</span></a></li>
+      <li><a href="globals_vars.html"><span>Variables</span></a></li>
       <li class="current"><a href="globals_type.html"><span>Typedefs</span></a></li>
       <li><a href="globals_enum.html"><span>Enumerations</span></a></li>
       <li><a href="globals_eval.html"><span>Enumerator</span></a></li>
@@ -118,12 +119,6 @@ $(document).ready(function(){initNavTree('globals_type.html','');});
 
 <div class="contents">
 &#160;<ul>
-<li>os_thread_func_t
-: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga9bc566f11f9296c8aba81741425f83be">cmsis_os2.h</a>
-</li>
-<li>os_timer_func_t
-: <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#ga38c36cea7eba37f8ea89cad14273e5b8">cmsis_os2.h</a>
-</li>
 <li>osEventFlagsId_t
 : <a class="el" href="group__CMSIS__RTOS__EventFlags.html#gafdbab933146d6d81d7cca7287e267a50">cmsis_os2.h</a>
 </li>
@@ -139,8 +134,14 @@ $(document).ready(function(){initNavTree('globals_type.html','');});
 <li>osSemaphoreId_t
 : <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">cmsis_os2.h</a>
 </li>
+<li>osThreadFunc_t
+: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd51f99a6eb50b94eee75f27cae815eb">cmsis_os2.h</a>
+</li>
 <li>osThreadId_t
 : <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">cmsis_os2.h</a>
+</li>
+<li>osTimerFunc_t
+: <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaacf768c1ec64b020598afb985d7b30be">cmsis_os2.h</a>
 </li>
 <li>osTimerId_t
 : <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">cmsis_os2.h</a>
@@ -154,7 +155,7 @@ $(document).ready(function(){initNavTree('globals_type.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:45 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

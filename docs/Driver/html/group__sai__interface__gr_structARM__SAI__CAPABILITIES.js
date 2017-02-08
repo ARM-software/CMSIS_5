@@ -10,5 +10,6 @@ var group__sai__interface__gr_structARM__SAI__CAPABILITIES =
     [ "mono_mode", "group__sai__interface__gr.html#a8d92817d8662211abda2d747c52ff4a9", null ],
     [ "companding", "group__sai__interface__gr.html#a77e4d8466d2bde30e6583b9ad8ba8c82", null ],
     [ "mclk_pin", "group__sai__interface__gr.html#a12554e2522a0c611e8a26c9e536554eb", null ],
-    [ "event_frame_error", "group__sai__interface__gr.html#acc06ba75f18af9862d171426abc3273e", null ]
+    [ "event_frame_error", "group__sai__interface__gr.html#acc06ba75f18af9862d171426abc3273e", null ],
+    [ "reserved", "group__sai__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
 ];

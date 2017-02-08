@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['kernel_20information_20and_20control',['Kernel Information and Control',['../group__CMSIS__RTOS__KernelCtrl.html',1,'']]],
-  ['kernel',['kernel',['../group__CMSIS__RTOS__KernelCtrl.html#ad8075d3f42141346ae2c56389358f9e7',1,'osVersion_t']]]
+  ['generic_20wait_20functions',['Generic Wait Functions',['../group__CMSIS__RTOS__Wait.html',1,'']]],
+  ['generic_20rtos_20interface',['Generic RTOS Interface',['../genRTOS2IF.html',1,'index']]]
 ];

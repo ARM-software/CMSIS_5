@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-CORE
-   &#160;<span id="projectnumber">Version 5.0.0</span>
+   &#160;<span id="projectnumber">Version 5.0.1</span>
    </div>
    <div id="projectbrief">CMSIS-CORE support for Cortex-M processor-based devices</div>
   </td>
@@ -161,6 +161,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gabe8996d3d985ee1529475443cc635bf1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#gabe8996d3d985ee1529475443cc635bf1">__PACKED</a></td></tr>
 <tr class="memdesc:gabe8996d3d985ee1529475443cc635bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request smallest possible alignment.  <a href="#gabe8996d3d985ee1529475443cc635bf1">More...</a><br/></td></tr>
 <tr class="separator:gabe8996d3d985ee1529475443cc635bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4dbb70fab85207c27b581ecb6532b314"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga4dbb70fab85207c27b581ecb6532b314">__PACKED_STRUCT</a></td></tr>
+<tr class="memdesc:ga4dbb70fab85207c27b581ecb6532b314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request smallest possible alignment for a structure.  <a href="#ga4dbb70fab85207c27b581ecb6532b314">More...</a><br/></td></tr>
+<tr class="separator:ga4dbb70fab85207c27b581ecb6532b314"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>The CMSIS-Core provides the header file <b>cmsis_compiler.h</b> with consistent #define symbols for generate C or C++ source files that should be compiler agnostic. Each CMSIS compliant compiler should support the functionality described in this section.</p>
@@ -320,11 +323,29 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <p>Specifies that a type must have the smallest possible alignment.</p>
 <p><b> Code Example:</b> </p>
-<div class="fragment"><div class="line"><span class="keyword">struct </span><a class="code" href="group__compiler__conntrol__gr.html#gabe8996d3d985ee1529475443cc635bf1">__PACKED</a> {</div>
-<div class="line">  uint8_t  len;</div>
-<div class="line">  uint8_t  type;</div>
-<div class="line">  uint16_t langid;</div>
-<div class="line">} desc_langid;</div>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>foo {</div>
+<div class="line">  uint8_t  u8;</div>
+<div class="line">  uint32_t u32[2] <a class="code" href="group__compiler__conntrol__gr.html#gabe8996d3d985ee1529475443cc635bf1">__PACKED</a>;</div>
+<div class="line">};</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga4dbb70fab85207c27b581ecb6532b314"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __PACKED_STRUCT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specifies that a structure must have the smallest possible alignment.</p>
+<p><b> Code Example:</b> </p>
+<div class="fragment"><div class="line"><a class="code" href="group__compiler__conntrol__gr.html#ga4dbb70fab85207c27b581ecb6532b314">__PACKED_STRUCT</a> foo {</div>
+<div class="line">  uint8_t   u8;</div>
+<div class="line">  uint32_t  u32;</div>
+<div class="line">  uint16_t  u16;</div>
+<div class="line">};</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -411,7 +432,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:20 for CMSIS-CORE by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:41 for CMSIS-CORE by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

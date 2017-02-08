@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.0.0</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -119,28 +119,29 @@ $(document).ready(function(){initNavTree('group__CMSIS__RTOS__ThreadFlagsMgmt.ht
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga6a4ff8198f272cd841e967e367889baa"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6a4ff8198f272cd841e967e367889baa">osThreadFlagsSet</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id, int32_t flags)</td></tr>
-<tr class="memdesc:ga6a4ff8198f272cd841e967e367889baa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the specified Thread Flags of a thread.  <a href="#ga6a4ff8198f272cd841e967e367889baa">More...</a><br/></td></tr>
-<tr class="separator:ga6a4ff8198f272cd841e967e367889baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6c1337952ff1dcb483d7e56c236b221e"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6c1337952ff1dcb483d7e56c236b221e">osThreadFlagsClear</a> (int32_t flags)</td></tr>
-<tr class="memdesc:ga6c1337952ff1dcb483d7e56c236b221e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the specified Thread Flags of current running thread.  <a href="#ga6c1337952ff1dcb483d7e56c236b221e">More...</a><br/></td></tr>
-<tr class="separator:ga6c1337952ff1dcb483d7e56c236b221e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga817323c214ffed88ddff3fd7dfe0f02c"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga817323c214ffed88ddff3fd7dfe0f02c">osThreadFlagsGet</a> (void)</td></tr>
-<tr class="memdesc:ga817323c214ffed88ddff3fd7dfe0f02c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current Thread Flags of current running thread.  <a href="#ga817323c214ffed88ddff3fd7dfe0f02c">More...</a><br/></td></tr>
-<tr class="separator:ga817323c214ffed88ddff3fd7dfe0f02c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga996e246da972e122bc6df453dfc6a9dd"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga996e246da972e122bc6df453dfc6a9dd">osThreadFlagsWait</a> (int32_t flags, uint32_t options, uint32_t timeout)</td></tr>
-<tr class="memdesc:ga996e246da972e122bc6df453dfc6a9dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for one or more Thread Flags of the current running thread to become signaled.  <a href="#ga996e246da972e122bc6df453dfc6a9dd">More...</a><br/></td></tr>
-<tr class="separator:ga996e246da972e122bc6df453dfc6a9dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f89ef9caded1d9963c7b12b0f6412c9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id, uint32_t flags)</td></tr>
+<tr class="memdesc:ga6f89ef9caded1d9963c7b12b0f6412c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the specified Thread Flags of a thread.  <a href="#ga6f89ef9caded1d9963c7b12b0f6412c9">More...</a><br/></td></tr>
+<tr class="separator:ga6f89ef9caded1d9963c7b12b0f6412c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga656abc1c862c5b9a2b13584c42cc0bfa"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga656abc1c862c5b9a2b13584c42cc0bfa">osThreadFlagsClear</a> (uint32_t flags)</td></tr>
+<tr class="memdesc:ga656abc1c862c5b9a2b13584c42cc0bfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the specified Thread Flags of current running thread.  <a href="#ga656abc1c862c5b9a2b13584c42cc0bfa">More...</a><br/></td></tr>
+<tr class="separator:ga656abc1c862c5b9a2b13584c42cc0bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga85c8d2c89466e25abbcb545d9ddd71ba"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga85c8d2c89466e25abbcb545d9ddd71ba">osThreadFlagsGet</a> (void)</td></tr>
+<tr class="memdesc:ga85c8d2c89466e25abbcb545d9ddd71ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current Thread Flags of current running thread.  <a href="#ga85c8d2c89466e25abbcb545d9ddd71ba">More...</a><br/></td></tr>
+<tr class="separator:ga85c8d2c89466e25abbcb545d9ddd71ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac11542ad6300b600f872fc96e340ec2b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> (uint32_t flags, uint32_t options, uint32_t timeout)</td></tr>
+<tr class="memdesc:gac11542ad6300b600f872fc96e340ec2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for one or more Thread Flags of the current running thread to become signaled.  <a href="#gac11542ad6300b600f872fc96e340ec2b">More...</a><br/></td></tr>
+<tr class="separator:gac11542ad6300b600f872fc96e340ec2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Thread Flags are a more specialized version of the Event Flags. See <a class="el" href="group__CMSIS__RTOS__EventFlags.html">Event Flags</a>. While Event Flags can be used to globally signal a number of threads, thread flags are only send to a single specific thread. Every thread instance can receive thread flags without any additional allocation of a thread flags object. </p>
+<p>Thread Flags are a more specialized version of the Event Flags. See <a class="el" href="group__CMSIS__RTOS__EventFlags.html">Event Flags</a>. While Event Flags can be used to globally signal a number of threads, thread flags are only send to a single specific thread. Every thread instance can receive thread flags without any additional allocation of a thread flags object.</p>
+<dl class="section note"><dt>Note</dt><dd>Thread flag management functions cannot be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>, except for <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a>. </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga6a4ff8198f272cd841e967e367889baa"></a>
+<a class="anchor" id="ga6f89ef9caded1d9963c7b12b0f6412c9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int32_t osThreadFlagsSet </td>
+          <td class="memname">uint32_t osThreadFlagsSet </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a>&#160;</td>
           <td class="paramname"><em>thread_id</em>, </td>
@@ -148,7 +149,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>flags</em>&#160;</td>
         </tr>
         <tr>
@@ -160,34 +161,25 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">thread_id</td><td>thread ID obtained by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8c59d9c5fcd0d286ad2a0f24dead8e6a">osThreadNew</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">thread_id</td><td>thread ID obtained by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">flags</td><td>specifies the flags of the thread that shall be set. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>thread flags after setting or error code if negative.</dd></dl>
-<p>Set the thread flags for a thread instance specified by <em>thread_id</em>. This function may be used also within interrupt service routines. The threads waiting for the flag set will be notified to resume from BLOCKED state.</p>
-<p><b>Code Example</b> </p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> Thread (<span class="keywordtype">void</span> *arg);</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> EX_Signal_1 (<span class="keywordtype">void</span>)  {</div>
-<div class="line">  int32_t      signals;</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id;</div>
-<div class="line">  </div>
-<div class="line">  thread_id = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8c59d9c5fcd0d286ad2a0f24dead8e6a">osThreadNew</a>  (Thread, NULL, NULL);</div>
-<div class="line">  signals   = <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6a4ff8198f272cd841e967e367889baa">osThreadFlagsSet</a> (event_id, 0x00000001ul);         <span class="comment">// Send signals to the created thread</span></div>
-<div class="line">}</div>
-</div><!-- fragment --> 
+<dl class="section return"><dt>Returns</dt><dd>thread flags after setting or error code if highest bit set.</dd></dl>
+<p>The function <b>osThreadFlagsSet</b> sets the thread flags for a thread specified by parameter <em>thread_id</em>. It returns the flags set, or an error code if highest bit is set (refer to <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a>). This function may be used also within interrupt service routines. Threads waiting for a flag to be set will resume from <em>BLOCKED</em> state.</p>
+<dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
+
 </div>
 </div>
-<a class="anchor" id="ga6c1337952ff1dcb483d7e56c236b221e"></a>
+<a class="anchor" id="ga656abc1c862c5b9a2b13584c42cc0bfa"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">osStatus osThreadFlagsClear </td>
+          <td class="memname">uint32_t osThreadFlagsClear </td>
           <td>(</td>
-          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>flags</em></td><td>)</td>
           <td></td>
         </tr>
@@ -199,17 +191,18 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>thread flags before clearing or error code if negative.</dd></dl>
-<p>Clear the specified event flags set for the a calling thread. </p>
+<dl class="section return"><dt>Returns</dt><dd>thread flags before clearing or error code if highest bit set.</dd></dl>
+<p>The function <b>osThreadFlagsClear</b> clears the specified flags for the currently running thread. It returns the flags before clearing, or an error code if highest bit is set (refer to <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a>).</p>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga817323c214ffed88ddff3fd7dfe0f02c"></a>
+<a class="anchor" id="ga85c8d2c89466e25abbcb545d9ddd71ba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int32_t osThreadFlagsGet </td>
+          <td class="memname">uint32_t osThreadFlagsGet </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -218,18 +211,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>current thread flags.</dd></dl>
-<p>Return the event flags currently set for the calling thread. </p>
+<p>The function <b>osThreadFlagsGet</b> returns the flags currently set for the currently running thread.</p>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga996e246da972e122bc6df453dfc6a9dd"></a>
+<a class="anchor" id="gac11542ad6300b600f872fc96e340ec2b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int32_t osThreadFlagsWait </td>
+          <td class="memname">uint32_t osThreadFlagsWait </td>
           <td>(</td>
-          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>flags</em>, </td>
         </tr>
         <tr>
@@ -255,12 +249,13 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">flags</td><td>specifies the flags to wait for. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">options</td><td>specifies flags options (osFlagsXxxx). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td><a class="el" href="CMSIS_RTOS_TimeOutValue.html">Timeout Value</a> or 0 in case of no time-out. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td><a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">Timeout Value</a> or 0 in case of no time-out. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>thread flags before clearing or error code if negative.</dd></dl>
-<p>Suspend the execution of the current <b>RUNNING</b> thread until any or all specified thread flags with the parameter <em>flags</em> are set. The <em>options</em> parameter specifies the wait condition.</p>
+<dl class="section return"><dt>Returns</dt><dd>thread flags before clearing or error code if highest bit set.</dd></dl>
+<p>The function <b>osThreadFlagsWait</b> suspends the execution of the currently <b>RUNNING</b> thread until any or all of the thread flags specified with the parameter <em>flags</em> are set. When these thread flags are already set, the function returns instantly. Otherwise the thread is put into the state <b>BLOCKED</b>. The function then returns flags before clearing, or an error code if highest bit is set (refer to <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a>).</p>
+<p>The parameter <em>options</em> specifies the wait condition: </p>
 <table class="doxtable">
 <tr>
 <th>Option </th><th></th></tr>
@@ -271,15 +266,21 @@ Functions</h2></td></tr>
 <tr>
 <td><b>osFlagsNoClear</b> </td><td>Do not clear flags which have been specified to wait for. </td></tr>
 </table>
-<p>If osFlagsNoClear is set in the options <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6c1337952ff1dcb483d7e56c236b221e">osThreadFlagsClear</a> can be used to clear flags manually.</p>
-<p>When these thread flags are already set, the function returns instantly. Otherwise the thread is put into the state <b>BLOCKED</b>.</p>
+<p>If <code>osFlagsNoClear</code> is set in the options <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga656abc1c862c5b9a2b13584c42cc0bfa">osThreadFlagsClear</a> can be used to clear flags manually.</p>
+<p>The parameter <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">timeout</a> represents a number of timer ticks and is an upper bound. The exact time delay depends on the actual time elapsed since the last timer tick.</p>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> Thread (<span class="keywordtype">void</span>* arg) {</div>
-<div class="line">;</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga996e246da972e122bc6df453dfc6a9dd">osThreadFlagsWait</a> (0x00000001ul, NULL, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>); <span class="comment">//Wait forever until event 0x01 is set.</span></div>
-<div class="line">;</div>
+<div class="line">  ;</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> (0x00000001U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012">osFlagsWaitAny</a>, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>); <span class="comment">// Wait forever until thread flag 1 is set.</span></div>
+<div class="line">  ;</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> (0x00000003U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012">osFlagsWaitAny</a>, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>); <span class="comment">// Wait forever until either thread flag 0 or 1 is set.</span></div>
+<div class="line">  ;</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> (0x00000003U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga8b6f562736fbfb5428940e0c017dec24">osFlagsWaitAll</a>, 10); <span class="comment">// Wait for 10 timer ticks until thread flags 0 and 1 are set. Timeout afterwards.</span></div>
+<div class="line">  ;</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> (0x00000003U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga8b6f562736fbfb5428940e0c017dec24">osFlagsWaitAll</a> | <a class="code" href="group__CMSIS__RTOS__Definitions.html#gaade844a42237d8c37569d4d9b16b9f1c">osFlagsNoClear</a>, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>); <span class="comment">// Same as the above, but the flags will not be cleared.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
@@ -289,7 +290,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:45 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

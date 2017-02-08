@@ -1,5 +1,6 @@
 var group__ComplexFFT =
 [
+    [ "Complex FFT Tables", "group__CFFT__CIFFT.html", "group__CFFT__CIFFT" ],
     [ "arm_cfft_f32", "group__ComplexFFT.html#gade0f9c4ff157b6b9c72a1eafd86ebf80", null ],
     [ "arm_cfft_q15", "group__ComplexFFT.html#ga68cdacd2267a2967955e40e6b7ec1229", null ],
     [ "arm_cfft_q31", "group__ComplexFFT.html#ga5a0008bd997ab6e2e299ef2fb272fb4b", null ],

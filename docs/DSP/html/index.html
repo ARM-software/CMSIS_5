@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -130,22 +130,27 @@ $(document).ready(function(){initNavTree('index.html','');});
 <h2>Using the Library </h2>
 <p>The library installer contains prebuilt versions of the libraries in the <code>Lib</code> folder.</p>
 <ul>
-<li>arm_cortexM7lfdp_math.lib (Little endian and Double Precision Floating Point Unit on Cortex-M7)</li>
-<li>arm_cortexM7bfdp_math.lib (Big endian and Double Precision Floating Point Unit on Cortex-M7)</li>
-<li>arm_cortexM7lfsp_math.lib (Little endian and Single Precision Floating Point Unit on Cortex-M7)</li>
-<li>arm_cortexM7bfsp_math.lib (Big endian and Single Precision Floating Point Unit on Cortex-M7)</li>
-<li>arm_cortexM7l_math.lib (Little endian on Cortex-M7)</li>
-<li>arm_cortexM7b_math.lib (Big endian on Cortex-M7)</li>
-<li>arm_cortexM4lf_math.lib (Little endian and Floating Point Unit on Cortex-M4)</li>
-<li>arm_cortexM4bf_math.lib (Big endian and Floating Point Unit on Cortex-M4)</li>
-<li>arm_cortexM4l_math.lib (Little endian on Cortex-M4)</li>
-<li>arm_cortexM4b_math.lib (Big endian on Cortex-M4)</li>
-<li>arm_cortexM3l_math.lib (Little endian on Cortex-M3)</li>
-<li>arm_cortexM3b_math.lib (Big endian on Cortex-M3)</li>
-<li>arm_cortexM0l_math.lib (Little endian on Cortex-M0 / Cortex-M0+)</li>
-<li>arm_cortexM0b_math.lib (Big endian on Cortex-M0 / Cortex-M0+)</li>
+<li>arm_cortexM7lfdp_math.lib (Cortex-M7, Little endian, Double Precision Floating Point Unit)</li>
+<li>arm_cortexM7bfdp_math.lib (Cortex-M7, Big endian, Double Precision Floating Point Unit)</li>
+<li>arm_cortexM7lfsp_math.lib (Cortex-M7, Little endian, Single Precision Floating Point Unit)</li>
+<li>arm_cortexM7bfsp_math.lib (Cortex-M7, Big endian and Single Precision Floating Point Unit on)</li>
+<li>arm_cortexM7l_math.lib (Cortex-M7, Little endian)</li>
+<li>arm_cortexM7b_math.lib (Cortex-M7, Big endian)</li>
+<li>arm_cortexM4lf_math.lib (Cortex-M4, Little endian, Floating Point Unit)</li>
+<li>arm_cortexM4bf_math.lib (Cortex-M4, Big endian, Floating Point Unit)</li>
+<li>arm_cortexM4l_math.lib (Cortex-M4, Little endian)</li>
+<li>arm_cortexM4b_math.lib (Cortex-M4, Big endian)</li>
+<li>arm_cortexM3l_math.lib (Cortex-M3, Little endian)</li>
+<li>arm_cortexM3b_math.lib (Cortex-M3, Big endian)</li>
+<li>arm_cortexM0l_math.lib (Cortex-M0 / Cortex-M0+, Little endian)</li>
+<li>arm_cortexM0b_math.lib (Cortex-M0 / Cortex-M0+, Big endian)</li>
+<li>arm_ARMv8MBLl_math.lib (ARMv8M Baseline, Little endian)</li>
+<li>arm_ARMv8MMLl_math.lib (ARMv8M Mainline, Little endian)</li>
+<li>arm_ARMv8MMLlfsp_math.lib (ARMv8M Mainline, Little endian, Single Precision Floating Point Unit)</li>
+<li>arm_ARMv8MMLld_math.lib (ARMv8M Mainline, Little endian, DSP instructions)</li>
+<li>arm_ARMv8MMLldfsp_math.lib (ARMv8M Mainline, Little endian, DSP instructions, Single Precision Floating Point Unit)</li>
 </ul>
-<p>The library functions are declared in the public file <code><a class="el" href="arm__math_8h.html">arm_math.h</a></code> which is placed in the <code>Include</code> folder. Simply include this file and link the appropriate library in the application and begin calling the library functions. The Library supports single public header file <code> <a class="el" href="arm__math_8h.html">arm_math.h</a></code> for Cortex-M7/M4/M3/M0/M0+ with little endian and big endian. Same header file will be used for floating point unit(FPU) variants. Define the appropriate pre processor MACRO ARM_MATH_CM7 or ARM_MATH_CM4 or ARM_MATH_CM3 or ARM_MATH_CM0 or ARM_MATH_CM0PLUS depending on the target processor in the application.</p>
+<p>The library functions are declared in the public file <code><a class="el" href="arm__math_8h.html">arm_math.h</a></code> which is placed in the <code>Include</code> folder. Simply include this file and link the appropriate library in the application and begin calling the library functions. The Library supports single public header file <code> <a class="el" href="arm__math_8h.html">arm_math.h</a></code> for Cortex-M cores with little endian and big endian. Same header file will be used for floating point unit(FPU) variants. Define the appropriate pre processor MACRO ARM_MATH_CM7 or ARM_MATH_CM4 or ARM_MATH_CM3 or ARM_MATH_CM0 or ARM_MATH_CM0PLUS depending on the target processor in the application. For ARMv8M cores define pre processor MACRO ARM_MATH_ARMV8MBL or ARM_MATH_ARMV8MML. Set Pre processor MACRO __DSP_PRESENT if ARMv8M Mainline core supports DSP instructions.</p>
 <h2>Examples </h2>
 <p>The library ships with a number of examples which demonstrate how to use the library functions.</p>
 <h2>Toolchain Support </h2>
@@ -179,9 +184,17 @@ $(document).ready(function(){initNavTree('index.html','');});
 </ul>
 <p>Define macro ARM_MATH_CM4 for building the library on Cortex-M4 target, ARM_MATH_CM3 for building library on Cortex-M3 target and ARM_MATH_CM0 for building library on Cortex-M0 target, ARM_MATH_CM0PLUS for building library on Cortex-M0+ target, and ARM_MATH_CM7 for building the library on cortex-M7.</p>
 <ul>
+<li>ARM_MATH_ARMV8MxL:</li>
+</ul>
+<p>Define macro ARM_MATH_ARMV8MBL for building the library on ARMv8M Baseline target, ARM_MATH_ARMV8MBL for building library on ARMv8M Mainline target.</p>
+<ul>
 <li>__FPU_PRESENT:</li>
 </ul>
-<p>Initialize macro __FPU_PRESENT = 1 when building on FPU supported Targets. Enable this macro for M4bf and M4lf libraries</p>
+<p>Initialize macro __FPU_PRESENT = 1 when building on FPU supported Targets. Enable this macro for floating point libraries.</p>
+<ul>
+<li>__DSP_PRESENT:</li>
+</ul>
+<p>Initialize macro __DSP_PRESENT = 1 when ARMv8M Mainline core supports DSP instructions.</p>
 <hr/>
  <h2>CMSIS-DSP in ARM::CMSIS Pack </h2>
 <p>The following files relevant to CMSIS-DSP are present in the <b>ARM::CMSIS</b> Pack directories: </p>
@@ -207,7 +220,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:52 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

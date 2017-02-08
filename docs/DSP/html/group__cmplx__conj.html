@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -129,11 +129,11 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Conjugates the elements of a complex data vector.</p>
 <p>The <code>pSrc</code> points to the source data and <code>pDst</code> points to the where the result should be written. <code>numSamples</code> specifies the number of complex samples and the data in each array is stored in an interleaved fashion (real, imag, real, imag, ...). Each array has a total of <code>2*numSamples</code> values. The underlying algorithm is used:</p>
-<pre>        
-for(n=0; n&lt;numSamples; n++) {        
-    pDst[(2*n)+0)] = pSrc[(2*n)+0];     // real part        
-    pDst[(2*n)+1)] = -pSrc[(2*n)+1];    // imag part        
-}        
+<pre>
+for(n=0; n&lt;numSamples; n++) {
+    pDst[(2*n)+0)] = pSrc[(2*n)+0];     // real part
+    pDst[(2*n)+1)] = -pSrc[(2*n)+1];    // imag part
+}
 </pre><p>There are separate functions for floating-point, Q15, and Q31 data types. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga3a102aead6460ad9fcb0626f6b226ffb"></a>
@@ -218,7 +218,7 @@ for(n=0; n&lt;numSamples; n++) {
 <p><b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. The Q15 value -1 (0x8000) will be saturated to the maximum allowable positive value 0x7FFF. </dd></dl>
 
-<p>References <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>.</p>
+<p>References <a class="el" href="arm__math_8h.html#aad6f7afa72d784b95e6357c215a919bb">__QASX()</a>, <a class="el" href="arm__math_8h.html#a391f5f1d2e7cefaccfece0a49141ad47">__QSAX()</a>, and <a class="el" href="arm__math_8h.html#a9de2e0a5785be82866bcb96012282248">__SIMD32</a>.</p>
 
 </div>
 </div>
@@ -263,6 +263,8 @@ for(n=0; n&lt;numSamples; n++) {
 <p><b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. The Q31 value -1 (0x80000000) will be saturated to the maximum allowable positive value 0x7FFFFFFF. </dd></dl>
 
+<p>References <a class="el" href="arm__math_8h.html#a15e896d0146c280e600d00f609832350">__QSUB()</a>.</p>
+
 </div>
 </div>
 </div><!-- contents -->
@@ -270,7 +272,7 @@ for(n=0; n&lt;numSamples; n++) {
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

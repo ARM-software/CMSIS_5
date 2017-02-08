@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.7</span>
+   &#160;<span id="projectnumber">Version 1.4.9</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -233,15 +233,7 @@ Software Components</h1>
 <li>Component Vendor (<code>Cvendor</code>): the supplier of the software component.</li>
 </ul>
 <p>The <code>Cclass</code>, <code>Cgroup</code>, <code>Csub</code>, <code>Cvariant</code> and <code>Cversion</code> attributes are used together with the vendor specified by the PACK to identify a component. A component vendor must ensure that the combination <code>Cclass</code>, <code>Cgroup</code>, <code>Csub</code> and <code>Cversion</code> is unique and not used by multiple components within the same Pack.</p>
-<p>The following <code>Cclass</code> names have a special meaning:</p>
-<ul>
-<li><b>Board</b> <b>Support</b> usually contains board specific drivers for external peripheral devices.</li>
-<li><b>CMSIS</b> contains general CMSIS components like the CORE, DSP extensions, RTOSes (e.g. Keil RTX)</li>
-<li><b>Device</b> contains startup files for the target device</li>
-<li><b>CMSIS</b> <b>Driver</b> contain CMSIS-Driver conform peripheral drivers for the target device. These will be listed below the respective <code>Cgroup</code> API entries (for example <b>Ethernet (API)</b>)</li>
-<li><b>File</b> <b>System</b>, <b>Graphics</b>, <b>Network</b>, and <b>USB</b> contain middleware to support these components</li>
-</ul>
-<p>Other <code>Cclass</code> names can be freely assigned to software components.</p>
+<p>For a list of established Cclasses, refer to <a class="el" href="cp_Packs.html#pack_Cclass">Software Component Cclasses</a>.</p>
 <p>In case multiple interdependent components (belonging to the same <code>Cclass</code>) form part of a solution, these can be grouped in a so called <a class="el" href="cp_SWComponents.html#cp_Bundles">bundle</a>.</p>
 <p>Use the following syntax to reference to software components and APIs:<br/>
 <b>&lt;Vendor&gt;::&lt;Cclass&gt;:&lt;Cgroup&gt;:&lt;Csub&gt;</b></p>
@@ -534,7 +526,7 @@ Display of example projects in development tools</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:43 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

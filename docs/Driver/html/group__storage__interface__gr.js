@@ -51,7 +51,8 @@ var group__storage__interface__gr =
     ] ],
     [ "ARM_STORAGE_STATUS", "group__storage__interface__gr.html#structARM__STORAGE__STATUS", [
       [ "busy", "group__storage__interface__gr.html#a50c88f3c1d787773e2ac1b59533f034a", null ],
-      [ "error", "group__storage__interface__gr.html#aa8d183302fdfa4a6892f1d80300cdb32", null ]
+      [ "error", "group__storage__interface__gr.html#aa8d183302fdfa4a6892f1d80300cdb32", null ],
+      [ "reserved", "group__storage__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_Storage_Callback_t", "group__storage__interface__gr.html#ga4b290224fea782e6d2ad06f541b28a98", null ],
     [ "ARM_STORAGE_OPERATION", "group__storage__interface__gr.html#ga3a9277f89946d61c41b22da72e3eef7c", [

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.0.0</span>
+   &#160;<span id="projectnumber">Version 2.1.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -114,7 +114,7 @@ $(document).ready(function(){initNavTree('group__CMSIS__RTOS__Wait.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>Wait for a time period or unspecified events.  
+<p>Wait for a certain period of time.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -127,7 +127,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaf0763875335699a9baa704ee36990d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>The Generic Wait function group provides means for a time delay. </p>
+<p>The generic wait functions provide means for a time delay.</p>
+<dl class="section note"><dt>Note</dt><dd>Generic wait functions cannot be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gaf6055a51390ef65b6b6edc28bf47322e"></a>
 <div class="memitem">
@@ -144,32 +145,27 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ticks</td><td><a class="el" href="CMSIS_RTOS_TimeOutValue.html">time ticks</a> value </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ticks</td><td><a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">time ticks</a> value </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>Wait for a specified time period in <em>kernel</em> ticks.</p>
-<p>The <a class="el" href="CMSIS_RTOS_TimeOutValue.html">timeout</a> value represents a number of timer ticks and is an upper bound. The exact time delay depends on the actual time elapsed since the last timer tick.</p>
-<p>For a value of <b>1</b>, the system waits until the next timer tick occurs. That means that the actual time delay may be up to one timer tick less.</p>
-<p><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<p>The function <b>osDelay</b> waits for a time period specified in kernel <em>ticks</em>. For a value of <span class="XML-Token">1</span>, the system waits until the next timer tick occurs. That means that the actual time delay may be up to one timer tick less.</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
-<li><em>osEventTimeout:</em> the time delay is executed.</li>
-<li><em>osErrorISR:</em> <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a> cannot be called from interrupt service routines.</li>
+<li><em>osOK:</em> the time delay is executed.</li>
+<li><em>osErrorISR:</em> <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a> cannot be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>Cannot be called from <a class="el" href="CMSIS_RTOS_ISR_Calls.html">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> Thread_1 (<span class="keywordtype">void</span> *arg)  {               <span class="comment">// Thread function</span></div>
+<div class="line"><span class="keywordtype">void</span> Thread_1 (<span class="keywordtype">void</span> *arg)  {                <span class="comment">// Thread function</span></div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> status;                        <span class="comment">// capture the return status</span></div>
 <div class="line">  uint32_t   delayTime;                     <span class="comment">// delay time in milliseconds</span></div>
 <div class="line"> </div>
 <div class="line">  delayTime = 1000;                         <span class="comment">// delay 1 second</span></div>
 <div class="line">  status = <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a> (delayTime);             <span class="comment">// suspend thread execution</span></div>
-<div class="line">  <span class="keywordflow">if</span> (status != <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>) {</div>
-<div class="line">    <span class="comment">// handle error code</span></div>
-<div class="line">  }  </div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
@@ -194,16 +190,28 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>Wait until an absolute time - specified in kernel ticks - is reached.</p>
-<p>The <a class="el" href="CMSIS_RTOS_TimeOutValue.html">timeout</a> value represents a number of timer ticks and is an upper bound. The exact time delay depends on the actual time elapsed since the last timer tick.</p>
-<p><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae0fcaff6cecfb4013bb556c87afcd7d2">osKernelGetSysTimerCount</a> can be used to retrieve the current elapsed time of the kernel in .</p>
-<p><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<p>The function <b>osDelayUntil</b> waits until an absolute time (specified in kernel <em>ticks</em>) is reached.</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
-<li><em>osEventTimeout:</em> the time delay is executed.</li>
-<li><em>osErrorISR:</em> <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">osDelayUntil</a> cannot be called from interrupt service routines.</li>
+<li><em>osOK:</em> the time delay is executed.</li>
+<li><em>osParameter:</em> the time is either in the past or cannot be handled (out of bounds).</li>
+<li><em>osErrorISR:</em> <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">osDelayUntil</a> cannot be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>Cannot be called from <a class="el" href="CMSIS_RTOS_ISR_Calls.html">Interrupt Service Routines</a>. </dd></dl>
-
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<p><b>Code Example</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> Thread_1 (<span class="keywordtype">void</span> *arg)  {                <span class="comment">// Thread function</span></div>
+<div class="line">  uint64_t tick;</div>
+<div class="line"></div>
+<div class="line">  tick = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga3cad48045fb59e47dc8bab75b420cb5f">osKernelGetTickCount</a>();            <span class="comment">// retrieve the number of system ticks</span></div>
+<div class="line">  <span class="keywordflow">for</span> (;;) {</div>
+<div class="line">    tick += 1000;                           <span class="comment">// delay 1000 ticks periodically</span></div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">osDelayUntil</a>(tick);</div>
+<div class="line">    <span class="comment">// ...</span></div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
@@ -211,7 +219,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:45 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

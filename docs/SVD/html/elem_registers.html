@@ -149,8 +149,16 @@ $(document).ready(function(){initNavTree('elem_registers.html','');});
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td>derivedFrom </td><td>Specifies the name of the cluster from which to inherit the data. Elements being specified underneath will override the inherited values. <br/>
-<b>Remarks:</b> When deriving a cluster, it is mandatory to specify at least the <em>&lt;name&gt;</em>, the <em>&lt;description&gt;</em>, and the <em>&lt;addressOffset&gt;</em>. </td><td>registerType </td><td>0..1  </td></tr>
+<td><p class="starttd">derivedFrom</p>
+<p class="endtd"></p>
+</td><td>Specify the cluster name from which to inherit data. Elements specified subsequently override inherited values. <br/>
+<b>Usage:</b><ul>
+<li>Always use the full qualifying path, which must start with the peripheral <em>&lt;name&gt;</em>, when deriving from another scope. (for example, in periperhal <span class="XML-Token">B</span>, derive from <span class="XML-Token">peripheralA.clusterX</span>).</li>
+<li>You can use the cluster <em>&lt;name&gt;</em> when both clusters are in the same scope.</li>
+<li>No relative paths will work. <br/>
+<b>Remarks:</b> When deriving a cluster, it is mandatory to specify at least the <em>&lt;name&gt;</em>, the <em>&lt;description&gt;</em>, and the <em>&lt;addressOffset&gt;</em>. </li>
+</ul>
+</td><td>registerType </td><td>0..1  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr class="group1">
@@ -258,8 +266,16 @@ $(document).ready(function(){initNavTree('elem_registers.html','');});
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td>derivedFrom </td><td>Specifies the name of the register from which to inherit the data. Elements being specified underneath will override the inherited values. <br/>
-<b>Remarks:</b> When deriving a register, it is mandatory to specify at least the name, the description, and the addressOffset. </td><td>xs:Name </td><td>0..1  </td></tr>
+<td><p class="starttd">derivedFrom</p>
+<p class="endtd"></p>
+</td><td>Specify the register name from which to inherit data. Elements specified subsequently override inherited values. <br/>
+<b>Usage:</b><ul>
+<li>Always use the full qualifying path, which must start with the peripheral <em>&lt;name&gt;</em>, when deriving from another scope. (for example, in periperhal <span class="XML-Token">B</span>, derive from <span class="XML-Token">peripheralA.registerX</span>.</li>
+<li>You can use the register <em>&lt;name&gt;</em> only when both registers are in the same scope.</li>
+<li>No relative paths will work. <br/>
+<b>Remarks:</b> When deriving, it is mandatory to specify at least the <em>&lt;name&gt;</em>, the <em>&lt;description&gt;</em>, and the <em>&lt;addressOffset&gt;</em>. </li>
+</ul>
+</td><td>xs:Name </td><td>0..1  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr class="group1">
@@ -449,7 +465,7 @@ Debuggers are not expected to read this register location unless explicitly inst
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="elem_registers.html#elem_field">field</a> </td><td>Define the bit-field properties of a register. </td><td>fieldType  </td><td>1..1   </td></tr>
+<td><a class="el" href="elem_registers.html#elem_field">field</a> </td><td>Define the bit-field properties of a register. </td><td>fieldType  </td><td>1..*   </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -471,7 +487,14 @@ Debuggers are not expected to read this register location unless explicitly inst
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td>derivedFrom </td><td>The field is cloned from a previously defined field with a unique name. </td><td>xs:Name </td><td>0..1  </td></tr>
+<td>derivedFrom </td><td>Specify the field name from which to inherit data. Elements specified subsequently override inherited values. <br/>
+<b>Usage:</b><ul>
+<li>Always use the full qualifying path, which must start with the peripheral <em>&lt;name&gt;</em>, when deriving from another scope. (for example, in periperhal <span class="XML-Token">A</span> and <span class="XML-Token">registerX</span>, derive from <span class="XML-Token">peripheralA.registerYY.fieldYY</span>.</li>
+<li>You can use the field <em>&lt;name&gt;</em> only when both fields are in the same scope.</li>
+<li>No relative paths will work. <br/>
+<b>Remarks:</b> When deriving, it is mandatory to specify at least the <em>&lt;name&gt;</em> and <em>&lt;description&gt;</em>. </li>
+</ul>
+</td><td>xs:Name </td><td>0..1  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr class="group1">
@@ -590,6 +613,8 @@ Debuggers are not expected to read this field location unless explicitly instruc
 <tr>
 <td>name </td><td>Identifier for the whole enumeration section. </td><td>xs:Name </td><td>0..1  </td></tr>
 <tr>
+<td>headerEnumName </td><td>Identifier for the enumeration section. Overwrites the hierarchical enumeration type in the device header file. User is responsible for uniqueness across description. </td><td>identifierType </td><td>0..1  </td></tr>
+<tr>
 <td>usage </td><td>Possible values are <span class="XML-Token">read<em>,</em> write<em>, or</em> read-write</span>. This allows specifying two different enumerated values depending whether it is to be used for a read or a write access. If not specified, the default value <span class="XML-Token">read-write</span> is used. </td><td>enumUsageType </td><td>0..1  </td></tr>
 <tr>
 <td><a class="el" href="elem_registers.html#elem_enumeratedValue">enumeratedValue</a> </td><td>Describes a single entry in the enumeration. The number of required items depends on the bit-width of the associated field. </td><td>enumeratedValueType </td><td>1..*  </td></tr>
@@ -626,7 +651,7 @@ Debuggers are not expected to read this field location unless explicitly instruc
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="svd_Format_pg.html">SVD Description (*.svd) Format</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:47 for CMSIS-SVD by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:05 for CMSIS-SVD by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

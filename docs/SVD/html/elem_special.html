@@ -211,7 +211,9 @@ dimElementGroup</h1>
 <tr>
 <th style="white-space:nowrap">Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td>headerEnumName </td><td>Specify the name of the enumeration. </td><td>identifierType </td><td>0..1   </td></tr>
+<td>headerEnumName </td><td><p class="starttd">Specify the base name of enumerations. Overwrites the hierarchical enumeration type in the device header file. User is responsible for uniqueness across description. The headerfile generator uses the name of a peripheral or cluster as the base name for enumeration types. If <em>&lt;headerEnumName&gt;</em> element is specfied, then this string is used.</p>
+<p class="endtd"></p>
+</td><td>identifierType </td><td>0..1   </td></tr>
 <tr>
 <td><a class="el" href="elem_registers.html#elem_enumeratedValue">enumeratedValue</a> </td><td>Specify the values contained in the enumeration. </td><td>enumeratedValueType </td><td>1..*   </td></tr>
 </table>
@@ -288,7 +290,7 @@ registerPropertiesGroup</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="svd_Format_pg.html">SVD Description (*.svd) Format</a></li>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:47 for CMSIS-SVD by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:21:05 for CMSIS-SVD by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

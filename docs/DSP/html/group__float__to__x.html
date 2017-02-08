@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -166,11 +166,11 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Description: </dt><dd></dd></dl>
-<dl class="section user"><dt></dt><dd>The equation used for the conversion process is: <pre>    
-        pDst[n] = (q15_t)(pSrc[n] * 32768);   0 &lt;= n &lt; blockSize.    
+<dl class="section user"><dt>Description:</dt><dd></dd></dl>
+<dl class="section user"><dt></dt><dd>The equation used for the conversion process is: <pre>
+        pDst[n] = (q15_t)(pSrc[n] * 32768);   0 &lt;= n &lt; blockSize.
 </pre> </dd></dl>
-<dl class="section user"><dt>Scaling and Overflow Behavior: </dt><dd></dd></dl>
+<dl class="section user"><dt>Scaling and Overflow Behavior:</dt><dd></dd></dl>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q15 range [0x8000 0x7FFF] will be saturated. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>In order to apply rounding, the library should be rebuilt with the ROUNDING macro defined in the preprocessor section of project options. </dd></dl>
 
@@ -216,10 +216,10 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Description: </dt><dd></dd></dl>
+<dl class="section user"><dt>Description:</dt><dd></dd></dl>
 <dl class="section user"><dt></dt><dd>The equation used for the conversion process is:</dd></dl>
-<pre>    
-        pDst[n] = (q31_t)(pSrc[n] * 2147483648);   0 &lt;= n &lt; blockSize.    
+<pre>
+        pDst[n] = (q31_t)(pSrc[n] * 2147483648);   0 &lt;= n &lt; blockSize.
  </pre><p> <b>Scaling and Overflow Behavior:</b> </p>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q31 range[0x80000000 0x7FFFFFFF] will be saturated.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>In order to apply rounding, the library should be rebuilt with the ROUNDING macro defined in the preprocessor section of project options. </dd></dl>
@@ -268,11 +268,11 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none.</dd></dl>
-<dl class="section user"><dt>Description: </dt><dd></dd></dl>
-<dl class="section user"><dt></dt><dd>The equation used for the conversion process is: <pre>    
-        pDst[n] = (q7_t)(pSrc[n] * 128);   0 &lt;= n &lt; blockSize.    
+<dl class="section user"><dt>Description:</dt><dd></dd></dl>
+<dl class="section user"><dt></dt><dd>The equation used for the conversion process is: <pre>
+        pDst[n] = (q7_t)(pSrc[n] * 128);   0 &lt;= n &lt; blockSize.
  </pre> </dd></dl>
-<dl class="section user"><dt>Scaling and Overflow Behavior: </dt><dd></dd></dl>
+<dl class="section user"><dt>Scaling and Overflow Behavior:</dt><dd></dd></dl>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q7 range [0x80 0x7F] will be saturated. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>In order to apply rounding, the library should be rebuilt with the ROUNDING macro defined in the preprocessor section of project options. </dd></dl>
 
@@ -285,7 +285,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

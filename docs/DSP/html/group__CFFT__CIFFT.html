@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.1</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('group__CFFT__CIFFT.html','');});
   <div class="summary">
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">Complex FFT Tables<div class="ingroups"><a class="el" href="group__groupTransforms.html">Transform Functions</a></div></div>  </div>
+<div class="title">Complex FFT Tables<div class="ingroups"><a class="el" href="group__ComplexFFT.html">Complex FFT Functions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -185,18 +185,18 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Pseudo code for Generation of Bit reversal Table is </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(l=1;l &lt;= N/4;l++)    
-{    
-  for(i=0;i&lt;logN2;i++)    
-  {     
-    a[i]=l&amp;(1&lt;&lt;i);    
-  }    
-  for(j=0; j&lt;logN2; j++)    
-  {    
-    if (a[j]!=0)    
-    y[l]+=(1&lt;&lt;((logN2-1)-j));    
-  }    
-  y[l] = y[l] &gt;&gt; 1;    
+<dl class="section user"><dt></dt><dd><pre>for(l=1;l &lt;= N/4;l++)
+{
+  for(i=0;i&lt;logN2;i++)
+  {
+    a[i]=l&amp;(1&lt;&lt;i);
+  }
+  for(j=0; j&lt;logN2; j++)
+  {
+    if (a[j]!=0)
+    y[l]+=(1&lt;&lt;((logN2-1)-j));
+  }
+  y[l] = y[l] &gt;&gt; 1;
  } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 4096 logN2 = 12 </dd></dl>
 <dl class="section user"><dt></dt><dd>N is the maximum FFT Size supported </dd></dl>
@@ -215,10 +215,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Floating-point Twiddle factors Generation: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)    
-{    
-      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);    
-      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)
+{
+      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
+      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 1024 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are in interleaved fashion </dd></dl>
@@ -237,10 +237,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for q15 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 1024 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -258,10 +258,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Q31 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 1024 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -279,10 +279,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Floating-point Twiddle factors Generation: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)    
-{    
-      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);    
-      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)
+{
+      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
+      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 128 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are in interleaved fashion </dd></dl>
@@ -301,10 +301,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for q15 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 128 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -322,10 +322,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Q31 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 128 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -343,10 +343,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Floating-point Twiddle factors Generation: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)    
-{    
-      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);    
-      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)
+{
+      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
+      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 16 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are in interleaved fashion </dd></dl>
@@ -365,10 +365,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for q15 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 16 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -386,10 +386,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Q31 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 16 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -407,10 +407,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Floating-point Twiddle factors Generation: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)    
-{    
-      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);    
-      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)
+{
+      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
+      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 2048 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are in interleaved fashion </dd></dl>
@@ -429,10 +429,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for q15 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 2048 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -450,10 +450,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Q31 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 2048 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -471,10 +471,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Floating-point Twiddle factors Generation: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)    
-{    
-      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);    
-      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)
+{
+      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
+      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 256 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are in interleaved fashion </dd></dl>
@@ -493,10 +493,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for q15 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 256 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -514,10 +514,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Q31 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 256 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -535,10 +535,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Floating-point Twiddle factors Generation: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)    
-{    
-      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);    
-      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)
+{
+      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
+      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 32 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are in interleaved fashion </dd></dl>
@@ -557,10 +557,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for q15 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 32 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -578,10 +578,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Q31 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 32 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -599,10 +599,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Floating-point Twiddle factors Generation: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)    
-{    
-      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);    
-      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)
+{
+      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
+      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 4096 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are in interleaved fashion </dd></dl>
@@ -619,10 +619,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for q15 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 4096 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -642,10 +642,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Q31 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 4096 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -665,10 +665,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Floating-point Twiddle factors Generation: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)    
-{    
-      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);    
-      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)
+{
+      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
+      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 512 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are in interleaved fashion </dd></dl>
@@ -687,10 +687,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for q15 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 512 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -708,10 +708,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Q31 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 512 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -729,10 +729,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Floating-point Twiddle factors Generation: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)    
-{    
-      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);    
-      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; N/; i++)
+{
+      twiddleCoef[2*i]= cos(i * 2*PI/(float)N);
+      twiddleCoef[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 64 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are in interleaved fashion </dd></dl>
@@ -751,10 +751,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for q15 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefq15[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefq15[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 64 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -772,10 +772,10 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt></dt><dd>Example code for Q31 Twiddle factors Generation:: </dd></dl>
-<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)    
-{    
-   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);    
-   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);    
+<dl class="section user"><dt></dt><dd><pre>for(i = 0; i&lt; 3N/4; i++)
+{
+   twiddleCoefQ31[2*i]= cos(i * 2*PI/(float)N);
+   twiddleCoefQ31[2*i+1]= sin(i * 2*PI/(float)N);
 } </pre> </dd></dl>
 <dl class="section user"><dt></dt><dd>where N = 64 and PI = 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Cos and Sin values are interleaved fashion </dd></dl>
@@ -788,7 +788,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Nov 11 2016 12:41:33 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Feb 8 2017 10:20:51 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

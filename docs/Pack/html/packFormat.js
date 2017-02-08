@@ -26,8 +26,11 @@ var packFormat =
       [ "/package/generators", "pdsc_generators_pg.html#element_generators", null ],
       [ "/package/generators/generator", "pdsc_generators_pg.html#element_generator", null ],
       [ "/package/generators/generator/select", "pdsc_generators_pg.html#element_gen_select", null ],
-      [ "/package/generators/generator/arguments", "pdsc_generators_pg.html#element_gen_arguments", null ],
-      [ "/package/generators/generator/arguments/argument", "pdsc_generators_pg.html#element_gen_argument", null ],
+      [ "/package/generators/generator/exe", "pdsc_generators_pg.html#element_gen_exe", null ],
+      [ "/package/generators/generator/eclipse", "pdsc_generators_pg.html#element_gen_eclipse", null ],
+      [ "/package/generators/generator/web", "pdsc_generators_pg.html#element_gen_web", null ],
+      [ "/package/generators/generator/.../command", "pdsc_generators_pg.html#element_gen_command", null ],
+      [ "/package/generators/generator/.../argument", "pdsc_generators_pg.html#element_gen_argument", null ],
       [ "/package/generators/generator/project_files", "pdsc_generators_pg.html#element_gen_project_files", null ],
       [ "/package/generators/generator/files", "pdsc_generators_pg.html#element_gen_files", null ],
       [ "/package/generators/generator/files/file", "pdsc_generators_pg.html#element_gen_file", null ]
@@ -58,6 +61,7 @@ var packFormat =
       [ "/package/components", "pdsc_components_pg.html#element_components", null ],
       [ "/package/components/bundle", "pdsc_components_pg.html#element_bundle", null ],
       [ "/package/components/.../component", "pdsc_components_pg.html#element_component", null ],
+      [ "/package/.../files", "pdsc_components_pg.html#element_files", null ],
       [ "/package/.../files/file", "pdsc_components_pg.html#element_file", null ]
     ] ],
     [ "/package/examples element", "pdsc_examples_pg.html", [
@@ -68,9 +72,5 @@ var packFormat =
       [ "/package/examples/project/environment", "pdsc_examples_pg.html#element_example_project_env", null ],
       [ "/package/examples/example/attributes", "pdsc_examples_pg.html#element_example_attributes", null ],
       [ "/package/examples/example/attributes/component", "pdsc_examples_pg.html#element_example_attribute_component", null ]
-    ] ],
-    [ "Debug Access Sequences", "pdsc_SequenceNameEnum_pg.html", [
-      [ "Usage of Debug Access Sequences", "pdsc_SequenceNameEnum_pg.html#usage_of_sequences", null ],
-      [ "Default Debug Access Sequences", "pdsc_SequenceNameEnum_pg.html#default_sequences", null ]
     ] ]
 ];
