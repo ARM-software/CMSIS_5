@@ -683,24 +683,29 @@ The table lists the values available as a file attribute.
 </table>
 
 \note 
-Header files with the attribute <span class="XML-Token">config</span> must be located in a directory within the pack that is
+Header files with the attribute \token{config} must be located in a directory within the pack that is
 not otherwise specified as an "include folder" of this or any other component's files of the category "header" or "include".
 For example:
 \verbatim
 <file category="header"  name="src/config/user_config.h" attr="config" version="1.0.0" />
 \endverbatim
-Config files are copied into the project folder and are adopted specifically for that project but chances are that due to the
-include path search order of the compiler, the unmodified header file in the pack repository is found first and used by the
+Config files are copied into the project folder and are adopted specifically for that project. Due to the include path search order of the compiler, 
+chances exist that the unmodified header file in the pack repository is found first and used by the
 compiler (creating unexpected results).
 
 <p>&nbsp;</p>		
 
 \anchor FileCategoryEnum <b>Table: File Categories</b>
 
-File category types define the use of component files within the application. Typically these files are added to 
+File category types define the use of component files within the application. Typically, these files are added to 
 the project and processed by the build tools.
 
-The table lists the predefined values for a file category. These values can be use also in the element \ref element_gen_file.
+File categories are used in the following elements:
+- \ref element_file
+- \ref element_gen_file
+- \ref element_component_file
+
+The table lists the predefined values for a file category. 
 <table class="cmtable" summary="Type: FileCategoryEnum">
   <tr>
     <th>category=</th>

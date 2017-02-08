@@ -326,6 +326,18 @@ A \ref element_condition "condition" becomes \token{true} when:
     <td>optional</td>
   </tr>
   <tr>
+    <td>Toptions</td>
+    <td>Specifies compiler specific options being active. For <em>Tcompiler="ARMCC"</em> available Toptions are:
+        - <b>AC5</b>: ARM Compiler Version 5 is in used
+        - <b>AC6</b>: ARM Compiler Version 6 (aka: ARM Clang 6) is in use
+        - <b>AC6LTO</b>: ARM Compiler Version 6 with Link Time Optimization (aka: LTO) is in use
+        
+        This attribute can be used to select compatible libraries for the selected compiler version or optimization mode.
+    </td>
+    <td>CompilerEnumType</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <td>condition</td>
     <td>Refers to another condition identified through the attribute \em \b id.</td>
     <td>xs:string</td>

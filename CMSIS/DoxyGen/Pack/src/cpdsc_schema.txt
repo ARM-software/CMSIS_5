@@ -1,35 +1,23 @@
 /**
-\page cpdsc_pg Project Description (*.CPDSC) Format  (new)
+\page cpdsc_pg Project Description (*.CPDSC) Format
 
-The purpose of this file format is the environment/tool independant definition of a software
-project. Environment specific project formats shall be derived from this description in a one time
-creation step. The CPDSC file is considered static and there is no expectation to keep the projects
-synchronized.
-\note The generator (*.GPDSC) constructs share be used for synchronizing updated software components
-driven by code generators.
+The CPDSC format provides the XML elements for defining CMSIS software projects. 
+The CPDSC file content is considered static, so you do not have to keep the projects synchronized.
 
-The scope of the project description includes:
-- CMSIS run time ennvironment configuration (RTE)
-- Project build including linker script generation
+The scope of the description includes:
+- CMSIS Run-Time Environment configuration (RTE)
+- Project build, including linker script generation
 - Flash programming
-- Basic configuration of the debug adapter
+- Basic configuration of debug probs
 
-The project format only creates a basic project configuration and does not reflect tool specific
-features and configuration options. 
-
-The import and conversion from the CPDSC format into a toolchain specific format is the 
-responsibility of the tool vendor ensuring that updates and changes in the tool specific project
-format will be managed appropriately.
+The project format creates a basic project configuration and does not reflect tool-specific features or configurations. 
+The import and conversion from the CPDSC format into a toolchain-specific format is the responsibility of the tool vendor.
 
 \section cpdsc_definition Definition of CMSIS project
-A CMSIS software project is a collection of files in a directory structure described by a CPDSC file.
-The CPDSC file is located in the base folder of the directory structure. There is only one 
-CPDSC file contained in the project directory structure. A CPDSC file contains one or more
-related project descriptions.
-<p>&nbsp;</p>		
-<hr>
+A CMSIS software project is a collection of files in a directory structure.
+The CPDSC file is located in the base folder of the directory structure. Only one CPDSC file 
+is allowed. A CPDSC file can describe one or more projects.
 
-\anchor cpdsc_create_section
 \b Example CMSIS Project Description File (*.CPDSC):
 \code
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -96,39 +84,19 @@ related project descriptions.
 \endcode
 
 
-\section element_cpdsc_structure Top level structure of the CMSIS project description
-The CPDSC file format shares the schema file (PACK.xsd) with PDSC and GPDSC, however a CPDSC file 
-can only contain the following top level elements:
+\section cpdsc_structure CPDSC top level structure
+The CPDSC file format shares the schema file (PACK.xsd) with the PDSC and GPDSC format. 
+However, a CPDSC file can only contain the top level elements listed in this table.
 
-- \ref element_package "\<vendor>" [required]: creator of the project and/or CMSIS project description
-- \ref element_package "\<name>" [required]: name of the example project which shall match the name
-                                             of this file
-- \ref element_package "\<description>" [required]: high level summary of the CMSIS Project
-- \ref element_releases "\<releases>" [required]: release notes history of the example project.
-   The attributes <em>deprecated</em> and <em>replacement</em> are not supported in the context of
-   CPDSC files.
-- \ref element_package "\<url>" [required]: file origin in case of generated CMSIS projects or url
-  of the pack it is contained in or repository link for the file.
-- \ref element_package "\<supportContact>" [optional]: may provide an email address or web page URL 
-       for reporting project specific questions and problems
-- \ref element_package "\<license>" [optional]: path to a license document, relative to cpdsc file.
-       Users are urged to review the terms and conditions of an example prior to using it.
-- \ref element_requirements "<requirements>" specifies required packs, compiler and
-        programming languages
-- \subpage cpdsc_create_pg "\<create>" contains the project details
-<p>&nbsp;</p>		
-<hr>
-
-
-\b /CPDSC package
-<table class="cmtable" summary="Element: package">
+\section element_package_cpdsc /package (for CPDSC)
+<table class="cmtable" summary="Element: CPDSC package">
   <tr>
     <th>Parents</th>
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
     <td>root</td>
-    <td colspan="3">description root point</td>
+    <td colspan="3">description root point for CPDSC</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -138,7 +106,7 @@ can only contain the following top level elements:
   </tr>
   <tr>
     <td>schemaVersion</td>
-    <td>version of PACK.xsd the description is compatible with</td>
+    <td>Version of PACK.xsd the description is compatible with</td>
     <td>VersionType</td>
     <td>required</td>  
   </tr>
@@ -150,81 +118,99 @@ can only contain the following top level elements:
   </tr>
   <tr>
     <td>name</td>
-    <td>file name of the CPDSC file</td>
+    <td>Name of the CPDSC \ref cp_SWComponents "Software Pack" file. Could be displayed by an installer.</td>
     <td>RestrictedString</td>
-    <td><1></td>
+    <td>1..1</td>
   </tr>
   <tr>
     <td>vendor</td>
-    <td>creator/owner of the CPDSC file</td>
+    <td>Creator or owner of the CPDSC file.</td>
     <td>RestrictedString</td>
-    <td><1></td>
+    <td>1..1</td>
   </tr>
   <tr>
     <td>description</td>
-    <td>high level description of the project(s)</td>
+    <td>High level description of the projects.</td>
     <td>xs:string</td>
-    <td><1></td>
+    <td>1..1</td>
   </tr>
   <tr>
     <td>url</td>
-    <td>file location if generated, link to the PACK this file belongs to</td>
+    <td>File location if generated, link to the PACK this file belongs to. 
+        If left empty, the pack cannot be updated automatically from a server location.</td>
     <td>xs:anyURI</td>
-    <td><1></td>
+    <td>1..1</td>
   </tr>
   <tr>
     <td>supportContact</td>
-    <td>email or web page for reporting errors or problems related to this project</td>
+    <td>Email or web page for reporting errors or problems related to this project.</td>
     <td>xs:string</td>
-    <td><0..1></td>
+    <td>0..1</td>
   </tr>
   <tr>
     <td>license</td>
-    <td>reference to a license file relative to this CPDSC</td>
+    <td>Reference to a license file relative to this CPDSC.</td>
     <td>xs:string</td>
-    <td><0..1></td>
-  </tr>
-  <tr>
-    <td>\ref element_releases "releases"</td>
-    <td>release history and release notes for tracking changes to this project</td>
-    <td>\ref element_releases "ReleasesType"</td>
-    <td><1></td>
+    <td>0..1</td>
   </tr>
   <tr>
     <td>\ref element_requirements "requirements"</td>
-    <td>specifies required packs, compiler and programming languages for the project</td>
-    <td>\ref element_requirements "RequirementsType"</td>
-    <td><1></td>
+    <td>Specify required packs, compiler, and programming languages for the project.</td>
+    <td>RequirementsType</td>
+    <td>1..1</td>
   </tr>
   <tr>
-    <td>\ref element_create "create"</td>
-    <td>section capturing the project configuration</td>
-    <td>\ref element_create "CreateType"</td>
-    <td><1></td>
+    <td>\subpage cpdsc_create_pg "create"</td>
+    <td>Section capturing the project configuration.</td>
+    <td>CreateType</td>
+    <td>1..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_releases "releases"</td>
+    <td>Release history and release notes for tracking changes to this project. The attributes \elem{deprecated} and \elem{replacement} 
+        are not supported in the context of CPDSC files.</td>
+    <td>ReleasesType</td>
+    <td>1..1</td>
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+You can refer to \ref element_package for more details.
 
-*/
- 
+\delim 
 
-/** 
-\page cpdsc_create_pg /package/create
-\anchor element_create
+\section cpdsc_create_pg /package/create
 
-The create element contains one or more project sections. The expectation is that the different
-projects are related, e.g. being the secure and non-secure part of an application, or a set of
-library projects and the final application project.
+This element groups one or more projects, which should be related. For example, the Secure and Non-secure part of an application, 
+or a set of library projects and the final application project. We recommend to use different CPDSC files for each individual project.
+
+<table class="cmtable" summary="Element: create">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_package_cpdsc "package"</td>
+    <td colspan="3">\ref element_package_cpdsc "/package"</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\refelem{project}</td>
+    <td>Grouping element to add project descriptions</td>
+    <td>ProjectType</td>
+    <td>1..*</td>  
+  </tr>
+</table>
+
+\delim
 
 \section element_project /package/create/project
-The \<project> section: bundles a project within the create section and consists of three sections:
 
-- \subpage cpdsc_target_pg "\<target>" section: specifying the device, memory, algorithms and debug adapter
-- \subpage cpdsc_select_pg "\<select>" section: specifying the RTE configuration and required configuration files
-- \subpage cpdsc_files_pg "\<files>" section: specifying source modules for the application which are not 
-                                     included as components
+This element bundles one project.
 
 \b Example <em>project</em> section:
 \code
@@ -246,16 +232,15 @@ The \<project> section: bundles a project within the create section and consists
   </create>
 </package>
 \endcode
-                                   
-\b /project
+\n
 <table class="cmtable" summary="Element: project">
   <tr>
     <th>Parents</th>
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_create "create"</td>
-    <td colspan="3">\ref element_create "CreateType"</td>
+    <td>\ref cpdsc_create_pg "create"</td>
+    <td colspan="3">\ref cpdsc_create_pg</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -265,16 +250,24 @@ The \<project> section: bundles a project within the create section and consists
   </tr>
   <tr>
     <td>name</td>
-    <td>name of the project. Will be used as file name as well. If not specified the name on the 
+    <td>Name of the project. Will be used as file name as well. If not specified, then the name on the 
     package level is used.</td>
     <td>RestrictedString</td>
     <td>optional</td>  
   </tr>
   <tr>
     <td>documentation</td>
-    <td>file path and name of a document relative to CPDSC file or url providing detailed information
-    about the software project</td>
+    <td>Path and file name of a document relative to the CPDSC file, or an url providing detailed information
+    about the software project.</td>
     <td>xs:string</td>
+    <td>optional</td>  
+  </tr>
+  <tr>
+    <td>public</td>
+    <td>Set publishing permissions for the documentation. If \tagem{public} is \token{true}, then the vendor gives permission 
+        to extract the documentation from the pack and publish it on a web-page. Links to web pages are assumed to be public.
+        The default value is \token{false}.</td>
+    <td>xs:boolean</td>
     <td>optional</td>  
   </tr>
   <tr>
@@ -284,33 +277,30 @@ The \<project> section: bundles a project within the create section and consists
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\ref element_target "target"</td>
-    <td>section containing details about the board, device, memory, debug, algorithms, etc.</td>
-    <td>\ref element_target "TargetType"</td>
-    <td><1></td>
+    <td>\ref cpdsc_target_pg "target"</td>
+    <td>Section containing details, for example about the board, device, memory, debug, or algorithms.</td>
+    <td>TargetType</td>
+    <td>1..1</td>
   </tr>
   <tr>
-    <td>\ref element_select "select"</td>
-    <td>section specifying the selected software components use for the run time configuration environment</td>
-    <td>\ref element_select "SelectType"</td>
-    <td><0..1></td>
+    <td>\ref cpdsc_select_pg "select"</td>
+    <td>Specify the software components selected in the Run-Time Environment (RTE).</td>
+    <td>SelectType</td>
+    <td>0..1</td>
   </tr>
   <tr>
-    <td>\ref element_project_files "files"</td>
-    <td>section listing all files used for the project build which are not configured using components</td>
-    <td>\ref element_project_files "ProjectFilesType"</td>
-    <td><0..1></td>
+    <td>\ref cpdsc_files_pg "files"</td>
+    <td>List all files used for the project build, which are not configured using components.</td>
+    <td>ProjectFilesType</td>
+    <td>0..1</td>
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+\delim
 
-*/
+\section cpdsc_target_pg /package/create/project/target
 
-/** 
-\page cpdsc_target_pg /package/create/project/target
-\anchor element_target
+This element describes the hardware target, including memory layout, debug probes, or flash programming algorithms.
 
 \b Example <em>target</em> section:
 
@@ -332,8 +322,7 @@ The \<project> section: bundles a project within the create section and consists
   </create>
 </package>
 \endcode
-
-\b /target
+\n
 <table class="cmtable" summary="Element: target">
   <tr>
     <th>Parents</th>
@@ -351,65 +340,64 @@ The \<project> section: bundles a project within the create section and consists
   </tr>
   <tr>
     <td>Bvendor</td>
-    <td>Board vendor name. Either a board vendor and board name with optional board revision 
-    are specified or a device vendor and a device name</td>
+    <td>Board vendor name. Either a board vendor and board name with optional board revision, or a device vendor and a device name.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>  
   <tr>
     <td>Bname</td>
-    <td>Board name. Either a board vendor and board name with optional board revision 
-    are specified or a device vendor and a device name</td>
+    <td>SPecify the board name.  Either a board vendor and board name with optional board revision, or a device vendor and a device name.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>  
     <tr>
-    <td>Bversion/td>
-    <td>Board version. Either a board vendor and board name with optional board revision 
-    are specified or a device vendor and a device name</td>
+    <td>Bversion</td>
+    <td>Board version.  Either a board vendor and board name with optional board revision, or a device vendor and a device name.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>  
   <tr>
     <td>Dvendor</td>
-    <td>Device vendor name. Either a board vendor and board name with optional board revision 
-    are specified or a device vendor and a device name</td>
+    <td>Device vendor name.  Either a board vendor and board name with optional board revision, or a device vendor and a device name.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>  
   <tr>
     <td>Dname</td>
-    <td>Device name. Either a board vendor and board name with optional board revision 
-    are specified or a device vendor and a device name</td>
+    <td>Device name.  Either a board vendor and board name with optional board revision, or a device vendor and a device name.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>Pname</td>
-    <td>Processor instance name. In case of multi-processor devices this processor ID is required.</td>
+    <td>Processor instance name. In case of multi-processor devices, this processor ID is required.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>  
   <tr>
     <td>Dfpu</td>
-    <td>Selects the floating point unit option that is active for the project. Note: even if the
-    device implements an FPU setting Dfpu=0 here, will disable FPU code generation.</td>
-    <td>\ref DfpuEnum "DfpuEnum"</td>
-    <td>optional</td>
-  </tr>  
-  <tr>
-    <td>Dmpu</td>
-    <td>Selects the memory protection unit to be enabled or disabled for the project.</td>
-    <td>\ref DmpuEnum "DmpuEnum"</td>
+    <td>Selects the floating point unit option that is active for the project. \b Note, even if the
+        device implements an FPU, setting \token{Dfpu=0} here, will disable FPU code generation. 
+        Use predefined values from the table \ref DfpuEnum "Device FPU".</td>
+    <td>DfpuEnum</td>
     <td>optional</td>
   </tr>  
   <tr>
     <td>Dendian</td>
-    <td>Selects the endianess to be used for the project. Note that selecting an endianess that is
-    not supported by the device, will result in a build that will not run on the device.</td>
-    <td>\ref DendianEnum "DendianEnum"</td>
+
+    <td>Selects the endianness to be used for the project. Note that selecting an endianness that is
+    not supported by the device, will result in a build that will not run on the device.
+    Use predefined values from the table \ref DendianEnum "DendianEnum".</td>
+    <td>DendianEnum</td>
     <td>optional</td>
   </tr>
+  <tr>
+    <td>Dmpu</td>
+    <td>Selects the memory protection unit to be enabled or disabled for the project.
+        Use predefined values from the table \ref DmpuEnum "Device MPU".</td>
+    <td>DmpuEnum</td>
+    <td>optional</td>
+  </tr>  
   <tr>
     <th>Child Elements</th>
     <th>Description</th>
@@ -418,47 +406,49 @@ The \<project> section: bundles a project within the create section and consists
   </tr>
   <tr>
     <td>\ref element_output "output"</td>
-    <td>configures the build output name, type and whether or not to include debug information</td>
-    <td>\ref element_output "OutputType"</td>
-    <td>1</td>
+    <td>Configure the build output name and type, and specify whether to include debug information.</td>
+    <td>OutputType</td>
+    <td>1..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_target_memory "memory"</td>
+    <td>Specify the memory configuration for this application. Based on the memory layout, the
+        linker script will be generated by the toolchain.</td>
+    <td>TargetMemoryType</td>
+    <td>0..*</td>
   </tr>
   <tr>
     <td>stack</td>
-    <td>specifies the stack size in bytes allocated by the linker for the application setting the attribute size</td>
+    <td>Specify the stack size in bytes allocated by the linker to the application. This element consists of one attribute named \tagem{size}.
+        Set the value for this attribute. Only positive numbers are allowed.
+    </td>
     <td>StackType</td>
-    <td>1</td>
+    <td>1..1</td>
   </tr>
   <tr>
     <td>heap</td>
-    <td>specifies the heap size in bytes allocated by the linker for the application setting the attribute size</td>
+    <td>Specify the heap size in bytes allocated by the linker to the application. This element consists of one attribute named \tagem{size}.
+        Set the value for this attribute. Only positive numbers are allowed.</td>
     <td>HeapType</td>
     <td>1</td>
   </tr>
   <tr>
-    <td>\ref element_target_memory "memory"</td>
-    <td>specifies the memory configuration to be used for this application. Based on the memories, the
-    linker script will be generated by the toolchain</td>
-    <td>\ref element_target_memory "TargetMemoryType"</td>
-    <td>0..*</td>
-  </tr>
-  <tr>
     <td>\ref element_target_algorithm "algorithm"</td>
-    <td>selects from the list of available flash programming algorithms specified for this device
+    <td>Selects from the list of available flash programming algorithms specified for this device
     in the corresponding Device Family Pack. Target and RAM memory ranges can be reconfigured from
     the defaults specified in the device description. </td>
-    <td>\ref element_target_algorithm "TargetAlgorithmType"</td>
+    <td>TargetAlgorithmType</td>
     <td>0..*</td>
   </tr>
   <tr>
     <td>\ref element_debugProbe "debugProbe"</td>
-    <td>selects and configures the debug probe to be used for this project.</td>
-    <td>\ref element_debugProbe "DebugProbeType"</td>
+    <td>Selects and configures the debug probe to be used for this project.</td>
+    <td>DebugProbeType</td>
     <td>0..*</td>
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+\delim
 
 \section element_target_algorithm /package/create/project/target/algorithm
 
@@ -474,17 +464,15 @@ The \<project> section: bundles a project within the create section and consists
     </project>
   ...
 \endcode
-
-
-\b /algorithm
+\n
 <table class="cmtable" summary="Element: algorithm">
   <tr>
     <th>Parents</th>
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_target "target"</td>
-    <td colspan="3">\ref element_target</td>
+    <td>\ref cpdsc_target_pg "target"</td>
+    <td colspan="3">\ref cpdsc_target_pg</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -493,57 +481,74 @@ The \<project> section: bundles a project within the create section and consists
     <th>Use</th>
   </tr>
   <tr>
+    <td>Pname</td>
+    <td>Processor name</td>
+    <td>xs:string</td>
+    <td>RestrictedString</td>
+  </tr>
+  <tr>
     <td>name</td>
-    <td>references the name (without path) of the flash programming algorithm as defined by the DFP/td>
+    <td>References the name (without path) of the flash programming algorithm as defined by the DFP.</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
     <td>start</td>
-    <td>overrides the predefined programming start address of the flash programming algorithm as
-    specified in the DFP</td>
+    <td>Overrides the predefined programming start address of the flash programming algorithm as specified in the DFP.</td>
     <td>NonNegativeInteger</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>size</td>
-    <td>overrides the predefined programming size of the flash programming algorithm as
-    specified in the DFP</td>
+    <td>Overrides the predefined programming size of the flash programming algorithm as specified in the DFP.</td>
     <td>NonNegativeInteger</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>RAMstart</td>
-    <td>overrides the predefined start address in RAM where the flash programming algorithm is
-    loaded into as specified in the DFP</td>
+    <td>Overrides the predefined start address in RAM where the flash programming algorithm is loaded as specified in the DFP.</td>
     <td>NonNegativeInteger</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>RAMsize</td>
-    <td>overrides the predefined size in RAM where the flash programming algorithm is loaded into as
-    specified in the DFP</td>
+    <td>Overrides the predefined RAM size in RAM where the flash programming algorithm is loaded as specified in the DFP.</td>
     <td>NonNegativeInteger</td>
     <td>optional</td>
   </tr>
   <tr>
-    <td>remove</td>
-    <td>disables a flash programming algorithm that is specified as default algorith by the DFP</td>
+    <td>default</td>
+    <td>Sets this algorithm as the default algorithm for flash programming when the value is set to \token{1}. The defualt value is \token{0} - false.</td>
     <td>xs:boolean</td>
     <td>optional</td>
   </tr>
   <tr>
-    <th>Child Elements</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Occurrence</th>
+    <td>style</td>
+    <td>Sets flash programming format. The default value is \token{Keil}. 
+        Use the predefinde values as listed in the table \ref AlgorithmStyleEnum "Algorithm Styles".</td>
+    <td>AlgorithmStyleType</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>parameter</td>
+    <td>Parameter string passed when invoking the algorithm.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>endian</td>
+    <td>Specify the endianness of the algorithm.  Default value is \token{Little-endian}. 
+        Use the predefined values as listed in the table \ref DendianEnum "Endinaness".</td>
+    <td>DendianEnum</td>
+    <td>optional</td>
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+\delim
 
 \section element_debugProbe /package/create/project/target/debugProbe
+
+Specify the attributes of a debug probe.
 
 \b Example <em>debugProbe</em> element
 \code
@@ -557,16 +562,15 @@ The \<project> section: bundles a project within the create section and consists
     </project>
   ...
 \endcode
-
-\b /debugProbe
+\n
 <table class="cmtable" summary="Element: debugProbe">
   <tr>
     <th>Parents</th>
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_target "target"</td>
-    <td colspan="3">\ref element_target</td>
+    <td>\ref cpdsc_target_pg "target"</td>
+    <td colspan="3">\ref cpdsc_target_pg</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -576,41 +580,35 @@ The \<project> section: bundles a project within the create section and consists
   </tr>
   <tr>
     <td>name</td>
-    <td>name of of the debugProbe (e.g. "JLink", "ULink2", "ULinkPro", "CMSIS-DAP", "ST-Link")/td>
+    <td>Name of of the debug probe, for example \token{JLink}, \token{ULink2}, \token{ULinkPro}, \token{CMSIS-DAP}, or \token{ST-Link}.</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
     <td>protocol</td>
-    <td>select the debug protocol to be configure (e.g. "jtag", "swd", "cjtag")</td>
-    <td>\ref DebugProtocolEnum "DebugProtocolEnum"</td>
+    <td>Select the debug protocol, for example, \token{swd}. Use the predefined values listed in the table \ref DebugProtocolEnum "Debug Protocol Type".</td>
+    <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
     <td>coreClock</td>
-    <td>clock frequency of the core once the system is initialized</td>
+    <td>Clock frequency of the core once the system is initialized.</td>
     <td>NonNegativeInteger</td>
     <td>required</td>
   </tr>
   <tr>
     <td>tpiuClock</td>
-    <td>clock frequency of the TPIU block of the CoreSight debug logic. Only relevant when tracing</td>
+    <td>Clock frequency of the TPIU block of the CoreSight debug logic. Only relevant for tracing.</td>
     <td>NonNegativeInteger</td>
     <td>optional</td>
   </tr>
-  <tr>
-    <th>Child Elements</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Occurrence</th>
-  </tr>
 </table>
 
-
-<p>&nbsp;</p>		
-<hr>
+\delim
 
 \section element_target_memory /package/create/project/target/memory
+
+Specify the memory layout. The linker script file will be genereted according to these settings.
 
 \b Example <em>memory</em> element
 \code
@@ -627,16 +625,16 @@ The \<project> section: bundles a project within the create section and consists
   ...
 \endcode
 
+\n
 
-\b /memory
 <table class="cmtable" summary="Element: memory">
   <tr>
     <th>Parents</th>
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_target "target"</td>
-    <td colspan="3">\ref element_target</td>
+    <td>\ref cpdsc_target_pg "target"</td>
+    <td colspan="3">\ref cpdsc_target_pg</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -645,62 +643,75 @@ The \<project> section: bundles a project within the create section and consists
     <th>Use</th>
   </tr>
   <tr>
+    <td>Pname</td>
+    <td>Identifies the processor.</td>
+    <td>RestrictedString</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>id</td>
+    <td>Eunmerated ID of memory. \token{Deprecated since version 1.4.4}</td>
+    <td>MemoryIDTypeEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <td>name</td>
-    <td>reference to the name of the memory as defined by the DFP/td>
+    <td>Reference to the name of the memory as defined by the DFP.</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
     <td>start</td>
-    <td>overrides the predefined memory start address</td>
+    <td>Overrides the predefined memory start address.</td>
     <td>NonNegativeInteger</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>size</td>
-    <td>overrides the predefined memory size</td>
+    <td>Overrides the predefined memory size.</td>
     <td>NonNegativeInteger</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>access</td>
-    <td>overrides the predefined access permissions for the memory as specified in the DFP</td>
-    <td>xs:string</td>
+    <td>Overrides the predefined access permissions for the memory as specified in the DFP. The default value is \token{r}, for 'read' permission.
+        Use the predefined values defined in the table \ref MemoryAccessTypeString "MemoryAccessTypeString".
+    </td>
+    <td>AccessType</td>
     <td>optional</td>
   </tr>
   <tr>
-    <td>remove</td>
-    <td>removes the memory specified in the DFP</td>
-    <td>xs:boolean</td>
+    <td>alias</td>
+    <td>Reference by 'name' to another memory to express that the same physical memory is mapped at another address.
+    </td>
+    <td>AccessType</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>init</td>
-    <td>overrides the predefined init flag as specfied in the DFP. Use for RAM only (access="rw")</td>
+    <td>\token{Deprecated; do not use! Ignore!!!}.</td>
     <td>xs:boolean</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>default</td>
-    <td>overrides the predefined default tag as specfied in the DFP. Use to define the default
-    memory for the linker</td>
+    <td>Use to define the default memory for the linker. </td>
     <td>xs:boolean</td>
     <td>optional</td>
   </tr>
   <tr>
-    <th>Child Elements</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Occurrence</th>
+    <td>startup</td>
+    <td>Specify whether the memory is used by the linker for the startup. The default value is \token{0} - false.</td>
+    <td>xs:boolean</td>
+    <td>optional</td>
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
-
-
+\delim
 
 \section element_output /package/create/project/target/output
+
+Specify the characteristics for the build output file.
 
 \b Example <em>output</em> element
 \code
@@ -713,15 +724,16 @@ The \<project> section: bundles a project within the create section and consists
     </project>
 \endcode
 
-\b /output
+\n
+
 <table class="cmtable" summary="Element: output">
   <tr>
     <th>Parents</th>
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_target "target"</td>
-    <td colspan="3">\ref element_target</td>
+    <td>\ref cpdsc_target_pg "target"</td>
+    <td colspan="3">\ref cpdsc_target_pg</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -731,42 +743,29 @@ The \<project> section: bundles a project within the create section and consists
   </tr>
   <tr>
     <td>name</td>
-    <td>name of the build target output file</td>
+    <td>Name of the build output file.</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
     <td>type</td>
-    <td>select the build target to be "lib" = library ir "exe" = executable</td>
+    <td>Select the build target to be \token{lib} - library or \token{exe} - executable. You can use the wildcard \token{*} for</td>
     <td>CompilerOutputType</td>
     <td>required</td>
   </tr>
   <tr>
     <td>debug</td>
-    <td>select whether the output will contain debug information or not</td>
+    <td>Select whether the output will contain debug information. Use the values \token{1;0} for true and false.</td>
     <td>xs:boolean</td>
     <td>required</td>
   </tr>
-  <tr>
-    <th>Child Elements</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Occurrence</th>
-  </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+\delim
 
+\section cpdsc_select_pg /package/create/project/select
 
-*/
-
-/** 
-\page cpdsc_select_pg /package/create/project/select
-\anchor element_select
-
-In this section all components are listed that are selected within the runtime configuration manager
-and the contained files are therefore part of the project.
+This element lists all software components that are selected within the Manage Run-Time Environment.
 
 \b Example <em>select</em> section:
 \code
@@ -801,8 +800,7 @@ and the contained files are therefore part of the project.
   </create>
 </package>
 \endcode
-
-\b /select
+\n
 <table class="cmtable" summary="Element: select">
   <tr>
     <th>Parents</th>
@@ -813,12 +811,6 @@ and the contained files are therefore part of the project.
     <td colspan="3">\ref element_project</td>
   </tr>
   <tr>
-    <th>Attributes</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Use</th>
-  </tr>
-    <tr>
     <th>Child Elements</th>
     <th>Description</th>
     <th>Type</th>
@@ -826,17 +818,17 @@ and the contained files are therefore part of the project.
   </tr>
   <tr>
     <td>\ref element_project_component "component"</td>
-    <td>specification of a selected component used for project configuration using CMSIS Software component taxonomy</td>
-    <td>\ref element_project_component "ComponentSelectType"</td>
-    <td>0..*</td>
+    <td>Group element for defining the selected software components.</td>
+    <td>ComponentSelectType</td>
+    <td>1..*</td>
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
-
+\delim
 
 \section element_project_component /package/create/project/select/component
+
+Specify the software components.
 
 \b Example <em>component</em> element
 \code
@@ -850,16 +842,15 @@ and the contained files are therefore part of the project.
       </select>
 ...
 \endcode
-
-\b /component
+\n
 <table class="cmtable" summary="Element: component">
   <tr>
     <th>Parents</th>
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_select "select"</td>
-    <td colspan="3">\ref element_select</td>
+    <td>\ref cpdsc_select_pg "select"</td>
+    <td colspan="3">\ref cpdsc_select_pg</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -869,59 +860,59 @@ and the contained files are therefore part of the project.
   </tr>
   <tr>
     <td>Cvendor</td>
-    <td>vendor of the component</td>
+    <td>Vendor name of the component.</td>
     <td>xs:string</td>
-    <td>required</td>
+    <td>optional</td>
   </tr>
   <tr>
     <td>Cbundle</td>
-    <td>name of bundle the selected component belongs to</td>
+    <td>Name of bundle to which the selected component belongs.</td>
     <td>xs:string</td>
-    <td>required</td>
-  </tr>
-    <tr>
-    <td>Cvariant</td>
-    <td>name of the variant of the selected component</td>
-    <td>xs:string</td>
-    <td>required</td>
+    <td>optional</td>
   </tr>
   <tr>
     <td>Cclass</td>
-    <td>component class name following the taxonomy</td>
+    <td>Component class name. Predefined values can be used as listed in the table \ref CclassType "Component Classes".</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
     <td>Cgroup</td>
-    <td>component group name following the taxonomy</td>
+    <td>Component group name following the taxonomy. Predefined values can be used as listed in the table \ref CgroupType "Component Groups".</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
     <td>Csub</td>
-    <td>component sub group name following the taxonomy (string may be empty)</td>
-    <td>xs:string</td>
-    <td>required</td>
+    <td>Component sub group name following the taxonomy (string may be empty)</td>
+    <td>CsubType</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Cvariant</td>
+    <td>Name of the variant of the selected component.</td>
+    <td>CvariantType</td>
+    <td>optional</td>
   </tr>
   <tr>
     <td>Cversion</td>
-    <td>version of the selected component. Note that a higher version number can be chosen in case 
-        the matching version is not available</td>
-    <td>xs:string</td>
-    <td>required</td>
+    <td>Version of the selected component. Note, a higher version number can be entered in case 
+        the matching version is not available.</td>
+    <td>ComponentVersionType</td>
+    <td>optional</td>
   </tr>
   <tr>
     <td>Capiversion</td>
-    <td>implemented api version defined for the corresponding Cclass:Cgroup:Csub. Only use for 
-        components that have an \<api> associated </td>
-    <td>xs:string</td>
+    <td>Implemented api version defined for the corresponding Cclass:Cgroup:Csub. Set the value only for 
+        components that have an  associated \tagem{api}.</td>
+    <td>ComponentVersionType</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>instances</td>
-    <td>number of instances that need to be created of the selectedcomponent. This is only set for
-        components that are multi-instance capable. Defaults to 1 if not set</td>
-    <td>xs:string</td>
+    <td>Number of instances created for the component. Set the value only for
+        components that are multi-instance capable. Defaults to \token{1} if not set.</td>
+    <td>InstancesType</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -932,18 +923,18 @@ and the contained files are therefore part of the project.
   </tr>
   <tr>
     <td>\ref element_component_file "file"</td>
-    <td>specification of configuration files from the selected component. These files are
-    required to be included in the project folder structure already and are expected to contain
-    a configuration setup specifically for the project.</td>
-    <td>\ref element_component_file "ComponentSelectType"</td>
+    <td>Specify configuration files from the selected component.</td>
+    <td>ComponentSelectType</td>
     <td>0..*</td>
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+\delim
 
 \section element_component_file /package/create/project/select/component/file
+
+Specify the configuration files for the selected component. These files must already exist
+in the project folder structure and contain a configuration setup specifically for the project.
 
 \b Example <em>file</em> element
 \code
@@ -954,8 +945,7 @@ and the contained files are therefore part of the project.
         </component>
   ...
 \endcode
-
-\b component/file
+\n
 <table class="cmtable" summary="Element: file">
   <tr>
     <th>Parents</th>
@@ -963,7 +953,7 @@ and the contained files are therefore part of the project.
   </tr>
   <tr>
     <td>\ref  element_project_component "component"</td>
-    <td colspan="3">\ref element_project_component "ComponentSelectType"</td>
+    <td colspan="3">\ref element_project_component</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -972,46 +962,41 @@ and the contained files are therefore part of the project.
     <th>Use</th>
   </tr>
   <tr>
+    <td>condition</td>
+    <td>Condition id being used at the time of runtime configuration.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>category</td>
+    <td>File type, for example \token{header}. Use predefined values from the table \ref FileCategoryEnum "File Category".</td>
+    <td>FileCategoryType</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>attr</td>
+    <td>File action attribute, for example \token{copy}. Use predefined values from the table \ref FileCategoryEnum "File Category".</td>
+    <td>\ref FileAttributeEnum "FileAttributeType"</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <td>name</td>
-    <td>file path and name within pack it originates from</td>
+    <td>File path and name within pack it originates from.</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
     <td>version</td>
-    <td>version of the configuration file being used in example</td>
+    <td>Version of the configuration file being used in the example.</td>
     <td>\ref VersionType "VersionType"</td>
     <td>required</td>
   </tr>
-    <tr>
-    <td>attr</td>
-    <td>file action attribute (i.e. config, copy)</td>
-    <td>\ref FileAttributeEnum "FileAttributeType"</td>
-    <td>required</td>
-  </tr>
-  <tr>
-    <td>category</td>
-    <td>file type (i.e. sourceC, sourceCPP, sourceAsm, header</td>)
-    <td>\ref FileCategoryEnum "FileCategoryType"</td>
-    <td>required</td>
-  </tr>
-  <tr>
-    <td>condition</td>
-    <td>condition id being used at the time of runtime configuration.</td>
-    <td>xs:string</td>
-    <td>optional</td>
-  </tr>
 </table>
 
+\delim
 
-<p>&nbsp;</p>		
-<hr>
+\section cpdsc_files_pg /package/create/project/files
 
-*/
-
-/** 
-\page cpdsc_files_pg /package/create/project/files
-\anchor element_files
 The files section specifies files to be included into the project build that are not managed through
 software components. Files can be sorted into named groups.
 
@@ -1034,9 +1019,7 @@ software components. Files can be sorted into named groups.
   </create>
 </package>
 \endcode
-
-\anchor element_project_files
-\b /files
+\n
 <table class="cmtable" summary="Element: files">
   <tr>
     <th>Parents</th>
@@ -1047,12 +1030,6 @@ software components. Files can be sorted into named groups.
     <td colspan="3">\ref element_project</td>
   </tr>
   <tr>
-    <th>Attributes</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Use</th>
-  </tr>
-    <tr>
     <th>Child Elements</th>
     <th>Description</th>
     <th>Type</th>
@@ -1060,31 +1037,32 @@ software components. Files can be sorted into named groups.
   </tr>
   <tr>
     <td>\ref element_project_file "file"</td>
-    <td>specification of a file.</td>
-    <td>\ref element_project_file "ProjectFileType"</td>
+    <td>Specify a file.</td>
+    <td>ProjectFileType</td>
     <td>0..*</td>
   </tr>
   <tr>
     <td>\ref element_project_group "group"</td>
-    <td>specification of a group of files</td>
-    <td>\ref element_project_group "GroupType"</td>
+    <td>Specify a group of files.</td>
+    <td>GroupType</td>
     <td>0..*</td>
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+\delim
 
 \section element_project_file /package/project/create/files/.../file
-\b /file
+
+Specify files that are not included through software components.
+
 <table class="cmtable" summary="Element: file">
   <tr>
     <th>Parents</th>
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_files "files"</td>
-    <td colspan="3">\ref element_files</td>
+    <td>\ref cpdsc_files_pg "files"</td>
+    <td colspan="3">\ref cpdsc_files_pg</td>
   </tr>
   <tr>
     <td>\ref element_project_group "group"</td>
@@ -1098,31 +1076,31 @@ software components. Files can be sorted into named groups.
   </tr>
   <tr>
     <td>name</td>
-    <td>path and name of file relative to CPDSC location</td>
+    <td>Path and name of the file, relative to CPDSC location.</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
-    <td>\ref FileCategoryEnum "category"</td>
-    <td>type of file (e.g. whether a c or assembler file)</td>
-    <td>\ref FileCategoryEnum "FileCategoryType"</td>
+    <td>category</td>
+    <td>Type of file, for example, whether the file is a C or assembler file. 
+        Use the predefined values from the table \ref FileCategoryEnum "File Categories".</td>
+    <td>FileCategoryType</td>
     <td>required</td>
   </tr>
   <tr>
     <td>src</td>
-    <td>folder specifying the source code location for a library</td>
+    <td>Folder specifying the source code location for a library.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
 </table>
-<p>&nbsp;</p>		
-<hr>
 
+\delim
 
 \section element_project_group /package/create/project/files/.../group
 
-\note The nesting of groups is supported. It is tool dependant how grouping is represented in the
-tool since the grouping of files has no impact on the build by default.
+Nesting of groups is supported. It is tool dependent how grouping is represented in the
+tool, because the grouping of files has no impact on the build by default.
 
 \b Example <em>files</em> section:
 \code
@@ -1148,16 +1126,15 @@ tool since the grouping of files has no impact on the build by default.
   </create>
 </package>
 \endcode
-
-\b /group
+\n
 <table class="cmtable" summary="Element: group">
   <tr>
     <th>Parents</th>
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_files "files"</td>
-    <td colspan="3">\ref element_files</td>
+    <td>\ref cpdsc_files_pg "files"</td>
+    <td colspan="3">\ref cpdsc_files_pg</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -1179,21 +1156,17 @@ tool since the grouping of files has no impact on the build by default.
   </tr>
   <tr>
     <td>\ref element_project_file "file"</td>
-    <td>specification of a file.</td>
-    <td>\ref element_project_file "ProjectFileType"</td>
+    <td>Specify a file.</td>
+    <td>ProjectFileType</td>
     <td>0..*</td>
   </tr>
   <tr>
     <td>\ref element_project_group "group"</td>
-    <td>specification of a group of files</td>
-    <td>\ref element_project_group "GroupType"</td>
+    <td>Specify a group (nesting).</td>
+    <td>GroupType</td>
     <td>0..*</td>
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
-
-<hr>
-
+\delim
 */

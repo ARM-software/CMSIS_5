@@ -397,9 +397,6 @@ This allows silicon vendors and tool partners to extend the description beyond t
 CMSIS-SVD supports the reuse of whole sections of the description. The attribute \em derivedFrom for
 \refelem{peripheral}, \refelem{register}, and \refelem{field} specifies the source of the section to be copied from.
 Individual tags can be used to redefine specific elements within a copied section. 
-In case the name of the description source is not unique, the name needs to be qualified hierarchically
-until the element composite name becomes unique. Hierarchies 
-are separated by a dot. For example, <em>\<peripheral name\>.\<register name\>.\<field name\></em>.
 
 <b>Array of Elements</b>
 

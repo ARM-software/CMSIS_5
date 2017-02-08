@@ -18,6 +18,7 @@ After installing a \ref cp_SWComponents "Software Pack", all included software c
 tools. \ref cp_Components "Software components" are a collection of source modules, header and configuration files as well as
 libraries. Packs containing software components can also include \ref cp_Examples and \ref cp_CodeTemplates.
 
+The \subpage pack_revisionHistory lists the main changes between versions.
 
 \section SWPackVariants Software Pack Use Cases
 
@@ -35,6 +36,7 @@ The figure above shows the following use cases for Software Packs:
 \note A Software Pack can address multiple use cases at the same time!
 
 The following sections give you more details on the basics:
+
  - \ref cp_Packs explains the steps required for creating a Software Pack in general.
  - \ref cp_SWComponents gives detailed information on the contents of the PDSC file.
  - \ref createPack_DFP describes additional requirements of Device Family Packs (DFPs).
@@ -44,7 +46,12 @@ The following sections give you more details on the basics:
  - \ref createPackUtil caters to programs that are useful during the creation of a Pack.
  - \ref packFormat describes all XML elements that can be used in a PDSC file.
  - \ref configWizard can be used to create GUI-like elements in development tools for configuration files.
- 
+ - \ref flashAlgorithm are used to erase or download applications to Flash devices.
+ - \ref coresight_setup allow to create tool-agnostic debug and trace configurations
+ - \ref cpdsc_pg is a environment/tool independent definition of a software project. This helps to create only one set of
+   example projects that can be used by many different tool vendors.
+ - \ref packIndexFile
+
 <hr>
 
 CMSIS-Pack in ARM::CMSIS Pack
@@ -67,7 +74,22 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <th>Version</th>
     <th>Description</th>
   </tr>
-    <tr>
+  <tr>
+    <td>1.4.9</td>
+    <td>Modifications compared to Version 1.4.8
+- added Toptions attribute for use in conditions
+- updated documentation for generator section to reflect new exe, web, and eclipse sections
+    </td>
+  </tr>
+  <tr>
+    <td>1.4.8</td>
+    <td>Modifications compared to Version 1.4.7
+- added support for semantic versioning quality information in ConditionVersionType
+- updated PACK schema file making some elements optional
+- added Pack Index File Specification and schema file
+    </td>
+  </tr>
+  <tr>
     <td>1.4.7</td>
     <td>Modifications compared to Version 1.4.6
 - added multiple version types to tighten the schema checking depending on context

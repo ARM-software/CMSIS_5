@@ -1,78 +1,66 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015
-* $Revision: 	V.1.4.5
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_conv_opt_q7.c    
-*    
-* Description:	Convolution of Q7 sequences.  
-*    
-* Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*  
-* Redistribution and use in source and binary forms, with or without 
-* modification, are permitted provided that the following conditions
-* are met:
-*   - Redistributions of source code must retain the above copyright
-*     notice, this list of conditions and the following disclaimer.
-*   - Redistributions in binary form must reproduce the above copyright
-*     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
-*     distribution.
-*   - Neither the name of ARM LIMITED nor the names of its contributors
-*     may be used to endorse or promote products derived from this
-*     software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
-* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-* ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.  
-* -------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------
+ * Project:      CMSIS DSP Library
+ * Title:        arm_conv_opt_q7.c
+ * Description:  Convolution of Q7 sequences
+ *
+ * $Date:        27. January 2017
+ * $Revision:    V.1.5.1
+ *
+ * Target Processor: Cortex-M cores
+ * -------------------------------------------------------------------- */
+/*
+ * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include "arm_math.h"
 
-/**    
- * @ingroup groupFilters    
+/**
+ * @ingroup groupFilters
  */
 
-/**    
- * @addtogroup Conv    
- * @{    
+/**
+ * @addtogroup Conv
+ * @{
  */
 
-/**    
- * @brief Convolution of Q7 sequences.    
- * @param[in] *pSrcA points to the first input sequence.    
- * @param[in] srcALen length of the first input sequence.    
- * @param[in] *pSrcB points to the second input sequence.    
- * @param[in] srcBLen length of the second input sequence.    
- * @param[out] *pDst points to the location where the output result is written.  Length srcALen+srcBLen-1.    
- * @param[in]  *pScratch1 points to scratch buffer(of type q15_t) of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.   
- * @param[in]  *pScratch2 points to scratch buffer (of type q15_t) of size min(srcALen, srcBLen).   
- * @return none.    
- *    
- * \par Restrictions    
- *  If the silicon does not support unaligned memory access enable the macro UNALIGNED_SUPPORT_DISABLE    
- *	In this case input, output, scratch1 and scratch2 buffers should be aligned by 32-bit     
- *       
- * @details    
- * <b>Scaling and Overflow Behavior:</b>    
- *    
- * \par    
- * The function is implemented using a 32-bit internal accumulator.    
- * Both the inputs are represented in 1.7 format and multiplications yield a 2.14 result.    
- * The 2.14 intermediate results are accumulated in a 32-bit accumulator in 18.14 format.    
- * This approach provides 17 guard bits and there is no risk of overflow as long as <code>max(srcALen, srcBLen)<131072</code>.    
- * The 18.14 result is then truncated to 18.7 format by discarding the low 7 bits and then saturated to 1.7 format.    
+/**
+ * @brief Convolution of Q7 sequences.
+ * @param[in] *pSrcA points to the first input sequence.
+ * @param[in] srcALen length of the first input sequence.
+ * @param[in] *pSrcB points to the second input sequence.
+ * @param[in] srcBLen length of the second input sequence.
+ * @param[out] *pDst points to the location where the output result is written.  Length srcALen+srcBLen-1.
+ * @param[in]  *pScratch1 points to scratch buffer(of type q15_t) of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
+ * @param[in]  *pScratch2 points to scratch buffer (of type q15_t) of size min(srcALen, srcBLen).
+ * @return none.
+ *
+ * \par Restrictions
+ *  If the silicon does not support unaligned memory access enable the macro UNALIGNED_SUPPORT_DISABLE
+ *	In this case input, output, scratch1 and scratch2 buffers should be aligned by 32-bit
+ *
+ * @details
+ * <b>Scaling and Overflow Behavior:</b>
+ *
+ * \par
+ * The function is implemented using a 32-bit internal accumulator.
+ * Both the inputs are represented in 1.7 format and multiplications yield a 2.14 result.
+ * The 2.14 intermediate results are accumulated in a 32-bit accumulator in 18.14 format.
+ * This approach provides 17 guard bits and there is no risk of overflow as long as <code>max(srcALen, srcBLen)<131072</code>.
+ * The 18.14 result is then truncated to 18.7 format by discarding the low 7 bits and then saturated to 1.7 format.
  *
  */
 
@@ -100,7 +88,7 @@ void arm_conv_opt_q7(
   /* The algorithm implementation is based on the lengths of the inputs. */
   /* srcB is always made to slide across srcA. */
   /* So srcBLen is always considered as shorter or equal to srcALen */
-  if(srcALen >= srcBLen)
+  if (srcALen >= srcBLen)
   {
     /* Initialization of inputA pointer */
     pIn1 = pSrcA;
@@ -131,9 +119,9 @@ void arm_conv_opt_q7(
   /* Apply loop unrolling and do 4 Copies simultaneously. */
   k = srcBLen >> 2u;
 
-  /* First part of the processing with loop unrolling copies 4 data points at a time.       
+  /* First part of the processing with loop unrolling copies 4 data points at a time.
    ** a second loop below copies for the remaining 1 to 3 samples. */
-  while(k > 0u)
+  while (k > 0u)
   {
     /* copy second buffer in reversal manner */
     x4 = (q15_t) * px--;
@@ -149,11 +137,11 @@ void arm_conv_opt_q7(
     k--;
   }
 
-  /* If the count is not a multiple of 4, copy remaining samples here.       
+  /* If the count is not a multiple of 4, copy remaining samples here.
    ** No loop unrolling is used. */
   k = srcBLen % 0x4u;
 
-  while(k > 0u)
+  while (k > 0u)
   {
     /* copy second buffer in reversal manner for remaining samples */
     x4 = (q15_t) * px--;
@@ -176,9 +164,9 @@ void arm_conv_opt_q7(
   /* Apply loop unrolling and do 4 Copies simultaneously. */
   k = srcALen >> 2u;
 
-  /* First part of the processing with loop unrolling copies 4 data points at a time.       
+  /* First part of the processing with loop unrolling copies 4 data points at a time.
    ** a second loop below copies for the remaining 1 to 3 samples. */
-  while(k > 0u)
+  while (k > 0u)
   {
     /* copy second buffer in reversal manner */
     x4 = (q15_t) * pIn1++;
@@ -194,11 +182,11 @@ void arm_conv_opt_q7(
     k--;
   }
 
-  /* If the count is not a multiple of 4, copy remaining samples here.       
+  /* If the count is not a multiple of 4, copy remaining samples here.
    ** No loop unrolling is used. */
   k = srcALen % 0x4u;
 
-  while(k > 0u)
+  while (k > 0u)
   {
     /* copy second buffer in reversal manner for remaining samples */
     x4 = (q15_t) * pIn1++;
@@ -221,9 +209,9 @@ void arm_conv_opt_q7(
   /* Apply loop unrolling and do 4 Copies simultaneously. */
   k = (srcBLen - 1u) >> 2u;
 
-  /* First part of the processing with loop unrolling copies 4 data points at a time.       
+  /* First part of the processing with loop unrolling copies 4 data points at a time.
    ** a second loop below copies for the remaining 1 to 3 samples. */
-  while(k > 0u)
+  while (k > 0u)
   {
     /* copy second buffer in reversal manner */
     *pScr1++ = 0;
@@ -235,11 +223,11 @@ void arm_conv_opt_q7(
     k--;
   }
 
-  /* If the count is not a multiple of 4, copy remaining samples here.       
+  /* If the count is not a multiple of 4, copy remaining samples here.
    ** No loop unrolling is used. */
   k = (srcBLen - 1u) % 0x4u;
 
-  while(k > 0u)
+  while (k > 0u)
   {
     /* copy second buffer in reversal manner for remaining samples */
     *pScr1++ = 0;
@@ -261,7 +249,7 @@ void arm_conv_opt_q7(
   /* Actual convolution process starts here */
   blkCnt = (srcALen + srcBLen - 1u) >> 2;
 
-  while(blkCnt > 0)
+  while (blkCnt > 0)
   {
     /* Initialze temporary scratch pointer as scratch1 */
     pScr1 = pScratch1;
@@ -280,7 +268,7 @@ void arm_conv_opt_q7(
 
     tapCnt = (srcBLen) >> 2u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
 
       /* Read four samples from smaller buffer */
@@ -347,7 +335,7 @@ void arm_conv_opt_q7(
     /* apply same above for remaining samples of smaller length sequence */
     tapCnt = (srcBLen) & 3u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
 
       /* accumlate the results */
@@ -383,7 +371,7 @@ void arm_conv_opt_q7(
   blkCnt = (srcALen + srcBLen - 1u) & 0x3;
 
   /* Calculate convolution for remaining samples of Bigger length sequence */
-  while(blkCnt > 0)
+  while (blkCnt > 0)
   {
     /* Initialze temporary scratch pointer as scratch1 */
     pScr1 = pScratch1;
@@ -393,7 +381,7 @@ void arm_conv_opt_q7(
 
     tapCnt = (srcBLen) >> 1u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       acc0 += (*pScr1++ * *pScr2++);
       acc0 += (*pScr1++ * *pScr2++);
@@ -405,7 +393,7 @@ void arm_conv_opt_q7(
     tapCnt = (srcBLen) & 1u;
 
     /* apply same above for remaining samples of smaller length sequence */
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
 
       /* accumlate the results */
@@ -430,6 +418,6 @@ void arm_conv_opt_q7(
 }
 
 
-/**    
- * @} end of Conv group    
+/**
+ * @} end of Conv group
  */

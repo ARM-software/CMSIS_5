@@ -397,12 +397,12 @@ int32_t main(void)
   ** Loop here if the signal does not match the reference output.
   ** ------------------------------------------------------------------- */
 
-  if( status != ARM_MATH_SUCCESS)
+  if ( status != ARM_MATH_SUCCESS)
   {
-    while(1);
+    while (1);
   }
 
-  while(1);                             /* main function does not return */
+  while (1);                             /* main function does not return */
 }
 
 /** \endlink */

@@ -1140,7 +1140,8 @@ HTML_EXTRA_STYLESHEET  = ../Doxygen_Templates/cmsis.css
 
 HTML_EXTRA_FILES       = ../Doxygen_Templates/tabs.css \
                          ../Doxygen_Templates/tab_topnav.png \
-                         ../Doxygen_Templates/printComponentTabs.js
+                         ../Doxygen_Templates/printComponentTabs.js \
+                         ../../RTOS/CMSIS_RTOS_Tutorial.pdf
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
 # will adjust the colors in the stylesheet and background images according to

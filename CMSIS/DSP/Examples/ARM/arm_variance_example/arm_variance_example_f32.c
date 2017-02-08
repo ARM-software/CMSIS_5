@@ -188,17 +188,17 @@ int32_t main(void)
   diff = fabsf(refVarianceOut - variance);
 
   /* Comparison of variance value with reference */
-  if(diff > DELTA)
+  if (diff > DELTA)
   {
     status = ARM_MATH_TEST_FAILURE;
   }
 
-  if( status != ARM_MATH_SUCCESS)
+  if ( status != ARM_MATH_SUCCESS)
   {
-    while(1);
+    while (1);
   }
 
-  while(1);                             /* main function does not return */
+  while (1);                             /* main function does not return */
 }
 
  /** \endlink */

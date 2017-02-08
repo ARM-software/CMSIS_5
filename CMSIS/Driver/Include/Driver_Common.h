@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -7,7 +7,7 @@
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
@@ -15,14 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        2. Jan 2014
- * $Revision:    V2.00
+ * $Date:        2. Feb 2017
+ * $Revision:    V2.0
  *
  * Project:      Common Driver definitions
  */
 
 /* History:
- *  Version 2.00
+ *  Version 2.0
  *    Changed prefix ARM_DRV -> ARM_DRIVER
  *    Added General return codes definitions
  *  Version 1.10

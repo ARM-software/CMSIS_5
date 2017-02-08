@@ -61,10 +61,17 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
       <th>Description</th>
     </tr>
     <tr>
+      <td>2.05</td>
+      <td>Modifications compared to Version 2.04:
+ - Changed: All typedefs related to status have been made volatile. 
+      </td>
+    </tr>
+    <tr>
       <td>2.04</td>
       <td>Modifications compared to Version 2.03:
  - Added: template files for CAN interface driver.
       </td>
+    </tr>
     <tr>
       <td>2.03</td>
       <td>Modifications compared to Version 2.02:
@@ -412,8 +419,7 @@ Further driver reference implementations are available in Device Family Packs (D
 /**
 \page driverValidation Driver Validation
 
-ARM offers a <a href="http://www.keil.com/pack/doc/CMSIS/DV/html/index.html" target=_blank>CMSIS-Driver Validation</a>
-Software Pack. The <b>ARM::CMSIS-Driver_Validation</b> Pack contains the following:
+The <a href="http://www.keil.com/pack/" target=_blank>Software Pack</a> named <b>ARM::CMSIS-Driver_Validation</b> contains the following:
 
  - Source code of a CMSIS-Driver Validation Suite along with configuration file.
  - Documentation of the CMSIS-Driver Validation Suite.

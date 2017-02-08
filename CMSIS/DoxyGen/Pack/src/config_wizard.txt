@@ -89,6 +89,15 @@ The following table lists the Configuration Wizard Annotations:
       <td>Heading, Enable, or Comment end.</td>
     </tr>
     <tr>
+      <td>\<n></td>
+      <td>yes</td>
+      <td>Notification text displayed
+      \code
+      // <n> This is shown as plain text
+      \endcode      
+      </td>
+    </tr>
+    <tr>
       <td>\<i></td>
       <td>yes</td>
       <td>Tooltip help for previous item.

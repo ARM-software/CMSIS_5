@@ -7,7 +7,7 @@
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
@@ -17,14 +17,12 @@
  *
  * ----------------------------------------------------------------------------
  *
- * $Date:        21. September 2016
- * $Revision:    V1.0
+ * $Date:        15. October 2016
+ * $Revision:    1.1.0
  *
  * Project:      TrustZone for ARMv8-M
  * Title:        Context Management for ARMv8-M TrustZone - Sample implementation
  *
- * Version 1.0
- *    Initial Release
  *---------------------------------------------------------------------------*/
  
 #include "RTE_Components.h"
@@ -58,9 +56,10 @@ __attribute__((cmse_nonsecure_entry))
 uint32_t TZ_InitContextSystem_S (void) {
   uint32_t n;
 
-  if ((__get_CONTROL() & 2U) == 0U)  {
-    return 0U;  // Not using PSP for threads
+  if (__get_IPSR() == 0U) {
+    return 0U;  // Thread Mode
   }
+
   for (n = 0U; n < TZ_PROCESS_STACK_SLOTS; n++) {
     ProcessStackInfo[n].sp = 0U;
     ProcessStackInfo[n].sp_limit = (uint32_t)&ProcessStackMemory[n];
@@ -70,6 +69,13 @@ uint32_t TZ_InitContextSystem_S (void) {
   *((uint32_t *)ProcessStackMemory[--n]) = 0xFFFFFFFFU;
 
   ProcessStackFreeSlot = 0U;
+
+  // Default process stack pointer and stack limit
+  __set_PSPLIM((uint32_t)ProcessStackMemory);
+  __set_PSP   ((uint32_t)ProcessStackMemory);
+
+  // Privileged Thread Mode using PSP
+  __set_CONTROL(0x02U);
 
   return 1U;    // Success
 }
@@ -84,6 +90,10 @@ TZ_MemoryId_t TZ_AllocModuleContext_S (TZ_ModuleId_t module) {
   uint32_t slot;
 
   (void)module; // Ignore (fixed Stack size)
+
+  if (__get_IPSR() == 0U) {
+    return 0U;  // Thread Mode
+  }
 
   if (ProcessStackFreeSlot == 0xFFFFFFFFU) {
     return 0U;  // No slot available
@@ -104,6 +114,10 @@ TZ_MemoryId_t TZ_AllocModuleContext_S (TZ_ModuleId_t module) {
 __attribute__((cmse_nonsecure_entry))
 uint32_t TZ_FreeModuleContext_S (TZ_MemoryId_t id) {
   uint32_t slot;
+
+  if (__get_IPSR() == 0U) {
+    return 0U;  // Thread Mode
+  }
 
   if ((id == 0U) || (id > TZ_PROCESS_STACK_SLOTS)) {
     return 0U;  // Invalid ID
@@ -180,6 +194,10 @@ uint32_t TZ_StoreContext_S (TZ_MemoryId_t id) {
     return 0U;  // SP out of range
   }
   ProcessStackInfo[slot].sp = sp;
+
+  // Default process stack pointer and stack limit
+  __set_PSPLIM((uint32_t)ProcessStackMemory);
+  __set_PSP   ((uint32_t)ProcessStackMemory);
 
   return 1U;    // Success
 }

@@ -38,7 +38,7 @@ PROJECT_NAME           = CMSIS-Pack
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "Version 1.4.7"
+PROJECT_NUMBER         = "Version 1.4.9"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -231,7 +231,10 @@ TAB_SIZE               = 8
 # newlines.
 
 ALIASES                = "token{1}=<span class=\"XML-Token\">\1</span>" \
-                         "elem{1}=\b \<\1>"
+                         "elem{1}=\b \<\1>" \
+                         "tagem{1}=<em>\<\1\></em>" \
+                         "refelem{1}=\ref element_\1 \"\1\"" \
+                         "delim=<p>&nbsp;<p> <hr>"
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only).
 # A mapping has the form "name=value". For example adding "class=itcl::class"
@@ -770,8 +773,9 @@ INPUT                  = . \
                          src/examples_schema.txt \
                          src/boards_schema.txt \
                          src/generators_schema.txt \
+                         src/xml_types.txt \
                          src/cpdsc_schema.txt \
-                         src/xml_types.txt
+                         src/pack_index.txt
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -848,7 +852,7 @@ EXCLUDE_SYMBOLS        =
 # that contain example code fragments that are included (see the \include
 # command).
 
-EXAMPLE_PATH           = ../../Driver/Include
+EXAMPLE_PATH           = ../../Utilities
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and

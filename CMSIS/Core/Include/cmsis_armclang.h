@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
- * @brief    CMSIS Cortex-M Core Function/Instruction Header File
- * @version  V5.00
- * @date     28. October 2016
+ * @brief    CMSIS compiler ARMCLANG (ARM compiler V6) header file
+ * @version  V5.0.1
+ * @date     02. February 2017
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -13,7 +13,7 @@
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
@@ -60,6 +60,9 @@
 #endif
 #ifndef   __PACKED
   #define __PACKED                  __attribute__((packed, aligned(1)))
+#endif
+#ifndef   __PACKED_STRUCT
+  #define __PACKED_STRUCT           struct __attribute__((packed, aligned(1)))
 #endif
 
 
@@ -218,7 +221,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PSP_NS(void)
  */
 __attribute__((always_inline)) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
 {
-  __ASM volatile ("MSR psp, %0" : : "r" (topOfProcStack) : "sp");
+  __ASM volatile ("MSR psp, %0" : : "r" (topOfProcStack) : );
 }
 
 
@@ -230,7 +233,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_PSP(uint32_t topOfProc
  */
 __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PSP_NS(uint32_t topOfProcStack)
 {
-  __ASM volatile ("MSR psp_ns, %0" : : "r" (topOfProcStack) : "sp");
+  __ASM volatile ("MSR psp_ns, %0" : : "r" (topOfProcStack) : );
 }
 #endif
 
@@ -272,7 +275,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_MSP_NS(void)
  */
 __attribute__((always_inline)) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
 {
-  __ASM volatile ("MSR msp, %0" : : "r" (topOfMainStack) : "sp");
+  __ASM volatile ("MSR msp, %0" : : "r" (topOfMainStack) : );
 }
 
 
@@ -284,7 +287,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_MSP(uint32_t topOfMain
  */
 __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
 {
-  __ASM volatile ("MSR msp_ns, %0" : : "r" (topOfMainStack) : "sp");
+  __ASM volatile ("MSR msp_ns, %0" : : "r" (topOfMainStack) : );
 }
 #endif
 
@@ -620,9 +623,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
   uint32_t result;
 
-  __ASM volatile ("");                                 /* Empty asm statement works as a scheduling barrier */
   __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
-  __ASM volatile ("");
   return(result);
 #else
   return(0U);
@@ -640,10 +641,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 {
 #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
-  __ASM volatile ("");                                 /* Empty asm statement works as a scheduling barrier */
-/*  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc"); */
-  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) :);
-  __ASM volatile ("");
+  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "memory");
 #else
   (void)fpscr;
 #endif

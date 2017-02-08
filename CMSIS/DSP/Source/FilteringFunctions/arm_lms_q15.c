@@ -1,74 +1,62 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015
-* $Revision: 	V.1.4.5
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_lms_q15.c    
-*    
-* Description:	Processing function for the Q15 LMS filter.    
-*    
-* Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*  
-* Redistribution and use in source and binary forms, with or without 
-* modification, are permitted provided that the following conditions
-* are met:
-*   - Redistributions of source code must retain the above copyright
-*     notice, this list of conditions and the following disclaimer.
-*   - Redistributions in binary form must reproduce the above copyright
-*     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
-*     distribution.
-*   - Neither the name of ARM LIMITED nor the names of its contributors
-*     may be used to endorse or promote products derived from this
-*     software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
-* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-* ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.    
-* -------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------
+ * Project:      CMSIS DSP Library
+ * Title:        arm_lms_q15.c
+ * Description:  Processing function for the Q15 LMS filter
+ *
+ * $Date:        27. January 2017
+ * $Revision:    V.1.5.1
+ *
+ * Target Processor: Cortex-M cores
+ * -------------------------------------------------------------------- */
+/*
+ * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include "arm_math.h"
-/**    
- * @ingroup groupFilters    
+/**
+ * @ingroup groupFilters
  */
 
-/**    
- * @addtogroup LMS    
- * @{    
+/**
+ * @addtogroup LMS
+ * @{
  */
 
- /**    
- * @brief Processing function for Q15 LMS filter.    
- * @param[in] *S points to an instance of the Q15 LMS filter structure.    
- * @param[in] *pSrc points to the block of input data.    
- * @param[in] *pRef points to the block of reference data.    
- * @param[out] *pOut points to the block of output data.    
- * @param[out] *pErr points to the block of error data.    
- * @param[in] blockSize number of samples to process.    
- * @return none.    
- *    
- * \par Scaling and Overflow Behavior:    
- * The function is implemented using a 64-bit internal accumulator.    
- * Both coefficients and state variables are represented in 1.15 format and multiplications yield a 2.30 result.    
- * The 2.30 intermediate results are accumulated in a 64-bit accumulator in 34.30 format.    
- * There is no risk of internal overflow with this approach and the full precision of intermediate multiplications is preserved.    
- * After all additions have been performed, the accumulator is truncated to 34.15 format by discarding low 15 bits.    
- * Lastly, the accumulator is saturated to yield a result in 1.15 format.    
- *   
- * \par   
- * 	In this filter, filter coefficients are updated for each sample and the updation of filter cofficients are saturted.   
- *    
+ /**
+ * @brief Processing function for Q15 LMS filter.
+ * @param[in] *S points to an instance of the Q15 LMS filter structure.
+ * @param[in] *pSrc points to the block of input data.
+ * @param[in] *pRef points to the block of reference data.
+ * @param[out] *pOut points to the block of output data.
+ * @param[out] *pErr points to the block of error data.
+ * @param[in] blockSize number of samples to process.
+ * @return none.
+ *
+ * \par Scaling and Overflow Behavior:
+ * The function is implemented using a 64-bit internal accumulator.
+ * Both coefficients and state variables are represented in 1.15 format and multiplications yield a 2.30 result.
+ * The 2.30 intermediate results are accumulated in a 64-bit accumulator in 34.30 format.
+ * There is no risk of internal overflow with this approach and the full precision of intermediate multiplications is preserved.
+ * After all additions have been performed, the accumulator is truncated to 34.15 format by discarding low 15 bits.
+ * Lastly, the accumulator is saturated to yield a result in 1.15 format.
+ *
+ * \par
+ * 	In this filter, filter coefficients are updated for each sample and the updation of filter cofficients are saturted.
+ *
  */
 
 void arm_lms_q15(
@@ -96,7 +84,7 @@ void arm_lms_q15(
   int32_t uShift = (32 - lShift);
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined (ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -108,7 +96,7 @@ void arm_lms_q15(
   /* Initializing blkCnt with blockSize */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy the new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -125,7 +113,7 @@ void arm_lms_q15(
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = numTaps >> 2u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* acc +=  b[N] * x[n-N] + b[N-1] * x[n-N-1] */
       /* Perform the multiply-accumulate */
@@ -151,7 +139,7 @@ void arm_lms_q15(
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = numTaps % 0x4u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       acc += (q63_t) (((q31_t) (*px++) * (*pb++)));
@@ -194,7 +182,7 @@ void arm_lms_q15(
     tapCnt = numTaps >> 2u;
 
     /* Update filter coefficients */
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       coef = (q31_t) * pb + (((q31_t) alpha * (*px++)) >> 15);
       *pb++ = (q15_t) __SSAT((coef), 16);
@@ -212,7 +200,7 @@ void arm_lms_q15(
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = numTaps % 0x4u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       coef = (q31_t) * pb + (((q31_t) alpha * (*px++)) >> 15);
@@ -227,8 +215,8 @@ void arm_lms_q15(
 
   }
 
-  /* Processing is complete. Now copy the last numTaps - 1 samples to the    
-     satrt of the state buffer. This prepares the state buffer for the    
+  /* Processing is complete. Now copy the last numTaps - 1 samples to the
+     satrt of the state buffer. This prepares the state buffer for the
      next function call. */
 
   /* Points to the start of the pState buffer */
@@ -237,7 +225,7 @@ void arm_lms_q15(
   /* Calculation of count for copying integer writes */
   tapCnt = (numTaps - 1u) >> 2;
 
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
 
 #ifndef UNALIGNED_SUPPORT_DISABLE
@@ -259,7 +247,7 @@ void arm_lms_q15(
   tapCnt = (numTaps - 1u) % 0x4u;
 
   /* copy data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -278,7 +266,7 @@ void arm_lms_q15(
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy the new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -295,7 +283,7 @@ void arm_lms_q15(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       acc += (q63_t) ((q31_t) (*px++) * (*pb++));
@@ -337,7 +325,7 @@ void arm_lms_q15(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       coef = (q31_t) * pb + (((q31_t) alpha * (*px++)) >> 15);
@@ -352,8 +340,8 @@ void arm_lms_q15(
 
   }
 
-  /* Processing is complete. Now copy the last numTaps - 1 samples to the        
-     start of the state buffer. This prepares the state buffer for the   
+  /* Processing is complete. Now copy the last numTaps - 1 samples to the
+     start of the state buffer. This prepares the state buffer for the
      next function call. */
 
   /* Points to the start of the pState buffer */
@@ -363,7 +351,7 @@ void arm_lms_q15(
   tapCnt = (numTaps - 1u);
 
   /* Copy the data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -371,10 +359,10 @@ void arm_lms_q15(
     tapCnt--;
   }
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*   #if defined (ARM_MATH_DSP) */
 
 }
 
-/**    
-   * @} end of LMS group    
+/**
+   * @} end of LMS group
    */

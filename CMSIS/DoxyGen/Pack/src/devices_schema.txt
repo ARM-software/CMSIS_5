@@ -125,7 +125,7 @@ The group is not mandatory.
 
 \endcode
 
-<p>&nbsp;</p>
+\n
 
 <table class="cmtable" summary="Element: devices">
   <tr>
@@ -150,8 +150,7 @@ The group is not mandatory.
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+\delim
 */
 
 /** 
@@ -238,16 +237,16 @@ Multiple \<family> groups can be defined.
     <td>0..*</td>
   </tr>
   <tr>
-    <td>\ref element_compile "compile"</td>
-    <td>Specify compile or translate options that are relevant to all devices of the family.</td>
-    <td>CompileType</td>
-    <td>0..*</td>
-  </tr>
-  <tr>
     <td>\ref element_debugconfig "debugconfig"</td>
     <td>Specify default settings for the debug connection relevant to all devices of the family.</td>
     <td>DebugConfigType</td>
     <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_compile "compile"</td>
+    <td>Specify compile or translate options that are relevant to all devices of the family.</td>
+    <td>CompileType</td>
+    <td>0..*</td>
   </tr>
   <tr>
     <td>\ref element_debugvars "debugvars"</td>
@@ -532,7 +531,7 @@ Multiple \<device> elements can be defined.
   </tr>
   <tr>
     <td>Dname</td>
-    <td>Specifies the name of the device. Only alphabetical characters, decimal digits, '-' and '_' are allowed</td>
+    <td>Specifies the name of the device. Only alphabetical characters, decimal digits, '-' and '_' are allowed.</td>
     <td>RestrictedString</td>
     <td>required</td>
   </tr>
@@ -549,45 +548,15 @@ Multiple \<device> elements can be defined.
     <td>0..*</td>
   </tr>
   <tr>
-    <td>\ref element_compile "compile"</td>
-    <td>Specify compile or translate options specific to this device.</td>
-    <td>CompileType</td>
-    <td>0..*</td>
-  </tr>
-  <tr>
     <td>\ref element_debugconfig "debugconfig"</td>
     <td>Specify default settings for the debug connection specific to this device.</td>
     <td>DebugConfigType</td>
     <td>0..1</td>
   </tr>
   <tr>
-    <td>\ref element_debugvars "debugvars"</td>
-    <td>Define debug access variables for user-defined settings specific to this device.</td>
-    <td>DebugVarsType</td>
-    <td>0..1</td>
-  </tr>
-  <tr>
-    <td>\ref element_sequences "sequences"</td>
-    <td>Describe debug access sequences specific to this device.</td>
-    <td>SequencesType</td>
-    <td>0..1</td>
-  </tr>
-  <tr>
-    <td>\ref element_debugport "debugport"</td>
-    <td>Describe a debug port specific to this device.</td>
-    <td>DebugPortType</td>
-    <td>0..*</td>
-  </tr>
-  <tr>
-    <td>\ref element_debug "debug"</td>
-    <td>Specify debug options specific to this device.</td>
-    <td>DebugType</td>
-    <td>0..*</td>
-  </tr>
-  <tr>
-    <td>\ref element_trace "trace"</td>
-    <td>Specify trace options specific to this device.</td>
-    <td>TraceType</td>
+    <td>\ref element_compile "compile"</td>
+    <td>Specify compile or translate options specific to this device.</td>
+    <td>CompileType</td>
     <td>0..*</td>
   </tr>
   <tr>
@@ -616,20 +585,55 @@ Multiple \<device> elements can be defined.
   </tr>
   <tr>
     <td>\ref element_feature "feature"</td>
-    <td>Specify features specific to this device.</td>
+    <td>Specify the features of this device.</td>
     <td>FeatureType</td>
     <td>0..*</td>
   </tr>
   <tr>
+    <td>\ref element_feature "environment"</td>
+    <td>Specify tool options.</td>
+    <td>EnvironmentType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_debugport "debugport"</td>
+    <td>Describe a debug port specific to this device.</td>
+    <td>DebugPortType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_debug "debug"</td>
+    <td>Specify debug options specific to this device.</td>
+    <td>DebugType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_trace "trace"</td>
+    <td>Specify trace options specific to this device.</td>
+    <td>TraceType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_debugvars "debugvars"</td>
+    <td>Define debug access variables for user-defined settings specific to this device.</td>
+    <td>DebugVarsType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_sequences "sequences"</td>
+    <td>Describe debug access sequences specific to this device.</td>
+    <td>SequencesType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
     <td>\ref element_variant "variant"</td>
     <td>Complex element specifying a variant of a device.</td>
-    <td>xs:string</td>
+    <td>xs:ComplexType</td>
     <td>0..*</td>
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+\delim
 
 \section element_algorithm /package/devices/family/.../algorithm
 
@@ -734,9 +738,9 @@ memory range and style are identical, the one on the lower level takes precedenc
   </tr>
     <tr>
     <td>style</td>
-    <td>[Version 1.4.0] Today different tool-chains support different styles of incompatible flash
+    <td>[Version 1.4.0] Today, different toolchains support different styles of incompatible flash
 	programming algorithms. The attribute specifies the style of the specified flash programming 
-	algorithm. For backward compatibility the default value is "Keil". The aim is to converge to
+	algorithm. For backward compatibility the default value is \token{Keil}. The aim is to converge to
 	the <em>CMSIS</em> style.
 	</td>
     <td>\ref AlgorithmStyleEnum "AlgorithmStyleEnum"</td>
@@ -804,7 +808,8 @@ The book element contains the location, filename, and extension of the file. The
   </tr>
   <tr>
     <td>name</td>
-    <td>File name of the document including the extension. The document path is relative to the package base folder. Directory/file names are case-sensitive.</td>
+    <td>File name of the document including the extension. The document path is relative to the package base folder. 
+        Directory/file names are case-sensitive.</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
@@ -816,9 +821,7 @@ The book element contains the location, filename, and extension of the file. The
   </tr>
 </table>
 
-
-<p>&nbsp;</p>		
-<hr>
+\delim
 
 \section element_compile /package/devices/family/.../compile
 
@@ -893,8 +896,7 @@ Multiple elements are allowed. The last occurrence in the hierarchy determines t
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+\delim
 
 \section element_description /package/devices/family/.../description
 
@@ -1002,8 +1004,7 @@ full control of the \em element usage.
 </package>
 \endcode
 
-
-<p>&nbsp;</p>		
+\n
 
 <table class="cmtable" summary="Element: description">
   <tr>
@@ -1030,7 +1031,7 @@ full control of the \em element usage.
   </tr>
   <tr>
     <td>name</td>
-    <td>Name of the development tool (e.g. "uv" for uVision)</td>
+    <td>Name of the development tool (for example, "uv" for uVision)</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
@@ -1056,10 +1057,7 @@ full control of the \em element usage.
   </tr>
 </table>
 
-
-<p>&nbsp;</p>		
-<hr>
-
+\delim
 
 \section element_feature /package/devices/family/.../feature
 
@@ -1109,7 +1107,7 @@ supersede outer elements.
 </package>
 \endcode
 
-<p>&nbsp;</p>
+\n
 
 <table class="cmtable" summary="Element: feature">
   <tr>
@@ -1169,7 +1167,7 @@ supersede outer elements.
   </tr>
 </table>
 
-<p>&nbsp;</p>		
+\n	
 
 \anchor DeviceFeatureTypeEnum <b>Table: Device Feature Types</b> 
 
@@ -1234,8 +1232,7 @@ The table lists predefined device features (peripherals).
 |Touch|Number of Touch Channels|N/A|Capacitive Touch Inputs|\<feature type="Touch"  n="10" name="Capacitive Touch Inputs"/\>|10 x Capacitive Touch Inputs|
 |Other|Number of Features|N/A|Other Feature|\<feature type="Other"  n="2" name="My other Interface"/\>|2 x My other Interface|
 	
-<p>&nbsp;</p>		
-<hr>
+\delim
 
 \section element_memory /package/devices/family/.../memory
 
@@ -1265,7 +1262,8 @@ This element can be defined on various levels. Inner memory elements supersede o
   ...
 </package>
 \endcode
-<p>&nbsp;</p>
+
+\n
 
 <table class="cmtable" summary="Element: memory">
   <tr>
@@ -1312,7 +1310,7 @@ This element can be defined on various levels. Inner memory elements supersede o
   </tr>
   <tr>
     <td>access (new in Version 1.4.0)</td>
-    <td>access permission attributes of the memory. See MemoryAccessTypeString for details (new in Version 1.4.0).
+    <td>access permission of the memory. See MemoryAccessTypeString for details (new in Version 1.4.0).
     <td>\ref MemoryAccessTypeString "MemoryAccessTypeString"</td>
     <td>optional</td>
   </tr>
@@ -1348,14 +1346,14 @@ This element can be defined on various levels. Inner memory elements supersede o
   <tr>
     <td>alias(new in Version 1.4.0)</td>
     <td>reference to another memory description which shares the same physical memory. Some physical
-	memory is made accessible via different addresses, e.g. chached vs. non-cached accesses. This
+	memory is made accessible via different addresses, for example, chached vs. non-cached accesses. This
 	avoids the impression that the device has twice as much memory available.
     <td>xs:string</td>
     <td>optional</td>
   </tr>
 </table>
 
-<p>&nbsp;</p>		
+\n
 
 \anchor MemoryIDTypeEnum <b>Table: Memory ID Types</b>
 
@@ -1383,15 +1381,14 @@ The table lists identifiers for memory types.
   </tr>
 </table>
 
-
-
-
-<p>&nbsp;</p>		
-<hr>
+\delim
 
 \anchor MemoryAccessTypeString <b>Table: Memory Access Attribute String</b>
 
-The table lists the letters and their meaning for use in the access attribute string.
+The table lists the letters and their meaning for use in the access attribute string. The values can be used in:
+ - \ref element_memory
+ - \ref element_target_memory
+
 <table class="cmtable" summary="Memory Access Permission Attributes">
   <tr>
     <th>access=</th>
@@ -1427,8 +1424,7 @@ The table lists the letters and their meaning for use in the access attribute st
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+\delim
 
 \section element_processor /package/devices/family/.../processor
 
@@ -1436,7 +1432,7 @@ Specifies attributes of the device processor. The element can occur on various l
 Elements of multi-processor devices can be associated with a specific processor using the attribute \elem{Pname}. If the information is relevant to
 all processors, no processor must be specified in \elem{Pname}. 
 
-\b Example
+\b Example \b 1
 \code
 <package>
   ...
@@ -1449,6 +1445,20 @@ all processors, no processor must be specified in \elem{Pname}.
   </devices>
   ...
 </package>
+\endcode
+
+\b Example \b 2
+\code
+<device name="MCIMX7D">
+  ...
+  <processor Dcore="Cortex-A7" DcoreVersion="r0p5" Pname="Cortex-A7" Punits="2" />
+  <processor Dcore="Cortex-M4" DcoreVersion="r0p1" Pname="Cortex-M4"/>
+  ...
+  <debug   Pname="Cortex-A7" Punit="0" svd="SVD/iMX7D_A7.svd" __dp="0" __ap="1" address="0x80070000"/> 
+  <debug   Pname="Cortex-A7" Punit="1" svd="SVD/iMX7D_A7.svd" __dp="0" __ap="1" address="0x80072000"/>
+  <debug   Pname="Cortex-M4"           svd="SVD/iMX7D_M4.svd" __dp="0" __ap="4"/>
+  ...
+</device>
 \endcode
 
 <p>&nbsp;</p>		
@@ -1486,9 +1496,9 @@ all processors, no processor must be specified in \elem{Pname}.
     <td>optional</td>
   </tr>
   <tr>
-    <td>Dvendor</td>
-    <td>Specfies the device vendor using a predefined string. Use predefined values as listed in the table \ref DeviceVendorEnum "Device Vendor".</td>
-    <td>DeviceVendorEnum</td>
+    <td>Punits</td>
+    <td>Specifies the number of processor units in a symmetric multi-processor core (MPCore). Defaults to single-core CPU (\token{1}) when left empty.</td>
+    <td>InstancesType</td>
     <td>optional</td>
   </tr>
   <tr>
@@ -1567,6 +1577,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.abov.co.kr/en/</td>
   </tr>
   <tr>
+    <td class="XML-Token">Active-Semi:140</td>
+    <td>Active-Semi</td>
+    <td>http://www.active-semi.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Ambiq Micro:120</td>
     <td>Ambiq Micro</td>
     <td>http://www.ambiqmicro.com</td>
@@ -1602,9 +1617,9 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.dialog-semiconductor.com</td>
   </tr>
   <tr>
-    <td class="XML-Token">Freescale:78</td>
-    <td>Freescale</td>
-    <td>http://www.freescale.com</td>
+    <td class="XML-Token">Elmos Semiconductor AG:138</td>
+    <td>Elmos Semiconductor AG</td>
+    <td>http://www.elmos.com</td>
   </tr>
   <tr>
     <td class="XML-Token">Generic:5</td>
@@ -1630,6 +1645,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">Lapis Semiconductor:10</td>
     <td>Lapis Semiconductor</td>
     <td>http://www.lapis-semi.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Linear Technolgy:136</td>
+    <td>Linear Technolgy</td>
+    <td>http://www.linear.com/</td>
   </tr>
   <tr>
     <td class="XML-Token">Maxim:23</td>
@@ -1659,7 +1679,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">MindMotion:132</td>
     <td>MindMotion</td>
-    <td>//http://www.mindmotion.com.cn</td>
+    <td>http://www.mindmotion.com.cn</td>
   </tr>
   <tr>
     <td class="XML-Token">Nordic Semiconductor:54</td>
@@ -1707,6 +1727,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.samsung.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Silergy Corp:139</td>
+    <td>Silergy Corporation</td>
+    <td>http://silergy.com/</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Silicon Labs:21</td>
     <td>Silicon Labs</td>
     <td>http://www.silabs.com</td>
@@ -1742,15 +1767,25 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.wiznet.co.kr</td>
   </tr>
   <tr>
-    <td class="XML-Token">Xinnova</td>
+    <td class="XML-Token">Xinnova:135</td>
     <td>Xinnova Technology</td>
     <td>http://www.xinnovatech.com/en</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Zilog:89</td>
+    <td>Zilog</td>
+    <td>https://zilog.com/</td>
   </tr>
 </table>
 
 <p>&nbsp;</p>
 
 \anchor AlgorithmStyleEnum <b>Table: Algorithm Styles</b>
+
+The table lists the predefined Flash algorithm style. These values can be used in:
+ - \ref element_algorithm
+ - \ref element_target_algorithm
+
 <table class="cmtable" summary="Enumeration: AlgorithmStyleEnum">
   <tr>
     <th>style=</th>
@@ -1801,18 +1836,9 @@ These values can be used in the elements:
     <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m1.php" target="_blank">ARM Cortex-M1</a> processor based device</td>
   </tr>
   <tr>
-    <td class="XML-Token">Cortex-M23</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" target="_blank">ARM Cortex-M23</a> processor based device</td>
-  </tr>
-  <tr>
     <td class="XML-Token">Cortex-M3</td>
     <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m3.php" target="_blank">ARM Cortex-M3</a> processor based device</td>
   </tr>
-  <tr>
-    <td class="XML-Token">Cortex-M33</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" target="_blank">ARM Cortex-M33</a> processor based device</td>
-  </tr>
-
   <tr>
     <td class="XML-Token">Cortex-M4</td>
     <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m4-processor.php" target="_blank">ARM Cortex-M4</a> processor based device</td>
@@ -1820,6 +1846,14 @@ These values can be used in the elements:
   <tr>
     <td class="XML-Token">Cortex-M7</td>
     <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m7-processor.php" target="_blank">ARM Cortex-M7</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-M23</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" target="_blank">ARM Cortex-M23</a> processor based device</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cortex-M33</td>
+    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" target="_blank">ARM Cortex-M33</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">SC000</td>
@@ -1918,6 +1952,7 @@ The tokens can be used in the elements:
 - \ref element_require 
 - \ref element_deny  
 - \ref element_processor
+- \ref cpdsc_target_pg
 	
 <table class="cmtable" summary="Enumeration: DfpuEnum">
   <tr>
@@ -1952,6 +1987,7 @@ The values can be used in the elements:
 - \ref element_require 
 - \ref element_deny  
 - \ref element_processor
+- \ref cpdsc_target_pg
 
 <table class="cmtable" summary="Enumeration: DmpuEnum">
   <tr>
@@ -2058,6 +2094,8 @@ The values can be used in the elements:
 - \ref element_require
 - \ref element_deny  
 - \ref element_processor
+- \ref cpdsc_target_pg
+- \ref element_target_algorithm
 
 <table class="cmtable" summary="Enumeration: DendianEnum">
   <tr>
@@ -2161,7 +2199,10 @@ Default debugger configuration for a target connection.
 
 \anchor DebugProtocolEnum <b>Table: Debug Protocol Type</b>
 
-The table lists the values for debug protocol types.
+The table lists the values for debug protocol types. The values can be used in 
+ - \ref element_debugconfig
+ - \ref element_debugProbe
+
 <table class="cmtable" summary="Enumeration: DataPatchAccessTypeEnum">
   <tr>
     <th>type=</th>
@@ -2402,7 +2443,7 @@ described in the following table.
     <td>
       Debug Port selected for target accesses.<br>
       This variable is initialized when entering a pre-defined debug access
-      sequence because of a debug event. The initialization value
+      sequence on a debug event. The initialization value
       is the <b>__dp</b> as defined for the used <b>debug</b> element.
     </td>
     <td>
@@ -2416,7 +2457,7 @@ described in the following table.
     <td>
       Access Port selected for target accesses.<br>
       This variable is initialized when entering a pre-defined debug access
-      sequence because of a debug event. The initialization value
+      sequence on a debug event. The initialization value
       is the <b>__ap</b> as defined for the used <b>debug</b> element.
     </td>
     <td>
@@ -2465,9 +2506,10 @@ described in the following table.
 
 Describes a CoreSight debug port of the device and its capabilities. The element can occur on various
 levels. Use unique ID values for the attribute <b>__dp</b> to distinguish multiple <b>debugport</b>
-elements in later references.<br><br>
-<b>debugport</b> elements are required for targets with multiple debug ports. For devices with a
-single debug port these elements can be omitted. If no <b>debugport</b> element exists the only
+elements in later references.
+
+<b>debugport</b> elements are required for targets with multiple debug ports. These elements can be omitted
+for devices with a single debug port. If no <b>debugport</b> element exists, then the only
 allowed <b>__dp</b> ID in later references is \token{0}.
 
 \b Example
@@ -2947,145 +2989,6 @@ Refer to \ref usage_of_sequences for details.<br>
   </tr>
 </table>
 
-<p>&nbsp;</p>		
-
-\anchor sequences_names <b>Table: Pre-defined Debug Access Sequences</b>
-
-The following table list the Pre-defined Debug Access Sequences.
-For sequences that are not specified in a <b>sequence</b> element \ref default_sequences are executed.
-Refer to \ref usage_of_sequences Usage for more information about the execution of these sequences.
-
-<table class="cmtable" summary="Enumeration: SequenceNameEnum">
-  <tr>
-    <th>name=</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref DebugPortSetup</td>
-    <td>Prepare the target debug port for connection; is executed before acquiring access to the debug port.<br>
-	May include for example an SWJ-DP switch sequence as defined in the ARM Debug Interface (ADI) Architecture Specification.<br>
-    <b>This sequence must not contain debug port/access port register and target memory accesses other than:</b>
-    - <b>Reading the \em DPIDR debug port register to release an SWD connection from its line reset.</b>
-    - <b>Writing the \em TARGETSEL debug port register (SWD protocol v2).</b>
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref DebugPortStart</td>
-    <td>Connect to the target debug port and power it up; is executed after DebugPortSetup.<br>
-	The parent <b>debugport</b> is default debug port for this sequence.<br>
-    <b>This sequence must not contain access port register and target memory accesses.</b></td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref DebugPortStop</td>
-    <td>Power down and disconnect from target debug port.<br>
-    Executed as last step during target disconnect unless another debugger connection to this port is active. The parent
-    <b>debugport</b> is default debug port for this sequence.<br>
-    <b>This sequence must not contain access port register and target memory accesses.</b></td>
-  </tr>
-  <tr>
-    <td class="XML-Token">DebugDeviceUnlock</td>
-    <td>Check if the device is in a locked state and unlock it. Use <b>query</b> command elements
-    for user confirmation.<br>
-    Executed after having powered up the debug port.</td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref DebugCoreStart</td>
-    <td>Initialize core debug system.<br>
-    Executed after having connected and powered up the default debug port for the connection.</td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref DebugCoreStop</td>
-    <td>Uninitialize core debug system.<br>
-    Executed as last step during disconnect before powering down any debug ports no longer required for
-    concurrent connections.</td>
-  </tr>
-  <tr>
-    <td class="XML-Token">DebugCodeMemRemap</td>
-    <td>Remap memory to execution location.<br>
-    Executed before verifying memory content after flash programming. This is required to replicate a memory remap of a device bootloader (that is not executed during debug connection).
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetSystem</td>
-    <td>Execute a system-wide reset via software mechanisms.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetProcessor</td>
-    <td>Execute a processor reset via software mechanisms.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetHardware</td>
-    <td>Execute a system-wide reset via the dedicated debugger reset line, e.g. nRST.
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetHardwareAssert</td>
-    <td>Assert a system-wide reset via the dedicated debugger reset line, e.g. nRST.
-  </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetHardwareDeassert</td>
-    <td>Deassert a system-wide reset via the dedicated debugger reset line, e.g. nRST.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetCatchSet</td>
-    <td>Executed before a target reset to configure the vector catch to stop code execution after the reset.<br>
-    The implementation of <b>ResetCatchSet</b> requires an implementation of <b>ResetCatchClear</b>
-    to free any hardware resources used for stopping the core.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">\ref ResetCatchClear</td>
-    <td>Executed after a target reset to free hardware resources allocated by <b>ResetCatchSet</b>.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">FlashEraseDone</td>
-    <td>
-    Executed after erasing flash memory.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">FlashProgramDone</td>
-    <td>
-    Eexecuted after programming flash memory.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">TraceStart</td>
-    <td>Enable target trace capture.<br>
-    Executed before the debugger powers up and configures standard CoreSight trace components, e.g. after the initial target connection
-    as well as after a system-wide reset.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">TraceStop</td>
-    <td>Disable target trace capture.<br>
-    Executed after the debugger disabled and powered down standard CoreSight trace components.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">RecoverySupportStart</td>
-    <td>Executed before step or run command to support recovery from a lost target connection, e.g. after a low power mode.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">RecoverySupportStop</td>
-    <td>Executed after step or run command in context of the <b>RecoverySupportStart</b> sequence.
-    </td>
-  </tr>
-  <tr>
-    <td class="XML-Token">RecoveryAcknowledge</td>
-    <td>Debugger acknowledge after recovering from a lost target connection. Can be executed independently
-    from a <b>RecoverySupportStart</b> sequence.
-    </td>
-  </tr>
-</table>
-
-<p>&nbsp;</p>
-<hr>
 
 \section element_seq_control /package/devices/family/.../sequences/sequence/control
 
@@ -3285,7 +3188,7 @@ for details on the allowed syntax of the block contents.
 </table>
 
 <b>Atomic Blocks:</b>
-- Do not use debug access results for subsequent accesses in the same atomic block.
+- Within an atomic block a variable must no longer be used as an r-value after a result from a target access has been assigned to it.
 - Support for atomic blocks is highly debugger dependent. Keep them as short and simple as possible
 to address a wide range of debuggers.
 - <b>Query</b> and <b>Sequence</b> debug access functions must not be used in an atomic block.
@@ -3692,7 +3595,7 @@ debug access variables which are evaluated for the function call.
   <tr>
     <td style="white-space: nowrap"><pre>DAP_SWJ_Sequence(cnt, val)</pre></td>
     <td>
-      Debug probe command to generate required SWJ sequences, e.g. for SWD/JTAG Reset, SWD<->JTAG
+      Debug probe command to generate required SWJ sequences,  for example,  for SWD/JTAG Reset, SWD<->JTAG
       switch and Dormant operation.<br>
       <br>
       <b>Parameters:</b><br>
@@ -3748,6 +3651,91 @@ debug access variables which are evaluated for the function call.
       
     </td>
   </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>QueryValue("message", default)</pre></td>
+    <td>
+      Query input value from user. The sequence execution stalls until the user has entered a value or canceled the query.
+      This function returns the <b>default</b> value if the user canceled the query or if the debugger runs in a batch mode.<br>
+      <br>
+      <b>Parameters:</b><br>
+      - message: A constant string with the query message to display. It must not be an expression and it must be
+                 enclosed by quotes.
+      - default: The default value to return if the user cancels the query or if the debugger runs in batch mode.
+
+      <b>Return Value:</b><br>
+      The queried value.
+
+    </td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>Message(type, "format", ...)</pre></td>
+    <td>
+      Outputs a message to a log window.<br>
+      <br>
+      <b>Parameters:</b><br>
+      - type: Message type. Can be one of:
+        - \token{0} : <b>Info</b>, outputs an informative message.
+        - \token{1} : <b>Warning</b>, outputs a warning.
+        - \token{2} : <b>Error</b>, outputs an error. Sequence execution aborts.
+      - format: A constant string with the message format. It must not be an expression and it must be
+                 enclosed by quotes. The string has the following format:<br>
+                 \code
+                 %[flags][width][.precision]specifier
+                 \endcode
+        - Specifiers:
+          - \token{\%u}: 32-bit unsigned decimal integer.
+          - \token{\%llu}: 64-bit unsigned decimal integer.
+          - \token{\%x}: 32-bit unsigned hexadecimal integer, lower case letters.
+          - \token{\%llx}: 64-bit unsigned hexadecimal integer, lower case letters.
+          - \token{\%X}: 32-bit unsigned hexadecimal integer, upper case letters.
+          - \token{\%llX}: 64-bit unsigned hexadecimal integer, upper case letters.
+          - \token{\%o}: 32-bit unsigned octal integer.
+          - \token{\%llo}: 64-bit unsigned octal integer.
+          - \token{\%b}: 32-bit unsigned binary integer.
+          - \token{\%llb}: 64-bit unsigned binary integer.
+          - \token{\%f}: Single-precision (32-bit) floating point value.
+          - \token{\%Lf}: Double-precision (64-bit) floating point value.
+          - \token{\%s}: Constant character string. Must not be an expression.
+          - \token{\%\%}: Print \token{\%} character.
+        - Flags:
+          - \token{0}: Pad the displayed value with zeros instead of spaces if padding is required by
+                       the \token{width} option.
+        - Width: Minimum number of displayed characters. If \token{width} is less than the number of characters
+                         of the value, then the value is padded with spaces to the left.
+        - .Precision:
+          - <b>Integer</b>: Minimum number of displayed digits. Padded with zeros to the left if the
+                             value has less digits than specified with \token{.precision}.
+          - <b>Floating Point</b>: Number of displayed digits after decimal point. Defaults to \token{6}
+                                    if not specified.
+          - <b>Constant String</b>: Maximum number of displayed characters.
+      - ... : Additional function parameters to replace format string specifiers. Each parameter can be
+             a constant string, or an expression that resolves to an unsigned 64-bit integer. A parameter
+             type must match the corresponding specifier type.
+
+      <b>Return Value:</b><br>
+      Always returns \token{0}.
+
+      \note
+      For 32-bit specifiers the <b>Message</b> command must print the lower 32 Bit of a 64 Bit debug access variable.
+
+    </td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>LoadDebugInfo("file")</pre></td>
+    <td>
+      Loads DWARF debug information from an application executable.<br>
+      <br>
+      <b>Parameters:</b><br>
+      - file: A constant string with the path to the executable. The path must be relative to the
+              root folder of the pack and use the format <b>path/name.extension</b>. It must not be 
+              an expression and it must be enclosed by quotes.
+              
+      <b>Return Value:</b><br>
+      Returns \token{0} after successful debug information load.<br>
+      Returns \token{1} if debug information load failed.
+
+    </td>
+  </tr>
 </table>
 
 \note
@@ -3759,9 +3747,7 @@ debug access variables which are evaluated for the function call.
   debug or access port than the default ones, it must change these values. This change is held
   until finishing the sequence the change has occurred in.
 
-<p>&nbsp;</p>
-<hr>
-
+\delim
 
 \section element_debug /package/devices/family/.../debug
 
@@ -3769,7 +3755,7 @@ Describes configuration settings, default values, and patches for data accesses 
 elements can be defined which are either specific to a processor identified by attribute <b>Pname</b>, or which apply
 to all connections.
 
-\b Example
+\b Example \b 1
 \code
 <family Dfamily="LPC4300 Series" Dvendor="NXP:11">
   ...
@@ -3782,6 +3768,20 @@ to all connections.
   </debug>
   ...
 </family>
+\endcode
+
+\b Example \b 2
+\code
+<device name="MCIMX7D">
+  ...
+  <processor Dcore="Cortex-A7" DcoreVersion="r0p5" Pname="Cortex-A7" Punits="2" />
+  <processor Dcore="Cortex-M4" DcoreVersion="r0p1" Pname="Cortex-M4"/>
+  ...
+  <debug   Pname="Cortex-A7" Punit="0" svd="SVD/iMX7D_A7.svd" __dp="0" __ap="1" address="0x80070000"/> 
+  <debug   Pname="Cortex-A7" Punit="1" svd="SVD/iMX7D_A7.svd" __dp="0" __ap="1" address="0x80072000"/>
+  <debug   Pname="Cortex-M4"           svd="SVD/iMX7D_M4.svd" __dp="0" __ap="4"/>
+  ...
+</device>
 \endcode
 
 <p>&nbsp;</p>		
@@ -3810,18 +3810,6 @@ to all connections.
     <th>Use</th>
   </tr>
   <tr>
-    <td>Pname</td>
-    <td>
-      Reference to a processor identifier as specified for a <b>processor</b> element. If <b>Pname</b> is set
-      this <b>debug</b> element's settings and data patches only apply for target connections to the referenced
-      processor. Otherwise, they apply for all processors.
-      <b>This attribute must be set if defining multiple \em debug elements within the same section.</b>
-      Only alphabetical characters, decimal digits, '-' and '_' are allowed.
-    </td>
-    <td>RestrictedString</td>
-    <td>optional</td>
-  </tr>
-  <tr>
     <td>__dp</td>
     <td>
       Default debug port ID to use for target accesses in this debug connection. The allowed values are
@@ -3845,9 +3833,51 @@ to all connections.
     <td>optional</td>
   </tr>
   <tr>
+    <td>address</td>
+    <td>
+      Base "address" of the CPU debug block referenced by "Pname" (and "Punit" in an MPCore system). Use in combination
+      with attributes "_dp" and "_ap". Mandatory if multiple CPU debug blocks are accessible via a single AP. Optional
+      if an AP hosts a single CPU debug block. Then a debugger can determine its base address in by analyzing the ROM
+      table behind __dp and __ap.
+    </td>
+    <td>NonNegativeInteger</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <td>svd</td>
     <td>The system viewer description (*.SVD) file to load for this debug connection. The file path is relative
     to the package base folder.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Pname</td>
+    <td>
+      Reference to a processor identifier as specified for a <b>processor</b> element. If <b>Pname</b> is set
+      this <b>debug</b> element's settings and data patches only apply for target connections to the referenced
+      processor. Otherwise, they apply for all processors.
+      <b>This attribute must be set if defining multiple \em debug elements within the same section.</b>
+      Only alphabetical characters, decimal digits, '-' and '_' are allowed.
+    </td>
+    <td>RestrictedString</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Punit</td>
+    <td>
+      Use "Punit" in addition to "Pname" to select a specific processor unit of a symmetric MPCore that the \<debug\>
+      configuration applies to. "Punit" is a '0'-based index and must be less than "Punits" of \<processor\>. If
+      "Punit" is not specified, the \<debug\> configuration applies to all processor units of the MPCore.
+    </td>
+    <td>xs:unsignedInt</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>defaultResetSequence</td>
+    <td>
+      Specifies the debug sequence that is to be used for the device. Refer to \ref writing_sequences for more
+      information.
+    </td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -3859,16 +3889,13 @@ to all connections.
   </tr>
   <tr>
     <td>\ref element_dbg_datapatch "datapatch"</td>
-    <td>Define a patch to apply for data reads in this debug connection.
-    </td>
+    <td>Define a patch to apply for data reads in this debug connection.</td>
     <td>DataPatchType</td>
     <td>0..*</td>
   </tr>
-
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+\delim
 
 \section element_dbg_datapatch /package/devices/family/.../debug/datapatch
 
@@ -3914,6 +3941,12 @@ Describes a patch a debugger shall apply when reading data from the device.
     <td>optional</td>
   </tr>
   <tr>
+    <td>address</td>
+    <td>The address for which to apply the patch.</td>
+    <td>NonNegativeInteger</td>
+    <td>required</td>
+  </tr>
+  <tr>
     <td>__dp</td>
     <td>
       The debug port ID to apply the patch for. The allowed values are defined by the <b>__dp</b> attribute of <b>debugport</b>
@@ -3929,12 +3962,6 @@ Describes a patch a debugger shall apply when reading data from the device.
       for the data patch is set to the default <b>__ap</b> of this <b>debug</b> section.
     <td>xs:unsignedInt</td>
     <td>optional</td>
-  </tr>
-  <tr>
-    <td>address</td>
-    <td>The address for which to apply the patch.</td>
-    <td>NonNegativeInteger</td>
-    <td>required</td>
   </tr>
   <tr>
     <td>value</td>
@@ -4349,7 +4376,7 @@ Defines a device variant. The element is optional. Can exist multiple times.
 </device>
 \endcode
 
-<p>&nbsp;</p>		
+\n
 
 <table class="cmtable" summary="Element: variant">
   <tr>
@@ -4369,7 +4396,7 @@ Defines a device variant. The element is optional. Can exist multiple times.
   <tr>
     <td>Dvariant</td>
     <td>Name of the device variant. Only alphabetical characters, decimal digits, '-' and '_' are allowed</td>
-    <td>RestrictedString</td>
+    <td>RestrictedStringDname</td>
     <td>required</td>
   </tr>
   <tr>
@@ -4379,25 +4406,90 @@ Defines a device variant. The element is optional. Can exist multiple times.
     <th>Occurrence</th>
   </tr>
   <tr>
+    <td>\ref element_processor "processor"</td>
+    <td>Specify processors that are specific to this device.</td>
+    <td>ProcessorType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_debugconfig "debugconfig"</td>
+    <td>Specify default settings for the debug connection specific to this device.</td>
+    <td>DebugConfigType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_compile "compile"</td>
+    <td>Specify compile or translate options specific to this device.</td>
+    <td>CompileType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_memory "memory"</td>
+    <td>Specify memory areas that specific to this device.</td>
+    <td>MemoryType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_algorithm "algorithm"</td>
+    <td>Specify Flash programming algorithms that can be used by this device.</td>
+    <td>AlgorithmType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
     <td>\ref element_book "book"</td>
-    <td>List books that are specific to this variant.</td>
+    <td>Specify documents specific to this device.</td>
     <td>BookType</td>
     <td>0..*</td>
   </tr>
   <tr>
     <td>\ref element_description "description"</td>
-    <td>Device description.</td>
+    <td>Description specific to this device.</td>
     <td>DescriptionType</td>
     <td>0..*</td>
   </tr>
   <tr>
     <td>\ref element_feature "feature"</td>
-    <td>Define features for this device variant.</td>
+    <td>Specify the features of this device.</td>
     <td>FeatureType</td>
     <td>0..*</td>
   </tr>
+  <tr>
+    <td>\ref element_feature "environment"</td>
+    <td>Specify tool options.</td>
+    <td>EnvironmentType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_debugport "debugport"</td>
+    <td>Describe a debug port specific to this device.</td>
+    <td>DebugPortType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_debug "debug"</td>
+    <td>Specify debug options specific to this device.</td>
+    <td>DebugType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_trace "trace"</td>
+    <td>Specify trace options specific to this device.</td>
+    <td>TraceType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\ref element_debugvars "debugvars"</td>
+    <td>Define debug access variables for user-defined settings specific to this device.</td>
+    <td>DebugVarsType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_sequences "sequences"</td>
+    <td>Describe debug access sequences specific to this device.</td>
+    <td>SequencesType</td>
+    <td>0..1</td>
+  </tr>
 </table>
 
-<p>&nbsp;</p>		
-<hr>
+\delim
 */

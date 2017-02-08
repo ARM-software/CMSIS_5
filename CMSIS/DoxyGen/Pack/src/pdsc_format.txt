@@ -70,7 +70,6 @@ The \ref packFormat is structured using grouping elements and contains the follo
    It allows making components and files conditional.
  - \subpage pdsc_components_pg "<components>": lists the software components contained in the \ref cp_SWComponents "Software Pack".
  - \subpage pdsc_examples_pg "<examples>": specifies example projects contained in the PACK.
- - \subpage pdsc_SequenceNameEnum_pg "<sequence>": specifies sequences of debugger commands.
 
 \section PDSC_Example Example of a *.PDSC File
 
@@ -187,7 +186,10 @@ assists searching for packages.
   </tr>
   <tr>
     <td>url</td>
-    <td><a href="https://en.wikipedia.org/wiki/Uniform_resource_locator" target="_blank">HTTP URL</a> or <a href="https://en.wikipedia.org/wiki/File_URI_scheme" target="_blank">file URI</a> location of the \ref cp_SWComponents "Software Pack". The URL can be used by installers for downloading, updating, or checking versions. If left empty, the Pack cannot be updated automatically from a server location.</td>
+    <td><a href="https://en.wikipedia.org/wiki/Uniform_resource_locator" target="_blank">HTTP URL</a> 
+        or <a href="https://en.wikipedia.org/wiki/File_URI_scheme" target="_blank">file URI</a> location 
+        of the \ref cp_SWComponents "Software Pack". The URL can be used by installers for downloading, 
+        updating, or checking versions. If left empty, the Pack cannot be updated automatically from a server location.</td>
     <td>xs:anyURI </td>
     <td>1..1 </td>
   </tr>
@@ -204,12 +206,6 @@ assists searching for packages.
     <td>0..1 </td>
   </tr>
   <tr>
-    <td>\ref element_releases "releases"</td>
-    <td>Version release history with brief information about a \ref cp_SWComponents "Software Pack".</td>
-    <td>ReleasesGroup</td>
-    <td>1..1 </td>
-  </tr>
-  <tr>
     <td>\ref element_requirements "requirements"</td>
     <td>Specifies other CMSIS-Packs, programming languages and compiler as well as their respective version
         or version range required by the components in this pack.
@@ -217,6 +213,18 @@ assists searching for packages.
     <td>RequirementsType</td>
     <td>0..1 </td>
   </td>
+  <tr>
+    <td>create</td>
+    <td>Use only when creating CMSIS software projects. Refer to \ref cpdsc_pg for details.</td>
+    <td>CreateType</td>
+    <td>0..1 </td>
+  </tr>
+  <tr>
+    <td>\ref element_releases "releases"</td>
+    <td>Version release history with brief information about a \ref cp_SWComponents "Software Pack".</td>
+    <td>ReleasesGroup</td>
+    <td>1..1 </td>
+  </tr>
   <tr>
     <td>\ref element_keywords "keywords"</td>
     <td>Defines keywords that might be used to find a \ref cp_SWComponents "Software Pack". Keywords may be also exported to web page to provide information for search engines, such as Google.</td>
@@ -822,6 +830,7 @@ and group \token{Startup} is defined for the device-specific CMSIS-CORE files.
     <description Cclass="Graphics">Graphical User Interface</description>
     <description Cclass="Network">Network Stack using Internet Protocols</description>
     <description Cclass="USB">Universal Serial Bus Stack</description>
+    <description Cclass="RTOS">Realtime Operating System</description>
   </taxonomy>
 \endcode
 
@@ -900,6 +909,7 @@ These values can be used in the elements:
 - \ref element_bundle
 - \ref element_api
 - \ref element_taxonomyDescription
+- \ref element_project_component
 
 \b Example:
 \code
@@ -944,6 +954,14 @@ The table lists predefined Component Classes.
     <td class="XML-Token">USB</td>
     <td>Components implementing some kind of USB interfaces (e.g. Host and Device interfaces)</td>
   </tr>
+  <tr>
+    <td class="XML-Token">Compiler</td>
+    <td>Components implementing Compiler specific interfaces (e.g. Retargeting)</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">RTOS</td>
+    <td>Components implementing some kind of Real-time Operating System (e.g. FreeRTOS, Micrium Real Time Kernel)</td>
+  </tr>
 </table>
 
 <p>&nbsp;</p>
@@ -968,6 +986,7 @@ Component Groups can be used in the elements:
 - \ref element_component
 - \ref element_api
 - \ref element_taxonomyDescription
+- \ref element_project_component
 
 The table lists predefined values for the Component Class <b>Cclass="CMSIS"</b>.
 No other Component Groups have been defined so far.

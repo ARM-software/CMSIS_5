@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -7,7 +7,7 @@
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        12. October 2016
- * $Revision:    V1.0
+ * $Date:        10. January 2017
+ * $Revision:    V1.2
  *
  * Project:      CMSIS-RTOS API V1
  * Title:        cmsis_os_v1.c V1 module file
@@ -36,51 +36,51 @@ osThreadId osThreadCreate (const osThreadDef_t *thread_def, void *argument) {
   if (thread_def == NULL) {
     return (osThreadId)NULL;
   }
-  return osThreadNew((os_thread_func_t)thread_def->pthread, argument, &thread_def->attr);
+  return osThreadNew((osThreadFunc_t)thread_def->pthread, argument, &thread_def->attr);
 }
 
 
 // Signals
 
-#define SignalMask (int32_t)((1U<<osFeature_Signals)-1U)
+#define SignalMask ((1U<<osFeature_Signals)-1U)
 
 int32_t osSignalSet (osThreadId thread_id, int32_t signals) {
-  int32_t flags;
+  uint32_t flags;
 
-  flags = osThreadFlagsSet(thread_id, signals);
-  if (flags < 0) {
-    return (int32_t)0x80000000U;
+  flags = osThreadFlagsSet(thread_id, (uint32_t)signals);
+  if ((flags & 0x80000000U) != 0U) {
+    return ((int32_t)0x80000000U);
   }
-  return (flags & ~signals);
+  return ((int32_t)(flags & ~((uint32_t)signals)));
 }
 
 int32_t osSignalClear (osThreadId thread_id, int32_t signals) {
-  int32_t flags;
+  uint32_t flags;
 
   if (thread_id != osThreadGetId()) {
-    return (int32_t)0x80000000U;
+    return ((int32_t)0x80000000U);
   }
-  flags = osThreadFlagsClear(signals);
-  if (flags < 0) {
-    return (int32_t)0x80000000U;
+  flags = osThreadFlagsClear((uint32_t)signals);
+  if ((flags & 0x80000000U) != 0U) {
+    return ((int32_t)0x80000000U);
   }
-  return flags;
+  return ((int32_t)flags);
 }
 
 osEvent osSignalWait (int32_t signals, uint32_t millisec) {
-  osEvent event;
-  int32_t flags;
+  osEvent  event;
+  uint32_t flags;
 
   if (signals != 0) {
-    flags = osThreadFlagsWait(signals,    osFlagsWaitAll, millisec);
+    flags = osThreadFlagsWait((uint32_t)signals, osFlagsWaitAll, millisec);
   } else {
-    flags = osThreadFlagsWait(SignalMask, osFlagsWaitAny, millisec);
+    flags = osThreadFlagsWait(SignalMask,        osFlagsWaitAny, millisec);
   }
-  if (flags > 0) {
+  if ((flags > 0U) && (flags < 0x80000000U)) {
     event.status = osEventSignal;
-    event.value.signals = flags;
+    event.value.signals = (int32_t)flags;
   } else {
-    switch (flags) {
+    switch ((int32_t)flags) {
       case osErrorResource:
         event.status = osOK;
         break;
@@ -105,7 +105,7 @@ osTimerId osTimerCreate (const osTimerDef_t *timer_def, os_timer_type type, void
   if (timer_def == NULL) {
     return (osTimerId)NULL;
   }
-  return osTimerNew((os_timer_func_t)timer_def->ptimer, type, argument, &timer_def->attr);
+  return osTimerNew((osTimerFunc_t)timer_def->ptimer, type, argument, &timer_def->attr);
 }
 
 

@@ -180,7 +180,7 @@ int32_t main(void)
   /*------------------------------------------------------------------------------
   *            Initialise status depending on SNR calculations
   *------------------------------------------------------------------------------*/
-  if( snr2 > snr1)
+  if ( snr2 > snr1)
   {
     status = ARM_MATH_SUCCESS;
   }
@@ -193,12 +193,12 @@ int32_t main(void)
   ** Loop here if the signals fail the PASS check.
   ** This denotes a test failure
   ** ------------------------------------------------------------------- */
-  if( status != ARM_MATH_SUCCESS)
+  if ( status != ARM_MATH_SUCCESS)
   {
-    while(1);
+    while (1);
   }
 
-  while(1);                             /* main function does not return */
+  while (1);                             /* main function does not return */
 }
 
  /** \endlink */

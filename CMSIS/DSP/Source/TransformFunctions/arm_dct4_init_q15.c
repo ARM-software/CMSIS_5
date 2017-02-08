@@ -1,78 +1,65 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_dct4_init_q15.c    
-*    
-* Description:	Initialization function of DCT-4 & IDCT4 Q15    
-*    
-* Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*  
-* Redistribution and use in source and binary forms, with or without 
-* modification, are permitted provided that the following conditions
-* are met:
-*   - Redistributions of source code must retain the above copyright
-*     notice, this list of conditions and the following disclaimer.
-*   - Redistributions in binary form must reproduce the above copyright
-*     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
-*     distribution.
-*   - Neither the name of ARM LIMITED nor the names of its contributors
-*     may be used to endorse or promote products derived from this
-*     software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
-* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-* ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.    
-* -------------------------------------------------------------------- */
-
+/* ----------------------------------------------------------------------
+ * Project:      CMSIS DSP Library
+ * Title:        arm_dct4_init_q15.c
+ * Description:  Initialization function of DCT-4 & IDCT4 Q15
+ *
+ * $Date:        27. January 2017
+ * $Revision:    V.1.5.1
+ *
+ * Target Processor: Cortex-M cores
+ * -------------------------------------------------------------------- */
+/*
+ * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include "arm_math.h"
 
-/**    
- * @ingroup groupTransforms    
+/**
+ * @ingroup DCT4_IDCT4
  */
 
-/**    
- * @addtogroup DCT4_IDCT4    
- * @{    
+/**
+ * @addtogroup DCT4_IDCT4_Table DCT Type IV Tables
+ * @{
  */
 
-/*    
-* @brief  Weights Table    
+/*
+* @brief  Weights Table
 */
 
-/**    
-* \par    
-* Weights tables are generated using the formula : <pre>weights[n] = e^(-j*n*pi/(2*N))</pre>    
-* \par    
-* C command to generate the table    
-* <pre>    
-* for(i = 0; i< N; i++)    
-* {    
-*   weights[2*i]= cos(i*c);    
-*   weights[(2*i)+1]= -sin(i * c);    
-* } </pre>    
-* \par    
-* where <code>N</code> is the Number of weights to be calculated and <code>c</code> is <code>pi/(2*N)</code>    
-* \par    
-* Converted the output to q15 format by multiplying with 2^31 and saturated if required.    
-* \par    
-* In the tables below the real and imaginary values are placed alternatively, hence the    
-* array length is <code>2*N</code>.    
-*/
+/**
+ * \par
+ * Weights tables are generated using the formula : <pre>weights[n] = e^(-j*n*pi/(2*N))</pre>
+ * \par
+ * C command to generate the table
+ * <pre>
+ * for(i = 0; i< N; i++)
+ * {
+ *   weights[2*i]= cos(i*c);
+ *   weights[(2*i)+1]= -sin(i * c);
+ * } </pre>
+ * \par
+ * where <code>N</code> is the Number of weights to be calculated and <code>c</code> is <code>pi/(2*N)</code>
+ * \par
+ * Converted the output to q15 format by multiplying with 2^31 and saturated if required.
+ * \par
+ * In the tables below the real and imaginary values are placed alternatively, hence the
+ * array length is <code>2*N</code>.
+ */
 
 static const q15_t ALIGN4 WeightsQ15_128[256] = {
   (q15_t)0x7fff, (q15_t)0x0, (q15_t)0x7ffd, (q15_t)0xfe6e, (q15_t)0x7ff6, (q15_t)0xfcdc, (q15_t)0x7fe9, (q15_t)0xfb4a,
@@ -106,7 +93,7 @@ static const q15_t ALIGN4 WeightsQ15_128[256] = {
   (q15_t)0x18f8, (q15_t)0x8276, (q15_t)0x176d, (q15_t)0x822a, (q15_t)0x15e2, (q15_t)0x81e3, (q15_t)0x1455, (q15_t)0x81a1,
   (q15_t)0x12c8, (q15_t)0x8163, (q15_t)0x1139, (q15_t)0x812b, (q15_t)0xfab, (q15_t)0x80f7, (q15_t)0xe1b, (q15_t)0x80c8,
   (q15_t)0xc8b, (q15_t)0x809e, (q15_t)0xafb, (q15_t)0x8079, (q15_t)0x96a, (q15_t)0x8059, (q15_t)0x7d9, (q15_t)0x803e,
-  (q15_t)0x647, (q15_t)0x8028, (q15_t)0x4b6, (q15_t)0x8017, (q15_t)0x324, (q15_t)0x800a, (q15_t)0x192, (q15_t)0x8003,
+  (q15_t)0x647, (q15_t)0x8028, (q15_t)0x4b6, (q15_t)0x8017, (q15_t)0x324, (q15_t)0x800a, (q15_t)0x192, (q15_t)0x8003
 };
 
 static const q15_t ALIGN4 WeightsQ15_512[1024] = {
@@ -237,7 +224,7 @@ static const q15_t ALIGN4 WeightsQ15_512[1024] = {
   (q15_t)0x647, (q15_t)0x8028, (q15_t)0x5e3, (q15_t)0x8023, (q15_t)0x57f, (q15_t)0x801f, (q15_t)0x51a, (q15_t)0x801b,
   (q15_t)0x4b6, (q15_t)0x8017, (q15_t)0x451, (q15_t)0x8013, (q15_t)0x3ed, (q15_t)0x8010, (q15_t)0x388, (q15_t)0x800d,
   (q15_t)0x324, (q15_t)0x800a, (q15_t)0x2bf, (q15_t)0x8008, (q15_t)0x25b, (q15_t)0x8006, (q15_t)0x1f6, (q15_t)0x8004,
-  (q15_t)0x192, (q15_t)0x8003, (q15_t)0x12d, (q15_t)0x8002, (q15_t)0xc9, (q15_t)0x8001, (q15_t)0x64, (q15_t)0x8001,
+  (q15_t)0x192, (q15_t)0x8003, (q15_t)0x12d, (q15_t)0x8002, (q15_t)0xc9, (q15_t)0x8001, (q15_t)0x64, (q15_t)0x8001
 };
 
 static const q15_t ALIGN4 WeightsQ15_2048[4096] = {
@@ -752,7 +739,7 @@ static const q15_t ALIGN4 WeightsQ15_2048[4096] = {
   (q15_t)0x192, (q15_t)0x8003, (q15_t)0x178, (q15_t)0x8003, (q15_t)0x15f, (q15_t)0x8002, (q15_t)0x146, (q15_t)0x8002,
   (q15_t)0x12d, (q15_t)0x8002, (q15_t)0x114, (q15_t)0x8002, (q15_t)0xfb, (q15_t)0x8001, (q15_t)0xe2, (q15_t)0x8001,
   (q15_t)0xc9, (q15_t)0x8001, (q15_t)0xaf, (q15_t)0x8001, (q15_t)0x96, (q15_t)0x8001, (q15_t)0x7d, (q15_t)0x8001,
-  (q15_t)0x64, (q15_t)0x8001, (q15_t)0x4b, (q15_t)0x8001, (q15_t)0x32, (q15_t)0x8001, (q15_t)0x19, (q15_t)0x8001,
+  (q15_t)0x64, (q15_t)0x8001, (q15_t)0x4b, (q15_t)0x8001, (q15_t)0x32, (q15_t)0x8001, (q15_t)0x19, (q15_t)0x8001
 };
 
 static const q15_t ALIGN4 WeightsQ15_8192[16384] = {
@@ -2803,25 +2790,25 @@ static const q15_t ALIGN4 WeightsQ15_8192[16384] = {
   (q15_t)0x64, (q15_t)0x8001, (q15_t)0x5e, (q15_t)0x8001, (q15_t)0x57, (q15_t)0x8001, (q15_t)0x51, (q15_t)0x8001,
   (q15_t)0x4b, (q15_t)0x8001, (q15_t)0x45, (q15_t)0x8001, (q15_t)0x3e, (q15_t)0x8001, (q15_t)0x38, (q15_t)0x8001,
   (q15_t)0x32, (q15_t)0x8001, (q15_t)0x2b, (q15_t)0x8001, (q15_t)0x25, (q15_t)0x8001, (q15_t)0x1f, (q15_t)0x8001,
-  (q15_t)0x19, (q15_t)0x8001, (q15_t)0x12, (q15_t)0x8001, (q15_t)0xc, (q15_t)0x8001, (q15_t)0x6, (q15_t)0x8001,
+  (q15_t)0x19, (q15_t)0x8001, (q15_t)0x12, (q15_t)0x8001, (q15_t)0xc, (q15_t)0x8001, (q15_t)0x6, (q15_t)0x8001
 };
 
 
-/**    
-* \par    
-* cosFactor tables are generated using the formula : <pre> cos_factors[n] = 2 * cos((2n+1)*pi/(4*N)) </pre>    
-* \par    
-* C command to generate the table    
-* <pre>    
-* for(i = 0; i< N; i++)    
-* {    
-*   cos_factors[i]= 2 * cos((2*i+1)*c/2);    
-* } </pre>    
-* \par    
-* where <code>N</code> is the number of factors to generate and <code>c</code> is <code>pi/(2*N)</code>    
-* \par    
-* Then converted to q15 format by multiplying with 2^31 and saturated if required.    
-    
+/**
+* \par
+* cosFactor tables are generated using the formula : <pre> cos_factors[n] = 2 * cos((2n+1)*pi/(4*N)) </pre>
+* \par
+* C command to generate the table
+* <pre>
+* for(i = 0; i< N; i++)
+* {
+*   cos_factors[i]= 2 * cos((2*i+1)*c/2);
+* } </pre>
+* \par
+* where <code>N</code> is the number of factors to generate and <code>c</code> is <code>pi/(2*N)</code>
+* \par
+* Then converted to q15 format by multiplying with 2^31 and saturated if required.
+
 */
 
 static const q15_t ALIGN4 cos_factorsQ15_128[128] = {
@@ -2907,7 +2894,7 @@ static const q15_t ALIGN4 cos_factorsQ15_512[512] = {
   (q15_t)0xc59, (q15_t)0xbf5, (q15_t)0xb91, (q15_t)0xb2d, (q15_t)0xac9, (q15_t)0xa65, (q15_t)0xa00, (q15_t)0x99c,
   (q15_t)0x938, (q15_t)0x8d4, (q15_t)0x86f, (q15_t)0x80b, (q15_t)0x7a7, (q15_t)0x742, (q15_t)0x6de, (q15_t)0x67a,
   (q15_t)0x615, (q15_t)0x5b1, (q15_t)0x54c, (q15_t)0x4e8, (q15_t)0x483, (q15_t)0x41f, (q15_t)0x3ba, (q15_t)0x356,
-  (q15_t)0x2f1, (q15_t)0x28d, (q15_t)0x228, (q15_t)0x1c4, (q15_t)0x15f, (q15_t)0xfb, (q15_t)0x96, (q15_t)0x32,
+  (q15_t)0x2f1, (q15_t)0x28d, (q15_t)0x228, (q15_t)0x1c4, (q15_t)0x15f, (q15_t)0xfb, (q15_t)0x96, (q15_t)0x32
 };
 
 static const q15_t ALIGN4 cos_factorsQ15_2048[2048] = {
@@ -3166,7 +3153,7 @@ static const q15_t ALIGN4 cos_factorsQ15_2048[2048] = {
   (q15_t)0x317, (q15_t)0x2fe, (q15_t)0x2e5, (q15_t)0x2cc, (q15_t)0x2b3, (q15_t)0x299, (q15_t)0x280, (q15_t)0x267,
   (q15_t)0x24e, (q15_t)0x235, (q15_t)0x21c, (q15_t)0x203, (q15_t)0x1ea, (q15_t)0x1d0, (q15_t)0x1b7, (q15_t)0x19e,
   (q15_t)0x185, (q15_t)0x16c, (q15_t)0x153, (q15_t)0x13a, (q15_t)0x121, (q15_t)0x107, (q15_t)0xee, (q15_t)0xd5,
-  (q15_t)0xbc, (q15_t)0xa3, (q15_t)0x8a, (q15_t)0x71, (q15_t)0x57, (q15_t)0x3e, (q15_t)0x25, (q15_t)0xc,
+  (q15_t)0xbc, (q15_t)0xa3, (q15_t)0x8a, (q15_t)0x71, (q15_t)0x57, (q15_t)0x3e, (q15_t)0x25, (q15_t)0xc
 
 };
 
@@ -4194,22 +4181,31 @@ static const q15_t ALIGN4 cos_factorsQ15_8192[8192] = {
   (q15_t)0xc5, (q15_t)0xbf, (q15_t)0xb9, (q15_t)0xb3, (q15_t)0xac, (q15_t)0xa6, (q15_t)0xa0, (q15_t)0x99,
   (q15_t)0x93, (q15_t)0x8d, (q15_t)0x87, (q15_t)0x80, (q15_t)0x7a, (q15_t)0x74, (q15_t)0x6d, (q15_t)0x67,
   (q15_t)0x61, (q15_t)0x5b, (q15_t)0x54, (q15_t)0x4e, (q15_t)0x48, (q15_t)0x41, (q15_t)0x3b, (q15_t)0x35,
-  (q15_t)0x2f, (q15_t)0x28, (q15_t)0x22, (q15_t)0x1c, (q15_t)0x15, (q15_t)0xf, (q15_t)0x9, (q15_t)0x3,
+  (q15_t)0x2f, (q15_t)0x28, (q15_t)0x22, (q15_t)0x1c, (q15_t)0x15, (q15_t)0xf, (q15_t)0x9, (q15_t)0x3
 };
 
-/**    
- * @brief  Initialization function for the Q15 DCT4/IDCT4.   
- * @param[in,out] *S         points to an instance of Q15 DCT4/IDCT4 structure.   
- * @param[in]     *S_RFFT    points to an instance of Q15 RFFT/RIFFT structure.   
- * @param[in]     *S_CFFT    points to an instance of Q15 CFFT/CIFFT structure.   
- * @param[in]     N          length of the DCT4.   
- * @param[in]     Nby2       half of the length of the DCT4.   
- * @param[in]     normalize  normalizing factor.   
- * @return  	  arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>N</code> is not a supported transform length.   
- * \par Normalizing factor:    
- * The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>.    
- * Normalizing factors in 1.15 format are mentioned in the table below for different DCT sizes:    
- * \image html dct4NormalizingQ15Table.gif    
+/**
+ * @} end of DCT4_IDCT4_Table group
+ */
+
+/**
+ * @addtogroup DCT4_IDCT4
+ * @{
+ */
+
+/**
+ * @brief  Initialization function for the Q15 DCT4/IDCT4.
+ * @param[in,out] *S         points to an instance of Q15 DCT4/IDCT4 structure.
+ * @param[in]     *S_RFFT    points to an instance of Q15 RFFT/RIFFT structure.
+ * @param[in]     *S_CFFT    points to an instance of Q15 CFFT/CIFFT structure.
+ * @param[in]     N          length of the DCT4.
+ * @param[in]     Nby2       half of the length of the DCT4.
+ * @param[in]     normalize  normalizing factor.
+ * @return  	  arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>N</code> is not a supported transform length.
+ * \par Normalizing factor:
+ * The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>.
+ * Normalizing factors in 1.15 format are mentioned in the table below for different DCT sizes:
+ * \image html dct4NormalizingQ15Table.gif
  */
 
 arm_status arm_dct4_init_q15(
@@ -4279,6 +4275,6 @@ arm_status arm_dct4_init_q15(
   return (status);
 }
 
-/**    
-   * @} end of DCT4_IDCT4 group    
-   */
+/**
+ * @} end of DCT4_IDCT4 group
+ */

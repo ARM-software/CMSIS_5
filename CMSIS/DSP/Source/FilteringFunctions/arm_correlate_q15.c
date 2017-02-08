@@ -1,42 +1,30 @@
 /* ----------------------------------------------------------------------
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
-*
-* $Date:        26. September 2016
-* $Revision:    V.1.4.5 a
-*
-* Project:      CMSIS DSP Library
-* Title:        arm_correlate_q15.c
-*
-* Description:  Correlation of Q15 sequences.
-*
-* Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions
-* are met:
-*   - Redistributions of source code must retain the above copyright
-*     notice, this list of conditions and the following disclaimer.
-*   - Redistributions in binary form must reproduce the above copyright
-*     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the
-*     distribution.
-*   - Neither the name of ARM LIMITED nor the names of its contributors
-*     may be used to endorse or promote products derived from this
-*     software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-* ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.
-* -------------------------------------------------------------------- */
+ * Project:      CMSIS DSP Library
+ * Title:        arm_correlate_q15.c
+ * Description:  Correlation of Q15 sequences
+ *
+ * $Date:        27. January 2017
+ * $Revision:    V.1.5.1
+ *
+ * Target Processor: Cortex-M cores
+ * -------------------------------------------------------------------- */
+/*
+ * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include "arm_math.h"
 
@@ -113,7 +101,7 @@ void arm_correlate_q15(
    * (srcALen - srcBLen) zeroes has to included in the starting of the output buffer */
   /* If srcALen < srcBLen,
    * (srcALen - srcBLen) zeroes has to included in the ending of the output buffer */
-  if(srcALen >= srcBLen)
+  if (srcALen >= srcBLen)
   {
     /* Initialization of inputA pointer */
     pIn1 = (pSrcA);
@@ -195,7 +183,7 @@ void arm_correlate_q15(
    * ----------------------*/
 
   /* The first loop starts here */
-  while(blockSize1 > 0u)
+  while (blockSize1 > 0u)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0;
@@ -205,7 +193,7 @@ void arm_correlate_q15(
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* x[0] * y[srcBLen - 4] , x[1] * y[srcBLen - 3] */
       sum = __SMLALD(*__SIMD32(px)++, *__SIMD32(py)++, sum);
@@ -220,7 +208,7 @@ void arm_correlate_q15(
      ** No loop unrolling is used. */
     k = count % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulates */
       /* x[0] * y[srcBLen - 1] */
@@ -272,12 +260,12 @@ void arm_correlate_q15(
   /* Stage2 depends on srcBLen as in this stage srcBLen number of MACS are performed.
    * So, to loop unroll over blockSize2,
    * srcBLen should be greater than or equal to 4, to loop unroll the srcBLen loop */
-  if(srcBLen >= 4u)
+  if (srcBLen >= 4u)
   {
     /* Loop unroll over blockSize2, by 4 */
     blkCnt = blockSize2 >> 2u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Set all accumulators to zero */
       acc0 = 0;
@@ -343,13 +331,13 @@ void arm_correlate_q15(
         /* acc3 +=  x[5] * y[2] + x[6] * y[3] */
         acc3 = __SMLALD(x1, c0, acc3);
 
-      } while(--k);
+      } while (--k);
 
       /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
        ** No loop unrolling is used. */
       k = srcBLen % 0x4u;
 
-      if(k == 1u)
+      if (k == 1u)
       {
         /* Read y[4] */
         c0 = *py;
@@ -373,7 +361,7 @@ void arm_correlate_q15(
         acc3 = __SMLALDX(x3, c0, acc3);
       }
 
-      if(k == 2u)
+      if (k == 2u)
       {
         /* Read y[4], y[5] */
         c0 = *__SIMD32(py);
@@ -392,7 +380,7 @@ void arm_correlate_q15(
         acc3 = __SMLALD(x2, c0, acc3);
       }
 
-      if(k == 3u)
+      if (k == 3u)
       {
         /* Read y[4], y[5] */
         c0 = *__SIMD32(py)++;
@@ -459,7 +447,7 @@ void arm_correlate_q15(
      ** No loop unrolling is used. */
     blkCnt = blockSize2 % 0x4u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
@@ -469,7 +457,7 @@ void arm_correlate_q15(
 
       /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulates */
         sum += ((q63_t) * px++ * *py++);
@@ -485,7 +473,7 @@ void arm_correlate_q15(
        ** No loop unrolling is used. */
       k = srcBLen % 0x4u;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulates */
         sum += ((q63_t) * px++ * *py++);
@@ -516,7 +504,7 @@ void arm_correlate_q15(
      * the blockSize2 loop cannot be unrolled by 4 */
     blkCnt = blockSize2;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
@@ -524,7 +512,7 @@ void arm_correlate_q15(
       /* Loop over srcBLen */
       k = srcBLen;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulate */
         sum += ((q63_t) * px++ * *py++);
@@ -576,7 +564,7 @@ void arm_correlate_q15(
    * Stage3 process
    * ------------------*/
 
-  while(blockSize3 > 0u)
+  while (blockSize3 > 0u)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0;
@@ -586,7 +574,7 @@ void arm_correlate_q15(
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulates */
       /* sum += x[srcALen - srcBLen + 4] * y[3] , sum += x[srcALen - srcBLen + 3] * y[2] */
@@ -602,7 +590,7 @@ void arm_correlate_q15(
      ** No loop unrolling is used. */
     k = count % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulates */
       sum = __SMLALD(*px++, *py++, sum);
@@ -657,7 +645,7 @@ void arm_correlate_q15(
   /* Calculate the length of the remaining sequence */
   tot = ((srcALen + srcBLen) - 2u);
 
-  if(srcALen > srcBLen)
+  if (srcALen > srcBLen)
   {
     /* Calculating the number of zeros to be padded to the output */
     j = srcALen - srcBLen;
@@ -666,7 +654,7 @@ void arm_correlate_q15(
     pDst += j;
   }
 
-  else if(srcALen < srcBLen)
+  else if (srcALen < srcBLen)
   {
     /* Initialization to inputB pointer */
     pIn1 = pSrcB;
@@ -697,14 +685,14 @@ void arm_correlate_q15(
     for (j = 0u; j <= i; j++)
     {
       /* Check the array limitations */
-      if((((i - j) < srcBLen) && (j < srcALen)))
+      if ((((i - j) < srcBLen) && (j < srcALen)))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += ((q31_t) pIn1[j] * pIn2[-((int32_t) i - j)]);
       }
     }
     /* Store the output in the destination buffer */
-    if(inv == 1)
+    if (inv == 1)
       *pDst-- = (q15_t) __SSAT((sum >> 15u), 16u);
     else
       *pDst++ = (q15_t) __SSAT((sum >> 15u), 16u);

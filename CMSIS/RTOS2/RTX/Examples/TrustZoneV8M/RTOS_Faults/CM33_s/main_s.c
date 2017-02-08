@@ -7,7 +7,7 @@
  * not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
@@ -17,10 +17,12 @@
  *
  * ----------------------------------------------------------------------
  *
- * main_s.c      Code template for secure main function 
+ * $Date:        15. October 2016
+ * $Revision:    1.1.0
  *
- * Version 1.0
- *    Initial Release
+ * Project:      TrustZone for ARMv8-M
+ * Title:        Code template for secure main function
+ *
  *---------------------------------------------------------------------------*/
  
 /* Use CMSE intrinsics */
@@ -30,48 +32,31 @@
 #include CMSIS_device_header
 #include "IncidentLog_s.h"
 #include "SysTick_s.h"
-
+ 
 /* TZ_START_NS: Start address of non-secure application */
 #ifndef TZ_START_NS
 #define TZ_START_NS (0x200000U)
 #endif
  
-/* Default process stack size */
-#ifndef PROCESS_STACK_SIZE
-#define PROCESS_STACK_SIZE 256U
-#endif
- 
-/* Default process stack */
-static uint64_t ProcessStack[PROCESS_STACK_SIZE/8U];
- 
-/* Generate BLXNS instruction */
-void NonSecure_Start (uint32_t addr) __attribute__((always_inline));
-void NonSecure_Start (uint32_t addr) {
-  __ASM volatile ("blxns %[addr]" : : [addr] "l" (addr));
-}
- 
+/* typedef for non-secure callback functions */
+typedef void (*funcptr_void) (void) __attribute__((cmse_nonsecure_call));
  
 /* Secure main() */
 int main(void) {
-  volatile uint32_t NonSecure_ResetHandler;
+  funcptr_void NonSecure_ResetHandler;
  
   /* Add user setup code for secure part here*/
  
   /* Set non-secure main stack (MSP_NS) */
   __TZ_set_MSP_NS(*((uint32_t *)(TZ_START_NS)));
-
-  /* Set default PSP, PSPLIM and privileged Thread Mode using PSP */
-  __set_PSPLIM((uint32_t)ProcessStack);
-  __set_PSP   ((uint32_t)ProcessStack + PROCESS_STACK_SIZE);
-  __set_CONTROL(0x02U);
  
   InitWatchdog (InitIncidentLog ());
-	
-  /* Get non-secure reset hanlder */
-  NonSecure_ResetHandler = cmse_nsfptr_create(*((uint32_t *)((TZ_START_NS) + 4U)));
+ 
+  /* Get non-secure reset handler */
+  NonSecure_ResetHandler = (funcptr_void)(*((uint32_t *)((TZ_START_NS) + 4U)));
  
   /* Start non-secure state software application */
-  NonSecure_Start(NonSecure_ResetHandler);
+  NonSecure_ResetHandler();
  
   /* Non-secure software does not return, this code is not executed */
   while (1) {

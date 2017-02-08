@@ -1,76 +1,63 @@
-/* ----------------------------------------------------------------------    
-* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
-*    
-* $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
-*    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_dct4_init_f32.c    
-*    
-* Description:	Initialization function of DCT-4 & IDCT4 F32    
-*    
-* Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
-*  
-* Redistribution and use in source and binary forms, with or without 
-* modification, are permitted provided that the following conditions
-* are met:
-*   - Redistributions of source code must retain the above copyright
-*     notice, this list of conditions and the following disclaimer.
-*   - Redistributions in binary form must reproduce the above copyright
-*     notice, this list of conditions and the following disclaimer in
-*     the documentation and/or other materials provided with the 
-*     distribution.
-*   - Neither the name of ARM LIMITED nor the names of its contributors
-*     may be used to endorse or promote products derived from this
-*     software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
-* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-* ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-* POSSIBILITY OF SUCH DAMAGE.   
-* -------------------------------------------------------------------- */
-
+/* ----------------------------------------------------------------------
+ * Project:      CMSIS DSP Library
+ * Title:        arm_dct4_init_f32.c
+ * Description:  Initialization function of DCT-4 & IDCT4 F32
+ *
+ * $Date:        27. January 2017
+ * $Revision:    V.1.5.1
+ *
+ * Target Processor: Cortex-M cores
+ * -------------------------------------------------------------------- */
+/*
+ * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #include "arm_math.h"
 
-/**    
- * @ingroup groupTransforms    
+/**
+ * @ingroup DCT4_IDCT4
  */
 
-/**    
- * @addtogroup DCT4_IDCT4    
- * @{    
+/**
+ * @addtogroup DCT4_IDCT4_Table DCT Type IV Tables
+ * @{
  */
 
-/*    
-* @brief  Weights Table    
+/*
+* @brief  Weights Table
 */
 
-/**    
-* \par    
-* Weights tables are generated using the formula : <pre>weights[n] = e^(-j*n*pi/(2*N))</pre>    
-* \par    
-* C command to generate the table    
-* <pre>    
-* for(i = 0; i< N; i++)    
-* {    
-*    weights[2*i]= cos(i*c);    
-*    weights[(2*i)+1]= -sin(i * c);    
-* } </pre>    
-* \par    
-* Where <code>N</code> is the Number of weights to be calculated and <code>c</code> is <code>pi/(2*N)</code>    
-* \par    
-* In the tables below the real and imaginary values are placed alternatively, hence the    
-* array length is <code>2*N</code>.    
-*/
+/**
+ * \par
+ * Weights tables are generated using the formula : <pre>weights[n] = e^(-j*n*pi/(2*N))</pre>
+ * \par
+ * C command to generate the table
+ * <pre>
+ * for(i = 0; i< N; i++)
+ * {
+ *    weights[2*i]= cos(i*c);
+ *    weights[(2*i)+1]= -sin(i * c);
+ * } </pre>
+ * \par
+ * Where <code>N</code> is the Number of weights to be calculated and <code>c</code> is <code>pi/(2*N)</code>
+ * \par
+ * In the tables below the real and imaginary values are placed alternatively, hence the
+ * array length is <code>2*N</code>.
+ */
 
 static const float32_t Weights_128[256] = {
   1.000000000000000000f, 0.000000000000000000f, 0.999924701839144500f,
@@ -10961,22 +10948,21 @@ static const float32_t Weights_8192[16384] = {
   0.000766990318742846f, -0.999999705862882230f, 0.000575242763732077f,
     -0.999999834547867670f,
   0.000383495187571497f, -0.999999926465717890f, 0.000191747597310674f,
-    -0.999999981616429330f,
-
+    -0.999999981616429330f
 };
 
-/**    
-* \par    
-* cosFactor tables are generated using the formula : <pre>cos_factors[n] = 2 * cos((2n+1)*pi/(4*N))</pre>    
-* \par    
-* C command to generate the table    
-* \par    
-* <pre> for(i = 0; i< N; i++)    
-* {    
-*    cos_factors[i]= 2 * cos((2*i+1)*c/2);    
-* } </pre>    
-* \par    
-* where <code>N</code> is the number of factors to generate and <code>c</code> is <code>pi/(2*N)</code>    
+/**
+* \par
+* cosFactor tables are generated using the formula : <pre>cos_factors[n] = 2 * cos((2n+1)*pi/(4*N))</pre>
+* \par
+* C command to generate the table
+* \par
+* <pre> for(i = 0; i< N; i++)
+* {
+*    cos_factors[i]= 2 * cos((2*i+1)*c/2);
+* } </pre>
+* \par
+* where <code>N</code> is the number of factors to generate and <code>c</code> is <code>pi/(2*N)</code>
 */
 static const float32_t cos_factors_128[128] = {
   0.999981175282601110f, 0.999830581795823400f, 0.999529417501093140f,
@@ -16427,23 +16413,31 @@ static const float32_t cos_factors_8192[8192] = {
   0.002876212985878184f, 0.002492718134944503f, 0.002109223192361147f,
     0.001725728172227238f,
   0.001342233088643682f, 0.000958737955710053f, 0.000575242787525925f,
-    0.000191747598192208f,
-
+    0.000191747598192208f
 };
 
-/**    
- * @brief  Initialization function for the floating-point DCT4/IDCT4.   
- * @param[in,out] *S         points to an instance of floating-point DCT4/IDCT4 structure.   
- * @param[in]     *S_RFFT    points to an instance of floating-point RFFT/RIFFT structure.   
- * @param[in]     *S_CFFT    points to an instance of floating-point CFFT/CIFFT structure.   
- * @param[in]     N			 length of the DCT4.   
- * @param[in]     Nby2       half of the length of the DCT4.   
- * @param[in]     normalize  normalizing factor.   
- * @return        arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLenReal</code> is not a supported transform length.   
- * \par Normalizing factor:    
- * The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>.    
- * Floating-point normalizing factors are mentioned in the table below for different DCT sizes:    
- * \image html dct4NormalizingF32Table.gif    
+/**
+ * @} end of DCT4_IDCT4_Table group
+ */
+
+/**
+ * @addtogroup DCT4_IDCT4
+ * @{
+ */
+
+/**
+ * @brief  Initialization function for the floating-point DCT4/IDCT4.
+ * @param[in,out] *S         points to an instance of floating-point DCT4/IDCT4 structure.
+ * @param[in]     *S_RFFT    points to an instance of floating-point RFFT/RIFFT structure.
+ * @param[in]     *S_CFFT    points to an instance of floating-point CFFT/CIFFT structure.
+ * @param[in]     N			 length of the DCT4.
+ * @param[in]     Nby2       half of the length of the DCT4.
+ * @param[in]     normalize  normalizing factor.
+ * @return        arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLenReal</code> is not a supported transform length.
+ * \par Normalizing factor:
+ * The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>.
+ * Floating-point normalizing factors are mentioned in the table below for different DCT sizes:
+ * \image html dct4NormalizingF32Table.gif
  */
 
 arm_status arm_dct4_init_f32(
@@ -16514,6 +16508,6 @@ arm_status arm_dct4_init_f32(
   return (status);
 }
 
-/**    
-   * @} end of DCT4_IDCT4 group    
-   */
+/**
+ * @} end of DCT4_IDCT4 group
+ */

@@ -143,19 +143,19 @@ int32_t main(void)
     diff = fabsf(testRefOutput_f32 - testOutput);
 
     /* Comparison of sin_cos value with reference */
-    if(diff > DELTA)
+    if (diff > DELTA)
     {
        status = ARM_MATH_TEST_FAILURE;
     }
 
-    if( status == ARM_MATH_TEST_FAILURE)
+    if ( status == ARM_MATH_TEST_FAILURE)
     {
-       while(1);
+       while (1);
     }
 
   }
 
-  while(1);                             /* main function does not return */
+  while (1);                             /* main function does not return */
 }
 
  /** \endlink */
