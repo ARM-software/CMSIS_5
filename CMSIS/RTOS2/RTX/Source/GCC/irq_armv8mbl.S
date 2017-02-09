@@ -24,7 +24,7 @@
 ; */
 
 
-        .file    "irq_armv8mbl.s"
+        .file    "irq_armv8mbl.S"
         .syntax  unified
 
         .ifndef  __DOMAIN_NS
