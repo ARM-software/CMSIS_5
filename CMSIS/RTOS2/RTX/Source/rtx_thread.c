@@ -1176,8 +1176,10 @@ void svcRtxThreadExit (void) {
     // Update Thread State and put it into Terminate Thread list
     thread->state = osRtxThreadTerminated;
     thread->thread_prev = NULL;
-    osRtxInfo.thread.terminate_list->thread_prev = thread;
     thread->thread_next = osRtxInfo.thread.terminate_list;
+    if (osRtxInfo.thread.terminate_list != NULL) {
+      osRtxInfo.thread.terminate_list->thread_prev = thread;
+    }
     osRtxInfo.thread.terminate_list = thread;
   }
 
@@ -1242,8 +1244,10 @@ osStatus_t svcRtxThreadTerminate (osThreadId_t thread_id) {
     // Update Thread State and put it into Terminate Thread list
     thread->state = osRtxThreadTerminated;
     thread->thread_prev = NULL;
-    osRtxInfo.thread.terminate_list->thread_prev = thread;
     thread->thread_next = osRtxInfo.thread.terminate_list;
+    if (osRtxInfo.thread.terminate_list != NULL) {
+      osRtxInfo.thread.terminate_list->thread_prev = thread;
+    }
     osRtxInfo.thread.terminate_list = thread;
   }
 
