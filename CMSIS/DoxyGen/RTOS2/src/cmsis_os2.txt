@@ -147,6 +147,12 @@ File/Folder                  | Content
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.1.1</td>
+      <td>
+       - Fixed potential corruption of terminated threads list.
+      </td>
+    </tr>
+    <tr>
       <td>V5.1.0</td>
       <td>
        - Based on CMSIS-RTOS API V2.1.
