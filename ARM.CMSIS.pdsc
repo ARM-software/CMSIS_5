@@ -8,6 +8,12 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.2-dev0">
+      CMSIS-Core: 5.0.2 (see revision history for details)
+      - Added macros __UNALIGNED_UINT16_READ, __UNALIGNED_UINT16_WRITE
+      - Added macros __UNALIGNED_UINT32_READ, __UNALIGNED_UINT32_WRITE
+      - Set macro __UNALIGNED_UINT32 to deprecated
+    </release>
     <release version="5.0.1" date="2017-02-03">
       Package Description:
       - added taxonomy for Cclass RTOS
