@@ -81,6 +81,14 @@ The CMSIS-CORE \ref templates_pg supplied by ARM have been tested and verified w
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.0.2</td>
+      <td>
+         Added macros  \ref \__UNALIGNED_UINT16_READ,  \ref \__UNALIGNED_UINT16_WRITE.\n
+         Added macros  \ref \__UNALIGNED_UINT32_READ,  \ref \__UNALIGNED_UINT32_WRITE.\n
+         Set macro  \ref \__UNALIGNED_UINT32 to deprecated.
+      </td>
+    </tr>
+    <tr>
       <td>V5.0.1</td>
       <td>
          Added: macro \ref \__PACKED_STRUCT. \n

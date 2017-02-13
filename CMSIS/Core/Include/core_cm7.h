@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_cm7.h
  * @brief    CMSIS Cortex-M7 Core Peripheral Access Layer Header File
- * @version  V5.0.1
- * @date     25. November 2016
+ * @version  V5.0.2
+ * @date     13. February 2017
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
