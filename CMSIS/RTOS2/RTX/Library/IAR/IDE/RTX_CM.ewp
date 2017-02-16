@@ -182,7 +182,7 @@
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>__ARM_ARCH_6M__</state>
+          <state></state>
           <state>CMSIS_device_header="ARMCM0.h"</state>
         </option>
         <option>
@@ -1152,7 +1152,7 @@
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>__ARM_ARCH_7M__</state>
+          <state></state>
           <state>CMSIS_device_header="ARMCM3.h"</state>
         </option>
         <option>
@@ -2122,7 +2122,7 @@
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>__ARM_ARCH_7EM__</state>
+          <state></state>
           <state>CMSIS_device_header="ARMCM4_FP.h"</state>
         </option>
         <option>
