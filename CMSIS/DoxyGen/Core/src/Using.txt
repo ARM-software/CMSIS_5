@@ -4,7 +4,7 @@
 
 \details 
 
-To use the CMSIS-CORE the following files are added to the embedded application:
+To use the CMSIS-Core-M the following files are added to the embedded application:
  - \ref startup_s_pg with reset handler and exception vectors.
  - \ref system_c_pg with general device configuration (i.e. for clock and BUS setup).
  - \ref device_h_pg gives access to processor core and all peripherals.
@@ -29,9 +29,9 @@ The \ref device_h_pg is the central include file that the application programmer
  - \ref ITM_Debug_gr are functions that allow printf-style I/O via the CoreSight Debug Unit and ITM communication.
 
 
-\image html "CMSIS_CORE_Files_user.png" "CMSIS-CORE User Files"
+\image html "CMSIS_CORE_Files_user.png" "CMSIS-Core-M User Files"
 
-The CMSIS-CORE are device specific. In addition, the \ref startup_s_pg is also compiler vendor specific. 
+The CMSIS-Core-M are device specific. In addition, the \ref startup_s_pg is also compiler vendor specific. 
 The various compiler vendor tool chains may provide folders that contain the CMSIS files for each supported device.
   
 
@@ -61,14 +61,14 @@ For example, the following files are provided in MDK-ARM to support the STM32F10
 </table>
 
 
-\note The silicon vendors create these device-specific CMSIS-CORE files based on \ref templates_pg provide by ARM.
+\note The silicon vendors create these device-specific CMSIS-Core-M files based on \ref templates_pg provide by ARM.
 
 Thereafter, the functions described under <a href="Modules.html">\b Reference </a> can be used in the application.
 
 \b Examples
  - \subpage using_CMSIS is a simple example that shows the usage of the CMSIS layer.
  - \subpage using_VTOR_pg shows how to remap the interrupt vector table.
- - \subpage using_ARM_pg explains how to use CMSIS-CORE for ARM processors.
+ - \subpage using_ARM_pg explains how to use CMSIS-Core-M for ARM processors.
 
 
 \page using_CMSIS Basic CMSIS Example
@@ -186,7 +186,7 @@ int main (void) {
     
 \page using_ARM_pg Using CMSIS with generic ARM Processors
 
-ARM provides CMSIS-CORE files for the supported ARM Processors and for various compiler vendors. 
+ARM provides CMSIS-Core-M files for the supported ARM Processors and for various compiler vendors. 
 These files can be used when standard ARM processors should be used in a project.
 The table below lists the folder and device names of the ARM processors.
   
