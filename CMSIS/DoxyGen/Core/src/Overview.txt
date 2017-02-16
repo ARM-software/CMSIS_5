@@ -1,6 +1,6 @@
 /** \mainpage Overview
 
-CMSIS-CORE implements the basic run-time system for a Cortex-M device and gives the user access to the processor core and the device peripherals.
+CMSIS-Core-M implements the basic run-time system for a Cortex-M device and gives the user access to the processor core and the device peripherals.
 In detail it defines:
  - <b>Hardware Abstraction Layer (HAL)</b> for Cortex-M processor registers with standardized  definitions for the SysTick, NVIC, System Control Block registers, MPU registers, FPU registers, and core access functions.
  - <b>System exception names</b> to interface to system exceptions without having compatibility issues.
@@ -10,24 +10,24 @@ In detail it defines:
  - A variable to determine the <b>system clock frequency</b> which simplifies the setup the SysTick timer.
 
 
-The following sections provide details about the CMSIS-CORE:
+The following sections provide details about the CMSIS-Core-M:
  - \ref using_pg describes the project setup and shows a simple program example.
  - \ref using_TrustZone_pg "Using TrustZone&reg; for ARMv8-M" describes how to use the security extensions available in the ARMv8-M architecture.
- - \ref templates_pg describes the files of the CMSIS-CORE in detail and explains how to adapt template files provided by ARM to silicon vendor devices.
+ - \ref templates_pg describes the files of the CMSIS-Core-M in detail and explains how to adapt template files provided by ARM to silicon vendor devices.
  - \ref coreMISRA_Exceptions_pg describes the violations to the MISRA standard.
  - <a href="Modules.html">\b Reference </a> describe the features and functions of the \ref device_h_pg in detail.
  - <a href="Annotated.html">\b Data \b Structures </a> describe the data structures of the \ref device_h_pg in detail.
     
 <hr>
 
-CMSIS-CORE in ARM::CMSIS Pack
+CMSIS-Core-M in ARM::CMSIS Pack
 -----------------------------
 
-Files relevant to CMSIS-CORE are present in the following <b>ARM::CMSIS</b> directories:
+Files relevant to CMSIS-Core-M are present in the following <b>ARM::CMSIS</b> directories:
 |File/Folder                   |Content                                                                 |
 |------------------------------|------------------------------------------------------------------------|
 |\b CMSIS\\Documentation\\Core | This documentation                                                     |
-|\b CMSIS\\Include             | CMSIS-CORE header files (for example core_cm3.h, core_cmInstr.h, etc.) |
+|\b CMSIS\\Include             | CMSIS-Core-M header files (for example core_cm3.h, core_cmInstr.h, etc.) |
 |\b Device                     | \ref using_ARM_pg "ARM reference implementations" of Cortex-M devices  |
 |\b Device\\\_Template_Vendor  | \ref templates_pg for extension by silicon vendors                     |
 
@@ -62,7 +62,7 @@ The ARMv8-M Architecture is described in the <a href="http://developer.arm.com/p
 
 \section tested_tools_sec Tested and Verified Toolchains
 
-The CMSIS-CORE \ref templates_pg supplied by ARM have been tested and verified with the following toolchains:
+The \ref templates_pg supplied by ARM have been tested and verified with the following toolchains:
  - ARM: ARM Compiler V5.6
  - ARM: ARM Compiler V6.6 (for Cortex-M23, Cortex-M33, ARMv8-M)
  - GNU: GNU Tools ARM Embedded 5.4 2016q3
@@ -73,7 +73,7 @@ The CMSIS-CORE \ref templates_pg supplied by ARM have been tested and verified w
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 
-\page core_revisionHistory Revision History of CMSIS-CORE
+\page core_revisionHistory Revision History of CMSIS-Core-M
 
 <table class="cmtable" summary="Core Exception Name">
     <tr>

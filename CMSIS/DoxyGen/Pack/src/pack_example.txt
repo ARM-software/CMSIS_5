@@ -14,7 +14,7 @@ sub-directories:
 |-----------------------------------|-------------------------------------------------------------------------------------------|------------------------------------|
 |\b Boards                          |CMSIS-RTOS Blinky uVision project running on the MCB1800 development board                 |\ref pdsc_examples_pg "<examples>"  |
 |\ref PE_CMSIS_Driver "CMSIS_Driver"|<a href="../../Driver/html/index.html"><b>CMSIS-Driver</b></a> compliant peripheral drivers|\ref element_component "<component>"|
-|\ref PE_Device "Device"            |<a href="../../Core/html/index.html"><b>CMSIS-CORE</b></a> files for LPC1800 series        |\ref element_device "<device>"      |
+|\ref PE_Device "Device"            |<a href="../../Core/html/index.html"><b>CMSIS-Core-M</b></a> files for LPC1800 series        |\ref element_device "<device>"      |
 |\ref PE_Documents "Documents"      |Documentation for devices and boards                                                       |\ref element_book "<book>"          |
 |\b Flash                           |\ref flashAlgorithm and a sub-directory called \b LPC18xx43xx_IAP containing a uVision project for IAP (In-Application Programming) support|\ref element_algorithm "<algorithm>"|
 |\b Images                          |Images of the MCB1800 development board                                                    |\ref pdsc_boards_pg "<board>"       |

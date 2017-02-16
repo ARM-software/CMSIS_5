@@ -360,7 +360,7 @@ also reflected in the user code template file "CMSIS-RTOS2 'main' function" supp
 Your application's \c main() should implement at least the following in the given order:
 -# Initialization and configuration of hardware including peripherals, memory, pins, clocks and the interrupt system.
 -# Update the system core clock using the respective
-   <a href=../../Core/html/group__system__init__gr.html>CMSIS-CORE function</a>.
+   <a href=../../Core/html/group__system__init__gr.html>CMSIS-Core-M function</a>.
 -# Initialize the CMSIS-RTOS kernel using \ref osKernelInitialize.
 -# Optionally, create a new thread \c app_main, which is used as a main thread using \ref osThreadNew. Alternatively, threads
    can be created in \c main() directly.

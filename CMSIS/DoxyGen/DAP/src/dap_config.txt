@@ -44,7 +44,7 @@ processor-based microcontroller. To deploy the firmware to a new Debug Unit copy
 For example, copy the folder .\\Firmware\\XMC4200 to a folder called .\\Firmware\\MyDebugUnit.
 
 To following steps describe the adaption of the CMSIS-DAP Firmware to a new Debug Unit:
-1. \ref DAP_ConfigMCU_gr :  Select the microcontroller and replace the CMSIS-CORE files.
+1. \ref DAP_ConfigMCU_gr :  Select the microcontroller and replace the CMSIS-Core-M files.
 2. \ref DAP_ConfigIO_gr : Adapt the I/O Ports and specify other parameters for the Debug Unit.
 3. \ref DAP_ConfigUSB_gr : Adapt the USB Peripheral to the microcontroller.
 4. \ref DAP_USART_gr : Optional you may add a CMSIS-Driver USART to interface to SWO.
