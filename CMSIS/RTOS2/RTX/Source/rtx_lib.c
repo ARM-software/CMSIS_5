@@ -434,8 +434,8 @@ extern const uint8_t *irqRtxLibRef;
        const uint8_t *irqRtxLibRef = &irqRtxLib;
 
 // Default User SVC Table
-__WEAK
 extern void * const osRtxUserSVC[];
+__WEAK
        void * const osRtxUserSVC[1] = { (void *)0 };
 
 
