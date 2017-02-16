@@ -32,19 +32,19 @@ DOXYFILE_ENCODING      = UTF-8
 # title of most generated pages and in a few other places.
 # The default value is: My Project.
 
-PROJECT_NAME           = CMSIS-Core-M
+PROJECT_NAME           = CMSIS-Core-A
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. This
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "Version 5.0.2"
+PROJECT_NUMBER         = "Version 0.0.1"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
 # quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = "CMSIS-Core support for Cortex-M processor-based devices"
+PROJECT_BRIEF          = "CMSIS-Core support for Cortex-A processor-based devices"
 
 # With the PROJECT_LOGO tag one can specify an logo or icon that is included in
 # the documentation. The maximum height of the logo should not exceed 55 pixels
@@ -58,7 +58,7 @@ PROJECT_LOGO           = ../Doxygen_Templates/CMSIS_Logo_Final.png
 # entered, it will be relative to the location where doxygen was started. If
 # left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = ../../Documentation/Core
+OUTPUT_DIRECTORY       = ../../Documentation/Core_A
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 4096 sub-
 # directories (in 2 levels) under the output directory of each output format and
@@ -749,25 +749,7 @@ WARN_LOGFILE           =
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = src/Overview.txt \
-                         src/Using.txt \
-                         src/UsingTrustZone.txt \
-                         src/Template.txt \
-                         src/MISRA.txt \
-                         src/Ref_CompilerControl.txt \
-                         src/Ref_Peripheral.txt \
-                         src/Ref_SystemAndClock.txt \
-                         src/Ref_NVIC.txt \
-                         src/Ref_CoreReg.txt \
-                         src/Ref_cmInstr.txt \
-                         src/Ref_cm4_simd.txt \
-                         src/Ref_FPU.txt \
-                         src/Ref_Systick.txt \
-                         src/Ref_Debug.txt \
-                         src/Ref_Trustzone.txt \
-                         src/core_cm7.txt \
-                         src/Ref_DataStructs.txt \
-                         src/RegMap_CMSIS2ARM_Doc.txt
+INPUT                  = src/Overview.txt
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -837,7 +819,7 @@ EXCLUDE_SYMBOLS        =
 # that contain example code fragments that are included (see the \include
 # command).
 
-EXAMPLE_PATH           = ../../../Device/_Template_Vendor/Vendor/Device
+EXAMPLE_PATH           = 
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and
