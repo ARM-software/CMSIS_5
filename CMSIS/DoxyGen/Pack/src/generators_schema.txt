@@ -79,9 +79,9 @@ generated and included and maintained as part of the project.
   </taxonomy>
   <conditions>
     <condition id="STCubeMX">
-      <description>Condition to include CMSIS core and Device Startup components</description>
+      <description>Condition to include CMSIS-Core-M and Device Startup components</description>
       <require Dvendor="STMicroelectronics:13" Dname="STM32F7*"/>
-      <require Cclass="CMSIS"  Cgroup="CORE"          Csub=""/>
+      <require Cclass="CMSIS"  Cgroup="Core"          Csub=""/>
       <require Cclass="Device" Cgroup="Startup"/>
       <require Cclass="Device" Cgroup="STM32Cube HAL" Csub="Common"/>
       <require Cclass="Device" Cgroup="STM32Cube HAL" Csub="GPIO"/>

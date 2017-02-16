@@ -996,7 +996,7 @@ No other Component Groups have been defined so far.
     <th>Description</th>
   </tr>
   <tr>
-    <td class="XML-Token">CORE</td>
+    <td class="XML-Token">Core</td>
 	<td>A component containing device support in accordance to the <a class=el href="../../Core/html/index.html">CMSIS-Core-M</a> specification (startup, system and device files)</td>
   </tr>
   <tr>

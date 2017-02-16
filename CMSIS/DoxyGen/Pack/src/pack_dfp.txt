@@ -146,10 +146,10 @@ Copy the \e content of the <b>02_System_and_Startup</b> directory of the \b Pack
 Add a \c \<conditions\> section in your PDSC with the following (the \ref cp_Conditions "conditions" section
 provides more information on this step):
 \code{.xml}
-    <condition id="MVCM3 CMSIS-CORE">
+    <condition id="MVCM3 CMSIS-Core">
       <!-- conditions selecting Devices -->
-      <description>MyVendor MVCM3 Series devices and CMSIS-CORE</description>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
+      <description>MyVendor MVCM3 Series devices and CMSIS-Core-M</description>
+      <require Cclass="CMSIS" Cgroup="Core"/>
       <require Dvendor="Generic:5" Dname="MVCM3*"/>
     </condition>
     <condition id="Startup ARM">
@@ -172,7 +172,7 @@ provides more information on this step):
 Add a \c \<components\> section in your PDSC with the following (the \ref cp_Components "components" section
 provides more information on this step):
 \code
-    <component Cclass="Device" Cgroup="Startup" Cversion="1.0.0" condition="MVCM3 CMSIS-CORE">
+    <component Cclass="Device" Cgroup="Startup" Cversion="1.0.0" condition="MVCM3 CMSIS-Core">
       <description>System Startup for MyVendor MVCM3 Series</description>
       <files>
         <!--  include folder -->
@@ -465,7 +465,7 @@ Finally, \ref cp_Components "software components" and \ref cp_Examples "example 
 <li>
 Add the following lines to the PDSC file in the \elem{components} section:
 \code
-<component Cclass="Device" Cgroup="HAL" Csub="GPIO" Cversion="1.0.0" condition="MVCM3 CMSIS-CORE">
+<component Cclass="Device" Cgroup="HAL" Csub="GPIO" Cversion="1.0.0" condition="MVCM3 CMSIS-Core">
   <description>GPIO HAL for MyVendor MVCM3 Series</description>
   <files>
     <file category="header" name="Device/Include/GPIO.h"/>
@@ -473,7 +473,7 @@ Add the following lines to the PDSC file in the \elem{components} section:
   </files>
 </component>
 
-<component Cclass="Device" Cgroup="HAL" Csub="ADC" Cversion="1.0.0" condition="MVCM3 CMSIS-CORE">
+<component Cclass="Device" Cgroup="HAL" Csub="ADC" Cversion="1.0.0" condition="MVCM3 CMSIS-Core">
   <description>ADC HAL for MyVendor MVCM3 Series</description>
   <files>
     <file category="header" name="Device/Include/ADC.h"/>
@@ -481,7 +481,7 @@ Add the following lines to the PDSC file in the \elem{components} section:
   </files>
 </component>
 
-<component Cclass="CMSIS Driver" Cgroup="I2C" Cversion="1.0.0" condition="MVCM3 CMSIS-CORE" maxInstances="3">
+<component Cclass="CMSIS Driver" Cgroup="I2C" Cversion="1.0.0" condition="MVCM3 CMSIS-Core" maxInstances="3">
   <description>I2C Driver for MVCM3 Series</description>
   <RTE_Components_h>
     #define RTE_Drivers_I2C0                /* Driver I2C0 */
@@ -494,7 +494,7 @@ Add the following lines to the PDSC file in the \elem{components} section:
   </files>
 </component>
 
-<component Cclass="CMSIS Driver" Cgroup="UART" Cversion="1.0.0" condition="MVCM3 CMSIS-CORE" maxInstances="5">
+<component Cclass="CMSIS Driver" Cgroup="UART" Cversion="1.0.0" condition="MVCM3 CMSIS-Core" maxInstances="5">
   <description>UART Driver for MVCM3 Series</description>
   <RTE_Components_h>
     #define RTE_Drivers_UART0               /* Driver UART0 */
