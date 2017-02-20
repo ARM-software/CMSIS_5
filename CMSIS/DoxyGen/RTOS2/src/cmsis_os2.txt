@@ -695,7 +695,7 @@ using the CMSIS-RTOS RTX kernel. The file "RTX_Config.c" contains stubs of the f
 \b osRtxErrorNotify that can be adapted to the application's needs.
 
 The configuration file uses
-<a class="el" href="http://www.keil.com/pack/doc/CMSIS/Pack/html/_config_wizard.html" target="_blank">Configuration Wizard Annotations</a>.
+<b>Configuration Wizard Annotations</b>. Refer to <b>Pack - Configuration Wizard Annotations</b> for details.
 Depending on the development tool, the annotations might lead to a more user-friendly graphical representation of the
 settings. The screenshot below is a screenshot from the µVision \b Configuration \b Wizard view:
 

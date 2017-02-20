@@ -1793,7 +1793,7 @@ The table lists the predefined Flash algorithm style. These values can be used i
   </tr>
   <tr>
     <td class="XML-Token">Keil</td>
-    <td><a href="http://www.keil.com/pack/doc/CMSIS/Pack/html/_flash_algorithm.html" target="_blank">Flash Programming Algorithm</a> as defined by ARM/Keil</td>
+    <td>\ref flashAlgorithm as defined by ARM/Keil</td>
   </tr>
   <tr>
     <td class="XML-Token">IAR</td>

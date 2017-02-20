@@ -1135,7 +1135,7 @@ The file \ref RTX_Conf_CM "RTX_Conf_CM.c" is used to define the configuration pa
 part of every project that is using the CMSIS-RTOS RTX kernel.
 
 The configuration file uses
-<a class="el" href="http://www.keil.com/pack/doc/CMSIS/Pack/html/_config_wizard.html" target="_blank">Configuration Wizard Annotations</a>.
+<b>Configuration Wizard Annotations</b>. Refer to <b>Pack - Configuration Wizard Annotations</b> for details.
 Depending on the development tool that is used, this might lead to a more user friendly graphical representation of the
 settings. The following is a screenshot of the same configuration file using µVision's Configuration Wizard view:
 
