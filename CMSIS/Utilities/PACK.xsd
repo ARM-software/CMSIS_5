@@ -143,6 +143,7 @@
       <xs:enumeration value="Nuvoton:18"/>
       <xs:enumeration value="NXP:11"/>
       <xs:enumeration value="OKI SEMICONDUCTOR CO.,LTD.:108"/>
+      <xs:enumeration value="ONSemiconductor:141"/>
       <xs:enumeration value="Panasonic:131"/>
       <xs:enumeration value="Realtek Semiconductor:124"/>
       <xs:enumeration value="Redpine Signals:125"/>
