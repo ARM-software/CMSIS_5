@@ -8,6 +8,17 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.2-dev1">
+      CMSIS CORE_A: 
+      - Added Cortex-A core support, ARMCC specific:
+        - Core specific register definitions
+        - Generic Interrupt Controller functions
+        - Generic Timer functions
+        - L1 and L2 Cache functions
+        - MMU functions
+      - Added ARMCA7 and ARMCA9 devices
+      - Added Startup, System and MMU configuration files
+    </release>
     <release version="5.0.2-dev0">
       CMSIS-Core: 5.0.2 (see revision history for details)
       - Added macros __UNALIGNED_UINT16_READ, __UNALIGNED_UINT16_WRITE
@@ -481,6 +492,35 @@ ARMv8-M Mainline based device with TrustZone
       </device>
     </family>
 
+    <!-- ******************************  Cortex-A7  ****************************** -->
+    <family Dfamily="ARM Cortex A7" Dvendor="ARM:82">
+      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0464f/index.html" title="Cortex-A7 MPCore Technical Reference Manual"/>
+      <description>
+The Cortex-A7 MPCore processor is a high-performance, low-power processor that implements the ARMv7-A architecture. 
+The Cortex-A7 MPCore processor has one to four processors in a single multiprocessor device with a L1 cache subsystem, 
+an optional integrated GIC, and an optional L2 cache controller.
+      </description>
+   
+      <device Dname="ARMCA7">
+        <processor Dcore="Cortex-A7" DcoreVersion="r0p5" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
+        <compile header="Device/ARM/ARMCA7/Include/ARMCA7.h" define="ARMCA7"/>
+      </device>
+    </family>
+
+    <!-- ******************************  Cortex-A9  ****************************** -->
+    <family Dfamily="ARM Cortex A9" Dvendor="ARM:82">
+      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.100511_0401_10_en/index.html" title="Cortex‑A9 Technical Reference Manual"/>
+      <description>
+The Cortex-A9 processor is a high-performance, low-power, ARM macrocell with an L1 cache subsystem that provides full virtual memory capabilities.
+The Cortex-A9 processor implements the ARMv7-A architecture and runs 32-bit ARM instructions, 16-bit and 32-bit Thumb instructions,
+and 8-bit Java bytecodes in Jazelle state.
+      </description>
+
+      <device Dname="ARMCA9">
+        <processor Dcore="Cortex-A9" DcoreVersion="r4p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
+        <compile header="Device/ARM/ARMCA9/Include/ARMCA9.h" define="ARMCA9"/>
+      </device>
+    </family>
   </devices>
 
 
@@ -651,6 +691,11 @@ ARMv8-M Mainline based device with TrustZone
       <accept condition="ARMv6-M Device"/>
       <accept condition="ARMv7-M Device"/>
       <accept condition="ARMv8-M Device"/>
+    </condition>
+    <condition id="ARMv7-A Device">
+      <description>ARMv7-A architecture based device</description>
+      <accept Dcore="Cortex-A7"/>
+      <accept Dcore="Cortex-A9"/>
     </condition>
 
     <!-- ARM core -->
@@ -1664,6 +1709,18 @@ ARMv8-M Mainline based device with TrustZone
       <require condition="GCC"/>
     </condition>
 
+    <condition id="ARMCA7 CMSIS">
+      <description>Generic ARM Cortex-A7 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCA7"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+
+    <condition id="ARMCA9 CMSIS">
+      <description>Generic ARM Cortex-A9 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCA9"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    
     <!-- CMSIS DSP -->
     <condition id="CMSIS DSP">
       <description>Components required for DSP</description>
@@ -1715,6 +1772,14 @@ ARMv8-M Mainline based device with TrustZone
         <!-- Code template -->
         <file category="sourceC" attr="template" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/main_s.c"     version="1.1.0" select="Secure mode 'main' module for ARMv8-M"/>
         <file category="sourceC" attr="template" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/tz_context.c" version="1.1.0" select="RTOS Context Management (TrustZone for ARMv8-M)" />
+      </files>
+    </component>
+
+    <component Cclass="CMSIS" Cgroup="CORE" Cversion="1.0.0"  condition="ARMv7-A Device" >
+      <description>CMSIS-CORE for Cortex-A</description>
+      <files>
+        <!-- CPU independent -->
+        <file category="include" name="CMSIS/CORE_A/Include/"/>
       </files>
     </component>
 
@@ -2017,6 +2082,33 @@ ARMv8-M Mainline based device with TrustZone
       </files>
     </component>
 
+    <!-- Cortex-A7 -->
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMCA7 CMSIS">
+      <description>System and Startup for Generic ARM Cortex-A7 device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="include"  name="Device/ARM/ARMCA7/Include/"/>
+        <!-- startup / system / mmu files -->
+        <file category="sourceAsm"    name="Device/ARM/ARMCA7/Source/ARM/startup_ARMCA7.s" version="1.0.0" attr="config" condition="ARMCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA7/Source/ARM/ARMCA7.sct"       version="1.0.0" attr="config"/>        
+        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/system_ARMCA7.c"      version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/mmu_ARMCA7.c"         version="1.0.0" attr="config"/>
+      </files>
+    </component>
+
+    <!-- Cortex-A9 -->
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMCA9 CMSIS">
+      <description>System and Startup for Generic ARM Cortex-A9 device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="include"  name="Device/ARM/ARMCA9/Include/"/>
+        <!-- startup / system / mmu files -->
+        <file category="sourceAsm"    name="Device/ARM/ARMCA9/Source/ARM/startup_ARMCA9.s" version="1.0.0" attr="config" condition="ARMCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA9/Source/ARM/ARMCA9.sct"       version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA9/Source/system_ARMCA9.c"      version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA9/Source/mmu_ARMCA9.c"         version="1.0.0" attr="config"/>
+      </files>
+    </component>
 
     <!-- CMSIS-DSP component -->
     <component Cclass="CMSIS" Cgroup="DSP" Cversion="1.5.1" condition="CMSIS DSP">
