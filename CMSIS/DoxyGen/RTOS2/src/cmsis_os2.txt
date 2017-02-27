@@ -112,7 +112,7 @@ File/Folder                  | Content
       \b osKernelSysTickFrequency, \b osKernelSysTickMicroSec.\n
       Removed: osSignalGet.
      </td>
-    </tr>
+    </tr>fv
     <tr>
       <td>V1.01</td>
       <td>Added capabilities for C++, kernel initialization and object deletion.\n
@@ -319,7 +319,8 @@ The steps to create a microcontroller application using RTX5 are:
   \b %RTX_Config.h, \b %RTX_Config.c, the library or the source code files, as well as the system and startup files:
 
    \image html project_window.png
-   
+
+- If using the Variant: \b Source as statet above, you have to assure to use at least C99 compiler mode (Project Options -> C/C++ -> C99 Mode).   
 - You can add template files to the project by right-clicking on <b>Source Group 1</b> and selecting
   <b>Add New Item to 'Source Group 1'</b>. In the new window, click on <b>User Code Template</b>. On the right-hand side
   you will see all available template files for CMSIS-RTOS RTX:
@@ -960,7 +961,7 @@ a reference for building the RTX5 libraries using a tool-chain of your choice.
 -# Select the project target that matches your device's processor core. 
    \n The project provides target configuration for all supported Cortex-M targets supported by RTX5.
 -# You can find out about the required preprocessor defines in the dialogs <b>Options for Target - C/C++</b> and
-   <b>Options for Target - Asm</b>.
+   <b>Options for Target - Asm</b>. Note the need to use at least the C99 compiler mode when building RTX from source.
 -# From the <b>Project</b> window you find the list of source files required for a complete library build.
 -# Build the library of your choice using \b Project - \b Build \b Target (or press F7).
 
