@@ -1726,6 +1726,7 @@ __STATIC_INLINE int MMU_MemorySection(uint32_t *descriptor_l1, mmu_memory_Type m
   \param [in]               mem  4k/64k page memory type: NORMAL, DEVICE, SHARED_DEVICE, NON_SHARED_DEVICE, STRONGLY_ORDERED
   \param [in]             outer  Outer cacheability: NON_CACHEABLE, WB_WA, WT, WB_NO_WA,
   \param [in]             inner  Inner cacheability: NON_CACHEABLE, WB_WA, WT, WB_NO_WA,
+  \param [in]              page  Page size
 
   \return          0
 */
@@ -1798,10 +1799,9 @@ __STATIC_INLINE int MMU_MemoryPage(uint32_t *descriptor_l2, mmu_memory_Type mem,
   - TEX remap disabled, so memory type and attributes are described directly by bits in the descriptor
   - Functions always return 0
 
-  \param [out]       descriptor  L1 descriptor
-  \param [out]      descriptor2  L2 descriptor
-  \param [in]               reg  Section attributes
-
+  \param [out]     descriptor  L1 descriptor
+  \param [in]      reg  Section attributes
+  
   \return          0
 */
 __STATIC_INLINE int MMU_GetSectionDescriptor(uint32_t *descriptor, mmu_region_attributes_Type reg)

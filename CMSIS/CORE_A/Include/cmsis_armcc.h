@@ -225,7 +225,7 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
   \param [in]    value  is ignored by the processor.
                  If required, a debugger can use it to store additional information about the breakpoint.
  */
-#define __BKPT(value)                       __breakpoint(value)
+#define __BKPT(value)                     __breakpoint(value)
 
 /**
   \brief   Reverse bit order of value
@@ -233,21 +233,7 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
-{
-  uint32_t result;
-  int32_t s = (4 /*sizeof(v)*/ * 8) - 1; /* extra shift needed at end */
-
-  result = value;                      /* r will be reversed bits of v; first get LSB of v */
-  for (value >>= 1U; value; value >>= 1U)
-  {
-    result <<= 1U;
-    result |= value & 1U;
-    s--;
-  }
-  result <<= s;                        /* shift when v's highest bits are zero */
-  return(result);
-}
+#define __RBIT                            __rbit
 
 /**
   \brief   Count leading zeros
@@ -273,36 +259,12 @@ __STATIC_INLINE uint32_t __get_CPSR(void)
 
     This function assigns the given value to the current stack pointer.
 
-    \param [in]    topOfStack  Stack Pointer value to set
+    \param [in]    stack  Stack Pointer value to set
  */
-register uint32_t __regSP              __ASM("sp");
-__STATIC_INLINE void __set_SP(uint32_t topOfStack)
+__STATIC_INLINE __ASM void __set_SP(uint32_t stack)
 {
-    __regSP = topOfStack;
-}
-
-
-/** \brief  Get link register
-
-    This function returns the value of the link register
-
-    \return    Value of link register
- */
-register uint32_t __reglr         __ASM("lr");
-__STATIC_INLINE uint32_t __get_LR(void)
-{
-  return(__reglr);
-}
-
-/** \brief  Set link register
-
-    This function sets the value of the link register
-
-    \param [in]    lr  LR value to set
- */
-__STATIC_INLINE void __set_LR(uint32_t lr)
-{
-  __reglr = lr;
+  MOV  sp, r0
+  BX   lr
 }
 
 /** \brief  Set Process Stack Pointer
@@ -311,7 +273,7 @@ __STATIC_INLINE void __set_LR(uint32_t lr)
 
     \param [in]    topOfProcStack  USR/SYS Stack Pointer value to set
  */
-__STATIC_ASM void __set_PSP(uint32_t topOfProcStack)
+__STATIC_INLINE __ASM void __set_PSP(uint32_t topOfProcStack)
 {
   ARM
   PRESERVE8
@@ -329,7 +291,7 @@ __STATIC_ASM void __set_PSP(uint32_t topOfProcStack)
 
     This function changes the processor state to User Mode
  */
-__STATIC_ASM void __set_CPS_USR(void)
+__STATIC_INLINE __ASM void __set_CPS_USR(void)
 {
   ARM
 
@@ -337,6 +299,17 @@ __STATIC_ASM void __set_CPS_USR(void)
   BX   LR
 }
 
+/** \brief  Set Mode
+
+    This function changes the processor mode
+
+    \param [in]    mode  Mode value to set
+ */
+__STATIC_INLINE __ASM void __set_mode(uint32_t mode) {
+  MOV  r1, lr
+  MSR  CPSR_C, r0
+  BX   r1
+}
 /** \brief  Get FPEXC
 
     This function returns the current value of the Floating Point Exception Control register.
@@ -357,7 +330,7 @@ __STATIC_INLINE uint32_t __get_FPEXC(void)
 
     This function assigns the given value to the Floating Point Exception Control register.
 
-    \param [in]    fpscr  Floating Point Exception Control value to set
+    \param [in]    fpexc  Floating Point Exception Control value to set
  */
 __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
 {
@@ -469,6 +442,42 @@ __STATIC_INLINE uint32_t __get_SCTLR() {
   return(__regSCTLR);
 }
 
+/** \brief  Set ACTRL
+
+    This function assigns the given value to the Auxiliary Control Register.
+
+    \param [in]    actlr  Auxiliary Control Register value to set
+ */
+__STATIC_INLINE void __set_ACTRL(uint32_t actrl)
+{
+  register uint32_t __regACTRL         __ASM("cp15:0:c1:c0:1");
+  __regACTRL = actrl;
+}
+
+/** \brief  Get ACTRL
+
+    This function returns the value of the Auxiliary Control Register.
+
+    \return               Auxiliary Control Register value
+ */
+__STATIC_INLINE uint32_t __get_ACTRL(void)
+{
+  register uint32_t __regACTRL         __ASM("cp15:0:c1:c0:1");
+  return(__regACTRL);
+}
+
+/** \brief  Get MPIDR
+
+    This function returns the value of the Multiprocessor Affinity Register.
+
+    \return               Multiprocessor Affinity Register value
+ */
+__STATIC_INLINE uint32_t __get_MPIDR(void)
+{
+  register uint32_t __regMPIDR         __ASM("cp15:0:c0:c0:5");
+  return(__regMPIDR);
+}
+
 /** \brief  Set CNTP_TVAL
 
   This function assigns the given value to PL1 Physical Timer Value Register (CNTP_TVAL).
@@ -478,6 +487,30 @@ __STATIC_INLINE uint32_t __get_SCTLR() {
 __STATIC_INLINE void __set_CNTP_TVAL(uint32_t value) {
   register uint32_t __regCNTP_TVAL         __ASM("cp15:0:c14:c2:0");
   __regCNTP_TVAL = value;
+}
+
+ /** \brief  Get VBAR
+
+    This function returns the value of the Vector Base Address Register.
+
+    \return               Vector Base Address Register
+ */
+__STATIC_INLINE uint32_t __get_VBAR(void)
+{
+  register uint32_t __regVBAR         __ASM("cp15:0:c12:c0:0");
+  return(__regVBAR);
+}
+
+/** \brief  Set VBAR
+
+    This function assigns the given value to the Vector Base Address Register.
+
+    \param [in]    vbar  Vector Base Address Register value to set
+ */
+__STATIC_INLINE void __set_VBAR(uint32_t vbar)
+{
+  register uint32_t __regVBAR          __ASM("cp15:0:c12:c0:0");
+  __regVBAR = vbar;
 }
 
 /** \brief  Get CNTP_TVAL
@@ -562,7 +595,7 @@ __STATIC_INLINE void __set_DCCIMVAC(uint32_t value) {
  */
 #pragma push
 #pragma arm
-__STATIC_ASM void __L1C_CleanInvalidateCache(uint32_t op) {
+__STATIC_INLINE __ASM void __L1C_CleanInvalidateCache(uint32_t op) {
         ARM
 
         PUSH    {R4-R11}
@@ -624,7 +657,7 @@ Finished
  */
 #pragma push
 #pragma arm
-__STATIC_ASM void __FPU_Enable(void) {
+__STATIC_INLINE __ASM void __FPU_Enable(void) {
         ARM
 
         //Permit access to VFP/NEON, registers by modifying CPACR
