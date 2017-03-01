@@ -2089,10 +2089,12 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCA7/Include/"/>
         <!-- startup / system / mmu files -->
-        <file category="sourceAsm"    name="Device/ARM/ARMCA7/Source/ARM/startup_ARMCA7.s" version="1.0.0" attr="config" condition="ARMCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMCA7/Source/ARM/ARMCA7.sct"       version="1.0.0" attr="config"/>        
+        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/ARM/startup_ARMCA7.c" version="1.0.0" attr="config" condition="ARMCC"/>             
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/system_ARMCA7.c"      version="1.0.0" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/mmu_ARMCA7.c"         version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA7/Include/system_ARMCA7.h"     version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA7/Include/mem_ARMCA7.h"        version="1.0.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA7/Source/ARM/ARMCA7.sct"       version="1.0.0" attr="config"/>         
       </files>
     </component>
 
@@ -2103,10 +2105,12 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="include"  name="Device/ARM/ARMCA9/Include/"/>
         <!-- startup / system / mmu files -->
-        <file category="sourceAsm"    name="Device/ARM/ARMCA9/Source/ARM/startup_ARMCA9.s" version="1.0.0" attr="config" condition="ARMCC"/>
-        <file category="linkerScript" name="Device/ARM/ARMCA9/Source/ARM/ARMCA9.sct"       version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA9/Source/ARM/startup_ARMCA9.c" version="1.0.0" attr="config" condition="ARMCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/system_ARMCA9.c"      version="1.0.0" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/mmu_ARMCA9.c"         version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA9/Include/system_ARMCA9.h"     version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA9/Include/mem_ARMCA9.h"        version="1.0.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA9/Source/ARM/ARMCA9.sct"       version="1.0.0" attr="config"/>
       </files>
     </component>
 

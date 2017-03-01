@@ -482,6 +482,7 @@ typedef union
 /**
  \brief  Union type to access the L2C_310 Cache Controller.
 */
+#if (__L2C_PRESENT == 1U)
 typedef struct
 {
   __I  uint32_t CACHE_ID;                   /*!< Offset: 0x0000   Cache ID Register               */
@@ -542,6 +543,7 @@ typedef struct
 } L2C_310_TypeDef;
 
 #define L2C_310           ((L2C_310_TypeDef *)L2C_310_BASE) /*!< L2C_310 Declaration */
+#endif
 
 /** \brief  Structure type to access the Generic Interrupt Controller Distributor (GICD)
 */
@@ -585,6 +587,25 @@ typedef struct
 
 #define GICInterface        ((GICInterface_Type        *)     GIC_INTERFACE_BASE )   /*!< GIC Interface configuration struct */
 
+/** \brief Structure type to access the Private Timer
+*/
+#if (__CORTEX_A == 9U)
+typedef struct
+{
+  __IO uint32_t LOAD;            // +0x000 - RW - Private Timer Load Register
+  __IO uint32_t COUNTER;         // +0x004 - RW - Private Timer Counter Register
+  __IO uint32_t CONTROL;         // +0x008 - RW - Private Timer Control Register
+  __IO uint32_t ISR;             // +0x00C - RO - Private Timer Interrupt Status Register
+  uint32_t RESERVED[8];
+  __IO uint32_t WLOAD;           // +0x020 - RW - Watchdog Load Register
+  __IO uint32_t WCOUNTER;        // +0x024 - RW - Watchdog Counter Register
+  __IO uint32_t WCONTROL;        // +0x028 - RW - Watchdog Control Register
+  __IO uint32_t WISR;            // +0x02C - RW - Watchdog Interrupt Status Register
+  __IO uint32_t WRESET;          // +0x030 - RW - Watchdog Reset Status Register
+  __I  uint32_t WDISABLE;        // +0x0FC - RO - Watchdog Disable Register
+} Timer_Type;
+#define PTIM ((Timer_Type *) TIMER_BASE )   /*!< Timer configuration struct */
+#endif
 
  /*******************************************************************************
   *                Hardware Abstraction Layer
@@ -728,7 +749,7 @@ __STATIC_INLINE void L1C_CleanInvalidateDCacheAll(void) {
 
 
 /* ##########################  L2 Cache functions  ################################# */
-
+#if (__L2C_PRESENT == 1U)
 //Cache Sync operation
 __STATIC_INLINE void L2C_Sync(void)
 {
@@ -817,6 +838,7 @@ __STATIC_INLINE void L2C_CleanInvPa (void *pa)
   L2C_310->CLEAN_INV_LINE_PA = (unsigned int)pa;
   L2C_Sync();
 }
+#endif
 
 /* ##########################  GIC functions  ###################################### */
 
@@ -1043,20 +1065,48 @@ __STATIC_INLINE void GIC_Enable(void)
 
 /* ##########################  Generic Timer functions  ############################ */
 
-__STATIC_INLINE void PL1_SetTimerValue(uint32_t value) {
+/* PL1 Physical Timer */
+#if   (__CORTEX_A == 7U)
+__STATIC_INLINE void PL1_SetLoadValue(uint32_t value) {
   __set_CNTP_TVAL(value);
   __ISB();
 }
 
-__STATIC_INLINE uint32_t PL1_GetTimerValue() {
+__STATIC_INLINE uint32_t PL1_GetCurrentValue() {
   return(__get_CNTP_TVAL());
 }
 
-__STATIC_INLINE void PL1_SetTimerCtrl(uint32_t value) {
+__STATIC_INLINE void PL1_SetControl(uint32_t value) {
   __set_CNTP_CTL(value);
   __ISB();
 }
 
+/* Private Timer */
+#elif (__CORTEX_A == 9U)
+__STATIC_INLINE void PTIM_SetLoadValue(uint32_t value) {
+  PTIM->LOAD = value;
+}
+
+__STATIC_INLINE uint32_t PTIM_GetLoadValue() {
+  return(PTIM->LOAD);
+}
+
+__STATIC_INLINE uint32_t PTIM_GetCurrentValue() {
+  return(PTIM->COUNTER);
+}
+
+__STATIC_INLINE void PTIM_SetControl(uint32_t value) {
+  PTIM->CONTROL = value;
+}
+
+__STATIC_INLINE uint32_t PTIM_GetControl(void) {
+  return(PTIM->CONTROL);
+}
+
+__STATIC_INLINE void PTIM_ClearEventFlag(void) {
+  PTIM->ISR = 1;
+}
+#endif
 
 /* ##########################  MMU functions  ###################################### */
 

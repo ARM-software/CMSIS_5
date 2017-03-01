@@ -99,7 +99,6 @@
 //Domain 0 is always the Client domain
 //Descriptors should place all memory in domain 0
 
-#include <stdint.h>
 #include "ARMCA7.h"
 
 

@@ -255,6 +255,28 @@ __STATIC_INLINE uint32_t __get_CPSR(void)
   return(__regCPSR);
 }
 
+/** \brief  Get Mode
+
+    This function gets the processor mode
+
+    \return                Processor Mode
+ */
+__STATIC_INLINE uint32_t __get_mode(void) {
+	return (__get_CPSR() & 0x1FU);
+}
+
+/** \brief  Set Mode
+
+    This function changes the processor mode
+
+    \param [in]    mode  Mode value to set
+ */
+__STATIC_INLINE __ASM void __set_mode(uint32_t mode) {
+  MOV  r1, lr
+  MSR  CPSR_C, r0
+  BX   r1
+}
+
 /** \brief  Set Stack Pointer
 
     This function assigns the given value to the current stack pointer.
@@ -299,17 +321,6 @@ __STATIC_INLINE __ASM void __set_CPS_USR(void)
   BX   LR
 }
 
-/** \brief  Set Mode
-
-    This function changes the processor mode
-
-    \param [in]    mode  Mode value to set
- */
-__STATIC_INLINE __ASM void __set_mode(uint32_t mode) {
-  MOV  r1, lr
-  MSR  CPSR_C, r0
-  BX   r1
-}
 /** \brief  Get FPEXC
 
     This function returns the current value of the Floating Point Exception Control register.
@@ -478,17 +489,6 @@ __STATIC_INLINE uint32_t __get_MPIDR(void)
   return(__regMPIDR);
 }
 
-/** \brief  Set CNTP_TVAL
-
-  This function assigns the given value to PL1 Physical Timer Value Register (CNTP_TVAL).
-
-  \param [in]    value  CNTP_TVAL Register value to set
-*/
-__STATIC_INLINE void __set_CNTP_TVAL(uint32_t value) {
-  register uint32_t __regCNTP_TVAL         __ASM("cp15:0:c14:c2:0");
-  __regCNTP_TVAL = value;
-}
-
  /** \brief  Get VBAR
 
     This function returns the value of the Vector Base Address Register.
@@ -511,6 +511,17 @@ __STATIC_INLINE void __set_VBAR(uint32_t vbar)
 {
   register uint32_t __regVBAR          __ASM("cp15:0:c12:c0:0");
   __regVBAR = vbar;
+}
+
+/** \brief  Set CNTP_TVAL
+
+  This function assigns the given value to PL1 Physical Timer Value Register (CNTP_TVAL).
+
+  \param [in]    value  CNTP_TVAL Register value to set
+*/
+__STATIC_INLINE void __set_CNTP_TVAL(uint32_t value) {
+  register uint32_t __regCNTP_TVAL         __ASM("cp15:0:c14:c2:0");
+  __regCNTP_TVAL = value;
 }
 
 /** \brief  Get CNTP_TVAL

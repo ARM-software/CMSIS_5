@@ -35,17 +35,10 @@ extern "C" {
 typedef void(*IRQHandler)();
 uint32_t InterruptHandlerRegister(IRQn_Type, IRQHandler);
 uint32_t InterruptHandlerUnregister(IRQn_Type);
-
-/**
- * Initialize the system
- *
- * @param  none
- * @return none
- *
- * @brief  Setup the microcontroller system.
- *         Initialize the System and update the SystemCoreClock variable.
- */
-extern void SystemInit (void);
+void SystemCoreClockUpdate (void);
+extern uint32_t SystemCoreClock;
+void SystemInit (void);
+void MMU_CreateTranslationTable(void);
 
 #ifdef __cplusplus
 }
