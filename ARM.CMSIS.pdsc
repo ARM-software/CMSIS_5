@@ -1779,7 +1779,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>CMSIS-CORE for Cortex-A</description>
       <files>
         <!-- CPU independent -->
-        <file category="include" name="CMSIS/CORE_A/Include/"/>
+        <file category="include" name="CMSIS/Core_A/Include/"/>
       </files>
     </component>
 
