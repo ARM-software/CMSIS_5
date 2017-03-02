@@ -32,6 +32,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *---------------------------------------------------------------------------*/
 
+/** \addtogroup RTXv1 */
+/** @{*/
+
 /* Definitions */
 
 /* Values for 'cb_type' */
@@ -59,6 +62,8 @@ extern void  rt_psq_enq       (OS_ID entry, U32 arg);
 
 /* This is a fast macro generating in-line code */
 #define rt_rdy_prio(void) (os_rdy.p_lnk->prio)
+
+/** @}*/
 
 /*----------------------------------------------------------------------------
  * end of file

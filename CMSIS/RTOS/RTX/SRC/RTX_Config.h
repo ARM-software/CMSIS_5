@@ -32,6 +32,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *---------------------------------------------------------------------------*/
 
+/** \addtogroup RTXv1 */
+/** @{*/
+
 #include <stdint.h>
 
 /* Error Codes */
@@ -74,6 +77,8 @@ extern U32  os_tick_ovf     (void);
 extern void os_tick_irqack  (void);
 extern void os_tmr_call     (U16 info);
 extern void os_error        (uint32_t err_code);
+
+/** @}*/
 
 /*----------------------------------------------------------------------------
  * end of file

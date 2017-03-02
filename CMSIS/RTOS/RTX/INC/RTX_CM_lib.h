@@ -32,6 +32,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *---------------------------------------------------------------------------*/
 
+/** \addtogroup RTXv1 */
+/** @{*/
+
 #if   defined (__CC_ARM)
 #pragma O3
 #define __USED __attribute__((used))
@@ -565,6 +568,8 @@ __noreturn __stackless void __cmain(void) {
 }
 
 #endif
+
+/** @}*/
 
 /*----------------------------------------------------------------------------
  * end of file

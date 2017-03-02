@@ -32,6 +32,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *---------------------------------------------------------------------------*/
 
+/** \addtogroup RTXv1 */
+/** @{*/
+
 /* Definitions */
 #define INITIAL_xPSR    0x01000000U
 #define DEMCR_TRCENA    0x01000000U
@@ -283,6 +286,8 @@ extern void dbg_task_switch (U32 task_id);
 #define DBG_TASK_NOTIFY(p_tcb,create)
 #define DBG_TASK_SWITCH(task_id)
 #endif
+
+/** @}*/
 
 /*----------------------------------------------------------------------------
  * end of file

@@ -26,6 +26,9 @@
 #ifndef RTX_EVR_H_
 #define RTX_EVR_H_
 
+/** \addtogroup RTXv2 */
+/** @{*/
+
 #include "cmsis_os2.h"                  // CMSIS RTOS API
 #include "rtx_os.h"                     // RTX OS definitions
 #include "RTX_Config.h"
@@ -1840,5 +1843,6 @@ extern void EvrRtxMessageQueueDestroyed (osMessageQueueId_t mq_id);
 #define EvrRtxMessageQueueDestroyed(mq_id)
 #endif
 
+/** @}*/
 
 #endif  // RTX_EVR_H_

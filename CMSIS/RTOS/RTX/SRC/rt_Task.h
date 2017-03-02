@@ -32,6 +32,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *---------------------------------------------------------------------------*/
 
+/** \addtogroup RTXv1 */
+/** @{*/
+
 /* Definitions */
 
 /* Values for 'state'   */
@@ -75,6 +78,8 @@ extern void      rt_sys_start  (void);
 #else
 extern void      rt_sys_init   (FUNCP first_task, U32 prio_stksz, void *stk);
 #endif
+
+/** @}*/
 
 /*----------------------------------------------------------------------------
  * end of file

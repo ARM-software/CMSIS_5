@@ -32,6 +32,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *---------------------------------------------------------------------------*/
 
+/** \addtogroup RTXv1 */
+/** @{*/
+
 /* Types */
 typedef char               S8;
 typedef unsigned char      U8;
@@ -161,6 +164,8 @@ typedef struct OS_BM {
 #define __TRUE          1U
 #define __FALSE         0U
 #define NULL            ((void *) 0)
+
+/** @}*/
 
 /*----------------------------------------------------------------------------
  * end of file
