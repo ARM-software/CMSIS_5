@@ -76,15 +76,22 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
       <th>Description</th>
     </tr>
     <tr>
-      <td>V1.10</td>
+      <td>V1.2.0 (Proposal)</td>
+      <td>
+	     Added: Debug Unit Timer (DUT) in commands \ref DAP_Info, \ref DAP_Transfer, \ref DAP_TransferBlock \n
+         Added: \ref DAP_PowerProbe_gr to support power measurement
+      </td>
+    </tr>
+    <tr>
+      <td>V1.1.0</td>
       <td>
          Added: \ref DAP_swo_gr to support Serial Wire Output (SWO) in UART mode\n
          Added: \ref DAP_atomic_gr support for executing time critical DAP commands
       </td>
     </tr>
     <tr>
-      <td>V1.00</td>
-      <td>Version 1.00 was never released; version number skipped.</td>
+      <td>V1.0.0</td>
+      <td>Version 1.0.0 was never released; version number skipped.</td>
     </tr>
     <tr>
       <td>V0.02</td>

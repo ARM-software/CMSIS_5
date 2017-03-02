@@ -25,8 +25,10 @@ The following conventions describe the command semantic used in the following do
  \>       | Prefix indicating the direction: Command from host to Debug Unit.
  \<       | Prefix indicating the direction: Response from Debug Unit to host.
  BYTE     | 8-bit value.
- SHORT    | 16-bit value.
- WORD     | 32-bit value.
+ SHORT    | 16-bit value (low byte first)
+ WORD     | 32-bit value (low byte first)
+ LWORD    | 64-bit value (low byte first)
+ FLOAT    | 32-bit single precision floating point value (LSB first)
  0x01     | Fixed HEX value in C notation. Used for example to identify a command.
  Reserved | The field above is reserved for future extension.
  \*\*\*\* | The field above has exactly one occurrence.
@@ -152,6 +154,21 @@ The Transfer Commands allow to:
 
 /**************************************************************************************************/
 /** 
+\defgroup DAP_PowerProbe_gr Power Probe Commands
+\ingroup DAP_Commands_gr
+\brief Power Probe management commands.
+
+CMSIS-DAP provides a command set that allows to control an Power Probe (PP) which measures
+voltage and currency using several measurement channels. This is an optional feature of an <b>Debug Unit</b>.
+
+Power Probe data are captured always as 16-bit values. However, it is possible to implement dynamic ranges
+for a channel (for example 14-bit values with 2-bit range selection).
+
+*/
+
+
+/**************************************************************************************************/
+/** 
 \defgroup DAP_atomic_gr Atomic Commands
 \ingroup DAP_Commands_gr
 \brief Execute atomic commands.
@@ -159,7 +176,7 @@ The Transfer Commands allow to:
 CMSIS-DAP command set is extended with two top level commands that allow the execution of multiple DAP commands further USB communication.
 Executing multiple CMSIS-DAP commands is typically a requirement at the reset time of some devices. The sequence after reset can be time
 critical and any USB communication would violate the available time window.
- - \ref DAP_ExecuteCommands_gr : execute multiple DAP commands from a single comamnd request
+ - \ref DAP_ExecuteCommands_gr : execute multiple DAP commands from a single command request
  - \ref DAP_QueueCommands_gr : queue of multiple DAP commands before execution
  
 These two DAP commands are used to collect several other DAP commands before execution.
@@ -202,6 +219,7 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
   - \b 0x05 = Get the <b>Target Device Vendor</b> (string).
   - \b 0x06 = Get the <b>Target Device Name</b> (string).
   - \b 0xF0 = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit.
+  - \b 0xF1 = Get <b>DUT</b> information.
   - \b 0xFD = Get the <b>SWO Trace Buffer Size</b> (WORD).
   - \b 0xFE = Get the maximum <b>Packet Count</b> (BYTE).
   - \b 0xFF = Get the maximum <b>Packet Size</b> (SHORT).
@@ -220,12 +238,25 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
   - a \b SHORT value (indicated with Len = 2).
   - a \b WORD value (indicated with Len = 4).
 
-The ID <b>Capabilities</b> obtains information about the available interface to the Device. The 
+The ID=0xF0 <b>Capabilities</b> obtains information about the available interface to the Device. The 
 information BYTE contains bits that indicate which communication methods are provided to the Device.
  - Bit 0: <b>1 = SWD</b> Serial Wire Debug communication is implemented (0 = not implemented).
  - Bit 1: <b>1 = JTAG</b> communication is implemented (0 = not implemented).
  - Bit 2: <b>1 = SWO UART</b> - UART Serial Wire Output is implemented (0 = not implemented).
  - Bit 3: <b>1 = SWO Manchester</b> - Manchester Serial Wire Output is implemented (0 = not implemented).
+ - Bit 4: <b>1 = DUT</b> - Debug Unit Timer is implemented (0 = not implemented).
+
+<b>DAP_Info Response (for ID=0xF1):</b>
+The ID=0xF1 <b>DUT</b> obtains information about an optional 64-bit Debug Unit Timer may be used for time measurements.
+\code
+  BYTE | BYTE | WORD *****| LWORD ****|
+< 0x00 | 0x0C | Frequency | DUT_Value |
+ ******|******|***********|***********|
+\endcode
+
+- \b Frequency:  Input frequency of the Debug Unit Timer (DUT).
+- \b DUT_Value:  Current Debug Unit Timer value (64-bit).
+
 
 \note
 The ID for <b>Vendor ID</b>, <b>Product ID</b>, and <b>Serial Number</b> may return no string (indicated by Len = 0). 
@@ -800,7 +831,7 @@ devices and the JTAG IR register length. This information is the input for \ref 
 <b>DAP_JTAG_Sequence Response</b>:
 \code
   BYTE | BYTE **| BYTE ****|
-< 0x14 | Status |TDO Data  |
+< 0x14 | Status | TDO Data |
  ******|********|++++++++++|
 \endcode
 
@@ -944,6 +975,7 @@ The data transfer is aborted on a communication error:
   - Bit 3: A3 Register Address bit 3.
   - Bit 4: Value Match (only valid for Read Register): 0 = Normal Read Register, 1 = Read Register with Value Match.
   - Bit 5: Match Mask (only valid for Write Register): 0 = Normal Write Register, 1 = Write Match Mask (instead of Register).
+  - Bit 7: DUT value request: 0 = No DUT value, 1 = Include DUT value 
 
 - <b>Transfer Data</b>: register value or match value
   - for Write Register transfer request: the register value for the CoreSight register.
@@ -953,9 +985,9 @@ The data transfer is aborted on a communication error:
 
 <b>DAP_Transfer Response:</b>
 \code
-  BYTE | BYTE **********| BYTE *************| WORD *********|
-< 0x05 | Transfer Count | Transfer Response | Transfer Data |
- ******|****************|*******************|+++++++++++++++|
+  BYTE | BYTE **********| BYTE *************| LWORD ****| WORD *********|
+< 0x05 | Transfer Count | Transfer Response | DUT_Value | Transfer Data |
+ ******|****************|*******************|///////////|+++++++++++++++|
 \endcode
 
 - <b>Transfer Count</b>: Number of transfers: 1 .. 255 that are executed.
@@ -968,6 +1000,9 @@ The data transfer is aborted on a communication error:
       - 7 = NO_ACK (no response from target)
   - Bit 3: 1 = Protocol Error (SWD)
   - Bit 4: 1 = Value Mismatch (Read Register with Value Match)
+  - Bit 7: 1 = DUT value included before transfer data  (0 = no DUT value)
+
+- <b>DUT_Value</b>: Debug Unit Timer value (64-bit).
 
 - <b>Transfer Data</b>: register value or match value in the order of the <b>Transfer Request</b>.
   - for Read Register transfer request: the register value of the CoreSight register.
@@ -1004,10 +1039,11 @@ The data transfer is aborted on a communication error:
 - <b>Transfer Count</b>: Number of transfers: 1 .. 65535.
 
 - <b>Transfer Request</b>: Contains information about requested access from host
-  - Bit0: APnDP: 0 = DP (Debug Port), 1 = AP (Access Port)
-  - Bit1: RnW: 0 = Write Register, 1 = Read Register
-  - Bit2: A2 := Register Address bit 2
-  - Bit3: A3 := Register Address bit 3
+  - Bit 0: APnDP: 0 = DP (Debug Port), 1 = AP (Access Port)
+  - Bit 1: RnW: 0 = Write Register, 1 = Read Register
+  - Bit 2: A2 := Register Address bit 2
+  - Bit 3: A3 := Register Address bit 3
+  - Bit 7: DUT value request: 0 = No DUT value, 1 = Include DUT value 
 
 - <b>Transfer Data</b>: register values  
   - for Write Register transfer request: the register values written to the CoreSight register.
@@ -1015,9 +1051,9 @@ The data transfer is aborted on a communication error:
 
 <b>DAP_TransferBlock Response</b>:
 \code
-  BYTE | SHORT *********| BYTE *************| WORD *********|
-< 0x06 | Transfer Count | Transfer Response | Transfer Data |
- ******|****************|*******************|+++++++++++++++|
+  BYTE | SHORT *********| BYTE *************| LWORD ****| WORD *********|
+< 0x06 | Transfer Count | Transfer Response | DUT_Value | Transfer Data |
+ ******|****************|*******************|///////////|+++++++++++++++|
 \endcode
 
 - <b>DAP Index</b>: Zero based device index of the selected JTAG device. For SWD mode the value is ignored.
@@ -1030,7 +1066,10 @@ The data transfer is aborted on a communication error:
       - 2 = WAIT
       - 4 = FAULT 
       - 7 = NO_ACK (no response from target)
-  - Bit3: Protocol Error (SWD)
+  - Bit 3: Protocol Error (SWD)
+  - Bit 7: 1 = DUT value included before transfer data (0 = no DUT value)
+
+- <b>DUT_Value</b>: Debug Unit Timer value (64-bit).
 
 - <b>Transfer Data</b>: register values  
   - no data is receive for Write Register operations.
@@ -1055,6 +1094,213 @@ aborted \ref DAP_Transfer or \ref DAP_TransferBlock command will respond with in
 \endcode
 */
 
+
+/**************************************************************************************************/
+/** 
+\defgroup DAP_PP_Info DAP_PP_Info
+\ingroup DAP_PowerProbe_gr
+\brief Get information about Power Probe parameters of the CMSIS-DAP Debug Unit.
+
+The <b>DAP_PP_Info Command</b> provides information about the Power Probe hardware that is optionally available with 
+the CMSIS-DAP Debug Unit.
+
+<b>DAP_PP_Info Request:</b>
+\code
+   BYTE | BYTE | BYTE ***|
+ > 0x1E | ID   | Channel |
+  ******|******|*********|
+\endcode
+
+- \b ID: Request Identifier to obtain information in the Response:
+  - \b 0x00 = Get general Power Probe parameters (\b Channel value not used).
+  - \b 0x01 = Get parameters of a specific \b Channel.
+  - \b 0x02 = Get possible data capturing frequencies of a specific \b Channel.
+
+- \b Channel: channel number.
+ 
+<b>DAP_PP_Info Response for \b ID=0x00:</b> 
+\code
+   BYTE | BYTE ****|
+ < 0x1E | Channels |
+  ******|**********|
+\endcode
+- \b Channels: number of channels available in the Debug Unit.
+
+<b>DAP_PP_Info Response for \b ID=0x00: Get general Power Probe parameters</b> 
+\code
+   BYTE | BYTE ****|
+ < 0x1E | Channels |
+  ******|**********|
+\endcode
+- \b Channels: number of channels available in the Debug Unit.
+  
+<b>DAP_PP_Info Response for \b ID=0x01: Get parameters of a specific Channel</b> 
+\code
+   BYTE | BYTE ***| BYTE | BYTE **| BYTE ****| FLOAT *| FLOAT *| FLOAT ++++++++++|
+ < 0x1E | Channel | Unit | NoBits | NoRanges | MinVal | MaxVal | RangeMultiplier |
+  ******|*********|******|********|**********|********|********|+++++++++++++++++| 
+\endcode
+- \b Channel: channel number that information belongs to.
+
+- \b Unit: physical measurement unit of the channel
+   - \b 0x00 = unknown
+   - \b 'U' = voltage in volts 
+   - \b 'I' = current in milli-amperes
+   - \b 'P' = power in milli-watts 
+
+- \b NoBits: A/D resolution of the channel in bits
+
+- \b NoRanges: channel has multiple A/D ranges that are represented by MSB in data words.  
+   - \b 0x00 = no ranges are supported (no RangeMultiplier values are provided in the response)
+   - \b 0x02 = 2 measurement ranges are support (2 RangeMultiplier values are provided in the response)
+   - \b 0x03 = 3 measurement ranges are support (3 RangeMultiplier values are provided in the response)
+   - \b 0x04 = 4 measurement ranges are support (4 RangeMultiplier values are provided in the response)
+   
+- \b MinVal: min. A/D result (= 0) in range 0 represents the minimum value in \b Unit.
+- \b MaxVal: max. A/D result in range 0 represents the maximum value in \b Unit.
+- \b CaptureFreq: bit mask that encodes possible capture frequencies for continuous measurement (see table below).
+- \b RangeMultiplier: multiplier for each measurement range
+
+The \b MinVal and \b MaxVal specifies the measurement ranges that is captured.  \b MinVal and \b MinMax relates to range 0 in case that a channel provides several measurement ranges.
+
+<b>Example 1</b>:  parameters for a channel that supports voltage measurement
+\code
+   Unit = 'U';                // ASCII character to denote voltage
+   NoBits = 10;               // 10 bit A/D resolution
+   NoRanges = 0;              // no ranges are supported
+   MinVal = 2.5;              // A/D result = 0x000 represents 2.5V
+   MaxVal = 6.0;              // A/D result = 0x3FF represents 6.0V
+\endcode
+
+<b>Example 2</b>:  parameters for a channel that supports current measurement with two ranges
+\code
+   Unit = 'I';                // ASCII character to denote currency
+   NoBits = 12;               // 12 bit A/D resolution (bit 0 .. 11 of data values contain A/D result)
+   NoRanges = 2;              // no ranges are supported (bit 12 of data values contains range)
+   MinVal = 0;                // A/D result = 0x000 represents 0mA
+   MaxVal = 2.5;              // A/D result = 0xFFF represents 2.5mA
+   RangeMultiplier[0] = 1.0;  // results of range 0 are multiplied with 1.0 (effective range is 0mA .. 2.5mA)
+   RangeMultiplier[1] = 12.0; // results of range 1 are multiplied with 12.0 (effective range is 0mA .. 30.0mA)
+\endcode
+
+A channel that reports <b>MaxVal = 0.0</b> the formula needs to be provided by the debugger as the debug unit is using perhaps an external shunt resistor.
+
+<b>DAP_PP_Info Response for \b ID=0x02: Get possible data capturing frequencies of a specific Channel</b> 
+\code
+   BYTE | BYTE ***| BYTE ********| DWORD ++++|
+ < 0x1E | Channel | NoSelections | Frequency |
+  ******|*********|**************|+++++++++++| 
+\endcode
+- \b Channel: channel number that information belongs to.
+
+- \b NoSelections: number of possible capture frequencies
+
+- \b Frequency: capture frequencies (repeated as indicated by NoSelection)
+  - Frequency[0]  capture frequency for CapSelect=0 (see DAP_PP_Capture)
+  - Frequency[1]  capture frequency for CapSelect=1 (see DAP_PP_Capture)
+  - Frequency[n]  capture frequency for CapSelect=n (see DAP_PP_Capture)
+*/
+
+
+/**************************************************************************************************/
+/** 
+\defgroup DAP_PP_Values DAP_PP_Values
+\ingroup DAP_PowerProbe_gr
+\brief Get current data values from Power Probe measurement channels.
+
+The <b>DAP_PP_Values Command</b> returns the current measurement values of the power probe channels in the  
+the CMSIS-DAP Debug Unit. Returned are the current physical values that are measured by the various channels.
+
+<b>DAP_PP_Values Request:</b>
+\code
+   BYTE | WORD *******| 
+ > 0x1F | ChannelMask |
+  ******|*************|
+\endcode
+
+- \b ChannelMask: Bit mask that encodes the channels that should be scanned. 
+  - \b 0xFFFF = scan all potential channels that are available.
+
+<b>DAP_PP_Values Response:</b> 
+\code
+   BYTE | WORD *******| WORD +++++|
+ < 0x1F | ChannelMask | DataValue |
+  ******|*************|+++++++++++|
+\endcode
+- \b ChannelMask: Bit mask of channels that are actually scanned. 
+
+- \b DataValue: A/D data value of the channel.
+*/
+
+
+/**************************************************************************************************/
+/** 
+\defgroup DAP_PP_Capture DAP_PP_Capture
+\ingroup DAP_PowerProbe_gr
+\brief Control continuous data recording of Power Probe measurement channels.
+
+The <b>DAP_PP_Capture Command</b> controls the data recording of the various measurement channels.
+
+<b>DAP_PP_Capture Request:</b>
+\code
+   BYTE | WORD *******| BYTE **| BYTE *****|
+ > 0x20 | ChannelMask | Action | CapSelect |
+  ******|*************|********|***********|
+\endcode
+
+- \b ChannelMask: Bit mask that encodes the channels that should be recorded. 
+  - \b 0xFFFF = record all potential channels that are available.
+
+- \b Action: start or stop recording
+  - \b 0x1 = start recording.
+  - \b 0x0 = stop recording.
+
+- \b CapSelect: select recording frequency for the data capturing (frequency is obtained via \ref DAP_PP_Info ID=0x02)
+  
+  
+<b>DAP_PP_Capture Response:</b> 
+\code
+   BYTE | WORD        |
+ < 0x20 | ChannelMask |
+  ******|*************|
+\endcode
+- \b ChannelMask: Bit mask of channels that are currently recorded.
+*/
+
+/**************************************************************************************************/
+/** 
+\defgroup DAP_PP_TransferBlock DAP_PP_TransferBlock
+\ingroup DAP_PowerProbe_gr
+\brief Transfer the data that are recorded for various Power Probe measurement channels.
+
+The <b>DAP_PP_TransferBlock Command</b> initiates the data transfer for the recorded measurement channels.
+
+<b>DAP_PP_TransferBlock Request:</b>
+\code
+   BYTE | WORD *******|
+ > 0x21 | ChannelMask |
+  ******|*************|
+\endcode
+
+- \b ChannelMask: Bit mask that encodes the channels that should be transferred. 
+  - \b 0xFFFF = transfer all potential channels that are available.
+  
+  
+<b>DAP_PP_TransferBlock Response:</b> 
+\code
+   BYTE | BYTE ***| LWORD ////| WORD +++++++|
+ < 0x21 | Channel | DUT_Value | ChannelData |
+  ******|*********|///////////|+++++++++++++|
+\endcode
+- \b Channel: Channel number that the ChannelData belong to.  If Channel bit 7 is set, the DUT Timer value is transferred.
+- \b DUT_Value: Debug Unit Timer value (64-bit)
+- \b ChannelData: 16-bit A/D data values for recorded channel.
+
+\todo DAP_TransferAbort could stop transfer of this command?
+*/
+
+
+
 /**************************************************************************************************/
 /** 
 \defgroup DAP_ExecuteCommands_gr DAP_ExecuteCommands
@@ -1065,7 +1311,7 @@ Executes multiple DAP commands that are provided in a single packet. Packet size
 
 <b>DAP_ExecuteCommands Request:</b>
 \code
-   BYTE | BYTE   |                   |
+   BYTE | BYTE **|+++++++++++++++++++|
  > 0x7F | NumCmd | Command Requests  |
   ******|********|+++++++++++++++++++|
 \endcode
@@ -1075,7 +1321,7 @@ Executes multiple DAP commands that are provided in a single packet. Packet size
   
 <b>DAP_ExecuteCommands Response:</b>
 \code
-   BYTE | BYTE   |                   |
+   BYTE | BYTE **|+++++++++++++++++++|
  < 0x7F | NumCmd | Command Responses |
   ******|********|+++++++++++++++++++|
 \endcode
@@ -1089,7 +1335,7 @@ Execute two \ref DAP_SWJ_Pins commands with \ref DAP_Delay in between.
 
 <b>Request:</b>
 \code
-   BYTE | BYTE | BYTE | BYTE       | BYTE       | WORD     | BYTE | SHORT | BYTE | BYTE       | BYTE       | WORD     |
+   BYTE | BYTE | BYTE | BYTE ******| BYTE ******| WORD ****| BYTE | SHORT | BYTE | BYTE ******| BYTE ******| WORD ****|
  > 0x7F | 0x03 | 0x10 | Pin Output | Pin Select | Pin Wait | 0x09 | Delay | 0x10 | Pin Output | Pin Select | Pin Wait |
   ******|******|******|************|************|**********|******|*******|******|************|************|**********|
         |NumCmd| DAP_SWJ_Pins                              | DAP_Delay    | DAP_SWJ_Pins                              |
@@ -1097,12 +1343,15 @@ Execute two \ref DAP_SWJ_Pins commands with \ref DAP_Delay in between.
 
 <b>Response:</b>
 \code
-   BYTE | BYTE | BYTE | BYTE      | BYTE | BYTE   | BYTE | BYTE      |
+   BYTE | BYTE | BYTE | BYTE *****| BYTE | BYTE **| BYTE | BYTE *****|
  < 0x7F | 0x03 | 0x10 | Pin Input | 0x09 | Status | 0x10 | Pin Input |
   ******|******|******|***********|******|********|******|***********|
         |NumCmd| DAP_SWJ_Pins     | DAP_Delay     | DAP_SWJ_Pins     |
 \endcode
 */
+
+
+
 
 /**************************************************************************************************/
 /** 
@@ -1119,13 +1368,13 @@ The command is similar to \ref DAP_ExecuteCommands_gr on a packet level but queu
 
 <b>DAP_QueueCommands Request:</b>
 \code
-   BYTE | BYTE   |                   |
+   BYTE | BYTE **|+++++++++++++++++++|
  > 0x7E | NumCmd | Command Requests  |   First queued packet
   ******|********|+++++++++++++++++++|
   .
   .
   .
-   BYTE | BYTE   |                   |
+   BYTE | BYTE **|+++++++++++++++++++|
  > 0x7E | NumCmd | Command Requests  |   Last queued packet
   ******|********|+++++++++++++++++++|
 \endcode
@@ -1137,13 +1386,13 @@ The command is similar to \ref DAP_ExecuteCommands_gr on a packet level but queu
  
 <b>DAP_QueueCommands Response:</b> 
 \code
-   BYTE | BYTE   |                   |
+   BYTE | BYTE **|+++++++++++++++++++|
  < 0x7F | NumCmd | Command Responses |
   ******|********|+++++++++++++++++++|
   .
   .
   .
-   BYTE | BYTE   |                   |
+   BYTE | BYTE **|+++++++++++++++++++|
  < 0x7F | NumCmd | Command Responses |
   ******|********|+++++++++++++++++++|
 \endcode
@@ -1162,12 +1411,12 @@ Send \ref DAP_SWJ_Pins in fourth packet which executes queued commands and comma
 \b Request:
 
 \code
-   BYTE | BYTE | BYTE | BYTE       | BYTE       | WORD     | BYTE | SHORT |
+   BYTE | BYTE | BYTE | BYTE ******| BYTE ******| WORD ****| BYTE | SHORT |
  > 0x7E | 0x02 | 0x10 | Pin Output | Pin Select | Pin Wait | 0x09 | Delay |
   ******|******|******|************|************|**********|******|*******|
    Queue|NumCmd| DAP_SWJ_Pins                              | DAP_Delay    |
     
-   BYTE | BYTE | BYTE | BYTE       | BYTE       | WORD     |
+   BYTE | BYTE | BYTE | BYTE ******| BYTE ******| WORD ****|
  > 0x7E | 0x01 | 0x10 | Pin Output | Pin Select | Pin Wait |
   ******|******|******|************|************|**********|
    Queue|NumCmd| DAP_SWJ_Pins                              |
@@ -1177,7 +1426,7 @@ Send \ref DAP_SWJ_Pins in fourth packet which executes queued commands and comma
   ******|******|******|*******|
    Queue|NumCmd| DAP_Delay    |
     
-   BYTE | BYTE       | BYTE       | WORD     |
+   BYTE | BYTE ******| BYTE ******| WORD ****|
  > 0x10 | Pin Output | Pin Select | Pin Wait |
   ******|************|************|**********|
    DAP_SWJ_Pins                              |
@@ -1186,22 +1435,22 @@ Send \ref DAP_SWJ_Pins in fourth packet which executes queued commands and comma
 \b Response:
 
 \code
-   BYTE | BYTE | BYTE | BYTE      | BYTE | BYTE   |
+   BYTE | BYTE | BYTE | BYTE *****| BYTE | BYTE **|
  < 0x7F | 0x02 | 0x10 | Pin Input | 0x09 | Status |
   ******|******|******|***********|******|********|
         |NumCmd| DAP_SWJ_Pins     | DAP_Delay     |
   
-   BYTE | BYTE | BYTE | BYTE      |
+   BYTE | BYTE | BYTE | BYTE *****|
  < 0x7F | 0x01 | 0x10 | Pin Input |
   ******|******|******|***********|
         |NumCmd| DAP_SWJ_Pins     |
    
-   BYTE | BYTE | BYTE | BYTE   |
+   BYTE | BYTE | BYTE | BYTE **|
  < 0x7F | 0x01 | 0x09 | Status |
   ******|******|******|********|
         |NumCmd| DAP_Delay     |
    
-   BYTE | BYTE      |
+   BYTE | BYTE *****|
  < 0x10 | Pin Input |
   ******|***********|
    DAP_SWJ_Pins     |
