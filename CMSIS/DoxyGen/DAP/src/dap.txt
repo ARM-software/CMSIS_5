@@ -78,8 +78,8 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
     <tr>
       <td>V1.2.0 (Proposal)</td>
       <td>
-	     Added: Debug Unit Timer (DUT) in commands \ref DAP_Info, \ref DAP_Transfer, \ref DAP_TransferBlock \n
-         Added: \ref DAP_PowerProbe_gr to support power measurement
+	     Added: Debug Unit Timer in the commands \ref DAP_Info, \ref DAP_Transfer, \ref DAP_TransferBlock \n
+         Added: \ref DAP_PerformanceCounter_gr to support trace data recording (for example power measurement).
       </td>
     </tr>
     <tr>
