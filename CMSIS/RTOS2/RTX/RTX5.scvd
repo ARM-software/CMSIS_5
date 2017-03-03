@@ -428,8 +428,8 @@
 
       <member name="robin_timeout"         type="uint32_t" offset="8"  info="Round Robim timeout tick"/>
       <member name="isr_queue_data"        type="uint32_t" offset="12" info="ISR post processing queue (value is void **)"/>
-      <member name="isr_queue_max"         type="uint16_t" offset="14" info="Maximum data"/>
-      <member name="isr_queue_padding"     type="uint16_t" offset="16" info="Padding bytes"/>
+      <member name="isr_queue_max"         type="uint16_t" offset="16" info="Maximum data"/>
+      <member name="isr_queue_padding"     type="uint16_t" offset="18" info="Padding bytes"/>
 
       <member name="mem_stack_addr"        type="uint32_t" offset="20" info="Stack memory address"/>
       <member name="mem_stack_size"        type="uint32_t" offset="24" info="Stack memory size"/>
