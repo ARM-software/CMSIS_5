@@ -160,12 +160,13 @@ The Transfer Commands allow to:
 
 CMSIS-DAP provides a command set that allows to implement an optional Performance Counter (PC) management in the <b>Debug Unit</b>.
 Recording of up to 16 different Performance Counters is possible. Performance Counter values can be recorded as BYTE, SHORT, or WORD. 
-The <b>Debug Unit</b> may include scaling parameters and dynamic ranges for a channel (for example a 14-bit values with a 2-bit range selection).
+The <b>Debug Unit</b> may include scaling parameters and dynamic ranges for a channel (for example a 14-bit value with a 2-bit range selection).
 
 Performance Counters could be used for various scenarios, for example:
   - capture power measurement from A/D converters.
   - capture wait states or cache misses from a memory system.  
   - capture data transfer parameters of an RF interface.
+  - test input pins of a Debug Unit.
 
 These Performance Counters can be recorded continuously with a specified trace recording frequency. The recording allows you to correlate 
 the Performance Counter information with program execution.  For recording of the CMSIS-DAP Firmware includes an optional Trace Data Management based on configurable memory blocks. 
@@ -228,7 +229,8 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
   - \b 0x05 = Get the <b>Target Device Vendor</b> (string).
   - \b 0x06 = Get the <b>Target Device Name</b> (string).
   - \b 0xF0 = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit.
-  - \b 0xF1 = Get the <b>Debug Unit Recorder</b> parameter information.
+  - \b 0xF1 = Get the <b>Debug Unit Timer</b> parameter information.
+  - \b 0xF2 = Get the <b>Trace Data Management</b> parameter information.
   - \b 0xFE = Get the maximum <b>Packet Count</b> (BYTE).
   - \b 0xFF = Get the maximum <b>Packet Size</b> (SHORT).
 
@@ -255,18 +257,31 @@ The ID=0xF0 <b>Capabilities</b> obtains information about the available interfac
  - Bit 5: <b>1 = Trace Data Management</b> - Trace Data Management is implemented (0 = not implemented).
 
 <b>DAP_Info Response (for ID=0xF1):</b>
-The ID=0xF1 <b>Debug Unit Recorder</b> obtains the parameter information about an optional 64-bit Debug Unit Timer that may be used for time measurements
+The ID=0xF1 <b>Debug Unit Timer</b> obtains the parameter information about an optional 64-bit Debug Unit Timer that may be used for time measurements.
+
 and the configuration parameters of an optional Trace Data Management. 
 \code
 | BYTE | BYTE | WORD *****| LWORD ****| BYTE ******| SHORT ****|
-< 0x00 | 0x0F | Frequency | TimeStamp | BlockCount | BlockSize |
+< 0x00 | 0x0C | Frequency | TimeStamp | BlockCount | BlockSize |
 |******|******|***********|***********|************|***********|
 \endcode
 
-- \b Frequency:  Input frequency of the Debug Unit Timer.
-- \b TimeStamp:  Current time stamp value of the Debug Unit Timer (64-bit).
 - \b BlockCount:  Number of data blocks in the Trace Data Management.
 - \b BlockSize:  Size (in bytes) of a data block in the Trace Data Management.
+
+
+<b>DAP_Info Response (for ID=0xF2):</b>
+The ID=0xF2 <b>Trace Data Management</b> obtains the parameter information about an optional Trace Data Management.
+
+\code
+| BYTE | BYTE | SHORT *****| SHORT ****|
+< 0x00 | 0x04 | BlockCount | BlockSize |
+|******|******|************|***********|
+\endcode
+
+- \b BlockCount:  Number of data blocks in the Trace Data Management.
+- \b BlockSize:  Size (in bytes) of a data block in the Trace Data Management.
+
 
 \note
 The ID for <b>Vendor ID</b>, <b>Product ID</b>, and <b>Serial Number</b> may return no string (indicated by Len = 0). 
@@ -1010,9 +1025,9 @@ The data transfer is aborted on a communication error:
       - 7 = NO_ACK (no response from target)
   - Bit 3: 1 = Protocol Error (SWD)
   - Bit 4: 1 = Value Mismatch (Read Register with Value Match)
-  - Bit 7: 1 = Time Stamp included before transfer data (0 = no Time Stamp)
 
-- <b>Time Stamp</b>: time stamp value (64-bit) from the Debug Unit Timer.
+- <b>Time Stamp</b>: on or more time stamp values (64-bit).  
+  The values relate to the <b>Transfer Request</b> - Bit 7: Time Stamp request and indicate the time from the Debug Unit Timer at the beginning of each request.
 
 - <b>Transfer Data</b>: register value or match value in the order of the <b>Transfer Request</b>.
   - for Read Register transfer request: the register value of the CoreSight register.
@@ -1053,7 +1068,6 @@ The data transfer is aborted on a communication error:
   - Bit 1: RnW: 0 = Write Register, 1 = Read Register
   - Bit 2: A2 := Register Address bit 2
   - Bit 3: A3 := Register Address bit 3
-  - Bit 7: Time Stamp request: 0 = No time stamp, 1 = Include time stamp value 
 
 - <b>Transfer Data</b>: register values  
   - for Write Register transfer request: the register values written to the CoreSight register.
@@ -1061,9 +1075,9 @@ The data transfer is aborted on a communication error:
 
 <b>DAP_TransferBlock Response</b>:
 \code
-| BYTE | SHORT *********| BYTE *************| LWORD *****| WORD *********|
-< 0x06 | Transfer Count | Transfer Response | Time Stamp | Transfer Data |
-|******|****************|*******************|////////////|+++++++++++++++|
+| BYTE | SHORT *********| BYTE *************| WORD *********|
+< 0x06 | Transfer Count | Transfer Response | Transfer Data |
+|******|****************|*******************|+++++++++++++++|
 \endcode
 
 - <b>DAP Index</b>: Zero based device index of the selected JTAG device. For SWD mode the value is ignored.
@@ -1077,7 +1091,6 @@ The data transfer is aborted on a communication error:
       - 4 = FAULT 
       - 7 = NO_ACK (no response from target)
   - Bit 3: Protocol Error (SWD)
-  - Bit 7: 1 = Time Stamp included before transfer data (0 = no Time Stamp)
 
 - <b>Time Stamp</b>: time stamp value (64-bit) from the Debug Unit Timer.
 
@@ -1137,9 +1150,9 @@ The <b>DAP_PC_Info Command</b> provides information about the Performance Counte
   
 <b>DAP_PC_Info Response for \b ID=0x01: Get parameters of a specific Channel</b> 
 \code
- | BYTE | BYTE ***| BYTE ******| BYTE **| LWORD ***| WORD ******| BYTE ****| FLOAT *| FLOAT *| FLOAT ++++++++++|
- < 0x1E | Channel | Attributes | NoBits | IdString | UnitString | Compress | MinVal | MaxVal | RangeMultiplier |
- |******|*********|************|********|**********|************|**********|********|********|+++++++++++++++++| 
+ | BYTE | BYTE ***| BYTE ******| BYTE **| LWORD ***| LWORD *****| BYTE ****| FLOAT *| FLOAT *|
+ < 0x1E | Channel | Attributes | NoBits | IdString | UnitString | Compress | MinVal | MaxVal |
+ |******|*********|************|********|**********|************|**********|++++++++|++++++++|
 \endcode
 - \b Channel: channel number that information belongs to.
 
@@ -1150,18 +1163,17 @@ The <b>DAP_PC_Info Command</b> provides information about the Performance Counte
   - <b>bit 6</b>: DiffCom: channel communicates optionally differences instead of contiguous stream
 - \b NoBits: resolution of the channel in bits
 - \b IdString: is a up to 8 character 8-bit US ASCII string that identifies the channel
-- \b UnitString: is a up to 4 character 8-bit US ASCII string that identifies the measurement unit of the channel (V, mA, kHz)
+- \b UnitString: is a up to 8 character 8-bit US ASCII string that identifies the measurement unit of the channel (V, mA, kHz)
 - \b Compress: describes the difference communication that is optionally available (see below)
-- \b MinVal: minimum data value (= 0) represents the /b MinVal.
+- \b MinVal: minimum data value (= 0) represents the /b MinVal.  Repeated for each 
 - \b MaxVal: maximum data value result represents the /b MaxVal.
-- \b RangeMultiplier: multiplier for each measurement range
 
       
 \note
 \b NoRanges: specifies if the channel data has data ranges; possible values are:
-  - 0 = no ranges (no RangeMultiplier values provided in the response).
-  - 1 = 2 ranges (2 RangeMultiplier values are provided in the response)
-  - 2 = 4 ranges (4 RangeMultiplier values are provided in the response)
+  - 0 = 1 range (1 MinVal/MaxVal value pair in the response).
+  - 1 = 2 ranges (2 MinVal/MaxVal value pairs are provided in the response)
+  - 2 = 4 ranges (4 MinVal/MaxVal value pairs are provided in the response)
 
   
 \note
@@ -1206,10 +1218,10 @@ The range value is used to select the \b RangeMultiplier.
    NoBits = 12;               // 12 bit A/D resolution (bit 0 .. 11 of data values contain A/D result)
    NoRanges = 1;              // 2 ranges are supported (bit 12 of data values contains range)
    Compress = 3;              // dynamic data differences may be communicated
-   MinVal = 0;                // A/D result = 0x000 represents 0.0
-   MaxVal = 2.5;              // A/D result = 0xFFF represents 2.5
-   RangeMultiplier[0] = 1.0;  // results of range 0 are multiplied with 1.0 (effective range is 0mA .. 2.5mA)
-   RangeMultiplier[1] = 12.0; // results of range 1 are multiplied with 12.0 (effective range is 0mA .. 30.0mA)
+   MinVal[0] = 0;             // A/D result = 0x000 in range 0 represents 0.0mA
+   MaxVal[0] = 2.5;           // A/D result = 0xFFF in range 0 represents 2.5mA
+   MinVal[1] = 1.0;           // A/D result = 0x000 in range 0 represents 1.0mA
+   MaxVal[1] = 12.0;          // A/D result = 0xFFF in range 0 represents 30.0mA
 \endcode
 
 A channel that reports <b>MaxVal = 0.0</b> the formula needs to be provided by the debugger as the debug unit is using perhaps an external shunt resistor.
@@ -1253,7 +1265,6 @@ the CMSIS-DAP Debug Unit. Returned are live data that are currently available in
 \endcode
 
 - \b ChannelMask: Bit mask that encodes the channels that should be scanned. 
-  - \b 0xFFFF = scan all potential channels that are available.
 
 <b>DAP_PC_Values Response:</b> 
 \code
@@ -1261,7 +1272,7 @@ the CMSIS-DAP Debug Unit. Returned are live data that are currently available in
  < 0x1F | ChannelMask | DataValues |
  |******|*************|++++++++++++|
 \endcode
-- \b ChannelMask: Bit mask of channels that are actually scanned. 
+- \b ChannelMask: Bit mask of channels that are actually scanned. Depending on the capabilities of the Debug Unit, this might be less than the request channels.
 
 - \b DataValues: data values of the various Performance Counters (starting with channel=0).  The size of \b DataValues depends on the data size (see DAP_PC_Info Response, Attributes bit 0..2)  In case of SHORT or WORD data format, the LSB is send first.
 */
@@ -1283,12 +1294,10 @@ The <b>DAP_PC_Capture Command</b> controls the data recording of the various Per
 \endcode
 
 - \b ChannelMask: Bit mask that encodes the channels that should be recorded. 
-  - \b 0xFFFF = record all potential channels that are available.
 
 - \b ChannelDiff: Bit mask that enables the channel to communicate data differences. 
   - \b 0x1 = Debug Unit may decide to send data differences.
   - \b 0x0 = Debug Unit will always send data values.
-
 
 - \b Action: start or stop recording
   - \b 0x1 = start recording.
@@ -1303,7 +1312,7 @@ The <b>DAP_PC_Capture Command</b> controls the data recording of the various Per
  < 0x20 | ChannelMask |
  |******|*************|
 \endcode
-- \b ChannelMask: Bit mask of channels that are currently recorded.
+- \b ChannelMask: Bit mask of channels that are currently recorded. Depending on the capabilities of the Debug Unit, this might be less than the request channels.
 */
 
 /**************************************************************************************************/
@@ -1313,31 +1322,31 @@ The <b>DAP_PC_Capture Command</b> controls the data recording of the various Per
 \brief Transfer the data that are recorded for various Performance Counter channels.
 
 The <b>DAP_PC_TransferBlock Command</b> initiates the data transfer of a single trace data block of the recorded trace data.
+The command delivers the content of one trace data block in the Trace Data Management system.
 
 <b>DAP_PC_TransferBlock Request:</b>
 \code
- | BYTE | BYTE *******| SHORT ******|
- > 0x21 | DataRequest | ChannelMask |
- |******|*************|*************|
+ | BYTE | BYTE *******|
+ > 0x21 | DataRequest |
+ |******|*************|
 \endcode
 
-- \b DataRequest: specifies the requested data from the record management system.
-  - <b>bit 0</b>: 1 = deliver data from any full channel record
-  - <b>bit 1</b>: 1 = deliver data from SWO channel (even when partially filled)
-  - <b>bit 2</b>: 1 = deliver data from the partially filled channels specified by \b ChannelMask
-
-- \b ChannelMask: mask of channels for partial data transfer requests.
+- \b DataRequest: specifies the requested data from the Trace Data Management system.
+   - <b>bit 0</b>: 1 = deliver one trace data block from any full trace data block (this includes SWO).
+   - <b>bit 1</b>: 1 = deliver one trace data block from SWO channel (even when partially filled).
+   - <b>bit 2</b>: 1 = deliver one trace data block from any the partially filled trace data block (this includes SWO).
    
 <b>DAP_PC_TransferBlock Response:</b> 
 \code
- | BYTE | BYTE ***| SHORT ///| LWORD ////|+++++++++++++|
+ | BYTE | BYTE ***| SHORT ***| LWORD ****|+++++++++++++|
  < 0x21 | Channel | DataVals | TimeStamp | ChannelData |
  |******|*********|//////////|///////////|+++++++++++++|
 \endcode
 - \b Channel: 
     - <b>bit 0..3</b>: number of the channel that the data belong to.
-	- <b>bit 4</b>: SWO record indicator: 1 = data belong to SWO data recording
-    - <b>bit 6</b>: First record indicator: 1 = Data Size and TimeStamp is transferred. 0= Only ChannelData
+    - <b>bit 4</b>: SWO record indicator: 1 = data belong to SWO data recording.
+    - <b>bit 6</b>: First record indicator: 1 = Data Size and TimeStamp is transferred. 0 = Only ChannelData.
+    - <b>bit 7</b>: No data indicator: 1 = No ChannelData available for this request. 0 = ChannelData are available.
 - \b DataParms: parameters for ChannelData.
     - <b>bit 0..12</b>: number of data values in \b ChannelData. \ref DAP_PC_TransferBlock Response is repeated until all values are transmitted.
     - <b>bit 14</b>: 1 = difference value format. 0 = contiguous value format.
