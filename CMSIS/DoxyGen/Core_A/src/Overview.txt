@@ -3,3 +3,12 @@
 Placeholder Core-A
 
 */
+
+/**
+\page rev_histCoreA Resvision History Core-A
+
+Version    | Description 
+-----------|--------------------
+V 1.0.0    | Initial version 
+
+ */
