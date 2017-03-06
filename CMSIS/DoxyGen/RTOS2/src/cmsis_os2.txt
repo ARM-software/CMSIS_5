@@ -1116,7 +1116,50 @@ processor variants in every configuration, including ARM Cortex-M23 and Cortex-M
 /** 
 \page technicalData5 Technical Data
 
-This section will list the technical data of CMSIS-RTOS RTX v5. Work in progress.
+\section technicalData5_ControlBlockSizes Control Block Sizes
+
+Keil RTX5 specific control block definitions (including sizes) as well as memory pool and message queue memory requirements
+are defined in the RTX5 header file:
+
+\code
+/// Control Block sizes
+#define osRtxThreadCbSize        sizeof(osRtxThread_t)
+#define osRtxTimerCbSize         sizeof(osRtxTimer_t)
+#define osRtxEventFlagsCbSize    sizeof(osRtxEventFlags_t)
+#define osRtxMutexCbSize         sizeof(osRtxMutex_t)
+#define osRtxSemaphoreCbSize     sizeof(osRtxSemaphore_t)
+#define osRtxMemoryPoolCbSize    sizeof(osRtxMemoryPool_t)
+#define osRtxMessageQueueCbSize  sizeof(osRtxMessageQueue_t)
+ 
+/// Memory size in bytes for Memory Pool storage.
+/// \param         block_count   maximum number of memory blocks in memory pool.
+/// \param         block_size    memory block size in bytes.
+#define osRtxMemoryPoolMemSize(block_count, block_size) \
+  (4*(block_count)*(((block_size)+3)/4))
+ 
+/// Memory size in bytes for Message Queue storage.
+/// \param         msg_count     maximum number of messages in queue.
+/// \param         msg_size      maximum message size in bytes.
+#define osRtxMessageQueueMemSize(msg_count, msg_size) \
+  (4*(msg_count)*(3+(((msg_size)+3)/4)))
+\endcode
+
+If you are using a \ref GlobalMemoryPool to allocate memory for the RTOS objects, you need to know the size that is required
+for each object in case of errors. Currently, the control block sizes are as follows (subject to change without
+notification):
+
+Type          | Control block size in bytes |
+--------------|:---------------------------:|
+Thread        | 68                          |
+Timer         | 32                          |
+Event Flags   | 16                          |
+Mutex         | 28                          |
+Semaphore     | 16                          |
+Memory Pool   | 36                          |
+Message Queue | 52                          |
+
+The size of the memory that is required for memory pool and message queue data storage can be determined from the macros
+stated above.
 */
 
 
