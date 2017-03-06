@@ -34,26 +34,9 @@
 #define __CORE_CA_H_GENERIC
 
 
-/** \page CMSIS_MISRA_Exceptions  MISRA-C:2004 Compliance Exceptions
-  CMSIS violates the following MISRA-C:2004 rules:
-
-   \li Required Rule 8.5, object/function definition in header file.<br>
-     Function definitions in header files are used to allow 'inlining'.
-
-   \li Required Rule 18.4, declaration of union type or object of union type: '{...}'.<br>
-     Unions are used for effective representation of core registers.
-
-   \li Advisory Rule 19.7, Function-like macro defined.<br>
-     Function-like macros are used to allow more efficient code.
- */
-
-
 /*******************************************************************************
  *                 CMSIS definitions
  ******************************************************************************/
-/** \ingroup Cortex_A
-  @{
- */
 
 /*  CMSIS CA definitions */
 #define __CA_CMSIS_VERSION_MAIN  (1U)                                      /*!< [31:16] CMSIS HAL main version   */
@@ -61,8 +44,6 @@
 #define __CA_CMSIS_VERSION       ((__CA_CMSIS_VERSION_MAIN << 16U) | \
                                    __CA_CMSIS_VERSION_SUB          )       /*!< CMSIS HAL version number         */
 
-/** __FPU_USED indicates whether an FPU is used or not. For this, __FPU_PRESENT has to be checked prior to making use of FPU specific registers and functions.
-*/
 #if defined ( __CC_ARM )
   #if defined __TARGET_FPU_VFP
     #if (__FPU_PRESENT == 1)
@@ -160,13 +141,6 @@
 #endif
 
 /* IO definitions (access restrictions to peripheral registers) */
-/**
-    \defgroup CMSIS_glob_defs CMSIS Global Defines
-
-    <strong>IO Type Qualifiers</strong> are used
-    \li to specify the access to peripheral variables.
-    \li for automatic generation of peripheral register debug information.
-*/
 #ifdef __cplusplus
   #define   __I     volatile             /*!< Defines 'read only' permissions */
 #else
@@ -180,8 +154,6 @@
 #define     __OM     volatile            /*! Defines 'write only' structure member permissions */
 #define     __IOM    volatile            /*! Defines 'read / write' structure member permissions */
 
-/*@} end of group Cortex_A */
-
 
  /*******************************************************************************
   *                 Register Abstraction
@@ -192,10 +164,6 @@
    - Generic Interrupt Controller Distributor
    - Generic Interrupt Controller Interface
   ******************************************************************************/
- /**
-   \defgroup CMSIS_core_register Defines and Type Definitions
-   \brief Type definitions and defines for Cortex-A processor based devices.
- */
 
 /* Core Register CPSR */
 typedef union
@@ -616,11 +584,7 @@ typedef struct
    - GIC Functions
    - MMU Functions
   ******************************************************************************/
- /**
-   \defgroup CMSIS_Core_FunctionInterface Functions and Instructions Reference
- */
-
-
+ 
 /* ##########################  L1 Cache functions  ################################# */
 
 /** \brief  Enable Caches
@@ -1200,11 +1164,6 @@ __STATIC_INLINE void PTIM_ClearEventFlag(void) {
 
 #define DESCRIPTOR_FAULT        (0x00000000)
 
-/** \ingroup  MMU_FunctionInterface
-    \defgroup MMU_Functions MMU Functions Interface
-  @{
- */
-
 /* Attributes enumerations */
 
 /* Region size attributes */
@@ -1430,8 +1389,6 @@ typedef struct RegionStruct {
 
 /** \brief  Set section execution-never attribute
 
-  The function sets section execution-never attribute
-
   \param [out]    descriptor_l1  L1 descriptor.
   \param [in]                xn  Section execution-never attribute : EXECUTE , NON_EXECUTE.
 
@@ -1445,8 +1402,6 @@ __STATIC_INLINE int MMU_XNSection(uint32_t *descriptor_l1, mmu_execute_Type xn)
 }
 
 /** \brief  Set section domain
-
-  The function sets section domain
 
   \param [out]    descriptor_l1  L1 descriptor.
   \param [in]            domain  Section domain
@@ -1462,8 +1417,6 @@ __STATIC_INLINE int MMU_DomainSection(uint32_t *descriptor_l1, uint8_t domain)
 
 /** \brief  Set section parity check
 
-  The function sets section parity check
-
   \param [out]    descriptor_l1  L1 descriptor.
   \param [in]              p_bit Parity check: ECC_DISABLED, ECC_ENABLED
 
@@ -1477,8 +1430,6 @@ __STATIC_INLINE int MMU_PSection(uint32_t *descriptor_l1, mmu_ecc_check_Type p_b
 }
 
 /** \brief  Set section access privileges
-
-  The function sets section access privileges
 
   \param [out]    descriptor_l1  L1 descriptor.
   \param [in]              user  User Level Access: NO_ACCESS, RW, READ
@@ -1516,8 +1467,6 @@ __STATIC_INLINE int MMU_APSection(uint32_t *descriptor_l1, mmu_access_Type user,
 
 /** \brief  Set section shareability
 
-  The function sets section shareability
-
   \param [out]    descriptor_l1  L1 descriptor.
   \param [in]             s_bit  Section shareability: NON_SHARED, SHARED
 
@@ -1531,8 +1480,6 @@ __STATIC_INLINE int MMU_SharedSection(uint32_t *descriptor_l1, mmu_shared_Type s
 }
 
 /** \brief  Set section Global attribute
-
-  The function sets section Global attribute
 
   \param [out]    descriptor_l1  L1 descriptor.
   \param [in]             g_bit  Section attribute: GLOBAL, NON_GLOBAL
@@ -1548,8 +1495,6 @@ __STATIC_INLINE int MMU_GlobalSection(uint32_t *descriptor_l1, mmu_global_Type g
 
 /** \brief  Set section Security attribute
 
-  The function sets section Global attribute
-
   \param [out]    descriptor_l1  L1 descriptor.
   \param [in]             s_bit  Section Security attribute: SECURE, NON_SECURE
 
@@ -1564,8 +1509,6 @@ __STATIC_INLINE int MMU_SecureSection(uint32_t *descriptor_l1, mmu_secure_Type s
 
 /* Page 4k or 64k */
 /** \brief  Set 4k/64k page execution-never attribute
-
-  The function sets 4k/64k page execution-never attribute
 
   \param [out]    descriptor_l2  L2 descriptor.
   \param [in]                xn  Page execution-never attribute : EXECUTE , NON_EXECUTE.
@@ -1590,8 +1533,6 @@ __STATIC_INLINE int MMU_XNPage(uint32_t *descriptor_l2, mmu_execute_Type xn, mmu
 
 /** \brief  Set 4k/64k page domain
 
-  The function sets 4k/64k page domain
-
   \param [out]    descriptor_l1  L1 descriptor.
   \param [in]            domain  Page domain
 
@@ -1606,8 +1547,6 @@ __STATIC_INLINE int MMU_DomainPage(uint32_t *descriptor_l1, uint8_t domain)
 
 /** \brief  Set 4k/64k page parity check
 
-  The function sets 4k/64k page parity check
-
   \param [out]    descriptor_l1  L1 descriptor.
   \param [in]              p_bit Parity check: ECC_DISABLED, ECC_ENABLED
 
@@ -1621,8 +1560,6 @@ __STATIC_INLINE int MMU_PPage(uint32_t *descriptor_l1, mmu_ecc_check_Type p_bit)
 }
 
 /** \brief  Set 4k/64k page access privileges
-
-  The function sets 4k/64k page access privileges
 
   \param [out]    descriptor_l2  L2 descriptor.
   \param [in]              user  User Level Access: NO_ACCESS, RW, READ
@@ -1660,8 +1597,6 @@ __STATIC_INLINE int MMU_APPage(uint32_t *descriptor_l2, mmu_access_Type user, mm
 
 /** \brief  Set 4k/64k page shareability
 
-  The function sets 4k/64k page shareability
-
   \param [out]    descriptor_l2  L2 descriptor.
   \param [in]             s_bit  4k/64k page shareability: NON_SHARED, SHARED
 
@@ -1675,8 +1610,6 @@ __STATIC_INLINE int MMU_SharedPage(uint32_t *descriptor_l2, mmu_shared_Type s_bi
 }
 
 /** \brief  Set 4k/64k page Global attribute
-
-  The function sets 4k/64k page Global attribute
 
   \param [out]    descriptor_l2  L2 descriptor.
   \param [in]             g_bit  4k/64k page attribute: GLOBAL, NON_GLOBAL
@@ -1692,8 +1625,6 @@ __STATIC_INLINE int MMU_GlobalPage(uint32_t *descriptor_l2, mmu_global_Type g_bi
 
 /** \brief  Set 4k/64k page Security attribute
 
-  The function sets 4k/64k page Global attribute
-
   \param [out]    descriptor_l1  L1 descriptor.
   \param [in]             s_bit  4k/64k page Security attribute: SECURE, NON_SECURE
 
@@ -1707,8 +1638,6 @@ __STATIC_INLINE int MMU_SecurePage(uint32_t *descriptor_l1, mmu_secure_Type s_bi
 }
 
 /** \brief  Set Section memory attributes
-
-  The function sets section memory attributes
 
   \param [out]    descriptor_l1  L1 descriptor.
   \param [in]               mem  Section memory type: NORMAL, DEVICE, SHARED_DEVICE, NON_SHARED_DEVICE, STRONGLY_ORDERED
@@ -1769,8 +1698,6 @@ __STATIC_INLINE int MMU_MemorySection(uint32_t *descriptor_l1, mmu_memory_Type m
 }
 
 /** \brief  Set 4k/64k page memory attributes
-
-  The function sets 4k/64k page memory attributes
 
   \param [out]    descriptor_l2  L2 descriptor.
   \param [in]               mem  4k/64k page memory type: NORMAL, DEVICE, SHARED_DEVICE, NON_SHARED_DEVICE, STRONGLY_ORDERED
@@ -1842,13 +1769,6 @@ __STATIC_INLINE int MMU_MemoryPage(uint32_t *descriptor_l2, mmu_memory_Type mem,
 
 /** \brief  Create a L1 section descriptor
 
-  The function creates a section descriptor.
-
-  Assumptions:
-  - 16MB super sections not supported
-  - TEX remap disabled, so memory type and attributes are described directly by bits in the descriptor
-  - Functions always return 0
-
   \param [out]     descriptor  L1 descriptor
   \param [in]      reg  Section attributes
   
@@ -1874,11 +1794,6 @@ __STATIC_INLINE int MMU_GetSectionDescriptor(uint32_t *descriptor, mmu_region_at
 
 
 /** \brief  Create a L1 and L2 4k/64k page descriptor
-
-  The function creates a 4k/64k page descriptor.
-  Assumptions:
-  - TEX remap disabled, so memory type and attributes are described directly by bits in the descriptor
-  - Functions always return 0
 
   \param [out]       descriptor  L1 descriptor
   \param [out]      descriptor2  L2 descriptor
@@ -2068,7 +1983,6 @@ __STATIC_INLINE void MMU_InvalidateTLB(void) {
   __ISB();     //ensure instruction fetch path sees new state
 }
 
-/*@} end of MMU_Functions */
 
 #ifdef __cplusplus
 }
