@@ -25,10 +25,10 @@ The following conventions describe the command semantic used in the following do
  \>       | Prefix indicating the direction: Command from host to Debug Unit.
  \<       | Prefix indicating the direction: Response from Debug Unit to host.
  BYTE     | 8-bit value.
- SHORT    | 16-bit value (low byte first)
- WORD     | 32-bit value (low byte first)
- LWORD    | 64-bit value (low byte first)
- FLOAT    | 32-bit single precision floating point value (LSB first)
+ SHORT    | 16-bit value (low byte first).
+ WORD     | 32-bit value (low byte first).
+ LWORD    | 64-bit value (low byte first).
+ FLOAT    | 32-bit single precision floating point value (LSB first).
  0x01     | Fixed HEX value in C notation. Used for example to identify a command.
  Reserved | The field above is reserved for future extension.
  \*\*\*\* | The field above has exactly one occurrence.
@@ -981,7 +981,7 @@ The data transfer is aborted on a communication error:
   - Bit 3: A3 Register Address bit 3.
   - Bit 4: Value Match (only valid for Read Register): 0 = Normal Read Register, 1 = Read Register with Value Match.
   - Bit 5: Match Mask (only valid for Write Register): 0 = Normal Write Register, 1 = Write Match Mask (instead of Register).
-  - Bit 7: DUT value request: 0 = No DUT value, 1 = Include DUT value 
+  - Bit 7: DUT value request: 0 = No DUT value, 1 = Include DUT value. 
 
 - <b>Transfer Data</b>: register value or match value
   - for Write Register transfer request: the register value for the CoreSight register.
@@ -1169,7 +1169,7 @@ The <b>DAP_PC_Info Command</b> provides information about the Performance Counte
 - \b RangeMultiplier: multiplier for each measurement range
 
 <b>Data Value Scaling</b>: the information \b NoBits, \b MinVal, \b MaxVal is used to convert the binary data value
-into a floating data value for displaying perposes. If both \b MinVal and \b MinMax are 0 no scaling formula is provided and raw data may be displayed instead.
+into a floating data value for displaying purposes. If both \b MinVal and \b MinMax are 0 no scaling formula is provided and raw data may be displayed instead.
 Scaling considers the \b NoBits value, for example at 12-bit resolution the maximum data value is 0x3FF.
 
 <b>Data Ranges</b>: the information \b NoRange, \b NoBits, \b RangeMultiplier allows to multiply the scaled data value based on range information.
