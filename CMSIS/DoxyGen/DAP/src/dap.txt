@@ -1,10 +1,10 @@
 /**
 \mainpage Firmware for CoreSight Debug Access Port
 
-<b>CMSIS-DAP</b> is a specification and a implementation of a <b>Firmware</b> that supports access to the CoreSight <b>Debug Access Port</b> (DAP). 
+<b>CMSIS-DAP</b> is a specification and a implementation of a <b>Firmware</b> that supports access to the CoreSight <b>Debug Access Port</b> (DAP).\n\n
 
-ARM Cortex processors provide <a href="http://www.arm.com/products/system-ip/coresight/index.php" target="_blank">
-CoreSight Debug and Trace</a>. CMSIS-DAP supports target Devices that contain one or more Cortex processors. 
+The various ARM Cortex processors provide <a href="http://www.arm.com/products/system-ip/coresight/index.php" target="_blank">
+<b>CoreSight Debug and Trace</b></a>. CMSIS-DAP supports target Devices that contain one or more Cortex processors. 
 A Device provides a Debug Access Port (DAP) typically either with a 5-pin JTAG or with a 2-pin Serial Wired Debug (SWD)
 interface that connects to a Debug Unit. CMSIS-DAP is the interface firmware for a Debug Unit that connects 
 the Debug Port to USB. Debuggers that execute on a host computer connect via USB and the Debug Unit to the Device
@@ -14,12 +14,12 @@ which runs the application software.
 
 Benefits of CMSIS-DAP
 ---------------------
- - Provides a standardized interface for debuggers. 
-    - Interfaces to many standard debuggers is already available. This includes also ARM DS-5 and Keil MDK-ARM.
+ - Provides a standardized interface for debuggers. Interfaces to many standard debuggers is available.
  - Access to CoreSight registers of all Cortex processor architectures (Cortex-A/R/M).
  - Connects via 5-pin JTAG or 2-pin Serial Wire Debug (SWD).
  - Supports multi-core debugging.
- - Supports Serial Wire Output of Cortex-M devices (new in CMSIS-DAP Version 1.10).
+ - Supports Serial Wire Output of Cortex-M devices (new in CMSIS-DAP Version 1.1.0).
+ - Supports trace recording of external Performance Counter inputs (new in CMSIS-DAP Version 1.2.0).
  - Easy to deploy to Debug Units based on Cortex-M microcontrollers. 
  - Debug Unit may be integrated on an evaluation board.
  - USB using HID (Human Interface Device) driver class that avoids driver installation on host PC.
