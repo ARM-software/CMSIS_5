@@ -1,0 +1,524 @@
+/**************************************************************************//**
+ * @file     core_ca.txt
+ * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
+ ******************************************************************************/
+
+/*******************************************************************************
+ *                 CMSIS definitions
+ ******************************************************************************/
+/**
+\defgroup CMSIS_glob_defs CMSIS Global Defines
+\brief Definitions common to all interfaces 
+    <b>IO Type Qualifiers</b> are used
+    \li to specify the access to peripheral variables.
+    \li for automatic generation of peripheral register debug information.
+@{
+*/
+
+/*  CMSIS CA definitions */
+/**
+\def __CA_CMSIS_VERSION_MAIN  
+\def __CA_CMSIS_VERSION_SUB   
+\def __CA_CMSIS_VERSION       
+                                 
+*/
+
+/** 
+\def __FPU_PRESENT
+\def __FPU_USED
+   __FPU_USED indicates whether an FPU is used or not. For this, \ref __FPU_PRESENT has to be checked prior to making use of FPU specific registers and functions.
+
+\def __CA_REV
+\def __MPU_PRESENT             
+
+*/
+
+/* IO definitions (access restrictions to peripheral registers) */
+/**
+
+\def   __I
+\def   __O
+\def   __IO  
+
+\def   __IM  
+\def   __OM  
+\def   __IOM 
+*/
+/** @} */ 
+/*end of group CMSIS_glob_defs */
+
+
+
+/**
+\defgroup CMSIS_core_register Core Register Defines
+\brief Type definitions and defines for Cortex-A processor based devices.
+@{
+ */
+
+/* Core Register CPSR */
+/**
+\defgroup CMSIS_CPSR Core Register CPSR
+\brief Type definitions and defines for CPSR
+@{
+*/
+
+/**
+\struct CPSR_Type
+
+// CPSR Register Definitions 
+\def CPSR_N_Pos                  
+\def CPSR_Z_Pos                  
+\def CPSR_C_Pos                  
+\def CPSR_V_Pos                  
+\def CPSR_Q_Pos                  
+\def CPSR_IT0_Pos                
+\def CPSR_J_Pos                  
+\def CPSR_GE_Pos                 
+\def CPSR_IT1_Pos                
+\def CPSR_E_Pos                  
+\def CPSR_A_Pos                  
+\def CPSR_I_Pos                  
+\def CPSR_F_Pos                  
+\def CPSR_T_Pos                  
+\def CPSR_M_Pos                  
+*/
+/** @} */
+/* end group CMSIS_CPSR */
+
+
+/* CP15 Register SCTLR */
+/**
+\defgroup CMSIS_SCTLR Core Register SCTLR
+\brief Type definitions and defines for SCTLR
+@{
+*/
+/**
+\struct SCTLR_Type
+
+\def SCTLR_TE_Pos                  
+\def SCTLR_AFE_Pos                 
+\def SCTLR_TRE_Pos                 
+\def SCTLR_NMFI_Pos                
+\def SCTLR_EE_Pos                  
+\def SCTLR_VE_Pos                  
+\def SCTLR_U_Pos                   
+\def SCTLR_FI_Pos                  
+\def SCTLR_UWXN_Pos                
+\def SCTLR_WXN_Pos                 
+\def SCTLR_HA_Pos                  
+\def SCTLR_RR_Pos                  
+\def SCTLR_V_Pos                   
+\def SCTLR_I_Pos                   
+\def SCTLR_Z_Pos                   
+\def SCTLR_SW_Pos                  
+\def SCTLR_B_Pos                   
+\def SCTLR_CP15BEN_Pos             
+\def SCTLR_C_Pos                   
+\def SCTLR_A_Pos                   
+\def SCTLR_M_Pos                   
+*/
+/** @} */
+/* end group CMSIS_SCTLR */
+
+/* CP15 Register CPACR */
+/**
+\defgroup CMSIS_CPACR Core Register CPACR
+\brief Type definitions and defines for CPACR
+@{
+*/
+/**
+\struct CPACR_Type
+
+\def CPACR_ASEDIS_Pos         
+\def CPACR_D32DIS_Pos         
+\def CPACR_cp11_Pos           
+\def CPACR_cp10_Pos           
+*/
+/** @} */
+/* end group CMSIS_CPACR */
+
+/* CP15 Register DFSR */
+/**
+\defgroup CMSIS_DFSR Core Register DFSR
+\brief Type definitions and defines for DFSR
+@{
+*/
+/**
+\struct DFSR_Type
+
+\def DFSR_CM_Pos             
+\def DFSR_Ext_Pos            
+\def DFSR_WnR_Pos            
+\def DFSR_FS1_Pos            
+\def DFSR_Domain_Pos         
+\def DFSR_FS0_Pos            
+*/
+/** @} */
+/* end group CMSIS_DFSR */
+
+/* CP15 Register IFSR */
+/**
+\defgroup CMSIS_IFSR Core Register IFSR
+\brief Type definitions and defines for IFSR
+@{
+*/
+/**
+\struct IFSR_Type
+
+\def IFSR_ExT_Pos           
+\def IFSR_FS1_Pos           
+\def IFSR_FS0_Pos           
+*/
+/** @} */
+/* end group CMSIS_IFSR */
+
+/* CP15 Register ISR */
+/**
+\defgroup CMSIS_ISR Core Register ISR
+\brief Type definitions and defines for ISR
+@{
+*/
+/**
+\struct ISR_Type
+
+\def ISR_A_Pos             
+\def ISR_I_Pos             
+\def ISR_F_Pos             
+*/
+/** @} */
+/* end group CMSIS_ISR */
+
+/* access the L2C_310 Cache Controller */
+/**
+\defgroup L2C_310_CC Cache Controller
+\brief Type definitions and defines for cache controller
+@{
+*/
+/**
+\struct L2C_310_TypeDef
+\def L2C_310
+*/
+/** @} */
+/* end group L2C_310_CC */
+
+/* access the Generic Interrupt Controller Distributor (GICD) */
+/**
+\defgroup GICD_gr Generic Interrupt Controller Distributor (GICD)
+\brief Type definitions and defines for Generic Interrupt Controller Distributor (GICD)
+@{
+*/
+/**
+\struct  GICDistributor_Type
+\def GICDistributor
+*/
+/** @} */
+/* end group GICD_gr */
+
+/* access the Generic Interrupt Controller Interface (GICC) */
+/**
+\defgroup GICC_gr Generic Interrupt Controller Interface (GICC)
+\brief Type definitions and defines for Generic Interrupt Controller Interface (GICC)
+@{
+*/
+/**
+\struct  GICInterface_Type
+
+\def GICInterface
+*/
+/** @} */
+/* end group GICC_gr */
+
+/** @} */ 
+/* end of group CMSIS_core_register */
+
+/*
+\defgroup CMSIS_Core_FunctionInterface Functions and Instructions Reference
+\brief 
+\details
+Hardware Abstraction Layer.
+   The Core-A function interface contains:
+   - \ref L1_chache_functions 
+   - \ref L2_chache_functions 
+   - \ref PL1_timer_functions
+   - \ref GIC_functions
+   - \ref MMU_functions
+
+@{
+*/
+
+
+/* ##########################  L1 Cache functions  ################################# */
+
+/** 
+\defgroup L1_chache_functions L1 Cache Functions 
+@{
+\fn __STATIC_INLINE void L1C_EnableCaches(void) 
+\fn __STATIC_INLINE void L1C_DisableCaches(void) 
+\fn __STATIC_INLINE void L1C_EnableBTAC(void) 
+\fn __STATIC_INLINE void L1C_DisableBTAC(void) 
+\fn __STATIC_INLINE void L1C_InvalidateBTAC(void) 
+\fn __STATIC_INLINE void L1C_InvalidateICacheAll(void)
+\fn __STATIC_INLINE void L1C_CleanDCacheMVA(void *va) 
+\fn __STATIC_INLINE void L1C_InvalidateDCacheMVA(void *va) 
+\fn __STATIC_INLINE void L1C_CleanInvalidateDCacheMVA(void *va) 
+\fn __STATIC_INLINE void L1C_CleanInvalidateCache(uint32_t op) 
+\fn __STATIC_INLINE void L1C_InvalidateDCacheAll(void) 
+\fn __STATIC_INLINE void L1C_CleanDCacheAll(void) 
+\fn __STATIC_INLINE void L1C_CleanInvalidateDCacheAll(void) 
+@}
+*/
+
+/* ##########################  L2 Cache functions  ################################# */
+
+//Cache Sync operation
+/**
+\defgroup L2_chache_functions L2C-310 Cache Controller Functions 
+@{
+\fn __STATIC_INLINE void L2C_Sync(void) 
+\fn __STATIC_INLINE int L2C_GetID (void) 
+\fn __STATIC_INLINE int L2C_GetType (void) 
+\fn __STATIC_INLINE void L2C_InvAllByWay (void) 
+\fn __STATIC_INLINE void L2C_CleanInvAllByWay (void) 
+\fn __STATIC_INLINE void L2C_Enable(void) 
+\fn __STATIC_INLINE void L2C_Disable(void) 
+\fn __STATIC_INLINE void L2C_InvPa (void *pa) 
+\fn __STATIC_INLINE void L2C_CleanPa (void *pa) 
+\fn __STATIC_INLINE void L2C_CleanInvPa (void *pa) 
+@}
+*/
+
+/* ##########################  GIC functions  ###################################### */
+/**
+\defgroup GIC_functions GIC functions
+@{
+\fn __STATIC_INLINE void GIC_EnableDistributor(void)
+\fn __STATIC_INLINE void GIC_DisableDistributor(void)
+\fn __STATIC_INLINE uint32_t GIC_DistributorInfo(void)
+\fn __STATIC_INLINE uint32_t GIC_DistributorImplementer(void)
+\fn __STATIC_INLINE void GIC_SetTarget(IRQn_Type IRQn, uint32_t cpu_target)
+\fn __STATIC_INLINE void GIC_SetICDICFR (const uint32_t *ICDICFRn)
+\fn __STATIC_INLINE uint32_t GIC_GetTarget(IRQn_Type IRQn)
+\fn __STATIC_INLINE void GIC_EnableInterface(void)
+\fn __STATIC_INLINE void GIC_DisableInterface(void)
+\fn __STATIC_INLINE IRQn_Type GIC_AcknowledgePending(void)
+\fn __STATIC_INLINE void GIC_EndInterrupt(IRQn_Type IRQn)
+\fn __STATIC_INLINE void GIC_EnableIRQ(IRQn_Type IRQn)
+\fn __STATIC_INLINE void GIC_DisableIRQ(IRQn_Type IRQn)
+\fn __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
+\fn __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
+\fn __STATIC_INLINE void GIC_SetLevelModel(IRQn_Type IRQn, int8_t edge_level, int8_t model)
+\fn __STATIC_INLINE void GIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
+\fn __STATIC_INLINE uint32_t GIC_GetPriority(IRQn_Type IRQn)
+\fn __STATIC_INLINE void GIC_InterfacePriorityMask(uint32_t priority)
+\fn __STATIC_INLINE void GIC_SetBinaryPoint(uint32_t binary_point)
+\fn __STATIC_INLINE uint32_t GIC_GetBinaryPoint(uint32_t binary_point)
+\fn __STATIC_INLINE uint32_t GIC_GetIRQStatus(IRQn_Type IRQn)
+\fn __STATIC_INLINE void GIC_SendSGI(IRQn_Type IRQn, uint32_t target_list, uint32_t filter_list)
+\fn __STATIC_INLINE void GIC_DistInit(void)
+\fn __STATIC_INLINE void GIC_CPUInterfaceInit(void)
+\fn __STATIC_INLINE void GIC_Enable(void)
+@}
+*/
+
+/* ##########################  Generic Timer functions  ############################ */
+/**
+\defgroup PL1_timer_functions Generic Timer Functions
+\brief Generic hardware timer functions
+@{
+\fn __STATIC_INLINE void PL1_SetLoadValue(uint32_t value)
+\fn __STATIC_INLINE uint32_t PL1_GetCurrentValue()
+\fn __STATIC_INLINE void PL1_SetControl(uint32_t value) 
+@}
+*/
+
+/* ##########################  Private Timer functions  ############################ */
+/**
+\defgroup PTM_timer_functions Private Timer Functions
+\brief Private timer functions
+@{
+\fn __STATIC_INLINE void PTIM_SetLoadValue(uint32_t value)
+\fn __STATIC_INLINE uint32_t PTIM_GetLoadValue()
+\fn __STATIC_INLINE uint32_t PTIM_GetCurrentValue()
+\fn __STATIC_INLINE void PTIM_SetControl(uint32_t value)
+\fn __STATIC_INLINE uint32_t PTIM_GetControl(void)
+\fn __STATIC_INLINE void PTIM_ClearEventFlag(void)
+@}
+*/
+
+
+/* ##########################  MMU functions  ###################################### */
+/**
+\defgroup MMU_functions MMU Functions 
+@{
+
+\def SECTION_DESCRIPTOR      
+\def SECTION_B_SHIFT         
+\def SECTION_C_SHIFT         
+\def SECTION_TEX0_SHIFT      
+\def SECTION_TEX1_SHIFT      
+\def SECTION_TEX2_SHIFT      
+\def SECTION_XN_SHIFT        
+\def SECTION_DOMAIN_SHIFT    
+\def SECTION_P_SHIFT         
+\def SECTION_AP_SHIFT        
+\def SECTION_AP2_SHIFT       
+\def SECTION_S_SHIFT         
+\def SECTION_NG_SHIFT        
+\def SECTION_NS_SHIFT        
+\def PAGE_L1_DESCRIPTOR      
+\def PAGE_L2_4K_DESC         
+\def PAGE_L2_64K_DESC        
+\def PAGE_4K_B_SHIFT         
+\def PAGE_4K_C_SHIFT         
+\def PAGE_4K_TEX0_SHIFT      
+\def PAGE_4K_TEX1_SHIFT      
+\def PAGE_4K_TEX2_SHIFT      
+\def PAGE_64K_B_SHIFT        
+\def PAGE_64K_C_SHIFT        
+\def PAGE_64K_TEX0_SHIFT     
+\def PAGE_64K_TEX1_SHIFT     
+\def PAGE_64K_TEX2_SHIFT     
+\def PAGE_B_SHIFT            
+\def PAGE_C_SHIFT            
+\def PAGE_TEX_SHIFT          
+\def PAGE_XN_4K_SHIFT        
+\def PAGE_XN_64K_SHIFT       
+\def PAGE_DOMAIN_SHIFT       
+\def PAGE_P_SHIFT            
+\def PAGE_AP_SHIFT           
+\def PAGE_AP2_SHIFT          
+\def PAGE_S_SHIFT            
+\def PAGE_NG_SHIFT           
+\def PAGE_NS_SHIFT           
+\def OFFSET_1M               
+\def OFFSET_64K              
+\def OFFSET_4K               
+\def DESCRIPTOR_FAULT        (0x00000000)        
+
+\enum mmu_region_size_Type
+
+\enum mmu_memory_Type
+
+\enum mmu_cacheability_Type
+
+\enum mmu_ecc_check_Type
+
+\enum mmu_execute_Type
+
+\enum mmu_global_Type
+
+\enum mmu_shared_Type
+
+\enum mmu_secure_Type
+
+\enum mmu_access_Type
+
+\struct  mmu_region_attributes_Type
+
+\def section_normal(descriptor_l1, region) 
+\def section_normal_cod(descriptor_l1, region)
+\def section_normal_ro(descriptor_l1, region)
+\def section_normal_rw(descriptor_l1, region)
+\def section_so(descriptor_l1, region)
+\def section_device_ro(descriptor_l1, region)
+\def section_device_rw(descriptor_l1, region)
+\def page4k_device_rw(descriptor_l1, descriptor_l2, region)
+\def page64k_device_rw(descriptor_l1, descriptor_l2, region) 
+
+
+\fn __STATIC_INLINE int MMU_XNSection(uint32_t *descriptor_l1, mmu_execute_Type xn)
+\details 
+  The function sets section execution-never attribute
+
+
+\fn __STATIC_INLINE int MMU_DomainSection(uint32_t *descriptor_l1, uint8_t domain)
+\details 
+The function sets section domain.
+
+\fn __STATIC_INLINE int MMU_PSection(uint32_t *descriptor_l1, mmu_ecc_check_Type p_bit)
+\details
+  The function sets section parity check
+
+\fn __STATIC_INLINE int MMU_APSection(uint32_t *descriptor_l1, mmu_access_Type user, mmu_access_Type priv, uint32_t afe)
+\details 
+The function sets section access privileges
+
+\fn __STATIC_INLINE int MMU_SharedSection(uint32_t *descriptor_l1, mmu_shared_Type s_bit)
+\details
+  The function sets section shareability
+
+\fn __STATIC_INLINE int MMU_GlobalSection(uint32_t *descriptor_l1, mmu_global_Type g_bit)
+\details
+  The function sets section Global attribute
+
+\fn __STATIC_INLINE int MMU_SecureSection(uint32_t *descriptor_l1, mmu_secure_Type s_bit)
+\details
+  The function sets section Global attribute
+
+\fn __STATIC_INLINE int MMU_XNPage(uint32_t *descriptor_l2, mmu_execute_Type xn, mmu_region_size_Type page)
+\details
+  The function sets 4k/64k page execution-never attribute
+
+\fn __STATIC_INLINE int MMU_DomainPage(uint32_t *descriptor_l1, uint8_t domain)
+\details
+  The function sets 4k/64k page domain
+
+\fn __STATIC_INLINE int MMU_PPage(uint32_t *descriptor_l1, mmu_ecc_check_Type p_bit)
+\details
+  The function sets 4k/64k page parity check
+
+\fn __STATIC_INLINE int MMU_APPage(uint32_t *descriptor_l2, mmu_access_Type user, mmu_access_Type priv, uint32_t afe)
+\details
+  The function sets 4k/64k page access privileges
+\fn __STATIC_INLINE int MMU_SharedPage(uint32_t *descriptor_l2, mmu_shared_Type s_bit)
+\details
+  The function sets 4k/64k page shareability
+
+\fn __STATIC_INLINE int MMU_GlobalPage(uint32_t *descriptor_l2, mmu_global_Type g_bit)
+\details
+  The function sets 4k/64k page Global attribute
+
+\fn __STATIC_INLINE int MMU_SecurePage(uint32_t *descriptor_l1, mmu_secure_Type s_bit)
+\details
+  The function sets 4k/64k page Global attribute
+
+\fn __STATIC_INLINE int MMU_MemorySection(uint32_t *descriptor_l1, mmu_memory_Type mem, mmu_cacheability_Type outer, mmu_cacheability_Type inner)
+\details
+  The function sets section memory attributes
+
+\fn __STATIC_INLINE int MMU_MemoryPage(uint32_t *descriptor_l2, mmu_memory_Type mem, mmu_cacheability_Type outer, mmu_cacheability_Type inner, mmu_region_size_Type page)
+\details
+  The function sets 4k/64k page memory attributes
+
+\fn __STATIC_INLINE int MMU_GetSectionDescriptor(uint32_t *descriptor, mmu_region_attributes_Type reg)
+\details
+  The function creates a section descriptor.
+
+\fn __STATIC_INLINE int MMU_GetPageDescriptor(uint32_t *descriptor, uint32_t *descriptor2, mmu_region_attributes_Type reg)
+\details
+  The function creates a 4k/64k page descriptor.
+  Assumptions:
+  - TEX remap disabled, so memory type and attributes are described directly by bits in the descriptor
+  - Functions always return 0
+
+\fn __STATIC_INLINE void MMU_TTSection(uint32_t *ttb, uint32_t base_address, uint32_t count, uint32_t descriptor_l1)
+\fn __STATIC_INLINE void MMU_TTPage4k(uint32_t *ttb, uint32_t base_address, uint32_t count, uint32_t descriptor_l1, uint32_t *ttb_l2, uint32_t descriptor_l2 )
+\fn __STATIC_INLINE void MMU_TTPage64k(uint32_t *ttb, uint32_t base_address, uint32_t count, uint32_t descriptor_l1, uint32_t *ttb_l2, uint32_t descriptor_l2 )
+\fn __STATIC_INLINE void MMU_Enable(void) 
+\details 
+   Set M bit 0 to enable the MMU
+   Set AFE bit to enable simplified access permissions model
+   Clear TRE bit to disable TEX remap and A bit to disable strict alignment fault checking
+
+\fn __STATIC_INLINE void MMU_Disable(void)
+
+\fn __STATIC_INLINE void MMU_InvalidateTLB(void) 
+
+@}
+*/
+/* end of MMU_Functions */
+
+/*
+@}
+*/
+/* end of CMSIS_Core_FunctionInterface  -   currently disabled */
