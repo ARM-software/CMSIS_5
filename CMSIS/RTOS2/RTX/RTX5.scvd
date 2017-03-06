@@ -158,9 +158,9 @@
       <member name="priority_base" type="int8_t"         offset="33" info="Base priority"/>
       <member name="stack_frame"   type="uint8_t"        offset="34" info="Stack frame"/>
       <member name="flags_options" type="uint8_t"        offset="35" info="Thread/Event flags options">
-        <enum name="osFlagsWaitAny"   value="0x00" info="Wait for any flag."/>
-        <enum name="osFlagsWaitAll"   value="0x01" info="Wait for all flags."/>
-        <enum name="osFlagsAutoClear" value="0x02" info="Clear flags which have been specified to wait for."/>
+        <enum name="osFlagsWaitAny" value="0x00" info="Wait for any flag."/>
+        <enum name="osFlagsWaitAll" value="0x01" info="Wait for all flags."/>
+        <enum name="osFlagsNoClear" value="0x02" info="Do not clear flags which have been specified to wait for."/>
       </member>
       <member name="wait_flags"    type="int32_t"        offset="36" info="Waiting Thread/Event flags"/>
       <member name="thread_flags"  type="int32_t"        offset="40" info="Thread flags"/>
@@ -202,7 +202,7 @@
       <member name="next"        type="*osRtxTimer_t" offset="12" info="Pointer to next active timer"/>
       <member name="tick"        type="uint32_t"      offset="16" info="Timer current tick"/>
       <member name="load"        type="uint32_t"      offset="20" info="Timer load value"/>
-      <!-- Inlined "os_timer_finfo_t" structure -->
+      <!-- Inlined "osRtxTimerFinfo_t" structure -->
       <member name="finfo_fp"    type="uint32_t"      offset="24" info="Timer function pointer (type is void *)"/>
       <member name="finfo_arg"   type="uint32_t"      offset="28" info="Timer function argument (type is void *)"/>
 
@@ -342,16 +342,6 @@
       <var name="ml_cnt"   type="uint32_t" info="Number of messages queued" />
     </typedef>
 
-    <!-- Generic Object Control Block -->
-    <typedef name="os_object_t" info="" size="12">
-      <member name="id"          type="uint8_t"        offset="0" info="Object Identifier"/>
-      <member name="state"       type="uint8_t"        offset="1" info="Object State"/>
-      <member name="flags"       type="uint8_t"        offset="2" info="Object Flags"/>
-      <member name="reserved"    type="uint8_t"        offset="3" info=""/>
-      <member name="name"        type="uint32_t"       offset="4" info="Object name (type is *uint8_t)"/>
-      <member name="thread_list" type="*osRtxThread_t" offset="8" info="Threads list"/>
-    </typedef>
-
     <!-- OS Runtime Information structure -->
     <typedef name="osRtxInfo_t" info="OS Runtime Information" size="168">
       <member name="os_id"                      type="uint32_t"             offset="0" info="OS Identification (type is *uint8_t)"/>
@@ -373,7 +363,7 @@
       <member name="thread_run_curr"            type="*osRtxThread_t"       offset="28" info="Current running thread"/>
       <member name="thread_run_next"            type="*osRtxThread_t"       offset="32" info="Next thread to run"/>
 
-      <!-- Inlined "os_object_t" structure at offset: 36 -->
+      <!-- Inlined "osRtxObject_t" structure at offset: 36 -->
       <member name="thread_ready_id"            type="uint8_t"              offset="36+0" info="Object Identifier" />
       <member name="thread_ready_state"         type="uint8_t"              offset="36+1" info="Object State" />
       <member name="thread_ready_flags"         type="uint8_t"              offset="36+2" info="Object Flags" />
@@ -1209,8 +1199,8 @@
 
               <item property="Stack Overrun" value="Overrun detected" cond="TCB[i].stack_over != 0"/>
               <item property="Flags" value="%x[TCB[i].thread_flags]"/>
-              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1]"                   cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) == 0)"/>
-              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1], osFlagsAutoClear" cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) != 0)"/>
+              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1]"                 cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) == 0)"/>
+              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1], osFlagsNoClear" cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) != 0)"/>
               <item property="TrustZone ID" value="%d[TCB[i].tz_memory]" cond="TCB[i].tz_memory"/>
             </item>
 
@@ -1296,8 +1286,8 @@
 
               <item property="Stack Overrun" value="Overrun detected" cond="TCB[i].stack_over != 0"/>
               <item property="Flags" value="%x[TCB[i].thread_flags]"/>
-              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1]"                   cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) == 0)"/>
-              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1], osFlagsAutoClear" cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) != 0)"/>
+              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1]"                 cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) == 0)"/>
+              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1], osFlagsNoClear" cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) != 0)"/>
               <item property="TrustZone ID" value="%d[TCB[i].tz_memory]" cond="TCB[i].tz_memory"/>
             </item>
           </list>
