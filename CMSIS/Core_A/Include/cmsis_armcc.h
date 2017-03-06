@@ -68,14 +68,9 @@
 
 
 /* ###########################  Core Function Access  ########################### */
-/** \ingroup  CMSIS_Core_FunctionInterface
-    \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
-  @{
- */
 
 /**
   \brief   Get FPSCR
-  \details Returns the current value of the Floating Point Status/Control register.
   \return               Floating Point Status/Control register value
  */
 __STATIC_INLINE uint32_t __get_FPSCR(void)
@@ -91,7 +86,6 @@ __STATIC_INLINE uint32_t __get_FPSCR(void)
 
 /**
   \brief   Set FPSCR
-  \details Assigns the given value to the Floating Point Status/Control register.
   \param [in]    fpscr  Floating Point Status/Control value to set
  */
 __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
@@ -105,45 +99,29 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 #endif
 }
 
-/*@} end of CMSIS_Core_RegAccFunctions */
-
-
 /* ##########################  Core Instruction Access  ######################### */
-/** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
-  Access to dedicated instructions
-  @{
-*/
-
 /**
   \brief   No Operation
-  \details No Operation does nothing. This instruction can be used for code alignment purposes.
  */
 #define __NOP                             __nop
 
 /**
   \brief   Wait For Interrupt
-  \details Wait For Interrupt is a hint instruction that suspends execution until one of a number of events occurs.
  */
 #define __WFI                             __wfi
 
 /**
   \brief   Wait For Event
-  \details Wait For Event is a hint instruction that permits the processor to enter
-           a low-power state until one of a number of events occurs.
  */
 #define __WFE                             __wfe
 
 /**
   \brief   Send Event
-  \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
  */
 #define __SEV                             __sev
 
 /**
   \brief   Instruction Synchronization Barrier
-  \details Instruction Synchronization Barrier flushes the pipeline in the processor,
-           so that all instructions following the ISB are fetched from cache or memory,
-           after the instruction has been completed.
  */
 #define __ISB() do {\
                    __schedule_barrier();\
@@ -153,8 +131,6 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 
 /**
   \brief   Data Synchronization Barrier
-  \details Acts as a special kind of Data Memory Barrier.
-           It completes when all explicit memory accesses before this instruction complete.
  */
 #define __DSB() do {\
                    __schedule_barrier();\
@@ -164,8 +140,6 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 
 /**
   \brief   Data Memory Barrier
-  \details Ensures the apparent order of the explicit memory operations before
-           and after the instruction, without ensuring their completion.
  */
 #define __DMB() do {\
                    __schedule_barrier();\
@@ -175,7 +149,6 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 
 /**
   \brief   Reverse byte order (32 bit)
-  \details Reverses the byte order in integer value.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -183,7 +156,6 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 
 /**
   \brief   Reverse byte order (16 bit)
-  \details Reverses the byte order in two unsigned short values.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -197,7 +169,6 @@ __attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(u
 
 /**
   \brief   Reverse byte order in signed short value
-  \details Reverses the byte order in a signed short value with sign extension to integer.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -211,7 +182,6 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
 
 /**
   \brief   Rotate Right in unsigned value (32 bit)
-  \details Rotate Right (immediate) provides the value of the contents of a register rotated by a variable number of bits.
   \param [in]    op1  Value to rotate
   \param [in]    op2  Number of Bits to rotate
   \return               Rotated value
@@ -220,8 +190,6 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
 
 /**
   \brief   Breakpoint
-  \details Causes the processor to enter Debug state.
-           Debug tools can use this to investigate system state when the instruction at a particular address is reached.
   \param [in]    value  is ignored by the processor.
                  If required, a debugger can use it to store additional information about the breakpoint.
  */
@@ -229,7 +197,6 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
 
 /**
   \brief   Reverse bit order of value
-  \details Reverses the bit order of the given value.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -237,16 +204,12 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
 
 /**
   \brief   Count leading zeros
-  \details Counts the number of leading zeros of a data value.
   \param [in]  value  Value to count the leading zeros
   \return             number of leading zeros in value
  */
 #define __CLZ                             __clz
 
 /** \brief  Get CPSR Register
-
-    This function returns the content of the CPSR Register.
-
     \return               CPSR Register value
  */
 __STATIC_INLINE uint32_t __get_CPSR(void)
@@ -256,9 +219,6 @@ __STATIC_INLINE uint32_t __get_CPSR(void)
 }
 
 /** \brief  Get Mode
-
-    This function gets the processor mode
-
     \return                Processor Mode
  */
 __STATIC_INLINE uint32_t __get_mode(void) {
@@ -266,9 +226,6 @@ __STATIC_INLINE uint32_t __get_mode(void) {
 }
 
 /** \brief  Set Mode
-
-    This function changes the processor mode
-
     \param [in]    mode  Mode value to set
  */
 __STATIC_INLINE __ASM void __set_mode(uint32_t mode) {
@@ -278,9 +235,6 @@ __STATIC_INLINE __ASM void __set_mode(uint32_t mode) {
 }
 
 /** \brief  Set Stack Pointer
-
-    This function assigns the given value to the current stack pointer.
-
     \param [in]    stack  Stack Pointer value to set
  */
 __STATIC_INLINE __ASM void __set_SP(uint32_t stack)
@@ -290,9 +244,6 @@ __STATIC_INLINE __ASM void __set_SP(uint32_t stack)
 }
 
 /** \brief  Set Process Stack Pointer
-
-    This function assigns the given value to the USR/SYS Stack Pointer (PSP).
-
     \param [in]    topOfProcStack  USR/SYS Stack Pointer value to set
  */
 __STATIC_INLINE __ASM void __set_PSP(uint32_t topOfProcStack)
@@ -310,8 +261,6 @@ __STATIC_INLINE __ASM void __set_PSP(uint32_t topOfProcStack)
 }
 
 /** \brief  Set User Mode
-
-    This function changes the processor state to User Mode
  */
 __STATIC_INLINE __ASM void __set_CPS_USR(void)
 {
@@ -322,9 +271,6 @@ __STATIC_INLINE __ASM void __set_CPS_USR(void)
 }
 
 /** \brief  Get FPEXC
-
-    This function returns the current value of the Floating Point Exception Control register.
-
     \return               Floating Point Exception Control register value
  */
 __STATIC_INLINE uint32_t __get_FPEXC(void)
@@ -338,9 +284,6 @@ __STATIC_INLINE uint32_t __get_FPEXC(void)
 }
 
 /** \brief  Set FPEXC
-
-    This function assigns the given value to the Floating Point Exception Control register.
-
     \param [in]    fpexc  Floating Point Exception Control value to set
  */
 __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
@@ -352,9 +295,6 @@ __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
 }
 
 /** \brief  Get CPACR
-
-    This function returns the current value of the Coprocessor Access Control register.
-
     \return               Coprocessor Access Control register value
  */
 __STATIC_INLINE uint32_t __get_CPACR(void)
@@ -364,9 +304,6 @@ __STATIC_INLINE uint32_t __get_CPACR(void)
 }
 
 /** \brief  Set CPACR
-
-    This function assigns the given value to the Coprocessor Access Control register.
-
     \param [in]    cpacr  Coprocessor Acccess Control value to set
  */
 __STATIC_INLINE void __set_CPACR(uint32_t cpacr)
@@ -376,9 +313,6 @@ __STATIC_INLINE void __set_CPACR(uint32_t cpacr)
 }
 
 /** \brief  Get CBAR
-
-    This function returns the value of the Configuration Base Address register.
-
     \return               Configuration Base Address register value
  */
 __STATIC_INLINE uint32_t __get_CBAR() {
@@ -443,9 +377,6 @@ __STATIC_INLINE void __set_SCTLR(uint32_t sctlr)
 }
 
 /** \brief  Get SCTLR
-
-    This function returns the value of the System Control Register.
-
     \return               System Control Register value
  */
 __STATIC_INLINE uint32_t __get_SCTLR() {
@@ -454,10 +385,7 @@ __STATIC_INLINE uint32_t __get_SCTLR() {
 }
 
 /** \brief  Set ACTRL
-
-    This function assigns the given value to the Auxiliary Control Register.
-
-    \param [in]    actlr  Auxiliary Control Register value to set
+    \param [in]    actrl  Auxiliary Control Register value to set
  */
 __STATIC_INLINE void __set_ACTRL(uint32_t actrl)
 {
@@ -466,9 +394,6 @@ __STATIC_INLINE void __set_ACTRL(uint32_t actrl)
 }
 
 /** \brief  Get ACTRL
-
-    This function returns the value of the Auxiliary Control Register.
-
     \return               Auxiliary Control Register value
  */
 __STATIC_INLINE uint32_t __get_ACTRL(void)
@@ -734,8 +659,5 @@ __STATIC_INLINE __ASM void __FPU_Enable(void) {
         BX      LR
 }
 #pragma pop
-
-/*@}*/ /* end of group CMSIS_Core_InstructionInterface */
-
 
 #endif /* __CMSIS_ARMCC_H */
