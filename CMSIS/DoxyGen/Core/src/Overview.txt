@@ -27,7 +27,7 @@ Files relevant to CMSIS-Core-M are present in the following <b>ARM::CMSIS</b> di
 |File/Folder                   |Content                                                                 |
 |------------------------------|------------------------------------------------------------------------|
 |\b CMSIS\\Documentation\\Core | This documentation                                                     |
-|\b CMSIS\\Include             | CMSIS-Core-M header files (for example core_cm3.h, core_cmInstr.h, etc.) |
+|\b CMSIS\\Core\\Include       | CMSIS-Core-M header files (for example core_cm3.h, core_cmInstr.h, etc.) |
 |\b Device                     | \ref using_ARM_pg "ARM reference implementations" of Cortex-M devices  |
 |\b Device\\\_Template_Vendor  | \ref templates_pg for extension by silicon vendors                     |
 
