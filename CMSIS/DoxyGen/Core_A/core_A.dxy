@@ -1978,7 +1978,8 @@ PREDEFINED             = __L2C_PRESENT:=1 \
                          __TI_ARM__:=1 \
                          __TASKING__:=1 \
                          __NO_EMBEDDED_ASM:=0 \
-                         __CORTEX_A:=9
+                         __CORTEX_A:=9 \
+                         __TARGET_ARCH_7_A:=1
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The
