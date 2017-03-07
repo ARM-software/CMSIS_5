@@ -375,46 +375,6 @@ The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enabl
 /** @} */
 /* end group CMSIS_ISR */
 
-/* access the L2C_310 Cache Controller */
-/**
-\defgroup L2C_310_CC Cache Controller
-\brief Type definitions and defines for cache controller
-@{
-*/
-/**
-\struct L2C_310_TypeDef
-\def L2C_310
-*/
-/** @} */
-/* end group L2C_310_CC */
-
-/* access the Generic Interrupt Controller Distributor (GICD) */
-/**
-\defgroup GICD_gr Generic Interrupt Controller Distributor (GICD)
-\brief Type definitions and defines for Generic Interrupt Controller Distributor (GICD)
-@{
-*/
-/**
-\struct  GICDistributor_Type
-\def GICDistributor
-*/
-/** @} */
-/* end group GICD_gr */
-
-/* access the Generic Interrupt Controller Interface (GICC) */
-/**
-\defgroup GICC_gr Generic Interrupt Controller Interface (GICC)
-\brief Type definitions and defines for Generic Interrupt Controller Interface (GICC)
-@{
-*/
-/**
-\struct  GICInterface_Type
-
-\def GICInterface
-*/
-/** @} */
-/* end group GICC_gr */
-
 /** @} */ 
 /* end of group CMSIS_core_register */
 
@@ -452,6 +412,7 @@ Hardware Abstraction Layer.
 \fn __STATIC_INLINE void L1C_InvalidateDCacheAll(void) 
 \fn __STATIC_INLINE void L1C_CleanDCacheAll(void) 
 \fn __STATIC_INLINE void L1C_CleanInvalidateDCacheAll(void) 
+\fn __STATIC_ASM void __L1C_CleanInvalidateCache(uint32_t op) 
 @}
 */
 
@@ -461,6 +422,8 @@ Hardware Abstraction Layer.
 /**
 \defgroup L2_chache_functions L2C-310 Cache Controller Functions 
 @{
+\struct L2C_310_TypeDef
+\def L2C_310
 \fn __STATIC_INLINE void L2C_Sync(void) 
 \fn __STATIC_INLINE int L2C_GetID (void) 
 \fn __STATIC_INLINE int L2C_GetType (void) 
@@ -478,6 +441,10 @@ Hardware Abstraction Layer.
 /**
 \defgroup GIC_functions GIC functions
 @{
+\struct  GICDistributor_Type
+\def GICDistributor
+\struct  GICInterface_Type
+\def GICInterface
 \fn __STATIC_INLINE void GIC_EnableDistributor(void)
 \fn __STATIC_INLINE void GIC_DisableDistributor(void)
 \fn __STATIC_INLINE uint32_t GIC_DistributorInfo(void)
@@ -541,6 +508,8 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value);
 \defgroup PTM_timer_functions Private Timer Functions
 \brief Private timer functions
 @{
+\struct Timer_Type
+\def PTIM
 \fn __STATIC_INLINE void PTIM_SetLoadValue(uint32_t value)
 \fn __STATIC_INLINE uint32_t PTIM_GetLoadValue()
 \fn __STATIC_INLINE uint32_t PTIM_GetCurrentValue()
@@ -550,6 +519,14 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value);
 @}
 */
 
+/* ##########################  FPU functions  ############################ */
+/**
+\defgroup FPU_functions Floating Point Unit Functions
+\brief FPU functions
+@{
+\fn __STATIC_ASM void __FPU_Enable(void) 
+@}
+*/
 
 /* ##########################  MMU functions  ###################################### */
 /**
