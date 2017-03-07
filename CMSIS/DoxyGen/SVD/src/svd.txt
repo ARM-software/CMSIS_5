@@ -417,6 +417,10 @@ On each level, the tag \tagem{description} provides verbose information about th
 The description field plays an important part in improving software development productivity as it gives 
 instant access to information that otherwise would need to be looked up in the device documentation.
 
+All multiple whitespace characters (space, tab, linefeed, carriage return) may be removed from the description
+by any tool for further processing (i.e. SVDConv does). In order to preserve explicit linebreaks one has to
+use the linefeed escape sequence (i.e. \\n).
+
 &nbsp;
 */
 
