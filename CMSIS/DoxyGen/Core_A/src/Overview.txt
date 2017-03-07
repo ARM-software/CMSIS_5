@@ -5,6 +5,23 @@ Placeholder Core-A
 */
 
 /**
+\page device_h_pg Devie Header File \<device.h>
+
+The \ref device_h_pg contains the following sections that are device specific:
+ - \ref irqn_defs provides interrupt numbers (IRQn) for all exceptions and interrupts of the device.
+ - \ref config_perifs reflect the features of the device.
+ - \ref access_perifs definitions for the \ref peripheral_gr to all device peripherals. It contains all data structures and the address mapping for device-specific peripherals.
+ - <b>Access Functions for Peripherals (optioal)</b> provide additional helper functions for peripherals that are useful for programming of these peripherals. Access Functions may be provided as inline functions or can be extern references to a device-specific library provided by the silicon vendor.
+
+\section irqn_defs Interrupt Number Definition
+
+\section config_perifs Configuration of the Processor and Core Peripherals
+
+\section access_perifs Device Peripheral Access Layer
+
+*/
+
+/**
 \page rev_histCoreA Resvision History Core-A
 
 Version    | Description 
