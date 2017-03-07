@@ -22,7 +22,7 @@ The \ref device_h_pg contains the following sections that are device specific:
 */
 
 /**
-\page rev_histCoreA Resvision History Core-A
+\page rev_histCoreA Revision History Core-A
 
 Version    | Description 
 -----------|--------------------

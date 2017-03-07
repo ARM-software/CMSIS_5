@@ -150,9 +150,9 @@
 #define     __IO    volatile             /*!< Defines 'read / write' permissions */
 
 /* following defines should be used for structure members */
-#define     __IM     volatile const      /*! Defines 'read only' structure member permissions */
-#define     __OM     volatile            /*! Defines 'write only' structure member permissions */
-#define     __IOM    volatile            /*! Defines 'read / write' structure member permissions */
+#define     __IM     volatile const      /*!< Defines 'read only' structure member permissions */
+#define     __OM     volatile            /*!< Defines 'write only' structure member permissions */
+#define     __IOM    volatile            /*!< Defines 'read / write' structure member permissions */
 
 
  /*******************************************************************************
@@ -1030,7 +1030,7 @@ __STATIC_INLINE void GIC_Enable(void)
 /* ##########################  Generic Timer functions  ############################ */
 
 /* PL1 Physical Timer */
-#if   (__CORTEX_A == 7U)
+#if (__CORTEX_A == 7U)
 __STATIC_INLINE void PL1_SetLoadValue(uint32_t value) {
   __set_CNTP_TVAL(value);
   __ISB();
