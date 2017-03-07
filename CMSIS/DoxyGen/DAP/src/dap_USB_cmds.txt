@@ -1158,7 +1158,6 @@ The <b>DAP_PC_Info Command</b> provides information about the Performance Counte
   - <b>bit 0..1</b>: DataSize: number of bytes recorded (0=BYTE, 1=SHORT, 2=WORD)
   - <b>bit 2..3</b>: NoRanges: channel data provides additional range bits (see below)
   - <b>bit 4..5</b>: tSource: channel provides time stamp information (see below)
-  - <b>bit 6</b>: DiffCom: channel communicates optionally differences instead of contiguous stream
 - \b NoBits: resolution of the channel in bits
 - \b IdString: is a up to 8 character 8-bit US ASCII string that identifies the channel
 - \b UnitString: is a up to 8 character 8-bit US ASCII string that identifies the measurement unit of the channel (V, mA, kHz)
@@ -1221,7 +1220,7 @@ The range information is provided in the upper data bits.  For example a data ch
    MaxVal[1] = 20.0;          // A/D result = 0xFFF in range 0 represents 20.0mA
 \endcode
 
-For a channel that reports <b><MinVal = MaxVal = 0</b> the formula needs to be provided by the debugger as the debug unit is using perhaps an external shunt resistor.
+For a channel that reports <b>MinVal = MaxVal = 0</b> the formula needs to be provided by the debugger as the debug unit is using perhaps an external shunt resistor.
 
 <b>DAP_PC_Info Response for \b ID=0x02: Get possible data capturing frequencies for recording of a specific channel</b> 
 \code
