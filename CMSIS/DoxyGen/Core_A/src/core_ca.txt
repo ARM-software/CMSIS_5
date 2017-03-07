@@ -3,6 +3,207 @@
  * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
  ******************************************************************************/
 
+/* IO definitions (access restrictions to peripheral registers) */
+/**
+\defgroup   peripheral_gr    Peripheral Access
+\brief      Naming conventions and optional features for accessing peripherals.
+\details
+The section below describes the naming conventions, requirements, and optional features for accessing device specific peripherals.
+Most of the rules also apply to the core peripherals.  The \ref device_h_pg "Device Header File \<device.h>" contains typically these definition and also includes
+the core specific header files.
+
+The definitions for \ref peripheral_gr can be generated using the <a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a> System View Description for Peripherals.
+Refer to <a href="../../SVD/html/svd_SVDConv_pg.html"><b>SVDConv.exe</b></a> for more information.
+	
+Each peripheral provides a data type definition with a name that is composed of:
+  - an optional prefix <b>&lt;<i>device abbreviation&gt;</i>_</b>
+  - <b>&lt;<i>peripheral name</i>&gt;</b>
+  - postfix \b _Type or \b _TypeDef to identify a type definition.
+
+Examples:
+  - \b UART_TypeDef for the peripheral \b UART.
+  - \b LPC_UART_TypeDef for the device family \b LPC and the peripheral \b UART.
+
+The data type definition uses standard C data types defined by the ANSI C header file <stdint.h>.
+ 
+ - IO Type Qualifiers are used to specify the access to peripheral variables.
+   IO Type Qualifier  | Type            | Description
+   :------------------|:----------------|:------------
+   \b __IM            | Struct member   | Defines 'read only' permissions
+   \b __OM            | Struct member   | Defines 'write only' permissions
+   \b __IOM           | Struct member   | Defines 'read / write' permissions
+   \b __I             | Scalar variable | Defines 'read only' permissions
+   \b __O             | Scalar variable | Defines 'write only' permissions
+   \b __IO            | Scalar variable | Defines 'read / write' permissions
+   
+The typedef <b>\<<i>device abbreviation</i>\>_UART_TypeDef</b> shown below defines the generic register layout for all UART channels in a device.
+
+\code
+typedef struct
+{
+  union {
+  __IM  uint8_t  RBR;                 // Offset: 0x000 (R/ )  Receiver Buffer Register          
+  __OM  uint8_t  THR;                 // Offset: 0x000 ( /W)  Transmit Holding Register           
+  __IOM uint8_t  DLL;                 // Offset: 0x000 (R/W)  Divisor Latch LSB                   
+        uint32_t RESERVED0;
+  };
+  union {
+  __IOM uint8_t  DLM;                 // Offset: 0x004 (R/W)  Divisor Latch MSB                   
+  __IOM uint32_t IER;                 // Offset: 0x004 (R/W)  Interrupt Enable Register           
+  };
+  union {
+  __IM  uint32_t IIR;                 // Offset: 0x008 (R/ )  Interrupt ID Register               
+  __OM  uint8_t  FCR;                 // Offset: 0x008 ( /W)  FIFO Control Register               
+  };
+  __IOM uint8_t  LCR;                 // Offset: 0x00C (R/W)  Line Control Register               
+        uint8_t  RESERVED1[7];
+  __IM  uint8_t  LSR;                 // Offset: 0x014 (R/ )  Line Status Register                
+        uint8_t  RESERVED2[7];
+  __IOM uint8_t  SCR;                 // Offset: 0x01C (R/W)  Scratch Pad Register                
+        uint8_t  RESERVED3[3];
+  __IOM uint32_t ACR;                 // Offset: 0x020 (R/W)  Autobaud Control Register           
+  __IOM uint8_t  ICR;                 // Offset: 0x024 (R/W)  IrDA Control Register               
+        uint8_t  RESERVED4[3];
+  __IOM uint8_t  FDR;                 // Offset: 0x028 (R/W)  Fractional Divider Register         
+        uint8_t  RESERVED5[7];
+  __IOM uint8_t  TER;                 // Offset: 0x030 (R/W)  Transmit Enable Register            
+        uint8_t  RESERVED6[39];
+  __IM  uint8_t  FIFOLVL;             // Offset: 0x058 (R/ )  FIFO Level Register                 
+} LPC_UART_TypeDef;
+\endcode
+
+To access the registers of the UART defined above, pointers to this register structure are defined.
+If more instances of a peripheral exist, the variables have a postfix (digit or letter) that identifies the peripheral.
+
+\b Example:
+In this example, \b LPC_UART2 and \b LPC_UART3 are two pointers to UARTs defined with above register structure.
+\n
+\code
+#define LPC_UART2             ((LPC_UART_TypeDef      *) LPC_UART2_BASE    )
+#define LPC_UART3             ((LPC_UART_TypeDef      *) LPC_UART3_BASE    )
+\endcode
+
+\note 
+ - The prefix <b>LPC</b> is optional.
+ 
+The registers in the various UARTs can now be referred in the user code as shown below:\n
+\code
+ val = LPC_UART2->DR   // is the data register of UART1.
+\endcode
+
+<hr>
+
+\section core_cmsis_pal_min_reqs Minimal Requirements
+\details
+ To access the peripheral registers and related function in a device, the files <b><i>device.h</i></b> and <b>core_ca<i>#</i>.h</b> define as a minimum:
+\n\n
+- The <b>Register Layout Typedef</b> for each peripheral that defines all register names.
+  RESERVED is used to introduce space into the structure for adjusting the addresses of
+  the peripheral registers.
+\n\n
+<b>Example:</b>
+\code
+typedef struct
+{
+  __IOM uint32_t CTRL;                // Offset: 0x000 (R/W)  SysTick Control and Status Register 
+  __IOM uint32_t LOAD;                // Offset: 0x004 (R/W)  SysTick Reload Value Register       
+  __IOM uint32_t VAL;                 // Offset: 0x008 (R/W)  SysTick Current Value Register      
+  __IM  uint32_t CALIB;               // Offset: 0x00C (R/ )  SysTick Calibration Register        
+} SysTick_Type;
+    \endcode
+
+
+- <b>Base Address</b> for each peripheral (in case of multiple peripherals
+    that use the same <b>register layout typedef</b> multiple base addresses are defined).
+    \n\n
+<b>Example:</b>
+\code
+#define SysTick_BASE (SCS_BASE + 0x0010)            // SysTick Base Address     
+\endcode
+
+
+- <b>Access Definitions</b> for each peripheral. In case of multiple peripherals that are using the same
+    <b>register layout typdef</b>, multiple access definitions exist (LPC_UART0, LPC_UART2).
+    \n\n
+<b>Example:</b>
+\code
+#define SysTick ((SysTick_Type *) Systick_BASE)    // SysTick access definition 
+\endcode
+
+
+These definitions allow accessing peripheral registers with simple assignments.
+
+- <b>Example:</b>
+  \n
+\code
+SysTick->CTRL = 0;
+\endcode
+
+<hr>
+
+\section core_cmsis_pal_opts Optional Features
+\details
+Optionally, the file <b><i>device</i>.h</b> may define:
+
+-  \ref core_cmsis_pal_bitfields and \#define constants that simplify access to peripheral registers.
+	These constants may define bit-positions or other specific patterns that are required for
+    programming peripheral registers. The identifiers should start with
+    <b>&lt;<i>device abbreviation</i>&gt;_</b> and <b>&lt;<i>peripheral name</i>&gt;_</b>.
+    It is recommended to use CAPITAL letters for \#define constants.
+
+-   More complex functions (i.e. status query before
+    a sending register is accessed). Again, these functions start with
+    <b>&lt;<i>device abbreviation</i>&gt;_</b> and <b>&lt;<i>peripheral name</i>&gt;_</b>.
+
+<hr>
+
+\section core_cmsis_pal_bitfields Register Bit Fields
+\details
+
+For Core Register, macros define the position and the mask value for a bit field. It is recommended to create such definitions also
+for other peripheral registers.
+
+<b>Example:</b>
+
+Bit field definitions for register CPUID in SCB (System Control Block).
+
+
+\code
+// SCB CPUID Register Definitions 
+#define SCB_CPUID_IMPLEMENTER_Pos      24U                                       
+#define SCB_CPUID_IMPLEMENTER_Msk      (0xFFUL << SCB_CPUID_IMPLEMENTER_Pos)     
+                                                                                 
+#define SCB_CPUID_VARIANT_Pos          20U                                       
+#define SCB_CPUID_VARIANT_Msk          (0xFUL << SCB_CPUID_VARIANT_Pos)          
+                                                                                 
+#define SCB_CPUID_ARCHITECTURE_Pos     16U                                       
+#define SCB_CPUID_ARCHITECTURE_Msk     (0xFUL << SCB_CPUID_ARCHITECTURE_Pos)     
+                                                                                 
+#define SCB_CPUID_PARTNO_Pos            4U                                       
+#define SCB_CPUID_PARTNO_Msk           (0xFFFUL << SCB_CPUID_PARTNO_Pos)         
+                                                                                 
+#define SCB_CPUID_REVISION_Pos          0U                                       
+#define SCB_CPUID_REVISION_Msk         (0xFUL)     
+\endcode
+
+The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enable access to bit fields.
+@{
+*/
+
+/**
+
+\def   __I
+\def   __O
+\def   __IO  
+
+\def   __IM  
+\def   __OM  
+\def   __IOM 
+*/
+/** @} */ 
+/*end of group peripheral_gr */
+
+
 /*******************************************************************************
  *                 CMSIS definitions
  ******************************************************************************/
@@ -20,29 +221,14 @@
 \def __CA_CMSIS_VERSION_MAIN  
 \def __CA_CMSIS_VERSION_SUB   
 \def __CA_CMSIS_VERSION       
-                                 
-*/
-
-/** 
+                                
 \def __FPU_PRESENT
+
 \def __FPU_USED
    __FPU_USED indicates whether an FPU is used or not. For this, \ref __FPU_PRESENT has to be checked prior to making use of FPU specific registers and functions.
 
 \def __CA_REV
 \def __MPU_PRESENT             
-
-*/
-
-/* IO definitions (access restrictions to peripheral registers) */
-/**
-
-\def   __I
-\def   __O
-\def   __IO  
-
-\def   __IM  
-\def   __OM  
-\def   __IOM 
 */
 /** @} */ 
 /*end of group CMSIS_glob_defs */
@@ -50,7 +236,8 @@
 
 
 /**
-\defgroup CMSIS_core_register Core Register Defines
+\defgroup core_reg_gr Core Register Defines
+\ingroup core_reg_func_gr
 \brief Type definitions and defines for Cortex-A processor based devices.
 @{
  */
@@ -322,14 +509,32 @@ Hardware Abstraction Layer.
 
 /* ##########################  Generic Timer functions  ############################ */
 /**
-\defgroup PL1_timer_functions Generic Timer Functions
+\defgroup pl1_timer_gr Generic Timer Functions
 \brief Generic hardware timer functions
 @{
-\fn __STATIC_INLINE void PL1_SetLoadValue(uint32_t value)
-\fn __STATIC_INLINE uint32_t PL1_GetCurrentValue()
-\fn __STATIC_INLINE void PL1_SetControl(uint32_t value) 
-@}
 */
+/* leave the function defs in here */
+/**
+\details  
+The function \b PL1_SetLoadValue sets the reset value of the timer.
+*/
+__STATIC_INLINE void PL1_SetLoadValue(uint32_t value);
+
+/**
+\details 
+The function \b PL1_GetCurrentValue returns the current timer value.
+*/
+__STATIC_INLINE uint32_t PL1_GetCurrentValue();
+
+/**
+\details 
+The function \b PL1_SetControl sets timer control values.
+*/
+__STATIC_INLINE void PL1_SetControl(uint32_t value);
+
+/** @} */
+/* end of pl1_timer_gr */
+
 
 /* ##########################  Private Timer functions  ############################ */
 /**
@@ -348,9 +553,18 @@ Hardware Abstraction Layer.
 
 /* ##########################  MMU functions  ###################################### */
 /**
-\defgroup MMU_functions MMU Functions 
+\defgroup MMU_gr MMU Functions
+\brief Functions and defines that relate to the Memory Management Unit
 @{
+*/
 
+/**
+\defgroup MMU_defs_gr MMU Defines and Structs
+\brief Defines and structures that relate to the Memory Management Unit
+@{
+*/
+
+/**
 \def SECTION_DESCRIPTOR      
 \def SECTION_B_SHIFT         
 \def SECTION_C_SHIFT         
@@ -393,24 +607,16 @@ Hardware Abstraction Layer.
 \def OFFSET_1M               
 \def OFFSET_64K              
 \def OFFSET_4K               
-\def DESCRIPTOR_FAULT        (0x00000000)        
+\def DESCRIPTOR_FAULT             
 
 \enum mmu_region_size_Type
-
 \enum mmu_memory_Type
-
 \enum mmu_cacheability_Type
-
 \enum mmu_ecc_check_Type
-
 \enum mmu_execute_Type
-
 \enum mmu_global_Type
-
 \enum mmu_shared_Type
-
 \enum mmu_secure_Type
-
 \enum mmu_access_Type
 
 \struct  mmu_region_attributes_Type
@@ -424,12 +630,19 @@ Hardware Abstraction Layer.
 \def section_device_rw(descriptor_l1, region)
 \def page4k_device_rw(descriptor_l1, descriptor_l2, region)
 \def page64k_device_rw(descriptor_l1, descriptor_l2, region) 
+*/
+/** @} */
+/* end group MMU_defs_gr */
 
+/* start grouping functions */
+/*
+@{
+*/
 
+/**
 \fn __STATIC_INLINE int MMU_XNSection(uint32_t *descriptor_l1, mmu_execute_Type xn)
 \details 
   The function sets section execution-never attribute
-
 
 \fn __STATIC_INLINE int MMU_DomainSection(uint32_t *descriptor_l1, uint8_t domain)
 \details 
@@ -513,10 +726,13 @@ The function sets section access privileges
 \fn __STATIC_INLINE void MMU_Disable(void)
 
 \fn __STATIC_INLINE void MMU_InvalidateTLB(void) 
-
-@}
 */
-/* end of MMU_Functions */
+
+/* @} */
+/* end of MMU_func_gr */
+
+/** @} */
+/* end of MMU_gr */
 
 /*
 @}
