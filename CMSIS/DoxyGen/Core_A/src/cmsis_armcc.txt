@@ -7,7 +7,7 @@
 /* CMSIS compiler control architecture macros */
 /**
 \defgroup cc_macros Compiler Control
-\brief Compiler agnostic #define symbols for generic C/C++ source code
+\brief Compiler agnostic \#define symbols for generic C/C++ source code
 @{
 \def __ARMCC_VERSION
 
@@ -49,7 +49,7 @@ Assigns the given value to the Floating Point Status/Control register.
 /* ##########################  Core Instruction Access  ######################### */
 /** 
 \defgroup CMSIS_Core_InstructionInterface Intrinsic Functions for CPU Instructions
-\brief Functions that generate specific Cortex-M CPU Instructions
+\brief Functions that generate specific Cortex-A CPU Instructions
 @{
 */
 
@@ -99,14 +99,16 @@ Assigns the given value to the Floating Point Status/Control register.
 
 
 \fn __STATIC_INLINE uint32_t __RBIT(uint32_t value)
-\details Reverses the bit order of the given value.
+\details 
+	Reverses the bit order of the given value.
 
 \def __CLZ                            
-\details Counts the number of leading zeros of a data value.
+\details 
+	Counts the number of leading zeros of a data value.
 
 \fn __STATIC_INLINE uint32_t __get_CPSR(void)
 \details
-This function returns the content of the CPSR Register.
+	This function returns the content of the CPSR Register.
 
 \fn __STATIC_INLINE void __set_SP(uint32_t stack)
 \details
@@ -117,42 +119,51 @@ This function returns the content of the CPSR Register.
     This function assigns the given value to the USR/SYS Stack Pointer (PSP).
 
 \fn __STATIC_ASM void __set_CPS_USR(void)
+\details
     This function changes the processor state to User Mode
 
 \fn __STATIC_INLINE uint32_t __get_FPEXC(void)
+\details
     This function returns the current value of the Floating Point Exception Control register.
 
 \fn __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
+\details
     This function assigns the given value to the Floating Point Exception Control register.
 
 \fn __STATIC_INLINE uint32_t __get_CPACR(void)
+\details
     This function returns the current value of the Coprocessor Access Control register.
 
 \fn __STATIC_INLINE void __set_CPACR(uint32_t cpacr)
+\details
     This function assigns the given value to the Coprocessor Access Control register.
 
-
 \fn __STATIC_INLINE uint32_t __get_CBAR()
+\details
     This function returns the value of the Configuration Base Address register.
 
 \fn __STATIC_INLINE uint32_t __get_TTBR0() 
+\details
     This function returns the value of the Translation Table Base Register 0.
 
 \fn __STATIC_INLINE void __set_TTBR0(uint32_t ttbr0) 
-
+\details
     This function assigns the given value to the Translation Table Base Register 0.
 
-
 \fn __STATIC_INLINE uint32_t __get_DACR() 
+\details
     This function returns the value of the Domain Access Control Register.
 
 \fn __STATIC_INLINE void __set_DACR(uint32_t dacr) 
+\details
     This function assigns the given value to the Domain Access Control Register.
 
 \fn __STATIC_INLINE void __set_SCTLR(uint32_t sctlr)
+\details
     This function assigns the given value to the System Control Register.
 
 \fn __STATIC_INLINE uint32_t __get_SCTLR() 
+\details
     This function returns the value of the System Control Register.
 
 \fn __STATIC_INLINE void __set_ACTRL(uint32_t actrl)
@@ -176,35 +187,46 @@ This function returns the content of the CPSR Register.
     This function assigns the given value to the Vector Base Address Register.
 
 \fn __STATIC_INLINE void __set_CNTP_TVAL(uint32_t value) 
+\details
   This function assigns the given value to PL1 Physical Timer Value Register (CNTP_TVAL).
 
 \fn __STATIC_INLINE uint32_t __get_CNTP_TVAL() 
+\details
     This function returns the value of the PL1 Physical Timer Value Register (CNTP_TVAL).
 
 \fn __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) 
+\details
   This function assigns the given value to PL1 Physical Timer Control Register (CNTP_CTL).
 
 \fn __STATIC_INLINE void __set_TLBIALL(uint32_t value) 
+\details
 
 \fn __STATIC_INLINE void __set_BPIALL(uint32_t value)   
+\details
   Branch Predictor Invalidate All
 
 \fn __STATIC_INLINE void __set_ICIALLU(uint32_t value) 
+\details
   Instruction Cache Invalidate All
 
 \fn __STATIC_INLINE void __set_DCCMVAC(uint32_t value) 
+\details
   Data cache clean
 
 \fn __STATIC_INLINE void __set_DCIMVAC(uint32_t value) 
+\details
   Data cache invalidate
 
 \fn __STATIC_INLINE void __set_DCCIMVAC(uint32_t value) 
+\details
   Data cache clean and invalidate
 
 \fn __STATIC_ASM void __L1C_CleanInvalidateCache(uint32_t op) 
+\details
   Generic mechanism for cleaning/invalidating the entire data or unified cache to the point of coherency.
 
 \fn __STATIC_ASM void __FPU_Enable(void) 
+\details
   Critical section, called from undef handler, so systick is disabled
 */
 
