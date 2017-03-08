@@ -41,8 +41,8 @@ CMSIS supports a selected subset of <a href="http://www.arm.com/products/process
 The Cortex-A Reference Manuals are generic user guides for devices that implement the various ARM Cortex-A processors. 
 These manuals contain the programmers model and detailed information about the core peripherals.
 
-- <a nohref target="_blank"><b>Cortex-A7</b></a> (ARMv7-A architecture)
-- <a nohref target="_blank"><b>Cortex-A9</b></a> (ARMv7-A architecture)
+- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0464f/DDI0464F_cortex_a7_mpcore_r0p5_trm.pdf" target="_blank"><b>Cortex-A7</b></a> (ARMv7-A architecture)
+- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.100511_0401_10_en/arm_cortexa9_trm_100511_0401_10_en.pdf" target="_blank"><b>Cortex-A9</b></a> (ARMv7-A architecture)
  
 <hr>
 
