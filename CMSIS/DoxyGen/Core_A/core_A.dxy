@@ -750,6 +750,8 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = src/Overview.txt \
+						 src/Using.txt \
+						 src/Template.txt \
                          ../../Core_A/Include/core_ca.h \
                          src/core_ca.txt \
                          ../../Core_A/Include/cmsis_armcc.h \
