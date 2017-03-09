@@ -73,6 +73,20 @@ uint32_t __TZ_get_MSP_NS(void);
 void __TZ_set_MSP_NS(uint32_t topOfMainStack);
 
 /**
+  \brief   Get Stack Pointer (non-secure)
+  \details Returns the current value of the non-secure Stack Pointer (SP) when in secure state.
+  \return               SP register value
+ */
+uint32_t __TZ_get_SP_NS(void);
+
+/**
+  \brief   Set Stack Pointer (non-secure)
+  \details Assigns the given value to the non-secure Stack Pointer (SP) when in secure state.
+  \param [in]    topOfStack  Stack Pointer value to set
+ */
+void __TZ_set_SP_NS(uint32_t topOfStack);
+
+/**
   \brief   Get Priority Mask (non-secure)
   \details Returns the current state of the non-secure priority mask bit from the Priority Mask register when in secure state.
   \return               Priority Mask value
