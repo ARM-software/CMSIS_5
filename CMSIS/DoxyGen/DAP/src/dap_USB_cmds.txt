@@ -254,8 +254,9 @@ The ID=0xF0 <b>Capabilities</b> obtains information about the available interfac
  - Bit 1: <b>1 = JTAG</b> communication is implemented (0 = not implemented).
  - Bit 2: <b>1 = SWO UART</b> - UART Serial Wire Output is implemented (0 = not implemented).
  - Bit 3: <b>1 = SWO Manchester</b> - Manchester Serial Wire Output is implemented (0 = not implemented).
- - Bit 4: <b>1 = Debug Unit Timer</b> - debug unit timer support is implemented (0 = not implemented).
- - Bit 5: <b>1 = Trace Data Management</b> - Trace Data Management is implemented (0 = not implemented).
+ - Bit 4: <b>1 = Atomic Commands</b> - Atomic Commands support is implemented (0 = not implemented).
+ - Bit 5: <b>1 = Debug Unit Timer</b> - debug unit timer support is implemented (0 = not implemented).
+ - Bit 6: <b>1 = Trace Data Management</b> - Trace Data Management is implemented (0 = not implemented).
 
 <b>DAP_Info Response (for ID=0xF1):</b>
 The ID=0xF1 <b>Debug Unit Timer</b> obtains the parameter information about an optional 64-bit Debug Unit Timer that may be used for time measurements.
