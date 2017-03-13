@@ -1,13 +1,12 @@
 # CMSIS Version 5
 
-CMSIS Version 5.0.1 release is now available.  The [pre-built documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
+The branch *master* of this GitHub repository contains the CMSIS Version 5.0.1.  The [documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
 
-Note that this repository gives our users and partners contiguous access to the CMSIS development. It allows you to review the work and provide feedback or create pull requests for contributions.
+Use [Issues](https://github.com/ARM-software/CMSIS_5#issues-and-labels) to provide feedback and report problems for CMSIS Version 5. 
 
-This GitHub repository development branch reflects our current state of development and is constantly updated.
-A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) is updated from time to time, but may be generated also using the instructions published under [Generate CMSIS Pack for Release](https://github.com/ARM-software/CMSIS_5#generate-cmsis-pack-for-release).
+**Note:** The branch *develop* of this GitHub repository reflects our current state of development and is constantly updated. It gives our users and partners contiguous access to the CMSIS development. It allows you to review the work and provide feedback or create pull requests for contributions.
 
-Use [Issues]https://github.com/ARM-software/CMSIS_5#issues-and-labels to provide feedback and report problems for CMSIS Version 5. 
+A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) is updated from time to time, but may be also generated using the instructions under [Generate CMSIS Pack for Release](https://github.com/ARM-software/CMSIS_5#generate-cmsis-pack-for-release).
 
 ## What's Hot
  - CMSIS-RTOS2: RTX 5 is now available for IAR, GCC, ARM Compiler 5, ARM Compiler 6
