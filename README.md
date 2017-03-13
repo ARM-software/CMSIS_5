@@ -1,18 +1,18 @@
 # CMSIS Version 5
 
-CMSIS Version 5.0.1 release is now available.
+CMSIS Version 5.0.1 release is now available.  The [pre-built documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
 
 This GitHub repository development branch reflects our current state of development and is constantly updated.
-
-The [pre-built documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
+A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) is update from time to time, but may be generated using the instructions published under *Generate CMSIS Pack for Release*
 
 Use *Issues* to provide feedback and report problems for CMSIS Version 5. Note that this repository gives our users and partners contiguous access to the CMSIS development. It allows you to review the work and provide feedback or create pull requests for contributions.
 
 ## What's Hot
  - CMSIS-RTOS2: RTX 5 is now available for IAR, GCC, ARM Compiler 5, ARM Compiler 6
- - CMSIS-RTOS2: FreeRTOS adoption (beta) available in https://github.com/ARM-software/CMSIS-FreeRTOS
+ - CMSIS-RTOS2: FreeRTOS adoption (release) is available https://github.com/ARM-software/CMSIS-FreeRTOS
  - CMSIS-Core: compiler agonstic features extended to simplify transition on LLVM based front-end
- - Coming soon: CMSIS-Core, CMSIS-RTOS2 for Cortex-A
+ - CMSIS-Core-A: preview of the CMSIS-Core for Cortex-A
+ - Coming soon: CMSIS-RTOS2 for Cortex-A
 
 ## Implemented Enhancements
  - Support for ARMv8-M Architecture (Mainline and Baseline) as well as devices Cortex-M23 and Cortex-M33
