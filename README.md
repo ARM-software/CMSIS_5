@@ -24,13 +24,16 @@ A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) i
  - CMSIS-RTOS API Secure and Non-Secure support, multi-processor support
 
 ## Futher Planned Enhancements
- - Improvements for Cortex-A / M hybrid devices (focus on Cortex-M interaction)
-
+ - CMSIS-Core-A: Cortex-A processor support
+ - CMSIS-RTOS: RTX5 for Cortex-A
+ - CMSIS-DAP: extended trace support
+ - CMSIS-Zone: management of complex system
+     - Improvements for Cortex-A / M hybrid devices (focus on Cortex-M interaction)
  - CMSIS-Pack 
-     - Additions for generic example, project templates, multiple download portals
+     - Additions for generic example and project templates
      - Adoption of IAR Flash Loader technology
 
-For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/master/CMSIS_EW2016.pdf).
+For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/master/CMSIS_EW2017.pdf).
 
 ## Directory Structure
 
