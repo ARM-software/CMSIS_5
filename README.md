@@ -33,7 +33,7 @@ A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) i
      - Additions for generic example and project templates
      - Adoption of IAR Flash Loader technology
 
-For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/master/CMSIS_EW2017.pdf).
+For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/develop/CMSIS_EW2017.pdf).
 
 ## Directory Structure
 
