@@ -138,6 +138,21 @@
     #define __MPU_PRESENT             0U
     #warning "__MPU_PRESENT not defined in device header file; using default!"
   #endif
+  
+  #ifndef __GIC_PRESENT
+    #define __GIC_PRESENT             1U
+    #warning "__GIC_PRESENT not defined in device header file; using default!"
+  #endif
+  
+  #ifndef __TIM_PRESENT
+    #define __TIM_PRESENT             1U
+    #warning "__TIM_PRESENT not defined in device header file; using default!"
+  #endif
+  
+  #ifndef __L2C_PRESENT
+    #define __L2C_PRESENT             0U
+    #warning "__L2C_PRESENT not defined in device header file; using default!"
+  #endif
 #endif
 
 /* IO definitions (access restrictions to peripheral registers) */
@@ -513,6 +528,7 @@ typedef struct
 #define L2C_310           ((L2C_310_TypeDef *)L2C_310_BASE) /*!< L2C_310 Declaration */
 #endif
 
+#if (__GIC_PRESENT == 1U)
 /** \brief  Structure type to access the Generic Interrupt Controller Distributor (GICD)
 */
 typedef struct
@@ -554,10 +570,12 @@ typedef struct
 }  GICInterface_Type;
 
 #define GICInterface        ((GICInterface_Type        *)     GIC_INTERFACE_BASE )   /*!< GIC Interface configuration struct */
+#endif
 
+#if (__TIM_PRESENT == 1U)
+#if ((__CORTEX_A == 5U)||(__CORTEX_A == 9U))
 /** \brief Structure type to access the Private Timer
 */
-#if (__CORTEX_A == 9U)
 typedef struct
 {
   __IO uint32_t LOAD;            // +0x000 - RW - Private Timer Load Register
@@ -573,6 +591,7 @@ typedef struct
   __I  uint32_t WDISABLE;        // +0x0FC - RO - Watchdog Disable Register
 } Timer_Type;
 #define PTIM ((Timer_Type *) TIMER_BASE )   /*!< Timer configuration struct */
+#endif
 #endif
 
  /*******************************************************************************
@@ -805,7 +824,8 @@ __STATIC_INLINE void L2C_CleanInvPa (void *pa)
 #endif
 
 /* ##########################  GIC functions  ###################################### */
-
+#if (__GIC_PRESENT == 1U)
+  
 __STATIC_INLINE void GIC_EnableDistributor(void)
 {
   GICDistributor->ICDDCR |= 1; //enable distributor
@@ -1026,9 +1046,11 @@ __STATIC_INLINE void GIC_Enable(void)
   GIC_DistInit();
   GIC_CPUInterfaceInit(); //per CPU
 }
+#endif
 
 /* ##########################  Generic Timer functions  ############################ */
-
+#if (__TIM_PRESENT == 1U)
+  
 /* PL1 Physical Timer */
 #if (__CORTEX_A == 7U)
 __STATIC_INLINE void PL1_SetLoadValue(uint32_t value) {
@@ -1046,7 +1068,7 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value) {
 }
 
 /* Private Timer */
-#elif (__CORTEX_A == 9U)
+#elif ((__CORTEX_A == 5U)||(__CORTEX_A == 9U))
 __STATIC_INLINE void PTIM_SetLoadValue(uint32_t value) {
   PTIM->LOAD = value;
 }
@@ -1070,6 +1092,7 @@ __STATIC_INLINE uint32_t PTIM_GetControl(void) {
 __STATIC_INLINE void PTIM_ClearEventFlag(void) {
   PTIM->ISR = 1;
 }
+#endif
 #endif
 
 /* ##########################  MMU functions  ###################################### */

@@ -218,6 +218,16 @@ __STATIC_INLINE uint32_t __get_CPSR(void)
   return(__regCPSR);
 }
 
+
+/** \brief  Set CPSR Register
+    \param [in]    cpsr  CPSR value to set
+ */
+__STATIC_INLINE void __set_CPSR(uint32_t cpsr)
+{
+  register uint32_t __regCPSR          __ASM("cpsr");
+  __regCPSR = cpsr;
+}
+
 /** \brief  Get Mode
     \return                Processor Mode
  */

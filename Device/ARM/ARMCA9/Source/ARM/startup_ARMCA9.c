@@ -1,5 +1,5 @@
 /******************************************************************************
- * @file     system_ARMCA9.c
+ * @file     startup_ARMCA9.c
  * @brief    CMSIS Device System Source File for ARM Cortex-A9 Device Series
  * @version  V1.00
  * @date     22 Feb 2017
@@ -139,17 +139,6 @@ uint32_t reg;
 
   //  Invalidate data cache
   __L1C_CleanInvalidateCache(0);
-
-  // Invalidate entire Unified TLB
-  __set_TLBIALL(0);
-  // Invalidate entire branch predictor array
-  __set_BPIALL(0);
-  __DSB();
-  __ISB();
-  // Invalidate instruction cache and flush branch target cache
-  __set_ICIALLU(0);
-  __DSB();
-  __ISB();
 
   // Enable MMU, but leave caches disabled (they will be enabled later)
   reg  = __get_SCTLR();  // Read CP15 System Control register

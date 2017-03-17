@@ -1,8 +1,8 @@
 /******************************************************************************
- * @file     startup_ARMCA7.c
- * @brief    CMSIS Device System Source File for ARM Cortex-A7 Device Series
+ * @file     startup_ARMCA5.c
+ * @brief    CMSIS Device System Source File for ARM Cortex-A5 Device Series
  * @version  V1.00
- * @date     22 Feb 2017
+ * @date     16 Mar 2017
  *
  * @note
  *
@@ -25,7 +25,7 @@
  * limitations under the License.
  */
 
-#include <ARMCA7.h>
+#include <ARMCA5.h>
 
 /*----------------------------------------------------------------------------
   Definitions
