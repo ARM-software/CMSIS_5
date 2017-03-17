@@ -16,7 +16,7 @@
         - Generic Timer functions
         - L1 and L2 Cache functions
         - MMU functions
-      - Added ARMCA7 and ARMCA9 devices
+      - Added ARMCA5, ARMCA7 and ARMCA9 devices
       - Added Startup, System and MMU configuration files
     </release>
     <release version="5.0.2-dev0">
@@ -492,6 +492,21 @@ ARMv8-M Mainline based device with TrustZone
       </device>
     </family>
 
+    <!-- ******************************  Cortex-A5  ****************************** -->
+    <family Dfamily="ARM Cortex A5" Dvendor="ARM:82">
+      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0433c/index.html" title="Cortex-A5 Technical Reference Manual"/>
+      <description>
+The ARM Cortex-A5 processor is a high-performance, low-power, ARM macrocell with an L1 cache subsystem that provides full 
+virtual memory capabilities. The Cortex-A5 processor implements the ARMv7-A architecture profile and can execute 32-bit 
+ARM instructions and 16-bit and 32-bit Thumb instructions. The Cortex-A5 is the smallest member of the Cortex-A processor family.
+      </description>
+   
+      <device Dname="ARMCA5">
+        <processor Dcore="Cortex-A5" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
+        <compile header="Device/ARM/ARMCA5/Include/ARMCA5.h" define="ARMCA5"/>
+      </device>
+    </family>
+    
     <!-- ******************************  Cortex-A7  ****************************** -->
     <family Dfamily="ARM Cortex A7" Dvendor="ARM:82">
       <book name="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0464f/index.html" title="Cortex-A7 MPCore Technical Reference Manual"/>
@@ -509,7 +524,7 @@ an optional integrated GIC, and an optional L2 cache controller.
 
     <!-- ******************************  Cortex-A9  ****************************** -->
     <family Dfamily="ARM Cortex A9" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.100511_0401_10_en/index.html" title="Cortex‑A9 Technical Reference Manual"/>
+      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.100511_0401_10_en/index.html" title="Cortex-A9 Technical Reference Manual"/>
       <description>
 The Cortex-A9 processor is a high-performance, low-power, ARM macrocell with an L1 cache subsystem that provides full virtual memory capabilities.
 The Cortex-A9 processor implements the ARMv7-A architecture and runs 32-bit ARM instructions, 16-bit and 32-bit Thumb instructions,
@@ -694,6 +709,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </condition>
     <condition id="ARMv7-A Device">
       <description>ARMv7-A architecture based device</description>
+      <accept Dcore="Cortex-A5"/>
       <accept Dcore="Cortex-A7"/>
       <accept Dcore="Cortex-A9"/>
     </condition>
@@ -1709,6 +1725,12 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="GCC"/>
     </condition>
 
+    <condition id="ARMCA5 CMSIS">
+      <description>Generic ARM Cortex-A5 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCA5"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    
     <condition id="ARMCA7 CMSIS">
       <description>Generic ARM Cortex-A7 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMCA7"/>
@@ -1779,6 +1801,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>CMSIS-CORE for Cortex-A</description>
       <files>
         <!-- CPU independent -->
+        <file category="doc"     name="CMSIS/Documentation/Core_A/html/index.html"/>
         <file category="include" name="CMSIS/Core_A/Include/"/>
       </files>
     </component>
@@ -2072,7 +2095,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>System and Startup for Generic ARM ARMv8MML device</description>
       <files>
         <!-- include folder / device header file -->
-        <file category="include"  name="Device/ARM/ARMv8MML/Include/"/>
+        <file category="include"      name="Device/ARM/ARMv8MML/Include/"/>
         <!-- startup / system file -->
         <file category="sourceC"      name="Device/ARM/ARMv8MML/Source/GCC/startup_ARMv8MML.c"         version="1.0.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMv8MML/Source/GCC/gcc_arm.ld"                 version="1.0.0" attr="config" condition="GCC"/>
@@ -2082,12 +2105,28 @@ and 8-bit Java bytecodes in Jazelle state.
       </files>
     </component>
 
+    <!-- Cortex-A5 -->
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMCA5 CMSIS">
+      <description>System and Startup for Generic ARM Cortex-A5 device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="include"      name="Device/ARM/ARMCA5/Include/"/>
+        <!-- startup / system / mmu files -->
+        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/ARM/startup_ARMCA5.c" version="1.0.0" attr="config" condition="ARMCC"/>             
+        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/system_ARMCA5.c"      version="1.0.0" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/mmu_ARMCA5.c"         version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA5/Include/system_ARMCA5.h"     version="1.0.0" attr="config"/>
+        <file category="header"       name="Device/ARM/ARMCA5/Include/mem_ARMCA5.h"        version="1.0.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA5/Source/ARM/ARMCA5.sct"       version="1.0.0" attr="config"/>         
+      </files>
+    </component>
+    
     <!-- Cortex-A7 -->
     <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMCA7 CMSIS">
       <description>System and Startup for Generic ARM Cortex-A7 device</description>
       <files>
         <!-- include folder / device header file -->
-        <file category="include"  name="Device/ARM/ARMCA7/Include/"/>
+        <file category="include"      name="Device/ARM/ARMCA7/Include/"/>
         <!-- startup / system / mmu files -->
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/ARM/startup_ARMCA7.c" version="1.0.0" attr="config" condition="ARMCC"/>             
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/system_ARMCA7.c"      version="1.0.0" attr="config"/>
