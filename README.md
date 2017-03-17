@@ -74,7 +74,7 @@ ARM CMSIS is licensed under Apache-2.0.
 
 Contributions are accepted under Apache-2.0. Only submit contributions where you have authored all of the code.
 
-###Issues and Labels
+### Issues and Labels
 
 Please feel free to raise an [issue on GitHub](https://github.com/ARM-software/CMSIS_5/issues)
 to report misbehaviour (i.e. bugs) or start discussions about enhancements. This
