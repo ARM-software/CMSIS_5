@@ -118,12 +118,12 @@ during \ref SystemInit in Secure state.
 \image html "CMSIS_TZ_files.png" "CMSIS with extensions for TrustZone"
 
 \note
-Refer to \ref using_pg for a general description of the CMSIS-Core-M files.
+Refer to \ref using_pg for a general description of the CMSIS-Core (Cortex-M) files.
 
 
 \subsection RTOS_TrustZone RTOS Thread Context Management
 
-To provide a consistent RTOS thread context management for ARMv8-M TrustZone across the various real-time operating systems (RTOS), the CMSIS-Core-M includes header file <b>TZ_context.h</b> with API definitions.
+To provide a consistent RTOS thread context management for ARMv8-M TrustZone across the various real-time operating systems (RTOS), the CMSIS-Core (Cortex-M) includes header file <b>TZ_context.h</b> with API definitions.
 An <i>non-secure application</i> which uses an RTOS and calls <i>secure</i> library modules requires the management of the <i>secure</i> stack space.   Since <i>secure state</i> registers cannot be accessed 
 by the RTOS that runs in <i>non-secure state</i> secure functions implement the thread context switch.
 

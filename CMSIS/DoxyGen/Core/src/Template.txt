@@ -705,7 +705,7 @@ The following code exemplifies the configuration of the Cortex-M4 Processor and 
 
 \section core_version_sect   CMSIS Version and Processor Information
 
-Defines in the core_<i>cpu</i>.h file identify the version of the CMSIS-Core-M and the processor used.
+Defines in the core_<i>cpu</i>.h file identify the version of the CMSIS-Core (Cortex-M) and the processor used.
 The following shows the defines in the various core_<i>cpu</i>.h files that may be used in the \ref device_h_pg
 to verify a minimum version or ensure that the right processor core is used.
 
