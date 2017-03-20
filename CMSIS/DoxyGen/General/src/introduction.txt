@@ -19,7 +19,7 @@ including <a class="el" href="http://www.arm.com/products/processors/technologie
 
 \anchor CM_Components
 The CMSIS components are:
- - <a href="../../Core/html/index.html"><b>CMSIS-Core-M</b></a>: API for the Cortex-M processor core and peripherals. 
+ - <a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a>: API for the Cortex-M processor core and peripherals. 
    It provides a standardized interface for Cortex-M0, Cortex-M0+, Cortex-M3, Cortex-M4, Cortex-M7, Cortex-M23, Cortex-M33, SC000, and SC300. 
    Also included are SIMD intrinsic functions for Cortex-M4, Cortex-M7, and Cortex-M33 SIMD instructions.
    
@@ -148,7 +148,7 @@ Directory                 |Content
 \b DAP                    |<a href="../../DAP/html/index.html"><b>CMSIS-DAP</b></a> Debug Access Port source code and reference implementations                     
 \b Driver                 |Header files for the <a href="../../Driver/html/index.html"><b>CMSIS-Driver</b></a> peripheral interface API                             
 \b DSP_Lib                |<a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> software library source code                                                    
-\b Include                |Include files for <a href="../../Core/html/index.html"><b>CMSIS-Core-M</b></a> and <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>
+\b Include                |Include files for <a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a> and <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>
 \b Lib                    |<a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> generated libraries for ARMCC and GCC                                           
 \b Pack                   |<a href="../../Pack/html/pack_Example.html"><b>CMSIS-Pack</b></a> example                                                              
 \b RTOS                   |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 1</b></a> along with RTX reference implementation                       
@@ -167,7 +167,7 @@ Directory                 |Content
 The following table shows the overall high-level history of the various CMSIS releases.
 In addition, each CMSIS component has its own release history:
 
-- <a href="../../Core/html/core_revisionHistory.html"><b>CMSIS-Core-M Revision History</b></a>
+- <a href="../../Core/html/core_revisionHistory.html"><b>CMSIS-Core (Cortex-M) Revision History</b></a>
 - <a href="../../DAP/html/dap_revisionHistory.html"><b>DAP Revision History</b></a>
 - <a href="../../Driver/html/driver_revisionHistory.html"><b>Driver Revision History</b></a>
 - <a href="../../DSP/html/ChangeLog_pg.html"><b>DSP Revision History (Change Log)</b></a>
@@ -198,7 +198,7 @@ In addition, each CMSIS component has its own release history:
       <td>5.0.0</td>
       <td>
         Added support for: <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>ARMv8-M architecture</b></a> including TrustZone for ARMv8-M and Cortex-M23, Cortex-M33 processors
-        - CMSIS-Core-M 5.0.0 added support for ARMv8-M and Cortex-M23, Cortex-M33 processors
+        - CMSIS-Core (Cortex-M) 5.0.0 added support for ARMv8-M and Cortex-M23, Cortex-M33 processors
         - CMSIS-Driver 2.04.0 (unchanged)
         - CMSIS-DSP 1.4.9 minor corrections and performance improvements
         - CMSIS-RTOS 2.0.0 new API with RTX 5.0.0 reference implementation and corrections in RTX 4.8.2
@@ -212,7 +212,7 @@ In addition, each CMSIS component has its own release history:
       <td>
         Maintenance release that is fixing defects. See component's revision history for more details.
         See component's revision history for more details.
-        - CMSIS-Core-M 4.30.0
+        - CMSIS-Core (Cortex-M) 4.30.0
         - CMSIS-DAP 1.1.0 (unchanged)
         - CMSIS-Driver 2.04.0
         - CMSIS-DSP 1.4.7
@@ -226,7 +226,7 @@ In addition, each CMSIS component has its own release history:
       <td>
         Feature release adding CMSIS-DAP (see extended End User Licence Agreement) and CMSIS-Driver for CAN.
         See component's revision history for more details.
-        - CMSIS-Core-M 4.20.0
+        - CMSIS-Core (Cortex-M) 4.20.0
         - CMSIS-DAP 1.1.0
         - CMSIS-Driver 2.03.0
         - CMSIS-DSP 1.4.5  (unchanged)
@@ -239,7 +239,7 @@ In addition, each CMSIS component has its own release history:
       <td>4.3.0</td>
       <td>
         Maintenance release adding SAI CMSIS-Driver and fixing defects. See component's revision history for more details.
-        - CMSIS-Core-M 4.10.0
+        - CMSIS-Core (Cortex-M) 4.10.0
         - CMSIS-Driver 2.02.0
         - CMSIS-DSP 1.4.5
         - CMSIS-RTOS RTX 4.78.0
@@ -298,7 +298,7 @@ In addition, each CMSIS component has its own release history:
     </tr>
     <tr>
       <td>1.00</td>
-      <td>Initial release of CMSIS-Core-M for Cortex-M3 processor</td>
+      <td>Initial release of CMSIS-Core (Cortex-M) for Cortex-M3 processor</td>
     </tr>
 </table>
 

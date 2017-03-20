@@ -18,7 +18,7 @@ not used by multiple components.
   <components>
     <!-- component has dependency described by "CMSIS Core" condition -->
     <component Cclass="CMSIS" Cgroup="Core" Cversion="3.1.0" condition="CMSIS Core">
-      <description>CMSIS-Core-M for Cortex-M, SC000, and SC300 processor.</description>
+      <description>CMSIS-Core (Cortex-M) for Cortex-M, SC000, and SC300 processor.</description>
       <files>
         <!-- CPU independent -->
         <file category="doc"    name="CMSIS/Documentation/Core/html/index.html"/>

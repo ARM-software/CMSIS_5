@@ -1,9 +1,9 @@
 /** \page coreMISRA_Exceptions_pg MISRA-C Deviations
-CMSIS-Core-M uses the common coding rules for CMSIS components that are documented under 
+CMSIS-Core (Cortex-M) uses the common coding rules for CMSIS components that are documented under 
 <a href="../../General/html/index.html"><b>Introduction</b></a>.
 
 
-CMSIS-Core-M violates the following MISRA-C:2004 rules:
+CMSIS-Core (Cortex-M) violates the following MISRA-C:2004 rules:
   
 - Required Rule 8.5, object/function definition in header file.<br>
   Violated since function definitions in header files are used for function inlining'. 
@@ -27,7 +27,7 @@ CMSIS-Core-M violates the following MISRA-C:2004 rules:
   Violated to set default settings for macros. 
 
   
-CMSIS-Core-M violates the following MISRA-C:2012 rules:
+CMSIS-Core (Cortex-M) violates the following MISRA-C:2012 rules:
   
 - Directive 4.9, function-like macro defined.<br>
   Violated since function-like macros are used to generate more efficient code. 

@@ -125,7 +125,7 @@ further details. Afterwards, install the Pack in your development tool.
 We will address this problem in the next section.
 
 \section cp_System_Startp System and Startup Files
-<a class=el href="http://www.keil.com/cmsis/core" target="_blank">CMSIS-Core-M</a> defines the following files to be used by
+<a class=el href="http://www.keil.com/cmsis/core" target="_blank">CMSIS-Core (Cortex-M)</a> defines the following files to be used by
 an embedded application:
 - \c startup_<device>.s with reset handler and exception vectors. It is executed after reset and calls \c SystemInit and may
   contain stack and heap configurations for the user application.
@@ -136,7 +136,7 @@ an embedded application:
 
 \image html SystemStartupFiles.png  "System and startup files in relation to user code"
 
-\note <a class=el href="http://www.keil.com/pack/doc/CMSIS/Core/html/_templates_pg.html" target="_blank">CMSIS-Core-M</a>
+\note <a class=el href="http://www.keil.com/pack/doc/CMSIS/Core/html/_templates_pg.html" target="_blank">CMSIS-Core (Cortex-M)</a>
 	  explains the structure of the system and startup files and how to create them.
 
 Copy the \e content of the <b>02_System_and_Startup</b> directory of the \b Pack_with_Device_Support.zip file to the
@@ -148,7 +148,7 @@ provides more information on this step):
 \code{.xml}
     <condition id="MVCM3 CMSIS-Core">
       <!-- conditions selecting Devices -->
-      <description>MyVendor MVCM3 Series devices and CMSIS-Core-M</description>
+      <description>MyVendor MVCM3 Series devices and CMSIS-Core (Cortex-M)</description>
       <require Cclass="CMSIS" Cgroup="Core"/>
       <require Dvendor="Generic:5" Dname="MVCM3*"/>
     </condition>

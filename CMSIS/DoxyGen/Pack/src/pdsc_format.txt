@@ -815,7 +815,7 @@ needs to be the same as specified in the element \ref element_generator. The des
 the opening and closing tags of the element \b description.
 
 It is recommended to use an already agreed taxonomy for interchangeable components. For example, the combination of class \token{CMSIS}
-and group \token{Startup} is defined for the device-specific CMSIS-Core-M files.
+and group \token{Startup} is defined for the device-specific CMSIS-Core (Cortex-M) files.
 
 <p>&nbsp;</p>
 
@@ -928,7 +928,7 @@ The table lists predefined Component Classes.
 	<td>Components providing interfaces for Evaluation and Development Boards</td>
   <tr>
     <td class="XML-Token">CMSIS</td>
-    <td>Components defined by Cortex Microcontroller Software Interface Standard (e.g. <a class=el href="../../Core/html/index.html">CMSIS-Core-M</a>, <a class=el href="../../DSP/html/index.html">CMSIS-DSP</a> and <a class=el href="../../RTOS/html/index.html">CMSIS-RTOS</a>)</td>
+    <td>Components defined by Cortex Microcontroller Software Interface Standard (e.g. <a class=el href="../../Core/html/index.html">CMSIS-Core (Cortex-M)</a>, <a class=el href="../../DSP/html/index.html">CMSIS-DSP</a> and <a class=el href="../../RTOS/html/index.html">CMSIS-RTOS</a>)</td>
   </tr>
   <tr>
     <td class="XML-Token">Device</td>
@@ -997,7 +997,7 @@ No other Component Groups have been defined so far.
   </tr>
   <tr>
     <td class="XML-Token">Core</td>
-	<td>A component containing device support in accordance to the <a class=el href="../../Core/html/index.html">CMSIS-Core-M</a> specification (startup, system and device files)</td>
+	<td>A component containing device support in accordance to the <a class=el href="../../Core/html/index.html">CMSIS-Core (Cortex-M)</a> specification (startup, system and device files)</td>
   </tr>
   <tr>
     <td class="XML-Token">DSP</td>

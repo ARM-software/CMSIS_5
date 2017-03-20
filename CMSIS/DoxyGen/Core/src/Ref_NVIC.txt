@@ -324,8 +324,8 @@ These overrides allow an operating system to control the access privileges of
 application code to critical interrupts.
 
 The NVIC function virtualization is enabled with the following \#define symbols:
-  - \ref CMSIS_NVIC_VIRTUAL enables overriding the CMSIS-Core-M NVIC functions.
-  - \ref CMSIS_VECTAB_VIRTUAL enables overriding the CMSIS-Core-M interrupt vector table access functions.
+  - \ref CMSIS_NVIC_VIRTUAL enables overriding the CMSIS-Core (Cortex-M) NVIC functions.
+  - \ref CMSIS_VECTAB_VIRTUAL enables overriding the CMSIS-Core (Cortex-M) interrupt vector table access functions.
 
 */     
 
