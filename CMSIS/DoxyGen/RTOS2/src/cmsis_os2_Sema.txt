@@ -74,7 +74,8 @@ void thread_n (void)
 \fn osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr)
 \details
 The function \b osSemaphoreNew creates and initializes a semaphore object that is used to manage access to shared resources
-and returns the pointer to the semaphore object identifier or \token{NULL} in case of an error.
+and returns the pointer to the semaphore object identifier or \token{NULL} in case of an error. It can be safely called
+before the RTOS is started (call to \ref osKernelStart), but not before it is initialized (call to \ref osKernelInitialize).
 
 The parameter \em max_count specifies the maximum number of available tokens. A \em max_count value of 1 creates a binary
 semaphore.

@@ -269,6 +269,9 @@ created thread function is higher than the current \b RUNNING thread, the create
 becomes the new \b RUNNING thread. Thread attributes are defined with the parameter pointer \a attr. Attributes include
 settings for thread priority, stack size, or memory allocation.
 
+The function can be safely called before the RTOS is
+started (call to \ref osKernelStart), but not before it is initialized (call to \ref osKernelInitialize).
+
 The function \b osThreadNew returns the pointer to the thread object identifier or \token{NULL} in case of an error.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".

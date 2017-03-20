@@ -64,7 +64,8 @@ binary semaphore that can be released from an ISR.
 \fn osMutexId_t osMutexNew (const osMutexAttr_t *attr)
 \details
 The function \b osMutexNew creates and initializes a new mutex object and returns the pointer to the mutex object identifier
-or \token{NULL} in case of an error.
+or \token{NULL} in case of an error. It can be safely called before the RTOS is
+started (call to \ref osKernelStart), but not before it is initialized (call to \ref osKernelInitialize).
 
 The parameter \a attr sets the mutex object attributes (refer to \ref osMutexAttr_t). Default attributes will be used if set
 to \token{NULL}.

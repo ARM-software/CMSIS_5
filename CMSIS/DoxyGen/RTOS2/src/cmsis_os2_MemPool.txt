@@ -36,7 +36,8 @@ functions are used to define and manage such fixed-sized memory pools.
 \fn osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, const osMemoryPoolAttr_t *attr)
 \details
 The function \b osMemoryPoolNew creates and initializes a memory pool object and returns the pointer to the memory pool
-object identifier or \token{NULL} in case of an error.
+object identifier or \token{NULL} in case of an error. It can be safely called before the RTOS is
+started (call to \ref osKernelStart), but not before it is initialized (call to \ref osKernelInitialize).
 
 The parameter \a block_count specifies the maximum number of memory blocks in the pool.
 

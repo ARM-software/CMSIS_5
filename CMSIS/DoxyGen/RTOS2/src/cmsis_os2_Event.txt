@@ -106,7 +106,8 @@ void Thread_EventReceiver (void *argument)
 \fn osEventFlagsId_t osEventFlagsNew (const osEventFlagsAttr_t *attr)
 \details
 The function \b osEventFlagsNew creates a new event flags object that is used to send events across threads and returns the
-pointer to the event flags object identifier or \token{NULL} in case of an error.
+pointer to the event flags object identifier or \token{NULL} in case of an error. It can be safely called before the RTOS is
+started (call to \ref osKernelStart), but not before it is initialized (call to \ref osKernelInitialize).
 
 The parameter \a attr sets the event flags attributes (refer to \ref osEventFlagsAttr_t).  Default attributes will be used if
 set to \token{NULL}.
