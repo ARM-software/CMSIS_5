@@ -40,7 +40,8 @@ Attributes structure for message queue.
 \fn osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, const osMessageQueueAttr_t *attr)
 \details
 The function \b osMessageQueueNew creates and initializes a message queue object and returns the pointer to the message queue
-object identifier or \token{NULL} in case of an error.
+object identifier or \token{NULL} in case of an error. It can be safely called before the RTOS is
+started (call to \ref osKernelStart), but not before it is initialized (call to \ref osKernelInitialize).
 
 The parameter \a msg_count specifies the maximum number of messages om the queue.
 

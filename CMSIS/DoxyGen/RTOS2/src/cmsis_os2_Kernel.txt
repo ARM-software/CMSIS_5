@@ -67,7 +67,8 @@ it will return \c osKernelError, otherwise it returns the kernel state.
 /**
 \fn osStatus_t osKernelInitialize (void)
 \details
-The function \b osKernelInitialize initializes the RTOS Kernel. Before it is successfully executed, no RTOS function may be called.
+The function \b osKernelInitialize initializes the RTOS Kernel. Before it is successfully executed, only the functions
+\ref osKernelGetInfo and \ref osKernelGetState may be called.
  
 Possible \ref osStatus_t return values:
 - \em osOK in case of success.
@@ -110,7 +111,9 @@ int main (void) {
 /**
 \fn osStatus_t osKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size)
 \details
-The function \b  osKernelGetInfo retrieves the API and kernel version of the underlying RTOS kernel and a human readable identifier string for the kernel.
+The function \b  osKernelGetInfo retrieves the API and kernel version of the underlying RTOS kernel and a human readable
+identifier string for the kernel. It can be safely called before the RTOS is initialized or started (call to
+\ref osKernelInitialize or \ref osKernelStart).
 
 Possible \ref osStatus_t return values:
 - \em osOK in case of success.
@@ -141,8 +144,9 @@ void info (void) {
 \fn osKernelState_t osKernelGetState (void)
 \details
 The function \b osKernelGetState returns the current state of the kernel and can be safely called before the RTOS is
-initialized. In case it fails or if it is called from an ISR, it will return \c osKernelError, otherwise it returns the
-kernel state (refer to \ref osKernelState_t for the list of kernel states).
+initialized or started (call to \ref osKernelInitialize or \ref osKernelStart). In case it fails or if it is called from an
+ISR, it will return \c osKernelError, otherwise it returns the kernel state (refer to \ref osKernelState_t for the list of
+kernel states).
 
 Possible \ref osKernelState_t return values:
 - \ref osKernelError if an unspecific error occurred or it has been called from an
@@ -169,7 +173,9 @@ int main (void) {
 /**
 \fn osStatus_t osKernelStart (void)
 \details
-The function \b osKernelStart starts the RTOS kernel and begins thread switching. It will not return to its calling function in case of success.
+The function \b osKernelStart starts the RTOS kernel and begins thread switching. It will not return to its calling function
+in case of success. Before it is successfully executed, only the functions \ref osKernelGetInfo, \ref osKernelGetState, and
+object creation functions (\b osXxxNew) may be called.
 
 Possible \ref osStatus_t return values:
 - \em osOK in case of success.

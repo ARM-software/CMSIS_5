@@ -76,7 +76,8 @@ Instances of this type hold a reference to a timer object.
 \fn osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr)
 \details
 The function \b osTimerNew creates an one-shot or periodic timer and associates it with a callback function with \a argument.
-The timer is in stopped state until it is started with \ref osTimerStart.
+The timer is in stopped state until it is started with \ref osTimerStart. The function can be safely called before the RTOS
+is started (call to \ref osKernelStart), but not before it is initialized (call to \ref osKernelInitialize).
 
 The parameter \a func specifies the start address of the timer callback function.
 
