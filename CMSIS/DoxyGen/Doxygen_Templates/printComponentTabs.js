@@ -14,8 +14,8 @@ var arr = [];
 
 // fill array
  arr.push( new tabElement( "GEN",     "/General/html/",     "General")   );
- arr.push( new tabElement( "CORE_A",  "/Core_A/html/",      "Core-A")    );
- arr.push( new tabElement( "CORE_M",  "/Core/html/",        "Core-M")    );
+ arr.push( new tabElement( "CORE_A",  "/Core_A/html/",      "CMSIS-Core(A)")    );
+ arr.push( new tabElement( "CORE_M",  "/Core/html/",        "CMSIS-Core(M)")    );
  arr.push( new tabElement( "DRV",     "/Driver/html/",      "Driver")    );
  arr.push( new tabElement( "DSP",     "/DSP/html/",         "DSP")       );
  arr.push( new tabElement( "RTOSv1",  "/RTOS/html/",        "RTOS v1")   );
