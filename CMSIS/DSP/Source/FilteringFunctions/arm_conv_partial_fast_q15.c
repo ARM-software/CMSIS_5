@@ -270,12 +270,13 @@ arm_status arm_conv_partial_fast_q15(
     /* Working pointer of inputA */
     if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
     {
-      px = pIn1 + firstIndex - srcBLen + 1;
+      pSrc1 = pIn1 + firstIndex - srcBLen + 1;
     }
     else
     {
-      px = pIn1;
+      pSrc1 = pIn1;
     }
+    px = pSrc1;
 
     /* Working pointer of inputB */
     pSrc2 = pIn2 + (srcBLen - 1u);
@@ -473,7 +474,7 @@ arm_status arm_conv_partial_fast_q15(
         count += 4u;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        px = pIn1 + count;
+        px = pSrc1 + count;
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -526,7 +527,7 @@ arm_status arm_conv_partial_fast_q15(
         count++;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        px = pIn1 + count;
+        px = pSrc1 + count;
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -563,7 +564,7 @@ arm_status arm_conv_partial_fast_q15(
         count++;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        px = pIn1 + count;
+        px = pSrc1 + count;
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -915,12 +916,13 @@ arm_status arm_conv_partial_fast_q15(
     /* Working pointer of inputA */
     if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
     {
-      px = pIn1 + firstIndex - srcBLen + 1;
+      pSrc1 = pIn1 + firstIndex - srcBLen + 1;
     }
     else
     {
-      px = pIn1;
+      pSrc1 = pIn1;
     }
+    px = pSrc1;
 
     /* Working pointer of inputB */
     pSrc2 = pIn2 + (srcBLen - 1u);
@@ -1241,7 +1243,7 @@ arm_status arm_conv_partial_fast_q15(
         count += 4u;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        px = pIn1 + count;
+        px = pSrc1 + count;
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -1294,7 +1296,7 @@ arm_status arm_conv_partial_fast_q15(
         count++;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        px = pIn1 + count;
+        px = pSrc1 + count;
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -1331,7 +1333,7 @@ arm_status arm_conv_partial_fast_q15(
         count++;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        px = pIn1 + count;
+        px = pSrc1 + count;
         py = pSrc2;
 
         /* Decrement the loop counter */
