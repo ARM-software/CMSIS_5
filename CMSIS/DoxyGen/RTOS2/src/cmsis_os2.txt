@@ -80,9 +80,6 @@ File/Folder                  | Content
     <tr>
       <td>V2.1.0</td>
       <td>
-        Updated configuration files: RTX_Config.h for the configuration settings and RTX_config.c for
-        implementing the \ref rtx5_specific.
-        
         Support for critical and uncritical sections (nesting safe):
          - updated: \ref osKernelLock, \ref osKernelUnlock
          - added: \ref osKernelRestoreLock
@@ -158,7 +155,7 @@ File/Folder                  | Content
        - Based on CMSIS-RTOS API V2.1.
        - Added support for Event recording.
        - Added support for IAR compiler.
-       - Configuration file split into .h and .c file.
+       - Updated configuration files: RTX_Config.h for the configuration settings and RTX_config.c for implementing the \ref rtx5_specific.
        - osRtx name-space for RTX specific symbols.
       </td>
     </tr>
