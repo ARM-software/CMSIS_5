@@ -786,7 +786,7 @@ Processor mode for Thread execution                      | \c OS_PRIVILEGE_MODE 
 
 The RTX5 kernel uses a separate stack space for each thread and provides two methods for defining the stack requirements:
  - <b>Static allocation</b>: when \ref osThreadAttr_t::stack_mem and \ref osThreadAttr_t::stack_size specify a memory area
-   which is used for the thread stack.
+   which is used for the thread stack. \b Attention: The stack memory provided must be 64-bit aligned, i.e. by using uint64_t for declaration.
  - <b>Dynamic allocation</b>: when \ref osThreadAttr_t is NULL or \ref osThreadAttr_t::stack_mem is NULL, the system
    allocates the stack memory from:
      - Object-specific Memory Pool (default Stack size) when "Object specific Memory allocation" is enabled and "Number of

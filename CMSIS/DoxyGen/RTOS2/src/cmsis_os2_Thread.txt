@@ -636,7 +636,7 @@ Reserved for future use. Must be \token{0}.
 
 \var osThreadAttr_t::stack_mem
 \details
-Pointer to a memory location for the thread stack. This can optionally be used for custom memory management systems. 
+Pointer to a memory location for the thread stack, \b must be 64-bit aligned. This can optionally be used for custom memory management systems. 
 Specify \token{NULL} to use the kernel memory management.
 
 \var osThreadAttr_t::tz_module
