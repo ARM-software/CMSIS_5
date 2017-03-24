@@ -30,11 +30,6 @@
 osRtxInfo_t osRtxInfo __attribute__((section(".data.os"))) =
 { .os_id = osRtxKernelId, .version = osRtxVersionKernel, .kernel.state = osRtxKernelInactive };
 
-//  Library reference to irq module
-extern       uint8_t  irqRtxLib;
-extern const uint8_t *irqRtxLibRef __attribute__((weak));
-       const uint8_t* irqRtxLibRef = &irqRtxLib;
-
 
 //  ==== Helper functions ====
 
