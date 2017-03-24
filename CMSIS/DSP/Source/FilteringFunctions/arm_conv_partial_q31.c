@@ -266,8 +266,8 @@ arm_status arm_conv_partial_q31(
         acc2 = 0;
 
         /* read x[0], x[1] samples */
-        x0 = *(px++);
-        x1 = *(px++);
+        x0 = *px++;
+        x1 = *px++;
 
         /* Apply loop unrolling and compute 3 MACs simultaneously. */
         k = srcBLen / 3;
@@ -332,10 +332,10 @@ arm_status arm_conv_partial_q31(
         while (k > 0u)
         {
           /* Read y[srcBLen - 5] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[7] sample */
-          x2 = *(px++);
+          x2 = *px++;
 
           /* Perform the multiply-accumulates */
           /* acc0 +=  x[4] * y[srcBLen - 5] */

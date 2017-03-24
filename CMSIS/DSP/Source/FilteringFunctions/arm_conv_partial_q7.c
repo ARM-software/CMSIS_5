@@ -290,9 +290,9 @@ arm_status arm_conv_partial_q7(
         acc3 = 0;
 
         /* read x[0], x[1], x[2] samples */
-        x0 = *(px++);
-        x1 = *(px++);
-        x2 = *(px++);
+        x0 = *px++;
+        x1 = *px++;
+        x2 = *px++;
 
         /* Apply loop unrolling and compute 4 MACs simultaneously. */
         k = srcBLen >> 2u;
@@ -302,12 +302,12 @@ arm_status arm_conv_partial_q7(
         do
         {
           /* Read y[srcBLen - 1] sample */
-          c0 = *(py--);
+          c0 = *py--;
           /* Read y[srcBLen - 2] sample */
-          c1 = *(py--);
+          c1 = *py--;
 
           /* Read x[3] sample */
-          x3 = *(px++);
+          x3 = *px++;
 
           /* x[0] and x[1] are packed */
           in1 = (q15_t) x0;
@@ -343,7 +343,7 @@ arm_status arm_conv_partial_q7(
           acc2 = __SMLAD(input1, input2, acc2);
 
           /* Read x[4] sample */
-          x0 = *(px++);
+          x0 = *px++;
 
           /* x[3] and x[4] are packed */
           in1 = (q15_t) x3;
@@ -355,12 +355,12 @@ arm_status arm_conv_partial_q7(
           acc3 = __SMLAD(input1, input2, acc3);
 
           /* Read y[srcBLen - 3] sample */
-          c0 = *(py--);
+          c0 = *py--;
           /* Read y[srcBLen - 4] sample */
-          c1 = *(py--);
+          c1 = *py--;
 
           /* Read x[5] sample */
-          x1 = *(px++);
+          x1 = *px++;
 
           /* x[2] and x[3] are packed */
           in1 = (q15_t) x2;
@@ -396,7 +396,7 @@ arm_status arm_conv_partial_q7(
           acc2 = __SMLAD(input1, input2, acc2);
 
           /* Read x[6] sample */
-          x2 = *(px++);
+          x2 = *px++;
 
           /* x[5] and x[6] are packed */
           in1 = (q15_t) x1;
@@ -416,10 +416,10 @@ arm_status arm_conv_partial_q7(
         while (k > 0u)
         {
           /* Read y[srcBLen - 5] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[7] sample */
-          x3 = *(px++);
+          x3 = *px++;
 
           /* Perform the multiply-accumulates */
           /* acc0 +=  x[4] * y[srcBLen - 5] */

@@ -270,9 +270,9 @@ arm_status arm_conv_partial_fast_q31(
         acc3 = 0;
 
         /* read x[0], x[1], x[2] samples */
-        x0 = *(px++);
-        x1 = *(px++);
-        x2 = *(px++);
+        x0 = *px++;
+        x1 = *px++;
+        x2 = *px++;
 
         /* Apply loop unrolling and compute 4 MACs simultaneously. */
         k = srcBLen >> 2u;
@@ -282,10 +282,10 @@ arm_status arm_conv_partial_fast_q31(
         do
         {
           /* Read y[srcBLen - 1] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[3] sample */
-          x3 = *(px++);
+          x3 = *px++;
 
           /* Perform the multiply-accumulate */
           /* acc0 +=  x[0] * y[srcBLen - 1] */
@@ -301,10 +301,10 @@ arm_status arm_conv_partial_fast_q31(
           acc3 = (q31_t) ((((q63_t) acc3 << 32) + ((q63_t) x3 * c0)) >> 32);
 
           /* Read y[srcBLen - 2] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[4] sample */
-          x0 = *(px++);
+          x0 = *px++;
 
           /* Perform the multiply-accumulate */
           /* acc0 +=  x[1] * y[srcBLen - 2] */
@@ -317,10 +317,10 @@ arm_status arm_conv_partial_fast_q31(
           acc3 = (q31_t) ((((q63_t) acc3 << 32) + ((q63_t) x0 * c0)) >> 32);
 
           /* Read y[srcBLen - 3] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[5] sample */
-          x1 = *(px++);
+          x1 = *px++;
 
           /* Perform the multiply-accumulates */
           /* acc0 +=  x[2] * y[srcBLen - 3] */
@@ -333,10 +333,10 @@ arm_status arm_conv_partial_fast_q31(
           acc3 = (q31_t) ((((q63_t) acc3 << 32) + ((q63_t) x1 * c0)) >> 32);
 
           /* Read y[srcBLen - 4] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[6] sample */
-          x2 = *(px++);
+          x2 = *px++;
 
           /* Perform the multiply-accumulates */
           /* acc0 +=  x[3] * y[srcBLen - 4] */
@@ -358,10 +358,10 @@ arm_status arm_conv_partial_fast_q31(
         while (k > 0u)
         {
           /* Read y[srcBLen - 5] sample */
-          c0 = *(py--);
+          c0 = *py--;
 
           /* Read x[7] sample */
-          x3 = *(px++);
+          x3 = *px++;
 
           /* Perform the multiply-accumulates */
           /* acc0 +=  x[4] * y[srcBLen - 5] */
