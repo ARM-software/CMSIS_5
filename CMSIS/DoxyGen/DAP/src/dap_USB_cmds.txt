@@ -106,7 +106,9 @@ CMSIS-DAP SWO (Serial Wire Output)
 ----------------------------------
 
 CMSIS-DAP (CoreSight Debug Access Port) specifies debug protocol and interface for devices with CoreSight Debug and Trace.
-Currently it only supports debug but not also trace.
+
+\note
+The \ref DAP_swo_gr are only available when \ref DAP_Info with ID=0xF0 (Capabilities) returns in \b Info - Bit 2: <b>1 = SWO UART</b> or Bit 3: <b>1 = SWO Manchester</b>.
 
 The following extension adds support for trace over SWO (Serial Wire Output).
 
@@ -171,6 +173,9 @@ Performance Counters could be used for various scenarios, for example:
 These Performance Counters can be recorded continuously with a specified trace recording frequency. The recording allows you to correlate 
 the Performance Counter information with program execution.  For recording of the CMSIS-DAP Firmware includes an optional Trace Data Management based on configurable memory blocks. 
 This Trace Data Management also captures SWO trace information.
+
+\note
+The \ref DAP_PerformanceCounter_gr are only available when \ref DAP_Info with ID=0xF0 (Capabilities) returns in \b Info - Bit 6: <b>1 = Trace Data Management</b>.
   
 \image html "TraceManagement.png" "Trace Data Management"
   
@@ -191,6 +196,10 @@ critical and any USB communication would violate the available time window.
  
 These two DAP commands are used to collect several other DAP commands before execution.
 Packet Size and Packet Count limitation (as reported via \ref DAP_Info) must be respected by the debugger.
+
+\note
+The \ref DAP_atomic_gr are only available when \ref DAP_Info with ID=0xF0 (Capabilities) returns in \b Info - Bit 4: <b>1 = Atomic Commands</b>.
+
 */
 
 /**************************************************************************************************/
@@ -254,7 +263,7 @@ The ID=0xF0 <b>Capabilities</b> obtains information about the available interfac
  - Bit 1: <b>1 = JTAG</b> communication is implemented (0 = not implemented).
  - Bit 2: <b>1 = SWO UART</b> - UART Serial Wire Output is implemented (0 = not implemented).
  - Bit 3: <b>1 = SWO Manchester</b> - Manchester Serial Wire Output is implemented (0 = not implemented).
- - Bit 4: <b>1 = Atomic Commands</b> - Atomic Commands support is implemented (0 = not implemented).
+ - Bit 4: <b>1 = Atomic Commands</b> - \ref DAP_atomic_gr support is implemented (0 = not implemented).
  - Bit 5: <b>1 = Debug Unit Timer</b> - debug unit timer support is implemented (0 = not implemented).
  - Bit 6: <b>1 = Trace Data Management</b> - Trace Data Management is implemented (0 = not implemented).
 
@@ -1256,22 +1265,27 @@ the CMSIS-DAP Debug Unit. Returned are live data that are currently available in
 
 <b>DAP_PC_Values Request:</b>
 \code
- | BYTE | SHORT ******| 
- > 0x1E | ChannelMask |
- |******|*************|
+ | BYTE | SHORT ******| BYTE ********|
+ > 0x1E | ChannelMask | Time_Request |
+ |******|*************|**************|
 \endcode
 
 - \b ChannelMask: Bit mask that encodes the channels that should be scanned. 
+- \b Time_Request: 
+   - 0: No Time Stamp in response.
+   - 1: Include Time Stamp in response. 
 
 <b>DAP_PC_Values Response:</b> 
 \code
- | BYTE | SHORT ******|++++++++++++|
- < 0x1E | ChannelMask | DataValues |
- |******|*************|++++++++++++|
+ | BYTE | SHORT ******|++++++++++++|++++++++++++|
+ < 0x1E | ChannelMask | Time Stamp | DataValues |
+ |******|*************|++++++++++++|++++++++++++|
 \endcode
 - \b ChannelMask: Bit mask of channels that are actually scanned. Depending on the capabilities of the Debug Unit, this might be less than the request channels.
 
-- \b DataValues: data values of the various Performance Counters (starting with channel=0).  The size of \b DataValues depends on the data size (see DAP_PC_Info Response, Attributes bit 0..2)  In case of SHORT or WORD data format, the LSB is send first.
+- <b>Time Stamp</b>: Indicate the time from the Debug Unit Timer at the beginning the the request (only present if \b Time_Request is set to 1).
+
+- \b DataValues: data values of the various Performance Counters (starting with channel=0).  The size of \b DataValues depends on the data size (see \ref DAP_PC_Info Response, Attributes bit 0..2)  In case of SHORT or WORD data format, the LSB is send first.
 */
 
 
