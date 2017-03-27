@@ -59,7 +59,7 @@ The \ref templates_pg supplied by ARM have been tested and verified with the fol
 
 
 /**
-\page rev_histCoreA Revision History Core-A
+\page rev_histCoreA Revision History Core (Cortex-A)
 
 Version    | Description 
 -----------|--------------------
