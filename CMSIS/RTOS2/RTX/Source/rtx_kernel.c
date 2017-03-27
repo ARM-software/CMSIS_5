@@ -281,6 +281,7 @@ osStatus_t svcRtxKernelStart (void) {
   // Setup and Enable System Timer
   osRtxInfo.tick_irqn = osRtxSysTimerSetup();
   if (osRtxInfo.tick_irqn >= 0) {
+    ExtTick_SetupIRQ (osRtxInfo.tick_irqn);
     ExtTick_EnableIRQ(osRtxInfo.tick_irqn);
   }
   osRtxSysTimerEnable();
