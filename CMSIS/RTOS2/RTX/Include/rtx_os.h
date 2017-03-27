@@ -25,7 +25,10 @@
  
 #ifndef RTX_OS_H_
 #define RTX_OS_H_
- 
+
+/** \addtogroup RTXv2 */
+/** @{*/
+
 #include <stdint.h>
 #include <stddef.h>
 #include "cmsis_os2.h"
@@ -472,5 +475,7 @@ extern const osRtxConfig_t osRtxConfig;         ///< OS Configuration
 #ifdef  __cplusplus
 }
 #endif
- 
+
+/** @}*/
+
 #endif  // RTX_OS_H_

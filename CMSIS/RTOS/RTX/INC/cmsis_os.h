@@ -54,6 +54,9 @@
 #ifndef _CMSIS_OS_H
 #define _CMSIS_OS_H
 
+/** \addtogroup RTXv1 */
+/** @{*/
+
 #define osCMSIS           0x10002U     ///< CMSIS-RTOS API version (main [31:16] .sub [15:0])
 
 #define osCMSIS_RTX     ((4<<16)|82)   ///< RTOS identification and version (main [31:16] .sub [15:0])
@@ -682,5 +685,7 @@ __NO_RETURN void os_error (uint32_t error_code);
 #ifdef  __cplusplus
 }
 #endif
+
+/** @}*/
 
 #endif  // _CMSIS_OS_H

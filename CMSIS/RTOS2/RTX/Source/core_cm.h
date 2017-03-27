@@ -26,6 +26,9 @@
 #ifndef CORE_CM_H_
 #define CORE_CM_H_
 
+/** \addtogroup RTXv2 */
+/** @{*/
+
 #include "RTE_Components.h"
 #include CMSIS_device_header
 
@@ -1520,5 +1523,6 @@ __STATIC_INLINE void atomic_link_put (void **root, void *link) {
 
 #endif  // (__EXCLUSIVE_ACCESS == 1U)
 
+/** @}*/
 
 #endif  // CORE_CM_H_

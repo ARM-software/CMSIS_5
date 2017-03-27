@@ -26,6 +26,9 @@
 #ifndef RTX_LIB_H_
 #define RTX_LIB_H_
 
+/** \addtogroup RTXv2 */
+/** @{*/
+
 #include <string.h>
 #include <stdbool.h>
 #include "core_cm.h"                    // Cortex-M definitions
@@ -210,5 +213,6 @@ extern uint32_t           svcRtxMessageQueueGetSpace    (osMessageQueueId_t mq_i
 extern osStatus_t         svcRtxMessageQueueReset       (osMessageQueueId_t mq_id);
 extern osStatus_t         svcRtxMessageQueueDelete      (osMessageQueueId_t mq_id);
 
+/** @}*/
 
 #endif  // RTX_LIB_H_

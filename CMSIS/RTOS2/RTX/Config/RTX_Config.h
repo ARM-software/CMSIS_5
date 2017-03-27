@@ -27,6 +27,9 @@
  
 #ifndef RTX_CONFIG_H_
 #define RTX_CONFIG_H_
+
+/** \addtogroup RTXv2 */
+/** @{*/
  
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
  
@@ -375,5 +378,7 @@
 #endif
  
 //------------- <<< end of configuration section >>> ---------------------------
- 
+
+/** @}*/
+
 #endif  // RTX_CONFIG_H_

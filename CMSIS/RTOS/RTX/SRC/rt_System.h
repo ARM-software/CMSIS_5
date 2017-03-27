@@ -32,6 +32,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *---------------------------------------------------------------------------*/
 
+/** \addtogroup RTXv1 */
+/** @{*/
+
 /* Variables */
 #define os_psq  ((P_PSQ)&os_fifo)
 extern S32 os_tick_irqn;
@@ -45,6 +48,8 @@ extern void rt_psh_req    (void);
 extern void rt_pop_req    (void);
 extern void rt_systick    (void);
 extern void rt_stk_check  (void);
+
+/** @}*/
 
 /*----------------------------------------------------------------------------
  * end of file

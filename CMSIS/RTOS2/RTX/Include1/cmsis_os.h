@@ -122,7 +122,10 @@
  
 #ifndef CMSIS_OS_H_
 #define CMSIS_OS_H_
- 
+
+/** \addtogroup RTXv2 */
+/** @{*/
+
 #define osCMSIS             0x20001U    ///< API version (main[31:16].sub[15:0])
  
 #define osCMSIS_RTX         0x50001U    ///< RTOS identification and version (main[31:16].sub[15:0])
@@ -894,5 +897,7 @@ osStatus osMailFree (osMailQId queue_id, void *mail);
 #ifdef  __cplusplus
 }
 #endif
- 
+
+/** @}*/
+
 #endif  // CMSIS_OS_H_
