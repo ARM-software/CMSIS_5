@@ -1167,7 +1167,7 @@ The <b>DAP_PC_Info Command</b> provides information about the Performance Counte
 - \b Attributes: attributes of the data channel
   - <b>bit 0..1</b>: DataSize: number of bytes recorded (0=BYTE, 1=SHORT, 2=WORD)
   - <b>bit 2..3</b>: NoRanges: channel data provides additional range bits (see below)
-  - <b>bit 4..5</b>: tSource: channel provides time stamp information (see below)
+  - <b>bit 4..6</b>: tSource: channel provides time stamp information (see below)
 - \b NoBits: resolution of the channel in bits
 - \b IdString: is a up to 8 character 8-bit US ASCII string that identifies the channel
 - \b UnitString: is a up to 8 character 8-bit US ASCII string that identifies the measurement unit of the channel (V, mA, kHz)
@@ -1188,7 +1188,8 @@ The <b>DAP_PC_Info Command</b> provides information about the Performance Counte
   - 0 = no time stamp information provided
   - 1 = time stamps are based on the Debug Unit timer
   - 2 = time stamps are based on the CoreSight DWT timer
-  - 3 = time stamps are from unknown source
+  - 3..6 = reserved
+  - 7 = time stamps are from unknown source
 
 \note
 \b Compress specifies a method for data differences by this channel.
