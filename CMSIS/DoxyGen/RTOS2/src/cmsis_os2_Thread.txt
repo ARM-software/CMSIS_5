@@ -429,7 +429,10 @@ void Thread_1 (void const *arg)  {                         // Thread function
 \details
 The function \b osThreadSuspend suspends the execution of the thread identified by parameter \em thread_id. The thread is put
 into the \em BLOCKED state (\ref osThreadBlocked). The thread is not executed until restarted with the function
-\ref osThreadResume. Threads that are already \em BLOCKED are suspended and become ready after they are resumed.
+\ref osThreadResume.
+
+Threads that are already \em BLOCKED are removed from any wait list and become ready when they are resumed.
+Thus it is not recommended to suspend an already blocked thread.
 
 Possible \ref osStatus_t return values:
     - \em osOK: the thread has been suspended successfully.
@@ -444,7 +447,10 @@ Possible \ref osStatus_t return values:
 /**
 \fn osStatus_t osThreadResume (osThreadId_t thread_id)
 \details
-The function \b osThreadResume forces a thread (specified with \em thread_id) in \em BLOCKED state to resume operation. 
+The function \b osThreadResume forces a thread identified by parameter \em thread_id which is is \em BLOCKED state to resume operation.
+
+The thread becomes ready regardless of the reason why the thread was blocked. Thus it is not recommended to resume a thread not suspended
+by \ref osThreadSuspend.
 
 Functions that will put a thread into \em BLOCKED state are:
 \ref osEventFlagsWait and \ref osThreadFlagsWait,
