@@ -260,6 +260,17 @@ osStatus_t svcRtxKernelStart (void) {
     }
   }
 
+  // Create Timer Thread
+  if (osRtxConfig.timer_mq_mcnt != 0U) {
+    if (osRtxInfo.timer.thread == NULL) {
+      osRtxInfo.timer.thread = svcRtxThreadNew(osRtxTimerThread, NULL, osRtxConfig.timer_thread_attr);
+      if (osRtxInfo.timer.thread == NULL) {
+        EvrRtxKernelError(osError);
+        return osError;
+      }
+    }
+  }
+
   // Switch to Ready Thread with highest Priority
   thread = osRtxThreadListGet(&osRtxInfo.thread.ready);
   if (thread == NULL) {
@@ -433,7 +444,7 @@ void svcRtxKernelResume (uint32_t sleep_ticks) {
         sleep_ticks -= timer->tick;
       timer->tick = 1U;
       do {
-        osRtxTimerTick();
+        osRtxInfo.timer.tick();
         if (sleep_ticks == 0U) {
           break;
         }
