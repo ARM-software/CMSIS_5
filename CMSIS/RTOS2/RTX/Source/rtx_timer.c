@@ -146,12 +146,6 @@ osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argume
   uint8_t     flags;
   const char *name;
 
-  // Check Timer Thread and MessageQueue
-  if ((osRtxInfo.timer.thread == NULL) || (osRtxInfo.timer.mq == NULL)) {
-    EvrRtxTimerError(NULL, osErrorResource);
-    return NULL;
-  }
-
   // Check parameters
   if ((func == NULL) || ((type != osTimerOnce) && (type != osTimerPeriodic))) {
     EvrRtxTimerError(NULL, osErrorParameter);
@@ -248,6 +242,10 @@ osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
   // Check object state
   switch (timer->state) {
     case osRtxTimerStopped:
+      if (osRtxInfo.timer.tick == NULL) {
+        EvrRtxTimerError(timer, osErrorResource);
+        return osErrorResource;
+      }
       timer->state = osRtxTimerRunning;
       timer->load  = ticks;
       break;
