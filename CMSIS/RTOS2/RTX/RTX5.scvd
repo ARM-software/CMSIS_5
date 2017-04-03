@@ -343,7 +343,7 @@
     </typedef>
 
     <!-- OS Runtime Information structure -->
-    <typedef name="osRtxInfo_t" info="OS Runtime Information" size="168">
+    <typedef name="osRtxInfo_t" info="OS Runtime Information" size="172">
       <member name="os_id"                      type="uint32_t"             offset="0" info="OS Identification (type is *uint8_t)"/>
       <member name="version"                    type="uint32_t"             offset="4" info="OS Version"/>
       <member name="kernel_state"               type="uint8_t"              offset="8" info="Kernel state">
@@ -383,32 +383,33 @@
       <member name="timer_list"                 type="*osRtxTimer_t"        offset="76"  info="Active timer list"/>
       <member name="timer_thread"               type="*osRtxThread_t"       offset="80"  info="Timer thread"/>
       <member name="timer_mq"                   type="*osRtxMessageQueue_t" offset="84"  info="Timer message queue"/>
+      <member name="timer_tick"                 type="uint32_t"             offset="88"  info="Timer tick function (type is func *)"/>
 
-      <member name="isr_queue_max"              type="uint16_t"             offset="88"  info="Maximum items"/>
-      <member name="isr_queue_cnt"              type="uint16_t"             offset="90"  info="Item count"/>
-      <member name="isr_queue_in"               type="uint16_t"             offset="92"  info="Incoming item index"/>
-      <member name="isr_queue_out"              type="uint16_t"             offset="94"  info="Outgoing item index"/>
-      <member name="isr_queue_data"             type="uint32_t"             offset="96"  info="Queue data (value is void **)"/>
+      <member name="isr_queue_max"              type="uint16_t"             offset="92"  info="Maximum items"/>
+      <member name="isr_queue_cnt"              type="uint16_t"             offset="94"  info="Item count"/>
+      <member name="isr_queue_in"               type="uint16_t"             offset="96"  info="Incoming item index"/>
+      <member name="isr_queue_out"              type="uint16_t"             offset="98"  info="Outgoing item index"/>
+      <member name="isr_queue_data"             type="uint32_t"             offset="100" info="Queue data (type is void **)"/>
 
-      <member name="post_process_thread"        type="uint32_t"             offset="100" info="Thread post processing function (value is func *)"/>
-      <member name="post_process_event_flags"   type="uint32_t"             offset="104" info="Event flags post processing function (value is func *)"/>
-      <member name="post_process_semaphore"     type="uint32_t"             offset="108" info="Semaphore post processing function (value is func *)"/>
-      <member name="post_process_memory_pool"   type="uint32_t"             offset="112" info="Memory pool post processing function (value is func *)"/>
-      <member name="post_process_message_queue" type="uint32_t"             offset="116" info="Message queue post processing function (value is func *)"/>
+      <member name="post_process_thread"        type="uint32_t"             offset="104" info="Thread post processing function (type is func *)"/>
+      <member name="post_process_event_flags"   type="uint32_t"             offset="108" info="Event flags post processing function (type is func *)"/>
+      <member name="post_process_semaphore"     type="uint32_t"             offset="112" info="Semaphore post processing function (type is func *)"/>
+      <member name="post_process_memory_pool"   type="uint32_t"             offset="116" info="Memory pool post processing function (type is func *)"/>
+      <member name="post_process_message_queue" type="uint32_t"             offset="120" info="Message queue post processing function (type is func *)"/>
 
-      <member name="mem_stack"                  type="uint32_t"             offset="120" info="Stack memory (value is void *)"/>
-      <member name="mem_mp_data"                type="uint32_t"             offset="124" info="Memory pool data memory (value is void *)"/>
-      <member name="mem_mq_data"                type="uint32_t"             offset="128" info="Message queue Data memory (value is void *)"/>
-      <member name="mem_common"                 type="uint32_t"             offset="132" info="Common memory address (value is void *)"/>
+      <member name="mem_stack"                  type="uint32_t"             offset="124" info="Stack memory (type is void *)"/>
+      <member name="mem_mp_data"                type="uint32_t"             offset="128" info="Memory pool data memory (type is void *)"/>
+      <member name="mem_mq_data"                type="uint32_t"             offset="132" info="Message queue Data memory (type is void *)"/>
+      <member name="mem_common"                 type="uint32_t"             offset="136" info="Common memory address (type is void *)"/>
 
-      <member name="mpi_stack"                  type="*osRtxMpInfo_t"       offset="136" info="Stack for threads"/>
-      <member name="mpi_thread"                 type="*osRtxMpInfo_t"       offset="140" info="Thread control blocks"/>
-      <member name="mpi_timer"                  type="*osRtxMpInfo_t"       offset="144" info="Timer control blocks"/>
-      <member name="mpi_event_flags"            type="*osRtxMpInfo_t"       offset="148" info="Event flags control blocks"/>
-      <member name="mpi_mutex"                  type="*osRtxMpInfo_t"       offset="152" info="Mutex control blocks"/>
-      <member name="mpi_semaphore"              type="*osRtxMpInfo_t"       offset="156" info="Semaphore control blocks"/>
-      <member name="mpi_memory_pool"            type="*osRtxMpInfo_t"       offset="160" info="Memory pool control blocks"/>
-      <member name="mpi_message_queue"          type="*osRtxMpInfo_t"       offset="164" info="Message queue control blocks"/>
+      <member name="mpi_stack"                  type="*osRtxMpInfo_t"       offset="140" info="Stack for threads"/>
+      <member name="mpi_thread"                 type="*osRtxMpInfo_t"       offset="144" info="Thread control blocks"/>
+      <member name="mpi_timer"                  type="*osRtxMpInfo_t"       offset="148" info="Timer control blocks"/>
+      <member name="mpi_event_flags"            type="*osRtxMpInfo_t"       offset="152" info="Event flags control blocks"/>
+      <member name="mpi_mutex"                  type="*osRtxMpInfo_t"       offset="156" info="Mutex control blocks"/>
+      <member name="mpi_semaphore"              type="*osRtxMpInfo_t"       offset="160" info="Semaphore control blocks"/>
+      <member name="mpi_memory_pool"            type="*osRtxMpInfo_t"       offset="164" info="Memory pool control blocks"/>
+      <member name="mpi_message_queue"          type="*osRtxMpInfo_t"       offset="168" info="Message queue control blocks"/>
     </typedef>
 
     <!-- OS Configuration structure -->
@@ -417,7 +418,7 @@
       <member name="tick_freq"             type="uint32_t" offset="4" info="Kernel tick frequency"/>
 
       <member name="robin_timeout"         type="uint32_t" offset="8"  info="Round Robim timeout tick"/>
-      <member name="isr_queue_data"        type="uint32_t" offset="12" info="ISR post processing queue (value is void **)"/>
+      <member name="isr_queue_data"        type="uint32_t" offset="12" info="ISR post processing queue (type is void **)"/>
       <member name="isr_queue_max"         type="uint16_t" offset="16" info="Maximum data"/>
       <member name="isr_queue_padding"     type="uint16_t" offset="18" info="Padding bytes"/>
 
@@ -440,9 +441,9 @@
       <member name="mpi_message_queue"     type="*osRtxMpInfo_t" offset="80" info="Message queue control blocks"/>
 
       <member name="thread_stack_size"     type="uint32_t" offset="84"  info="Default thread stack size"/>
-      <member name="idle_thread_attr"      type="uint32_t" offset="88"  info="Idle thread attributes (value is osThreadAttr_s *)"/>
-      <member name="timer_thread_attr"     type="uint32_t" offset="92"  info="Timer thread attributes (value is osThreadAttr_s *)"/>
-      <member name="timer_mq_attr"         type="uint32_t" offset="96"  info="Timer message queue attributes (value is osMessageQueueAttr_s *)"/>
+      <member name="idle_thread_attr"      type="uint32_t" offset="88"  info="Idle thread attributes (type is osThreadAttr_s *)"/>
+      <member name="timer_thread_attr"     type="uint32_t" offset="92"  info="Timer thread attributes (type is osThreadAttr_s *)"/>
+      <member name="timer_mq_attr"         type="uint32_t" offset="96"  info="Timer message queue attributes (type is osMessageQueueAttr_s *)"/>
       <member name="timer_mq_mcnt"         type="uint32_t" offset="100" info="Timer message queue maximum messages"/>
     </typedef>
 
