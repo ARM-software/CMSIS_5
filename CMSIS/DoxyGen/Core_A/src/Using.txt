@@ -33,9 +33,8 @@ The \ref device_h_pg is the central include file that the application programmer
  - \ref peripheral_gr provides a standardized register layout for all peripherals. Optionally functions for device-specific peripherals may be available.
  - \ref GIC_gr can be accessed with standardized symbols and functions for the General Interrupt Controller (GIC) are provided.
  - \ref intrinsic_CPU_gr allow to access special instructions, for example for activating sleep mode or the NOP instruction.
- - \ref intrinsic_SIMD_gr provide access to the DSP-oriented instructions.
- - \ref SysTick_gr function to configure and start a periodic timer interrupt.
- - \ref ITM_Debug_gr are functions that allow printf-style I/O via the CoreSight Debug Unit and ITM communication.
+ - \ref timer_gr Generic and Private Timer functions to configure and start a periodic timer interrupt.
+ - \ref cache_gr Level 1 and Level 2 Cache controller functions to enable, disable, clean and invalidate caches.
 
 \image html "CMSIS_CORE_A_Files_user.png" "CMSIS-Core-A User Files"
 
