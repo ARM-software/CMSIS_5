@@ -7,7 +7,7 @@ In detail it defines:
  - <b>Methods to organize header files</b> that makes it easy to learn new Cortex-A microcontroller products and improve software portability. This includes naming conventions for device-specific interrupts.
  - <b>Methods for system initialization</b> to be used by each MCU vendor. For example, the standardized SystemInit() function is essential for configuring the clock system of the device.
  - <b>Intrinsic functions</b> used to generate CPU instructions that are not supported by standard C functions.
- - A variable to determine the <b>system clock frequency</b> which simplifies the setup of the SysTick timer.
+ - A variable to determine the <b>system clock frequency</b> which simplifies the setup of the system timers.
 
 
 The following sections provide details about the CMSIS-Core (Cortex-A):
@@ -40,7 +40,7 @@ CMSIS supports a selected subset of <a href="http://www.arm.com/products/process
 
 The Cortex-A Reference Manuals are generic user guides for devices that implement the various ARM Cortex-A processors. 
 These manuals contain the programmers model and detailed information about the core peripherals.
-
+- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0433c/DDI0433C_cortex_a5_trm.pdf" target="_blank"><b>Cortex-A5</b></a> (ARMv7-A architecture)
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0464f/DDI0464F_cortex_a7_mpcore_r0p5_trm.pdf" target="_blank"><b>Cortex-A7</b></a> (ARMv7-A architecture)
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.100511_0401_10_en/arm_cortexa9_trm_100511_0401_10_en.pdf" target="_blank"><b>Cortex-A9</b></a> (ARMv7-A architecture)
  
@@ -50,10 +50,7 @@ These manuals contain the programmers model and detailed information about the c
 
 The \ref templates_pg supplied by ARM have been tested and verified with the following toolchains:
  - ARM: ARM Compiler V5.6
- - ARM: ARM Compiler V6.6
- - GNU: GNU Tools ARM Embedded 5.4 2016q3
- - IAR: IAR Embedded Workbench Kickstart Edition V6.10
-
+ 
 <hr>
 */
 
