@@ -39,10 +39,10 @@
  ******************************************************************************/
 
 /*  CMSIS CA definitions */
-#define __CA_CMSIS_VERSION_MAIN  (1U)                                      /*!< [31:16] CMSIS HAL main version   */
-#define __CA_CMSIS_VERSION_SUB   (0U)                                      /*!< [15:0]  CMSIS HAL sub version    */
+#define __CA_CMSIS_VERSION_MAIN  (1U)                                      /*!< \brief [31:16] CMSIS HAL main version   */
+#define __CA_CMSIS_VERSION_SUB   (0U)                                      /*!< \brief [15:0]  CMSIS HAL sub version    */
 #define __CA_CMSIS_VERSION       ((__CA_CMSIS_VERSION_MAIN << 16U) | \
-                                   __CA_CMSIS_VERSION_SUB          )       /*!< CMSIS HAL version number         */
+                                   __CA_CMSIS_VERSION_SUB          )       /*!< \brief CMSIS HAL version number         */
 
 #if defined ( __CC_ARM )
   #if defined __TARGET_FPU_VFP
@@ -157,17 +157,17 @@
 
 /* IO definitions (access restrictions to peripheral registers) */
 #ifdef __cplusplus
-  #define   __I     volatile             /*!< Defines 'read only' permissions */
+  #define   __I     volatile             /*!< \brief Defines 'read only' permissions */
 #else
-  #define   __I     volatile const       /*!< Defines 'read only' permissions */
+  #define   __I     volatile const       /*!< \brief Defines 'read only' permissions */
 #endif
-#define     __O     volatile             /*!< Defines 'write only' permissions */
-#define     __IO    volatile             /*!< Defines 'read / write' permissions */
+#define     __O     volatile             /*!< \brief Defines 'write only' permissions */
+#define     __IO    volatile             /*!< \brief Defines 'read / write' permissions */
 
 /* following defines should be used for structure members */
-#define     __IM     volatile const      /*!< Defines 'read only' structure member permissions */
-#define     __OM     volatile            /*!< Defines 'write only' structure member permissions */
-#define     __IOM    volatile            /*!< Defines 'read / write' structure member permissions */
+#define     __IM     volatile const      /*!< \brief Defines 'read only' structure member permissions */
+#define     __OM     volatile            /*!< \brief Defines 'write only' structure member permissions */
+#define     __IOM    volatile            /*!< \brief Defines 'read / write' structure member permissions */
 
 
  /*******************************************************************************
@@ -185,281 +185,281 @@ typedef union
 {
   struct
   {
-    uint32_t M:5;                        /*!< bit:  0.. 4  Mode field */
-    uint32_t T:1;                        /*!< bit:      5  Thumb execution state bit */
-    uint32_t F:1;                        /*!< bit:      6  FIQ mask bit */
-    uint32_t I:1;                        /*!< bit:      7  IRQ mask bit */
-    uint32_t A:1;                        /*!< bit:      8  Asynchronous abort mask bit */
-    uint32_t E:1;                        /*!< bit:      9  Endianness execution state bit */
-    uint32_t IT1:6;                      /*!< bit: 10..15  If-Then execution state bits 2-7 */
-    uint32_t GE:4;                       /*!< bit: 16..19  Greater than or Equal flags */
-    uint32_t _reserved0:4;               /*!< bit: 20..23  Reserved */
-    uint32_t J:1;                        /*!< bit:     24  Jazelle bit */
-    uint32_t IT0:2;                      /*!< bit: 25..26  If-Then execution state bits 0-1 */
-    uint32_t Q:1;                        /*!< bit:     27  Saturation condition flag */
-    uint32_t V:1;                        /*!< bit:     28  Overflow condition code flag */
-    uint32_t C:1;                        /*!< bit:     29  Carry condition code flag */
-    uint32_t Z:1;                        /*!< bit:     30  Zero condition code flag */
-    uint32_t N:1;                        /*!< bit:     31  Negative condition code flag */
-  } b;                                   /*!< Structure used for bit  access */
-  uint32_t w;                            /*!< Type      used for word access */
+    uint32_t M:5;                        /*!< \brief bit:  0.. 4  Mode field */
+    uint32_t T:1;                        /*!< \brief bit:      5  Thumb execution state bit */
+    uint32_t F:1;                        /*!< \brief bit:      6  FIQ mask bit */
+    uint32_t I:1;                        /*!< \brief bit:      7  IRQ mask bit */
+    uint32_t A:1;                        /*!< \brief bit:      8  Asynchronous abort mask bit */
+    uint32_t E:1;                        /*!< \brief bit:      9  Endianness execution state bit */
+    uint32_t IT1:6;                      /*!< \brief bit: 10..15  If-Then execution state bits 2-7 */
+    uint32_t GE:4;                       /*!< \brief bit: 16..19  Greater than or Equal flags */
+    uint32_t _reserved0:4;               /*!< \brief bit: 20..23  Reserved */
+    uint32_t J:1;                        /*!< \brief bit:     24  Jazelle bit */
+    uint32_t IT0:2;                      /*!< \brief bit: 25..26  If-Then execution state bits 0-1 */
+    uint32_t Q:1;                        /*!< \brief bit:     27  Saturation condition flag */
+    uint32_t V:1;                        /*!< \brief bit:     28  Overflow condition code flag */
+    uint32_t C:1;                        /*!< \brief bit:     29  Carry condition code flag */
+    uint32_t Z:1;                        /*!< \brief bit:     30  Zero condition code flag */
+    uint32_t N:1;                        /*!< \brief bit:     31  Negative condition code flag */
+  } b;                                   /*!< \brief Structure used for bit  access */
+  uint32_t w;                            /*!< \brief Type      used for word access */
 } CPSR_Type;
 
 /* CPSR Register Definitions */
-#define CPSR_N_Pos                       31U                                    /*!< CPSR: N Position */
-#define CPSR_N_Msk                       (1UL << CPSR_N_Pos)                    /*!< CPSR: N Mask */
+#define CPSR_N_Pos                       31U                                    /*!< \brief CPSR: N Position */
+#define CPSR_N_Msk                       (1UL << CPSR_N_Pos)                    /*!< \brief CPSR: N Mask */
 
-#define CPSR_Z_Pos                       30U                                    /*!< CPSR: Z Position */
-#define CPSR_Z_Msk                       (1UL << CPSR_Z_Pos)                    /*!< CPSR: Z Mask */
+#define CPSR_Z_Pos                       30U                                    /*!< \brief CPSR: Z Position */
+#define CPSR_Z_Msk                       (1UL << CPSR_Z_Pos)                    /*!< \brief CPSR: Z Mask */
 
-#define CPSR_C_Pos                       29U                                    /*!< CPSR: C Position */
-#define CPSR_C_Msk                       (1UL << CPSR_C_Pos)                    /*!< CPSR: C Mask */
+#define CPSR_C_Pos                       29U                                    /*!< \brief CPSR: C Position */
+#define CPSR_C_Msk                       (1UL << CPSR_C_Pos)                    /*!< \brief CPSR: C Mask */
 
-#define CPSR_V_Pos                       28U                                    /*!< CPSR: V Position */
-#define CPSR_V_Msk                       (1UL << CPSR_V_Pos)                    /*!< CPSR: V Mask */
+#define CPSR_V_Pos                       28U                                    /*!< \brief CPSR: V Position */
+#define CPSR_V_Msk                       (1UL << CPSR_V_Pos)                    /*!< \brief CPSR: V Mask */
 
-#define CPSR_Q_Pos                       27U                                    /*!< CPSR: Q Position */
-#define CPSR_Q_Msk                       (1UL << CPSR_Q_Pos)                    /*!< CPSR: Q Mask */
+#define CPSR_Q_Pos                       27U                                    /*!< \brief CPSR: Q Position */
+#define CPSR_Q_Msk                       (1UL << CPSR_Q_Pos)                    /*!< \brief CPSR: Q Mask */
 
-#define CPSR_IT0_Pos                     25U                                    /*!< CPSR: IT0 Position */
-#define CPSR_IT0_Msk                     (3UL << CPSR_IT0_Pos)                  /*!< CPSR: IT0 Mask */
+#define CPSR_IT0_Pos                     25U                                    /*!< \brief CPSR: IT0 Position */
+#define CPSR_IT0_Msk                     (3UL << CPSR_IT0_Pos)                  /*!< \brief CPSR: IT0 Mask */
 
-#define CPSR_J_Pos                       24U                                    /*!< CPSR: J Position */
-#define CPSR_J_Msk                       (1UL << CPSR_J_Pos)                    /*!< CPSR: J Mask */
+#define CPSR_J_Pos                       24U                                    /*!< \brief CPSR: J Position */
+#define CPSR_J_Msk                       (1UL << CPSR_J_Pos)                    /*!< \brief CPSR: J Mask */
 
-#define CPSR_GE_Pos                      16U                                    /*!< CPSR: GE Position */
-#define CPSR_GE_Msk                      (0xFUL << CPSR_GE_Pos)                 /*!< CPSR: GE Mask */
+#define CPSR_GE_Pos                      16U                                    /*!< \brief CPSR: GE Position */
+#define CPSR_GE_Msk                      (0xFUL << CPSR_GE_Pos)                 /*!< \brief CPSR: GE Mask */
 
-#define CPSR_IT1_Pos                     10U                                    /*!< CPSR: IT1 Position */
-#define CPSR_IT1_Msk                     (0x3FUL << CPSR_IT1_Pos)               /*!< CPSR: IT1 Mask */
+#define CPSR_IT1_Pos                     10U                                    /*!< \brief CPSR: IT1 Position */
+#define CPSR_IT1_Msk                     (0x3FUL << CPSR_IT1_Pos)               /*!< \brief CPSR: IT1 Mask */
 
-#define CPSR_E_Pos                       9U                                     /*!< CPSR: E Position */
-#define CPSR_E_Msk                       (1UL << CPSR_E_Pos)                    /*!< CPSR: E Mask */
+#define CPSR_E_Pos                       9U                                     /*!< \brief CPSR: E Position */
+#define CPSR_E_Msk                       (1UL << CPSR_E_Pos)                    /*!< \brief CPSR: E Mask */
 
-#define CPSR_A_Pos                       8U                                     /*!< CPSR: A Position */
-#define CPSR_A_Msk                       (1UL << CPSR_A_Pos)                    /*!< CPSR: A Mask */
+#define CPSR_A_Pos                       8U                                     /*!< \brief CPSR: A Position */
+#define CPSR_A_Msk                       (1UL << CPSR_A_Pos)                    /*!< \brief CPSR: A Mask */
 
-#define CPSR_I_Pos                       7U                                     /*!< CPSR: I Position */
-#define CPSR_I_Msk                       (1UL << CPSR_I_Pos)                    /*!< CPSR: I Mask */
+#define CPSR_I_Pos                       7U                                     /*!< \brief CPSR: I Position */
+#define CPSR_I_Msk                       (1UL << CPSR_I_Pos)                    /*!< \brief CPSR: I Mask */
 
-#define CPSR_F_Pos                       6U                                     /*!< CPSR: F Position */
-#define CPSR_F_Msk                       (1UL << CPSR_F_Pos)                    /*!< CPSR: F Mask */
+#define CPSR_F_Pos                       6U                                     /*!< \brief CPSR: F Position */
+#define CPSR_F_Msk                       (1UL << CPSR_F_Pos)                    /*!< \brief CPSR: F Mask */
 
-#define CPSR_T_Pos                       5U                                     /*!< CPSR: T Position */
-#define CPSR_T_Msk                       (1UL << CPSR_T_Pos)                    /*!< CPSR: T Mask */
+#define CPSR_T_Pos                       5U                                     /*!< \brief CPSR: T Position */
+#define CPSR_T_Msk                       (1UL << CPSR_T_Pos)                    /*!< \brief CPSR: T Mask */
 
-#define CPSR_M_Pos                       0U                                     /*!< CPSR: M Position */
-#define CPSR_M_Msk                       (0x1FUL << CPSR_M_Pos)                 /*!< CPSR: M Mask */
+#define CPSR_M_Pos                       0U                                     /*!< \brief CPSR: M Position */
+#define CPSR_M_Msk                       (0x1FUL << CPSR_M_Pos)                 /*!< \brief CPSR: M Mask */
 
 /* CP15 Register SCTLR */
 typedef union
 {
   struct
   {
-    uint32_t M:1;                        /*!< bit:     0  MMU enable */
-    uint32_t A:1;                        /*!< bit:     1  Alignment check enable */
-    uint32_t C:1;                        /*!< bit:     2  Cache enable */
-    uint32_t _reserved0:2;               /*!< bit: 3.. 4  Reserved */
-    uint32_t CP15BEN:1;                  /*!< bit:     5  CP15 barrier enable */
-    uint32_t _reserved1:1;               /*!< bit:     6  Reserved */
-    uint32_t B:1;                        /*!< bit:     7  Endianness model */
-    uint32_t _reserved2:2;               /*!< bit: 8.. 9  Reserved */
-    uint32_t SW:1;                       /*!< bit:    10  SWP and SWPB enable */
-    uint32_t Z:1;                        /*!< bit:    11  Branch prediction enable */
-    uint32_t I:1;                        /*!< bit:    12  Instruction cache enable */
-    uint32_t V:1;                        /*!< bit:    13  Vectors bit */
-    uint32_t RR:1;                       /*!< bit:    14  Round Robin select */
-    uint32_t _reserved3:2;               /*!< bit:15..16  Reserved */
-    uint32_t HA:1;                       /*!< bit:    17  Hardware Access flag enable */
-    uint32_t _reserved4:1;               /*!< bit:    18  Reserved */
-    uint32_t WXN:1;                      /*!< bit:    19  Write permission implies XN */
-    uint32_t UWXN:1;                     /*!< bit:    20  Unprivileged write permission implies PL1 XN */
-    uint32_t FI:1;                       /*!< bit:    21  Fast interrupts configuration enable */
-    uint32_t U:1;                        /*!< bit:    22  Alignment model */
-    uint32_t _reserved5:1;               /*!< bit:    23  Reserved */
-    uint32_t VE:1;                       /*!< bit:    24  Interrupt Vectors Enable */
-    uint32_t EE:1;                       /*!< bit:    25  Exception Endianness */
-    uint32_t _reserved6:1;               /*!< bit:    26  Reserved */
-    uint32_t NMFI:1;                     /*!< bit:    27  Non-maskable FIQ (NMFI) support */
-    uint32_t TRE:1;                      /*!< bit:    28  TEX remap enable. */
-    uint32_t AFE:1;                      /*!< bit:    29  Access flag enable */
-    uint32_t TE:1;                       /*!< bit:    30  Thumb Exception enable */
-    uint32_t _reserved7:1;               /*!< bit:    31  Reserved */
-  } b;                                   /*!< Structure used for bit  access */
-  uint32_t w;                            /*!< Type      used for word access */
+    uint32_t M:1;                        /*!< \brief bit:     0  MMU enable */
+    uint32_t A:1;                        /*!< \brief bit:     1  Alignment check enable */
+    uint32_t C:1;                        /*!< \brief bit:     2  Cache enable */
+    uint32_t _reserved0:2;               /*!< \brief bit: 3.. 4  Reserved */
+    uint32_t CP15BEN:1;                  /*!< \brief bit:     5  CP15 barrier enable */
+    uint32_t _reserved1:1;               /*!< \brief bit:     6  Reserved */
+    uint32_t B:1;                        /*!< \brief bit:     7  Endianness model */
+    uint32_t _reserved2:2;               /*!< \brief bit: 8.. 9  Reserved */
+    uint32_t SW:1;                       /*!< \brief bit:    10  SWP and SWPB enable */
+    uint32_t Z:1;                        /*!< \brief bit:    11  Branch prediction enable */
+    uint32_t I:1;                        /*!< \brief bit:    12  Instruction cache enable */
+    uint32_t V:1;                        /*!< \brief bit:    13  Vectors bit */
+    uint32_t RR:1;                       /*!< \brief bit:    14  Round Robin select */
+    uint32_t _reserved3:2;               /*!< \brief bit:15..16  Reserved */
+    uint32_t HA:1;                       /*!< \brief bit:    17  Hardware Access flag enable */
+    uint32_t _reserved4:1;               /*!< \brief bit:    18  Reserved */
+    uint32_t WXN:1;                      /*!< \brief bit:    19  Write permission implies XN */
+    uint32_t UWXN:1;                     /*!< \brief bit:    20  Unprivileged write permission implies PL1 XN */
+    uint32_t FI:1;                       /*!< \brief bit:    21  Fast interrupts configuration enable */
+    uint32_t U:1;                        /*!< \brief bit:    22  Alignment model */
+    uint32_t _reserved5:1;               /*!< \brief bit:    23  Reserved */
+    uint32_t VE:1;                       /*!< \brief bit:    24  Interrupt Vectors Enable */
+    uint32_t EE:1;                       /*!< \brief bit:    25  Exception Endianness */
+    uint32_t _reserved6:1;               /*!< \brief bit:    26  Reserved */
+    uint32_t NMFI:1;                     /*!< \brief bit:    27  Non-maskable FIQ (NMFI) support */
+    uint32_t TRE:1;                      /*!< \brief bit:    28  TEX remap enable. */
+    uint32_t AFE:1;                      /*!< \brief bit:    29  Access flag enable */
+    uint32_t TE:1;                       /*!< \brief bit:    30  Thumb Exception enable */
+    uint32_t _reserved7:1;               /*!< \brief bit:    31  Reserved */
+  } b;                                   /*!< \brief Structure used for bit  access */
+  uint32_t w;                            /*!< \brief Type      used for word access */
 } SCTLR_Type;
 
-#define SCTLR_TE_Pos                     30U                                    /*!< SCTLR: TE Position */
-#define SCTLR_TE_Msk                     (1UL << SCTLR_TE_Pos)                  /*!< SCTLR: TE Mask */
+#define SCTLR_TE_Pos                     30U                                    /*!< \brief SCTLR: TE Position */
+#define SCTLR_TE_Msk                     (1UL << SCTLR_TE_Pos)                  /*!< \brief SCTLR: TE Mask */
 
-#define SCTLR_AFE_Pos                    29U                                    /*!< SCTLR: AFE Position */
-#define SCTLR_AFE_Msk                    (1UL << SCTLR_AFE_Pos)                 /*!< SCTLR: AFE Mask */
+#define SCTLR_AFE_Pos                    29U                                    /*!< \brief SCTLR: AFE Position */
+#define SCTLR_AFE_Msk                    (1UL << SCTLR_AFE_Pos)                 /*!< \brief SCTLR: AFE Mask */
 
-#define SCTLR_TRE_Pos                    28U                                    /*!< SCTLR: TRE Position */
-#define SCTLR_TRE_Msk                    (1UL << SCTLR_TRE_Pos)                 /*!< SCTLR: TRE Mask */
+#define SCTLR_TRE_Pos                    28U                                    /*!< \brief SCTLR: TRE Position */
+#define SCTLR_TRE_Msk                    (1UL << SCTLR_TRE_Pos)                 /*!< \brief SCTLR: TRE Mask */
 
-#define SCTLR_NMFI_Pos                   27U                                    /*!< SCTLR: NMFI Position */
-#define SCTLR_NMFI_Msk                   (1UL << SCTLR_NMFI_Pos)                /*!< SCTLR: NMFI Mask */
+#define SCTLR_NMFI_Pos                   27U                                    /*!< \brief SCTLR: NMFI Position */
+#define SCTLR_NMFI_Msk                   (1UL << SCTLR_NMFI_Pos)                /*!< \brief SCTLR: NMFI Mask */
 
-#define SCTLR_EE_Pos                     25U                                    /*!< SCTLR: EE Position */
-#define SCTLR_EE_Msk                     (1UL << SCTLR_EE_Pos)                  /*!< SCTLR: EE Mask */
+#define SCTLR_EE_Pos                     25U                                    /*!< \brief SCTLR: EE Position */
+#define SCTLR_EE_Msk                     (1UL << SCTLR_EE_Pos)                  /*!< \brief SCTLR: EE Mask */
 
-#define SCTLR_VE_Pos                     24U                                    /*!< SCTLR: VE Position */
-#define SCTLR_VE_Msk                     (1UL << SCTLR_VE_Pos)                  /*!< SCTLR: VE Mask */
+#define SCTLR_VE_Pos                     24U                                    /*!< \brief SCTLR: VE Position */
+#define SCTLR_VE_Msk                     (1UL << SCTLR_VE_Pos)                  /*!< \brief SCTLR: VE Mask */
 
-#define SCTLR_U_Pos                      22U                                    /*!< SCTLR: U Position */
-#define SCTLR_U_Msk                      (1UL << SCTLR_U_Pos)                   /*!< SCTLR: U Mask */
+#define SCTLR_U_Pos                      22U                                    /*!< \brief SCTLR: U Position */
+#define SCTLR_U_Msk                      (1UL << SCTLR_U_Pos)                   /*!< \brief SCTLR: U Mask */
 
-#define SCTLR_FI_Pos                     21U                                    /*!< SCTLR: FI Position */
-#define SCTLR_FI_Msk                     (1UL << SCTLR_FI_Pos)                  /*!< SCTLR: FI Mask */
+#define SCTLR_FI_Pos                     21U                                    /*!< \brief SCTLR: FI Position */
+#define SCTLR_FI_Msk                     (1UL << SCTLR_FI_Pos)                  /*!< \brief SCTLR: FI Mask */
 
-#define SCTLR_UWXN_Pos                   20U                                    /*!< SCTLR: UWXN Position */
-#define SCTLR_UWXN_Msk                   (1UL << SCTLR_UWXN_Pos)                /*!< SCTLR: UWXN Mask */
+#define SCTLR_UWXN_Pos                   20U                                    /*!< \brief SCTLR: UWXN Position */
+#define SCTLR_UWXN_Msk                   (1UL << SCTLR_UWXN_Pos)                /*!< \brief SCTLR: UWXN Mask */
 
-#define SCTLR_WXN_Pos                    19U                                    /*!< SCTLR: WXN Position */
-#define SCTLR_WXN_Msk                    (1UL << SCTLR_WXN_Pos)                 /*!< SCTLR: WXN Mask */
+#define SCTLR_WXN_Pos                    19U                                    /*!< \brief SCTLR: WXN Position */
+#define SCTLR_WXN_Msk                    (1UL << SCTLR_WXN_Pos)                 /*!< \brief SCTLR: WXN Mask */
 
-#define SCTLR_HA_Pos                     17U                                    /*!< SCTLR: HA Position */
-#define SCTLR_HA_Msk                     (1UL << SCTLR_HA_Pos)                  /*!< SCTLR: HA Mask */
+#define SCTLR_HA_Pos                     17U                                    /*!< \brief SCTLR: HA Position */
+#define SCTLR_HA_Msk                     (1UL << SCTLR_HA_Pos)                  /*!< \brief SCTLR: HA Mask */
 
-#define SCTLR_RR_Pos                     14U                                    /*!< SCTLR: RR Position */
-#define SCTLR_RR_Msk                     (1UL << SCTLR_RR_Pos)                  /*!< SCTLR: RR Mask */
+#define SCTLR_RR_Pos                     14U                                    /*!< \brief SCTLR: RR Position */
+#define SCTLR_RR_Msk                     (1UL << SCTLR_RR_Pos)                  /*!< \brief SCTLR: RR Mask */
 
-#define SCTLR_V_Pos                      13U                                    /*!< SCTLR: V Position */
-#define SCTLR_V_Msk                      (1UL << SCTLR_V_Pos)                   /*!< SCTLR: V Mask */
+#define SCTLR_V_Pos                      13U                                    /*!< \brief SCTLR: V Position */
+#define SCTLR_V_Msk                      (1UL << SCTLR_V_Pos)                   /*!< \brief SCTLR: V Mask */
 
-#define SCTLR_I_Pos                      12U                                    /*!< SCTLR: I Position */
-#define SCTLR_I_Msk                      (1UL << SCTLR_I_Pos)                   /*!< SCTLR: I Mask */
+#define SCTLR_I_Pos                      12U                                    /*!< \brief SCTLR: I Position */
+#define SCTLR_I_Msk                      (1UL << SCTLR_I_Pos)                   /*!< \brief SCTLR: I Mask */
 
-#define SCTLR_Z_Pos                      11U                                    /*!< SCTLR: Z Position */
-#define SCTLR_Z_Msk                      (1UL << SCTLR_Z_Pos)                   /*!< SCTLR: Z Mask */
+#define SCTLR_Z_Pos                      11U                                    /*!< \brief SCTLR: Z Position */
+#define SCTLR_Z_Msk                      (1UL << SCTLR_Z_Pos)                   /*!< \brief SCTLR: Z Mask */
 
-#define SCTLR_SW_Pos                     10U                                    /*!< SCTLR: SW Position */
-#define SCTLR_SW_Msk                     (1UL << SCTLR_SW_Pos)                  /*!< SCTLR: SW Mask */
+#define SCTLR_SW_Pos                     10U                                    /*!< \brief SCTLR: SW Position */
+#define SCTLR_SW_Msk                     (1UL << SCTLR_SW_Pos)                  /*!< \brief SCTLR: SW Mask */
 
-#define SCTLR_B_Pos                      7U                                     /*!< SCTLR: B Position */
-#define SCTLR_B_Msk                      (1UL << SCTLR_B_Pos)                   /*!< SCTLR: B Mask */
+#define SCTLR_B_Pos                      7U                                     /*!< \brief SCTLR: B Position */
+#define SCTLR_B_Msk                      (1UL << SCTLR_B_Pos)                   /*!< \brief SCTLR: B Mask */
 
-#define SCTLR_CP15BEN_Pos                5U                                     /*!< SCTLR: CP15BEN Position */
-#define SCTLR_CP15BEN_Msk                (1UL << SCTLR_CP15BEN_Pos)             /*!< SCTLR: CP15BEN Mask */
+#define SCTLR_CP15BEN_Pos                5U                                     /*!< \brief SCTLR: CP15BEN Position */
+#define SCTLR_CP15BEN_Msk                (1UL << SCTLR_CP15BEN_Pos)             /*!< \brief SCTLR: CP15BEN Mask */
 
-#define SCTLR_C_Pos                      2U                                     /*!< SCTLR: C Position */
-#define SCTLR_C_Msk                      (1UL << SCTLR_C_Pos)                   /*!< SCTLR: C Mask */
+#define SCTLR_C_Pos                      2U                                     /*!< \brief SCTLR: C Position */
+#define SCTLR_C_Msk                      (1UL << SCTLR_C_Pos)                   /*!< \brief SCTLR: C Mask */
 
-#define SCTLR_A_Pos                      1U                                     /*!< SCTLR: A Position */
-#define SCTLR_A_Msk                      (1UL << SCTLR_A_Pos)                   /*!< SCTLR: A Mask */
+#define SCTLR_A_Pos                      1U                                     /*!< \brief SCTLR: A Position */
+#define SCTLR_A_Msk                      (1UL << SCTLR_A_Pos)                   /*!< \brief SCTLR: A Mask */
 
-#define SCTLR_M_Pos                      0U                                     /*!< SCTLR: M Position */
-#define SCTLR_M_Msk                      (1UL << SCTLR_M_Pos)                   /*!< SCTLR: M Mask */
+#define SCTLR_M_Pos                      0U                                     /*!< \brief SCTLR: M Position */
+#define SCTLR_M_Msk                      (1UL << SCTLR_M_Pos)                   /*!< \brief SCTLR: M Mask */
 
 /* CP15 Register CPACR */
 typedef union
 {
   struct
   {
-    uint32_t _reserved0:20;              /*!< bit: 0..19  Reserved */
-    uint32_t cp10:2;                     /*!< bit:20..21  Access rights for coprocessor 10 */
-    uint32_t cp11:2;                     /*!< bit:22..23  Access rights for coprocessor 11 */
-    uint32_t _reserved1:6;               /*!< bit:24..29  Reserved */
-    uint32_t D32DIS:1;                   /*!< bit:    30  Disable use of registers D16-D31 of the VFP register file */
-    uint32_t ASEDIS:1;                   /*!< bit:    31  Disable Advanced SIMD Functionality */
-  } b;                                   /*!< Structure used for bit  access */
-  uint32_t w;                            /*!< Type      used for word access */
+    uint32_t _reserved0:20;              /*!< \brief bit: 0..19  Reserved */
+    uint32_t cp10:2;                     /*!< \brief bit:20..21  Access rights for coprocessor 10 */
+    uint32_t cp11:2;                     /*!< \brief bit:22..23  Access rights for coprocessor 11 */
+    uint32_t _reserved1:6;               /*!< \brief bit:24..29  Reserved */
+    uint32_t D32DIS:1;                   /*!< \brief bit:    30  Disable use of registers D16-D31 of the VFP register file */
+    uint32_t ASEDIS:1;                   /*!< \brief bit:    31  Disable Advanced SIMD Functionality */
+  } b;                                   /*!< \brief Structure used for bit  access */
+  uint32_t w;                            /*!< \brief Type      used for word access */
 } CPACR_Type;
 
-#define CPACR_ASEDIS_Pos                 31U                                    /*!< CPACR: ASEDIS Position */
-#define CPACR_ASEDIS_Msk                 (1UL << CPACR_ASEDIS_Pos)              /*!< CPACR: ASEDIS Mask */
+#define CPACR_ASEDIS_Pos                 31U                                    /*!< \brief CPACR: ASEDIS Position */
+#define CPACR_ASEDIS_Msk                 (1UL << CPACR_ASEDIS_Pos)              /*!< \brief CPACR: ASEDIS Mask */
 
-#define CPACR_D32DIS_Pos                 30U                                    /*!< CPACR: D32DIS Position */
-#define CPACR_D32DIS_Msk                 (1UL << CPACR_D32DIS_Pos)              /*!< CPACR: D32DIS Mask */
+#define CPACR_D32DIS_Pos                 30U                                    /*!< \brief CPACR: D32DIS Position */
+#define CPACR_D32DIS_Msk                 (1UL << CPACR_D32DIS_Pos)              /*!< \brief CPACR: D32DIS Mask */
 
-#define CPACR_cp11_Pos                   22U                                    /*!< CPACR: cp11 Position */
-#define CPACR_cp11_Msk                   (3UL << CPACR_cp11_Pos)                /*!< CPACR: cp11 Mask */
+#define CPACR_cp11_Pos                   22U                                    /*!< \brief CPACR: cp11 Position */
+#define CPACR_cp11_Msk                   (3UL << CPACR_cp11_Pos)                /*!< \brief CPACR: cp11 Mask */
 
-#define CPACR_cp10_Pos                   20U                                    /*!< CPACR: cp10 Position */
-#define CPACR_cp10_Msk                   (3UL << CPACR_cp10_Pos)                /*!< CPACR: cp10 Mask */
+#define CPACR_cp10_Pos                   20U                                    /*!< \brief CPACR: cp10 Position */
+#define CPACR_cp10_Msk                   (3UL << CPACR_cp10_Pos)                /*!< \brief CPACR: cp10 Mask */
 
 /* CP15 Register DFSR */
 typedef union
 {
   struct
   {
-    uint32_t FS0:4;                      /*!< bit: 0.. 3  Fault Status bits bit 0-3 */
-    uint32_t Domain:4;                   /*!< bit: 4.. 7  Fault on which domain */
-    uint32_t _reserved0:2;               /*!< bit: 8.. 9  Reserved */
-    uint32_t FS1:1;                      /*!< bit:    10  Fault Status bits bit 4 */
-    uint32_t WnR:1;                      /*!< bit:    11  Write not Read bit */
-    uint32_t ExT:1;                      /*!< bit:    12  External abort type */
-    uint32_t CM:1;                       /*!< bit:    13  Cache maintenance fault */
-    uint32_t _reserved1:18;              /*!< bit:14..31  Reserved */
-  } b;                                   /*!< Structure used for bit  access */
-  uint32_t w;                            /*!< Type      used for word access */
+    uint32_t FS0:4;                      /*!< \brief bit: 0.. 3  Fault Status bits bit 0-3 */
+    uint32_t Domain:4;                   /*!< \brief bit: 4.. 7  Fault on which domain */
+    uint32_t _reserved0:2;               /*!< \brief bit: 8.. 9  Reserved */
+    uint32_t FS1:1;                      /*!< \brief bit:    10  Fault Status bits bit 4 */
+    uint32_t WnR:1;                      /*!< \brief bit:    11  Write not Read bit */
+    uint32_t ExT:1;                      /*!< \brief bit:    12  External abort type */
+    uint32_t CM:1;                       /*!< \brief bit:    13  Cache maintenance fault */
+    uint32_t _reserved1:18;              /*!< \brief bit:14..31  Reserved */
+  } b;                                   /*!< \brief Structure used for bit  access */
+  uint32_t w;                            /*!< \brief Type      used for word access */
 } DFSR_Type;
 
-#define DFSR_CM_Pos                      13U                                    /*!< DFSR: CM Position */
-#define DFSR_CM_Msk                      (1UL << DFSR_CM_Pos)                   /*!< DFSR: CM Mask */
+#define DFSR_CM_Pos                      13U                                    /*!< \brief DFSR: CM Position */
+#define DFSR_CM_Msk                      (1UL << DFSR_CM_Pos)                   /*!< \brief DFSR: CM Mask */
 
-#define DFSR_Ext_Pos                     12U                                    /*!< DFSR: Ext Position */
-#define DFSR_Ext_Msk                     (1UL << DFSR_Ext_Pos)                  /*!< DFSR: Ext Mask */
+#define DFSR_Ext_Pos                     12U                                    /*!< \brief DFSR: Ext Position */
+#define DFSR_Ext_Msk                     (1UL << DFSR_Ext_Pos)                  /*!< \brief DFSR: Ext Mask */
 
-#define DFSR_WnR_Pos                     11U                                    /*!< DFSR: WnR Position */
-#define DFSR_WnR_Msk                     (1UL << DFSR_WnR_Pos)                  /*!< DFSR: WnR Mask */
+#define DFSR_WnR_Pos                     11U                                    /*!< \brief DFSR: WnR Position */
+#define DFSR_WnR_Msk                     (1UL << DFSR_WnR_Pos)                  /*!< \brief DFSR: WnR Mask */
 
-#define DFSR_FS1_Pos                     10U                                    /*!< DFSR: FS1 Position */
-#define DFSR_FS1_Msk                     (1UL << DFSR_FS1_Pos)                  /*!< DFSR: FS1 Mask */
+#define DFSR_FS1_Pos                     10U                                    /*!< \brief DFSR: FS1 Position */
+#define DFSR_FS1_Msk                     (1UL << DFSR_FS1_Pos)                  /*!< \brief DFSR: FS1 Mask */
 
-#define DFSR_Domain_Pos                  4U                                     /*!< DFSR: Domain Position */
-#define DFSR_Domain_Msk                  (0xFUL << DFSR_Domain_Pos)             /*!< DFSR: Domain Mask */
+#define DFSR_Domain_Pos                  4U                                     /*!< \brief DFSR: Domain Position */
+#define DFSR_Domain_Msk                  (0xFUL << DFSR_Domain_Pos)             /*!< \brief DFSR: Domain Mask */
 
-#define DFSR_FS0_Pos                     0U                                     /*!< DFSR: FS0 Position */
-#define DFSR_FS0_Msk                     (0xFUL << DFSR_FS0_Pos)                /*!< DFSR: FS0 Mask */
+#define DFSR_FS0_Pos                     0U                                     /*!< \brief DFSR: FS0 Position */
+#define DFSR_FS0_Msk                     (0xFUL << DFSR_FS0_Pos)                /*!< \brief DFSR: FS0 Mask */
 
 /* CP15 Register IFSR */
 typedef union
 {
   struct
   {
-    uint32_t FS0:4;                      /*!< bit: 0.. 3  Fault Status bits bit 0-3 */
-    uint32_t _reserved0:6;               /*!< bit: 4.. 9  Reserved */
-    uint32_t FS1:1;                      /*!< bit:    10  Fault Status bits bit 4 */
-    uint32_t _reserved1:1;               /*!< bit:    11  Reserved */
-    uint32_t ExT:1;                      /*!< bit:    12  External abort type */
-    uint32_t _reserved2:19;              /*!< bit:13..31  Reserved */
-  } b;                                   /*!< Structure used for bit  access */
-  uint32_t w;                            /*!< Type      used for word access */
+    uint32_t FS0:4;                      /*!< \brief bit: 0.. 3  Fault Status bits bit 0-3 */
+    uint32_t _reserved0:6;               /*!< \brief bit: 4.. 9  Reserved */
+    uint32_t FS1:1;                      /*!< \brief bit:    10  Fault Status bits bit 4 */
+    uint32_t _reserved1:1;               /*!< \brief bit:    11  Reserved */
+    uint32_t ExT:1;                      /*!< \brief bit:    12  External abort type */
+    uint32_t _reserved2:19;              /*!< \brief bit:13..31  Reserved */
+  } b;                                   /*!< \brief Structure used for bit  access */
+  uint32_t w;                            /*!< \brief Type      used for word access */
 } IFSR_Type;
 
-#define IFSR_ExT_Pos                     12U                                    /*!< IFSR: ExT Position */
-#define IFSR_ExT_Msk                     (1UL << IFSR_ExT_Pos)                  /*!< IFSR: ExT Mask */
+#define IFSR_ExT_Pos                     12U                                    /*!< \brief IFSR: ExT Position */
+#define IFSR_ExT_Msk                     (1UL << IFSR_ExT_Pos)                  /*!< \brief IFSR: ExT Mask */
 
-#define IFSR_FS1_Pos                     10U                                    /*!< IFSR: FS1 Position */
-#define IFSR_FS1_Msk                     (1UL << IFSR_FS1_Pos)                  /*!< IFSR: FS1 Mask */
+#define IFSR_FS1_Pos                     10U                                    /*!< \brief IFSR: FS1 Position */
+#define IFSR_FS1_Msk                     (1UL << IFSR_FS1_Pos)                  /*!< \brief IFSR: FS1 Mask */
 
-#define IFSR_FS0_Pos                     0U                                     /*!< IFSR: FS0 Position */
-#define IFSR_FS0_Msk                     (0xFUL << IFSR_FS0_Pos)                /*!< IFSR: FS0 Mask */
+#define IFSR_FS0_Pos                     0U                                     /*!< \brief IFSR: FS0 Position */
+#define IFSR_FS0_Msk                     (0xFUL << IFSR_FS0_Pos)                /*!< \brief IFSR: FS0 Mask */
 
 /* CP15 Register ISR */
 typedef union
 {
   struct
   {
-    uint32_t _reserved0:6;               /*!< bit: 0.. 5  Reserved */
-    uint32_t F:1;                        /*!< bit:     6  FIQ pending bit */
-    uint32_t I:1;                        /*!< bit:     7  IRQ pending bit */
-    uint32_t A:1;                        /*!< bit:     8  External abort pending bit */
-    uint32_t _reserved1:23;              /*!< bit:14..31  Reserved */
-  } b;                                   /*!< Structure used for bit  access */
-  uint32_t w;                            /*!< Type      used for word access */
+    uint32_t _reserved0:6;               /*!< \brief bit: 0.. 5  Reserved */
+    uint32_t F:1;                        /*!< \brief bit:     6  FIQ pending bit */
+    uint32_t I:1;                        /*!< \brief bit:     7  IRQ pending bit */
+    uint32_t A:1;                        /*!< \brief bit:     8  External abort pending bit */
+    uint32_t _reserved1:23;              /*!< \brief bit:14..31  Reserved */
+  } b;                                   /*!< \brief Structure used for bit  access */
+  uint32_t w;                            /*!< \brief Type      used for word access */
 } ISR_Type;
 
-#define ISR_A_Pos                        13U                                    /*!< ISR: A Position */
-#define ISR_A_Msk                        (1UL << ISR_A_Pos)                     /*!< ISR: A Mask */
+#define ISR_A_Pos                        13U                                    /*!< \brief ISR: A Position */
+#define ISR_A_Msk                        (1UL << ISR_A_Pos)                     /*!< \brief ISR: A Mask */
 
-#define ISR_I_Pos                        12U                                    /*!< ISR: I Position */
-#define ISR_I_Msk                        (1UL << ISR_I_Pos)                     /*!< ISR: I Mask */
+#define ISR_I_Pos                        12U                                    /*!< \brief ISR: I Position */
+#define ISR_I_Msk                        (1UL << ISR_I_Pos)                     /*!< \brief ISR: I Mask */
 
-#define ISR_F_Pos                        11U                                    /*!< ISR: F Position */
-#define ISR_F_Msk                        (1UL << ISR_F_Pos)                     /*!< ISR: F Mask */
+#define ISR_F_Pos                        11U                                    /*!< \brief ISR: F Position */
+#define ISR_F_Msk                        (1UL << ISR_F_Pos)                     /*!< \brief ISR: F Mask */
 
 
 /**
@@ -468,64 +468,64 @@ typedef union
 #if (__L2C_PRESENT == 1U)
 typedef struct
 {
-  __I  uint32_t CACHE_ID;                   /*!< Offset: 0x0000   Cache ID Register               */
-  __I  uint32_t CACHE_TYPE;                 /*!< Offset: 0x0004   Cache Type Register             */
+  __I  uint32_t CACHE_ID;                   /*!< \brief Offset: 0x0000   Cache ID Register               */
+  __I  uint32_t CACHE_TYPE;                 /*!< \brief Offset: 0x0004   Cache Type Register             */
        uint32_t RESERVED0[0x3e];
-  __IO uint32_t CONTROL;                    /*!< Offset: 0x0100   Control Register                */
-  __IO uint32_t AUX_CNT;                    /*!< Offset: 0x0104   Auxiliary Control               */
+  __IO uint32_t CONTROL;                    /*!< \brief Offset: 0x0100   Control Register                */
+  __IO uint32_t AUX_CNT;                    /*!< \brief Offset: 0x0104   Auxiliary Control               */
        uint32_t RESERVED1[0x3e];
-  __IO uint32_t EVENT_CONTROL;              /*!< Offset: 0x0200   Event Counter Control           */
-  __IO uint32_t EVENT_COUNTER1_CONF;        /*!< Offset: 0x0204   Event Counter 1 Configuration   */
-  __IO uint32_t EVENT_COUNTER0_CONF;        /*!< Offset: 0x0208   Event Counter 1 Configuration   */
+  __IO uint32_t EVENT_CONTROL;              /*!< \brief Offset: 0x0200   Event Counter Control           */
+  __IO uint32_t EVENT_COUNTER1_CONF;        /*!< \brief Offset: 0x0204   Event Counter 1 Configuration   */
+  __IO uint32_t EVENT_COUNTER0_CONF;        /*!< \brief Offset: 0x0208   Event Counter 1 Configuration   */
        uint32_t RESERVED2[0x2];
-  __IO uint32_t INTERRUPT_MASK;             /*!< Offset: 0x0214   Interrupt Mask                  */
-  __I  uint32_t MASKED_INT_STATUS;          /*!< Offset: 0x0218   Masked Interrupt Status         */
-  __I  uint32_t RAW_INT_STATUS;             /*!< Offset: 0x021c   Raw Interrupt Status            */
-  __O  uint32_t INTERRUPT_CLEAR;            /*!< Offset: 0x0220   Interrupt Clear                 */
+  __IO uint32_t INTERRUPT_MASK;             /*!< \brief Offset: 0x0214   Interrupt Mask                  */
+  __I  uint32_t MASKED_INT_STATUS;          /*!< \brief Offset: 0x0218   Masked Interrupt Status         */
+  __I  uint32_t RAW_INT_STATUS;             /*!< \brief Offset: 0x021c   Raw Interrupt Status            */
+  __O  uint32_t INTERRUPT_CLEAR;            /*!< \brief Offset: 0x0220   Interrupt Clear                 */
        uint32_t RESERVED3[0x143];
-  __IO uint32_t CACHE_SYNC;                 /*!< Offset: 0x0730   Cache Sync                      */
+  __IO uint32_t CACHE_SYNC;                 /*!< \brief Offset: 0x0730   Cache Sync                      */
        uint32_t RESERVED4[0xf];
-  __IO uint32_t INV_LINE_PA;                /*!< Offset: 0x0770   Invalidate Line By PA           */
+  __IO uint32_t INV_LINE_PA;                /*!< \brief Offset: 0x0770   Invalidate Line By PA           */
        uint32_t RESERVED6[2];
-  __IO uint32_t INV_WAY;                    /*!< Offset: 0x077c   Invalidate by Way               */
+  __IO uint32_t INV_WAY;                    /*!< \brief Offset: 0x077c   Invalidate by Way               */
        uint32_t RESERVED5[0xc];
-  __IO uint32_t CLEAN_LINE_PA;              /*!< Offset: 0x07b0   Clean Line by PA                */
+  __IO uint32_t CLEAN_LINE_PA;              /*!< \brief Offset: 0x07b0   Clean Line by PA                */
        uint32_t RESERVED7[1];
-  __IO uint32_t CLEAN_LINE_INDEX_WAY;       /*!< Offset: 0x07b8   Clean Line by Index/Way         */
-  __IO uint32_t CLEAN_WAY;                  /*!< Offset: 0x07bc   Clean by Way                    */
+  __IO uint32_t CLEAN_LINE_INDEX_WAY;       /*!< \brief Offset: 0x07b8   Clean Line by Index/Way         */
+  __IO uint32_t CLEAN_WAY;                  /*!< \brief Offset: 0x07bc   Clean by Way                    */
        uint32_t RESERVED8[0xc];
-  __IO uint32_t CLEAN_INV_LINE_PA;          /*!< Offset: 0x07f0   Clean and Invalidate Line by PA  */
+  __IO uint32_t CLEAN_INV_LINE_PA;          /*!< \brief Offset: 0x07f0   Clean and Invalidate Line by PA  */
        uint32_t RESERVED9[1];
-  __IO uint32_t CLEAN_INV_LINE_INDEX_WAY;   /*!< Offset: 0x07f8   Clean and Invalidate Line by Index/Way  */
-  __IO uint32_t CLEAN_INV_WAY;              /*!< Offset: 0x07fc   Clean and Invalidate by Way     */
+  __IO uint32_t CLEAN_INV_LINE_INDEX_WAY;   /*!< \brief Offset: 0x07f8   Clean and Invalidate Line by Index/Way  */
+  __IO uint32_t CLEAN_INV_WAY;              /*!< \brief Offset: 0x07fc   Clean and Invalidate by Way     */
        uint32_t RESERVED10[0x40];
-  __IO uint32_t DATA_LOCK_0_WAY;            /*!< Offset: 0x0900   Data Lockdown 0 by Way          */
-  __IO uint32_t INST_LOCK_0_WAY;            /*!< Offset: 0x0904   Instruction Lockdown 0 by Way   */
-  __IO uint32_t DATA_LOCK_1_WAY;            /*!< Offset: 0x0908   Data Lockdown 1 by Way          */
-  __IO uint32_t INST_LOCK_1_WAY;            /*!< Offset: 0x090c   Instruction Lockdown 1 by Way   */
-  __IO uint32_t DATA_LOCK_2_WAY;            /*!< Offset: 0x0910   Data Lockdown 2 by Way          */
-  __IO uint32_t INST_LOCK_2_WAY;            /*!< Offset: 0x0914   Instruction Lockdown 2 by Way   */
-  __IO uint32_t DATA_LOCK_3_WAY;            /*!< Offset: 0x0918   Data Lockdown 3 by Way          */
-  __IO uint32_t INST_LOCK_3_WAY;            /*!< Offset: 0x091c   Instruction Lockdown 3 by Way   */
-  __IO uint32_t DATA_LOCK_4_WAY;            /*!< Offset: 0x0920   Data Lockdown 4 by Way          */
-  __IO uint32_t INST_LOCK_4_WAY;            /*!< Offset: 0x0924   Instruction Lockdown 4 by Way   */
-  __IO uint32_t DATA_LOCK_5_WAY;            /*!< Offset: 0x0928   Data Lockdown 5 by Way          */
-  __IO uint32_t INST_LOCK_5_WAY;            /*!< Offset: 0x092c   Instruction Lockdown 5 by Way   */
-  __IO uint32_t DATA_LOCK_6_WAY;            /*!< Offset: 0x0930   Data Lockdown 5 by Way          */
-  __IO uint32_t INST_LOCK_6_WAY;            /*!< Offset: 0x0934   Instruction Lockdown 5 by Way   */
-  __IO uint32_t DATA_LOCK_7_WAY;            /*!< Offset: 0x0938   Data Lockdown 6 by Way          */
-  __IO uint32_t INST_LOCK_7_WAY;            /*!< Offset: 0x093c   Instruction Lockdown 6 by Way   */
+  __IO uint32_t DATA_LOCK_0_WAY;            /*!< \brief Offset: 0x0900   Data Lockdown 0 by Way          */
+  __IO uint32_t INST_LOCK_0_WAY;            /*!< \brief Offset: 0x0904   Instruction Lockdown 0 by Way   */
+  __IO uint32_t DATA_LOCK_1_WAY;            /*!< \brief Offset: 0x0908   Data Lockdown 1 by Way          */
+  __IO uint32_t INST_LOCK_1_WAY;            /*!< \brief Offset: 0x090c   Instruction Lockdown 1 by Way   */
+  __IO uint32_t DATA_LOCK_2_WAY;            /*!< \brief Offset: 0x0910   Data Lockdown 2 by Way          */
+  __IO uint32_t INST_LOCK_2_WAY;            /*!< \brief Offset: 0x0914   Instruction Lockdown 2 by Way   */
+  __IO uint32_t DATA_LOCK_3_WAY;            /*!< \brief Offset: 0x0918   Data Lockdown 3 by Way          */
+  __IO uint32_t INST_LOCK_3_WAY;            /*!< \brief Offset: 0x091c   Instruction Lockdown 3 by Way   */
+  __IO uint32_t DATA_LOCK_4_WAY;            /*!< \brief Offset: 0x0920   Data Lockdown 4 by Way          */
+  __IO uint32_t INST_LOCK_4_WAY;            /*!< \brief Offset: 0x0924   Instruction Lockdown 4 by Way   */
+  __IO uint32_t DATA_LOCK_5_WAY;            /*!< \brief Offset: 0x0928   Data Lockdown 5 by Way          */
+  __IO uint32_t INST_LOCK_5_WAY;            /*!< \brief Offset: 0x092c   Instruction Lockdown 5 by Way   */
+  __IO uint32_t DATA_LOCK_6_WAY;            /*!< \brief Offset: 0x0930   Data Lockdown 5 by Way          */
+  __IO uint32_t INST_LOCK_6_WAY;            /*!< \brief Offset: 0x0934   Instruction Lockdown 5 by Way   */
+  __IO uint32_t DATA_LOCK_7_WAY;            /*!< \brief Offset: 0x0938   Data Lockdown 6 by Way          */
+  __IO uint32_t INST_LOCK_7_WAY;            /*!< \brief Offset: 0x093c   Instruction Lockdown 6 by Way   */
        uint32_t RESERVED11[0x4];
-  __IO uint32_t LOCK_LINE_EN;               /*!< Offset: 0x0950   Lockdown by Line Enable         */
-  __IO uint32_t UNLOCK_ALL_BY_WAY;          /*!< Offset: 0x0954   Unlock All Lines by Way         */
+  __IO uint32_t LOCK_LINE_EN;               /*!< \brief Offset: 0x0950   Lockdown by Line Enable         */
+  __IO uint32_t UNLOCK_ALL_BY_WAY;          /*!< \brief Offset: 0x0954   Unlock All Lines by Way         */
        uint32_t RESERVED12[0xaa];
-  __IO uint32_t ADDRESS_FILTER_START;       /*!< Offset: 0x0c00   Address Filtering Start         */
-  __IO uint32_t ADDRESS_FILTER_END;         /*!< Offset: 0x0c04   Address Filtering End           */
+  __IO uint32_t ADDRESS_FILTER_START;       /*!< \brief Offset: 0x0c00   Address Filtering Start         */
+  __IO uint32_t ADDRESS_FILTER_END;         /*!< \brief Offset: 0x0c04   Address Filtering End           */
        uint32_t RESERVED13[0xce];
-  __IO uint32_t DEBUG_CONTROL;              /*!< Offset: 0x0f40   Debug Control Register          */
+  __IO uint32_t DEBUG_CONTROL;              /*!< \brief Offset: 0x0f40   Debug Control Register          */
 } L2C_310_TypeDef;
 
-#define L2C_310           ((L2C_310_TypeDef *)L2C_310_BASE) /*!< L2C_310 Declaration */
+#define L2C_310           ((L2C_310_TypeDef *)L2C_310_BASE) /*!< \brief L2C_310 Declaration */
 #endif
 
 #if (__GIC_PRESENT == 1U)
@@ -557,16 +557,16 @@ typedef struct
 */
 typedef struct
 {
-  __IO uint32_t ICCICR;          // +0x000 - RW - CPU Interface Control Register
-  __IO uint32_t ICCPMR;          // +0x004 - RW - Interrupt Priority Mask Register
-  __IO uint32_t ICCBPR;          // +0x008 - RW - Binary Point Register
-  __I  uint32_t ICCIAR;          // +0x00C - RO - Interrupt Acknowledge Register
-  __IO uint32_t ICCEOIR;         // +0x010 - WO - End of Interrupt Register
-  __I  uint32_t ICCRPR;          // +0x014 - RO - Running Priority Register
-  __I  uint32_t ICCHPIR;         // +0x018 - RO - Highest Pending Interrupt Register
-  __IO uint32_t ICCABPR;         // +0x01C - RW - Aliased Binary Point Register
+  __IO uint32_t ICCICR;          //!< \brief  +0x000 - RW - CPU Interface Control Register
+  __IO uint32_t ICCPMR;          //!< \brief  +0x004 - RW - Interrupt Priority Mask Register
+  __IO uint32_t ICCBPR;          //!< \brief  +0x008 - RW - Binary Point Register
+  __I  uint32_t ICCIAR;          //!< \brief  +0x00C - RO - Interrupt Acknowledge Register
+  __IO uint32_t ICCEOIR;         //!< \brief  +0x010 - WO - End of Interrupt Register
+  __I  uint32_t ICCRPR;          //!< \brief  +0x014 - RO - Running Priority Register
+  __I  uint32_t ICCHPIR;         //!< \brief  +0x018 - RO - Highest Pending Interrupt Register
+  __IO uint32_t ICCABPR;         //!< \brief  +0x01C - RW - Aliased Binary Point Register
   uint32_t RESERVED[55];
-  __I  uint32_t ICCIIDR;         // +0x0FC - RO - CPU Interface Identification Register
+  __I  uint32_t ICCIIDR;         //!< \brief  +0x0FC - RO - CPU Interface Identification Register
 }  GICInterface_Type;
 
 #define GICInterface        ((GICInterface_Type        *)     GIC_INTERFACE_BASE )   /*!< GIC Interface configuration struct */
@@ -578,19 +578,19 @@ typedef struct
 */
 typedef struct
 {
-  __IO uint32_t LOAD;            // +0x000 - RW - Private Timer Load Register
-  __IO uint32_t COUNTER;         // +0x004 - RW - Private Timer Counter Register
-  __IO uint32_t CONTROL;         // +0x008 - RW - Private Timer Control Register
-  __IO uint32_t ISR;             // +0x00C - RO - Private Timer Interrupt Status Register
+  __IO uint32_t LOAD;            //!< \brief  +0x000 - RW - Private Timer Load Register
+  __IO uint32_t COUNTER;         //!< \brief  +0x004 - RW - Private Timer Counter Register
+  __IO uint32_t CONTROL;         //!< \brief  +0x008 - RW - Private Timer Control Register
+  __IO uint32_t ISR;             //!< \brief  +0x00C - RO - Private Timer Interrupt Status Register
   uint32_t RESERVED[8];
-  __IO uint32_t WLOAD;           // +0x020 - RW - Watchdog Load Register
-  __IO uint32_t WCOUNTER;        // +0x024 - RW - Watchdog Counter Register
-  __IO uint32_t WCONTROL;        // +0x028 - RW - Watchdog Control Register
-  __IO uint32_t WISR;            // +0x02C - RW - Watchdog Interrupt Status Register
-  __IO uint32_t WRESET;          // +0x030 - RW - Watchdog Reset Status Register
-  __I  uint32_t WDISABLE;        // +0x0FC - RO - Watchdog Disable Register
+  __IO uint32_t WLOAD;           //!< \brief  +0x020 - RW - Watchdog Load Register
+  __IO uint32_t WCOUNTER;        //!< \brief  +0x024 - RW - Watchdog Counter Register
+  __IO uint32_t WCONTROL;        //!< \brief  +0x028 - RW - Watchdog Control Register
+  __IO uint32_t WISR;            //!< \brief  +0x02C - RW - Watchdog Interrupt Status Register
+  __IO uint32_t WRESET;          //!< \brief  +0x030 - RW - Watchdog Reset Status Register
+  __I  uint32_t WDISABLE;        //!< \brief  +0x0FC - RO - Watchdog Disable Register
 } Timer_Type;
-#define PTIM ((Timer_Type *) TIMER_BASE )   /*!< Timer configuration struct */
+#define PTIM ((Timer_Type *) TIMER_BASE )   /*!< \brief Timer configuration struct */
 #endif
 #endif
 
