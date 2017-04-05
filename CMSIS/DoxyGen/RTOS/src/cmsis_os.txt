@@ -601,7 +601,7 @@ This RTX implementation gives therefore serious benefits to the users and the so
  - The unified feature set of the CMSIS-RTOS API simplifies sharing of software components and reduces learning efforts.
  - Middleware components that use the CMSIS-RTOS API are RTOS agnostic and CMSIS-RTOS compliant middleware is easier to
    adapt.
- - This RTX implementation is available under the BSD license and can be freely distributed with project templates.
+ - This RTX implementation is available under the Apache-2.0 license and can be freely distributed with project templates.
  
 The CMSIS-RTOS RTX manages the resources of the microcontroller system and implements the concept of parallel threads that
 run concurrently. There are many advantages of using the CMSIS-RTOS RTX kernel.
