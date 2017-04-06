@@ -439,7 +439,7 @@ Hardware Abstraction Layer.
 
 /* ##########################  GIC functions  ###################################### */
 /**
-\defgroup GIC_functions GIC functions
+\defgroup GIC_functions Generic Interrupt Controller Functions
 @{
 \struct  GICDistributor_Type
 \def GICDistributor
@@ -530,7 +530,7 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value);
 
 /* ##########################  MMU functions  ###################################### */
 /**
-\defgroup MMU_gr MMU Functions
+\defgroup MMU_gr Memory Management Unit Functions
 \brief Functions and defines that relate to the Memory Management Unit
 @{
 */
