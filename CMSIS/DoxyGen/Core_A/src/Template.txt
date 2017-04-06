@@ -31,6 +31,7 @@ and include CMSIS-Core processor file explained before. The following sample dev
 
 Family             | Device            | Description
 :------------------|:------------------|:---------------------------------
+ARM Cortex-A5      | ARMCA5            | Cortex-A5 based device
 ARM Cortex-A7      | ARMCA7            | Cortex-A7 based device
 ARM Cortex-A9      | ARMCA9            | Cortex-A9 based device
 
