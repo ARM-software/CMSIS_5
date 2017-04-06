@@ -113,7 +113,6 @@ typedef struct {                                                   // object dat
   uint8_t Idx;
 } MSGQUEUE_OBJ_t;
  
-osMemoryPoolId_t mpid_MemPool2;                                    // memory pool id
 osMessageQueueId_t mid_MsgQueue;                                   // message queue id
  
 int Init_MsgQueue (void) {
@@ -132,24 +131,25 @@ int Init_MsgQueue (void) {
 }
  
 void Thread_MsgQueue1 (void *argument) {
-  MSGQUEUE_OBJ_t pMsg = 0;
+  MSGQUEUE_OBJ_t msg;
 
   while (1) {
     ; // Insert thread code here...
-    pMsg->Buf[0] = 0x55;                                           // do some work...
-    pMsg->Idx    = 0;
-    osMessageQueuePut (mid_MsgQueue, &pMsg, NULL, NULL);
+    msg.Buf[0] = 0x55;                                           // do some work...
+    msg.Idx    = 0;
+    osMessageQueuePut (mid_MsgQueue, &msg, 0, NULL);
     osThreadYield ();                                              // suspend thread
   }
 }
  
 void Thread_MsgQueue2 (void *argument) {
 
-  MSGQUEUE_OBJ_t pMsg = 0;
+  MSGQUEUE_OBJ_t msg;
+  osStatus_t status;
 
   while (1) {
     ; // Insert thread code here...
-    status = osMessageQueueGet (mid_MsgQueue, &pMsg, NULL, NULL);  // wait for message
+    status = osMessageQueueGet (mid_MsgQueue, &msg, NULL, NULL);  // wait for message
     if (status == osOK) {
         ; // process data
     }
