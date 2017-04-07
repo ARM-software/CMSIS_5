@@ -536,13 +536,14 @@ void osRtxIdleThread (void) {
 \c __WFE() is not available in every Cortex-M implementation. Check device manuals for availability.
 
 
-\section kernelTimer RTX kernel Timer Tick
+\section kernelTimer RTX Kernel Timer Tick
 
 By default, RTX5 uses the Cortex-M
 <a href="http://www.keil.com/support/man/docs/gsac/GSAC_SYSTICKtimer.htm" target="_blank">SysTick</a> timer to generate
 periodic interrupts for the RTX kernel timer tick. CMSIS-RTOS provides \ref CMSIS_RTOS_TimerMgmt functions and several
 CMSIS-RTOS functions have a \a timeout parameter. This periodic RTX kernel timer tick interrupt is used to derive the
-required time interval. RTX5 also provides configuration options for an alternative timer and tick-less operation. 
+required time interval. RTX5 also provides configuration options for an \ref kernelTimer_alt "alternative timer" and
+\ref TickLess "tick-less operation". 
 
 To handle timeout and time delays for threads, the RTX5 thread management is controlled by the RTX kernel timer tick
 interrupt. The thread context contains all CPU registers (R0 - R12), the return address (LR), the program counter (PC), and
@@ -554,44 +555,106 @@ When a thread switch occurs:
  - the stack pointer is switched to the next running thread.
  - the thread context of this next running thread is restored and this thread starts to run.
 
-
-\section CMSIS_RTOS_TimeOutValue Timeout Value   
-
-Timeout values are an argument to several \b osXxx functions to allow time for resolving a request. A timeout value of \b 0
-means that the RTOS does not wait and the function returns instantly, even when no resource is available. A timeout value of
-\ref osWaitForever means that the RTOS waits infinitely until a resource becomes available.
  
-The timeout value specifies the number of timer ticks until the time delay elapses. The value is an upper bound and 
-depends on the actual time elapsed since the last timer tick. 
+\subsection kernelTimer_alt Using an Alternative Timer as RTX Kernel Timer
 
-Examples:
-  - timeout value \b 0 : the system does not wait, even when no resource is available the RTOS function returns instantly. 
-  - timeout value \b 1 : the system waits until the next timer tick occurs; depending on the previous timer tick, it may be a
-    very short wait time.
-  - timeout value \b 2 : actual wait time is between 1 and 2 timer ticks.
-  - timeout value \ref osWaitForever : system waits infinite until a resource becomes available. 
-  
-\image html TimerValues.png "Example of timeout using osDelay()"
+The following functions need to be adapted to enable the usage of an alternative kernel timer:
+ - \ref osRtxSysTimerSetup sets up the timer (including IRQ priority) and returns its IRQ number. Note that it is no longer
+   required to start the time in this function as a separate function is available (see next).
+ - \ref osRtxSysTimerEnable starts the timer.
+ - \ref osRtxSysTimerDisable stops the timer.
+ - \ref osRtxSysTimerAckIRQ acknowledges the IRQ.
+ - \ref osRtxSysTimerGetCount returns the current tick count as a 32-bit value. Note that this function can be called when
+   the timer is disabled. It should still provide valid tick count values.
+ - \ref osRtxSysTimerGetFreq returns the timer tick frequency. Note that this function can be called when the
+   timer is disabled. It should still provide valid tick count values.
 
+It is important to configure the IRQ priority (it should match PendSV). This can be achieved using the ExtTick_SetupIRQ()
+function from core_cm.h. Enabling/disabling the IRQ is handled by the system.
 
-\section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
+There is no need to provide an IRQ handler. Only make sure that existing SysTick_Handler is mapped to the tick IRQ.
 
-The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
-  - \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
-  - \ref osThreadFlagsSet
-  - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
-  - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
-  - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize,
-    \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace
-  - \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity, \ref osMessageQueueGetMsgSize,
-    \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace
+\b Code \b Example:
 
-Functions that cannot be called from an ISR are verifying the interrupt status and return the status code \b osErrorISR, in
-case they are called from an ISR context. In some implementations, this condition might be caught using the HARD_FAULT
-vector.
+The following code example shows an implementation for a Cortex-A core that does not come with a built-in SysTick timer.
 
+\code
+#include "RTE_Components.h"
+#include CMSIS_device_header
+#include "rtx_os.h"
+ 
+int32_t osRtxSysTimerSetup (void) {
+  uint32_t load;
+ 
+  /* Private Timer runs with the system frequency */
+  load = osRtxInfo.kernel.sys_freq / osRtxConfig.tick_freq;
+ 
+  PTIM_SetLoadValue (load - 1U);
+ 
+  /* Determine number of implemented priority bits */
+  GIC_SetPriority (PrivTimer_IRQn, 0xFFU);
+ 
+  /* Set lowest priority -1 */
+  GIC_SetPriority (PrivTimer_IRQn, GIC_GetPriority(PrivTimer_IRQn)-1);
+ 
+  /* Enable IRQ */
+  GIC_EnableIRQ (PrivTimer_IRQn);
+ 
+  return (PrivTimer_IRQn);
+}
+ 
+void osRtxSysTimerEnable (void) {
+  /* Start the Private Timer */
+  uint32_t ctrl;
+ 
+  ctrl  = PTIM_GetControl();
+  /* Set bits: IRQ enable, Auto Reload, Timer enable */
+  ctrl |= 7U;
+ 
+  PTIM_SetControl (ctrl);
+}
+ 
+void osRtxSysTimerDisable (void) {
+  /* Stop the Private Timer */
+  uint32_t ctrl;
+ 
+  ctrl  = PTIM_GetControl();
+  /* Clear bit: Timer enable */
+  ctrl &= ~1;
+ 
+  PTIM_SetControl (ctrl);
+}
+ 
+void osRtxSysTimerAckIRQ (void) {
+  PTIM_ClearEventFlag();
+}
+ 
+uint32_t osRtxSysTimerGetCount (void) {
+  uint32_t tick;
+  uint32_t val;
+ 
+  tick = (uint32_t)osRtxInfo.kernel.tick;
+  val  = PTIM_GetLoadValue();
+  val -= PTIM_GetCurrentValue();
+ 
+  /* if (PTIM_GetEventFlag() != 0) */
+  if ((PTIM->ISR & 1) != 0) {
+    val  = PTIM_GetLoadValue();
+    val -= PTIM_GetCurrentValue();
+    tick++;
+  }
+  val += tick * (PTIM_GetLoadValue() + 1U);
+ 
+  return val;
+}
+ 
+uint32_t osRtxSysTimerGetFreq (void) {
+  /* Private Timer runs with the system frequency */
+  return osRtxInfo.kernel.sys_freq;
+}
+\endcode
 
-\section TickLess Tick-less Low-Power Operation
+\subsection TickLess Tick-less Low-Power Operation
 
 RTX5 provides extension for tick-less operation which is useful for applications that use extensively low-power modes where
 the SysTick timer is also disabled. To provide a time-tick in such power-saving modes, a wake-up timer is used to
@@ -684,6 +747,42 @@ using macros for control block and memory sizes.
 If you require some of the RTX specific functions in your application code, \#include the header file \b %rtx_os.h:
 
 \include rtx_os.h
+
+
+\section CMSIS_RTOS_TimeOutValue Timeout Value   
+
+Timeout values are an argument to several \b osXxx functions to allow time for resolving a request. A timeout value of \b 0
+means that the RTOS does not wait and the function returns instantly, even when no resource is available. A timeout value of
+\ref osWaitForever means that the RTOS waits infinitely until a resource becomes available.
+ 
+The timeout value specifies the number of timer ticks until the time delay elapses. The value is an upper bound and 
+depends on the actual time elapsed since the last timer tick. 
+
+Examples:
+  - timeout value \b 0 : the system does not wait, even when no resource is available the RTOS function returns instantly. 
+  - timeout value \b 1 : the system waits until the next timer tick occurs; depending on the previous timer tick, it may be a
+    very short wait time.
+  - timeout value \b 2 : actual wait time is between 1 and 2 timer ticks.
+  - timeout value \ref osWaitForever : system waits infinite until a resource becomes available. 
+  
+\image html TimerValues.png "Example of timeout using osDelay()"
+
+
+\section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
+
+The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
+  - \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
+  - \ref osThreadFlagsSet
+  - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
+  - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
+  - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize,
+    \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace
+  - \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity, \ref osMessageQueueGetMsgSize,
+    \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace
+
+Functions that cannot be called from an ISR are verifying the interrupt status and return the status code \b osErrorISR, in
+case they are called from an ISR context. In some implementations, this condition might be caught using the HARD_FAULT
+vector.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
