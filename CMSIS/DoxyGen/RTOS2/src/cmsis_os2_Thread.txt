@@ -248,17 +248,15 @@ thread with a lower priority.
 /**
 \def osThreadJoinable
 \details
-
-See \ref osThreadJoin.
+A thread in this state can be joined using \ref osThreadJoin.
 */
 
 /**
 \def osThreadDetached
 \details
-
 A thread in this state cannot be joined using \ref osThreadJoin.
-
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osThreadId_t osThreadNew (osThreadFunc_t func, void *argument, const osThreadAttr_t *attr)
@@ -397,8 +395,9 @@ void Thread_1 (void const *arg)  {                         // Thread function
 /**
 \fn osStatus_t osThreadYield (void)
 \details
-The function \b osThreadYield passes control to the next thread that is in the \b READY state. If there is no other thread in
-state \b READY, then the current thread continues execution and no thread switching occurs.
+The function \b osThreadYield passes control to the next thread with the same priority that is in the \b READY state. 
+If there is no other thread with the same priority in state \b READY, then the current thread continues execution and
+no thread switch occurs.
 
 Possible \ref osStatus_t return values:
     - \em osOK: control has been passed to the next thread successfully.
@@ -406,6 +405,7 @@ Possible \ref osStatus_t return values:
     - \em osErrorISR: the function \b osThreadYield cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function <b>has no impact</b> when called when the kernel is locked, see \ref osKernelLock.
 
 <b>Code Example</b>
 \code
@@ -428,8 +428,8 @@ void Thread_1 (void const *arg)  {                         // Thread function
 \fn osStatus_t osThreadSuspend (osThreadId_t thread_id)
 \details
 The function \b osThreadSuspend suspends the execution of the thread identified by parameter \em thread_id. The thread is put
-into the \em BLOCKED state (\ref osThreadBlocked). The thread is not executed until restarted with the function
-\ref osThreadResume.
+into the \em BLOCKED state (\ref osThreadBlocked). Suspending the running thread will cause a context switch to another
+thread in \em READY state immediately. The suspended thread is not executed until explicitly resumed with the function \ref osThreadResume. 
 
 Threads that are already \em BLOCKED are removed from any wait list and become ready when they are resumed.
 Thus it is not recommended to suspend an already blocked thread.
@@ -441,13 +441,16 @@ Possible \ref osStatus_t return values:
     - \em osErrorISR: the function \b osThreadSuspend cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function <b>must not</b> be called to suspend the running thread when the kernel is locked, i.e. \ref osKernelLock.
+
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn osStatus_t osThreadResume (osThreadId_t thread_id)
 \details
-The function \b osThreadResume forces a thread identified by parameter \em thread_id which is is \em BLOCKED state to resume operation.
+The function \b osThreadResume puts the thread identified by parameter \em thread_id (which has to be in \em BLOCKED state)
+back to the \em READY state. If the resumed thread has a higher priority than the running thread a context switch occurs immediately.
 
 The thread becomes ready regardless of the reason why the thread was blocked. Thus it is not recommended to resume a thread not suspended
 by \ref osThreadSuspend.
@@ -468,6 +471,9 @@ Possible \ref osStatus_t return values:
     - \em osErrorISR: the function \b osThreadResume cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function <b>may be</b> called when kernel is locked (\ref osKernelLock). Under this circumstances
+	a potential context switch is delayed until the kernel gets unlocked, i.e. \ref osKernelUnlock or \ref osKernelRestoreLock.
+
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -614,10 +620,11 @@ The function \b osThreadEnumerate returns the number of enumerated threads or \t
 \details
 The following predefined bit masks can be assigned to set options for a thread object.
 
-Bit Mask                |   Description
-:-----------------------|:-----------------------------------------
-osThreadJoinable        | Thread is created in a join-able state.
-osThreadDetached        | Thread is created in a detached state (default).
+| Bit Mask                | Description                                             |
+| :---------------------- | :------------------------------------------------------ |
+| \ref osThreadDetached   | Create thread in a detached mode (default).             |
+| \ref osThreadJoinable   | Create thread in joinable mode, see \ref osThreadJoin.  |
+
 
 \var osThreadAttr_t::cb_mem
 \details
