@@ -175,8 +175,8 @@ typedef enum {
 #define osFlagsErrorISR       0xFFFFFFFAU ///< osErrorISR (-6).
  
 /// Thread attributes (attr_bits in \ref osThreadAttr_t).
-#define osThreadDetached      0x00000000U ///< Thread created in detached state (default)
-#define osThreadJoinable      0x00000001U ///< Thread created in joinable state
+#define osThreadDetached      0x00000000U ///< Thread created in detached mode (default)
+#define osThreadJoinable      0x00000001U ///< Thread created in joinable mode
  
 /// Mutex attributes (attr_bits in \ref osMutexAttr_t).
 #define osMutexRecursive      0x00000001U ///< Recursive mutex.
@@ -338,7 +338,7 @@ void osKernelResume (uint32_t sleep_ticks);
 uint64_t osKernelGetTickCount (void);
  
 /// Get the RTOS kernel tick frequency.
-/// \return frequency of the kernel tick.
+/// \return frequency of the kernel tick in hertz, i.e. kernel ticks per second.
 uint32_t osKernelGetTickFreq (void);
  
 /// Get the RTOS kernel system timer count.
@@ -346,7 +346,7 @@ uint32_t osKernelGetTickFreq (void);
 uint32_t osKernelGetSysTimerCount (void);
  
 /// Get the RTOS kernel system timer frequency.
-/// \return frequency of the system timer.
+/// \return frequency of the system timer in hertz, i.e. timer ticks per second.
 uint32_t osKernelGetSysTimerFreq (void);
  
  

@@ -3,7 +3,7 @@
 /** 
 \addtogroup CMSIS_RTOS_KernelCtrl Kernel Information and Control
 \ingroup CMSIS_RTOS
-\brief Provide version/system information and start the RTOS Kernel.
+\brief Provides version/system information and starts/controls the RTOS Kernel.
 \details 
 The kernel Information and Control function group allows to:
   - obtain information about the system and the underlying kernel.
@@ -177,8 +177,9 @@ The function \b osKernelStart starts the RTOS kernel and begins thread switching
 in case of success. Before it is successfully executed, only the functions \ref osKernelGetInfo, \ref osKernelGetState, and
 object creation functions (\b osXxxNew) may be called.
 
+At least one initial thread should be created prior osKernelStart, see \ref osThreadNew.
+
 Possible \ref osStatus_t return values:
-- \em osOK in case of success.
 - \em osError if an unspecific error occurred.
 - \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
  
@@ -211,6 +212,10 @@ The function \b osKernelLock allows to lock all task switches. It returns the pr
 it was locked, \token{0} if it was unlocked), or a negative number representing an error code otherwise (refer to
 \ref osStatus_t).
 
+Possible \ref osStatus_t return values:
+- \em osError if an unspecific error occurred.
+- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
@@ -228,6 +233,10 @@ it was locked, \token{0} if it was unlocked), or a negative number representing 
 The function \b osKernelUnlock resumes from \ref osKernelLock. It returns the previous value of the lock state (\token{1} if
 it was locked, \token{0} if it was unlocked), or a negative number representing an error code otherwise (refer to
 \ref osStatus_t).
+
+Possible \ref osStatus_t return values:
+- \em osError if an unspecific error occurred.
+- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -256,6 +265,10 @@ The argument \a lock specifies the lock state as obtained by \ref osKernelLock o
 The function returns the new value of the lock state (\token{1} if it was locked, \token{0} if it was unlocked), or a
 negative number representing an error code otherwise (refer to \ref osStatus_t).
 
+Possible \ref osStatus_t return values:
+- \em osError if an unspecific error occurred.
+- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
@@ -279,6 +292,10 @@ negative number representing an error code otherwise (refer to \ref osStatus_t).
 CMSIS-RTOS provides extension for tick-less operation which is useful for applications that use extensively low-power modes
 where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to derive
 timer intervals. The function \b osKernelSuspend suspends the RTX kernel scheduler and thus enables sleep modes.
+
+The return value can be used to determine the amount of system ticks until the next tick-based kernel event will occure, i.e.
+a delayed thread becomed ready again. It is recommended to set up the low power timer to generate a wake-up interrupt based
+on this return value.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
