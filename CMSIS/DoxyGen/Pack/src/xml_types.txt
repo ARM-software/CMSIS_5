@@ -1,10 +1,26 @@
 /**************************************************************************************************/
 /**
-\page coresight_setup  Simplifying debug setup using debug descriptions
+\page coresight_setup  Simplifying debug with CMSIS-Pack
+
+CMSIS-Pack offers two ways to simplify the debug setup:
+- A \subpage debug_description declares a set of standardized debug and trace methods are automatically executed by the
+  debugger. Implementation-specific steps can be described using an XML syntax. This concept is easy to implement for basic
+  chip configurations that mostly rely on a standard implementation of the CoreSight architecture. Most single-core devices
+  should be able to be specified completely with debug descriptions.  
+- For more complex topologies and multi-core devices, a \ref sdf_pg "System Description File" helps debuggers to connect to
+  the target and access all available cores via trace. An SDF file is more complex (although also specified in XML), but is
+  also more flexible with regards to the underlying debug architecture.
+*/
+
+
+/******************************************************************************************************************/
+/**
+\page debug_description Debug Description
 
 Debug descriptions allow silicon vendors to create tool-agnostic debug and trace configurations so that the development
 environment settings can be reduced to simple checkboxes for selecting for example either standard run/stop debugging or
 complex instruction tracing.
+
 
 \section das_concept Concept
 
@@ -34,13 +50,8 @@ A complete debug description for a device consists of the following elements:
  - \refelem{trace} with the child elements \refelem{trace_serialwire}, \refelem{trace_traceport}, and
    \refelem{trace_tracebuffer} sets up the trace connection.
 
-For more information, refer to the \subpage pdsc_SequenceNameEnum_pg.
-*/
-
-
-/******************************************************************************************************************/
-/**
-\page pdsc_SequenceNameEnum_pg Debug access sequences
+   
+\section pdsc_SequenceNameEnum_pg Debug access sequences
 
 Debug access sequences define the activities of development tools to connect to a device using the debug channel for
 debugging, tracing, or flash programming. Several debug access sequences are pre-defined and executed in specific context. 
@@ -638,6 +649,159 @@ Free hardware resources allocated by ResetCatchSet.
 \endcode
 
 
+\section nonstdExamples Examples of non-standard debug access sequences
+
+
+\subsection traceStart TraceStart
+
+\code
+<sequence name="TraceStart">
+  <block>
+    __var value      = 0;
+  
+    //Enable SWO
+    value = Read8(0x40004D2A);
+    Write8(0x40004D2A, (value | 0x20));         // Set the register
+    value = Read8(0x40004D2C);
+    Write8(0x40004D2C, (value &amp; (~0x20)));  // Clear the register
+  </block>
+</sequence>
+\endcode
+
+
+\subsection debugDeviceUnlock DebugDeviceUnlock
+
+\code
+<sequence name="DebugDeviceUnlock">
+  <block>
+    __var DAuthUserInput   = 0;
+    __var DAUTHSTATUS_Val  = 0;
+    __var DHCSR_Val        = 0;
+    __var SecureDebugEna   = 0;
+    __var SecureDebugAvail = 0;
+    __var DAuthVal         = 0;
+    __var Status           = 0;  // AP Status value
+ 
+    DAUTHSTATUS_Val  = Read32(0xE000EFB8);
+    DHCSR_Val        = Read32(0xE000EDF0);
+    DAP_Delay(100000);
+    SecureDebugAvail = (DAUTHSTATUS_Val &amp; 0x00000020) ? 1 : 0;  // SID: Secure Invasive Debug Implemented
+    Status = ReadAP(0x0);                                           // Read Status register
+  </block>
+ 
+  <control if="SecureDebugAvail" info="Configure Debug Authentication if Security Extensions available">
+    <block>
+      SecureDebugEna = ((DHCSR_Val &amp; 0x00100000) || ((DAUTHSTATUS_Val &amp; 0x00000030) == 0x00000030)) ? 1 : 0;
+    </block>
+ 
+    <control if="DAuthFixed">
+      <block>
+        // Debug Authentication as per Debug Configuration File
+        DAuthVal = DAuthConfig;
+      </block>
+    </control>
+    <control if="DAuthFixed == 0">
+      <block>
+        DAuthUserInput = Query(1, "Enable Secure Debug?", 3);
+      </block>
+      <control if="DAuthUserInput == 3">
+        <block>
+          // Enable Secure Debug
+          DAuthVal = 0xF;
+        </block>
+      </control>
+      <control if="DAuthUserInput != 3">
+        <block>
+          // Disable Secure Debug
+          DAuthVal = 0x3;
+        </block>
+      </control>
+    </control>
+ 
+    <control if="SecureDebugEna">
+      <block>
+        // Setup Secure Debug
+        Write32(0x50007000, DAuthVal);
+      </block>
+    </control>
+    <control if="SecureDebugEna == 0">
+      <control if="DAuthVal &amp; 0x4">
+        <block>
+          Query(0, "Cannot configure Debug Authentication, secure debug disabled! Please reboot FPGA!", 1);
+        </block>
+      </control>
+    </control>
+  </control>
+</sequence>
+\endcode
+
+
+\subsection hwReset User-defined hardware reset sequence
+
+\code
+<sequence name="HWReset">
+  <block>
+    __var protType = __protocol &amp; 0x0000FFFF;
+  </block>
+ 
+  <!-- JTAG variant-->
+  <control if="protType == 1">
+    <block atomic="true">
+      // HW Reset Pulse
+      DAP_SWJ_Pins(0x00, 0x80, 0);
+      DAP_Delay(50000);
+      DAP_SWJ_Pins(0x80, 0x80, 0);
+ 
+      // Wait at least 200us
+      DAP_Delay(200);
+ 
+      // Register to SSW (Start-up Software) within 2ms
+ 
+      // JTAG Reset
+      DAP_JTAG_Sequence(6, 1, 0x7F);
+      DAP_JTAG_Sequence(1, 0, 0x01);
+ 
+      // Request Debug and System Power-Up
+      WriteDP(0x4, 0x50000F00);
+ 
+      // Init DP SELECT register
+      WriteDP(0x8, 0x00000000);
+ 
+      // Init AP CSW register
+      WriteAP(0x00, 0x23000052);
+ 
+      // Set TAR register to DHCSR address
+      WriteAP(0x4, 0xE000EDF0);
+ 
+      // Enable core debug (finishes tool register process)
+      WriteAP(0xC, 0xA05F0001);
+ 
+      // SSW will configure a HW BP0 at User Code start
+    </block>
+  </control>
+  
+  ...
+  
+</sequence>
+\endcode
+
+
+\subsection sequenceExample Calling sequences in a control block
+
+\code
+...
+<control if="siliconRevision &gt;= 3" >
+  <block>                                                 
+    Sequence("SecurityUnlock");                           // Execute TAP Sequence according to SiliconRevision
+    Sequence("Set_JTAG_CTL");
+    Sequence("WaitIdleState");
+    Sequence("SetIDCODES");
+  </block>
+</control>
+...
+\endcode
+
+
 \section writing_sequences Writing debug access sequences
 
 To override a default sequence or to create a custom (default) sequence, you need to write \refelem{sequence} elements. The
@@ -762,6 +926,9 @@ debug access variables which are evaluated for the function call.
       
       <b>Return Value:</b><br>
       Always returns \token{0}.
+
+      <b>Code Example:</b><br>
+	  Refer to \ref sequenceExample
     </td>
   </tr>
   <tr>
@@ -779,6 +946,9 @@ debug access variables which are evaluated for the function call.
       
       <b>Return Value:</b><br>
       The 8-bit value as read from target memory.
+
+      <b>Code Example:</b><br>
+	  Refer to \ref traceStart
     </td>
   </tr>
   <tr>
@@ -850,6 +1020,9 @@ debug access variables which are evaluated for the function call.
       
       <b>Return Value:</b><br>
       The 32-bit value as read from the AP register.
+
+      <b>Code Example:</b><br>
+      Refer to \ref debugDeviceUnlock
     </td>
   </tr>
   <tr>
@@ -886,6 +1059,9 @@ debug access variables which are evaluated for the function call.
 
       <b>Return Value:</b><br>
       Always returns \token{0}.
+
+      <b>Code Example:</b><br>
+	  Refer to \ref traceStart
     </td>
   </tr>
   <tr>
@@ -961,6 +1137,9 @@ debug access variables which are evaluated for the function call.
 
       <b>Return Value:</b><br>
       Always returns \token{0}.
+
+      <b>Code Example:</b><br>
+      Refer to \ref hwReset
     </td>
   </tr>
   <tr>
@@ -992,6 +1171,9 @@ debug access variables which are evaluated for the function call.
 
       <b>Return Value:</b><br>
       Always returns \token{0}.
+
+      <b>Code Example:</b><br>
+      Refer to \ref debugDeviceUnlock
     </td>
   </tr>
   <tr>
