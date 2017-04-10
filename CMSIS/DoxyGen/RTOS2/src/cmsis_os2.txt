@@ -371,6 +371,36 @@ Your application's \c main() should implement at least the following in the give
 groupings in the NVIC are altered by the application after the above sequence it might be necessary to call
 \ref osKernelInitialize again.
 
+\section Scheduler 
+
+RTX5 implements a low-latency preemtive scheduler. Major parts of RTX5 are executed in handler mode such as
+  - \ref SysTick_Handler used for time-based scheduling.
+  - \ref SVC_Handler used for lock-based scheduling.
+  - \ref PendSV_Handler used for interrupt-based scheduling.
+
+In order to be low-latency with respect to ISR execution those system exceptions are configured to use the
+lowest priority groups available. The priorities are configured such that no preemption happens between them. Thus
+no interrupt critical sections (i.e. interrupt locks) are needed to protect the scheduler.
+
+\image html scheduling.png "Thread scheduling and interrupt execution"
+
+The scheduler combines priority and round-robin based context switches. The example depicted in the image above contains
+four threads (1, 2, 3, and 4). Threads 1 and 2 share the same priority, thread 3 has a higher one and thread 4 the highest
+(\ref osThreadAttr_t::priority). As long as threads 3 and 4 are blocked the scheduler switches between thread 1 and 2 on
+a time-slice basis (round-robin). The time-slice for round-robin scheduling can be configured, see Round-Robin Timeout in \ref systemConfig.
+
+Thread 2 unblocks thread 3 by an arbitrary RTOS-call (executed in SVC handler mode) at time index 2. The scheduler switches to
+thread 3 immidiately because thread 3 has the highest priority. Thread 4 is still blocked.
+
+At time index 4 an interrupt (ISR) occurs and preempts the SysTick_Handler. RTX does not add any latency to the interrupt
+service execution. The ISR routine uses an RTOS-call that unblocks thread 4. Instead of switching to thread 4 immediately
+the PendSV flag is set to defer the context switching. The PendSV_Handler is executed right after the SysTick_Handler returns
+and the defered context switch to thread 4 is carried out. As soon as highest priority thread 4 blocks again by using
+a blocking RTOS-call execution is switched back to thread 3 immidiately during time index 5.
+
+At time index 5 thread 3 uses a blocking RTOS-call as well. Thus the scheduler switches back to thread 2 for time index 6.
+At time index 7 the scheduler uses the round-robin mechanism to switch to thread 1 and so on.
+
 \section MemoryAllocation Memory Allocation 
 
 RTX5 objects (thread, mutex, semaphore, timer, message queue, thread and event flags, as well as memory pool) require
@@ -567,7 +597,7 @@ The following functions need to be adapted to enable the usage of an alternative
  - \ref osRtxSysTimerGetCount returns the current tick count as a 32-bit value. Note that this function can be called when
    the timer is disabled. It should still provide valid tick count values.
  - \ref osRtxSysTimerGetFreq returns the timer tick frequency. Note that this function can be called when the
-   timer is disabled. It should still provide valid tick count values.
+   timer is disabled. It should still provide valid tick frequency values.
 
 It is important to configure the IRQ priority (it should match PendSV). This can be achieved using the ExtTick_SetupIRQ()
 function from core_cm.h. Enabling/disabling the IRQ is handled by the system.
