@@ -14,28 +14,28 @@ Thread states
 -------------
 Threads can be in the following states:
 
- - \b RUNNING: The thread that is currently running is in the \em RUNNING state. Only one thread at a time can be in this
+ - \b RUNNING: The thread that is currently running is in the \ref ThreadStates "RUNNING" state. Only one thread at a time can be in this
    state.
- - \b READY: Threads which are ready to run are in the \em READY state. Once the \em RUNNING thread has terminated, or is
-   \em BLOCKED, the next \em READY thread with the highest priority becomes the \em RUNNING thread.
- - \b BLOCKED: Threads that are blocked either delayed, waiting for an event to occur or suspended are in the \em BLOCKED
+ - \b READY: Threads which are ready to run are in the \ref ThreadStates "READY" state. Once the \ref ThreadStates "RUNNING" thread has terminated, or is
+   \ref ThreadStates "BLOCKED", the next \ref ThreadStates "READY" thread with the highest priority becomes the \ref ThreadStates "RUNNING" thread.
+ - \b BLOCKED: Threads that are blocked either delayed, waiting for an event to occur or suspended are in the \ref ThreadStates "BLOCKED"
    state.
- - \b TERMINATED: When \ref osThreadTerminate is called, threads are \em TERMINATED with resources not yet released. 
- - \b INACTIVE: Threads that are not created or have been terminated with all resources released are in the \em INACTIVE state.
+ - \b TERMINATED: When \ref osThreadTerminate is called, threads are \ref ThreadStates "TERMINATED" with resources not yet released. 
+ - \b INACTIVE: Threads that are not created or have been terminated with all resources released are in the \ref ThreadStates "INACTIVE" state.
  
 \image html "ThreadStatus.png" "Thread State and State Transitions"
 
 
 A CMSIS-RTOS assumes that threads are scheduled as shown in the figure <b>Thread State and State Transitions</b>. The thread
 states change as follows:
- - A thread is created using the function \ref osThreadNew. This puts the thread into the \em READY or \em RUNNING state
+ - A thread is created using the function \ref osThreadNew. This puts the thread into the \ref ThreadStates "READY" or \ref ThreadStates "RUNNING" state
    (depending on the thread priority).
- - CMSIS-RTOS is pre-emptive. The active thread with the highest priority becomes the \em RUNNING thread provided it does not
+ - CMSIS-RTOS is pre-emptive. The active thread with the highest priority becomes the \ref ThreadStates "RUNNING" thread provided it does not
    wait for any event. The initial priority of a thread is defined with the \ref osThreadAttr_t but may be changed during
    execution using the function \ref osThreadSetPriority.
- - The \em RUNNING thread transfers into the \em BLOCKED state when it is delayed, waiting for an event or suspended.
+ - The \ref ThreadStates "RUNNING" thread transfers into the \ref ThreadStates "BLOCKED" state when it is delayed, waiting for an event or suspended.
  - Active threads can be terminated any time using the function \ref osThreadTerminate. Threads can terminate also by just
-   returning from the thread function. Threads that are terminated are in the \em INACTIVE state and typically do not consume
+   returning from the thread function. Threads that are terminated are in the \ref ThreadStates "INACTIVE" state and typically do not consume
    any dynamic memory resources. 
 
 \note 
@@ -292,9 +292,9 @@ A thread in this state cannot be joined using \ref osThreadJoin.
 \fn osThreadId_t osThreadNew (osThreadFunc_t func, void *argument, const osThreadAttr_t *attr)
 \details
 The function \b osThreadNew starts a thread function by adding it to the list of active threads and sets it to state
-\em READY. Arguments for the thread function are passed using the parameter pointer \a *argument. When the priority of the
-created thread function is higher than the current \em RUNNING thread, the created thread function starts instantly and
-becomes the new \em RUNNING thread. Thread attributes are defined with the parameter pointer \a attr. Attributes include
+\ref ThreadStates "READY". Arguments for the thread function are passed using the parameter pointer \a *argument. When the priority of the
+created thread function is higher than the current \ref ThreadStates "RUNNING" thread, the created thread function starts instantly and
+becomes the new \ref ThreadStates "RUNNING" thread. Thread attributes are defined with the parameter pointer \a attr. Attributes include
 settings for thread priority, stack size, or memory allocation.
 
 The function can be safely called before the RTOS is
@@ -425,10 +425,10 @@ void Thread_1 (void const *arg)  {                         // Thread function
 /**
 \fn osStatus_t osThreadYield (void)
 \details
-The function \b osThreadYield passes control to the next thread with the same priority that is in the \em READY state. 
-If there is no other thread with the same priority in state \em READY, then the current thread continues execution and
-no thread switch occurs. \b osThreadYield does not set the thread to state \em BLOCKED. Thus no thread with a lower
-priority will be scheduled even if threads in state \em READY are available.
+The function \b osThreadYield passes control to the next thread with the same priority that is in the \ref ThreadStates "READY" state. 
+If there is no other thread with the same priority in state \ref ThreadStates "READY", then the current thread continues execution and
+no thread switch occurs. \b osThreadYield does not set the thread to state \ref ThreadStates "BLOCKED". Thus no thread with a lower
+priority will be scheduled even if threads in state \ref ThreadStates "READY" are available.
 
 Possible \ref osStatus_t return values:
     - \em osOK: control has been passed to the next thread successfully.
@@ -459,10 +459,10 @@ void Thread_1 (void const *arg)  {                         // Thread function
 \fn osStatus_t osThreadSuspend (osThreadId_t thread_id)
 \details
 The function \b osThreadSuspend suspends the execution of the thread identified by parameter \em thread_id. The thread is put
-into the \em BLOCKED state (\ref osThreadBlocked). Suspending the running thread will cause a context switch to another
-thread in \em READY state immediately. The suspended thread is not executed until explicitly resumed with the function \ref osThreadResume. 
+into the \ref ThreadStates "BLOCKED" state (\ref osThreadBlocked). Suspending the running thread will cause a context switch to another
+thread in \ref ThreadStates "READY" state immediately. The suspended thread is not executed until explicitly resumed with the function \ref osThreadResume. 
 
-Threads that are already \em BLOCKED are removed from any wait list and become ready when they are resumed.
+Threads that are already \ref ThreadStates "BLOCKED" are removed from any wait list and become ready when they are resumed.
 Thus it is not recommended to suspend an already blocked thread.
 
 Possible \ref osStatus_t return values:
@@ -480,13 +480,13 @@ Possible \ref osStatus_t return values:
 /**
 \fn osStatus_t osThreadResume (osThreadId_t thread_id)
 \details
-The function \b osThreadResume puts the thread identified by parameter \em thread_id (which has to be in \em BLOCKED state)
-back to the \em READY state. If the resumed thread has a higher priority than the running thread a context switch occurs immediately.
+The function \b osThreadResume puts the thread identified by parameter \em thread_id (which has to be in \ref ThreadStates "BLOCKED" state)
+back to the \ref ThreadStates "READY" state. If the resumed thread has a higher priority than the running thread a context switch occurs immediately.
 
 The thread becomes ready regardless of the reason why the thread was blocked. Thus it is not recommended to resume a thread not suspended
 by \ref osThreadSuspend.
 
-Functions that will put a thread into \em BLOCKED state are:
+Functions that will put a thread into \ref ThreadStates "BLOCKED" state are:
 \ref osEventFlagsWait and \ref osThreadFlagsWait,
 \ref osDelay and \ref osDelayUntil,
 \ref osMutexAcquire and \ref osSemaphoreAcquire,
@@ -567,14 +567,14 @@ __NO_RETURN void worker (void *argument) {
 \fn osStatus_t osThreadTerminate (osThreadId_t thread_id)
 \details
 The function \b osThreadTerminate removes the thread specified by parameter \a thread_id from the list of active threads. If
-the thread is currently \em RUNNING, the thread terminates and the execution continues with the next \em READY thread. If no
+the thread is currently \ref ThreadStates "RUNNING", the thread terminates and the execution continues with the next \ref ThreadStates "READY" thread. If no
 such thread exists, the function will not terminate the running thread, but return \em osErrorResource.
 
 Possible \ref osStatus_t return values:
     - \em osOK: the specified thread has been removed from the active thread list successfully.
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
     - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state or no
-      other \em READY thread exists.
+      other \ref ThreadStates "READY" thread exists.
     - \em osErrorISR: the function \b osThreadTerminate cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
