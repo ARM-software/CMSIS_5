@@ -16,9 +16,12 @@ between the threads (they can acquire and release the mutex).
 
 A mutex is a special version of a \ref CMSIS_RTOS_SemaphoreMgmt "semaphore". Like the semaphore, it is a container for
 tokens. But instead of being able to have multiple tokens, a mutex can only carry one (representing the resource). Thus, a
-mutex token is binary and bounded. The advantage of a mutex is that it introduces thread ownership. When a thread acquires a
-mutex and becomes its owner, subsequent mutex acquires from that thread will succeed immediately without any latency (if
-\ref osMutexRecursive is specified). Thus, mutex acquires/releases can be nested.
+mutex token is binary and bounded, i.e. it is either \em available, or \em blocked by a owning thread. The advantage of a
+mutex is that it introduces thread ownership. When a thread acquires a mutex and becomes its owner, subsequent mutex acquires
+from that thread will succeed immediately without any latency (if \ref osMutexRecursive is specified). Thus, mutex acquires/releases
+can be nested.
+
+\image html "mutex_states.png" "CMSIS-RTOS Mutex States"
 
 \note Mutex management functions cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" (ISR), unlike a
 binary semaphore that can be released from an ISR.
@@ -86,7 +89,6 @@ const osMutexAttr_t Thread_Mutex_attr = {
   };
   
 void CreateMutex (void)  {
- 
   mutex_id = osMutexNew(&Thread_Mutex_attr);
   if (mutex_id != NULL)  {
     // Mutex object created
@@ -114,11 +116,11 @@ The blocking function \b osMutexAcquire waits until a mutex object specified by 
 no other thread has obtained the mutex, the function instantly returns and blocks the mutex object. 
 
 The parameter \a timeout specifies how long the system waits to acquire the mutex. While the system waits, the thread that is
-calling this function is put into the \b BLOCKED state. The parameter \ref CMSIS_RTOS_TimeOutValue "timeout" can have the
-following values:
- - when \a timeout is \token{0}, the function returns instantly.
- - when \a timeout is set to \b osWaitForever the function will wait for an infinite time until the mutex becomes available.
- - all other values specify a time in kernel ticks for a timeout.
+calling this function is put into the \ref ThreadStates "BLOCKED" state. The parameter \ref CMSIS_RTOS_TimeOutValue "timeout"
+can have the following values:
+ - when \a timeout is \token{0}, the function returns instantly (i.e. try semantics).
+ - when \a timeout is set to \b osWaitForever the function will wait for an infinite time until the mutex becomes available (i.e. wait semantics).
+ - all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).
 
 Possible \ref osStatus_t return values:
  - \em osOK: the mutex has been obtained.
@@ -154,7 +156,7 @@ osStatus_t  status;
 \fn osStatus_t osMutexRelease (osMutexId_t mutex_id)
 \details
 The function \b osMutexRelease releases a mutex specified by parameter \a mutex_id. Other threads that currently wait for
-this mutex will be put into the \b READY state.
+this mutex will be put into the \ref ThreadStates "READY" state.
 
 Possible \ref osStatus_t return values:
  - \em osOK: the mutex has been correctly released.
@@ -172,7 +174,7 @@ Possible \ref osStatus_t return values:
 osMutexId_t mutex_id;                                        // Mutex id populated by the function osMutexNew()
  
 void ReleaseMutex (osMutexId_t mutex_id)  {
-osStatus_t status;
+  osStatus_t status;
   
   if (mutex_id != NULL)  {
     status = osMutexRelease(mutex_id);
@@ -188,8 +190,8 @@ osStatus_t status;
 /**
 \fn osThreadId_t osMutexGetOwner (osMutexId_t mutex_id)
 \details
-The function \b osMutexGetOwner returns the thread object ID of the thread that acquired a mutex specified by parameter \a
-mutex_id. In case of an error or if the mutex is not owned by the thread, it returns \token{NULL}.
+The function \b osMutexGetOwner returns the thread ID of the thread that acquired a mutex specified by parameter \a
+mutex_id. In case of an error or if the mutex is not blocked by any thread, it returns \token{NULL}.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -217,7 +219,7 @@ Possible \ref osStatus_t return values:
 osMutexId_t mutex_id;                            // Mutex id populated by the function osMutexNew()
  
 void DeleteMutex (osMutexId_t mutex_id)  {
-osStatus_t status;
+  osStatus_t status;
   
   if (mutex_id != NULL)  {
     status = osMutexDelete(mutex_id);
