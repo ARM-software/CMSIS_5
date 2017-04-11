@@ -404,7 +404,7 @@ At time index 7 the scheduler uses the round-robin mechanism to switch to thread
 \section MemoryAllocation Memory Allocation 
 
 RTX5 objects (thread, mutex, semaphore, timer, message queue, thread and event flags, as well as memory pool) require
-dedicated RAM memory. Objects can be created using os<i>object</i>New() calls and deleted using os<i>object</i>Delete()
+dedicated RAM memory. Objects can be created using os<i>Object</i>New() calls and deleted using os<i>Object</i>Delete()
 calls. The related object memory needs to be available during the lifetime of the object.
 
 RTX5 offers three different memory allocation methods for objects:
@@ -425,7 +425,7 @@ configuration setting of RTX5.
 \image html MemAllocGlob.png "Global Memory Pool for all objects"
 
 When the memory pool does not provide sufficient memory, the creation of the object fails and the related
-os<i>object</i>New() function returns \token{NULL}.
+os<i>Object</i>New() function returns \token{NULL}.
 
 Enabled in \ref systemConfig.
 
@@ -449,7 +449,7 @@ file:
  - Enabled in \ref msgQueueConfig for message objects.
 
 When the memory pool does not provide sufficient memory, the creation of the object fails and the related
-os<i>object</i>New() function returns \token{NULL}.
+os<i>Object</i>New() function returns \token{NULL}.
 
 \subsection StaticObjectMemory Static Object Memory
 In contrast to the dynamic memory allocations, the static memory allocation requires compile-time allocation of object memory. 
@@ -783,7 +783,8 @@ If you require some of the RTX specific functions in your application code, \#in
 
 Timeout values are an argument to several \b osXxx functions to allow time for resolving a request. A timeout value of \b 0
 means that the RTOS does not wait and the function returns instantly, even when no resource is available. A timeout value of
-\ref osWaitForever means that the RTOS waits infinitely until a resource becomes available.
+\ref osWaitForever means that the RTOS waits infinitely until a resource becomes available. Or one forces the thread to resume
+using \ref osThreadResume which is discouraged.
  
 The timeout value specifies the number of timer ticks until the time delay elapses. The value is an upper bound and 
 depends on the actual time elapsed since the last timer tick. 
