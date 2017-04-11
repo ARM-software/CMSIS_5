@@ -5,8 +5,17 @@
 \ingroup CMSIS_RTOS
 \brief Manage thread-safe fixed-size blocks of dynamic memory.
 \details
-\b Memory \b pools are fixed-size blocks of memory that are thread-safe. They operate much faster than the dynamically
+\b Memory \b Pools are fixed-size blocks of memory that are thread-safe. They operate much faster than the dynamically
 allocated heap and do not suffer from fragmentation. Being thread-safe, they can be accessed from threads and ISRs alike.
+
+A Memory Pool can be seen as a linked list of available (unused) memory blocks of fixed and equal size. Allocating memory
+from a pool (using \ref osMemoryPoolAlloc) simply unchains a block from the list and hands over control to the user. Freeing
+memory to the pool (using \ref osMemoryPoolFree) simply rechains the block into the list.
+
+\image html "mempool.png" "CMSIS-RTOS Memory Pools"
+
+\note One must not write to freed block. It is up to the implementation to reuse the memory of unused blocks for internal
+control data, i.e. linked list pointers.
 
 \b Shared \b memory is one of the basic models to exchange information between threads. Using memory pools for exchanging
 data, you can share more complex objects between threads if compared to a \ref CMSIS_RTOS_Message. Memory pool management
@@ -39,11 +48,8 @@ The function \b osMemoryPoolNew creates and initializes a memory pool object and
 object identifier or \token{NULL} in case of an error. It can be safely called before the RTOS is
 started (call to \ref osKernelStart), but not before it is initialized (call to \ref osKernelInitialize).
 
-The parameter \a block_count specifies the maximum number of memory blocks in the pool.
-
-The parameter \a block_size sets memory size in bytes.
-
-The parameter \a attr specifies additional memory pool attributes. Default attributes will be used if set to \token{NULL}.
+The total amount of memory needed is at least <code>block_count * block_size</code>. Memory from the pool can only be
+allocated/freed in fixed portions of \c block_size.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -66,12 +72,18 @@ The blocking function \b osMemoryPoolAlloc allocates the memory pool parameter \
 of the allocated memory or \token{0} in case of an error.
 
 The parameter \a timeout specifies how long the system waits to allocate the memory. While the system waits, the thread
-that is calling this function is put into the \b BLOCKED state. The parameter \ref CMSIS_RTOS_TimeOutValue "timeout" can have
-the following values:
- - when \a timeout is \token{0}, the function returns instantly.
- - when \a timeout is set to \b osWaitForever the function will wait for an infinite time until the memory is allocated.
- - all other values specify a time in kernel ticks for a timeout.
+that is calling this function is put into the \ref ThreadStates "BLOCKED" state. The thread will become \ref ThreadStates "READY"
+as soon as at least one block of memory gets available.
 
+The parameter \ref CMSIS_RTOS_TimeOutValue "timeout" can have the following values:
+ - when \a timeout is \token{0}, the function returns instantly (i.e. try semantics).
+ - when \a timeout is set to \b osWaitForever the function will wait for an infinite time until the memory is allocated (i.e. wait semantics).
+ - all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).
+
+The result is the pointer to the memory block allocated, or NULL if no memory is available.
+
+\note It is in the responsibility of the user to respect the block size, i.e. not access memory beyond the blocks limit.
+ 
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
 */
@@ -81,12 +93,17 @@ the following values:
 \fn osStatus_t osMemoryPoolFree (osMemoryPoolId_t mp_id, void *block)
 \details
 The function \b osMemoryPoolFree frees the memory pool block specified by the parameter \a block in the memory pool object
-specified by the parameter \a mp_id.
+specified by the parameter \a mp_id. The memory block is put back to the list of available blocks.
+
+If another thread is waiting for memory to become available the thread is put to \ref ThreadStates "READY" state.
 
 Possible \ref osStatus_t return values:
  - \em osOK: the memory has been freed.
- - \em osErrorParameter: parameter \a mp_id is \token{NULL} or invalid.
+ - \em osErrorParameter: parameter \a mp_id is \token{NULL} or invalid, \a block points to invalid memory.
  - \em osErrorResource: the memory pool specified by parameter \a mp_id is in an invalid memory pool state.
+
+\note \b osMemoryPoolFree may perform certain checks on the \a block pointer given. But using \b osMemoryPoolFree 
+with a pointer other than one received from \ref osMemoryPoolAlloc has \b UNPREDICTED behaviour.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
