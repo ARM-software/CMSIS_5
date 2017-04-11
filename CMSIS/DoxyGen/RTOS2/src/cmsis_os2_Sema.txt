@@ -13,10 +13,12 @@ semaphores, access to a group of identical peripherals can be managed (for examp
 \image html "Semaphore.png" "CMSIS-RTOS Semaphore"
 
 A semaphore object should be initialized to the maximum number of available tokens. This number of available resources is
-specified as parameter of the \ref osSemaphoreNew function. Each time a semaphore token is obtained with
-\ref osSemaphoreAcquire, the semaphore count is decremented. When the semaphore count is 0, no semaphore token can be
-obtained. The thread/ISR that tries to obtain the semaphore token needs to wait until the next token is free. Semaphores are
-released with \ref osSemaphoreRelease incrementing the semaphore count.
+specified as parameter of the \ref osSemaphoreNew function. Each time a semaphore token is obtained with \ref osSemaphoreAcquire
+(in \em available state), the semaphore count is decremented. When the semaphore count is 0 (i.e. \em depleted state), no
+more semaphore tokens can be obtained. The thread/ISR that tries to obtain the semaphore token needs to wait until the next
+token is free. Semaphores are released with \ref osSemaphoreRelease incrementing the semaphore count.
+
+\image html "semaphore_states.png" "CMSIS-RTOS Semaphore States"
 
 \note The functions \ref osSemaphoreAcquire, \ref osSemaphoreGetCount, and \ref osSemaphoreRelease can be called from
 \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -118,7 +120,7 @@ void Thread_Semaphore (void *argument)
   while (1) {
     ; // Insert thread code here...
  
-    val = osSemaphoreAcquire (sid_Thread_Semaphore, 10);   // wait 10 mSec
+    val = osSemaphoreAcquire (sid_Thread_Semaphore, 10);   // wait for max. 10 ticks for semaphore token to get available
     switch (val) {
     case osOK:
       ; // Use protected code here...
@@ -156,12 +158,12 @@ The blocking function \b osSemaphoreAcquire waits until a token of the semaphore
 \a semaphore_id becomes available. If a token is available, the function instantly returns and decrements the token count. 
 
 The parameter \a timeout specifies how long the system waits to acquire the token. While the system waits, the thread/ISR
-that is calling this function is put into the \b BLOCKED state. The parameter \ref CMSIS_RTOS_TimeOutValue "timeout" can have
-the following values:
- - when \a timeout is \token{0}, the function returns instantly.
+that is calling this function is put into the \ref ThreadStates "BLOCKED" state. The parameter \ref CMSIS_RTOS_TimeOutValue
+"timeout" can have the following values:
+ - when \a timeout is \token{0}, the function returns instantly (i.e. try semantics).
  - when \a timeout is set to \b osWaitForever the function will wait for an infinite time until the semaphore becomes
-   available.
- - all other values specify a time in kernel ticks for a timeout.
+   available (i.e. wait semantics).
+ - all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).
 
 Possible \ref osStatus_t return values:
  - \em osOK: the token has been obtained.
@@ -182,7 +184,7 @@ Refer to \ref osSemaphoreNew.
 \fn osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id)
 \details
 The function \b osSemaphoreRelease releases a token of the semaphore object specified by parameter \a semaphore_id. Other
-threads/ISRs that currently wait for a token of this semaphore object will be put into the \b READY state.
+threads that currently wait for a token of this semaphore object will be put into the \ref ThreadStates "READY" state.
 
 Possible \ref osStatus_t return values:
  - \em osOK: the token has been correctly released and the count increased.
@@ -200,8 +202,8 @@ Refer to \ref osSemaphoreNew.
 /**
 \fn uint32_t osSemaphoreGetCount (osSemaphoreId_t semaphore_id)
 \details
-The function \b osSemaphoreGetCount returns the count of available semaphores of the semaphore object specified by parameter
-\a semaphore_id. In case of an error, it returns \token{0}.
+The function \b osSemaphoreGetCount returns the number of available tokens of the semaphore object specified by parameter
+\a semaphore_id. In case of an error it returns \token{0}.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
