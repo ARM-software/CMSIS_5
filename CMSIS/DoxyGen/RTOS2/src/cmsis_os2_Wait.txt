@@ -16,8 +16,13 @@ The generic wait functions provide means for a time delay.
 /** 
 \fn osStatus_t osDelay (uint32_t ticks)
 \details
-The function \b osDelay waits for a time period specified in kernel \a ticks. For a value of \token{1}, the system waits
-until the next timer tick occurs. That means that the actual time delay may be up to one timer tick less.
+The function \b osDelay waits for a time period specified in kernel \a ticks. For a value of \token{1} the system waits
+until the next timer tick occurs. The actual time delay may be up to one timer tick less than specified, i.e. calling 
+\c osDelay(1) right before the next system tick occurs the thread is rescheduled immediately.
+
+The delayed thread is put into the \ref ThreadStates "BLOCKED" state and a context switch occurs immediately. The thread
+is automatically put back to the \ref ThreadStates "READY" state after the given amount of ticks has elapsed. If the thread
+will have the highest priority in \ref ThreadStates "READY" state it will being scheduled immediately.
 
 Possible \ref osStatus_t return values:
  - \em osOK: the time delay is executed.
@@ -44,6 +49,10 @@ void Thread_1 (void *arg)  {                // Thread function
 \fn osStatus_t osDelayUntil (uint64_t ticks)
 \details
 The function \b osDelayUntil waits until an absolute time (specified in kernel \a ticks) is reached. 
+
+The delayed thread is put into the \ref ThreadStates "BLOCKED" state and a context switch occurs immediately. The thread
+is automatically put back to the \ref ThreadStates "READY" state when the given time is reached. If the thread will
+have the highest priority in \ref ThreadStates "READY" state it will being scheduled immediately.
 
 Possible \ref osStatus_t return values:
  - \em osOK: the time delay is executed.
