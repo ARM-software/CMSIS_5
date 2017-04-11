@@ -25,20 +25,30 @@ callback function.
 
 Working with Timers
 --------------------
-The following steps are required to use a timer:
+The following steps are required to use a software timer:
 -# Define the timers:
 \code
 osTimerId_t one_shot_id, periodic_id;
 \endcode
+-# Define callback functions:
+\code
+static void one_shot_Callback (void *argument) {
+    int32_t arg = (int32_t)argument; // cast back argument '0' 
+    // do something, i.e. set thread/event flags
+}
+static void periodic_Callback (void *argument) {
+    int32_t arg = (int32_t)argument; // cast back argument '5'
+    // do something, i.e. set thread/event flags
+}
+\endcode
 -# Instantiate and start the timers:
 \code
 // creates a one-shot timer:
-one_shot_id = osTimerNew((osTimerFunc_t)&one_shot_Callback, osTimerOnce, (void *)0);     // (void*)0 is passed as an argument
-                                                                                           // to the callback function
- 
+one_shot_id = osTimerNew(one_shot_Callback, osTimerOnce, (void *)0, NULL);     // (void*)0 is passed as an argument
+                                                                               // to the callback function
 // creates a periodic timer:
-periodic_id = osTimerNew((osTimerFunc_t)&periodic_Callback, osTimerPeriodic, (void *)5); // (void*)5 is passed as an argument
-                                                                                           // to the callback function
+periodic_id = osTimerNew(periodic_Callback, osTimerPeriodic, (void *)5, NULL); // (void*)5 is passed as an argument
+                                                                               // to the callback function
 osTimerStart(one_shot_id, 500);
 osTimerStart(periodic_id, 1500);
 \endcode
@@ -47,9 +57,17 @@ osTimerStart(periodic_id, 1500);
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\enum  osTimerType_t
+\enum osTimerType_t
 \details
 The \ref osTimerType_t specifies the a repeating (periodic) or one-shot timer for the function \ref osTimerNew.
+
+\var osTimerType_t::osTimerOnce
+\details
+The timer is not automatically restarted once it has elapsed.
+
+\var osTimerType_t::osTimerPeriodic
+\details 
+The timer repeats automatically and triggers the callback continuously.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -63,6 +81,12 @@ Instances of this type hold a reference to a timer object.
 /**
 \typedef void (*osTimerFunc_t) (void *argument)
 \details
+The timer callback function is called everytime the timer elapses.
+
+The callback might be executed either in a dedicated timer thread or in interrupt context. Thus it is recommended to only
+use ISR callable functions from the timer callback.
+
+\param[in] argument The argument provided to \ref osTimerNew.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -79,13 +103,6 @@ The function \b osTimerNew creates an one-shot or periodic timer and associates 
 The timer is in stopped state until it is started with \ref osTimerStart. The function can be safely called before the RTOS
 is started (call to \ref osKernelStart), but not before it is initialized (call to \ref osKernelInitialize).
 
-The parameter \a func specifies the start address of the timer callback function.
-
-The parameter \a type specifies the type of the timer (refer to \ref osTimerType_t).
-
-The parameter \a attr sets the timer attributes (refer to \ref osTimerAttr_t). Default attributes will be used if set to
-\token{NULL}.
-
 The function \b osTimerNew returns the pointer to the timer object identifier or \token{NULL} in case of an error.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -94,8 +111,8 @@ The function \b osTimerNew returns the pointer to the timer object identifier or
 \code
 #include "cmsis_os2.h"
  
-void Timer1_Callback  (void const *arg);                   // prototypes for timer callback function
-void Timer2_Callback  (void const *arg);                   
+void Timer1_Callback (void *arg);                          // prototypes for timer callback function
+void Timer2_Callback (void *arg);                   
  
 uint32_t  exec1;                                           // argument for the timer call back function
 uint32_t  exec2;                                           // argument for the timer call back function
@@ -106,14 +123,14 @@ void TimerCreate_example (void)  {
  
   // Create one-shoot timer
   exec1 = 1;
-  id1 = osTimerNew ((osTimerFunc_t)&Timer1_Callback, osTimerOnce, &exec1, NULL);
+  id1 = osTimerNew (Timer1_Callback, osTimerOnce, &exec1, NULL);
   if (id1 != NULL)  {
     // One-shoot timer created
   }
  
   // Create periodic timer
   exec2 = 2;
-  id2 = osTimerNew ((osTimerFunc_t)&Timer2_Callback, osTimerPeriodic, &exec2, NULL);
+  id2 = osTimerNew (Timer2_Callback, osTimerPeriodic, &exec2, NULL);
   if (id2 != NULL)  {
     // Periodic timer created
   }
@@ -152,7 +169,7 @@ Possible \ref osStatus_t return values:
 \code
 #include "cmsis_os2.h"
   
-void Timer_Callback  (void const *arg)  {                   // timer callback function
+void Timer_Callback (void *arg)  {                          // timer callback function
                                                             // arg contains &exec
                                                             // called every second after osTimerStart
 } 
@@ -166,7 +183,7 @@ void TimerStart_example (void)  {
  
   // Create periodic timer
   exec = 1;
-  id = osTimerNew ((osTimerFunc_t)&Timer_Callback, osTimerPeriodic, &exec, NULL);
+  id = osTimerNew (Timer_Callback, osTimerPeriodic, &exec, NULL);
   if (id)  {
     timerDelay = 1000;
     status = osTimerStart (id, timerDelay);                 // start timer
@@ -197,21 +214,21 @@ Possible \ref osStatus_t return values:
 \code
 #include "cmsis_os2.h"
  
-void Timer_Callback  (void const *arg);                    // prototype for timer callback function
+void Timer_Callback (void *arg);                           // prototype for timer callback function
  
 uint32_t  exec;                                            // argument for the timer call back function
 
-void TimerStop_example (void)  {
+void TimerStop_example (void) {
   osTimerId_t id;                                          // timer id
   osStatus_t  status;                                      // function return status
  
   // Create periodic timer
   exec = 1;
-  id = osTimerNew ((osTimerFunc_t)&Timer_Callback, osTimerPeriodic, &exec, NULL);
+  id = osTimerNew (Timer_Callback, osTimerPeriodic, &exec, NULL);
   osTimerStart (id, 1000);                                 // start timer
   :
   status = osTimerStop (id);                               // stop timer
-  if (status != osOK)  {
+  if (status != osOK) {
     // Timer could not be stopped
   } 
   ;
@@ -225,7 +242,7 @@ void TimerStop_example (void)  {
 /** 
 \fn uint32_t osTimerIsRunning (osTimerId_t timer_id)
 \details
-the function \b osTimerIsRunning checks whether a timer specified by parameter \a timer_id is running. It returns \token{1}
+The function \b osTimerIsRunning checks whether a timer specified by parameter \a timer_id is running. It returns \token{1}
 if the timer is running and \token{0} if the timer is stopped or an error occurred.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -249,21 +266,21 @@ Possible \ref osStatus_t return values:
 \code
 #include "cmsis_os2.h"
 
-void Timer_Callback  (void const *arg);                    // prototype for timer callback function
+void Timer_Callback (void *arg);                           // prototype for timer callback function
  
 uint32_t  exec;                                            // argument for the timer call back function
 
-void TimerDelete_example (void)  {
+void TimerDelete_example (void) {
   osTimerId_t id;                                          // timer id
   osStatus_t  status;                                      // function return status  
  
   // Create periodic timer
   exec = 1;
-  id = osTimerNew ((osTimerFunc_t)&Timer_Callback, osTimerPeriodic, &exec, NULL);
+  id = osTimerNew (Timer_Callback, osTimerPeriodic, &exec, NULL);
   osTimerStart (id, 1000UL);                               // start timer
   ;
   status = osTimerDelete (id);                             // stop and delete timer
-  if (status != osOK)  {
+  if (status != osOK) {
     // Timer could not be deleted
   } 
   ;

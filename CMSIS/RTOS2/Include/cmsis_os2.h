@@ -149,7 +149,7 @@ typedef enum {
 /// Entry point of a thread.
 typedef void (*osThreadFunc_t) (void *argument);
  
-/// Entry point of a timer call back function.
+/// Timer callback function.
 typedef void (*osTimerFunc_t) (void *argument);
  
 /// Timer type.
@@ -478,9 +478,9 @@ osStatus_t osDelayUntil (uint64_t ticks);
 //  ==== Timer Management Functions ====
  
 /// Create and Initialize a timer.
-/// \param[in]     func          start address of a timer call back function.
-/// \param[in]     type          osTimerOnce for one-shot or osTimerPeriodic for periodic behavior.
-/// \param[in]     argument      argument to the timer call back function.
+/// \param[in]     func          function pointer to callback function.
+/// \param[in]     type          \ref osTimerOnce for one-shot or \ref osTimerPeriodic for periodic behavior.
+/// \param[in]     argument      argument to the timer callback function.
 /// \param[in]     attr          timer attributes; NULL: default values.
 /// \return timer ID for reference by other functions or NULL in case of error.
 osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr);
