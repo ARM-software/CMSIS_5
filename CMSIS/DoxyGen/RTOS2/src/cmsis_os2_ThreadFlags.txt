@@ -21,6 +21,11 @@ The function \b osThreadFlagsSet sets the thread flags for a thread specified by
 flags set, or an error code if highest bit is set (refer to \ref flags_error_codes). This function may
 be used also within interrupt service routines. Threads waiting for a flag to be set will resume from \em BLOCKED state.
 
+Possible \ref flags_error_codes return values:
+    - \em osFlagsErrorUnknown: Unspecified error.
+    - \em osFlagsErrorResource: Thread specified by parameter \em thread_id is not active to receive flags.
+    - \em osFlagsErrorParameter: Parameter \em thread_id is not a valid thread or \em flags has highest bit set.
+
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
@@ -30,22 +35,27 @@ be used also within interrupt service routines. Threads waiting for a flag to be
 The function \b osThreadFlagsClear clears the specified flags for the currently running thread. It returns the
 flags before clearing, or an error code if highest bit is set (refer to \ref flags_error_codes).
 
+Possible \ref flags_error_codes return values:
+    - \em osFlagsErrorUnknown: Unspecified error, i.e. not called from a running threads context.
+    - \em osFlagsErrorResource: Running thread is not active to receive flags.
+    - \em osFlagsErrorParameter: Parameter \em flags has highest bit set. 
+	
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \fn uint32_t osThreadFlagsGet (void)
 \details
 The function \b osThreadFlagsGet returns the flags currently set for the currently running thread. 
-
+If called without a active and currently running thread \b osThreadFlagsGet return zero.
+	
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \fn uint32_t osThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout)
-The function \b osThreadFlagsWait suspends the execution of the currently \b RUNNING thread until any or all of the thread
+The function \b osThreadFlagsWait suspends the execution of the currently \em RUNNING thread until any or all of the thread
 flags specified with the parameter \a flags are set. When these thread flags are already set, the function returns instantly.
-Otherwise the thread is put into the state \b BLOCKED. The function then returns flags before clearing, or an error code
-if highest bit is set (refer to \ref flags_error_codes).
+Otherwise the thread is put into the state \em BLOCKED.
 
 The parameter \em options specifies the wait condition:
 |Option              |                                                       |
@@ -55,10 +65,19 @@ The parameter \em options specifies the wait condition:
 |\b osFlagsNoClear   |   Do not clear flags which have been specified to wait for.  |
 
 If \c osFlagsNoClear is set in the options \ref osThreadFlagsClear can be used to clear flags manually.
+Otherwise \b osThreadFlagsWait automatically clears the flags waited for.
 
 The parameter \ref CMSIS_RTOS_TimeOutValue "timeout" represents a number of timer ticks and is an upper bound. The
 exact time delay depends on the actual time elapsed since the last timer tick. 
 
+The function returns the flags before clearing, or an error code if highest bit is set (refer to \ref flags_error_codes).
+
+Possible \ref flags_error_codes return values:
+    - \em osFlagsErrorUnknown: Unspecified error, i.e. not called from a running threads context.
+    - \em osFlagsErrorTimeout: The awaited flags has not been set during given timeout.
+    - \em osFlagsErrorResource: Running thread is not active to receive flags.
+    - \em osFlagsErrorParameter: Parameter \em flags has highest bit set.
+	
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
