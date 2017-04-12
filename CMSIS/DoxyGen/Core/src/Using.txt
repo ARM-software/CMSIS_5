@@ -258,17 +258,17 @@ Refer to \ref core_config_sect for a list of the available <b>core_<cpu>.h</b> h
 
 \b Example:
 
-The following code section shows the usage of the <b>core_&lt;cpu&gt;.h</b> header files to build a generic library for Cortex-M0, Cortex-M3, Cortex-M4, or Cortex-M7.  To
-select the processor, the source code uses the define \b CORTEX_M7, \b CORTEX_M4, \b CORTEX_M3, \b CORTEX_M0, or \b CORTEX_M0PLUS. By using this header file, the source code can access 
-the functions for \ref Core_Register_gr, \ref intrinsic_CPU_gr, \ref intrinsic_SIMD_gr, and \ref ITM_Debug_gr.
-
+The following code section shows the usage of the <b>core_&lt;cpu&gt;.h</b> header files to build a generic library for Cortex-M0, Cortex-M3, Cortex-M4, or Cortex-M7. To
+select the processor, the source code uses the define \b CORTEX_M7, \b CORTEX_M4, \b CORTEX_M3, \b CORTEX_M0, or \b CORTEX_M0PLUS. One of these defines needs to be provided
+on the compiler command line. By using this header file, the source code can access the functions for \ref Core_Register_gr, \ref intrinsic_CPU_gr, \ref intrinsic_SIMD_gr,
+and \ref ITM_Debug_gr.
 
 \code
 #define __CMSIS_GENERIC              /* disable NVIC and Systick functions */
 
 #if defined (CORTEX_M7)
   #include "core_cm7.h"
-#if defined (CORTEX_M4)
+#elif defined (CORTEX_M4)
   #include "core_cm4.h"
 #elif defined (CORTEX_M3)
   #include "core_cm3.h"
