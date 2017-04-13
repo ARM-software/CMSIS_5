@@ -31,34 +31,68 @@
 
 /* CMSIS compiler specific defines */
 #ifndef   __ASM
-  #define __ASM                     __asm
-#endif
-#ifndef   __INLINE
-  #define __INLINE                  __inline
-#endif
-#ifndef   __STATIC_INLINE
-  #define __STATIC_INLINE           static __inline
-#endif
-#ifndef   __STATIC_ASM
-  #define __STATIC_ASM              static __asm
-#endif
-#ifndef   __NO_RETURN
-  #define __NO_RETURN               __declspec(noreturn)
-#endif
-#ifndef   __USED
-  #define __USED                    __attribute__((used))
-#endif
-#ifndef   __WEAK
-  #define __WEAK                    __attribute__((weak))
-#endif
-#ifndef   __UNALIGNED_UINT32
-  #define __UNALIGNED_UINT32(x)     (*((__packed uint32_t *)(x)))
-#endif
-#ifndef   __ALIGNED
-  #define __ALIGNED(x)              __attribute__((aligned(x)))
+  #define __ASM                                  __asm
+#endif                                          
+#ifndef   __INLINE                              
+  #define __INLINE                               __inline
+#endif                                          
+#ifndef   __STATIC_INLINE                       
+  #define __STATIC_INLINE                        static __inline
+#endif                                          
+#ifndef   __STATIC_ASM                          
+  #define __STATIC_ASM                           static __asm
+#endif                                          
+#ifndef   __NO_RETURN                           
+  #define __NO_RETURN                            __declspec(noreturn)
+#endif                                          
+#ifndef   __USED                                
+  #define __USED                                 __attribute__((used))
+#endif                                          
+#ifndef   __WEAK                                
+  #define __WEAK                                 __attribute__((weak))
 #endif
 #ifndef   __PACKED
-  #define __PACKED                  __attribute__((packed))
+  #define __PACKED                               __attribute__((packed, aligned(1)))
+#endif
+#ifndef   __PACKED_STRUCT
+  #define __PACKED_STRUCT                        struct __attribute__((packed, aligned(1)))
+#endif
+#ifndef   __UNALIGNED_UINT16_WRITE
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wpacked"
+//lint -esym(9058, T_UINT16_WRITE)  disable MISRA 2012 Rule 2.4 for T_UINT16_WRITE
+  __PACKED_STRUCT T_UINT16_WRITE { uint16_t v; };
+  #pragma clang diagnostic pop
+  #define __UNALIGNED_UINT16_WRITE(addr, val)    (void)((((struct T_UINT16_WRITE *)(void *)(addr))->v) = (val))
+#endif
+#ifndef   __UNALIGNED_UINT16_READ
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wpacked"
+//lint -esym(9058, T_UINT16_READ)  disable MISRA 2012 Rule 2.4 for T_UINT16_READ
+  __PACKED_STRUCT T_UINT16_READ { uint16_t v; };
+  #pragma clang diagnostic pop
+  #define __UNALIGNED_UINT16_READ(addr)          (((const struct T_UINT16_READ *)(const void *)(addr))->v)
+#endif
+#ifndef   __UNALIGNED_UINT32_WRITE
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wpacked"
+//lint -esym(9058, T_UINT32_WRITE)  disable MISRA 2012 Rule 2.4 for T_UINT32_WRITE
+  __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
+  #pragma clang diagnostic pop
+  #define __UNALIGNED_UINT32_WRITE(addr, val)    (void)((((struct T_UINT32_WRITE *)(void *)(addr))->v) = (val))
+#endif
+#ifndef   __UNALIGNED_UINT32_READ
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wpacked"
+  __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
+  #pragma clang diagnostic pop
+  #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(addr))->v)
+#endif
+#ifndef   __ALIGNED
+  #define __ALIGNED(x)                           __attribute__((aligned(x)))
+#endif                                        
+#ifndef   __PACKED                            
+  #define __PACKED                               __attribute__((packed))
 #endif
 
 
@@ -210,6 +244,67 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint
  */
 #define __CLZ                             __builtin_clz
 
+/**
+  \brief   LDR Exclusive (8 bit)
+  \details Executes a exclusive LDR instruction for 8 bit value.
+  \param [in]    ptr  Pointer to data
+  \return             value of type uint8_t at (*ptr)
+ */
+#define __LDREXB        (uint8_t)__builtin_arm_ldrex
+
+
+/**
+  \brief   LDR Exclusive (16 bit)
+  \details Executes a exclusive LDR instruction for 16 bit values.
+  \param [in]    ptr  Pointer to data
+  \return        value of type uint16_t at (*ptr)
+ */
+#define __LDREXH        (uint16_t)__builtin_arm_ldrex
+
+/**
+  \brief   LDR Exclusive (32 bit)
+  \details Executes a exclusive LDR instruction for 32 bit values.
+  \param [in]    ptr  Pointer to data
+  \return        value of type uint32_t at (*ptr)
+ */
+#define __LDREXW        (uint32_t)__builtin_arm_ldrex
+
+/**
+  \brief   STR Exclusive (8 bit)
+  \details Executes a exclusive STR instruction for 8 bit values.
+  \param [in]  value  Value to store
+  \param [in]    ptr  Pointer to location
+  \return          0  Function succeeded
+  \return          1  Function failed
+ */
+#define __STREXB        (uint32_t)__builtin_arm_strex
+
+/**
+  \brief   STR Exclusive (16 bit)
+  \details Executes a exclusive STR instruction for 16 bit values.
+  \param [in]  value  Value to store
+  \param [in]    ptr  Pointer to location
+  \return          0  Function succeeded
+  \return          1  Function failed
+ */
+#define __STREXH        (uint32_t)__builtin_arm_strex
+
+/**
+  \brief   STR Exclusive (32 bit)
+  \details Executes a exclusive STR instruction for 32 bit values.
+  \param [in]  value  Value to store
+  \param [in]    ptr  Pointer to location
+  \return          0  Function succeeded
+  \return          1  Function failed
+ */
+#define __STREXW        (uint32_t)__builtin_arm_strex
+
+/**
+  \brief   Remove the exclusive lock
+  \details Removes the exclusive lock which is created by LDREX.
+ */
+#define __CLREX             __builtin_arm_clrex
+
 /** \brief  Get CPSR Register
     \return               CPSR Register value
  */
@@ -218,6 +313,14 @@ __STATIC_INLINE uint32_t __get_CPSR(void)
   uint32_t result;
   __ASM volatile("MRS %0, cpsr" : "=r" (result) );
   return(result);
+}
+
+/** \brief  Set CPSR Register
+    \param [in]    cpsr  CPSR value to set
+ */
+__STATIC_INLINE void __set_CPSR(uint32_t cpsr)
+{
+__ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "memory");
 }
 
 /** \brief  Get Mode
@@ -242,10 +345,10 @@ __STATIC_INLINE void __set_SP(uint32_t stack)
   __ASM volatile("MOV  sp, %0" : : "r" (stack) : "memory");
 }
 
-/** \brief  Set Process Stack Pointer
+/** \brief  Set USR/SYS Stack Pointer
     \param [in]    topOfProcStack  USR/SYS Stack Pointer value to set
  */
-__STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+__STATIC_INLINE void __set_SP_usr(uint32_t topOfProcStack)
 {
   __ASM volatile(
     ".preserve8         \n"
@@ -256,13 +359,6 @@ __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
     "MSR     cpsr_c, r1 \n" // no effect in USR mode
     "ISB"
    );
-}
-
-/** \brief  Set User Mode
- */
-__STATIC_INLINE void __set_CPS_USR(void)
-{
-  __ASM volatile("CPS  #0x10");
 }
 
 /** \brief  Get FPEXC
@@ -289,6 +385,23 @@ __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
 #endif
 }
 
+/** \brief  Get ACTLR
+    \return               Auxiliary Control register value
+ */
+__STATIC_INLINE uint32_t __get_ACTLR(void)
+{
+  uint32_t result;
+  __ASM volatile("MRS %0, actlr" : "=r" (result) );
+  return(result);
+}
+
+/** \brief  Set ACTLR
+    \param [in]    actlr  Auxiliary Control value to set
+ */
+__STATIC_INLINE void __set_ACTLR(uint32_t actlr)
+{
+  __ASM volatile ("MSR fpexc, %0" : : "r" (actlr) : "memory");
+}
 /** \brief  Get CPACR
     \return               Coprocessor Access Control register value
  */
@@ -300,7 +413,7 @@ __STATIC_INLINE uint32_t __get_CPACR(void)
 }
 
 /** \brief  Set CPACR
-    \param [in]    cpacr  Coprocessor Acccess Control value to set
+    \param [in]    cpacr  Coprocessor Access Control value to set
  */
 __STATIC_INLINE void __set_CPACR(uint32_t cpacr)
 {
