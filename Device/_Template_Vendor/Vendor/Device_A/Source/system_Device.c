@@ -98,14 +98,44 @@ void SystemInit (void)
    reaching pre-main. RW section may be overwritten afterwards.          */
   SystemCoreClock = SYSTEM_CLOCK;
 
-  /* Enable generic interrupt controller */
-  GIC_Enable();
+  // Invalidate entire Unified TLB
+  __set_TLBIALL(0);
+
+  // Invalidate entire branch predictor array
+  __set_BPIALL(0);
+  __DSB();
+  __ISB();
+
+  //  Invalidate instruction cache and flush branch target cache
+  __set_ICIALLU(0);
+  __DSB();
+  __ISB();
+
+  //  Invalidate data cache
+  L1C_InvalidateDCacheAll();
   
-  /* Enable caches */
+  // Create Translation Table
+  MMU_CreateTranslationTable();
+
+  // Enable MMU
+  MMU_Enable();
+
+  // Enable Caches
   L1C_EnableCaches();
   L1C_EnableBTAC();
-  L2C_Enable();
 
-  /* Enable FPU */
+#if (__L2C_PRESENT == 1) 
+  // Enable GIC
+  L2C_Enable();
+#endif
+
+#if (__GIC_PRESENT == 1) 
+  // Enable GIC
+  GIC_Enable();
+#endif
+
+#if ((__FPU_PRESENT == 1) && (__FPU_USED == 1))
+  // Enable FPU
   __FPU_Enable();
+#endif
 }

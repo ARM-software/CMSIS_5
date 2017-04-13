@@ -32,13 +32,47 @@
 extern "C" {
 #endif
 
-typedef void(*IRQHandler)();
-uint32_t InterruptHandlerRegister(IRQn_Type, IRQHandler);
-uint32_t InterruptHandlerUnregister(IRQn_Type);
-void SystemCoreClockUpdate (void);
-extern uint32_t SystemCoreClock;
-void SystemInit (void);
-void MMU_CreateTranslationTable(void);
+#include <stdint.h>
+
+extern uint32_t SystemCoreClock;     /*!< System Clock Frequency (Core Clock)  */
+
+typedef void(*IRQHandler)();         /*!< Type Definition for Interrupt Handlers */
+
+/**
+  \brief Setup the microcontroller system.
+
+   Initialize the System and update the SystemCoreClock variable.
+ */
+extern void SystemInit (void);
+
+
+/**
+  \brief  Update SystemCoreClock variable.
+
+   Updates the SystemCoreClock with current core Clock retrieved from cpu registers.
+ */
+extern void SystemCoreClockUpdate (void);
+
+/**
+  \brief  Interrupt Handler Register.
+
+   Registers an Interrupt Handler into the IRQ Table.
+ */
+extern uint32_t InterruptHandlerRegister(IRQn_Type, IRQHandler);
+
+/**
+  \brief  Interrupt Handler Unregister.
+
+   Unregisters an Interrupt Handler from the IRQ Table.
+ */
+extern uint32_t InterruptHandlerUnregister(IRQn_Type);
+
+/**
+  \brief  Create Translation Table.
+
+   Creates Memory Management Unit Translation Table.
+ */
+extern void MMU_CreateTranslationTable(void);
 
 #ifdef __cplusplus
 }

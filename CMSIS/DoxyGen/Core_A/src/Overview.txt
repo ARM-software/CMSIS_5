@@ -50,6 +50,7 @@ These manuals contain the programmers model and detailed information about the c
 
 The \ref templates_pg supplied by ARM have been tested and verified with the following toolchains:
  - ARM: ARM Compiler V5.6
+ - ARM: ARM Compiler V6.6
  
 <hr>
 */

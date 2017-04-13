@@ -352,6 +352,47 @@ typedef union
 #define SCTLR_M_Pos                      0U                                     /*!< \brief SCTLR: M Position */
 #define SCTLR_M_Msk                      (1UL << SCTLR_M_Pos)                   /*!< \brief SCTLR: M Mask */
 
+/* CP15 Register ACTLR */
+typedef union
+{
+  struct
+  {
+    uint32_t _reserved0:6;               /*!< bit: 0.. 5  Reserved */
+    uint32_t SMP:1;                      /*!< bit:     6  Enables coherent requests to the processor */
+    uint32_t _reserved1:3;               /*!< bit: 7.. 9  Reserved */
+    uint32_t DODMBS:1;                   /*!< bit:    10  Disable optimized data memory barrier behavior */
+    uint32_t L2RADIS:1;                  /*!< bit:    11  L2 Data Cache read-allocate mode disable */
+    uint32_t L1RADIS:1;                  /*!< bit:    12  L1 Data Cache read-allocate mode disable */
+    uint32_t L1PCTL:2;                   /*!< bit:13..14  L1 Data prefetch control */
+    uint32_t DDVM:1;                     /*!< bit:    15  Disable Distributed Virtual Memory (DVM) transactions */
+    uint32_t _reserved3:12;              /*!< bit:16..27  Reserved */
+    uint32_t DDI:1;                      /*!< bit:    28  Disable dual issue */
+    uint32_t _reserved7:3;               /*!< bit:29..31  Reserved */
+  } b;                                   /*!< Structure used for bit  access */
+  uint32_t w;                            /*!< Type      used for word access */
+} ACTLR_Type;
+
+#define ACTLR_DDI_Pos                    28U                                     /*!< ACTLR: DDI Position */
+#define ACTLR_DDI_Msk                    (1UL << ACTLR_DDI_Pos)                  /*!< ACTLR: DDI Mask */
+
+#define ACTLR_DDVM_Pos                   15U                                     /*!< ACTLR: DDVM Position */
+#define ACTLR_DDVM_Msk                   (1UL << ACTLR_DDVM_Pos)                 /*!< ACTLR: DDVM Mask */
+
+#define ACTLR_L1PCTL_Pos                 13U                                     /*!< ACTLR: L1PCTL Position */
+#define ACTLR_L1PCTL_Msk                 (3UL << ACTLR_L1PCTL_Pos)               /*!< ACTLR: L1PCTL Mask */
+
+#define ACTLR_L1RADIS_Pos                12U                                     /*!< ACTLR: L1RADIS Position */
+#define ACTLR_L1RADIS_Msk                (1UL << ACTLR_L1RADIS_Pos)              /*!< ACTLR: L1RADIS Mask */
+
+#define ACTLR_L2RADIS_Pos                11U                                     /*!< ACTLR: L2RADIS Position */
+#define ACTLR_L2RADIS_Msk                (1UL << ACTLR_L2RADIS_Pos)              /*!< ACTLR: L2RADIS Mask */
+
+#define ACTLR_DODMBS_Pos                 10U                                     /*!< ACTLR: DODMBS Position */
+#define ACTLR_DODMBS_Msk                 (1UL << ACTLR_DODMBS_Pos)               /*!< ACTLR: DODMBS Mask */
+
+#define ACTLR_SMP_Pos                    6U                                      /*!< ACTLR: SMP Position */
+#define ACTLR_SMP_Msk                    (1UL << ACTLR_SMP_Pos)                  /*!< ACTLR: SMP Mask */
+
 /* CP15 Register CPACR */
 typedef union
 {
@@ -533,22 +574,50 @@ typedef struct
 */
 typedef struct
 {
- __IO uint32_t ICDDCR;
- __I  uint32_t ICDICTR;
- __I  uint32_t ICDIIDR;
-      uint32_t RESERVED0[29];
- __IO uint32_t ICDISR[32];
- __IO uint32_t ICDISER[32];
- __IO uint32_t ICDICER[32];
- __IO uint32_t ICDISPR[32];
- __IO uint32_t ICDICPR[32];
- __I  uint32_t ICDABR[32];
-      uint32_t RESERVED1[32];
- __IO uint32_t ICDIPR[256];
- __IO uint32_t ICDIPTR[256];
- __IO uint32_t ICDICFR[64];
-      uint32_t RESERVED2[128];
- __IO uint32_t ICDSGIR;
+  __IOM uint32_t D_CTLR;                 /*!< \brief  +0x000 (R/W) Distributor Control Register */
+  __IM  uint32_t D_TYPER;                /*!< \brief  +0x004 (R/ )  Interrupt Controller Type Register */
+  __IM  uint32_t D_IIDR;                 /*!< \brief  +0x008 (R/ )  Distributor Implementer Identification Register */
+        uint32_t RESERVED1[29];
+  __IOM uint32_t D_IGROUPR[16];          /*!< \brief  +0x080 - 0x0BC (R/W) Interrupt Group Registers */
+        uint32_t RESERVED2[16];
+  __IOM uint32_t D_ISENABLER[16];        /*!< \brief  +0x100 - 0x13C (R/W) Interrupt Set-Enable Registers */
+        uint32_t RESERVED3[16];
+  __IOM uint32_t D_ICENABLER[16];        /*!< \brief  +0x180 - 0x1BC (R/W) Interrupt Clear-Enable Registers */
+        uint32_t RESERVED4[16];
+  __IOM uint32_t D_ISPENDR[16];          /*!< \brief  +0x200 - 0x23C (R/W) Interrupt Set-Pending Registers */
+        uint32_t RESERVED5[16];
+  __IOM uint32_t D_ICPENDR[16];          /*!< \brief  +0x280 - 0x2BC (R/W) Interrupt Clear-Pending Registers */
+        uint32_t RESERVED6[16];
+  __IOM uint32_t D_ISACTIVER[16];        /*!< \brief  +0x300 - 0x33C (R/W) Interrupt Set-Active Registers */
+        uint32_t RESERVED7[16];
+  __IOM uint32_t D_ICACTIVER[16];        /*!< \brief  +0x380 - 0x3BC (R/W) Interrupt Clear-Active Registers */
+        uint32_t RESERVED8[16];
+  __IOM uint8_t  D_IPRIORITYR[512];      /*!< \brief  +0x400 - 0x5FC (R/W) Interrupt Priority Registers */
+        uint32_t RESERVED9[128];
+  __IOM uint8_t  D_ITARGETSR[512];       /*!< \brief  +0x800 - 0x9FC (R/W) Interrupt Targets Registers */
+        uint32_t RESERVED10[128];
+  __IOM uint32_t D_ICFGR[32];            /*!< \brief  +0xC00 - 0xC7C (R/W) Interrupt Configuration Registers */
+        uint32_t RESERVED11[32];
+  __IM  uint32_t D_PPISR;                /*!< \brief  +0xD00 (R/ ) Private Peripheral Interrupt Status Register */
+  __IM  uint32_t D_SPISR[15];            /*!< \brief  +0xD04 - 0xD3C (R/ ) Shared Peripheral Interrupt Status Registers */
+        uint32_t RESERVED12[112];
+  __OM  uint32_t D_SGIR;                 /*!< \brief  +0xF00 ( /W) Software Generated Interrupt Register */
+        uint32_t RESERVED13[3];
+  __IOM uint8_t  D_CPENDSGIR[16];        /*!< \brief  +0xF10 - 0xF1C (R/W) SGI Clear-Pending Registers */
+  __IOM uint8_t  D_SPENDSGIR[16];        /*!< \brief  +0xF20 - 0xF2C (R/W) SGI Set-Pending Registers */
+        uint32_t RESERVED14[40];
+  __IM  uint32_t D_PIDR4;                /*!< \brief  +0xFD0 (R/ ) Peripheral ID4 Register */
+  __IM  uint32_t D_PIDR5;                /*!< \brief  +0xFD4 (R/ ) Peripheral ID5 Register */
+  __IM  uint32_t D_PIDR6;                /*!< \brief  +0xFD8 (R/ ) Peripheral ID6 Register */
+  __IM  uint32_t D_PIDR7;                /*!< \brief  +0xFDC (R/ ) Peripheral ID7 Register */
+  __IM  uint32_t D_PIDR0;                /*!< \brief  +0xFE0 (R/ ) Peripheral ID0 Register */
+  __IM  uint32_t D_PIDR1;                /*!< \brief  +0xFE4 (R/ ) Peripheral ID1 Register */
+  __IM  uint32_t D_PIDR2;                /*!< \brief  +0xFE8 (R/ ) Peripheral ID2 Register */
+  __IM  uint32_t D_PIDR3;                /*!< \brief  +0xFEC (R/ ) Peripheral ID3 Register */
+  __IM  uint32_t D_CIDR0;                /*!< \brief  +0xFF0 (R/ ) Component ID0 Register */
+  __IM  uint32_t D_CIDR1;                /*!< \brief  +0xFF4 (R/ ) Component ID1 Register */
+  __IM  uint32_t D_CIDR2;                /*!< \brief  +0xFF8 (R/ ) Component ID2 Register */
+  __IM  uint32_t D_CIDR3;                /*!< \brief  +0xFFC (R/ ) Component ID3 Register */
 }  GICDistributor_Type;
 
 #define GICDistributor      ((GICDistributor_Type      *)     GIC_DISTRIBUTOR_BASE ) /*!< GIC Distributor configuration struct */
@@ -557,16 +626,25 @@ typedef struct
 */
 typedef struct
 {
-  __IO uint32_t ICCICR;          //!< \brief  +0x000 - RW - CPU Interface Control Register
-  __IO uint32_t ICCPMR;          //!< \brief  +0x004 - RW - Interrupt Priority Mask Register
-  __IO uint32_t ICCBPR;          //!< \brief  +0x008 - RW - Binary Point Register
-  __I  uint32_t ICCIAR;          //!< \brief  +0x00C - RO - Interrupt Acknowledge Register
-  __IO uint32_t ICCEOIR;         //!< \brief  +0x010 - WO - End of Interrupt Register
-  __I  uint32_t ICCRPR;          //!< \brief  +0x014 - RO - Running Priority Register
-  __I  uint32_t ICCHPIR;         //!< \brief  +0x018 - RO - Highest Pending Interrupt Register
-  __IO uint32_t ICCABPR;         //!< \brief  +0x01C - RW - Aliased Binary Point Register
-  uint32_t RESERVED[55];
-  __I  uint32_t ICCIIDR;         //!< \brief  +0x0FC - RO - CPU Interface Identification Register
+  __IOM uint32_t C_CTLR;                 /*!< \brief  +0x000 (R/W) CPU Interface Control Register */
+  __IOM uint32_t C_PMR;                  /*!< \brief  +0x004 (R/W) Interrupt Priority Mask Register */
+  __IOM uint32_t C_BPR;                  /*!< \brief  +0x008 (R/W) Binary Point Register */
+  __IM  uint32_t C_IAR;                  /*!< \brief  +0x00C (R/ ) Interrupt Acknowledge Register */
+  __OM  uint32_t C_EOIR;                 /*!< \brief  +0x010 ( /W) End Of Interrupt Register */
+  __IM  uint32_t C_RPR;                  /*!< \brief  +0x014 (R/ ) Running Priority Register */
+  __IM  uint32_t C_HPPIR;                /*!< \brief  +0x018 (R/ ) Highest Priority Pending Interrupt Register */
+  __IOM uint32_t C_ABPR;                 /*!< \brief  +0x01C (R/W) Aliased Binary Point Register */
+  __IM  uint32_t C_AIAR;                 /*!< \brief  +0x020 (R/ ) Aliased Interrupt Acknowledge Register */
+  __OM  uint32_t C_AEOIR;                /*!< \brief  +0x024 ( /W) Aliased End Of Interrupt Register */
+  __IM  uint32_t C_AHPPIR;               /*!< \brief  +0x028 (R/ ) Aliased Highest Priority Pending Interrupt Register */
+        uint32_t RESERVED15[41];                         
+  __IOM uint32_t C_APR0;                 /*!< \brief  +0x0D0 (R/W) Active Priority Register */
+        uint32_t RESERVED16[3];                          
+  __IOM uint32_t C_NSAPR0;               /*!< \brief  +0x0E0 (R/W) Non-secure Active Priority Register */
+        uint32_t RESERVED17[6];                          
+  __IM  uint32_t C_IIDR;                 /*!< \brief  +0x0FC (R/ ) CPU Interface Identification Register */
+        uint32_t RESERVED18[960];                        
+  __OM  uint32_t C_DIR;                  /*!< \brief  +0x000 ( /W) Deactivate Interrupt Register */
 }  GICInterface_Type;
 
 #define GICInterface        ((GICInterface_Type        *)     GIC_INTERFACE_BASE )   /*!< GIC Interface configuration struct */
@@ -828,95 +906,78 @@ __STATIC_INLINE void L2C_CleanInvPa (void *pa)
   
 __STATIC_INLINE void GIC_EnableDistributor(void)
 {
-  GICDistributor->ICDDCR |= 1; //enable distributor
+  GICDistributor->D_CTLR |= 1; //enable distributor
 }
 
 __STATIC_INLINE void GIC_DisableDistributor(void)
 {
-  GICDistributor->ICDDCR &=~1; //disable distributor
+  GICDistributor->D_CTLR &=~1; //disable distributor
 }
 
 __STATIC_INLINE uint32_t GIC_DistributorInfo(void)
 {
-  return (uint32_t)(GICDistributor->ICDICTR);
+  return (uint32_t)(GICDistributor->D_TYPER);
 }
 
 __STATIC_INLINE uint32_t GIC_DistributorImplementer(void)
 {
-  return (uint32_t)(GICDistributor->ICDIIDR);
+  return (uint32_t)(GICDistributor->D_IIDR);
 }
 
 __STATIC_INLINE void GIC_SetTarget(IRQn_Type IRQn, uint32_t cpu_target)
 {
-  char* field = (char*)&(GICDistributor->ICDIPTR[IRQn / 4]);
-  field += IRQn % 4;
-  *field = (char)cpu_target & 0xf;
-}
-
-__STATIC_INLINE void GIC_SetICDICFR (const uint32_t *ICDICFRn)
-{
-  uint32_t i, num_irq;
-
-  //Get the maximum number of interrupts that the GIC supports
-  num_irq = 32 * ((GIC_DistributorInfo() & 0x1f) + 1);
-
-  for (i = 0; i < (num_irq/16); i++)
-  {
-    GICDistributor->ICDISPR[i] = *ICDICFRn++;
-  }
+  GICDistributor->D_ITARGETSR[((uint32_t)(int32_t)IRQn)] = (uint8_t)(cpu_target & 0x0f);
 }
 
 __STATIC_INLINE uint32_t GIC_GetTarget(IRQn_Type IRQn)
 {
-  char* field = (char*)&(GICDistributor->ICDIPTR[IRQn / 4]);
-  field += IRQn % 4;
-  return ((uint32_t)*field & 0xf);
+  return ((uint32_t) GICDistributor->D_ITARGETSR[((uint32_t)(int32_t)IRQn)] & 0x0f);
 }
 
 __STATIC_INLINE void GIC_EnableInterface(void)
 {
-  GICInterface->ICCICR |= 1; //enable interface
+  GICInterface->C_CTLR |= 1; //enable interface
 }
 
 __STATIC_INLINE void GIC_DisableInterface(void)
 {
-  GICInterface->ICCICR &=~1; //disable distributor
+  GICInterface->C_CTLR &=~1; //disable distributor
 }
 
 __STATIC_INLINE IRQn_Type GIC_AcknowledgePending(void)
 {
-  return (IRQn_Type)(GICInterface->ICCIAR);
+  return (IRQn_Type)(GICInterface->C_IAR);
 }
 
 __STATIC_INLINE void GIC_EndInterrupt(IRQn_Type IRQn)
 {
-  GICInterface->ICCEOIR = IRQn;
+  GICInterface->C_EOIR = IRQn;
 }
 
 __STATIC_INLINE void GIC_EnableIRQ(IRQn_Type IRQn)
 {
-  GICDistributor->ICDISER[IRQn / 32] = 1 << (IRQn % 32);
+  GICDistributor->D_ISENABLER[IRQn / 32] = 1 << (IRQn % 32);
 }
 
 __STATIC_INLINE void GIC_DisableIRQ(IRQn_Type IRQn)
 {
-  GICDistributor->ICDICER[IRQn / 32] = 1 << (IRQn % 32);
+  GICDistributor->D_ICENABLER[IRQn / 32] = 1 << (IRQn % 32);
 }
 
 __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
 {
-  GICDistributor->ICDISPR[IRQn / 32] = 1 << (IRQn % 32);
+  GICDistributor->D_ISPENDR[IRQn / 32] = 1 << (IRQn % 32);
 }
 
 __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
 {
-  GICDistributor->ICDICPR[IRQn / 32] = 1 << (IRQn % 32);
+  GICDistributor->D_ICPENDR[IRQn / 32] = 1 << (IRQn % 32);
 }
 
 __STATIC_INLINE void GIC_SetLevelModel(IRQn_Type IRQn, int8_t edge_level, int8_t model)
 {   
   // Word-size read/writes must be used to access this register
-  volatile uint32_t * field = &(GICDistributor->ICDICFR[IRQn / 16]);
+  volatile uint32_t * field = &(GICDistributor->D_ICFGR[IRQn / 16]);
   unsigned bit_shift = (IRQn % 16)<<1;
   unsigned int save_word;
 
@@ -928,47 +989,59 @@ __STATIC_INLINE void GIC_SetLevelModel(IRQn_Type IRQn, int8_t edge_level, int8_t
 
 __STATIC_INLINE void GIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
 {
-  char* field = (char*)&(GICDistributor->ICDIPR[IRQn / 4]);
-  field += IRQn % 4;
-  *field = (char)priority;
+  GICDistributor->D_IPRIORITYR[((uint32_t)(int32_t)IRQn)] = (uint8_t)(priority);
 }
 
 __STATIC_INLINE uint32_t GIC_GetPriority(IRQn_Type IRQn)
 {
-  char* field = (char*)&(GICDistributor->ICDIPR[IRQn / 4]);
-  field += IRQn % 4;
-  return (uint32_t)*field;
+  return((uint32_t)GICDistributor->D_IPRIORITYR[((uint32_t)(int32_t)IRQn)]);
 }
 
-__STATIC_INLINE void GIC_InterfacePriorityMask(uint32_t priority)
+__STATIC_INLINE void GIC_SetInterfacePriorityMask(uint32_t priority)
 {
-  GICInterface->ICCPMR = priority & 0xff; //set priority mask
+  GICInterface->C_PMR = priority & 0xff; //set priority mask
+}
+
+__STATIC_INLINE uint32_t GIC_GetInterfacePriorityMask(void)
+{
+  return (uint32_t)GICInterface->C_PMR;
 }
 
 __STATIC_INLINE void GIC_SetBinaryPoint(uint32_t binary_point)
 {
-  GICInterface->ICCBPR = binary_point & 0x07; //set binary point
+  GICInterface->C_BPR = binary_point & 0x07; //set binary point
 }
 
-__STATIC_INLINE uint32_t GIC_GetBinaryPoint(uint32_t binary_point)
+__STATIC_INLINE uint32_t GIC_GetBinaryPoint(void)
 {
-  return (uint32_t)GICInterface->ICCBPR;
+  return (uint32_t)GICInterface->C_BPR;
 }
 
 __STATIC_INLINE uint32_t GIC_GetIRQStatus(IRQn_Type IRQn)
 {
   uint32_t pending, active;
 
-  active = ((GICDistributor->ICDABR[IRQn / 32])  >> (IRQn % 32)) & 0x1;
-  pending =((GICDistributor->ICDISPR[IRQn / 32]) >> (IRQn % 32)) & 0x1;
+  active = ((GICDistributor->D_ISACTIVER[IRQn / 32])  >> (IRQn % 32)) & 0x1;
+  pending =((GICDistributor->D_ISPENDR[IRQn / 32]) >> (IRQn % 32)) & 0x1;
 
   return ((active<<1) | pending);
 }
 
 __STATIC_INLINE void GIC_SendSGI(IRQn_Type IRQn, uint32_t target_list, uint32_t filter_list)
 {
-  GICDistributor->ICDSGIR = ((filter_list & 0x3) << 24) | ((target_list & 0xff) << 16) | (IRQn & 0xf);
+  GICDistributor->D_SGIR = ((filter_list & 0x3) << 24) | ((target_list & 0xff) << 16) | (IRQn & 0xf);
 }
+
+__STATIC_INLINE uint32_t GIC_GetHighPendingIRQ(void) 
+{ 
+  return GICInterface->C_HPPIR; 
+}
+
+__STATIC_INLINE uint32_t GIC_GetInterfaceId(void)
+{ 
+  return GICInterface->C_IIDR; 
+}
+
 
 __STATIC_INLINE void GIC_DistInit(void)
 {
@@ -976,7 +1049,7 @@ __STATIC_INLINE void GIC_DistInit(void)
   uint32_t num_irq = 0;
   uint32_t priority_field;
 
-  //A reset sets all bits in the ICDISRs corresponding to the SPIs to 0,
+  //A reset sets all bits in the D_IGROUPRs corresponding to the SPIs to 0,
   //configuring all of the interrupts as Secure.
 
   //Disable interrupt forwarding
@@ -985,7 +1058,7 @@ __STATIC_INLINE void GIC_DistInit(void)
   num_irq = 32 * ((GIC_DistributorInfo() & 0x1f) + 1);
 
   /* Priority level is implementation defined.
-   To determine the number of priority bits implemented write 0xFF to an ICDIPR
+   To determine the number of priority bits implemented write 0xFF to an D_IPRIORITYR
    priority field and read back the value stored.*/
   GIC_SetPriority((IRQn_Type)0, 0xff);
   priority_field = GIC_GetPriority((IRQn_Type)0);
@@ -1010,14 +1083,14 @@ __STATIC_INLINE void GIC_CPUInterfaceInit(void)
   IRQn_Type i;
   uint32_t priority_field;
 
-  //A reset sets all bits in the ICDISRs corresponding to the SPIs to 0,
+  //A reset sets all bits in the D_IGROUPRs corresponding to the SPIs to 0,
   //configuring all of the interrupts as Secure.
 
   //Disable interrupt forwarding
   GIC_DisableInterface();
 
   /* Priority level is implementation defined.
-   To determine the number of priority bits implemented write 0xFF to an ICDIPR
+   To determine the number of priority bits implemented write 0xFF to an D_IPRIORITYR
    priority field and read back the value stored.*/
   GIC_SetPriority((IRQn_Type)0, 0xff);
   priority_field = GIC_GetPriority((IRQn_Type)0);
@@ -1038,7 +1111,7 @@ __STATIC_INLINE void GIC_CPUInterfaceInit(void)
   //Set binary point to 0
   GIC_SetBinaryPoint(0);
   //Set priority mask
-  GIC_InterfacePriorityMask(0xff);
+  GIC_SetInterfacePriorityMask(0xff);
 }
 
 __STATIC_INLINE void GIC_Enable(void)

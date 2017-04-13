@@ -36,34 +36,49 @@
 
 /* CMSIS compiler specific defines */
 #ifndef   __ASM
-  #define __ASM                     __asm
-#endif
-#ifndef   __INLINE
-  #define __INLINE                  __inline
-#endif
-#ifndef   __STATIC_INLINE
-  #define __STATIC_INLINE           static __inline
-#endif
-#ifndef   __STATIC_ASM
-  #define __STATIC_ASM              static __asm
-#endif
-#ifndef   __NO_RETURN
-  #define __NO_RETURN               __declspec(noreturn)
-#endif
-#ifndef   __USED
-  #define __USED                    __attribute__((used))
-#endif
-#ifndef   __WEAK
-  #define __WEAK                    __attribute__((weak))
-#endif
-#ifndef   __UNALIGNED_UINT32
-  #define __UNALIGNED_UINT32(x)     (*((__packed uint32_t *)(x)))
-#endif
-#ifndef   __ALIGNED
-  #define __ALIGNED(x)              __attribute__((aligned(x)))
+  #define __ASM                                  __asm
+#endif                                          
+#ifndef   __INLINE                              
+  #define __INLINE                               __inline
+#endif                                          
+#ifndef   __STATIC_INLINE                       
+  #define __STATIC_INLINE                        static __inline
+#endif                                          
+#ifndef   __STATIC_ASM                          
+  #define __STATIC_ASM                           static __asm
+#endif                                          
+#ifndef   __NO_RETURN                           
+  #define __NO_RETURN                            __declspec(noreturn)
+#endif                                          
+#ifndef   __USED                                
+  #define __USED                                 __attribute__((used))
+#endif                                          
+#ifndef   __WEAK                                
+  #define __WEAK                                 __attribute__((weak))
 #endif
 #ifndef   __PACKED
-  #define __PACKED                  __attribute__((packed))
+  #define __PACKED                               __attribute__((packed))
+#endif
+#ifndef   __PACKED_STRUCT
+  #define __PACKED_STRUCT                        __packed struct
+#endif
+#ifndef   __UNALIGNED_UINT16_WRITE
+  #define __UNALIGNED_UINT16_WRITE(addr, val)    ((*((__packed uint16_t *)(addr))) = (val))
+#endif
+#ifndef   __UNALIGNED_UINT16_READ
+  #define __UNALIGNED_UINT16_READ(addr)          (*((const __packed uint16_t *)(addr)))
+#endif
+#ifndef   __UNALIGNED_UINT32_WRITE
+  #define __UNALIGNED_UINT32_WRITE(addr, val)    ((*((__packed uint32_t *)(addr))) = (val))
+#endif
+#ifndef   __UNALIGNED_UINT32_READ
+  #define __UNALIGNED_UINT32_READ(addr)          (*((const __packed uint32_t *)(addr)))
+#endif
+#ifndef   __ALIGNED
+  #define __ALIGNED(x)                           __attribute__((aligned(x)))
+#endif                                          
+#ifndef   __PACKED                              
+  #define __PACKED                               __attribute__((packed))
 #endif
 
 
@@ -209,6 +224,90 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
  */
 #define __CLZ                             __clz
 
+/**
+  \brief   LDR Exclusive (8 bit)
+  \details Executes a exclusive LDR instruction for 8 bit value.
+  \param [in]    ptr  Pointer to data
+  \return             value of type uint8_t at (*ptr)
+ */
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
+  #define __LDREXB(ptr)                                                        ((uint8_t ) __ldrex(ptr))
+#else
+  #define __LDREXB(ptr)          _Pragma("push") _Pragma("diag_suppress 3731") ((uint8_t ) __ldrex(ptr))  _Pragma("pop")
+#endif
+
+/**
+  \brief   LDR Exclusive (16 bit)
+  \details Executes a exclusive LDR instruction for 16 bit values.
+  \param [in]    ptr  Pointer to data
+  \return        value of type uint16_t at (*ptr)
+ */
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
+  #define __LDREXH(ptr)                                                        ((uint16_t) __ldrex(ptr))
+#else
+  #define __LDREXH(ptr)          _Pragma("push") _Pragma("diag_suppress 3731") ((uint16_t) __ldrex(ptr))  _Pragma("pop")
+#endif
+
+/**
+  \brief   LDR Exclusive (32 bit)
+  \details Executes a exclusive LDR instruction for 32 bit values.
+  \param [in]    ptr  Pointer to data
+  \return        value of type uint32_t at (*ptr)
+ */
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
+  #define __LDREXW(ptr)                                                        ((uint32_t ) __ldrex(ptr))
+#else
+  #define __LDREXW(ptr)          _Pragma("push") _Pragma("diag_suppress 3731") ((uint32_t ) __ldrex(ptr))  _Pragma("pop")
+#endif
+
+/**
+  \brief   STR Exclusive (8 bit)
+  \details Executes a exclusive STR instruction for 8 bit values.
+  \param [in]  value  Value to store
+  \param [in]    ptr  Pointer to location
+  \return          0  Function succeeded
+  \return          1  Function failed
+ */
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
+  #define __STREXB(value, ptr)                                                 __strex(value, ptr)
+#else
+  #define __STREXB(value, ptr)   _Pragma("push") _Pragma("diag_suppress 3731") __strex(value, ptr)        _Pragma("pop")
+#endif
+
+/**
+  \brief   STR Exclusive (16 bit)
+  \details Executes a exclusive STR instruction for 16 bit values.
+  \param [in]  value  Value to store
+  \param [in]    ptr  Pointer to location
+  \return          0  Function succeeded
+  \return          1  Function failed
+ */
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
+  #define __STREXH(value, ptr)                                                 __strex(value, ptr)
+#else
+  #define __STREXH(value, ptr)   _Pragma("push") _Pragma("diag_suppress 3731") __strex(value, ptr)        _Pragma("pop")
+#endif
+
+/**
+  \brief   STR Exclusive (32 bit)
+  \details Executes a exclusive STR instruction for 32 bit values.
+  \param [in]  value  Value to store
+  \param [in]    ptr  Pointer to location
+  \return          0  Function succeeded
+  \return          1  Function failed
+ */
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 5060020)
+  #define __STREXW(value, ptr)                                                 __strex(value, ptr)
+#else
+  #define __STREXW(value, ptr)   _Pragma("push") _Pragma("diag_suppress 3731") __strex(value, ptr)        _Pragma("pop")
+#endif
+
+/**
+  \brief   Remove the exclusive lock
+  \details Removes the exclusive lock which is created by LDREX.
+ */
+#define __CLREX                           __clrex
+
 /** \brief  Get CPSR Register
     \return               CPSR Register value
  */
@@ -239,9 +338,8 @@ __STATIC_INLINE uint32_t __get_mode(void) {
     \param [in]    mode  Mode value to set
  */
 __STATIC_INLINE __ASM void __set_mode(uint32_t mode) {
-  MOV  r1, lr
   MSR  CPSR_C, r0
-  BX   r1
+  BX   lr
 }
 
 /** \brief  Set Stack Pointer
@@ -253,10 +351,10 @@ __STATIC_INLINE __ASM void __set_SP(uint32_t stack)
   BX   lr
 }
 
-/** \brief  Set Process Stack Pointer
+/** \brief  Set USR/SYS Stack Pointer
     \param [in]    topOfProcStack  USR/SYS Stack Pointer value to set
  */
-__STATIC_INLINE __ASM void __set_PSP(uint32_t topOfProcStack)
+__STATIC_INLINE __ASM void __set_SP_usr(uint32_t topOfProcStack)
 {
   ARM
   PRESERVE8
@@ -268,16 +366,6 @@ __STATIC_INLINE __ASM void __set_PSP(uint32_t topOfProcStack)
   MSR     CPSR_c, R1  ;no effect in USR mode
   ISB
   BX      LR
-}
-
-/** \brief  Set User Mode
- */
-__STATIC_INLINE __ASM void __set_CPS_USR(void)
-{
-  ARM
-
-  CPS  #0x10
-  BX   LR
 }
 
 /** \brief  Get FPEXC
@@ -304,6 +392,24 @@ __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
 #endif
 }
 
+/** \brief  Get ACTLR
+    \return               Auxiliary Control register value
+ */
+__STATIC_INLINE uint32_t __get_ACTLR(void)
+{
+  register uint32_t __regACTLR         __ASM("cp15:0:c1:c0:1");
+  return __regACTLR;
+}
+
+/** \brief  Set ACTLR
+    \param [in]    actlr  Auxiliary Control value to set
+ */
+__STATIC_INLINE void __set_ACTLR(uint32_t actlr)
+{
+  register uint32_t __regACTLR         __ASM("cp15:0:c1:c0:1");
+  __regACTLR = actlr;
+}
+
 /** \brief  Get CPACR
     \return               Coprocessor Access Control register value
  */
@@ -314,7 +420,7 @@ __STATIC_INLINE uint32_t __get_CPACR(void)
 }
 
 /** \brief  Set CPACR
-    \param [in]    cpacr  Coprocessor Acccess Control value to set
+    \param [in]    cpacr  Coprocessor Access Control value to set
  */
 __STATIC_INLINE void __set_CPACR(uint32_t cpacr)
 {
@@ -539,8 +645,6 @@ __STATIC_INLINE void __set_DCCIMVAC(uint32_t value) {
 
   Generic mechanism for cleaning/invalidating the entire data or unified cache to the point of coherency
  */
-#pragma push
-#pragma arm
 __STATIC_INLINE __ASM void __L1C_CleanInvalidateCache(uint32_t op) {
         ARM
 
@@ -595,14 +699,11 @@ Finished
         POP    {R4-R11}
         BX     lr
 }
-#pragma pop
 
 /** \brief  Enable Floating Point Unit
 
   Critical section, called from undef handler, so systick is disabled
  */
-#pragma push
-#pragma arm
 __STATIC_INLINE __ASM void __FPU_Enable(void) {
         ARM
 
@@ -668,6 +769,5 @@ __STATIC_INLINE __ASM void __FPU_Enable(void) {
 
         BX      LR
 }
-#pragma pop
 
 #endif /* __CMSIS_ARMCC_H */

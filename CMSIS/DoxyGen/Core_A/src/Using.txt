@@ -19,14 +19,14 @@ The \ref ResetHandler defined in \ref startup_c_pg is executed after reset.
 The default initialization sequence is
  - set the vector base address register (\ref __set_VBAR),
  - set stacks for each exception mode (\ref __set_mode, \ref __set_SP),
- - call \ref MMU_CreateTranslationTable, and
  - call \ref SystemInit.
 
 After the system initialization control is transferred to the C/C++ run-time
 library which performs initialization and calls the \b main function in the user code. In addition the \ref startup_c_pg contains a weak default handler
 implementation for every exception. It may also contain stack and heap configurations for the user application.
 
-The \ref system_c_pg performs the setup for the processor clock. The variable \ref SystemCoreClock indicates the CPU clock speed.
+The \ref system_c_pg performs the setup for the processor clock and the initialization of memory caches, memory management unit, generic interrupt interface
+and floating point unit. The variable \ref SystemCoreClock indicates the CPU clock speed.
 \ref system_init_gr describes the minimum feature set. In addition the file may contain functions for the memory bus setup and clock re-configuration. 
 
 The \ref device_h_pg is the central include file that the application programmer is using in the C/C++ source code. It provides the following features:

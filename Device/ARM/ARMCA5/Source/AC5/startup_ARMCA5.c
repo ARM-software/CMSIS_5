@@ -1,8 +1,8 @@
 /******************************************************************************
- * @file     startup_ARMCA7.c
- * @brief    CMSIS Device System Source File for ARM Cortex-A7 Device Series
+ * @file     startup_ARMCA5.c
+ * @brief    CMSIS Device System Source File for ARM Cortex-A5 Device Series
  * @version  V1.00
- * @date     22 Feb 2017
+ * @date     16 Mar 2017
  *
  * @note
  *
@@ -25,7 +25,7 @@
  * limitations under the License.
  */
 
-#include <ARMCA7.h>
+#include <ARMCA5.h>
 
 /*----------------------------------------------------------------------------
   Definitions
@@ -39,18 +39,9 @@
 #define SYS_MODE 0x1F            // System mode
 
 /*----------------------------------------------------------------------------
-  Linker generated Symbols
- *----------------------------------------------------------------------------*/
-extern uint32_t Image$$FIQ_STACK$$ZI$$Limit;
-extern uint32_t Image$$IRQ_STACK$$ZI$$Limit;
-extern uint32_t Image$$SVC_STACK$$ZI$$Limit;
-extern uint32_t Image$$ABT_STACK$$ZI$$Limit;
-extern uint32_t Image$$UND_STACK$$ZI$$Limit;
-extern uint32_t Image$$ARM_LIB_STACK$$ZI$$Limit;
-
-/*----------------------------------------------------------------------------
   Internal References
  *----------------------------------------------------------------------------*/
+void Vectors       (void) __attribute__ ((section("RESET")));
 void Reset_Handler(void);
 
 /*----------------------------------------------------------------------------
@@ -66,9 +57,7 @@ void FIQ_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector Table
  *----------------------------------------------------------------------------*/
-void Vectors(void) __attribute__ ((section("RESET")));
 __ASM void Vectors(void) {
-  IMPORT Reset_Handler
   IMPORT Undef_Handler
   IMPORT SVC_Handler
   IMPORT PAbt_Handler
@@ -88,72 +77,67 @@ __ASM void Vectors(void) {
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
-void Reset_Handler(void) {
-uint32_t reg;
+__ASM void Reset_Handler(void) {
+
+  // Mask interrupts
+  CPSID  if                           
 
   // Put any cores other than 0 to sleep
-  if ((__get_MPIDR()&3U)!=0) __WFI();
+  MRC    p15, 0, R0, c0, c0, 5       // Read MPIDR
+  ANDS   R0, R0, #3
+goToSleep
+  WFINE
+  BNE    goToSleep
 
-  reg  = __get_SCTLR();  // Read CP15 System Control register
-  reg &= ~(0x1 << 12);   // Clear I bit 12 to disable I Cache
-  reg &= ~(0x1 <<  2);   // Clear C bit  2 to disable D Cache
-  reg &= ~(0x1 <<  0);   // Clear M bit  0 to disable MMU
-  reg &= ~(0x1 << 11);   // Clear Z bit 11 to disable branch prediction
-  reg &= ~(0x1 << 13);   // Clear V bit 13 to disable hivecs
-  __set_SCTLR(reg);      // Write value back to CP15 System Control register
-  __ISB();
+  // Reset SCTLR Settings
+  MRC    p15, 0, R0, c1, c0, 0       // Read CP15 System Control register
+  BIC    R0, R0, #(0x1 << 12)        // Clear I bit 12 to disable I Cache
+  BIC    R0, R0, #(0x1 <<  2)        // Clear C bit  2 to disable D Cache
+  BIC    R0, R0, #0x1                // Clear M bit  0 to disable MMU
+  BIC    R0, R0, #(0x1 << 11)        // Clear Z bit 11 to disable branch prediction
+  BIC    R0, R0, #(0x1 << 13)        // Clear V bit 13 to disable hivecs
+  MCR    p15, 0, R0, c1, c0, 0       // Write value back to CP15 System Control register
+  ISB
 
-  reg  = __get_ACTRL();  // Read CP15 Auxiliary Control Register
-  reg |= (0x1 <<  1);    // Enable L2 prefetch hint (UNK/WI since r4p1)
-  __set_ACTRL(reg);      // Write CP15 Auxiliary Control Register
+  // Configure ACTLR
+  MRC    p15, 0, r0, c1, c0, 1       // Read CP15 Auxiliary Control Register
+  ORR    r0, r0, #(1 <<  1)          // Enable L2 prefetch hint (UNK/WI since r4p1)
+  MCR    p15, 0, r0, c1, c0, 1       // Write CP15 Auxiliary Control Register
 
-  __set_VBAR((uint32_t)((uint32_t*)&Vectors));
+  // Set Vector Base Address Register (VBAR) to point to this application's vector table
+	LDR    R0, =Vectors
+	MCR    p15, 0, R0, c12, c0, 0
 
   // Setup Stack for each exceptional mode
-  __set_mode(FIQ_MODE);
-  __set_SP((uint32_t)&Image$$FIQ_STACK$$ZI$$Limit);
-  __set_mode(IRQ_MODE);
-  __set_SP((uint32_t)&Image$$IRQ_STACK$$ZI$$Limit);
-  __set_mode(SVC_MODE);
-  __set_SP((uint32_t)&Image$$SVC_STACK$$ZI$$Limit);
-  __set_mode(ABT_MODE);
-  __set_SP((uint32_t)&Image$$ABT_STACK$$ZI$$Limit);
-  __set_mode(UND_MODE);
-  __set_SP((uint32_t)&Image$$UND_STACK$$ZI$$Limit);
-  __set_mode(SYS_MODE);
-  __set_SP((uint32_t)&Image$$ARM_LIB_STACK$$ZI$$Limit);
+  IMPORT |Image$$FIQ_STACK$$ZI$$Limit|
+  IMPORT |Image$$IRQ_STACK$$ZI$$Limit|
+  IMPORT |Image$$SVC_STACK$$ZI$$Limit|
+  IMPORT |Image$$ABT_STACK$$ZI$$Limit|
+  IMPORT |Image$$UND_STACK$$ZI$$Limit|
+  IMPORT |Image$$ARM_LIB_STACK$$ZI$$Limit|
+  CPS    #0x11
+  LDR    SP, =|Image$$FIQ_STACK$$ZI$$Limit|
+  CPS    #0x12
+  LDR    SP, =|Image$$IRQ_STACK$$ZI$$Limit|
+  CPS    #0x13
+  LDR    SP, =|Image$$SVC_STACK$$ZI$$Limit|
+  CPS    #0x17
+  LDR    SP, =|Image$$ABT_STACK$$ZI$$Limit|
+  CPS    #0x1B
+  LDR    SP, =|Image$$UND_STACK$$ZI$$Limit|
+  CPS    #0x1F
+  LDR    SP, =|Image$$ARM_LIB_STACK$$ZI$$Limit|
 
-  // Create Translation Table
-  MMU_CreateTranslationTable();
+  // Call SystemInit
+  IMPORT SystemInit
+  BL     SystemInit
 
-  // Invalidate entire Unified TLB
-  __set_TLBIALL(0);
-  // Invalidate entire branch predictor array
-  __set_BPIALL(0);
-  __DSB();
-  __ISB();
-  //  Invalidate instruction cache and flush branch target cache
-  __set_ICIALLU(0);
-  __DSB();
-  __ISB();
+  // Unmask interrupts
+  CPSIE  if
 
-  //  Invalidate data cache
-  __L1C_CleanInvalidateCache(0);
-
-  // Enable MMU, but leave caches disabled (they will be enabled later)
-  reg  = __get_SCTLR();  // Read CP15 System Control register
-  reg |=  (0x1 << 29);   // Set AFE bit 29 to enable simplified access permissions model
-  reg &= ~(0x1 << 28);   // Clear TRE bit 28 to disable TEX remap
-  reg &= ~(0x1 << 12);   // Clear I bit 12 to disable I Cache
-  reg &= ~(0x1 <<  2);   // Clear C bit  2 to disable D Cache
-  reg &= ~(0x1 <<  1);   // Clear A bit  1 to disable strict alignment fault checking
-  reg |=  (0x1 <<  0);	 // Set M bit 0 to enable MMU
-  __set_SCTLR(reg);      // Write CP15 System Control register
-
-  SystemInit();
-
-  extern void __main(void);
-  __main();
+  // Call __main
+  IMPORT __main
+  BL     __main
 }
 
 /*----------------------------------------------------------------------------
