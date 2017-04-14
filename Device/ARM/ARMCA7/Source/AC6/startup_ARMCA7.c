@@ -61,11 +61,11 @@ void Vectors(void) {
   __ASM volatile(
   "LDR    PC, =Reset_Handler                        \n"
   "LDR    PC, =Undef_Handler                        \n"
-  "LDR    PC, =FreeRTOS_SWI_Handler                 \n"
+  "LDR    PC, =SVC_Handler                          \n"
   "LDR    PC, =PAbt_Handler                         \n"
   "LDR    PC, =DAbt_Handler                         \n"
   "NOP                                              \n"
-  "LDR    PC, =FreeRTOS_IRQ_Handler                 \n"
+  "LDR    PC, =IRQ_Handler                          \n"
   "LDR    PC, =FIQ_Handler                          \n"
   );
 }
