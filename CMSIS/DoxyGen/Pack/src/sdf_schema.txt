@@ -318,7 +318,7 @@ The \b config_items applicable to the \ref element_debug "debug" element are the
 | TRSTHoldTime           | TAP reset hold time in milliseconds - Default Value:10 |
 | TRSTPostResetTime      | Delay after TAP reset before next operation - Default Value:10 |
 | ResetHoldTime          | Time in milliseconds that the target is held in a hardware reset state - Default Value:100 |
-| PostResetDelay         | Time in milliseconds that the target will wait after reset is released before attempting any other debugging operations - Default Value:1000 |
+| PostResetDelay         | Time in milliseconds that the target will wait after reset is released before attempting any other debugging operations - Default Value:10 |
 | Linked_SRST_TRST       | Target hardware has System Reset and TAP reset physically linked (True/False) - Default Value:False|
 
 Device element
@@ -400,18 +400,6 @@ Describes the recommended trace configuration for the device.
     <td>complexType</td>
     <td>0..*</td>  
   </tr>
-  <tr>
-    <th>Attributes</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Use</th>
-  </tr>
-  <tr>
-    <td>type</td>
-    <td>Trace type - either parallel or HSSTP.</td>
-    <td>xs:string</td>
-    <td>required</td>
-  </tr>  
 </table>
 
 \delim
