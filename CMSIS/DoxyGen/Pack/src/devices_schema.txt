@@ -3903,12 +3903,28 @@ Describes a patch a debugger shall apply when reading data from the device.
 
 \b Example
 \code
-<family Dfamily="LPC800 Series" Dvendor="NXP:11">
+<family Dfamily="M0 Series" Dvendor="Generic:5">
   ...
-  <debug svd="SVD\LPC800.svd">
-    ...
-    <datapatch type="Mem" __ap="0" address="0x1400000C" value="0x10000000" mask="0xFFFFFFFF" info="Patch MTB BASE register"/>
-    ...
+  <debug>
+    <!-- Patched ROM Table for a Cortex-M0+ -->
+    <datapatch  type=”AP”__dp="0" __ap="0" address="0xF8" value="0xE00FF003" info="AP BASE Register, ROM Table at 0xE00FF000"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FF000" value="0xFFF0F003" info="ROM Table pointer to SCS at 0xE000E000"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FF004" value="0xFFF02003" info="ROM Table pointer to DWT at 0xE0001000"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FF008" value="0xFFF03003" info="ROM Table pointer to BPU at 0xE0002000"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FF00C" value="0x00000000" info="ROM Table End Marker"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFCC" value="0x00000001" info="ROM Table MEMTYPE"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFD0" value="0x00000004" info="ROM Table Peripheral ID4"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFD4" value="0x00000000" info="ROM Table Peripheral ID5"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFD8" value="0x00000000" info="ROM Table Peripheral ID6"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFDC" value="0x00000000" info="ROM Table Peripheral ID7"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFE0" value="0x000000C0" info="ROM Table Peripheral ID0"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFE4" value="0x000000B4" info="ROM Table Peripheral ID1"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFE8" value="0x0000000B" info="ROM Table Peripheral ID2"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFEC" value="0x00000000" info="ROM Table Peripheral ID3"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFF0" value="0x0000000D" info="ROM Table Component  ID0"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFF4" value="0x00000010" info="ROM Table Component  ID1"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFF8" value="0x00000005" info="ROM Table Component  ID2"/>
+    <datapatch  __dp="0" __ap="0" address="0xE00FFFFC" value="0x000000B1" info="ROM Table Component  ID3"/>
   </debug>
   ...
 </family>
