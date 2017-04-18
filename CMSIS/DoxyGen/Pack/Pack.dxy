@@ -775,6 +775,7 @@ INPUT                  = . \
                          src/generators_schema.txt \
                          src/xml_types.txt \
                          src/cpdsc_schema.txt \
+                         src/sdf_schema.txt \
                          src/pack_index.txt
 
 # This tag can be used to specify the character encoding of the source files
