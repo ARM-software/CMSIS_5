@@ -213,30 +213,40 @@ void osRtxPostProcess (os_object_t *object) {
 
 /// Setup System Timer.
 __WEAK int32_t osRtxSysTimerSetup (void) {
-
+#ifdef SysTick
   // Setup SysTick Timer
   SysTick_Setup(osRtxInfo.kernel.sys_freq / osRtxConfig.tick_freq);
 
   return SysTick_IRQn;                  // Return IRQ number of SysTick
+#else
+  return 0;
+#endif
 }
 
 /// Enable System Timer.
 __WEAK void osRtxSysTimerEnable (void) {
+#ifdef SysTick
   SysTick_Enable();
+#endif
 }
 
 /// Disable System Timer.
 __WEAK void osRtxSysTimerDisable (void) {
+#ifdef SysTick
   SysTick_Disable();
+#endif
 }
 
 /// Acknowledge System Timer IRQ.
 __WEAK void osRtxSysTimerAckIRQ (void) {
+#ifdef SysTick
   SysTick_GetOvf();
+#endif
 }
 
 /// Get System Timer count.
 __WEAK uint32_t osRtxSysTimerGetCount (void) {
+#ifdef SysTick
   uint32_t tick;
   uint32_t val;
 
@@ -249,9 +259,16 @@ __WEAK uint32_t osRtxSysTimerGetCount (void) {
   val += tick * SysTick_GetPeriod();
 
   return val;
+#else
+  return 0U;
+#endif
 }
 
 /// Get System Timer frequency.
 __WEAK uint32_t osRtxSysTimerGetFreq (void) {
+#ifdef SysTick
   return osRtxInfo.kernel.sys_freq;
+#else
+  return 0U;
+#endif
 }

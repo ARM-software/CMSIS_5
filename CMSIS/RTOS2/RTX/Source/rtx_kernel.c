@@ -279,6 +279,7 @@ osStatus_t svcRtxKernelStart (void) {
   }
   osRtxThreadSwitch(thread);
 
+#if (__ARM_ARCH_7A__ == 0U)
   if ((osRtxConfig.flags & osRtxConfigPrivilegedMode) != 0U) {
     // Privileged Thread mode & PSP
     __set_CONTROL(0x02U);
@@ -286,6 +287,7 @@ osStatus_t svcRtxKernelStart (void) {
     // Unprivileged Thread mode & PSP
     __set_CONTROL(0x03U);
   }
+#endif
 
   osRtxInfo.kernel.sys_freq = SystemCoreClock;
 
