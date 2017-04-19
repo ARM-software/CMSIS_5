@@ -429,6 +429,18 @@ Describes settings for the trace capture device.
     <td>complexType</td>
     <td>0..*</td>  
   </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>Trace capture type: parallel or HSSTP.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
 </table>
 
 \delim
