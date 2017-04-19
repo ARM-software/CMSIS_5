@@ -331,15 +331,16 @@ __STATIC_INLINE void __set_CPSR(uint32_t cpsr)
     \return                Processor Mode
  */
 __STATIC_INLINE uint32_t __get_mode(void) {
-	return (__get_CPSR() & 0x1FU);
+  return (__get_CPSR() & 0x1FU);
 }
 
 /** \brief  Set Mode
     \param [in]    mode  Mode value to set
  */
 __STATIC_INLINE __ASM void __set_mode(uint32_t mode) {
+  MOV  r1, lr
   MSR  CPSR_C, r0
-  BX   lr
+  BX   r1
 }
 
 /** \brief  Set Stack Pointer
