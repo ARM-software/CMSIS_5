@@ -2,7 +2,7 @@
  * @file     core_cm23.h
  * @brief    CMSIS Cortex-M23 Core Peripheral Access Layer Header File
  * @version  V5.0.2
- * @date     13. February 2017
+ * @date     19. April 2017
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
@@ -60,11 +60,13 @@
   @{
  */
 
-/*  CMSIS cmGrebe definitions */
-#define __CM23_CMSIS_VERSION_MAIN  ( 5U)                                       /*!< [31:16] CMSIS HAL main version */
-#define __CM23_CMSIS_VERSION_SUB   ( 0U)                                       /*!< [15:0]  CMSIS HAL sub version */
+#include "cmsis_version.h"
+
+/*  CMSIS definitions */
+#define __CM23_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                   /*!< \deprecated [31:16] CMSIS HAL main version */
+#define __CM23_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                    /*!< \deprecated [15:0]  CMSIS HAL sub version */
 #define __CM23_CMSIS_VERSION       ((__CM23_CMSIS_VERSION_MAIN << 16U) | \
-                                     __CM23_CMSIS_VERSION_SUB           )      /*!< CMSIS HAL version number */
+                                     __CM23_CMSIS_VERSION_SUB           )      /*!< \deprecated CMSIS HAL version number */
 
 #define __CORTEX_M                     (23U)                                   /*!< Cortex-M Core */
 
