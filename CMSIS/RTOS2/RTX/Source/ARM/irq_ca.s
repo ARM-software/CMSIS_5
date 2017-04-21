@@ -281,7 +281,7 @@ SVC_Handler\
 
                 MRS     R12, SPSR                   ; Load SPSR
                 TST     R12, #CPSR_BIT_T            ; Thumb bit set?
-                LDRNEH  R12, [LR,#-2]               ; Thumb: load halfword
+                LDRHNE  R12, [LR,#-2]               ; Thumb: load halfword
                 BICNE   R12, R12, #0xFF00           ;        extract SVC number
                 LDREQ   R12, [LR,#-4]               ; ARM:   load word
                 BICEQ   R12, R12, #0xFF000000       ;        extract SVC number
