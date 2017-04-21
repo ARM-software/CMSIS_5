@@ -843,7 +843,12 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="CA_ARMCC">
       <description>Cortex-A5, Cortex-A7 or Cortex-A9 processor based device for the ARM Compiler</description>
       <require condition="ARMv7-A Device"/>
-      <require Tcompiler="ARMCC"/>
+      <require condition="ARMCC"/>
+    </condition>
+	<condition id="CA_ARMCC6">
+      <description>Cortex-A5, Cortex-A7 or Cortex-A9 processor based device for the ARM Compiler 6</description>
+      <require condition="ARMv7-A Device"/>
+      <require condition="ARMCC6"/>
     </condition>
 
     <condition id="CM0_ARMCC">
@@ -2541,6 +2546,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_lib.c"/>
         <!-- RTX sources (handlers ARMCC) -->
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_ca.s"          condition="CA_ARMCC"/>
+		<file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_ca.S"          condition="CA_ARMCC6"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm0.s"         condition="CM0_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM3_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM4_ARMCC"/>
