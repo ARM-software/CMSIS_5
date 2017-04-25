@@ -429,7 +429,7 @@ extern "C"
    * @brief definition to read/write two 16 bit values.
    */
 #if   defined ( __CC_ARM )
-  #define __SIMD32_TYPE int32_t __packed
+  #define __SIMD32_TYPE int32_t
   #define CMSIS_UNUSED __attribute__((unused))
   #define CMSIS_INLINE __attribute__((always_inline))
 
