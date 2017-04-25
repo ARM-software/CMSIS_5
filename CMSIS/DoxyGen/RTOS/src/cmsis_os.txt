@@ -2885,7 +2885,7 @@ When these signal flags are already set, the function returns instantly. Otherwi
 Signal flags that are reported as event are automatically cleared.
 
 The argument \a millisec specifies how long the system waits for the specified signal flags.
-While the system waits the tread calling this function is put into the state \b WAITING.
+While the system waits the thread calling this function is put into the state \b WAITING.
 The timeout value can have the following values:
  - when \a millisec is 0, the function returns instantly.
  - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until a specified signal is set.
@@ -3507,7 +3507,7 @@ Allocate a memory block from the mail queue that is filled with the mail informa
 The argument \a queue_id specifies a mail queue identifier that is obtain with \ref osMailCreate.
 
 The argument \a millisec specifies how long the system waits for a mail slot to become available.
-While the system waits the tread calling this function is put into the state \b WAITING.
+While the system waits the thread calling this function is put into the state \b WAITING.
 The \a millisec timeout can have the following values:
  - when \a millisec is 0, the function returns instantly.
  - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until a mail slot can be allocated.
