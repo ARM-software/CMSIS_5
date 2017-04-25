@@ -91,6 +91,7 @@
 #ifndef   __UNALIGNED_UINT32_READ
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wpacked"
+//lint -esym(9058, T_UINT32_READ)  disable MISRA 2012 Rule 2.4 for T_UINT32_READ
   __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
   #pragma clang diagnostic pop
   #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(addr))->v)
