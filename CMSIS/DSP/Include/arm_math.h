@@ -294,7 +294,7 @@
 #define _ARM_MATH_H
 
 /* ignore some GCC warnings */
-#if defined ( __GNUC__ )
+#if defined ( __GNUC__ ) && !defined ( __CC_ARM )
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wconversion"
@@ -7214,7 +7214,7 @@ void arm_rfft_fast_f32(
 #endif
 
 
-#if defined ( __GNUC__ )
+#if defined ( __GNUC__ ) && !defined ( __CC_ARM )
 #pragma GCC diagnostic pop
 #endif
 
