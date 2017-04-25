@@ -105,6 +105,26 @@
     #define __ALIGNED(x)
   #endif
 
+  // Workaround for missing __CLZ intrinsic in
+  // IAR compilers prior 8.0
+  #if (__CORE__ == __ARM6M__) && (__VER__ < 8000000)
+    __STATIC_INLINE uint32_t __CLZ(uint32_t data)
+    {
+      if (data == 0u) { return 32u; }
+      
+      uint32_t count = 0;
+      uint32_t mask = 0x80000000;
+      
+      while ((data & mask) == 0)
+      {
+        count += 1u;
+        mask = mask >> 1u;
+      }
+      
+      return (count);
+    }
+  #endif
+
 
 /*
  * TI ARM Compiler
