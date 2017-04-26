@@ -1486,7 +1486,7 @@
     <event id="0xF100 + 0x13" level="API"    property="KernelGetTickCount"        value="count=%d[((uint64_t)val2 &lt;&lt; 32) | val1]" info="osKernelGetTickCount function was called."/>
     <event id="0xF100 + 0x14" level="API"    property="KernelGetTickFreq"         value="freq=%d[val1]" info="osKernelGetTickFreq function was called."/>
     <event id="0xF100 + 0x15" level="API"    property="KernelGetSysTimerCount"    value="count=%d[val1]" info="osKernelGetSysTimerCount function was called."/>
-    <event id="0xF100 + 0x16" level="API"    property="KernelGetSysTimerFreq"     value="freq=%d[va1]" info="osKernelGetSysTimerFreq function was called."/>
+    <event id="0xF100 + 0x16" level="API"    property="KernelGetSysTimerFreq"     value="freq=%d[val1]" info="osKernelGetSysTimerFreq function was called."/>
 
     <event id="0xF200 + 0x00" level="Error"  property="ThreadError"                 value="thread_id=%x[val1], status=%E[val2, rtx_t:status]" info="Thread error occurred."/>
     <event id="0xF200 + 0x01" level="API"    property="ThreadNew"                   value="func=%S[val1], argument=%x[val2], attr=%x[val3]" info="osThreadNew function was called."/>
