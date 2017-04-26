@@ -203,7 +203,7 @@
     <xs:restriction base="xs:string">
       <xs:minLength value="0"/>
       <xs:maxLength value="32"/>
-      <xs:pattern value="\S(.*\S)?"></xs:pattern>
+      <!-- <xs:pattern value="\S(.*\S)?"></xs:pattern> not backward compatible -->
     </xs:restriction>
   </xs:simpleType>
 
