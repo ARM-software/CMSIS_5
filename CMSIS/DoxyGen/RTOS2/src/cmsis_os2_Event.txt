@@ -116,16 +116,27 @@ set to \token{NULL}, i.e. kernel memory allocation is used for the event control
 
 <b>Code Example</b>
 \code
-#include "cmsis_os2.h"
-
-osEventFlagsId_t event_id;
-  
-void CreateEvent (void)  {
-
-  event_id = osEventFlagsNew(NULL);
-  if (event_id != NULL)  {
-    // Event object created
-  }   
+#include "cmsis_os2.h"                                        // CMSIS RTOS header file
+ 
+osEventFlagsId_t evt_id;                                      // message queue id
+ 
+void Thread_EventSender (void *argument)
+{
+  evt_id = osEventFlagsNew(NULL);
+  while (1) {    
+    osEventFlagsSet(evt_id, FLAGS_MSK1);
+    osThreadYield ();                                         // suspend thread
+  }
+}
+ 
+void Thread_EventReceiver (void *argument)
+{
+  uint32_t  flags;
+ 
+  while (1) {
+    flags = osEventFlagsWait (evt_id,FLAGS_MSK1,osFlagsWaitAny, osWaitForever);
+    //handle event
+  }
 }
 \endcode
 */
@@ -144,6 +155,32 @@ Possible \ref flags_error_codes return values:
     - \em osFlagsErrorParameter: Parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
 	
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os2.h"                                        // CMSIS RTOS header file
+ 
+osEventFlagsId_t evt_id;                                      // message queue id
+ 
+void Thread_EventSender (void *argument)
+{
+  evt_id = osEventFlagsNew(NULL);
+  while (1) {    
+    osEventFlagsSet(evt_id, FLAGS_MSK1);
+    osThreadYield ();                                         // suspend thread
+  }
+}
+ 
+void Thread_EventReceiver (void *argument)
+{
+  uint32_t  flags;
+ 
+  while (1) {
+    flags = osEventFlagsWait (evt_id,FLAGS_MSK1,osFlagsWaitAny, osWaitForever);
+    //handle event
+  }
+}
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -201,6 +238,32 @@ Possible \ref flags_error_codes return values:
     - \em osFlagsErrorParameter: Parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+#include "cmsis_os2.h"                                        // CMSIS RTOS header file
+ 
+osEventFlagsId_t evt_id;                                      // message queue id
+ 
+void Thread_EventSender (void *argument)
+{
+  evt_id = osEventFlagsNew(NULL);
+  while (1) {    
+    osEventFlagsSet(evt_id, FLAGS_MSK1);
+    osThreadYield ();                                         // suspend thread
+  }
+}
+ 
+void Thread_EventReceiver (void *argument)
+{
+  uint32_t  flags;
+ 
+  while (1) {
+    flags = osEventFlagsWait (evt_id,FLAGS_MSK1,osFlagsWaitAny, osWaitForever);
+    //handle event
+  }
+}
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -249,19 +312,21 @@ void EvtFlagsGetName_example (void)  {
 /**
 \var osEventFlagsAttr_t::attr_bits
 \details
-No attributes available.
+Reserved for future use (set to '0').\n
+Default: \token{0}.
 
 \var osEventFlagsAttr_t::cb_mem
 \details
-Pointer to a memory location for the event object. This can optionally be used for custom memory management systems. 
-Specify \token{NULL} to use the kernel memory management.
+Pointer to a memory location for the event control block object. This can optionally be used for custom memory management systems.\n
+Default: \token{NULL} (uses kernel memory management).
 
 
 \var osEventFlagsAttr_t::cb_size
 \details
-The size of the memory block passed with \ref cb_mem. Must be the size of an event object or larger.
+The size of the memory block passed with \ref cb_mem. Must be the size of an event control block object or larger.
 
 \var osEventFlagsAttr_t::name
 \details
-String with a human readable name of the event object.
+Pointer to a string with a human readable name of the event object.\n
+Default: \token{NULL}.
 */
