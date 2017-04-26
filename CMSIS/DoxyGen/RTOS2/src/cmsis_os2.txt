@@ -1753,6 +1753,29 @@ By default, RTX5 uses the Cortex-M SysTick timer, but using \b osRtxSysTimerSetu
 timer. 
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+int32_t osRtxSysTimerSetup (void) {
+  uint32_t load;
+ 
+  /* Private Timer runs with the system frequency */
+  load = osRtxInfo.kernel.sys_freq / osRtxConfig.tick_freq;
+ 
+  PTIM_SetLoadValue (load - 1U);
+ 
+  /* Determine number of implemented priority bits */
+  GIC_SetPriority (PrivTimer_IRQn, 0xFFU);
+ 
+  /* Set lowest priority -1 */
+  GIC_SetPriority (PrivTimer_IRQn, GIC_GetPriority(PrivTimer_IRQn)-1);
+	
+  /* Enable IRQ */
+  GIC_EnableIRQ (PrivTimer_IRQn);
+ 
+  return (PrivTimer_IRQn);
+}
+\endcode
 */ 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -1762,6 +1785,20 @@ timer.
 The function \b osRtxSysTimerEnable enables the alternative system timer that has been set up using \ref osRtxSysTimerSetup.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+void osRtxSysTimerEnable (void) {
+  /* Start the Private Timer */
+  uint32_t ctrl;
+ 
+  ctrl  = PTIM_GetControl();
+  /* Set bits: IRQ enable, Auto Reload, Timer enable */
+  ctrl |= 7U;
+ 
+  PTIM_SetControl (ctrl);
+}
+\endcode
 */ 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -1771,6 +1808,20 @@ The function \b osRtxSysTimerEnable enables the alternative system timer that ha
 The function \b osRtxSysTimerDisable disables the alternative system timer that has been set up using \ref osRtxSysTimerSetup.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+void osRtxSysTimerDisable (void) {
+  /* Stop the Private Timer */
+  uint32_t ctrl;
+ 
+  ctrl  = PTIM_GetControl();
+  /* Clear bit: Timer enable */
+  ctrl &= ~1;
+ 
+  PTIM_SetControl (ctrl);
+}
+\endcode
 */ 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -1779,6 +1830,13 @@ The function \b osRtxSysTimerDisable disables the alternative system timer that 
 \details
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+void osRtxSysTimerAckIRQ (void) {
+  PTIM_ClearEventFlag();
+}
+\endcode
 */ 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -1789,6 +1847,28 @@ The function \b osRtxSysTimerGetCount returns the system timer count of the alte
 \ref osRtxSysTimerSetup.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+uint32_t osRtxSysTimerGetCount (void) {
+  uint32_t tick;
+  uint32_t val;
+ 
+  tick = (uint32_t)osRtxInfo.kernel.tick;
+  val  = PTIM_GetLoadValue();
+  val -= PTIM_GetCurrentValue();
+ 
+  /* if (PTIM_GetEventFlag() != 0) */
+  if ((PTIM->ISR & 1) != 0) {
+    val  = PTIM_GetLoadValue();
+    val -= PTIM_GetCurrentValue();
+    tick++;
+  }
+  val += tick * (PTIM_GetLoadValue() + 1U);
+ 
+  return val;
+}
+\endcode
 */ 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -1799,6 +1879,14 @@ The function \b osRtxSysTimerGetFreq returns the system timer frequency of the a
 \ref osRtxSysTimerSetup.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+uint32_t osRtxSysTimerGetFreq (void) {
+  /* Private Timer runs with the system frequency */
+  return osRtxInfo.kernel.sys_freq;
+}
+\endcode
 */
 
 /**

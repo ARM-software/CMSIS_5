@@ -225,3 +225,26 @@ Possible \ref osStatus_t return values:
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /// @}
+
+// these struct members must stay outside the group to avoid double entries in documentation
+/**
+\var osSemaphoreAttr_t::attr_bits
+\details
+Reserved for future use (set to '0').\n
+Default: \token{0}.
+
+\var osSemaphoreAttr_t::cb_mem
+\details
+Pointer to a memory location for the semaphore control block object. This can optionally be used for custom memory management systems.\n
+Default: \token{NULL} (uses kernel memory management).
+
+
+\var osSemaphoreAttr_t::cb_size
+\details
+The size of the memory block passed with \ref cb_mem. Must be the size of a semaphore control block object or larger.
+
+\var osSemaphoreAttr_t::name
+\details
+Pointer to a string with a human readable name of the semaphore object.\n
+Default: \token{NULL}.
+*/

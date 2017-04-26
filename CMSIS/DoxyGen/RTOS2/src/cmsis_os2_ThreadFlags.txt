@@ -27,9 +27,24 @@ Possible \ref flags_error_codes return values:
     - \em osFlagsErrorParameter: Parameter \em thread_id is not a valid thread or \em flags has highest bit set.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+/*----------------------------------------------------------------------------
+ *      Function 'signal_func' called from multiple threads
+ *---------------------------------------------------------------------------*/
+void signal_func (osThreadId_t tid)  {
+  osThreadFlagsSet(tid_clock, 0x0100);      /* set signal to clock thread    */
+  osDelay(500);                             /* delay 500ms                   */
+  osThreadFlagsSet(tid_clock, 0x0100);      /* set signal to clock thread    */
+  osDelay(500);                             /* delay 500ms                   */
+  osThreadFlagsSet(tid, 0x0001);            /* set signal to thread 'thread' */
+  osDelay(500);                             /* delay 500ms                   */
+}
+\endcode
 */
 
-/*=======0=========1=========2=========3=========4=========5=========6=========7=======osThreadFlagsClear==8=========9=========0=========1====*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \fn uint32_t osThreadFlagsClear (uint32_t flags)
 \details
 The function \b osThreadFlagsClear clears the specified flags for the currently running thread. It returns the
@@ -42,6 +57,7 @@ Possible \ref flags_error_codes return values:
 	
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
+
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** \fn uint32_t osThreadFlagsGet (void)
 \details
