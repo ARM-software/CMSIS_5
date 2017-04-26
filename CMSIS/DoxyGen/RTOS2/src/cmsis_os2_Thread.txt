@@ -40,7 +40,8 @@ states change as follows:
 
 \note 
 Refer to \ref threadConfig for RTX5 configuration options.
- 
+
+\anchor thread_examples
 Thread Examples
 ===============
 The following examples show various scenarios to create threads:
@@ -303,6 +304,10 @@ started (call to \ref osKernelStart), but not before it is initialized (call to 
 The function \b osThreadNew returns the pointer to the thread object identifier or \token{NULL} in case of an error.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+
+Refer to the \ref thread_examples "Thread Examples" section.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -659,8 +664,8 @@ The following predefined bit masks can be assigned to set options for a thread o
 
 \var osThreadAttr_t::cb_mem
 \details
-Pointer to a memory location for the thread object. This can optionally be used for custom memory management systems. 
-Specify \token{NULL} to use the kernel memory management.
+Pointer to a memory location for the thread control block object. This can optionally be used for custom memory management systems.\n
+Default: \token{NULL} (uses kernel memory management).
 
 \var osThreadAttr_t::cb_size
 \details
@@ -668,20 +673,24 @@ The size of the memory block passed with \ref cb_mem. Must be the size of a thre
 
 \var osThreadAttr_t::name
 \details
-String with a human readable name of the thread object.
+Pointer to a string with a human readable name of the thread object.\n
+Default: \token{NULL}.
 
 \var osThreadAttr_t::priority
 \details
-Specifies the initial thread priority with a value from #osPriority_t.
+Specifies the initial thread priority with a value from #osPriority_t.\n
+Default: \token{osPriorityNormal}
 
 \var osThreadAttr_t::reserved
 \details
-Reserved for future use. Must be \token{0}.
+Reserved for future use (set to '0').\n
+Default: \token{0}.
 
 \var osThreadAttr_t::stack_mem
 \details
-Pointer to a memory location for the thread stack, \b must be 64-bit aligned. This can optionally be used for custom memory management systems. 
-Specify \token{NULL} to use the kernel memory management.
+Pointer to a memory location for the thread stack, \b must be 64-bit aligned. This can optionally be used for custom memory
+management systems.\n
+Default: \token{NULL} (uses kernel memory management).
 
 \var osThreadAttr_t::tz_module
 \details
@@ -691,5 +700,5 @@ See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZon
 
 \var osThreadAttr_t::stack_size
 \details
-The size of the stack in Bytes.
+The size of the stack specified by \ref stack_mem in Bytes.
 */
