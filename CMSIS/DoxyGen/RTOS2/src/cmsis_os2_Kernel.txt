@@ -383,6 +383,21 @@ void osRtxIdleThread (void) {
 The function \b osKernelGetTickCount returns the current RTOS kernel tick count or \token{0} in case of a failure.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+\b Code \b Example
+\code
+#include "cmsis_os2.h"
+ 
+void Thread_1 (void *arg)  {                // Thread function
+  uint64_t tick;
+
+  tick = osKernelGetTickCount();            // retrieve the number of system ticks
+  for (;;) {
+    tick += 1000;                           // delay 1000 ticks periodically
+    osDelayUntil(tick);
+    // ...
+  }
+}\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

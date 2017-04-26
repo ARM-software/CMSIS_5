@@ -247,16 +247,17 @@ Bit Mask                    |  Description
 /**
 \var osMutexAttr_t::cb_mem
 \details
-Pointer to a memory location for the mutex object. This can optionally be used for custom memory management systems. 
-Specify NULL to use the kernel memory management.
+Pointer to a memory location for the mutex control block object. This can optionally be used for custom memory management systems.\n
+Default: \token{NULL} (uses kernel memory management).
 */
 /**
 \var osMutexAttr_t::cb_size
 \details
-The size of the memory block passed with \ref cb_mem. Must be the size of a mutex object or larger.
+The size of the memory block passed with \ref cb_mem. Must be the size of a mutex control block object or larger.
 */
 /**
 \var osMutexAttr_t::name
 \details
-String with a human readable name of the mutex object.
+Pointer to a string with a human readable name of the event object.\n
+Default: \token{NULL}.
 */
