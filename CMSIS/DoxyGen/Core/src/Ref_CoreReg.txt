@@ -717,14 +717,3 @@ __set_MSPLIM(uint32_t MainStackPtrLimit);
 
 
 /** @} */ /** end of Core_Register_gr **/
-
-
-
-/*********************************************
-
-    -todo next year
-            - Some embedded systems might have to execute system restore tasks after
-the processor wakes up, and before it executes an interrupt handler. To achieve this set the
-PRIMASK bit to 1 and the FAULTMASK bit to 0. (\ref __WFI);
-
-**********************************************/
