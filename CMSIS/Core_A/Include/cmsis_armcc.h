@@ -552,6 +552,17 @@ __STATIC_INLINE void __set_VBAR(uint32_t vbar)
   __regVBAR = vbar;
 }
 
+/** \brief  Set CNTFRQ
+
+  This function assigns the given value to PL1 Physical Timer Counter Frequency Register (CNTFRQ).
+
+  \param [in]    value  CNTFRQ Register value to set
+*/
+__STATIC_INLINE void __set_CNTFRQ(uint32_t value) {
+  register uint32_t __regCNTFRQ         __ASM("cp15:0:c14:c0:0");
+  __regCNTFRQ = value;
+}
+
 /** \brief  Set CNTP_TVAL
 
   This function assigns the given value to PL1 Physical Timer Value Register (CNTP_TVAL).

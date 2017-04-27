@@ -545,6 +545,16 @@ __STATIC_INLINE void __set_VBAR(uint32_t vbar)
   __ASM volatile("MCR p15, 0, %0, c12, c0, 1" : : "r"(vbar) : "memory");
 }
 
+/** \brief  Set CNTFRQ
+
+  This function assigns the given value to PL1 Physical Timer Counter Frequency Register (CNTFRQ).
+
+  \param [in]    value  CNTFRQ Register value to set
+*/
+__STATIC_INLINE void __set_CNTFRQ(uint32_t value) {
+  __ASM volatile("MCR p15, 0, %0, c14, c0, 0" : : "r"(value) : "memory");
+}
+
 /** \brief  Set CNTP_TVAL
 
   This function assigns the given value to PL1 Physical Timer Value Register (CNTP_TVAL).
