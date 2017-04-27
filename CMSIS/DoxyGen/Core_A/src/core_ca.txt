@@ -412,7 +412,7 @@ Hardware Abstraction Layer.
 \fn __STATIC_INLINE void L1C_InvalidateDCacheAll(void) 
 \fn __STATIC_INLINE void L1C_CleanDCacheAll(void) 
 \fn __STATIC_INLINE void L1C_CleanInvalidateDCacheAll(void) 
-\fn __STATIC_ASM void __L1C_CleanInvalidateCache(uint32_t op) 
+\fn __STATIC_INLINE __ASM void __L1C_CleanInvalidateCache(uint32_t op) 
 @}
 */
 
@@ -526,7 +526,7 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value);
 \defgroup FPU_functions Floating Point Unit Functions
 \brief FPU functions
 @{
-\fn __STATIC_ASM void __FPU_Enable(void) 
+\fn __STATIC_INLINE __ASM void __FPU_Enable(void) 
 @}
 */
 

@@ -43,10 +43,7 @@
 #endif                                          
 #ifndef   __STATIC_INLINE                       
   #define __STATIC_INLINE                        static __inline
-#endif                                          
-#ifndef   __STATIC_ASM                          
-  #define __STATIC_ASM                           static __asm
-#endif                                          
+#endif                                                                                   
 #ifndef   __NO_RETURN                           
   #define __NO_RETURN                            __declspec(noreturn)
 #endif                                          
