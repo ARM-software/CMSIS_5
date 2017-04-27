@@ -628,6 +628,50 @@ the SWD protocol refer to the <b>ARM Debug Interface v5 - Interface Specificatio
 
 /**************************************************************************************************/
 /** 
+\defgroup DAP_SWD_Sequence DAP_SWD_Sequence
+\ingroup DAP_swd_gr
+\brief Generate SWD sequence and output on SWDIO or capture input from SWDIO data.
+\details
+The <b>DAP_SWD_Sequence Command</b> is used to generate special sequences in SWD mode on the pins SWCLK and SWDIO.
+For example, for SWD multi-drop target selection (see picture) it is required to put the SWDIO pin to input mode (where it is not driven).
+
+\image html "SWD_Sequence.png" "SWD sequence for multi-drop target selection"
+
+ - For mode=0 (output: SWDIO is driven), the data for the SWDIO pin are part of the <b>DAP_SWD_Sequence Command</b>.
+ - For mode=1 (input: SWDIO is not driven), the data from the SWDIO pin are captured and returned as part of the <b>DAP_SWD_Sequence Response</b>. 
+
+<b>DAP_SWD_Sequence Command</b>:
+\code
+| BYTE | BYTE **********| BYTE *********| BYTE ******|
+> 0x21 | Sequence Count | Sequence Info | SWDIO Data |
+|******|****************|///////////////|++++++++++++|
+\endcode
+
+- <b>Sequence Count</b>: Number of Sequences
+- <b>Sequence Info</b>: Contains number of SWCLK cycles and SWDIO mode
+  - Bit 5 .. 0: Number of TCK cycles: 1 .. 64 (64 encoded as 0)
+  - Bit 6: reserved
+  - Bit 7: mode: 0=output (SWDIO Data in command), 1=input (SWDIO Data in response)
+- <b>SWDIO Data</b> (only for output mode):  Data generated on SWDIO
+  - One bit for each TCK cycle
+  - LSB transmitted first, padded to BYTE boundary
+
+<b>DAP_SWD_Sequence Response</b>:
+\code
+| BYTE | BYTE **| BYTE ******|
+< 0x14 | Status | SWDIO Data |
+|******|********|++++++++++++|
+\endcode
+
+- <b>SWDIO Data</b> (only for input mode):  Data captured from SWDIO
+  - One bit for each SWCLK cycle for input mode
+  - LSB received first, padded to BYTE boundary
+- \b Status: \ref DAP_Response_Status
+*/
+
+
+/**************************************************************************************************/
+/** 
 \defgroup DAP_SWO_Transport DAP_SWO_Transport
 \ingroup DAP_swo_gr
 \brief Set SWO transport mode

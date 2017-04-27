@@ -78,7 +78,8 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
     <tr>
       <td>V1.2.0 (Proposal)</td>
       <td>
-	     Added: Debug Unit Timer in the commands \ref DAP_Info, \ref DAP_Transfer \n
+	     Added: \ref DAP_SWD_Sequence to enable SWD multi-drop target selection \n
+		 Added: Debug Unit Timer in the commands \ref DAP_Info, \ref DAP_Transfer \n
          Added: \ref DAP_PerformanceCounter_gr to support trace data recording (for example power measurement)
       </td>
     </tr>
