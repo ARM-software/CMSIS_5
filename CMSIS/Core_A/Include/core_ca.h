@@ -1126,6 +1126,11 @@ __STATIC_INLINE void GIC_Enable(void)
   
 /* PL1 Physical Timer */
 #if (__CORTEX_A == 7U)
+__STATIC_INLINE void PL1_SetCounterFrequency(uint32_t value) {
+  __set_CNTFRQ(value);
+  __ISB();
+}
+
 __STATIC_INLINE void PL1_SetLoadValue(uint32_t value) {
   __set_CNTP_TVAL(value);
   __ISB();
