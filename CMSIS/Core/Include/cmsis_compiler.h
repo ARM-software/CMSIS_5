@@ -122,8 +122,10 @@
   #endif
 
   // Workaround for missing __CLZ intrinsic in
-  // IAR compilers prior 8.0
-  #if (__CORE__ == __ARM6M__) && (__VER__ < 8000000)
+  // various versions of the IAR compilers.
+  // __IAR_FEATURE_CLZ__ should be defined by
+  // the compiler that supports __CLZ internally.
+  #if __ARM_ARCH_6M__ && !__IAR_FEATURE_CLZ__
     __STATIC_INLINE uint32_t __CLZ(uint32_t data)
     {
       if (data == 0u) { return 32u; }
