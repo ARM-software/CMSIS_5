@@ -74,7 +74,9 @@ The timer repeats automatically and triggers the callback continuously.
 /**
 \typedef osTimerId_t 
 \details
-Instances of this type hold a reference to a timer object.
+Instances of this type hold a reference to a timer object. \n
+Returned by:
+- \ref osTimerNew
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

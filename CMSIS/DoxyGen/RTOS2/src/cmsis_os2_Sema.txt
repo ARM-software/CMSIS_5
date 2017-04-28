@@ -64,6 +64,8 @@ void thread_n (void)
 /**
 \typedef  osSemaphoreId_t
 \details
+Returned by:
+- \ref osSemaphoreNew
 */
 
 /**
