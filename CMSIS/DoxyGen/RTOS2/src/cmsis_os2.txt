@@ -756,7 +756,7 @@ void osRtxIdleThread (void) {
       tc = 0;
       /* Enter the low power state */
       MSP432_LP_Entry();
-      __WFI();
+      __WFE();
     }
     /* Adjust the kernel ticks with the amount of ticks slept */
     osKernelResume (tc);
@@ -765,8 +765,8 @@ void osRtxIdleThread (void) {
 \endcode
 
 \note
-\c __WFI() is not available in every ARM Cortex-M implementation. Check device manuals for availability.
-
+\c __WFE() is not available in every ARM Cortex-M implementation. Check device manuals for availability. 
+The alternative using \c __WFI() has other issues, please take note of http://www.keil.com/support/docs/3591.htm as well.
 
 \section rtx_os_h RTX5 Header File
 
