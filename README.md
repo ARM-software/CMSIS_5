@@ -23,7 +23,7 @@ A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) i
 
  - CMSIS-RTOS API Secure and Non-Secure support, multi-processor support
 
-## Futher Planned Enhancements
+## Further Planned Enhancements
  - CMSIS-Core-A: Cortex-A processor support
  - CMSIS-RTOS: RTX5 for Cortex-A
  - CMSIS-DAP: extended trace support
@@ -51,7 +51,7 @@ For further details see also the [Slides of the Embedded World CMSIS Partner Mee
 
 ## Generate CMSIS Pack for Release
 
-This GitHub development repository contains already pre-build libraries of various libraries (DSP, RTOS, RTOS2).
+This GitHub development repository contains already pre-built libraries of various software components (DSP, RTOS, RTOS2).
 These libraries are validated for release.
 
 To build a complete CMSIS pack for installation the following additional tools are required:
@@ -77,10 +77,10 @@ Contributions are accepted under Apache-2.0. Only submit contributions where you
 ### Issues and Labels
 
 Please feel free to raise an [issue on GitHub](https://github.com/ARM-software/CMSIS_5/issues)
-to report misbehaviour (i.e. bugs) or start discussions about enhancements. This
-is your best way to interact directly with the maintainance team and the community.
+to report misbehavior (i.e. bugs) or start discussions about enhancements. This
+is your best way to interact directly with the maintenance team and the community.
 We encourage you to append implementation suggestions as this helps to decrease the
-workload of the very limited maintainance team. 
+workload of the very limited maintenance team. 
 
 We will be monitoring and responding to issues as best we can.
 Please attempt to avoid filing duplicates of open or closed items when possible.
@@ -88,7 +88,7 @@ In the spirit of openness we will be tagging issues with the following:
 
 - **bug** – We consider this issue to be a bug that will be investigated.
 
-- **wontfix** - We appriciate this issue but decided not to change the current behaviour.
+- **wontfix** - We appreciate this issue but decided not to change the current behavior.
 	
 - **enhancement** – Denotes something that will be implemented soon. 
 
