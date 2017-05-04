@@ -437,7 +437,7 @@ Describes settings for the trace capture device.
   </tr>
   <tr>
     <td>type</td>
-    <td>Trace capture type: parallel or HSSTP.</td>
+    <td>Trace capture type: for example parallel or HSSTP.</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
