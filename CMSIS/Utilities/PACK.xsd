@@ -134,6 +134,7 @@
       <xs:enumeration value="MediaTek:129"/>
       <xs:enumeration value="MegaChips:128"/>
       <xs:enumeration value="Mentor Graphics Co.:24"/>
+      <xs:enumeration value="Microchip:142"/>
       <xs:enumeration value="Micronas:30"/>
       <xs:enumeration value="Microsemi:112"/>
       <xs:enumeration value="Milandr:99"/>
