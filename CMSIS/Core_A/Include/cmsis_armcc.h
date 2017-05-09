@@ -340,7 +340,7 @@ __STATIC_INLINE __ASM void __set_mode(uint32_t mode) {
   BX   r1
 }
 
-/** \brief  Set Stack Pointer
+/** \brief  Set Stack Pointer 
     \param [in]    stack  Stack Pointer value to set
  */
 __STATIC_INLINE __ASM void __set_SP(uint32_t stack)
@@ -366,7 +366,7 @@ __STATIC_INLINE __ASM void __set_SP_usr(uint32_t topOfProcStack)
   BX      LR
 }
 
-/** \brief  Get FPEXC
+/** \brief  Get FPEXC register
     \return               Floating Point Exception Control register value
  */
 __STATIC_INLINE uint32_t __get_FPEXC(void)
@@ -379,7 +379,7 @@ __STATIC_INLINE uint32_t __get_FPEXC(void)
 #endif
 }
 
-/** \brief  Set FPEXC
+/** \brief  Set FPEXC register
     \param [in]    fpexc  Floating Point Exception Control value to set
  */
 __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
@@ -390,7 +390,7 @@ __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
 #endif
 }
 
-/** \brief  Get ACTLR
+/** \brief  Get ACTLR register
     \return               Auxiliary Control register value
  */
 __STATIC_INLINE uint32_t __get_ACTLR(void)
@@ -399,7 +399,7 @@ __STATIC_INLINE uint32_t __get_ACTLR(void)
   return __regACTLR;
 }
 
-/** \brief  Set ACTLR
+/** \brief  Set ACTLR register
     \param [in]    actlr  Auxiliary Control value to set
  */
 __STATIC_INLINE void __set_ACTLR(uint32_t actlr)
@@ -408,7 +408,7 @@ __STATIC_INLINE void __set_ACTLR(uint32_t actlr)
   __regACTLR = actlr;
 }
 
-/** \brief  Get CPACR
+/** \brief  Get CPACR register
     \return               Coprocessor Access Control register value
  */
 __STATIC_INLINE uint32_t __get_CPACR(void)
@@ -417,7 +417,7 @@ __STATIC_INLINE uint32_t __get_CPACR(void)
   return __regCPACR;
 }
 
-/** \brief  Set CPACR
+/** \brief  Set CPACR register
     \param [in]    cpacr  Coprocessor Access Control value to set
  */
 __STATIC_INLINE void __set_CPACR(uint32_t cpacr)
@@ -426,7 +426,7 @@ __STATIC_INLINE void __set_CPACR(uint32_t cpacr)
   __regCPACR = cpacr;
 }
 
-/** \brief  Get CBAR
+/** \brief  Get CBAR register
     \return               Configuration Base Address register value
  */
 __STATIC_INLINE uint32_t __get_CBAR() {
@@ -434,7 +434,7 @@ __STATIC_INLINE uint32_t __get_CBAR() {
   return(__regCBAR);
 }
 
-/** \brief  Get TTBR0
+/** \brief  Get TTBR0 register
 
     This function returns the value of the Translation Table Base Register 0.
 
@@ -445,7 +445,7 @@ __STATIC_INLINE uint32_t __get_TTBR0() {
   return(__regTTBR0);
 }
 
-/** \brief  Set TTBR0
+/** \brief  Set TTBR0 register
 
     This function assigns the given value to the Translation Table Base Register 0.
 
@@ -456,7 +456,7 @@ __STATIC_INLINE void __set_TTBR0(uint32_t ttbr0) {
   __regTTBR0 = ttbr0;
 }
 
-/** \brief  Get DACR
+/** \brief  Get DACR register
 
     This function returns the value of the Domain Access Control Register.
 
@@ -467,7 +467,7 @@ __STATIC_INLINE uint32_t __get_DACR() {
   return(__regDACR);
 }
 
-/** \brief  Set DACR
+/** \brief  Set DACR register
 
     This function assigns the given value to the Domain Access Control Register.
 
@@ -478,10 +478,7 @@ __STATIC_INLINE void __set_DACR(uint32_t dacr) {
   __regDACR = dacr;
 }
 
-/** \brief  Set SCTLR
-
-    This function assigns the given value to the System Control Register.
-
+/** \brief  Set the \ref CMSIS_SCTLR "System Control Register" register.
     \param [in]    sctlr  System Control Register value to set
  */
 __STATIC_INLINE void __set_SCTLR(uint32_t sctlr)
@@ -490,7 +487,7 @@ __STATIC_INLINE void __set_SCTLR(uint32_t sctlr)
   __regSCTLR = sctlr;
 }
 
-/** \brief  Get SCTLR
+/** \brief  Get SCTLR register
     \return               System Control Register value
  */
 __STATIC_INLINE uint32_t __get_SCTLR() {
@@ -498,7 +495,7 @@ __STATIC_INLINE uint32_t __get_SCTLR() {
   return(__regSCTLR);
 }
 
-/** \brief  Set ACTRL
+/** \brief  Set ACTRL register
     \param [in]    actrl  Auxiliary Control Register value to set
  */
 __STATIC_INLINE void __set_ACTRL(uint32_t actrl)
@@ -507,7 +504,7 @@ __STATIC_INLINE void __set_ACTRL(uint32_t actrl)
   __regACTRL = actrl;
 }
 
-/** \brief  Get ACTRL
+/** \brief  Get ACTRL register
     \return               Auxiliary Control Register value
  */
 __STATIC_INLINE uint32_t __get_ACTRL(void)
@@ -516,10 +513,7 @@ __STATIC_INLINE uint32_t __get_ACTRL(void)
   return(__regACTRL);
 }
 
-/** \brief  Get MPIDR
-
-    This function returns the value of the Multiprocessor Affinity Register.
-
+/** \brief  Get MPIDR register
     \return               Multiprocessor Affinity Register value
  */
 __STATIC_INLINE uint32_t __get_MPIDR(void)
@@ -528,10 +522,7 @@ __STATIC_INLINE uint32_t __get_MPIDR(void)
   return(__regMPIDR);
 }
 
- /** \brief  Get VBAR
-
-    This function returns the value of the Vector Base Address Register.
-
+ /** \brief  Get VBAR register
     \return               Vector Base Address Register
  */
 __STATIC_INLINE uint32_t __get_VBAR(void)
@@ -540,10 +531,7 @@ __STATIC_INLINE uint32_t __get_VBAR(void)
   return(__regVBAR);
 }
 
-/** \brief  Set VBAR
-
-    This function assigns the given value to the Vector Base Address Register.
-
+/** \brief  Set VBAR register
     \param [in]    vbar  Vector Base Address Register value to set
  */
 __STATIC_INLINE void __set_VBAR(uint32_t vbar)
@@ -552,10 +540,7 @@ __STATIC_INLINE void __set_VBAR(uint32_t vbar)
   __regVBAR = vbar;
 }
 
-/** \brief  Set CNTFRQ
-
-  This function assigns the given value to PL1 Physical Timer Counter Frequency Register (CNTFRQ).
-
+/** \brief  Set CNTFRQ register
   \param [in]    value  CNTFRQ Register value to set
 */
 __STATIC_INLINE void __set_CNTFRQ(uint32_t value) {
@@ -563,10 +548,7 @@ __STATIC_INLINE void __set_CNTFRQ(uint32_t value) {
   __regCNTFRQ = value;
 }
 
-/** \brief  Set CNTP_TVAL
-
-  This function assigns the given value to PL1 Physical Timer Value Register (CNTP_TVAL).
-
+/** \brief  Set CNTP_TVAL register
   \param [in]    value  CNTP_TVAL Register value to set
 */
 __STATIC_INLINE void __set_CNTP_TVAL(uint32_t value) {
@@ -574,10 +556,7 @@ __STATIC_INLINE void __set_CNTP_TVAL(uint32_t value) {
   __regCNTP_TVAL = value;
 }
 
-/** \brief  Get CNTP_TVAL
-
-    This function returns the value of the PL1 Physical Timer Value Register (CNTP_TVAL).
-
+/** \brief  Get CNTP_TVAL register
     \return               CNTP_TVAL Register value
  */
 __STATIC_INLINE uint32_t __get_CNTP_TVAL() {
@@ -585,10 +564,7 @@ __STATIC_INLINE uint32_t __get_CNTP_TVAL() {
   return(__regCNTP_TVAL);
 }
 
-/** \brief  Set CNTP_CTL
-
-  This function assigns the given value to PL1 Physical Timer Control Register (CNTP_CTL).
-
+/** \brief  Set CNTP_CTL register
   \param [in]    value  CNTP_CTL Register value to set
 */
 __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) {
@@ -596,54 +572,43 @@ __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) {
   __regCNTP_CTL = value;
 }
 
-/** \brief  Set TLBIALL
-
-  TLB Invalidate All
+/** \brief  Set TLBIALL register
  */
 __STATIC_INLINE void __set_TLBIALL(uint32_t value) {
   register uint32_t __TLBIALL              __ASM("cp15:0:c8:c7:0");
   __TLBIALL = value;
 }
 
-/** \brief  Set BPIALL.
-
-  Branch Predictor Invalidate All
- */
+/** \brief  Set Branch Predictor Invalidate All register.
+* \param [in] value New register value to be set.
+*/
 __STATIC_INLINE void __set_BPIALL(uint32_t value) {
   register uint32_t __BPIALL            __ASM("cp15:0:c7:c5:6");
   __BPIALL = value;
 }
 
-/** \brief  Set ICIALLU
-
-  Instruction Cache Invalidate All
+/** \brief  Set ICIALLU register
  */
 __STATIC_INLINE void __set_ICIALLU(uint32_t value) {
   register uint32_t __ICIALLU         __ASM("cp15:0:c7:c5:0");
   __ICIALLU = value;
 }
 
-/** \brief  Set DCCMVAC
-
-  Data cache clean
+/** \brief  Set DCCMVAC register
  */
 __STATIC_INLINE void __set_DCCMVAC(uint32_t value) {
   register uint32_t __DCCMVAC         __ASM("cp15:0:c7:c10:1");
   __DCCMVAC = value;
 }
 
-/** \brief  Set DCIMVAC
-
-  Data cache invalidate
+/** \brief  Set DCIMVAC register
  */
 __STATIC_INLINE void __set_DCIMVAC(uint32_t value) {
   register uint32_t __DCIMVAC         __ASM("cp15:0:c7:c6:1");
   __DCIMVAC = value;
 }
 
-/** \brief  Set DCCIMVAC
-
-  Data cache clean and invalidate
+/** \brief  Set DCCIMVAC register
  */
 __STATIC_INLINE void __set_DCCIMVAC(uint32_t value) {
   register uint32_t __DCCIMVAC        __ASM("cp15:0:c7:c14:1");
@@ -651,8 +616,7 @@ __STATIC_INLINE void __set_DCCIMVAC(uint32_t value) {
 }
 
 /** \brief  Clean and Invalidate the entire data or unified cache
-
-  Generic mechanism for cleaning/invalidating the entire data or unified cache to the point of coherency
+ * \param op 0 - invalidate, 1 - clean, otherwise - invalidate and clean
  */
 __STATIC_INLINE __ASM void __L1C_CleanInvalidateCache(uint32_t op) {
         ARM
