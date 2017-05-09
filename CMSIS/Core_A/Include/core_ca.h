@@ -675,60 +675,43 @@ typedef struct
  
 /* ##########################  L1 Cache functions  ################################# */
 
-/** \brief  Enable Caches
-
-  Enable Caches
- */
+/** \brief Enable Caches by setting I and C bits in \ref CMSIS_SCTLR "SCTLR" register.
+*/
 __STATIC_INLINE void L1C_EnableCaches(void) {
-  // Set I bit 12 to enable I Cache
-  // Set C bit  2 to enable D Cache
-  __set_SCTLR( __get_SCTLR() | (1 << 12) | (1 << 2));
+  __set_SCTLR( __get_SCTLR() | (1u << SCTLR_I_Pos) | (1u << SCTLR_C_Pos));
+  __ISB();
 }
 
-/** \brief  Disable Caches
-
-  Disable Caches
- */
+/** \brief Disable Caches by clearing I and C bits in \ref CMSIS_SCTLR "SCTLR" register.
+*/
 __STATIC_INLINE void L1C_DisableCaches(void) {
-  // Clear I bit 12 to disable I Cache
-  // Clear C bit  2 to disable D Cache
-  __set_SCTLR( __get_SCTLR() & ~(1 << 12) & ~(1 << 2));
+  __set_SCTLR( __get_SCTLR() & ~(1u << SCTLR_I_Pos) & ~(1u << SCTLR_C_Pos));
   __ISB();
 }
 
-/** \brief  Enable BTAC
-
-  Enable BTAC
- */
+/** \brief  Enable Branch Prediction by setting Z bit in \ref CMSIS_SCTLR "SCTLR" register.
+*/
 __STATIC_INLINE void L1C_EnableBTAC(void) {
-  // Set Z bit 11 to enable branch prediction
-  __set_SCTLR( __get_SCTLR() | (1 << 11));
+  __set_SCTLR( __get_SCTLR() | (1u << SCTLR_Z_Pos));
   __ISB();
 }
 
-/** \brief  Disable BTAC
-
-  Disable BTAC
- */
+/** \brief  Disable Branch Prediction by clearing Z bit in \ref CMSIS_SCTLR "SCTLR" register.
+*/
 __STATIC_INLINE void L1C_DisableBTAC(void) {
-  // Clear Z bit 11 to disable branch prediction
-  __set_SCTLR( __get_SCTLR() & ~(1 << 11));
+  __set_SCTLR( __get_SCTLR() & ~(1u << SCTLR_Z_Pos));
+  __ISB();
 }
 
 /** \brief  Invalidate entire branch predictor array
-
-  BPIALL. Branch Predictor Invalidate All.
- */
-
+*/
 __STATIC_INLINE void L1C_InvalidateBTAC(void) {
   __set_BPIALL(0);
   __DSB();     //ensure completion of the invalidation
   __ISB();     //ensure instruction fetch path sees new state
 }
 
-/** \brief  Invalidate the whole I$
-
-  ICIALLU. Instruction Cache Invalidate All to PoU
+/** \brief  Invalidate the whole instruction cache
 */
 __STATIC_INLINE void L1C_InvalidateICacheAll(void) {
   __set_ICIALLU(0);
@@ -736,27 +719,24 @@ __STATIC_INLINE void L1C_InvalidateICacheAll(void) {
   __ISB();     //ensure instruction fetch path sees new I cache state
 }
 
-/** \brief  Clean D$ by MVA
-
-  DCCMVAC. Data cache clean by MVA to PoC
+/** \brief  Clean data cache line by address.
+* \param va Pointer to data to clear the cache for.
 */
 __STATIC_INLINE void L1C_CleanDCacheMVA(void *va) {
   __set_DCCMVAC((uint32_t)va);
   __DMB();     //ensure the ordering of data cache maintenance operations and their effects
 }
 
-/** \brief  Invalidate D$ by MVA
-
-  DCIMVAC. Data cache invalidate by MVA to PoC
+/** \brief  Invalidate data cache line by address.
+* \param va Pointer to data to invalidate the cache for.
 */
 __STATIC_INLINE void L1C_InvalidateDCacheMVA(void *va) {
   __set_DCIMVAC((uint32_t)va);
   __DMB();     //ensure the ordering of data cache maintenance operations and their effects
 }
 
-/** \brief  Clean and Invalidate D$ by MVA
-
-  DCCIMVAC. Data cache clean and invalidate by MVA to PoC
+/** \brief  Clean and Invalidate data cache by address.
+* \param va Pointer to data to invalidate the cache for.
 */
 __STATIC_INLINE void L1C_CleanInvalidateDCacheMVA(void *va) {
   __set_DCCIMVAC((uint32_t)va);
@@ -764,37 +744,27 @@ __STATIC_INLINE void L1C_CleanInvalidateDCacheMVA(void *va) {
 }
 
 /** \brief  Clean and Invalidate the entire data or unified cache
-
-  Generic mechanism for cleaning/invalidating the entire data or unified cache to the point of coherency.
+* \param op 0 - invalidate, 1 - clean, otherwise - invalidate and clean
+* \see __L1C_CleanInvalidateCache
 */
 __STATIC_INLINE void L1C_CleanInvalidateCache(uint32_t op) {
-  __L1C_CleanInvalidateCache(op);  // compiler specific call
+  __L1C_CleanInvalidateCache(op);
 }
 
-
-/** \brief  Invalidate the whole D$
-
-  DCISW. Invalidate by Set/Way
+/** \brief  Invalidate the whole data cache.
 */
-
 __STATIC_INLINE void L1C_InvalidateDCacheAll(void) {
   L1C_CleanInvalidateCache(0);
 }
 
-/** \brief  Clean the whole D$
-
-    DCCSW. Clean by Set/Way
+/** \brief  Clean the whole data cache.
  */
-
 __STATIC_INLINE void L1C_CleanDCacheAll(void) {
   L1C_CleanInvalidateCache(1);
 }
 
-/** \brief  Clean and invalidate the whole D$
-
-    DCCISW. Clean and Invalidate by Set/Way
+/** \brief  Clean and invalidate the whole data cache.
  */
-
 __STATIC_INLINE void L1C_CleanInvalidateDCacheAll(void) {
   L1C_CleanInvalidateCache(2);
 }
@@ -802,57 +772,67 @@ __STATIC_INLINE void L1C_CleanInvalidateDCacheAll(void) {
 
 /* ##########################  L2 Cache functions  ################################# */
 #if (__L2C_PRESENT == 1U) || defined(DOXYGEN)
-//Cache Sync operation
+/** \brief Cache Sync operation by writing \ref L2C_310_TypeDef::CACHE_SYNC "CACHE_SYNC" register.
+*/
 __STATIC_INLINE void L2C_Sync(void)
 {
   L2C_310->CACHE_SYNC = 0x0;
 }
 
-//return Cache controller cache ID
+/** \brief Read cache controller cache ID from \ref L2C_310_TypeDef::CACHE_ID "CACHE_ID" register.
+ * \return L2C_310_TypeDef::CACHE_ID
+ */
 __STATIC_INLINE int L2C_GetID (void)
 {
   return L2C_310->CACHE_ID;
 }
 
-//return Cache controller cache Type
+/** \brief Read cache controller cache type from \ref L2C_310_TypeDef::CACHE_TYPE "CACHE_TYPE" register.
+*  \return L2C_310_TypeDef::CACHE_TYPE
+*/
 __STATIC_INLINE int L2C_GetType (void)
 {
   return L2C_310->CACHE_TYPE;
 }
 
-//Invalidate all cache by way
+/** \brief Invalidate all cache by way
+*/
 __STATIC_INLINE void L2C_InvAllByWay (void)
 {
   unsigned int assoc;
 
-  if (L2C_310->AUX_CNT & (1<<16))
-    assoc = 16;
-  else
-    assoc =  8;
-
-  L2C_310->INV_WAY = (1 << assoc) - 1;
-  while(L2C_310->INV_WAY & ((1 << assoc) - 1)); //poll invalidate
+  if (L2C_310->AUX_CNT & (1u << 16u)) {
+    assoc = 16u;
+  } else {
+    assoc =  8u;
+  }
+  
+  L2C_310->INV_WAY = (1u << assoc) - 1u;
+  while(L2C_310->INV_WAY & ((1u << assoc) - 1u)); //poll invalidate
 
   L2C_Sync();
 }
 
-//Clean and Invalidate all cache by way
+/** \brief Clean and Invalidate all cache by way
+*/
 __STATIC_INLINE void L2C_CleanInvAllByWay (void)
 {
   unsigned int assoc;
 
-  if (L2C_310->AUX_CNT & (1<<16))
-    assoc = 16;
-  else
-    assoc =  8;
+  if (L2C_310->AUX_CNT & (1u << 16u)) {
+    assoc = 16u;
+  } else {
+    assoc =  8u;
+  }
 
-  L2C_310->CLEAN_INV_WAY = (1 << assoc) - 1;
-  while(L2C_310->CLEAN_INV_WAY & ((1 << assoc) - 1)); //poll invalidate
+  L2C_310->CLEAN_INV_WAY = (1u << assoc) - 1u;
+  while(L2C_310->CLEAN_INV_WAY & ((1u << assoc) - 1u)); //poll invalidate
 
   L2C_Sync();
 }
 
-//Enable Cache
+/** \brief Enable Level 2 Cache
+*/
 __STATIC_INLINE void L2C_Enable(void)
 {
   L2C_310->CONTROL = 0;
@@ -863,28 +843,36 @@ __STATIC_INLINE void L2C_Enable(void)
   L2C_310->CONTROL = 0x01;
   L2C_Sync();
 }
-//Disable Cache
+
+/** \brief Disable Level 2 Cache
+*/
 __STATIC_INLINE void L2C_Disable(void)
 {
   L2C_310->CONTROL = 0x00;
   L2C_Sync();
 }
 
-//Invalidate cache by physical address
+/** \brief Invalidate cache by physical address
+* \param pa Pointer to data to invalidate cache for.
+*/
 __STATIC_INLINE void L2C_InvPa (void *pa)
 {
   L2C_310->INV_LINE_PA = (unsigned int)pa;
   L2C_Sync();
 }
 
-//Clean cache by physical address
+/** \brief Clean cache by physical address
+* \param pa Pointer to data to invalidate cache for.
+*/
 __STATIC_INLINE void L2C_CleanPa (void *pa)
 {
   L2C_310->CLEAN_LINE_PA = (unsigned int)pa;
   L2C_Sync();
 }
 
-//Clean and invalidate cache by physical address
+/** \brief Clean and invalidate cache by physical address
+* \param pa Pointer to data to invalidate cache for.
+*/
 __STATIC_INLINE void L2C_CleanInvPa (void *pa)
 {
   L2C_310->CLEAN_INV_LINE_PA = (unsigned int)pa;
@@ -1201,6 +1189,20 @@ __STATIC_INLINE void GIC_Enable(void)
   
 /* PL1 Physical Timer */
 #if (__CORTEX_A == 7U) || defined(DOXYGEN)
+  
+/** \brief Physical Timer Control register */
+typedef union
+{
+  struct
+  {
+    uint32_t ENABLE:1;      /*!< \brief bit: 0      Enables the timer. */
+    uint32_t IMASK:1;       /*!< \brief bit: 1      Timer output signal mask bit. */
+    uint32_t ISTATUS:1;     /*!< \brief bit: 2      The status of the timer. */
+    uint32_t _reserved0:29; /*!< \brief bit: 3..31  Reserved */
+  } b;                      /*!< \brief Structure used for bit  access */
+  uint32_t w;               /*!< \brief Type      used for word access */
+} CNTP_CTL_Type;
+
 /** Configures the frequency the timer shall run at.
 * \param value The timer frequency in Hz.
 */
@@ -1242,14 +1244,14 @@ __STATIC_INLINE void PTIM_SetLoadValue(uint32_t value) {
 }
 
 /** Get the load value from timers \ref Timer_Type::LOAD "LOAD" register.
-* \return timers PTIM::LOAD
+* \return Timer_Type::LOAD
 */
 __STATIC_INLINE uint32_t PTIM_GetLoadValue() {
   return(PTIM->LOAD);
 }
 
 /** Get current counter value from timers \ref Timer_Type::COUNTER "COUNTER" register.
-* \result PTIM::COUNTER
+* \result Timer_Type::COUNTER
 */
 __STATIC_INLINE uint32_t PTIM_GetCurrentValue() {
   return(PTIM->COUNTER);
@@ -1263,7 +1265,7 @@ __STATIC_INLINE void PTIM_SetControl(uint32_t value) {
 }
 
 /** Get the current timer configuration from its \ref Timer_Type::CONTROL "CONTROL" register.
-* \return PTIM::CONTROL
+* \return Timer_Type::CONTROL
 */
 __STATIC_INLINE uint32_t PTIM_GetControl(void) {
   return(PTIM->CONTROL);
@@ -2156,8 +2158,6 @@ __STATIC_INLINE void MMU_TTPage64k(uint32_t *ttb, uint32_t base_address, uint32_
 }
 
 /** \brief  Enable MMU
-
-  Enable MMU
 */
 __STATIC_INLINE void MMU_Enable(void) {
   // Set M bit 0 to enable the MMU
@@ -2168,8 +2168,6 @@ __STATIC_INLINE void MMU_Enable(void) {
 }
 
 /** \brief  Disable MMU
-
-  Disable MMU
 */
 __STATIC_INLINE void MMU_Disable(void) {
   // Clear M bit 0 to disable the MMU
@@ -2178,8 +2176,6 @@ __STATIC_INLINE void MMU_Disable(void) {
 }
 
 /** \brief  Invalidate entire unified TLB
-
-  TLBIALL. Invalidate entire unified TLB
 */
 
 __STATIC_INLINE void MMU_InvalidateTLB(void) {

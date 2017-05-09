@@ -238,7 +238,7 @@ struct foo {
 
 \fn __STATIC_INLINE void __set_SCTLR(uint32_t sctlr)
 \details
-  This function assigns the given value to the System Control Register.
+  This function assigns the given value to the \ref CMSIS_SCTLR "System Control Register".
 
 \fn __STATIC_INLINE uint32_t __get_SCTLR() 
 \details
@@ -281,7 +281,7 @@ struct foo {
 
 \fn __STATIC_INLINE void __set_BPIALL(uint32_t value)   
 \details
-  Branch Predictor Invalidate All
+  Write the provided value to the Branch Predictor Invalidate All (BPIALL) register.
 
 \fn __STATIC_INLINE void __set_ICIALLU(uint32_t value) 
 \details
@@ -298,6 +298,7 @@ struct foo {
 \fn __STATIC_INLINE void __set_DCCIMVAC(uint32_t value) 
 \details
   Data cache clean and invalidate
+
 */
 /**
 @} 
