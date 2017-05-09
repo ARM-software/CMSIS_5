@@ -506,109 +506,109 @@ typedef union
 /**
  \brief  Union type to access the L2C_310 Cache Controller.
 */
-#if (__L2C_PRESENT == 1U)
+#if (__L2C_PRESENT == 1U) || defined(DOXYGEN)
 typedef struct
 {
-  __I  uint32_t CACHE_ID;                   /*!< \brief Offset: 0x0000   Cache ID Register               */
-  __I  uint32_t CACHE_TYPE;                 /*!< \brief Offset: 0x0004   Cache Type Register             */
-       uint32_t RESERVED0[0x3e];
-  __IO uint32_t CONTROL;                    /*!< \brief Offset: 0x0100   Control Register                */
-  __IO uint32_t AUX_CNT;                    /*!< \brief Offset: 0x0104   Auxiliary Control               */
-       uint32_t RESERVED1[0x3e];
-  __IO uint32_t EVENT_CONTROL;              /*!< \brief Offset: 0x0200   Event Counter Control           */
-  __IO uint32_t EVENT_COUNTER1_CONF;        /*!< \brief Offset: 0x0204   Event Counter 1 Configuration   */
-  __IO uint32_t EVENT_COUNTER0_CONF;        /*!< \brief Offset: 0x0208   Event Counter 1 Configuration   */
-       uint32_t RESERVED2[0x2];
-  __IO uint32_t INTERRUPT_MASK;             /*!< \brief Offset: 0x0214   Interrupt Mask                  */
-  __I  uint32_t MASKED_INT_STATUS;          /*!< \brief Offset: 0x0218   Masked Interrupt Status         */
-  __I  uint32_t RAW_INT_STATUS;             /*!< \brief Offset: 0x021c   Raw Interrupt Status            */
-  __O  uint32_t INTERRUPT_CLEAR;            /*!< \brief Offset: 0x0220   Interrupt Clear                 */
-       uint32_t RESERVED3[0x143];
-  __IO uint32_t CACHE_SYNC;                 /*!< \brief Offset: 0x0730   Cache Sync                      */
-       uint32_t RESERVED4[0xf];
-  __IO uint32_t INV_LINE_PA;                /*!< \brief Offset: 0x0770   Invalidate Line By PA           */
-       uint32_t RESERVED6[2];
-  __IO uint32_t INV_WAY;                    /*!< \brief Offset: 0x077c   Invalidate by Way               */
-       uint32_t RESERVED5[0xc];
-  __IO uint32_t CLEAN_LINE_PA;              /*!< \brief Offset: 0x07b0   Clean Line by PA                */
-       uint32_t RESERVED7[1];
-  __IO uint32_t CLEAN_LINE_INDEX_WAY;       /*!< \brief Offset: 0x07b8   Clean Line by Index/Way         */
-  __IO uint32_t CLEAN_WAY;                  /*!< \brief Offset: 0x07bc   Clean by Way                    */
-       uint32_t RESERVED8[0xc];
-  __IO uint32_t CLEAN_INV_LINE_PA;          /*!< \brief Offset: 0x07f0   Clean and Invalidate Line by PA  */
-       uint32_t RESERVED9[1];
-  __IO uint32_t CLEAN_INV_LINE_INDEX_WAY;   /*!< \brief Offset: 0x07f8   Clean and Invalidate Line by Index/Way  */
-  __IO uint32_t CLEAN_INV_WAY;              /*!< \brief Offset: 0x07fc   Clean and Invalidate by Way     */
-       uint32_t RESERVED10[0x40];
-  __IO uint32_t DATA_LOCK_0_WAY;            /*!< \brief Offset: 0x0900   Data Lockdown 0 by Way          */
-  __IO uint32_t INST_LOCK_0_WAY;            /*!< \brief Offset: 0x0904   Instruction Lockdown 0 by Way   */
-  __IO uint32_t DATA_LOCK_1_WAY;            /*!< \brief Offset: 0x0908   Data Lockdown 1 by Way          */
-  __IO uint32_t INST_LOCK_1_WAY;            /*!< \brief Offset: 0x090c   Instruction Lockdown 1 by Way   */
-  __IO uint32_t DATA_LOCK_2_WAY;            /*!< \brief Offset: 0x0910   Data Lockdown 2 by Way          */
-  __IO uint32_t INST_LOCK_2_WAY;            /*!< \brief Offset: 0x0914   Instruction Lockdown 2 by Way   */
-  __IO uint32_t DATA_LOCK_3_WAY;            /*!< \brief Offset: 0x0918   Data Lockdown 3 by Way          */
-  __IO uint32_t INST_LOCK_3_WAY;            /*!< \brief Offset: 0x091c   Instruction Lockdown 3 by Way   */
-  __IO uint32_t DATA_LOCK_4_WAY;            /*!< \brief Offset: 0x0920   Data Lockdown 4 by Way          */
-  __IO uint32_t INST_LOCK_4_WAY;            /*!< \brief Offset: 0x0924   Instruction Lockdown 4 by Way   */
-  __IO uint32_t DATA_LOCK_5_WAY;            /*!< \brief Offset: 0x0928   Data Lockdown 5 by Way          */
-  __IO uint32_t INST_LOCK_5_WAY;            /*!< \brief Offset: 0x092c   Instruction Lockdown 5 by Way   */
-  __IO uint32_t DATA_LOCK_6_WAY;            /*!< \brief Offset: 0x0930   Data Lockdown 5 by Way          */
-  __IO uint32_t INST_LOCK_6_WAY;            /*!< \brief Offset: 0x0934   Instruction Lockdown 5 by Way   */
-  __IO uint32_t DATA_LOCK_7_WAY;            /*!< \brief Offset: 0x0938   Data Lockdown 6 by Way          */
-  __IO uint32_t INST_LOCK_7_WAY;            /*!< \brief Offset: 0x093c   Instruction Lockdown 6 by Way   */
-       uint32_t RESERVED11[0x4];
-  __IO uint32_t LOCK_LINE_EN;               /*!< \brief Offset: 0x0950   Lockdown by Line Enable         */
-  __IO uint32_t UNLOCK_ALL_BY_WAY;          /*!< \brief Offset: 0x0954   Unlock All Lines by Way         */
-       uint32_t RESERVED12[0xaa];
-  __IO uint32_t ADDRESS_FILTER_START;       /*!< \brief Offset: 0x0c00   Address Filtering Start         */
-  __IO uint32_t ADDRESS_FILTER_END;         /*!< \brief Offset: 0x0c04   Address Filtering End           */
-       uint32_t RESERVED13[0xce];
-  __IO uint32_t DEBUG_CONTROL;              /*!< \brief Offset: 0x0f40   Debug Control Register          */
+  __IM  uint32_t CACHE_ID;                   /*!< \brief Offset: 0x0000 (R/ ) Cache ID Register               */
+  __IM  uint32_t CACHE_TYPE;                 /*!< \brief Offset: 0x0004 (R/ ) Cache Type Register             */
+        uint32_t RESERVED0[0x3e];
+  __IOM uint32_t CONTROL;                    /*!< \brief Offset: 0x0100 (R/W) Control Register                */
+  __IOM uint32_t AUX_CNT;                    /*!< \brief Offset: 0x0104 (R/W) Auxiliary Control               */
+        uint32_t RESERVED1[0x3e];
+  __IOM uint32_t EVENT_CONTROL;              /*!< \brief Offset: 0x0200 (R/W) Event Counter Control           */
+  __IOM uint32_t EVENT_COUNTER1_CONF;        /*!< \brief Offset: 0x0204 (R/W) Event Counter 1 Configuration   */
+  __IOM uint32_t EVENT_COUNTER0_CONF;        /*!< \brief Offset: 0x0208 (R/W) Event Counter 1 Configuration   */
+        uint32_t RESERVED2[0x2];
+  __IOM uint32_t INTERRUPT_MASK;             /*!< \brief Offset: 0x0214 (R/W) Interrupt Mask                  */
+  __IM  uint32_t MASKED_INT_STATUS;          /*!< \brief Offset: 0x0218 (R/ ) Masked Interrupt Status         */
+  __IM  uint32_t RAW_INT_STATUS;             /*!< \brief Offset: 0x021c (R/ ) Raw Interrupt Status            */
+  __OM  uint32_t INTERRUPT_CLEAR;            /*!< \brief Offset: 0x0220 ( /W) Interrupt Clear                 */
+        uint32_t RESERVED3[0x143];
+  __IOM uint32_t CACHE_SYNC;                 /*!< \brief Offset: 0x0730 (R/W) Cache Sync                      */
+        uint32_t RESERVED4[0xf];
+  __IOM uint32_t INV_LINE_PA;                /*!< \brief Offset: 0x0770 (R/W) Invalidate Line By PA           */
+        uint32_t RESERVED6[2];
+  __IOM uint32_t INV_WAY;                    /*!< \brief Offset: 0x077c (R/W) Invalidate by Way               */
+        uint32_t RESERVED5[0xc];
+  __IOM uint32_t CLEAN_LINE_PA;              /*!< \brief Offset: 0x07b0 (R/W) Clean Line by PA                */
+        uint32_t RESERVED7[1];
+  __IOM uint32_t CLEAN_LINE_INDEX_WAY;       /*!< \brief Offset: 0x07b8 (R/W) Clean Line by Index/Way         */
+  __IOM uint32_t CLEAN_WAY;                  /*!< \brief Offset: 0x07bc (R/W) Clean by Way                    */
+        uint32_t RESERVED8[0xc];
+  __IOM uint32_t CLEAN_INV_LINE_PA;          /*!< \brief Offset: 0x07f0 (R/W) Clean and Invalidate Line by PA  */
+        uint32_t RESERVED9[1];
+  __IOM uint32_t CLEAN_INV_LINE_INDEX_WAY;   /*!< \brief Offset: 0x07f8 (R/W) Clean and Invalidate Line by Index/Way  */
+  __IOM uint32_t CLEAN_INV_WAY;              /*!< \brief Offset: 0x07fc (R/W) Clean and Invalidate by Way     */
+        uint32_t RESERVED10[0x40];
+  __IOM uint32_t DATA_LOCK_0_WAY;            /*!< \brief Offset: 0x0900 (R/W) Data Lockdown 0 by Way          */
+  __IOM uint32_t INST_LOCK_0_WAY;            /*!< \brief Offset: 0x0904 (R/W) Instruction Lockdown 0 by Way   */
+  __IOM uint32_t DATA_LOCK_1_WAY;            /*!< \brief Offset: 0x0908 (R/W) Data Lockdown 1 by Way          */
+  __IOM uint32_t INST_LOCK_1_WAY;            /*!< \brief Offset: 0x090c (R/W) Instruction Lockdown 1 by Way   */
+  __IOM uint32_t DATA_LOCK_2_WAY;            /*!< \brief Offset: 0x0910 (R/W) Data Lockdown 2 by Way          */
+  __IOM uint32_t INST_LOCK_2_WAY;            /*!< \brief Offset: 0x0914 (R/W) Instruction Lockdown 2 by Way   */
+  __IOM uint32_t DATA_LOCK_3_WAY;            /*!< \brief Offset: 0x0918 (R/W) Data Lockdown 3 by Way          */
+  __IOM uint32_t INST_LOCK_3_WAY;            /*!< \brief Offset: 0x091c (R/W) Instruction Lockdown 3 by Way   */
+  __IOM uint32_t DATA_LOCK_4_WAY;            /*!< \brief Offset: 0x0920 (R/W) Data Lockdown 4 by Way          */
+  __IOM uint32_t INST_LOCK_4_WAY;            /*!< \brief Offset: 0x0924 (R/W) Instruction Lockdown 4 by Way   */
+  __IOM uint32_t DATA_LOCK_5_WAY;            /*!< \brief Offset: 0x0928 (R/W) Data Lockdown 5 by Way          */
+  __IOM uint32_t INST_LOCK_5_WAY;            /*!< \brief Offset: 0x092c (R/W) Instruction Lockdown 5 by Way   */
+  __IOM uint32_t DATA_LOCK_6_WAY;            /*!< \brief Offset: 0x0930 (R/W) Data Lockdown 5 by Way          */
+  __IOM uint32_t INST_LOCK_6_WAY;            /*!< \brief Offset: 0x0934 (R/W) Instruction Lockdown 5 by Way   */
+  __IOM uint32_t DATA_LOCK_7_WAY;            /*!< \brief Offset: 0x0938 (R/W) Data Lockdown 6 by Way          */
+  __IOM uint32_t INST_LOCK_7_WAY;            /*!< \brief Offset: 0x093c (R/W) Instruction Lockdown 6 by Way   */
+        uint32_t RESERVED11[0x4];
+  __IOM uint32_t LOCK_LINE_EN;               /*!< \brief Offset: 0x0950 (R/W) Lockdown by Line Enable         */
+  __IOM uint32_t UNLOCK_ALL_BY_WAY;          /*!< \brief Offset: 0x0954 (R/W) Unlock All Lines by Way         */
+        uint32_t RESERVED12[0xaa];
+  __IOM uint32_t ADDRESS_FILTER_START;       /*!< \brief Offset: 0x0c00 (R/W) Address Filtering Start         */
+  __IOM uint32_t ADDRESS_FILTER_END;         /*!< \brief Offset: 0x0c04 (R/W) Address Filtering End           */
+        uint32_t RESERVED13[0xce];
+  __IOM uint32_t DEBUG_CONTROL;              /*!< \brief Offset: 0x0f40 (R/W) Debug Control Register          */
 } L2C_310_TypeDef;
 
 #define L2C_310           ((L2C_310_TypeDef *)L2C_310_BASE) /*!< \brief L2C_310 Declaration */
 #endif
 
-#if (__GIC_PRESENT == 1U)
+#if (__GIC_PRESENT == 1U) || defined(DOXYGEN)
 /** \brief  Structure type to access the Generic Interrupt Controller Distributor (GICD)
 */
 typedef struct
 {
-  __IOM uint32_t D_CTLR;                 /*!< \brief  +0x000 (R/W) Distributor Control Register */
-  __IM  uint32_t D_TYPER;                /*!< \brief  +0x004 (R/ ) Interrupt Controller Type Register */
-  __IM  uint32_t D_IIDR;                 /*!< \brief  +0x008 (R/ ) Distributor Implementer Identification Register */
+  __IOM uint32_t D_CTLR;                 /*!< \brief  Offset: 0x000 (R/W) Distributor Control Register */
+  __IM  uint32_t D_TYPER;                /*!< \brief  Offset: 0x004 (R/ ) Interrupt Controller Type Register */
+  __IM  uint32_t D_IIDR;                 /*!< \brief  Offset: 0x008 (R/ ) Distributor Implementer Identification Register */
         uint32_t RESERVED0;
-  __IOM uint32_t D_STATUSR;              /*!< \brief  +0x010 (R/W) Error Reporting Status Register, optional */
+  __IOM uint32_t D_STATUSR;              /*!< \brief  Offset: 0x010 (R/W) Error Reporting Status Register, optional */
         uint32_t RESERVED1[11];
-  __IO  uint32_t D_SETSPI_NSR;           /*!< \brief  +0x040 ( /W) Set SPI Register */
+  __OM  uint32_t D_SETSPI_NSR;           /*!< \brief  Offset: 0x040 ( /W) Set SPI Register */
         uint32_t RESERVED2;
-  __IO  uint32_t D_CLRSPI_NSR;           /*!< \brief  +0x048 ( /W) Clear SPI Register */
+  __OM  uint32_t D_CLRSPI_NSR;           /*!< \brief  Offset: 0x048 ( /W) Clear SPI Register */
         uint32_t RESERVED3;
-  __IO  uint32_t D_SETSPI_SR;            /*!< \brief  +0x050 ( /W) Set SPI, Secure Register */
+  __OM  uint32_t D_SETSPI_SR;            /*!< \brief  Offset: 0x050 ( /W) Set SPI, Secure Register */
         uint32_t RESERVED4;
-  __IO  uint32_t D_CLRSPI_SR;            /*!< \brief  +0x058 ( /W) Clear SPI, Secure Register */
+  __OM  uint32_t D_CLRSPI_SR;            /*!< \brief  Offset: 0x058 ( /W) Clear SPI, Secure Register */
         uint32_t RESERVED5[8];
-  __IOM uint32_t D_IGROUPR[32];          /*!< \brief  +0x080 (R/W) Interrupt Group Registers */
-  __IOM uint32_t D_ISENABLER[32];        /*!< \brief  +0x100 (R/W) Interrupt Set-Enable Registers */
-  __IOM uint32_t D_ICENABLER[32];        /*!< \brief  +0x180 (R/W) Interrupt Clear-Enable Registers */
-  __IOM uint32_t D_ISPENDR[32];          /*!< \brief  +0x200 (R/W) Interrupt Set-Pending Registers */
-  __IOM uint32_t D_ICPENDR[32];          /*!< \brief  +0x280 (R/W) Interrupt Clear-Pending Registers */
-  __IOM uint32_t D_ISACTIVER[32];        /*!< \brief  +0x300 (R/W) Interrupt Set-Active Registers */
-  __IOM uint32_t D_ICACTIVER[32];        /*!< \brief  +0x380 (R/W) Interrupt Clear-Active Registers */
-  __IOM uint8_t  D_IPRIORITYR[1020];     /*!< \brief  +0x400 (R/W) Interrupt Priority Registers */
+  __IOM uint32_t D_IGROUPR[32];          /*!< \brief  Offset: 0x080 (R/W) Interrupt Group Registers */
+  __IOM uint32_t D_ISENABLER[32];        /*!< \brief  Offset: 0x100 (R/W) Interrupt Set-Enable Registers */
+  __IOM uint32_t D_ICENABLER[32];        /*!< \brief  Offset: 0x180 (R/W) Interrupt Clear-Enable Registers */
+  __IOM uint32_t D_ISPENDR[32];          /*!< \brief  Offset: 0x200 (R/W) Interrupt Set-Pending Registers */
+  __IOM uint32_t D_ICPENDR[32];          /*!< \brief  Offset: 0x280 (R/W) Interrupt Clear-Pending Registers */
+  __IOM uint32_t D_ISACTIVER[32];        /*!< \brief  Offset: 0x300 (R/W) Interrupt Set-Active Registers */
+  __IOM uint32_t D_ICACTIVER[32];        /*!< \brief  Offset: 0x380 (R/W) Interrupt Clear-Active Registers */
+  __IOM uint8_t  D_IPRIORITYR[1020];     /*!< \brief  Offset: 0x400 (R/W) Interrupt Priority Registers */
         uint32_t RESERVED9[1];
-  __IOM uint8_t  D_ITARGETSR[1020];      /*!< \brief  +0x800 (R/W) Interrupt Targets Registers */
+  __IOM uint8_t  D_ITARGETSR[1020];      /*!< \brief  Offset: 0x800 (R/W) Interrupt Targets Registers */
         uint32_t RESERVED10[1];
-  __IOM uint32_t D_ICFGR[64];            /*!< \brief  +0xC00 (R/W) Interrupt Configuration Registers */
-  __IOM uint32_t D_IGRPMODR[32];         /*!< \brief  +0xD00 (R/W) Interrupt Group Modifier Registers */
+  __IOM uint32_t D_ICFGR[64];            /*!< \brief  Offset: 0xC00 (R/W) Interrupt Configuration Registers */
+  __IOM uint32_t D_IGRPMODR[32];         /*!< \brief  Offset: 0xD00 (R/W) Interrupt Group Modifier Registers */
         uint32_t RESERVED11[32];
-  __IOM uint32_t D_NSACR[64];            /*!< \brief  +0xE00 (R/W) Non-secure Access Control Registers */
-  __OM  uint32_t D_SGIR;                 /*!< \brief  +0xF00 ( /W) Software Generated Interrupt Register */
+  __IOM uint32_t D_NSACR[64];            /*!< \brief  Offset: 0xE00 (R/W) Non-secure Access Control Registers */
+  __OM  uint32_t D_SGIR;                 /*!< \brief  Offset: 0xF00 ( /W) Software Generated Interrupt Register */
         uint32_t RESERVED13[3];
-  __IOM uint8_t  D_CPENDSGIR[16];        /*!< \brief  +0xF10 (R/W) SGI Clear-Pending Registers */
-  __IOM uint8_t  D_SPENDSGIR[16];        /*!< \brief  +0xF20 (R/W) SGI Set-Pending Registers */
+  __IOM uint8_t  D_CPENDSGIR[16];        /*!< \brief  Offset: 0xF10 (R/W) SGI Clear-Pending Registers */
+  __IOM uint8_t  D_SPENDSGIR[16];        /*!< \brief  Offset: 0xF20 (R/W) SGI Set-Pending Registers */
         uint32_t RESERVED14[5236];
-  __IOM uint64_t D_IROUTER[988];         /*!< \brief  +0x6100(R/W) Interrupt Routing Registers */
+  __IOM uint64_t D_IROUTER[988];         /*!< \brief  Offset: 0x6100(R/W) Interrupt Routing Registers */
 }  GICDistributor_Type;
 
 #define GICDistributor      ((GICDistributor_Type      *)     GIC_DISTRIBUTOR_BASE ) /*!< GIC Distributor configuration struct */
@@ -617,47 +617,47 @@ typedef struct
 */
 typedef struct
 {
-  __IOM uint32_t C_CTLR;                 /*!< \brief  +0x000 (R/W) CPU Interface Control Register */
-  __IOM uint32_t C_PMR;                  /*!< \brief  +0x004 (R/W) Interrupt Priority Mask Register */
-  __IOM uint32_t C_BPR;                  /*!< \brief  +0x008 (R/W) Binary Point Register */
-  __IM  uint32_t C_IAR;                  /*!< \brief  +0x00C (R/ ) Interrupt Acknowledge Register */
-  __OM  uint32_t C_EOIR;                 /*!< \brief  +0x010 ( /W) End Of Interrupt Register */
-  __IM  uint32_t C_RPR;                  /*!< \brief  +0x014 (R/ ) Running Priority Register */
-  __IM  uint32_t C_HPPIR;                /*!< \brief  +0x018 (R/ ) Highest Priority Pending Interrupt Register */
-  __IOM uint32_t C_ABPR;                 /*!< \brief  +0x01C (R/W) Aliased Binary Point Register */
-  __IM  uint32_t C_AIAR;                 /*!< \brief  +0x020 (R/ ) Aliased Interrupt Acknowledge Register */
-  __OM  uint32_t C_AEOIR;                /*!< \brief  +0x024 ( /W) Aliased End Of Interrupt Register */
-  __IM  uint32_t C_AHPPIR;               /*!< \brief  +0x028 (R/ ) Aliased Highest Priority Pending Interrupt Register */
-  __IOM uint32_t C_STATUSR;              /*!< \brief  +0x02C (R/W) Error Reporting Status Register, optional */
-        uint32_t RESERVED15[40];                         
-  __IOM uint32_t C_APR[4];               /*!< \brief  +0x0D0 (R/W) Active Priority Register */
-  __IOM uint32_t C_NSAPR[4];             /*!< \brief  +0x0E0 (R/W) Non-secure Active Priority Register */
-        uint32_t RESERVED17[3];                          
-  __IM  uint32_t C_IIDR;                 /*!< \brief  +0x0FC (R/ ) CPU Interface Identification Register */
-        uint32_t RESERVED18[960];                        
-  __OM  uint32_t C_DIR;                  /*!< \brief  +0x1000( /W) Deactivate Interrupt Register */
+  __IOM uint32_t C_CTLR;                 /*!< \brief  Offset: 0x000 (R/W) CPU Interface Control Register */
+  __IOM uint32_t C_PMR;                  /*!< \brief  Offset: 0x004 (R/W) Interrupt Priority Mask Register */
+  __IOM uint32_t C_BPR;                  /*!< \brief  Offset: 0x008 (R/W) Binary Point Register */
+  __IM  uint32_t C_IAR;                  /*!< \brief  Offset: 0x00C (R/ ) Interrupt Acknowledge Register */
+  __OM  uint32_t C_EOIR;                 /*!< \brief  Offset: 0x010 ( /W) End Of Interrupt Register */
+  __IM  uint32_t C_RPR;                  /*!< \brief  Offset: 0x014 (R/ ) Running Priority Register */
+  __IM  uint32_t C_HPPIR;                /*!< \brief  Offset: 0x018 (R/ ) Highest Priority Pending Interrupt Register */
+  __IOM uint32_t C_ABPR;                 /*!< \brief  Offset: 0x01C (R/W) Aliased Binary Point Register */
+  __IM  uint32_t C_AIAR;                 /*!< \brief  Offset: 0x020 (R/ ) Aliased Interrupt Acknowledge Register */
+  __OM  uint32_t C_AEOIR;                /*!< \brief  Offset: 0x024 ( /W) Aliased End Of Interrupt Register */
+  __IM  uint32_t C_AHPPIR;               /*!< \brief  Offset: 0x028 (R/ ) Aliased Highest Priority Pending Interrupt Register */
+  __IOM uint32_t C_STATUSR;              /*!< \brief  Offset: 0x02C (R/W) Error Reporting Status Register, optional */
+        uint32_t RESERVED15[40];
+  __IOM uint32_t C_APR[4];               /*!< \brief  Offset: 0x0D0 (R/W) Active Priority Register */
+  __IOM uint32_t C_NSAPR[4];             /*!< \brief  Offset: 0x0E0 (R/W) Non-secure Active Priority Register */
+        uint32_t RESERVED17[3];
+  __IM  uint32_t C_IIDR;                 /*!< \brief  Offset: 0x0FC (R/ ) CPU Interface Identification Register */
+        uint32_t RESERVED18[960];  
+  __OM  uint32_t C_DIR;                  /*!< \brief  Offset: 0x1000( /W) Deactivate Interrupt Register */
 }  GICInterface_Type;
 
 #define GICInterface        ((GICInterface_Type        *)     GIC_INTERFACE_BASE )   /*!< GIC Interface configuration struct */
 #endif
 
-#if (__TIM_PRESENT == 1U)
-#if ((__CORTEX_A == 5U)||(__CORTEX_A == 9U))
+#if (__TIM_PRESENT == 1U) || defined(DOXYGEN)
+#if ((__CORTEX_A == 5U) || (__CORTEX_A == 9U)) || defined(DOXYGEN)
 /** \brief Structure type to access the Private Timer
 */
 typedef struct
 {
-  __IO uint32_t LOAD;            //!< \brief  +0x000 - RW - Private Timer Load Register
-  __IO uint32_t COUNTER;         //!< \brief  +0x004 - RW - Private Timer Counter Register
-  __IO uint32_t CONTROL;         //!< \brief  +0x008 - RW - Private Timer Control Register
-  __IO uint32_t ISR;             //!< \brief  +0x00C - RO - Private Timer Interrupt Status Register
-  uint32_t RESERVED[8];
-  __IO uint32_t WLOAD;           //!< \brief  +0x020 - RW - Watchdog Load Register
-  __IO uint32_t WCOUNTER;        //!< \brief  +0x024 - RW - Watchdog Counter Register
-  __IO uint32_t WCONTROL;        //!< \brief  +0x028 - RW - Watchdog Control Register
-  __IO uint32_t WISR;            //!< \brief  +0x02C - RW - Watchdog Interrupt Status Register
-  __IO uint32_t WRESET;          //!< \brief  +0x030 - RW - Watchdog Reset Status Register
-  __I  uint32_t WDISABLE;        //!< \brief  +0x0FC - RO - Watchdog Disable Register
+  __IOM uint32_t LOAD;            //!< \brief  Offset: 0x000 (R/W) Private Timer Load Register
+  __IOM uint32_t COUNTER;         //!< \brief  Offset: 0x004 (R/W) Private Timer Counter Register
+  __IOM uint32_t CONTROL;         //!< \brief  Offset: 0x008 (R/W) Private Timer Control Register
+  __IM  uint32_t ISR;             //!< \brief  Offset: 0x00C (R/ ) Private Timer Interrupt Status Register
+        uint32_t RESERVED[4];
+  __IOM uint32_t WLOAD;           //!< \brief  Offset: 0x020 (R/W) Watchdog Load Register
+  __IOM uint32_t WCOUNTER;        //!< \brief  Offset: 0x024 (R/W) Watchdog Counter Register
+  __IOM uint32_t WCONTROL;        //!< \brief  Offset: 0x028 (R/W) Watchdog Control Register
+  __IOM uint32_t WISR;            //!< \brief  Offset: 0x02C (R/W) Watchdog Interrupt Status Register
+  __IOM uint32_t WRESET;          //!< \brief  Offset: 0x030 (R/W) Watchdog Reset Status Register
+  __IM  uint32_t WDISABLE;        //!< \brief  Offset: 0x034 (R/ ) Watchdog Disable Register
 } Timer_Type;
 #define PTIM ((Timer_Type *) TIMER_BASE )   /*!< \brief Timer configuration struct */
 #endif
@@ -801,7 +801,7 @@ __STATIC_INLINE void L1C_CleanInvalidateDCacheAll(void) {
 
 
 /* ##########################  L2 Cache functions  ################################# */
-#if (__L2C_PRESENT == 1U)
+#if (__L2C_PRESENT == 1U) || defined(DOXYGEN)
 //Cache Sync operation
 __STATIC_INLINE void L2C_Sync(void)
 {
@@ -893,7 +893,7 @@ __STATIC_INLINE void L2C_CleanInvPa (void *pa)
 #endif
 
 /* ##########################  GIC functions  ###################################### */
-#if (__GIC_PRESENT == 1U)
+#if (__GIC_PRESENT == 1U) || defined(DOXYGEN)
   
 /** Enable the interrupt distributor using the GIC's \ref GICDistributor_Type::D_CTLR "D_CTLR" register.
 */
@@ -1197,51 +1197,80 @@ __STATIC_INLINE void GIC_Enable(void)
 #endif
 
 /* ##########################  Generic Timer functions  ############################ */
-#if (__TIM_PRESENT == 1U)
+#if (__TIM_PRESENT == 1U) || defined(DOXYGEN)
   
 /* PL1 Physical Timer */
-#if (__CORTEX_A == 7U)
+#if (__CORTEX_A == 7U) || defined(DOXYGEN)
+/** Configures the frequency the timer shall run at.
+* \param value The timer frequency in Hz.
+*/
 __STATIC_INLINE void PL1_SetCounterFrequency(uint32_t value) {
   __set_CNTFRQ(value);
   __ISB();
 }
 
+/** Sets the reset value of the timer.
+* \param value The value the timer is loaded with.
+*/
 __STATIC_INLINE void PL1_SetLoadValue(uint32_t value) {
   __set_CNTP_TVAL(value);
   __ISB();
 }
 
+/** Get the current counter value.
+* \return Current counter value.
+*/
 __STATIC_INLINE uint32_t PL1_GetCurrentValue() {
   return(__get_CNTP_TVAL());
 }
 
+/** Configure the timer by setting the control value.
+* \param value New timer control value.
+*/
 __STATIC_INLINE void PL1_SetControl(uint32_t value) {
   __set_CNTP_CTL(value);
   __ISB();
 }
 
 /* Private Timer */
-#elif ((__CORTEX_A == 5U)||(__CORTEX_A == 9U))
+#elif ((__CORTEX_A == 5U) || (__CORTEX_A == 9U)) || defined(DOXYGEN)
+/** Set the load value to timers \ref Timer_Type::LOAD "LOAD" register.
+* \param value The load value to be set.
+*/
 __STATIC_INLINE void PTIM_SetLoadValue(uint32_t value) {
   PTIM->LOAD = value;
 }
 
+/** Get the load value from timers \ref Timer_Type::LOAD "LOAD" register.
+* \return timers PTIM::LOAD
+*/
 __STATIC_INLINE uint32_t PTIM_GetLoadValue() {
   return(PTIM->LOAD);
 }
 
+/** Get current counter value from timers \ref Timer_Type::COUNTER "COUNTER" register.
+* \result PTIM::COUNTER
+*/
 __STATIC_INLINE uint32_t PTIM_GetCurrentValue() {
   return(PTIM->COUNTER);
 }
 
+/** Configure the timer using its \ref Timer_Type::CONTROL "CONTROL" register.
+* \param value The new configuration value to be set.
+*/
 __STATIC_INLINE void PTIM_SetControl(uint32_t value) {
   PTIM->CONTROL = value;
 }
 
+/** Get the current timer configuration from its \ref Timer_Type::CONTROL "CONTROL" register.
+* \return PTIM::CONTROL
+*/
 __STATIC_INLINE uint32_t PTIM_GetControl(void) {
   return(PTIM->CONTROL);
 }
 
+/** Clears the event flag in timers \ref Timer_Type::ISR "ISR" register.
+*/
 __STATIC_INLINE void PTIM_ClearEventFlag(void) {
   PTIM->ISR = 1;
 }

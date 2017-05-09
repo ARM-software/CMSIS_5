@@ -33,7 +33,7 @@ Devices can operation in Master or Slave mode:
  
  - To operate in Slave mode set the <em>slave address</em> using the function \ref ARM_I2C_Control. The functions \ref ARM_I2C_SlaveTransmit or \ref ARM_I2C_SlaveReceive are used to transfer data in Slave mode.
 
-**I<sup>2</sup>C Slave Address**
+<b>I<sup>2</sup>C Slave Address</b>
  
 Depending on the device, I<sup>2</sup>C supports 7-bit and 10-bit Slaves addresses. 
 The element <em>address_10_bit</em> in \ref ARM_I2C_CAPABILITIES indicates that the driver is able to handle 10-bit addresses.
@@ -43,14 +43,14 @@ I<sup>2</sup>C also supports a General Call to all Slaves by using the slave add
 A General Call is recognized by Slaves have a slave address value \ref ARM_I2C_ADDRESS_GC registered with the 
 function \ref ARM_I2C_Control.
 
-**Block Diagram**
+<b>Block Diagram</b>
 
 The I2C driver allows you to connect low-speed peripherals to a motherboard, embedded system, cellphone, or other electronic device. 
 
 \image html I2C_BlockDiagram.png  "Master/Slave connected via I2C interface"
 
 
-**I<sup>2</sup>C API**
+<b>I<sup>2</sup>C API</b>
 
 The following header files define the Application Programming Interface (API) for the I<sup>2</sup>C interface:
   - \b %Driver_I2C.h : Driver API for I2C Bus Peripheral
@@ -59,13 +59,13 @@ The driver implementation is a typical part of the Device Family Pack (DFP) that
 peripherals of the microcontroller family.
 
 
-**Driver Functions**
+<b>Driver Functions</b>
 
 The driver functions are published in the access struct as explained in \ref DriverFunctions
   - \ref ARM_DRIVER_I2C : access struct for I2C driver functions
 
 
-\anchor example **Example Code**
+\anchor example <b>Example Code</b>
 
 The following example code shows the usage of the I<sup>2</sup>C interface in Master mode.
 
