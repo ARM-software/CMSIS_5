@@ -378,7 +378,7 @@ The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enabl
 /** @} */ 
 /* end of group CMSIS_core_register */
 
-/*
+/**
 \defgroup CMSIS_Core_FunctionInterface Functions and Instructions Reference
 \brief 
 \details
@@ -386,8 +386,10 @@ Hardware Abstraction Layer.
    The Core-A function interface contains:
    - \ref L1_chache_functions 
    - \ref L2_chache_functions 
-   - \ref PL1_timer_functions
    - \ref GIC_functions
+   - \ref PL1_timer_functions
+   - \ref PTM_timer_functions
+   - \ref FPU_functions
    - \ref MMU_functions
 
 @{
@@ -398,6 +400,7 @@ Hardware Abstraction Layer.
 
 /** 
 \defgroup L1_chache_functions L1 Cache Functions 
+\details Functions to controll the Level 1 Cache.
 @{
 \fn __STATIC_INLINE void L1C_EnableCaches(void) 
 \fn __STATIC_INLINE void L1C_DisableCaches(void) 
@@ -421,6 +424,7 @@ Hardware Abstraction Layer.
 //Cache Sync operation
 /**
 \defgroup L2_chache_functions L2C-310 Cache Controller Functions 
+\details Functions to controll the Level 2 Cache.
 @{
 \struct L2C_310_TypeDef
 \def L2C_310
@@ -1040,41 +1044,22 @@ for details.
 @}
 */
 
-
-
-/* ##########################  Generic Timer functions  ############################ */
+/* ##########################  Physical Timer functions  ############################ */
 /**
-\defgroup pl1_timer_gr Generic Timer Functions
-\brief Generic hardware timer functions
+\defgroup PL1_timer_functions Physical Timer Functions
+\brief Physical timer functions (on Cortex-A7 class devices)
 @{
+\fn __STATIC_INLINE void PL1_SetCounterFrequency(uint32_t value)
+\fn __STATIC_INLINE void PL1_SetLoadValue(uint32_t value)
+\fn __STATIC_INLINE uint32_t PL1_GetCurrentValue()
+\fn __STATIC_INLINE void PL1_SetControl(uint32_t value)
+@}
 */
-/* leave the function defs in here */
-/**
-\details  
-The function \b PL1_SetLoadValue sets the reset value of the timer.
-*/
-__STATIC_INLINE void PL1_SetLoadValue(uint32_t value);
-
-/**
-\details 
-The function \b PL1_GetCurrentValue returns the current timer value.
-*/
-__STATIC_INLINE uint32_t PL1_GetCurrentValue();
-
-/**
-\details 
-The function \b PL1_SetControl sets timer control values.
-*/
-__STATIC_INLINE void PL1_SetControl(uint32_t value);
-
-/** @} */
-/* end of pl1_timer_gr */
-
 
 /* ##########################  Private Timer functions  ############################ */
 /**
 \defgroup PTM_timer_functions Private Timer Functions
-\brief Private timer functions
+\brief Private timer functions (on Cortex-A5 and -A9 class devices)
 @{
 \struct Timer_Type
 \def PTIM
@@ -1084,6 +1069,67 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value);
 \fn __STATIC_INLINE void PTIM_SetControl(uint32_t value)
 \fn __STATIC_INLINE uint32_t PTIM_GetControl(void)
 \fn __STATIC_INLINE void PTIM_ClearEventFlag(void)
+
+\var __IOM uint32_t Timer_Type::LOAD
+\details Private Timer Load Register
+The Timer Load Register contains the value copied to the Timer Counter Register when
+it decrements down to zero with auto reload mode enabled. Writing to the Timer Load
+Register means that you also write to the Timer Counter Register.
+
+\var __IOM uint32_t Timer_Type::COUNTER
+\details Private Timer Counter Register
+The Timer Counter Register is a decrementing counter.
+
+The Timer Counter Register decrements if the timer is enabled using the timer enable bit in the Timer Control Register.
+
+When the Timer Counter Register reaches zero and auto reload mode is enabled, it
+reloads the value in the Timer Load Register and then decrements from that value. If
+auto reload mode is not enabled, the Timer Counter Register decrements down to zero
+and stops.
+
+When the Timer Counter Register reaches zero, the timer interrupt status event flag is
+set and the interrupt ID 29 is set as pending in the Interrupt Distributor, if interrupt
+generation is enabled in the Timer Control Register.
+
+Writing to the Timer Counter Register or Timer Load Register forces the Timer Counter
+Register to decrement from the newly written value.
+
+\var __IOM uint32_t Timer_Type::CONTROL
+\details Private Timer Control Register
+
+| Bits    | Name          | Function                                                       |
+| :------ | :------------ | :------------------------------------------------------------- |
+| [31:16] | -             | Reserved.                                                      |
+| [15:8]  | Prescaler     | The prescaler modifies the clock period for the decrementing event for the Counter Register. |
+| [7:3]   | -             | Reserved.                                                      |
+| [2]     | IRQ Enable    | If set, the interrupt is set as pending in the Interrupt Distributor when the event flag is set in the Timer Status Register. |
+| [1]     | Auto Reload   | If set, each time the Counter Register reaches zero, it is reloaded with the value contained in the Timer Load Register. |
+| [0]     | Time Enabled  | If set, Timer is enabled and the counter decrements normally. |
+
+\var __IM uint32_t Timer_Type::ISR
+\details Private Timer Interrupt Status Register
+
+The event flag is a sticky bit that is automatically set when the Counter Register reaches
+zero. If the timer interrupt is enabled, Interrupt ID 29 is set as pending in the Interrupt
+Distributor after the event flag is set. The event flag is cleared when written to 1.
+
+\var __IOM uint32_t Timer_Type::WLOAD
+\details
+
+\var __IOM uint32_t Timer_Type::WCOUNTER
+\details
+
+\var __IOM uint32_t Timer_Type::WCONTROL
+\details
+
+\var __IOM uint32_t Timer_Type::WISR
+\details
+
+\var __IOM uint32_t Timer_Type::WRESET
+\details
+
+\var __IM uint32_t Timer_Type::WDISABLE
+\details
 @}
 */
 
@@ -1098,7 +1144,7 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value);
 
 /* ##########################  MMU functions  ###################################### */
 /**
-\defgroup MMU_gr Memory Management Unit Functions
+\defgroup MMU_functions Memory Management Unit Functions
 \brief Functions and defines that relate to the Memory Management Unit
 @{
 */
@@ -1180,7 +1226,7 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value);
 /* end group MMU_defs_gr */
 
 /* start grouping functions */
-/*
+/**
 @{
 */
 
@@ -1273,13 +1319,13 @@ The function sets section access privileges
 \fn __STATIC_INLINE void MMU_InvalidateTLB(void) 
 */
 
-/* @} */
+/** @} */
 /* end of MMU_func_gr */
 
 /** @} */
-/* end of MMU_gr */
+/* end of MMU_functions */
 
-/*
+/**
 @}
 */
 /* end of CMSIS_Core_FunctionInterface  -   currently disabled */
