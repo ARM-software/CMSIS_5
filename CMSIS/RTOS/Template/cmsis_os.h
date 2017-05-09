@@ -1,6 +1,6 @@
 /* ----------------------------------------------------------------------
- * $Date:        5. April 2017
- * $Revision:    V1.03
+ * $Date:        5. February 2013
+ * $Revision:    V1.02
  *
  * Project:      CMSIS-RTOS API
  * Title:        cmsis_os.h template header file
@@ -21,9 +21,7 @@
  * Version 1.02
  *    Control functions for short timeouts in microsecond resolution:
  *    Added: osKernelSysTick, osKernelSysTickFrequency, osKernelSysTickMicroSec
- *    Removed: osSignalGet
- * Version 1.03
- *    Changed license to Apache-2.0
+ *    Removed: osSignalGet 
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 2013-2017 ARM LIMITED

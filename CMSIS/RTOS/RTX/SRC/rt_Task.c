@@ -3,7 +3,7 @@
  *----------------------------------------------------------------------------
  *      Name:    RT_TASK.C
  *      Purpose: Task functions and system start up.
- *      Rev.:    V4.81
+ *      Rev.:    V4.80
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 1999-2009 KEIL, 2009-2017 ARM Germany GmbH. All rights reserved.

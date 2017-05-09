@@ -3,7 +3,7 @@
  *----------------------------------------------------------------------------
  *      Name:    RTX_CONFIG.H
  *      Purpose: Exported functions of RTX_Config.c
- *      Rev.:    V4.82
+ *      Rev.:    V4.81
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 1999-2009 KEIL, 2009-2017 ARM Germany GmbH. All rights reserved.

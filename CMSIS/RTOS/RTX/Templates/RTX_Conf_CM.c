@@ -3,7 +3,7 @@
  *----------------------------------------------------------------------------
  *      Name:    RTX_Conf_CM.C
  *      Purpose: Configuration of CMSIS RTX Kernel for Cortex-M
- *      Rev.:    V4.71
+ *      Rev.:    V4.70.1
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 1999-2009 KEIL, 2009-2016 ARM Germany GmbH. All rights reserved.

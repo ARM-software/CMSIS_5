@@ -3,7 +3,7 @@
  *----------------------------------------------------------------------------
  *      Name:    HAL_CM3.C
  *      Purpose: Hardware Abstraction Layer for Cortex-M3
- *      Rev.:    V4.71
+ *      Rev.:    V4.70
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 1999-2009 KEIL, 2009-2017 ARM Germany GmbH. All rights reserved.

@@ -3,7 +3,7 @@
  *----------------------------------------------------------------------------
  *      Name:    RT_MUTEX.C
  *      Purpose: Implements mutex synchronization objects
- *      Rev.:    V4.83
+ *      Rev.:    V4.82
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 1999-2009 KEIL, 2009-2017 ARM Germany GmbH. All rights reserved.

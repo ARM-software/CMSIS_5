@@ -3,7 +3,7 @@
  *----------------------------------------------------------------------------
  *      Name:    RT_SEMAPHORE.H
  *      Purpose: Implements binary and counting semaphores
- *      Rev.:    V4.71
+ *      Rev.:    V4.70
  *----------------------------------------------------------------------------
  *
  * Copyright (c) 1999-2009 KEIL, 2009-2017 ARM Germany GmbH. All rights reserved.
