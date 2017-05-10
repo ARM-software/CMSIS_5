@@ -41,7 +41,13 @@
 /*----------------------------------------------------------------------------
   Internal References
  *----------------------------------------------------------------------------*/
+
+/** \brief Exception and Interrupt Handler Jumptable.
+*/
 void Vectors       (void) __attribute__ ((naked, section("RESET")));
+
+/** \brief Reset Handler
+*/
 void Reset_Handler (void) __attribute__ ((naked));
 
 /*----------------------------------------------------------------------------
