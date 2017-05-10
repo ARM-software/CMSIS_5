@@ -120,6 +120,7 @@ The device configuration of the template files is described in detail on the fol
   - \subpage startup_c_pg
   - \subpage system_c_pg
   - \subpage device_h_pg
+  - \subpage mem_h_pg
   - \subpage mmu_c_pg
 */
 
@@ -225,32 +226,38 @@ The \ref device_h_pg contains the following sections that are device specific:
 \section interrupt_number_sec Interrupt Number Definition
 
 \ref device_h_pg contains the enumeration \ref IRQn_Type that defines all exceptions and interrupts of the device.
-  - Negative IRQn values represent processor core exceptions (internal interrupts).
-  - Positive IRQn values represent device-specific exceptions (external interrupts). The first device-specific interrupt has the IRQn value 0.
-    The IRQn values needs extension to reflect the device-specific interrupt vector table in the \ref startup_s_pg.
-
+For devices implementing an ARM GIC these are defined as:
+  - IRQn 0-15 represents software generated interrupts (SGI), local to each processor core.
+  - IRQn 16-31 represents private peripheral interrupts (PPI), local to each processor core.
+  - IRQn 32-1019 represents shared peripheral interrups (SPI), routeable to all processor cores.
+  - IRQn 1020-1023 represents special interrupts, refer to the GIC Architecture Specification.
 \b Example:
 
-The following example shows the extension of the interrupt vector table for the LPC1100 device family.
+The following example shows the extension of the interrupt vector table for Cortex-A9 class device.
 
 \code
 typedef enum IRQn
 {
-/******  Cortex-M0 Processor Exceptions Numbers ***************************************************/
-  NonMaskableInt_IRQn           = -14,      /*!< 2 Non Maskable Interrupt                         */
-  HardFault_IRQn                = -13,      /*!< 3 Cortex-M0 Hard Fault Interrupt                 */
-  SVCall_IRQn                   = -5,       /*!< 11 Cortex-M0 SV Call Interrupt                   */
-  PendSV_IRQn                   = -2,       /*!< 14 Cortex-M0 Pend SV Interrupt                   */
-  SysTick_IRQn                  = -1,       /*!< 15 Cortex-M0 System Tick Interrupt               */
+/******  SGI Interrupts Numbers                 ****************************************/
+  SGI0_IRQn            =  0,      
+  SGI1_IRQn            =  1,
+  SGI2_IRQn            =  2,
+       :                  :
+  SGI15_IRQn           = 15,
 
-/******  LPC11xx/LPC11Cxx Specific Interrupt Numbers **********************************************/
-  WAKEUP0_IRQn                  = 0,        /*!< All I/O pins can be used as wakeup source.       */
-  WAKEUP1_IRQn                  = 1,        /*!< There are 13 pins in total for LPC11xx           */
-  WAKEUP2_IRQn                  = 2,
-                 :       :
-                 :       :
-  EINT1_IRQn                    = 30,       /*!< External Interrupt 1 Interrupt                   */
-  EINT0_IRQn                    = 31,       /*!< External Interrupt 0 Interrupt                   */
+/******  Cortex-A9 Processor Exceptions Numbers ****************************************/
+  GlobalTimer_IRQn     = 27,        /*!< Global Timer Interrupt                        */
+  PrivTimer_IRQn       = 29,        /*!< Private Timer Interrupt                       */
+  PrivWatchdog_IRQn    = 30,        /*!< Private Watchdog Interrupt                    */
+
+/******  Platform Exceptions Numbers ***************************************************/
+  Watchdog_IRQn        = 32,        /*!< SP805 Interrupt        */
+  Timer0_IRQn          = 34,        /*!< SP804 Interrupt        */
+  Timer1_IRQn          = 35,        /*!< SP804 Interrupt        */
+  RTClock_IRQn         = 36,        /*!< PL031 Interrupt        */
+  UART0_IRQn           = 37,        /*!< PL011 Interrupt        */
+       :                  :
+       :                  :
 } IRQn_Type;
 \endcode
 
@@ -792,3 +799,20 @@ The \ref system_Device_h_sec which is provided as part of the CMSIS specificatio
 \verbinclude "Include\Device.h"
 
 */
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page mem_h_pg Memory Configuration Files mem_<device>.h
+
+\verbinclude "Include\mem_Device.h"
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page mmu_c_pg Memory Management Unit Files mmu_<device>.c
+
+\verbinclude "Source\mmu_Device.c"
+
+*/
+
