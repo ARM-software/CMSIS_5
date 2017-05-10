@@ -587,7 +587,7 @@ typedef struct
   __OM  uint32_t D_SETSPI_SR;            /*!< \brief  Offset: 0x050 ( /W) Set SPI, Secure Register */
         uint32_t RESERVED4;
   __OM  uint32_t D_CLRSPI_SR;            /*!< \brief  Offset: 0x058 ( /W) Clear SPI, Secure Register */
-        uint32_t RESERVED5[8];
+        uint32_t RESERVED5[9];
   __IOM uint32_t D_IGROUPR[32];          /*!< \brief  Offset: 0x080 (R/W) Interrupt Group Registers */
   __IOM uint32_t D_ISENABLER[32];        /*!< \brief  Offset: 0x100 (R/W) Interrupt Set-Enable Registers */
   __IOM uint32_t D_ICENABLER[32];        /*!< \brief  Offset: 0x180 (R/W) Interrupt Clear-Enable Registers */
@@ -982,7 +982,14 @@ __STATIC_INLINE void GIC_DisableIRQ(IRQn_Type IRQn)
 */
 __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
 {
-  GICDistributor->D_ISPENDR[IRQn / 32] = 1 << (IRQn % 32);
+  if (IRQn >= 16U) {
+    GICDistributor->D_ISPENDR[IRQn / 32] = 1 << (IRQn % 32);
+  } else {
+    // INTID 0-15 Software Generated Interrupt
+    GICDistributor->D_SPENDSGIR[IRQn] = 1U;
+    // Forward the interrupt to the CPU interface that requested it
+    GICDistributor->D_SGIR = (IRQn | 0x02000000U);
+  }
 }
 
 /** Clears the given interrupt from beeing pending using GIC's \ref GICDistributor_Type::D_ICPENDR "D_ICPENDR" register.
@@ -990,7 +997,12 @@ __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
 */
 __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
 {
-  GICDistributor->D_ICPENDR[IRQn / 32] = 1 << (IRQn % 32);
+  if (IRQn >= 16U) {
+    GICDistributor->D_ICPENDR[IRQn / 32] = 1 << (IRQn % 32);
+  } else {
+    // INTID 0-15 Software Generated Interrupt
+    GICDistributor->D_CPENDSGIR[IRQn] = 1U;
+  }
 }
 
 /** Configures the interrupt egde and model using GIC's GICDistributor_Type::D_ICFGR "D_ICFGR" register.
