@@ -339,7 +339,6 @@
       <var name="wl_idx"   type="uint32_t" info="Waiting list index (QWL)" />
       <var name="wl_cnt"   type="uint32_t" info="Number of threads waiting" />
       <var name="ml_idx"   type="uint32_t" info="Queue message list index (QML)" />
-      <var name="ml_cnt"   type="uint32_t" info="Number of messages queued" />
     </typedef>
 
     <!-- OS Runtime Information structure -->
@@ -413,7 +412,7 @@
     </typedef>
 
     <!-- OS Configuration structure -->
-    <typedef name="osRtxConfig_t" const="1" info="OS Configuration Structure" size="100">
+    <typedef name="osRtxConfig_t" const="1" info="OS Configuration Structure" size="104">
       <member name="flags"                 type="uint32_t" offset="0" info="OS configuration flags"/>
       <member name="tick_freq"             type="uint32_t" offset="4" info="Kernel tick frequency"/>
 
@@ -1408,7 +1407,7 @@
         <!-- Message Queue -->
         <item cond="QCB_En" property="Message Queues" value="">
           <list name="i" start="0" limit="QCB._count">
-            <item cond="QCB[i].cb_valid" property="id: %x[QCB[i]._addr]%t[QCB[i].obj_name]" value="Messages: %d[QCB[i].used_blocks], Max: %d[QCB[i].max_blocks]">
+            <item cond="QCB[i].cb_valid" property="id: %x[QCB[i]._addr]%t[QCB[i].obj_name]" value="Messages: %d[QCB[i].msg_count], Max: %d[QCB[i].max_blocks]">
 
               <item property="Messages"     value="%d[QCB[i].msg_count]"/>
               <item property="Max Messages" value="%d[QCB[i].max_blocks]"/>
@@ -1430,7 +1429,7 @@
               <item cond="QCB[i].msg_count" property="Queue (%d[QCB[i].msg_count])" value="">
 
                 <list name="j" start="0" limit="QCB[i].msg_count">
-                  <item property="Queue[%d[j]]" value="Address: %x[QML[j + QCB[i].ml_idx].addr], Priority: %d[QML[j].priority]" />
+                  <item property="Queue[%d[j]]" value="Address: %x[QML[j + QCB[i].ml_idx].addr], Priority: %d[QML[j + QCB[i].ml_idx].priority]" />
                 </list>
 
               </item>
