@@ -33,21 +33,154 @@ binary semaphore that can be released from an ISR.
 /**
 \def osMutexRecursive
 \details
- - \ref osMutexAttr_t
+Recursive flag in osMutexAttr_t.
+
+The same thread can consume a mutex multiple times without locking itself.
+Each time the owning thread acquires the mutex the lock count is incremented. The mutex must
+be released multiple times as well until the lock count reaches zero. At reaching zero the
+mutex is actually released and can be acquired by other threads.
+
+\note The maximum amount of recursive locks possible is implementation specific, i.e. the type size used for the lock count.
+If the maximum amount of recursive locks is depleted mutex acquire might fail.
+
+<b>Code Example</b>
+\code
+#include "cmsis_os2.h"
+  
+osMutexId_t mutex_id;  
+  
+const osMutexAttr_t Thread_Mutex_attr = {
+  "myThreadMutex",     // human readable mutex name
+  osMutexRecursive,    // attr_bits
+  NULL,                // memory for control block   
+  NULL                 // size for control block
+};
+  
+// must be called from a thread context
+void UseMutexRecursively(int count)  {
+  osStatus_t result = osMutexAcquire(mutex_id, osWaitForever);  // lock count is incremented, might fail when lock count is depleted
+  if (result == osOK) {
+    if (count < 10) {
+      UseMutexRecursively(count + 1);
+    }
+    osMutexRelease(mutex_id); // lock count is decremented, actually releases the mutex on lock count zero
+  }
+}
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \def osMutexPrioInherit
 \details
- - \ref osMutexAttr_t
+Priority inheritance flag in osMutexAttr_t.
+
+A mutex using priority inheritance protocol transfers a waiting threads priority to the
+current mutex owner if the owners thread priority is lower. This assures that a low priority
+thread does not block a high priority thread.
+
+Otherwise a low priority thread might hold a mutex but is not granted execution time due to
+another mid priority thread. Without priority inheritance the high priority thread waiting
+for the mutex would be blocked by the mid priority thread, called priority inversion.
+
+<b>Code Example</b>
+
+This example reveals a blocked high priority thread if osMutexPrioInherit is removed.
+
+\code
+#include "cmsis_os2.h"
+  
+osMutexId_t mutex_id;  
+  
+const osMutexAttr_t Thread_Mutex_attr = {
+  "myThreadMutex",     // human readable mutex name
+  osMutexPrioInherit,  // attr_bits
+  NULL,                // memory for control block   
+  NULL                 // size for control block
+};
+  
+void HighPrioThread(void *argument) {
+  osDelay(1000); // wait 1s until start actual work
+  while(1) {
+    osMutexAcquire(mutex_id, osWaitForever); // try to acquire mutex
+    // do stuff
+    osMutexRelease(mutex_id);
+  }
+}
+  
+void MidPrioThread(void *argument) {
+  osDelay(1000); // wait 1s until start actual work
+  while(1) {
+    // do non blocking stuff
+  }
+}
+  
+void LowPrioThread(void *argument) {
+  while(1) {
+    osMutexAcquire(mutex_id, osWaitForever);
+    osDelay(5000); // block mutex for 5s
+    osMutexRelease(mutex_id);
+    osDelay(5000); // sleep for 5s
+  }
+}
+\endcode
+
+During the first second the high and mid priority threads are delayed. Thus the low priority
+thread can start its work, acquires the mutex and delays while holding it.
+
+After the first second the high and mid priority threads become ready. Thus the high priority
+thread gets precedence and tries to acquire the mutex. Because the mutex is already owned by
+the low priority thread the high priority thread gets blocked.
+
+Finally the mid priority thread gets executed and start doing a lot of non-blocking stuff,
+i.e. it does not call any blocking RTOS functionality.
+
+Without osMutexPrioInherit we would stuck here forever. Even if the low priority thread
+gets ready after 5s. Due to its low priority the mid priority thread always gets precedence.
+The effect called priority inversion leads to the mid priority thread blocking the high
+priority thread indirectly.
+
+Using osMutexPrioInherit as shown in the example code we get rid of this situation. Due
+to the priority inheritance protocol the low priority thread inherites the high priority
+while holding the mutex. Thus the low priority thread gets precedence over the mid priority
+thread until it release the mutex. On osMutexRelease the high priority thread get ready and
+is scheduled immediately.
+
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \def osMutexRobust
 \details
- - \ref osMutexAttr_t
+Robust flag in osMutexAttr_t.
+
+Robust mutexes are automatically released if the owning thread is terminated (either by
+osThreadExit or osThreadTerminate). Non-robust mutexes are not released and the user must
+assure mutex release manually.
+
+<b>Code Example</b>
+
+This example reveals a blocked mutex if osMutexRobust is removed.
+
+\code
+#include "cmsis_os2.h"
+  
+osMutexId_t mutex_id;  
+  
+const osMutexAttr_t Thread_Mutex_attr = {
+  "myThreadMutex",     // human readable mutex name
+  osMutexRobust,       // attr_bits
+  NULL,                // memory for control block   
+  NULL                 // size for control block
+};
+  
+void Thread(void *argument) {
+  osMutexAcquire(mutex_id, osWaitForever);
+  osThreadExit();
+}
+\endcode
+
+Due to osMutexRobust the mutex gets released automatically. A non-robust mutex would stay locked and cannot be released anymore.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -240,11 +373,12 @@ void DeleteMutex (osMutexId_t mutex_id)  {
 \details
 The following predefined bit masks can be assigned to set options for a mutex object.  
 
-Bit Mask                    |  Description
-:---------------------------|:------------------
-\token{osMutexRecursive}    | Mutex is recursive. The same thread can consume a mutex multiple times without locking itself.
-\token{osMutexPrioInherit}  | Priority inheritance protocol. While a thread owns this mutex it cannot be preempted by a higher priority thread to avoid starvation.
-\token{osMutexRobust}       | Robust mutex. Notify threads that acquire a mutex if the previous owner was terminated.
+| Bit Mask                    |  Description        |
+| :-------------------------- | :------------------ |
+| \ref osMutexRecursive       | Mutex is recursive. |
+| \ref osMutexPrioInherit     | Priority inheritance protocol. |
+| \ref osMutexRobust          | Robust mutex.       |
+
 */
 /**
 \var osMutexAttr_t::cb_mem
