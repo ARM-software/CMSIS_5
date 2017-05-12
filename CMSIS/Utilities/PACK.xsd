@@ -109,6 +109,7 @@
       <xs:enumeration value="Analog Devices:1"/>
       <xs:enumeration value="ARM:82"/>
       <xs:enumeration value="ARM CMSIS:109"/>
+      <xs:enumeration value="ArteryTek:143"/>
       <xs:enumeration value="Atmel:3"/>
       <xs:enumeration value="CSR:118"/>
       <xs:enumeration value="Cypress:19"/>
