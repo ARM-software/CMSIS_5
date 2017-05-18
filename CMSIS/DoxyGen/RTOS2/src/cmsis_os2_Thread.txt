@@ -327,7 +327,8 @@ The function \b osThreadGetName returns the pointer to the name string of the th
 <b>Code Example</b>
 \code
 void ThreadGetName_example (void)  {
-  const char* name = osThreadGetName ();
+  osThreadId_t thread_id = osThreadGetId ();
+  const char* name = osThreadGetName (thread_id);
   if (name == NULL) {
     // Failed to get the thread name; not in a thread
   }
