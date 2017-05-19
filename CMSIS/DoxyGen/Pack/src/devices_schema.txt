@@ -1597,8 +1597,13 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.arm.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">ArteryTek:143</td>
+    <td>ArteryTek</td>
+    <td>http://www.arterytek.com<td>
+  </tr>
+  <tr>
     <td class="XML-Token">Atmel:3</td>
-    <td>Atmel Corporation</td>
+    <td>Atmel Corporation (now Microchip)</td>
     <td>http://www.atmel.com</td>
   </tr>
   <tr>
@@ -1667,6 +1672,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.megachips.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Microchip:3</td>
+    <td>Microchip (previously Atmel)</td>
+    <td>http://www.microchip.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">MicroSemi:112</td>
     <td>Microsemi</td>
     <td>http://www.microsemi.com</td>
@@ -1695,6 +1705,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">NXP:11</td>
     <td>NXP</td>
     <td>http://www.nxp.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">ONSemiconductor:141</td>
+    <td>ON Semiconductor</td>
+    <td>http://www.onsemi.com</td>
   </tr>
   <tr>
     <td class="XML-Token">Panasonic:131</td>
@@ -1747,6 +1762,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.st.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Synwit:144</td>
+    <td>Synwit Technology Co.,LTD.</td>
+    <td>http://www.synwit.cn</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Texas Instruments:16</td>
     <td>Texas Instruments</td>
     <td>http://www.ti.com</td>
@@ -1760,6 +1780,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">Triad Semiconductor:104</td>
     <td>Triad Semiconductor</td>
     <td>http://www.triadsemi.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Vorago:137</td>
+    <td>Vorago Technologies</td>
+    <td>http://www.voragotech.com</td>
   </tr>
   <tr>
     <td class="XML-Token">WIZnet:122</td>
