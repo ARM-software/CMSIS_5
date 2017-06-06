@@ -252,8 +252,7 @@ osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
     EvrRtxMessageQueueError(NULL, osErrorParameter);
     return NULL;
   }
-  msg_size = (msg_size + 3U) & ~3UL;
-  block_size = msg_size + sizeof(os_message_t);
+  block_size = ((msg_size + 3U) & ~3UL) + sizeof(os_message_t);
   if ((__CLZ(msg_count) + __CLZ(block_size)) < 32) {
     EvrRtxMessageQueueError(NULL, osErrorParameter);
     return NULL;
