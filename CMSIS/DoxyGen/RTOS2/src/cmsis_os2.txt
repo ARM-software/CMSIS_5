@@ -147,6 +147,7 @@ File/Folder                  | Content
       <td>V5.1.1</td>
       <td>
        - Fixed potential corruption of terminated threads list.
+       - Corrected MessageQueue to use actual message length (before padding).
        - Corrected parameters for ThreadEnumerate and MessageQueueInserted events.
        - Timer Thread creation moved to osKernelStart.
       </td>
