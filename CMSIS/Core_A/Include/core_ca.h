@@ -650,14 +650,14 @@ typedef struct
   __IOM uint32_t LOAD;            //!< \brief  Offset: 0x000 (R/W) Private Timer Load Register
   __IOM uint32_t COUNTER;         //!< \brief  Offset: 0x004 (R/W) Private Timer Counter Register
   __IOM uint32_t CONTROL;         //!< \brief  Offset: 0x008 (R/W) Private Timer Control Register
-  __IM  uint32_t ISR;             //!< \brief  Offset: 0x00C (R/ ) Private Timer Interrupt Status Register
+  __IOM uint32_t ISR;             //!< \brief  Offset: 0x00C (R/W) Private Timer Interrupt Status Register
         uint32_t RESERVED[4];
   __IOM uint32_t WLOAD;           //!< \brief  Offset: 0x020 (R/W) Watchdog Load Register
   __IOM uint32_t WCOUNTER;        //!< \brief  Offset: 0x024 (R/W) Watchdog Counter Register
   __IOM uint32_t WCONTROL;        //!< \brief  Offset: 0x028 (R/W) Watchdog Control Register
   __IOM uint32_t WISR;            //!< \brief  Offset: 0x02C (R/W) Watchdog Interrupt Status Register
   __IOM uint32_t WRESET;          //!< \brief  Offset: 0x030 (R/W) Watchdog Reset Status Register
-  __IM  uint32_t WDISABLE;        //!< \brief  Offset: 0x034 (R/ ) Watchdog Disable Register
+  __OM  uint32_t WDISABLE;        //!< \brief  Offset: 0x034 ( /W) Watchdog Disable Register
 } Timer_Type;
 #define PTIM ((Timer_Type *) TIMER_BASE )   /*!< \brief Timer configuration struct */
 #endif
