@@ -61,6 +61,9 @@
 #ifndef   __PACKED_STRUCT
   #define __PACKED_STRUCT                        struct __attribute__((packed, aligned(1)))
 #endif
+#ifndef   __PACKED_UNION
+  #define __PACKED_UNION                         union __attribute__((packed, aligned(1)))
+#endif
 #ifndef   __UNALIGNED_UINT32        /* deprecated */
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wpacked"
