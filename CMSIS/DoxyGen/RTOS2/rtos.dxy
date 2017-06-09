@@ -752,6 +752,8 @@ WARN_LOGFILE           =
 
 INPUT                  = . \
                          ../../RTOS2/Include/cmsis_os2.h \
+                         ../../RTOS2/Include/os_tick.h \
+                         ../../RTOS2/Source/os_systick.c \
                          ./src/cmsis_os2.txt \
                          ./src/cmsis_os2_Kernel.txt \
                          ./src/cmsis_os2_Thread.txt \
@@ -766,6 +768,7 @@ INPUT                  = . \
                          ./src/cmsis_os2_Status.txt \
                          ./src/cmsis_os2_Migration.txt \
                          ./src/cmsis_os2_MigrationGuide.txt \
+                         ./src/cmsis_os2_tick.txt \
                          ../../RTOS2/RTX/Include/rtx_os.h \
                          ../../RTOS2/RTX/Include/rtx_evr.h \
                          ./src/rtx_evr.txt
