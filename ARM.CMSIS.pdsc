@@ -843,18 +843,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dcore="ARMV8MML" Ddsp="DSP" Dfpu="SP_FPU"/>
     </condition>
 
-    <!-- Cortex-A Devices -->
-    <condition id="RZ_A Device">
-      <description>Renesas RZ_A Device</description>
-      <require Dvendor="Renesas:117"/>
-      <require Dfamily="RZ_A"/>
-    </condition>
-    <condition id="Unknown Cortex-A Device">
-      <description>Unknown Cortex-A Device</description>
-      <require condition="ARMv7-A Device"/>
-      <deny    condition="RZ_A Device"/>
-    </condition>
-
     <!-- ARMCC compiler -->
     <condition id="CA_ARMCC5">
       <description>Cortex-A5, Cortex-A7 or Cortex-A9 processor based device for the ARM Compiler 5</description>
@@ -1834,11 +1822,18 @@ and 8-bit Java bytecodes in Jazelle state.
     </condition>
     <condition id="RTOS2 RTX5">
       <description>Components required for RTOS2 RTX5</description>
-      <accept condition="ARMv6_7_8-M Device"/>
-      <accept condition="ARMv7-A Device"/>
+      <require condition="ARMv6_7_8-M Device"/>
       <require condition="ARMCC GCC IAR"/>
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
+    </condition>
+    <condition id="RTOS2 RTX5 v7-A">
+      <description>Components required for RTOS2 RTX5 v7-A</description>
+      <require condition="ARMv7-A Device"/>
+      <require condition="ARMCC GCC IAR"/>
+      <require Cclass="CMSIS"  Cgroup="CORE"/>
+      <require Cclass="Device" Cgroup="Startup"/>
+      <require Cclass="Device" Cgroup="OS Tick"/>
     </condition>
     <condition id="RTOS2 RTX5 Lib">
       <description>Components required for RTOS2 RTX5 Library</description>
@@ -2526,12 +2521,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"               version="5.1.0"/>
-        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"               version="5.1.0" condition="ARMv6_7_8-M Device" />
-        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/Cortex_A/RTX_Config.c"      version="5.1.0" condition="Unknown Cortex-A Device"/>
-        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/Renesas/RZ_A/RTX_Config.c"  version="5.1.0" condition="RZ_A Device"/>
-
-        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/handlers.c"                 version="5.1.0" condition="ARMv7-A Device"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.1.0"/>
+        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.0.0" select="CMSIS-RTOS2 'main' function"/>
@@ -2557,12 +2548,9 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_msgqueue.c"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_system.c"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_evr.c"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_gic.c"             condition="ARMv7-A Device"/>
         <!-- RTX sources (library configuration) -->
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_lib.c"/>
         <!-- RTX sources (handlers ARMCC) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_ca.s"          condition="CA_ARMCC5"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_ca.S"          condition="CA_ARMCC6"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm0.s"         condition="CM0_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM3_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM4_ARMCC"/>
@@ -2576,7 +2564,6 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_FP_ARMCC"/>
         <!-- RTX sources (handlers GCC) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_ca.S"          condition="CA_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm0.S"         condition="CM0_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"         condition="CM3_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"         condition="CM4_GCC"/>
@@ -2590,13 +2577,71 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="ARMv8MML_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="ARMv8MML_FP_GCC"/>
         <!-- RTX sources (handlers IAR) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_ca.s"          condition="CA_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm0.s"         condition="CM0_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"         condition="CM3_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"         condition="CM4_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm4f.s"        condition="CM4_FP_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"         condition="CM7_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm4f.s"        condition="CM7_FP_IAR"/>
+        <!-- OS Tick (SysTick) -->
+        <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
+      </files>
+    </component>
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.2.0" Capiversion="2.1.1" condition="RTOS2 RTX5 v7-A">
+      <description>CMSIS-RTOS2 RTX5 for ARMv7-A (Source)</description>
+      <RTE_Components_h>
+        <!-- the following content goes into file 'RTE_Components.h' -->
+        #define RTE_CMSIS_RTOS2                 /* CMSIS-RTOS2 */
+        #define RTE_CMSIS_RTOS2_RTX5            /* CMSIS-RTOS2 Keil RTX5 */
+        #define RTE_CMSIS_RTOS2_RTX5_SOURCE     /* CMSIS-RTOS2 Keil RTX5 Source */
+      </RTE_Components_h>
+      <files>
+        <!-- RTX documentation -->
+        <file category="doc"    name="CMSIS/Documentation/RTOS2/html/rtx5_impl.html"/>
+
+        <!-- RTX header files -->
+        <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
+
+        <!-- RTX configuration -->
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.1.0"/>
+        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
+
+        <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/handlers.c"    version="5.1.0"/>
+
+        <!-- RTX templates -->
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.0.0" select="CMSIS-RTOS2 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Events.c"    version="2.0.0" select="CMSIS-RTOS2 Events"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MemPool.c"   version="2.0.0" select="CMSIS-RTOS2 Memory Pool"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MsgQueue.c"  version="2.0.0" select="CMSIS-RTOS2 Message Queue"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Mutex.c"     version="2.0.0" select="CMSIS-RTOS2 Mutex"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="2.0.0" select="CMSIS-RTOS2 Semaphore"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="2.0.0" select="CMSIS-RTOS2 Thread"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.0" select="CMSIS-RTOS2 Timer"/>
+        <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
+
+        <!-- RTX sources (core) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_kernel.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_thread.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_delay.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_timer.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_evflags.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_mutex.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_semaphore.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_memory.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_mempool.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_msgqueue.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_system.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_evr.c"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_gic.c"/>
+        <!-- RTX sources (library configuration) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_lib.c"/>
+        <!-- RTX sources (handlers ARMCC) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_ca.s"          condition="CA_ARMCC5"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_ca.S"          condition="CA_ARMCC6"/>
+        <!-- RTX sources (handlers GCC) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_ca.S"          condition="CA_GCC"/>
+        <!-- RTX sources (handlers IAR) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_ca.s"          condition="CA_IAR"/>
       </files>
     </component>
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.2.0" Capiversion="2.1.1" condition="RTOS2 RTX5 NS">
@@ -2659,6 +2704,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.S"    condition="ARMv8MBL_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.S"    condition="ARMv8MML_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.S" condition="ARMv8MML_FP_GCC"/>
+        <!-- OS Tick (SysTick) -->
+        <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
       </files>
     </component>
 
