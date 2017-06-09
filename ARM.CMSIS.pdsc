@@ -8,6 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.2-dev4">
+      CMSIS Device:
+      - Added OS Tick API
+    </release>
     <release version="5.0.2-dev3">
       CMSIS-Core_A: 
       - Added ARM Compiler 6 support
@@ -553,6 +557,13 @@ and 8-bit Java bytecodes in Jazelle state.
 
 
   <apis>
+    <!-- CMSIS Device API -->
+    <api Cclass="Device" Cgroup="OS Tick" Capiversion="1.0.0" exclusive="1">
+      <description>CMSIS OS Tick API</description>
+      <files>
+        <file category="header" name="CMSIS/RTOS2/Include/os_tick.h"/>
+      </files>
+    </api>
     <!-- CMSIS-RTOS API -->
     <api Cclass="CMSIS" Cgroup="RTOS" Capiversion="1.0.0" exclusive="1">
       <description>CMSIS-RTOS API for Cortex-M, SC000, and SC300</description>
