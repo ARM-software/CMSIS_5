@@ -559,7 +559,7 @@ and 8-bit Java bytecodes in Jazelle state.
   <apis>
     <!-- CMSIS Device API -->
     <api Cclass="Device" Cgroup="OS Tick" Capiversion="1.0.0" exclusive="1">
-      <description>CMSIS OS Tick API</description>
+      <description>RTOS Kernel system tick timer interface</description>
       <files>
         <file category="header" name="CMSIS/RTOS2/Include/os_tick.h"/>
       </files>
