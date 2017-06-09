@@ -834,26 +834,31 @@ vector.
 \page config_rtx5 Configure RTX v5
 
 The file "RTX_Config.h" defines the configuration parameters of CMSIS-RTOS RTX and must be part of every project that is
-using the CMSIS-RTOS RTX kernel. The file "RTX_Config.c" contains stubs of the functions \b osRtxIdleThread and
-\b osRtxErrorNotify that can be adapted to the application's needs.
+using the CMSIS-RTOS RTX kernel. The configuration options are explained in detail in the following sections:
+- \ref systemConfig covers system-wide settings for the global memory pool, tick frequency, ISR event buffer and round-robin thread switching.
+- \ref threadConfig provides several parameters to configure the \ref CMSIS_RTOS_ThreadMgmt functions.
+- \ref timerConfig provides several parameters to configure the \ref CMSIS_RTOS_TimerMgmt functions.
+- \ref eventFlagsConfig provides several parameters to configure the \ref CMSIS_RTOS_EventFlags functions.
+- \ref mutexConfig provides several parameters to configure the \ref CMSIS_RTOS_MutexMgmt functions.
+- \ref semaphoreConfig provides several parameters to configure the \ref CMSIS_RTOS_SemaphoreMgmt functions.
+- \ref memPoolConfig provides several parameters to configure the \ref CMSIS_RTOS_PoolMgmt functions.
+- \ref msgQueueConfig provides several parameters to configure the \ref CMSIS_RTOS_Message functions.
 
-The configuration file uses
-<b>Configuration Wizard Annotations</b>. Refer to <b>Pack - Configuration Wizard Annotations</b> for details.
+The file "RTX_Config.c" contains default implementations of the functions \ref osRtxIdleThread and \ref osRtxErrorNotify. Both functions
+can simply be overwritten with a custimized behavior by redefining them as part of the user code.
+
+The configuration file uses <b>Configuration Wizard Annotations</b>. Refer to <b>Pack - Configuration Wizard Annotations</b> for details.
 Depending on the development tool, the annotations might lead to a more user-friendly graphical representation of the
 settings. The screenshot below is a screenshot from the µVision \b Configuration \b Wizard view:
 
 \image html config_wizard.png "RTX_Config.h in Configuration Wizard View"
 
-The configuration options are explained on these pages:
-- \ref systemConfig
-- \ref threadConfig
-- \ref timerConfig
-- \ref eventFlagsConfig
-- \ref mutexConfig
-- \ref semaphoreConfig
-- \ref memPoolConfig
-- \ref msgQueueConfig
+Alternatively one can provide configuration options using the compiler command line.
 
+For example one can customize the used tick frequency to 100us by (overwriting) the configuration using
+\code
+cc -DOS_TICK_FREQ=100
+\endcode
 
 \section systemConfig System Configuration
 
@@ -1740,7 +1745,7 @@ osRtxErrorClibMutex         /**
 \details
 The function \b osRtxIdleThread is executed by the RTX kernel, when no other threads are ready to run. By default, this
 thread is an empty end-less loop that does nothing. It only waits until another task becomes ready to run. You may change the
-code of the \b osRtxIdleThread function to put the CPU into a power-saving or idle mode.
+code of the \b osRtxIdleThread function to put the CPU into a power-saving or idle mode, see \ref TickLess.
 
 The default stack size for this thread is defined in the file RTX_Config.h. Refer to \ref threadConfig.
 
