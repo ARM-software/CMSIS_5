@@ -77,11 +77,11 @@
 //  - Extended: S16-S31, R4-R11, R0-R3, R12, LR, PC, xPSR, S0-S15, FPSCR
 //  - Basic:             R4-R11, R0-R3, R12, LR, PC, xPSR
 #if (__FPU_USED == 1U)
-#define STACK_OFFSET_R0(stack_frame)                \
-  (((stack_frame) & 0x10U) == 0U) ? ((16U+8U)*4U) : \
-                                         (8U *4U)
+#define STACK_OFFSET_R0(stack_frame)                 \
+  ((((stack_frame) & 0x10U) == 0U) ? ((16U+8U)*4U) : \
+                                          (8U *4U))
 #else
-#define STACK_OFFSET_R0(stack_frame)     (8U *4U)
+#define STACK_OFFSET_R0(stack_frame)      (8U *4U)
 #endif
 
 #define OS_TICK_HANDLER         SysTick_Handler

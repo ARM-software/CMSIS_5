@@ -56,10 +56,10 @@
 //  - VFP-D32: D16-31, D0-D15, FPSCR, Reserved, R4-R11, R0-R3, R12, LR, PC, CPSR
 //  - VFP-D16:         D0-D15, FPSCR, Reserved, R4-R11, R0-R3, R12, LR, PC, CPSR
 //  - Basic:                                    R4-R11, R0-R3, R12, LR, PC, CPSR
-#define STACK_OFFSET_R0(stack_frame)                                 \
-  (((stack_frame) & 0x04U) != 0U) ? ((32U*8U) + (2U*4U) + (8U*4U)) : \
-  (((stack_frame) & 0x02U) != 0U) ? ((16U*8U) + (2U*4U) + (8U*4U)) : \
-                                                          (8U*4U)
+#define STACK_OFFSET_R0(stack_frame)                                  \
+  ((((stack_frame) & 0x04U) != 0U) ? ((32U*8U) + (2U*4U) + (8U*4U)) : \
+   (((stack_frame) & 0x02U) != 0U) ? ((16U*8U) + (2U*4U) + (8U*4U)) : \
+                                                           (8U*4U))
 
 #define OS_TICK_HANDLER         osRtxTick_Handler
 
