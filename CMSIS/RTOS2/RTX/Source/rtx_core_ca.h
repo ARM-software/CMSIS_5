@@ -108,8 +108,6 @@ __STATIC_INLINE   t  __svc##f (void) {                                         \
   return svc##f(svcRtx##f);                                                    \
 }
 
-#define SVC0_0D SVC0_0
-
 #define SVC0_1N(f,t,t1)                                                        \
 __SVC_INDIRECT(0) t    svc##f (t(*)(t1),t1);                                   \
                   t svcRtx##f (t1 a1);                                         \
@@ -184,8 +182,6 @@ __STATIC_INLINE   t  __svc##f (void) {                                         \
   SVC_Setup(svcRtx##f);                                                        \
   return svc##f();                                                             \
 }
-
-#define SVC0_0D SVC0_0
 
 #define SVC0_1N(f,t,t1)                                                        \
 __SVC_INDIRECT(0) t    svc##f (t1 a1);                                         \
@@ -282,16 +278,6 @@ __STATIC_INLINE t __svc##f (void) {                                            \
   SVC_ArgF(svcRtx##f);                                                         \
   SVC_Call0(SVC_In0, SVC_Out1, SVC_CL1);                                       \
   return (t) __r0;                                                             \
-}
-
-#define SVC0_0D(f,t)                                                           \
-__attribute__((always_inline))                                                 \
-__STATIC_INLINE t __svc##f (void) {                                            \
-  SVC_ArgN(0);                                                                 \
-  SVC_ArgN(1);                                                                 \
-  SVC_ArgF(svcRtx##f);                                                         \
-  SVC_Call0(SVC_In0, SVC_Out2, SVC_CL0);                                       \
-  return (((t) __r0) | (((t) __r1) << 32));                                    \
 }
 
 #define SVC0_1N(f,t,t1)                                                        \

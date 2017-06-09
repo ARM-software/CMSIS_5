@@ -503,9 +503,9 @@ __WEAK void EvrRtxKernelResumed (void) {
 #endif
 
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_GET_TICK_COUNT_DISABLE))
-__WEAK void EvrRtxKernelGetTickCount (uint64_t count) {
+__WEAK void EvrRtxKernelGetTickCount (uint32_t count) {
 #if defined(RTE_Compiler_EventRecorder)
-  EventRecord2(EvtRtxKernelGetTickCount, (uint32_t)count, (uint32_t)(count>>32));
+  EventRecord2(EvtRtxKernelGetTickCount, count, 0U);
 #else
   (void)count;
 #endif
@@ -960,9 +960,9 @@ __WEAK void EvrRtxThreadDelay (uint32_t ticks) {
 #endif
 
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_DELAY_UNTIL_DISABLE))
-__WEAK void EvrRtxThreadDelayUntil (uint64_t ticks) {
+__WEAK void EvrRtxThreadDelayUntil (uint32_t ticks) {
 #if defined(RTE_Compiler_EventRecorder)
-  EventRecord2(EvtRtxThreadDelayUntil, (uint32_t)ticks, (uint32_t)(ticks >> 32));
+  EventRecord2(EvtRtxThreadDelayUntil, ticks, 0U);
 #else
   (void)ticks;
 #endif

@@ -82,7 +82,7 @@ SVC0_1 (KernelRestoreLock,      int32_t, int32_t)
 SVC0_0 (KernelSuspend,          uint32_t)
 SVC0_1N(KernelResume,           void, uint32_t)
 SVC0_0 (KernelGetState,         osKernelState_t)
-SVC0_0D(KernelGetTickCount,     uint64_t)
+SVC0_0 (KernelGetTickCount,     uint32_t)
 SVC0_0 (KernelGetTickFreq,      uint32_t)
 SVC0_0 (KernelGetSysTimerCount, uint32_t)
 SVC0_0 (KernelGetSysTimerFreq,  uint32_t)
@@ -468,7 +468,7 @@ void svcRtxKernelResume (uint32_t sleep_ticks) {
 
 /// Get the RTOS kernel tick count.
 /// \note API identical to osKernelGetTickCount
-uint64_t svcRtxKernelGetTickCount (void) {
+uint32_t svcRtxKernelGetTickCount (void) {
   EvrRtxKernelGetTickCount(osRtxInfo.kernel.tick);
   return osRtxInfo.kernel.tick;
 }
@@ -597,10 +597,9 @@ void osKernelResume (uint32_t sleep_ticks) {
 }
 
 /// Get the RTOS kernel tick count.
-uint64_t osKernelGetTickCount (void) {
+uint32_t osKernelGetTickCount (void) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxKernelGetTickCount(0U);
-    return  0U;
+    return svcRtxKernelGetTickCount();
   } else {
     return  __svcKernelGetTickCount();
   }
@@ -609,8 +608,7 @@ uint64_t osKernelGetTickCount (void) {
 /// Get the RTOS kernel tick frequency.
 uint32_t osKernelGetTickFreq (void) {
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxKernelGetTickFreq(0U);
-    return  0U;
+    return svcRtxKernelGetTickFreq();
   } else {
     return  __svcKernelGetTickFreq();
   }

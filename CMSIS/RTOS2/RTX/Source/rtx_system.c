@@ -250,7 +250,7 @@ __WEAK uint32_t osRtxSysTimerGetCount (void) {
   uint32_t tick;
   uint32_t val;
 
-  tick = (uint32_t)osRtxInfo.kernel.tick;
+  tick = osRtxInfo.kernel.tick;
   val  = SysTick_GetVal();
   if (SysTick_GetOvf()) {
     val = SysTick_GetVal();

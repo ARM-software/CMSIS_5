@@ -357,7 +357,7 @@
       <member name="kernel_pendISR"             type="uint8_t"              offset="10" info="Kernel pending ISR"/>
       <member name="kernel_pendSV"              type="uint8_t"              offset="11" info="Kernel pending SV"/>
       <member name="kernel_sys_freq"            type="uint32_t"             offset="12" info="Kernel system frequency"/>
-      <member name="kernel_tick"                type="uint64_t"             offset="16" info="Kernel tick counter"/>
+      <member name="kernel_tick"                type="uint32_t"             offset="16" info="Kernel tick counter"/>
       <member name="tick_irqn"                  type="int32_t"              offset="24" info="Tick timer IRQ number"/>
       <member name="thread_run_curr"            type="*osRtxThread_t"       offset="28" info="Current running thread"/>
       <member name="thread_run_next"            type="*osRtxThread_t"       offset="32" info="Next thread to run"/>
@@ -1482,7 +1482,7 @@
     <event id="0xF100 + 0x10" level="Op"     property="KernelSuspended"           value="sleep_ticks=%d[val1]" info="Kernel execution was suspended."/>
     <event id="0xF100 + 0x11" level="API"    property="KernelResume"              value="sleep_ticks=%d[val1]" info="osKernelResume function was called."/>
     <event id="0xF100 + 0x12" level="Op"     property="KernelResumed"             value="" info="Kernel execution was resumed."/>
-    <event id="0xF100 + 0x13" level="API"    property="KernelGetTickCount"        value="count=%d[((uint64_t)val2 &lt;&lt; 32) | val1]" info="osKernelGetTickCount function was called."/>
+    <event id="0xF100 + 0x13" level="API"    property="KernelGetTickCount"        value="count=%d[val1]" info="osKernelGetTickCount function was called."/>
     <event id="0xF100 + 0x14" level="API"    property="KernelGetTickFreq"         value="freq=%d[val1]" info="osKernelGetTickFreq function was called."/>
     <event id="0xF100 + 0x15" level="API"    property="KernelGetSysTimerCount"    value="count=%d[val1]" info="osKernelGetSysTimerCount function was called."/>
     <event id="0xF100 + 0x16" level="API"    property="KernelGetSysTimerFreq"     value="freq=%d[val1]" info="osKernelGetSysTimerFreq function was called."/>
@@ -1528,7 +1528,7 @@
     <event id="0xF200 + 0x26" level="Op"     property="ThreadFlagsWaitCompleted"    value="flags=%x[val1], options=%x[val2], thread_flags=%x[val3]" info="Wait for thread flags completed."/>
     <event id="0xF200 + 0x27" level="Op"     property="ThreadFlagsWaitNotCompleted" value="flags=%x[val1], options=%x[val2]" info="Wait for thread flags not completed."/>
     <event id="0xF200 + 0x28" level="API"    property="ThreadDelay"                 value="ticks=%d[val1]" info="osDelay function was called."/>
-    <event id="0xF200 + 0x29" level="API"    property="ThreadDelayUntil"            value="ticks=%d[((uint64_t)val2 &lt;&lt; 32) | val1]" info="osDelayUntil function was called."/>
+    <event id="0xF200 + 0x29" level="API"    property="ThreadDelayUntil"            value="ticks=%d[val1]" info="osDelayUntil function was called."/>
     <event id="0xF200 + 0x2A" level="Op"     property="ThreadDelayCompleted"        value="" info="osDelay/osDelayUntil completed."/>
 
     <event id="0xF300 + 0x00" level="Error"  property="TimerError"     value="timer_id=%x[val1], status=%E[val2, rtx_t:status]" info="Timer error occurred."/>

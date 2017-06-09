@@ -124,7 +124,7 @@ extern int32_t          svcRtxKernelUnlock           (void);
 extern int32_t          svcRtxKernelRestoreLock      (int32_t lock);
 extern uint32_t         svcRtxKernelSuspend          (void);
 extern void             svcRtxKernelResume           (uint32_t sleep_ticks);
-extern uint64_t         svcRtxKernelGetTickCount     (void);
+extern uint32_t         svcRtxKernelGetTickCount     (void);
 extern uint32_t         svcRtxKernelGetTickFreq      (void);
 extern uint32_t         svcRtxKernelGetSysTimerCount (void);
 extern uint32_t         svcRtxKernelGetSysTimerFreq  (void);
@@ -154,7 +154,7 @@ extern uint32_t         svcRtxThreadFlagsWait    (uint32_t flags, uint32_t optio
 
 // Delay Service Calls
 extern osStatus_t       svcRtxDelay      (uint32_t ticks);
-extern osStatus_t       svcRtxDelayUntil (uint32_t ticks_l, uint32_t ticks_h);
+extern osStatus_t       svcRtxDelayUntil (uint32_t ticks);
 
 // Timer Service Calls
 extern osTimerId_t      svcRtxTimerNew       (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr);

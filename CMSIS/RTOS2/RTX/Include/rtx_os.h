@@ -37,9 +37,9 @@ extern "C"
  
  
 /// Kernel Information
-#define osRtxVersionAPI      20010000   ///< API version (2.1.0)
-#define osRtxVersionKernel   50010001   ///< Kernel version (5.1.1)
-#define osRtxKernelId     "RTX V5.1.1"  ///< Kernel identification string
+#define osRtxVersionAPI      20010001   ///< API version (2.1.1)
+#define osRtxVersionKernel   50020001   ///< Kernel version (5.2.0)
+#define osRtxKernelId     "RTX V5.2.0"  ///< Kernel identification string
  
  
 //  ==== Common definitions ====
@@ -285,7 +285,8 @@ typedef struct {
     uint8_t                   pendISR;  ///< Pending ISR (SV and SysTick)
     uint8_t                    pendSV;  ///< Pending SV
     uint32_t                 sys_freq;  ///< System Frequency
-    uint64_t                     tick;  ///< Tick counter
+    uint32_t                     tick;  ///< Tick counter
+    uint32_t                 reserved;
   } kernel;
   int32_t                   tick_irqn;  ///< Tick Timer IRQ Number
   struct {                              ///< Thread Info
