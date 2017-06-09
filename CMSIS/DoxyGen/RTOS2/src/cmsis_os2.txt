@@ -78,6 +78,16 @@ File/Folder                  | Content
       <th>Description</th>
     </tr>
     <tr>
+      <td>V2.1.1</td>
+      <td>
+        Additional functions allowed to be called from Interrupt Service Routines:
+         - \ref osKernelGetTickCount, \ref osKernelGetTickFreq
+         
+        Changed Kernel Tick type to uint32_t:
+         - updated: \ref osKernelGetTickCount, \ref osDelayUntil
+     </td>
+    </tr>
+    <tr>
       <td>V2.1.0</td>
       <td>
         Support for critical and uncritical sections (nesting safe):
@@ -144,8 +154,10 @@ File/Folder                  | Content
       <th>Description</th>
     </tr>
     <tr>
-      <td>V5.1.1</td>
+      <td>V5.2.0</td>
       <td>
+       - Based on CMSIS-RTOS API V2.1.1.
+       - Added support for for Cortex-A.
        - Fixed potential corruption of terminated threads list.
        - Corrected MessageQueue to use actual message length (before padding).
        - Corrected parameters for ThreadEnumerate and MessageQueueInserted events.
@@ -155,7 +167,7 @@ File/Folder                  | Content
     <tr>
       <td>V5.1.0</td>
       <td>
-       - Based on CMSIS-RTOS API V2.1.
+       - Based on CMSIS-RTOS API V2.1.0.
        - Added support for Event recording.
        - Added support for IAR compiler.
        - Updated configuration files: RTX_Config.h for the configuration settings and RTX_config.c for implementing the \ref rtx5_specific.
@@ -803,7 +815,7 @@ Examples:
 \section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
 
 The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
-  - \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
+  - \ref osKernelGetTickCount, \ref osKernelGetTickFreq, \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
   - \ref osThreadFlagsSet
   - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
   - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
@@ -1488,7 +1500,7 @@ Overview of all CMSIS-RTOS C API v2 functions that are implemented in the \subpa
 
 The following CMSIS-RTOS2 functions can be called from threads and \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines"
 (ISR):
-   - \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
+   - \ref osKernelGetTickCount, \ref osKernelGetTickFreq, \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
    - \ref osThreadFlagsSet
    - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
    - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
