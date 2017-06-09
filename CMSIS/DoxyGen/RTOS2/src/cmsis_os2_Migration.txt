@@ -52,7 +52,7 @@ New function #osKernelGetInfo.
 \enddiv
 
 \div{new}
-\func{uint64_t #osKernelGetTickCount (void)}
+\func{uint32_t #osKernelGetTickCount (void)}
 \none
 \copybrief{osKernelGetTickCount}
 New function.
@@ -390,7 +390,7 @@ Refer to \ref CMSIS_RTOS_Wait for details.
 \enddiv
 
 \div{new}
-\func{osStatus_t #osDelayUntil (uint64_t ticks)}
+\func{osStatus_t #osDelayUntil (uint32_t ticks)}
 \none
 \copybrief{osDelayUntil}
 New function.
