@@ -18,18 +18,12 @@
 ; * -----------------------------------------------------------------------------
 ; *
 ; * Project:     CMSIS-RTOS RTX
-; * Title:       Cortex-A Exception handlers (using GIC)
+; * Title:       Cortex-A Exception handlers
 ; *
 ; * -----------------------------------------------------------------------------
 ; */
 
                 NAME     irq_ca.s
-
-ICDABR0_OFFSET  EQU      0x00000300                 ; GICD: Active Bit Register 0 offset
-ICDIPR0_OFFSET  EQU      0x00000400                 ; GICD: Interrupt Priority Register 0 offset
-ICCIAR_OFFSET   EQU      0x0000000C                 ; GICI: Interrupt Acknowledge Register offset
-ICCEOIR_OFFSET  EQU      0x00000010                 ; GICI: End of Interrupt Register offset
-ICCHPIR_OFFSET  EQU      0x00000018                 ; GICI: Highest Pending Interrupt Register offset
 
 MODE_FIQ        EQU      0x11
 MODE_IRQ        EQU      0x12
@@ -39,7 +33,7 @@ MODE_UND        EQU      0x1B
 
 CPSR_BIT_T      EQU      0x20
 
-I_T_RUN_OFS     EQU      28                         ; osRtxInfo.thread.run offset
+I_T_RUN_OFS     EQU      20                         ; osRtxInfo.thread.run offset
 TCB_SP_FRAME    EQU      34                         ; osRtxThread_t.stack_frame offset
 TCB_SP_OFS      EQU      56                         ; osRtxThread_t.sp offset
 
@@ -54,7 +48,10 @@ irqRtxLib       DCB      0                          ; Non weak library reference
 
 
                 SECTION .data:DATA:NOROOT(2)
-ID0_Active      DCB      4                          ; Flag used to workaround GIC 390 errata 733075
+                EXPORT   IRQ_PendSV
+IRQ_NestLevel   DCD      0                          ; IRQ nesting level counter
+IRQ_PendSV      DCB      0                          ; Pending SVC flag
+SVC_Active      DCB      0                          ; SVC handler execution active flag
 
 
                 SECTION .text:CODE:NOROOT(2)
@@ -160,108 +157,105 @@ DAbt_Handler
 
 IRQ_Handler
                 EXPORT  IRQ_Handler
-                IMPORT  IRQTable
-                IMPORT  IRQCount
-                IMPORT  osRtxIrqHandler
-                IMPORT  irqRtxGicBase
+                IMPORT  osRtxInfo
+                IMPORT  osRtxIrqGetId
+                IMPORT  osRtxIrqGetHandler
+                IMPORT  osRtxIrqSetEnd
 
                 SUB     LR, LR, #4                  ; Pre-adjust LR
                 SRSFD   SP!, #MODE_IRQ              ; Save LR_irq and SPRS_irq
                 PUSH    {R0-R3, R12, LR}            ; Save APCS corruptible registers
 
-                ; Identify and acknowledge interrupt
-                LDR     R1, =irqRtxGicBase;
-                LDR     R1, [R1, #4]
-                LDR     R0, [R1, #ICCHPIR_OFFSET]   ; Dummy Read GICI ICCHPIR to avoid GIC 390 errata 801120
-                LDR     R0, [R1, #ICCIAR_OFFSET]    ; Read GICI ICCIAR
-                DSB                                 ; Ensure that interrupt acknowledge completes before re-enabling interrupts
+                MOV     R3, SP                      ; Move SP into R3
+                AND     R3, R3, #4                  ; Get stack adjustment to ensure 8-byte alignment
+                SUB     SP, SP, R3                  ; Adjust stack
+                PUSH    {R3, R4}                    ; Store stack adjustment(R3) and user data(R4)
 
-                ; Workaround GIC 390 errata 733075 - see GIC-390_Errata_Notice_v6.pdf dated 09-Jul-2014
-                ; The following workaround code is for a single-core system.  It would be different in a multi-core system.
-                ; If the ID is 0 or 0x3FE or 0x3FF, then the GIC CPU interface may be locked-up so unlock it, otherwise service the interrupt as normal
-                ; Special IDs 1020=0x3FC and 1021=0x3FD are reserved values in GICv1 and GICv2 so will not occur here
-                CMP     R0, #0
-                BEQ     IRQ_Unlock
-                MOV     R2, #0x3FE
-                CMP     R0, R2
-                BLT     IRQ_Normal
-IRQ_Unlock
-                ; Unlock the CPU interface with a dummy write to ICDIPR0
-                LDR     R2, =irqRtxGicBase
-                LDR     R2, [R2]
-                LDR     R3, [R2, #ICDIPR0_OFFSET]
-                STR     R3, [R2, #ICDIPR0_OFFSET]
-                DSB                                 ; Ensure the write completes before continuing
+                BLX     osRtxIrqGetId               ; Retrieve interrupt ID into R0
+                CMP     R0, #-1                     ; Check if interrupt valid
+                BEQ     IRQ_Exit                    ; Spurious interrupt if -1, exit IRQ
+                MOV     R4, R0                      ; Move interrupt ID to R4
 
-                ; If the ID is 0 and it is active and has not been seen before, then service it as normal,
-                ; otherwise the interrupt should be treated as spurious and not serviced.
-                CMP     R0, #0
-                BNE     IRQ_Exit                    ; Not 0, so spurious
-                LDR     R3, [R2, #ICDABR0_OFFSET]   ; Get the interrupt state
-                TST     R3, #1
-                BEQ     IRQ_Exit                    ; Not active, so spurious
-                LDR     R2, =ID0_Active
-                LDRB    R3, [R2]
-                CMP     R3, #1
-                BEQ     IRQ_Exit                    ; Seen it before, so spurious
+                LDR     R1, =IRQ_NestLevel
+                LDR     R3, [R1]                    ; Load IRQ nest level and increment it
+                ADD     R3, R3, #1
+                STR     R3, [R1]
 
-                ; Record that ID0 has now been seen, then service it as normal
-                MOV     R3, #1
-                STRB    R3, [R2]
-                ; End of Workaround GIC 390 errata 733075
-
-IRQ_Normal
-                LDR     R2, =IRQCount               ; Read number of entries in IRQ handler table
-                LDR     R2, [R2]
-                CMP     R0, R2                      ; Check if IRQ ID is within range
-                MOV     R2, #0
-                BHS     IRQ_End                     ; Out of range, return as normal
-                LDR     R2, =IRQTable               ; Read IRQ handler address from IRQ table
-                LDR     R2, [R2, R0, LSL #2]
-                CMP     R2, #0                      ; Check if handler address is 0
+                BLX     osRtxIrqGetHandler          ; Retrieve interrupt handler address for current ID
+                CMP     R0, #0                      ; Check if handler address is 0
                 BEQ     IRQ_End                     ; If 0, end interrupt and return
-                PUSH    {R0, R1}                    ; Store IRQ ID and GIC CPU Interface base address
 
                 CPS     #MODE_SVC                   ; Change to SVC mode
 
                 MOV     R3, SP                      ; Move SP into R3
                 AND     R3, R3, #4                  ; Get stack adjustment to ensure 8-byte alignment
                 SUB     SP, SP, R3                  ; Adjust stack
-                PUSH    {R2, R3, R12, LR}           ; Store handler address(R2), stack adjustment(R3) and user R12, LR
+                PUSH    {R3, R4}                    ; Store stack adjustment(R3) and alignment dummy(R4)
 
                 CPSIE   i                           ; Re-enable interrupts
-                BLX     R2                          ; Call IRQ handler
+                BLX     R0                          ; Call IRQ handler
                 CPSID   i                           ; Disable interrupts
 
-                POP     {R2, R3, R12, LR}           ; Restore handler address(R2), stack adjustment(R3) and user R12, LR
+                POP     {R3, R4}
                 ADD     SP, SP, R3                  ; Unadjust stack
 
                 CPS     #MODE_IRQ                   ; Change to IRQ mode
-                POP     {R0, R1}                    ; Restore IRQ ID and GIC CPU Interface base address
-                DSB                                 ; Ensure that interrupt source is cleared before signalling End Of Interrupt
+
 IRQ_End
-                ; R0 =IRQ ID, R1 =GICI_BASE
-                ; EOI does not need to be written for IDs 1020 to 1023 (0x3FC to 0x3FF)
-                STR     R0, [R1, #ICCEOIR_OFFSET]   ; Normal end-of-interrupt write to EOIR (GIC CPU Interface register) to clear the active bit
+                MOV     R0, R4                      ; Move interrupt ID to R0
+                BLX     osRtxIrqSetEnd
 
-                ; If it was ID0, clear the seen flag, otherwise return as normal
+                LDR     R2, =IRQ_NestLevel
+                LDR     R1, [R2]                    ; Load IRQ nest level and
+                SUBS    R1, R1, #1                  ; decrement it
+                STR     R1, [R2]
+                BNE     IRQ_Exit                    ; Not zero, exit from IRQ handler
+
+                LDR     R0, =SVC_Active
+                LDRB    R0, [R0]                    ; Load SVC_Active flag
                 CMP     R0, #0
-                LDREQ   R1, =ID0_Active
-                STRBEQ  R0, [R1]                    ; Clear the seen flag, using R0 (which is 0), to save loading another register
+                BNE     IRQ_SwitchCheck             ; Skip post processing when SVC active
 
-                LDR     R3, =osRtxIrqHandler        ; Load osRtxIrqHandler function address
-                CMP     R2, R3                      ; If is the same ass current IRQ handler
-                BEQ     osRtxContextSwitch          ; Call context switcher
+                ; RTX IRQ post processing check
+                PUSH    {R5, R6}                    ; Save user R5 and R6
+                MOV     R6, #0
+                LDR     R5, =IRQ_PendSV             ; Load address of IRQ_PendSV flag
+                B       IRQ_PendCheck
+IRQ_PendExec
+                STRB    R6, [R5]                    ; Clear PendSV flag
+                CPSIE   i                           ; Re-enable interrupts
+                BLX     osRtxPendSV_Handler         ; Post process pending objects
+                CPSID   i                           ; Disable interrupts
+IRQ_PendCheck
+                LDRB    R0, [R5]                    ; Load PendSV flag
+                CMP     R0, #1                      ; Compare PendSV value
+                BEQ     IRQ_PendExec                ; Branch to IRQ_PendExec if PendSV is set
+                POP     {R5, R6}                    ; Restore user R5 and R6
+
+IRQ_SwitchCheck
+                ; RTX IRQ context switch check
+                LDR     R12, =osRtxInfo+I_T_RUN_OFS ; Load address of osRtxInfo.run
+                LDM     R12, {R0, R1}               ; Load osRtxInfo.thread.run: curr & next
+                CMP     R0, R1                      ; Check if context switch is required
+                BEQ     IRQ_Exit
+
+                POP     {R3, R4}                    ; Restore stack adjustment(R3) and user data(R4)
+                ADD     SP, SP, R3                  ; Unadjust stack
+                B       osRtxContextSwitch
 
 IRQ_Exit
+                POP     {R3, R4}                    ; Restore stack adjustment(R3) and user data(R4)
+                ADD     SP, SP, R3                  ; Unadjust stack
+
                 POP     {R0-R3, R12, LR}            ; Restore stacked APCS registers
                 RFEFD   SP!                         ; Return from IRQ handler
-                
+
 
 SVC_Handler
                 EXPORT  SVC_Handler
-                IMPORT  osRtxIrqLock
-                IMPORT  osRtxIrqUnlock
+                IMPORT  osRtxIrqEnableTick
+                IMPORT  osRtxIrqDisableTick
+                IMPORT  osRtxPendSV_Handler
                 IMPORT  osRtxUserSVC
                 IMPORT  osRtxInfo
 
@@ -278,7 +272,10 @@ SVC_Handler
                 BNE     SVC_User                    ; Branch if User SVC
 
                 PUSH    {R0-R3}
-                BLX     osRtxIrqLock                ; Disable RTX interrupt (timer, PendSV)
+                BLX     osRtxIrqDisableTick         ; Disable System Timer interrupt
+                LDR     R0, =SVC_Active
+                MOV     R1, #1
+                STRB    R1, [R0]                    ; Set SVC_Active flag
                 POP     {R0-R3}
 
                 LDR     R12, [SP]                   ; Reload R12 from stack
@@ -294,7 +291,30 @@ SVC_Handler
                 LDMDB   R12, {R2,R3}                ; Load return values from SVC function
                 PUSH    {R0-R3}                     ; Push return values to stack
 
-                BLX     osRtxIrqUnlock              ; Enable RTX interrupt (timer, PendSV)
+                PUSH    {R4, R5}                    ; Save R4 and R5
+                MOV     R5, #0
+                LDR     R4, =IRQ_PendSV             ; Load address of IRQ_PendSV
+                B       SVC_PendCheck
+SVC_PendExec
+                STRB    R5, [R4]                    ; Clear IRQ_PendSV flag
+                CPSIE   i                           ; Re-enable interrupts
+                BLX     osRtxPendSV_Handler         ; Post process pending objects
+                CPSID   i                           ; Disable interrupts
+SVC_PendCheck
+                LDRB    R0, [R4]                    ; Load IRQ_PendSV flag
+                CMP     R0, #1                      ; Compare IRQ_PendSV value
+                BEQ     SVC_PendExec                ; Branch to SVC_PendExec if IRQ_PendSV is set
+                POP     {R4, R5}                    ; Restore R4 and R5
+
+                LDR     R0, =SVC_Active
+                MOV     R1, #0
+                STRB    R1, [R0]                    ; Clear SVC_Active flag
+                BLX     osRtxIrqEnableTick          ; Enable System Timer interrupt
+
+                LDR     R12, =osRtxInfo+I_T_RUN_OFS ; Load address of osRtxInfo.run
+                LDM     R12, {R0, R1}               ; Load osRtxInfo.thread.run: curr & next
+                CMP     R0, R1                      ; Check if context switch is required
+                BEQ     osRtxContextExit            ; Exit if curr and next are equal
                 B       osRtxContextSwitch          ; Continue in context switcher
 
 SVC_User
@@ -315,10 +335,9 @@ SVC_Done
 osRtxContextSwitch
                 EXPORT  osRtxContextSwitch
 
-                LDR     R12, =osRtxInfo+I_T_RUN_OFS ; Load address of osRtxInfo.run
-                LDM     R12, {R0, R1}               ; Load osRtxInfo.thread.run: curr & next
-                CMP     R0, R1                      ; Check if context switch is required
-                BEQ     osRtxContextExit            ; Exit if curr and next are equal
+                ; R0  = osRtxInfo.thread.run.curr
+                ; R1  = osRtxInfo.thread.run.next
+                ; R12 = &osRtxInfo.thread.run
 
                 CMP     R0, #0                      ; Is osRtxInfo.thread.run.curr == 0
                 ADDEQ   SP, SP, #32                 ; Equal, curr deleted, adjust current SP

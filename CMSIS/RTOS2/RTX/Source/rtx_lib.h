@@ -32,6 +32,7 @@
 #if ((__ARM_ARCH_8M_BASE__ != 0) || (__ARM_ARCH_8M_MAIN__ != 0))
 #include "tz_context.h"                 // TrustZone Context API
 #endif
+#include "os_tick.h"
 #include "cmsis_os2.h"                  // CMSIS RTOS API
 #include "rtx_os.h"                     // RTX OS definitions
 #include "rtx_evr.h"                    // RTX Event Recorder definitions

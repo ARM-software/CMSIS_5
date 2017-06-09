@@ -38,7 +38,7 @@ extern "C"
  
 /// Kernel Information
 #define osRtxVersionAPI      20010001   ///< API version (2.1.1)
-#define osRtxVersionKernel   50020001   ///< Kernel version (5.2.0)
+#define osRtxVersionKernel   50020000   ///< Kernel version (5.2.0)
 #define osRtxKernelId     "RTX V5.2.0"  ///< Kernel identification string
  
  
@@ -282,11 +282,9 @@ typedef struct {
   struct {                              ///< Kernel Info
     uint8_t                     state;  ///< State
     volatile uint8_t          blocked;  ///< Blocked
-    uint8_t                   pendISR;  ///< Pending ISR (SV and SysTick)
     uint8_t                    pendSV;  ///< Pending SV
-    uint32_t                 sys_freq;  ///< System Frequency
+    uint8_t                  reserved;
     uint32_t                     tick;  ///< Tick counter
-    uint32_t                 reserved;
   } kernel;
   int32_t                   tick_irqn;  ///< Tick Timer IRQ Number
   struct {                              ///< Thread Info
@@ -341,7 +339,6 @@ typedef struct {
     osRtxMpInfo_t        *memory_pool;  ///< Memory Pool Control Blocks
     osRtxMpInfo_t      *message_queue;  ///< Message Queue Control Blocks
   } mpi;
-  uint32_t                    padding;
 } osRtxInfo_t;
  
 extern osRtxInfo_t osRtxInfo;           ///< OS Runtime Information
@@ -396,30 +393,6 @@ extern void osRtxIdleThread (void *argument);
 extern void SVC_Handler     (void);
 extern void PendSV_Handler  (void);
 extern void SysTick_Handler (void);
- 
- 
-/// OS System Timer functions (default implementation uses SysTick)
- 
-/// Setup System Timer.
-/// \return system timer IRQ number.
-extern int32_t osRtxSysTimerSetup (void);
- 
-/// Enable System Timer.
-extern void osRtxSysTimerEnable (void);
- 
-/// Disable System Timer.
-extern void osRtxSysTimerDisable (void);
- 
-/// Acknowledge System Timer IRQ.
-extern void osRtxSysTimerAckIRQ (void);
- 
-/// Get System Timer count.
-/// \return system timer count.
-extern uint32_t osRtxSysTimerGetCount (void);
- 
-/// Get System Timer frequency.
-/// \return system timer frequency.
-extern uint32_t osRtxSysTimerGetFreq (void);
  
  
 //  ==== OS External Configuration ====

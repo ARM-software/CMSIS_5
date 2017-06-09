@@ -377,33 +377,7 @@ void osRtxThreadDelayTick (void) {
 /// \param[in]  thread          thread object.
 /// \return pointer to registers R0-R3.
 uint32_t *osRtxThreadRegPtr (os_thread_t *thread) {
-#if (__ARM_ARCH_7A__ == 0U) /* Cortex-M */
-#if (__FPU_USED == 1U)
-  if (IS_EXTENDED_STACK_FRAME(thread->stack_frame)) {
-    // Extended Stack Frame: S16-S31, R4-R11, R0-R3, R12, LR, PC, xPSR, S0-S15, FPSCR
-    return ((uint32_t *)(thread->sp + (16U+8U)*4U));
-  } else {
-    // Basic Stack Frame:             R4-R11, R0-R3, R12, LR, PC, xPSR
-    return ((uint32_t *)(thread->sp +      8U *4U));
-  }
-#else
-  // Stack Frame: R4-R11, R0-R3, R12, LR, PC, xPSR
-  return ((uint32_t *)(thread->sp + 8U*4U));
-#endif
-#else /* Cortex-A */
-  if (IS_VFP_D32_STACK_FRAME(thread->stack_frame)) {
-    /* VFP-D32 Stack Frame: D16-31, D0-D15, FPSCR, Reserved, R4-R11, R0-R3, R12, LR, PC, CPSR */
-    return (uint32_t *)(thread->sp + (8U*4U) + (2U*4U) + (32U*8U));
-  }
-  else if (IS_VFP_D16_STACK_FRAME(thread->stack_frame)) {
-    /* VFP-D16 Stack Frame:         D0-D15, FPSCR, Reserved, R4-R11, R0-R3, R12, LR, PC, CPSR */
-    return (uint32_t *)(thread->sp + (8U*4U) + (2U*4U) + (16U*8U));
-  }
-  else {
-    /* Basic Stack Frame:                                    R4-R11, R0-R3, R12, LR, PC, CPSR */
-    return (uint32_t *)(thread->sp + (8U*4U));
-  }
-#endif
+  return ((uint32_t *)(thread->sp + STACK_OFFSET_R0(thread->stack_frame)));
 }
 
 /// Block running Thread execution and register it as Ready to Run.
@@ -775,19 +749,10 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
   }
   *ptr++   = (uint32_t)osThreadExit;    // LR
   *ptr++   = (uint32_t)func;            // PC
-#if (__ARM_ARCH_7A__ == 0U)
-  *ptr++   = XPSR_INITIAL_VALUE;        // xPSR
-#else
-  if ((osRtxConfig.flags & osRtxConfigPrivilegedMode) != 0U) {
-    *ptr   = CPSR_INIT_SYSTEM;          // CPSR (Mode=System))
-  } else {
-    *ptr   = CPSR_INIT_USER;            // CPSR (Mode=User)
-  }
-  if (((uint32_t)func & 1U) != 0U) {
-    *ptr  |= CPSR_T_BIT;                // CPSR (Thumb=1)
-  }
-  ptr++;
-#endif
+  *ptr++   = xPSR_INIT(
+              (osRtxConfig.flags & osRtxConfigPrivilegedMode),
+              ((uint32_t)func & 1U)
+             );                         // xPSR
   *(ptr-8) = (uint32_t)argument;        // R0
 
   // Register post ISR processing function

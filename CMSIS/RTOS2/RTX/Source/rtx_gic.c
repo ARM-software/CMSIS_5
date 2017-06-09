@@ -26,121 +26,93 @@
 #include "RTE_Components.h"
 #include CMSIS_device_header
 
-#include "rtx_lib.h"
+#include "rtx_os.h"
+
 
 #if ((__ARM_ARCH_7A__ == 1U) && (__GIC_PRESENT == 1U))
 
-extern const uint32_t irqRtxGicBase[];
-       const uint32_t irqRtxGicBase[2] = {
-  GIC_DISTRIBUTOR_BASE,
-  GIC_INTERFACE_BASE
-};
+extern IRQHandler IRQTable[];
+extern uint32_t   IRQCount;
 
+static uint32_t ID0_Active;
 
-static IRQn_Type PendSV_IRQn;
-static uint8_t   PendSV_Flag = 0U;
-
-
-// Pending supervisor call interface
-// =================================
-
-/// Get Pending SV (Service Call) Flag
-/// \return    Pending SV Flag
-uint8_t GetPendSV (void) {
-  uint32_t pend;
-
-  pend = GIC_GetIRQStatus(PendSV_IRQn);
-
-  return ((uint8_t)(pend & 1U));
-}
-
-/// Clear Pending SV (Service Call) Flag
-void ClrPendSV (void) {
-  GIC_ClearPendingIRQ(PendSV_IRQn);
-  PendSV_Flag = 0U;
-}
-
-/// Set Pending SV (Service Call) Flag
-void SetPendSV (void) {
-  PendSV_Flag = 1U;
-  GIC_SetPendingIRQ(PendSV_IRQn);
-}
-
-/// Set Pending Flags
-/// \param[in] flags  Flags to set
-void SetPendFlags (uint8_t flags) {
-  if ((flags & 1U) != 0U) {
-    PendSV_Flag = 1U;
-    GIC_SetPendingIRQ(PendSV_IRQn);
-  }
-}
-
-
-// External IRQ handling interface
-// =================================
-
-/// Enable RTX interrupts
-void osRtxIrqUnlock (void) {
-  GIC_EnableIRQ(PendSV_IRQn);
-}
-
-/// Disable RTX interrupts
-void osRtxIrqLock (void) {
-  GIC_DisableIRQ(PendSV_IRQn);
-}
-
-/// Timer/PendSV interrupt handler
-void osRtxIrqHandler (void) {
-
-  if (PendSV_Flag == 0U) {
-    osRtxTick_Handler();
-  } else {
-    ClrPendSV();
-    osRtxPendSV_Handler();
-  }
-}
-
-
-// External tick timer IRQ interface
-// =================================
-
-/// Setup External Tick Timer Interrupt
-/// \param[in] irqn  Interrupt number
-void ExtTick_SetupIRQ (int32_t irqn) {
-  IRQn_Type irq = (IRQn_Type)irqn;
+int32_t osRtxIrqGetId (void) {
+  IRQn_Type irq;
+  int32_t id;
   uint32_t prio;
 
-  PendSV_IRQn = irq;
+  /* Dummy read to avoid GIC 390 errata 801120 */
+  GIC_GetHighPendingIRQ();
 
-  // Disable corresponding IRQ first
-  GIC_DisableIRQ     (irq);
-  GIC_ClearPendingIRQ(irq);
+  irq = GIC_AcknowledgePending();
 
-  // Write 0xFF to determine priority level
-  GIC_SetPriority(irq, 0xFFU);
+  __DSB();
 
-  // Read back the number of priority bits
-  prio = GIC_GetPriority(irq);
+  /* Workaround GIC 390 errata 733075 (GIC-390_Errata_Notice_v6.pdf, 09-Jul-2014)  */
+  /* The following workaround code is for a single-core system.  It would be       */
+  /* different in a multi-core system.                                             */
+  /* If the ID is 0 or 0x3FE or 0x3FF, then the GIC CPU interface may be locked-up */
+  /* so unlock it, otherwise service the interrupt as normal.                      */
+  /* Special IDs 1020=0x3FC and 1021=0x3FD are reserved values in GICv1 and GICv2  */
+  /* so will not occur here.                                                       */
+  id = (int32_t)irq;
 
-  // Set lowest possible priority
-  GIC_SetPriority(irq, prio - 1);
+  if ((irq == 0U) || (irq >= 0x3FEU)) {
+    /* Unlock the CPU interface with a dummy write to Interrupt Priority Register */
+    prio = GIC_GetPriority((IRQn_Type)0);
+    GIC_SetPriority ((IRQn_Type)0, prio);
 
-  // Set edge-triggered and 1-N model bits
-  GIC_SetLevelModel(irq, 1, 1);
+    __DSB();
 
-  InterruptHandlerRegister(irq, osRtxIrqHandler);
+    if (id != 0U) {
+      /* Not 0 (spurious interrupt) */
+      id = -1;
+    }
+    else if ((GIC_GetIRQStatus (irq) & 1U) == 0U) {
+      /* Not active (spurious interrupt) */
+      id = -1;
+    }
+    else if (ID0_Active == 1U) {
+      /* Already seen (spurious interrupt) */
+      id = -1;
+    }
+    else {
+      ID0_Active = 1U;
+    }
+    /* End of Workaround GIC 390 errata 733075 */
+  }
+
+  return (id);
 }
 
-/// Enable External Tick Timer Interrupt
-/// \param[in] irqn  Interrupt number
-void ExtTick_EnableIRQ (int32_t irqn) {
-  GIC_EnableIRQ((IRQn_Type)irqn);
+uint32_t osRtxIrqGetHandler (int32_t id) {
+  IRQHandler h;
+
+  if (id < IRQCount) {
+    h = IRQTable[id];
+  } else {
+    h = NULL;
+  }
+
+  return ((uint32_t)h);
 }
 
-/// Disable External Tick Timer Interrupt
-/// \param[in] irqn  Interrupt number
-void ExtTick_DisableIRQ (int32_t irqn) {
-  GIC_DisableIRQ((IRQn_Type)irqn);
+void osRtxIrqSetEnd (int32_t id) {
+
+  GIC_EndInterrupt ((IRQn_Type)id);
+
+  if (id == 0) {
+    ID0_Active = 0U;
+  }
+}
+
+void osRtxIrqEnableTick  (void) {
+  GIC_EnableIRQ((IRQn_Type)osRtxInfo.tick_irqn);
+}
+
+void osRtxIrqDisableTick (void) {
+  GIC_DisableIRQ((IRQn_Type)osRtxInfo.tick_irqn);
 }
 
 #endif
+

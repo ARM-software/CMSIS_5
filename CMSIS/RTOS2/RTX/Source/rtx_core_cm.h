@@ -53,7 +53,6 @@
 #endif
 #endif
 
-
 #define IS_PRIVILEGED()         ((__get_CONTROL() & 1U) == 0U)
 
 #define IS_IRQ_MODE()            (__get_IPSR() != 0U)
@@ -66,7 +65,7 @@
 #define IS_IRQ_MASKED()          (__get_PRIMASK() != 0U) 
 #endif
 
-#define XPSR_INITIAL_VALUE      0x01000000U
+#define xPSR_INIT(...)          0x01000000U
 
 #if    (__DOMAIN_NS == 1U)
 #define STACK_FRAME_INIT        0xBCU
@@ -74,7 +73,18 @@
 #define STACK_FRAME_INIT        0xFDU
 #endif
 
-#define IS_EXTENDED_STACK_FRAME(n) (((n) & 0x10U) == 0U)
+// Stack Frame:
+//  - Extended: S16-S31, R4-R11, R0-R3, R12, LR, PC, xPSR, S0-S15, FPSCR
+//  - Basic:             R4-R11, R0-R3, R12, LR, PC, xPSR
+#if (__FPU_USED == 1U)
+#define STACK_OFFSET_R0(stack_frame)                \
+  (((stack_frame) & 0x10U) == 0U) ? ((16U+8U)*4U) : \
+                                         (8U *4U)
+#else
+#define STACK_OFFSET_R0(stack_frame)     (8U *4U)
+#endif
+
+#define OS_TICK_HANDLER         SysTick_Handler
 
 
 //  ==== Service Calls definitions ====
@@ -569,9 +579,6 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
 
 //  ==== Core Peripherals functions ====
 
-extern uint32_t SystemCoreClock;        // System Clock Frequency (Core Clock)
-
-
 /// Initialize SVC and PendSV System Service Calls
 __STATIC_INLINE void SVC_Initialize (void) {
 #if   ((__ARM_ARCH_8M_MAIN__ == 1U) || (defined(__CORTEX_M) && (__CORTEX_M == 7U)))
@@ -604,98 +611,10 @@ __STATIC_INLINE void SVC_Initialize (void) {
 #endif
 }
 
-/// Setup SysTick Timer
-/// \param[in] period  Timer Load value
-__STATIC_INLINE void SysTick_Setup (uint32_t period) {
-  SysTick->LOAD = period - 1U;
-  SysTick->VAL  = 0U;
-#if   ((__ARM_ARCH_8M_MAIN__ == 1U) || (defined(__CORTEX_M) && (__CORTEX_M == 7U)))
-  SCB->SHPR[11] = 0xFFU;
-#elif  (__ARM_ARCH_8M_BASE__ == 1U)
-  SCB->SHPR[1] |= 0xFF000000U;
-#elif ((__ARM_ARCH_7M__      == 1U) || \
-       (__ARM_ARCH_7EM__     == 1U))
-  SCB->SHP[11]  = 0xFFU;
-#elif  (__ARM_ARCH_6M__      == 1U)
-  SCB->SHP[1]  |= 0xFF000000U;
-#endif
-}
-
-/// Get SysTick Period
-/// \return    SysTick Period
-__STATIC_INLINE uint32_t SysTick_GetPeriod (void) {
-  return (SysTick->LOAD + 1U);
-}
-
-/// Get SysTick Value
-/// \return    SysTick Value
-__STATIC_INLINE uint32_t SysTick_GetVal (void) {
-  uint32_t load = SysTick->LOAD;
-  return  (load - SysTick->VAL);
-}
-
-/// Get SysTick Overflow (Auto Clear)
-/// \return    SysTick Overflow flag
-__STATIC_INLINE uint32_t SysTick_GetOvf (void) {
-  return ((SysTick->CTRL >> 16) & 1U);
-}
-
-/// Enable SysTick Timer
-__STATIC_INLINE void SysTick_Enable (void) {
-  SysTick->CTRL = SysTick_CTRL_ENABLE_Msk     |
-                  SysTick_CTRL_TICKINT_Msk    |
-                  SysTick_CTRL_CLKSOURCE_Msk;
-}
-
-/// Disable SysTick Timer
-__STATIC_INLINE void SysTick_Disable (void) {
-  SysTick->CTRL = 0U;
-}
-
-/// Setup External Tick Timer Interrupt
-/// \param[in] irqn  Interrupt number
-__STATIC_INLINE void ExtTick_SetupIRQ (int32_t irqn) {
-#if    (__ARM_ARCH_8M_MAIN__ == 1U)
-  NVIC->IPR[irqn] = 0xFFU;
-#elif  (__ARM_ARCH_8M_BASE__ == 1U)
-  NVIC->IPR[irqn >> 2] = (NVIC->IPR[irqn >> 2]  & ~(0xFFU << ((irqn & 3) << 3))) |
-                                                   (0xFFU << ((irqn & 3) << 3));
-#elif ((__ARM_ARCH_7M__      == 1U) || \
-       (__ARM_ARCH_7EM__     == 1U))
-  NVIC->IP[irqn] = 0xFFU;
-#elif  (__ARM_ARCH_6M__      == 1U)
-  NVIC->IP[irqn >> 2] = (NVIC->IP[irqn >> 2]  & ~(0xFFU << ((irqn & 3) << 3))) |
-                                                 (0xFFU << ((irqn & 3) << 3));
-#endif
-}
-
-/// Enable External Tick Timer Interrupt
-/// \param[in] irqn  Interrupt number
-__STATIC_INLINE void ExtTick_EnableIRQ (int32_t irqn) {
-  NVIC->ISER[irqn >> 5] = 1U << (irqn & 0x1F);
-}
-
-/// Disable External Tick Timer Interrupt
-/// \param[in] irqn  Interrupt number
-__STATIC_INLINE void ExtTick_DisableIRQ (int32_t irqn) {
-  NVIC->ICER[irqn >> 5] = 1U << (irqn & 0x1F);
-}
-
-/// Get Pending SV (Service Call) and ST (SysTick) Flags
-/// \return    Pending SV&ST Flags
-__STATIC_INLINE uint8_t GetPendSV_ST (void) {
-  return ((uint8_t)((SCB->ICSR & (SCB_ICSR_PENDSVSET_Msk | SCB_ICSR_PENDSTSET_Msk)) >> 24));
-}
-
 /// Get Pending SV (Service Call) Flag
 /// \return    Pending SV Flag
 __STATIC_INLINE uint8_t GetPendSV (void) {
   return ((uint8_t)((SCB->ICSR & (SCB_ICSR_PENDSVSET_Msk)) >> 24));
-}
-
-/// Clear Pending SV (Service Call) and ST (SysTick) Flags
-__STATIC_INLINE void ClrPendSV_ST (void) {
-  SCB->ICSR = SCB_ICSR_PENDSVCLR_Msk | SCB_ICSR_PENDSTCLR_Msk;
 }
 
 /// Clear Pending SV (Service Call) Flag
@@ -706,12 +625,6 @@ __STATIC_INLINE void ClrPendSV (void) {
 /// Set Pending SV (Service Call) Flag
 __STATIC_INLINE void SetPendSV (void) {
   SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;
-}
-
-/// Set Pending Flags
-/// \param[in] flags  Flags to set
-__STATIC_INLINE void SetPendFlags (uint8_t flags) {
-  SCB->ICSR = ((uint32_t)flags << 24);
 }
 
 

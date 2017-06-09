@@ -342,7 +342,7 @@
     </typedef>
 
     <!-- OS Runtime Information structure -->
-    <typedef name="osRtxInfo_t" info="OS Runtime Information" size="172">
+    <typedef name="osRtxInfo_t" info="OS Runtime Information" size="164">
       <member name="os_id"                      type="uint32_t"             offset="0" info="OS Identification (type is *uint8_t)"/>
       <member name="version"                    type="uint32_t"             offset="4" info="OS Version"/>
       <member name="kernel_state"               type="uint8_t"              offset="8" info="Kernel state">
@@ -354,61 +354,59 @@
         <enum name="osKernelError"     value="5"  info="Error"/>
       </member>
       <member name="kernel_blocked"             type="uint8_t"              offset="9"  info="Kernel blocked"/>
-      <member name="kernel_pendISR"             type="uint8_t"              offset="10" info="Kernel pending ISR"/>
-      <member name="kernel_pendSV"              type="uint8_t"              offset="11" info="Kernel pending SV"/>
-      <member name="kernel_sys_freq"            type="uint32_t"             offset="12" info="Kernel system frequency"/>
-      <member name="kernel_tick"                type="uint32_t"             offset="16" info="Kernel tick counter"/>
-      <member name="tick_irqn"                  type="int32_t"              offset="24" info="Tick timer IRQ number"/>
-      <member name="thread_run_curr"            type="*osRtxThread_t"       offset="28" info="Current running thread"/>
-      <member name="thread_run_next"            type="*osRtxThread_t"       offset="32" info="Next thread to run"/>
+      <member name="kernel_pendSV"              type="uint8_t"              offset="10" info="Kernel pending SV"/>
+      <member name="kernel_tick"                type="uint32_t"             offset="12" info="Kernel tick counter"/>
+      <member name="tick_irqn"                  type="int32_t"              offset="16" info="Tick timer IRQ number"/>
+      <member name="thread_run_curr"            type="*osRtxThread_t"       offset="20" info="Current running thread"/>
+      <member name="thread_run_next"            type="*osRtxThread_t"       offset="24" info="Next thread to run"/>
 
-      <!-- Inlined "osRtxObject_t" structure at offset: 36 -->
-      <member name="thread_ready_id"            type="uint8_t"              offset="36+0" info="Object Identifier" />
-      <member name="thread_ready_state"         type="uint8_t"              offset="36+1" info="Object State" />
-      <member name="thread_ready_flags"         type="uint8_t"              offset="36+2" info="Object Flags" />
-      <member name="thread_ready_rsvd"          type="uint8_t"              offset="36+3" info="Reserved" />
-      <member name="thread_ready_name"          type="uint32_t"             offset="36+4" info="Object Name (type is *uint8_t)" />
-      <member name="thread_ready_thread_list"   type="*osRtxThread_t"       offset="36+8" info="Threads List" />
+      <!-- Inlined "osRtxObject_t" structure at offset: 28 -->
+      <member name="thread_ready_id"            type="uint8_t"              offset="28+0" info="Object Identifier" />
+      <member name="thread_ready_state"         type="uint8_t"              offset="28+1" info="Object State" />
+      <member name="thread_ready_flags"         type="uint8_t"              offset="28+2" info="Object Flags" />
+      <member name="thread_ready_rsvd"          type="uint8_t"              offset="28+3" info="Reserved" />
+      <member name="thread_ready_name"          type="uint32_t"             offset="28+4" info="Object Name (type is *uint8_t)" />
+      <member name="thread_ready_thread_list"   type="*osRtxThread_t"       offset="28+8" info="Threads List" />
 
-      <member name="thread_idle"                type="*osRtxThread_t"       offset="48"  info="Idle thread"/>
-      <member name="thread_delay_list"          type="*osRtxThread_t"       offset="52"  info="Delay list"/>
-      <member name="thread_wait_list"           type="*osRtxThread_t"       offset="56"  info="Wait list (no timeout)"/>
-      <member name="thread_terminate_list"      type="*osRtxThread_t"       offset="60"  info="Terminate list"/>
+      <member name="thread_idle"                type="*osRtxThread_t"       offset="40"  info="Idle thread"/>
+      <member name="thread_delay_list"          type="*osRtxThread_t"       offset="44"  info="Delay list"/>
+      <member name="thread_wait_list"           type="*osRtxThread_t"       offset="48"  info="Wait list (no timeout)"/>
+      <member name="thread_terminate_list"      type="*osRtxThread_t"       offset="52"  info="Terminate list"/>
 
-      <member name="thread_robin_thread"        type="*osRtxThread_t"       offset="64"  info="Round Robin thread"/>
-      <member name="thread_robin_tick"          type="uint32_t"             offset="68"  info="Round Robin time tick"/>
-      <member name="thread_timeout"             type="uint32_t"             offset="72"  info="Round Robin timeout"/>
+      <member name="thread_robin_thread"        type="*osRtxThread_t"       offset="56"  info="Round Robin thread"/>
+      <member name="thread_robin_tick"          type="uint32_t"             offset="60"  info="Round Robin time tick"/>
+      <member name="thread_timeout"             type="uint32_t"             offset="64"  info="Round Robin timeout"/>
 
-      <member name="timer_list"                 type="*osRtxTimer_t"        offset="76"  info="Active timer list"/>
-      <member name="timer_thread"               type="*osRtxThread_t"       offset="80"  info="Timer thread"/>
-      <member name="timer_mq"                   type="*osRtxMessageQueue_t" offset="84"  info="Timer message queue"/>
-      <member name="timer_tick"                 type="uint32_t"             offset="88"  info="Timer tick function (type is func *)"/>
+      <member name="timer_list"                 type="*osRtxTimer_t"        offset="68"  info="Active timer list"/>
+      <member name="timer_thread"               type="*osRtxThread_t"       offset="72"  info="Timer thread"/>
+      <member name="timer_mq"                   type="*osRtxMessageQueue_t" offset="76"  info="Timer message queue"/>
+      <member name="timer_tick"                 type="uint32_t"             offset="80"  info="Timer tick function (type is func *)"/>
 
-      <member name="isr_queue_max"              type="uint16_t"             offset="92"  info="Maximum items"/>
-      <member name="isr_queue_cnt"              type="uint16_t"             offset="94"  info="Item count"/>
-      <member name="isr_queue_in"               type="uint16_t"             offset="96"  info="Incoming item index"/>
-      <member name="isr_queue_out"              type="uint16_t"             offset="98"  info="Outgoing item index"/>
-      <member name="isr_queue_data"             type="uint32_t"             offset="100" info="Queue data (type is void **)"/>
+      <member name="isr_queue_max"              type="uint16_t"             offset="84"  info="Maximum items"/>
+      <member name="isr_queue_cnt"              type="uint16_t"             offset="86"  info="Item count"/>
+      <member name="isr_queue_in"               type="uint16_t"             offset="88"  info="Incoming item index"/>
+      <member name="isr_queue_out"              type="uint16_t"             offset="90"  info="Outgoing item index"/>
+      <member name="isr_queue_data"             type="uint32_t"             offset="92"  info="Queue data (type is void **)"/>
 
-      <member name="post_process_thread"        type="uint32_t"             offset="104" info="Thread post processing function (type is func *)"/>
-      <member name="post_process_event_flags"   type="uint32_t"             offset="108" info="Event flags post processing function (type is func *)"/>
-      <member name="post_process_semaphore"     type="uint32_t"             offset="112" info="Semaphore post processing function (type is func *)"/>
-      <member name="post_process_memory_pool"   type="uint32_t"             offset="116" info="Memory pool post processing function (type is func *)"/>
-      <member name="post_process_message_queue" type="uint32_t"             offset="120" info="Message queue post processing function (type is func *)"/>
+      <member name="post_process_thread"        type="uint32_t"             offset="96"  info="Thread post processing function (type is func *)"/>
+      <member name="post_process_event_flags"   type="uint32_t"             offset="100" info="Event flags post processing function (type is func *)"/>
+      <member name="post_process_semaphore"     type="uint32_t"             offset="104" info="Semaphore post processing function (type is func *)"/>
+      <member name="post_process_memory_pool"   type="uint32_t"             offset="108" info="Memory pool post processing function (type is func *)"/>
+      <member name="post_process_message_queue" type="uint32_t"             offset="112" info="Message queue post processing function (type is func *)"/>
 
-      <member name="mem_stack"                  type="uint32_t"             offset="124" info="Stack memory (type is void *)"/>
-      <member name="mem_mp_data"                type="uint32_t"             offset="128" info="Memory pool data memory (type is void *)"/>
-      <member name="mem_mq_data"                type="uint32_t"             offset="132" info="Message queue Data memory (type is void *)"/>
-      <member name="mem_common"                 type="uint32_t"             offset="136" info="Common memory address (type is void *)"/>
+      <member name="mem_stack"                  type="uint32_t"             offset="116" info="Stack memory (type is void *)"/>
+      <member name="mem_mp_data"                type="uint32_t"             offset="120" info="Memory pool data memory (type is void *)"/>
+      <member name="mem_mq_data"                type="uint32_t"             offset="124" info="Message queue Data memory (type is void *)"/>
+      <member name="mem_common"                 type="uint32_t"             offset="128" info="Common memory address (type is void *)"/>
 
-      <member name="mpi_stack"                  type="*osRtxMpInfo_t"       offset="140" info="Stack for threads"/>
-      <member name="mpi_thread"                 type="*osRtxMpInfo_t"       offset="144" info="Thread control blocks"/>
-      <member name="mpi_timer"                  type="*osRtxMpInfo_t"       offset="148" info="Timer control blocks"/>
-      <member name="mpi_event_flags"            type="*osRtxMpInfo_t"       offset="152" info="Event flags control blocks"/>
-      <member name="mpi_mutex"                  type="*osRtxMpInfo_t"       offset="156" info="Mutex control blocks"/>
-      <member name="mpi_semaphore"              type="*osRtxMpInfo_t"       offset="160" info="Semaphore control blocks"/>
-      <member name="mpi_memory_pool"            type="*osRtxMpInfo_t"       offset="164" info="Memory pool control blocks"/>
-      <member name="mpi_message_queue"          type="*osRtxMpInfo_t"       offset="168" info="Message queue control blocks"/>
+      <member name="mpi_stack"                  type="*osRtxMpInfo_t"       offset="132" info="Stack for threads"/>
+      <member name="mpi_thread"                 type="*osRtxMpInfo_t"       offset="136" info="Thread control blocks"/>
+      <member name="mpi_timer"                  type="*osRtxMpInfo_t"       offset="140" info="Timer control blocks"/>
+      <member name="mpi_event_flags"            type="*osRtxMpInfo_t"       offset="144" info="Event flags control blocks"/>
+      <member name="mpi_mutex"                  type="*osRtxMpInfo_t"       offset="148" info="Mutex control blocks"/>
+      <member name="mpi_semaphore"              type="*osRtxMpInfo_t"       offset="152" info="Semaphore control blocks"/>
+      <member name="mpi_memory_pool"            type="*osRtxMpInfo_t"       offset="156" info="Memory pool control blocks"/>
+      <member name="mpi_message_queue"          type="*osRtxMpInfo_t"       offset="160" info="Message queue control blocks"/>
     </typedef>
 
     <!-- OS Configuration structure -->
@@ -1070,7 +1068,6 @@
           <item property="Kernel State" value="%E[os_Info.kernel_state]" cond="RTX_En != 0"/>
           <item property="Kernel Tick Count"      value="%d[os_Info.kernel_tick]"     cond="RTX_En != 0"/>
           <item property="Kernel Tick Frequency"  value="%d[os_Config.tick_freq]"     cond="RTX_En != 0" />          
-          <item property="System Timer Frequency" value="%d[os_Info.kernel_sys_freq]" cond="RTX_En != 0" />
           <item property="Round Robin"            value="Disabled"                      cond="(os_Config.robin_timeout == 0) &amp;&amp; (RTX_En != 0)" />
           <item property="Round Robin Tick Count" value="%d[os_Info.thread_robin_tick]" cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
           <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]"   cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />

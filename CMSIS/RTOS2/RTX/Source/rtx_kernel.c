@@ -36,18 +36,14 @@ osRtxInfo_t osRtxInfo __attribute__((section(".data.os"))) =
 /// Block Kernel (disable: thread switching, time tick, post ISR processing).
 static void KernelBlock (void) {
 
-  if (osRtxInfo.tick_irqn >= 0) {
-    ExtTick_DisableIRQ(osRtxInfo.tick_irqn);
-  }
-  osRtxSysTimerDisable();
+  OS_Tick_Disable();
+
   osRtxInfo.kernel.blocked = 1U;
   __DSB();
-  if (osRtxInfo.tick_irqn < 0) {
-    osRtxInfo.kernel.pendISR = GetPendSV_ST();
-    ClrPendSV_ST();
-  } else {
-    osRtxInfo.kernel.pendISR = GetPendSV();
+
+  if (GetPendSV() != 0U) {
     ClrPendSV();
+    osRtxInfo.kernel.pendSV = 1U;
   }
 }
 
@@ -56,17 +52,13 @@ static void KernelUnblock (void) {
 
   osRtxInfo.kernel.blocked = 0U;
   __DSB();
+
   if (osRtxInfo.kernel.pendSV != 0U) {
     osRtxInfo.kernel.pendSV = 0U;
     SetPendSV();
   }
-  if (osRtxInfo.kernel.pendISR != 0U) {
-    SetPendFlags(osRtxInfo.kernel.pendISR);
-  }
-  if (osRtxInfo.tick_irqn >= 0) {
-    ExtTick_EnableIRQ(osRtxInfo.tick_irqn);
-  }
-  osRtxSysTimerEnable();
+
+  OS_Tick_Enable();
 }
 
 
@@ -271,6 +263,17 @@ osStatus_t svcRtxKernelStart (void) {
     }
   }
 
+  // Setup RTOS Tick
+  if (OS_Tick_Setup(osRtxConfig.tick_freq, OS_TICK_HANDLER) != 0U) {
+    return osError;
+  }
+  osRtxInfo.tick_irqn = OS_Tick_GetIRQn();
+
+  // Enable RTOS Tick
+  if (OS_Tick_Enable() != 0U) {
+    return osError;
+  }
+
   // Switch to Ready Thread with highest Priority
   thread = osRtxThreadListGet(&osRtxInfo.thread.ready);
   if (thread == NULL) {
@@ -279,7 +282,6 @@ osStatus_t svcRtxKernelStart (void) {
   }
   osRtxThreadSwitch(thread);
 
-#if (__ARM_ARCH_7A__ == 0U)
   if ((osRtxConfig.flags & osRtxConfigPrivilegedMode) != 0U) {
     // Privileged Thread mode & PSP
     __set_CONTROL(0x02U);
@@ -287,17 +289,6 @@ osStatus_t svcRtxKernelStart (void) {
     // Unprivileged Thread mode & PSP
     __set_CONTROL(0x03U);
   }
-#endif
-
-  osRtxInfo.kernel.sys_freq = SystemCoreClock;
-
-  // Setup and Enable System Timer
-  osRtxInfo.tick_irqn = osRtxSysTimerSetup();
-  if (osRtxInfo.tick_irqn >= 0) {
-    ExtTick_SetupIRQ (osRtxInfo.tick_irqn);
-    ExtTick_EnableIRQ(osRtxInfo.tick_irqn);
-  }
-  osRtxSysTimerEnable();
 
   osRtxInfo.kernel.state = osRtxKernelRunning;
 
@@ -483,7 +474,16 @@ uint32_t svcRtxKernelGetTickFreq (void) {
 /// Get the RTOS kernel system timer count.
 /// \note API identical to osKernelGetSysTimerCount
 uint32_t svcRtxKernelGetSysTimerCount (void) {
-  uint32_t count = osRtxSysTimerGetCount();
+  uint32_t tick;
+  uint32_t count;
+
+  tick  = (uint32_t)osRtxInfo.kernel.tick;
+  count = OS_Tick_GetCount();
+  if (OS_Tick_GetOverflow()) {
+    count = OS_Tick_GetCount();
+    tick++;
+  }
+  count += tick * OS_Tick_GetInterval();
   EvrRtxKernelGetSysTimerCount(count);
   return count;
 }
@@ -491,7 +491,7 @@ uint32_t svcRtxKernelGetSysTimerCount (void) {
 /// Get the RTOS kernel system timer frequency.
 /// \note API identical to osKernelGetSysTimerFreq
 uint32_t svcRtxKernelGetSysTimerFreq (void) {
-  uint32_t freq = osRtxSysTimerGetFreq();
+  uint32_t freq = OS_Tick_GetClock();
   EvrRtxKernelGetSysTimerFreq(freq);
   return freq;
 }
