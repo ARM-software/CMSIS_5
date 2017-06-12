@@ -158,6 +158,7 @@ File/Folder                  | Content
       <td>
        - Based on CMSIS-RTOS API V2.1.1.
        - Added support for for Cortex-A.
+       - Using OS Tick API for RTX Kernel Timer Tick.
        - Fixed potential corruption of terminated threads list.
        - Corrected MessageQueue to use actual message length (before padding).
        - Corrected parameters for ThreadEnumerate and MessageQueueInserted events.
