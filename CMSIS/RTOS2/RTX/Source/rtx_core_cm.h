@@ -592,8 +592,11 @@ __STATIC_INLINE void SVC_Initialize (void) {
   }
   SCB->SHPR[7] = (uint8_t)(0xFEU << n);
 #elif  (__ARM_ARCH_8M_BASE__ == 1U)
-  SCB->SHPR[1] |= 0x00FF0000U;
-  SCB->SHPR[0] |= (SCB->SHPR[1] << (8+1)) & 0xFC000000U;
+  uint32_t n;
+
+  n = SCB->SHPR[1] | 0x00FF0000U;
+  SCB->SHPR[1]  =  n;
+  SCB->SHPR[0] |= (n << (8+1)) & 0xFC000000U;
 #elif ((__ARM_ARCH_7M__      == 1U) || \
        (__ARM_ARCH_7EM__     == 1U))
   uint32_t p, n;
@@ -606,8 +609,11 @@ __STATIC_INLINE void SVC_Initialize (void) {
   }
   SCB->SHP[7] = (uint8_t)(0xFEU << n);
 #elif  (__ARM_ARCH_6M__      == 1U)
-  SCB->SHP[1] |= 0x00FF0000U;
-  SCB->SHP[0] |= (SCB->SHP[1] << (8+1)) & 0xFC000000U;
+  uint32_t n;
+
+  n = SCB->SHP[1] | 0x00FF0000U;
+  SCB->SHP[1]  =  n;
+  SCB->SHP[0] |= (n << (8+1)) & 0xFC000000U;
 #endif
 }
 
