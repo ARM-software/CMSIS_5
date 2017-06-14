@@ -45,6 +45,7 @@ irqRtxLib:
                 .byte    0
 
                 .section ".data"
+                .global  IRQ_PendSV
 IRQ_NestLevel:
                 .word    0                          // IRQ nesting level counter
 IRQ_PendSV:
