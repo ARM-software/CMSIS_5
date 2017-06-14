@@ -47,16 +47,57 @@ threads that might access the resource:
 osSemaphoreId_t multiplex_id;
  
 void thread_n (void)
-  {
-    multiplex_id = osSemaphoreNew(3, 3, NULL);
-    while(1)
-      {
-        osSemaphoreAcquire(multiplex_id, osWaitForever);
-        // do something
-        osSemaphoreRelease(multiplex_id);
-      }
-  }
+{
+  multiplex_id = osSemaphoreNew(3, 3, NULL);
+  while(1)
+    {
+      osSemaphoreAcquire(multiplex_id, osWaitForever);
+      // do something
+      osSemaphoreRelease(multiplex_id);
+    }
+}
 \endcode
+
+<b>Producer/Consumer Semaphore</b>
+
+The producer-consumer problem can be solved using two semaphores.
+
+A first semaphore (\token{empty_id}) counts down the available (empty) buffers, i.e.
+the producer thread can wait for available buffer slots by acquiring from this one.
+
+A second semaphore (\token{filled_id}) counts up the used (filled) buffers, i.e.
+the consumer thread can wait for available data by acquiring from this one.
+
+It is crucial for the correct behaviour that the threads acquire and release on both
+semaphores in the given sequence. According to this example one can have multiple
+producer and/or consumer threads running concurrently.
+
+\code
+#define BUFFER_SIZE 10
+osSemaphoreId_t empty_id = osSemaphoreNew(BUFFER_SIZE, BUFFER_SIZE, NULL);
+osSemaphoreId_t filled_id = osSemaphoreNew(BUFFER_SIZE, 0, NULL);
+
+void producer_thread (void)
+{
+  while(1)
+  {
+    osSemaphoreAcquire(empty_id, osWaitForever);
+    // produce data
+    osSemaphoreRelease(filled_id);
+  }
+}
+
+void consumer_thread (void)
+{
+  while(1)
+  {
+    osSemaphoreAcquire(filled_id, osWaitForever);
+    // consume data
+    osSemaphoreRelease(empty_id);
+  }
+}
+\endcode
+
 @{
 */
 
@@ -159,7 +200,7 @@ semaphore_id or \token{NULL} in case of an error.
 The blocking function \b osSemaphoreAcquire waits until a token of the semaphore object specified by parameter
 \a semaphore_id becomes available. If a token is available, the function instantly returns and decrements the token count. 
 
-The parameter \a timeout specifies how long the system waits to acquire the token. While the system waits, the thread/ISR
+The parameter \a timeout specifies how long the system waits to acquire the token. While the system waits, the thread
 that is calling this function is put into the \ref ThreadStates "BLOCKED" state. The parameter \ref CMSIS_RTOS_TimeOutValue
 "timeout" can have the following values:
  - when \a timeout is \token{0}, the function returns instantly (i.e. try semantics).
@@ -185,8 +226,9 @@ Refer to \ref osSemaphoreNew.
 /**
 \fn osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id)
 \details
-The function \b osSemaphoreRelease releases a token of the semaphore object specified by parameter \a semaphore_id. Other
-threads that currently wait for a token of this semaphore object will be put into the \ref ThreadStates "READY" state.
+The function \b osSemaphoreRelease releases a token of the semaphore object specified by parameter \a semaphore_id. Tokens
+can only be released up to the maximum count specified at creation time, see \ref osSemaphoreNew. Other threads that
+currently wait for a token of this semaphore object will be put into the \ref ThreadStates "READY" state.
 
 Possible \ref osStatus_t return values:
  - \em osOK: the token has been correctly released and the count increased.
