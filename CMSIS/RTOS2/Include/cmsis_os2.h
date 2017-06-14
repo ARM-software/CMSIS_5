@@ -614,7 +614,7 @@ const char *osSemaphoreGetName (osSemaphoreId_t semaphore_id);
 /// \return status code that indicates the execution status of the function.
 osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout);
  
-/// Release a Semaphore token that was acquired by \ref osSemaphoreAcquire.
+/// Release a Semaphore token up to the initial maximum count.
 /// \param[in]     semaphore_id  semaphore ID obtained by \ref osSemaphoreNew.
 /// \return status code that indicates the execution status of the function.
 osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id);
