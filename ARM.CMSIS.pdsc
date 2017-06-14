@@ -843,6 +843,12 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dcore="ARMV8MML" Ddsp="DSP" Dfpu="SP_FPU"/>
     </condition>
 
+    <condition id="CA5_CA9">
+      <description>Cortex-A5 or Cortex-A9 processor based device</description>
+      <accept Dcore="Cortex-A5"/>
+      <accept Dcore="Cortex-A9"/>
+    </condition>
+
     <!-- ARMCC compiler -->
     <condition id="CA_ARMCC5">
       <description>Cortex-A5, Cortex-A7 or Cortex-A9 processor based device for the ARM Compiler 5</description>
@@ -2227,6 +2233,14 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/mmu_ARMCA9.c"         version="1.0.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA9/Include/system_ARMCA9.h"     version="1.0.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA9/Include/mem_ARMCA9.h"        version="1.0.0" attr="config"/>
+      </files>
+    </component>
+
+    <!-- OS Tick -->
+    <component Cclass="Device" Cgroup="OS Tick" Csub="Private Timer" Capiversion="1.0.0" Cversion="1.0.0" condition="CA5_CA9">
+      <description>OS Tick implementation using Private Timer</description>
+      <files>
+        <file category="sourceC" name="CMSIS/RTOS2/Source/os_tick_ptim.c"/>
       </files>
     </component>
 
