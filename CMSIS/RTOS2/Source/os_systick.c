@@ -37,8 +37,8 @@ static uint8_t PendST;
 
 // Setup OS Tick.
 __WEAK int32_t  OS_Tick_Setup (uint32_t freq, IRQHandler_t handler) {
-  (void)handler;
   uint32_t load;
+  (void)handler;
 
   if (freq == 0U) {
     return (-1);
