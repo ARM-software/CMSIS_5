@@ -271,13 +271,13 @@ The ID=0xF0 <b>Capabilities</b> obtains information about the available interfac
 The ID=0xF1 <b>Debug Unit Timer</b> obtains the parameter information about an optional 64-bit Debug Unit Timer that may be used for time measurements.
 
 \code
-| BYTE | BYTE | WORD *****| LWORD ****|
-< 0x00 | 0x0C | Frequency | TimeStamp |
+| BYTE | BYTE | WORD *****| WORD *****|
+< 0x00 | 0x08 | Frequency | TimeStamp |
 |******|******|***********|***********|
 \endcode
 
 - \b Frequency:  Input frequency of the Debug Unit Timer.
-- \b TimeStamp:  Current time stamp value of the Debug Unit Timer (64-bit).
+- \b TimeStamp:  Current time stamp value of the Debug Unit Timer (32-bit).
 
 
 <b>DAP_Info Response (for ID=0xF2):</b>
@@ -1064,7 +1064,7 @@ The data transfer is aborted on a communication error:
 
 <b>DAP_Transfer Response:</b>
 \code
-| BYTE | BYTE **********| BYTE *************| LWORD *****| WORD *********|
+| BYTE | BYTE **********| BYTE *************| WORD ******| WORD *********|
 < 0x05 | Transfer Count | Transfer Response | Time Stamp | Transfer Data |
 |******|****************|*******************|////////////|+++++++++++++++|
 \endcode
@@ -1394,7 +1394,7 @@ The command delivers the content of one trace data block in the Trace Data Manag
    
 <b>DAP_PC_TransferBlock Response:</b> 
 \code
- | BYTE | BYTE ***| SHORT ****| LWORD ****|+++++++++++++|
+ | BYTE | BYTE ***| SHORT ****| WORD *****|+++++++++++++|
  < 0x20 | Channel | DataParms | TimeStamp | ChannelData |
  |******|*********|///////////|///////////|+++++++++++++|
 \endcode
@@ -1407,7 +1407,7 @@ The command delivers the content of one trace data block in the Trace Data Manag
     - <b>bit 0..12</b>: number of data values in \b ChannelData. \ref DAP_PC_TransferBlock Response is repeated until all values are transmitted.
     - <b>bit 14</b>: 1 = difference value format. 0 = contiguous value format.
     - <b>bit 15</b>: 1 = Trace Data Management overflow since last \ref DAP_PC_TransferBlock Request. 0 = no overflow.
-- \b TimeStamp: time stamp value (64-bit) from the Debug Unit timer.
+- \b TimeStamp: time stamp value (32-bit) from the Debug Unit timer.
 - \b ChannelData: data values from the recorded Performance Counter channel.
 
 The <b>ChannelData</b> reply has depending on <b>DataParms bit 14</b> two different formats.  If \b ChannelDiff in <b>DAP_PC_Capture Request</b> is set
