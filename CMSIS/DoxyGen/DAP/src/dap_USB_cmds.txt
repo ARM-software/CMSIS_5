@@ -159,26 +159,26 @@ The Transfer Commands allow to:
 
 /**************************************************************************************************/
 /** 
-\defgroup DAP_PerformanceCounter_gr Performance Counter Commands
+\defgroup DAP_TestInput_gr Test Input Commands
 \ingroup DAP_Commands_gr
-\brief Performance Counter management commands.
+\brief Management commands for optional Test Inputs.
 
-CMSIS-DAP provides a command set that allows to implement an optional Performance Counter (PC) management in the <b>Debug Unit</b>.
-Recording of up to 16 different Performance Counters is possible. Performance Counter values can be recorded as BYTE, SHORT, or WORD. 
+CMSIS-DAP provides a command set that allows to implement an optional Test Input (TI) management in the <b>Debug Unit</b>.
+Recording of up to 16 different Test Inputs is possible. Test Input values can be recorded as BYTE, SHORT, or WORD. 
 The <b>Debug Unit</b> may include scaling parameters and dynamic ranges for a channel (for example a 14-bit value with a 2-bit range selection).
 
-Performance Counters could be used for various scenarios, for example:
+Test Inputs could be used for various scenarios, for example:
   - capture power measurement from A/D converters.
   - capture wait states or cache misses from a memory system.  
   - capture data transfer parameters of an RF interface.
   - test input pins of a Debug Unit.
 
-These Performance Counters can be recorded continuously with a specified trace recording frequency. The recording allows you to correlate 
-the Performance Counter information with program execution.  For recording of the CMSIS-DAP Firmware includes an optional Trace Data Management based on configurable memory blocks. 
+These Test Inputs can be recorded continuously with a specified trace recording frequency. The recording allows you to correlate 
+the Test Input information with program execution.  For recording of the CMSIS-DAP Firmware includes an optional Trace Data Management based on configurable memory blocks. 
 This Trace Data Management also captures SWO trace information.
 
 \note
-The \ref DAP_PerformanceCounter_gr are only available when \ref DAP_Info with ID=0xF0 (Capabilities) returns in \b Info - Bit 6: <b>1 = Trace Data Management</b>.
+The \ref DAP_TestInput_gr are only available when \ref DAP_Info with ID=0xF0 (Capabilities) returns in \b Info - Bit 6: <b>1 = Trace Data Management</b>.
   
 \image html "TraceManagement.png" "Trace Data Management"
   
@@ -297,7 +297,7 @@ Serial Wire Trace (SWO) support:
  
 Command extensions for transfer protocol: 
  - Info0 - Bit 4: <b>1 = Atomic Commands</b> - \ref DAP_atomic_gr support is implemented (0 = \ref DAP_atomic_gr not implemented).
- - Info0 - Bit 5: <b>1 = \ref DAP_SWD_Sequence</b> is implemented (0 = \ref DAP_SWD_Sequence not implemented).
+ - Info0 - Bit 5: <b>1 = \ref DAP_SWD_Sequence</b> command is implemented (0 = \ref DAP_SWD_Sequence not implemented).
  
 Time synchronisation via debug unit timer:
  - Info0 - Bit 6: <b>1 = Debug Unit Timer</b> - debug unit timer support is implemented (0 = not implemented).
@@ -1215,13 +1215,13 @@ aborted \ref DAP_Transfer or \ref DAP_TransferBlock command will respond with in
 
 /**************************************************************************************************/
 /** 
-\defgroup DAP_PC_Info DAP_PC_Info
-\ingroup DAP_PerformanceCounter_gr
-\brief Get information about Performance Counter channel parameters of the CMSIS-DAP Debug Unit.
+\defgroup DAP_TI_Info DAP_TI_Info
+\ingroup DAP_TestInput_gr
+\brief Get information about Test Input channel parameters of the CMSIS-DAP Debug Unit.
 
-The <b>DAP_PC_Info Command</b> provides information about the Performance Counters that are possible to capture with the CMSIS-DAP Debug Unit.
+The <b>DAP_TI_Info Command</b> provides information about additional Test Inputs that are possible to capture with the CMSIS-DAP Debug Unit.
 
-<b>DAP_PC_Info Request:</b>
+<b>DAP_TI_Info Request:</b>
 \code
  | BYTE | BYTE | BYTE ***|
  > 0x1D | ID   | Channel |
@@ -1229,13 +1229,13 @@ The <b>DAP_PC_Info Command</b> provides information about the Performance Counte
 \endcode
 
 - \b ID: Request Identifier to obtain information in the Response:
-  - \b 0x00 = Get general Performance Counter channel parameters (\b Channel value not used).
-  - \b 0x01 = Get parameters of a specific \b Channel.
+  - \b 0x00 = Get general Test Input channel parameters (\b Channel value not used).
+  - \b 0x01 = Get parameters of a specific Test Input \b Channel.
   - \b 0x02 = Get possible data capturing frequencies.
 
 - \b Channel: channel number.
  
-<b>DAP_PC_Info Response for \b ID=0x00: Get general Performance Counter channel parameters</b> 
+<b>DAP_TI_Info Response for \b ID=0x00: Get general Test Input channel parameters</b> 
 \code
  | BYTE | BYTE ****|
  < 0x1D | Channels |
@@ -1243,7 +1243,7 @@ The <b>DAP_PC_Info Command</b> provides information about the Performance Counte
 \endcode
 - \b Channels: number of channels available in the Debug Unit.
   
-<b>DAP_PC_Info Response for \b ID=0x01: Get parameters of a specific Channel</b> 
+<b>DAP_TI_Info Response for \b ID=0x01: Get parameters of a specific Channel</b> 
 \code
  | BYTE | BYTE ***| BYTE ******| BYTE ***| LWORD ***| LWORD *****| BYTE ****| FLOAT *| FLOAT *|
  < 0x1D | Channel | Attributes | NumBits | IdString | UnitString | Compress | MinVal | MaxVal |
@@ -1270,7 +1270,7 @@ The <b>DAP_PC_Info Command</b> provides information about the Performance Counte
 
 \note
 \b Compress specifies a method for data differences by this channel.
-  - 0 = no data differences can be communicated. Only <b>Contiguous Value Format</b> is transmitted in \ref DAP_PC_TransferBlock Response.
+  - 0 = no data differences can be communicated. Only <b>Contiguous Value Format</b> is transmitted in \ref DAP_TI_TransferBlock Response.
   - 1 = data differences are transmitted when a single bit is different.
   - 2 = new data are transmitted when a value has a significant difference. The least significant 3-bits are ignored.  This is useful for A/D values.
   - 3 = new data are transmitted when a value has a significant dynamic difference. Only the uppermost 8-bits are considered.  This is useful for dynamic A/D values such as the currency consumption of a device.
@@ -1310,7 +1310,7 @@ The range information is provided in the upper data bits.  For example a data ch
 
 For a channel that reports <b>MinVal = MaxVal = 0</b> the formula needs to be provided by the debugger as the debug unit is using perhaps an external shunt resistor.
 
-<b>DAP_PC_Info Response for \b ID=0x02: Get possible data capturing frequencies for recording of a specific channel</b> 
+<b>DAP_TI_Info Response for \b ID=0x02: Get possible data capturing frequencies for recording of a specific channel</b> 
 \code
  | BYTE | BYTE ***| BYTE ********|DWORD ++++|
  < 0x1D | Channel | NoSelections |Frequency |
@@ -1326,22 +1326,22 @@ For a channel that reports <b>MinVal = MaxVal = 0</b> the formula needs to be pr
   - NoSelections = 0xFF: channel allows selection of a common data capture frequency.
 
 - \b Frequency: capture frequencies (repeated as indicated by NoSelection = 1..15)
-  - Frequency[0]  capture frequency for CapSelect=0 (see DAP_PC_Capture)
-  - Frequency[1]  capture frequency for CapSelect=1 (see DAP_PC_Capture)
-  - Frequency[n]  capture frequency for CapSelect=n (see DAP_PC_Capture)
+  - Frequency[0]  capture frequency for CapSelect=0 (see DAP_TI_Capture)
+  - Frequency[1]  capture frequency for CapSelect=1 (see DAP_TI_Capture)
+  - Frequency[n]  capture frequency for CapSelect=n (see DAP_TI_Capture)
 */
 
 
 /**************************************************************************************************/
 /** 
-\defgroup DAP_PC_Values DAP_PC_Values
-\ingroup DAP_PerformanceCounter_gr
-\brief Get live data values from Performance Counter channels.
+\defgroup DAP_TI_Value DAP_TI_Value
+\ingroup DAP_TestInput_gr
+\brief Get live data values from Test Input channels.
 
-The <b>DAP_PC_Values Command</b> returns the live (current) values of the Performance Counters in the  
-the CMSIS-DAP Debug Unit. Returned are live data that are currently available in the Performance Counters channels.  
+The <b>DAP_TI_Value Command</b> returns the live (current) values of the Test Inputs in the  
+CMSIS-DAP Debug Unit. Returned are live data that are currently available in the Test Inputs channels.  
 
-<b>DAP_PC_Values Request:</b>
+<b>DAP_TI_Value Request:</b>
 \code
  | BYTE | SHORT ******| BYTE ********|
  > 0x1E | ChannelMask | Time_Request |
@@ -1353,7 +1353,7 @@ the CMSIS-DAP Debug Unit. Returned are live data that are currently available in
    - 0: No Time Stamp in response.
    - 1: Include Time Stamp in response. 
 
-<b>DAP_PC_Values Response:</b> 
+<b>DAP_TI_Value Response:</b> 
 \code
  | BYTE | SHORT ******|++++++++++++|++++++++++++|
  < 0x1E | ChannelMask | Time Stamp | DataValues |
@@ -1363,19 +1363,19 @@ the CMSIS-DAP Debug Unit. Returned are live data that are currently available in
 
 - <b>Time Stamp</b>: Indicate the time from the Debug Unit Timer at the beginning the the request (only present if \b Time_Request is set to 1).
 
-- \b DataValues: data values of the various Performance Counters (starting with channel=0).  The size of \b DataValues depends on the data size (see \ref DAP_PC_Info Response, Attributes bit 0..2)  In case of SHORT or WORD data format, the LSB is send first.
+- \b DataValues: data values of the various Test Inputs (starting with channel=0).  The size of \b DataValues depends on the data size (see \ref DAP_TI_Info Response, Attributes bit 0..2)  In case of SHORT or WORD data format, the LSB is send first.
 */
 
 
 /**************************************************************************************************/
 /** 
-\defgroup DAP_PC_Capture DAP_PC_Capture
-\ingroup DAP_PerformanceCounter_gr
-\brief Control continuous data recording of Performance Counter channels.
+\defgroup DAP_TI_Capture DAP_TI_Capture
+\ingroup DAP_TestInput_gr
+\brief Control continuous data recording of Test Input channels.
 
-The <b>DAP_PC_Capture Command</b> controls the data recording of the various Performance Counter channels.
+The <b>DAP_TI_Capture Command</b> controls the data recording of the various Test Input channels.
 
-<b>DAP_PC_Capture Request:</b>
+<b>DAP_TI_Capture Request:</b>
 \code
  | BYTE | SHORT ******| SHORT ******| BYTE **| BYTE *****|
  > 0x1F | ChannelMask | ChannelDiff | Action | CapSelect |
@@ -1392,10 +1392,10 @@ The <b>DAP_PC_Capture Command</b> controls the data recording of the various Per
   - \b 0x1 = start recording.
   - \b 0x0 = stop recording.
 
-- \b CapSelect: select recording frequency for the data capturing (frequency is obtained via \ref DAP_PC_Info ID=0x02)
+- \b CapSelect: select recording frequency for the data capturing (frequency is obtained via \ref DAP_TI_Info ID=0x02)
   
   
-<b>DAP_PC_Capture Response:</b> 
+<b>DAP_TI_Capture Response:</b> 
 \code
  | BYTE | SHORT ******|
  < 0x1F | ChannelMask |
@@ -1406,14 +1406,14 @@ The <b>DAP_PC_Capture Command</b> controls the data recording of the various Per
 
 /**************************************************************************************************/
 /** 
-\defgroup DAP_PC_TransferBlock DAP_PC_TransferBlock
-\ingroup DAP_PerformanceCounter_gr
-\brief Transfer the data that are recorded for various Performance Counter channels.
+\defgroup DAP_TI_TransferBlock DAP_TI_TransferBlock
+\ingroup DAP_TestInput_gr
+\brief Transfer the data that are recorded for various Test Input channels.
 
-The <b>DAP_PC_TransferBlock Command</b> initiates the data transfer of a single trace data block of the recorded trace data.
+The <b>DAP_TI_TransferBlock Command</b> initiates the data transfer of a single trace data block of the recorded trace data.
 The command delivers the content of one trace data block in the Trace Data Management system.
 
-<b>DAP_PC_TransferBlock Request:</b>
+<b>DAP_TI_TransferBlock Request:</b>
 \code
  | BYTE | BYTE *******|
  > 0x20 | DataRequest |
@@ -1425,7 +1425,7 @@ The command delivers the content of one trace data block in the Trace Data Manag
    - <b>bit 1</b>: 1 = deliver one trace data block from SWO channel (even when partially filled).
    - <b>bit 2</b>: 1 = deliver one trace data block from any partially filled trace data block (this includes SWO).
    
-<b>DAP_PC_TransferBlock Response:</b> 
+<b>DAP_TI_TransferBlock Response:</b> 
 \code
  | BYTE | BYTE ***| SHORT ****| WORD *****|+++++++++++++|
  < 0x20 | Channel | DataParms | TimeStamp | ChannelData |
@@ -1437,13 +1437,13 @@ The command delivers the content of one trace data block in the Trace Data Manag
     - <b>bit 6</b>: First record indicator: 1 = DataParms and TimeStamp is transferred. 0 = Only ChannelData.
     - <b>bit 7</b>: No data indicator: 1 = No ChannelData available for this request. 0 = ChannelData are available.
 - \b DataParms: parameters for ChannelData.
-    - <b>bit 0..12</b>: number of data values in \b ChannelData. \ref DAP_PC_TransferBlock Response is repeated until all values are transmitted.
+    - <b>bit 0..12</b>: number of data values in \b ChannelData. \ref DAP_TI_TransferBlock Response is repeated until all values are transmitted.
     - <b>bit 14</b>: 1 = difference value format. 0 = contiguous value format.
-    - <b>bit 15</b>: 1 = Trace Data Management overflow since last \ref DAP_PC_TransferBlock Request. 0 = no overflow.
+    - <b>bit 15</b>: 1 = Trace Data Management overflow since last \ref DAP_TI_TransferBlock Request. 0 = no overflow.
 - \b TimeStamp: time stamp value (32-bit) from the Debug Unit timer.
-- \b ChannelData: data values from the recorded Performance Counter channel.
+- \b ChannelData: data values from the recorded Test Input channel.
 
-The <b>ChannelData</b> reply has depending on <b>DataParms bit 14</b> two different formats.  If \b ChannelDiff in <b>DAP_PC_Capture Request</b> is set
+The <b>ChannelData</b> reply has depending on <b>DataParms bit 14</b> two different formats.  If \b ChannelDiff in <b>DAP_TI_Capture Request</b> is set
 for the specific channel, the Debug Unit may decide the data format depending on the trace data values.
 
 <b>Contiguous Value Format</b> transmits sequentially all data values stored in the trace data buffer. When <b>DataParms bit 14 = 0 </b> the \b ChannelData has the following format:
@@ -1453,8 +1453,8 @@ for the specific channel, the Debug Unit may decide the data format depending on
   |************|************|************|......
 \endcode
 
-The size of \b TraceValue depends on the data size for the channel (see \ref DAP_PC_Info Response, Attributes bit 0..2).  
-\ref DAP_PC_TransferBlock Response is repeated until the number of \b TraceValues specified by <b>DataParms bit 0 .. 12</b> is transmitted.
+The size of \b TraceValue depends on the data size for the channel (see \ref DAP_TI_Info Response, Attributes bit 0..2).  
+\ref DAP_TI_TransferBlock Response is repeated until the number of \b TraceValues specified by <b>DataParms bit 0 .. 12</b> is transmitted.
 
 <b>Difference Value Format</b> transmits data values only when there is a significant difference. When <b>DataParms bit 14 = 1 </b> the \b ChannelData has the following format:
 \code
@@ -1465,11 +1465,11 @@ The size of \b TraceValue depends on the data size for the channel (see \ref DAP
 - \b TraceValue0: is the first data value on the trace data buffer
 - \b ValueIndex: information about the next data value in TraceValueI.
     - <b>bit 0..12</b>: \b index in trace data buffer of next data value with significant difference.
-    - <b>bit 15</b>: 1 = last trace value of trace data buffer send by \ref DAP_PC_TransferBlock Response.
+    - <b>bit 15</b>: 1 = last trace value of trace data buffer send by \ref DAP_TI_TransferBlock Response.
 - \b TraceValueI: is the trace data value in in trace data buffer referenced by \b index.
 
-The size of \b TraceValue0 and \b TraceValueI depends on the data size for the channel (see \ref DAP_PC_Info Response, Attributes bit 0..2).  
-\ref DAP_PC_TransferBlock Response is repeated until \b ValueIndex with <b>bit 15 = 1</b> is transmitted.
+The size of \b TraceValue0 and \b TraceValueI depends on the data size for the channel (see \ref DAP_TI_Info Response, Attributes bit 0..2).  
+\ref DAP_TI_TransferBlock Response is repeated until \b ValueIndex with <b>bit 15 = 1</b> is transmitted.
 
 \note 
 When all data values in the trace buffer are identical, \b ValueIndex is set to number of data values with bit 15 set to 1.
