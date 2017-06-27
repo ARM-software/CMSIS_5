@@ -14,10 +14,10 @@ The picture below shows the setup with an isolation adapter.
 
 Hardware Requirements
 ---------------------
-The CMSIS-DAP Firmware is designed for Debug Units that fulfill the following hardware
+The CMSIS-DAP Firmware is designed for Debug Units that fulfil the following hardware
 requirements:
   - Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 processor-based microcontroller.
-  - CPU Clock: 48MHz or higher; Microcontroller must have a SYSTICK timer.
+  - CPU Clock: 48MHz or higher; microcontroller must have a SYSTICK timer.
   - RAM: 8KB or more; Flash ROM: 16KB or more.
   - Full-speed or High-speed USB Device Peripheral.
   - 7 standard I/O pins for JTAG/SWD Device Interface.
@@ -40,10 +40,10 @@ Folders and Files                   | Description
 .\\Firmware\\Example\\XMC4200       | CMSIS-DAP Firmware adapted to the Infineon XMC4200-based Debug Unit.
 
 The CMSIS-DAP Firmware is designed to execute on a Debug Unit that is using a Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 
-processor-based microcontroller. To deploy the firmware to a new Debug Unit copy an existing firmware adaption to a new folder.
+processor-based microcontroller. To deploy the firmware to a new Debug Unit copy an existing firmware adaptation to a new folder.
 For example, copy the folder .\\Firmware\\XMC4200 to a folder called .\\Firmware\\MyDebugUnit.
 
-To following steps describe the adaption of the CMSIS-DAP Firmware to a new Debug Unit:
+To following steps describe the adaptation of the CMSIS-DAP Firmware to a new Debug Unit:
 1. \ref DAP_ConfigMCU_gr :  Select the microcontroller and replace the CMSIS-Core (Cortex-M) files.
 2. \ref DAP_ConfigIO_gr : Adapt the I/O Ports and specify other parameters for the Debug Unit.
 3. \ref DAP_ConfigUSB_gr : Adapt the USB Peripheral to the microcontroller.
@@ -58,7 +58,7 @@ To following steps describe the adaption of the CMSIS-DAP Firmware to a new Debu
 \defgroup DAP_ConfigMCU_gr Debug Unit Processor
 \ingroup DAP_Config_gr
 @{
-CMSIS-DAP Firmware runs on Debug Units with a Cortex-M Microcontroller.
+CMSIS-DAP Firmware runs on Debug Units with a Cortex-M microcontroller.
 
 The CMSIS-DAP Firmware is designed to execute on a Debug Unit that is using a Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 
 processor-based microcontroller. 
@@ -163,7 +163,7 @@ A CMSIS-DAP conforming Debug Unit must be validated.
 A CMSIS-DAP Debug Unit must be validate using the Keil MDK-ARM Debugger. 
 A validation project for MDK is provided in the folder <b>.\\Validation\\MDK</b>.
 The project <b>Blinky.uvproj</b> is a "Blinky" application and needs to be adapted for the target hardware
-that is connected to the Debug Unit. Once the adaption is complete, you may open a Command Prompt and
+that is connected to the Debug Unit. Once the adaptation is complete, you may open a Command Prompt and
 call the batch file <b>TestAll.bat</b> optionally with the path to UV4.EXE.  This should generate the
 following output.
 

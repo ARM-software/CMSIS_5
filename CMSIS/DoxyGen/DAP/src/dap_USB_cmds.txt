@@ -14,6 +14,9 @@ This configuration setting can be obtained with the command \ref DAP_Info and is
 optimize the performance for Full-Speed or High-Speed USB. The debugger must ensure that each 
 data package fits within the limitations of the configured \ref DAP_PACKET_SIZE.
 
+\note
+Commands that are not implemented reply with 0xFF instead of repeating the command byte.
+The available commands can be evaluated using the command \ref DAP_Info with 0xF0 (Capabilities).
 
 Conventions and Command Structure
 ---------------------------------
@@ -237,9 +240,9 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
   - \b 0x04 = Get the <b>CMSIS-DAP Firmware Version</b> (string).
   - \b 0x05 = Get the <b>Target Device Vendor</b> (string).
   - \b 0x06 = Get the <b>Target Device Name</b> (string).
-  - \b 0xF0 = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit.
-  - \b 0xF1 = Get the <b>Debug Unit Timer</b> parameter information.
-  - \b 0xF2 = Get the <b>Trace Data Management</b> parameter information.
+  - \b 0xF0 = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit (see below for details).
+  - \b 0xF1 = Get the <b>Debug Unit Timer</b> parameter information (see below for details).
+  - \b 0xF2 = Get the <b>Trace Data Management</b> parameter information (see below for details).
   - \b 0xFD = Get the <b>SWO Trace Buffer Size</b> (WORD).
   - \b 0xFE = Get the maximum <b>Packet Count</b> (BYTE).
   - \b 0xFF = Get the maximum <b>Packet Size</b> (SHORT).
@@ -258,29 +261,69 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
   - a \b SHORT value (indicated with Len = 2).
   - a \b WORD value (indicated with Len = 4).
 
-The ID=0xF0 <b>Capabilities</b> obtains information about the available interface to the Device. \b Info contains bits that indicate the features of the <b>Debug Unit</b>.
- - Bit 0: <b>1 = SWD</b> Serial Wire Debug communication is implemented (0 = not implemented).
- - Bit 1: <b>1 = JTAG</b> communication is implemented (0 = not implemented).
- - Bit 2: <b>1 = SWO UART</b> - UART Serial Wire Output is implemented (0 = not implemented).
- - Bit 3: <b>1 = SWO Manchester</b> - Manchester Serial Wire Output is implemented (0 = not implemented).
- - Bit 4: <b>1 = Atomic Commands</b> - \ref DAP_atomic_gr support is implemented (0 = not implemented).
- - Bit 5: <b>1 = Debug Unit Timer</b> - debug unit timer support is implemented (0 = not implemented).
- - Bit 6: <b>1 = Trace Data Management</b> - Trace Data Management is implemented (0 = not implemented).
+\note
+The ID for <b>Vendor ID</b>, <b>Product ID</b>, and <b>Serial Number</b> may return no string (indicated by Len = 0). 
+In this case the USB Device Information is used to obtain Vendor, Product, and Serial Number.
 
-<b>DAP_Info Response (for ID=0xF1):</b>
-The ID=0xF1 <b>Debug Unit Timer</b> obtains the parameter information about an optional 64-bit Debug Unit Timer that may be used for time measurements.
+\note
+<b>Target Device Vendor</b> and <b>Target Device Name</b> are only available on Debug Units with known
+Target Device. Refer to \ref TARGET_DEVICE_FIXED for more information. If the Target Device is not known
+no string is returned (indicated by Len = 0).
+
+<hr>
+  
+<b>DAP_Info Response (for ID=0xF0):</b>
+
+The ID=0xF0 <b>Capabilities</b> obtains information about the available interface to the Device. 
+The reply consists of one or two \b Info bytes with bits that indicate the features of the <b>Debug Unit</b>.
+The features indicate the command scope of the CMSIS-DAP firmware. If certain features are not available, the debugger should not call the related commands as the may not be implemented. Commands that are not implemented reply with 0xFF instead of repeating the command byte.
+
 
 \code
-| BYTE | BYTE | WORD *****| WORD *****|
-< 0x00 | 0x08 | Frequency | TimeStamp |
-|******|******|***********|***********|
+| BYTE | BYTE | BYTE *| BYTE  |
+< 0x00 | Len  | Info0 | Info1 |
+|******|******|*******|*******|
+\endcode
+
+- \b Len:  <b>1 = Info0</b> present, <b>2 = Info0, Info1</b> present.
+
+Available transfer protocols to target:
+ - Info0 - Bit 0: <b>1 = SWD</b> Serial Wire Debug communication is implemented (0 = \ref DAP_swd_gr not implemented).  
+ - Info0 - Bit 1: <b>1 = JTAG</b> communication is implemented (0 = \ref DAP_jtag_gr not implemented).
+ 
+Serial Wire Trace (SWO) support: 
+ - Info0 - Bit 2: <b>1 = SWO UART</b> - UART Serial Wire Output is implemented (0 = not implemented).
+ - Info0 - Bit 3: <b>1 = SWO Manchester</b> - Manchester Serial Wire Output is implemented (0 = not implemented).
+ 
+Command extensions for transfer protocol: 
+ - Info0 - Bit 4: <b>1 = Atomic Commands</b> - \ref DAP_atomic_gr support is implemented (0 = \ref DAP_atomic_gr not implemented).
+ - Info0 - Bit 5: <b>1 = \ref DAP_SWD_Sequence</b> is implemented (0 = \ref DAP_SWD_Sequence not implemented).
+ 
+Time synchronisation via debug unit timer:
+ - Info0 - Bit 6: <b>1 = Debug Unit Timer</b> - debug unit timer support is implemented (0 = not implemented).
+ 
+Test Input management: 
+ - Info1 - Bit 0: <b>1 = Trace Data Management</b> - Trace Data Management is implemented (0 = not implemented).
+ 
+<hr>
+ 
+<b>DAP_Info Response (for ID=0xF1):</b>
+
+The ID=0xF1 <b>Debug Unit Timer</b> obtains the parameter information about an optional 32-bit Debug Unit Timer that may be used for time measurements.
+
+\code
+| BYTE | BYTE | WORD *****|
+< 0x00 | 0x08 | Frequency |
+|******|******|***********|
 \endcode
 
 - \b Frequency:  Input frequency of the Debug Unit Timer.
-- \b TimeStamp:  Current time stamp value of the Debug Unit Timer (32-bit).
 
+
+<hr>
 
 <b>DAP_Info Response (for ID=0xF2):</b>
+
 The ID=0xF2 <b>Trace Data Management</b> obtains the parameter information about an optional Trace Data Management.
 
 \code
@@ -293,14 +336,6 @@ The ID=0xF2 <b>Trace Data Management</b> obtains the parameter information about
 - \b BlockSize:  Size (in bytes) of a data block in the Trace Data Management.
 
 
-\note
-The ID for <b>Vendor ID</b>, <b>Product ID</b>, and <b>Serial Number</b> may return no string (indicated by Len = 0). 
-In this case the USB Device Information is used to obtain Vendor, Product, and Serial Number.
-
-\note
-<b>Target Device Vendor</b> and <b>Target Device Name</b> are only available on Debug Units with known
-Target Device. Refer to \ref TARGET_DEVICE_FIXED for more information. If the Target Device is not known
-no string is returned (indicated by Len = 0).
 */
 
 
@@ -632,6 +667,10 @@ the SWD protocol refer to the <b>ARM Debug Interface v5 - Interface Specificatio
 \ingroup DAP_swd_gr
 \brief Generate SWD sequence and output on SWDIO or capture input from SWDIO data.
 \details
+\note
+The \ref DAP_SWD_Sequence is only available when \ref DAP_Info with ID=0xF0 (Capabilities) returns in \b Info0 - Bit 5: <b>1 = \ref DAP_SWD_Sequence</b> is implemented.
+
+
 The <b>DAP_SWD_Sequence Command</b> is used to generate special sequences in SWD mode on the pins SWCLK and SWDIO.
 For example, for SWD multi-drop target selection (see picture) it is required to put the SWDIO pin to input mode (where it is not driven).
 
@@ -1054,7 +1093,7 @@ The data transfer is aborted on a communication error:
   - Bit 3: A3 Register Address bit 3.
   - Bit 4: Value Match (only valid for Read Register): 0 = Normal Read Register, 1 = Read Register with Value Match.
   - Bit 5: Match Mask (only valid for Write Register): 0 = Normal Write Register, 1 = Write Match Mask (instead of Register).
-  - Bit 7: Time Stamp request: 0 = No time stamp, 1 = Include time stamp value 
+  - Bit 7: Time Stamp request: 0 = No time stamp, 1 = Include time stamp value from Debug Unit Timer before every Transfer Data word (restrictions see note).
 
 - <b>Transfer Data</b>: register value or match value
   - for Write Register transfer request: the register value for the CoreSight register.
@@ -1062,6 +1101,11 @@ The data transfer is aborted on a communication error:
   - for Value Match transfer request: the match value of the CoreSight register.
   - no data is sent for other operations.
 
+\note
+<b>Transfer Request</b> - Bit 7 (Time Stamp) cannot be combined with Bit 4 (Value Match) or Bit 5 (Match Mask).
+  
+  
+  
 <b>DAP_Transfer Response:</b>
 \code
 | BYTE | BYTE **********| BYTE *************| WORD ******| WORD *********|
@@ -1080,8 +1124,7 @@ The data transfer is aborted on a communication error:
   - Bit 3: 1 = Protocol Error (SWD)
   - Bit 4: 1 = Value Mismatch (Read Register with Value Match)
 
-- <b>Time Stamp</b>: one or more time stamp values (64-bit).  
-  The values relate to the <b>Transfer Request</b> - Bit 7: Time Stamp request and indicate the time from the Debug Unit Timer at the beginning of each request.
+- <b>Time Stamp</b>: A time stamp that is derived from the Debug Unit Timer is added before each Transfer Data word when Transfer Request - bit 7: Time Stamp request is set.
 
 - <b>Transfer Data</b>: register value or match value in the order of the <b>Transfer Request</b>.
   - for Read Register transfer request: the register value of the CoreSight register.
@@ -1202,38 +1245,28 @@ The <b>DAP_PC_Info Command</b> provides information about the Performance Counte
   
 <b>DAP_PC_Info Response for \b ID=0x01: Get parameters of a specific Channel</b> 
 \code
- | BYTE | BYTE ***| BYTE ******| BYTE **| LWORD ***| LWORD *****| BYTE ****| FLOAT *| FLOAT *|
- < 0x1D | Channel | Attributes | NoBits | IdString | UnitString | Compress | MinVal | MaxVal |
- |******|*********|************|********|**********|************|**********|++++++++|++++++++|
+ | BYTE | BYTE ***| BYTE ******| BYTE ***| LWORD ***| LWORD *****| BYTE ****| FLOAT *| FLOAT *|
+ < 0x1D | Channel | Attributes | NumBits | IdString | UnitString | Compress | MinVal | MaxVal |
+ |******|*********|************|*********|**********|************|**********|++++++++|++++++++|
 \endcode
 - \b Channel: channel number that information belongs to.
 
 - \b Attributes: attributes of the data channel
-  - <b>bit 0..1</b>: DataSize: number of bytes recorded (0=BYTE, 1=SHORT, 2=WORD)
-  - <b>bit 2..3</b>: NoRanges: channel data provides additional range bits (see below)
-  - <b>bit 4..6</b>: tSource: channel provides time stamp information (see below)
-- \b NoBits: resolution of the channel in bits
+  - Bit 0..1: DataSize: number of bytes recorded (0=BYTE, 1=SHORT, 2=WORD)
+  - Bit 2..3: NumRanges: channel data provides additional range bits (see below)
+  - Bit 4: TimeStamp: 1= channel provides time stamp based on Debug Unit Timer
+- \b NumBits: resolution of the channel in bits
 - \b IdString: is a up to 8 character 8-bit US ASCII string that identifies the channel
 - \b UnitString: is a up to 8 character 8-bit US ASCII string that identifies the measurement unit of the channel (V, mA, kHz)
 - \b Compress: describes the difference communication that is optionally available (see below)
 - \b MinVal: minimum data value (= 0) represents the \b MinVal. Repeated for each range.
 - \b MaxVal: maximum data value result represents the \b MaxVal. Repeated for each range.
 
-      
 \note
 \b NoRanges: specifies if the channel data has data ranges; possible values are:
   - 0 = 1 range (1 MinVal/MaxVal value pair in the response).
   - 1 = 2 ranges (2 MinVal/MaxVal value pairs are provided in the response)
   - 2 = 4 ranges (4 MinVal/MaxVal value pairs are provided in the response)
-
-  
-\note
-\b tSource: specifies if the channel provides time stamp information; possible values are: 
-  - 0 = no time stamp information provided
-  - 1 = time stamps are based on the Debug Unit timer
-  - 2 = time stamps are based on the CoreSight DWT timer
-  - 3..6 = reserved
-  - 7 = time stamps are from unknown source
 
 \note
 \b Compress specifies a method for data differences by this channel.
