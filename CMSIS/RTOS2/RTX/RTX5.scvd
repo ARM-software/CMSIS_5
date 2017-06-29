@@ -1183,6 +1183,7 @@
                 <item property="Used"  value="%d[TCB[i].stack_curb]"/>
                 <item property="Max"   value="%d[TCB[i].stack_maxb]"/>
                 <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
+                <item property="Current" value="%x[TCB[i].sp]"/>
                 <item property="Limit" value="%x[TCB[i].stack_mem]"/>
                 <item property="Size"  value="%d[TCB[i].stack_size]"/>
               </item>
@@ -1190,6 +1191,7 @@
               <item property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]" cond="stack_wmark == 0">
                 <item property="Used"  value="%d[TCB[i].stack_curb]"/>
                 <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
+                <item property="Current" value="%x[TCB[i].sp]"/>
                 <item property="Limit" value="%x[TCB[i].stack_mem]"/>
                 <item property="Size"  value="%d[TCB[i].stack_size]"/>
               </item>
@@ -1270,6 +1272,7 @@
                 <item property="Used"  value="%d[TCB[i].stack_curb]"/>
                 <item property="Max"   value="%d[TCB[i].stack_maxb]"/>
                 <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
+                <item property="Current" value="%x[TCB[i].sp]"/>
                 <item property="Limit" value="%x[TCB[i].stack_mem]"/>
                 <item property="Size"  value="%d[TCB[i].stack_size]"/>
               </item>
@@ -1277,6 +1280,7 @@
               <item property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]" cond="stack_wmark == 0">
                 <item property="Used"  value="%d[TCB[i].stack_curb]"/>
                 <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
+                <item property="Current" value="%x[TCB[i].sp]"/>
                 <item property="Limit" value="%x[TCB[i].stack_mem]"/>
                 <item property="Size"  value="%d[TCB[i].stack_size]"/>
               </item>
