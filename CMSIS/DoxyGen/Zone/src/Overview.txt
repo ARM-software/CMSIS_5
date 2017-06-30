@@ -1,5 +1,35 @@
-/** \mainpage Overview
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\mainpage
 
-Placeholder
+\b CMSIS-Zone describes a mechanism to declare embedded system capabilities and partition the resources (i.e. memory and
+peripherals). The specification covers a common
+- \ref XML_Format (XML based) to store system resource definition and partitioning information, and a
+- \ref GenDataModel to interface with a template engine.
+
+
+
+\section UseCases CMSIS-Zone Use Cases
+
+The use cases driving development of \b CMSIS-Zone are mainly justified with the increasing complexity of embedded
+microcontrollers. All use cases confirm to the need to define (concurrent) execution contexts, processes and
+resource assignments. 
+
+\subsection UseCase_TrustZone_MPU TrustZone Partitioning and MPU Protection
+
+Focused on a single core microcontroller one might want to utilize the memory protection unit (MPU) capabilities
+to segregate parts of an application. Thus the need to partition the system resources accordingly arises. Optional
+TrustZone extensions add another degree of segregate which must be handled consistently.
+
+\image html mpu.png  "TrustZone Partitioning and MPU Protection"
+
+\subsection UseCase_MultiCore Multi-Core Partitioning
+
+Beside traditional single cores asymetric and hybrid multi-core devices contribute to increasing development complexity
+for embedded systems. Having multiple cores running different parts of an application concurrently needs a well defined
+resource assignment to prevent undesired misbehaviour.
+
+\image html multicore.png  "Multi-Core Partitioning"
+
 
 */

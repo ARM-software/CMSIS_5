@@ -1,0 +1,508 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page XML_Format Zone Description Format 
+
+[TOC]
+
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_system /system element 
+
+The <b>system</b> element is the root element of a CMSIS-Zone system definition.
+
+<b>Example</b>
+\code
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<system xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- ARM SoC with Cortex-M4 processor -->
+  <device Dname="ARM32CM4128x">
+    <processor Pname="Cortex-M4">
+      :
+    </processor>
+    :
+  </device>
+  
+  <resources>
+    <memory>
+	  <!-- 16MB external Flash memory, e.g. attached to the SoC using a memory interface -->
+      <region name="EXT_FLASH" size="0x1000000" access="rx" info="External Flash (16MB)"/>
+      :
+    </memory>
+  </resources>
+  
+  <zones>
+    <!-- Project Zone for Application running on the previously defined ARM SoC -->
+    <pzone name="Application" Dname="ARM32CM412x" Pname="Cortex-M4">
+      :
+    </pzone>
+    :
+  </zones>
+</system>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Root Element: System">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>root</td>
+    <td colspan=3>Document root</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>xmlns:xs</td>
+    <td>Is set to: \token{"http://www.w3.org/2001/XMLSchema-instance"} to indicate compliance to the XML format.</td>
+    <td>xs:decimal</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>xs:noNamespaceSchemaLocation</td>
+    <td>Path and file name of the XML Schema Definition (XSD).</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\subpage format_device "device"</td>
+    <td>Specifies available microcontroller devices (i.e. SoCs) that are part of the system. Typically a system contains only a single SoC device.</td>
+    <td>complexType</td>
+    <td>1..*</td>
+  </tr>
+  <tr>
+    <td>\subpage format_resources "resources"</td>
+    <td>Specifies the resources (i.e. memory and peripherals) on system level, i.e. those not integral part of an SoC device. Resources defined on system level may be specified as shared between multiple SoCs.</td>
+    <td>complexType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\subpage format_zones "zones"</td>
+    <td>Specifies the system partitioning in terms of project and execution zones.</td>
+    <td>complexType</td>
+    <td>0..1</td>
+  </tr>
+</table>
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_device /device element 
+
+The <b>device</b> element is used to define one integral System-on-Chip (SoC) device. 
+
+<b>Example</b>
+\code
+<device Dname="ARM32CM4128x">
+  <package name="ARM32CM4xxx_DFP" url="http://www.keil.com/pack" vendor="ARM" version="1.8.15"/>
+
+  <processor Pname="Cortex-M4">
+    :
+  </processor>
+  :
+  
+  <!-- Device uniform memory map -->
+  <memory_map>
+    <!-- Logical memory address to access integrated SRAM -->
+    <memory name="SRAM" start="0x10000000"/>
+	:
+  </memory_map>
+  
+  <resources>
+    <memory>
+      <!-- 512KB SRAM integrated on the SoC -->
+      <region name="SRAM" size="0x80000" access="rwx" info="Internal SRAM (512KB)"/>
+      :
+    </memory>
+  </resources>
+</device>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Device">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_system "system"</td>
+    <td colspan=3>\ref format_system</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>Dfamily</td>
+    <td>The familiy name the device belongs to.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>DsubFamily</td>
+    <td>The sub familiy name the device belongs to.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Dname</td>
+    <td>The device name.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Dvendor</td>
+    <td>The devices vendor identifier.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>info</td>
+    <td>Brief description of the device.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\subpage format_package "package"</td>
+    <td>Optional reference to the Software Pack this device is provided by.</td>
+    <td>complexType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\subpage format_processor "processor"</td>
+    <td>Processing elements and associated features embedded in the device.</td>
+    <td>complexType</td>
+    <td>1..*</td>
+  </tr>
+  <tr>
+    <td>\subpage format_resources "resources"</td>
+    <td>Memory and peripheral resources embedded in the device. In contrast to resources defined on system level those at device level are only accessible from processors located on the same enclosing device.</td>
+    <td>complexType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\subpage format_memory_map "memory_map"</td>
+    <td>All \em physical resources are accessible using \em logical memory addresses, i.e. typically called memory map.
+	Common logical addresses valid for all processing elements can be defined at device level memory map, i.e. devices
+	with an uniform memory map. Refer to the individual processor memory map for devices with non-uniform memory maps.</td>
+    <td>complexType</td>
+    <td>0..1</td>
+  </tr>
+</table>
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_package /package element
+
+
+The <b>package</b> element can optinally be used to refer to the Software Pack providing a certain \ref format_device "device". 
+
+<b>Example</b>
+\code
+<device Dname="ARM32CM4128x">
+  <package name="ARM32CM4xxx_DFP" url="http://www.keil.com/pack" vendor="ARM" version="1.8.15"/>  
+  :
+</device>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Package">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_device "device"</td>
+    <td colspan=3>\ref format_device</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>The unique pack name.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>url</td>
+    <td>The URL the pack can be obtained from.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>vendor</td>
+    <td>The pack vendor name.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>version</td>
+    <td>The pack version.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>info</td>
+    <td>Brief description of the Software Pack.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>    
+</table>
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_processor /processor element
+
+The <b>processor</b> element is used to define the processing elements integration on a \ref format_device "device".
+
+<b>Example</b>
+\code
+<processor Pname="Cortex-M4" Dclock="168000000" Dcore="Cortex-M4" DcoreVersion="r0p1" Dendian="Little-endian" Dfpu="SP_FPU" Dmpu="MPU" Dtz="NO_TZ">
+  <memory_map>
+  </memory_map>
+  :
+</processor>
+\endcode
+
+<b>Schema Description</b>
+
+
+
+<table class="cmtable" summary="Element: Processor">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_device "device"</td>
+    <td colspan=3>\ref format_device</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>Pname</td>
+    <td>Processor identifier. This attribute <b>is mandatory for devices that embed multiple processors</b>. 
+	    Each processor needs a per device unique identifier and must be used consistently in the <b>Pname</b> attribute.
+        Only alphabetical characters, decimal digits, '-' and '_' are allowed.
+    </td>
+    <td>RestrictedString</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Dcore</td>
+    <td>Specifies the processor core. Use predefined values as listed in the table \ref DcoreEnum "Device Cores".</td>
+    <td>DcoreEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Dfpu</td>
+    <td>Specifies whether a hardware Floating Point Unit is present in the processor.  Use predefined values as listed in the table \ref DfpuEnum "Device FPU".</td>
+    <td>DfpuEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Dmpu</td>
+    <td>Specifies whether a Memory Protection Unit is present in the processor. Use predefined values as listed in the table \ref DmpuEnum "Device MPU".</td>
+    <td>DmpuEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Dtz</td>
+    <td>Specifies whether an ARMv8M based device implements TrustZone. Use predefined values as listed in the table \ref DtzEnum "Device TZ".</td>
+    <td>DtzEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Ddsp</td>
+    <td>Specifies whether an ARMv8M based device supports the DSP instructions set. Use predefined values as listed in the table \ref DdspEnum "Device DSP".</td>
+    <td>DdspEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Dendian</td>
+    <td>Specifies the endianess of the processor. Use predefined values as listed in the table \ref DendianEnum "Endinaness".</td>
+    <td>DendianEnum</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>Dclock</td>
+    <td>Specifies the max clock frequency of the processor subsystem</td>
+    <td>xs:unsignedInt</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>DcoreVersion</td>
+    <td>Hardware revision of the processor core</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>info</td>
+    <td>Brief description of the processor.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\subpage format_resources "resources"</td>
+    <td></td>
+    <td>complexType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\subpage format_memory_map "memory_map"</td>
+    <td></td>
+    <td>complexType</td>
+    <td>0..1</td>
+  </tr>
+</table>
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_memory_map /memory_map element
+
+- \subpage format_map_memory
+- \subpage format_map_peripheral
+
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_map_memory /memory element
+
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_map_peripheral /peripheral element
+
+
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_resources /resources element
+
+- \subpage format_memory
+- \subpage format_peripherals
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_peripherals /peripherals element
+
+- \subpage format_group
+- \subpage format_peripheral
+
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_group /group element
+
+- \subpage format_peripheral
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_memory /memory element
+
+- \subpage format_region
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_region /region element
+
+- \subpage format_block
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_block /block element
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_peripheral /peripheral element
+
+
+*/
+
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_zones /zones element
+
+- \subpage format_pzone
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_pzone /pzone element
+
+- \subpage format_assign
+
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_assign /assign element
+
+
+*/
