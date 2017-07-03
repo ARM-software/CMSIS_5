@@ -919,7 +919,7 @@ __STATIC_INLINE uint32_t GIC_DistributorImplementer(void)
 */
 __STATIC_INLINE void GIC_SetTarget(IRQn_Type IRQn, uint32_t cpu_target)
 {
-  GICDistributor->D_ITARGETSR[((uint32_t)(int32_t)IRQn)] = (uint8_t)(cpu_target & 0x0f);
+  GICDistributor->D_ITARGETSR[((uint32_t)(int32_t)IRQn)] = (uint8_t)(cpu_target & 0xff);
 }
 
 /** Read the GIC's \ref GICDistributor_Type.D_ITARGETSR "D_ITARGETSR" register.
@@ -928,7 +928,7 @@ __STATIC_INLINE void GIC_SetTarget(IRQn_Type IRQn, uint32_t cpu_target)
 */
 __STATIC_INLINE uint32_t GIC_GetTarget(IRQn_Type IRQn)
 {
-  return ((uint32_t) GICDistributor->D_ITARGETSR[((uint32_t)(int32_t)IRQn)] & 0x0f);
+  return ((uint32_t) GICDistributor->D_ITARGETSR[((uint32_t)(int32_t)IRQn)] & 0xff);
 }
 
 /** Enable the CPUs interrupt interface.
@@ -969,12 +969,45 @@ __STATIC_INLINE void GIC_EnableIRQ(IRQn_Type IRQn)
   GICDistributor->D_ISENABLER[IRQn / 32] = 1 << (IRQn % 32);
 }
 
+/** Get interrupt enable status using GIC's \ref GICDistributor_Type::D_ISENABLER "D_ISENABLER" register.
+* \param IRQn The interrupt to be queried.
+* \return 0 - interrupt is not enabled, 1 - interrupt is enabled.
+*/
+__STATIC_INLINE uint32_t GIC_GetEnableIRQ(IRQn_Type IRQn)
+{
+  return (GICDistributor->D_ISENABLER[IRQn / 32] >> (IRQn % 32)) & 0x1UL;
+}
+
 /** Disables the given interrupt using GIC's \ref GICDistributor_Type::D_ICENABLER "D_ICENABLER" register.
 * \param IRQn The interrupt to be disabled.
 */
 __STATIC_INLINE void GIC_DisableIRQ(IRQn_Type IRQn)
 {
   GICDistributor->D_ICENABLER[IRQn / 32] = 1 << (IRQn % 32);
+}
+
+/** Get interrupt pending status from GIC's \ref GICDistributor_Type::D_ISPENDR "D_ISPENDR" register.
+* \param IRQn The interrupt to be queried.
+* \return 0 - interrupt is not pending, 1 - interrupt is pendig.
+*/
+__STATIC_INLINE uint32_t GIC_GetPendingIRQ(IRQn_Type IRQn)
+{
+  uint32_t pend;
+
+  if (IRQn >= 16U) {
+    pend = (GICDistributor->D_ISPENDR[IRQn / 32] >> (IRQn % 32)) & 0x1UL;
+  } else {
+    // INTID 0-15 Software Generated Interrupt
+    pend = GICDistributor->D_SPENDSGIR[IRQn] & 0xff;
+    // No CPU identification offered
+    if (pend != 0U) {
+      pend = 1U;
+    } else {
+      pend = 0U;
+    }
+  }
+
+  return (pend);
 }
 
 /** Sets the given interrupt as pending using GIC's \ref GICDistributor_Type::D_ISPENDR "D_ISPENDR" register.
@@ -1005,22 +1038,30 @@ __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
   }
 }
 
-/** Configures the interrupt egde and model using GIC's GICDistributor_Type::D_ICFGR "D_ICFGR" register.
+/** Sets the interrupt configuration using GIC's GICDistributor_Type::D_ICFGR "D_ICFGR" register.
 * \param IRQn The interrupt to be configured.
-* \param edge_level Signal sensitivity: 0 - level sensitive, 1 - edge triggered
-* \param model Handling mode: 0 - N-N model, 1 - 1-N model.
+* \param int_config Int_config field value. Bit 0: Reserved (0 - N-N model, 1 - 1-N model for some GIC before v1)
+*                                           Bit 1: 0 - level sensitive, 1 - edge triggered
 */
-__STATIC_INLINE void GIC_SetLevelModel(IRQn_Type IRQn, uint8_t edge_level, uint8_t model)
-{   
-  // Word-size read/writes must be used to access this register
-  volatile uint32_t * field = &(GICDistributor->D_ICFGR[IRQn / 16]);
-  unsigned bit_shift = (IRQn % 16)<<1;
-  unsigned int save_word;
+__STATIC_INLINE void GIC_SetConfiguration(IRQn_Type IRQn, uint32_t int_config)
+{
+  uint32_t icfgr = GICDistributor->D_ICFGR[IRQn / 16];
+  uint32_t shift = (IRQn % 16) << 1;
 
-  save_word = *field;
-  save_word &= (~(3 << bit_shift));
+  icfgr &= (    ~(0x03 << shift));
+  icfgr |= (int_config << shift);
 
-  *field = (save_word | ((((edge_level & 0x01u) << 1) | (model & 0x01u)) << bit_shift));
+  GICDistributor->D_ICFGR[IRQn / 16] = icfgr;
+}
+
+/** Get the interrupt configuration from the GIC's GICDistributor_Type::D_ICFGR "D_ICFGR" register.
+* \param IRQn Interrupt to acquire the configuration for.
+* \return Int_config field value. Bit 0: Reserved (0 - N-N model, 1 - 1-N model for some GIC before v1)
+*                                 Bit 1: 0 - level sensitive, 1 - edge triggered
+*/
+__STATIC_INLINE uint32_t GIC_GetConfiguration(IRQn_Type IRQn)
+{
+  return (GICDistributor->D_ICFGR[IRQn / 16] >> ((IRQn % 16) >> 1));
 }
 
 /** Set the priority for the given interrupt in the GIC's \ref GICDistributor_Type::D_IPRIORITYR "D_IPRIORITYR" register.
@@ -1112,6 +1153,32 @@ __STATIC_INLINE uint32_t GIC_GetInterfaceId(void)
   return GICInterface->C_IIDR; 
 }
 
+/** Set the interrupt group from the GIC's GICDistributor_Type::D_IGROUPR "D_IGROUPR" register.
+* \param IRQn The interrupt to be queried.
+* \param group Interrupt group number: 0 - Group 0, 1 - Group 1
+*/
+__STATIC_INLINE void GIC_SetGroup(IRQn_Type IRQn, uint32_t group)
+{
+  uint32_t igroupr = GICDistributor->D_IGROUPR[IRQn / 32];
+  uint32_t shift   = (IRQn % 32);
+
+  igroupr &= (~(0x01       << shift));
+  igroupr |= ((group & 1)  << shift);
+
+  GICDistributor->D_IGROUPR[IRQn / 32] = igroupr;
+}
+#define GIC_SetSecurity         GIC_SetGroup
+
+/** Get the interrupt group from the GIC's GICDistributor_Type::D_IGROUPR "D_IGROUPR" register.
+* \param IRQn The interrupt to be queried.
+* \return 0 - Group 0, 1 - Group 1
+*/
+__STATIC_INLINE uint32_t GIC_GetGroup(IRQn_Type IRQn)
+{
+  return (GICDistributor->D_IGROUPR[IRQn / 32] >> (IRQn % 32)) & 0x1;
+}
+#define GIC_GetSecurity         GIC_GetGroup
+
 /** Initialitze the interrupt distributor.
 */
 __STATIC_INLINE void GIC_DistInit(void)
@@ -1138,8 +1205,10 @@ __STATIC_INLINE void GIC_DistInit(void)
   {
       //Disable the SPI interrupt
       GIC_DisableIRQ(i);
-      //Set level-sensitive and 1-N model
-      GIC_SetLevelModel(i, 0, 1);
+      if (i > 15) {
+        //Set level-sensitive (and N-N model)
+        GIC_SetConfiguration(i, 0);
+      }
       //Set priority
       GIC_SetPriority(i, priority_field/2);
       //Set target list to CPU0
@@ -1171,13 +1240,14 @@ __STATIC_INLINE void GIC_CPUInterfaceInit(void)
   //SGI and PPI
   for (i = (IRQn_Type)0; i < 32; i++)
   {
-      //Set level-sensitive and 1-N model for PPI
-    if(i > 15)
-          GIC_SetLevelModel(i, 0, 1);
-      //Disable SGI and PPI interrupts
-      GIC_DisableIRQ(i);
-      //Set priority
-      GIC_SetPriority(i, priority_field/2);
+    if(i > 15) {
+      //Set level-sensitive (and N-N model) for PPI
+      GIC_SetConfiguration(i, 0U);
+    }
+    //Disable SGI and PPI interrupts
+    GIC_DisableIRQ(i);
+    //Set priority
+    GIC_SetPriority(i, priority_field/2);
   }
   //Enable interface
   GIC_EnableInterface();
@@ -1262,6 +1332,12 @@ __STATIC_INLINE uint32_t PTIM_GetLoadValue() {
   return(PTIM->LOAD);
 }
 
+/** Set current counter value from its \ref Timer_Type::COUNTER "COUNTER" register.
+*/
+__STATIC_INLINE void PTIM_SetCurrentValue(uint32_t value) {
+  PTIM->COUNTER = value;
+}
+
 /** Get current counter value from timers \ref Timer_Type::COUNTER "COUNTER" register.
 * \result Timer_Type::COUNTER
 */
@@ -1281,6 +1357,13 @@ __STATIC_INLINE void PTIM_SetControl(uint32_t value) {
 */
 __STATIC_INLINE uint32_t PTIM_GetControl(void) {
   return(PTIM->CONTROL);
+}
+
+/** Get the event flag in timers \ref Timer_Type::ISR "ISR" register.
+* \return 0 - flag is not set, 1- flag is set
+*/
+__STATIC_INLINE uint32_t PTIM_GetEventFlag(void) {
+  return (PTIM->ISR & 1UL);
 }
 
 /** Clears the event flag in timers \ref Timer_Type::ISR "ISR" register.
