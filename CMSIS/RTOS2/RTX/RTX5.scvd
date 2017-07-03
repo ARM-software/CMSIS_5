@@ -173,10 +173,12 @@
 
       <var name="obj_name"   type="uint8_t"  info="Object name string" size="66" />
       <var name="cb_valid"   type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
+      <var name="out_type"   type="uint8_t"  info="Output display type ID"/>
 
       <var name="ex_delay"   type="uint32_t" info="Calculated execution delay"/>
 
       <var name="stack_val"  type="uint32_t" info="Stack usage: analysis result"/>
+      <var name="stack_cur"  type="uint32_t" info="Stack usage: current (address)"/>
       <var name="stack_curp" type="uint32_t" info="Stack usage: current (in percent)"/>
       <var name="stack_curb" type="uint32_t" info="Stack usage: current (in bytes)"/>
       <var name="stack_maxb" type="uint32_t" info="Stack usage: maximum (in bytes)"/>
@@ -768,6 +770,11 @@
         <calc cond="TCB[i].state != 2">
           sp = TCB[i].sp;
         </calc>
+        
+        <!-- Save current stack pointer -->
+        <calc>
+          TCB[i].stack_cur = sp;
+        </calc>
 
         <!-- Determine current stack usage -->
         <calc cond="TCB[i].sp != 0">
@@ -850,13 +857,14 @@
       <list name="i" start="0" limit="ECB._count">
         <calc>
           ECB[i].cb_valid = (ECB[i].id == 3) &amp;&amp; (ECB[i].state == 1);
-          ECB[i].wl_idx   = k;
+          ECB[i].wl_idx = k;
+          ECB[i].wl_cnt = 0;
         </calc>
 
         <!-- Create a list of threads waiting for event flags -->
-        <readlist name="EWL" type="osRtxThread_t" offset="ECB[i].thread_list" next="thread_next" />
+        <readlist name="EWL" type="osRtxThread_t" offset="ECB[i].thread_list" next="thread_next" cond="ECB[i].thread_list"/>
 
-        <calc>
+        <calc cond="ECB[i].thread_list">
           ECB[i].wl_cnt = (EWL._count - k);
           k = EWL._count;
         </calc>
@@ -885,13 +893,14 @@
       <list cond="MCB._count" name="i" start="0" limit="MCB._count">
         <calc>
           MCB[i].cb_valid = (MCB[i].id == 4) &amp;&amp; (MCB[i].state == 1);
-          MCB[i].wl_idx  = k;
+          MCB[i].wl_idx = k;
+          MCB[i].wl_cnt = 0;
         </calc>
 
         <!-- Create a list of threads waiting for mutex -->
-        <readlist name="MWL" type="osRtxThread_t" offset="MCB[i].thread_list" next="thread_next" />
+        <readlist name="MWL" type="osRtxThread_t" offset="MCB[i].thread_list" next="thread_next" cond="MCB[i].thread_list"/>
 
-        <calc>
+        <calc cond="MCB[i].thread_list">
           MCB[i].wl_cnt = (MWL._count - k);
           k = MWL._count;
         </calc>
@@ -921,13 +930,14 @@
       <list cond="SCB._count" name="i" start="0" limit="SCB._count">
         <calc>
           SCB[i].cb_valid = (SCB[i].id == 5) &amp;&amp; (SCB[i].state == 1);
-          SCB[i].wl_idx  = k;
+          SCB[i].wl_idx = k;
+          SCB[i].wl_cnt = 0;
         </calc>
 
         <!-- Create a list of threads waiting for semaphore -->
-        <readlist name="SWL" type="osRtxThread_t" offset="SCB[i].thread_list" next="thread_next" />
+        <readlist name="SWL" type="osRtxThread_t" offset="SCB[i].thread_list" next="thread_next" cond="SCB[i].thread_list"/>
 
-        <calc>
+        <calc cond="SCB[i].thread_list">
           SCB[i].wl_cnt = (SWL._count - k);
           k = SWL._count;
         </calc>
@@ -956,13 +966,14 @@
       <list cond="PCB._count" name="i" start="0" limit="PCB._count">
         <calc>
           PCB[i].cb_valid = (PCB[i].id == 6) &amp;&amp; (PCB[i].state == 1);
-          PCB[i].wl_idx   = k;
+          PCB[i].wl_idx = k;
+          PCB[i].wl_cnt = 0;
         </calc>
 
         <!-- Create a list of threads waiting for memory pool -->
-        <readlist name="PWL" type="osRtxThread_t" offset="PCB[i].thread_list" next="thread_next" />
+        <readlist name="PWL" type="osRtxThread_t" offset="PCB[i].thread_list" next="thread_next" cond="PCB[i].thread_list"/>
 
-        <calc>
+        <calc cond="PCB[i].thread_list">
           PCB[i].wl_cnt = (PWL._count - k);
           k = PWL._count;
         </calc>
@@ -993,12 +1004,13 @@
         <calc>
           QCB[i].cb_valid = (QCB[i].id == 8) &amp;&amp; (QCB[i].state == 1);
           QCB[i].wl_idx = k;
+          QCB[i].wl_cnt = 0;
         </calc>
 
         <!-- Create a list of threads waiting for message queue -->
-        <readlist name="QWL" type="osRtxThread_t" offset="QCB[i].thread_list" next="thread_next" />
+        <readlist name="QWL" type="osRtxThread_t" offset="QCB[i].thread_list" next="thread_next" cond="QCB[i].thread_list"/>
 
-        <calc>
+        <calc cond="QCB[i].thread_list">
           QCB[i].wl_cnt = (QWL._count - k);
           k = QWL._count;
         </calc>
@@ -1021,7 +1033,7 @@
         </list>
 
         <!-- Create a list of enqueued messages -->
-        <readlist name="QML" type="osRtxMessage_t" offset="QCB[i].msg_first" next="next" />
+        <readlist name="QML" type="osRtxMessage_t" offset="QCB[i].msg_first" next="next" cond="QCB[i].msg_first"/>
 
         <calc>
           QCB[i].ml_idx = j;
@@ -1040,6 +1052,12 @@
       <!-- Determine what to display -->
       <list cond="TCB._count" name="i" start="0" limit="TCB._count">
         <calc>TCB_En += TCB[i].cb_valid; </calc>
+
+        <calc cond="TCB[i].cb_valid == 0"> TCB[i].out_type = 0;</calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (stack_wmark == 0)"> TCB[i].out_type = 1; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (stack_wmark != 0)"> TCB[i].out_type = 2; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (stack_wmark == 0)"> TCB[i].out_type = 3; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (stack_wmark != 0)"> TCB[i].out_type = 4; </calc>
       </list>
       <list cond="CCB._count" name="i" start="0" limit="CCB._count">
         <calc>CCB_En += CCB[i].cb_valid; </calc>
@@ -1114,12 +1132,19 @@
         <!-- Threads -->
         <item cond="TCB_En" property="Threads" value="">
           <list name="i" start="0" limit="TCB._count">
-            <item cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0)" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority]">
+            <item>
+              <print cond="TCB[i].out_type == 1" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%"                               alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 2" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 3" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]"      value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%"                               alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 4" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]"      value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
+
               <item property="State"        value="%E[TCB[i].state &amp; 0x07]"/>
               <item property="Priority"     value="%E[TCB[i].priority]"/>
               <item property="Attributes"   value="%E[TCB[i].attr &amp; 0x01]"/>
 
-              <item property="Waiting" value="%E[TCB[i].state], Timeout: osWaitForever" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay == -1)">
+              <item>
+                <print property="Waiting" value="%E[TCB[i].state], Timeout: %d[TCB[i].ex_delay]" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay != -1)"/>
+                <print property="Waiting" value="%E[TCB[i].state], Timeout: osWaitForever"       cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay == -1)"/>
                 <!-- Wait Thread Flags -->
                 <item cond="TCB[i].state == 0x33" property="id: %x[TCB[i].thread_prev]" value=""/>
 
@@ -1149,138 +1174,14 @@
                 </list>
               </item>
 
-              <item property="Waiting" value="%E[TCB[i].state], Timeout: %d[TCB[i].ex_delay]" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay != -1)">
-                <!-- Wait Thread Flags -->
-                <item cond="TCB[i].state == 0x33" property="id: %x[TCB[i].thread_prev]" value=""/>
+              <item>
+                <print cond="stack_wmark == 0" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]"/>
+                <print cond="stack_wmark != 0" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
 
-                <list cond="TCB[i].state == 0x43" name="n" start="0" limit="ECB._count">
-                  <!-- Wait Event Flags -->
-                  <item cond="TCB[i].thread_prev == ECB[n]._addr" property="id: %x[ECB[n]._addr]%t[ECB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x53" name="n" start="0" limit="MCB._count">
-                  <!-- Wait Mutex -->
-                  <item cond="TCB[i].thread_prev == MCB[n]._addr" property="id: %x[MCB[n]._addr]%t[MCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x63" name="n" start="0" limit="SCB._count">
-                  <!-- Wait Semaphore -->
-                  <item cond="TCB[i].thread_prev == SCB[n]._addr" property="id: %x[SCB[n]._addr]%t[SCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x73" name="n" start="0" limit="PCB._count">
-                  <!-- Wait Memory Pool -->
-                  <item cond="TCB[i].thread_prev == PCB[n]._addr" property="id: %x[PCB[n]._addr]%t[PCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="(TCB[i].state == 0x83) || (TCB[i].state == 0x84)" name="n" start="0" limit="QCB._count">
-                  <!-- Wait Message Queue -->
-                  <item cond="TCB[i].thread_prev == QCB[n]._addr" property="id: %x[QCB[n]._addr]%t[QCB[n].obj_name]" value=""/>
-                </list>
-              </item>
-
-              <item property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]" cond="stack_wmark != 0">
                 <item property="Used"  value="%d[TCB[i].stack_curb]"/>
-                <item property="Max"   value="%d[TCB[i].stack_maxb]"/>
+                <item property="Max"   value="%d[TCB[i].stack_maxb]" cond="stack_wmark != 0"/>
                 <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
-                <item property="Current" value="%x[TCB[i].sp]"/>
-                <item property="Limit" value="%x[TCB[i].stack_mem]"/>
-                <item property="Size"  value="%d[TCB[i].stack_size]"/>
-              </item>
-
-              <item property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]" cond="stack_wmark == 0">
-                <item property="Used"  value="%d[TCB[i].stack_curb]"/>
-                <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
-                <item property="Current" value="%x[TCB[i].sp]"/>
-                <item property="Limit" value="%x[TCB[i].stack_mem]"/>
-                <item property="Size"  value="%d[TCB[i].stack_size]"/>
-              </item>
-
-              <item property="Stack Overrun" value="Overrun detected" cond="TCB[i].stack_over != 0"/>
-              <item property="Flags" value="%x[TCB[i].thread_flags]"/>
-              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1]"                 cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) == 0)"/>
-              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1], osFlagsNoClear" cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) != 0)"/>
-              <item property="TrustZone ID" value="%d[TCB[i].tz_memory]" cond="TCB[i].tz_memory"/>
-            </item>
-
-            <item cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0)" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority]">
-              <item property="State"        value="%E[TCB[i].state &amp; 0x07]"/>
-              <item property="Priority"     value="%E[TCB[i].priority]"/>
-              <item property="Attributes"   value="%E[TCB[i].attr &amp; 0x01]"/>
-
-              <item property="Waiting" value="%E[TCB[i].state], Timeout: osWaitForever" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay == -1)">
-                <!-- Wait Thread Flags -->
-                <item cond="TCB[i].state == 0x33" property="id: %x[TCB[i].thread_prev]" value=""/>
-
-                <list cond="TCB[i].state == 0x43" name="n" start="0" limit="ECB._count">
-                  <!-- Wait Event Flags -->
-                  <item cond="TCB[i].thread_prev == ECB[n]._addr" property="id: %x[ECB[n]._addr]%t[ECB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x53" name="n" start="0" limit="MCB._count">
-                  <!-- Wait Mutex -->
-                  <item cond="TCB[i].thread_prev == MCB[n]._addr" property="id: %x[MCB[n]._addr]%t[MCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x63" name="n" start="0" limit="SCB._count">
-                  <!-- Wait Semaphore -->
-                  <item cond="TCB[i].thread_prev == SCB[n]._addr" property="id: %x[SCB[n]._addr]%t[SCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x73" name="n" start="0" limit="PCB._count">
-                  <!-- Wait Memory Pool -->
-                  <item cond="TCB[i].thread_prev == PCB[n]._addr" property="id: %x[PCB[n]._addr]%t[PCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="(TCB[i].state == 0x83) || (TCB[i].state == 0x84)" name="n" start="0" limit="QCB._count">
-                  <!-- Wait Message Queue -->
-                  <item cond="TCB[i].thread_prev == QCB[n]._addr" property="id: %x[QCB[n]._addr]%t[QCB[n].obj_name]" value=""/>
-                </list>
-              </item>
-
-              <item property="Waiting" value="%E[TCB[i].state], Timeout: %d[TCB[i].ex_delay]" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay != -1)">
-                <!-- Wait Thread Flags -->
-                <item cond="TCB[i].state == 0x33" property="id: %x[TCB[i].thread_prev]" value=""/>
-
-                <list cond="TCB[i].state == 0x43" name="n" start="0" limit="ECB._count">
-                  <!-- Wait Event Flags -->
-                  <item cond="TCB[i].thread_prev == ECB[n]._addr" property="id: %x[ECB[n]._addr]%t[ECB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x53" name="n" start="0" limit="MCB._count">
-                  <!-- Wait Mutex -->
-                  <item cond="TCB[i].thread_prev == MCB[n]._addr" property="id: %x[MCB[n]._addr]%t[MCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x63" name="n" start="0" limit="SCB._count">
-                  <!-- Wait Semaphore -->
-                  <item cond="TCB[i].thread_prev == SCB[n]._addr" property="id: %x[SCB[n]._addr]%t[SCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x73" name="n" start="0" limit="PCB._count">
-                  <!-- Wait Memory Pool -->
-                  <item cond="TCB[i].thread_prev == PCB[n]._addr" property="id: %x[PCB[n]._addr]%t[PCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="(TCB[i].state == 0x83) || (TCB[i].state == 0x84)" name="n" start="0" limit="QCB._count">
-                  <!-- Wait Message Queue -->
-                  <item cond="TCB[i].thread_prev == QCB[n]._addr" property="id: %x[QCB[n]._addr]%t[QCB[n].obj_name]" value=""/>
-                </list>
-              </item>
-
-              <item property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]" cond="stack_wmark != 0">
-                <item property="Used"  value="%d[TCB[i].stack_curb]"/>
-                <item property="Max"   value="%d[TCB[i].stack_maxb]"/>
-                <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
-                <item property="Current" value="%x[TCB[i].sp]"/>
-                <item property="Limit" value="%x[TCB[i].stack_mem]"/>
-                <item property="Size"  value="%d[TCB[i].stack_size]"/>
-              </item>
-
-              <item property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]" cond="stack_wmark == 0">
-                <item property="Used"  value="%d[TCB[i].stack_curb]"/>
-                <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
-                <item property="Current" value="%x[TCB[i].sp]"/>
+                <item property="Current" value="%x[TCB[i].stack_cur]"/>
                 <item property="Limit" value="%x[TCB[i].stack_mem]"/>
                 <item property="Size"  value="%d[TCB[i].stack_size]"/>
               </item>
