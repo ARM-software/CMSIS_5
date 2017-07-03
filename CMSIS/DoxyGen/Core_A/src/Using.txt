@@ -74,16 +74,16 @@ void private_timer_init(void) {
   PTIM_SetControl (PTIM_GetControl() | 7U);
 
   /* Install SysTick_Handler as the interrupt function for PTIM */
-  InterruptHandlerRegister (PrivTimer_IRQn, SysTick_Handler);
+  IRQ_SetHandler((IRQn_ID_t)PrivTimer_IRQn, SysTick_Handler);
  
   /* Determine number of implemented priority bits */
-  GIC_SetPriority (PrivTimer_IRQn, 0xFFU);
+  IRQ_SetPriority ((IRQn_ID_t)PrivTimer_IRQn, IRQ_PRIORITY_Msk);
  
   /* Set lowest priority -1 */
-  GIC_SetPriority (PrivTimer_IRQn, GIC_GetPriority(PrivTimer_IRQn)-1);
+  IRQ_SetPriority ((IRQn_ID_t)PrivTimer_IRQn, GIC_GetPriority((IRQn_ID_t)PrivTimer_IRQn)-1);
  
   /* Enable IRQ */
-  GIC_EnableIRQ (PrivTimer_IRQn);
+  IRQ_Enable ((IRQn_ID_t)PrivTimer_IRQn);
 }
 
 /* Delay execution for given amount of ticks */
