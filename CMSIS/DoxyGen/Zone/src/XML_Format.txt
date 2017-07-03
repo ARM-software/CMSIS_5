@@ -2,7 +2,27 @@
 /**
 \page XML_Format Zone Description Format 
 
-[TOC]
+The <b>Zone Description Format</b> uses standard XML annotations and is defined in the schema file \b ZONE.xsd.
+It is intended to provide a tool vendor agnostic storage format for
+
+- describing embedded system resource capabilities
+  - specific \ref format_device "device" and \ref format_processor "processor" properties
+  - available \ref format_memory "memory" and \ref format_peripheral "peripheral" resources
+- specifying resource partitioning across
+  - \ref format_pzone "project zones", e.g. for secure and non-secure firmware parts
+  - \ref format_process "execution zones", e.g. for functional segregation
+
+\section Zone Schema
+
+The XML schema is defined hierarchically with the following top-level elements:
+
+\subpage format_system
+- \ref format_device
+- \ref format_resources
+- \ref format_zones
+
+\section Example
+
 
 
 */
@@ -27,7 +47,7 @@ The <b>system</b> element is the root element of a CMSIS-Zone system definition.
   
   <resources>
     <memory>
-	  <!-- 16MB external Flash memory, e.g. attached to the SoC using a memory interface -->
+      <!-- 16MB external Flash memory, e.g. attached to the SoC using a memory interface -->
       <region name="EXT_FLASH" size="0x1000000" access="rx" info="External Flash (16MB)"/>
       :
     </memory>
@@ -118,9 +138,9 @@ The <b>device</b> element is used to define one integral System-on-Chip (SoC) de
   
   <!-- Device uniform memory map -->
   <memory_map>
-    <!-- Logical memory address to access integrated SRAM -->
+    <!-- Logical address to access integrated SRAM -->
     <memory name="SRAM" start="0x10000000"/>
-	:
+    :
   </memory_map>
   
   <resources>
@@ -207,8 +227,8 @@ The <b>device</b> element is used to define one integral System-on-Chip (SoC) de
   <tr>
     <td>\subpage format_memory_map "memory_map"</td>
     <td>All \em physical resources are accessible using \em logical memory addresses, i.e. typically called memory map.
-	Common logical addresses valid for all processing elements can be defined at device level memory map, i.e. devices
-	with an uniform memory map. Refer to the individual processor memory map for devices with non-uniform memory maps.</td>
+    Common logical addresses valid for all processing elements can be defined at device level memory map, i.e. devices
+    with an uniform memory map. Refer to the individual processor memory map for devices with non-uniform memory maps.</td>
     <td>complexType</td>
     <td>0..1</td>
   </tr>
@@ -292,14 +312,15 @@ The <b>processor</b> element is used to define the processing elements integrati
 \code
 <processor Pname="Cortex-M4" Dclock="168000000" Dcore="Cortex-M4" DcoreVersion="r0p1" Dendian="Little-endian" Dfpu="SP_FPU" Dmpu="MPU" Dtz="NO_TZ">
   <memory_map>
+    <!-- Logical address alias to access integrated SRAM -->
+    <memory name="CODE_SRAM" alias="SRAM" start="0x00000000"/>
+    :
   </memory_map>
   :
 </processor>
 \endcode
 
 <b>Schema Description</b>
-
-
 
 <table class="cmtable" summary="Element: Processor">
   <tr>
@@ -319,7 +340,7 @@ The <b>processor</b> element is used to define the processing elements integrati
   <tr>
     <td>Pname</td>
     <td>Processor identifier. This attribute <b>is mandatory for devices that embed multiple processors</b>. 
-	    Each processor needs a per device unique identifier and must be used consistently in the <b>Pname</b> attribute.
+        Each processor needs a per device unique identifier and must be used consistently in the <b>Pname</b> attribute.
         Only alphabetical characters, decimal digits, '-' and '_' are allowed.
     </td>
     <td>RestrictedString</td>
@@ -387,13 +408,15 @@ The <b>processor</b> element is used to define the processing elements integrati
   </tr>
   <tr>
     <td>\subpage format_resources "resources"</td>
-    <td></td>
+    <td>Resources tightly coupled to (and exclusively accessible by) a single processor. Resources shared between
+    multiple processors or devices should be defined at device or system level instead.</td>
     <td>complexType</td>
     <td>0..1</td>
   </tr>
   <tr>
     <td>\subpage format_memory_map "memory_map"</td>
-    <td></td>
+    <td>Processor specific (non-uniform) memory map. The effective memory map of the processor is derived as
+    the union of device and processor level mappings.</td>
     <td>complexType</td>
     <td>0..1</td>
   </tr>
@@ -405,9 +428,54 @@ The <b>processor</b> element is used to define the processing elements integrati
 /**
 \page format_memory_map /memory_map element
 
-- \subpage format_map_memory
-- \subpage format_map_peripheral
+The <b>memory_map</b> element is used to to define the logical address mappings (i.e. the \em "memory map").
 
+<b>Example</b>
+\code
+<memory_map>
+  <!-- Logical address to access integrated SRAM -->
+  <memory name="SRAM" start="0x10000000"/>
+  :
+  <!-- Logical address to access peripheral ADC0 registers -->  
+  <peripheral name="ADC0" start="0x40010000"/>
+  :
+</memory_map>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Memory_Map">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_device "device"</td>
+    <td colspan=3>\ref format_device</td>
+  </tr>
+  <tr>
+    <td>\ref format_processor "processor"</td>
+    <td colspan=3>\ref format_processor</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\subpage format_map_memory "memory"</td>
+    <td>One memory entry per memory region mapped into the logical address space.</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\subpage format_map_peripheral "peripheral"</td>
+    <td>One peripheral entry per peripheral mapped into the logical address space.</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+</table>
 
 */
 
@@ -415,6 +483,80 @@ The <b>processor</b> element is used to define the processing elements integrati
 /**
 \page format_map_memory /memory element
 
+The <b>memory</b> element is used to define an address mapping for one \ref element_region "memory/region".
+
+<b>Example</b>
+\code
+<memory_map>
+  <!-- Logical address to access integrated SRAM -->
+  <memory name="SRAM" start="0x10000000"/>
+
+  <!-- Logical address alias to access integrated SRAM -->
+  <memory name="CODE_SRAM" alias="SRAM" start="0x00000000"/>
+  :
+</memory_map>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Memory">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_memory_map "memory_map"</td>
+    <td colspan=3>\ref format_memory_map</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>The name this address mapping can be referenced by. Must be unique within a single processors memory map.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>alias</td>
+    <td>Reference to the (physical) memory region mapped. If the alias is ommitted the name is used.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>start</td>
+    <td>The logical start address the memory region is accessible at.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>size</td>
+    <td>The amount of memory that is accessible. If ommitted the size is taken over from the memory region.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>info</td>
+    <td>Brief description of the memory mapping.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td>complexType</td>
+    <td>0..1</td>
+  </tr>
+</table>
 
 */
 
@@ -422,6 +564,71 @@ The <b>processor</b> element is used to define the processing elements integrati
 /**
 \page format_map_peripheral /peripheral element
 
+The <b>peripheral</b> element is used to define an address mapping for one \ref element_peripheral "peripheral".
+
+<b>Example</b>
+\code
+<memory_map>
+  <!-- Logical address to access peripheral ADC0 registers -->  
+  <peripheral name="ADC0" start="0x40010000"/>
+  :
+</memory_map>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Peripheral">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_memory_map "memory_map"</td>
+    <td colspan=3>\ref format_memory_map</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>The name this address mapping can be referenced by. Must be unique within a single processors memory map.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>alias</td>
+    <td>Reference to the (physical) peripheral mapped. If the alias is ommitted the name is used.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>start</td>
+    <td>The logical start address the peripheral registers are accessible at.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>info</td>
+    <td>Brief description of the peripheral mapping.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td>complexType</td>
+    <td>0..1</td>
+  </tr>
+</table>
 
 */
 
@@ -430,8 +637,61 @@ The <b>processor</b> element is used to define the processing elements integrati
 /**
 \page format_resources /resources element
 
-- \subpage format_memory
-- \subpage format_peripherals
+The <b>resources</b> element groups physical memory and peripheral definitions.
+
+<b>Example</b>
+\code
+<resources>
+  <memory>
+    <!-- 512KB SRAM integrated on the SoC -->
+    <region name="SRAM" size="0x80000" access="rwx" info="Internal SRAM (512KB)"/>
+    :
+  </memory>
+  <peripherals>
+    <peripheral name="ADC0" size="0x1000" access="rw" info="Analog/Digital Converter 0 (12-bit)"/>
+    :
+  </peripherals>
+</resources>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Resources">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_system "system"</td>
+    <td colspan=3>\ref format_system</td>
+  </tr>
+  <tr>
+    <td>\ref format_device "device"</td>
+    <td colspan=3>\ref format_device</td>
+  </tr>
+  <tr>
+    <td>\ref format_processor "processor"</td>
+    <td colspan=3>\ref format_processor</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\subpage format_memory</td>
+    <td>Group with all memory region definitions.</td>
+    <td>complexType</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\subpage format_peripherals</td>
+    <td>Group with all peripheral definitions.</td>
+    <td>complexType</td>
+    <td>0..1</td>
+  </tr>
+</table>
 
 */
 
@@ -439,8 +699,54 @@ The <b>processor</b> element is used to define the processing elements integrati
 /**
 \page format_peripherals /peripherals element
 
-- \subpage format_group
-- \subpage format_peripheral
+The <b>peripherals</b> element groups all physical peripheral definitions.
+
+<b>Example</b>
+\code
+<resources>
+  :
+  <peripherals>
+    <peripheral name="ADC0" size="0x1000" access="rw" info="Analog/Digital Converter 0 (12-bit)"/>
+    :
+    <group name="USART" info="Universal synchronous/asynchronous receiver/transmitter">
+      <peripheral name="UART0"  size="0x1000" access="rw" info="Universal asynchronous receiver/transmitter 0"/>
+      <peripheral name="USART1" size="0x1000" access="rw" info="Universal synchronous/asynchronous receiver/transmitter 1"/>
+      :
+    </group>
+  </peripherals>
+</resources>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Peripherals">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_resources "resources"</td>
+    <td colspan=3>\ref format_resources</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\subpage format_group</td>
+    <td>Logical grouping of peripherals.</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\subpage format_peripheral</td>
+    <td>Peripheral definitions.</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+</table>
 
 */
 
@@ -449,7 +755,76 @@ The <b>processor</b> element is used to define the processing elements integrati
 /**
 \page format_group /group element
 
-- \subpage format_peripheral
+The <b>group</b> element can be used to logically group peripherals together, e.g. according to functionality or bus topology.
+
+<b>Example</b>
+\code
+<resources>
+  :
+  <peripherals>
+    <peripheral name="ADC0" size="0x1000" access="rw" info="Analog/Digital Converter 0 (12-bit)"/>
+    :
+    <group name="USART" info="Universal synchronous/asynchronous receiver/transmitter">
+      <peripheral name="UART0"  size="0x1000" access="rw" info="Universal asynchronous receiver/transmitter 0"/>
+      <peripheral name="USART1" size="0x1000" access="rw" info="Universal synchronous/asynchronous receiver/transmitter 1"/>
+      :
+    </group>
+  </peripherals>
+</resources>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Group">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_peripherals "peripherals"</td>
+    <td colspan=3>\ref format_peripherals</td>
+  </tr>
+  <tr>
+    <td>\ref format_group "group"</td>
+    <td colspan=3>\ref format_group</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>The name for the peripheral group.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>info</td>
+    <td>Brief description of the peripheral group.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\ref format_group</td>
+    <td>Logical grouping of peripherals.</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
+    <td>\subpage format_peripheral</td>
+    <td>Peripheral definitions.</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+</table>
 
 */
 
@@ -457,7 +832,45 @@ The <b>processor</b> element is used to define the processing elements integrati
 /**
 \page format_memory /memory element
 
-- \subpage format_region
+
+The <b>memory</b> element groups \ref format_region "memory regions".
+
+<b>Example</b>
+\code
+<resources>
+  <memory>
+    <!-- 512KB SRAM integrated on the SoC -->
+    <region name="SRAM" size="0x80000" access="rwx" info="Internal SRAM (512KB)"/>
+    :
+  </memory>
+  :
+</resources>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Memory">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_resources "Resources"</td>
+    <td colspan=3>\ref format_resources</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\subpage format_region</td>
+    <td>Memory region definitions.</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+</table>
 
 */
 
@@ -465,12 +878,155 @@ The <b>processor</b> element is used to define the processing elements integrati
 /**
 \page format_region /region element
 
-- \subpage format_block
+The <b>region</b> element is used to define individual physical memory regions.
+
+<b>Example</b>
+\code
+<resources>
+  <memory>
+    <!-- 512KB SRAM integrated on the SoC -->
+    <region name="SRAM" size="0x80000" access="rwx" info="Internal SRAM (512KB)">
+      <block name="SHARED" offset="0x00000" size="0x08000" access="rwu" info="Shared memory area for inter process communication."/>
+      :
+    </region>
+    :
+  </memory>
+  :
+</resources>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Region">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_memory "memory"</td>
+    <td colspan=3>\ref format_memory</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>The name this memory region can be referenced by. Must be unique within a single device.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>size</td>
+    <td>The physical memory size this region provides.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>access</td>
+    <td>The access attributes for this memory region.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>info</td>
+    <td>Brief description of the physical memory resource.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\subpage format_block</td>
+    <td>Memory block definitions.</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+</table>
+
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page format_block /block element
+
+The <b>block</b> element is used to subdived a physical \ref format_memory "memory region" into segregated logical blocks.
+
+<b>Example</b>
+\code
+<resources>
+  <memory>
+    <!-- 512KB SRAM integrated on the SoC -->
+    <region name="SRAM" size="0x80000" access="rwx" info="Internal SRAM (512KB)">
+      <block name="SHARED" offset="0x00000" size="0x08000" access="rwu" info="Shared memory area for inter process communication."/>
+      :
+    </region>
+    :
+  </memory>
+  :
+</resources>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Block">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_region "region"</td>
+    <td colspan=3>\ref format_region</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>The name this memory block can be referenced by. Must be unique within a single device.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>size</td>
+    <td>The physical memory size this block allocates.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>access</td>
+    <td>The access attributes for this memory block.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>info</td>
+    <td>Brief description of the memory block.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\ref format_block</td>
+    <td>Memory block definitions.</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+</table>
 
 */
 
@@ -478,16 +1034,127 @@ The <b>processor</b> element is used to define the processing elements integrati
 /**
 \page format_peripheral /peripheral element
 
+The <b>peripheral</b> element is used to define physical peripheral resources.
+
+<b>Example</b>
+\code
+<resources>
+  :
+  <peripherals>
+    <peripheral name="ADC0" size="0x1000" access="rw" info="Analog/Digital Converter 0 (12-bit)"/>
+    :
+    <group name="USART" info="Universal synchronous/asynchronous receiver/transmitter">
+      <peripheral name="UART0"  size="0x1000" access="rw" info="Universal asynchronous receiver/transmitter 0"/>
+      <peripheral name="USART1" size="0x1000" access="rw" info="Universal synchronous/asynchronous receiver/transmitter 1"/>
+      :
+    </group>
+  </peripherals>
+</resources>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Peripheral">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_peripherals "peripherals"</td>
+    <td colspan=3>\ref format_peripherals</td>
+  </tr>
+  <tr>
+    <td>\ref format_group "group"</td>
+    <td colspan=3>\ref format_group</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>The name for this peripheral. Must be unique within a single device.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>size</td>
+    <td>The memory size the peripheral registers occupy.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>access</td>
+    <td>The access attributes for this peripheral.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>info</td>
+    <td>Brief description of the peripheral resource.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+</table>
 
 */
-
-
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page format_zones /zones element
 
-- \subpage format_pzone
+The <b>zones</b> element groups all zone definitions.
+
+<b>Example</b>
+\code
+<zones>
+  <pzone name="App" Dname="ARM32CM4128x" Pname="Cortex-M4">
+    <assign name="SHARED" as="SRAM" access="rwu"/>
+    <assign name="ADC0"             access="rw" />
+    :
+  </pzone>
+  :
+</zones>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Zones">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_system "system"</td>
+    <td colspan=3>\ref format_system</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\subpage format_pzone</td>
+    <td>Project zone definitions</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+</table>
 
 */
 
@@ -495,7 +1162,74 @@ The <b>processor</b> element is used to define the processing elements integrati
 /**
 \page format_pzone /pzone element
 
-- \subpage format_assign
+The <b>pzone</b> element defines a single project zone.
+
+<b>Example</b>
+\code
+<zones>
+  <pzone name="App" Dname="ARM32CM4128x" Pname="Cortex-M4">
+    <assign name="SHARED" as="SRAM" access="rwu"/>
+    <assign name="ADC0"             access="rw" />
+    :
+  </pzone>
+  :
+</zones>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: PZone">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_zones "zones"</td>
+    <td colspan=3>\ref format_zones</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>The unique name for this project zone.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Dname</td>
+    <td>The name of the device this project zone is assigned to.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Pname</td>
+    <td>The name of the processor (on the device) this project is assigned to.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>info</td>
+    <td>Brief description of the project zone.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\subpage format_assign</td>
+    <td>Resource Assignments</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+</table>
 
 */
 
@@ -504,5 +1238,144 @@ The <b>processor</b> element is used to define the processing elements integrati
 /**
 \page format_assign /assign element
 
+The <b>assign</b> element defines the resources used by a zone.
+
+<b>Example</b>
+\code
+<zones>
+  <pzone name="App" Dname="ARM32CM4128x" Pname="Cortex-M4">
+    <assign name="SHARED" as="SRAM" access="rwu">
+      <capture symbol=".bss.shared"/>
+      <capture symbol=".data.shared"/>
+      :
+    </assign>
+    <assign name="ADC0"             access="rw" />
+    :
+  </pzone>
+  :
+</zones>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Assign">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_pzone "pzone"</td>
+    <td colspan=3>\ref format_pzone</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>The name of a resource (mapped to the processor) to be used by this zone.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>as</td>
+    <td>The name of the mapping (alias) to be used to address the referenced resource.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>access</td>
+    <td>Additional access attributes to be used.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>info</td>
+    <td>Brief description of the resource assignment.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td>\subpage format_capture</td>
+    <td>Linker usage</td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+</table>
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page format_capture /capture element
+
+The <b>capture</b> element can be used to specify linker symbol patterns to be placed into the enclosing
+memory assignment.
+
+<b>Example</b>
+\code
+<zones>
+  <pzone name="App" Dname="ARM32CM4128x" Pname="Cortex-M4">
+    <assign name="SHARED" as="SRAM" access="rwu">
+      <capture symbol=".bss.shared"/>
+      <capture symbol=".data.shared"/>
+      :
+    </assign>
+    :
+  </pzone>
+  :
+</zones>
+\endcode
+
+<b>Schema Description</b>
+
+<table class="cmtable" summary="Element: Capture">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref format_assign "assign"</td>
+    <td colspan=3>\ref format_assign</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>cunit</td>
+    <td>Pattern selecting the compilation unit(s) to be placed into this assignment.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>symbol</td>
+    <td>Pattern selecting the symbols to be placed into this assignment.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <th>Child Elements</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Occurrence</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td>complexType</td>
+    <td>0..*</td>
+  </tr>
+</table>
 
 */
