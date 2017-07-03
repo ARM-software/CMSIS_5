@@ -4,7 +4,7 @@
 \defgroup irq_ctrl_gr IRQ Controller Functions
 \brief Provides a low level API between an device agnostic interrupt handling implementation and specific interrupt controller.
 
-\details The IRQ Controller API may be used by an arbitrary interrupt handling implementation to be easily potable across a wide range
+\details The IRQ Controller API may be used by an arbitrary interrupt handling implementation to be easily portable across a wide range
 of controllers.
 
 A default implementation for ARM GIC (Generic Interrupt Controller) can be found in \ref irq_ctrl_gic.c.
@@ -178,7 +178,7 @@ int32_t IRQ_Enable (IRQn_ID_t irqn) {
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn int32_t IRQ_Disable (IRQn_ID_t irqn)
-\details This function disabled forwarding of the corresponding interrupt to the CPU. 
+\details This function disables forwarding of the corresponding interrupt to the CPU. 
 
 For ARM GIC the default implementation looks like the following example:
 
