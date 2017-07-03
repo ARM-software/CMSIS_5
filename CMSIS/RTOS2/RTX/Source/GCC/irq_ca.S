@@ -34,6 +34,9 @@
 
                 .equ   CPSR_BIT_T,      0x20
 
+                .equ   K_STATE_RUNNING, 2           // osKernelState_t::osKernelRunning
+                .equ   I_K_STATE_OFS,   8           // osRtxInfo.kernel.state offset
+                .equ   I_TICK_IRQN_OFS, 16          // osRtxInfo.tick_irqn offset
                 .equ   I_T_RUN_OFS,     20          // osRtxInfo.thread.run offset
                 .equ   TCB_SP_FRAME,    34          // osRtxThread_t.stack_frame offset
                 .equ   TCB_SP_OFS,      56          // osRtxThread_t.sp offset
@@ -185,9 +188,7 @@ IRQ_Handler:
                 SUB     SP, SP, R3                  // Adjust stack
                 PUSH    {R3, R4}                    // Store stack adjustment(R3) and user data(R4)
 
-                BLX     osRtxIrqGetId               // Retrieve interrupt ID into R0
-                CMP     R0, #-1                     // Check if interrupt valid
-                BEQ     IRQ_Exit                    // Spurious interrupt if -1, exit IRQ
+                BLX     IRQ_GetActiveIRQ            // Retrieve interrupt ID into R0
                 MOV     R4, R0                      // Move interrupt ID to R4
 
                 LDR     R1, =IRQ_NestLevel
@@ -195,7 +196,7 @@ IRQ_Handler:
                 ADD     R3, R3, #1
                 STR     R3, [R1]
 
-                BLX     osRtxIrqGetHandler          // Retrieve interrupt handler address for current ID
+                BLX     IRQ_GetHandler              // Retrieve interrupt handler address for current ID
                 CMP     R0, #0                      // Check if handler address is 0
                 BEQ     IRQ_End                     // If 0, end interrupt and return
 
@@ -210,14 +211,14 @@ IRQ_Handler:
                 BLX     R0                          // Call IRQ handler
                 CPSID   i                           // Disable interrupts
 
-                POP     {R3, R4}
+                POP     {R3, R4}                    // Restore stack adjustment(R3) and alignment dummy(R4)
                 ADD     SP, SP, R3                  // Unadjust stack
 
                 CPS     #MODE_IRQ                   // Change to IRQ mode
 
 IRQ_End:
                 MOV     R0, R4                      // Move interrupt ID to R0
-                BLX     osRtxIrqSetEnd
+                BLX     IRQ_EndOfInterrupt          // Signal end of interrupt
 
                 LDR     R2, =IRQ_NestLevel
                 LDR     R1, [R2]                    // Load IRQ nest level and
@@ -287,7 +288,14 @@ SVC_Handler:
                 BNE     SVC_User                    // Branch if User SVC
 
                 PUSH    {R0-R3}
-                BLX     osRtxIrqDisableTick         // Disable System Timer interrupt
+
+                LDR     R3, =osRtxInfo
+                LDR     R1, [R3, #I_K_STATE_OFS]    // Load RTX5 kernel state
+                CMP     R1, #K_STATE_RUNNING        // Check osKernelRunning
+                BLT     SVC_FuncCall                // Continue if kernel is not running
+                LDR     R0, [R3, #I_TICK_IRQN_OFS]  // Load OS Tick irqn
+                BLX     IRQ_Disable                 // Disable OS Tick interrupt
+SVC_FuncCall:
                 LDR     R0, =SVC_Active
                 MOV     R1, #1
                 STRB    R1, [R0]                    // Set SVC_Active flag
@@ -324,9 +332,15 @@ SVC_PendCheck:
                 LDR     R0, =SVC_Active
                 MOV     R1, #0
                 STRB    R1, [R0]                    // Clear SVC_Active flag
-                BLX     osRtxIrqEnableTick          // Enable System Timer interrupt
 
-                LDR     R12, =osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.run
+                LDR     R12, =osRtxInfo
+                LDR     R1, [R12, #I_K_STATE_OFS]   // Load RTX5 kernel state
+                CMP     R1, #K_STATE_RUNNING        // Check osKernelRunning
+                BLT     SVC_ContextCheck            // Continue if kernel is not running
+                LDR     R0, [R12, #I_TICK_IRQN_OFS] // Load OS Tick irqn
+                BLX     IRQ_Enable                  // Enable OS Tick interrupt
+SVC_ContextCheck:
+                ADD     R12, R12, #I_T_RUN_OFS      // Load address of osRtxInfo.thread.run
                 LDM     R12, {R0, R1}               // Load osRtxInfo.thread.run: curr & next
                 CMP     R0, R1                      // Check if context switch is required
                 BEQ     osRtxContextExit            // Exit if curr and next are equal
