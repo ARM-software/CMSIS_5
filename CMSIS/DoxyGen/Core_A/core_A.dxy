@@ -758,6 +758,9 @@ INPUT                  = src/Overview.txt \
                          src/core_ca.txt \
                          ../../Core_A/Include/cmsis_armcc.h \
                          src/cmsis_armcc.txt \
+                         ../../Core_A/Source/irq_ctrl_gic.c \
+                         ../../Core_A/Include/irq_ctrl.h \
+                         src/irq_ctrl.txt \
                          ../../../Device/ARM/ARMCA9/Include/ARMCA9.h \
                          ../../../Device/ARM/ARMCA9/Include/mem_ARMCA9.h \
                          ../../../Device/ARM/ARMCA9/Include/system_ARMCA9.h \
