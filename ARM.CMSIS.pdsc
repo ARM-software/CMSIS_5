@@ -11,6 +11,7 @@
     <release version="5.0.2-dev4">
       CMSIS Device:
       - Added OS Tick API
+      - Added IRQ Controller API
     </release>
     <release version="5.0.2-dev3">
       CMSIS-Core_A: 
@@ -558,6 +559,12 @@ and 8-bit Java bytecodes in Jazelle state.
 
   <apis>
     <!-- CMSIS Device API -->
+    <api Cclass="Device" Cgroup="IRQ Controller" Capiversion="1.0.0" exclusive="1">
+      <description>Device interrupt controller interface</description>
+      <files>
+        <file category="header" name="CMSIS/Core_A/Include/irq_ctrl.h"/>
+      </files>
+    </api>
     <api Cclass="Device" Cgroup="OS Tick" Capiversion="1.0.0" exclusive="1">
       <description>RTOS Kernel system tick timer interface</description>
       <files>
@@ -1840,6 +1847,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
       <require Cclass="Device" Cgroup="OS Tick"/>
+      <require Cclass="Device" Cgroup="IRQ Controller"/>
     </condition>
     <condition id="RTOS2 RTX5 Lib">
       <description>Components required for RTOS2 RTX5 Library</description>
@@ -1854,6 +1862,13 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="ARMCC GCC"/>
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
+    </condition>
+    
+    <!-- OS Tick -->
+    <condition id="OS Tick PTIM">
+      <description>Components required for OS Tick Private Timer</description>
+      <require condition="CA5_CA9"/>
+      <require Cclass="Device" Cgroup="IRQ Controller"/>
     </condition>
 
   </conditions>
@@ -2236,8 +2251,16 @@ and 8-bit Java bytecodes in Jazelle state.
       </files>
     </component>
 
+    <!-- IRQ Controller -->
+    <component Cclass="Device" Cgroup="IRQ Controller" Csub="GIC" Capiversion="1.0.0" Cversion="1.0.0" condition="ARMv7-A Device">
+      <description>IRQ Controller implementation using GIC</description>
+      <files>
+        <file category="sourceC" name="CMSIS/Core_A/Source/irq_ctrl_gic.c"/>
+      </files>
+    </component>
+
     <!-- OS Tick -->
-    <component Cclass="Device" Cgroup="OS Tick" Csub="Private Timer" Capiversion="1.0.0" Cversion="1.0.0" condition="CA5_CA9">
+    <component Cclass="Device" Cgroup="OS Tick" Csub="Private Timer" Capiversion="1.0.0" Cversion="1.0.0" condition="OS Tick PTIM">
       <description>OS Tick implementation using Private Timer</description>
       <files>
         <file category="sourceC" name="CMSIS/RTOS2/Source/os_tick_ptim.c"/>
@@ -2646,7 +2669,6 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_msgqueue.c"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_system.c"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_evr.c"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_gic.c"/>
         <!-- RTX sources (library configuration) -->
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_lib.c"/>
         <!-- RTX sources (handlers ARMCC) -->
