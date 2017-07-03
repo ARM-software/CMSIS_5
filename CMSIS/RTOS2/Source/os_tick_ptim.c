@@ -2,10 +2,10 @@
  * @file     os_tick_ptim.c
  * @brief    CMSIS OS Tick implementation for Private Timer
  * @version  V1.0.0
- * @date     13. June 2017
+ * @date     29. June 2017
  ******************************************************************************/
 /*
- * Copyright (c) 2017-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -23,11 +23,12 @@
  */
 
 #include "os_tick.h"
+#include "irq_ctrl.h"
 
 #include "RTE_Components.h"
 #include CMSIS_device_header
 
-#if defined(PTIM) && defined (__GIC_PRESENT) && (__GIC_PRESENT != 0U)
+#if defined(PTIM)
 
 #ifndef PTIM_IRQ_PRIORITY
 #define PTIM_IRQ_PRIORITY           0xFFU
@@ -55,13 +56,13 @@ int32_t  OS_Tick_Setup (uint32_t freq, IRQHandler_t handler) {
   PTIM_SetLoadValue (load);
 
   // Disable corresponding IRQ
-  GIC_DisableIRQ     (PrivTimer_IRQn);
-  GIC_ClearPendingIRQ(PrivTimer_IRQn);
+  IRQ_Disable     (PrivTimer_IRQn);
+  IRQ_ClearPending(PrivTimer_IRQn);
 
   // Determine number of implemented priority bits
-  GIC_SetPriority (PrivTimer_IRQn, 0xFFU);
+  IRQ_SetPriority (PrivTimer_IRQn, 0xFFU);
 
-  prio = GIC_GetPriority (PrivTimer_IRQn);
+  prio = IRQ_GetPriority (PrivTimer_IRQn);
 
   // At least bits [7:4] must be implemented
   if ((prio & 0xF0U) == 0U) {
@@ -79,16 +80,16 @@ int32_t  OS_Tick_Setup (uint32_t freq, IRQHandler_t handler) {
   prio = (PTIM_IRQ_PRIORITY << bits) & 0xFFUL;
 
   // Set Private Timer interrupt priority
-  GIC_SetPriority(PrivTimer_IRQn, prio-1U);
+  IRQ_SetPriority(PrivTimer_IRQn, prio-1U);
 
-  // Set edge-triggered and 1-N model bits
-  GIC_SetLevelModel(PrivTimer_IRQn, 1, 1);
+  // Set edge-triggered IRQ
+  IRQ_SetMode(PrivTimer_IRQn, IRQ_MODE_TRIG_EDGE);
 
   // Register tick interrupt handler function
-  InterruptHandlerRegister(PrivTimer_IRQn, (IRQHandler)handler);
+  IRQ_SetHandler(PrivTimer_IRQn, handler);
 
-  // Enable corresponding IRQ
-  GIC_EnableIRQ (PrivTimer_IRQn);
+  // Enable corresponding interrupt
+  IRQ_Enable (PrivTimer_IRQn);
 
   // Set bits: IRQ enable and Auto reload
   PTIM_SetControl (0x06U);
@@ -103,7 +104,7 @@ int32_t  OS_Tick_Enable (void) {
   // Set pending interrupt if flag set
   if (PTIM_PendIRQ != 0U) {
     PTIM_PendIRQ = 0U;
-    GIC_SetPendingIRQ (PrivTimer_IRQn);
+    IRQ_SetPending (PrivTimer_IRQn);
   }
 
   // Start the Private Timer
@@ -126,8 +127,8 @@ int32_t  OS_Tick_Disable (void) {
   PTIM_SetControl (ctrl);
 
   // Remember pending interrupt flag
-  if ((GIC_GetIRQStatus (PrivTimer_IRQn) >> 1) != 0) {
-    GIC_ClearPendingIRQ (PrivTimer_IRQn);
+  if (IRQ_GetPending(PrivTimer_IRQn) != 0) {
+    IRQ_ClearPending (PrivTimer_IRQn);
     PTIM_PendIRQ = 1U;
   }
 
