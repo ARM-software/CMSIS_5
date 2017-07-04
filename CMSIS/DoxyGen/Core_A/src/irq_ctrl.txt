@@ -1,15 +1,70 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 //  ==== IRQ Controller API ====
 /** 
-\defgroup irq_ctrl_gr IRQ Controller Functions
-\brief Provides a low level API between an device agnostic interrupt handling implementation and specific interrupt controller.
+\defgroup irq_ctrl_gr Interrupts and Exceptions
+\brief Generic functions to access the Interrupt Controller.
 
-\details The IRQ Controller API may be used by an arbitrary interrupt handling implementation to be easily portable across a wide range
-of controllers.
+\details This section describes the device agnostic interrupt API viable for a wide range of specific interrupt controllers.
+The IRQ Controller API allows interrupt dependend applications to be easily portable across a wide range of controllers.
 
-A default implementation for ARM GIC (Generic Interrupt Controller) can be found in \ref irq_ctrl_gic.c.
+\note The default implementation for \ref GIC_functions "ARM GIC (Generic Interrupt Controller)" can be found in \ref irq_ctrl_gic.c.
+It uses \c weak functions thus it can easily be overwritten by an alternative user implementation if needed.
 
-\note The default implementation is defined \c weak thus it can easily be overwritten by an alternative user implementation.
+The ARMv7-A architecture defines a common set of first level exceptions, see table below.
+
+| Exception                     | CMSIS Handler | Offset | Description                                                                 |
+|-------------------------------|---------------|--------|-----------------------------------------------------------------------------|
+| Reset                         | Reset_Handler | 0x0000 | First instruction executed after reset.                                     |
+| Undefined Instruction (Undef) | Undef_Handler | 0x0004 | Signals usage of an illegal instructions.                                   |
+| Supervisor Call (SVC)         | SVC_Handler   | 0x0008 | Issued by software using SVC instruction.                                   |
+| Prefetch Abort (PAbt)         | PAbt_Handler  | 0x000C | Signals a memory abort on istruction fetch.                                 |
+| Data Abort (DAbt)             | DAbt_Handler  | 0x0010 | Signals a memory abort on data read or write.                               |
+| Hyp Trap                      | (NOP)         | 0x0014 | Hypervisor instruction trap, only available with Virtualization Extensions. |
+| IRQ interrupt                 | IRQ_Handler   | 0x0018 | Interrupt Request (typically from Interrupt Controller)                     |
+| FIQ interrupt                 | FIQ_Handler   | 0x001C | Fast Interrupt Request (typically from Interrupt Controller)                |
+
+By default those handlers are defined as weak empty functions by the \ref startup_c_sec "device specific startup code".
+Software and peripheral interrupts are all handled by one of the both central interrupt handlers (IRQ and FIQ). These needs to
+be implemented application specific. If an RTOS is used the interrupt handlers are typically provided by the RTOS, e.g. when using 
+<a href="../../RTOS2/html/rtx5_impl.html">RTX5</a>.
+
+The interrupts available depends on the actual device in use. According to CMSIS specification the interrupts are defined
+as \ref IRQn_Type in \ref device_h_pg. Using the generic IRQ API one can easily enable and disable interrupts, set up priorities, modes 
+and preemption rules, and register interrupt callbacks.
+
+\b Example:
+
+\code
+void SGI0_Handler() {
+  /* 
+   * Handle Interrupt 
+   */
+  
+  IRQ_ClearPending((IRQn_ID_t)SGI0_IRQn);
+}
+ 
+void main() {
+  /* Initialize the Interrupt Controller */
+  IRQ_Initialize();
+  
+  /* Register the user defined handler function */
+  IRQ_SetHandler((IRQn_ID_t)SGI0_IRQn, SGI0_Handler);  
+  
+  /* Set the priority considering the priority grouping */
+  const uint32_t subprio = IRQ_GetPriorityGroupBits();
+  IRQ_SetPriority((IRQn_ID_t)SGI0_IRQn, 1u << subprio);
+  
+  /* Set interrupt mode to falling edge */
+  IRQ_SetMode((IRQn_ID_t)SGI0_IRQn, IRQ_MODE_TYPE_IRQ | IRQ_MODE_CPU_0 | IRQ_MODE_TRIG_EDGE | IRQ_MODE_TRIG_EDGE_FALLING);
+  
+  IRQ_Enable((IRQn_ID_t)SGI0_IRQn);
+  
+  /* Trigger interrupt */
+  IRQ_SetPending((IRQn_ID_t)SGI0_IRQn);
+  
+  IRQ_Disable((IRQn_ID_t)SGI0_IRQn);
+}
+\endcode
 
 @{
 */
@@ -226,8 +281,9 @@ uint32_t IRQ_GetEnableState (IRQn_ID_t irqn) {
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn int32_t IRQ_SetMode (IRQn_ID_t irqn, uint32_t mode)
+
 \details This function configures the interrupt triggering mode, type, secure access and target CPUs of the interrupt
-identified by the irqn parameter.
+(see \ref irq_mode_defs) identified by the irqn parameter.
 
 For ARM GIC the default implementation looks like the following example:
 

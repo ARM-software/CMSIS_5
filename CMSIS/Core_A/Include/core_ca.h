@@ -133,12 +133,7 @@
     #define __FPU_PRESENT             0U
     #warning "__FPU_PRESENT not defined in device header file; using default!"
   #endif
-  
-  #ifndef __MPU_PRESENT
-    #define __MPU_PRESENT             0U
-    #warning "__MPU_PRESENT not defined in device header file; using default!"
-  #endif
-  
+    
   #ifndef __GIC_PRESENT
     #define __GIC_PRESENT             1U
     #warning "__GIC_PRESENT not defined in device header file; using default!"
