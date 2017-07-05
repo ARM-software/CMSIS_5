@@ -241,7 +241,7 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
   - \b 0x05 = Get the <b>Target Device Vendor</b> (string).
   - \b 0x06 = Get the <b>Target Device Name</b> (string).
   - \b 0xF0 = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit (see below for details).
-  - \b 0xF1 = Get the <b>Debug Unit Timer</b> parameter information (see below for details).
+  - \b 0xF1 = Get the <b>Test Domain Timer</b> parameter information (see below for details).
   - \b 0xF2 = Get the <b>Trace Data Management</b> parameter information (see below for details).
   - \b 0xFD = Get the <b>SWO Trace Buffer Size</b> (WORD).
   - \b 0xFE = Get the maximum <b>Packet Count</b> (BYTE).
@@ -299,8 +299,8 @@ Command extensions for transfer protocol:
  - Info0 - Bit 4: <b>1 = Atomic Commands</b> - \ref DAP_atomic_gr support is implemented (0 = \ref DAP_atomic_gr not implemented).
  - Info0 - Bit 5: <b>1 = \ref DAP_SWD_Sequence</b> command is implemented (0 = \ref DAP_SWD_Sequence not implemented).
  
-Time synchronisation via debug unit timer:
- - Info0 - Bit 6: <b>1 = Debug Unit Timer</b> - debug unit timer support is implemented (0 = not implemented).
+Time synchronisation via Test Domain Timer:
+ - Info0 - Bit 6: <b>1 = Test Domain Timer</b> - debug unit support for Test Domain Timer is implemented (0 = not implemented).
  
 Test Input management: 
  - Info1 - Bit 0: <b>1 = Trace Data Management</b> - Trace Data Management is implemented (0 = not implemented).
@@ -309,7 +309,7 @@ Test Input management:
  
 <b>DAP_Info Response (for ID=0xF1):</b>
 
-The ID=0xF1 <b>Debug Unit Timer</b> obtains the parameter information about an optional 32-bit Debug Unit Timer that may be used for time measurements.
+The ID=0xF1 <b>Test Domain Timer</b> obtains the parameter information about an optional 32-bit Test Domain Timer that may be used for various time measurements.
 
 \code
 | BYTE | BYTE | WORD *****|
@@ -317,7 +317,7 @@ The ID=0xF1 <b>Debug Unit Timer</b> obtains the parameter information about an o
 |******|******|***********|
 \endcode
 
-- \b Frequency:  Input frequency of the Debug Unit Timer.
+- \b Frequency:  Input frequency of the Test Domain Timer which indicates the resolution of the 32-bit TD_TimeStamp values.
 
 
 <hr>
@@ -924,7 +924,7 @@ Reads the captured SWO trace data from Trace Buffer.
 /** 
 \defgroup DAP_JTAG_Sequence DAP_JTAG_Sequence
 \ingroup DAP_jtag_gr
-\brief Generate JTAG sequence TMS,TDI and capture TDO 
+\brief Generate JTAG sequence TMS, TDI and capture TDO 
 \details
 The <b>DAP_JTAG_Sequence Command</b> may be used to auto-detect devices on the JTAG chain.
 The result of this command can be used to calculate on the host computer the number of JTAG 
@@ -1093,7 +1093,7 @@ The data transfer is aborted on a communication error:
   - Bit 3: A3 Register Address bit 3.
   - Bit 4: Value Match (only valid for Read Register): 0 = Normal Read Register, 1 = Read Register with Value Match.
   - Bit 5: Match Mask (only valid for Write Register): 0 = Normal Write Register, 1 = Write Match Mask (instead of Register).
-  - Bit 7: Time Stamp request: 0 = No time stamp, 1 = Include time stamp value from Debug Unit Timer before every Transfer Data word (restrictions see note).
+  - Bit 7: TD_TimeStamp request: 0 = No time stamp, 1 = Include time stamp value from Test Domain Timer before every Transfer Data word (restrictions see note).
 
 - <b>Transfer Data</b>: register value or match value
   - for Write Register transfer request: the register value for the CoreSight register.
@@ -1108,9 +1108,9 @@ The data transfer is aborted on a communication error:
   
 <b>DAP_Transfer Response:</b>
 \code
-| BYTE | BYTE **********| BYTE *************| WORD ******| WORD *********|
-< 0x05 | Transfer Count | Transfer Response | Time Stamp | Transfer Data |
-|******|****************|*******************|////////////|+++++++++++++++|
+| BYTE | BYTE **********| BYTE *************| WORD ********| WORD *********|
+< 0x05 | Transfer Count | Transfer Response | TD_TimeStamp | Transfer Data |
+|******|****************|*******************|//////////////|+++++++++++++++|
 \endcode
 
 - <b>Transfer Count</b>: Number of transfers: 1 .. 255 that are executed.
@@ -1124,7 +1124,7 @@ The data transfer is aborted on a communication error:
   - Bit 3: 1 = Protocol Error (SWD)
   - Bit 4: 1 = Value Mismatch (Read Register with Value Match)
 
-- <b>Time Stamp</b>: A time stamp that is derived from the Debug Unit Timer is added before each Transfer Data word when Transfer Request - bit 7: Time Stamp request is set.
+- <b>TD_TimeStamp</b>: current Test Domain Timer value is added before each Transfer Data word when Transfer Request - bit 7: TD_TimeStamp request is set.
 
 - <b>Transfer Data</b>: register value or match value in the order of the <b>Transfer Request</b>.
   - for Read Register transfer request: the register value of the CoreSight register.
@@ -1254,7 +1254,7 @@ The <b>DAP_TI_Info Command</b> provides information about additional Test Inputs
 - \b Attributes: attributes of the data channel
   - Bit 0..1: DataSize: number of bytes recorded (0=BYTE, 1=SHORT, 2=WORD)
   - Bit 2..3: NumRanges: channel data provides additional range bits (see below)
-  - Bit 4: TimeStamp: 1= channel provides time stamp based on Debug Unit Timer
+  - Bit 4: DT_TimeStamp: 1= channel provides time stamp based on Test Domain Timer
 - \b NumBits: resolution of the channel in bits
 - \b IdString: is a up to 8 character 8-bit US ASCII string that identifies the channel
 - \b UnitString: is a up to 8 character 8-bit US ASCII string that identifies the measurement unit of the channel (V, mA, kHz)
@@ -1343,9 +1343,9 @@ CMSIS-DAP Debug Unit. Returned are live data that are currently available in the
 
 <b>DAP_TI_Value Request:</b>
 \code
- | BYTE | SHORT ******| BYTE ********|
- > 0x1E | ChannelMask | Time_Request |
- |******|*************|**************|
+ | BYTE | SHORT ******| BYTE ***********|
+ > 0x1E | ChannelMask | DT_Time_Request |
+ |******|*************|*****************|
 \endcode
 
 - \b ChannelMask: Bit mask that encodes the channels that should be scanned. 
@@ -1355,13 +1355,13 @@ CMSIS-DAP Debug Unit. Returned are live data that are currently available in the
 
 <b>DAP_TI_Value Response:</b> 
 \code
- | BYTE | SHORT ******|++++++++++++|++++++++++++|
- < 0x1E | ChannelMask | Time Stamp | DataValues |
- |******|*************|++++++++++++|++++++++++++|
+ | BYTE | SHORT ******| WORD ++++++++|++++++++++++|
+ < 0x1E | ChannelMask | TD_TimeStamp | DataValues |
+ |******|*************|++++++++++++++|++++++++++++|
 \endcode
 - \b ChannelMask: Bit mask of channels that are actually scanned. Depending on the capabilities of the Debug Unit, this might be less than the request channels.
 
-- <b>Time Stamp</b>: Indicate the time from the Debug Unit Timer at the beginning the the request (only present if \b Time_Request is set to 1).
+- <b>TD_TimeStamp</b>: Test Domain Timer value at the beginning the the request (only present if \b DT_Time_Request is set to 1).
 
 - \b DataValues: data values of the various Test Inputs (starting with channel=0).  The size of \b DataValues depends on the data size (see \ref DAP_TI_Info Response, Attributes bit 0..2)  In case of SHORT or WORD data format, the LSB is send first.
 */
@@ -1427,9 +1427,9 @@ The command delivers the content of one trace data block in the Trace Data Manag
    
 <b>DAP_TI_TransferBlock Response:</b> 
 \code
- | BYTE | BYTE ***| SHORT ****| WORD *****|+++++++++++++|
- < 0x20 | Channel | DataParms | TimeStamp | ChannelData |
- |******|*********|///////////|///////////|+++++++++++++|
+ | BYTE | BYTE ***| SHORT ****| WORD ********|+++++++++++++|
+ < 0x20 | Channel | DataParms | TD_TimeStamp | ChannelData |
+ |******|*********|///////////|//////////////|+++++++++++++|
 \endcode
 - \b Channel: 
     - <b>bit 0..3</b>: number of the channel that the data belong to.
@@ -1440,7 +1440,7 @@ The command delivers the content of one trace data block in the Trace Data Manag
     - <b>bit 0..12</b>: number of data values in \b ChannelData. \ref DAP_TI_TransferBlock Response is repeated until all values are transmitted.
     - <b>bit 14</b>: 1 = difference value format. 0 = contiguous value format.
     - <b>bit 15</b>: 1 = Trace Data Management overflow since last \ref DAP_TI_TransferBlock Request. 0 = no overflow.
-- \b TimeStamp: time stamp value (32-bit) from the Debug Unit timer.
+- \b TD_TimeStamp: Test Domain Timer value at the read time of data values for ChannelData.
 - \b ChannelData: data values from the recorded Test Input channel.
 
 The <b>ChannelData</b> reply has depending on <b>DataParms bit 14</b> two different formats.  If \b ChannelDiff in <b>DAP_TI_Capture Request</b> is set
