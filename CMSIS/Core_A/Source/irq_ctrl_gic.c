@@ -377,8 +377,12 @@ __WEAK uint32_t IRQ_GetPriorityMask (void) {
 __WEAK int32_t IRQ_SetPriorityGroupBits (uint32_t bits) {
   int32_t status;
 
+  if (bits == IRQ_PRIORITY_Msk) {
+    bits = 7U;
+  }
+
   if (bits < 8U) {
-    GIC_SetBinaryPoint (bits);
+    GIC_SetBinaryPoint (7U - bits);
     status = 0;
   } else {
     status = -1;
@@ -390,7 +394,11 @@ __WEAK int32_t IRQ_SetPriorityGroupBits (uint32_t bits) {
 
 /// Get priority grouping field split point
 __WEAK uint32_t IRQ_GetPriorityGroupBits (void) {
-  return (GIC_GetBinaryPoint() & 0x07U);
+  uint32_t bp;
+
+  bp = GIC_GetBinaryPoint() & 0x07U;
+
+  return (7U - bp);
 }
 
 #endif
