@@ -1990,6 +1990,7 @@ PREDEFINED             = __L2C_PRESENT:=1 \
                          __TASKING__:=1 \
                          __NO_EMBEDDED_ASM:=0 \
                          __CORTEX_A:=9 \
+						 __CA_REV:=0x0000 \
                          __TARGET_ARCH_7_A:=1
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this

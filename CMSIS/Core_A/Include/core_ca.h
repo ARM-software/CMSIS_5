@@ -499,6 +499,23 @@ typedef union
 
 
 /**
+  \brief     Mask and shift a bit field value for use in a register bit range.
+  \param[in] field  Name of the register bit field.
+  \param[in] value  Value of the bit field. This parameter is interpreted as an uint32_t type.
+  \return           Masked and shifted value.
+*/
+#define _VAL2FLD(field, value)    (((uint32_t)(value) << field ## _Pos) & field ## _Msk)
+
+/**
+  \brief     Mask and shift a register value to extract a bit filed value.
+  \param[in] field  Name of the register bit field.
+  \param[in] value  Value of register. This parameter is interpreted as an uint32_t type.
+  \return           Masked and shifted bit field value.
+*/
+#define _FLD2VAL(field, value)    (((uint32_t)(value) & field ## _Msk) >> field ## _Pos)
+
+
+/**
  \brief  Union type to access the L2C_310 Cache Controller.
 */
 #if (__L2C_PRESENT == 1U) || defined(DOXYGEN)
@@ -1020,7 +1037,7 @@ __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
   }
 }
 
-/** Clears the given interrupt from beeing pending using GIC's \ref GICDistributor_Type::D_ICPENDR "D_ICPENDR" register.
+/** Clears the given interrupt from being pending using GIC's \ref GICDistributor_Type::D_ICPENDR "D_ICPENDR" register.
 * \param IRQn The interrupt to be enabled.
 */
 __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
@@ -1125,7 +1142,7 @@ __STATIC_INLINE uint32_t GIC_GetIRQStatus(IRQn_Type IRQn)
 /** Generate a software interrupt using GIC's \ref GICDistributor_Type::D_SGIR "D_SGIR" register.
 * \param IRQn Software interrupt to be generated.
 * \param target_list List of CPUs the software interrupt should be forwarded to.
-* \param filter_list Filter to be applied to determin interrupt receivers.
+* \param filter_list Filter to be applied to determine interrupt receivers.
 */
 __STATIC_INLINE void GIC_SendSGI(IRQn_Type IRQn, uint32_t target_list, uint32_t filter_list)
 {
@@ -1174,7 +1191,7 @@ __STATIC_INLINE uint32_t GIC_GetGroup(IRQn_Type IRQn)
 }
 #define GIC_GetSecurity         GIC_GetGroup
 
-/** Initialitze the interrupt distributor.
+/** Initialize the interrupt distributor.
 */
 __STATIC_INLINE void GIC_DistInit(void)
 {
