@@ -34,7 +34,7 @@ The \ref device_h_pg is the central include file that the application programmer
  - \ref GIC_functions can be accessed with standardized symbols and functions for the General Interrupt Controller (GIC) are provided.
  - \ref CMSIS_Core_InstructionInterface allow to access special instructions, for example for activating sleep mode or the NOP instruction.
  - \ref PL1_timer_functions "Generic" and \ref PTM_timer_functions "Private" Timer functions to configure and start a periodic timer interrupt.
- - \ref L1_chache_functions "Level 1" and \ref L2_chache_functions "Level 2" Cache controller functions to enable, disable, clean and invalidate caches.
+ - \ref L1_cache_functions "Level 1" and \ref L2_cache_functions "Level 2" Cache controller functions to enable, disable, clean and invalidate caches.
 
 \image html "CMSIS_CORE_A_Files_user.png" "CMSIS-Core-A User Files"
 

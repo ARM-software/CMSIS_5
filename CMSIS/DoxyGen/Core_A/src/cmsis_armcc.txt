@@ -178,7 +178,7 @@ struct foo {
 /**
 \fn __STATIC_INLINE uint32_t __get_FPSCR(void)
 \details 
-  Returns the current value of the Floating Point Status/Control register.
+  This function returns the current value of the Floating Point Status/Control register.
 
 \fn __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 \details 
@@ -270,7 +270,7 @@ struct foo {
 
 \fn __STATIC_INLINE uint32_t __get_CNTP_TVAL() 
 \details
-  This function returns the value of the PL1 Physical Timer Value Register (CNTP_TVAL).
+  This function returns the value of the PL1 Physical Timer Value Register. (CNTP_TVAL).
 
 \fn __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) 
 \details
@@ -278,26 +278,27 @@ struct foo {
 
 \fn __STATIC_INLINE void __set_TLBIALL(uint32_t value) 
 \details
+  This function invalidates entire unified TLB.
 
 \fn __STATIC_INLINE void __set_BPIALL(uint32_t value)   
 \details
-  Write the provided value to the Branch Predictor Invalidate All (BPIALL) register.
+  This function writes the provided value to the Branch Predictor Invalidate All (BPIALL) register.
 
 \fn __STATIC_INLINE void __set_ICIALLU(uint32_t value) 
 \details
-  Instruction Cache Invalidate All
+  This function invalidates all instruction cache.
 
 \fn __STATIC_INLINE void __set_DCCMVAC(uint32_t value) 
 \details
-  Data cache clean
+  This function cleans data or unified cache line by MVA to PoC.
 
 \fn __STATIC_INLINE void __set_DCIMVAC(uint32_t value) 
 \details
-  Data cache invalidate
+  This function invalidates data or unified cache line by MVA to PoC.
 
 \fn __STATIC_INLINE void __set_DCCIMVAC(uint32_t value) 
 \details
-  Data cache clean and invalidate
+  This function cleans and invalidates data or unified cache line by MVA to PoC.
 
 */
 /**
@@ -307,7 +308,7 @@ struct foo {
 
 /* ##########################  Core Instruction Access  ######################### */
 /** 
-\defgroup CMSIS_Core_InstructionInterface Intrinsic Functions for CPU Instructions
+\defgroup CMSIS_Core_InstructionInterface Intrinsic Functions 
 \brief Functions that generate specific Cortex-A CPU Instructions
 @{
 */

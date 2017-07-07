@@ -22,7 +22,7 @@ Each peripheral provides a data type definition with a name that is composed of:
 
 Examples:
   - \b UART_TypeDef for the peripheral \b UART.
-  - \b LPC_UART_TypeDef for the device family \b LPC and the peripheral \b UART.
+  - \b IMX_UART_TypeDef for the device family \b IMX and the peripheral \b UART.
 
 The data type definition uses standard C data types defined by the ANSI C header file <stdint.h>.
  
@@ -39,63 +39,47 @@ The data type definition uses standard C data types defined by the ANSI C header
 The typedef <b>\<<i>device abbreviation</i>\>_UART_TypeDef</b> shown below defines the generic register layout for all UART channels in a device.
 
 \code
-typedef struct
-{
-  union {
-  __IM  uint8_t  RBR;                 // Offset: 0x000 (R/ )  Receiver Buffer Register          
-  __OM  uint8_t  THR;                 // Offset: 0x000 ( /W)  Transmit Holding Register           
-  __IOM uint8_t  DLL;                 // Offset: 0x000 (R/W)  Divisor Latch LSB                   
-        uint32_t RESERVED0;
-  };
-  union {
-  __IOM uint8_t  DLM;                 // Offset: 0x004 (R/W)  Divisor Latch MSB                   
-  __IOM uint32_t IER;                 // Offset: 0x004 (R/W)  Interrupt Enable Register           
-  };
-  union {
-  __IM  uint32_t IIR;                 // Offset: 0x008 (R/ )  Interrupt ID Register               
-  __OM  uint8_t  FCR;                 // Offset: 0x008 ( /W)  FIFO Control Register               
-  };
-  __IOM uint8_t  LCR;                 // Offset: 0x00C (R/W)  Line Control Register               
-        uint8_t  RESERVED1[7];
-  __IM  uint8_t  LSR;                 // Offset: 0x014 (R/ )  Line Status Register                
-        uint8_t  RESERVED2[7];
-  __IOM uint8_t  SCR;                 // Offset: 0x01C (R/W)  Scratch Pad Register                
-        uint8_t  RESERVED3[3];
-  __IOM uint32_t ACR;                 // Offset: 0x020 (R/W)  Autobaud Control Register           
-  __IOM uint8_t  ICR;                 // Offset: 0x024 (R/W)  IrDA Control Register               
-        uint8_t  RESERVED4[3];
-  __IOM uint8_t  FDR;                 // Offset: 0x028 (R/W)  Fractional Divider Register         
-        uint8_t  RESERVED5[7];
-  __IOM uint8_t  TER;                 // Offset: 0x030 (R/W)  Transmit Enable Register            
-        uint8_t  RESERVED6[39];
-  __IM  uint8_t  FIFOLVL;             // Offset: 0x058 (R/ )  FIFO Level Register                 
-} LPC_UART_TypeDef;
+typedef struct {
+	__O  uint32_t UART_CR;            // Offset: 0x0000 ( /W) Control Register 
+	__IO uint32_t UART_MR;            // Offset: 0x0004 (R/W) Mode Register 
+	__O  uint32_t UART_IER;           // Offset: 0x0008 ( /W) Interrupt Enable Register 
+	__O  uint32_t UART_IDR;           // Offset: 0x000C ( /W) Interrupt Disable Register 
+	__I  uint32_t UART_IMR;           // Offset: 0x0010 (R/ ) Interrupt Mask Register 
+	__I  uint32_t UART_SR;            // Offset: 0x0014 (R/ ) Status Register 
+	__I  uint32_t UART_RHR;           // Offset: 0x0018 (R/ ) Receive Holding Register 
+	__O  uint32_t UART_THR;           // Offset: 0x001C ( /W) Transmit Holding Register 
+	__IO uint32_t UART_BRGR;          // Offset: 0x0020 (R/W) Baud Rate Generator Register 
+	__IO uint32_t UART_CMPR;          // Offset: 0x0024 (R/W) Comparison Register 
+	__IO uint32_t UART_RTOR;          // Offset: 0x0028 (R/W) Receiver Time-out Register 
+	__I  uint32_t RESERVED[46];       // Offset: 0x002C (R/ ) Reserved                     
+	__IO uint32_t UART_WPMR;          // Offset: 0x00E4 (R/W) Write Protection Mode Register 
+} IMX_UART_TypeDef;
 \endcode
 
 To access the registers of the UART defined above, pointers to this register structure are defined.
 If more instances of a peripheral exist, the variables have a postfix (digit or letter) that identifies the peripheral.
 
 \b Example:
-In this example, \b LPC_UART2 and \b LPC_UART3 are two pointers to UARTs defined with above register structure.
+In this example, \b IMX_UART2 and \b IMX_UART3 are two pointers to UARTs defined with above register structure.
 \n
 \code
-#define LPC_UART2             ((LPC_UART_TypeDef      *) LPC_UART2_BASE    )
-#define LPC_UART3             ((LPC_UART_TypeDef      *) LPC_UART3_BASE    )
+#define IMX_UART2   ((IMX_UART_TypeDef *) IMX_UART2_BASE)
+#define IMX_UART3   ((IMX_UART_TypeDef *) IMX_UART3_BASE)
 \endcode
 
 \note 
- - The prefix <b>LPC</b> is optional.
+ - The prefix <b>IMX</b> is optional.
  
 The registers in the various UARTs can now be referred in the user code as shown below:\n
 \code
- val = LPC_UART2->DR   // is the data register of UART1.
+ val = IMX_UART2->SR   // is the Status Register of UART2.
 \endcode
 
 <hr>
 
 \section core_cmsis_pal_min_reqs Minimal Requirements
 \details
- To access the peripheral registers and related function in a device, the files <b><i>device.h</i></b> and <b>core_ca<i>#</i>.h</b> define as a minimum:
+ To access the peripheral registers and related function in a device, the files <b><i>device.h</i></b> and <b>core_ca.h</b> define as a minimum:
 \n\n
 - The <b>Register Layout Typedef</b> for each peripheral that defines all register names.
   RESERVED is used to introduce space into the structure for adjusting the addresses of
@@ -105,12 +89,27 @@ The registers in the various UARTs can now be referred in the user code as shown
 \code
 typedef struct
 {
-  __IOM uint32_t CTRL;                // Offset: 0x000 (R/W)  SysTick Control and Status Register 
-  __IOM uint32_t LOAD;                // Offset: 0x004 (R/W)  SysTick Reload Value Register       
-  __IOM uint32_t VAL;                 // Offset: 0x008 (R/W)  SysTick Current Value Register      
-  __IM  uint32_t CALIB;               // Offset: 0x00C (R/ )  SysTick Calibration Register        
-} SysTick_Type;
-    \endcode
+  __IOM uint32_t C_CTLR;              // Offset: 0x0000 (R/W) CPU Interface Control Register 
+  __IOM uint32_t C_PMR;               // Offset: 0x0004 (R/W) Interrupt Priority Mask Register 
+  __IOM uint32_t C_BPR;               // Offset: 0x0008 (R/W) Binary Point Register 
+  __IM  uint32_t C_IAR;               // Offset: 0x000C (R/ ) Interrupt Acknowledge Register 
+  __OM  uint32_t C_EOIR;              // Offset: 0x0010 ( /W) End Of Interrupt Register 
+  __IM  uint32_t C_RPR;               // Offset: 0x0014 (R/ ) Running Priority Register 
+  __IM  uint32_t C_HPPIR;             // Offset: 0x0018 (R/ ) Highest Priority Pending Interrupt Register 
+  __IOM uint32_t C_ABPR;              // Offset: 0x001C (R/W) Aliased Binary Point Register 
+  __IM  uint32_t C_AIAR;              // Offset: 0x0020 (R/ ) Aliased Interrupt Acknowledge Register 
+  __OM  uint32_t C_AEOIR;             // Offset: 0x0024 ( /W) Aliased End Of Interrupt Register 
+  __IM  uint32_t C_AHPPIR;            // Offset: 0x0028 (R/ ) Aliased Highest Priority Pending Interrupt Register 
+  __IOM uint32_t C_STATUSR;           // Offset: 0x002C (R/W) Error Reporting Status Register, optional 
+  __I   uint32_t RESERVED1[40];       // Offset: 0x0030 (R/ ) Reserved
+  __IOM uint32_t C_APR[4];            // Offset: 0x00D0 (R/W) Active Priority Register 
+  __IOM uint32_t C_NSAPR[4];          // Offset: 0x00E0 (R/W) Non-secure Active Priority Register 
+  __I   uint32_t RESERVED2[3];        // Offset: 0x00F6 (R/ ) Reserved
+  __IM  uint32_t C_IIDR;              // Offset: 0x00FC (R/ ) CPU Interface Identification Register 
+  __I   uint32_t RESERVED3[960];      // Offset: 0x0100 (R/ ) Reserved
+  __OM  uint32_t C_DIR;               // Offset: 0x1000 ( /W) Deactivate Interrupt Register 
+}  GICInterface_Type;
+\endcode
 
 
 - <b>Base Address</b> for each peripheral (in case of multiple peripherals
@@ -118,16 +117,16 @@ typedef struct
     \n\n
 <b>Example:</b>
 \code
-#define SysTick_BASE (SCS_BASE + 0x0010)            // SysTick Base Address     
+#define GIC_INTERFACE_BASE (0xe8202000UL)   // GIC Interface Base Address     
 \endcode
 
 
 - <b>Access Definitions</b> for each peripheral. In case of multiple peripherals that are using the same
-    <b>register layout typdef</b>, multiple access definitions exist (LPC_UART0, LPC_UART2).
+    <b>register layout typedef</b>, multiple access definitions exist.
     \n\n
 <b>Example:</b>
 \code
-#define SysTick ((SysTick_Type *) Systick_BASE)    // SysTick access definition 
+#define GICInterface   ((GICInterface_Type *) GIC_INTERFACE_BASE)   // GIC Interface Access Definition 
 \endcode
 
 
@@ -136,7 +135,7 @@ These definitions allow accessing peripheral registers with simple assignments.
 - <b>Example:</b>
   \n
 \code
-SysTick->CTRL = 0;
+GICInterface->C_CTLR |= 1;   // Enable Interface
 \endcode
 
 <hr>
@@ -160,30 +159,35 @@ Optionally, the file <b><i>device</i>.h</b> may define:
 \section core_cmsis_pal_bitfields Register Bit Fields
 \details
 
-For Core Register, macros define the position and the mask value for a bit field. It is recommended to create such definitions also
-for other peripheral registers.
+For Core Register, macros define the position and the mask value for a bit field.
 
 <b>Example:</b>
 
-Bit field definitions for register CPUID in SCB (System Control Block).
+Bit field definitions for register ACTLR in CP15.
 
 
 \code
-// SCB CPUID Register Definitions 
-#define SCB_CPUID_IMPLEMENTER_Pos      24U                                       
-#define SCB_CPUID_IMPLEMENTER_Msk      (0xFFUL << SCB_CPUID_IMPLEMENTER_Pos)     
-                                                                                 
-#define SCB_CPUID_VARIANT_Pos          20U                                       
-#define SCB_CPUID_VARIANT_Msk          (0xFUL << SCB_CPUID_VARIANT_Pos)          
-                                                                                 
-#define SCB_CPUID_ARCHITECTURE_Pos     16U                                       
-#define SCB_CPUID_ARCHITECTURE_Msk     (0xFUL << SCB_CPUID_ARCHITECTURE_Pos)     
-                                                                                 
-#define SCB_CPUID_PARTNO_Pos            4U                                       
-#define SCB_CPUID_PARTNO_Msk           (0xFFFUL << SCB_CPUID_PARTNO_Pos)         
-                                                                                 
-#define SCB_CPUID_REVISION_Pos          0U                                       
-#define SCB_CPUID_REVISION_Msk         (0xFUL)     
+// CP15 Register ACTLR
+#define ACTLR_DDI_Pos                  28U                       
+#define ACTLR_DDI_Msk                  (1UL << ACTLR_DDI_Pos)    
+                                       
+#define ACTLR_DDVM_Pos                 15U                       
+#define ACTLR_DDVM_Msk                 (1UL << ACTLR_DDVM_Pos)   
+                                       
+#define ACTLR_L1PCTL_Pos               13U                       
+#define ACTLR_L1PCTL_Msk               (3UL << ACTLR_L1PCTL_Pos) 
+                                       
+#define ACTLR_L1RADIS_Pos              12U                       
+#define ACTLR_L1RADIS_Msk              (1UL << ACTLR_L1RADIS_Pos)
+                                       
+#define ACTLR_L2RADIS_Pos              11U                       
+#define ACTLR_L2RADIS_Msk              (1UL << ACTLR_L2RADIS_Pos)
+                                       
+#define ACTLR_DODMBS_Pos               10U                       
+#define ACTLR_DODMBS_Msk               (1UL << ACTLR_DODMBS_Pos) 
+                                       
+#define ACTLR_SMP_Pos                  6U                        
+#define ACTLR_SMP_Msk                  (1UL << ACTLR_SMP_Pos)     
 \endcode
 
 The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enable access to bit fields.
@@ -191,15 +195,39 @@ The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enabl
 */
 
 /**
+\def _VAL2FLD(field, value)
+\param         field        name of bit field.
+\param         value        value for the bit field. This parameter is interpreted as an uint32_t type.
+\brief Mask and shift a bit field value for assigning the result to a peripheral register.
+\details
+The macro \ref _VAL2FLD uses the \#define's <i>_Pos</i> and <i>_Msk</i> of the related bit field to shift bit-field values for
+assigning to a register.
+ 
+<b>Example:</b>
+\code
+  ACTLR = _VAL2FLD(ACTLR_SMP, 0x1)
+\endcode
 
-\def   __I
-\def   __O
-\def   __IO  
-
-\def   __IM  
-\def   __OM  
-\def   __IOM 
 */
+#define _VAL2FLD(field, value)
+
+/**
+ 
+\def _FLD2VAL(field, value)
+\param         field        name of bit field.
+\param         value        value of the register. This parameter is interpreted as an uint32_t type.
+\brief Extract from a peripheral register value the a bit field value.
+\details
+The macro \ref _FLD2VAL uses the \#define's <i>_Pos</i> and <i>_Msk</i> of the related bit field to extract the value of a bit field from a register.
+ 
+<b>Example:</b>
+\code
+  i = _FLD2VAL(ACTLR_SMP, ACTLR);
+\endcode
+
+*/
+#define _FLD2VAL(field, value)
+
 /** @} */ 
 /*end of group peripheral_gr */
 
@@ -208,11 +236,9 @@ The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enabl
  *                 CMSIS definitions
  ******************************************************************************/
 /**
-\defgroup CMSIS_glob_defs CMSIS Global Defines
-\brief Definitions common to all interfaces 
-    <b>IO Type Qualifiers</b> are used
-    \li to specify the access to peripheral variables.
-    \li for automatic generation of peripheral register debug information.
+\defgroup version_ctrl Version Control
+\brief Version symbols for CMSIS release specific C/C++ source code. 
+ 
 @{
 */
 
@@ -222,17 +248,15 @@ The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enabl
 \def __CA_CMSIS_VERSION_SUB   
 \def __CA_CMSIS_VERSION       
                                 
-\def __FPU_PRESENT
-
-\def __FPU_USED
-   __FPU_USED indicates whether an FPU is used or not. For this, \ref __FPU_PRESENT has to be checked prior to making use of FPU specific registers and functions.
-
 \def __CA_REV
-\def __MPU_PRESENT             
+\brief Contains the core revision for a Cortex-A class device.
+
+\def __CORTEX_A
+\brief Contains the core family for a Cortex-A class device.
+		  
 */
 /** @} */ 
-/*end of group CMSIS_glob_defs */
-
+/*end of group version_ctrl */
 
 
 /**
@@ -403,13 +427,13 @@ The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enabl
 /* end of group CMSIS_core_register */
 
 /**
-\defgroup CMSIS_Core_FunctionInterface Functions and Instructions Reference
+\defgroup CMSIS_Core_FunctionInterface Functions for Core Peripherals
 \brief 
 \details
 Hardware Abstraction Layer.
    The Core-A function interface contains:
-   - \ref L1_chache_functions 
-   - \ref L2_chache_functions 
+   - \ref L1_cache_functions 
+   - \ref L2_cache_functions 
    - \ref GIC_functions
    - \ref PL1_timer_functions
    - \ref PTM_timer_functions
@@ -422,9 +446,9 @@ Hardware Abstraction Layer.
 /* ##########################  L1 Cache functions  ################################# */
 
 /** 
-\defgroup L1_chache_functions L1 Cache Functions 
+\defgroup L1_cache_functions L1 Cache Functions 
 \ingroup CMSIS_Core_FunctionInterface
-\details Functions to controll the Level 1 Cache.
+\brief L1 Cache Functions give support to enable, clean and invalidate level 1 instruction and data caches, as well as to enable branch target address cache.
 @{
 \fn __STATIC_INLINE void L1C_EnableCaches(void) 
 \fn __STATIC_INLINE void L1C_DisableCaches(void) 
@@ -457,9 +481,10 @@ The parameter \b op defines which cleaning/invalidation strategy should be used:
 /* ##########################  L2 Cache functions  ################################# */
 
 /**
-\defgroup L2_chache_functions L2C-310 Cache Controller Functions 
+\defgroup L2_cache_functions L2C-310 Cache Controller Functions 
 \ingroup CMSIS_Core_FunctionInterface
-\details Functions to controll the Level 2 Cache.
+\brief L2C-310 Cache Controller gives access to functions for level 2 cache maintenance.\n
+Reference: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0246h/index.html">Level 2 Cache Controller L2C-310 Technical Reference Manual</a>.
 */
 /** @{ */
 
@@ -484,11 +509,9 @@ The parameter \b op defines which cleaning/invalidation strategy should be used:
 /**
 \defgroup GIC_functions Generic Interrupt Controller Functions
 \ingroup CMSIS_Core_FunctionInterface
-\details
-The Generic Interrupt Controller Functions grants access to the configuration, control and
-status registers of an ARM Generic Interrupt Controller (ARM GIC). For detailed informations
-about its capabilities and usage constraints refere to the 
-<a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ihi0048b/index.html">ARM Generic Interrupt Controller Architecture Specificaton</a>.
+\brief The Generic Interrupt Controller Functions grant access to the configuration, control and
+status registers of the Generic Interrupt Controller (GIC).\n
+Reference: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ihi0069c/index.html">Generic Interrupt Controller Architecture Specificaton</a>.
 */
 
 /** @{ */
@@ -683,7 +706,8 @@ GIC_CPUInterfaceInit
 /**
 \defgroup PL1_timer_functions Physical Timer Functions
 \ingroup CMSIS_Core_FunctionInterface
-\brief Physical timer functions (on Cortex-A7 class devices)
+\brief PL1 Physical Timer Functions allow to control privilege level 1 physical timer registers on Generic Timer for Cortex-A7 class devices.\n
+Reference: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0464f/index.html">Cortex-A7 MPCore Technical Reference Manual</a>.
 */
 /** @{ */
 
@@ -726,7 +750,10 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value);
 /**
 \defgroup PTM_timer_functions Private Timer Functions
 \ingroup CMSIS_Core_FunctionInterface
-\brief Private timer functions (on Cortex-A5 and -A9 class devices)
+\brief Private Timer Functions controls private timer registers present on Cortex-A5 and A9 class devices.\n
+References: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0434c/index.html">Cortex-A5 MPCore Technical Reference Manual</a>,
+<a href="http://infocenter.arm.com/help/topic/com.arm.doc.100486_0401_10_en/index.html">Cortex-A9 MPCore Technical Reference Manual</a>.
+
 @{
 \struct Timer_Type
 \def PTIM
@@ -743,7 +770,8 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value);
 /**
 \defgroup FPU_functions Floating Point Unit Functions
 \ingroup CMSIS_Core_FunctionInterface
-\brief FPU functions
+\brief FPU Functions enable the use of Floating Point instructions and extensions.\n
+Reference: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0406c/index.html">Architecture Reference Manual Reference Manual - ARMv7-A and ARMv7-R edition</a>.
 @{
 \fn __STATIC_INLINE __ASM void __FPU_Enable(void) 
 @}
@@ -753,7 +781,8 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value);
 /**
 \defgroup MMU_functions Memory Management Unit Functions
 \ingroup CMSIS_Core_FunctionInterface
-\brief Functions and defines that relate to the Memory Management Unit
+\brief MMU Functions provide control of the Memory Management Unit using translation tables and attributes of different regions of the physical memory map.\n
+Reference: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0406c/index.html">Architecture Reference Manual Reference Manual - ARMv7-A and ARMv7-R edition</a>.
 */
 
 /** @{ */
