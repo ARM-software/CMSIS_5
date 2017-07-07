@@ -21,8 +21,70 @@ The XML schema is defined hierarchically with the following top-level elements:
 - \ref format_resources
 - \ref format_zones
 
-\section Example
+\code
+<system>
+  
+  <device>
+  
+    <processor>
+      <memory_map>
+        <memory/>
+        <peripheral/>
+      </memory_map>
+    </processor>
+    
+    <memory_map>
+      <memory/>
+      <peripheral/>
+    </memory_map>
+  
+    <resources>
+    
+      <memory>
+        <region>
+          <block/>
+        </region>
+      </memory>
+      
+      <peripherals>
+        <peripheral/>
+      </peripherals>
+      
+    </resources>
+    
+  </device>
+  
+  <resources>
+  
+    <memory>
+      <region>
+        <block/>
+      </region>
+    </memory>
+    
+    <peripherals>
+      <peripheral/>
+    </peripherals>
+    
+  </resources>
+  
+  <zones>
+    <pzone>
+      <assign/>
+      
+      <xzone>
+        <assign>
+          <capture/>
+        </assign>
+      </xzone>
+      
+    </pzone>
+  </zones>
+  
+</system>
+\endcode
 
+\section Example
 
 
 */
@@ -405,13 +467,6 @@ The <b>processor</b> element is used to define the processing elements integrati
     <th>Description</th>
     <th>Type</th>
     <th>Occurrence</th>
-  </tr>
-  <tr>
-    <td>\subpage format_resources "resources"</td>
-    <td>Resources tightly coupled to (and exclusively accessible by) a single processor. Resources shared between
-    multiple processors or devices should be defined at device or system level instead.</td>
-    <td>complexType</td>
-    <td>0..1</td>
   </tr>
   <tr>
     <td>\subpage format_memory_map "memory_map"</td>
