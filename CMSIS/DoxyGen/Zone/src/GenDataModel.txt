@@ -2,5 +2,9 @@
 /**
 \page GenDataModel Generator Data Model 
 
-[TOC]
+The <b>Generator Data Model</b> defines the view on the <b>Zone Description</b> for code generators.
+By defining a common data model code generators can be developed independendly from actual CMSIS Zone Projects and vendor tools.
+
+<a href="../genmodel/index.html" target="_blank">JavaDoc</a>
+
 */
