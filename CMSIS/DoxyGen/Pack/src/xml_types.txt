@@ -486,7 +486,7 @@ Execute a system-wide reset via software mechanisms.
 
 Execute a processor reset via software mechanisms.
 
-\note This Default Debug Access Sequence is empty for ARMv6-M based processors.
+\note This Default Debug Access Sequence is empty for ARMv6-M and ARMv8-M based processors.
 
 \code
   <sequence name="ResetProcessor">
