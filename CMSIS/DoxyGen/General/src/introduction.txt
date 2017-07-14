@@ -45,6 +45,9 @@ The CMSIS components are:
 
  - <a href="../../DAP/html/index.html"><b>CMSIS-DAP</b></a>: Debug Access Port. Standardized firmware for a Debug Unit that connects to the CoreSight Debug Access Port. CMSIS-DAP is distributed as a separate package and is
     well suited for integration on evaluation boards. This component is provided as separate download.
+	
+ - <a href="../../Zone/html/index.html"><b>CMSIS-Zone</b></a>: System resource definition and partitioning. Defines methods to describe system resources and to partition 
+   these resources into multiple projects and execution areas.
 
 \note Refer to \ref CM_Pack_Content for more information on the content of the Software Pack.
 
