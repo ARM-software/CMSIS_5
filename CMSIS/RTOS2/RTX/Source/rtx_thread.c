@@ -1340,13 +1340,8 @@ uint32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
   if (thread->state == osRtxThreadWaitingThreadFlags) {
     thread_flags0 = ThreadFlagsCheck(thread, thread->wait_flags, thread->flags_options);
     if (thread_flags0 != 0U) {
-      if ((thread->flags_options & osFlagsNoClear) == 0U) {
-        thread_flags = thread_flags0 & ~thread->wait_flags;
-      } else {
-        thread_flags = thread_flags0;
-      }
-      osRtxThreadWaitExit(thread, thread_flags0, true);
-      EvrRtxThreadFlagsWaitCompleted(thread->wait_flags, thread->flags_options, thread_flags0);
+      osRtxThreadWaitExit(thread, thread_flags, true);
+      EvrRtxThreadFlagsWaitCompleted(thread->wait_flags, thread->flags_options, thread_flags);
     }
   }
 
@@ -1415,6 +1410,7 @@ uint32_t svcRtxThreadFlagsGet (void) {
 /// \note API identical to osThreadFlagsWait
 uint32_t svcRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout) {
   os_thread_t *thread;
+  uint32_t     thread_flags_orig;
   uint32_t     thread_flags;
 
   thread = osRtxThreadGetRunning();
@@ -1429,11 +1425,13 @@ uint32_t svcRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeo
     return ((uint32_t)osErrorParameter);
   }
 
+  thread_flags_orig = thread->thread_flags;
+
   // Check Thread Flags
   thread_flags = ThreadFlagsCheck(thread, flags, options);
   if (thread_flags != 0U) {
     EvrRtxThreadFlagsWaitCompleted(flags, options, thread_flags);
-    return thread_flags;
+    return thread_flags_orig;
   }
 
   // Check if timeout is specified
