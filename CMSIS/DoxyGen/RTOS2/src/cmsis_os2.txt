@@ -342,11 +342,26 @@ The steps to create a microcontroller application using RTX5 are:
 
 - \ref config_rtx5 "Configure" RTX5 to the application's needs using the \b %RTX_Config.h file.
 
+\section cre_rtx_cortexa Additional requirements for RTX on Cortex-A
+
+Cortex-A based microcontrollers are less unified with respect to the interrupt and timer implementations used compared to 
+M-class devices. Thus RTX requires additional components when an A-class device is used, namely
+<a href="../../Core_A/html/group__irq__ctrl__gr.html"><b>IRQ Controller (API)</b></a> and \ref CMSIS_RTOS_TickAPI "OS Tick (API)"
+implementations. 
+
+\image html manage_rte_cortex-a.png
+
+The default implementations provided along with CMSIS are 
+- ARM <a href="../../Core_A/html/group__GIC__functions.html">Generic Interrupt Controller (GIC)</a>
+- ARM Cortex-A <a href="../../Core_A/html/group__PTM__timer__functions.html">Private Timer (PTIM)</a>
+
+For devices not implementing GIC or PTIM respectively please refer to the according device family pack and select the
+proper implementations.
+
 \section cre_rtx_proj_specifics Add support for RTX specific functions
 If you require some of the \ref rtx5_specific "RTX specific functions" in your application code, \#include the
 \ref rtx_os_h "header file rtx_os.h". This enables \ref lowPower "low-power" and \ref TickLess "tick-less" operation modes.
-  
-  
+
 \section cre_rtx_proj_er Add Event Recorder Visibility
 - To use the Event Recorder together with RTX5, select the software component <b>Compiler:Event Recorder</b>.
 - Select the \b Source variant of the software component <b>CMSIS:RTOS2 (API):Keil RTX5</b>.
