@@ -8,6 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.2-dev5">
+      CMSIS-Core(M):
+      - Added MPU Management Functions for CM0+/3/4/7
+    </release>
     <release version="5.0.2-dev4">
       CMSIS Device:
       - Added OS Tick API
