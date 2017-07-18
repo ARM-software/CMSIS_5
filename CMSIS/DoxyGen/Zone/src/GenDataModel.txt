@@ -22,7 +22,7 @@ one can access the named attributes like
 <a href="http://freemarker.org/docs/dgui_template_exp.html#dgui_template_exp_var_hash" target="_blank">retrieving data from a hash</a>.
 The reference implementation documented in detail below make use of the default FreeMarker
 <a href="http://freemarker.org/docs/pgui_misc_beanwrapper.html" target="_blank">Bean wrapper</a>. This leads to all Java methods 
-named like \em get<Attribute> or \em is<Attribute> to be visible just as <i><Attribute></i> to the template.
+named like \em get\<Attribute\> or \em is\<Attribute\> to be visible just as <i>\<Attribute\></i> to the template.
 
 Please take note about the multiplicities stated in the diagram:
 - 0..1 indicates an optional value which might be unavailable, consider using <a href="http://freemarker.org/docs/dgui_template_exp.html#dgui_template_exp_missing" target="_blank">missing value handler operators</a>.

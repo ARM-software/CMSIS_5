@@ -10,9 +10,84 @@ It is intended to provide a tool vendor agnostic storage format for
   - available \ref format_memory "memory" and \ref format_peripheral "peripheral" resources
 - specifying resource partitioning across
   - \ref format_pzone "project zones", e.g. for secure and non-secure firmware parts
-  - \ref format_process "execution zones", e.g. for functional segregation
+  - \ref format_xzone "execution zones", e.g. for functional segregation
 
-\section Zone Schema
+\section XML_Format_Model Storage Data Model
+
+In the following diagram the overall structure of the <b>Storage Data Model</b> is depicted.
+The \ref XML_Format_Schema "storage format" is derived from the model.
+
+\image html storagemodel.png "Storage Data Model Class Diagram"
+
+The storage model is developed based on the domain and can be seen as the domain model as well.
+Its main purpose is to capture all information about presumable embedded systems and microcontroller devices.
+
+\subsection XML_Format_Model_Decomp Embedded Microcontroller System Decomposition
+
+Todays available system-on-modules (SoM) and system-on-chips (SoC) already physically outlines the overall composition.
+It seems to be viable to stick with todays system structures. It's not likely that this structure will change drastically.
+
+A detailed view on the decomposition of an arbitrary SoM is given in the diagram below. 
+
+\image html som-decomposition.png "System-on-Module Decomposition"
+
+The SoM itself (System) can be seen as a composition of one or more SoCs (Device) combined with an arbitrary amount of
+board-level resources, i.e. off-chip memory (Memory) and peripheral (Peripheral). In turn each SoC is a composition of
+one or more processor elements (Processor, PE) with chip-level resources, i.e. on-chip memory and peripheral.
+
+Private memory and peripheral resources local to a dedicated PE has been simplified. These can also be seen as chip-level resources.
+
+The grouping (ResourceGroup) is intended to allow structural grouping of resources elements, i.e. by type or bus structure.
+
+\note The names (i.e. `name` attributes) are typically used as references and hence must be unique per class. Duplicate names are
+allowed if object hierarchies do not overlap. I.e. resources contained on two separate SoCs may have the same name but the name of
+a SoM level resource must not be reused on SoC level.
+
+\subsection XML_Format_Model_MemMap Microcontroller Memory Map Specification
+
+Most of the Multi-Core-SoCs available today show uniform memory maps. But in principle the logical memory address used
+to address a certain resource may vary between multiple PEs on the same SoC. Taking this into account leads to memory
+map specification on both SoC and PE level, see diagram below.
+
+\image html soc-memorymap.png "System-on-Chip Memory Map Specification"
+
+The memory maps specified on SoC and PE level are additive, i.e. the PEs actual memory map is the combination of both.
+This split allow the specification of uniform memory maps without duplication. Only the non-uniform parts need to be
+specified on PE level.
+
+Each resource can be mapped as often as needed, i.e. to reflect multiple memory aliases. By default the `name` attribute
+is used to identify the resource to be mapped. In order to map the same resource multiple times into a PEs memory space
+the `alias` attribute must be given to identify the resource instead. The mapping names must be unique per PE because they
+are used as references later.
+
+The attributes of the mapping are merged with those of the resource mapped. This allows the mapping of an individual PE
+to enhance the basic attributes of a resource. For example a memory resource that is basically readable/writeable/executable
+might be mapped to a PE as readonly memory.
+
+\subsection XML_Format_Model_Assign Zone Resource Assignments
+
+A system can be split into an arbitrary amount of project zones (PZone). And each PZone can be further split into execution
+zones (XZone). Resources used by an individual zone are represented using assignments (Assignment). Refer to the diagram
+below.
+
+\image html zone-assignment.png "Zone Resource Assignments"
+
+Each PZone is assigned to a dedicated PE which is selected to execute the resulting software part. The PE is referenced by
+the unique combination of `Dname` and `Pname` attributes. The XZones are contained in the PZone they belong to.
+
+Both PZones and XZones can have arbitrary assignments to available resources visible to the assigned PE. Assignments to
+SoC level resources not part of the SoC the PE is located on are illegal. Such assignments cannot be represented because
+the unique reference is built from `PZone::Dname` and `Assignment::name`.
+
+As a resource may be visible to the enclosing PE using multiple mappings the `as` attribute can be used to distinguish
+which alias is used for access. Selecting the correct alias is significant because of the effective access attributes
+resulting from merging `Resource.access`, `MemoryMapping.access`/`PeripheralMapping.access` and `Assignment.access`.
+
+Whilst peripheral resources can be assigned directly memory resources need to be split into blocks (MemoryBlock). A
+block can be seen as an arbitrary part of the physical memory. Individual blocks can be defined using modified
+access attributes, e.g. for having dedicated executable or readonly regions in RAM.
+
+\section XML_Format_Schema Zone Schema
 
 The XML schema is defined hierarchically with the following top-level elements:
 
@@ -410,37 +485,37 @@ The <b>processor</b> element is used to define the processing elements integrati
   </tr>
   <tr>
     <td>Dcore</td>
-    <td>Specifies the processor core. Use predefined values as listed in the table \ref DcoreEnum "Device Cores".</td>
+    <td>Specifies the processor core.</td>
     <td>DcoreEnum</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>Dfpu</td>
-    <td>Specifies whether a hardware Floating Point Unit is present in the processor.  Use predefined values as listed in the table \ref DfpuEnum "Device FPU".</td>
+    <td>Specifies whether a hardware Floating Point Unit is present in the processor.</td>
     <td>DfpuEnum</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>Dmpu</td>
-    <td>Specifies whether a Memory Protection Unit is present in the processor. Use predefined values as listed in the table \ref DmpuEnum "Device MPU".</td>
+    <td>Specifies whether a Memory Protection Unit is present in the processor.</td>
     <td>DmpuEnum</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>Dtz</td>
-    <td>Specifies whether an ARMv8M based device implements TrustZone. Use predefined values as listed in the table \ref DtzEnum "Device TZ".</td>
+    <td>Specifies whether an ARMv8M based device implements TrustZone.</td>
     <td>DtzEnum</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>Ddsp</td>
-    <td>Specifies whether an ARMv8M based device supports the DSP instructions set. Use predefined values as listed in the table \ref DdspEnum "Device DSP".</td>
+    <td>Specifies whether an ARMv8M based device supports the DSP instructions set.</td>
     <td>DdspEnum</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>Dendian</td>
-    <td>Specifies the endianess of the processor. Use predefined values as listed in the table \ref DendianEnum "Endinaness".</td>
+    <td>Specifies the endianess of the processor.</td>
     <td>DendianEnum</td>
     <td>optional</td>
   </tr>
@@ -538,7 +613,7 @@ The <b>memory_map</b> element is used to to define the logical address mappings 
 /**
 \page format_map_memory /memory element
 
-The <b>memory</b> element is used to define an address mapping for one \ref element_region "memory/region".
+The <b>memory</b> element is used to define an address mapping for one \ref format_region "memory/region".
 
 <b>Example</b>
 \code
@@ -619,7 +694,7 @@ The <b>memory</b> element is used to define an address mapping for one \ref elem
 /**
 \page format_map_peripheral /peripheral element
 
-The <b>peripheral</b> element is used to define an address mapping for one \ref element_peripheral "peripheral".
+The <b>peripheral</b> element is used to define an address mapping for one \ref format_peripheral "peripheral".
 
 <b>Example</b>
 \code
@@ -1313,7 +1388,7 @@ The <b>xzone</b> element defines an execution zone, i.e. a process grouping thre
     <assign name="ADC0"             access="rw" />
     :
     <xzone name="process">
-      <assign name="ADC0"           access="rwu" />
+      <assign name="ADC0"           access="rwu"/>
     </xzone>
     :
   </pzone>
@@ -1511,3 +1586,4 @@ memory assignment.
 </table>
 
 */
+
