@@ -28,14 +28,19 @@ And, it simplifies the consistent configuration of access rights across the syst
 
 The following section describes several uses cases that benefit from \b CMSIS-Zone.
 
-\subsection UseCase_TrustZone_MPU TrustZone Partitioning and MPU Protection
+\subsection UseCase_MPU MPU Protection
 
 Focused on a single core microcontroller one might want to utilize the memory protection unit (MPU) capabilities
-to segregate parts of an application. Thus the need to partition the system resources accordingly arises. Optional
+to segregate parts of an application. Thus the need to partition the system resources accordingly arises.
+
+\image html mpu.png  "MPU Protection"
+
+\subsection UseCase_TrustZone TrustZone Partitioning
+
 TrustZone extensions add another degree of segregate which must be handled consistently.
+In this case one has to handle MPU settings per security context and SAU configuration.
 
-\image html mpu.png  "TrustZone Partitioning and MPU Protection"
-
+\image html trustzone.png  "TrustZone Partitioning and MPU Protection"
 
 \subsection UseCase_MultiCore Multi-Core Partitioning
 
