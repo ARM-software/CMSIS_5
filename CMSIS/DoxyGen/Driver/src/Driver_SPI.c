@@ -17,7 +17,7 @@ the interface is often used to connect peripheral components at board (PCB) leve
 Slave (SCLK and SS are inputs). Wikipedia offers more information about 
 the <a href="http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus" target="_blank"><b>Serial Peripheral Interface Bus</b></a>.
 
-**Block Diagram**
+<b>Block Diagram</b>
 
 The SPI Driver API defines a <b>SPI</b> interface for middleware components. The SPI Driver supports multiple
 slaves, but if only one slave is connected, then the Slave Select signal can be omitted.
@@ -39,7 +39,7 @@ SCLK   | Serial Clock                        | Serial clock output from Master. 
 MISO   | Master&nbsp;In,&nbsp;Slave&nbsp;Out | MISO input of the Master connects to MISO output of the Slave.
 
 
-**SPI API**
+<b>SPI API</b>
 
 The following header files define the Application Programming Interface (API) for the SPI interface:
   - \b %Driver_SPI.h : Driver API for SPI Bus Peripheral
@@ -48,13 +48,13 @@ The driver implementation is a typical part of the Device Family Pack (DFP) that
 peripherals of the microcontroller family.
 
 
-**Driver Functions**
+<b>Driver Functions</b>
 
 The driver functions are published in the access struct as explained in \ref DriverFunctions
   - \ref ARM_DRIVER_SPI : access struct for SPI driver functions
 
   
-**Example Code**
+<b>Example Code</b>
 
 The following example code shows the usage of the SPI interface.
 
