@@ -57,7 +57,7 @@
 #ifndef   __UNALIGNED_UINT16_WRITE
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wpacked"
-/* lint -esym(9058, T_UINT16_WRITE)  disable MISRA 2012 Rule 2.4 for T_UINT16_WRITE */
+/*lint -esym(9058, T_UINT16_WRITE)*/ /* disable MISRA 2012 Rule 2.4 for T_UINT16_WRITE */
   __PACKED_STRUCT T_UINT16_WRITE { uint16_t v; };
   #pragma clang diagnostic pop
   #define __UNALIGNED_UINT16_WRITE(addr, val)    (void)((((struct T_UINT16_WRITE *)(void *)(addr))->v) = (val))
@@ -65,7 +65,7 @@
 #ifndef   __UNALIGNED_UINT16_READ
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wpacked"
-/* lint -esym(9058, T_UINT16_READ)  disable MISRA 2012 Rule 2.4 for T_UINT16_READ */
+/*lint -esym(9058, T_UINT16_READ)*/ /* disable MISRA 2012 Rule 2.4 for T_UINT16_READ */
   __PACKED_STRUCT T_UINT16_READ { uint16_t v; };
   #pragma clang diagnostic pop
   #define __UNALIGNED_UINT16_READ(addr)          (((const struct T_UINT16_READ *)(const void *)(addr))->v)
@@ -73,7 +73,7 @@
 #ifndef   __UNALIGNED_UINT32_WRITE
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wpacked"
-/* lint -esym(9058, T_UINT32_WRITE)  disable MISRA 2012 Rule 2.4 for T_UINT32_WRITE */
+/*lint -esym(9058, T_UINT32_WRITE)*/ /* disable MISRA 2012 Rule 2.4 for T_UINT32_WRITE */
   __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
   #pragma clang diagnostic pop
   #define __UNALIGNED_UINT32_WRITE(addr, val)    (void)((((struct T_UINT32_WRITE *)(void *)(addr))->v) = (val))
