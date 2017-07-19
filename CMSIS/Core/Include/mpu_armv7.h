@@ -25,41 +25,41 @@
 #ifndef MPU_ARMV7_H
 #define MPU_ARMV7_H
 
-#define MPU_REGION_SIZE_32B      ((uint8_t)0x04U)
-#define MPU_REGION_SIZE_64B      ((uint8_t)0x05U)
-#define MPU_REGION_SIZE_128B     ((uint8_t)0x06U)
-#define MPU_REGION_SIZE_256B     ((uint8_t)0x07U)
-#define MPU_REGION_SIZE_512B     ((uint8_t)0x08U)
-#define MPU_REGION_SIZE_1KB      ((uint8_t)0x09U)
-#define MPU_REGION_SIZE_2KB      ((uint8_t)0x0AU)
-#define MPU_REGION_SIZE_4KB      ((uint8_t)0x0BU)
-#define MPU_REGION_SIZE_8KB      ((uint8_t)0x0CU)
-#define MPU_REGION_SIZE_16KB     ((uint8_t)0x0DU)
-#define MPU_REGION_SIZE_32KB     ((uint8_t)0x0EU)
-#define MPU_REGION_SIZE_64KB     ((uint8_t)0x0FU)
-#define MPU_REGION_SIZE_128KB    ((uint8_t)0x10U)
-#define MPU_REGION_SIZE_256KB    ((uint8_t)0x11U)
-#define MPU_REGION_SIZE_512KB    ((uint8_t)0x12U)
-#define MPU_REGION_SIZE_1MB      ((uint8_t)0x13U)
-#define MPU_REGION_SIZE_2MB      ((uint8_t)0x14U)
-#define MPU_REGION_SIZE_4MB      ((uint8_t)0x15U)
-#define MPU_REGION_SIZE_8MB      ((uint8_t)0x16U)
-#define MPU_REGION_SIZE_16MB     ((uint8_t)0x17U)
-#define MPU_REGION_SIZE_32MB     ((uint8_t)0x18U)
-#define MPU_REGION_SIZE_64MB     ((uint8_t)0x19U)
-#define MPU_REGION_SIZE_128MB    ((uint8_t)0x1AU)
-#define MPU_REGION_SIZE_256MB    ((uint8_t)0x1BU)
-#define MPU_REGION_SIZE_512MB    ((uint8_t)0x1CU)
-#define MPU_REGION_SIZE_1GB      ((uint8_t)0x1DU)
-#define MPU_REGION_SIZE_2GB      ((uint8_t)0x1EU)
-#define MPU_REGION_SIZE_4GB      ((uint8_t)0x1FU)
+#define ARM_MPU_REGION_SIZE_32B      ((uint8_t)0x04U)
+#define ARM_MPU_REGION_SIZE_64B      ((uint8_t)0x05U)
+#define ARM_MPU_REGION_SIZE_128B     ((uint8_t)0x06U)
+#define ARM_MPU_REGION_SIZE_256B     ((uint8_t)0x07U)
+#define ARM_MPU_REGION_SIZE_512B     ((uint8_t)0x08U)
+#define ARM_MPU_REGION_SIZE_1KB      ((uint8_t)0x09U)
+#define ARM_MPU_REGION_SIZE_2KB      ((uint8_t)0x0AU)
+#define ARM_MPU_REGION_SIZE_4KB      ((uint8_t)0x0BU)
+#define ARM_MPU_REGION_SIZE_8KB      ((uint8_t)0x0CU)
+#define ARM_MPU_REGION_SIZE_16KB     ((uint8_t)0x0DU)
+#define ARM_MPU_REGION_SIZE_32KB     ((uint8_t)0x0EU)
+#define ARM_MPU_REGION_SIZE_64KB     ((uint8_t)0x0FU)
+#define ARM_MPU_REGION_SIZE_128KB    ((uint8_t)0x10U)
+#define ARM_MPU_REGION_SIZE_256KB    ((uint8_t)0x11U)
+#define ARM_MPU_REGION_SIZE_512KB    ((uint8_t)0x12U)
+#define ARM_MPU_REGION_SIZE_1MB      ((uint8_t)0x13U)
+#define ARM_MPU_REGION_SIZE_2MB      ((uint8_t)0x14U)
+#define ARM_MPU_REGION_SIZE_4MB      ((uint8_t)0x15U)
+#define ARM_MPU_REGION_SIZE_8MB      ((uint8_t)0x16U)
+#define ARM_MPU_REGION_SIZE_16MB     ((uint8_t)0x17U)
+#define ARM_MPU_REGION_SIZE_32MB     ((uint8_t)0x18U)
+#define ARM_MPU_REGION_SIZE_64MB     ((uint8_t)0x19U)
+#define ARM_MPU_REGION_SIZE_128MB    ((uint8_t)0x1AU)
+#define ARM_MPU_REGION_SIZE_256MB    ((uint8_t)0x1BU)
+#define ARM_MPU_REGION_SIZE_512MB    ((uint8_t)0x1CU)
+#define ARM_MPU_REGION_SIZE_1GB      ((uint8_t)0x1DU)
+#define ARM_MPU_REGION_SIZE_2GB      ((uint8_t)0x1EU)
+#define ARM_MPU_REGION_SIZE_4GB      ((uint8_t)0x1FU)
 
-#define MPU_AP_NONE 0u 
-#define MPU_AP_PRIV 1u
-#define MPU_AP_URO  2u
-#define MPU_AP_FULL 3u
-#define MPU_AP_PRO  5u
-#define MPU_AP_RO   6u
+#define ARM_MPU_AP_NONE 0u 
+#define ARM_MPU_AP_PRIV 1u
+#define ARM_MPU_AP_URO  2u
+#define ARM_MPU_AP_FULL 3u
+#define ARM_MPU_AP_PRO  5u
+#define ARM_MPU_AP_RO   6u
 
 /** MPU Region Base Address Register Value
 *
@@ -157,9 +157,10 @@ __STATIC_INLINE void MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t rasr)
 * \param src Source data is copied from.
 * \param len Amount of data words to be copied.
 */
-__STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* restrict src, uint32_t len)
+__STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRICT src, uint32_t len)
 {
-    for (uint32_t i = 0u; i < len; ++i) 
+		uint32_t i;
+    for (i = 0u; i < len; ++i) 
     {
         dst[i] = src[i];
     }
