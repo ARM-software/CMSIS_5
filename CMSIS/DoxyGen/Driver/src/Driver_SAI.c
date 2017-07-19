@@ -39,14 +39,14 @@ can transfer digital audio using various protocols:
 - \ref Driver_SAI_User
 
 
-**Block Diagram**
+<b>Block Diagram</b>
 
 <p>&nbsp;</p>
 \image html SAI_Schematics.png "Simplified SAI Schematic"
 <p>&nbsp;</p>
 
 
-**SAI API**
+<b>SAI API</b>
 
 The following header files define the Application Programming Interface (API) for the SAI interface:
   - \b %Driver_SAI.h : Driver API for Serial Audio Interface
@@ -56,7 +56,7 @@ The driver implementation is a typical part of the
 the microcontroller family.
 
 
-**Driver Functions**
+<b>Driver Functions</b>
 
 The driver functions are published in the access struct as explained in \ref DriverFunctions
   - \ref ARM_DRIVER_SAI : access struct for SAI driver functions

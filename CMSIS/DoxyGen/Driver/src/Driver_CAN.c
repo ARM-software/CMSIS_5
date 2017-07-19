@@ -28,7 +28,7 @@ CAN 2.0B supports:
   - \ref Remote_Frame requests
   
 \anchor CAN_FD
-**CAN FD**
+<b>CAN FD</b>
 
 Support for CAN FD depends on the hardware.  
 A CMSIS-Driver that supports CAN FD has the capability \ref ARM_CAN_CAPABILITIES data field \b fd_mode = \token{1}, which can be
@@ -40,7 +40,7 @@ CAN FD supports:
 
 CAN FD does not support \ref Remote_Frame requests.
 
-**Block Diagram**
+<b>Block Diagram</b>
 
 The CAN Driver API defines a <b>CAN</b> interface for middleware components. The CAN Driver supports multiple
 nodes, which are able to send and receive messages, but not simultaneously.
@@ -57,12 +57,12 @@ The driver implementation is a typical part of the Device Family Pack (DFP) that
 peripherals of the microcontroller family.
 
 
-**Driver Functions**
+<b>Driver Functions</b>
 
 The driver functions are published in the access struct as explained in \ref DriverFunctions
   - \ref ARM_DRIVER_CAN : access struct for CAN driver functions
 
-**Example Code**
+<b>Example Code</b>
 
 The following example code shows the usage of the CAN interface.
 
@@ -278,7 +278,7 @@ In general, data transmission is performed on an autonomous basis with the data 
 However, sending a <b>Remote Frame</b> allows a destination node to request the data from the source node.
 The examples below shows the data exchange using a <b>Remote Transmission Request (RTR)</b>.
 
-**Example for automatic Data Message response on RTR**
+<b>Example for automatic Data Message response on RTR</b>
 
 For automatic data message response on an RTR, the object is configured with the function \ref ARM_CAN_ObjectConfigure \em obj_cfg = \ref ARM_CAN_OBJ_RX_RTR_TX_DATA.
 
@@ -306,7 +306,7 @@ and the related \em obj_idx.
 \endcode
 
  
-**Example for automatic Data Message reception using RTR**
+<b>Example for automatic Data Message reception using RTR</b>
 
 For automatic data message reception on an RTR, the object is configured with the function \ref ARM_CAN_ObjectConfigure \em obj_cfg = \ref ARM_CAN_OBJ_TX_RTR_RX_DATA. 
 
