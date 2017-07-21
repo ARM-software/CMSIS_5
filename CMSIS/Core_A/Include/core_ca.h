@@ -39,10 +39,10 @@
  ******************************************************************************/
 
 /*  CMSIS CA definitions */
-#define __CA_CMSIS_VERSION_MAIN  (1U)                                      /*!< \brief [31:16] CMSIS HAL main version   */
-#define __CA_CMSIS_VERSION_SUB   (0U)                                      /*!< \brief [15:0]  CMSIS HAL sub version    */
+#define __CA_CMSIS_VERSION_MAIN  (1U)                                      /*!< \brief [31:16] CMSIS-Core(A) main version   */
+#define __CA_CMSIS_VERSION_SUB   (0U)                                      /*!< \brief [15:0]  CMSIS-Core(A) sub version    */
 #define __CA_CMSIS_VERSION       ((__CA_CMSIS_VERSION_MAIN << 16U) | \
-                                   __CA_CMSIS_VERSION_SUB          )       /*!< \brief CMSIS HAL version number         */
+                                   __CA_CMSIS_VERSION_SUB          )       /*!< \brief CMSIS-Core(A) version number         */
 
 #if defined ( __CC_ARM )
   #if defined __TARGET_FPU_VFP
@@ -163,7 +163,7 @@
 #define     __IM     volatile const      /*!< \brief Defines 'read only' structure member permissions */
 #define     __OM     volatile            /*!< \brief Defines 'write only' structure member permissions */
 #define     __IOM    volatile            /*!< \brief Defines 'read / write' structure member permissions */
-
+#define RESERVED(N, T) T RESERVED##N;    // placeholder struct members used for "reserved" areas
 
  /*******************************************************************************
   *                 Register Abstraction
@@ -188,7 +188,7 @@ typedef union
     uint32_t E:1;                        /*!< \brief bit:      9  Endianness execution state bit */
     uint32_t IT1:6;                      /*!< \brief bit: 10..15  If-Then execution state bits 2-7 */
     uint32_t GE:4;                       /*!< \brief bit: 16..19  Greater than or Equal flags */
-    uint32_t _reserved0:4;               /*!< \brief bit: 20..23  Reserved */
+    RESERVED(0:4, uint32_t)              
     uint32_t J:1;                        /*!< \brief bit:     24  Jazelle bit */
     uint32_t IT0:2;                      /*!< \brief bit: 25..26  If-Then execution state bits 0-1 */
     uint32_t Q:1;                        /*!< \brief bit:     27  Saturation condition flag */
@@ -199,6 +199,8 @@ typedef union
   } b;                                   /*!< \brief Structure used for bit  access */
   uint32_t w;                            /*!< \brief Type      used for word access */
 } CPSR_Type;
+
+
 
 /* CPSR Register Definitions */
 #define CPSR_N_Pos                       31U                                    /*!< \brief CPSR: N Position */
@@ -254,32 +256,32 @@ typedef union
     uint32_t M:1;                        /*!< \brief bit:     0  MMU enable */
     uint32_t A:1;                        /*!< \brief bit:     1  Alignment check enable */
     uint32_t C:1;                        /*!< \brief bit:     2  Cache enable */
-    uint32_t _reserved0:2;               /*!< \brief bit: 3.. 4  Reserved */
+    RESERVED(0:2, uint32_t)              
     uint32_t CP15BEN:1;                  /*!< \brief bit:     5  CP15 barrier enable */
-    uint32_t _reserved1:1;               /*!< \brief bit:     6  Reserved */
+    RESERVED(1:1, uint32_t)              
     uint32_t B:1;                        /*!< \brief bit:     7  Endianness model */
-    uint32_t _reserved2:2;               /*!< \brief bit: 8.. 9  Reserved */
+    RESERVED(2:2, uint32_t)              
     uint32_t SW:1;                       /*!< \brief bit:    10  SWP and SWPB enable */
     uint32_t Z:1;                        /*!< \brief bit:    11  Branch prediction enable */
     uint32_t I:1;                        /*!< \brief bit:    12  Instruction cache enable */
     uint32_t V:1;                        /*!< \brief bit:    13  Vectors bit */
     uint32_t RR:1;                       /*!< \brief bit:    14  Round Robin select */
-    uint32_t _reserved3:2;               /*!< \brief bit:15..16  Reserved */
+    RESERVED(3:2, uint32_t)              
     uint32_t HA:1;                       /*!< \brief bit:    17  Hardware Access flag enable */
-    uint32_t _reserved4:1;               /*!< \brief bit:    18  Reserved */
+    RESERVED(4:1, uint32_t)              
     uint32_t WXN:1;                      /*!< \brief bit:    19  Write permission implies XN */
     uint32_t UWXN:1;                     /*!< \brief bit:    20  Unprivileged write permission implies PL1 XN */
     uint32_t FI:1;                       /*!< \brief bit:    21  Fast interrupts configuration enable */
     uint32_t U:1;                        /*!< \brief bit:    22  Alignment model */
-    uint32_t _reserved5:1;               /*!< \brief bit:    23  Reserved */
+    RESERVED(5:1, uint32_t)              
     uint32_t VE:1;                       /*!< \brief bit:    24  Interrupt Vectors Enable */
     uint32_t EE:1;                       /*!< \brief bit:    25  Exception Endianness */
-    uint32_t _reserved6:1;               /*!< \brief bit:    26  Reserved */
+    RESERVED(6:1, uint32_t)              
     uint32_t NMFI:1;                     /*!< \brief bit:    27  Non-maskable FIQ (NMFI) support */
     uint32_t TRE:1;                      /*!< \brief bit:    28  TEX remap enable. */
     uint32_t AFE:1;                      /*!< \brief bit:    29  Access flag enable */
     uint32_t TE:1;                       /*!< \brief bit:    30  Thumb Exception enable */
-    uint32_t _reserved7:1;               /*!< \brief bit:    31  Reserved */
+    RESERVED(7:1, uint32_t)              
   } b;                                   /*!< \brief Structure used for bit  access */
   uint32_t w;                            /*!< \brief Type      used for word access */
 } SCTLR_Type;
@@ -350,53 +352,129 @@ typedef union
 /* CP15 Register ACTLR */
 typedef union
 {
+#if __CORTEX_A == 5 || defined(DOXYGEN)
+  /** \brief Structure used for bit access on Cortex-A5 */
   struct
   {
-    uint32_t _reserved0:6;               /*!< bit: 0.. 5  Reserved */
-    uint32_t SMP:1;                      /*!< bit:     6  Enables coherent requests to the processor */
-    uint32_t _reserved1:3;               /*!< bit: 7.. 9  Reserved */
-    uint32_t DODMBS:1;                   /*!< bit:    10  Disable optimized data memory barrier behavior */
-    uint32_t L2RADIS:1;                  /*!< bit:    11  L2 Data Cache read-allocate mode disable */
-    uint32_t L1RADIS:1;                  /*!< bit:    12  L1 Data Cache read-allocate mode disable */
-    uint32_t L1PCTL:2;                   /*!< bit:13..14  L1 Data prefetch control */
-    uint32_t DDVM:1;                     /*!< bit:    15  Disable Distributed Virtual Memory (DVM) transactions */
-    uint32_t _reserved3:12;              /*!< bit:16..27  Reserved */
-    uint32_t DDI:1;                      /*!< bit:    28  Disable dual issue */
-    uint32_t _reserved7:3;               /*!< bit:29..31  Reserved */
-  } b;                                   /*!< Structure used for bit  access */
-  uint32_t w;                            /*!< Type      used for word access */
+    uint32_t FW:1;                      /*!< \brief bit:      0  Cache and TLB maintenance broadcast */
+    RESERVED(0:5, uint32_t)              
+    uint32_t SMP:1;                      /*!< \brief bit:     6  Enables coherent requests to the processor */
+    uint32_t EXCL:1;                     /*!< \brief bit:     7  Exclusive L1/L2 cache control */
+    RESERVED(1:2, uint32_t)
+    uint32_t DODMBS:1;                   /*!< \brief bit:    10  Disable optimized data memory barrier behavior */
+    uint32_t DWBST:1;                    /*!< \brief bit:    11  AXI data write bursts to Normal memory */
+    uint32_t RADIS:1;                    /*!< \brief bit:    12  L1 Data Cache read-allocate mode disable */
+    uint32_t L1PCTL:2;                   /*!< \brief bit:13..14  L1 Data prefetch control */    
+    uint32_t BP:2;                       /*!< \brief bit:16..15  Branch prediction policy */
+    uint32_t RSDIS:1;                    /*!< \brief bit:    17  Disable return stack operation */
+    uint32_t BTDIS:1;                    /*!< \brief bit:    18  Disable indirect Branch Target Address Cache (BTAC) */
+    RESERVED(3:9, uint32_t)             
+    uint32_t DBDI:1;                     /*!< \brief bit:    28  Disable branch dual issue */
+    RESERVED(7:3, uint32_t)              
+ } b;
+#endif  
+#if __CORTEX_A == 7 || defined(DOXYGEN)
+  /** \brief Structure used for bit access on Cortex-A7 */
+  struct
+  {
+    RESERVED(0:6, uint32_t)              
+    uint32_t SMP:1;                      /*!< \brief bit:     6  Enables coherent requests to the processor */
+    RESERVED(1:3, uint32_t)              
+    uint32_t DODMBS:1;                   /*!< \brief bit:    10  Disable optimized data memory barrier behavior */
+    uint32_t L2RADIS:1;                  /*!< \brief bit:    11  L2 Data Cache read-allocate mode disable */
+    uint32_t L1RADIS:1;                  /*!< \brief bit:    12  L1 Data Cache read-allocate mode disable */
+    uint32_t L1PCTL:2;                   /*!< \brief bit:13..14  L1 Data prefetch control */
+    uint32_t DDVM:1;                     /*!< \brief bit:    15  Disable Distributed Virtual Memory (DVM) transactions */
+    RESERVED(3:12, uint32_t)             
+    uint32_t DDI:1;                      /*!< \brief bit:    28  Disable dual issue */
+    RESERVED(7:3, uint32_t)              
+  } b;
+#endif  
+#if __CORTEX_A == 9 || defined(DOXYGEN)
+  /** \brief Structure used for bit access on Cortex-A9 */
+  struct
+  {
+    uint32_t FW:1;                       /*!< \brief bit:     0  Cache and TLB maintenance broadcast */
+    RESERVED(0:1, uint32_t)
+    uint32_t L1PE:1;                     /*!< \brief bit:     2  Dside prefetch */
+    uint32_t WFLZM:1;                    /*!< \brief bit:     3  Cache and TLB maintenance broadcast */
+    RESERVED(1:2, uint32_t)
+    uint32_t SMP:1;                      /*!< \brief bit:     6  Enables coherent requests to the processor */
+    uint32_t EXCL:1;                     /*!< \brief bit:     7  Exclusive L1/L2 cache control */
+    uint32_t AOW:1;                      /*!< \brief bit:     8  Enable allocation in one cache way only */
+    uint32_t PARITY:1;                   /*!< \brief bit:     9  Support for parity checking, if implemented */
+    RESERVED(7:22, uint32_t)              
+  } b;
+#endif  
+  uint32_t w;                            /*!< \brief Type      used for word access */
 } ACTLR_Type;
 
-#define ACTLR_DDI_Pos                    28U                                     /*!< ACTLR: DDI Position */
-#define ACTLR_DDI_Msk                    (1UL << ACTLR_DDI_Pos)                  /*!< ACTLR: DDI Mask */
+#define ACTLR_DDI_Pos                    28U                                     /*!< \brief ACTLR: DDI Position */
+#define ACTLR_DDI_Msk                    (1UL << ACTLR_DDI_Pos)                  /*!< \brief ACTLR: DDI Mask */
 
-#define ACTLR_DDVM_Pos                   15U                                     /*!< ACTLR: DDVM Position */
-#define ACTLR_DDVM_Msk                   (1UL << ACTLR_DDVM_Pos)                 /*!< ACTLR: DDVM Mask */
+#define ACTLR_DBDI_Pos                   28U                                     /*!< \brief ACTLR: DBDI Position */
+#define ACTLR_DBDI_Msk                   (1UL << ACTLR_DBDI_Pos)                 /*!< \brief ACTLR: DBDI Mask */
 
-#define ACTLR_L1PCTL_Pos                 13U                                     /*!< ACTLR: L1PCTL Position */
-#define ACTLR_L1PCTL_Msk                 (3UL << ACTLR_L1PCTL_Pos)               /*!< ACTLR: L1PCTL Mask */
+#define ACTLR_BTDIS_Pos                  18U                                     /*!< \brief ACTLR: BTDIS Position */
+#define ACTLR_BTDIS_Msk                  (1UL << ACTLR_BTDIS_Pos)                /*!< \brief ACTLR: BTDIS Mask */
 
-#define ACTLR_L1RADIS_Pos                12U                                     /*!< ACTLR: L1RADIS Position */
-#define ACTLR_L1RADIS_Msk                (1UL << ACTLR_L1RADIS_Pos)              /*!< ACTLR: L1RADIS Mask */
+#define ACTLR_RSDIS_Pos                  17U                                     /*!< \brief ACTLR: RSDIS Position */
+#define ACTLR_RSDIS_Msk                  (1UL << ACTLR_RSDIS_Pos)                /*!< \brief ACTLR: RSDIS Mask */
 
-#define ACTLR_L2RADIS_Pos                11U                                     /*!< ACTLR: L2RADIS Position */
-#define ACTLR_L2RADIS_Msk                (1UL << ACTLR_L2RADIS_Pos)              /*!< ACTLR: L2RADIS Mask */
+#define ACTLR_BP_Pos                     15U                                     /*!< \brief ACTLR: BP Position */
+#define ACTLR_BP_Msk                     (3UL << ACTLR_BP_Pos)                   /*!< \brief ACTLR: BP Mask */
 
-#define ACTLR_DODMBS_Pos                 10U                                     /*!< ACTLR: DODMBS Position */
-#define ACTLR_DODMBS_Msk                 (1UL << ACTLR_DODMBS_Pos)               /*!< ACTLR: DODMBS Mask */
+#define ACTLR_DDVM_Pos                   15U                                     /*!< \brief ACTLR: DDVM Position */
+#define ACTLR_DDVM_Msk                   (1UL << ACTLR_DDVM_Pos)                 /*!< \brief ACTLR: DDVM Mask */
 
-#define ACTLR_SMP_Pos                    6U                                      /*!< ACTLR: SMP Position */
-#define ACTLR_SMP_Msk                    (1UL << ACTLR_SMP_Pos)                  /*!< ACTLR: SMP Mask */
+#define ACTLR_L1PCTL_Pos                 13U                                     /*!< \brief ACTLR: L1PCTL Position */
+#define ACTLR_L1PCTL_Msk                 (3UL << ACTLR_L1PCTL_Pos)               /*!< \brief ACTLR: L1PCTL Mask */
+
+#define ACTLR_RADIS_Pos                  12U                                     /*!< \brief ACTLR: RADIS Position */
+#define ACTLR_RADIS_Msk                  (1UL << ACTLR_RADIS_Pos)                /*!< \brief ACTLR: RADIS Mask */
+
+#define ACTLR_L1RADIS_Pos                12U                                     /*!< \brief ACTLR: L1RADIS Position */
+#define ACTLR_L1RADIS_Msk                (1UL << ACTLR_L1RADIS_Pos)              /*!< \brief ACTLR: L1RADIS Mask */
+
+#define ACTLR_DWBST_Pos                  11U                                     /*!< \brief ACTLR: DWBST Position */
+#define ACTLR_DWBST_Msk                  (1UL << ACTLR_DWBST_Pos)                /*!< \brief ACTLR: DWBST Mask */
+
+#define ACTLR_L2RADIS_Pos                11U                                     /*!< \brief ACTLR: L2RADIS Position */
+#define ACTLR_L2RADIS_Msk                (1UL << ACTLR_L2RADIS_Pos)              /*!< \brief ACTLR: L2RADIS Mask */
+
+#define ACTLR_DODMBS_Pos                 10U                                     /*!< \brief ACTLR: DODMBS Position */
+#define ACTLR_DODMBS_Msk                 (1UL << ACTLR_DODMBS_Pos)               /*!< \brief ACTLR: DODMBS Mask */
+
+#define ACTLR_PARITY_Pos                 9U                                      /*!< \brief ACTLR: PARITY Position */
+#define ACTLR_PARITY_Msk                 (1UL << ACTLR_PARITY_Pos)               /*!< \brief ACTLR: PARITY Mask */
+
+#define ACTLR_AOW_Pos                    8U                                      /*!< \brief ACTLR: AOW Position */
+#define ACTLR_AOW_Msk                    (1UL << ACTLR_AOW_Pos)                  /*!< \brief ACTLR: AOW Mask */
+
+#define ACTLR_EXCL_Pos                   7U                                      /*!< \brief ACTLR: EXCL Position */
+#define ACTLR_EXCL_Msk                   (1UL << ACTLR_EXCL_Pos)                 /*!< \brief ACTLR: EXCL Mask */
+
+#define ACTLR_SMP_Pos                    6U                                      /*!< \brief ACTLR: SMP Position */
+#define ACTLR_SMP_Msk                    (1UL << ACTLR_SMP_Pos)                  /*!< \brief ACTLR: SMP Mask */
+
+#define ACTLR_WFLZM_Pos                  3U                                      /*!< \brief ACTLR: WFLZM Position */
+#define ACTLR_WFLZM_Msk                  (1UL << ACTLR_WFLZM_Pos)                /*!< \brief ACTLR: WFLZM Mask */
+
+#define ACTLR_L1PE_Pos                   2U                                      /*!< \brief ACTLR: L1PE Position */
+#define ACTLR_L1PE_Msk                   (1UL << ACTLR_L1PE_Pos)                 /*!< \brief ACTLR: L1PE Mask */
+
+#define ACTLR_FW_Pos                     0U                                      /*!< \brief ACTLR: FW Position */
+#define ACTLR_FW_Msk                     (1UL << ACTLR_FW_Pos)                   /*!< \brief ACTLR: FW Mask */
 
 /* CP15 Register CPACR */
 typedef union
 {
   struct
   {
-    uint32_t _reserved0:20;              /*!< \brief bit: 0..19  Reserved */
+    RESERVED(0:20, uint32_t)             
     uint32_t cp10:2;                     /*!< \brief bit:20..21  Access rights for coprocessor 10 */
     uint32_t cp11:2;                     /*!< \brief bit:22..23  Access rights for coprocessor 11 */
-    uint32_t _reserved1:6;               /*!< \brief bit:24..29  Reserved */
+    RESERVED(1:6, uint32_t)              
     uint32_t D32DIS:1;                   /*!< \brief bit:    30  Disable use of registers D16-D31 of the VFP register file */
     uint32_t ASEDIS:1;                   /*!< \brief bit:    31  Disable Advanced SIMD Functionality */
   } b;                                   /*!< \brief Structure used for bit  access */
@@ -422,12 +500,12 @@ typedef union
   {
     uint32_t FS0:4;                      /*!< \brief bit: 0.. 3  Fault Status bits bit 0-3 */
     uint32_t Domain:4;                   /*!< \brief bit: 4.. 7  Fault on which domain */
-    uint32_t _reserved0:2;               /*!< \brief bit: 8.. 9  Reserved */
+    RESERVED(0:2, uint32_t)              
     uint32_t FS1:1;                      /*!< \brief bit:    10  Fault Status bits bit 4 */
     uint32_t WnR:1;                      /*!< \brief bit:    11  Write not Read bit */
     uint32_t ExT:1;                      /*!< \brief bit:    12  External abort type */
     uint32_t CM:1;                       /*!< \brief bit:    13  Cache maintenance fault */
-    uint32_t _reserved1:18;              /*!< \brief bit:14..31  Reserved */
+    RESERVED(1:18, uint32_t)             
   } b;                                   /*!< \brief Structure used for bit  access */
   uint32_t w;                            /*!< \brief Type      used for word access */
 } DFSR_Type;
@@ -456,11 +534,11 @@ typedef union
   struct
   {
     uint32_t FS0:4;                      /*!< \brief bit: 0.. 3  Fault Status bits bit 0-3 */
-    uint32_t _reserved0:6;               /*!< \brief bit: 4.. 9  Reserved */
+    RESERVED(0:6, uint32_t)              
     uint32_t FS1:1;                      /*!< \brief bit:    10  Fault Status bits bit 4 */
-    uint32_t _reserved1:1;               /*!< \brief bit:    11  Reserved */
+    RESERVED(1:1, uint32_t)              
     uint32_t ExT:1;                      /*!< \brief bit:    12  External abort type */
-    uint32_t _reserved2:19;              /*!< \brief bit:13..31  Reserved */
+    RESERVED(2:19, uint32_t)             
   } b;                                   /*!< \brief Structure used for bit  access */
   uint32_t w;                            /*!< \brief Type      used for word access */
 } IFSR_Type;
@@ -479,11 +557,11 @@ typedef union
 {
   struct
   {
-    uint32_t _reserved0:6;               /*!< \brief bit: 0.. 5  Reserved */
+    RESERVED(0:6, uint32_t)              
     uint32_t F:1;                        /*!< \brief bit:     6  FIQ pending bit */
     uint32_t I:1;                        /*!< \brief bit:     7  IRQ pending bit */
     uint32_t A:1;                        /*!< \brief bit:     8  External abort pending bit */
-    uint32_t _reserved1:23;              /*!< \brief bit:14..31  Reserved */
+    RESERVED(1:23, uint32_t)             
   } b;                                   /*!< \brief Structure used for bit  access */
   uint32_t w;                            /*!< \brief Type      used for word access */
 } ISR_Type;
@@ -523,35 +601,35 @@ typedef struct
 {
   __IM  uint32_t CACHE_ID;                   /*!< \brief Offset: 0x0000 (R/ ) Cache ID Register               */
   __IM  uint32_t CACHE_TYPE;                 /*!< \brief Offset: 0x0004 (R/ ) Cache Type Register             */
-        uint32_t RESERVED0[0x3e];
+        RESERVED(0[0x3e], uint32_t)
   __IOM uint32_t CONTROL;                    /*!< \brief Offset: 0x0100 (R/W) Control Register                */
   __IOM uint32_t AUX_CNT;                    /*!< \brief Offset: 0x0104 (R/W) Auxiliary Control               */
-        uint32_t RESERVED1[0x3e];
+        RESERVED(1[0x3e], uint32_t)
   __IOM uint32_t EVENT_CONTROL;              /*!< \brief Offset: 0x0200 (R/W) Event Counter Control           */
   __IOM uint32_t EVENT_COUNTER1_CONF;        /*!< \brief Offset: 0x0204 (R/W) Event Counter 1 Configuration   */
   __IOM uint32_t EVENT_COUNTER0_CONF;        /*!< \brief Offset: 0x0208 (R/W) Event Counter 1 Configuration   */
-        uint32_t RESERVED2[0x2];
+        RESERVED(2[0x2], uint32_t)
   __IOM uint32_t INTERRUPT_MASK;             /*!< \brief Offset: 0x0214 (R/W) Interrupt Mask                  */
   __IM  uint32_t MASKED_INT_STATUS;          /*!< \brief Offset: 0x0218 (R/ ) Masked Interrupt Status         */
   __IM  uint32_t RAW_INT_STATUS;             /*!< \brief Offset: 0x021c (R/ ) Raw Interrupt Status            */
   __OM  uint32_t INTERRUPT_CLEAR;            /*!< \brief Offset: 0x0220 ( /W) Interrupt Clear                 */
-        uint32_t RESERVED3[0x143];
+        RESERVED(3[0x143], uint32_t)
   __IOM uint32_t CACHE_SYNC;                 /*!< \brief Offset: 0x0730 (R/W) Cache Sync                      */
-        uint32_t RESERVED4[0xf];
+        RESERVED(4[0xf], uint32_t)
   __IOM uint32_t INV_LINE_PA;                /*!< \brief Offset: 0x0770 (R/W) Invalidate Line By PA           */
-        uint32_t RESERVED6[2];
+        RESERVED(6[2], uint32_t)
   __IOM uint32_t INV_WAY;                    /*!< \brief Offset: 0x077c (R/W) Invalidate by Way               */
-        uint32_t RESERVED5[0xc];
+        RESERVED(5[0xc], uint32_t)
   __IOM uint32_t CLEAN_LINE_PA;              /*!< \brief Offset: 0x07b0 (R/W) Clean Line by PA                */
-        uint32_t RESERVED7[1];
+        RESERVED(7[1], uint32_t)
   __IOM uint32_t CLEAN_LINE_INDEX_WAY;       /*!< \brief Offset: 0x07b8 (R/W) Clean Line by Index/Way         */
   __IOM uint32_t CLEAN_WAY;                  /*!< \brief Offset: 0x07bc (R/W) Clean by Way                    */
-        uint32_t RESERVED8[0xc];
+        RESERVED(8[0xc], uint32_t)
   __IOM uint32_t CLEAN_INV_LINE_PA;          /*!< \brief Offset: 0x07f0 (R/W) Clean and Invalidate Line by PA  */
-        uint32_t RESERVED9[1];
+        RESERVED(9[1], uint32_t)
   __IOM uint32_t CLEAN_INV_LINE_INDEX_WAY;   /*!< \brief Offset: 0x07f8 (R/W) Clean and Invalidate Line by Index/Way  */
   __IOM uint32_t CLEAN_INV_WAY;              /*!< \brief Offset: 0x07fc (R/W) Clean and Invalidate by Way     */
-        uint32_t RESERVED10[0x40];
+        RESERVED(10[0x40], uint32_t);
   __IOM uint32_t DATA_LOCK_0_WAY;            /*!< \brief Offset: 0x0900 (R/W) Data Lockdown 0 by Way          */
   __IOM uint32_t INST_LOCK_0_WAY;            /*!< \brief Offset: 0x0904 (R/W) Instruction Lockdown 0 by Way   */
   __IOM uint32_t DATA_LOCK_1_WAY;            /*!< \brief Offset: 0x0908 (R/W) Data Lockdown 1 by Way          */
@@ -568,20 +646,21 @@ typedef struct
   __IOM uint32_t INST_LOCK_6_WAY;            /*!< \brief Offset: 0x0934 (R/W) Instruction Lockdown 5 by Way   */
   __IOM uint32_t DATA_LOCK_7_WAY;            /*!< \brief Offset: 0x0938 (R/W) Data Lockdown 6 by Way          */
   __IOM uint32_t INST_LOCK_7_WAY;            /*!< \brief Offset: 0x093c (R/W) Instruction Lockdown 6 by Way   */
-        uint32_t RESERVED11[0x4];
+        RESERVED(11[0x4], uint32_t)
   __IOM uint32_t LOCK_LINE_EN;               /*!< \brief Offset: 0x0950 (R/W) Lockdown by Line Enable         */
   __IOM uint32_t UNLOCK_ALL_BY_WAY;          /*!< \brief Offset: 0x0954 (R/W) Unlock All Lines by Way         */
-        uint32_t RESERVED12[0xaa];
+        RESERVED(12[0xaa], uint32_t)
   __IOM uint32_t ADDRESS_FILTER_START;       /*!< \brief Offset: 0x0c00 (R/W) Address Filtering Start         */
   __IOM uint32_t ADDRESS_FILTER_END;         /*!< \brief Offset: 0x0c04 (R/W) Address Filtering End           */
-        uint32_t RESERVED13[0xce];
+        RESERVED(13[0xce], uint32_t)
   __IOM uint32_t DEBUG_CONTROL;              /*!< \brief Offset: 0x0f40 (R/W) Debug Control Register          */
 } L2C_310_TypeDef;
 
-#define L2C_310           ((L2C_310_TypeDef *)L2C_310_BASE) /*!< \brief L2C_310 Declaration */
+#define L2C_310           ((L2C_310_TypeDef *)L2C_310_BASE) /*!< \brief L2C_310 register set access pointer */
 #endif
 
 #if (__GIC_PRESENT == 1U) || defined(DOXYGEN)
+    
 /** \brief  Structure type to access the Generic Interrupt Controller Distributor (GICD)
 */
 typedef struct
@@ -589,17 +668,17 @@ typedef struct
   __IOM uint32_t D_CTLR;                 /*!< \brief  Offset: 0x000 (R/W) Distributor Control Register */
   __IM  uint32_t D_TYPER;                /*!< \brief  Offset: 0x004 (R/ ) Interrupt Controller Type Register */
   __IM  uint32_t D_IIDR;                 /*!< \brief  Offset: 0x008 (R/ ) Distributor Implementer Identification Register */
-        uint32_t RESERVED0;
+        RESERVED(0, uint32_t)
   __IOM uint32_t D_STATUSR;              /*!< \brief  Offset: 0x010 (R/W) Error Reporting Status Register, optional */
-        uint32_t RESERVED1[11];
+        RESERVED(1[11], uint32_t)
   __OM  uint32_t D_SETSPI_NSR;           /*!< \brief  Offset: 0x040 ( /W) Set SPI Register */
-        uint32_t RESERVED2;
+        RESERVED(2, uint32_t)
   __OM  uint32_t D_CLRSPI_NSR;           /*!< \brief  Offset: 0x048 ( /W) Clear SPI Register */
-        uint32_t RESERVED3;
+        RESERVED(3, uint32_t)
   __OM  uint32_t D_SETSPI_SR;            /*!< \brief  Offset: 0x050 ( /W) Set SPI, Secure Register */
-        uint32_t RESERVED4;
+        RESERVED(4, uint32_t)
   __OM  uint32_t D_CLRSPI_SR;            /*!< \brief  Offset: 0x058 ( /W) Clear SPI, Secure Register */
-        uint32_t RESERVED5[9];
+        RESERVED(5[9], uint32_t)
   __IOM uint32_t D_IGROUPR[32];          /*!< \brief  Offset: 0x080 (R/W) Interrupt Group Registers */
   __IOM uint32_t D_ISENABLER[32];        /*!< \brief  Offset: 0x100 (R/W) Interrupt Set-Enable Registers */
   __IOM uint32_t D_ICENABLER[32];        /*!< \brief  Offset: 0x180 (R/W) Interrupt Clear-Enable Registers */
@@ -608,22 +687,22 @@ typedef struct
   __IOM uint32_t D_ISACTIVER[32];        /*!< \brief  Offset: 0x300 (R/W) Interrupt Set-Active Registers */
   __IOM uint32_t D_ICACTIVER[32];        /*!< \brief  Offset: 0x380 (R/W) Interrupt Clear-Active Registers */
   __IOM uint8_t  D_IPRIORITYR[1020];     /*!< \brief  Offset: 0x400 (R/W) Interrupt Priority Registers */
-        uint32_t RESERVED9[1];
+        RESERVED(9, uint32_t)
   __IOM uint8_t  D_ITARGETSR[1020];      /*!< \brief  Offset: 0x800 (R/W) Interrupt Targets Registers */
-        uint32_t RESERVED10[1];
+        RESERVED(10, uint32_t)
   __IOM uint32_t D_ICFGR[64];            /*!< \brief  Offset: 0xC00 (R/W) Interrupt Configuration Registers */
   __IOM uint32_t D_IGRPMODR[32];         /*!< \brief  Offset: 0xD00 (R/W) Interrupt Group Modifier Registers */
-        uint32_t RESERVED11[32];
+        RESERVED(11[32], uint32_t)
   __IOM uint32_t D_NSACR[64];            /*!< \brief  Offset: 0xE00 (R/W) Non-secure Access Control Registers */
   __OM  uint32_t D_SGIR;                 /*!< \brief  Offset: 0xF00 ( /W) Software Generated Interrupt Register */
-        uint32_t RESERVED13[3];
+        RESERVED(13[3], uint32_t)
   __IOM uint8_t  D_CPENDSGIR[16];        /*!< \brief  Offset: 0xF10 (R/W) SGI Clear-Pending Registers */
   __IOM uint8_t  D_SPENDSGIR[16];        /*!< \brief  Offset: 0xF20 (R/W) SGI Set-Pending Registers */
-        uint32_t RESERVED14[5236];
+        RESERVED(14[5236], uint32_t)
   __IOM uint64_t D_IROUTER[988];         /*!< \brief  Offset: 0x6100(R/W) Interrupt Routing Registers */
 }  GICDistributor_Type;
 
-#define GICDistributor      ((GICDistributor_Type      *)     GIC_DISTRIBUTOR_BASE ) /*!< GIC Distributor configuration struct */
+#define GICDistributor      ((GICDistributor_Type      *)     GIC_DISTRIBUTOR_BASE ) /*!< \brief GIC Distributor register set access pointer */
 
 /** \brief  Structure type to access the Generic Interrupt Controller Interface (GICC)
 */
@@ -641,16 +720,16 @@ typedef struct
   __OM  uint32_t C_AEOIR;                /*!< \brief  Offset: 0x024 ( /W) Aliased End Of Interrupt Register */
   __IM  uint32_t C_AHPPIR;               /*!< \brief  Offset: 0x028 (R/ ) Aliased Highest Priority Pending Interrupt Register */
   __IOM uint32_t C_STATUSR;              /*!< \brief  Offset: 0x02C (R/W) Error Reporting Status Register, optional */
-        uint32_t RESERVED15[40];
+        RESERVED(15[40], uint32_t)
   __IOM uint32_t C_APR[4];               /*!< \brief  Offset: 0x0D0 (R/W) Active Priority Register */
   __IOM uint32_t C_NSAPR[4];             /*!< \brief  Offset: 0x0E0 (R/W) Non-secure Active Priority Register */
-        uint32_t RESERVED17[3];
+        RESERVED(17[3], uint32_t)
   __IM  uint32_t C_IIDR;                 /*!< \brief  Offset: 0x0FC (R/ ) CPU Interface Identification Register */
-        uint32_t RESERVED18[960];  
+        RESERVED(18[960], uint32_t)  
   __OM  uint32_t C_DIR;                  /*!< \brief  Offset: 0x1000( /W) Deactivate Interrupt Register */
 }  GICInterface_Type;
 
-#define GICInterface        ((GICInterface_Type        *)     GIC_INTERFACE_BASE )   /*!< GIC Interface configuration struct */
+#define GICInterface        ((GICInterface_Type        *)     GIC_INTERFACE_BASE )   /*!< \brief GIC Interface register set access pointer */
 #endif
 
 #if (__TIM_PRESENT == 1U) || defined(DOXYGEN)
@@ -663,7 +742,7 @@ typedef struct
   __IOM uint32_t COUNTER;         //!< \brief  Offset: 0x004 (R/W) Private Timer Counter Register
   __IOM uint32_t CONTROL;         //!< \brief  Offset: 0x008 (R/W) Private Timer Control Register
   __IOM uint32_t ISR;             //!< \brief  Offset: 0x00C (R/W) Private Timer Interrupt Status Register
-        uint32_t RESERVED[4];
+        RESERVED(0[4], uint32_t)
   __IOM uint32_t WLOAD;           //!< \brief  Offset: 0x020 (R/W) Watchdog Load Register
   __IOM uint32_t WCOUNTER;        //!< \brief  Offset: 0x024 (R/W) Watchdog Counter Register
   __IOM uint32_t WCONTROL;        //!< \brief  Offset: 0x028 (R/W) Watchdog Control Register
@@ -671,7 +750,7 @@ typedef struct
   __IOM uint32_t WRESET;          //!< \brief  Offset: 0x030 (R/W) Watchdog Reset Status Register
   __OM  uint32_t WDISABLE;        //!< \brief  Offset: 0x034 ( /W) Watchdog Disable Register
 } Timer_Type;
-#define PTIM ((Timer_Type *) TIMER_BASE )   /*!< \brief Timer configuration struct */
+#define PTIM ((Timer_Type *) TIMER_BASE )   /*!< \brief Timer register struct */
 #endif
 #endif
 
@@ -1292,7 +1371,7 @@ typedef union
     uint32_t ENABLE:1;      /*!< \brief bit: 0      Enables the timer. */
     uint32_t IMASK:1;       /*!< \brief bit: 1      Timer output signal mask bit. */
     uint32_t ISTATUS:1;     /*!< \brief bit: 2      The status of the timer. */
-    uint32_t _reserved0:29; /*!< \brief bit: 3..31  Reserved */
+    RESERVED(0:29, uint32_t)
   } b;                      /*!< \brief Structure used for bit  access */
   uint32_t w;               /*!< \brief Type      used for word access */
 } CNTP_CTL_Type;
@@ -1327,9 +1406,10 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value) {
   __set_CNTP_CTL(value);
   __ISB();
 }
+#endif
 
 /* Private Timer */
-#elif ((__CORTEX_A == 5U) || (__CORTEX_A == 9U)) || defined(DOXYGEN)
+#if ((__CORTEX_A == 5U) || (__CORTEX_A == 9U)) || defined(DOXYGEN)
 /** Set the load value to timers \ref Timer_Type::LOAD "LOAD" register.
 * \param value The load value to be set.
 */
