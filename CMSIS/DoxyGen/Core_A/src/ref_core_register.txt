@@ -1,0 +1,473 @@
+/* ##########################  Core Register Defines  ################################# */
+
+/* ###########################  Core Function Access  ########################### */
+/** 
+\defgroup core_reg_func_gr Core Register Access
+\brief Functions to access the Cortex-A core registers
+@{
+*/
+
+/**
+\fn __STATIC_INLINE uint32_t __get_FPSCR(void)
+\details 
+  This function returns the current value of the Floating Point Status/Control register.
+
+\fn __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+\details 
+  Assigns the given value to the Floating Point Status/Control register.
+
+\fn __STATIC_INLINE uint32_t __get_CPSR(void)
+\details
+	This function returns the content of the CPSR Register.
+  
+\fn __STATIC_INLINE void __set_CPSR(uint32_t cpsr)
+\details
+	This function assigns the given value to the CPSR Register.
+
+\fn __STATIC_INLINE __ASM void __set_SP(uint32_t stack)
+\details
+  This function assigns the given value to the current stack pointer.
+
+\fn __STATIC_INLINE __ASM void __set_SP_usr(uint32_t topOfProcStack)
+\details
+  This function assigns the given value to the USR/SYS Stack Pointer (PSP).
+
+\fn __STATIC_INLINE uint32_t __get_FPEXC(void)
+\details
+  This function returns the current value of the Floating Point Exception Control register.
+
+\fn __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
+\details
+  This function assigns the given value to the Floating Point Exception Control register.
+
+\fn __STATIC_INLINE uint32_t __get_CPACR(void)
+\details
+  This function returns the current value of the Coprocessor Access Control register.
+
+\fn __STATIC_INLINE void __set_CPACR(uint32_t cpacr)
+\details
+  This function assigns the given value to the Coprocessor Access Control register.
+
+\fn __STATIC_INLINE uint32_t __get_CBAR()
+\details
+  This function returns the value of the Configuration Base Address register.
+
+\fn __STATIC_INLINE uint32_t __get_TTBR0() 
+\details
+  This function returns the value of the Translation Table Base Register 0.
+
+\fn __STATIC_INLINE void __set_TTBR0(uint32_t ttbr0) 
+\details
+  This function assigns the given value to the Translation Table Base Register 0.
+
+\fn __STATIC_INLINE uint32_t __get_DACR() 
+\details
+  This function returns the value of the Domain Access Control Register.
+
+\fn __STATIC_INLINE void __set_DACR(uint32_t dacr) 
+\details
+  This function assigns the given value to the Domain Access Control Register.
+
+\fn __STATIC_INLINE void __set_SCTLR(uint32_t sctlr)
+\details
+  This function assigns the given value to the \ref CMSIS_SCTLR "System Control Register".
+
+\fn __STATIC_INLINE uint32_t __get_SCTLR() 
+\details
+  This function returns the value of the System Control Register.
+
+\fn __STATIC_INLINE uint32_t __get_MPIDR(void)
+\details
+  This function returns the value of the Multiprocessor Affinity Register.
+
+\fn __STATIC_INLINE uint32_t __get_VBAR(void)
+\details
+  This function returns the value of the Vector Base Address Register.
+
+\fn __STATIC_INLINE void __set_VBAR(uint32_t vbar)
+\details
+  This function assigns the given value to the Vector Base Address Register.
+
+\fn __STATIC_INLINE void __set_CNTP_TVAL(uint32_t value) 
+\details
+  This function assigns the given value to PL1 Physical Timer Value Register (CNTP_TVAL).
+
+\fn __STATIC_INLINE uint32_t __get_CNTP_TVAL() 
+\details
+  This function returns the value of the PL1 Physical Timer Value Register. (CNTP_TVAL).
+
+\fn __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) 
+\details
+  This function assigns the given value to PL1 Physical Timer Control Register (CNTP_CTL).
+
+\fn __STATIC_INLINE void __set_TLBIALL(uint32_t value) 
+\details
+  This function invalidates entire unified TLB.
+
+\fn __STATIC_INLINE void __set_BPIALL(uint32_t value)   
+\details
+  This function writes the provided value to the Branch Predictor Invalidate All (BPIALL) register.
+
+\fn __STATIC_INLINE void __set_ICIALLU(uint32_t value) 
+\details
+  This function invalidates all instruction cache.
+
+\fn __STATIC_INLINE void __set_DCCMVAC(uint32_t value) 
+\details
+  This function cleans data or unified cache line by MVA to PoC.
+
+\fn __STATIC_INLINE void __set_DCIMVAC(uint32_t value) 
+\details
+  This function invalidates data or unified cache line by MVA to PoC.
+
+\fn __STATIC_INLINE void __set_DCCIMVAC(uint32_t value) 
+\details
+  This function cleans and invalidates data or unified cache line by MVA to PoC.
+
+*/
+/**
+@} 
+*/
+/* end group core_reg_func_gr */
+
+/* Core Register CPSR */
+/**
+\defgroup CMSIS_CPSR Current Program Status Register (CPSR)
+\ingroup core_reg_func_gr
+\brief The Current Program Status Register (CPSR) holds processor status and control information.
+
+| Bits    | Name       | Function                                                      |
+| :------ | :--------- | :------------------------------------------------------------ |
+| [31]    | N          | Negative condition code flag                                  |
+| [30]    | Z          | Zero condition code flag                                      |
+| [29]    | C          | Carry condition code flag                                     |
+| [28]    | V          | Overflow condition code flag                                  |
+| [27]    | Q          | Cumulative saturation bit                                     |
+| [26:25] | IT[1:0]    | If-Then execution state bits for the Thumb IT (If-Then) instruction |
+| [24]    | J          | Jazelle bit                                                   |
+| [19:16] | GE         | Greater than or Equal flags                                   |
+| [15:10] | IT[7:2]    | If-Then execution state bits for the Thumb IT (If-Then) instruction |
+| [9]     | E          | Endianness execution state bit: 0 - Little-endian, 1 - Big-endian |
+| [8]     | A          | Asynchronous abort mask bit                                   |
+| [7]     | I          | IRQ mask bit                                                  |
+| [6]     | F          | FIRQ mask bit                                                 |
+| [5]     | T          | Thumb execution state bit                                     |
+| [4:0]   | M          | Mode field                                                    |
+
+@{
+*/
+
+/**
+\struct CPSR_Type
+\def CPSR_N_Pos                  
+\def CPSR_N_Msk
+\def CPSR_Z_Pos                  
+\def CPSR_Z_Msk                  
+\def CPSR_C_Pos                  
+\def CPSR_C_Msk
+\def CPSR_V_Pos                  
+\def CPSR_V_Msk
+\def CPSR_Q_Pos                  
+\def CPSR_Q_Msk
+\def CPSR_IT0_Pos                
+\def CPSR_IT0_Msk
+\def CPSR_J_Pos                  
+\def CPSR_J_Msk
+\def CPSR_GE_Pos                 
+\def CPSR_GE_Msk
+\def CPSR_IT1_Pos                
+\def CPSR_IT1_Msk
+\def CPSR_E_Pos                  
+\def CPSR_E_Msk
+\def CPSR_A_Pos                  
+\def CPSR_A_Msk
+\def CPSR_I_Pos                  
+\def CPSR_I_Msk
+\def CPSR_F_Pos                  
+\def CPSR_F_Msk
+\def CPSR_T_Pos                  
+\def CPSR_T_Msk
+\def CPSR_M_Pos                  
+\def CPSR_M_Msk
+
+*/
+
+/** @} */
+
+
+/* end group CMSIS_CPSR */
+
+
+/* CP15 Register SCTLR */
+/**
+\defgroup CMSIS_SCTLR System Control Register (SCTLR)
+\ingroup core_reg_func_gr
+\brief Type definitions and defines for System Control Register (SCTLR).
+\details Provides the top level control of the system, including its memory system.
+
+| Bits    | Name          | Function                                                      |
+| :------ | :------------ | :------------------------------------------------------------ |
+| [31]    | -             | Reserved.                                                     |
+| [30]    | TE            | Thumb Exception enable.                                       |
+| [29]    | AFE           | Access flag enable bit.                                       |
+| [28]    | TRE           | TEX remap enable bit.                                         |
+| [27:26] | -             | Reserved.                                                     |
+| [25]    | EE            | Exception Endianness bit.                                     |
+| [24:21] | -             | Reserved.                                                     |
+| [20]    | UWXN          | Unprivileged write permission implies PL1 Execute Never (XN). |
+| [19]    | WXN           | Write permission implies Execute Never (XN).                  |
+| [18:14] | -             | Reserved.                                                     |
+| [13]    | V             | Vectors bit.                                                  |
+| [12]    | I             | Instruction cache enable bit.                                 |
+| [11]    | Z             | Branch prediction enable bit.                                 |
+| [10]    | SW            | SWP and SWPB enable bit.                                      |
+| [9:3]   | -             | Reserved.                                                     |
+| [2]     | C             | Cache enable bit.                                             |
+| [1]     | A             | Alignment bit.                                                |
+| [0]     | M             | Address translation enable bit.                               |
+
+@{
+*/
+/**
+\struct SCTLR_Type
+
+\def SCTLR_TE_Pos                  
+\def SCTLR_TE_Msk
+\def SCTLR_AFE_Pos                 
+\def SCTLR_AFE_Msk
+\def SCTLR_TRE_Pos                 
+\def SCTLR_TRE_Msk
+\def SCTLR_NMFI_Pos                
+\def SCTLR_NMFI_Msk
+\def SCTLR_EE_Pos                  
+\def SCTLR_EE_Msk
+\def SCTLR_VE_Pos                  
+\def SCTLR_VE_Msk
+\def SCTLR_U_Pos                   
+\def SCTLR_U_Msk
+\def SCTLR_FI_Pos                  
+\def SCTLR_FI_Msk
+\def SCTLR_UWXN_Pos                
+\def SCTLR_UWXN_Msk
+\def SCTLR_WXN_Pos                 
+\def SCTLR_WXN_Msk
+\def SCTLR_HA_Pos                  
+\def SCTLR_HA_Msk
+\def SCTLR_RR_Pos                  
+\def SCTLR_RR_Msk
+\def SCTLR_V_Pos                   
+\def SCTLR_V_Msk
+\def SCTLR_I_Pos                   
+\def SCTLR_I_Msk
+\def SCTLR_Z_Pos                   
+\def SCTLR_Z_Msk
+\def SCTLR_SW_Pos                  
+\def SCTLR_SW_Msk
+\def SCTLR_B_Pos                   
+\def SCTLR_B_Msk
+\def SCTLR_CP15BEN_Pos             
+\def SCTLR_CP15BEN_Msk
+\def SCTLR_C_Pos                   
+\def SCTLR_C_Msk
+\def SCTLR_A_Pos                   
+\def SCTLR_A_Msk
+\def SCTLR_M_Pos                   
+\def SCTLR_M_Msk
+*/
+/** @} */
+/* end group CMSIS_SCTLR */
+
+/* CP15 Register ACTLR */
+/**
+\defgroup CMSIS_ACTLR Auxiliary Control Register (ACTLR)
+\ingroup core_reg_func_gr
+\brief Type definitions and defines for Auxiliary Control Register (ACTLR).
+\details
+Provides IMPLEMENTATION DEFINED configuration and control options. The bit definition
+differs between various ARMv7-A implementations. 
+
+<b>Cortex-A5</b>
+
+| Bits    | Name          | Function                                                      |
+| :------ | :------------ | :------------------------------------------------------------ |
+| [31:29] | -             | Reserved.                                                     |
+| [28]    | DBDI          | Disable Branch Dual Issue                                     |
+| [27:19] | -             | Reserved.                                                     |
+| [18]    | BTDIS         | Disable indirect Branch Target Address Cache (BTAC).          |
+| [17]    | RSDIS         | Disable return stack operation.                               |
+| [16:15] | BP            | Branch prediction policy.                                     |
+| [14:13] | L1PCTL        | L1 Data prefetch control.                                     |
+| [12]    | RADIS         | Disable Data Cache read-allocate mode.                        |
+| [11]    | DWBST         | Disable AXI data write bursts to Normal memory.               |
+| [10]    | DODMBS        | Disable optimized data memory barrier behavior.               |
+| [9:8]   | -             | Reserved.                                                     |
+| [7]     | EXCL          | Exclusive L1/L2 cache control.                                |
+| [6]     | SMP           | Enables coherent requests to the processor.                   |
+| [5:1]   | -             | Reserved.                                                     |
+| [0]     | FW            | Cache and TLB maintenance broadcast.                          |
+
+<b>Cortex-A7</b>
+
+| Bits    | Name          | Function                                                      |
+| :------ | :------------ | :------------------------------------------------------------ |
+| [31:29] | -             | Reserved.                                                     |
+| [28]    | DDI           | Disable Dual Issue                                            |
+| [27:16] | -             | Reserved.                                                     |
+| [15]    | DDVM          | Disable Distributed Virtual Memory transactions.              |
+| [14:13] | L1PCTL        | L1 Data prefetch control.                                     |
+| [12]    | L1RADIS       | L1 Data Cache read-allocate mode disable.                     |
+| [11]    | L2RADIS       | L2 Data Cache read-allocate mode disable.                     |
+| [10]    | DODMBS        | Disable optimized data memory barrier behavior.               |
+| [9:7]   | -             | Reserved.                                                     |
+| [6]     | SMP           | Enables coherent requests to the processor.                   |
+| [5:0]   | -             | Reserved.                                                     |
+
+<b>Cortex-A9</b>
+
+| Bits    | Name          | Function                                                      |
+| :------ | :------------ | :------------------------------------------------------------ |
+| [31:10] | -             | Reserved.                                                     |
+| [9]     | PARITY        | Support for parity checking, if implemented.                  |
+| [8]     | AOW           | Enable allocation in one cache way only.                      |
+| [7]     | EXCL          | Exclusive L1/L2 cache control.                                |
+| [6]     | SMP           | Enables coherent requests to the processor.                   |
+| [5:4]   | -             | Reserved.                                                     |
+| [3]     | WFLZM         | Enable write full line of zeros modea.                        |
+| [2]     | L1PE          | Dside prefetch.                                               |
+| [1]     | -             | Reserved.                                                     |
+| [0]     | FW            | Cache and TLB maintenance broadcast.                          |
+
+@{
+*/
+
+/**
+\fn __STATIC_INLINE void __set_ACTRL(uint32_t actrl)
+\details
+  This function assigns the given value to the Auxiliary Control Register.  
+
+\fn __STATIC_INLINE uint32_t __get_ACTLR(void)
+\details
+  This function returns the value of the Auxiliary Control Register.
+
+
+\struct ACTLR_Type
+\def ACTLR_DDI_Pos
+\def ACTLR_DDI_Msk
+\def ACTLR_DBDI_Pos
+\def ACTLR_DBDI_Msk
+\def ACTLR_BTDIS_Pos
+\def ACTLR_BTDIS_Msk
+\def ACTLR_RSDIS_Pos
+\def ACTLR_RSDIS_Msk
+\def ACTLR_BP_Pos
+\def ACTLR_BP_Msk
+\def ACTLR_DDVM_Pos
+\def ACTLR_DDVM_Msk
+\def ACTLR_L1PCTL_Pos
+\def ACTLR_L1PCTL_Msk
+\def ACTLR_RADIS_Pos
+\def ACTLR_RADIS_Msk
+\def ACTLR_L1RADIS_Pos
+\def ACTLR_L1RADIS_Msk
+\def ACTLR_DWBST_Pos
+\def ACTLR_DWBST_Msk
+\def ACTLR_L2RADIS_Pos
+\def ACTLR_L2RADIS_Msk
+\def ACTLR_DODMBS_Pos
+\def ACTLR_DODMBS_Msk
+\def ACTLR_PARITY_Pos
+\def ACTLR_PARITY_Msk
+\def ACTLR_AOW_Pos
+\def ACTLR_AOW_Msk
+\def ACTLR_EXCL_Pos
+\def ACTLR_EXCL_Msk
+\def ACTLR_SMP_Pos
+\def ACTLR_SMP_Msk
+\def ACTLR_WFLZM_Pos
+\def ACTLR_WFLZM_Msk
+\def ACTLR_L1PE_Pos
+\def ACTLR_L1PE_Msk
+\def ACTLR_FW_Pos
+\def ACTLR_FW_Msk
+*/
+
+/** @} */
+
+
+/* end group CMSIS_ACTLR */
+
+/* CP15 Register CPACR */
+/**
+\defgroup CMSIS_CPACR Core Register CPACR
+\ingroup core_reg_func_gr
+\brief Type definitions and defines for CPACR
+@{
+*/
+/**
+\struct CPACR_Type
+
+\def CPACR_ASEDIS_Pos         
+\def CPACR_D32DIS_Pos         
+\def CPACR_cp11_Pos           
+\def CPACR_cp10_Pos           
+*/
+/** @} */
+/* end group CMSIS_CPACR */
+
+/* CP15 Register DFSR */
+/**
+\defgroup CMSIS_DFSR Core Register DFSR
+\ingroup core_reg_func_gr
+\brief Type definitions and defines for DFSR
+@{
+*/
+/**
+\struct DFSR_Type
+
+\def DFSR_CM_Pos             
+\def DFSR_Ext_Pos            
+\def DFSR_WnR_Pos            
+\def DFSR_FS1_Pos            
+\def DFSR_Domain_Pos         
+\def DFSR_FS0_Pos            
+*/
+/** @} */
+/* end group CMSIS_DFSR */
+
+/* CP15 Register IFSR */
+/**
+\defgroup CMSIS_IFSR Core Register IFSR
+\ingroup core_reg_func_gr
+\brief Type definitions and defines for IFSR
+@{
+*/
+/**
+\struct IFSR_Type
+
+\def IFSR_ExT_Pos           
+\def IFSR_FS1_Pos           
+\def IFSR_FS0_Pos           
+*/
+/** @} */
+/* end group CMSIS_IFSR */
+
+/* CP15 Register ISR */
+/**
+\defgroup CMSIS_ISR Core Register ISR
+\ingroup core_reg_func_gr
+\brief Type definitions and defines for ISR
+@{
+*/
+/**
+\struct ISR_Type
+
+\def ISR_A_Pos             
+\def ISR_I_Pos             
+\def ISR_F_Pos             
+*/
+
+/** @} */
+/* end group CMSIS_ISR */
+
+/** @} */ 
+/* end of group CMSIS_core_register */
