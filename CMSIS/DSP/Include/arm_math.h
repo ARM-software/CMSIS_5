@@ -81,7 +81,7 @@
    * ARM_MATH_CM0 or ARM_MATH_CM0PLUS depending on the target processor in the application.
    * For ARMv8M cores define pre processor MACRO ARM_MATH_ARMV8MBL or ARM_MATH_ARMV8MML.
    * Set Pre processor MACRO __DSP_PRESENT if ARMv8M Mainline core supports DSP instructions.
-   * 
+   *
    *
    * Examples
    * --------
@@ -1824,7 +1824,8 @@ extern "C"
 #else
     q31_t A1;           /**< The derived gain A1 = -Kp - 2Kd | Kd.*/
 #endif
-    q15_t state[3];     /**< The state array of length 3. */
+    q15_t state[2];     /**< The state array of length 2. */
+    q63_t state_acc;
     q15_t Kp;           /**< The proportional gain. */
     q15_t Ki;           /**< The integral gain. */
     q15_t Kd;           /**< The derivative gain. */
@@ -4982,7 +4983,10 @@ void arm_rfft_fast_f32(
 #endif
 
     /* acc += y[n-1] */
-    acc += (q31_t) S->state[2] << 15;
+    acc += S->state_acc;
+
+    /* Update accumulator state */
+    S->state_acc = acc;
 
     /* saturate the output */
     out = (q15_t) (__SSAT((acc >> 15), 16));
@@ -4990,7 +4994,6 @@ void arm_rfft_fast_f32(
     /* Update state */
     S->state[1] = S->state[0];
     S->state[0] = in;
-    S->state[2] = out;
 
     /* return to application */
     return (out);
