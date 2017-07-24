@@ -353,9 +353,10 @@ implementations.
 
 The default implementations provided along with CMSIS are 
 - ARM <a href="../../Core_A/html/group__GIC__functions.html">Generic Interrupt Controller (GIC)</a>
-- ARM Cortex-A <a href="../../Core_A/html/group__PTM__timer__functions.html">Private Timer (PTIM)</a>
+- ARM Cortex-A5, Cortex-A9 <a href="../../Core_A/html/group__PTM__timer__functions.html">Private Timer (PTIM)</a>
+- ARM Cortex-A7 <a href="../../Core_A/html/group__PL1__timer__functions.html">Generic Physical Timer (GTIM)</a>
 
-For devices not implementing GIC or PTIM respectively please refer to the according device family pack and select the
+For devices not implementing GIC, PTIM nor GTIM please refer to the according device family pack and select the
 proper implementations.
 
 \section cre_rtx_proj_specifics Add support for RTX specific functions

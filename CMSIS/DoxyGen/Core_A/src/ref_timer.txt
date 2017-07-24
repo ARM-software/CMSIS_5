@@ -1,8 +1,8 @@
-/* ##########################  Physical Timer functions  ############################ */
+/* ##########################  Generic Physical Timer functions  ############################ */
 /**
-\defgroup PL1_timer_functions Physical Timer Functions
+\defgroup PL1_timer_functions Generic Physical Timer Functions
 \ingroup CMSIS_Core_FunctionInterface
-\brief PL1 Physical Timer Functions allow to control privilege level 1 physical timer registers on Generic Timer for Cortex-A7 class devices.\n
+\brief Generic Physical Timer Functions allow to control privilege level 1 physical timer registers on Generic Timer for Cortex-A7 class devices.\n
 Reference: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0464f/index.html">Cortex-A7 MPCore Technical Reference Manual</a>.
 */
 /** @{ */
@@ -39,6 +39,11 @@ __STATIC_INLINE uint32_t PL1_GetCurrentValue();
 * \param value New \ref CNTP_CTL_Type "timer control value".
 */
 __STATIC_INLINE void PL1_SetControl(uint32_t value);
+
+/** Get the timer control value.
+* \return \ref CNTP_CTL_Type Timer control value.
+*/
+__STATIC_INLINE uint32_t PL1_GetControl();
 
 /** @} */
 

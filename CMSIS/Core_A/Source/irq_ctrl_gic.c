@@ -36,7 +36,7 @@
 #define IRQ_GIC_LINE_COUNT      (1020U)
 #endif
 
-static IRQHandler IRQTable[IRQ_GIC_LINE_COUNT] = { 0U };
+static IRQHandler_t IRQTable[IRQ_GIC_LINE_COUNT] = { 0U };
 static uint32_t   IRQ_ID0;
 
 /// Initialize interrupt controller.
@@ -44,7 +44,7 @@ __WEAK int32_t IRQ_Initialize (void) {
   uint32_t i;
 
   for (i = 0U; i < IRQ_GIC_LINE_COUNT; i++) {
-    IRQTable[i] = (IRQHandler)NULL;
+    IRQTable[i] = (IRQHandler_t)NULL;
   }
   GIC_Enable();
   return (0);
@@ -68,7 +68,7 @@ __WEAK int32_t IRQ_SetHandler (IRQn_ID_t irqn, IRQHandler_t handler) {
 
 /// Get the registered interrupt handler.
 __WEAK IRQHandler_t IRQ_GetHandler (IRQn_ID_t irqn) {
-  IRQHandler h;
+  IRQHandler_t h;
 
   if ((irqn >= 0) && (irqn < IRQ_GIC_LINE_COUNT)) {
     h = IRQTable[irqn];
