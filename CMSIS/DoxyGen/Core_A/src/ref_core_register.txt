@@ -99,6 +99,10 @@
 \fn __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) 
 \details
   This function assigns the given value to PL1 Physical Timer Control Register (CNTP_CTL).
+  
+\fn __STATIC_INLINE uint32_t __get_CNTP_CTL() 
+\details
+  This function returns the value of the PL1 Physical Timer Control Register. (CNTP_CTL).
 
 \fn __STATIC_INLINE void __set_TLBIALL(uint32_t value) 
 \details

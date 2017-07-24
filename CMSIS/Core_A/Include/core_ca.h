@@ -629,7 +629,7 @@ typedef struct
         RESERVED(9[1], uint32_t)
   __IOM uint32_t CLEAN_INV_LINE_INDEX_WAY;   /*!< \brief Offset: 0x07f8 (R/W) Clean and Invalidate Line by Index/Way  */
   __IOM uint32_t CLEAN_INV_WAY;              /*!< \brief Offset: 0x07fc (R/W) Clean and Invalidate by Way     */
-        RESERVED(10[0x40], uint32_t);
+        RESERVED(10[0x40], uint32_t)
   __IOM uint32_t DATA_LOCK_0_WAY;            /*!< \brief Offset: 0x0900 (R/W) Data Lockdown 0 by Way          */
   __IOM uint32_t INST_LOCK_0_WAY;            /*!< \brief Offset: 0x0904 (R/W) Instruction Lockdown 0 by Way   */
   __IOM uint32_t DATA_LOCK_1_WAY;            /*!< \brief Offset: 0x0908 (R/W) Data Lockdown 1 by Way          */
@@ -1405,6 +1405,13 @@ __STATIC_INLINE uint32_t PL1_GetCurrentValue() {
 __STATIC_INLINE void PL1_SetControl(uint32_t value) {
   __set_CNTP_CTL(value);
   __ISB();
+}
+
+/** Get the control value.
+* \return Control value.
+*/
+__STATIC_INLINE uint32_t PL1_GetControl() {
+  return(__get_CNTP_CTL());
 }
 #endif
 

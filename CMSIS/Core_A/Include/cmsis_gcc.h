@@ -705,6 +705,15 @@ __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) {
   __ASM volatile("MCR p15, 0, %0, c14, c2, 1" : : "r"(value) : "memory");
 }
 
+/** \brief  Get CNTP_CTL register
+    \return               CNTP_CTL Register value
+ */
+__STATIC_INLINE uint32_t __get_CNTP_CTL() {
+  uint32_t result;
+  __ASM volatile("MRC p15, 0, %0, c14, c2, 1" : "=r"(result));
+  return result;
+}
+
 /** \brief  Set TLBIALL
 
   TLB Invalidate All

@@ -560,6 +560,14 @@ __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) {
   __regCNTP_CTL = value;
 }
 
+/** \brief  Get CNTP_CTL register
+    \return               CNTP_CTL Register value
+ */
+__STATIC_INLINE uint32_t __get_CNTP_CTL() {
+  register uint32_t __regCNTP_CTL          __ASM("cp15:0:c14:c2:1");
+  return(__regCNTP_CTL);
+}
+
 /** \brief  Set TLBIALL (Invalidate Entire Unified TLB)
  */
 __STATIC_INLINE void __set_TLBIALL(uint32_t value) {

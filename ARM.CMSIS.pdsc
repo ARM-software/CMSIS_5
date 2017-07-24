@@ -860,6 +860,11 @@ and 8-bit Java bytecodes in Jazelle state.
       <accept Dcore="Cortex-A9"/>
     </condition>
 
+    <condition id="CA7">
+      <description>Cortex-A7 processor based device</description>
+      <accept Dcore="Cortex-A7"/>
+    </condition>
+
     <!-- ARMCC compiler -->
     <condition id="CA_ARMCC5">
       <description>Cortex-A5, Cortex-A7 or Cortex-A9 processor based device for the ARM Compiler 5</description>
@@ -1875,6 +1880,12 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Cclass="Device" Cgroup="IRQ Controller"/>
     </condition>
 
+    <condition id="OS Tick GTIM">
+      <description>Components required for OS Tick Generic Physical Timer</description>
+      <require condition="CA7"/>
+      <require Cclass="Device" Cgroup="IRQ Controller"/>
+    </condition>
+
   </conditions>
 
   <components>
@@ -2268,6 +2279,13 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>OS Tick implementation using Private Timer</description>
       <files>
         <file category="sourceC" name="CMSIS/RTOS2/Source/os_tick_ptim.c"/>
+      </files>
+    </component>
+
+    <component Cclass="Device" Cgroup="OS Tick" Csub="Generic Physical Timer" Capiversion="1.0.0" Cversion="1.0.0" condition="OS Tick GTIM">
+      <description>OS Tick implementation using Generic Physical Timer</description>
+      <files>
+        <file category="sourceC" name="CMSIS/RTOS2/Source/os_tick_gtim.c"/>
       </files>
     </component>
 
