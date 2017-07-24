@@ -417,6 +417,52 @@ __STATIC_INLINE void __set_CPACR(uint32_t cpacr)
   __ASM volatile("MCR p15, 0, %0, c1, c0, 2" : : "r"(cpacr) : "memory");
 }
 
+/** \brief  Get DFSR
+    \return               Data Fault Status Register value
+ */
+__STATIC_INLINE uint32_t __get_DFSR(void)
+{
+  uint32_t result;
+  __ASM volatile("MRC p15, 0, %0, c5, c0, 0" : "=r"(result));
+  return result;
+}
+
+/** \brief  Set DFSR
+    \param [in]    dfsr  Data Fault Status value to set
+ */
+__STATIC_INLINE void __set_DFSR(uint32_t dfsr)
+{
+  __ASM volatile("MCR p15, 0, %0, c5, c0, 0" : : "r"(dfsr) : "memory");
+}
+
+/** \brief  Get IFSR
+    \return               Instruction Fault Status Register value
+ */
+__STATIC_INLINE uint32_t __get_IFSR(void)
+{
+  uint32_t result;
+  __ASM volatile("MRC p15, 0, %0, c5, c0, 1" : "=r"(result));
+  return result;
+}
+
+/** \brief  Set IFSR
+    \param [in]    ifsr  Instruction Fault Status value to set
+ */
+__STATIC_INLINE void __set_IFSR(uint32_t ifsr)
+{
+  __ASM volatile("MCR p15, 0, %0, c5, c0, 1" : : "r"(dfsr) : "memory");
+}
+
+/** \brief  Get ISR
+    \return               Interrupt Status Register value
+ */
+__STATIC_INLINE uint32_t __get_ISR(void)
+{
+  uint32_t result;
+  __ASM volatile("MRC p15, 0, %0, c12, c1, 0" : "=r"(result));
+  return result;
+}
+
 /** \brief  Get CBAR
     \return               Configuration Base Address register value
  */

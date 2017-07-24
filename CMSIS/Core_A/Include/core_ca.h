@@ -248,6 +248,16 @@ typedef union
 #define CPSR_M_Pos                       0U                                     /*!< \brief CPSR: M Position */
 #define CPSR_M_Msk                       (0x1FUL << CPSR_M_Pos)                 /*!< \brief CPSR: M Mask */
 
+#define CPSR_M_USR                       0x10U                                  /*!< \brief CPSR: M User mode (PL0) */
+#define CPSR_M_FIQ                       0x11U                                  /*!< \brief CPSR: M Fast Interrupt mode (PL1) */
+#define CPSR_M_IRQ                       0x12U                                  /*!< \brief CPSR: M Interrupt mode (PL1) */
+#define CPSR_M_SVC                       0x13U                                  /*!< \brief CPSR: M Supervisor mode (PL1) */
+#define CPSR_M_MON                       0x16U                                  /*!< \brief CPSR: M Monitor mode (PL1) */
+#define CPSR_M_ABT                       0x17U                                  /*!< \brief CPSR: M Abort mode (PL1) */
+#define CPSR_M_HYP                       0x1AU                                  /*!< \brief CPSR: M Hypervisor mode (PL2) */
+#define CPSR_M_UND                       0x1BU                                  /*!< \brief CPSR: M Undefined mode (PL1) */
+#define CPSR_M_SYS                       0x1FU                                  /*!< \brief CPSR: M System mode (PL1) */
+
 /* CP15 Register SCTLR */
 typedef union
 {
@@ -471,10 +481,22 @@ typedef union
 {
   struct
   {
-    RESERVED(0:20, uint32_t)             
-    uint32_t cp10:2;                     /*!< \brief bit:20..21  Access rights for coprocessor 10 */
-    uint32_t cp11:2;                     /*!< \brief bit:22..23  Access rights for coprocessor 11 */
-    RESERVED(1:6, uint32_t)              
+    uint32_t CP0:2;                      /*!< \brief bit:  0..1  Access rights for coprocessor 0 */
+    uint32_t CP1:2;                      /*!< \brief bit:  2..3  Access rights for coprocessor 1 */
+    uint32_t CP2:2;                      /*!< \brief bit:  4..5  Access rights for coprocessor 2 */
+    uint32_t CP3:2;                      /*!< \brief bit:  6..7  Access rights for coprocessor 3 */
+    uint32_t CP4:2;                      /*!< \brief bit:  8..9  Access rights for coprocessor 4 */
+    uint32_t CP5:2;                      /*!< \brief bit:10..11  Access rights for coprocessor 5 */
+    uint32_t CP6:2;                      /*!< \brief bit:12..13  Access rights for coprocessor 6 */
+    uint32_t CP7:2;                      /*!< \brief bit:14..15  Access rights for coprocessor 7 */
+    uint32_t CP8:2;                      /*!< \brief bit:16..17  Access rights for coprocessor 8 */
+    uint32_t CP9:2;                      /*!< \brief bit:18..19  Access rights for coprocessor 9 */
+    uint32_t CP10:2;                     /*!< \brief bit:20..21  Access rights for coprocessor 10 */
+    uint32_t CP11:2;                     /*!< \brief bit:22..23  Access rights for coprocessor 11 */
+	uint32_t CP12:2;                     /*!< \brief bit:24..25  Access rights for coprocessor 11 */
+	uint32_t CP13:2;                     /*!< \brief bit:26..27  Access rights for coprocessor 11 */
+	uint32_t TRCDIS:1;                   /*!< \brief bit:    28  Disable CP14 access to trace registers */
+    RESERVED(0:1, uint32_t)              
     uint32_t D32DIS:1;                   /*!< \brief bit:    30  Disable use of registers D16-D31 of the VFP register file */
     uint32_t ASEDIS:1;                   /*!< \brief bit:    31  Disable Advanced SIMD Functionality */
   } b;                                   /*!< \brief Structure used for bit  access */
@@ -487,11 +509,15 @@ typedef union
 #define CPACR_D32DIS_Pos                 30U                                    /*!< \brief CPACR: D32DIS Position */
 #define CPACR_D32DIS_Msk                 (1UL << CPACR_D32DIS_Pos)              /*!< \brief CPACR: D32DIS Mask */
 
-#define CPACR_cp11_Pos                   22U                                    /*!< \brief CPACR: cp11 Position */
-#define CPACR_cp11_Msk                   (3UL << CPACR_cp11_Pos)                /*!< \brief CPACR: cp11 Mask */
+#define CPACR_TRCDIS_Pos                 28U                                    /*!< \brief CPACR: D32DIS Position */
+#define CPACR_TRCDIS_Msk                 (1UL << CPACR_D32DIS_Pos)              /*!< \brief CPACR: D32DIS Mask */
 
-#define CPACR_cp10_Pos                   20U                                    /*!< \brief CPACR: cp10 Position */
-#define CPACR_cp10_Msk                   (3UL << CPACR_cp10_Pos)                /*!< \brief CPACR: cp10 Mask */
+#define CPACR_CP_Pos_(n)                 (n*2U)                                 /*!< \brief CPACR: CPn Position */
+#define CPACR_CP_Msk_(n)                 (3UL << CPACR_CP_Pos_(n))              /*!< \brief CPACR: CPn Mask */
+
+#define CPACR_CP_NA                      0U                                     /*!< \brief CPACR CPn field: Access denied. */
+#define CPACR_CP_PL1                     1U                                     /*!< \brief CPACR CPn field: Accessible from PL1 only. */
+#define CPACR_CP_FA                      3U                                     /*!< \brief CPACR CPn field: Full access. */
 
 /* CP15 Register DFSR */
 typedef union
@@ -500,13 +526,25 @@ typedef union
   {
     uint32_t FS0:4;                      /*!< \brief bit: 0.. 3  Fault Status bits bit 0-3 */
     uint32_t Domain:4;                   /*!< \brief bit: 4.. 7  Fault on which domain */
-    RESERVED(0:2, uint32_t)              
+    RESERVED(0:1, uint32_t)              
+	uint32_t LPAE:1;                     /*!< \brief bit:     9  Large Physical Address Extension */
     uint32_t FS1:1;                      /*!< \brief bit:    10  Fault Status bits bit 4 */
     uint32_t WnR:1;                      /*!< \brief bit:    11  Write not Read bit */
     uint32_t ExT:1;                      /*!< \brief bit:    12  External abort type */
     uint32_t CM:1;                       /*!< \brief bit:    13  Cache maintenance fault */
     RESERVED(1:18, uint32_t)             
-  } b;                                   /*!< \brief Structure used for bit  access */
+  } s;                                   /*!< \brief Structure used for bit  access in short format */
+  struct
+  {
+    uint32_t STATUS:5;                   /*!< \brief bit: 0.. 5  Fault Status bits */
+    RESERVED(0:3, uint32_t)              
+	uint32_t LPAE:1;                     /*!< \brief bit:     9  Large Physical Address Extension */
+    RESERVED(1:1, uint32_t)              
+    uint32_t WnR:1;                      /*!< \brief bit:    11  Write not Read bit */
+    uint32_t ExT:1;                      /*!< \brief bit:    12  External abort type */
+    uint32_t CM:1;                       /*!< \brief bit:    13  Cache maintenance fault */
+    RESERVED(1:18, uint32_t)             
+  } l                                    /*!< \brief Structure used for bit  access in long format */
   uint32_t w;                            /*!< \brief Type      used for word access */
 } DFSR_Type;
 
@@ -522,11 +560,17 @@ typedef union
 #define DFSR_FS1_Pos                     10U                                    /*!< \brief DFSR: FS1 Position */
 #define DFSR_FS1_Msk                     (1UL << DFSR_FS1_Pos)                  /*!< \brief DFSR: FS1 Mask */
 
+#define DFSR_LPAE_Pos                    9U                                    /*!< \brief DFSR: LPAE Position */
+#define DFSR_LPAE_Msk                    (1UL << DFSR_LPAE_Pos)                /*!< \brief DFSR: LPAE Mask */
+
 #define DFSR_Domain_Pos                  4U                                     /*!< \brief DFSR: Domain Position */
 #define DFSR_Domain_Msk                  (0xFUL << DFSR_Domain_Pos)             /*!< \brief DFSR: Domain Mask */
 
 #define DFSR_FS0_Pos                     0U                                     /*!< \brief DFSR: FS0 Position */
 #define DFSR_FS0_Msk                     (0xFUL << DFSR_FS0_Pos)                /*!< \brief DFSR: FS0 Mask */
+
+#define DFSR_STATUS_Pos                  0U                                     /*!< \brief DFSR: STATUS Position */
+#define DFSR_STATUS_Msk                  (0x3FUL << DFSR_STATUS_Pos)            /*!< \brief DFSR: STATUS Mask */
 
 /* CP15 Register IFSR */
 typedef union
@@ -534,12 +578,22 @@ typedef union
   struct
   {
     uint32_t FS0:4;                      /*!< \brief bit: 0.. 3  Fault Status bits bit 0-3 */
-    RESERVED(0:6, uint32_t)              
+    RESERVED(0:5, uint32_t)              
+    uint32_t LPAE:1;                     /*!< \brief bit:     9  Large Physical Address Extension */
     uint32_t FS1:1;                      /*!< \brief bit:    10  Fault Status bits bit 4 */
     RESERVED(1:1, uint32_t)              
     uint32_t ExT:1;                      /*!< \brief bit:    12  External abort type */
     RESERVED(2:19, uint32_t)             
-  } b;                                   /*!< \brief Structure used for bit  access */
+  } s;                                   /*!< \brief Structure used for bit access in short format */
+  struct
+  {
+    uint32_t STATUS:6;                   /*!< \brief bit: 0.. 5  Fault Status bits */
+    RESERVED(0:3, uint32_t)              
+    uint32_t LPAE:1;                     /*!< \brief bit:     9  Large Physical Address Extension */
+    RESERVED(0:2, uint32_t)              
+    uint32_t ExT:1;                      /*!< \brief bit:    12  External abort type */
+    RESERVED(2:19, uint32_t)             
+  } l;                                   /*!< \brief Structure used for bit access in long format */
   uint32_t w;                            /*!< \brief Type      used for word access */
 } IFSR_Type;
 
@@ -549,8 +603,14 @@ typedef union
 #define IFSR_FS1_Pos                     10U                                    /*!< \brief IFSR: FS1 Position */
 #define IFSR_FS1_Msk                     (1UL << IFSR_FS1_Pos)                  /*!< \brief IFSR: FS1 Mask */
 
+#define IFSR_LPAE_Pos                    9U                                     /*!< \brief IFSR: LPAE Position */
+#define IFSR_LPAE_Msk                    (0x1UL << IFSR_LPAE_Pos)               /*!< \brief IFSR: LPAE Mask */
+
 #define IFSR_FS0_Pos                     0U                                     /*!< \brief IFSR: FS0 Position */
 #define IFSR_FS0_Msk                     (0xFUL << IFSR_FS0_Pos)                /*!< \brief IFSR: FS0 Mask */
+
+#define IFSR_STATUS_Pos                  0U                                     /*!< \brief IFSR: STATUS Position */
+#define IFSR_STATUS_Msk                  (0x3FUL << IFSR_STATUS_Pos)            /*!< \brief IFSR: STATUS Mask */
 
 /* CP15 Register ISR */
 typedef union
@@ -575,6 +635,12 @@ typedef union
 #define ISR_F_Pos                        11U                                    /*!< \brief ISR: F Position */
 #define ISR_F_Msk                        (1UL << ISR_F_Pos)                     /*!< \brief ISR: F Mask */
 
+/* DACR Register */
+#define DACR_D_Pos_(n)                   (2u*n)                                 /*!< \brief DACR: Dn Position */
+#define DACR_D_Msk_(n)                   (3UL << DACR_D_Pos_(n))                /*!< \brief DACR: Dn Mask */
+#define DACR_Dn_NOACCESS                 0U                                     /*!< \brief DACR Dn field: No access */
+#define DACR_Dn_CLIENT                   1U                                     /*!< \brief DACR Dn field: Client */
+#define DACR_Dn_MANAGER                  3U                                     /*!< \brief DACR Dn field: Manager */
 
 /**
   \brief     Mask and shift a bit field value for use in a register bit range.

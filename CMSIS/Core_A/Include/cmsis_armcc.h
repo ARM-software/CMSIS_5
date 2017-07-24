@@ -408,7 +408,7 @@ __STATIC_INLINE void __set_ACTLR(uint32_t actlr)
   __regACTLR = actlr;
 }
 
-/** \brief  Get the \ref CMSIS_CPACR (Coprocessor Access Control Register)
+/** \brief  Get CPACR (Coprocessor Access Control Register)
     \return               Coprocessor Access Control Register value
  */
 __STATIC_INLINE uint32_t __get_CPACR(void)
@@ -417,13 +417,58 @@ __STATIC_INLINE uint32_t __get_CPACR(void)
   return __regCPACR;
 }
 
-/** \brief  Set the \ref CMSIS_CPACR (Coprocessor Access Control Register)
+/** \brief  Set CPACR (Coprocessor Access Control Register)
     \param [in]    cpacr  Coprocessor Access Control value to set
  */
 __STATIC_INLINE void __set_CPACR(uint32_t cpacr)
 {
   register uint32_t __regCPACR         __ASM("cp15:0:c1:c0:2");
   __regCPACR = cpacr;
+}
+
+/** \brief  Get DFSR (Data Fault Status Register)
+    \return               Data Fault Status Register value
+ */
+__STATIC_INLINE uint32_t __get_DFSR(void)
+{
+  register uint32_t __regDFSR         __ASM("cp15:0:c5:c0:0");
+  return __regDFSR;
+}
+
+/** \brief  Set DFSR (Data Fault Status Register)
+    \param [in]    dfsr  Data Fault Status value to set
+ */
+__STATIC_INLINE void __set_DFSR(uint32_t dfsr)
+{
+  register uint32_t __regDFSR         __ASM("cp15:0:c5:c0:0");
+  __regDFSR = dfsr;
+}
+
+/** \brief  Get IFSR (Instruction Fault Status Register)
+    \return               Instruction Fault Status Register value
+ */
+__STATIC_INLINE uint32_t __get_IFSR(void)
+{
+  register uint32_t __regIFSR         __ASM("cp15:0:c5:c0:1");
+  return __regIFSR;
+}
+
+/** \brief  Set IFSR (Instruction Fault Status Register)
+    \param [in]    ifsr  Instruction Fault Status value to set
+ */
+__STATIC_INLINE void __set_IFSR(uint32_t ifsr)
+{
+  register uint32_t __regIFSR         __ASM("cp15:0:c5:c0:1");
+  __regIFSR = ifsr;
+}
+
+/** \brief  Get ISR (Interrupt Status Register)
+    \return               Interrupt Status Register value
+ */
+__STATIC_INLINE uint32_t __get_ISR(void)
+{
+  register uint32_t __regISR         __ASM("cp15:0:c5:c0:1");
+  return __regISR;
 }
 
 /** \brief  Get CBAR (Configuration Base Address Register)
@@ -466,7 +511,7 @@ __STATIC_INLINE void __set_DACR(uint32_t dacr) {
   __regDACR = dacr;
 }
 
-/** \brief  Set the \ref CMSIS_SCTLR (System Control Register).
+/** \brief  Set SCTLR (System Control Register).
     \param [in]    sctlr  System Control Register value to set
  */
 __STATIC_INLINE void __set_SCTLR(uint32_t sctlr)
@@ -475,7 +520,7 @@ __STATIC_INLINE void __set_SCTLR(uint32_t sctlr)
   __regSCTLR = sctlr;
 }
 
-/** \brief  Get the \ref CMSIS_SCTLR (System Control Register).
+/** \brief  Get SCTLR (System Control Register).
     \return               System Control Register value
  */
 __STATIC_INLINE uint32_t __get_SCTLR() {
