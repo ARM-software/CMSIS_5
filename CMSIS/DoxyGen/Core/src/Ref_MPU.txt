@@ -3,7 +3,7 @@
 \brief Functions that relate to the Memory Protection Unit.
 \details
 Devices based on Cortex-M processors M0+, M3, M4 and M7 optionally can contain a Memory Protection Unit.
-If available the MPU can be used to prevent errornous memory accesses.
+If available the MPU can be used to prevent erroneous memory accesses.
 
 <b>Example:</b>
 \code
@@ -40,7 +40,7 @@ typedef struct {} MPU_Type;
 
 /**
 * \def MPU_RASR
-* \brief MPU Region Attribut and Size Register Value
+* \brief MPU Region Attribute and Size Register Value
 *
 * This preprocessor function can be used to construct a valid \ref MPU_Type::RASR "RASR" value.
 * The ENABLE bit is implicitly set to 1.
@@ -50,7 +50,7 @@ typedef struct {} MPU_Type;
 * \param TypeExtField      Type extension field, allows you to configure memory access type, for example strongly ordered, peripheral.
 * \param IsShareable       Region is shareable between multiple bus masters.
 * \param IsCacheable       Region is cacheable, i.e. its value may be kept in cache.
-* \param IsBufferable      Region is bufferable, i.e. using write-back caching. Cachable but non-bufferable regions use write-through policy.
+* \param IsBufferable      Region is bufferable, i.e. using write-back caching. Cacheable but non-bufferable regions use write-through policy.
 * \param SubRegionDisable  Sub-region disable field.
 * \param Size              Region size of the region be configured, for example 4K, 8K. See \ref mpu_functions_region_size.
 */                         
@@ -404,9 +404,9 @@ that region.
 | [23:22] | -             | Reserved.                                                     |
 | [21:19] | TEX           | Type Extension.                                               |
 | [18]    | S             | Shareable.                                                    |
-| [17]    | C             | Cachable.                                                     |
+| [17]    | C             | Cacheable.                                                    |
 | [16]    | B             | Bufferable.                                                   |
-| [15:8]  | SRD           | Subregion Disable. For regions of 256 bytes or larger, each bit of this field controls whether ne of the eight equal subregions is enabled (0) or disabled (1). 
+| [15:8]  | SRD           | Subregion Disable. For regions of 256 bytes or larger, each bit of this field controls whether one of the eight equal subregions is enabled (0) or disabled (1). 
 | [7:6]   | -             | Reserved.                                                     |
 | [5:1]   | SIZE          | Indicates the region size. The region size, in bytes, is 2(SIZE+1). SIZE field values less than 4 are reserved, because the smallest supported region size is 32 bytes. |
 | [0]     | ENABLE        | 0 - This region is disabled. 1 - This region is enabled.      |

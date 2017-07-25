@@ -1,4 +1,4 @@
-/**************************************************************************//**
+/******************************************************************************
  * @file     mpu_armv7.h
  * @brief    CMSIS MPU API for ARMv7 MPU
  * @version  V5.0.2
@@ -76,28 +76,28 @@
 * \param TypeExtField      Type extension field, allows you to configure memory access type, for example strongly ordered, peripheral.
 * \param IsShareable       Region is shareable between multiple bus masters.
 * \param IsCacheable       Region is cacheable, i.e. its value may be kept in cache.
-* \param IsBufferable      Region is bufferable, i.e. using write-back caching. Cachable but non-bufferable regions use write-through policy.
+* \param IsBufferable      Region is bufferable, i.e. using write-back caching. Cacheable but non-bufferable regions use write-through policy.
 * \param SubRegionDisable  Sub-region disable field.
-* \param Size              Region size of the region be configured, for example 4K, 8K.
+* \param Size              Region size of the region to be configured, for example 4K, 8K.
 */                         
 #define MPU_RASR(DisableExec, AccessPermission, TypeExtField, IsShareable, IsCacheable, IsBufferable, SubRegionDisable, Size) \
-    ((DisableExec      << MPU_RASR_XN_Pos)     & MPU_RASR_XN_Msk)     | \
-    ((AccessPermission << MPU_RASR_AP_Pos)     & MPU_RASR_AP_Msk)     | \
-    ((TypeExtField     << MPU_RASR_TEX_Pos)    & MPU_RASR_TEX_Msk)    | \
-    ((IsShareable      << MPU_RASR_S_Pos)      & MPU_RASR_S_Msk)      | \
-    ((IsCacheable      << MPU_RASR_C_Pos)      & MPU_RASR_C_Msk)      | \
-    ((IsBufferable     << MPU_RASR_B_Pos)      & MPU_RASR_B_Msk)      | \
-    ((SubRegionDisable << MPU_RASR_SRD_Pos)    & MPU_RASR_SRD_Msk)    | \
-    ((Size             << MPU_RASR_SIZE_Pos)   & MPU_RASR_SIZE_Msk)   | \
-    ((1UL              << MPU_RASR_ENABLE_Pos) & MPU_RASR_ENABLE_Msk)
+  ((DisableExec      << MPU_RASR_XN_Pos)     & MPU_RASR_XN_Msk)     | \
+  ((AccessPermission << MPU_RASR_AP_Pos)     & MPU_RASR_AP_Msk)     | \
+  ((TypeExtField     << MPU_RASR_TEX_Pos)    & MPU_RASR_TEX_Msk)    | \
+  ((IsShareable      << MPU_RASR_S_Pos)      & MPU_RASR_S_Msk)      | \
+  ((IsCacheable      << MPU_RASR_C_Pos)      & MPU_RASR_C_Msk)      | \
+  ((IsBufferable     << MPU_RASR_B_Pos)      & MPU_RASR_B_Msk)      | \
+  ((SubRegionDisable << MPU_RASR_SRD_Pos)    & MPU_RASR_SRD_Msk)    | \
+  ((Size             << MPU_RASR_SIZE_Pos)   & MPU_RASR_SIZE_Msk)   | \
+  ((1UL              << MPU_RASR_ENABLE_Pos) & MPU_RASR_ENABLE_Msk)
 
 
 /**
 * Struct for a single MPU Region
 */
 typedef struct _MPU_Region_t {
-    uint32_t RBAR; //!< The region base address register value (RBAR)
-    uint32_t RASR; //!< The region attribute and size register value (RASR) \ref MPU_RASR
+  uint32_t RBAR; //!< The region base address register value (RBAR)
+  uint32_t RASR; //!< The region attribute and size register value (RASR) \ref MPU_RASR
 } MPU_Region_t;
     
 /** Enable the MPU.
@@ -105,20 +105,20 @@ typedef struct _MPU_Region_t {
 */
 __STATIC_INLINE void MPU_Enable(uint32_t MPU_Control)
 {
-    __DSB();
-    __ISB();
-    MPU->CTRL = MPU_Control | MPU_CTRL_ENABLE_Msk;
-    SCB->SHCSR |= SCB_SHCSR_MEMFAULTENA_Msk;
+  __DSB();
+  __ISB();
+  MPU->CTRL = MPU_Control | MPU_CTRL_ENABLE_Msk;
+  SCB->SHCSR |= SCB_SHCSR_MEMFAULTENA_Msk;
 }
 
 /** Disable the MPU.
 */
 __STATIC_INLINE void MPU_Disable()
 {
-    __DSB();
-    __ISB();
-    SCB->SHCSR &= ~SCB_SHCSR_MEMFAULTENA_Msk;
-    MPU->CTRL  &= ~MPU_CTRL_ENABLE_Msk;
+  __DSB();
+  __ISB();
+  SCB->SHCSR &= ~SCB_SHCSR_MEMFAULTENA_Msk;
+  MPU->CTRL  &= ~MPU_CTRL_ENABLE_Msk;
 }
 
 /** Clear and disable the given MPU region.
@@ -126,8 +126,8 @@ __STATIC_INLINE void MPU_Disable()
 */
 __STATIC_INLINE void MPU_ClrRegion(uint32_t rnr)
 {
-    MPU->RNR = rnr;
-    MPU->RASR = 0u;
+  MPU->RNR = rnr;
+  MPU->RASR = 0u;
 }
 
 /** Configure an MPU region.
@@ -136,8 +136,8 @@ __STATIC_INLINE void MPU_ClrRegion(uint32_t rnr)
 */   
 __STATIC_INLINE void MPU_SetRegion(uint32_t rbar, uint32_t rasr)
 {
-    MPU->RBAR = rbar;
-    MPU->RASR = rasr;
+  MPU->RBAR = rbar;
+  MPU->RASR = rasr;
 }
 
 /** Configure the given MPU region.
@@ -147,9 +147,9 @@ __STATIC_INLINE void MPU_SetRegion(uint32_t rbar, uint32_t rasr)
 */   
 __STATIC_INLINE void MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t rasr)
 {
-    MPU->RNR = rnr;
-    MPU->RBAR = rbar;
-    MPU->RASR = rasr;
+  MPU->RNR = rnr;
+  MPU->RBAR = rbar;
+  MPU->RASR = rasr;
 }
 
 /** Memcopy with strictly ordered memory access, e.g. for register targets.
@@ -159,11 +159,11 @@ __STATIC_INLINE void MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t rasr)
 */
 __STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRICT src, uint32_t len)
 {
-		uint32_t i;
-    for (i = 0u; i < len; ++i) 
-    {
-        dst[i] = src[i];
-    }
+  uint32_t i;
+  for (i = 0u; i < len; ++i) 
+  {
+    dst[i] = src[i];
+  }
 }
 
 /** Load the given number of MPU regions from a table.
@@ -172,7 +172,7 @@ __STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRI
 */
 __STATIC_INLINE void MPU_Load(MPU_Region_t const* table, uint32_t cnt) 
 {
-    orderedCpy(&(MPU->RBAR), &(table->RBAR), cnt*sizeof(MPU_Region_t)/4u);
+  orderedCpy(&(MPU->RBAR), &(table->RBAR), cnt*sizeof(MPU_Region_t)/4u);
 }
 
 #endif
