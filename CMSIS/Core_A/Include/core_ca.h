@@ -543,8 +543,8 @@ typedef union
     uint32_t WnR:1;                      /*!< \brief bit:    11  Write not Read bit */
     uint32_t ExT:1;                      /*!< \brief bit:    12  External abort type */
     uint32_t CM:1;                       /*!< \brief bit:    13  Cache maintenance fault */
-    RESERVED(1:18, uint32_t)             
-  } l                                    /*!< \brief Structure used for bit  access in long format */
+    RESERVED(2:18, uint32_t)             
+  } l;                                   /*!< \brief Structure used for bit  access in long format */
   uint32_t w;                            /*!< \brief Type      used for word access */
 } DFSR_Type;
 
@@ -590,7 +590,7 @@ typedef union
     uint32_t STATUS:6;                   /*!< \brief bit: 0.. 5  Fault Status bits */
     RESERVED(0:3, uint32_t)              
     uint32_t LPAE:1;                     /*!< \brief bit:     9  Large Physical Address Extension */
-    RESERVED(0:2, uint32_t)              
+    RESERVED(1:2, uint32_t)              
     uint32_t ExT:1;                      /*!< \brief bit:    12  External abort type */
     RESERVED(2:19, uint32_t)             
   } l;                                   /*!< \brief Structure used for bit access in long format */
