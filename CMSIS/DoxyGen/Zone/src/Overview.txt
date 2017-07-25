@@ -24,7 +24,7 @@ The following sections explain:
 
 \b CMSIS-Zone simplifies to manage the complexity and the configuration of modern embedded systems that frequently include multiple processors and/or memory protection hardware.
 It helps to split the embedded application various projects which creates the need to partition system resources.
-And, it simplifies the consistent configuration of access rights across the system, for example when using a MPU (memory protection unit).
+And it simplifies the consistent configuration of access rights across the system, for example when using an MPU (memory protection unit).
 
 The following section describes several uses cases that benefit from \b CMSIS-Zone.
 
@@ -37,7 +37,7 @@ to segregate parts of an application. Thus the need to partition the system reso
 
 \subsection UseCase_TrustZone TrustZone Partitioning
 
-TrustZone extensions add another degree of segregate which must be handled consistently.
+TrustZone extensions add another degree of segregation which must be handled consistently.
 In this case one has to handle MPU settings per security context and SAU configuration.
 
 \image html trustzone.png  "TrustZone Partitioning and MPU Protection"
