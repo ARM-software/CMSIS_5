@@ -22,8 +22,8 @@
  * limitations under the License.
  */
  
-#ifndef MPU_ARMV7_H
-#define MPU_ARMV7_H
+#ifndef ARM_MPU_ARMV7_H
+#define ARM_MPU_ARMV7_H
 
 #define ARM_MPU_REGION_SIZE_32B      ((uint8_t)0x04U)
 #define ARM_MPU_REGION_SIZE_64B      ((uint8_t)0x05U)
@@ -66,7 +66,7 @@
 * \param Region The region to be configured, number 0 to 15.
 * \param BaseAddress The base address for the region.
 */
-#define MPU_RBAR(Region, BaseAddress) ((BaseAddress & MPU_RBAR_ADDR_Msk) | (Region & MPU_RBAR_REGION_Msk) | (1UL << MPU_RBAR_VALID_Pos))
+#define ARM_MPU_RBAR(Region, BaseAddress) ((BaseAddress & MPU_RBAR_ADDR_Msk) | (Region & MPU_RBAR_REGION_Msk) | (1UL << MPU_RBAR_VALID_Pos))
 
 /**
 * MPU Region Attribut and Size Register Value
@@ -80,7 +80,7 @@
 * \param SubRegionDisable  Sub-region disable field.
 * \param Size              Region size of the region to be configured, for example 4K, 8K.
 */                         
-#define MPU_RASR(DisableExec, AccessPermission, TypeExtField, IsShareable, IsCacheable, IsBufferable, SubRegionDisable, Size) \
+#define ARM_MPU_RASR(DisableExec, AccessPermission, TypeExtField, IsShareable, IsCacheable, IsBufferable, SubRegionDisable, Size) \
   ((DisableExec      << MPU_RASR_XN_Pos)     & MPU_RASR_XN_Msk)     | \
   ((AccessPermission << MPU_RASR_AP_Pos)     & MPU_RASR_AP_Msk)     | \
   ((TypeExtField     << MPU_RASR_TEX_Pos)    & MPU_RASR_TEX_Msk)    | \
@@ -95,15 +95,15 @@
 /**
 * Struct for a single MPU Region
 */
-typedef struct _MPU_Region_t {
+typedef struct _ARM_MPU_Region_t {
   uint32_t RBAR; //!< The region base address register value (RBAR)
   uint32_t RASR; //!< The region attribute and size register value (RASR) \ref MPU_RASR
-} MPU_Region_t;
+} ARM_MPU_Region_t;
     
 /** Enable the MPU.
 * \param MPU_Control Default access permissions for unconfigured regions.
 */
-__STATIC_INLINE void MPU_Enable(uint32_t MPU_Control)
+__STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_Control)
 {
   __DSB();
   __ISB();
@@ -113,7 +113,7 @@ __STATIC_INLINE void MPU_Enable(uint32_t MPU_Control)
 
 /** Disable the MPU.
 */
-__STATIC_INLINE void MPU_Disable()
+__STATIC_INLINE void ARM_MPU_Disable()
 {
   __DSB();
   __ISB();
@@ -124,7 +124,7 @@ __STATIC_INLINE void MPU_Disable()
 /** Clear and disable the given MPU region.
 * \param rnr Region number to be cleared.
 */
-__STATIC_INLINE void MPU_ClrRegion(uint32_t rnr)
+__STATIC_INLINE void ARM_MPU_ClrRegion(uint32_t rnr)
 {
   MPU->RNR = rnr;
   MPU->RASR = 0u;
@@ -134,7 +134,7 @@ __STATIC_INLINE void MPU_ClrRegion(uint32_t rnr)
 * \param rbar Value for RBAR register.
 * \param rsar Value for RSAR register.
 */   
-__STATIC_INLINE void MPU_SetRegion(uint32_t rbar, uint32_t rasr)
+__STATIC_INLINE void ARM_MPU_SetRegion(uint32_t rbar, uint32_t rasr)
 {
   MPU->RBAR = rbar;
   MPU->RASR = rasr;
@@ -145,7 +145,7 @@ __STATIC_INLINE void MPU_SetRegion(uint32_t rbar, uint32_t rasr)
 * \param rbar Value for RBAR register.
 * \param rsar Value for RSAR register.
 */   
-__STATIC_INLINE void MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t rasr)
+__STATIC_INLINE void ARM_MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t rasr)
 {
   MPU->RNR = rnr;
   MPU->RBAR = rbar;
@@ -170,9 +170,9 @@ __STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRI
 * \param table Pointer to the MPU configuration table.
 * \param cnt Amount of regions to be configured.
 */
-__STATIC_INLINE void MPU_Load(MPU_Region_t const* table, uint32_t cnt) 
+__STATIC_INLINE void ARM_MPU_Load(ARM_MPU_Region_t const* table, uint32_t cnt) 
 {
-  orderedCpy(&(MPU->RBAR), &(table->RBAR), cnt*sizeof(MPU_Region_t)/4u);
+  orderedCpy(&(MPU->RBAR), &(table->RBAR), cnt*sizeof(ARM_MPU_Region_t)/4u);
 }
 
 #endif
