@@ -54,7 +54,7 @@ volatile int counterC;
 
 
 static int callbackA (int val)  {
-	return (val);
+  return (val);
 }
 
 __attribute__((noreturn))
@@ -69,15 +69,14 @@ void ThreadA (void *argument)  {
 }
 
 static int callbackB (int val)  {
-	int32_t flags;
-	
-	flags = osThreadFlagsWait (1, osFlagsWaitAny, osWaitForever);
-	if (flags == 1)  {
-	  return (val+1);
-	}
-	else {
-		return (0);
-	}
+  uint32_t flags;
+  
+  flags = osThreadFlagsWait (1u, osFlagsWaitAny, osWaitForever);
+  if (flags == 1u)  {
+    return (val+1);
+  } else {
+    return (0);
+  }
 }
 
 
@@ -98,7 +97,7 @@ void ThreadC (void *argument) {
 
   for (;;) {
     counterC = counterC + 1;
-		if ((counterC % 0x10) == 0)  {
+    if ((counterC % 0x10) == 0)  {
       osThreadFlagsSet (ThreadB_Id, 1);
     }
     osDelay(1U);
@@ -113,10 +112,10 @@ void ThreadC (void *argument) {
 void thread_stack_overflow (void);
 void thread_stack_overflow (void) {
   volatile uint32_t foo [1024];
-	uint32_t i;
-	for (i=0; i<1024; i++)  {
+  uint32_t i;
+  for (i=0; i<1024; i++)  {
     foo[i] = i+i;;
-	}
+  }
 }  
 
 
@@ -207,15 +206,15 @@ __NO_RETURN void ThreadD (void *argument) {
 
   TestCase = 0xFFFFFFFF;  
   WatchdogToken = StartWatchdog_s ();                 /* start watchdog in secure mode */
-	GetIncidentLog_s (&IncidentLogCopy);                /* get incident log and draw the table */
+  GetIncidentLog_s (&IncidentLogCopy);                /* get incident log and draw the table */
 
   while (1) {
     FeedWatchdog_s (WatchdogToken);
     osDelay (50);
 
-		if (TestCase < (sizeof (TestCases) / sizeof(TestCases[0])))  {
+    if (TestCase < (sizeof (TestCases) / sizeof(TestCases[0])))  {
       TestCases [TestCase].TestFunc ();               /* execute selected test */
-		}
+    }
   }
 }
 
@@ -231,7 +230,7 @@ int main (void) {
   ThreadA_Id = osThreadNew(ThreadA, NULL, &ThreadAttr);
   ThreadB_Id = osThreadNew(ThreadB, NULL, &ThreadAttr);
   ThreadC_Id = osThreadNew(ThreadC, NULL, NULL);
-	ThreadD_Id = osThreadNew(ThreadD, NULL, &ThreadAttr);
+  ThreadD_Id = osThreadNew(ThreadD, NULL, &ThreadAttr);
 
   Status = osKernelStart();
 

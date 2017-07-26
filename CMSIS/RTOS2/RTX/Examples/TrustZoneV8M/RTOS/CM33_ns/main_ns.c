@@ -47,7 +47,7 @@ volatile int counterC;
 
 
 static int callbackA (int val)  {
-	return (val);
+  return (val);
 }
 
 __attribute__((noreturn))
@@ -62,15 +62,14 @@ void ThreadA (void *argument)  {
 }
 
 static int callbackB (int val)  {
-	int32_t flags;
-	
-	flags = osThreadFlagsWait (1, osFlagsWaitAny, osWaitForever);
-	if (flags == 1)  {
-	  return (val+1);
-	}
-	else {
-		return (0);
-	}
+  uint32_t flags;
+  
+  flags = osThreadFlagsWait (1u, osFlagsWaitAny, osWaitForever);
+  if (flags == 1u)  {
+    return (val+1);
+  }  else {
+    return (0);
+  }
 }
 
 
@@ -90,14 +89,12 @@ void ThreadC (void *argument) {
 
   for (;;) {
     counterC = counterC + 1;
-		if ((counterC % 0x10) == 0)  {
+    if ((counterC % 0x10) == 0)  {
       osThreadFlagsSet (ThreadB_Id, 1);
     }
     osDelay(1U);
   }
 }
-
-
 
 static const osThreadAttr_t ThreadAttr = {
   .tz_module = 1U,                  // indicate calls to secure mode
