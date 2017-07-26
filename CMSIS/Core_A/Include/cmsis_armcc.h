@@ -661,7 +661,7 @@ __STATIC_INLINE void __set_DCCIMVAC(uint32_t value) {
 }
 
 /** \brief  Clean and Invalidate the entire data or unified cache
- * \param op 0 - invalidate, 1 - clean, otherwise - invalidate and clean
+ * \param [in] op 0 - invalidate, 1 - clean, otherwise - invalidate and clean
  */
 __STATIC_INLINE __ASM void __L1C_CleanInvalidateCache(uint32_t op) {
         ARM

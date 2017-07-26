@@ -450,7 +450,7 @@ __STATIC_INLINE uint32_t __get_IFSR(void)
  */
 __STATIC_INLINE void __set_IFSR(uint32_t ifsr)
 {
-  __ASM volatile("MCR p15, 0, %0, c5, c0, 1" : : "r"(dfsr) : "memory");
+  __ASM volatile("MCR p15, 0, %0, c5, c0, 1" : : "r"(ifsr) : "memory");
 }
 
 /** \brief  Get ISR

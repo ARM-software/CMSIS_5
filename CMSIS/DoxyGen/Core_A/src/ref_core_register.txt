@@ -3,6 +3,7 @@
 \defgroup CMSIS_core_register Core Register Access
 \brief Functions to access the Cortex-A core registers
 \details
+
 */
 /* end group CMSIS_core_register */
 
