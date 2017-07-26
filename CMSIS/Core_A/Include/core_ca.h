@@ -731,41 +731,41 @@ typedef struct
 */
 typedef struct
 {
-  __IOM uint32_t D_CTLR;                 /*!< \brief  Offset: 0x000 (R/W) Distributor Control Register */
-  __IM  uint32_t D_TYPER;                /*!< \brief  Offset: 0x004 (R/ ) Interrupt Controller Type Register */
-  __IM  uint32_t D_IIDR;                 /*!< \brief  Offset: 0x008 (R/ ) Distributor Implementer Identification Register */
+  __IOM uint32_t CTLR;                 /*!< \brief  Offset: 0x000 (R/W) Distributor Control Register */
+  __IM  uint32_t TYPER;                /*!< \brief  Offset: 0x004 (R/ ) Interrupt Controller Type Register */
+  __IM  uint32_t IIDR;                 /*!< \brief  Offset: 0x008 (R/ ) Distributor Implementer Identification Register */
         RESERVED(0, uint32_t)
-  __IOM uint32_t D_STATUSR;              /*!< \brief  Offset: 0x010 (R/W) Error Reporting Status Register, optional */
+  __IOM uint32_t STATUSR;              /*!< \brief  Offset: 0x010 (R/W) Error Reporting Status Register, optional */
         RESERVED(1[11], uint32_t)
-  __OM  uint32_t D_SETSPI_NSR;           /*!< \brief  Offset: 0x040 ( /W) Set SPI Register */
+  __OM  uint32_t SETSPI_NSR;           /*!< \brief  Offset: 0x040 ( /W) Set SPI Register */
         RESERVED(2, uint32_t)
-  __OM  uint32_t D_CLRSPI_NSR;           /*!< \brief  Offset: 0x048 ( /W) Clear SPI Register */
+  __OM  uint32_t CLRSPI_NSR;           /*!< \brief  Offset: 0x048 ( /W) Clear SPI Register */
         RESERVED(3, uint32_t)
-  __OM  uint32_t D_SETSPI_SR;            /*!< \brief  Offset: 0x050 ( /W) Set SPI, Secure Register */
+  __OM  uint32_t SETSPI_SR;            /*!< \brief  Offset: 0x050 ( /W) Set SPI, Secure Register */
         RESERVED(4, uint32_t)
-  __OM  uint32_t D_CLRSPI_SR;            /*!< \brief  Offset: 0x058 ( /W) Clear SPI, Secure Register */
+  __OM  uint32_t CLRSPI_SR;            /*!< \brief  Offset: 0x058 ( /W) Clear SPI, Secure Register */
         RESERVED(5[9], uint32_t)
-  __IOM uint32_t D_IGROUPR[32];          /*!< \brief  Offset: 0x080 (R/W) Interrupt Group Registers */
-  __IOM uint32_t D_ISENABLER[32];        /*!< \brief  Offset: 0x100 (R/W) Interrupt Set-Enable Registers */
-  __IOM uint32_t D_ICENABLER[32];        /*!< \brief  Offset: 0x180 (R/W) Interrupt Clear-Enable Registers */
-  __IOM uint32_t D_ISPENDR[32];          /*!< \brief  Offset: 0x200 (R/W) Interrupt Set-Pending Registers */
-  __IOM uint32_t D_ICPENDR[32];          /*!< \brief  Offset: 0x280 (R/W) Interrupt Clear-Pending Registers */
-  __IOM uint32_t D_ISACTIVER[32];        /*!< \brief  Offset: 0x300 (R/W) Interrupt Set-Active Registers */
-  __IOM uint32_t D_ICACTIVER[32];        /*!< \brief  Offset: 0x380 (R/W) Interrupt Clear-Active Registers */
-  __IOM uint8_t  D_IPRIORITYR[1020];     /*!< \brief  Offset: 0x400 (R/W) Interrupt Priority Registers */
+  __IOM uint32_t IGROUPR[32];          /*!< \brief  Offset: 0x080 (R/W) Interrupt Group Registers */
+  __IOM uint32_t ISENABLER[32];        /*!< \brief  Offset: 0x100 (R/W) Interrupt Set-Enable Registers */
+  __IOM uint32_t ICENABLER[32];        /*!< \brief  Offset: 0x180 (R/W) Interrupt Clear-Enable Registers */
+  __IOM uint32_t ISPENDR[32];          /*!< \brief  Offset: 0x200 (R/W) Interrupt Set-Pending Registers */
+  __IOM uint32_t ICPENDR[32];          /*!< \brief  Offset: 0x280 (R/W) Interrupt Clear-Pending Registers */
+  __IOM uint32_t ISACTIVER[32];        /*!< \brief  Offset: 0x300 (R/W) Interrupt Set-Active Registers */
+  __IOM uint32_t ICACTIVER[32];        /*!< \brief  Offset: 0x380 (R/W) Interrupt Clear-Active Registers */
+  __IOM uint8_t  IPRIORITYR[1020];     /*!< \brief  Offset: 0x400 (R/W) Interrupt Priority Registers */
         RESERVED(9, uint32_t)
-  __IOM uint8_t  D_ITARGETSR[1020];      /*!< \brief  Offset: 0x800 (R/W) Interrupt Targets Registers */
+  __IOM uint8_t  ITARGETSR[1020];      /*!< \brief  Offset: 0x800 (R/W) Interrupt Targets Registers */
         RESERVED(10, uint32_t)
-  __IOM uint32_t D_ICFGR[64];            /*!< \brief  Offset: 0xC00 (R/W) Interrupt Configuration Registers */
-  __IOM uint32_t D_IGRPMODR[32];         /*!< \brief  Offset: 0xD00 (R/W) Interrupt Group Modifier Registers */
+  __IOM uint32_t ICFGR[64];            /*!< \brief  Offset: 0xC00 (R/W) Interrupt Configuration Registers */
+  __IOM uint32_t IGRPMODR[32];         /*!< \brief  Offset: 0xD00 (R/W) Interrupt Group Modifier Registers */
         RESERVED(11[32], uint32_t)
-  __IOM uint32_t D_NSACR[64];            /*!< \brief  Offset: 0xE00 (R/W) Non-secure Access Control Registers */
-  __OM  uint32_t D_SGIR;                 /*!< \brief  Offset: 0xF00 ( /W) Software Generated Interrupt Register */
+  __IOM uint32_t NSACR[64];            /*!< \brief  Offset: 0xE00 (R/W) Non-secure Access Control Registers */
+  __OM  uint32_t SGIR;                 /*!< \brief  Offset: 0xF00 ( /W) Software Generated Interrupt Register */
         RESERVED(13[3], uint32_t)
-  __IOM uint8_t  D_CPENDSGIR[16];        /*!< \brief  Offset: 0xF10 (R/W) SGI Clear-Pending Registers */
-  __IOM uint8_t  D_SPENDSGIR[16];        /*!< \brief  Offset: 0xF20 (R/W) SGI Set-Pending Registers */
+  __IOM uint8_t  CPENDSGIR[16];        /*!< \brief  Offset: 0xF10 (R/W) SGI Clear-Pending Registers */
+  __IOM uint8_t  SPENDSGIR[16];        /*!< \brief  Offset: 0xF20 (R/W) SGI Set-Pending Registers */
         RESERVED(14[5236], uint32_t)
-  __IOM uint64_t D_IROUTER[988];         /*!< \brief  Offset: 0x6100(R/W) Interrupt Routing Registers */
+  __IOM uint64_t IROUTER[988];         /*!< \brief  Offset: 0x6100(R/W) Interrupt Routing Registers */
 }  GICDistributor_Type;
 
 #define GICDistributor      ((GICDistributor_Type      *)     GIC_DISTRIBUTOR_BASE ) /*!< \brief GIC Distributor register set access pointer */
@@ -774,25 +774,25 @@ typedef struct
 */
 typedef struct
 {
-  __IOM uint32_t C_CTLR;                 /*!< \brief  Offset: 0x000 (R/W) CPU Interface Control Register */
-  __IOM uint32_t C_PMR;                  /*!< \brief  Offset: 0x004 (R/W) Interrupt Priority Mask Register */
-  __IOM uint32_t C_BPR;                  /*!< \brief  Offset: 0x008 (R/W) Binary Point Register */
-  __IM  uint32_t C_IAR;                  /*!< \brief  Offset: 0x00C (R/ ) Interrupt Acknowledge Register */
-  __OM  uint32_t C_EOIR;                 /*!< \brief  Offset: 0x010 ( /W) End Of Interrupt Register */
-  __IM  uint32_t C_RPR;                  /*!< \brief  Offset: 0x014 (R/ ) Running Priority Register */
-  __IM  uint32_t C_HPPIR;                /*!< \brief  Offset: 0x018 (R/ ) Highest Priority Pending Interrupt Register */
-  __IOM uint32_t C_ABPR;                 /*!< \brief  Offset: 0x01C (R/W) Aliased Binary Point Register */
-  __IM  uint32_t C_AIAR;                 /*!< \brief  Offset: 0x020 (R/ ) Aliased Interrupt Acknowledge Register */
-  __OM  uint32_t C_AEOIR;                /*!< \brief  Offset: 0x024 ( /W) Aliased End Of Interrupt Register */
-  __IM  uint32_t C_AHPPIR;               /*!< \brief  Offset: 0x028 (R/ ) Aliased Highest Priority Pending Interrupt Register */
-  __IOM uint32_t C_STATUSR;              /*!< \brief  Offset: 0x02C (R/W) Error Reporting Status Register, optional */
+  __IOM uint32_t CTLR;                 /*!< \brief  Offset: 0x000 (R/W) CPU Interface Control Register */
+  __IOM uint32_t PMR;                  /*!< \brief  Offset: 0x004 (R/W) Interrupt Priority Mask Register */
+  __IOM uint32_t BPR;                  /*!< \brief  Offset: 0x008 (R/W) Binary Point Register */
+  __IM  uint32_t IAR;                  /*!< \brief  Offset: 0x00C (R/ ) Interrupt Acknowledge Register */
+  __OM  uint32_t EOIR;                 /*!< \brief  Offset: 0x010 ( /W) End Of Interrupt Register */
+  __IM  uint32_t RPR;                  /*!< \brief  Offset: 0x014 (R/ ) Running Priority Register */
+  __IM  uint32_t HPPIR;                /*!< \brief  Offset: 0x018 (R/ ) Highest Priority Pending Interrupt Register */
+  __IOM uint32_t ABPR;                 /*!< \brief  Offset: 0x01C (R/W) Aliased Binary Point Register */
+  __IM  uint32_t AIAR;                 /*!< \brief  Offset: 0x020 (R/ ) Aliased Interrupt Acknowledge Register */
+  __OM  uint32_t AEOIR;                /*!< \brief  Offset: 0x024 ( /W) Aliased End Of Interrupt Register */
+  __IM  uint32_t AHPPIR;               /*!< \brief  Offset: 0x028 (R/ ) Aliased Highest Priority Pending Interrupt Register */
+  __IOM uint32_t STATUSR;              /*!< \brief  Offset: 0x02C (R/W) Error Reporting Status Register, optional */
         RESERVED(15[40], uint32_t)
-  __IOM uint32_t C_APR[4];               /*!< \brief  Offset: 0x0D0 (R/W) Active Priority Register */
-  __IOM uint32_t C_NSAPR[4];             /*!< \brief  Offset: 0x0E0 (R/W) Non-secure Active Priority Register */
+  __IOM uint32_t APR[4];               /*!< \brief  Offset: 0x0D0 (R/W) Active Priority Register */
+  __IOM uint32_t NSAPR[4];             /*!< \brief  Offset: 0x0E0 (R/W) Non-secure Active Priority Register */
         RESERVED(17[3], uint32_t)
-  __IM  uint32_t C_IIDR;                 /*!< \brief  Offset: 0x0FC (R/ ) CPU Interface Identification Register */
+  __IM  uint32_t IIDR;                 /*!< \brief  Offset: 0x0FC (R/ ) CPU Interface Identification Register */
         RESERVED(18[960], uint32_t)  
-  __OM  uint32_t C_DIR;                  /*!< \brief  Offset: 0x1000( /W) Deactivate Interrupt Register */
+  __OM  uint32_t DIR;                  /*!< \brief  Offset: 0x1000( /W) Deactivate Interrupt Register */
 }  GICInterface_Type;
 
 #define GICInterface        ((GICInterface_Type        *)     GIC_INTERFACE_BASE )   /*!< \brief GIC Interface register set access pointer */
@@ -1040,110 +1040,110 @@ __STATIC_INLINE void L2C_CleanInvPa (void *pa)
 /* ##########################  GIC functions  ###################################### */
 #if (__GIC_PRESENT == 1U) || defined(DOXYGEN)
   
-/** \brief  Enable the interrupt distributor using the GIC's D_CTLR register.
+/** \brief  Enable the interrupt distributor using the GIC's CTLR register.
 */
 __STATIC_INLINE void GIC_EnableDistributor(void)
 {
-  GICDistributor->D_CTLR |= 1;
+  GICDistributor->CTLR |= 1;
 }
 
-/** \brief Disable the interrupt distributor using the GIC's D_CTLR register.
+/** \brief Disable the interrupt distributor using the GIC's CTLR register.
 */
 __STATIC_INLINE void GIC_DisableDistributor(void)
 {
-  GICDistributor->D_CTLR &=~1;
+  GICDistributor->CTLR &=~1;
 }
 
-/** \brief Read the GIC's D_TYPER register.
-* \return GICDistributor_Type::D_TYPER
+/** \brief Read the GIC's TYPER register.
+* \return GICDistributor_Type::TYPER
 */
 __STATIC_INLINE uint32_t GIC_DistributorInfo(void)
 {
-  return (uint32_t)(GICDistributor->D_TYPER);
+  return (uint32_t)(GICDistributor->TYPER);
 }
 
-/** \brief Reads the GIC's D_IIDR register.
-* \return GICDistributor_Type::D_IIDR
+/** \brief Reads the GIC's IIDR register.
+* \return GICDistributor_Type::IIDR
 */
 __STATIC_INLINE uint32_t GIC_DistributorImplementer(void)
 {
-  return (uint32_t)(GICDistributor->D_IIDR);
+  return (uint32_t)(GICDistributor->IIDR);
 }
 
-/** \brief Sets the GIC's D_ITARGETSR register for the given interrupt.
+/** \brief Sets the GIC's ITARGETSR register for the given interrupt.
 * \param [in] IRQn Interrupt to be configured.
 * \param [in] cpu_target CPU interfaces to assign this interrupt to.
 */
 __STATIC_INLINE void GIC_SetTarget(IRQn_Type IRQn, uint32_t cpu_target)
 {
-  GICDistributor->D_ITARGETSR[((uint32_t)(int32_t)IRQn)] = (uint8_t)(cpu_target & 0xff);
+  GICDistributor->ITARGETSR[((uint32_t)(int32_t)IRQn)] = (uint8_t)(cpu_target & 0xff);
 }
 
-/** \brief Read the GIC's D_ITARGETSR register.
+/** \brief Read the GIC's ITARGETSR register.
 * \param [in] IRQn Interrupt to acquire the configuration for.
-* \return GICDistributor_Type::D_ITARGETSR
+* \return GICDistributor_Type::ITARGETSR
 */
 __STATIC_INLINE uint32_t GIC_GetTarget(IRQn_Type IRQn)
 {
-  return ((uint32_t) GICDistributor->D_ITARGETSR[((uint32_t)(int32_t)IRQn)] & 0xff);
+  return ((uint32_t) GICDistributor->ITARGETSR[((uint32_t)(int32_t)IRQn)] & 0xff);
 }
 
 /** \brief Enable the CPU's interrupt interface.
 */
 __STATIC_INLINE void GIC_EnableInterface(void)
 {
-  GICInterface->C_CTLR |= 1; //enable interface
+  GICInterface->CTLR |= 1; //enable interface
 }
 
 /** \brief Disable the CPU's interrupt interface.
 */
 __STATIC_INLINE void GIC_DisableInterface(void)
 {
-  GICInterface->C_CTLR &=~1; //disable distributor
+  GICInterface->CTLR &=~1; //disable distributor
 }
 
-/** \brief Read the CPU's C_IAR register.
-* \return GICInterface_Type::C_IAR
+/** \brief Read the CPU's IAR register.
+* \return GICInterface_Type::IAR
 */
 __STATIC_INLINE IRQn_Type GIC_AcknowledgePending(void)
 {
-  return (IRQn_Type)(GICInterface->C_IAR);
+  return (IRQn_Type)(GICInterface->IAR);
 }
 
-/** \brief Writes the given interrupt number to the CPU's C_EOIR register.
+/** \brief Writes the given interrupt number to the CPU's EOIR register.
 * \param [in] IRQn The interrupt to be signaled as finished.
 */
 __STATIC_INLINE void GIC_EndInterrupt(IRQn_Type IRQn)
 {
-  GICInterface->C_EOIR = IRQn;
+  GICInterface->EOIR = IRQn;
 }
 
-/** \brief Enables the given interrupt using GIC's D_ISENABLER register.
+/** \brief Enables the given interrupt using GIC's ISENABLER register.
 * \param [in] IRQn The interrupt to be enabled.
 */
 __STATIC_INLINE void GIC_EnableIRQ(IRQn_Type IRQn)
 {
-  GICDistributor->D_ISENABLER[IRQn / 32] = 1 << (IRQn % 32);
+  GICDistributor->ISENABLER[IRQn / 32] = 1 << (IRQn % 32);
 }
 
-/** \brief Get interrupt enable status using GIC's D_ISENABLER register.
+/** \brief Get interrupt enable status using GIC's ISENABLER register.
 * \param [in] IRQn The interrupt to be queried.
 * \return 0 - interrupt is not enabled, 1 - interrupt is enabled.
 */
 __STATIC_INLINE uint32_t GIC_GetEnableIRQ(IRQn_Type IRQn)
 {
-  return (GICDistributor->D_ISENABLER[IRQn / 32] >> (IRQn % 32)) & 0x1UL;
+  return (GICDistributor->ISENABLER[IRQn / 32] >> (IRQn % 32)) & 0x1UL;
 }
 
-/** \brief Disables the given interrupt using GIC's D_ICENABLER register.
+/** \brief Disables the given interrupt using GIC's ICENABLER register.
 * \param [in] IRQn The interrupt to be disabled.
 */
 __STATIC_INLINE void GIC_DisableIRQ(IRQn_Type IRQn)
 {
-  GICDistributor->D_ICENABLER[IRQn / 32] = 1 << (IRQn % 32);
+  GICDistributor->ICENABLER[IRQn / 32] = 1 << (IRQn % 32);
 }
 
-/** \brief Get interrupt pending status from GIC's D_ISPENDR register.
+/** \brief Get interrupt pending status from GIC's ISPENDR register.
 * \param [in] IRQn The interrupt to be queried.
 * \return 0 - interrupt is not pending, 1 - interrupt is pendig.
 */
@@ -1152,10 +1152,10 @@ __STATIC_INLINE uint32_t GIC_GetPendingIRQ(IRQn_Type IRQn)
   uint32_t pend;
 
   if (IRQn >= 16U) {
-    pend = (GICDistributor->D_ISPENDR[IRQn / 32] >> (IRQn % 32)) & 0x1UL;
+    pend = (GICDistributor->ISPENDR[IRQn / 32] >> (IRQn % 32)) & 0x1UL;
   } else {
     // INTID 0-15 Software Generated Interrupt
-    pend = GICDistributor->D_SPENDSGIR[IRQn] & 0xff;
+    pend = GICDistributor->SPENDSGIR[IRQn] & 0xff;
     // No CPU identification offered
     if (pend != 0U) {
       pend = 1U;
@@ -1167,107 +1167,107 @@ __STATIC_INLINE uint32_t GIC_GetPendingIRQ(IRQn_Type IRQn)
   return (pend);
 }
 
-/** \brief Sets the given interrupt as pending using GIC's D_ISPENDR register.
+/** \brief Sets the given interrupt as pending using GIC's ISPENDR register.
 * \param [in] IRQn The interrupt to be enabled.
 */
 __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
 {
   if (IRQn >= 16U) {
-    GICDistributor->D_ISPENDR[IRQn / 32] = 1 << (IRQn % 32);
+    GICDistributor->ISPENDR[IRQn / 32] = 1 << (IRQn % 32);
   } else {
     // INTID 0-15 Software Generated Interrupt
-    GICDistributor->D_SPENDSGIR[IRQn] = 1U;
+    GICDistributor->SPENDSGIR[IRQn] = 1U;
     // Forward the interrupt to the CPU interface that requested it
-    GICDistributor->D_SGIR = (IRQn | 0x02000000U);
+    GICDistributor->SGIR = (IRQn | 0x02000000U);
   }
 }
 
-/** \brief Clears the given interrupt from being pending using GIC's D_ICPENDR register.
+/** \brief Clears the given interrupt from being pending using GIC's ICPENDR register.
 * \param [in] IRQn The interrupt to be enabled.
 */
 __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
 {
   if (IRQn >= 16U) {
-    GICDistributor->D_ICPENDR[IRQn / 32] = 1 << (IRQn % 32);
+    GICDistributor->ICPENDR[IRQn / 32] = 1 << (IRQn % 32);
   } else {
     // INTID 0-15 Software Generated Interrupt
-    GICDistributor->D_CPENDSGIR[IRQn] = 1U;
+    GICDistributor->CPENDSGIR[IRQn] = 1U;
   }
 }
 
-/** \brief Sets the interrupt configuration using GIC's D_ICFGR register.
+/** \brief Sets the interrupt configuration using GIC's ICFGR register.
 * \param [in] IRQn The interrupt to be configured.
 * \param [in] int_config Int_config field value. Bit 0: Reserved (0 - N-N model, 1 - 1-N model for some GIC before v1)
 *                                           Bit 1: 0 - level sensitive, 1 - edge triggered
 */
 __STATIC_INLINE void GIC_SetConfiguration(IRQn_Type IRQn, uint32_t int_config)
 {
-  uint32_t icfgr = GICDistributor->D_ICFGR[IRQn / 16];
+  uint32_t icfgr = GICDistributor->ICFGR[IRQn / 16];
   uint32_t shift = (IRQn % 16) << 1;
 
   icfgr &= (    ~(0x03 << shift));
   icfgr |= (int_config << shift);
 
-  GICDistributor->D_ICFGR[IRQn / 16] = icfgr;
+  GICDistributor->ICFGR[IRQn / 16] = icfgr;
 }
 
-/** \brief Get the interrupt configuration from the GIC's D_ICFGR register.
+/** \brief Get the interrupt configuration from the GIC's ICFGR register.
 * \param [in] IRQn Interrupt to acquire the configuration for.
 * \return Int_config field value. Bit 0: Reserved (0 - N-N model, 1 - 1-N model for some GIC before v1)
 *                                 Bit 1: 0 - level sensitive, 1 - edge triggered
 */
 __STATIC_INLINE uint32_t GIC_GetConfiguration(IRQn_Type IRQn)
 {
-  return (GICDistributor->D_ICFGR[IRQn / 16] >> ((IRQn % 16) >> 1));
+  return (GICDistributor->ICFGR[IRQn / 16] >> ((IRQn % 16) >> 1));
 }
 
-/** \brief Set the priority for the given interrupt in the GIC's D_IPRIORITYR register.
+/** \brief Set the priority for the given interrupt in the GIC's IPRIORITYR register.
 * \param [in] IRQn The interrupt to be configured.
 * \param [in] priority The priority for the interrupt, lower values denote higher priorities.
 */
 __STATIC_INLINE void GIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
 {
-  GICDistributor->D_IPRIORITYR[((uint32_t)(int32_t)IRQn)] = (uint8_t)(priority);
+  GICDistributor->IPRIORITYR[((uint32_t)(int32_t)IRQn)] = (uint8_t)(priority);
 }
 
-/** \brief Read the current interrupt priority from GIC's D_IPRIORITYR register.
+/** \brief Read the current interrupt priority from GIC's IPRIORITYR register.
 * \param [in] IRQn The interrupt to be queried.
 */
 __STATIC_INLINE uint32_t GIC_GetPriority(IRQn_Type IRQn)
 {
-  return((uint32_t)GICDistributor->D_IPRIORITYR[((uint32_t)(int32_t)IRQn)]);
+  return((uint32_t)GICDistributor->IPRIORITYR[((uint32_t)(int32_t)IRQn)]);
 }
 
-/** \brief Set the interrupt priority mask using CPU's C_PMR register.
+/** \brief Set the interrupt priority mask using CPU's PMR register.
 * \param [in] priority Priority mask to be set.
 */
 __STATIC_INLINE void GIC_SetInterfacePriorityMask(uint32_t priority)
 {
-  GICInterface->C_PMR = priority & 0xff; //set priority mask
+  GICInterface->PMR = priority & 0xff; //set priority mask
 }
 
-/** \brief Read the current interrupt priority mask from CPU's C_PMR register.
-* \result GICInterface_Type::C_PMR
+/** \brief Read the current interrupt priority mask from CPU's PMR register.
+* \result GICInterface_Type::PMR
 */
 __STATIC_INLINE uint32_t GIC_GetInterfacePriorityMask(void)
 {
-  return (uint32_t)GICInterface->C_PMR;
+  return (uint32_t)GICInterface->PMR;
 }
 
-/** \brief Configures the group priority and subpriority split point using CPU's C_BPR register.
+/** \brief Configures the group priority and subpriority split point using CPU's BPR register.
 * \param [in] binary_point Amount of bits used as subpriority.
 */
 __STATIC_INLINE void GIC_SetBinaryPoint(uint32_t binary_point)
 {
-  GICInterface->C_BPR = binary_point & 0x07; //set binary point
+  GICInterface->BPR = binary_point & 0x07; //set binary point
 }
 
-/** \brief Read the current group priority and subpriority split point from CPU's C_BPR register.
-* \return GICInterface_Type::C_BPR
+/** \brief Read the current group priority and subpriority split point from CPU's BPR register.
+* \return GICInterface_Type::BPR
 */
 __STATIC_INLINE uint32_t GIC_GetBinaryPoint(void)
 {
-  return (uint32_t)GICInterface->C_BPR;
+  return (uint32_t)GICInterface->BPR;
 }
 
 /** \brief Get the status for a given interrupt.
@@ -1278,61 +1278,61 @@ __STATIC_INLINE uint32_t GIC_GetIRQStatus(IRQn_Type IRQn)
 {
   uint32_t pending, active;
 
-  active = ((GICDistributor->D_ISACTIVER[IRQn / 32])  >> (IRQn % 32)) & 0x1;
-  pending =((GICDistributor->D_ISPENDR[IRQn / 32]) >> (IRQn % 32)) & 0x1;
+  active = ((GICDistributor->ISACTIVER[IRQn / 32])  >> (IRQn % 32)) & 0x1;
+  pending =((GICDistributor->ISPENDR[IRQn / 32]) >> (IRQn % 32)) & 0x1;
 
   return ((active<<1) | pending);
 }
 
-/** \brief Generate a software interrupt using GIC's D_SGIR register.
+/** \brief Generate a software interrupt using GIC's SGIR register.
 * \param [in] IRQn Software interrupt to be generated.
 * \param [in] target_list List of CPUs the software interrupt should be forwarded to.
 * \param [in] filter_list Filter to be applied to determine interrupt receivers.
 */
 __STATIC_INLINE void GIC_SendSGI(IRQn_Type IRQn, uint32_t target_list, uint32_t filter_list)
 {
-  GICDistributor->D_SGIR = ((filter_list & 0x3) << 24) | ((target_list & 0xff) << 16) | (IRQn & 0xf);
+  GICDistributor->SGIR = ((filter_list & 0x3) << 24) | ((target_list & 0xff) << 16) | (IRQn & 0xf);
 }
 
-/** \brief Get the interrupt number of the highest interrupt pending from CPU's C_HPPIR register.
-* \return GICInterface_Type::C_HPPIR
+/** \brief Get the interrupt number of the highest interrupt pending from CPU's HPPIR register.
+* \return GICInterface_Type::HPPIR
 */
 __STATIC_INLINE uint32_t GIC_GetHighPendingIRQ(void) 
 { 
-  return GICInterface->C_HPPIR; 
+  return GICInterface->HPPIR; 
 }
 
 /** \brief Provides information about the implementer and revision of the CPU interface.
-* \return GICInterface_Type::C_IIDR
+* \return GICInterface_Type::IIDR
 */
 __STATIC_INLINE uint32_t GIC_GetInterfaceId(void)
 { 
-  return GICInterface->C_IIDR; 
+  return GICInterface->IIDR; 
 }
 
-/** \brief Set the interrupt group from the GIC's D_IGROUPR register.
+/** \brief Set the interrupt group from the GIC's IGROUPR register.
 * \param [in] IRQn The interrupt to be queried.
 * \param [in] group Interrupt group number: 0 - Group 0, 1 - Group 1
 */
 __STATIC_INLINE void GIC_SetGroup(IRQn_Type IRQn, uint32_t group)
 {
-  uint32_t igroupr = GICDistributor->D_IGROUPR[IRQn / 32];
+  uint32_t igroupr = GICDistributor->IGROUPR[IRQn / 32];
   uint32_t shift   = (IRQn % 32);
 
   igroupr &= (~(0x01       << shift));
   igroupr |= ((group & 1)  << shift);
 
-  GICDistributor->D_IGROUPR[IRQn / 32] = igroupr;
+  GICDistributor->IGROUPR[IRQn / 32] = igroupr;
 }
 #define GIC_SetSecurity         GIC_SetGroup
 
-/** \brief Get the interrupt group from the GIC's D_IGROUPR register.
+/** \brief Get the interrupt group from the GIC's IGROUPR register.
 * \param [in] IRQn The interrupt to be queried.
 * \return 0 - Group 0, 1 - Group 1
 */
 __STATIC_INLINE uint32_t GIC_GetGroup(IRQn_Type IRQn)
 {
-  return (GICDistributor->D_IGROUPR[IRQn / 32] >> (IRQn % 32)) & 0x1;
+  return (GICDistributor->IGROUPR[IRQn / 32] >> (IRQn % 32)) & 0x1;
 }
 #define GIC_GetSecurity         GIC_GetGroup
 
@@ -1344,7 +1344,7 @@ __STATIC_INLINE void GIC_DistInit(void)
   uint32_t num_irq = 0;
   uint32_t priority_field;
 
-  //A reset sets all bits in the D_IGROUPRs corresponding to the SPIs to 0,
+  //A reset sets all bits in the IGROUPRs corresponding to the SPIs to 0,
   //configuring all of the interrupts as Secure.
 
   //Disable interrupt forwarding
@@ -1353,7 +1353,7 @@ __STATIC_INLINE void GIC_DistInit(void)
   num_irq = 32 * ((GIC_DistributorInfo() & 0x1f) + 1);
 
   /* Priority level is implementation defined.
-   To determine the number of priority bits implemented write 0xFF to an D_IPRIORITYR
+   To determine the number of priority bits implemented write 0xFF to an IPRIORITYR
    priority field and read back the value stored.*/
   GIC_SetPriority((IRQn_Type)0, 0xff);
   priority_field = GIC_GetPriority((IRQn_Type)0);
@@ -1382,14 +1382,14 @@ __STATIC_INLINE void GIC_CPUInterfaceInit(void)
   IRQn_Type i;
   uint32_t priority_field;
 
-  //A reset sets all bits in the D_IGROUPRs corresponding to the SPIs to 0,
+  //A reset sets all bits in the IGROUPRs corresponding to the SPIs to 0,
   //configuring all of the interrupts as Secure.
 
   //Disable interrupt forwarding
   GIC_DisableInterface();
 
   /* Priority level is implementation defined.
-   To determine the number of priority bits implemented write 0xFF to an D_IPRIORITYR
+   To determine the number of priority bits implemented write 0xFF to an IPRIORITYR
    priority field and read back the value stored.*/
   GIC_SetPriority((IRQn_Type)0, 0xff);
   priority_field = GIC_GetPriority((IRQn_Type)0);
