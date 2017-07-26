@@ -644,16 +644,16 @@ typedef union
 
 /**
   \brief     Mask and shift a bit field value for use in a register bit range.
-  \param[in] field  Name of the register bit field.
-  \param[in] value  Value of the bit field. This parameter is interpreted as an uint32_t type.
+  \param [in] field  Name of the register bit field.
+  \param [in] value  Value of the bit field. This parameter is interpreted as an uint32_t type.
   \return           Masked and shifted value.
 */
 #define _VAL2FLD(field, value)    (((uint32_t)(value) << field ## _Pos) & field ## _Msk)
 
 /**
   \brief     Mask and shift a register value to extract a bit filed value.
-  \param[in] field  Name of the register bit field.
-  \param[in] value  Value of register. This parameter is interpreted as an uint32_t type.
+  \param [in] field  Name of the register bit field.
+  \param [in] value  Value of register. This parameter is interpreted as an uint32_t type.
   \return           Masked and shifted bit field value.
 */
 #define _FLD2VAL(field, value)    (((uint32_t)(value) & field ## _Msk) >> field ## _Pos)
@@ -832,28 +832,28 @@ typedef struct
  
 /* ##########################  L1 Cache functions  ################################# */
 
-/** \brief Enable Caches by setting I and C bits in \ref CMSIS_SCTLR "SCTLR" register.
+/** \brief Enable Caches by setting I and C bits in SCTLR register.
 */
 __STATIC_INLINE void L1C_EnableCaches(void) {
   __set_SCTLR( __get_SCTLR() | (1u << SCTLR_I_Pos) | (1u << SCTLR_C_Pos));
   __ISB();
 }
 
-/** \brief Disable Caches by clearing I and C bits in \ref CMSIS_SCTLR "SCTLR" register.
+/** \brief Disable Caches by clearing I and C bits in SCTLR register.
 */
 __STATIC_INLINE void L1C_DisableCaches(void) {
   __set_SCTLR( __get_SCTLR() & ~(1u << SCTLR_I_Pos) & ~(1u << SCTLR_C_Pos));
   __ISB();
 }
 
-/** \brief  Enable Branch Prediction by setting Z bit in \ref CMSIS_SCTLR "SCTLR" register.
+/** \brief  Enable Branch Prediction by setting Z bit in SCTLR register.
 */
 __STATIC_INLINE void L1C_EnableBTAC(void) {
   __set_SCTLR( __get_SCTLR() | (1u << SCTLR_Z_Pos));
   __ISB();
 }
 
-/** \brief  Disable Branch Prediction by clearing Z bit in \ref CMSIS_SCTLR "SCTLR" register.
+/** \brief  Disable Branch Prediction by clearing Z bit in SCTLR register.
 */
 __STATIC_INLINE void L1C_DisableBTAC(void) {
   __set_SCTLR( __get_SCTLR() & ~(1u << SCTLR_Z_Pos));
@@ -877,7 +877,7 @@ __STATIC_INLINE void L1C_InvalidateICacheAll(void) {
 }
 
 /** \brief  Clean data cache line by address.
-* \param va Pointer to data to clear the cache for.
+* \param [in] va Pointer to data to clear the cache for.
 */
 __STATIC_INLINE void L1C_CleanDCacheMVA(void *va) {
   __set_DCCMVAC((uint32_t)va);
@@ -885,7 +885,7 @@ __STATIC_INLINE void L1C_CleanDCacheMVA(void *va) {
 }
 
 /** \brief  Invalidate data cache line by address.
-* \param va Pointer to data to invalidate the cache for.
+* \param [in] va Pointer to data to invalidate the cache for.
 */
 __STATIC_INLINE void L1C_InvalidateDCacheMVA(void *va) {
   __set_DCIMVAC((uint32_t)va);
@@ -893,7 +893,7 @@ __STATIC_INLINE void L1C_InvalidateDCacheMVA(void *va) {
 }
 
 /** \brief  Clean and Invalidate data cache by address.
-* \param va Pointer to data to invalidate the cache for.
+* \param [in] va Pointer to data to invalidate the cache for.
 */
 __STATIC_INLINE void L1C_CleanInvalidateDCacheMVA(void *va) {
   __set_DCCIMVAC((uint32_t)va);
@@ -901,7 +901,7 @@ __STATIC_INLINE void L1C_CleanInvalidateDCacheMVA(void *va) {
 }
 
 /** \brief  Clean and Invalidate the entire data or unified cache
-* \param op 0 - invalidate, 1 - clean, otherwise - invalidate and clean
+* \param [in] op 0 - invalidate, 1 - clean, otherwise - invalidate and clean
 * \see __L1C_CleanInvalidateCache
 */
 __STATIC_INLINE void L1C_CleanInvalidateCache(uint32_t op) {
@@ -929,14 +929,14 @@ __STATIC_INLINE void L1C_CleanInvalidateDCacheAll(void) {
 
 /* ##########################  L2 Cache functions  ################################# */
 #if (__L2C_PRESENT == 1U) || defined(DOXYGEN)
-/** \brief Cache Sync operation by writing \ref L2C_310_TypeDef::CACHE_SYNC "CACHE_SYNC" register.
+/** \brief Cache Sync operation by writing CACHE_SYNC register.
 */
 __STATIC_INLINE void L2C_Sync(void)
 {
   L2C_310->CACHE_SYNC = 0x0;
 }
 
-/** \brief Read cache controller cache ID from \ref L2C_310_TypeDef::CACHE_ID "CACHE_ID" register.
+/** \brief Read cache controller cache ID from CACHE_ID register.
  * \return L2C_310_TypeDef::CACHE_ID
  */
 __STATIC_INLINE int L2C_GetID (void)
@@ -944,7 +944,7 @@ __STATIC_INLINE int L2C_GetID (void)
   return L2C_310->CACHE_ID;
 }
 
-/** \brief Read cache controller cache type from \ref L2C_310_TypeDef::CACHE_TYPE "CACHE_TYPE" register.
+/** \brief Read cache controller cache type from CACHE_TYPE register.
 *  \return L2C_310_TypeDef::CACHE_TYPE
 */
 __STATIC_INLINE int L2C_GetType (void)
@@ -1010,7 +1010,7 @@ __STATIC_INLINE void L2C_Disable(void)
 }
 
 /** \brief Invalidate cache by physical address
-* \param pa Pointer to data to invalidate cache for.
+* \param [in] pa Pointer to data to invalidate cache for.
 */
 __STATIC_INLINE void L2C_InvPa (void *pa)
 {
@@ -1019,7 +1019,7 @@ __STATIC_INLINE void L2C_InvPa (void *pa)
 }
 
 /** \brief Clean cache by physical address
-* \param pa Pointer to data to invalidate cache for.
+* \param [in] pa Pointer to data to invalidate cache for.
 */
 __STATIC_INLINE void L2C_CleanPa (void *pa)
 {
@@ -1028,7 +1028,7 @@ __STATIC_INLINE void L2C_CleanPa (void *pa)
 }
 
 /** \brief Clean and invalidate cache by physical address
-* \param pa Pointer to data to invalidate cache for.
+* \param [in] pa Pointer to data to invalidate cache for.
 */
 __STATIC_INLINE void L2C_CleanInvPa (void *pa)
 {
@@ -1040,21 +1040,21 @@ __STATIC_INLINE void L2C_CleanInvPa (void *pa)
 /* ##########################  GIC functions  ###################################### */
 #if (__GIC_PRESENT == 1U) || defined(DOXYGEN)
   
-/** Enable the interrupt distributor using the GIC's \ref GICDistributor_Type::D_CTLR "D_CTLR" register.
+/** \brief  Enable the interrupt distributor using the GIC's D_CTLR register.
 */
 __STATIC_INLINE void GIC_EnableDistributor(void)
 {
   GICDistributor->D_CTLR |= 1;
 }
 
-/** Disable the interrupt distributor using the GIC's \ref GICDistributor_Type::D_CTLR "D_CTLR" register.
+/** \brief Disable the interrupt distributor using the GIC's D_CTLR register.
 */
 __STATIC_INLINE void GIC_DisableDistributor(void)
 {
   GICDistributor->D_CTLR &=~1;
 }
 
-/** Read the GIC's \ref GICDistributor_Type.D_TYPER "D_TYPER" register.
+/** \brief Read the GIC's D_TYPER register.
 * \return GICDistributor_Type::D_TYPER
 */
 __STATIC_INLINE uint32_t GIC_DistributorInfo(void)
@@ -1062,7 +1062,7 @@ __STATIC_INLINE uint32_t GIC_DistributorInfo(void)
   return (uint32_t)(GICDistributor->D_TYPER);
 }
 
-/** Reads the GIC's \ref GICDistributor_Type.D_IIDR "D_IIDR" register.
+/** \brief Reads the GIC's D_IIDR register.
 * \return GICDistributor_Type::D_IIDR
 */
 __STATIC_INLINE uint32_t GIC_DistributorImplementer(void)
@@ -1070,17 +1070,17 @@ __STATIC_INLINE uint32_t GIC_DistributorImplementer(void)
   return (uint32_t)(GICDistributor->D_IIDR);
 }
 
-/** Sets the GIC's \ref GICDistributor_Type.D_ITARGETSR "D_ITARGETSR" register for the given interrupt.
-* \param IRQn Interrupt to be configured.
-* \param cpu_target CPU interfaces to assign this interrupt to.
+/** \brief Sets the GIC's D_ITARGETSR register for the given interrupt.
+* \param [in] IRQn Interrupt to be configured.
+* \param [in] cpu_target CPU interfaces to assign this interrupt to.
 */
 __STATIC_INLINE void GIC_SetTarget(IRQn_Type IRQn, uint32_t cpu_target)
 {
   GICDistributor->D_ITARGETSR[((uint32_t)(int32_t)IRQn)] = (uint8_t)(cpu_target & 0xff);
 }
 
-/** Read the GIC's \ref GICDistributor_Type.D_ITARGETSR "D_ITARGETSR" register.
-* \param IRQn Interrupt to acquire the configuration for.
+/** \brief Read the GIC's D_ITARGETSR register.
+* \param [in] IRQn Interrupt to acquire the configuration for.
 * \return GICDistributor_Type::D_ITARGETSR
 */
 __STATIC_INLINE uint32_t GIC_GetTarget(IRQn_Type IRQn)
@@ -1088,21 +1088,21 @@ __STATIC_INLINE uint32_t GIC_GetTarget(IRQn_Type IRQn)
   return ((uint32_t) GICDistributor->D_ITARGETSR[((uint32_t)(int32_t)IRQn)] & 0xff);
 }
 
-/** Enable the CPUs interrupt interface.
+/** \brief Enable the CPU's interrupt interface.
 */
 __STATIC_INLINE void GIC_EnableInterface(void)
 {
   GICInterface->C_CTLR |= 1; //enable interface
 }
 
-/** Disable the CPUs interrupt interface.
+/** \brief Disable the CPU's interrupt interface.
 */
 __STATIC_INLINE void GIC_DisableInterface(void)
 {
   GICInterface->C_CTLR &=~1; //disable distributor
 }
 
-/** Read the CPU's \ref GICInterface_Type::C_IAR "C_IAR" register.
+/** \brief Read the CPU's C_IAR register.
 * \return GICInterface_Type::C_IAR
 */
 __STATIC_INLINE IRQn_Type GIC_AcknowledgePending(void)
@@ -1110,24 +1110,24 @@ __STATIC_INLINE IRQn_Type GIC_AcknowledgePending(void)
   return (IRQn_Type)(GICInterface->C_IAR);
 }
 
-/** Writes the given interrupt number to the CPU's \ref GICInterface_Type::C_EOIR "C_EOIR" register.
-* \param IRQn The interrupt to be signaled as finished.
+/** \brief Writes the given interrupt number to the CPU's C_EOIR register.
+* \param [in] IRQn The interrupt to be signaled as finished.
 */
 __STATIC_INLINE void GIC_EndInterrupt(IRQn_Type IRQn)
 {
   GICInterface->C_EOIR = IRQn;
 }
 
-/** Enables the given interrupt using GIC's \ref GICDistributor_Type::D_ISENABLER "D_ISENABLER" register.
-* \param IRQn The interrupt to be enabled.
+/** \brief Enables the given interrupt using GIC's D_ISENABLER register.
+* \param [in] IRQn The interrupt to be enabled.
 */
 __STATIC_INLINE void GIC_EnableIRQ(IRQn_Type IRQn)
 {
   GICDistributor->D_ISENABLER[IRQn / 32] = 1 << (IRQn % 32);
 }
 
-/** Get interrupt enable status using GIC's \ref GICDistributor_Type::D_ISENABLER "D_ISENABLER" register.
-* \param IRQn The interrupt to be queried.
+/** \brief Get interrupt enable status using GIC's D_ISENABLER register.
+* \param [in] IRQn The interrupt to be queried.
 * \return 0 - interrupt is not enabled, 1 - interrupt is enabled.
 */
 __STATIC_INLINE uint32_t GIC_GetEnableIRQ(IRQn_Type IRQn)
@@ -1135,16 +1135,16 @@ __STATIC_INLINE uint32_t GIC_GetEnableIRQ(IRQn_Type IRQn)
   return (GICDistributor->D_ISENABLER[IRQn / 32] >> (IRQn % 32)) & 0x1UL;
 }
 
-/** Disables the given interrupt using GIC's \ref GICDistributor_Type::D_ICENABLER "D_ICENABLER" register.
-* \param IRQn The interrupt to be disabled.
+/** \brief Disables the given interrupt using GIC's D_ICENABLER register.
+* \param [in] IRQn The interrupt to be disabled.
 */
 __STATIC_INLINE void GIC_DisableIRQ(IRQn_Type IRQn)
 {
   GICDistributor->D_ICENABLER[IRQn / 32] = 1 << (IRQn % 32);
 }
 
-/** Get interrupt pending status from GIC's \ref GICDistributor_Type::D_ISPENDR "D_ISPENDR" register.
-* \param IRQn The interrupt to be queried.
+/** \brief Get interrupt pending status from GIC's D_ISPENDR register.
+* \param [in] IRQn The interrupt to be queried.
 * \return 0 - interrupt is not pending, 1 - interrupt is pendig.
 */
 __STATIC_INLINE uint32_t GIC_GetPendingIRQ(IRQn_Type IRQn)
@@ -1167,8 +1167,8 @@ __STATIC_INLINE uint32_t GIC_GetPendingIRQ(IRQn_Type IRQn)
   return (pend);
 }
 
-/** Sets the given interrupt as pending using GIC's \ref GICDistributor_Type::D_ISPENDR "D_ISPENDR" register.
-* \param IRQn The interrupt to be enabled.
+/** \brief Sets the given interrupt as pending using GIC's D_ISPENDR register.
+* \param [in] IRQn The interrupt to be enabled.
 */
 __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
 {
@@ -1182,8 +1182,8 @@ __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
   }
 }
 
-/** Clears the given interrupt from being pending using GIC's \ref GICDistributor_Type::D_ICPENDR "D_ICPENDR" register.
-* \param IRQn The interrupt to be enabled.
+/** \brief Clears the given interrupt from being pending using GIC's D_ICPENDR register.
+* \param [in] IRQn The interrupt to be enabled.
 */
 __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
 {
@@ -1195,9 +1195,9 @@ __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
   }
 }
 
-/** Sets the interrupt configuration using GIC's GICDistributor_Type::D_ICFGR "D_ICFGR" register.
-* \param IRQn The interrupt to be configured.
-* \param int_config Int_config field value. Bit 0: Reserved (0 - N-N model, 1 - 1-N model for some GIC before v1)
+/** \brief Sets the interrupt configuration using GIC's D_ICFGR register.
+* \param [in] IRQn The interrupt to be configured.
+* \param [in] int_config Int_config field value. Bit 0: Reserved (0 - N-N model, 1 - 1-N model for some GIC before v1)
 *                                           Bit 1: 0 - level sensitive, 1 - edge triggered
 */
 __STATIC_INLINE void GIC_SetConfiguration(IRQn_Type IRQn, uint32_t int_config)
@@ -1211,8 +1211,8 @@ __STATIC_INLINE void GIC_SetConfiguration(IRQn_Type IRQn, uint32_t int_config)
   GICDistributor->D_ICFGR[IRQn / 16] = icfgr;
 }
 
-/** Get the interrupt configuration from the GIC's GICDistributor_Type::D_ICFGR "D_ICFGR" register.
-* \param IRQn Interrupt to acquire the configuration for.
+/** \brief Get the interrupt configuration from the GIC's D_ICFGR register.
+* \param [in] IRQn Interrupt to acquire the configuration for.
 * \return Int_config field value. Bit 0: Reserved (0 - N-N model, 1 - 1-N model for some GIC before v1)
 *                                 Bit 1: 0 - level sensitive, 1 - edge triggered
 */
@@ -1221,32 +1221,32 @@ __STATIC_INLINE uint32_t GIC_GetConfiguration(IRQn_Type IRQn)
   return (GICDistributor->D_ICFGR[IRQn / 16] >> ((IRQn % 16) >> 1));
 }
 
-/** Set the priority for the given interrupt in the GIC's \ref GICDistributor_Type::D_IPRIORITYR "D_IPRIORITYR" register.
-* \param IRQn The interrupt to be configured.
-* \param priority The priority for the interrupt, lower values denote higher priorities.
+/** \brief Set the priority for the given interrupt in the GIC's D_IPRIORITYR register.
+* \param [in] IRQn The interrupt to be configured.
+* \param [in] priority The priority for the interrupt, lower values denote higher priorities.
 */
 __STATIC_INLINE void GIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
 {
   GICDistributor->D_IPRIORITYR[((uint32_t)(int32_t)IRQn)] = (uint8_t)(priority);
 }
 
-/** Read the current interrupt priority from GIC's \ref GICDistributor_Type::D_IPRIORITYR "D_IPRIORITYR" register.
-* \param IRQn The interrupt to be queried.
+/** \brief Read the current interrupt priority from GIC's D_IPRIORITYR register.
+* \param [in] IRQn The interrupt to be queried.
 */
 __STATIC_INLINE uint32_t GIC_GetPriority(IRQn_Type IRQn)
 {
   return((uint32_t)GICDistributor->D_IPRIORITYR[((uint32_t)(int32_t)IRQn)]);
 }
 
-/** Set the interrupt priority mask using CPU's \ref GICInterface_Type::C_PMR "C_PMR" register.
-* \param priority Priority mask to be set.
+/** \brief Set the interrupt priority mask using CPU's C_PMR register.
+* \param [in] priority Priority mask to be set.
 */
 __STATIC_INLINE void GIC_SetInterfacePriorityMask(uint32_t priority)
 {
   GICInterface->C_PMR = priority & 0xff; //set priority mask
 }
 
-/** Read the current interrupt priority mask from CPU's \ref GICInterface_Type::C_PMR "C_PMR" register.
+/** \brief Read the current interrupt priority mask from CPU's C_PMR register.
 * \result GICInterface_Type::C_PMR
 */
 __STATIC_INLINE uint32_t GIC_GetInterfacePriorityMask(void)
@@ -1254,15 +1254,15 @@ __STATIC_INLINE uint32_t GIC_GetInterfacePriorityMask(void)
   return (uint32_t)GICInterface->C_PMR;
 }
 
-/** Configures the group priority and subpriority split point using CPU's \ref GICInterface_Type::C_BPR "C_BPR" register.
-* \param binary_point Amount of bits used as subpriority.
+/** \brief Configures the group priority and subpriority split point using CPU's C_BPR register.
+* \param [in] binary_point Amount of bits used as subpriority.
 */
 __STATIC_INLINE void GIC_SetBinaryPoint(uint32_t binary_point)
 {
   GICInterface->C_BPR = binary_point & 0x07; //set binary point
 }
 
-/** Read the current group priority and subpriority split point from CPU's \ref GICInterface_Type::C_BPR "C_BPR" register.
+/** \brief Read the current group priority and subpriority split point from CPU's C_BPR register.
 * \return GICInterface_Type::C_BPR
 */
 __STATIC_INLINE uint32_t GIC_GetBinaryPoint(void)
@@ -1270,8 +1270,8 @@ __STATIC_INLINE uint32_t GIC_GetBinaryPoint(void)
   return (uint32_t)GICInterface->C_BPR;
 }
 
-/** Get the status for a given interrupt.
-* \param IRQn The interrupt to get status for.
+/** \brief Get the status for a given interrupt.
+* \param [in] IRQn The interrupt to get status for.
 * \return 0 - not pending/active, 1 - pending, 2 - active, 3 - pending and active
 */
 __STATIC_INLINE uint32_t GIC_GetIRQStatus(IRQn_Type IRQn)
@@ -1284,17 +1284,17 @@ __STATIC_INLINE uint32_t GIC_GetIRQStatus(IRQn_Type IRQn)
   return ((active<<1) | pending);
 }
 
-/** Generate a software interrupt using GIC's \ref GICDistributor_Type::D_SGIR "D_SGIR" register.
-* \param IRQn Software interrupt to be generated.
-* \param target_list List of CPUs the software interrupt should be forwarded to.
-* \param filter_list Filter to be applied to determine interrupt receivers.
+/** \brief Generate a software interrupt using GIC's D_SGIR register.
+* \param [in] IRQn Software interrupt to be generated.
+* \param [in] target_list List of CPUs the software interrupt should be forwarded to.
+* \param [in] filter_list Filter to be applied to determine interrupt receivers.
 */
 __STATIC_INLINE void GIC_SendSGI(IRQn_Type IRQn, uint32_t target_list, uint32_t filter_list)
 {
   GICDistributor->D_SGIR = ((filter_list & 0x3) << 24) | ((target_list & 0xff) << 16) | (IRQn & 0xf);
 }
 
-/** Get the interrupt number of the highest interrupt pending from CPU's \ref GICInterface_Type::C_HPPIR "C_HPPIR" register.
+/** \brief Get the interrupt number of the highest interrupt pending from CPU's C_HPPIR register.
 * \return GICInterface_Type::C_HPPIR
 */
 __STATIC_INLINE uint32_t GIC_GetHighPendingIRQ(void) 
@@ -1302,7 +1302,7 @@ __STATIC_INLINE uint32_t GIC_GetHighPendingIRQ(void)
   return GICInterface->C_HPPIR; 
 }
 
-/** Provides information about the implementer and revision of the CPU interface.
+/** \brief Provides information about the implementer and revision of the CPU interface.
 * \return GICInterface_Type::C_IIDR
 */
 __STATIC_INLINE uint32_t GIC_GetInterfaceId(void)
@@ -1310,9 +1310,9 @@ __STATIC_INLINE uint32_t GIC_GetInterfaceId(void)
   return GICInterface->C_IIDR; 
 }
 
-/** Set the interrupt group from the GIC's GICDistributor_Type::D_IGROUPR "D_IGROUPR" register.
-* \param IRQn The interrupt to be queried.
-* \param group Interrupt group number: 0 - Group 0, 1 - Group 1
+/** \brief Set the interrupt group from the GIC's D_IGROUPR register.
+* \param [in] IRQn The interrupt to be queried.
+* \param [in] group Interrupt group number: 0 - Group 0, 1 - Group 1
 */
 __STATIC_INLINE void GIC_SetGroup(IRQn_Type IRQn, uint32_t group)
 {
@@ -1326,8 +1326,8 @@ __STATIC_INLINE void GIC_SetGroup(IRQn_Type IRQn, uint32_t group)
 }
 #define GIC_SetSecurity         GIC_SetGroup
 
-/** Get the interrupt group from the GIC's GICDistributor_Type::D_IGROUPR "D_IGROUPR" register.
-* \param IRQn The interrupt to be queried.
+/** \brief Get the interrupt group from the GIC's D_IGROUPR register.
+* \param [in] IRQn The interrupt to be queried.
 * \return 0 - Group 0, 1 - Group 1
 */
 __STATIC_INLINE uint32_t GIC_GetGroup(IRQn_Type IRQn)
@@ -1336,7 +1336,7 @@ __STATIC_INLINE uint32_t GIC_GetGroup(IRQn_Type IRQn)
 }
 #define GIC_GetSecurity         GIC_GetGroup
 
-/** Initialize the interrupt distributor.
+/** \brief Initialize the interrupt distributor.
 */
 __STATIC_INLINE void GIC_DistInit(void)
 {
@@ -1375,7 +1375,7 @@ __STATIC_INLINE void GIC_DistInit(void)
   GIC_EnableDistributor();
 }
 
-/** Initialize the CPU's interrupt interface
+/** \brief Initialize the CPU's interrupt interface
 */
 __STATIC_INLINE void GIC_CPUInterfaceInit(void)
 {
@@ -1414,7 +1414,7 @@ __STATIC_INLINE void GIC_CPUInterfaceInit(void)
   GIC_SetInterfacePriorityMask(0xff);
 }
 
-/** Initialize and enable the GIC
+/** \brief Initialize and enable the GIC
 */
 __STATIC_INLINE void GIC_Enable(void)
 {
@@ -1442,38 +1442,38 @@ typedef union
   uint32_t w;               /*!< \brief Type      used for word access */
 } CNTP_CTL_Type;
 
-/** Configures the frequency the timer shall run at.
-* \param value The timer frequency in Hz.
+/** \brief Configures the frequency the timer shall run at.
+* \param [in] value The timer frequency in Hz.
 */
 __STATIC_INLINE void PL1_SetCounterFrequency(uint32_t value) {
   __set_CNTFRQ(value);
   __ISB();
 }
 
-/** Sets the reset value of the timer.
-* \param value The value the timer is loaded with.
+/** \brief Sets the reset value of the timer.
+* \param [in] value The value the timer is loaded with.
 */
 __STATIC_INLINE void PL1_SetLoadValue(uint32_t value) {
   __set_CNTP_TVAL(value);
   __ISB();
 }
 
-/** Get the current counter value.
+/** \brief Get the current counter value.
 * \return Current counter value.
 */
 __STATIC_INLINE uint32_t PL1_GetCurrentValue() {
   return(__get_CNTP_TVAL());
 }
 
-/** Configure the timer by setting the control value.
-* \param value New timer control value.
+/** \brief Configure the timer by setting the control value.
+* \param [in] value New timer control value.
 */
 __STATIC_INLINE void PL1_SetControl(uint32_t value) {
   __set_CNTP_CTL(value);
   __ISB();
 }
 
-/** Get the control value.
+/** \brief Get the control value.
 * \return Control value.
 */
 __STATIC_INLINE uint32_t PL1_GetControl() {
@@ -1483,55 +1483,55 @@ __STATIC_INLINE uint32_t PL1_GetControl() {
 
 /* Private Timer */
 #if ((__CORTEX_A == 5U) || (__CORTEX_A == 9U)) || defined(DOXYGEN)
-/** Set the load value to timers \ref Timer_Type::LOAD "LOAD" register.
-* \param value The load value to be set.
+/** \brief Set the load value to timers LOAD register.
+* \param [in] value The load value to be set.
 */
 __STATIC_INLINE void PTIM_SetLoadValue(uint32_t value) {
   PTIM->LOAD = value;
 }
 
-/** Get the load value from timers \ref Timer_Type::LOAD "LOAD" register.
+/** \brief Get the load value from timers LOAD register.
 * \return Timer_Type::LOAD
 */
 __STATIC_INLINE uint32_t PTIM_GetLoadValue() {
   return(PTIM->LOAD);
 }
 
-/** Set current counter value from its \ref Timer_Type::COUNTER "COUNTER" register.
+/** \brief Set current counter value from its COUNTER register.
 */
 __STATIC_INLINE void PTIM_SetCurrentValue(uint32_t value) {
   PTIM->COUNTER = value;
 }
 
-/** Get current counter value from timers \ref Timer_Type::COUNTER "COUNTER" register.
+/** \brief Get current counter value from timers COUNTER register.
 * \result Timer_Type::COUNTER
 */
 __STATIC_INLINE uint32_t PTIM_GetCurrentValue() {
   return(PTIM->COUNTER);
 }
 
-/** Configure the timer using its \ref Timer_Type::CONTROL "CONTROL" register.
-* \param value The new configuration value to be set.
+/** \brief Configure the timer using its CONTROL register.
+* \param [in] value The new configuration value to be set.
 */
 __STATIC_INLINE void PTIM_SetControl(uint32_t value) {
   PTIM->CONTROL = value;
 }
 
-/** Get the current timer configuration from its \ref Timer_Type::CONTROL "CONTROL" register.
+/** ref Timer_Type::CONTROL Get the current timer configuration from its CONTROL register.
 * \return Timer_Type::CONTROL
 */
 __STATIC_INLINE uint32_t PTIM_GetControl(void) {
   return(PTIM->CONTROL);
 }
 
-/** Get the event flag in timers \ref Timer_Type::ISR "ISR" register.
+/** ref Timer_Type::CONTROL Get the event flag in timers ISR register.
 * \return 0 - flag is not set, 1- flag is set
 */
 __STATIC_INLINE uint32_t PTIM_GetEventFlag(void) {
   return (PTIM->ISR & 1UL);
 }
 
-/** Clears the event flag in timers \ref Timer_Type::ISR "ISR" register.
+/** ref Timer_Type::CONTROL Clears the event flag in timers ISR register.
 */
 __STATIC_INLINE void PTIM_ClearEventFlag(void) {
   PTIM->ISR = 1;

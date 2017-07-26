@@ -1,63 +1,15 @@
-/* ##########################  Core Register Defines  ################################# */
-
 /* ###########################  Core Function Access  ########################### */
 /** 
-\defgroup core_reg_func_gr Core Register Access
+\defgroup CMSIS_core_register Core Register Access
 \brief Functions to access the Cortex-A core registers
-@{
+\details
 */
-
-/**
-\fn __STATIC_INLINE __ASM void __set_SP(uint32_t stack)
-\details
-  This function assigns the given value to the current stack pointer.
-
-\fn __STATIC_INLINE __ASM void __set_SP_usr(uint32_t topOfProcStack)
-\details
-  This function assigns the given value to the USR/SYS Stack Pointer (PSP).
-
-\fn __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) 
-\details
-  This function assigns the given value to PL1 Physical Timer Control Register (CNTP_CTL).
-  
-\fn __STATIC_INLINE uint32_t __get_CNTP_CTL() 
-\details
-  This function returns the value of the PL1 Physical Timer Control Register. (CNTP_CTL).
-
-\fn __STATIC_INLINE void __set_TLBIALL(uint32_t value) 
-\details
-  This function invalidates entire unified TLB.
-
-\fn __STATIC_INLINE void __set_BPIALL(uint32_t value)   
-\details
-  This function writes the provided value to the Branch Predictor Invalidate All (BPIALL) register.
-
-\fn __STATIC_INLINE void __set_ICIALLU(uint32_t value) 
-\details
-  This function invalidates all instruction cache.
-
-\fn __STATIC_INLINE void __set_DCCMVAC(uint32_t value) 
-\details
-  This function cleans data or unified cache line by MVA to PoC.
-
-\fn __STATIC_INLINE void __set_DCIMVAC(uint32_t value) 
-\details
-  This function invalidates data or unified cache line by MVA to PoC.
-
-\fn __STATIC_INLINE void __set_DCCIMVAC(uint32_t value) 
-\details
-  This function cleans and invalidates data or unified cache line by MVA to PoC.
-
-*/
-/**
-@} 
-*/
-/* end group core_reg_func_gr */
+/* end group CMSIS_core_register */
 
 /* CP15 Register ACTLR */
 /**
 \defgroup CMSIS_ACTLR Auxiliary Control Register (ACTLR)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief The ACTLR provides IMPLEMENTATION DEFINED configuration and control options.
 \details
 The ACTLR characteristics are differs between various ARMv7-A implementations.
@@ -177,10 +129,49 @@ Consider using \ref __get_ACTLR and \ref __set_ACTRL to access ACTRL register.
 /** @} */
 
 /* end group CMSIS_ACTLR */
+
+/* Cache and branch predictor maintenance operations */
+/**
+\defgroup CMSIS_CBPM Cache and branch predictor maintenance operations
+\ingroup CMSIS_core_register
+\brief This section describes the cache and branch predictor maintenance operations.
+\details
+Cache maintenance operations are defined to act on particular memory locations.
+In addition, for instruction caches and branch predictors, there are operations that invalidate all entries.
+
+Consider using \ref L1_cache_functions and \ref L2_cache_functions for cache maintenance instead of
+raw register usage.
+@{
+*/
+/**
+\fn __STATIC_INLINE void __set_BPIALL(uint32_t value)   
+\details
+  This function writes the provided value to the Branch Predictor Invalidate All (BPIALL) register.
+
+\fn __STATIC_INLINE void __set_DCCIMVAC(uint32_t value) 
+\details
+  This function cleans and invalidates data or unified cache line by MVA to PoC.
+
+  \fn __STATIC_INLINE void __set_DCCMVAC(uint32_t value) 
+\details
+  This function cleans data or unified cache line by MVA to PoC.
+
+\fn __STATIC_INLINE void __set_DCIMVAC(uint32_t value) 
+\details
+  This function invalidates data or unified cache line by MVA to PoC.
+
+\fn __STATIC_INLINE void __set_ICIALLU(uint32_t value) 
+\details
+  This function invalidates all instruction cache.
+*/
+
+/** @} */
+/* end group CMSIS_CBPM */
+
 /* CBAR Register */
 /**
 \defgroup CMSIS_CBAR Configuration Base Address Register (CBAR)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief Takes the physical base address value of the memory-mapped SCU peripherals at reset from the external signal PERIPHBASE[31:13].
 \details
 
@@ -211,7 +202,7 @@ Consider \ref __get_CBAR to access this register.
 /* CP15 Register CPACR */
 /**
 \defgroup CMSIS_CPACR Coprocessor Access Control Register (CPACR)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief The CPACR controls access to coprocessors CP0 to CP13.
 \details
 The CPACR characteristics are:
@@ -288,7 +279,7 @@ The meaning of full access is defined by the appropriate coprocessor.
 /* Core Register CPSR */
 /**
 \defgroup CMSIS_CPSR Current Program Status Register (CPSR)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief The Current Program Status Register (CPSR) holds processor status and control information.
 
 The individual register bits have the following meaning:
@@ -412,7 +403,7 @@ as User mode, and is not entered by any exception.
 /* CP15 Register DFSR */
 /**
 \defgroup CMSIS_DFSR Data Fault Status Register (DFSR)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief The DFSR holds status information about the last data fault.
 \details
 
@@ -487,7 +478,7 @@ Consider \ref __get_DFSR and \ref __set_DFSR to access this register.
 /* DACR Register */
 /**
 \defgroup CMSIS_DACR Domain Access Control Register (DACR)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief DACR defines the access permission for each of the sixteen memory domains.
 \details
 
@@ -566,7 +557,7 @@ __set_DACR(__get_DACR() & ~DACR_D_Msk_(7));
 /* FPEXC Register */
 /**
 \defgroup CMSIS_FPEXC Floating-Point Exception Control register (FPEXC)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief Provides a global enable for the Advanced SIMD and Floating-point (VFP) Extensions, and
 indicates how the state of these extensions is recorded.
 \details
@@ -596,7 +587,7 @@ Consider \ref __get_FPEXC and \ref __set_FPEXC to access this register.
 /* FPSCR Register */
 /**
 \defgroup CMSIS_FPSCR Floating-point Status and Control Register (FPSCR)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief Provides floating-point system status information and control.
 
 | Bits    | Name          | Function                                                      |
@@ -657,7 +648,7 @@ Consider \ref __get_FPSCR and \ref __set_FPSCR to access this register.
 /* CP15 Register IFSR */
 /**
 \defgroup CMSIS_IFSR Instruction Fault Status Register (IFSR)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief The IFSR holds status information about the last instruction fault.
 \details
 
@@ -720,7 +711,7 @@ Consider \ref __get_IFSR and \ref __set_IFSR to access this register.
 /* CP15 Register ISR */
 /**
 \defgroup CMSIS_ISR Interrupt Status Register (ISR)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief The ISR shows whether an IRQ, FIQ, or external abort is pending.
 
 | Bits    | Name          | Function                                                      |
@@ -761,7 +752,7 @@ Consider \ref __get_IFSR to access this register.
 /* MPIDR Register */
 /**
 \defgroup CMSIS_MPIDR Multiprocessor Affinity Register (MPIDR)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief In a multiprocessor system, the MPIDR provides an additional processor identification
 mechanism for scheduling purposes, and indicates whether the implementation includes the
 Multiprocessing Extensions.
@@ -790,14 +781,47 @@ Consider \ref __get_MPIDR to access this register.
 /** @} */
 /* end group CMSIS_MPIDR */
 
+/* CNTP_CTL Register */
+/**
+\defgroup CMSIS_CNTP_CTL PL1 Physical Timer Control register (CNTP_CTL)
+\ingroup CMSIS_core_register
+\brief The control register for the physical timer.
+\details
+| Bits    | Name    | Function                                           |
+| :------ | :------ | :------------------------------------------------- |
+| [31:3]  | -       | Reserved.                                          |
+| [2]     | ISTATUS | The status of the timer.                           |
+| [1]     | IMASK   | Timer output signal mask bit.                      |
+| [0]     | ENABLE  | Enables the timer.                                 |
+
+Consider \ref __get_CNTP_CTL and \ref __set_CNTP_CTL to access this register.
+
+Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
+
+@{
+*/
+/**
+\fn __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) 
+\details
+  This function assigns the given value to PL1 Physical Timer Control Register (CNTP_CTL).
+  
+\fn __STATIC_INLINE uint32_t __get_CNTP_CTL() 
+\details
+  This function returns the value of the PL1 Physical Timer Control Register. (CNTP_CTL).
+*/
+
+/** @} */
+/* end group CMSIS_CNTP_CTL */
+
 /* CNTP_TVAL Register */
 /**
-\defgroup CMSIS_CNTP_TVAL PL1 Physical TimerValue register (CNTP_TVAL)
-\ingroup core_reg_func_gr
+\defgroup CMSIS_CNTP_TVAL PL1 Physical Timer Value register (CNTP_TVAL)
+\ingroup CMSIS_core_register
 \brief Holds the timer value for the PL1 physical timer.
 \details
 Consider \ref __get_CNTP_TVAL and \ref __set_CNTP_TVAL to access this register.
 
+Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
 @{
 */
 /**
@@ -813,10 +837,49 @@ Consider \ref __get_CNTP_TVAL and \ref __set_CNTP_TVAL to access this register.
 /** @} */
 /* end group CMSIS_CNTP_TVAL */
 
+/* Stack Pointer */
+/**
+\defgroup CMSIS_SP Stack Pointer (SP/R13)
+\ingroup CMSIS_core_register
+\brief The processor uses SP as a pointer to the active stack.
+\details 
+The Stack Pointer is banked per processor mode. Accessing the 
+active stack pointer actually returns/modifies the stack pointer
+of the current processor execution mode.
+
+| Mode        | Actual SP |
+| :---------- | :-------- |
+| User/System | SP_usr    |
+| Hypervisor  | SP_hyp    |
+| Supervisor  | SP_svc    |
+| Abort       | SP_abt    |
+| Undefined   | SP_und    |
+| Monitor     | SP_mon    |
+| IRQ         | SP_irq    |
+| FIQ         | SP_fiq    |
+
+Consider \ref __set_SP and \ref __set_SP_usr to access this register.
+
+@{
+*/
+/**
+\fn __STATIC_INLINE __ASM void __set_SP(uint32_t stack)
+\details
+  This function assigns the given value to the current stack pointer.
+
+\fn __STATIC_INLINE __ASM void __set_SP_usr(uint32_t topOfProcStack)
+\details
+  This function assigns the given value to the User/System Stack Pointer (SP_usr).
+*/
+
+/** @} */
+/* end group CMSIS_SP */
+
+
 /* CP15 Register SCTLR */
 /**
 \defgroup CMSIS_SCTLR System Control Register (SCTLR)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief The SCTLR provides the top level control of the system, including its memory system.
 \details 
 In a VMSAv7 implementation, the SCTLR bit assignments are:
@@ -908,10 +971,29 @@ Consider using \ref __get_SCTLR and \ref __set_SCTLR for accessing this register
 /** @} */
 /* end group CMSIS_SCTLR */
 
+/* TLB maintenance operations */
+/**
+\defgroup CMSIS_TLB TLB maintenance operations
+\ingroup CMSIS_core_register
+\brief This section describes the TLB operations that are implemented on all ARMv7-A implementations.
+\details 
+TLB maintenance operations provide a mechanism to invalidate entries from a TLB.
+
+Consider using \ref MMU_functions instead of raw register usage.
+@{
+*/
+/**
+\fn __STATIC_INLINE void __set_TLBIALL(uint32_t value) 
+\details
+  This function invalidates entire unified TLB.
+*/
+/** @} */
+/* end group CMSIS_TLB */
+
 /* CP15 Register TTBR0/TTBR1 */
 /**
 \defgroup CMSIS_TTBR Translation Table Base Registers (TTBR0/TTBR1)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief TTBRn holds the base address of translation table n, and information about the memory it occupies.
 \details 
 <b>32-bit TTBR format</b>
@@ -959,7 +1041,7 @@ Consider using \ref __get_TTBR0 and \ref __set_TTBR0 for accessing TTBR0 registe
 /* CP15 Register VBAR */
 /**
 \defgroup CMSIS_VBAR Vector Base Address Register (VBAR)
-\ingroup core_reg_func_gr
+\ingroup CMSIS_core_register
 \brief When high exception vectors are not selected, the VBAR holds the exception base address
 for exceptions that are not taken to Monitor mode or to Hyp mode.
 \details 

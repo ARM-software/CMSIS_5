@@ -325,18 +325,18 @@ Use this define to query the actual Cortex-A class device number implemented in 
 /*end of group version_ctrl */
 
 /**
-\defgroup CMSIS_Core_FunctionInterface Functions for Core Peripherals
+\defgroup CMSIS_Core_FunctionInterface Core Peripherals
 \brief 
 \details
 Hardware Abstraction Layer.
    The Core-A function interface contains:
+   - \ref FPU_functions
+   - \ref GIC_functions
    - \ref L1_cache_functions 
    - \ref L2_cache_functions 
-   - \ref GIC_functions
+   - \ref MMU_functions
    - \ref PL1_timer_functions
    - \ref PTM_timer_functions
-   - \ref FPU_functions
-   - \ref MMU_functions
 
 */
 
