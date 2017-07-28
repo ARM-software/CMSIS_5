@@ -762,8 +762,8 @@ typedef struct
   __IOM uint32_t NSACR[64];            /*!< \brief  Offset: 0xE00 (R/W) Non-secure Access Control Registers */
   __OM  uint32_t SGIR;                 /*!< \brief  Offset: 0xF00 ( /W) Software Generated Interrupt Register */
         RESERVED(13[3], uint32_t)
-  __IOM uint8_t  CPENDSGIR[16];        /*!< \brief  Offset: 0xF10 (R/W) SGI Clear-Pending Registers */
-  __IOM uint8_t  SPENDSGIR[16];        /*!< \brief  Offset: 0xF20 (R/W) SGI Set-Pending Registers */
+  __IOM uint32_t CPENDSGIR[4];         /*!< \brief  Offset: 0xF10 (R/W) SGI Clear-Pending Registers */
+  __IOM uint32_t SPENDSGIR[4];         /*!< \brief  Offset: 0xF20 (R/W) SGI Set-Pending Registers */
         RESERVED(14[5236], uint32_t)
   __IOM uint64_t IROUTER[988];         /*!< \brief  Offset: 0x6100(R/W) Interrupt Routing Registers */
 }  GICDistributor_Type;
@@ -1152,10 +1152,10 @@ __STATIC_INLINE uint32_t GIC_GetPendingIRQ(IRQn_Type IRQn)
   uint32_t pend;
 
   if (IRQn >= 16U) {
-    pend = (GICDistributor->ISPENDR[IRQn / 32] >> (IRQn % 32)) & 0x1UL;
+    pend = (GICDistributor->ISPENDR[IRQn / 32U] >> (IRQn % 32U)) & 0x1UL;
   } else {
     // INTID 0-15 Software Generated Interrupt
-    pend = GICDistributor->SPENDSGIR[IRQn] & 0xff;
+    pend = GICDistributor->SPENDSGIR[IRQn] & 0xFFUL;
     // No CPU identification offered
     if (pend != 0U) {
       pend = 1U;
@@ -1173,10 +1173,10 @@ __STATIC_INLINE uint32_t GIC_GetPendingIRQ(IRQn_Type IRQn)
 __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
 {
   if (IRQn >= 16U) {
-    GICDistributor->ISPENDR[IRQn / 32] = 1 << (IRQn % 32);
+    GICDistributor->ISPENDR[IRQn / 32U] = 1U << (IRQn % 32U);
   } else {
     // INTID 0-15 Software Generated Interrupt
-    GICDistributor->SPENDSGIR[IRQn] = 1U;
+    GICDistributor->SPENDSGIR[IRQn / 4U] |= 1U << (IRQn % 4U);
     // Forward the interrupt to the CPU interface that requested it
     GICDistributor->SGIR = (IRQn | 0x02000000U);
   }
@@ -1188,10 +1188,10 @@ __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
 __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
 {
   if (IRQn >= 16U) {
-    GICDistributor->ICPENDR[IRQn / 32] = 1 << (IRQn % 32);
+    GICDistributor->ICPENDR[IRQn / 32U] = 1U << (IRQn % 32U);
   } else {
     // INTID 0-15 Software Generated Interrupt
-    GICDistributor->CPENDSGIR[IRQn] = 1U;
+    GICDistributor->CPENDSGIR[IRQn / 4U] |= 1U << (IRQn % 4U);
   }
 }
 
