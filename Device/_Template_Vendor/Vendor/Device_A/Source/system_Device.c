@@ -24,7 +24,7 @@
 
 #include <stdint.h>
 #include "<Device>.h" /* ToDo: replace '<Device>' with your device name */
-
+#include "irq_ctrl.h"
 
 /*----------------------------------------------------------------------------
   Define clocks
@@ -58,35 +58,7 @@ void SystemCoreClockUpdate (void)            /* Get Core Clock Frequency      */
          after user changed register sittings. */
   SystemCoreClock = SYSTEM_CLOCK;
 }
-/*----------------------------------------------------------------------------
-  IRQ Handler Register/Unregister
- *----------------------------------------------------------------------------*/
- /* ToDo: add here your device specific number of interrupt handlers */
- IRQHandler IRQTable[<Device>_IRQ_MAX] = { 0U };
 
-uint32_t IRQCount = sizeof IRQTable / 4U;
-
-uint32_t InterruptHandlerRegister (IRQn_Type irq, IRQHandler handler)
-{
-  if (irq < IRQCount) {
-    IRQTable[irq] = handler;
-    return 0U;
-  }
-  else {
-    return 1U;
-  }
-}
-
-uint32_t InterruptHandlerUnregister (IRQn_Type irq)
-{
-  if (irq < IRQCount) {
-    IRQTable[irq] = 0U;
-    return 0U;
-  }
-  else {
-    return 1U;
-  }
-}
 
 /*----------------------------------------------------------------------------
   System Initialization
@@ -129,13 +101,11 @@ void SystemInit (void)
   L2C_Enable();
 #endif
 
-#if (__GIC_PRESENT == 1) 
-  // Enable GIC
-  GIC_Enable();
-#endif
-
 #if ((__FPU_PRESENT == 1) && (__FPU_USED == 1))
   // Enable FPU
   __FPU_Enable();
 #endif
+
+  // IRQ Initialize
+  IRQ_Initialize();
 }

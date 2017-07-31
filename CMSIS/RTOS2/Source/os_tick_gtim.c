@@ -56,7 +56,13 @@ int32_t  OS_Tick_Setup (uint32_t freq, IRQHandler_t handler) {
   GTIM_PendIRQ = 0U;
 
   // Get timer clock
+#ifdef SCTR_BASE
   GTIM_Clock = *(uint32_t*)(SCTR_BASE+0x20);
+#else
+  // FVP REFCLK CNTControl 100MHz
+  GTIM_Clock = 100000000UL;
+#endif
+
   PL1_SetCounterFrequency(GTIM_Clock);
 
   // Calculate load value
@@ -103,7 +109,11 @@ int32_t  OS_Tick_Setup (uint32_t freq, IRQHandler_t handler) {
   IRQ_Enable(GTIM_IRQ_NUM);
 
   // Enable system counter and timer control
+#ifdef SCTR_BASE
   *(uint32_t*)SCTR_BASE |= 3U;
+#endif
+
+  // Enable timer control
   PL1_SetControl(1U);
 
   return (0);

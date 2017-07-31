@@ -2790,7 +2790,14 @@ and 8-bit Java bytecodes in Jazelle state.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_TZ"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_DSP_FP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_DSP_FP_TZ"/>
-   </board>
+    </board>
+   
+    <board name="Fixed Virtual Platform" vendor="ARM">
+      <description>uVision Simulator</description>
+      <mountedDevice    deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA5"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA7"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA9"/>
+    </board>
   </boards>
 
   <examples>

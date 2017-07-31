@@ -42,7 +42,7 @@
   Internal References
  *----------------------------------------------------------------------------*/
 void Vectors       (void) __attribute__ ((section("RESET")));
-void Reset_Handler(void);
+void Reset_Handler (void);
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
@@ -105,8 +105,8 @@ goToSleep
   MCR    p15, 0, r0, c1, c0, 1       // Write CP15 Auxiliary Control Register
 
   // Set Vector Base Address Register (VBAR) to point to this application's vector table
-	LDR    R0, =Vectors
-	MCR    p15, 0, R0, c12, c0, 0
+  LDR    R0, =Vectors
+  MCR    p15, 0, R0, c12, c0, 0
 
   // Setup Stack for each exceptional mode
   IMPORT |Image$$FIQ_STACK$$ZI$$Limit|
@@ -144,5 +144,5 @@ goToSleep
   Default Handler for Exceptions / Interrupts
  *----------------------------------------------------------------------------*/
 void Default_Handler(void) {
-	while(1);
+  while(1);
 }

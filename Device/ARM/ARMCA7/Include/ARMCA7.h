@@ -56,9 +56,7 @@ typedef enum IRQn
   SGI15_IRQn           = 15,
 
 /******  Cortex-A7 Processor Exceptions Numbers ****************************************/
-  GlobalTimer_IRQn     = 27,        /*!< Global Timer Interrupt                        */
-  PrivTimer_IRQn       = 29,        /*!< Private Timer Interrupt                       */
-  PrivWatchdog_IRQn    = 30,        /*!< Private Watchdog Interrupt                    */
+  SecurePhyTimer_IRQn  = 29,        /*!< Physical Timer Interrupt                      */
 
 /******  Platform Exceptions Numbers ***************************************************/
   Watchdog_IRQn        = 32,        /*!< SP805 Interrupt        */
