@@ -8,6 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.0.2-dev6">
+      CMSIS-RTOS2:
+      - Updated ARMv8-M startup code to provide __user_setup_stackheap and setup main stack limit.
+    </release>
     <release version="5.0.2-dev5">
       CMSIS-Core(M):
       - Added MPU Management Functions for CM0+/3/4/7
