@@ -2,6 +2,10 @@
 /**
 \mainpage
 
+This is a preview of \b CMSIS-Zone which is scheduled for release in Q1'2018.  The final release of CMSIS-Zone will provide:
+  - \ref XML_Format (XML based) which stores consistent system setup information.
+  - CMSIS-Zone configuration utility for system partitioning. The \ref GenDataModel "data" captured can be exported to various project and configuration files using file templates.
+  
 \b CMSIS-Zone defines methods to describe system resources and to partition these resources into multiple projects and execution areas. 
 The system resources may include multiple processors, memory areas, and peripherals. The system resource and partitioning information is stored in \ref XML_Format (XML based). 
 
@@ -16,7 +20,7 @@ The following diagram explains the development flow when using the \b CMSIS-Zone
 \image html DevelopmentFlow.png  "CMSIS-Zone Development Flow"
 
 The following sections explain: 
-- \ref XML_Format (XML based) that stores system resource information and the configuration of project zones and execution zones.
+- \ref XML_Format (XML based) that stores system resource information and the configuration of project zones and execution zones.
 - \ref GenDataModel which is used to create tool set-up files and hardware configuration files.
 
 
