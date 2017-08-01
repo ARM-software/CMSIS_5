@@ -28,6 +28,50 @@ void main()
 */
 typedef struct {} MPU_Type;
 
+/**
+* \defgroup mpu_functions_ctrl MPU_CTRL_
+* \brief Bit definitions for MPU_Type::CTRL register.
+* @{
+*/
+
+/** 
+* \brief MPU_Type::CTRL register bit PRIVDEFENA position.
+* \details This bit enabled (if set) the default memory map as a background region for privileged access.
+*/
+#define MPU_CTRL_PRIVDEFENA_Pos             2U
+
+/** 
+* \brief MPU_Type::CTRL register bit PRIVDEFENA mask.
+* \details This bit enabled (if set) the default memory map as a background region for privileged access.
+*/
+#define MPU_CTRL_PRIVDEFENA_Msk            (1UL << MPU_CTRL_PRIVDEFENA_Pos)
+
+/** 
+* \brief MPU_Type::CTRL register bit HFNMIENA position.
+* \details If this bit is set exception handlers with priority < 0 use the MPU for memory accesses.
+*/
+#define MPU_CTRL_HFNMIENA_Pos               1U
+
+/** 
+* \brief MPU_Type::CTRL register bit HFNMIENA mask.
+* \details If this bit is set exception handlers with priority < 0 use the MPU for memory accesses.
+*/
+#define MPU_CTRL_HFNMIENA_Msk              (1UL << MPU_CTRL_HFNMIENA_Pos)
+
+/** 
+* \brief MPU_Type::CTRL register bit ENABLE position
+* \details Enable the MPU (if set).
+*/
+#define MPU_CTRL_ENABLE_Pos                 0U
+
+/** 
+* \brief MPU_Type::CTRL register bit ENABLE position
+* \details Enable the MPU (if set).
+*/
+#define MPU_CTRL_ENABLE_Msk                (1UL)
+
+/** @} */
+
 /** \def ARM_MPU_RBAR
 * \brief MPU Region Base Address Register Value
 *
@@ -69,9 +113,8 @@ typedef struct {
     uint32_t RASR; //!< The region attribute and size register value (\ref MPU_Type::RASR "RASR"), see \ref ARM_MPU_RASR.
 } ARM_MPU_Region_t;
 
-/** Enable the MPU.
-* \param MPU_Control Default access permissions for regions that are disabled.
-\todo MPU_Control is not fully documented
+/** Enable the MPU by setting the \ref MPU_CTRL_ENABLE_Msk "ENABLE" bit in \ref MPU_Type::CTRL.
+* \param MPU_Control Additional flags to be set in \ref MPU_Type::CTRL, see \ref mpu_functions_ctrl.
 */
 __STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_Control);
 
