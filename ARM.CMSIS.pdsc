@@ -2797,7 +2797,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </board>
    
     <board name="Fixed Virtual Platform" vendor="ARM">
-      <description>uVision Simulator</description>
+      <description>Fixed Virtual Platform</description>
       <mountedDevice    deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA5"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA7"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA9"/>

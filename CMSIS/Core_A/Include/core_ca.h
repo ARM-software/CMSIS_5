@@ -752,19 +752,19 @@ typedef struct
   __IOM uint32_t ICPENDR[32];          /*!< \brief  Offset: 0x280 (R/W) Interrupt Clear-Pending Registers */
   __IOM uint32_t ISACTIVER[32];        /*!< \brief  Offset: 0x300 (R/W) Interrupt Set-Active Registers */
   __IOM uint32_t ICACTIVER[32];        /*!< \brief  Offset: 0x380 (R/W) Interrupt Clear-Active Registers */
-  __IOM uint8_t  IPRIORITYR[1020];     /*!< \brief  Offset: 0x400 (R/W) Interrupt Priority Registers */
-        RESERVED(9, uint32_t)
-  __IOM uint8_t  ITARGETSR[1020];      /*!< \brief  Offset: 0x800 (R/W) Interrupt Targets Registers */
-        RESERVED(10, uint32_t)
+  __IOM uint32_t IPRIORITYR[255];      /*!< \brief  Offset: 0x400 (R/W) Interrupt Priority Registers */
+        RESERVED(6, uint32_t)
+  __IOM uint32_t  ITARGETSR[255];      /*!< \brief  Offset: 0x800 (R/W) Interrupt Targets Registers */
+        RESERVED(7, uint32_t)
   __IOM uint32_t ICFGR[64];            /*!< \brief  Offset: 0xC00 (R/W) Interrupt Configuration Registers */
   __IOM uint32_t IGRPMODR[32];         /*!< \brief  Offset: 0xD00 (R/W) Interrupt Group Modifier Registers */
-        RESERVED(11[32], uint32_t)
+        RESERVED(8[32], uint32_t)
   __IOM uint32_t NSACR[64];            /*!< \brief  Offset: 0xE00 (R/W) Non-secure Access Control Registers */
   __OM  uint32_t SGIR;                 /*!< \brief  Offset: 0xF00 ( /W) Software Generated Interrupt Register */
-        RESERVED(13[3], uint32_t)
+        RESERVED(9[3], uint32_t)
   __IOM uint32_t CPENDSGIR[4];         /*!< \brief  Offset: 0xF10 (R/W) SGI Clear-Pending Registers */
   __IOM uint32_t SPENDSGIR[4];         /*!< \brief  Offset: 0xF20 (R/W) SGI Set-Pending Registers */
-        RESERVED(14[5236], uint32_t)
+        RESERVED(10[5236], uint32_t)
   __IOM uint64_t IROUTER[988];         /*!< \brief  Offset: 0x6100(R/W) Interrupt Routing Registers */
 }  GICDistributor_Type;
 
@@ -786,12 +786,12 @@ typedef struct
   __OM  uint32_t AEOIR;                /*!< \brief  Offset: 0x024 ( /W) Aliased End Of Interrupt Register */
   __IM  uint32_t AHPPIR;               /*!< \brief  Offset: 0x028 (R/ ) Aliased Highest Priority Pending Interrupt Register */
   __IOM uint32_t STATUSR;              /*!< \brief  Offset: 0x02C (R/W) Error Reporting Status Register, optional */
-        RESERVED(15[40], uint32_t)
+        RESERVED(1[40], uint32_t)
   __IOM uint32_t APR[4];               /*!< \brief  Offset: 0x0D0 (R/W) Active Priority Register */
   __IOM uint32_t NSAPR[4];             /*!< \brief  Offset: 0x0E0 (R/W) Non-secure Active Priority Register */
-        RESERVED(17[3], uint32_t)
+        RESERVED(2[3], uint32_t)
   __IM  uint32_t IIDR;                 /*!< \brief  Offset: 0x0FC (R/ ) CPU Interface Identification Register */
-        RESERVED(18[960], uint32_t)  
+        RESERVED(3[960], uint32_t)
   __OM  uint32_t DIR;                  /*!< \brief  Offset: 0x1000( /W) Deactivate Interrupt Register */
 }  GICInterface_Type;
 
@@ -1044,14 +1044,14 @@ __STATIC_INLINE void L2C_CleanInvPa (void *pa)
 */
 __STATIC_INLINE void GIC_EnableDistributor(void)
 {
-  GICDistributor->CTLR |= 1;
+  GICDistributor->CTLR |= 1U;
 }
 
 /** \brief Disable the interrupt distributor using the GIC's CTLR register.
 */
 __STATIC_INLINE void GIC_DisableDistributor(void)
 {
-  GICDistributor->CTLR &=~1;
+  GICDistributor->CTLR &=~1U;
 }
 
 /** \brief Read the GIC's TYPER register.
@@ -1059,7 +1059,7 @@ __STATIC_INLINE void GIC_DisableDistributor(void)
 */
 __STATIC_INLINE uint32_t GIC_DistributorInfo(void)
 {
-  return (uint32_t)(GICDistributor->TYPER);
+  return (GICDistributor->TYPER);
 }
 
 /** \brief Reads the GIC's IIDR register.
@@ -1067,7 +1067,7 @@ __STATIC_INLINE uint32_t GIC_DistributorInfo(void)
 */
 __STATIC_INLINE uint32_t GIC_DistributorImplementer(void)
 {
-  return (uint32_t)(GICDistributor->IIDR);
+  return (GICDistributor->IIDR);
 }
 
 /** \brief Sets the GIC's ITARGETSR register for the given interrupt.
@@ -1076,7 +1076,8 @@ __STATIC_INLINE uint32_t GIC_DistributorImplementer(void)
 */
 __STATIC_INLINE void GIC_SetTarget(IRQn_Type IRQn, uint32_t cpu_target)
 {
-  GICDistributor->ITARGETSR[((uint32_t)(int32_t)IRQn)] = (uint8_t)(cpu_target & 0xff);
+  uint32_t mask = GICDistributor->ITARGETSR[IRQn / 4U] & ~(0xFFUL << ((IRQn % 4U) * 8U));
+  GICDistributor->ITARGETSR[IRQn / 4U] = mask | ((cpu_target & 0xFFUL) << ((IRQn % 4U) * 8U));
 }
 
 /** \brief Read the GIC's ITARGETSR register.
@@ -1085,21 +1086,21 @@ __STATIC_INLINE void GIC_SetTarget(IRQn_Type IRQn, uint32_t cpu_target)
 */
 __STATIC_INLINE uint32_t GIC_GetTarget(IRQn_Type IRQn)
 {
-  return ((uint32_t) GICDistributor->ITARGETSR[((uint32_t)(int32_t)IRQn)] & 0xff);
+  return (GICDistributor->ITARGETSR[IRQn / 4U] >> ((IRQn % 4U) * 8U)) & 0xFFUL;
 }
 
 /** \brief Enable the CPU's interrupt interface.
 */
 __STATIC_INLINE void GIC_EnableInterface(void)
 {
-  GICInterface->CTLR |= 1; //enable interface
+  GICInterface->CTLR |= 1U; //enable interface
 }
 
 /** \brief Disable the CPU's interrupt interface.
 */
 __STATIC_INLINE void GIC_DisableInterface(void)
 {
-  GICInterface->CTLR &=~1; //disable distributor
+  GICInterface->CTLR &=~1U; //disable distributor
 }
 
 /** \brief Read the CPU's IAR register.
@@ -1123,7 +1124,7 @@ __STATIC_INLINE void GIC_EndInterrupt(IRQn_Type IRQn)
 */
 __STATIC_INLINE void GIC_EnableIRQ(IRQn_Type IRQn)
 {
-  GICDistributor->ISENABLER[IRQn / 32] = 1 << (IRQn % 32);
+  GICDistributor->ISENABLER[IRQn / 32U] = 1U << (IRQn % 32U);
 }
 
 /** \brief Get interrupt enable status using GIC's ISENABLER register.
@@ -1132,7 +1133,7 @@ __STATIC_INLINE void GIC_EnableIRQ(IRQn_Type IRQn)
 */
 __STATIC_INLINE uint32_t GIC_GetEnableIRQ(IRQn_Type IRQn)
 {
-  return (GICDistributor->ISENABLER[IRQn / 32] >> (IRQn % 32)) & 0x1UL;
+  return (GICDistributor->ISENABLER[IRQn / 32U] >> (IRQn % 32U)) & 1UL;
 }
 
 /** \brief Disables the given interrupt using GIC's ICENABLER register.
@@ -1140,7 +1141,7 @@ __STATIC_INLINE uint32_t GIC_GetEnableIRQ(IRQn_Type IRQn)
 */
 __STATIC_INLINE void GIC_DisableIRQ(IRQn_Type IRQn)
 {
-  GICDistributor->ICENABLER[IRQn / 32] = 1 << (IRQn % 32);
+  GICDistributor->ICENABLER[IRQn / 32U] = 1U << (IRQn % 32U);
 }
 
 /** \brief Get interrupt pending status from GIC's ISPENDR register.
@@ -1152,10 +1153,10 @@ __STATIC_INLINE uint32_t GIC_GetPendingIRQ(IRQn_Type IRQn)
   uint32_t pend;
 
   if (IRQn >= 16U) {
-    pend = (GICDistributor->ISPENDR[IRQn / 32U] >> (IRQn % 32U)) & 0x1UL;
+    pend = (GICDistributor->ISPENDR[IRQn / 32U] >> (IRQn % 32U)) & 1UL;
   } else {
     // INTID 0-15 Software Generated Interrupt
-    pend = GICDistributor->SPENDSGIR[IRQn] & 0xFFUL;
+    pend = (GICDistributor->SPENDSGIR[IRQn / 4U] >> ((IRQn % 4U) * 8U)) & 0xFFUL;
     // No CPU identification offered
     if (pend != 0U) {
       pend = 1U;
@@ -1176,7 +1177,7 @@ __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
     GICDistributor->ISPENDR[IRQn / 32U] = 1U << (IRQn % 32U);
   } else {
     // INTID 0-15 Software Generated Interrupt
-    GICDistributor->SPENDSGIR[IRQn / 4U] |= 1U << (IRQn % 4U);
+    GICDistributor->SPENDSGIR[IRQn / 4U] = 1U << ((IRQn % 4U) * 8U);
     // Forward the interrupt to the CPU interface that requested it
     GICDistributor->SGIR = (IRQn | 0x02000000U);
   }
@@ -1191,7 +1192,7 @@ __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
     GICDistributor->ICPENDR[IRQn / 32U] = 1U << (IRQn % 32U);
   } else {
     // INTID 0-15 Software Generated Interrupt
-    GICDistributor->CPENDSGIR[IRQn / 4U] |= 1U << (IRQn % 4U);
+    GICDistributor->CPENDSGIR[IRQn / 4U] = 1U << ((IRQn % 4U) * 8U);
   }
 }
 
@@ -1202,13 +1203,13 @@ __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
 */
 __STATIC_INLINE void GIC_SetConfiguration(IRQn_Type IRQn, uint32_t int_config)
 {
-  uint32_t icfgr = GICDistributor->ICFGR[IRQn / 16];
-  uint32_t shift = (IRQn % 16) << 1;
+  uint32_t icfgr = GICDistributor->ICFGR[IRQn / 16U];
+  uint32_t shift = (IRQn % 16U) << 1U;
 
-  icfgr &= (    ~(0x03 << shift));
-  icfgr |= (int_config << shift);
+  icfgr &= (~(3U         << shift));
+  icfgr |= (  int_config << shift);
 
-  GICDistributor->ICFGR[IRQn / 16] = icfgr;
+  GICDistributor->ICFGR[IRQn / 16U] = icfgr;
 }
 
 /** \brief Get the interrupt configuration from the GIC's ICFGR register.
@@ -1218,7 +1219,7 @@ __STATIC_INLINE void GIC_SetConfiguration(IRQn_Type IRQn, uint32_t int_config)
 */
 __STATIC_INLINE uint32_t GIC_GetConfiguration(IRQn_Type IRQn)
 {
-  return (GICDistributor->ICFGR[IRQn / 16] >> ((IRQn % 16) >> 1));
+  return (GICDistributor->ICFGR[IRQn / 16U] >> ((IRQn % 16U) >> 1U));
 }
 
 /** \brief Set the priority for the given interrupt in the GIC's IPRIORITYR register.
@@ -1227,7 +1228,8 @@ __STATIC_INLINE uint32_t GIC_GetConfiguration(IRQn_Type IRQn)
 */
 __STATIC_INLINE void GIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
 {
-  GICDistributor->IPRIORITYR[((uint32_t)(int32_t)IRQn)] = (uint8_t)(priority);
+  uint32_t mask = GICDistributor->IPRIORITYR[IRQn / 4U] & ~(0xFFUL << ((IRQn % 4U) * 8U));
+  GICDistributor->IPRIORITYR[IRQn / 4U] = mask | ((priority & 0xFFUL) << ((IRQn % 4U) * 8U));
 }
 
 /** \brief Read the current interrupt priority from GIC's IPRIORITYR register.
@@ -1235,7 +1237,7 @@ __STATIC_INLINE void GIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
 */
 __STATIC_INLINE uint32_t GIC_GetPriority(IRQn_Type IRQn)
 {
-  return((uint32_t)GICDistributor->IPRIORITYR[((uint32_t)(int32_t)IRQn)]);
+  return (GICDistributor->IPRIORITYR[IRQn / 4U] >> ((IRQn % 4U) * 8U)) & 0xFFUL;
 }
 
 /** \brief Set the interrupt priority mask using CPU's PMR register.
@@ -1243,7 +1245,7 @@ __STATIC_INLINE uint32_t GIC_GetPriority(IRQn_Type IRQn)
 */
 __STATIC_INLINE void GIC_SetInterfacePriorityMask(uint32_t priority)
 {
-  GICInterface->PMR = priority & 0xff; //set priority mask
+  GICInterface->PMR = priority & 0xFFUL; //set priority mask
 }
 
 /** \brief Read the current interrupt priority mask from CPU's PMR register.
@@ -1251,7 +1253,7 @@ __STATIC_INLINE void GIC_SetInterfacePriorityMask(uint32_t priority)
 */
 __STATIC_INLINE uint32_t GIC_GetInterfacePriorityMask(void)
 {
-  return (uint32_t)GICInterface->PMR;
+  return GICInterface->PMR;
 }
 
 /** \brief Configures the group priority and subpriority split point using CPU's BPR register.
@@ -1259,7 +1261,7 @@ __STATIC_INLINE uint32_t GIC_GetInterfacePriorityMask(void)
 */
 __STATIC_INLINE void GIC_SetBinaryPoint(uint32_t binary_point)
 {
-  GICInterface->BPR = binary_point & 0x07; //set binary point
+  GICInterface->BPR = binary_point & 7U; //set binary point
 }
 
 /** \brief Read the current group priority and subpriority split point from CPU's BPR register.
@@ -1267,7 +1269,7 @@ __STATIC_INLINE void GIC_SetBinaryPoint(uint32_t binary_point)
 */
 __STATIC_INLINE uint32_t GIC_GetBinaryPoint(void)
 {
-  return (uint32_t)GICInterface->BPR;
+  return GICInterface->BPR;
 }
 
 /** \brief Get the status for a given interrupt.
@@ -1278,10 +1280,10 @@ __STATIC_INLINE uint32_t GIC_GetIRQStatus(IRQn_Type IRQn)
 {
   uint32_t pending, active;
 
-  active = ((GICDistributor->ISACTIVER[IRQn / 32])  >> (IRQn % 32)) & 0x1;
-  pending =((GICDistributor->ISPENDR[IRQn / 32]) >> (IRQn % 32)) & 0x1;
+  active = ((GICDistributor->ISACTIVER[IRQn / 32U])  >> (IRQn % 32U)) & 1UL;
+  pending = ((GICDistributor->ISPENDR[IRQn / 32U]) >> (IRQn % 32U)) & 1UL;
 
-  return ((active<<1) | pending);
+  return ((active<<1U) | pending);
 }
 
 /** \brief Generate a software interrupt using GIC's SGIR register.
@@ -1291,7 +1293,7 @@ __STATIC_INLINE uint32_t GIC_GetIRQStatus(IRQn_Type IRQn)
 */
 __STATIC_INLINE void GIC_SendSGI(IRQn_Type IRQn, uint32_t target_list, uint32_t filter_list)
 {
-  GICDistributor->SGIR = ((filter_list & 0x3) << 24) | ((target_list & 0xff) << 16) | (IRQn & 0xf);
+  GICDistributor->SGIR = ((filter_list & 3U) << 24U) | ((target_list & 0xFFUL) << 16U) | (IRQn & 0x0FUL);
 }
 
 /** \brief Get the interrupt number of the highest interrupt pending from CPU's HPPIR register.
@@ -1316,13 +1318,13 @@ __STATIC_INLINE uint32_t GIC_GetInterfaceId(void)
 */
 __STATIC_INLINE void GIC_SetGroup(IRQn_Type IRQn, uint32_t group)
 {
-  uint32_t igroupr = GICDistributor->IGROUPR[IRQn / 32];
-  uint32_t shift   = (IRQn % 32);
+  uint32_t igroupr = GICDistributor->IGROUPR[IRQn / 32U];
+  uint32_t shift   = (IRQn % 32U);
 
-  igroupr &= (~(0x01       << shift));
-  igroupr |= ((group & 1)  << shift);
+  igroupr &= (~(1U          << shift));
+  igroupr |= ( (group & 1U) << shift);
 
-  GICDistributor->IGROUPR[IRQn / 32] = igroupr;
+  GICDistributor->IGROUPR[IRQn / 32U] = igroupr;
 }
 #define GIC_SetSecurity         GIC_SetGroup
 
@@ -1332,7 +1334,7 @@ __STATIC_INLINE void GIC_SetGroup(IRQn_Type IRQn, uint32_t group)
 */
 __STATIC_INLINE uint32_t GIC_GetGroup(IRQn_Type IRQn)
 {
-  return (GICDistributor->IGROUPR[IRQn / 32] >> (IRQn % 32)) & 0x1;
+  return (GICDistributor->IGROUPR[IRQn / 32U] >> (IRQn % 32U)) & 1UL;
 }
 #define GIC_GetSecurity         GIC_GetGroup
 
