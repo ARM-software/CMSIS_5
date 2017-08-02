@@ -423,6 +423,12 @@ void osRtxThreadDispatch (os_thread_t *thread) {
 
   kernel_state   = osRtxKernelGetState();
   thread_running = osRtxThreadGetRunning();
+#if (__ARM_ARCH_7A__ != 0U)
+  // On Cortex-A PendSV_Handler is executed before final context switch.
+  if ((thread_running != NULL) && (thread_running->state != osRtxThreadRunning)) {
+    thread_running = osRtxInfo.thread.run.next;
+  }
+#endif
 
   if (thread == NULL) {
     thread = osRtxInfo.thread.ready.thread_list;
