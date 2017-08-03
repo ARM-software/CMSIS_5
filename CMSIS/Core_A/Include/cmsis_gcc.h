@@ -100,6 +100,26 @@
 /* ###########################  Core Function Access  ########################### */
 
 /**
+  \brief   Enable IRQ Interrupts
+  \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+           Can only be executed in Privileged modes.
+ */
+__attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
+{
+  __ASM volatile ("cpsie i" : : : "memory");
+}
+
+/**
+  \brief   Disable IRQ Interrupts
+  \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  Can only be executed in Privileged modes.
+ */
+__attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
+{
+  __ASM volatile ("cpsid i" : : : "memory");
+}
+
+/**
   \brief   Get FPSCR
   \details Returns the current value of the Floating Point Status/Control register.
   \return Floating Point Status/Control register value
@@ -147,22 +167,22 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 /**
   \brief   No Operation
  */
-#define __NOP                             __builtin_arm_nop
+#define __NOP()                             __ASM volatile ("nop")
 
 /**
   \brief   Wait For Interrupt
  */
-#define __WFI                             __builtin_arm_wfi
+#define __WFI()                             __ASM volatile ("wfi")
 
 /**
   \brief   Wait For Event
  */
-#define __WFE                             __builtin_arm_wfe
+#define __WFE()                             __ASM volatile ("wfe")
 
 /**
   \brief   Send Event
  */
-#define __SEV                             __builtin_arm_sev
+#define __SEV()                             __ASM volatile ("sev")
 
 /**
   \brief   Instruction Synchronization Barrier
