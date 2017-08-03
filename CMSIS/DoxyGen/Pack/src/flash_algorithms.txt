@@ -1,8 +1,6 @@
 /**************************************************************************************************/
 /**
-\page flashAlgorithm  Flash Programming Algorithms
-
-[TOC]
+\page flashAlgorithm  Flash Programming
 
 <b>Flash Programming Algorithms</b> are a piece of software to erase or download applications to Flash devices. A \ref createPack_DFP
 usually contains predefined Flash algorithms for programming the devices that are supported by the DFP. A template for
@@ -122,6 +120,20 @@ Function Name    |Indication |Description
 \ref ProgramPage |mandatory  |Write the application into the Flash memory.
 \ref UnInit      |mandatory  |De-initialize the microcontroller after one of the Flash programming steps.
 \ref Verify      |optional   |Compare Flash memory content with the program code.
+
+The following diagrams show how the functions of the <b>Flash Programming Algorithms</b> are executed by a development tool.
+
+The <b>Flash Erase</b> sequence is executed to erase the Flash content.
+
+\image html FlashErase.png "Flash Erase"
+
+The <b>Flash Program</b> sequence is executed to program the Flash memory.
+
+\image html FlashProgram.png "Flash Program"
+
+The <b>Flash Verify</b> sequence is executed to verify the content after flash programming.
+
+\image html FlashVerify.png "Flash Verify"
 
 <p>&nbsp;</p>
 <hr>

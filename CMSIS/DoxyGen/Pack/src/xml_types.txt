@@ -1,6 +1,6 @@
 /**************************************************************************************************/
 /**
-\page coresight_setup  Simplifying debug with CMSIS-Pack
+\page coresight_setup  Debug Setup with CMSIS-Pack
 
 CMSIS-Pack offers two ways to simplify the debug setup:
 - A \subpage debug_description declares a set of standardized debug and trace methods are automatically executed by the
