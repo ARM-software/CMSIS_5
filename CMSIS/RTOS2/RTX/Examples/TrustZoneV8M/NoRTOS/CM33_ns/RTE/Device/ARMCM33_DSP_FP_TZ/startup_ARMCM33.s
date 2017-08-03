@@ -2,11 +2,11 @@
 ; * @file     startup_ARMCM33.s
 ; * @brief    CMSIS Core Device Startup File for
 ; *           ARMCM33 Device Series
-; * @version  V5.1
-; * @date     31. July 2017
+; * @version  V5.00
+; * @date     21. October 2016
 ; ******************************************************************************/
 ;/*
-; * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+; * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *
@@ -125,8 +125,6 @@ Reset_Handler   PROC
                 EXPORT  Reset_Handler             [WEAK]
                 IMPORT  SystemInit
                 IMPORT  __main
-				LDR		R0, =Stack_Mem
-				MSR		MSPLIM, R0
                 LDR     R0, =SystemInit
                 BLX     R0
                 LDR     R0, =__main
@@ -250,9 +248,10 @@ SPI_IRQHandler
 
                 ELSE
 
-                EXPORT  __user_setup_stackheap
+                IMPORT  __use_two_region_memory
+                EXPORT  __user_initial_stackheap
 
-__user_setup_stackheap PROC
+__user_initial_stackheap PROC
                 LDR     R0, =  Heap_Mem
                 LDR     R1, =(Stack_Mem + Stack_Size)
                 LDR     R2, = (Heap_Mem +  Heap_Size)
