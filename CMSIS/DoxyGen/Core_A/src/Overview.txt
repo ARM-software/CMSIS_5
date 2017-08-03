@@ -58,12 +58,19 @@ Verifications with GCC and IAR compiler are in preparation.
 
 
 /**
-\page rev_histCoreA Revision History Core (Cortex-A)
+\page rev_histCoreA Revision History of CMSIS-Core (Cortex-A)
 
-Version    | Description 
------------|--------------------
-V 1.0.0    | Initial version 
-
+<table class="cmtable" summary="Core Exception Name">
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>V1.00</td>
+      <td>Initial Release for Cortex-A5/A7/A9 processors.</td>
+    </tr>
+</table>	
+	
 */
 
 

@@ -87,7 +87,8 @@ The \ref templates_pg supplied by ARM have been tested and verified with the fol
          Added macros  \ref \__UNALIGNED_UINT16_READ,  \ref \__UNALIGNED_UINT16_WRITE.\n
          Added macros  \ref \__UNALIGNED_UINT32_READ,  \ref \__UNALIGNED_UINT32_WRITE.\n
          Deprecated macro  \ref \__UNALIGNED_UINT32.\n
-		 Added \ref mpu_functions 
+		 Changed \ref version_control_gr macros to be core agnostic. \n
+		 Added \ref mpu_functions for Cortex-M0+/M3/M4/M7.
       </td>
     </tr>
     <tr>

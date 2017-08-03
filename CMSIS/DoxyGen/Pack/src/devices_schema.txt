@@ -1645,6 +1645,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.gigadevice.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">HDSC:145</td>
+    <td>HUADA Semiconductor</td>
+    <td>http://www.hdsc.com.cn</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Holtek:106</td>
     <td>Holtek Microelectronics</td>
     <td>http://www.holtek.com.tw</td>
@@ -1733,6 +1738,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">Redpine Signals:125</td>
     <td>Repine Signals</td>
     <td>http://www.redpinesignals.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">RelChip:146</td>
+    <td>RelChip </td>
+    <td>http://www.relchip.com/</td>
   </tr>
   <tr>
     <td class="XML-Token">Renesas:117</td>

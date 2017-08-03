@@ -8,49 +8,26 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.0.2-dev6">
-      CMSIS-RTOS2:
-      - Updated ARMv8-M startup code to provide __user_setup_stackheap and setup main stack limit.
-    </release>
-    <release version="5.0.2-dev5">
-      CMSIS-Core(M):
-      - Added MPU Management Functions for CM0+/3/4/7
-    </release>
-    <release version="5.0.2-dev4">
-      CMSIS Device:
-      - Added OS Tick API
-      - Added IRQ Controller API
-    </release>
-    <release version="5.0.2-dev3">
-      CMSIS-Core_A: 
-      - Added ARM Compiler 6 support
-      - Updated Cortex-A core functions
-      - Updated Startup and System files 
+    <release version="5.1.0" date="2017-08-04">
+      CMSIS-Core(M): 5.0.2 (see revision history for details)
+	  - Changed Version Control macros to be core agnostic. 
+      - Added MPU Functions for ARMv7-M for Cortex-M0+/M3/M4/M7.
+      CMSIS-Core(A): 1.0.0 (see revision history for details)
+	  - Initial release
+	  - IRQ Controller API 1.0.0
+	  CMSIS-Driver: 2.05 (see revision history for details)
+	  - All typedefs related to status have been made volatile.
       CMSIS-RTOS2:
       - API 2.1.1 (see revision history for details)
       - RTX 5.2.0 (see revision history for details)
-    </release>
-    <release version="5.0.2-dev2">
-      CMSIS-RTOS2:
-      - RTX 5.1.1 (see revision history for details)
-    </release>
-    <release version="5.0.2-dev1">
-      CMSIS-Core_A: 
-      - Added Cortex-A core support, ARMCC specific:
-        - Core specific register definitions
-        - Generic Interrupt Controller functions
-        - Generic Timer functions
-        - L1 and L2 Cache functions
-        - MMU functions
-      - Added ARMCA5, ARMCA7 and ARMCA9 devices
-      - Added Startup, System and MMU configuration files
-    </release>
-    <release version="5.0.2-dev0">
-      CMSIS-Core: 5.0.2 (see revision history for details)
-      - Added macros __UNALIGNED_UINT16_READ, __UNALIGNED_UINT16_WRITE
-      - Added macros __UNALIGNED_UINT32_READ, __UNALIGNED_UINT32_WRITE
-      - Set macro __UNALIGNED_UINT32 to deprecated
-    </release>
+	  - OS Tick API 1.0.0
+      CMSIS-DSP: 1.5.2 (see revision history for details)
+      - Fixed GNU Compiler specific diagnostics.
+      CMSIS-PACK:1.5.0 (see revision history for details)
+      - added System Description File (*.SDF) Format
+	  CMSIS-Zone: Preview 0.0.1
+	  - Initial specification draft
+	</release>
     <release version="5.0.1" date="2017-02-03">
       Package Description:
       - added taxonomy for Cclass RTOS
@@ -1894,7 +1871,7 @@ and 8-bit Java bytecodes in Jazelle state.
 
   <components>
     <!-- CMSIS-Core component -->
-    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.0.1"  condition="ARMv6_7_8-M Device" >
+    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.0.2"  condition="ARMv6_7_8-M Device" >
       <description>CMSIS-CORE for Cortex-M, SC000, SC300, ARMv8-M</description>
       <files>
         <!-- CPU independent -->
@@ -2294,7 +2271,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-DSP component -->
-    <component Cclass="CMSIS" Cgroup="DSP" Cversion="1.5.1" condition="CMSIS DSP">
+    <component Cclass="CMSIS" Cgroup="DSP" Cversion="1.5.2" condition="CMSIS DSP">
       <description>CMSIS-DSP Library for Cortex-M, SC000, and SC300</description>
       <files>
         <!-- CPU independent -->
@@ -2357,7 +2334,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-RTOS Keil RTX component -->
-    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cversion="4.81.0" Capiversion="1.0.0" condition="RTOS RTX">
+    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cversion="4.81.1" Capiversion="1.0.0" condition="RTOS RTX">
       <description>CMSIS-RTOS RTX implementation for Cortex-M, SC000, and SC300</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2475,8 +2452,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Mutex.c"     version="2.0.0" select="CMSIS-RTOS2 Mutex"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="2.0.0" select="CMSIS-RTOS2 Semaphore"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="2.0.0" select="CMSIS-RTOS2 Thread"/>
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.0" select="CMSIS-RTOS2 Timer"/>
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="2.0.0" select="CMSIS-RTOS2 SVC User Table"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.1" select="CMSIS-RTOS2 Timer"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX library configuration -->
@@ -2545,7 +2522,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Mutex.c"     version="2.0.0" select="CMSIS-RTOS2 Mutex"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="2.0.0" select="CMSIS-RTOS2 Semaphore"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="2.0.0" select="CMSIS-RTOS2 Thread"/>
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.0" select="CMSIS-RTOS2 Timer"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.1" select="CMSIS-RTOS2 Timer"/>
+		<file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX library configuration -->
@@ -2595,7 +2573,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Mutex.c"     version="2.0.0" select="CMSIS-RTOS2 Mutex"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="2.0.0" select="CMSIS-RTOS2 Semaphore"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="2.0.0" select="CMSIS-RTOS2 Thread"/>
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.0" select="CMSIS-RTOS2 Timer"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.1" select="CMSIS-RTOS2 Timer"/>
+		<file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX sources (core) -->
@@ -2679,7 +2658,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Mutex.c"     version="2.0.0" select="CMSIS-RTOS2 Mutex"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="2.0.0" select="CMSIS-RTOS2 Semaphore"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="2.0.0" select="CMSIS-RTOS2 Thread"/>
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.0" select="CMSIS-RTOS2 Timer"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.1" select="CMSIS-RTOS2 Timer"/>
+		<file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX sources (core) -->
@@ -2734,7 +2714,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Mutex.c"     version="2.0.0" select="CMSIS-RTOS2 Mutex"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="2.0.0" select="CMSIS-RTOS2 Semaphore"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="2.0.0" select="CMSIS-RTOS2 Thread"/>
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.0" select="CMSIS-RTOS2 Timer"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.1" select="CMSIS-RTOS2 Timer"/>
+		<file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX sources (core) -->
