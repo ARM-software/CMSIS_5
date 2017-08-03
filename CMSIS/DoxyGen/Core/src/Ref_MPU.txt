@@ -28,49 +28,6 @@ void main()
 */
 typedef struct {} MPU_Type;
 
-/**
-* \defgroup mpu_functions_ctrl MPU_CTRL_
-* \brief Bit definitions for MPU_Type::CTRL register.
-* @{
-*/
-
-/** 
-* \brief MPU_Type::CTRL register bit PRIVDEFENA position.
-* \details This bit enabled (if set) the default memory map as a background region for privileged access.
-*/
-#define MPU_CTRL_PRIVDEFENA_Pos             2U
-
-/** 
-* \brief MPU_Type::CTRL register bit PRIVDEFENA mask.
-* \details This bit enabled (if set) the default memory map as a background region for privileged access.
-*/
-#define MPU_CTRL_PRIVDEFENA_Msk            (1UL << MPU_CTRL_PRIVDEFENA_Pos)
-
-/** 
-* \brief MPU_Type::CTRL register bit HFNMIENA position.
-* \details If this bit is set exception handlers with priority < 0 use the MPU for memory accesses.
-*/
-#define MPU_CTRL_HFNMIENA_Pos               1U
-
-/** 
-* \brief MPU_Type::CTRL register bit HFNMIENA mask.
-* \details If this bit is set exception handlers with priority < 0 use the MPU for memory accesses.
-*/
-#define MPU_CTRL_HFNMIENA_Msk              (1UL << MPU_CTRL_HFNMIENA_Pos)
-
-/** 
-* \brief MPU_Type::CTRL register bit ENABLE position
-* \details Enable the MPU (if set).
-*/
-#define MPU_CTRL_ENABLE_Pos                 0U
-
-/** 
-* \brief MPU_Type::CTRL register bit ENABLE position
-* \details Enable the MPU (if set).
-*/
-#define MPU_CTRL_ENABLE_Msk                (1UL)
-
-/** @} */
 
 /** \def ARM_MPU_RBAR
 * \brief MPU Region Base Address Register Value
@@ -113,10 +70,32 @@ typedef struct {
     uint32_t RASR; //!< The region attribute and size register value (\ref MPU_Type::RASR "RASR"), see \ref ARM_MPU_RASR.
 } ARM_MPU_Region_t;
 
-/** Enable the MPU by setting the \ref MPU_CTRL_ENABLE_Msk "ENABLE" bit in \ref MPU_Type::CTRL.
-* \param MPU_Control Additional flags to be set in \ref MPU_Type::CTRL, see \ref mpu_functions_ctrl.
+/** 
+\brief Enable the memory protection unit (MPU) and 
+\param MPU_CTRL Additional control settings that configure MPU behaviour
+\details
+The function \ref ARM_MPU_Enable writes to the register \ref MPU_Type::CTRL "MPU->CTRL" and sets bit ENABLE. The parameter \em MPU_CTRL provides additional bit values 
+(see table below) that configure the MPU behaviour.  For processors that implement an <b>MPU Fault Handler</b> the \ref NVIC_gr "MemoryManagement_IRQn" exception is enabled by setting the bit MEMFAULTACT in register SBC->SHCSR.
+
+The following table contains possible values for the parameter \em MPU_CTRL that set specific bits in register MPU->CTRL.
+| Bit | MPU_CTRL value           | When applied                                                            | When not applied
+|:----|:-------------------------|:------------------------------------------------------------------------|:---------------------------------------
+| 1   | MPU_CTRL_HFNMIENA_Pos    | Enable MPU during hard fault, NMI, and FAULTMASK handlers execution     | Disable MPU during hard fault, NMI, and FAULTMASK handler execution
+| 2   | MPU_CTRL_PRIVDEFENA_Pos  | Enable default memory map as a background region for privileged access  | Use only MPU region settings
+
+<b>Example:</b>
+
+\code 
+// enable MPU with all region definitions. Exceptions are not protected by MPU.
+  MPU_Enable (0);
+  
+// enable MPU with all region definitions and background regions for privileged access. Exceptions are protected by MPU.
+  MPU_Enable (MPU_CTRL_PRIVDEFENA_Pos | MPU_CTRL_HFNMIENA_Pos);
+\endcode  
+
+
 */
-__STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_Control);
+__STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_CTRL);
 
 /** Disable the MPU.
 */
@@ -147,7 +126,7 @@ __STATIC_INLINE void ARM_MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t r
 * \param table Pointer to the MPU configuration table.
 * \param cnt Number of regions to be configured.
 *
-* \note only up to 16 regions can be handled as the function \ref ARM_MPU_Load uses the REGION field in \ref MPU_Type::RBAR.
+* \note only up to 16 regions can be handled as the function \ref ARM_MPU_Load uses the REGION field in \ref MPU_Type::RBAR "MPU->RBAR".
 *
 * <b>Example:</b>
 * \code
@@ -174,7 +153,7 @@ __STATIC_INLINE void ARM_MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t r
 *  
 * void UpdateMpu(uint32_t idx)
 * {
-*    ARM_MPU_Load(mpuTable[idx], 4u);
+*    ARM_MPU_Load(mpuTable[idx], 4);
 * }
 * \endcode
 *
