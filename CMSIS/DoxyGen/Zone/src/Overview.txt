@@ -20,7 +20,7 @@ The following diagram explains the development flow when using the \b CMSIS-Zone
 \image html DevelopmentFlow.png  "CMSIS-Zone Development Flow"
 
 The following sections explain: 
-- \ref XML_Format (XML based) that stores system resource information and the configuration of project zones and execution zones.
+- \ref XML_Format (XML based) that stores system resource information and the configuration of project zones and execution zones.
 - \ref GenDataModel which is used to create tool set-up files and hardware configuration files.
 
 
@@ -55,4 +55,22 @@ resource assignment to prevent undesired misbehaviour.
 \image html multicore.png  "Multi-Core Partitioning"
 
 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page zone_revisionHistory Revision History of CMSIS-Zone
+
+<table class="cmtable" summary="Revision History">
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>0.0.1 (Preview)</td>
+      <td>Initial specification draft</td>
+    </tr>
+</table>
+
+	
 */

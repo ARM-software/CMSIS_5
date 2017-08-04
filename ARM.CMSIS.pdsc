@@ -23,9 +23,9 @@
 	  - OS Tick API 1.0.0
       CMSIS-DSP: 1.5.2 (see revision history for details)
       - Fixed GNU Compiler specific diagnostics.
-      CMSIS-PACK:1.5.0 (see revision history for details)
+      CMSIS-PACK: 1.5.0 (see revision history for details)
       - added System Description File (*.SDF) Format
-	  CMSIS-Zone: Preview 0.0.1
+	  CMSIS-Zone: 0.0.1 (Preview)
 	  - Initial specification draft
 	</release>
     <release version="5.0.1" date="2017-02-03">
