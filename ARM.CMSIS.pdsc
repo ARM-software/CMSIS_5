@@ -8,6 +8,9 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.1.1-dev0">
+	  Active development...
+	</release>
     <release version="5.1.0" date="2017-08-04">
       CMSIS-Core(M): 5.0.2 (see revision history for details)
 	  - Changed Version Control macros to be core agnostic. 
