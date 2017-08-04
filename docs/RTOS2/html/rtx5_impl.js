@@ -1,11 +1,13 @@
 var rtx5_impl =
 [
     [ "Create an RTX5 Project", "cre_rtx_proj.html", [
+      [ "Additional requirements for RTX on Cortex-A", "cre_rtx_proj.html#cre_rtx_cortexa", null ],
       [ "Add support for RTX specific functions", "cre_rtx_proj.html#cre_rtx_proj_specifics", null ],
       [ "Add Event Recorder Visibility", "cre_rtx_proj.html#cre_rtx_proj_er", null ]
     ] ],
     [ "Theory of Operation", "theory_of_operation.html", [
       [ "System Startup", "theory_of_operation.html#SystemStartup", null ],
+      [ "Scheduler", "theory_of_operation.html#Scheduler", null ],
       [ "Memory Allocation", "theory_of_operation.html#MemoryAllocation", [
         [ "Global Memory Pool", "theory_of_operation.html#GlobalMemoryPool", null ],
         [ "Object-specific Memory Pools", "theory_of_operation.html#ObjectMemoryPool", null ],
@@ -13,11 +15,12 @@ var rtx5_impl =
       ] ],
       [ "Thread Stack Management", "theory_of_operation.html#ThreadStack", null ],
       [ "Low-Power Operation", "theory_of_operation.html#lowPower", null ],
-      [ "RTX kernel Timer Tick", "theory_of_operation.html#kernelTimer", null ],
+      [ "RTX Kernel Timer Tick", "theory_of_operation.html#kernelTimer", [
+        [ "Tick-less Low-Power Operation", "theory_of_operation.html#TickLess", null ]
+      ] ],
+      [ "RTX5 Header File", "theory_of_operation.html#rtx_os_h", null ],
       [ "Timeout Value", "theory_of_operation.html#CMSIS_RTOS_TimeOutValue", null ],
-      [ "Calls from Interrupt Service Routines", "theory_of_operation.html#CMSIS_RTOS_ISR_Calls", null ],
-      [ "Tick-less Low-Power Operation", "theory_of_operation.html#TickLess", null ],
-      [ "RTX5 Header File", "theory_of_operation.html#rtx_os_h", null ]
+      [ "Calls from Interrupt Service Routines", "theory_of_operation.html#CMSIS_RTOS_ISR_Calls", null ]
     ] ],
     [ "Configure RTX v5", "config_rtx5.html", [
       [ "System Configuration", "config_rtx5.html#systemConfig", [
@@ -56,6 +59,13 @@ var rtx5_impl =
       [ "RTX v5 Directory Structure", "dirstructfiles5.html#Folders", null ],
       [ "RTX v5 Library Files", "dirstructfiles5.html#libFiles", null ]
     ] ],
-    [ "Technical Data", "technicalData5.html", null ],
+    [ "Technical Data", "technicalData5.html", [
+      [ "Supported Toolchains", "technicalData5.html#technicalData_Toolchains", [
+        [ "ARM Compiler (ARM/Keil MDK, uVision5)", "technicalData5.html#technicalData_Toolchain_ARM", null ],
+        [ "IAR Embedded Workbench", "technicalData5.html#technicalData_Toolchain_IAR", null ],
+        [ "GNU Compiler Collection", "technicalData5.html#technicalData_Toolchain_GCC", null ]
+      ] ],
+      [ "Control Block Sizes", "technicalData5.html#technicalData5_ControlBlockSizes", null ]
+    ] ],
     [ "MISRA-C Compliance Exceptions", "misraCompliance5.html", null ]
 ];

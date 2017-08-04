@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -272,7 +272,7 @@ Error and Warning Messages</h1>
 <tr>
 <td>M335 </td><td>WARNING </td><td>Component declared as 'Board Support' has no ref to a device: Cclass= <em>'CCLASS'</em>, Cgroup= <em>'CGROUP'</em>, Cversion= <em>'CVER'</em>  </td><td>A component defined as 'board support' needs a reference to a device. Add a device or correct the component definition. Refer to attribute <em>Cclass</em> of <a class="el" href="pdsc_components_pg.html#element_component">/package/components/.../component</a> and <a class="el" href="pdsc_boards_pg.html#element_board_mountedDevice">/package/boards/board/mountedDevice</a>.  </td></tr>
 <tr>
-<td>M336 </td><td>WARNING </td><td>No reference to a device or device not found: Cclass= <em>'CCLASS'</em>, Cgroup= <em>'CGROUP'</em>, Cversion= <em>'CVER'</em>  </td><td>Define the device <a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a> or correct the information about the device in the reference.  </td></tr>
+<td>M336 </td><td>WARNING </td><td>No reference to a device or device not found: Cclass= <em>'CCLASS'</em>, Cgroup= <em>'CGROUP'</em>, Cversion= <em>'CVER'</em>  </td><td>Define the device <a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a> or correct the information about the device in the reference.  </td></tr>
 <tr>
 <td>M337 </td><td>WARNING </td><td>File with category <em>'CAT'</em> has wrong extension <em>'EXT'</em>: <em>'PATH'</em>  </td><td>The extension of the file does not match the file category. Verify the extension to match the category. Refer to <a class="el" href="pdsc_components_pg.html#element_file">/package/.../files/file</a>.  </td></tr>
 <tr>
@@ -327,7 +327,7 @@ Error and Warning Messages</h1>
 <tr>
 <td>M363 </td><td>WARNING </td><td>No API defined for Component Cclass= <em>'CCLASS'</em>, Cgroup= <em>'CGROUP'</em>, Csub= <em>'CSUB'</em>, Cversion= <em>'CVER'</em>, Capiversion= <em>'APIVER'</em>  </td><td>The package is missing the API information for the specified component. Refer to <a class="el" href="pdsc_apis_pg.html#element_apis">/package/apis</a>.   </td></tr>
 <tr>
-<td>M364 </td><td>WARNING </td><td>No Devices for Condition <em>'COND'</em> available. </td><td>The specified condition refers to a device that does not exist. Define the device (<a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>) or correct the information for the condition (<a class="el" href="pdsc_conditions_pg.html#element_condition">/package/conditions/condition</a>).  </td></tr>
+<td>M364 </td><td>WARNING </td><td>No Devices for Condition <em>'COND'</em> available. </td><td>The specified condition refers to a device that does not exist. Define the device (<a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>) or correct the information for the condition (<a class="el" href="pdsc_conditions_pg.html#element_condition">/package/conditions/condition</a>).  </td></tr>
 <tr>
 <td>M365 </td><td>ERROR </td><td>Redefined DEVTYPE <em>'MCU'</em> found, see Line <em>LINE</em>  </td><td>Remove duplicate device/variant entries.  </td></tr>
 <tr>
@@ -346,7 +346,7 @@ Error and Warning Messages</h1>
 <tr>
 <td>M373 </td><td>ERROR </td><td>Unsupported Schema Version: <em>'VER'</em>. </td><td>The schema version is not supported. Verify the attribute <span class="XML-Token">schemaVersion</span> of the element <a class="el" href="pdsc_package_pg.html#element_package">/package</a>.  </td></tr>
 <tr>
-<td>M374 </td><td>ERROR </td><td>While checking Feature for <em>'MCU'</em>: Pname <em>'CPU'</em> not found. </td><td>The processor could not be found for the specified device. Refer to <a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a> and <a class="el" href="pdsc_family_pg.html#element_processor">/package/devices/family/.../processor</a>.  </td></tr>
+<td>M374 </td><td>ERROR </td><td>While checking Feature for <em>'MCU'</em>: Pname <em>'CPU'</em> not found. </td><td>The processor could not be found for the specified device. Refer to <a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a> and <a class="el" href="pdsc_family_pg.html#element_processor">/package/devices/family/.../processor</a>.  </td></tr>
 <tr>
 <td>M375 </td><td>ERROR </td><td><em>'path/pdsc_file'</em>: No &lt;mountedDevice&gt; for board <em>'BOARD'</em> found. </td><td>If a board element does not contain a &lt;mountedDevice&gt; element, then the examples for this board are not shown and example projects may not appear in the development tools. Refer to <a class="el" href="pdsc_boards_pg.html#element_board_mountedDevice">/package/boards/board/mountedDevice</a> of <a class="el" href="pdsc_boards_pg.html#element_boards">/package/boards</a>.  </td></tr>
 <tr>
@@ -404,7 +404,7 @@ Error and Warning Messages</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="createPackUtil.html">Utilities for Creating Packs</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:41 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

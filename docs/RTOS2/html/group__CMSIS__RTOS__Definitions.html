@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -128,10 +128,10 @@ Content</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga9eb9a7a797a42e4b55eb171ecc609ddb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>&#160;&#160;&#160;0xFFFFFFFFU</td></tr>
-<tr class="memdesc:ga9eb9a7a797a42e4b55eb171ecc609ddb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout value.  <a href="#ga9eb9a7a797a42e4b55eb171ecc609ddb">More...</a><br/></td></tr>
+<tr class="memdesc:ga9eb9a7a797a42e4b55eb171ecc609ddb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait forever timeout value.  <a href="#ga9eb9a7a797a42e4b55eb171ecc609ddb">More...</a><br/></td></tr>
 <tr class="separator:ga9eb9a7a797a42e4b55eb171ecc609ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga18e63587b8450d5b8798b6f6ec04e012"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012">osFlagsWaitAny</a>&#160;&#160;&#160;0x00000000U</td></tr>
-<tr class="memdesc:ga18e63587b8450d5b8798b6f6ec04e012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags options (<a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> and <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a>).  <a href="#ga18e63587b8450d5b8798b6f6ec04e012">More...</a><br/></td></tr>
+<tr class="memdesc:ga18e63587b8450d5b8798b6f6ec04e012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for any flag (default).  <a href="#ga18e63587b8450d5b8798b6f6ec04e012">More...</a><br/></td></tr>
 <tr class="separator:ga18e63587b8450d5b8798b6f6ec04e012"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8b6f562736fbfb5428940e0c017dec24"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga8b6f562736fbfb5428940e0c017dec24">osFlagsWaitAll</a>&#160;&#160;&#160;0x00000001U</td></tr>
 <tr class="memdesc:ga8b6f562736fbfb5428940e0c017dec24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for all flags.  <a href="#ga8b6f562736fbfb5428940e0c017dec24">More...</a><br/></td></tr>
@@ -175,7 +175,6 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Wait forever timeout value.</p>
 <p>A special <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">Timeout Value</a> that informs the RTOS to wait infinite until a resource becomes available. It applies to the following functions:</p>
 <ul>
 <li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> : Wait for one or more Thread Flags of the current running thread to become signaled.</li>
@@ -198,7 +197,6 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Wait for any flag (default).</p>
 <p>Reference:</p>
 <ul>
 <li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a></li>
@@ -286,7 +284,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:47 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

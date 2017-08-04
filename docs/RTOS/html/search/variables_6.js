@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tpriority',['tpriority',['../structosThreadDef__t.html#a15da8f23c6fe684b70a73646ada685e7',1,'osThreadDef_t']]]
+  ['value',['value',['../group__CMSIS__RTOS__Definitions.html#a0b9f8fd3645f01d8cb09cae82add2d7f',1,'osEvent']]]
 ];

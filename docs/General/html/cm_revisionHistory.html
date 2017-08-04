@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS
-   &#160;<span id="projectnumber">Version 5.0.1</span>
+   &#160;<span id="projectnumber">Version 5.1.0</span>
    </div>
    <div id="projectbrief">Cortex Microcontroller Software Interface Standard</div>
   </td>
@@ -74,18 +74,33 @@ $(document).ready(function(){initNavTree('cm_revisionHistory.html','');});
 <div class="contents">
 <div class="textblock"><p>The following table shows the overall high-level history of the various CMSIS releases. In addition, each CMSIS component has its own release history:</p>
 <ul>
-<li><a href="../../Core/html/core_revisionHistory.html"><b>CORE Revision History</b></a></li>
-<li><a href="../../DAP/html/dap_revisionHistory.html"><b>DAP Revision History</b></a></li>
+<li><a href="../../Core/html/core_revisionHistory.html"><b>CMSIS-Core (Cortex-M) Revision History</b></a></li>
+<li><a href="../../Core/html/rev_histCoreA.html"><b>CMSIS-Core (Cortex-A) Revision History</b></a></li>
 <li><a href="../../Driver/html/driver_revisionHistory.html"><b>Driver Revision History</b></a></li>
 <li><a href="../../DSP/html/ChangeLog_pg.html"><b>DSP Revision History (Change Log)</b></a></li>
-<li><a href="../../Pack/html/pack_revisionHistory.html"><b>Pack Revision History</b></a></li>
 <li><a href="../../RTOS/html/rtos_revisionHistory.html"><b>RTOS v1 Revision History</b></a></li>
 <li><a href="../../RTOS2/html/rtos_revisionHistory.html"><b>RTOS v2 Revision History</b></a></li>
+<li><a href="../../Pack/html/pack_revisionHistory.html"><b>Pack Revision History</b></a></li>
 <li><a href="../../SVD/html/svd_revisionHistory.html"><b>SVD Revision History</b></a></li>
+<li><a href="../../DAP/html/dap_revisionHistory.html"><b>DAP Revision History</b></a></li>
+<li><a href="../../Zone/html/zone_revisionHistory.html"><b>Zone Revision History</b></a></li>
 </ul>
 <table  class="cmtable" summary="Revision History">
 <tr>
 <th>Version </th><th>Description  </th></tr>
+<tr>
+<td>5.1.0 </td><td><ul>
+<li>CMSIS-Core (Cortex-M) 5.0.2 several minor corrections and enhancements</li>
+<li>CMSIS-Core (Cortex-A) 1.0.0 implements a basic run-time system for Cortex-A5/A7/A9</li>
+<li>CMSIS-Driver 2.05 status typedef made volatile</li>
+<li>CMSIS-DSP 1.5.2 fixed GNU Compiler specific diagnostics</li>
+<li>CMSIS-RTOS 2.1.1 added support for Cortex-A5/A7/A9 to RTX5</li>
+<li>CMSIS-PACK 1.5.0 added SDF format specification</li>
+<li>CMSIS-SVD 1.3.3 (unchanged)</li>
+<li>CMSIS-DAP 1.1.0 (unchanged)</li>
+<li>CMSIS-Zone 0.0.1 (Preview) format to describe system resources and tool for partitioning of resources   </li>
+</ul>
+</td></tr>
 <tr>
 <td>5.0.1 </td><td><ul>
 <li>CMSIS-Core 5.0.1 added __PACKED_STRUCT macro and uVisor support</li>
@@ -94,12 +109,12 @@ $(document).ready(function(){initNavTree('cm_revisionHistory.html','');});
 <li>CMSIS-RTOS 2.1.0 added support for critical and uncritical sections</li>
 <li>CMSIS-PACK 1.4.8 add Pack Index File specification</li>
 <li>CMSIS-SVD 1.3.3 (unchanged)</li>
-<li>CMSIS-DAP 1.1.0 (unchanged)  </li>
+<li>CMSIS-DAP 1.1.0 (unchanged)   </li>
 </ul>
 </td></tr>
 <tr>
 <td>5.0.0 </td><td>Added support for: <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>ARMv8-M architecture</b></a> including TrustZone for ARMv8-M and Cortex-M23, Cortex-M33 processors<ul>
-<li>CMSIS-CORE 5.0.0 added support for ARMv8-M and Cortex-M23, Cortex-M33 processors</li>
+<li>CMSIS-Core (Cortex-M) 5.0.0 added support for ARMv8-M and Cortex-M23, Cortex-M33 processors</li>
 <li>CMSIS-Driver 2.04.0 (unchanged)</li>
 <li>CMSIS-DSP 1.4.9 minor corrections and performance improvements</li>
 <li>CMSIS-RTOS 2.0.0 new API with RTX 5.0.0 reference implementation and corrections in RTX 4.8.2</li>
@@ -110,7 +125,7 @@ $(document).ready(function(){initNavTree('cm_revisionHistory.html','');});
 </td></tr>
 <tr>
 <td>4.5.0 </td><td>Maintenance release that is fixing defects. See component's revision history for more details. See component's revision history for more details.<ul>
-<li>CMSIS-CORE 4.30.0</li>
+<li>CMSIS-Core (Cortex-M) 4.30.0</li>
 <li>CMSIS-DAP 1.1.0 (unchanged)</li>
 <li>CMSIS-Driver 2.04.0</li>
 <li>CMSIS-DSP 1.4.7</li>
@@ -121,7 +136,7 @@ $(document).ready(function(){initNavTree('cm_revisionHistory.html','');});
 </td></tr>
 <tr>
 <td>4.4.0 </td><td>Feature release adding CMSIS-DAP (see extended End User Licence Agreement) and CMSIS-Driver for CAN. See component's revision history for more details.<ul>
-<li>CMSIS-CORE 4.20.0</li>
+<li>CMSIS-Core (Cortex-M) 4.20.0</li>
 <li>CMSIS-DAP 1.1.0</li>
 <li>CMSIS-Driver 2.03.0</li>
 <li>CMSIS-DSP 1.4.5 (unchanged)</li>
@@ -132,7 +147,7 @@ $(document).ready(function(){initNavTree('cm_revisionHistory.html','');});
 </td></tr>
 <tr>
 <td>4.3.0 </td><td>Maintenance release adding SAI CMSIS-Driver and fixing defects. See component's revision history for more details.<ul>
-<li>CMSIS-CORE 4.10.0</li>
+<li>CMSIS-Core (Cortex-M) 4.10.0</li>
 <li>CMSIS-Driver 2.02.0</li>
 <li>CMSIS-DSP 1.4.5</li>
 <li>CMSIS-RTOS RTX 4.78.0</li>
@@ -168,14 +183,14 @@ $(document).ready(function(){initNavTree('cm_revisionHistory.html','');});
 <tr>
 <td>1.01 </td><td>Added support for Cortex-M0 processor  </td></tr>
 <tr>
-<td>1.00 </td><td>Initial release of CMSIS-CORE for Cortex-M3 processor  </td></tr>
+<td>1.00 </td><td>Initial release of CMSIS-Core (Cortex-M) for Cortex-M3 processor  </td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:52 for CMSIS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:31 for CMSIS by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

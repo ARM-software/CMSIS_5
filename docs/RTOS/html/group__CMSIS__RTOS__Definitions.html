@@ -122,6 +122,10 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structosEvent"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#structosEvent">osEvent</a></td></tr>
 <tr class="memdesc:structosEvent"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure contains detailed information about an event.  <a href="group__CMSIS__RTOS__Definitions.html#structosEvent">More...</a><br/></td></tr>
 <tr class="separator:structosEvent"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:unionosEvent_8value"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#unionosEvent_8value">osEvent.value</a></td></tr>
+<tr class="separator:unionosEvent_8value"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:unionosEvent_8def"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#unionosEvent_8def">osEvent.def</a></td></tr>
+<tr class="separator:unionosEvent_8def"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structos__mailQ"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#structos__mailQ">os_mailQ</a></td></tr>
 <tr class="separator:structos__mailQ"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -139,132 +143,87 @@ Data Structures</h2></td></tr>
 </div><div class="memdoc">
 <div class="textblock"><dl class="section note"><dt>Note</dt><dd>MUST REMAIN UNCHANGED: <b>os_event</b> shall be consistent in every CMSIS-RTOS. However the struct may be extended at the end.</dd></dl>
 <p>The <b><a class="el" href="group__CMSIS__RTOS__Definitions.html#structosEvent" title="Event structure contains detailed information about an event. ">osEvent</a></b> structure describes the events returned by CMSIS-RTOS functions. </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ad477a289f1f03ac45407b64268d707d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Status.html#gae2e091fefc4c767117727bd5aba4d99e">osStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ad477a289f1f03ac45407b64268d707d3">status</a></td></tr>
-<tr class="memdesc:ad477a289f1f03ac45407b64268d707d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">status code: event or error information  <a href="#ad477a289f1f03ac45407b64268d707d3">More...</a><br/></td></tr>
-<tr class="separator:ad477a289f1f03ac45407b64268d707d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b9f8fd3645f01d8cb09cae82add2d7f"><td class="memItemLeft" >union {</td></tr>
-<tr class="memitem:a9e0a00edabf3b8a5dafff624fff7bbfc"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="group__CMSIS__RTOS__Definitions.html#a9e0a00edabf3b8a5dafff624fff7bbfc">v</a></td></tr>
-<tr class="memdesc:a9e0a00edabf3b8a5dafff624fff7bbfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">message as 32-bit value  <a href="#a9e0a00edabf3b8a5dafff624fff7bbfc">More...</a><br/></td></tr>
-<tr class="separator:a9e0a00edabf3b8a5dafff624fff7bbfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a117104b82864d3b23ec174af6d392709"><td class="memItemLeft" >&#160;&#160;&#160;void *&#160;&#160;&#160;<a class="el" href="group__CMSIS__RTOS__Definitions.html#a117104b82864d3b23ec174af6d392709">p</a></td></tr>
-<tr class="memdesc:a117104b82864d3b23ec174af6d392709"><td class="mdescLeft">&#160;</td><td class="mdescRight">message or mail as void pointer  <a href="#a117104b82864d3b23ec174af6d392709">More...</a><br/></td></tr>
-<tr class="separator:a117104b82864d3b23ec174af6d392709"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0dda1bf7e74f1576261d493fba232b6"><td class="memItemLeft" >&#160;&#160;&#160;int32_t&#160;&#160;&#160;<a class="el" href="group__CMSIS__RTOS__Definitions.html#ad0dda1bf7e74f1576261d493fba232b6">signals</a></td></tr>
-<tr class="memdesc:ad0dda1bf7e74f1576261d493fba232b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">signal flags  <a href="#ad0dda1bf7e74f1576261d493fba232b6">More...</a><br/></td></tr>
-<tr class="separator:ad0dda1bf7e74f1576261d493fba232b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b9f8fd3645f01d8cb09cae82add2d7f"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#a0b9f8fd3645f01d8cb09cae82add2d7f">value</a></td></tr>
-<tr class="memdesc:a0b9f8fd3645f01d8cb09cae82add2d7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">event value  <a href="#a0b9f8fd3645f01d8cb09cae82add2d7f">More...</a><br/></td></tr>
-<tr class="separator:a0b9f8fd3645f01d8cb09cae82add2d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a596b6d55c3321db19239256bbe403df6"><td class="memItemLeft" >union {</td></tr>
-<tr class="memitem:ac86175a4b1706bee596f3018322df26e"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="cmsis__os_8h.html#a1dac049fb7725a8af8b26c71cbb373b5">osMailQId</a>&#160;&#160;&#160;<a class="el" href="group__CMSIS__RTOS__Definitions.html#ac86175a4b1706bee596f3018322df26e">mail_id</a></td></tr>
-<tr class="memdesc:ac86175a4b1706bee596f3018322df26e"><td class="mdescLeft">&#160;</td><td class="mdescRight">mail id obtained by <a class="el" href="group__CMSIS__RTOS__Mail.html#gaa177e7fe5820dd70d8c9e46ded131174">osMailCreate</a>  <a href="#ac86175a4b1706bee596f3018322df26e">More...</a><br/></td></tr>
-<tr class="separator:ac86175a4b1706bee596f3018322df26e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af394cbe21dde7377974e63af38cd87b0"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="cmsis__os_8h.html#ad9ec70c32c6c521970636b521e12d17f">osMessageQId</a>&#160;&#160;&#160;<a class="el" href="group__CMSIS__RTOS__Definitions.html#af394cbe21dde7377974e63af38cd87b0">message_id</a></td></tr>
-<tr class="memdesc:af394cbe21dde7377974e63af38cd87b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">message id obtained by <a class="el" href="group__CMSIS__RTOS__Message.html#gaf3b9345cf426304d46565152bc26fb78">osMessageCreate</a>  <a href="#af394cbe21dde7377974e63af38cd87b0">More...</a><br/></td></tr>
-<tr class="separator:af394cbe21dde7377974e63af38cd87b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a596b6d55c3321db19239256bbe403df6"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#a596b6d55c3321db19239256bbe403df6">def</a></td></tr>
-<tr class="memdesc:a596b6d55c3321db19239256bbe403df6"><td class="mdescLeft">&#160;</td><td class="mdescRight">event definition  <a href="#a596b6d55c3321db19239256bbe403df6">More...</a><br/></td></tr>
-<tr class="separator:a596b6d55c3321db19239256bbe403df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a596b6d55c3321db19239256bbe403df6"></a>union <a class="el" href="group__CMSIS__RTOS__Definitions.html#unionosEvent_8def">osEvent</a></td>
+<td class="fieldname">
+def</td>
+<td class="fielddoc">
+event definition </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="ad477a289f1f03ac45407b64268d707d3"></a><a class="el" href="group__CMSIS__RTOS__Status.html#gae2e091fefc4c767117727bd5aba4d99e">osStatus</a></td>
+<td class="fieldname">
+status</td>
+<td class="fielddoc">
+status code: event or error information </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a0b9f8fd3645f01d8cb09cae82add2d7f"></a>union <a class="el" href="group__CMSIS__RTOS__Definitions.html#unionosEvent_8value">osEvent</a></td>
+<td class="fieldname">
+value</td>
+<td class="fielddoc">
+event value </td></tr>
 </table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a596b6d55c3321db19239256bbe403df6"></a>
+
+</div>
+</div>
+<a name="unionosEvent_8value" id="unionosEvent_8value"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">union { ... }   def</td>
+          <td class="memname">union osEvent.value</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a83878c91171338902e0fe0fb97a8c47a"></a>void *</td>
+<td class="fieldname">
+p</td>
+<td class="fielddoc">
+message or mail as void pointer </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="aa8420f8bebd6d9578b405b6bbaa813d9"></a>int32_t</td>
+<td class="fieldname">
+signals</td>
+<td class="fielddoc">
+signal flags </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a9e3669d19b675bd57058fd4664205d2a"></a>uint32_t</td>
+<td class="fieldname">
+v</td>
+<td class="fielddoc">
+message as 32-bit value </td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="ac86175a4b1706bee596f3018322df26e"></a>
+<a name="unionosEvent_8def" id="unionosEvent_8def"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="cmsis__os_8h.html#a1dac049fb7725a8af8b26c71cbb373b5">osMailQId</a> mail_id</td>
+          <td class="memname">union osEvent.def</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af394cbe21dde7377974e63af38cd87b0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="cmsis__os_8h.html#ad9ec70c32c6c521970636b521e12d17f">osMessageQId</a> message_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a117104b82864d3b23ec174af6d392709"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* p</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ad0dda1bf7e74f1576261d493fba232b6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int32_t signals</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ad477a289f1f03ac45407b64268d707d3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__CMSIS__RTOS__Status.html#gae2e091fefc4c767117727bd5aba4d99e">osStatus</a> status</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a9e0a00edabf3b8a5dafff624fff7bbfc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t v</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a0b9f8fd3645f01d8cb09cae82add2d7f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">union { ... }   value</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a57aa2b69577037fb2428bc48a9fb1038"></a><a class="el" href="cmsis__os_8h.html#a1dac049fb7725a8af8b26c71cbb373b5">osMailQId</a></td>
+<td class="fieldname">
+mail_id</td>
+<td class="fielddoc">
+mail id obtained by <a class="el" href="group__CMSIS__RTOS__Mail.html#gaa177e7fe5820dd70d8c9e46ded131174">osMailCreate</a> </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a4ccaa172acbdcbf38fa0ea0ef0229c49"></a><a class="el" href="cmsis__os_8h.html#ad9ec70c32c6c521970636b521e12d17f">osMessageQId</a></td>
+<td class="fieldname">
+message_id</td>
+<td class="fielddoc">
+message id obtained by <a class="el" href="group__CMSIS__RTOS__Message.html#gaf3b9345cf426304d46565152bc26fb78">osMessageCreate</a> </td></tr>
+</table>
 
 </div>
 </div>
@@ -286,7 +245,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:02 for CMSIS-RTOS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:44 for CMSIS-RTOS by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

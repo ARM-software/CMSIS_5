@@ -212,30 +212,21 @@ Header File Template: cmsis_os.h</h1>
 <div class="line"><span class="comment"> *    Removed: osSignalGet </span></div>
 <div class="line"><span class="comment"> *----------------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment"> *</span></div>
-<div class="line"><span class="comment"> * Copyright (c) 2013 ARM LIMITED</span></div>
-<div class="line"><span class="comment"> * All rights reserved.</span></div>
-<div class="line"><span class="comment"> * Redistribution and use in source and binary forms, with or without</span></div>
-<div class="line"><span class="comment"> * modification, are permitted provided that the following conditions are met:</span></div>
-<div class="line"><span class="comment"> *  - Redistributions of source code must retain the above copyright</span></div>
-<div class="line"><span class="comment"> *    notice, this list of conditions and the following disclaimer.</span></div>
-<div class="line"><span class="comment"> *  - Redistributions in binary form must reproduce the above copyright</span></div>
-<div class="line"><span class="comment"> *    notice, this list of conditions and the following disclaimer in the</span></div>
-<div class="line"><span class="comment"> *    documentation and/or other materials provided with the distribution.</span></div>
-<div class="line"><span class="comment"> *  - Neither the name of ARM  nor the names of its contributors may be used</span></div>
-<div class="line"><span class="comment"> *    to endorse or promote products derived from this software without</span></div>
-<div class="line"><span class="comment"> *    specific prior written permission.</span></div>
+<div class="line"><span class="comment"> * Copyright (c) 2013-2017 ARM LIMITED</span></div>
 <div class="line"><span class="comment"> *</span></div>
-<div class="line"><span class="comment"> * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;</span></div>
-<div class="line"><span class="comment"> * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span></div>
-<div class="line"><span class="comment"> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span></div>
-<div class="line"><span class="comment"> * ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE</span></div>
-<div class="line"><span class="comment"> * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR</span></div>
-<div class="line"><span class="comment"> * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF</span></div>
-<div class="line"><span class="comment"> * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS</span></div>
-<div class="line"><span class="comment"> * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN</span></div>
-<div class="line"><span class="comment"> * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span></div>
-<div class="line"><span class="comment"> * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
-<div class="line"><span class="comment"> * POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><span class="comment"> *</span></div>
+<div class="line"><span class="comment"> * Licensed under the Apache License, Version 2.0 (the License); you may</span></div>
+<div class="line"><span class="comment"> * not use this file except in compliance with the License.</span></div>
+<div class="line"><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><span class="comment"> *</span></div>
+<div class="line"><span class="comment"> * www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><span class="comment"> *</span></div>
+<div class="line"><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><span class="comment"> * distributed under the License is distributed on an AS IS BASIS, WITHOUT</span></div>
+<div class="line"><span class="comment"> * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><span class="comment"> * limitations under the License.</span></div>
 <div class="line"><span class="comment"> *---------------------------------------------------------------------------*/</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
@@ -363,25 +354,25 @@ Header File Template: cmsis_os.h</h1>
 <div class="line"><span class="comment"></span>  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga7f2b42f1983b9107775ec2a1c69a849a">osPriority</a>             tpriority;    <span class="comment">///&lt; initial thread priority</span></div>
 <div class="line"><span class="comment"></span>  uint32_t               instances;    <span class="comment">///&lt; maximum number of instances of that thread function</span></div>
 <div class="line"><span class="comment"></span>  uint32_t               stacksize;    <span class="comment">///&lt; stack size requirements in bytes; 0 is default stack size</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="structosThreadDef__t.html">osThreadDef_t</a>;</div>
+<div class="line"><span class="comment"></span>} <a class="code" href="cmsis__os_8h.html#structosThreadDef__t">osThreadDef_t</a>;</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Timer Definition structure contains timer parameters.</span></div>
 <div class="line"><span class="comment">/// \note CAN BE CHANGED: \b os_timer_def is implementation specific in every CMSIS-RTOS.</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>os_timer_def  {</div>
 <div class="line">  <a class="code" href="cmsis__os_8h.html#aa2d85e49bde9f6951ff3545cd323f065">os_ptimer</a>                 ptimer;    <span class="comment">///&lt; start address of a timer function</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="structosTimerDef__t.html">osTimerDef_t</a>;</div>
+<div class="line"><span class="comment"></span>} <a class="code" href="cmsis__os_8h.html#structosTimerDef__t">osTimerDef_t</a>;</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Mutex Definition structure contains setup information for a mutex.</span></div>
 <div class="line"><span class="comment">/// \note CAN BE CHANGED: \b os_mutex_def is implementation specific in every CMSIS-RTOS.</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>os_mutex_def  {</div>
 <div class="line">  uint32_t                   dummy;    <span class="comment">///&lt; dummy value.</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="structosMutexDef__t.html">osMutexDef_t</a>;</div>
+<div class="line"><span class="comment"></span>} <a class="code" href="cmsis__os_8h.html#structosMutexDef__t">osMutexDef_t</a>;</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Semaphore Definition structure contains setup information for a semaphore.</span></div>
 <div class="line"><span class="comment">/// \note CAN BE CHANGED: \b os_semaphore_def is implementation specific in every CMSIS-RTOS.</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>os_semaphore_def  {</div>
 <div class="line">  uint32_t                   dummy;    <span class="comment">///&lt; dummy value.</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="structosSemaphoreDef__t.html">osSemaphoreDef_t</a>;</div>
+<div class="line"><span class="comment"></span>} <a class="code" href="cmsis__os_8h.html#structosSemaphoreDef__t">osSemaphoreDef_t</a>;</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Definition structure for memory block allocation.</span></div>
 <div class="line"><span class="comment">/// \note CAN BE CHANGED: \b os_pool_def is implementation specific in every CMSIS-RTOS.</span></div>
@@ -389,7 +380,7 @@ Header File Template: cmsis_os.h</h1>
 <div class="line">  uint32_t                 pool_sz;    <span class="comment">///&lt; number of items (elements) in the pool</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                 item_sz;    <span class="comment">///&lt; size of an item</span></div>
 <div class="line"><span class="comment"></span>  <span class="keywordtype">void</span>                       *pool;    <span class="comment">///&lt; pointer to memory for pool</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="structosPoolDef__t.html">osPoolDef_t</a>;</div>
+<div class="line"><span class="comment"></span>} <a class="code" href="cmsis__os_8h.html#structosPoolDef__t">osPoolDef_t</a>;</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Definition structure for message queue.</span></div>
 <div class="line"><span class="comment">/// \note CAN BE CHANGED: \b os_messageQ_def is implementation specific in every CMSIS-RTOS.</span></div>
@@ -397,7 +388,7 @@ Header File Template: cmsis_os.h</h1>
 <div class="line">  uint32_t                queue_sz;    <span class="comment">///&lt; number of elements in the queue</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                 item_sz;    <span class="comment">///&lt; size of an item</span></div>
 <div class="line"><span class="comment"></span>  <span class="keywordtype">void</span>                       *pool;    <span class="comment">///&lt; memory array for messages</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="structosMessageQDef__t.html">osMessageQDef_t</a>;</div>
+<div class="line"><span class="comment"></span>} <a class="code" href="cmsis__os_8h.html#structosMessageQDef__t">osMessageQDef_t</a>;</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Definition structure for mail queue.</span></div>
 <div class="line"><span class="comment">/// \note CAN BE CHANGED: \b os_mailQ_def is implementation specific in every CMSIS-RTOS.</span></div>
@@ -405,7 +396,7 @@ Header File Template: cmsis_os.h</h1>
 <div class="line">  uint32_t                queue_sz;    <span class="comment">///&lt; number of elements in the queue</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                 item_sz;    <span class="comment">///&lt; size of an item</span></div>
 <div class="line"><span class="comment"></span>  <span class="keywordtype">void</span>                       *pool;    <span class="comment">///&lt; memory array for mail</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="structosMailQDef__t.html">osMailQDef_t</a>;</div>
+<div class="line"><span class="comment"></span>} <a class="code" href="cmsis__os_8h.html#structosMailQDef__t">osMailQDef_t</a>;</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Event structure contains detailed information about an event.</span></div>
 <div class="line"><span class="comment">/// \note MUST REMAIN UNCHANGED: \b os_event shall be consistent in every CMSIS-RTOS.</span></div>
@@ -489,7 +480,7 @@ Header File Template: cmsis_os.h</h1>
 <div class="line"><span class="comment">/// \param[in]     argument      pointer that is passed to the thread function as start argument.</span></div>
 <div class="line"><span class="comment">/// \return thread ID for reference by other functions or NULL in case of error.</span></div>
 <div class="line"><span class="comment">/// \note MUST REMAIN UNCHANGED: \b osThreadCreate shall be consistent in every CMSIS-RTOS.</span></div>
-<div class="line"><span class="comment"></span>osThreadId <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gac59b5713cb083702dce759c73fd90dff">osThreadCreate</a> (<span class="keyword">const</span> <a class="code" href="structosThreadDef__t.html">osThreadDef_t</a> *thread_def, <span class="keywordtype">void</span> *argument);</div>
+<div class="line"><span class="comment"></span>osThreadId <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gac59b5713cb083702dce759c73fd90dff">osThreadCreate</a> (<span class="keyword">const</span> <a class="code" href="cmsis__os_8h.html#structosThreadDef__t">osThreadDef_t</a> *thread_def, <span class="keywordtype">void</span> *argument);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Return the thread ID of the current running thread.</span></div>
 <div class="line"><span class="comment">/// \return thread ID for reference by other functions or NULL in case of error.</span></div>
@@ -567,7 +558,7 @@ Header File Template: cmsis_os.h</h1>
 <div class="line"><span class="comment">/// \param[in]     argument      argument to the timer call back function.</span></div>
 <div class="line"><span class="comment">/// \return timer ID for reference by other functions or NULL in case of error.</span></div>
 <div class="line"><span class="comment">/// \note MUST REMAIN UNCHANGED: \b osTimerCreate shall be consistent in every CMSIS-RTOS.</span></div>
-<div class="line"><span class="comment"></span>osTimerId <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaedd312bfdca04e0b8162b666e09a1ae6">osTimerCreate</a> (<span class="keyword">const</span> <a class="code" href="structosTimerDef__t.html">osTimerDef_t</a> *timer_def, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gadac860eb9e1b4b0619271e6595ed83d9">os_timer_type</a> type, <span class="keywordtype">void</span> *argument);</div>
+<div class="line"><span class="comment"></span>osTimerId <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaedd312bfdca04e0b8162b666e09a1ae6">osTimerCreate</a> (<span class="keyword">const</span> <a class="code" href="cmsis__os_8h.html#structosTimerDef__t">osTimerDef_t</a> *timer_def, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gadac860eb9e1b4b0619271e6595ed83d9">os_timer_type</a> type, <span class="keywordtype">void</span> *argument);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Start or restart a timer.</span></div>
 <div class="line"><span class="comment">/// \param[in]     timer_id      timer ID obtained by \ref osTimerCreate.</span></div>
@@ -638,7 +629,7 @@ Header File Template: cmsis_os.h</h1>
 <div class="line"><span class="comment">/// \param[in]     mutex_def     mutex definition referenced with \ref osMutex.</span></div>
 <div class="line"><span class="comment">/// \return mutex ID for reference by other functions or NULL in case of error.</span></div>
 <div class="line"><span class="comment">/// \note MUST REMAIN UNCHANGED: \b osMutexCreate shall be consistent in every CMSIS-RTOS.</span></div>
-<div class="line"><span class="comment"></span>osMutexId <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga5c9de56e717016e39e788064e9a291cc">osMutexCreate</a> (<span class="keyword">const</span> <a class="code" href="structosMutexDef__t.html">osMutexDef_t</a> *mutex_def);</div>
+<div class="line"><span class="comment"></span>osMutexId <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga5c9de56e717016e39e788064e9a291cc">osMutexCreate</a> (<span class="keyword">const</span> <a class="code" href="cmsis__os_8h.html#structosMutexDef__t">osMutexDef_t</a> *mutex_def);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Wait until a Mutex becomes available.</span></div>
 <div class="line"><span class="comment">/// \param[in]     mutex_id      mutex ID obtained by \ref osMutexCreate.</span></div>
@@ -688,7 +679,7 @@ Header File Template: cmsis_os.h</h1>
 <div class="line"><span class="comment">/// \param[in]     count         number of available resources.</span></div>
 <div class="line"><span class="comment">/// \return semaphore ID for reference by other functions or NULL in case of error.</span></div>
 <div class="line"><span class="comment">/// \note MUST REMAIN UNCHANGED: \b osSemaphoreCreate shall be consistent in every CMSIS-RTOS.</span></div>
-<div class="line"><span class="comment"></span>osSemaphoreId <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga97381e8e55cd47cec390bf57c96d6edb">osSemaphoreCreate</a> (<span class="keyword">const</span> <a class="code" href="structosSemaphoreDef__t.html">osSemaphoreDef_t</a> *semaphore_def, int32_t count);</div>
+<div class="line"><span class="comment"></span>osSemaphoreId <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga97381e8e55cd47cec390bf57c96d6edb">osSemaphoreCreate</a> (<span class="keyword">const</span> <a class="code" href="cmsis__os_8h.html#structosSemaphoreDef__t">osSemaphoreDef_t</a> *semaphore_def, int32_t count);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Wait until a Semaphore token becomes available.</span></div>
 <div class="line"><span class="comment">/// \param[in]     semaphore_id  semaphore object referenced with \ref osSemaphoreCreate.</span></div>
@@ -742,7 +733,7 @@ Header File Template: cmsis_os.h</h1>
 <div class="line"><span class="comment">/// \param[in]     pool_def      memory pool definition referenced with \ref osPool.</span></div>
 <div class="line"><span class="comment">/// \return memory pool ID for reference by other functions or NULL in case of error.</span></div>
 <div class="line"><span class="comment">/// \note MUST REMAIN UNCHANGED: \b osPoolCreate shall be consistent in every CMSIS-RTOS.</span></div>
-<div class="line"><span class="comment"></span>osPoolId <a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#ga34af5c4f4ab38f4138ea7f1f9ece3a1a">osPoolCreate</a> (<span class="keyword">const</span> <a class="code" href="structosPoolDef__t.html">osPoolDef_t</a> *pool_def);</div>
+<div class="line"><span class="comment"></span>osPoolId <a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#ga34af5c4f4ab38f4138ea7f1f9ece3a1a">osPoolCreate</a> (<span class="keyword">const</span> <a class="code" href="cmsis__os_8h.html#structosPoolDef__t">osPoolDef_t</a> *pool_def);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Allocate a memory block from a memory pool.</span></div>
 <div class="line"><span class="comment">/// \param[in]     pool_id       memory pool ID obtain referenced with \ref osPoolCreate.</span></div>
@@ -797,7 +788,7 @@ Header File Template: cmsis_os.h</h1>
 <div class="line"><span class="comment">/// \param[in]     thread_id     thread ID (obtained by \ref osThreadCreate or \ref osThreadGetId) or NULL.</span></div>
 <div class="line"><span class="comment">/// \return message queue ID for reference by other functions or NULL in case of error.</span></div>
 <div class="line"><span class="comment">/// \note MUST REMAIN UNCHANGED: \b osMessageCreate shall be consistent in every CMSIS-RTOS.</span></div>
-<div class="line"><span class="comment"></span>osMessageQId <a class="code" href="group__CMSIS__RTOS__Message.html#gaf3b9345cf426304d46565152bc26fb78">osMessageCreate</a> (<span class="keyword">const</span> <a class="code" href="structosMessageQDef__t.html">osMessageQDef_t</a> *queue_def, osThreadId thread_id);</div>
+<div class="line"><span class="comment"></span>osMessageQId <a class="code" href="group__CMSIS__RTOS__Message.html#gaf3b9345cf426304d46565152bc26fb78">osMessageCreate</a> (<span class="keyword">const</span> <a class="code" href="cmsis__os_8h.html#structosMessageQDef__t">osMessageQDef_t</a> *queue_def, osThreadId thread_id);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Put a Message to a Queue.</span></div>
 <div class="line"><span class="comment">/// \param[in]     queue_id      message queue ID obtained with \ref osMessageCreate.</span></div>
@@ -848,7 +839,7 @@ Header File Template: cmsis_os.h</h1>
 <div class="line"><span class="comment">/// \param[in]     thread_id     thread ID (obtained by \ref osThreadCreate or \ref osThreadGetId) or NULL.</span></div>
 <div class="line"><span class="comment">/// \return mail queue ID for reference by other functions or NULL in case of error.</span></div>
 <div class="line"><span class="comment">/// \note MUST REMAIN UNCHANGED: \b osMailCreate shall be consistent in every CMSIS-RTOS.</span></div>
-<div class="line"><span class="comment"></span>osMailQId <a class="code" href="group__CMSIS__RTOS__Mail.html#gaa177e7fe5820dd70d8c9e46ded131174">osMailCreate</a> (<span class="keyword">const</span> <a class="code" href="structosMailQDef__t.html">osMailQDef_t</a> *queue_def, osThreadId thread_id);</div>
+<div class="line"><span class="comment"></span>osMailQId <a class="code" href="group__CMSIS__RTOS__Mail.html#gaa177e7fe5820dd70d8c9e46ded131174">osMailCreate</a> (<span class="keyword">const</span> <a class="code" href="cmsis__os_8h.html#structosMailQDef__t">osMailQDef_t</a> *queue_def, osThreadId thread_id);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Allocate a memory block from a mail.</span></div>
 <div class="line"><span class="comment">/// \param[in]     queue_id      mail queue ID obtained with \ref osMailCreate.</span></div>
@@ -899,7 +890,7 @@ Header File Template: cmsis_os.h</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:02 for CMSIS-RTOS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:43 for CMSIS-RTOS by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

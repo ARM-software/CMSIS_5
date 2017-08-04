@@ -132,7 +132,7 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa177e7fe5820dd70d8c9e46ded131174"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__os_8h.html#a1dac049fb7725a8af8b26c71cbb373b5">osMailQId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Mail.html#gaa177e7fe5820dd70d8c9e46ded131174">osMailCreate</a> (const <a class="el" href="structosMailQDef__t.html">osMailQDef_t</a> *queue_def, <a class="el" href="cmsis__os_8h.html#adfeb153a84a81309e2d958268197617f">osThreadId</a> thread_id)</td></tr>
+<tr class="memitem:gaa177e7fe5820dd70d8c9e46ded131174"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__os_8h.html#a1dac049fb7725a8af8b26c71cbb373b5">osMailQId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Mail.html#gaa177e7fe5820dd70d8c9e46ded131174">osMailCreate</a> (const <a class="el" href="cmsis__os_8h.html#structosMailQDef__t">osMailQDef_t</a> *queue_def, <a class="el" href="cmsis__os_8h.html#adfeb153a84a81309e2d958268197617f">osThreadId</a> thread_id)</td></tr>
 <tr class="memdesc:gaa177e7fe5820dd70d8c9e46ded131174"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and Initialize mail queue.  <a href="#gaa177e7fe5820dd70d8c9e46ded131174">More...</a><br/></td></tr>
 <tr class="separator:gaa177e7fe5820dd70d8c9e46ded131174"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadf5ce811bd6a56e617e902a1db6c2194"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Mail.html#gadf5ce811bd6a56e617e902a1db6c2194">osMailAlloc</a> (<a class="el" href="cmsis__os_8h.html#a1dac049fb7725a8af8b26c71cbb373b5">osMailQId</a> queue_id, uint32_t millisec)</td></tr>
@@ -310,7 +310,7 @@ CMSIS-RTOS Mail Queue</div></div>
 <dl class="section note"><dt>Note</dt><dd>MUST REMAIN UNCHANGED: <b>osMailAlloc</b> shall be consistent in every CMSIS-RTOS.</dd></dl>
 <p>Allocate a memory block from the mail queue that is filled with the mail information.</p>
 <p>The argument <em>queue_id</em> specifies a mail queue identifier that is obtain with <a class="el" href="group__CMSIS__RTOS__Mail.html#gaa177e7fe5820dd70d8c9e46ded131174">osMailCreate</a>.</p>
-<p>The argument <em>millisec</em> specifies how long the system waits for a mail slot to become available. While the system waits the tread calling this function is put into the state <b>WAITING</b>. The <em>millisec</em> timeout can have the following values:</p>
+<p>The argument <em>millisec</em> specifies how long the system waits for a mail slot to become available. While the system waits the thread calling this function is put into the state <b>WAITING</b>. The <em>millisec</em> timeout can have the following values:</p>
 <ul>
 <li>when <em>millisec</em> is 0, the function returns instantly.</li>
 <li>when <em>millisec</em> is set to <b>osWaitForever</b> the function will wait for an infinite time until a mail slot can be allocated.</li>
@@ -377,7 +377,7 @@ CMSIS-RTOS Mail Queue</div></div>
         <tr>
           <td class="memname"><a class="el" href="cmsis__os_8h.html#a1dac049fb7725a8af8b26c71cbb373b5">osMailQId</a> osMailCreate </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structosMailQDef__t.html">osMailQDef_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="cmsis__os_8h.html#structosMailQDef__t">osMailQDef_t</a> *&#160;</td>
           <td class="paramname"><em>queue_def</em>, </td>
         </tr>
         <tr>
@@ -457,7 +457,7 @@ CMSIS-RTOS Mail Queue</div></div>
 <div class="line">  <span class="keywordflow">for</span> (;;) {</div>
 <div class="line">    evt = <a class="code" href="group__CMSIS__RTOS__Mail.html#gac6ad7e6e7d6c4a80e60da22c57a42ccd">osMailGet</a>(mail, <a class="code" href="cmsis__os_8h.html#a9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>);        <span class="comment">// wait for mail</span></div>
 <div class="line">    <span class="keywordflow">if</span> (evt.<a class="code" href="group__CMSIS__RTOS__Definitions.html#ad477a289f1f03ac45407b64268d707d3">status</a> == <a class="code" href="group__CMSIS__RTOS__Status.html#gae2e091fefc4c767117727bd5aba4d99ea15b12e42b42b53f35fb8a2724ad02926">osEventMail</a>) {</div>
-<div class="line">      rptr = evt.<a class="code" href="group__CMSIS__RTOS__Definitions.html#a0b9f8fd3645f01d8cb09cae82add2d7f">value</a>.<a class="code" href="group__CMSIS__RTOS__Definitions.html#a117104b82864d3b23ec174af6d392709">p</a>;</div>
+<div class="line">      rptr = evt.<a class="code" href="group__CMSIS__RTOS__Definitions.html#a0b9f8fd3645f01d8cb09cae82add2d7f">value</a>.p;</div>
 <div class="line">      printf (<span class="stringliteral">&quot;\nVoltage: %.2f V\n&quot;</span>, rptr-&gt;voltage);</div>
 <div class="line">      printf (<span class="stringliteral">&quot;Current: %.2f A\n&quot;</span>, rptr-&gt;current);</div>
 <div class="line">      printf (<span class="stringliteral">&quot;Number of cycles: %d\n&quot;</span>, rptr-&gt;counter);</div>
@@ -621,7 +621,7 @@ CMSIS-RTOS Mail Queue</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:02 for CMSIS-RTOS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:44 for CMSIS-RTOS by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

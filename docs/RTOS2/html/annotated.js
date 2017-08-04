@@ -18,7 +18,7 @@ var annotated =
     [ "osRtxInfo_t.thread", "rtx__os_8h.html#structosRtxInfo__t_8thread", "rtx__os_8h_structosRtxInfo__t_8thread" ],
     [ "osRtxInfo_t.thread.robin", "rtx__os_8h.html#structosRtxInfo__t_8thread_8robin", "rtx__os_8h_structosRtxInfo__t_8thread_8robin" ],
     [ "osRtxInfo_t.thread.run", "rtx__os_8h.html#structosRtxInfo__t_8thread_8run", "rtx__os_8h_structosRtxInfo__t_8thread_8run" ],
-    [ "osRtxInfo_t.timer", "rtx__os_8h.html#structosRtxInfo__t_8timer", "rtx__os_8h_structosRtxInfo__t_8timer" ],
+    [ "osRtxInfo_t.timer", "structosRtxInfo__t_8timer.html", "structosRtxInfo__t_8timer" ],
     [ "osRtxMemoryPool_t", "group__rtx5__specific__structs.html#structosRtxMemoryPool__t", "group__rtx5__specific__structs_structosRtxMemoryPool__t" ],
     [ "osRtxMessage_t", "rtx__os_8h.html#structosRtxMessage__t", "rtx__os_8h_structosRtxMessage__t" ],
     [ "osRtxMessageQueue_t", "group__rtx5__specific__structs.html#structosRtxMessageQueue__t", "group__rtx5__specific__structs_structosRtxMessageQueue__t" ],

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -112,14 +112,14 @@ $(document).ready(function(){initNavTree('group__DAP__JTAG__Sequence.html','');}
 </div><!--header-->
 <div class="contents">
 
-<p>Generate JTAG sequence TMS,TDI and capture TDO.  
+<p>Generate JTAG sequence TMS, TDI and capture TDO.  
 <a href="#details">More...</a></p>
-<p>Generate JTAG sequence TMS,TDI and capture TDO. </p>
+<p>Generate JTAG sequence TMS, TDI and capture TDO. </p>
 <p>The <b>DAP_JTAG_Sequence Command</b> may be used to auto-detect devices on the JTAG chain. The result of this command can be used to calculate on the host computer the number of JTAG devices and the JTAG IR register length. This information is the input for <a class="el" href="group__DAP__JTAG__Configure.html">DAP_JTAG_Configure</a>.</p>
 <p><b>DAP_JTAG_Sequence Command</b>: </p>
-<div class="fragment"><div class="line">  BYTE | BYTE **********| BYTE *********| BYTE ****|</div>
+<div class="fragment"><div class="line">| BYTE | BYTE **********| BYTE *********| BYTE ****|</div>
 <div class="line">&gt; 0x14 | Sequence Count | Sequence Info | TDI Data |</div>
-<div class="line">       |****************|<span class="comment">///////////////|//////////|</span></div>
+<div class="line">|******|****************|<span class="comment">///////////////|//////////|</span></div>
 </div><!-- fragment --><ul>
 <li><b>Sequence Count</b>: Number of Sequences</li>
 <li><b>Sequence Info</b>: Contains number of TDI bits and fixed TMS value<ul>
@@ -135,9 +135,9 @@ $(document).ready(function(){initNavTree('group__DAP__JTAG__Sequence.html','');}
 </li>
 </ul>
 <p><b>DAP_JTAG_Sequence Response</b>: </p>
-<div class="fragment"><div class="line">  BYTE | BYTE **| BYTE ****|</div>
-<div class="line">&lt; 0x14 | Status |TDO Data  |</div>
-<div class="line">       |********|++++++++++|</div>
+<div class="fragment"><div class="line">| BYTE | BYTE **| BYTE ****|</div>
+<div class="line">&lt; 0x14 | Status | TDO Data |</div>
+<div class="line">|******|********|++++++++++|</div>
 </div><!-- fragment --><ul>
 <li><b>TDO Data</b>: Data captured from TDO<ul>
 <li>One bit for each TCK cycle when TDO Capture is enabled</li>
@@ -151,7 +151,7 @@ $(document).ready(function(){initNavTree('group__DAP__JTAG__Sequence.html','');}
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

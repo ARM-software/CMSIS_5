@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <title>Systick Timer (SYSTICK)</title>
-<title>CMSIS-CORE: Systick Timer (SYSTICK)</title>
+<title>CMSIS-Core (Cortex-M): Systick Timer (SYSTICK)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -31,10 +31,10 @@
  <tr style="height: 46px;">
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CMSIS-CORE
-   &#160;<span id="projectnumber">Version 5.0.1</span>
+   <div id="projectname">CMSIS-Core (Cortex-M)
+   &#160;<span id="projectnumber">Version 5.0.2</span>
    </div>
-   <div id="projectbrief">CMSIS-CORE support for Cortex-M processor-based devices</div>
+   <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
  </tr>
  </tbody>
@@ -129,24 +129,22 @@ Functions</h2></td></tr>
 Code Example</h1>
 <p>The code below shows the usage of the function <a class="el" href="group__SysTick__gr.html#gabe47de40e9b0ad465b752297a9d9f427" title="System Tick Timer Configuration. ">SysTick_Config()</a> with an LPC1700.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;LPC17xx.h&quot;</span></div>
-<div class="line"></div>
-<div class="line">uint32_t msTicks = 0;                                       <span class="comment">/* Variable to store millisecond ticks */</span></div>
-<div class="line"></div>
-<div class="line">                                            </div>
-<div class="line"><span class="keywordtype">void</span> SysTick_Handler(<span class="keywordtype">void</span>)  {                               <span class="comment">/* SysTick interrupt Handler.</span></div>
-<div class="line"><span class="comment">  msTicks++;                                                   See startup file startup_LPC17xx.s for SysTick vector */</span> </div>
+<div class="line">  </div>
+<div class="line"><span class="keyword">volatile</span> uint32_t msTicks = 0;                              <span class="comment">/* Variable to store millisecond ticks */</span></div>
+<div class="line">  </div>
+<div class="line"><span class="keywordtype">void</span> SysTick_Handler(<span class="keywordtype">void</span>)  {                               <span class="comment">/* SysTick interrupt Handler. */</span></div>
+<div class="line">  msTicks++;                                                <span class="comment">/* See startup file startup_LPC17xx.s for SysTick vector */</span> </div>
 <div class="line">}</div>
-<div class="line"></div>
-<div class="line"></div>
+<div class="line">  </div>
 <div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>)  {</div>
 <div class="line">  uint32_t returnCode;</div>
-<div class="line"></div>
+<div class="line">  </div>
 <div class="line">  returnCode = <a class="code" href="group__SysTick__gr.html#gabe47de40e9b0ad465b752297a9d9f427">SysTick_Config</a>(<a class="code" href="group__system__init__gr.html#gaa3cd3e43291e81e795d642b79b6088e6">SystemCoreClock</a> / 1000);      <span class="comment">/* Configure SysTick to generate an interrupt every millisecond */</span></div>
-<div class="line"></div>
+<div class="line">  </div>
 <div class="line">  <span class="keywordflow">if</span> (returnCode != 0)  {                                   <span class="comment">/* Check return code for errors */</span></div>
 <div class="line">    <span class="comment">// Error Handling </span></div>
 <div class="line">  }</div>
-<div class="line"></div>
+<div class="line">  </div>
 <div class="line">  <span class="keywordflow">while</span>(1);</div>
 <div class="line">}</div>
 </div><!-- fragment --> <h2 class="groupheader">Function Documentation</h2>
@@ -182,7 +180,7 @@ Code Example</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:41 for CMSIS-CORE by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:11 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -115,10 +115,14 @@ $(document).ready(function(){initNavTree('dap_revisionHistory.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
-<td>V1.10 </td><td>Added: <a class="el" href="group__DAP__swo__gr.html">SWO Commands</a> to support Serial Wire Output (SWO) in UART mode<br/>
+<td>V1.2.0 (Proposal) </td><td>Added: <a class="el" href="group__DAP__SWD__Sequence.html">DAP_SWD_Sequence</a> to enable SWD multi-drop target selection <br/>
+ Added: Test Domain Timer values in the commands <a class="el" href="group__DAP__Info.html">DAP_Info</a>, <a class="el" href="group__DAP__Transfer.html">DAP_Transfer</a> to allow time synchronisation with <a class="el" href="group__DAP__TestInput__gr.html">Test Input Commands</a> <br/>
+ Added: <a class="el" href="group__DAP__TestInput__gr.html">Test Input Commands</a> to support additional test inputs optional with trace recording (for example power measurement)   </td></tr>
+<tr>
+<td>V1.1.0 </td><td>Added: <a class="el" href="group__DAP__swo__gr.html">SWO Commands</a> to support Serial Wire Output (SWO) in UART mode<br/>
  Added: <a class="el" href="group__DAP__atomic__gr.html">Atomic Commands</a> support for executing time critical DAP commands   </td></tr>
 <tr>
-<td>V1.00 </td><td>Version 1.00 was never released; version number skipped.  </td></tr>
+<td>V1.0.0 </td><td>Version 1.0.0 was never released; version number skipped.  </td></tr>
 <tr>
 <td>V0.02 </td><td>Renamed <b>DAP_LED</b> to <a class="el" href="group__DAP__HostStatus.html">DAP_HostStatus</a>.  </td></tr>
 <tr>
@@ -129,7 +133,7 @@ $(document).ready(function(){initNavTree('dap_revisionHistory.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

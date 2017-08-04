@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -118,15 +118,32 @@ System Startup</h1>
 <p>Your application's <code>main()</code> should implement at least the following in the given order:</p>
 <ol type="1">
 <li>Initialization and configuration of hardware including peripherals, memory, pins, clocks and the interrupt system.</li>
-<li>Update the system core clock using the respective <a href="../../Core/html/group__system__init__gr.html">CMSIS-CORE function</a>.</li>
+<li>Update the system core clock using the respective <a href="../../Core/html/group__system__init__gr.html">CMSIS-Core (Cortex-M) function</a>.</li>
 <li>Initialize the CMSIS-RTOS kernel using <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>.</li>
 <li>Optionally, create a new thread <code>app_main</code>, which is used as a main thread using <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>. Alternatively, threads can be created in <code>main()</code> directly.</li>
 <li>Start the RTOS scheduler using <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>. This function does not return in case of successful execution. Any application code after <b>osKernelStart</b> will not be executed unless <b>osKernelStart</b> fails.</li>
 </ol>
 <dl class="section note"><dt>Note</dt><dd>Interrupts (like SVC for example) used by the kernel are initialized in <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>. In case priorities and groupings in the NVIC are altered by the application after the above sequence it might be necessary to call <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a> again.</dd></dl>
+<h1><a class="anchor" id="Scheduler"></a>
+Scheduler</h1>
+<p>RTX5 implements a low-latency preemtive scheduler. Major parts of RTX5 are executed in handler mode such as</p>
+<ul>
+<li><a class="el" href="rtx__os_8h.html#ab5e09814056d617c521549e542639b7e">SysTick_Handler</a> used for time-based scheduling.</li>
+<li><a class="el" href="rtx__os_8h.html#a3e5ddb3df0d62f2dc357e64a3f04a6ce">SVC_Handler</a> used for lock-based scheduling.</li>
+<li><a class="el" href="rtx__os_8h.html#a6303e1f258cbdc1f970ce579cc015623">PendSV_Handler</a> used for interrupt-based scheduling.</li>
+</ul>
+<p>In order to be low-latency with respect to ISR execution those system exceptions are configured to use the lowest priority groups available. The priorities are configured such that no preemption happens between them. Thus no interrupt critical sections (i.e. interrupt locks) are needed to protect the scheduler.</p>
+<div class="image">
+<img src="scheduling.png" alt="scheduling.png"/>
+<div class="caption">
+Thread scheduling and interrupt execution</div></div>
+<p> The scheduler combines priority and round-robin based context switches. The example depicted in the image above contains four threads (1, 2, 3, and 4). Threads 1 and 2 share the same priority, thread 3 has a higher one and thread 4 the highest (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a6a5183df4c54c3e28dc8dc704f2487d5">osThreadAttr_t::priority</a>). As long as threads 3 and 4 are blocked the scheduler switches between thread 1 and 2 on a time-slice basis (round-robin). The time-slice for round-robin scheduling can be configured, see Round-Robin Timeout in <a class="el" href="config_rtx5.html#systemConfig">System Configuration</a>.</p>
+<p>Thread 2 unblocks thread 3 by an arbitrary RTOS-call (executed in SVC handler mode) at time index 2. The scheduler switches to thread 3 immidiately because thread 3 has the highest priority. Thread 4 is still blocked.</p>
+<p>At time index 4 an interrupt (ISR) occurs and preempts the SysTick_Handler. RTX does not add any latency to the interrupt service execution. The ISR routine uses an RTOS-call that unblocks thread 4. Instead of switching to thread 4 immediately the PendSV flag is set to defer the context switching. The PendSV_Handler is executed right after the SysTick_Handler returns and the defered context switch to thread 4 is carried out. As soon as highest priority thread 4 blocks again by using a blocking RTOS-call execution is switched back to thread 3 immidiately during time index 5.</p>
+<p>At time index 5 thread 3 uses a blocking RTOS-call as well. Thus the scheduler switches back to thread 2 for time index 6. At time index 7 the scheduler uses the round-robin mechanism to switch to thread 1 and so on.</p>
 <h1><a class="anchor" id="MemoryAllocation"></a>
 Memory Allocation</h1>
-<p>RTX5 objects (thread, mutex, semaphore, timer, message queue, thread and event flags, as well as memory pool) require dedicated RAM memory. Objects can be created using os<em>object</em>New() calls and deleted using os<em>object</em>Delete() calls. The related object memory needs to be available during the lifetime of the object.</p>
+<p>RTX5 objects (thread, mutex, semaphore, timer, message queue, thread and event flags, as well as memory pool) require dedicated RAM memory. Objects can be created using os<em>Object</em>New() calls and deleted using os<em>Object</em>Delete() calls. The related object memory needs to be available during the lifetime of the object.</p>
 <p>RTX5 offers three different memory allocation methods for objects:</p>
 <ul>
 <li><a class="el" href="theory_of_operation.html#GlobalMemoryPool">Global Memory Pool</a> uses a single global memory pool for all objects. It is easy to configure, but may have the disadvantage for memory fragmentation when objects with different sizes are created and destroyed.</li>
@@ -141,7 +158,7 @@ Global Memory Pool</h2>
 <img src="MemAllocGlob.png" alt="MemAllocGlob.png"/>
 <div class="caption">
 Global Memory Pool for all objects</div></div>
-<p> When the memory pool does not provide sufficient memory, the creation of the object fails and the related os<em>object</em>New() function returns <span class="XML-Token">NULL</span>.</p>
+<p> When the memory pool does not provide sufficient memory, the creation of the object fails and the related os<em>Object</em>New() function returns <span class="XML-Token">NULL</span>.</p>
 <p>Enabled in <a class="el" href="config_rtx5.html#systemConfig">System Configuration</a>.</p>
 <h2><a class="anchor" id="ObjectMemoryPool"></a>
 Object-specific Memory Pools</h2>
@@ -160,7 +177,7 @@ One memory pool per object type</div></div>
 <li>Enabled in <a class="el" href="config_rtx5.html#memPoolConfig">Memory Pool Configuration</a> for memory pools.</li>
 <li>Enabled in <a class="el" href="config_rtx5.html#msgQueueConfig">Message Queue Configuration</a> for message objects.</li>
 </ul>
-<p>When the memory pool does not provide sufficient memory, the creation of the object fails and the related os<em>object</em>New() function returns <span class="XML-Token">NULL</span>.</p>
+<p>When the memory pool does not provide sufficient memory, the creation of the object fails and the related os<em>Object</em>New() function returns <span class="XML-Token">NULL</span>.</p>
 <h2><a class="anchor" id="StaticObjectMemory"></a>
 Static Object Memory</h2>
 <p>In contrast to the dynamic memory allocations, the static memory allocation requires compile-time allocation of object memory.</p>
@@ -258,44 +275,12 @@ Low-Power Operation</h1>
 <div class="line">}</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>__WFE()</code> is not available in every Cortex-M implementation. Check device manuals for availability.</dd></dl>
 <h1><a class="anchor" id="kernelTimer"></a>
-RTX kernel Timer Tick</h1>
-<p>By default, RTX5 uses the Cortex-M <a href="http://www.keil.com/support/man/docs/gsac/GSAC_SYSTICKtimer.htm" target="_blank">SysTick</a> timer to generate periodic interrupts for the RTX kernel timer tick. CMSIS-RTOS provides <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html">Timer Management</a> functions and several CMSIS-RTOS functions have a <em>timeout</em> parameter. This periodic RTX kernel timer tick interrupt is used to derive the required time interval. RTX5 also provides configuration options for an alternative timer and tick-less operation.</p>
-<p>To handle timeout and time delays for threads, the RTX5 thread management is controlled by the RTX kernel timer tick interrupt. The thread context contains all CPU registers (R0 - R12), the return address (LR), the program counter (PC), and the processor status register (xPSR). For the Cortex-M4/M7 FPU the floating point status and registers (S0 - S32, FPSCR) are also part of the thread context.</p>
-<p>When a thread switch occurs:</p>
-<ul>
-<li>the thread context of the current running thread is stored on the local stack of this thread.</li>
-<li>the stack pointer is switched to the next running thread.</li>
-<li>the thread context of this next running thread is restored and this thread starts to run.</li>
-</ul>
-<h1><a class="anchor" id="CMSIS_RTOS_TimeOutValue"></a>
-Timeout Value</h1>
-<p>Timeout values are an argument to several <b>osXxx</b> functions to allow time for resolving a request. A timeout value of <b>0</b> means that the RTOS does not wait and the function returns instantly, even when no resource is available. A timeout value of <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a> means that the RTOS waits infinitely until a resource becomes available.</p>
-<p>The timeout value specifies the number of timer ticks until the time delay elapses. The value is an upper bound and depends on the actual time elapsed since the last timer tick.</p>
-<p>Examples:</p>
-<ul>
-<li>timeout value <b>0</b> : the system does not wait, even when no resource is available the RTOS function returns instantly.</li>
-<li>timeout value <b>1</b> : the system waits until the next timer tick occurs; depending on the previous timer tick, it may be a very short wait time.</li>
-<li>timeout value <b>2</b> : actual wait time is between 1 and 2 timer ticks.</li>
-<li>timeout value <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a> : system waits infinite until a resource becomes available.</li>
-</ul>
-<div class="image">
-<img src="TimerValues.png" alt="TimerValues.png"/>
-<div class="caption">
-Example of timeout using osDelay()</div></div>
-<h1><a class="anchor" id="CMSIS_RTOS_ISR_Calls"></a>
-Calls from Interrupt Service Routines</h1>
-<p>The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):</p>
-<ul>
-<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae0fcaff6cecfb4013bb556c87afcd7d2">osKernelGetSysTimerCount</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a">osKernelGetSysTimerFreq</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga33b71d14cecf90b4e72639dd19f23a5e">osEventFlagsSet</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga93bf258ca0007c6641fbe8e4f2b8a1e5">osEventFlagsClear</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga8bda3185f46bfd278cea8a6cf357677d">osEventFlagsGet</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>, <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a>, <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7559d4dff3cda9992fc5ab5de3e74c70">osSemaphoreGetCount</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16">osMemoryPoolFree</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gad696e94bfbe28f0b6613f9303fdf6a37">osMemoryPoolGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab2bf059b7fa7679c3cccdaeec60b6c0e">osMemoryPoolGetBlockSize</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga958a9449bff8c95ce213de98eef5739d">osMemoryPoolGetCount</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga0394cffa9479a7994e3b03c79c1cb909">osMemoryPoolGetSpace</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gac24f87d4f395e9e9c900c320e45ade8a">osMessageQueueGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga96d3d84069b20359de48109e28a1a89e">osMessageQueueGetMsgSize</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga6a32ac394fcff568b251c160cc3014b2">osMessageQueueGetCount</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gaddf0904427436dd3880d46263c2dc9fa">osMessageQueueGetSpace</a></li>
-</ul>
-<p>Functions that cannot be called from an ISR are verifying the interrupt status and return the status code <b>osErrorISR</b>, in case they are called from an ISR context. In some implementations, this condition might be caught using the HARD_FAULT vector.</p>
-<h1><a class="anchor" id="TickLess"></a>
-Tick-less Low-Power Operation</h1>
+RTX Kernel Timer Tick</h1>
+<p>RTX uses the generic <a class="el" href="group__CMSIS__RTOS__TickAPI.html">OS Tick API</a> to configure and control its periodic Kernel Tick.</p>
+<p>To use an alternative timer as the Kernel Tick Timer one simply needs to implement a custom version of the <a class="el" href="group__CMSIS__RTOS__TickAPI.html">OS Tick API</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>The OS Tick implementation provided must asure that the used timer interrupt uses the same (low) priority group as the service interrupts, i.e. interrupts used by RTX must not preempt each other. Refer to the <a class="el" href="theory_of_operation.html#Scheduler">Scheduler</a> section for more details.</dd></dl>
+<h2><a class="anchor" id="TickLess"></a>
+Tick-less Low-Power Operation</h2>
 <p>RTX5 provides extension for tick-less operation which is useful for applications that use extensively low-power modes where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes, a wake-up timer is used to derive timer intervals. The CMSIS-RTOS2 functions <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae26683e1606ec633354a2876c68f0c1f">osKernelSuspend</a> and <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced">osKernelResume</a> control the tick-less operation.</p>
 <p>Using this functions allows the RTX5 thread scheduler to stop the periodic kernel tick interrupt. When all active threads are suspended, the system enters power-down and calculates how long it can stay in this power-down mode. In the power-down mode the processor and peripherals can be switched off. Only a wake-up timer must remain powered, because this timer is responsible to wake-up the system after the power-down period expires.</p>
 <p>The tick-less operation is controlled from the <b>osRtxIdleThread</b> thread. The wake-up timeout value is set before the system enters the power-down mode. The function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae26683e1606ec633354a2876c68f0c1f">osKernelSuspend</a> calculates the wake-up timeout measured in RTX Timer Ticks; this value is used to setup the wake-up timer that runs during the power-down mode of the system.</p>
@@ -351,13 +336,13 @@ Tick-less Low-Power Operation</h1>
 <div class="line">      tc = 0;</div>
 <div class="line">      <span class="comment">/* Enter the low power state */</span></div>
 <div class="line">      MSP432_LP_Entry();</div>
-<div class="line">      __WFI();</div>
+<div class="line">      __WFE();</div>
 <div class="line">    }</div>
 <div class="line">    <span class="comment">/* Adjust the kernel ticks with the amount of ticks slept */</span></div>
 <div class="line">    <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced">osKernelResume</a> (tc);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>__WFI()</code> is not available in every ARM Cortex-M implementation. Check device manuals for availability.</dd></dl>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>__WFE()</code> is not available in every ARM Cortex-M implementation. Check device manuals for availability. The alternative using <code>__WFI()</code> has other issues, please take note of <a href="http://www.keil.com/support/docs/3591.htm">http://www.keil.com/support/docs/3591.htm</a> as well.</dd></dl>
 <h1><a class="anchor" id="rtx_os_h"></a>
 RTX5 Header File</h1>
 <p>Every implementation of the CMSIS-RTOS2 API can bring its own additional features. RTX5 adds a couple of <a class="el" href="group__rtx5__specific.html">functions</a> for the idle more, for error notifications, and special system timer functions. It also is using macros for control block and memory sizes.</p>
@@ -401,9 +386,9 @@ RTX5 Header File</h1>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Kernel Information</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxVersionAPI      20010000   </span><span class="comment">///&lt; API version (2.1.0)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50010000   <span class="comment">///&lt; Kernel version (5.1.0)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.1.0&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
+<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxVersionAPI      20010001   </span><span class="comment">///&lt; API version (2.1.1)</span></div>
+<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50020000   <span class="comment">///&lt; Kernel version (5.2.0)</span></div>
+<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.2.0&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Common definitions ====</span></div>
@@ -646,10 +631,9 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>  <span class="keyword">struct </span>{                              <span class="comment">///&lt; Kernel Info</span></div>
 <div class="line"><span class="comment"></span>    uint8_t                     state;  <span class="comment">///&lt; State</span></div>
 <div class="line"><span class="comment"></span>    <span class="keyword">volatile</span> uint8_t          blocked;  <span class="comment">///&lt; Blocked</span></div>
-<div class="line"><span class="comment"></span>    uint8_t                   pendISR;  <span class="comment">///&lt; Pending ISR (SV and SysTick)</span></div>
 <div class="line"><span class="comment"></span>    uint8_t                    pendSV;  <span class="comment">///&lt; Pending SV</span></div>
-<div class="line"><span class="comment"></span>    uint32_t                 sys_freq;  <span class="comment">///&lt; System Frequency</span></div>
-<div class="line"><span class="comment"></span>    uint64_t                     tick;  <span class="comment">///&lt; Tick counter</span></div>
+<div class="line"><span class="comment"></span>    uint8_t                  reserved;</div>
+<div class="line">    uint32_t                     tick;  <span class="comment">///&lt; Tick counter</span></div>
 <div class="line"><span class="comment"></span>  } kernel;</div>
 <div class="line">  int32_t                   tick_irqn;  <span class="comment">///&lt; Tick Timer IRQ Number</span></div>
 <div class="line"><span class="comment"></span>  <span class="keyword">struct </span>{                              <span class="comment">///&lt; Thread Info</span></div>
@@ -672,6 +656,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxTimer__t">osRtxTimer_t</a>                *list;  <span class="comment">///&lt; Active Timer List</span></div>
 <div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>             *thread;  <span class="comment">///&lt; Timer Thread</span></div>
 <div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxMessageQueue__t">osRtxMessageQueue_t</a>           *mq;  <span class="comment">///&lt; Timer Message Queue</span></div>
+<div class="line"><span class="comment"></span>    void                (*tick)(void);  <span class="comment">///&lt; Timer Tick Function</span></div>
 <div class="line"><span class="comment"></span>  } timer;</div>
 <div class="line">  <span class="keyword">struct </span>{                              <span class="comment">///&lt; ISR Post Processing Queue</span></div>
 <div class="line"><span class="comment"></span>    uint16_t                      max;  <span class="comment">///&lt; Maximum Items</span></div>
@@ -758,30 +743,6 @@ RTX5 Header File</h1>
 <div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="rtx__os_8h.html#a6303e1f258cbdc1f970ce579cc015623">PendSV_Handler</a>  (<span class="keywordtype">void</span>);</div>
 <div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="rtx__os_8h.html#ab5e09814056d617c521549e542639b7e">SysTick_Handler</a> (<span class="keywordtype">void</span>);</div>
 <div class="line"> </div>
-<div class="line"> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// OS System Timer functions (default implementation uses SysTick)</span></div>
-<div class="line"><span class="comment"></span> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Setup System Timer.</span></div>
-<div class="line"><span class="comment">/// \return system timer IRQ number.</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">extern</span> int32_t <a class="code" href="group__rtx5__specific__functions.html#gaa10ba9022d27bfbf2f76c40663f4598d">osRtxSysTimerSetup</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Enable System Timer.</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#ga186a61d27c68b3ae841dded8f1289857">osRtxSysTimerEnable</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Disable System Timer.</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#gaf8200a879df96753af1af391fadd9f9e">osRtxSysTimerDisable</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Acknowledge System Timer IRQ.</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#ga9194d74a1170a6107fb8a9bb3783dace">osRtxSysTimerAckIRQ</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Get System Timer count.</span></div>
-<div class="line"><span class="comment">/// \return system timer count.</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">extern</span> uint32_t <a class="code" href="group__rtx5__specific__functions.html#gaa1b9fdcae08625c1f32e230051c3601f">osRtxSysTimerGetCount</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Get System Timer frequency.</span></div>
-<div class="line"><span class="comment">/// \return system timer frequency.</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">extern</span> uint32_t <a class="code" href="group__rtx5__specific__functions.html#gaa15aeddbccbc909c2ea88f9e2fe98ccf">osRtxSysTimerGetFreq</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== OS External Configuration ====</span></div>
 <div class="line"> <span class="comment"></span></div>
@@ -838,13 +799,40 @@ RTX5 Header File</h1>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"><span class="preprocessor">#endif  // RTX_OS_H_</span></div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><h1><a class="anchor" id="CMSIS_RTOS_TimeOutValue"></a>
+Timeout Value</h1>
+<p>Timeout values are an argument to several <b>osXxx</b> functions to allow time for resolving a request. A timeout value of <b>0</b> means that the RTOS does not wait and the function returns instantly, even when no resource is available. A timeout value of <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a> means that the RTOS waits infinitely until a resource becomes available. Or one forces the thread to resume using <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3dbad90eff394b02de76a452c84c5d80">osThreadResume</a> which is discouraged.</p>
+<p>The timeout value specifies the number of timer ticks until the time delay elapses. The value is an upper bound and depends on the actual time elapsed since the last timer tick.</p>
+<p>Examples:</p>
+<ul>
+<li>timeout value <b>0</b> : the system does not wait, even when no resource is available the RTOS function returns instantly.</li>
+<li>timeout value <b>1</b> : the system waits until the next timer tick occurs; depending on the previous timer tick, it may be a very short wait time.</li>
+<li>timeout value <b>2</b> : actual wait time is between 1 and 2 timer ticks.</li>
+<li>timeout value <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a> : system waits infinite until a resource becomes available.</li>
+</ul>
+<div class="image">
+<img src="TimerValues.png" alt="TimerValues.png"/>
+<div class="caption">
+Example of timeout using osDelay()</div></div>
+<h1><a class="anchor" id="CMSIS_RTOS_ISR_Calls"></a>
+Calls from Interrupt Service Routines</h1>
+<p>The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee">osKernelGetTickFreq</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae0fcaff6cecfb4013bb556c87afcd7d2">osKernelGetSysTimerCount</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a">osKernelGetSysTimerFreq</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga33b71d14cecf90b4e72639dd19f23a5e">osEventFlagsSet</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga93bf258ca0007c6641fbe8e4f2b8a1e5">osEventFlagsClear</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga8bda3185f46bfd278cea8a6cf357677d">osEventFlagsGet</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>, <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a>, <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7559d4dff3cda9992fc5ab5de3e74c70">osSemaphoreGetCount</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16">osMemoryPoolFree</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gad696e94bfbe28f0b6613f9303fdf6a37">osMemoryPoolGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab2bf059b7fa7679c3cccdaeec60b6c0e">osMemoryPoolGetBlockSize</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga958a9449bff8c95ce213de98eef5739d">osMemoryPoolGetCount</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga0394cffa9479a7994e3b03c79c1cb909">osMemoryPoolGetSpace</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gac24f87d4f395e9e9c900c320e45ade8a">osMessageQueueGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga96d3d84069b20359de48109e28a1a89e">osMessageQueueGetMsgSize</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga6a32ac394fcff568b251c160cc3014b2">osMessageQueueGetCount</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gaddf0904427436dd3880d46263c2dc9fa">osMessageQueueGetSpace</a></li>
+</ul>
+<p>Functions that cannot be called from an ISR are verifying the interrupt status and return the status code <b>osErrorISR</b>, in case they are called from an ISR context. In some implementations, this condition might be caught using the HARD_FAULT vector. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:03 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:46 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

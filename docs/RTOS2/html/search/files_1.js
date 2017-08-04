@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['rtx_5fevr_2eh',['rtx_evr.h',['../rtx__evr_8h.html',1,'']]],
-  ['rtx_5fevr_2etxt',['rtx_evr.txt',['../rtx__evr_8txt.html',1,'']]],
-  ['rtx_5fos_2eh',['rtx_os.h',['../rtx__os_8h.html',1,'']]]
+  ['os_5fsystick_2ec',['os_systick.c',['../os__systick_8c.html',1,'']]],
+  ['os_5ftick_2eh',['os_tick.h',['../os__tick_8h.html',1,'']]]
 ];

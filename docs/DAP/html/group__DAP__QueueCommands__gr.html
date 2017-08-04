@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -118,15 +118,15 @@ $(document).ready(function(){initNavTree('group__DAP__QueueCommands__gr.html',''
 <p>Queues multiple DAP commands provided in multiple packets. Queuing starts with the first packet that includes <b>DAP_QueueCommands</b> command and continues with all subsequent packets that also include this command. Queued commands execute when a packet without <b>DAP_QueueCommands</b> command is received. Packet size and count limitation for requests and responses needs to respected.</p>
 <p>The command is similar to <a class="el" href="group__DAP__ExecuteCommands__gr.html">DAP_ExecuteCommands</a> on a packet level but queues multiple packets before processing them.</p>
 <p><b>DAP_QueueCommands Request:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE   |                   |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE **|+++++++++++++++++++|</div>
 <div class="line">&gt; 0x7E | NumCmd | Command Requests  |   First queued packet</div>
-<div class="line">       |********|+++++++++++++++++++|</div>
+<div class="line">|******|********|+++++++++++++++++++|</div>
 <div class="line"> .</div>
 <div class="line"> .</div>
 <div class="line"> .</div>
-<div class="line">  BYTE | BYTE   |                   |</div>
+<div class="line">| BYTE | BYTE **|+++++++++++++++++++|</div>
 <div class="line">&gt; 0x7E | NumCmd | Command Requests  |   Last queued packet</div>
-<div class="line">       |********|+++++++++++++++++++|</div>
+<div class="line">|******|********|+++++++++++++++++++|</div>
 </div><!-- fragment --><ul>
 <li><b>&gt;</b> Command Request (any command except <b>DAP_QueueCommands</b>) <br/>
  Queued commands are executed before this command</li>
@@ -134,15 +134,15 @@ $(document).ready(function(){initNavTree('group__DAP__QueueCommands__gr.html',''
 <li><b>Commands Requests</b>: Concatenated command requests (single packet)</li>
 </ul>
 <p><b>DAP_QueueCommands Response:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE   |                   |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE **|+++++++++++++++++++|</div>
 <div class="line">&lt; 0x7F | NumCmd | Command Responses |</div>
-<div class="line">       |********|+++++++++++++++++++|</div>
+<div class="line">|******|********|+++++++++++++++++++|</div>
 <div class="line"> .</div>
 <div class="line"> .</div>
 <div class="line"> .</div>
-<div class="line">  BYTE | BYTE   |                   |</div>
+<div class="line">| BYTE | BYTE **|+++++++++++++++++++|</div>
 <div class="line">&lt; 0x7F | NumCmd | Command Responses |</div>
-<div class="line">       |********|+++++++++++++++++++|</div>
+<div class="line">|******|********|+++++++++++++++++++|</div>
 </div><!-- fragment --><ul>
 <li><b>&lt;</b> Command Response (first non <b>DAP_QueueCommands</b> command)</li>
 <li><b>NumCmd:</b> Number of commands executed (single packet)</li>
@@ -154,51 +154,51 @@ Queue <a class="el" href="group__DAP__SWJ__Pins.html">DAP_SWJ_Pins</a> in second
 Queue <a class="el" href="group__DAP__Delay.html">DAP_Delay</a> in third packet. <br/>
 Send <a class="el" href="group__DAP__SWJ__Pins.html">DAP_SWJ_Pins</a> in fourth packet which executes queued commands and command in the last packet.</p>
 <p><b>Request:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE | BYTE | BYTE       | BYTE       | WORD     | BYTE | SHORT |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE | BYTE | BYTE ******| BYTE ******| WORD ****| BYTE | SHORT |</div>
 <div class="line">&gt; 0x7E | 0x02 | 0x10 | Pin Output | Pin Select | Pin Wait | 0x09 | Delay |</div>
-<div class="line">       |******|******|************|************|**********|******|*******|</div>
+<div class="line">|******|******|******|************|************|**********|******|*******|</div>
 <div class="line">  Queue|NumCmd| DAP_SWJ_Pins                              | DAP_Delay    |</div>
 <div class="line">   </div>
-<div class="line">  BYTE | BYTE | BYTE | BYTE       | BYTE       | WORD     |</div>
+<div class="line">| BYTE | BYTE | BYTE | BYTE ******| BYTE ******| WORD ****|</div>
 <div class="line">&gt; 0x7E | 0x01 | 0x10 | Pin Output | Pin Select | Pin Wait |</div>
-<div class="line">       |******|******|************|************|**********|</div>
+<div class="line">|******|******|******|************|************|**********|</div>
 <div class="line">  Queue|NumCmd| DAP_SWJ_Pins                              |</div>
 <div class="line">   </div>
-<div class="line">  BYTE | BYTE | BYTE | SHORT |</div>
+<div class="line">| BYTE | BYTE | BYTE | SHORT |</div>
 <div class="line">&gt; 0x7E | 0x01 | 0x09 | Delay |</div>
-<div class="line">       |******|******|*******|</div>
+<div class="line">|******|******|******|*******|</div>
 <div class="line">  Queue|NumCmd| DAP_Delay    |</div>
 <div class="line">   </div>
-<div class="line">  BYTE | BYTE       | BYTE       | WORD     |</div>
+<div class="line">| BYTE | BYTE ******| BYTE ******| WORD ****|</div>
 <div class="line">&gt; 0x10 | Pin Output | Pin Select | Pin Wait |</div>
-<div class="line">       |************|************|**********|</div>
+<div class="line">|******|************|************|**********|</div>
 <div class="line">  DAP_SWJ_Pins                              |</div>
 </div><!-- fragment --><p><b>Response:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE | BYTE | BYTE      | BYTE | BYTE   |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE | BYTE | BYTE *****| BYTE | BYTE **|</div>
 <div class="line">&lt; 0x7F | 0x02 | 0x10 | Pin Input | 0x09 | Status |</div>
-<div class="line">       |******|******|***********|******|********|</div>
+<div class="line">|******|******|******|***********|******|********|</div>
 <div class="line">       |NumCmd| DAP_SWJ_Pins     | DAP_Delay     |</div>
 <div class="line"> </div>
-<div class="line">  BYTE | BYTE | BYTE | BYTE      |</div>
+<div class="line">| BYTE | BYTE | BYTE | BYTE *****|</div>
 <div class="line">&lt; 0x7F | 0x01 | 0x10 | Pin Input |</div>
-<div class="line">       |******|******|***********|</div>
+<div class="line">|******|******|******|***********|</div>
 <div class="line">       |NumCmd| DAP_SWJ_Pins     |</div>
 <div class="line">  </div>
-<div class="line">  BYTE | BYTE | BYTE | BYTE   |</div>
+<div class="line">| BYTE | BYTE | BYTE | BYTE **|</div>
 <div class="line">&lt; 0x7F | 0x01 | 0x09 | Status |</div>
-<div class="line">       |******|******|********|</div>
+<div class="line">|******|******|******|********|</div>
 <div class="line">       |NumCmd| DAP_Delay     |</div>
 <div class="line">  </div>
-<div class="line">  BYTE | BYTE      |</div>
+<div class="line">| BYTE | BYTE *****|</div>
 <div class="line">&lt; 0x10 | Pin Input |</div>
-<div class="line">       |***********|</div>
+<div class="line">|******|***********|</div>
 <div class="line">  DAP_SWJ_Pins     |</div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

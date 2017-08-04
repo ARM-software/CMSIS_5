@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -117,8 +117,17 @@ CMSIS-RTOS API Version 2</h1>
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
-<td>V2.1.0 </td><td><p class="starttd">Updated configuration files: RTX_Config.h for the configuration settings and RTX_config.c for implementing the <a class="el" href="group__rtx5__specific.html">RTX5 Specific API</a>.</p>
-<p>Support for critical and uncritical sections (nesting safe):</p>
+<td>V2.1.1 </td><td><p class="starttd">Additional functions allowed to be called from Interrupt Service Routines:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee">osKernelGetTickFreq</a></li>
+</ul>
+<p class="endtd">Changed Kernel Tick type to uint32_t:</p>
+<ul>
+<li>updated: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a>, <a class="el" href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">osDelayUntil</a>   </li>
+</ul>
+</td></tr>
+<tr>
+<td>V2.1.0 </td><td><p class="starttd">Support for critical and uncritical sections (nesting safe):</p>
 <ul>
 <li>updated: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gaf401728b4657456198c33fe75f8d6720">osKernelUnlock</a></li>
 <li>added: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae7d0a71b9586cbbb49fcbdf6a04f0289">osKernelRestoreLock</a></li>
@@ -139,7 +148,7 @@ CMSIS-RTOS API Version 2</h1>
  Clarified: Behavior of <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">Timeout Value</a>.   </td></tr>
 <tr>
 <td>V1.02 </td><td>Added: New control functions for short timeouts in microsecond resolution <b>osKernelSysTick</b>, <b>osKernelSysTickFrequency</b>, <b>osKernelSysTickMicroSec</b>.<br/>
- Removed: osSignalGet.   </td></tr>
+ Removed: osSignalGet.  fv </td></tr>
 <tr>
 <td>V1.01 </td><td>Added capabilities for C++, kernel initialization and object deletion.<br/>
  Prepared for C++ class interface. In this context to <em>const</em> attribute has been moved from osXxxxDef_t typedefs to the osXxxxDef macros.<br/>
@@ -161,11 +170,22 @@ CMSIS-RTOS RTX Version 5</h1>
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>V5.2.0 </td><td><ul>
+<li>Based on CMSIS-RTOS API V2.1.1.</li>
+<li>Added support for for Cortex-A.</li>
+<li>Using OS Tick API for RTX Kernel Timer Tick.</li>
+<li>Fixed potential corruption of terminated threads list.</li>
+<li>Corrected MessageQueue to use actual message length (before padding).</li>
+<li>Corrected parameters for ThreadEnumerate and MessageQueueInserted events.</li>
+<li>Timer Thread creation moved to osKernelStart.   </li>
+</ul>
+</td></tr>
+<tr>
 <td>V5.1.0 </td><td><ul>
-<li>Based on CMSIS-RTOS API V2.1.</li>
+<li>Based on CMSIS-RTOS API V2.1.0.</li>
 <li>Added support for Event recording.</li>
 <li>Added support for IAR compiler.</li>
-<li>Configuration file split into .h and .c file.</li>
+<li>Updated configuration files: RTX_Config.h for the configuration settings and RTX_config.c for implementing the <a class="el" href="group__rtx5__specific.html">RTX5 Specific API</a>.</li>
 <li>osRtx name-space for RTX specific symbols.   </li>
 </ul>
 </td></tr>
@@ -179,7 +199,7 @@ CMSIS-RTOS RTX Version 5</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:03 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:46 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

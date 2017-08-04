@@ -11,7 +11,7 @@ var indexSectionsWithContent =
   1: "o",
   2: "cr",
   3: "os",
-  4: "dimpqstv",
+  4: "dipqstv",
   5: "o",
   6: "o",
   7: "o",

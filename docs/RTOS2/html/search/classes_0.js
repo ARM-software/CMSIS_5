@@ -18,7 +18,7 @@ var searchData=
   ['osrtxinfo_5ft_2ethread',['osRtxInfo_t.thread',['../rtx__os_8h.html#structosRtxInfo__t_8thread',1,'']]],
   ['osrtxinfo_5ft_2ethread_2erobin',['osRtxInfo_t.thread.robin',['../rtx__os_8h.html#structosRtxInfo__t_8thread_8robin',1,'']]],
   ['osrtxinfo_5ft_2ethread_2erun',['osRtxInfo_t.thread.run',['../rtx__os_8h.html#structosRtxInfo__t_8thread_8run',1,'']]],
-  ['osrtxinfo_5ft_2etimer',['osRtxInfo_t.timer',['../rtx__os_8h.html#structosRtxInfo__t_8timer',1,'']]],
+  ['osrtxinfo_5ft_2etimer',['osRtxInfo_t.timer',['../structosRtxInfo__t_8timer.html',1,'']]],
   ['osrtxmemorypool_5ft',['osRtxMemoryPool_t',['../group__rtx5__specific__structs.html#structosRtxMemoryPool__t',1,'']]],
   ['osrtxmessage_5ft',['osRtxMessage_t',['../rtx__os_8h.html#structosRtxMessage__t',1,'']]],
   ['osrtxmessagequeue_5ft',['osRtxMessageQueue_t',['../group__rtx5__specific__structs.html#structosRtxMessageQueue__t',1,'']]],

@@ -22,7 +22,7 @@ var group__CMSIS__RTOS__KernelCtrl =
     [ "osKernelRestoreLock", "group__CMSIS__RTOS__KernelCtrl.html#gae7d0a71b9586cbbb49fcbdf6a04f0289", null ],
     [ "osKernelSuspend", "group__CMSIS__RTOS__KernelCtrl.html#gae26683e1606ec633354a2876c68f0c1f", null ],
     [ "osKernelResume", "group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced", null ],
-    [ "osKernelGetTickCount", "group__CMSIS__RTOS__KernelCtrl.html#ga3cad48045fb59e47dc8bab75b420cb5f", null ],
+    [ "osKernelGetTickCount", "group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b", null ],
     [ "osKernelGetTickFreq", "group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee", null ],
     [ "osKernelGetSysTimerCount", "group__CMSIS__RTOS__KernelCtrl.html#gae0fcaff6cecfb4013bb556c87afcd7d2", null ],
     [ "osKernelGetSysTimerFreq", "group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a", null ]

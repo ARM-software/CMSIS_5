@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <title>Using CMSIS in Embedded Applications</title>
-<title>CMSIS-CORE: Using CMSIS in Embedded Applications</title>
+<title>CMSIS-Core (Cortex-M): Using CMSIS in Embedded Applications</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -31,10 +31,10 @@
  <tr style="height: 46px;">
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CMSIS-CORE
-   &#160;<span id="projectnumber">Version 5.0.1</span>
+   <div id="projectname">CMSIS-Core (Cortex-M)
+   &#160;<span id="projectnumber">Version 5.0.2</span>
    </div>
-   <div id="projectbrief">CMSIS-CORE support for Cortex-M processor-based devices</div>
+   <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
  </tr>
  </tbody>
@@ -111,7 +111,7 @@ $(document).ready(function(){initNavTree('using_pg.html','');});
 <div class="title">Using CMSIS in Embedded Applications </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>To use the CMSIS-CORE the following files are added to the embedded application:</p>
+<div class="textblock"><p>To use the CMSIS-Core (Cortex-M) the following files are added to the embedded application:</p>
 <ul>
 <li><a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s</a> with reset handler and exception vectors.</li>
 <li><a class="el" href="system_c_pg.html">System Configuration Files system_&lt;device&gt;.c and system_&lt;device&gt;.h</a> with general device configuration (i.e. for clock and BUS setup).</li>
@@ -132,8 +132,8 @@ $(document).ready(function(){initNavTree('using_pg.html','');});
 <div class="image">
 <img src="CMSIS_CORE_Files_user.png" alt="CMSIS_CORE_Files_user.png"/>
 <div class="caption">
-CMSIS-CORE User Files</div></div>
-<p> The CMSIS-CORE are device specific. In addition, the <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s</a> is also compiler vendor specific. The various compiler vendor tool chains may provide folders that contain the CMSIS files for each supported device.</p>
+CMSIS-Core (Cortex-M) User Files</div></div>
+<p> The CMSIS-Core (Cortex-M) are device specific. In addition, the <a class="el" href="startup_s_pg.html">Startup File startup_&lt;device&gt;.s</a> is also compiler vendor specific. The various compiler vendor tool chains may provide folders that contain the CMSIS files for each supported device.</p>
 <p>For example, the following files are provided in MDK-ARM to support the STM32F10x Connectivity Line device variants:</p>
 <table  class="cmtable">
 <tr>
@@ -147,20 +147,20 @@ CMSIS-CORE User Files</div></div>
 <tr>
 <td>".\ARM\INC\ST\STM32F10x\system_stm32f10x.h" </td><td><a class="el" href="system_c_pg.html#system_Device_h_sec">system_Device.h Template File</a> for the STM32F10x device families.  </td></tr>
 </table>
-<dl class="section note"><dt>Note</dt><dd>The silicon vendors create these device-specific CMSIS-CORE files based on <a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> provide by ARM.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The silicon vendors create these device-specific CMSIS-Core (Cortex-M) files based on <a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> provide by ARM.</dd></dl>
 <p>Thereafter, the functions described under <a href="Modules.html"><b>Reference</b> </a> can be used in the application.</p>
 <p><b>Examples</b> </p>
 <ul>
 <li><a class="el" href="using_CMSIS.html">Basic CMSIS Example</a> is a simple example that shows the usage of the CMSIS layer.</li>
 <li><a class="el" href="using_VTOR_pg.html">Using Interrupt Vector Remap</a> shows how to remap the interrupt vector table.</li>
-<li><a class="el" href="using_ARM_pg.html">Using CMSIS with generic ARM Processors</a> explains how to use CMSIS-CORE for ARM processors. </li>
+<li><a class="el" href="using_ARM_pg.html">Using CMSIS with generic ARM Processors</a> explains how to use CMSIS-Core (Cortex-M) for ARM processors. </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:41 for CMSIS-CORE by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:10 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

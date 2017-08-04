@@ -211,25 +211,24 @@ Functions</h2></td></tr>
 <p>Devices can operation in Master or Slave mode:</p>
 <ul>
 <li>To operate in Master mode call the functions <a class="el" href="group__i2c__interface__gr.html#ga8bf4214580149d5a5d2360f71f0feb94">ARM_I2C_MasterTransmit</a> or <a class="el" href="group__i2c__interface__gr.html#gafa22504bcf88a85584dfe6e0dd270ad5">ARM_I2C_MasterReceive</a>. These functions get as argument a <em>slave address</em>.</li>
-<li><p class="startli">To operate in Slave mode set the <em>slave address</em> using the function <a class="el" href="group__i2c__interface__gr.html#ga828f5fa289d065675ef78a9a73d129dc">ARM_I2C_Control</a>. The functions <a class="el" href="group__i2c__interface__gr.html#gafe164f30eba78f066272373b98a62cd4">ARM_I2C_SlaveTransmit</a> or <a class="el" href="group__i2c__interface__gr.html#gae3c9abccd1d377385d3d4cfe29035164">ARM_I2C_SlaveReceive</a> are used to transfer data in Slave mode.</p>
-<p class="startli">I<sup>2</sup>C Slave Address**</p>
-</li>
+<li>To operate in Slave mode set the <em>slave address</em> using the function <a class="el" href="group__i2c__interface__gr.html#ga828f5fa289d065675ef78a9a73d129dc">ARM_I2C_Control</a>. The functions <a class="el" href="group__i2c__interface__gr.html#gafe164f30eba78f066272373b98a62cd4">ARM_I2C_SlaveTransmit</a> or <a class="el" href="group__i2c__interface__gr.html#gae3c9abccd1d377385d3d4cfe29035164">ARM_I2C_SlaveReceive</a> are used to transfer data in Slave mode.</li>
 </ul>
+<p><b>I<sup>2</sup>C Slave Address</b></p>
 <p>Depending on the device, I<sup>2</sup>C supports 7-bit and 10-bit Slaves addresses. The element <em>address_10_bit</em> in <a class="el" href="group__i2c__interface__gr.html#structARM__I2C__CAPABILITIES">ARM_I2C_CAPABILITIES</a> indicates that the driver is able to handle 10-bit addresses. A 10-bit Slave address is ORed with <a class="el" href="group__i2c__address__flags.html#ga16be1861b90774bf062feab2dbb829a4">ARM_I2C_ADDRESS_10BIT</a>.</p>
 <p>I<sup>2</sup>C also supports a General Call to all Slaves by using the slave address value <span class="XML-Token">0</span>. A General Call is recognized by Slaves have a slave address value <a class="el" href="group__i2c__address__flags.html#ga337f4f1aa082e9b593b2dcd43c50134e">ARM_I2C_ADDRESS_GC</a> registered with the function <a class="el" href="group__i2c__interface__gr.html#ga828f5fa289d065675ef78a9a73d129dc">ARM_I2C_Control</a>.</p>
-<p>Block Diagram**</p>
+<p><b>Block Diagram</b></p>
 <p>The I2C driver allows you to connect low-speed peripherals to a motherboard, embedded system, cellphone, or other electronic device.</p>
 <div class="image">
 <img src="I2C_BlockDiagram.png" alt="I2C_BlockDiagram.png"/>
 <div class="caption">
 Master/Slave connected via I2C interface</div></div>
-<p>I<sup>2</sup>C API**</p>
+<p><b>I<sup>2</sup>C API</b></p>
 <p>The following header files define the Application Programming Interface (API) for the I<sup>2</sup>C interface:</p>
 <ul>
 <li><b>Driver_I2C.h</b> : Driver API for I2C Bus Peripheral</li>
 </ul>
 <p>The driver implementation is a typical part of the Device Family Pack (DFP) that supports the peripherals of the microcontroller family.</p>
-<p>Driver Functions**</p>
+<p><b>Driver Functions</b></p>
 <p>The driver functions are published in the access struct as explained in <a class="el" href="theoryOperation.html#DriverFunctions">Common Driver Functions</a></p>
 <ul>
 <li><a class="el" href="group__i2c__interface__gr.html#structARM__DRIVER__I2C">ARM_DRIVER_I2C</a> : access struct for I2C driver functions</li>
@@ -315,6 +314,43 @@ Master/Slave connected via I2C interface</div></div>
 <div class="line">  </div>
 <div class="line">uint32_t EEPROM_GetSize (<span class="keywordtype">void</span>) {</div>
 <div class="line">  <span class="keywordflow">return</span> EEPROM_MAX_ADDR;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>The following example code shows the usage of the I<sup>2</sup>C interface in Slave mode.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="Driver__I2C_8h.html">Driver_I2C.h</a>&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// I2C driver instance</span></div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="group__i2c__interface__gr.html#structARM__DRIVER__I2C">ARM_DRIVER_I2C</a> Driver_I2C0; </div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="group__i2c__interface__gr.html#structARM__DRIVER__I2C">ARM_DRIVER_I2C</a> *i2cDev = &amp;Driver_I2C0;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t <span class="keyword">event</span> = 0;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> I2C_DrvEvent (uint32_t e) {</div>
+<div class="line">    <span class="keyword">event</span> |= e;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>) {</div>
+<div class="line">    uint8_t cnt = 0;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">/* Initialize I2C peripheral */</span></div>
+<div class="line">    i2cDev-&gt;<a class="code" href="group__i2c__interface__gr.html#ab0480980f67e0ebe0461ccea7873a65b">Initialize</a>(I2C_DrvEvent);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">/* Power-on SPI peripheral */</span></div>
+<div class="line">    i2cDev-&gt;<a class="code" href="group__i2c__interface__gr.html#aba8f1c8019af95ffe19c32403e3240ef">PowerControl</a>(<a class="code" href="Driver__Common_8h.html#ga47d6d7c31f88f3b8ae4aaf9d8444afa5abed52b77a9ce4775570e44a842b1295e">ARM_POWER_FULL</a>);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">/* Configure USART bus*/</span></div>
+<div class="line">    i2cDev-&gt;<a class="code" href="group__i2c__interface__gr.html#a6e0f47a92f626a971c5197fca6545505">Control</a>(<a class="code" href="group__i2c__control__codes.html#ga69d130b9f8aa34d6df5334ab67c74307">ARM_I2C_OWN_ADDRESS</a>, 0x78);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">while</span> (1) {</div>
+<div class="line">                <span class="comment">/* Receive chuck */</span></div>
+<div class="line">        i2cDev-&gt;<a class="code" href="group__i2c__interface__gr.html#a12d2689d6e93985e64b9561a8e4e917b">SlaveReceive</a>(&amp;cnt, 1);</div>
+<div class="line">        <span class="keywordflow">while</span> ((event &amp; ARM_event_TRANSFER_DONE) == 0);</div>
+<div class="line">        <span class="keyword">event</span> &amp;= ~ARM_event_TRANSFER_DONE;</div>
+<div class="line"> </div>
+<div class="line">                <span class="comment">/* Transmit chunk back */</span></div>
+<div class="line">        i2cDev-&gt;<a class="code" href="group__i2c__interface__gr.html#ae9e3b81b352d4564fd2337fdf0e5488c">SlaveTransmit</a>(&amp;cnt, 1);</div>
+<div class="line">        <span class="keywordflow">while</span> ((event &amp; ARM_event_TRANSFER_DONE) == 0);</div>
+<div class="line">        <span class="keyword">event</span> &amp;= ~ARM_event_TRANSFER_DONE;</div>
+<div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --> <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structARM__DRIVER__I2C" id="structARM__DRIVER__I2C"></a>
@@ -1261,7 +1297,7 @@ The parameter <em>arg</em> provides, depending on the operation, additional info
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:44 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:18 for CMSIS-Driver by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

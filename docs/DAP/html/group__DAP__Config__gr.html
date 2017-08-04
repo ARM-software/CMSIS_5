@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('group__DAP__Config__gr.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Content</h2></td></tr>
 <tr class="memitem:group__DAP__ConfigMCU__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__ConfigMCU__gr.html">Debug Unit Processor</a></td></tr>
-<tr class="memdesc:group__DAP__ConfigMCU__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMSIS-DAP Firmware runs on Debug Units with a Cortex-M Microcontroller. <br/></td></tr>
+<tr class="memdesc:group__DAP__ConfigMCU__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMSIS-DAP Firmware runs on Debug Units with a Cortex-M microcontroller. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__DAP__ConfigIO__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__ConfigIO__gr.html">Configure I/O Ports and Debug Unit</a></td></tr>
 <tr class="memdesc:group__DAP__ConfigIO__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">DAP_config.h configures I/O ports and Debug Unit hardware parameters. <br/></td></tr>
@@ -145,10 +145,10 @@ CMSIS-DAP Debug Unit Hardware</div></div>
 <div class="caption">
 CMSIS-DAP Debug Unit with Isolation adapter</div></div>
  <h2>Hardware Requirements </h2>
-<p>The CMSIS-DAP Firmware is designed for Debug Units that fulfill the following hardware requirements:</p>
+<p>The CMSIS-DAP Firmware is designed for Debug Units that fulfil the following hardware requirements:</p>
 <ul>
 <li>Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 processor-based microcontroller.</li>
-<li>CPU Clock: 48MHz or higher; Microcontroller must have a SYSTICK timer.</li>
+<li>CPU Clock: 48MHz or higher; microcontroller must have a SYSTICK timer.</li>
 <li>RAM: 8KB or more; Flash ROM: 16KB or more.</li>
 <li>Full-speed or High-speed USB Device Peripheral.</li>
 <li>7 standard I/O pins for JTAG/SWD Device Interface.</li>
@@ -166,10 +166,10 @@ CMSIS-DAP Debug Unit with Isolation adapter</div></div>
 <tr>
 <td>.\Firmware\Example\XMC4200 </td><td>CMSIS-DAP Firmware adapted to the Infineon XMC4200-based Debug Unit. </td></tr>
 </table>
-<p>The CMSIS-DAP Firmware is designed to execute on a Debug Unit that is using a Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 processor-based microcontroller. To deploy the firmware to a new Debug Unit copy an existing firmware adaption to a new folder. For example, copy the folder .\Firmware\XMC4200 to a folder called .\Firmware\MyDebugUnit.</p>
-<p>To following steps describe the adaption of the CMSIS-DAP Firmware to a new Debug Unit:</p>
+<p>The CMSIS-DAP Firmware is designed to execute on a Debug Unit that is using a Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 processor-based microcontroller. To deploy the firmware to a new Debug Unit copy an existing firmware adaptation to a new folder. For example, copy the folder .\Firmware\XMC4200 to a folder called .\Firmware\MyDebugUnit.</p>
+<p>To following steps describe the adaptation of the CMSIS-DAP Firmware to a new Debug Unit:</p>
 <ol type="1">
-<li><a class="el" href="group__DAP__ConfigMCU__gr.html">Debug Unit Processor</a> : Select the microcontroller and replace the CMSIS-CORE files.</li>
+<li><a class="el" href="group__DAP__ConfigMCU__gr.html">Debug Unit Processor</a> : Select the microcontroller and replace the CMSIS-Core (Cortex-M) files.</li>
 <li><a class="el" href="group__DAP__ConfigIO__gr.html">Configure I/O Ports and Debug Unit</a> : Adapt the I/O Ports and specify other parameters for the Debug Unit.</li>
 <li><a class="el" href="group__DAP__ConfigUSB__gr.html">Configure USB Peripheral</a> : Adapt the USB Peripheral to the microcontroller.</li>
 <li><a class="el" href="group__DAP__USART__gr.html">Connect SWO Trace</a> : Optional you may add a CMSIS-Driver USART to interface to SWO.</li>
@@ -182,7 +182,7 @@ CMSIS-DAP Debug Unit with Isolation adapter</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

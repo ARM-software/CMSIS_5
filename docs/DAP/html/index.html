@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -111,21 +111,21 @@ $(document).ready(function(){initNavTree('index.html','');});
 <div class="title">Firmware for CoreSight Debug Access Port </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><b>CMSIS-DAP</b> is a specification and a implementation of a <b>Firmware</b> that supports access to the CoreSight <b>Debug Access Port</b> (DAP).ARM Cortex processors provide <a href="http://www.arm.com/products/system-ip/coresight/index.php" target="_blank">CoreSight Debug and Trace</a>. CMSIS-DAP supports target Devices that contain one or more Cortex processors. A Device provides a Debug Access Port (DAP) typically either with a 5-pin JTAG or with a 2-pin Serial Wired Debug (SWD) interface that connects to a Debug Unit. CMSIS-DAP is the interface firmware for a Debug Unit that connects the Debug Port to USB. Debuggers that execute on a host computer connect via USB and the Debug Unit to the Device which runs the application software.</p>
+<div class="textblock"><p><b>CMSIS-DAP</b> is a specification and a implementation of a <b>Firmware</b> that supports access to the CoreSight <b>Debug Access Port</b> (DAP).<br/>
+<br/>
+ The various ARM Cortex processors provide <a href="http://www.arm.com/products/system-ip/coresight/index.php" target="_blank"><b>CoreSight Debug and Trace</b></a>. CMSIS-DAP supports target Devices that contain one or more Cortex processors. A Device provides a Debug Access Port (DAP) typically either with a 5-pin JTAG or with a 2-pin Serial Wired Debug (SWD) interface that connects to a Debug Unit. CMSIS-DAP is the interface firmware for a Debug Unit that connects the Debug Port to USB. Debuggers that execute on a host computer connect via USB and the Debug Unit to the Device which runs the application software.</p>
 <div class="image">
 <img src="CMSIS_DAP_INTERFACE.png" alt="CMSIS_DAP_INTERFACE.png"/>
 <div class="caption">
 CMSIS-DAP Overview</div></div>
  <h2>Benefits of CMSIS-DAP </h2>
 <ul>
-<li>Provides a standardized interface for debuggers.<ul>
-<li>Interfaces to many standard debuggers is already available. This includes also ARM DS-5 and Keil MDK-ARM.</li>
-</ul>
-</li>
+<li>Provides a standardized interface for debuggers. Interfaces to many standard debuggers is available.</li>
 <li>Access to CoreSight registers of all Cortex processor architectures (Cortex-A/R/M).</li>
 <li>Connects via 5-pin JTAG or 2-pin Serial Wire Debug (SWD).</li>
 <li>Supports multi-core debugging.</li>
-<li>Supports Serial Wire Output of Cortex-M devices (new in CMSIS-DAP Version 1.10).</li>
+<li>Supports Serial Wire Output of Cortex-M devices (new in CMSIS-DAP Version 1.1.0).</li>
+<li>Supports trace recording of additional Test Inputs, for example power measurement (new in CMSIS-DAP Version 1.2.0).</li>
 <li>Easy to deploy to Debug Units based on Cortex-M microcontrollers.</li>
 <li>Debug Unit may be integrated on an evaluation board.</li>
 <li>USB using HID (Human Interface Device) driver class that avoids driver installation on host PC.</li>
@@ -172,7 +172,7 @@ CMSIS-DAP Software Stack</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

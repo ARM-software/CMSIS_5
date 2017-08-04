@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <title>Compiler Control</title>
-<title>CMSIS-CORE: Compiler Control</title>
+<title>CMSIS-Core (Cortex-M): Compiler Control</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -31,10 +31,10 @@
  <tr style="height: 46px;">
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CMSIS-CORE
-   &#160;<span id="projectnumber">Version 5.0.1</span>
+   <div id="projectname">CMSIS-Core (Cortex-M)
+   &#160;<span id="projectnumber">Version 5.0.2</span>
    </div>
-   <div id="projectbrief">CMSIS-CORE support for Cortex-M processor-based devices</div>
+   <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
  </tr>
  </tbody>
@@ -152,18 +152,30 @@ Macros</h2></td></tr>
 <tr class="memitem:gac607bf387b29162be6a9b77fc7999539"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#gac607bf387b29162be6a9b77fc7999539">__WEAK</a></td></tr>
 <tr class="memdesc:gac607bf387b29162be6a9b77fc7999539"><td class="mdescLeft">&#160;</td><td class="mdescRight">Export a function or variable weakly to allow overwrites.  <a href="#gac607bf387b29162be6a9b77fc7999539">More...</a><br/></td></tr>
 <tr class="separator:gac607bf387b29162be6a9b77fc7999539"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga27fd2ec6767ca1ab66d36b5cc0103268"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga27fd2ec6767ca1ab66d36b5cc0103268">__UNALIGNED_UINT32</a></td></tr>
-<tr class="memdesc:ga27fd2ec6767ca1ab66d36b5cc0103268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer for unaligned access of a uint32_t variable.  <a href="#ga27fd2ec6767ca1ab66d36b5cc0103268">More...</a><br/></td></tr>
-<tr class="separator:ga27fd2ec6767ca1ab66d36b5cc0103268"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c58caa5a273e2c21924509a45f8b849"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga0c58caa5a273e2c21924509a45f8b849">__ALIGNED</a></td></tr>
-<tr class="memdesc:ga0c58caa5a273e2c21924509a45f8b849"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum alignment for a variable.  <a href="#ga0c58caa5a273e2c21924509a45f8b849">More...</a><br/></td></tr>
-<tr class="separator:ga0c58caa5a273e2c21924509a45f8b849"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabe8996d3d985ee1529475443cc635bf1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#gabe8996d3d985ee1529475443cc635bf1">__PACKED</a></td></tr>
 <tr class="memdesc:gabe8996d3d985ee1529475443cc635bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request smallest possible alignment.  <a href="#gabe8996d3d985ee1529475443cc635bf1">More...</a><br/></td></tr>
 <tr class="separator:gabe8996d3d985ee1529475443cc635bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4dbb70fab85207c27b581ecb6532b314"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga4dbb70fab85207c27b581ecb6532b314">__PACKED_STRUCT</a></td></tr>
 <tr class="memdesc:ga4dbb70fab85207c27b581ecb6532b314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request smallest possible alignment for a structure.  <a href="#ga4dbb70fab85207c27b581ecb6532b314">More...</a><br/></td></tr>
 <tr class="separator:ga4dbb70fab85207c27b581ecb6532b314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga27fd2ec6767ca1ab66d36b5cc0103268"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga27fd2ec6767ca1ab66d36b5cc0103268">__UNALIGNED_UINT32</a></td></tr>
+<tr class="memdesc:ga27fd2ec6767ca1ab66d36b5cc0103268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer for unaligned access of a uint32_t variable.  <a href="#ga27fd2ec6767ca1ab66d36b5cc0103268">More...</a><br/></td></tr>
+<tr class="separator:ga27fd2ec6767ca1ab66d36b5cc0103268"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe8693a7200e573101551d49a1772fb9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#gabe8693a7200e573101551d49a1772fb9">__UNALIGNED_UINT16_READ</a></td></tr>
+<tr class="memdesc:gabe8693a7200e573101551d49a1772fb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer for unaligned read of a uint16_t variable.  <a href="#gabe8693a7200e573101551d49a1772fb9">More...</a><br/></td></tr>
+<tr class="separator:gabe8693a7200e573101551d49a1772fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb9cd73446f7e11e92383cd327a23407"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#gadb9cd73446f7e11e92383cd327a23407">__UNALIGNED_UINT16_WRITE</a></td></tr>
+<tr class="memdesc:gadb9cd73446f7e11e92383cd327a23407"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer for unaligned write of a uint16_t variable.  <a href="#gadb9cd73446f7e11e92383cd327a23407">More...</a><br/></td></tr>
+<tr class="separator:gadb9cd73446f7e11e92383cd327a23407"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga254322c344d954c9f829719a50a88e87"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga254322c344d954c9f829719a50a88e87">__UNALIGNED_UINT32_READ</a></td></tr>
+<tr class="memdesc:ga254322c344d954c9f829719a50a88e87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer for unaligned read of a uint32_t variable.  <a href="#ga254322c344d954c9f829719a50a88e87">More...</a><br/></td></tr>
+<tr class="separator:ga254322c344d954c9f829719a50a88e87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb2180285c417aa9120a360c51f64b4b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#gabb2180285c417aa9120a360c51f64b4b">__UNALIGNED_UINT32_WRITE</a></td></tr>
+<tr class="memdesc:gabb2180285c417aa9120a360c51f64b4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer for unaligned write of a uint32_t variable.  <a href="#gabb2180285c417aa9120a360c51f64b4b">More...</a><br/></td></tr>
+<tr class="separator:gabb2180285c417aa9120a360c51f64b4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c58caa5a273e2c21924509a45f8b849"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga0c58caa5a273e2c21924509a45f8b849">__ALIGNED</a></td></tr>
+<tr class="memdesc:ga0c58caa5a273e2c21924509a45f8b849"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum alignment for a variable.  <a href="#ga0c58caa5a273e2c21924509a45f8b849">More...</a><br/></td></tr>
+<tr class="separator:ga0c58caa5a273e2c21924509a45f8b849"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>The CMSIS-Core provides the header file <b>cmsis_compiler.h</b> with consistent #define symbols for generate C or C++ source files that should be compiler agnostic. Each CMSIS compliant compiler should support the functionality described in this section.</p>
@@ -283,7 +295,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <p>Inline functions offer a trade-off between code size and performance. By default, the compiler decides during optimization whether to inline code or not. The <b>__INLINE</b> attribute gives the compiler an hint to inline this function. Still, the compiler may decide not to inline the function. As the function is global an callable function is also generated.</p>
 <p><b> Code Example:</b> </p>
-<div class="fragment"><div class="line"><span class="keyword">const</span> uint32_t led_mask[] = {1UL &lt;&lt; 4, 1UL &lt;&lt; 5, 1UL &lt;&lt; 6, 1UL &lt;&lt; 7};</div>
+<div class="fragment"><div class="line"><span class="keyword">const</span> uint32_t led_mask[] = {1U &lt;&lt; 4, 1U &lt;&lt; 5, 1U &lt;&lt; 6, 1U &lt;&lt; 7};</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/*------------------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  Switch on LEDs</span></div>
@@ -369,6 +381,44 @@ Macros</h2></td></tr>
 </div><!-- fragment --> 
 </div>
 </div>
+<a class="anchor" id="gabe8693a7200e573101551d49a1772fb9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __UNALIGNED_UINT16_READ</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Defines a pointer to a uint16_t from an address that does not need to be aligned. This can then be used in read operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying ARM processor core and compiler settings.</p>
+<p><b> Code Example:</b> </p>
+<div class="fragment"><div class="line">uint16_t val16;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
+<div class="line">   val16 = <a class="code" href="group__compiler__conntrol__gr.html#gabe8693a7200e573101551d49a1772fb9">__UNALIGNED_UINT16_READ</a>(ptr);</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="gadb9cd73446f7e11e92383cd327a23407"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __UNALIGNED_UINT16_WRITE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Defines a pointer to a uint16_t from an address that does not need to be aligned. This can then be used in write operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying ARM processor core and compiler settings.</p>
+<p><b> Code Example:</b> </p>
+<div class="fragment"><div class="line">uint16_t val16 = 0U;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
+<div class="line">   <a class="code" href="group__compiler__conntrol__gr.html#gadb9cd73446f7e11e92383cd327a23407">__UNALIGNED_UINT16_WRITE</a>(ptr, val16);</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
 <a class="anchor" id="ga27fd2ec6767ca1ab66d36b5cc0103268"></a>
 <div class="memitem">
 <div class="memproto">
@@ -378,12 +428,51 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000004">Deprecated:</a></b></dt><dd>Do not use this macro. It has been superseded by <a class="el" href="group__compiler__conntrol__gr.html#ga254322c344d954c9f829719a50a88e87">__UNALIGNED_UINT32_READ</a>, <a class="el" href="group__compiler__conntrol__gr.html#gabb2180285c417aa9120a360c51f64b4b">__UNALIGNED_UINT32_WRITE</a> and will be removed in the future.</dd></dl>
 <p>Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in read/write operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying ARM processor core and compiler settings.</p>
 <p><b> Code Example:</b> </p>
 <div class="fragment"><div class="line">uint32_t val32;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
 <div class="line">  <a class="code" href="group__compiler__conntrol__gr.html#ga27fd2ec6767ca1ab66d36b5cc0103268">__UNALIGNED_UINT32</a>(ptr) = val32;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga254322c344d954c9f829719a50a88e87"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __UNALIGNED_UINT32_READ</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in read operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying ARM processor core and compiler settings.</p>
+<p><b> Code Example:</b> </p>
+<div class="fragment"><div class="line">uint32_t val32;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
+<div class="line">   val32 = <a class="code" href="group__compiler__conntrol__gr.html#ga254322c344d954c9f829719a50a88e87">__UNALIGNED_UINT32_READ</a>(ptr);</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="gabb2180285c417aa9120a360c51f64b4b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __UNALIGNED_UINT32_WRITE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in write operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying ARM processor core and compiler settings.</p>
+<p><b> Code Example:</b> </p>
+<div class="fragment"><div class="line">uint32_t val32 = 0U;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
+<div class="line">   <a class="code" href="group__compiler__conntrol__gr.html#gabb2180285c417aa9120a360c51f64b4b">__UNALIGNED_UINT32_WRITE</a>(ptr, val32);</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
@@ -432,7 +521,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:41 for CMSIS-CORE by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:10 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -170,9 +170,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> </td><td>Describe a debug port relevant to all devices of the family. </td><td>DebugPortType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td>Specify debug options that are relevant to all devices of the family. </td><td>DebugType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_debug">debug</a> </td><td>Specify debug options that are relevant to all devices of the family. </td><td>DebugType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td>Specify trace options that are relevant to all devices of the family. </td><td>TraceType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td>Specify trace options that are relevant to all devices of the family. </td><td>TraceType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_memory">memory</a> </td><td>Specify memory areas that are available for all devices of the family. </td><td>MemoryType </td><td>0..*  </td></tr>
 <tr>
@@ -188,7 +188,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td>A optional sub-family that is used to group devices. </td><td>group </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td>Individual devices that belong to the device family. </td><td>DeviceType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td>Individual devices that belong to the device family. </td><td>DeviceType </td><td>0..*  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -247,9 +247,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> </td><td>Describe a debug port relevant to all devices of the sub-family. </td><td>DebugPortType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td>Specify debug options that are relevant to all devices of the sub-family. </td><td>DebugType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_debug">debug</a> </td><td>Specify debug options that are relevant to all devices of the sub-family. </td><td>DebugType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td>Specify trace options that are relevant to all devices of the sub-family. </td><td>TraceType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td>Specify trace options that are relevant to all devices of the sub-family. </td><td>TraceType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_memory">memory</a> </td><td>Specify memory areas that are available in all device of the sub-family. </td><td>MemoryType </td><td>0..*  </td></tr>
 <tr>
@@ -261,12 +261,12 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_feature">feature</a> </td><td>Specify features available in devices of the sub-family. </td><td>FeatureType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td>List individual devices that belong to the device sub-family. </td><td>DeviceType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td>List individual devices that belong to the device sub-family. </td><td>DeviceType </td><td>0..*  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
 <h1><a class="anchor" id="element_device"></a>
-/package/devices/family/../device</h1>
+/system_description/platform/scanchain/device</h1>
 <p>Define properties that are specific to a device. Properties defined on upper levels get inherited, unless they can be overwritten. Multiple &lt;device&gt; elements can be defined.</p>
 <p><b>Example</b> </p>
 <div class="fragment"><div class="line">&lt;subFamily DsubFamily=<span class="stringliteral">&quot;STM32F405&quot;</span>&gt;</div>
@@ -319,9 +319,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> </td><td>Describe a debug port specific to this device. </td><td>DebugPortType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td>Specify debug options specific to this device. </td><td>DebugType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_debug">debug</a> </td><td>Specify debug options specific to this device. </td><td>DebugType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td>Specify trace options specific to this device. </td><td>TraceType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td>Specify trace options specific to this device. </td><td>TraceType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugvars">debugvars</a> </td><td>Define debug access variables for user-defined settings specific to this device. </td><td>DebugVarsType </td><td>0..1  </td></tr>
 <tr>
@@ -359,7 +359,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -408,7 +408,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -451,7 +451,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -491,7 +491,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -540,7 +540,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -605,7 +605,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -774,7 +774,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -841,14 +841,17 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <hr/>
 <h1><a class="anchor" id="element_processor"></a>
 /package/devices/family/.../processor</h1>
-<p>Specifies attributes of the device processor. The element can occur on various levels. Elements of multi-processor devices can be associated with a specific processor using the attribute <b>&lt;Pname&gt;</b>. If the information is relevant to all processors, no processor must be specified in <b>&lt;Pname&gt;</b>.</p>
+<p>Specifies attributes of the device processor. The element can occur on various levels. The attributes add-up over the different levels (family -&gt; subFamily -&gt; device). Elements of multi-processor devices can be associated with a specific processor using the attribute <b>&lt;Pname&gt;</b>. If the information is relevant to all processors, no processor must be specified in <b>&lt;Pname&gt;</b>.</p>
 <p><b>Example</b> <b>1</b> </p>
 <div class="fragment"><div class="line">&lt;package&gt;</div>
 <div class="line">  ...</div>
 <div class="line">  &lt;devices&gt;</div>
-<div class="line">    &lt;family Dfamily=<span class="stringliteral">&quot;STM32F4&quot;</span> Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span>&gt;</div>
-<div class="line">      &lt;processor Dcore=<span class="stringliteral">&quot;Cortex-M4&quot;</span> DcoreVersion=<span class="stringliteral">&quot;r0p1&quot;</span></div>
-<div class="line">                 Dfpu=<span class="stringliteral">&quot;FPU&quot;</span> Dmpu=<span class="stringliteral">&quot;MPU&quot;</span> Dendian=<span class="stringliteral">&quot;Little-endian&quot;</span> Dclock=<span class="stringliteral">&quot;168000000&quot;</span>/&gt;</div>
+<div class="line">    &lt;family Dfamily=<span class="stringliteral">&quot;K20 Series&quot;</span> Dvendor=<span class="stringliteral">&quot;NXP:11&quot;</span>&gt;</div>
+<div class="line">      &lt;processor Dcore=<span class="stringliteral">&quot;Cortex-M4&quot;</span> DcoreVersion=<span class="stringliteral">&quot;r0p1&quot;</span>/&gt;</div>
+<div class="line">      &lt;!-- ******************************  MK20DN128xxx5  ****************************** --&gt;</div>
+<div class="line">      &lt;device Dname=<span class="stringliteral">&quot;MK20DN128xxx5&quot;</span>&gt;</div>
+<div class="line">        &lt;processor Dfpu=<span class="stringliteral">&quot;0&quot;</span> Dmpu=<span class="stringliteral">&quot;0&quot;</span> Dendian=<span class="stringliteral">&quot;Little-endian&quot;</span> Dclock=<span class="stringliteral">&quot;50000000&quot;</span>/&gt;</div>
+<div class="line">      &lt;/device&gt;</div>
 <div class="line">      ...</div>
 <div class="line">    &lt;/family&gt;</div>
 <div class="line">  &lt;/devices&gt;</div>
@@ -874,30 +877,31 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
-<td>Pname </td><td>Processor identifier. This attribute <b>is mandatory for devices that embed multiple processors</b>. Each processor needs a unique identifier and must be used consistently in the <b>Pname</b> attribute of the elements within the scope of the current device family section. Only alphabetical characters, decimal digits, '-' and '_' are allowed.  </td><td>RestrictedString </td><td>optional  </td></tr>
+<td>Pname </td><td>Processor identifier. This attribute <b>is mandatory for devices that embed multiple processors</b>. Each processor needs a unique identifier and must be used consistently in the <b>Pname</b> attribute of the elements within the scope of the current device family section. Only alphabetical characters, decimal digits, '-' and '_' are allowed.  </td><td>RestrictedString </td><td>required for all multi-core devices  </td></tr>
 <tr>
-<td>Punits </td><td>Specifies the number of processor units in a symmetric multi-processor core (MPCore). Defaults to single-core CPU (<span class="XML-Token">1</span>) when left empty. </td><td>InstancesType </td><td>optional  </td></tr>
+<td>Punits </td><td>Specifies the number of processor units in a symmetric multi-processor core (MPCore). Defaults to single-core CPU (<span class="XML-Token">1</span>) when left empty. </td><td>InstancesType </td><td>required for all multi-core devices  </td></tr>
 <tr>
-<td>Dcore </td><td>Specifies the processor core. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DcoreEnum">Device Cores</a>. </td><td>DcoreEnum </td><td>optional  </td></tr>
+<td>Dcore </td><td>Specifies the processor core. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DcoreEnum">Device Cores</a>. </td><td>DcoreEnum </td><td>required  </td></tr>
 <tr>
-<td>Dfpu </td><td>Specifies whether a hardware Floating Point Unit is present in the processor. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DfpuEnum">Device FPU</a>. </td><td>DfpuEnum </td><td>optional  </td></tr>
+<td>Dfpu </td><td>Specifies whether a hardware Floating Point Unit is present in the processor. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DfpuEnum">Device FPU</a>. </td><td>DfpuEnum </td><td>required  </td></tr>
 <tr>
-<td>Dmpu </td><td>Specifies whether a Memory Protection Unit is present in the processor. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DmpuEnum">Device MPU</a>. </td><td>DmpuEnum </td><td>optional  </td></tr>
+<td>Dmpu </td><td>Specifies whether a Memory Protection Unit is present in the processor. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DmpuEnum">Device MPU</a>. </td><td>DmpuEnum </td><td>required  </td></tr>
 <tr>
-<td>Dtz </td><td>Specifies whether an ARMv8M based device implements TrustZone. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DtzEnum">Device TZ</a>. </td><td>DtzEnum </td><td>optional  </td></tr>
+<td>Dtz </td><td>Specifies whether an ARMv8-M based device implements TrustZone. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DtzEnum">Device TZ</a>. </td><td>DtzEnum </td><td>required for ARMv8-M based devices  </td></tr>
 <tr>
-<td>Ddsp </td><td>Specifies whether an ARMv8M based device supports the DSP instructions set. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DdspEnum">Device DSP</a>. </td><td>DdspEnum </td><td>optional  </td></tr>
+<td>Ddsp </td><td>Specifies whether a device supports the DSP instructions set. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DdspEnum">Device DSP</a>. </td><td>DdspEnum </td><td>required  </td></tr>
 <tr>
-<td>Dendian </td><td>Specifies the endianess of the processor. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DendianEnum">Endinaness</a>. </td><td>DendianEnum </td><td>optional  </td></tr>
+<td>Dendian </td><td>Specifies the endianess of the processor. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DendianEnum">Endinaness</a>. </td><td>DendianEnum </td><td>required  </td></tr>
 <tr>
-<td>Dclock </td><td>Specifies the max clock frequency of the processor subsystem </td><td>xs:unsignedInt </td><td>optional  </td></tr>
+<td>Dclock </td><td>Specifies the max clock frequency of the processor subsystem </td><td>xs:unsignedInt </td><td>required  </td></tr>
 <tr>
 <td>DcoreVersion </td><td>Hardware revision of the processor core </td><td>xs:string </td><td>required  </td></tr>
 </table>
+<dl class="section note"><dt>Note</dt><dd>While the different attributes can be spreaded over the family levels, they add-up and at the leaf (device level), a complete set of attributes should be present (at least Dcore, Dfpu, Dmpu, Ddsp, Dendian, Dclock, and DcoreVersion). Adding-up means that you can overwrite previous attributes on the next level. For example, if you have a subFamily that has a general Dclock of 50000000 (50 Mhz), you can still specify for one of the subFamily members a different Dclock (such as 66000000).</dd></dl>
 <p>&#160;</p>
 <p><a class="anchor" id="DeviceVendorEnum"></a><b>Table: Device Vendors</b></p>
 <p>The table lists predefined values representing device vendors. The list is extended from time to time (on request by new vendors). Contact <a href="#" onclick="location.href='mai'+'lto:'+'cms'+'is'+'@ar'+'m.'+'com'; return false;">cmsis<span style="display: none;">.nosp@m.</span>@arm<span style="display: none;">.nosp@m.</span>.com</a> to ask for an extension. These values can be used in the elements:</p>
@@ -924,9 +928,11 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">ARM:82 </td><td>ARM Ltd. </td><td><a href="http://www.arm.com">http://www.arm.com</a>  </td></tr>
 <tr>
-<td class="XML-Token">Atmel:3 </td><td>Atmel Corporation </td><td><a href="http://www.atmel.com">http://www.atmel.com</a>  </td></tr>
+<td class="XML-Token">ArteryTek:143 </td><td>ArteryTek </td><td><a href="http://www.arterytek.com">http://www.arterytek.com</a>  </td></tr>
 <tr>
-<td class="XML-Token">CSR:118 </td><td>CSR: </td><td><a href="http://www.csr.com">http://www.csr.com</a>  </td></tr>
+<td class="XML-Token">Atmel:3 </td><td>Atmel Corporation (now Microchip) </td><td><a href="http://www.atmel.com">http://www.atmel.com</a>  </td></tr>
+<tr>
+<td class="XML-Token">CSR:118 </td><td>CSR </td><td><a href="http://www.csr.com">http://www.csr.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Cypress:19 </td><td>Cypress Semiconductor </td><td><a href="http://www.cypress.com">http://www.cypress.com</a>  </td></tr>
 <tr>
@@ -937,6 +943,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td class="XML-Token">Generic:5 </td><td>Generic: Not a vendor specific device </td><td></td></tr>
 <tr>
 <td class="XML-Token">GigaDevice:123 </td><td>GigaDevice </td><td><a href="http://www.gigadevice.com">http://www.gigadevice.com</a>  </td></tr>
+<tr>
+<td class="XML-Token">HDSC:145 </td><td>HUADA Semiconductor </td><td><a href="http://www.hdsc.com.cn">http://www.hdsc.com.cn</a>  </td></tr>
 <tr>
 <td class="XML-Token">Holtek:106 </td><td>Holtek Microelectronics </td><td><a href="http://www.holtek.com.tw">http://www.holtek.com.tw</a>  </td></tr>
 <tr>
@@ -952,6 +960,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">MegaChips:128 </td><td>MegaChips </td><td><a href="http://www.megachips.com">http://www.megachips.com</a>  </td></tr>
 <tr>
+<td class="XML-Token">Microchip:3 </td><td>Microchip (previously Atmel) </td><td><a href="http://www.microchip.com">http://www.microchip.com</a>  </td></tr>
+<tr>
 <td class="XML-Token">MicroSemi:112 </td><td>Microsemi </td><td><a href="http://www.microsemi.com">http://www.microsemi.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Milandr:99 </td><td>Milandr </td><td><a href="http://www.milandr.ru">http://www.milandr.ru</a>  </td></tr>
@@ -964,11 +974,15 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">NXP:11 </td><td>NXP </td><td><a href="http://www.nxp.com">http://www.nxp.com</a>  </td></tr>
 <tr>
+<td class="XML-Token">ONSemiconductor:141 </td><td>ON Semiconductor </td><td><a href="http://www.onsemi.com">http://www.onsemi.com</a>  </td></tr>
+<tr>
 <td class="XML-Token">Panasonic:131 </td><td>Panasonic </td><td><a href="http://www.panasonic.com/industrial">http://www.panasonic.com/industrial</a>  </td></tr>
 <tr>
 <td class="XML-Token">Realtek Semiconductor:124 </td><td>Realtek Semiconductor </td><td><a href="http://www.realtek.com.tw">http://www.realtek.com.tw</a>  </td></tr>
 <tr>
 <td class="XML-Token">Redpine Signals:125 </td><td>Repine Signals </td><td><a href="http://www.redpinesignals.com">http://www.redpinesignals.com</a>  </td></tr>
+<tr>
+<td class="XML-Token">RelChip:146 </td><td>RelChip  </td><td><a href="http://www.relchip.com/">http://www.relchip.com/</a>  </td></tr>
 <tr>
 <td class="XML-Token">Renesas:117 </td><td>Renesas </td><td><a href="http://www.renesas.com">http://www.renesas.com</a>  </td></tr>
 <tr>
@@ -984,11 +998,15 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">STMicroelectronics:13 </td><td>STMicroelectronics </td><td><a href="http://www.st.com">http://www.st.com</a>  </td></tr>
 <tr>
+<td class="XML-Token">Synwit:144 </td><td>Synwit Technology Co.,LTD. </td><td><a href="http://www.synwit.cn">http://www.synwit.cn</a>  </td></tr>
+<tr>
 <td class="XML-Token">Texas Instruments:16 </td><td>Texas Instruments </td><td><a href="http://www.ti.com">http://www.ti.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Toshiba:92 </td><td>Toshiba Semiconductor </td><td><a href="http://www.toshiba-components.com">http://www.toshiba-components.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Triad Semiconductor:104 </td><td>Triad Semiconductor </td><td><a href="http://www.triadsemi.com">http://www.triadsemi.com</a>  </td></tr>
+<tr>
+<td class="XML-Token">Vorago:137 </td><td>Vorago Technologies </td><td><a href="http://www.voragotech.com">http://www.voragotech.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">WIZnet:122 </td><td>WIZnet </td><td><a href="http://www.wiznet.co.kr">http://www.wiznet.co.kr</a>  </td></tr>
 <tr>
@@ -1007,7 +1025,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>style= </th><th>Description  </th></tr>
 <tr>
-<td class="XML-Token">Keil </td><td><a href="http://www.keil.com/pack/doc/CMSIS/Pack/html/_flash_algorithm.html" target="_blank">Flash Programming Algorithm</a> as defined by ARM/Keil  </td></tr>
+<td class="XML-Token">Keil </td><td><a class="el" href="flashAlgorithm.html">Flash Programming</a> as defined by ARM/Keil  </td></tr>
 <tr>
 <td class="XML-Token">IAR </td><td>Flash Programming Algorithm as defined by IAR  </td></tr>
 <tr>
@@ -1218,7 +1236,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -1296,7 +1314,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -1440,7 +1458,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -1581,7 +1599,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Child&#160;Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
@@ -1591,7 +1609,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <hr/>
 <h1><a class="anchor" id="element_sequence"></a>
 /package/devices/family/.../sequences/sequence</h1>
-<p>Describes a Debug Access Sequence which contains <b>control</b> and <b>block</b> elements. <b>block</b> elements contains statements including calls to <a class="el" href="pdsc_SequenceNameEnum_pg.html#DebugFunctions">Debug Access Functions</a>. A Debug Access Sequence overrides or extends the default functionality of a development tool. Refer to <a class="el" href="pdsc_SequenceNameEnum_pg.html#usage_of_sequences">Usage of debug access sequences</a> for details.<br/>
+<p>Describes a Debug Access Sequence which contains <b>control</b> and <b>block</b> elements. <b>block</b> elements contains statements including calls to <a class="el" href="debug_description.html#DebugFunctions">Debug Access Functions</a>. A Debug Access Sequence overrides or extends the default functionality of a development tool. Refer to <a class="el" href="debug_description.html#usage_of_sequences">Usage of debug access sequences</a> for details.<br/>
 </p>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li><b>control</b> elements can contain other <b>control</b> and <b>block</b> elements. <b>The maximum nesting of <em>control</em> elements is 10.</b></li>
@@ -1661,14 +1679,14 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>name </td><td>Name of the Debug Access Sequence:<br/>
 <ul>
-<li>Pre-defined names are executed by the development tool described under <a class="el" href="pdsc_SequenceNameEnum_pg.html#usage_of_sequences">Usage of debug access sequences</a>.</li>
-<li>Any Debug Access Sequence can be executed the <a class="el" href="pdsc_SequenceNameEnum_pg.html#DebugFunctions">debug access function</a> <b>Sequence</b>.  </li>
+<li>Pre-defined names are executed by the development tool described under <a class="el" href="debug_description.html#usage_of_sequences">Usage of debug access sequences</a>.</li>
+<li>Any Debug Access Sequence can be executed the <a class="el" href="debug_description.html#DebugFunctions">debug access function</a> <b>Sequence</b>.  </li>
 </ul>
 </td><td>xs:string </td><td>required  </td></tr>
 <tr>
 <td>Pname </td><td>Reference to a processor identifier as specified for a <b>processor</b> element. If <b>Pname</b> is set for this <b>sequence</b> element, a debugger executes the debug access sequence only for a debug connection to the referenced processor. Otherwise, it is executed for all processors. <b>This attribute must be set if defining multiple implementations of the same debug access sequence.</b> Only alphabetical characters, decimal digits, '-' and '_' are allowed.  </td><td>RestrictedString </td><td>optional  </td></tr>
 <tr>
-<td>disable </td><td>Disables execution of the <a class="el" href="pdsc_SequenceNameEnum_pg.html#default_sequences">Default Debug Access Sequence</a>. </td><td>xs:boolean </td><td>optional  </td></tr>
+<td>disable </td><td>Disables execution of the <a class="el" href="debug_description.html#default_sequences">Default Debug Access Sequence</a>. </td><td>xs:boolean </td><td>optional  </td></tr>
 <tr>
 <td>info </td><td>Descriptive text to display for example for error diagnostics. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
@@ -1728,9 +1746,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Attribute </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
-<td>if </td><td>Expression describing the condition under which to execute this sequence block. The block is skipped if the condition resolved to <span class="XML-Token">false</span>. Defaults to <span class="XML-Token">true</span> if not set. Refer to <a class="el" href="pdsc_SequenceNameEnum_pg.html#ExpressionType">Expression Rules</a> for the syntax.  </td><td>ExpressionType </td><td>optional  </td></tr>
+<td>if </td><td>Expression describing the condition under which to execute this sequence block. The block is skipped if the condition resolved to <span class="XML-Token">false</span>. Defaults to <span class="XML-Token">true</span> if not set. Refer to <a class="el" href="debug_description.html#ExpressionType">Expression Rules</a> for the syntax.  </td><td>ExpressionType </td><td>optional  </td></tr>
 <tr>
-<td>while </td><td>Expression describing a while-condition. The execution of the block contents is repeated while the condition resolves to <span class="XML-Token">true</span>, or until an optional <b>timeout</b> is reached. Refer to <a class="el" href="pdsc_SequenceNameEnum_pg.html#ExpressionType">Expression Rules</a> for the syntax.  </td><td>ExpressionType </td><td>optional  </td></tr>
+<td>while </td><td>Expression describing a while-condition. The execution of the block contents is repeated while the condition resolves to <span class="XML-Token">true</span>, or until an optional <b>timeout</b> is reached. Refer to <a class="el" href="debug_description.html#ExpressionType">Expression Rules</a> for the syntax.  </td><td>ExpressionType </td><td>optional  </td></tr>
 <tr>
 <td>timeout </td><td>Timeout in microseconds for a <b>block</b> with a <b>while</b> condition. A debugger must extend the timeout to the closest possible time granularity. If the timeout is reached, the current iteration including a last evaluation of the <b>while</b> condition must finish. A value of <span class="XML-Token">0</span> disables the timeout.<br/>
  This attribute defaults to <span class="XML-Token">0</span>.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
@@ -1747,7 +1765,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <hr/>
 <h1><a class="anchor" id="element_seq_block"></a>
 /package/devices/family/.../sequences/sequence/block</h1>
-<p>Describes a block of debug accesses. See <a class="el" href="pdsc_SequenceNameEnum_pg.html#DebugSyntaxRules">Debug Access Syntax Rules</a> for details on the allowed syntax of the block contents.</p>
+<p>Describes a block of debug accesses. See <a class="el" href="debug_description.html#DebugSyntaxRules">Debug Access Syntax Rules</a> for details on the allowed syntax of the block contents.</p>
 <p><b>Example</b> </p>
 <div class="fragment"><div class="line">&lt;family Dfamily=<span class="stringliteral">&quot;Generic Family&quot;</span> Dvendor=<span class="stringliteral">&quot;Generic:5&quot;</span>&gt;</div>
 <div class="line">  ...</div>
@@ -1794,9 +1812,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <ul>
 <li>The contents of a <b>block</b> element is a series of statements.</li>
 <li>Each statement must begin in a new line and is terminated by a <span class="XML-Token">;</span> character.</li>
-<li>A typical statement consists of variable, followed by a <span class="XML-Token">=</span> character and an expression, where the <span class="XML-Token">=</span> character is an assignment of the <a class="el" href="pdsc_SequenceNameEnum_pg.html#ExpressionType">expression</a> result to the variable: <div class="fragment"><div class="line">variable = expression;</div>
+<li>A typical statement consists of variable, followed by a <span class="XML-Token">=</span> character and an expression, where the <span class="XML-Token">=</span> character is an assignment of the <a class="el" href="debug_description.html#ExpressionType">expression</a> result to the variable: <div class="fragment"><div class="line">variable = expression;</div>
 </div><!-- fragment --></li>
-<li>Alternatively, a statement can be a sole <a class="el" href="pdsc_SequenceNameEnum_pg.html#ExpressionType">expression</a> without storing its result to a variable. <div class="fragment"><div class="line">expression;</div>
+<li>Alternatively, a statement can be a sole <a class="el" href="debug_description.html#ExpressionType">expression</a> without storing its result to a variable. <div class="fragment"><div class="line">expression;</div>
 </div><!-- fragment --></li>
 <li>Comments begin with two slashes (<span class="XML-Token">//</span>) and end with a linebreak: <div class="fragment"><div class="line"><span class="comment">// Whole line is a comment</span></div>
 <div class="line">variable = expression;  <span class="comment">// Comment appended to statement</span></div>
@@ -1832,7 +1850,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <p><a class="anchor" id="ExpressionType"></a><b>Expression Rules</b></p>
 <p>Expressions are used in various places to describe one of the following:</p>
 <ul>
-<li>A value as assigned in a <a class="el" href="pdsc_SequenceNameEnum_pg.html#DebugSyntaxRules">debug access statement</a>.</li>
+<li>A value as assigned in a <a class="el" href="debug_description.html#DebugSyntaxRules">debug access statement</a>.</li>
 <li>A condition to use in the <b>if</b> attribute of a <b>control</b> element.</li>
 <li>A condition to use in the <b>while</b> attribute of a <b>control</b> element.</li>
 <li>A parameter to a debug access function as described below.</li>
@@ -1848,7 +1866,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 </div><!-- fragment --></li>
 <li>Precedence of sub-expressions is indicated by brackets (<span class="XML-Token">(</span>, <span class="XML-Token">)</span>). C-like precedence applies if brackets are omitted.</li>
 <li>References to <a class="el" href="pdsc_family_pg.html#DebugVars">debug access variables</a> for evaluating debug settings.</li>
-<li>Calls to <a class="el" href="pdsc_SequenceNameEnum_pg.html#DebugFunctions">debug access functions</a>.</li>
+<li>Calls to <a class="el" href="debug_description.html#DebugFunctions">debug access functions</a>.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>All values used in expressions resolve to 64-bit unsigned integer values.</li>
@@ -2289,7 +2307,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <p>&#160;</p>
 <hr/>
 <h1><a class="anchor" id="element_debug"></a>
-/package/devices/family/.../debug</h1>
+/system_description/debug_and_trace_config/debug</h1>
 <p>Describes configuration settings, default values, and patches for data accesses for a debug connection. Multiple <b>debug</b> elements can be defined which are either specific to a processor identified by attribute <b>Pname</b>, or which apply to all connections.</p>
 <p><b>Example</b> <b>1</b> </p>
 <div class="fragment"><div class="line">&lt;family Dfamily=<span class="stringliteral">&quot;LPC4300 Series&quot;</span> Dvendor=<span class="stringliteral">&quot;NXP:11&quot;</span>&gt;</div>
@@ -2323,7 +2341,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -2343,7 +2361,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>Punit </td><td>Use "Punit" in addition to "Pname" to select a specific processor unit of a symmetric MPCore that the &lt;debug&gt; configuration applies to. "Punit" is a '0'-based index and must be less than "Punits" of &lt;processor&gt;. If "Punit" is not specified, the &lt;debug&gt; configuration applies to all processor units of the MPCore.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
 <tr>
-<td>defaultResetSequence </td><td>Specifies the debug sequence that is to be used for the device. Refer to <a class="el" href="pdsc_SequenceNameEnum_pg.html#writing_sequences">Writing debug access sequences</a> for more information.  </td><td>xs:string </td><td>optional  </td></tr>
+<td>defaultResetSequence </td><td>Specifies the debug sequence that is to be used for the device. Refer to <a class="el" href="debug_description.html#writing_sequences">Writing debug access sequences</a> for more information.  </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
 <th>Child&#160;Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
@@ -2355,12 +2373,28 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 /package/devices/family/.../debug/datapatch</h1>
 <p>Describes a patch a debugger shall apply when reading data from the device.</p>
 <p><b>Example</b> </p>
-<div class="fragment"><div class="line">&lt;family Dfamily=<span class="stringliteral">&quot;LPC800 Series&quot;</span> Dvendor=<span class="stringliteral">&quot;NXP:11&quot;</span>&gt;</div>
+<div class="fragment"><div class="line">&lt;family Dfamily=<span class="stringliteral">&quot;M0 Series&quot;</span> Dvendor=<span class="stringliteral">&quot;Generic:5&quot;</span>&gt;</div>
 <div class="line">  ...</div>
-<div class="line">  &lt;debug svd=<span class="stringliteral">&quot;SVD\LPC800.svd&quot;</span>&gt;</div>
-<div class="line">    ...</div>
-<div class="line">    &lt;datapatch type=<span class="stringliteral">&quot;Mem&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0x1400000C&quot;</span> value=<span class="stringliteral">&quot;0x10000000&quot;</span> mask=<span class="stringliteral">&quot;0xFFFFFFFF&quot;</span> info=<span class="stringliteral">&quot;Patch MTB BASE register&quot;</span>/&gt;</div>
-<div class="line">    ...</div>
+<div class="line">  &lt;debug&gt;</div>
+<div class="line">    &lt;!-- Patched ROM Table <span class="keywordflow">for</span> a Cortex-M0+ --&gt;</div>
+<div class="line">    &lt;datapatch  type=”AP”__dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xF8&quot;</span> value=<span class="stringliteral">&quot;0xE00FF003&quot;</span> info=<span class="stringliteral">&quot;AP BASE Register, ROM Table at 0xE00FF000&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FF000&quot;</span> value=<span class="stringliteral">&quot;0xFFF0F003&quot;</span> info=<span class="stringliteral">&quot;ROM Table pointer to SCS at 0xE000E000&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FF004&quot;</span> value=<span class="stringliteral">&quot;0xFFF02003&quot;</span> info=<span class="stringliteral">&quot;ROM Table pointer to DWT at 0xE0001000&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FF008&quot;</span> value=<span class="stringliteral">&quot;0xFFF03003&quot;</span> info=<span class="stringliteral">&quot;ROM Table pointer to BPU at 0xE0002000&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FF00C&quot;</span> value=<span class="stringliteral">&quot;0x00000000&quot;</span> info=<span class="stringliteral">&quot;ROM Table End Marker&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFCC&quot;</span> value=<span class="stringliteral">&quot;0x00000001&quot;</span> info=<span class="stringliteral">&quot;ROM Table MEMTYPE&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFD0&quot;</span> value=<span class="stringliteral">&quot;0x00000004&quot;</span> info=<span class="stringliteral">&quot;ROM Table Peripheral ID4&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFD4&quot;</span> value=<span class="stringliteral">&quot;0x00000000&quot;</span> info=<span class="stringliteral">&quot;ROM Table Peripheral ID5&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFD8&quot;</span> value=<span class="stringliteral">&quot;0x00000000&quot;</span> info=<span class="stringliteral">&quot;ROM Table Peripheral ID6&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFDC&quot;</span> value=<span class="stringliteral">&quot;0x00000000&quot;</span> info=<span class="stringliteral">&quot;ROM Table Peripheral ID7&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFE0&quot;</span> value=<span class="stringliteral">&quot;0x000000C0&quot;</span> info=<span class="stringliteral">&quot;ROM Table Peripheral ID0&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFE4&quot;</span> value=<span class="stringliteral">&quot;0x000000B4&quot;</span> info=<span class="stringliteral">&quot;ROM Table Peripheral ID1&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFE8&quot;</span> value=<span class="stringliteral">&quot;0x0000000B&quot;</span> info=<span class="stringliteral">&quot;ROM Table Peripheral ID2&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFEC&quot;</span> value=<span class="stringliteral">&quot;0x00000000&quot;</span> info=<span class="stringliteral">&quot;ROM Table Peripheral ID3&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFF0&quot;</span> value=<span class="stringliteral">&quot;0x0000000D&quot;</span> info=<span class="stringliteral">&quot;ROM Table Component  ID0&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFF4&quot;</span> value=<span class="stringliteral">&quot;0x00000010&quot;</span> info=<span class="stringliteral">&quot;ROM Table Component  ID1&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFF8&quot;</span> value=<span class="stringliteral">&quot;0x00000005&quot;</span> info=<span class="stringliteral">&quot;ROM Table Component  ID2&quot;</span>/&gt;</div>
+<div class="line">    &lt;datapatch  __dp=<span class="stringliteral">&quot;0&quot;</span> __ap=<span class="stringliteral">&quot;0&quot;</span> address=<span class="stringliteral">&quot;0xE00FFFFC&quot;</span> value=<span class="stringliteral">&quot;0x000000B1&quot;</span> info=<span class="stringliteral">&quot;ROM Table Component  ID3&quot;</span>/&gt;</div>
 <div class="line">  &lt;/debug&gt;</div>
 <div class="line">  ...</div>
 <div class="line">&lt;/family&gt;</div>
@@ -2369,7 +2403,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_debug">/package/devices/family/.../debug</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_debug">debug</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_debug">/system_description/debug_and_trace_config/debug</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -2404,7 +2438,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <p>&#160;</p>
 <hr/>
 <h1><a class="anchor" id="element_trace"></a>
-/package/devices/family/.../trace</h1>
+/system_description/debug_and_trace_config/trace</h1>
 <p>Describes device capabilities and possible configuration settings for capturing trace. Multiple <b>trace</b> elements can be defined which are either specific to a processor identified by attribute <b>Pname</b>, or which apply to all connections.</p>
 <p><b>Example</b> </p>
 <div class="fragment"><div class="line">&lt;family Dfamily=<span class="stringliteral">&quot;LPC4300 Series&quot;</span> Dvendor=<span class="stringliteral">&quot;NXP:11&quot;</span>&gt;</div>
@@ -2429,7 +2463,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -2463,7 +2497,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_trace">/package/devices/family/.../trace</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_trace">/system_description/debug_and_trace_config/trace</a>  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -2485,7 +2519,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_trace">/package/devices/family/.../trace</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_trace">/system_description/debug_and_trace_config/trace</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -2520,7 +2554,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_trace">/package/devices/family/.../trace</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_trace">/system_description/debug_and_trace_config/trace</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -2554,7 +2588,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -2582,9 +2616,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> </td><td>Describe a debug port specific to this device. </td><td>DebugPortType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td>Specify debug options specific to this device. </td><td>DebugType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_debug">debug</a> </td><td>Specify debug options specific to this device. </td><td>DebugType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td>Specify trace options specific to this device. </td><td>TraceType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td>Specify trace options specific to this device. </td><td>TraceType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugvars">debugvars</a> </td><td>Define debug access variables for user-defined settings specific to this device. </td><td>DebugVarsType </td><td>0..1  </td></tr>
 <tr>
@@ -2598,7 +2632,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li><li class="navelem"><a class="el" href="pdsc_devices_pg.html">/package/devices element</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:42 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -150,10 +150,10 @@ Macros</h2></td></tr>
 <tr class="memitem:a153a4a31b276a9758959580538720a51"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__os2_8h.html#a153a4a31b276a9758959580538720a51">__NO_RETURN</a></td></tr>
 <tr class="separator:a153a4a31b276a9758959580538720a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9eb9a7a797a42e4b55eb171ecc609ddb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>&#160;&#160;&#160;0xFFFFFFFFU</td></tr>
-<tr class="memdesc:ga9eb9a7a797a42e4b55eb171ecc609ddb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout value.  <a href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">More...</a><br/></td></tr>
+<tr class="memdesc:ga9eb9a7a797a42e4b55eb171ecc609ddb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait forever timeout value.  <a href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">More...</a><br/></td></tr>
 <tr class="separator:ga9eb9a7a797a42e4b55eb171ecc609ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga18e63587b8450d5b8798b6f6ec04e012"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012">osFlagsWaitAny</a>&#160;&#160;&#160;0x00000000U</td></tr>
-<tr class="memdesc:ga18e63587b8450d5b8798b6f6ec04e012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags options (<a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a> and <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a>).  <a href="group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012">More...</a><br/></td></tr>
+<tr class="memdesc:ga18e63587b8450d5b8798b6f6ec04e012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for any flag (default).  <a href="group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012">More...</a><br/></td></tr>
 <tr class="separator:ga18e63587b8450d5b8798b6f6ec04e012"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8b6f562736fbfb5428940e0c017dec24"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga8b6f562736fbfb5428940e0c017dec24">osFlagsWaitAll</a>&#160;&#160;&#160;0x00000001U</td></tr>
 <tr class="memdesc:ga8b6f562736fbfb5428940e0c017dec24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for all flags.  <a href="group__CMSIS__RTOS__Definitions.html#ga8b6f562736fbfb5428940e0c017dec24">More...</a><br/></td></tr>
@@ -162,7 +162,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:gaade844a42237d8c37569d4d9b16b9f1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do not clear flags which have been specified to wait for.  <a href="group__CMSIS__RTOS__Definitions.html#gaade844a42237d8c37569d4d9b16b9f1c">More...</a><br/></td></tr>
 <tr class="separator:gaade844a42237d8c37569d4d9b16b9f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01c1359c3a5640bff6e08f09bf94ce3a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__os2_8h.html#a01c1359c3a5640bff6e08f09bf94ce3a">osFlagsError</a>&#160;&#160;&#160;0x80000000U</td></tr>
-<tr class="memdesc:a01c1359c3a5640bff6e08f09bf94ce3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags errors (returned by osThreadFlagsXxxx and osEventFlagsXxxx).  <a href="#a01c1359c3a5640bff6e08f09bf94ce3a">More...</a><br/></td></tr>
+<tr class="memdesc:a01c1359c3a5640bff6e08f09bf94ce3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error indicator.  <a href="#a01c1359c3a5640bff6e08f09bf94ce3a">More...</a><br/></td></tr>
 <tr class="separator:a01c1359c3a5640bff6e08f09bf94ce3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3b1d9fbb83d64eedb62f831c9be647c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__flags__error__codes.html#ga3b1d9fbb83d64eedb62f831c9be647c3">osFlagsErrorUnknown</a>&#160;&#160;&#160;0xFFFFFFFFU</td></tr>
 <tr class="memdesc:ga3b1d9fbb83d64eedb62f831c9be647c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">osError (-1).  <a href="group__flags__error__codes.html#ga3b1d9fbb83d64eedb62f831c9be647c3">More...</a><br/></td></tr>
@@ -180,13 +180,13 @@ Macros</h2></td></tr>
 <tr class="memdesc:gaea3abd186643f539877e894b62b63448"><td class="mdescLeft">&#160;</td><td class="mdescRight">osErrorISR (-6).  <a href="group__flags__error__codes.html#gaea3abd186643f539877e894b62b63448">More...</a><br/></td></tr>
 <tr class="separator:gaea3abd186643f539877e894b62b63448"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa9336c1073858d6b118e2e011636246f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f">osThreadDetached</a>&#160;&#160;&#160;0x00000000U</td></tr>
-<tr class="memdesc:gaa9336c1073858d6b118e2e011636246f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread attributes (attr_bits in <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a>).  <a href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f">More...</a><br/></td></tr>
+<tr class="memdesc:gaa9336c1073858d6b118e2e011636246f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread created in detached mode (default)  <a href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f">More...</a><br/></td></tr>
 <tr class="separator:gaa9336c1073858d6b118e2e011636246f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga249499c519f3f8eef5673009ab6cfcbe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">osThreadJoinable</a>&#160;&#160;&#160;0x00000001U</td></tr>
-<tr class="memdesc:ga249499c519f3f8eef5673009ab6cfcbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread created in joinable state.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">More...</a><br/></td></tr>
+<tr class="memdesc:ga249499c519f3f8eef5673009ab6cfcbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread created in joinable mode.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">More...</a><br/></td></tr>
 <tr class="separator:ga249499c519f3f8eef5673009ab6cfcbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga65c2482cc64a35d03871f3180f305926"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">osMutexRecursive</a>&#160;&#160;&#160;0x00000001U</td></tr>
-<tr class="memdesc:ga65c2482cc64a35d03871f3180f305926"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex attributes (attr_bits in <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a>).  <a href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">More...</a><br/></td></tr>
+<tr class="memdesc:ga65c2482cc64a35d03871f3180f305926"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recursive mutex.  <a href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">More...</a><br/></td></tr>
 <tr class="separator:ga65c2482cc64a35d03871f3180f305926"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga40fba270cb31a977b3bd551d41eb9599"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga40fba270cb31a977b3bd551d41eb9599">osMutexPrioInherit</a>&#160;&#160;&#160;0x00000002U</td></tr>
 <tr class="memdesc:ga40fba270cb31a977b3bd551d41eb9599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority inherit protocol.  <a href="group__CMSIS__RTOS__MutexMgmt.html#ga40fba270cb31a977b3bd551d41eb9599">More...</a><br/></td></tr>
@@ -203,7 +203,7 @@ Typedefs</h2></td></tr>
 <tr class="memdesc:gadd51f99a6eb50b94eee75f27cae815eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entry point of a thread.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#gadd51f99a6eb50b94eee75f27cae815eb">More...</a><br/></td></tr>
 <tr class="separator:gadd51f99a6eb50b94eee75f27cae815eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaacf768c1ec64b020598afb985d7b30be"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaacf768c1ec64b020598afb985d7b30be">osTimerFunc_t</a> )(void *argument)</td></tr>
-<tr class="memdesc:gaacf768c1ec64b020598afb985d7b30be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entry point of a timer call back function.  <a href="group__CMSIS__RTOS__TimerMgmt.html#gaacf768c1ec64b020598afb985d7b30be">More...</a><br/></td></tr>
+<tr class="memdesc:gaacf768c1ec64b020598afb985d7b30be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer callback function.  <a href="group__CMSIS__RTOS__TimerMgmt.html#gaacf768c1ec64b020598afb985d7b30be">More...</a><br/></td></tr>
 <tr class="separator:gaacf768c1ec64b020598afb985d7b30be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa6c32fe2a3e0a2e01f212d55b02e51c7"><td class="memItemLeft" align="right" valign="top">typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a></td></tr>
 <tr class="separator:gaa6c32fe2a3e0a2e01f212d55b02e51c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -243,17 +243,17 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:ga08326469274b668140ca934b168a5ad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel state.  <a href="group__CMSIS__RTOS__KernelCtrl.html#ga08326469274b668140ca934b168a5ad4">More...</a><br/></td></tr>
 <tr class="separator:ga08326469274b668140ca934b168a5ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad3dc89e942e38d9f3af858a0269a820d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820d">osThreadState_t</a> { <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820da7d7d4f719a1be6daa63a251563585fdd">osThreadInactive</a> = 0, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820dae9d77830b6866e287417b6e1d983e971">osThreadInactive</a> = 0, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820dad9a040e03d7e7943c0217a3359fc1e8b">osThreadReady</a> = 1, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820da59e286915944fe0e4d1ffdb1f2946f14">osThreadReady</a> = 1, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820da71dae1f35a4b4d9d2ab24e186461a17f">osThreadRunning</a> = 2, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820dac4fe336e0790188fcf7d667372eca19d">osThreadRunning</a> = 2, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820da476cd2370e6938974fb2a79811408819">osThreadBlocked</a> = 3, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820daf0e992e354fba8695957c530226a4968">osThreadBlocked</a> = 3, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820dac2a35280d5475f56352c539c9c9b42f9">osThreadTerminated</a> = 4, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820dad5b2726c2d0228f4f1a76cf6b630963c">osThreadTerminated</a> = 4, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820dac841e73a7198a42364c9450f1f54a0ef">osThreadError</a> = -1, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820da339313e26613bc12f66a852e2ff8745e">osThreadError</a> = -1, 
 <br/>
 &#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820da8872f7e352370eb11ee772c7dcca6e6c">osThreadReserved</a> = 0x7FFFFFFF
 <br/>
@@ -263,7 +263,7 @@ Enumerations</h2></td></tr>
 <tr class="memitem:gad4e3e0971b41f2d17584a8c6837342ec"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec">osPriority_t</a> { <br/>
 &#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342eca6c437c7185161a3bd1e7e4669dfa17a3">osPriorityNone</a> = 0, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342eca549e79a43ff4f8b2b31afb613f5caa81">osPriorityIdle</a> = 1, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad4e3e0971b41f2d17584a8c6837342ecacd5864eac01a6916a7c866bb51a6aac1">osPriorityIdle</a> = 1, 
 <br/>
 &#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342eca61cb822239ac8f66dfbdc7291598a3d4">osPriorityLow</a> = 8, 
 <br/>
@@ -361,7 +361,7 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ecaa76da6825c4bd31c4958200bc289103b">osPriorityRealtime7</a> = 48+7, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342eca3943224956e1ea667c6a931c74137b79">osPriorityISR</a> = 56, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad4e3e0971b41f2d17584a8c6837342eca4b4fa46c3ebaf4259662a0a0a3173b7f">osPriorityISR</a> = 56, 
 <br/>
 &#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ecae35f5e2f9c64ad346822521b643bdea4">osPriorityError</a> = -1, 
 <br/>
@@ -371,9 +371,9 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:gad4e3e0971b41f2d17584a8c6837342ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority values.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec">More...</a><br/></td></tr>
 <tr class="separator:gad4e3e0971b41f2d17584a8c6837342ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7dc24a4c2b90334427081c3da7a71915"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#ga7dc24a4c2b90334427081c3da7a71915">osTimerType_t</a> { <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#ga7dc24a4c2b90334427081c3da7a71915ad21712f8df5f97069c82dc9eec37b951">osTimerOnce</a> = 0, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915a2e0e1f31c742c84b497c4d7143357bdb">osTimerOnce</a> = 0, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#ga7dc24a4c2b90334427081c3da7a71915ab9c91f9699162edb09bb7c90c11c8788">osTimerPeriodic</a> = 1
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35">osTimerPeriodic</a> = 1
 <br/>
  }</td></tr>
 <tr class="memdesc:ga7dc24a4c2b90334427081c3da7a71915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer type.  <a href="group__CMSIS__RTOS__TimerMgmt.html#ga7dc24a4c2b90334427081c3da7a71915">More...</a><br/></td></tr>
@@ -428,9 +428,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8c4b4d7ed34cab73c001665d9176aced"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced">osKernelResume</a> (uint32_t sleep_ticks)</td></tr>
 <tr class="memdesc:ga8c4b4d7ed34cab73c001665d9176aced"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resume the RTOS Kernel scheduler.  <a href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced">More...</a><br/></td></tr>
 <tr class="separator:ga8c4b4d7ed34cab73c001665d9176aced"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3cad48045fb59e47dc8bab75b420cb5f"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga3cad48045fb59e47dc8bab75b420cb5f">osKernelGetTickCount</a> (void)</td></tr>
-<tr class="memdesc:ga3cad48045fb59e47dc8bab75b420cb5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the RTOS kernel tick count.  <a href="group__CMSIS__RTOS__KernelCtrl.html#ga3cad48045fb59e47dc8bab75b420cb5f">More...</a><br/></td></tr>
-<tr class="separator:ga3cad48045fb59e47dc8bab75b420cb5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84bcdbf2fb76b10c8df4e439f0c7e11b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a> (void)</td></tr>
+<tr class="memdesc:ga84bcdbf2fb76b10c8df4e439f0c7e11b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the RTOS kernel tick count.  <a href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">More...</a><br/></td></tr>
+<tr class="separator:ga84bcdbf2fb76b10c8df4e439f0c7e11b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7a8d7bd927eaaa58999f91d7d6310cee"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee">osKernelGetTickFreq</a> (void)</td></tr>
 <tr class="memdesc:ga7a8d7bd927eaaa58999f91d7d6310cee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the RTOS kernel tick frequency.  <a href="group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee">More...</a><br/></td></tr>
 <tr class="separator:ga7a8d7bd927eaaa58999f91d7d6310cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -506,9 +506,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf6055a51390ef65b6b6edc28bf47322e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a> (uint32_t ticks)</td></tr>
 <tr class="memdesc:gaf6055a51390ef65b6b6edc28bf47322e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for Timeout (Time Delay).  <a href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">More...</a><br/></td></tr>
 <tr class="separator:gaf6055a51390ef65b6b6edc28bf47322e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0763875335699a9baa704ee36990d3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">osDelayUntil</a> (uint64_t ticks)</td></tr>
-<tr class="memdesc:gaf0763875335699a9baa704ee36990d3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until specified time.  <a href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">More...</a><br/></td></tr>
-<tr class="separator:gaf0763875335699a9baa704ee36990d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c807924c2d6d43bc2ffb49da3f7f3a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">osDelayUntil</a> (uint32_t ticks)</td></tr>
+<tr class="memdesc:ga3c807924c2d6d43bc2ffb49da3f7f3a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until specified time.  <a href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">More...</a><br/></td></tr>
+<tr class="separator:ga3c807924c2d6d43bc2ffb49da3f7f3a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad4e7f785c5f700a509f55a3bf6a62bec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a> (<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaacf768c1ec64b020598afb985d7b30be">osTimerFunc_t</a> func, <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#ga7dc24a4c2b90334427081c3da7a71915">osTimerType_t</a> type, void *argument, const <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#structosTimerAttr__t">osTimerAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:gad4e7f785c5f700a509f55a3bf6a62bec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and Initialize a timer.  <a href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">More...</a><br/></td></tr>
 <tr class="separator:gad4e7f785c5f700a509f55a3bf6a62bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -576,7 +576,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga7e94c8b242a0c81f2cc79ec22895c87b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acquire a Semaphore token or timeout if no tokens are available.  <a href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">More...</a><br/></td></tr>
 <tr class="separator:ga7e94c8b242a0c81f2cc79ec22895c87b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0abcee1b5449d7a6928fb9248c690bb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a> (<a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> semaphore_id)</td></tr>
-<tr class="memdesc:ga0abcee1b5449d7a6928fb9248c690bb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release a Semaphore token that was acquired by <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>.  <a href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">More...</a><br/></td></tr>
+<tr class="memdesc:ga0abcee1b5449d7a6928fb9248c690bb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release a Semaphore token up to the initial maximum count.  <a href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">More...</a><br/></td></tr>
 <tr class="separator:ga0abcee1b5449d7a6928fb9248c690bb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7559d4dff3cda9992fc5ab5de3e74c70"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7559d4dff3cda9992fc5ab5de3e74c70">osSemaphoreGetCount</a> (<a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> semaphore_id)</td></tr>
 <tr class="memdesc:ga7559d4dff3cda9992fc5ab5de3e74c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current Semaphore token count.  <a href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7559d4dff3cda9992fc5ab5de3e74c70">More...</a><br/></td></tr>
@@ -664,7 +664,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Error indicator. </p>
 
 </div>
 </div>
@@ -713,7 +712,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_a43355fbfff7212ac2193223a73d577c.html">RTOS2</a></li><li class="navelem"><a class="el" href="dir_f5870d36a7061bb81e1a64a750696f2d.html">Include</a></li><li class="navelem"><a class="el" href="cmsis__os2_8h.html">cmsis_os2.h</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:03 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:46 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

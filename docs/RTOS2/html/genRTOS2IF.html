@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -130,7 +130,7 @@ CMSIS-RTOS API Structure</div></div>
 <li><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html">Mutex Management</a> and <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html">Semaphores</a> are incorporated.</li>
 <li>CPU time can be scheduled with the following functionalities:<ul>
 <li>A <em>timeout</em> parameter is incorporated in many CMSIS-RTOS functions to avoid system lockup. When a timeout is specified, the system waits until a resource is available or an event occurs. While waiting, other threads are scheduled.</li>
-<li>The <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a> and <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">osDelayUntil</a> functions put a thread into the <b>WAITING</b> state for a specified period of time.</li>
+<li>The <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a> and <a class="el" href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">osDelayUntil</a> functions put a thread into the <b>WAITING</b> state for a specified period of time.</li>
 <li>The <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2">osThreadYield</a> provides co-operative thread switching and passes execution to another thread of the same priority.</li>
 </ul>
 </li>
@@ -213,12 +213,17 @@ cmsis_os2.h header file</h1>
 <div class="line"><span class="comment"> *</span></div>
 <div class="line"><span class="comment"> * ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment"> *</span></div>
-<div class="line"><span class="comment"> * $Date:        10. January 2017</span></div>
-<div class="line"><span class="comment"> * $Revision:    V2.1.0</span></div>
+<div class="line"><span class="comment"> * $Date:        9. June 2017</span></div>
+<div class="line"><span class="comment"> * $Revision:    V2.1.1</span></div>
 <div class="line"><span class="comment"> *</span></div>
 <div class="line"><span class="comment"> * Project:      CMSIS-RTOS2 API</span></div>
 <div class="line"><span class="comment"> * Title:        cmsis_os2.h header file</span></div>
 <div class="line"><span class="comment"> *</span></div>
+<div class="line"><span class="comment"> * Version 2.1.1</span></div>
+<div class="line"><span class="comment"> *    Additional functions allowed to be called from Interrupt Service Routines:</span></div>
+<div class="line"><span class="comment"> *    - osKernelGetTickCount, osKernelGetTickFreq</span></div>
+<div class="line"><span class="comment"> *    Changed Kernel Tick type to uint32_t:</span></div>
+<div class="line"><span class="comment"> *    - updated: osKernelGetTickCount, osDelayUntil</span></div>
 <div class="line"><span class="comment"> * Version 2.1.0</span></div>
 <div class="line"><span class="comment"> *    Support for critical and uncritical sections (nesting safe):</span></div>
 <div class="line"><span class="comment"> *    - updated: osKernelLock, osKernelUnlock</span></div>
@@ -276,19 +281,19 @@ cmsis_os2.h header file</h1>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Thread state.</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
-<div class="line">  <a class="code" href="cmsis__os2_8h.html#gad3dc89e942e38d9f3af858a0269a820da7d7d4f719a1be6daa63a251563585fdd">osThreadInactive</a>        =  0,         <span class="comment">///&lt; Inactive.</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad3dc89e942e38d9f3af858a0269a820dad9a040e03d7e7943c0217a3359fc1e8b">osThreadReady</a>           =  1,         <span class="comment">///&lt; Ready.</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad3dc89e942e38d9f3af858a0269a820da71dae1f35a4b4d9d2ab24e186461a17f">osThreadRunning</a>         =  2,         <span class="comment">///&lt; Running.</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad3dc89e942e38d9f3af858a0269a820da476cd2370e6938974fb2a79811408819">osThreadBlocked</a>         =  3,         <span class="comment">///&lt; Blocked.</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad3dc89e942e38d9f3af858a0269a820dac2a35280d5475f56352c539c9c9b42f9">osThreadTerminated</a>      =  4,         <span class="comment">///&lt; Terminated.</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad3dc89e942e38d9f3af858a0269a820dac841e73a7198a42364c9450f1f54a0ef">osThreadError</a>           = -1,         <span class="comment">///&lt; Error.</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820dae9d77830b6866e287417b6e1d983e971">osThreadInactive</a>        =  0,         <span class="comment">///&lt; Inactive.</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820da59e286915944fe0e4d1ffdb1f2946f14">osThreadReady</a>           =  1,         <span class="comment">///&lt; Ready.</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820dac4fe336e0790188fcf7d667372eca19d">osThreadRunning</a>         =  2,         <span class="comment">///&lt; Running.</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820daf0e992e354fba8695957c530226a4968">osThreadBlocked</a>         =  3,         <span class="comment">///&lt; Blocked.</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820dad5b2726c2d0228f4f1a76cf6b630963c">osThreadTerminated</a>      =  4,         <span class="comment">///&lt; Terminated.</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820da339313e26613bc12f66a852e2ff8745e">osThreadError</a>           = -1,         <span class="comment">///&lt; Error.</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad3dc89e942e38d9f3af858a0269a820da8872f7e352370eb11ee772c7dcca6e6c">osThreadReserved</a>        = 0x7FFFFFFF  <span class="comment">///&lt; Prevents enum down-size compiler optimization.</span></div>
 <div class="line"><span class="comment"></span>} <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820d">osThreadState_t</a>;</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Priority values.</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
 <div class="line">  <a class="code" href="cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342eca6c437c7185161a3bd1e7e4669dfa17a3">osPriorityNone</a>          =  0,         <span class="comment">///&lt; No priority (not initialized).</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342eca549e79a43ff4f8b2b31afb613f5caa81">osPriorityIdle</a>          =  1,         <span class="comment">///&lt; Reserved for Idle thread.</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad4e3e0971b41f2d17584a8c6837342ecacd5864eac01a6916a7c866bb51a6aac1">osPriorityIdle</a>          =  1,         <span class="comment">///&lt; Reserved for Idle thread.</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342eca61cb822239ac8f66dfbdc7291598a3d4">osPriorityLow</a>           =  8,         <span class="comment">///&lt; Priority: low</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342ecaba2b6919f0b630c8c1b2c940e3bfadbe">osPriorityLow1</a>          =  8+1,       <span class="comment">///&lt; Priority: low + 1</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342eca78ad5d00aa07a2b4bf30a639544f5507">osPriorityLow2</a>          =  8+2,       <span class="comment">///&lt; Priority: low + 2</span></div>
@@ -337,7 +342,7 @@ cmsis_os2.h header file</h1>
 <div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342ecaff84f31ceff203c711fb9476443507df">osPriorityRealtime5</a>     = 48+5,       <span class="comment">///&lt; Priority: realtime + 5</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342eca80ae9d0dd256312c0c8f44af48316194">osPriorityRealtime6</a>     = 48+6,       <span class="comment">///&lt; Priority: realtime + 6</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342ecaa76da6825c4bd31c4958200bc289103b">osPriorityRealtime7</a>     = 48+7,       <span class="comment">///&lt; Priority: realtime + 7</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342eca3943224956e1ea667c6a931c74137b79">osPriorityISR</a>           = 56,         <span class="comment">///&lt; Reserved for ISR deferred thread.</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad4e3e0971b41f2d17584a8c6837342eca4b4fa46c3ebaf4259662a0a0a3173b7f">osPriorityISR</a>           = 56,         <span class="comment">///&lt; Reserved for ISR deferred thread.</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342ecae35f5e2f9c64ad346822521b643bdea4">osPriorityError</a>         = -1,         <span class="comment">///&lt; System cannot determine priority or illegal priority.</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#gad4e3e0971b41f2d17584a8c6837342ecac86c171f8d466cced0cb1b03bb03343b">osPriorityReserved</a>      = 0x7FFFFFFF  <span class="comment">///&lt; Prevents enum down-size compiler optimization.</span></div>
 <div class="line"><span class="comment"></span>} <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec">osPriority_t</a>;</div>
@@ -345,37 +350,37 @@ cmsis_os2.h header file</h1>
 <div class="line"><span class="comment">/// Entry point of a thread.</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> void (*<a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd51f99a6eb50b94eee75f27cae815eb">osThreadFunc_t</a>) (<span class="keywordtype">void</span> *argument);</div>
 <div class="line"> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Entry point of a timer call back function.</span></div>
+<div class="line"><span class="comment">/// Timer callback function.</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> void (*<a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaacf768c1ec64b020598afb985d7b30be">osTimerFunc_t</a>) (<span class="keywordtype">void</span> *argument);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Timer type.</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
-<div class="line">  <a class="code" href="cmsis__os2_8h.html#ga7dc24a4c2b90334427081c3da7a71915ad21712f8df5f97069c82dc9eec37b951">osTimerOnce</a>               = 0,          <span class="comment">///&lt; One-shot timer.</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="cmsis__os2_8h.html#ga7dc24a4c2b90334427081c3da7a71915ab9c91f9699162edb09bb7c90c11c8788">osTimerPeriodic</a>           = 1           <span class="comment">///&lt; Repeating timer.</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915a2e0e1f31c742c84b497c4d7143357bdb">osTimerOnce</a>               = 0,          <span class="comment">///&lt; One-shot timer.</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35">osTimerPeriodic</a>           = 1           <span class="comment">///&lt; Repeating timer.</span></div>
 <div class="line"><span class="comment"></span>} <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#ga7dc24a4c2b90334427081c3da7a71915">osTimerType_t</a>;</div>
-<div class="line"> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Timeout value.</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osWaitForever         0xFFFFFFFFU </span><span class="comment">///&lt; Wait forever timeout value.</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Timeout value.</span></div>
+<div class="line"><span class="preprocessor">#define osWaitForever         0xFFFFFFFFU </span><span class="comment">///&lt; Wait forever timeout value.</span></div>
 <div class="line"><span class="comment"></span> </div>
-<div class="line"><span class="comment">/// Flags options (\ref osThreadFlagsWait and \ref osEventFlagsWait).</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osFlagsWaitAny        0x00000000U </span><span class="comment">///&lt; Wait for any flag (default).</span></div>
+<div class="line"><span class="comment">// Flags options (\ref osThreadFlagsWait and \ref osEventFlagsWait).</span></div>
+<div class="line"><span class="preprocessor">#define osFlagsWaitAny        0x00000000U </span><span class="comment">///&lt; Wait for any flag (default).</span></div>
 <div class="line"><span class="comment"></span>#define osFlagsWaitAll        0x00000001U <span class="comment">///&lt; Wait for all flags.</span></div>
 <div class="line"><span class="comment"></span>#define osFlagsNoClear        0x00000002U <span class="comment">///&lt; Do not clear flags which have been specified to wait for.</span></div>
 <div class="line"><span class="comment"></span> </div>
-<div class="line"><span class="comment">/// Flags errors (returned by osThreadFlagsXxxx and osEventFlagsXxxx).</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osFlagsError          0x80000000U </span><span class="comment">///&lt; Error indicator.</span></div>
+<div class="line"><span class="comment">// Flags errors (returned by osThreadFlagsXxxx and osEventFlagsXxxx).</span></div>
+<div class="line"><span class="preprocessor">#define osFlagsError          0x80000000U </span><span class="comment">///&lt; Error indicator.</span></div>
 <div class="line"><span class="comment"></span>#define osFlagsErrorUnknown   0xFFFFFFFFU <span class="comment">///&lt; osError (-1).</span></div>
 <div class="line"><span class="comment"></span>#define osFlagsErrorTimeout   0xFFFFFFFEU <span class="comment">///&lt; osErrorTimeout (-2).</span></div>
 <div class="line"><span class="comment"></span>#define osFlagsErrorResource  0xFFFFFFFDU <span class="comment">///&lt; osErrorResource (-3).</span></div>
 <div class="line"><span class="comment"></span>#define osFlagsErrorParameter 0xFFFFFFFCU <span class="comment">///&lt; osErrorParameter (-4).</span></div>
 <div class="line"><span class="comment"></span>#define osFlagsErrorISR       0xFFFFFFFAU <span class="comment">///&lt; osErrorISR (-6).</span></div>
 <div class="line"><span class="comment"></span> </div>
-<div class="line"><span class="comment">/// Thread attributes (attr_bits in \ref osThreadAttr_t).</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osThreadDetached      0x00000000U </span><span class="comment">///&lt; Thread created in detached state (default)</span></div>
-<div class="line"><span class="comment"></span>#define osThreadJoinable      0x00000001U <span class="comment">///&lt; Thread created in joinable state</span></div>
+<div class="line"><span class="comment">// Thread attributes (attr_bits in \ref osThreadAttr_t).</span></div>
+<div class="line"><span class="preprocessor">#define osThreadDetached      0x00000000U </span><span class="comment">///&lt; Thread created in detached mode (default)</span></div>
+<div class="line"><span class="comment"></span>#define osThreadJoinable      0x00000001U <span class="comment">///&lt; Thread created in joinable mode</span></div>
 <div class="line"><span class="comment"></span> </div>
-<div class="line"><span class="comment">/// Mutex attributes (attr_bits in \ref osMutexAttr_t).</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osMutexRecursive      0x00000001U </span><span class="comment">///&lt; Recursive mutex.</span></div>
+<div class="line"><span class="comment">// Mutex attributes (attr_bits in \ref osMutexAttr_t).</span></div>
+<div class="line"><span class="preprocessor">#define osMutexRecursive      0x00000001U </span><span class="comment">///&lt; Recursive mutex.</span></div>
 <div class="line"><span class="comment"></span>#define osMutexPrioInherit    0x00000002U <span class="comment">///&lt; Priority inherit protocol.</span></div>
 <div class="line"><span class="comment"></span>#define osMutexRobust         0x00000008U <span class="comment">///&lt; Robust mutex.</span></div>
 <div class="line"><span class="comment"></span> </div>
@@ -531,10 +536,10 @@ cmsis_os2.h header file</h1>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Get the RTOS kernel tick count.</span></div>
 <div class="line"><span class="comment">/// \return RTOS kernel current tick count.</span></div>
-<div class="line"><span class="comment"></span>uint64_t <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga3cad48045fb59e47dc8bab75b420cb5f">osKernelGetTickCount</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><span class="comment"></span>uint32_t <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a> (<span class="keywordtype">void</span>);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Get the RTOS kernel tick frequency.</span></div>
-<div class="line"><span class="comment">/// \return frequency of the kernel tick.</span></div>
+<div class="line"><span class="comment">/// \return frequency of the kernel tick in hertz, i.e. kernel ticks per second.</span></div>
 <div class="line"><span class="comment"></span>uint32_t <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee">osKernelGetTickFreq</a> (<span class="keywordtype">void</span>);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Get the RTOS kernel system timer count.</span></div>
@@ -542,7 +547,7 @@ cmsis_os2.h header file</h1>
 <div class="line"><span class="comment"></span>uint32_t <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#gae0fcaff6cecfb4013bb556c87afcd7d2">osKernelGetSysTimerCount</a> (<span class="keywordtype">void</span>);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Get the RTOS kernel system timer frequency.</span></div>
-<div class="line"><span class="comment">/// \return frequency of the system timer.</span></div>
+<div class="line"><span class="comment">/// \return frequency of the system timer in hertz, i.e. timer ticks per second.</span></div>
 <div class="line"><span class="comment"></span>uint32_t <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a">osKernelGetSysTimerFreq</a> (<span class="keywordtype">void</span>);</div>
 <div class="line"> </div>
 <div class="line"> </div>
@@ -668,15 +673,15 @@ cmsis_os2.h header file</h1>
 <div class="line"><span class="comment">/// Wait until specified time.</span></div>
 <div class="line"><span class="comment">/// \param[in]     ticks         absolute time in ticks</span></div>
 <div class="line"><span class="comment">/// \return status code that indicates the execution status of the function.</span></div>
-<div class="line"><span class="comment"></span><a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">osDelayUntil</a> (uint64_t ticks);</div>
+<div class="line"><span class="comment"></span><a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> <a class="code" href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">osDelayUntil</a> (uint32_t ticks);</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Timer Management Functions ====</span></div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Create and Initialize a timer.</span></div>
-<div class="line"><span class="comment">/// \param[in]     func          start address of a timer call back function.</span></div>
-<div class="line"><span class="comment">/// \param[in]     type          osTimerOnce for one-shot or osTimerPeriodic for periodic behavior.</span></div>
-<div class="line"><span class="comment">/// \param[in]     argument      argument to the timer call back function.</span></div>
+<div class="line"><span class="comment">/// \param[in]     func          function pointer to callback function.</span></div>
+<div class="line"><span class="comment">/// \param[in]     type          \ref osTimerOnce for one-shot or \ref osTimerPeriodic for periodic behavior.</span></div>
+<div class="line"><span class="comment">/// \param[in]     argument      argument to the timer callback function.</span></div>
 <div class="line"><span class="comment">/// \param[in]     attr          timer attributes; NULL: default values.</span></div>
 <div class="line"><span class="comment">/// \return timer ID for reference by other functions or NULL in case of error.</span></div>
 <div class="line"><span class="comment"></span>osTimerId_t <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a> (<a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaacf768c1ec64b020598afb985d7b30be">osTimerFunc_t</a> func, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#ga7dc24a4c2b90334427081c3da7a71915">osTimerType_t</a> type, <span class="keywordtype">void</span> *argument, <span class="keyword">const</span> <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#structosTimerAttr__t">osTimerAttr_t</a> *attr);</div>
@@ -805,7 +810,7 @@ cmsis_os2.h header file</h1>
 <div class="line"><span class="comment">/// \return status code that indicates the execution status of the function.</span></div>
 <div class="line"><span class="comment"></span><a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a> (osSemaphoreId_t semaphore_id, uint32_t timeout);</div>
 <div class="line"> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Release a Semaphore token that was acquired by \ref osSemaphoreAcquire.</span></div>
+<div class="line"><span class="comment">/// Release a Semaphore token up to the initial maximum count.</span></div>
 <div class="line"><span class="comment">/// \param[in]     semaphore_id  semaphore ID obtained by \ref osSemaphoreNew.</span></div>
 <div class="line"><span class="comment">/// \return status code that indicates the execution status of the function.</span></div>
 <div class="line"><span class="comment"></span><a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> <a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a> (osSemaphoreId_t semaphore_id);</div>
@@ -945,7 +950,7 @@ cmsis_os2.h header file</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:03 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:46 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

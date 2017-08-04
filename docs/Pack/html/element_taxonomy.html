@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -135,7 +135,7 @@ $(document).ready(function(){initNavTree('element_taxonomy.html','');});
 <h1><a class="anchor" id="element_taxonomyDescription"></a>
 /package/taxonomy/description</h1>
 <p>This element describes a component class or the combination between a component class and a component group. Components are categorized by <em>Cclass</em> and <em>Cgroup</em>. The creator of a package can define names for <em>Cclass</em> and <em>Cgroup</em>. Thus, configuration tools can display the set of available components. A document can be referenced using the attribute <em>doc</em>. The attribute <em>generator</em> can be used to reference to a generator tool. The <em>id</em> of the generator needs to be the same as specified in the element <a class="el" href="pdsc_generators_pg.html#element_generator">/package/generators/generator</a>. The description itself is a string entered between the opening and closing tags of the element <b>description</b>.</p>
-<p>It is recommended to use an already agreed taxonomy for interchangeable components. For example, the combination of class <span class="XML-Token">CMSIS</span> and group <span class="XML-Token">Startup</span> is defined for the device-specific CMSIS-CORE files.</p>
+<p>It is recommended to use an already agreed taxonomy for interchangeable components. For example, the combination of class <span class="XML-Token">CMSIS</span> and group <span class="XML-Token">Startup</span> is defined for the device-specific CMSIS-Core (Cortex-M) files.</p>
 <p>&#160;</p>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line">&lt;taxonomy&gt;</div>
@@ -201,7 +201,7 @@ $(document).ready(function(){initNavTree('element_taxonomy.html','');});
 <tr>
 <td class="XML-Token">Board Support </td><td>Components providing interfaces for Evaluation and Development Boards </td></tr>
 <tr>
-<td class="XML-Token">CMSIS </td><td>Components defined by Cortex Microcontroller Software Interface Standard (e.g. <a href="../../Core/html/index.html" class="el">CMSIS-CORE</a>, <a href="../../DSP/html/index.html" class="el">CMSIS-DSP</a> and <a href="../../RTOS/html/index.html" class="el">CMSIS-RTOS</a>)  </td></tr>
+<td class="XML-Token">CMSIS </td><td>Components defined by Cortex Microcontroller Software Interface Standard (e.g. <a href="../../Core/html/index.html" class="el">CMSIS-Core (Cortex-M)</a>, <a href="../../DSP/html/index.html" class="el">CMSIS-DSP</a> and <a href="../../RTOS/html/index.html" class="el">CMSIS-RTOS</a>)  </td></tr>
 <tr>
 <td class="XML-Token">Device </td><td>Components containing device specific implementations of non-standard APIs (e.g. HAL drivers, CMSIS Startup files)  </td></tr>
 <tr>
@@ -241,7 +241,7 @@ $(document).ready(function(){initNavTree('element_taxonomy.html','');});
 <tr>
 <th>Cgroup= </th><th>Description  </th></tr>
 <tr>
-<td class="XML-Token">CORE </td><td>A component containing device support in accordance to the <a href="../../Core/html/index.html" class="el">CMSIS-CORE</a> specification (startup, system and device files)  </td></tr>
+<td class="XML-Token">Core </td><td>A component containing device support in accordance to the <a href="../../Core/html/index.html" class="el">CMSIS-Core (Cortex-M)</a> specification (startup, system and device files)  </td></tr>
 <tr>
 <td class="XML-Token">DSP </td><td>A component implementing the <a href="../../DSP/html/index.html" class="el">CMSIS-DSP</a> API specification.  </td></tr>
 <tr>
@@ -254,7 +254,7 @@ $(document).ready(function(){initNavTree('element_taxonomy.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:41 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

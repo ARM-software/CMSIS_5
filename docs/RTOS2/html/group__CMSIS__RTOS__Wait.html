@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -122,9 +122,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf6055a51390ef65b6b6edc28bf47322e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a> (uint32_t ticks)</td></tr>
 <tr class="memdesc:gaf6055a51390ef65b6b6edc28bf47322e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for Timeout (Time Delay).  <a href="#gaf6055a51390ef65b6b6edc28bf47322e">More...</a><br/></td></tr>
 <tr class="separator:gaf6055a51390ef65b6b6edc28bf47322e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0763875335699a9baa704ee36990d3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">osDelayUntil</a> (uint64_t ticks)</td></tr>
-<tr class="memdesc:gaf0763875335699a9baa704ee36990d3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until specified time.  <a href="#gaf0763875335699a9baa704ee36990d3c">More...</a><br/></td></tr>
-<tr class="separator:gaf0763875335699a9baa704ee36990d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c807924c2d6d43bc2ffb49da3f7f3a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">osDelayUntil</a> (uint32_t ticks)</td></tr>
+<tr class="memdesc:ga3c807924c2d6d43bc2ffb49da3f7f3a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until specified time.  <a href="#ga3c807924c2d6d43bc2ffb49da3f7f3a1">More...</a><br/></td></tr>
+<tr class="separator:ga3c807924c2d6d43bc2ffb49da3f7f3a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>The generic wait functions provide means for a time delay.</p>
@@ -150,7 +150,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>The function <b>osDelay</b> waits for a time period specified in kernel <em>ticks</em>. For a value of <span class="XML-Token">1</span>, the system waits until the next timer tick occurs. That means that the actual time delay may be up to one timer tick less.</p>
+<p>The function <b>osDelay</b> waits for a time period specified in kernel <em>ticks</em>. For a value of <span class="XML-Token">1</span> the system waits until the next timer tick occurs. The actual time delay may be up to one timer tick less than specified, i.e. calling <code>osDelay(1)</code> right before the next system tick occurs the thread is rescheduled immediately.</p>
+<p>The delayed thread is put into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state and a context switch occurs immediately. The thread is automatically put back to the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> state after the given amount of ticks has elapsed. If the thread will have the highest priority in <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> state it will being scheduled immediately.</p>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> the time delay is executed.</li>
@@ -170,14 +171,14 @@ Functions</h2></td></tr>
 </div><!-- fragment --> 
 </div>
 </div>
-<a class="anchor" id="gaf0763875335699a9baa704ee36990d3c"></a>
+<a class="anchor" id="ga3c807924c2d6d43bc2ffb49da3f7f3a1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> osDelayUntil </td>
           <td>(</td>
-          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>ticks</em></td><td>)</td>
           <td></td>
         </tr>
@@ -191,23 +192,25 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
 <p>The function <b>osDelayUntil</b> waits until an absolute time (specified in kernel <em>ticks</em>) is reached.</p>
+<p>The corner case when the kernel tick counter overflows is handled by <b>osDelayUntil</b>. Thus it is absolutely legal to provide a value which is lower than the current tick value, i.e. returned by <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a>. Typically as a user you do not have to take care about the overflow. The only limitation you have to have in mind is that the maximum delay is limited to (2<sup>32</sup>)-1 ticks.</p>
+<p>The delayed thread is put into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state and a context switch occurs immediately. The thread is automatically put back to the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> state when the given time is reached. If the thread will have the highest priority in <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> state it will being scheduled immediately.</p>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> the time delay is executed.</li>
-<li><em>osParameter:</em> the time is either in the past or cannot be handled (out of bounds).</li>
-<li><em>osErrorISR:</em> <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">osDelayUntil</a> cannot be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</li>
+<li><em>osParameter:</em> the time cannot be handled (out of bounds).</li>
+<li><em>osErrorISR:</em> <a class="el" href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">osDelayUntil</a> cannot be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> Thread_1 (<span class="keywordtype">void</span> *arg)  {                <span class="comment">// Thread function</span></div>
-<div class="line">  uint64_t tick;</div>
+<div class="line">  uint32_t tick;</div>
 <div class="line"></div>
-<div class="line">  tick = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga3cad48045fb59e47dc8bab75b420cb5f">osKernelGetTickCount</a>();            <span class="comment">// retrieve the number of system ticks</span></div>
+<div class="line">  tick = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a>();            <span class="comment">// retrieve the number of system ticks</span></div>
 <div class="line">  <span class="keywordflow">for</span> (;;) {</div>
 <div class="line">    tick += 1000;                           <span class="comment">// delay 1000 ticks periodically</span></div>
-<div class="line">    <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">osDelayUntil</a>(tick);</div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">osDelayUntil</a>(tick);</div>
 <div class="line">    <span class="comment">// ...</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
@@ -219,7 +222,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:46 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

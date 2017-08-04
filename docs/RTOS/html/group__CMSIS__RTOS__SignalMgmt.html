@@ -318,7 +318,7 @@ Simple signal event communication</div></div>
 <dl class="section return"><dt>Returns</dt><dd>event flag information or error code. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>MUST REMAIN UNCHANGED: <b>osSignalWait</b> shall be consistent in every CMSIS-RTOS.</dd></dl>
 <p>Suspend the execution of the current <b>RUNNING</b> thread until all specified signal flags with the parameter <em>signals</em> are set. When the parameter <em>signals</em> is 0 the current <b>RUNNING</b> thread is suspended until any signal is set. When these signal flags are already set, the function returns instantly. Otherwise the thread is put into the state <b>WAITING</b>. Signal flags that are reported as event are automatically cleared.</p>
-<p>The argument <em>millisec</em> specifies how long the system waits for the specified signal flags. While the system waits the tread calling this function is put into the state <b>WAITING</b>. The timeout value can have the following values:</p>
+<p>The argument <em>millisec</em> specifies how long the system waits for the specified signal flags. While the system waits the thread calling this function is put into the state <b>WAITING</b>. The timeout value can have the following values:</p>
 <ul>
 <li>when <em>millisec</em> is 0, the function returns instantly.</li>
 <li>when <em>millisec</em> is set to <b>osWaitForever</b> the function will wait for an infinite time until a specified signal is set.</li>
@@ -364,7 +364,7 @@ Simple signal event communication</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:02 for CMSIS-RTOS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:44 for CMSIS-RTOS by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

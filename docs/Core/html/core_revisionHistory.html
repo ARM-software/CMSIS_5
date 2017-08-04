@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Revision History of CMSIS-CORE</title>
-<title>CMSIS-CORE: Revision History of CMSIS-CORE</title>
+<title>Revision History of CMSIS-Core (Cortex-M)</title>
+<title>CMSIS-Core (Cortex-M): Revision History of CMSIS-Core (Cortex-M)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -31,10 +31,10 @@
  <tr style="height: 46px;">
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CMSIS-CORE
-   &#160;<span id="projectnumber">Version 5.0.1</span>
+   <div id="projectname">CMSIS-Core (Cortex-M)
+   &#160;<span id="projectnumber">Version 5.0.2</span>
    </div>
-   <div id="projectbrief">CMSIS-CORE support for Cortex-M processor-based devices</div>
+   <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
  </tr>
  </tbody>
@@ -108,12 +108,18 @@ $(document).ready(function(){initNavTree('core_revisionHistory.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Revision History of CMSIS-CORE </div>  </div>
+<div class="title">Revision History of CMSIS-Core (Cortex-M) </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><table  class="cmtable" summary="Core Exception Name">
 <tr>
 <th>Version </th><th>Description  </th></tr>
+<tr>
+<td>V5.0.2 </td><td>Added macros <a class="el" href="group__compiler__conntrol__gr.html#gabe8693a7200e573101551d49a1772fb9">__UNALIGNED_UINT16_READ</a>, <a class="el" href="group__compiler__conntrol__gr.html#gadb9cd73446f7e11e92383cd327a23407">__UNALIGNED_UINT16_WRITE</a>.<br/>
+ Added macros <a class="el" href="group__compiler__conntrol__gr.html#ga254322c344d954c9f829719a50a88e87">__UNALIGNED_UINT32_READ</a>, <a class="el" href="group__compiler__conntrol__gr.html#gabb2180285c417aa9120a360c51f64b4b">__UNALIGNED_UINT32_WRITE</a>.<br/>
+ Deprecated macro <a class="el" href="group__compiler__conntrol__gr.html#ga27fd2ec6767ca1ab66d36b5cc0103268">__UNALIGNED_UINT32</a>.<br/>
+ Changed <a class="el" href="group__version__control__gr.html">Version Control</a> macros to be core agnostic. <br/>
+ Added <a class="el" href="group__mpu__functions.html">MPU Functions for ARMv7-M</a> for Cortex-M0+/M3/M4/M7.   </td></tr>
 <tr>
 <td>V5.0.1 </td><td>Added: macro <a class="el" href="group__compiler__conntrol__gr.html#ga4dbb70fab85207c27b581ecb6532b314">__PACKED_STRUCT</a>. <br/>
  Added: uVisor support. <br/>
@@ -240,7 +246,7 @@ Beta 1 </td><td>Renamed: cmsis_armcc_V6.h to cmsis_armclang.h.<br/>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:41 for CMSIS-CORE by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:10 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

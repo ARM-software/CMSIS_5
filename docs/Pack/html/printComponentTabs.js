@@ -13,16 +13,17 @@ function tabElement(id, folderName, tabTxt )  {
 var arr = [];
 
 // fill array
- arr.push( new tabElement( "GEN",    "/General/html/",     "General")   );
- arr.push( new tabElement( "CORE",   "/Core/html/",        "Core")      );
- arr.push( new tabElement( "DRV",    "/Driver/html/",      "Driver")    );
- arr.push( new tabElement( "DSP",    "/DSP/html/",         "DSP")       );
- arr.push( new tabElement( "RTOSv1", "/RTOS/html/",        "RTOS v1")   );
- arr.push( new tabElement( "RTOSv2", "/RTOS2/html/",       "RTOS v2")   );
-// arr.push( new tabElement( "RTX",  "/RTX/html/",         "RTX")       );
- arr.push( new tabElement( "PACK",   "/Pack/html/",        "Pack")      );
- arr.push( new tabElement( "SVD",    "/SVD/html/",         "SVD")       );
- arr.push( new tabElement( "DAP",    "/DAP/html/",         "DAP")       );
+ arr.push( new tabElement( "GEN",     "/General/html/",     "General")   );
+ arr.push( new tabElement( "CORE_A",  "/Core_A/html/",      "CMSIS-Core(A)")    );
+ arr.push( new tabElement( "CORE_M",  "/Core/html/",        "CMSIS-Core(M)")    );
+ arr.push( new tabElement( "DRV",     "/Driver/html/",      "Driver")    );
+ arr.push( new tabElement( "DSP",     "/DSP/html/",         "DSP")       );
+ arr.push( new tabElement( "RTOSv1",  "/RTOS/html/",        "RTOS v1")   );
+ arr.push( new tabElement( "RTOSv2",  "/RTOS2/html/",       "RTOS v2")   );
+ arr.push( new tabElement( "PACK",    "/Pack/html/",        "Pack")      );
+ arr.push( new tabElement( "SVD",     "/SVD/html/",         "SVD")       );
+ arr.push( new tabElement( "DAP",     "/DAP/html/",         "DAP")       );
+ arr.push( new tabElement( "ZONE",    "/Zone/html/",        "Zone")      );
  
 // write tabs
 // called from the header file.

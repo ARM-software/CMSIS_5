@@ -434,9 +434,9 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
       &lt;!-- V1.1: Endian specifies the endianess of the processor/device --&gt;
       &lt;xs:element name="endian" type="endianType"/&gt;
       &lt;!-- V1.1: mpuPresent specifies whether or not a memory protection unit is physically present --&gt;
-      &lt;xs:element name="mpuPresent" type="xs:boolean"/&gt;
+      &lt;xs:element name="mpuPresent" type="xs:boolean" minOccurs="0"/&gt;
       &lt;!-- V1.1: fpuPresent specifies whether or not a floating point hardware unit is physically present --&gt;
-      &lt;xs:element name="fpuPresent" type="xs:boolean"/&gt;
+      &lt;xs:element name="fpuPresent" type="xs:boolean" minOccurs="0"/&gt;
       &lt;!-- V1.2: fpuDP specifies a double precision floating point hardware unit is physically present--&gt;
       &lt;xs:element name="fpuDP" type="xs:boolean" minOccurs="0"/&gt;
       &lt;!-- V1.2: icachePresent specifies that an instruction cache is physically present--&gt;
@@ -754,7 +754,7 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:05 for CMSIS-SVD by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:49 for CMSIS-SVD by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

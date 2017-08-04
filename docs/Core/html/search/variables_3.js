@@ -14,6 +14,6 @@ var searchData=
   ['cpicnt',['CPICNT',['../structDWT__Type.html#a2c08096c82abe245c0fa97badc458154',1,'DWT_Type']]],
   ['cpuid',['CPUID',['../structSCB__Type.html#a21e08d546d8b641bee298a459ea73e46',1,'SCB_Type']]],
   ['cspsr',['CSPSR',['../structTPI__Type.html#a8826aa84e5806053395a742d38d59d0f',1,'TPI_Type']]],
-  ['ctrl',['CTRL',['../structSysTick__Type.html#a875e7afa5c4fd43997fb544a4ac6e37e',1,'SysTick_Type::CTRL()'],['../structMPU__Type.html#a4d81d6aa73a9287bafba2bcc5ffc6d18',1,'MPU_Type::CTRL()'],['../structDWT__Type.html#add790c53410023b3b581919bb681fe2a',1,'DWT_Type::CTRL()']]],
+  ['ctrl',['CTRL',['../structSysTick__Type.html#a875e7afa5c4fd43997fb544a4ac6e37e',1,'SysTick_Type::CTRL()'],['../structMPU__Type.html#a769178ef949f0d5d8f18ddbd9e4e926f',1,'MPU_Type::CTRL()'],['../structDWT__Type.html#add790c53410023b3b581919bb681fe2a',1,'DWT_Type::CTRL()']]],
   ['cyccnt',['CYCCNT',['../structDWT__Type.html#a102eaa529d9098242851cb57c52b42d9',1,'DWT_Type']]]
 ];

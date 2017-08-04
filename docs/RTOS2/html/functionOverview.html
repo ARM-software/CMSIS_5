@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -134,7 +134,7 @@ CMSIS-RTOS2</h1>
 <li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced">osKernelResume</a> : Resume the RTOS Kernel scheduler.</li>
 <li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a> : Start the RTOS Kernel scheduler.</li>
 <li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae26683e1606ec633354a2876c68f0c1f">osKernelSuspend</a> : Suspend the RTOS Kernel scheduler.</li>
-<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga3cad48045fb59e47dc8bab75b420cb5f">osKernelGetTickCount</a> : Get the RTOS kernel tick count.</li>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a> : Get the RTOS kernel tick count.</li>
 <li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee">osKernelGetTickFreq</a> : Get the RTOS kernel tick frequency.</li>
 </ul>
 </li>
@@ -177,7 +177,7 @@ CMSIS-RTOS2</h1>
 </li>
 <li><a class="el" href="group__CMSIS__RTOS__Wait.html">Generic Wait Functions</a><ul>
 <li><a class="el" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a> : Wait for Timeout (Time Delay).</li>
-<li><a class="el" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">osDelayUntil</a> : Wait until specified time.</li>
+<li><a class="el" href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">osDelayUntil</a> : Wait until specified time.</li>
 </ul>
 </li>
 <li><a class="el" href="group__CMSIS__RTOS__TimerMgmt.html">Timer Management</a><ul>
@@ -204,7 +204,7 @@ CMSIS-RTOS2</h1>
 <li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7559d4dff3cda9992fc5ab5de3e74c70">osSemaphoreGetCount</a> : Get current Semaphore token count.</li>
 <li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga9586952051f00285f1482dbe6695bbc4">osSemaphoreGetName</a> : Get name of a Semaphore object.</li>
 <li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a> : Create and Initialize a Semaphore object.</li>
-<li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a> : Release a Semaphore token that was acquired by <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>.</li>
+<li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a> : Release a Semaphore token up to the initial maximum count.</li>
 </ul>
 </li>
 <li><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html">Memory Pool</a><ul>
@@ -232,21 +232,27 @@ CMSIS-RTOS2</h1>
 <li><a class="el" href="group__CMSIS__RTOS__Message.html#gac6dce7f9ad132d266292c2e979d861b4">osMessageQueueReset</a> : Reset a Message Queue to initial empty state.</li>
 </ul>
 </li>
+<li><a class="el" href="group__CMSIS__RTOS__TickAPI.html">OS Tick API</a><ul>
+<li><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga5eeffb4d9dc6c6802fee8898096d9a59">OS_Tick_Setup</a> : Setup OS Tick.</li>
+<li><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga3e47971bf3a02599d9ecb32208adafec">OS_Tick_Enable</a> : Enable OS Tick.</li>
+<li><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga5e325c304fef5003b1dc31906f6a3056">OS_Tick_Disable</a> : Disable OS Tick.</li>
+<li><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga57065ec4b281504ad4de13a419870b4f">OS_Tick_AcknowledgeIRQ</a> : Acknowledge OS Tick IRQ.</li>
+<li><a class="el" href="group__CMSIS__RTOS__TickAPI.html#gaa8b4eca23e3ffe2df403291958cdc905">OS_Tick_GetIRQn</a> : Get OS Tick IRQ number.</li>
+<li><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga936217ea28236fb57648973e0d8f627a">OS_Tick_GetClock</a> : Get OS Tick clock.</li>
+<li><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga123151dc19d5a94a68f12cdbf61a9bb5">OS_Tick_GetInterval</a> : Get OS Tick interval.</li>
+<li><a class="el" href="group__CMSIS__RTOS__TickAPI.html#gaa64a145a554f1e5077848938d7f39c92">OS_Tick_GetCount</a> : Get OS Tick count value.</li>
+<li><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga1f9a593126b7f0b66fc526c2cebd6192">OS_Tick_GetOverflow</a> : Get OS Tick overflow status.</li>
+</ul>
+</li>
 <li><a class="el" href="group__rtx5__specific.html">RTX5 Specific API</a><ul>
 <li><a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> : OS Error Callback function.</li>
 <li><a class="el" href="group__rtx5__specific__functions.html#gacc47720b9a10fcb7d3412640c8276465">osRtxIdleThread</a> : OS Idle Thread.</li>
-<li><a class="el" href="group__rtx5__specific__functions.html#gaa10ba9022d27bfbf2f76c40663f4598d">osRtxSysTimerSetup</a> : OS System Timer functions (default implementation uses SysTick)</li>
-<li><a class="el" href="group__rtx5__specific__functions.html#ga186a61d27c68b3ae841dded8f1289857">osRtxSysTimerEnable</a> : Enable System Timer.</li>
-<li><a class="el" href="group__rtx5__specific__functions.html#gaf8200a879df96753af1af391fadd9f9e">osRtxSysTimerDisable</a> : Disable System Timer.</li>
-<li><a class="el" href="group__rtx5__specific__functions.html#ga9194d74a1170a6107fb8a9bb3783dace">osRtxSysTimerAckIRQ</a> : Acknowledge System Timer IRQ.</li>
-<li><a class="el" href="group__rtx5__specific__functions.html#gaa1b9fdcae08625c1f32e230051c3601f">osRtxSysTimerGetCount</a> : Get System Timer count.</li>
-<li><a class="el" href="group__rtx5__specific__functions.html#gaa15aeddbccbc909c2ea88f9e2fe98ccf">osRtxSysTimerGetFreq</a> : Get System Timer frequency.</li>
 </ul>
 </li>
 </ul>
 <p>The following CMSIS-RTOS2 functions can be called from threads and <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> (ISR):</p>
 <ul>
-<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae0fcaff6cecfb4013bb556c87afcd7d2">osKernelGetSysTimerCount</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a">osKernelGetSysTimerFreq</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee">osKernelGetTickFreq</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae0fcaff6cecfb4013bb556c87afcd7d2">osKernelGetSysTimerCount</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a">osKernelGetSysTimerFreq</a></li>
 <li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a></li>
 <li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga33b71d14cecf90b4e72639dd19f23a5e">osEventFlagsSet</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga93bf258ca0007c6641fbe8e4f2b8a1e5">osEventFlagsClear</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga8bda3185f46bfd278cea8a6cf357677d">osEventFlagsGet</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a></li>
 <li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>, <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a>, <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7559d4dff3cda9992fc5ab5de3e74c70">osSemaphoreGetCount</a></li>
@@ -259,7 +265,7 @@ CMSIS-RTOS2</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:03 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:46 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

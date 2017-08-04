@@ -9,6 +9,7 @@ var searchData=
   ['misra_2etxt',['MISRA.txt',['../MISRA_8txt.html',1,'']]],
   ['mmfar',['MMFAR',['../structSCB__Type.html#a2d03d0b7cec2254f39eb1c46c7445e80',1,'SCB_Type']]],
   ['mmfr',['MMFR',['../structSCB__Type.html#aa11887804412bda283cc85a83fdafa7c',1,'SCB_Type']]],
+  ['mpu_20functions_20for_20armv7_2dm',['MPU Functions for ARMv7-M',['../group__mpu__functions.html',1,'']]],
   ['mpu_5ftype',['MPU_Type',['../structMPU__Type.html',1,'']]],
   ['mvfr0',['MVFR0',['../structFPU__Type.html#a4f19014defe6033d070b80af19ef627c',1,'FPU_Type']]],
   ['mvfr1',['MVFR1',['../structFPU__Type.html#a66f8cfa49a423b480001a4e101bf842d',1,'FPU_Type']]]

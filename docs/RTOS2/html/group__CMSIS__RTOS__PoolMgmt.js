@@ -1,12 +1,12 @@
 var group__CMSIS__RTOS__PoolMgmt =
 [
     [ "osMemoryPoolAttr_t", "group__CMSIS__RTOS__PoolMgmt.html#structosMemoryPoolAttr__t", [
-      [ "name", "group__CMSIS__RTOS__PoolMgmt.html#a8f8f80d37794cde9472343e4487ba3eb", null ],
-      [ "attr_bits", "group__CMSIS__RTOS__PoolMgmt.html#a712a8f140170e6798f561e783265a279", null ],
-      [ "cb_mem", "group__CMSIS__RTOS__PoolMgmt.html#a8c66c30fe3b487298af0e70eb93a197a", null ],
-      [ "cb_size", "group__CMSIS__RTOS__PoolMgmt.html#a5c542fd75887b7be589b39a2062910de", null ],
-      [ "mp_mem", "group__CMSIS__RTOS__PoolMgmt.html#ac24b31114b3e60ed1e41bf9a166aad6d", null ],
-      [ "mp_size", "group__CMSIS__RTOS__PoolMgmt.html#a2e5d8aa8630f560597dd5e85c86f8a73", null ]
+      [ "name", "group__CMSIS__RTOS__PoolMgmt.html#ab74e6bf80237ddc4109968cedc58c151", null ],
+      [ "attr_bits", "group__CMSIS__RTOS__PoolMgmt.html#a6e93b49cb79c12f768d72580c7731f30", null ],
+      [ "cb_mem", "group__CMSIS__RTOS__PoolMgmt.html#a1e100dc33d403841ed3c344e3397868e", null ],
+      [ "cb_size", "group__CMSIS__RTOS__PoolMgmt.html#aa55a4335d12dc2785dc00fdc292d1159", null ],
+      [ "mp_mem", "group__CMSIS__RTOS__PoolMgmt.html#a5799465cca9c71c5587ceb0986f5b06a", null ],
+      [ "mp_size", "group__CMSIS__RTOS__PoolMgmt.html#a66c26015c0ac8e88a4ad907c120aee4f", null ]
     ] ],
     [ "osMemoryPoolId_t", "group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960", null ],
     [ "osMemoryPoolNew", "group__CMSIS__RTOS__PoolMgmt.html#ga497ced5d72dc5cd405c4c418516220dc", null ],

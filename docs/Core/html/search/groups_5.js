@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['peripheral_20access',['Peripheral Access',['../group__peripheral__gr.html',1,'']]]
+  ['nvic_20functions',['NVIC Functions',['../group__nvic__trustzone__functions.html',1,'']]]
 ];

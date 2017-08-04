@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -117,17 +117,17 @@ $(document).ready(function(){initNavTree('group__DAP__ExecuteCommands__gr.html',
 <p>Execute multiple DAP commands from a single packet. </p>
 <p>Executes multiple DAP commands that are provided in a single packet. Packet size limitation for requests and responses needs to respected.</p>
 <p><b>DAP_ExecuteCommands Request:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE   |                   |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE **|+++++++++++++++++++|</div>
 <div class="line">&gt; 0x7F | NumCmd | Command Requests  |</div>
-<div class="line">       |********|+++++++++++++++++++|</div>
+<div class="line">|******|********|+++++++++++++++++++|</div>
 </div><!-- fragment --><ul>
 <li><b>NumCmd:</b> Number of commands to execute</li>
 <li><b>Commands Requests</b>: Concatenated command requests</li>
 </ul>
 <p><b>DAP_ExecuteCommands Response:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE   |                   |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE **|+++++++++++++++++++|</div>
 <div class="line">&lt; 0x7F | NumCmd | Command Responses |</div>
-<div class="line">       |********|+++++++++++++++++++|</div>
+<div class="line">|******|********|+++++++++++++++++++|</div>
 </div><!-- fragment --><ul>
 <li><b>NumCmd:</b> Number of commands executed</li>
 <li><b>Commands Responses</b>: Concatenated command responses</li>
@@ -135,21 +135,21 @@ $(document).ready(function(){initNavTree('group__DAP__ExecuteCommands__gr.html',
 <p><b>Example</b>:</p>
 <p>Execute two <a class="el" href="group__DAP__SWJ__Pins.html">DAP_SWJ_Pins</a> commands with <a class="el" href="group__DAP__Delay.html">DAP_Delay</a> in between.</p>
 <p><b>Request:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE | BYTE | BYTE       | BYTE       | WORD     | BYTE | SHORT | BYTE | BYTE       | BYTE       | WORD     |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE | BYTE | BYTE ******| BYTE ******| WORD ****| BYTE | SHORT | BYTE | BYTE ******| BYTE ******| WORD ****|</div>
 <div class="line">&gt; 0x7F | 0x03 | 0x10 | Pin Output | Pin Select | Pin Wait | 0x09 | Delay | 0x10 | Pin Output | Pin Select | Pin Wait |</div>
-<div class="line">       |******|******|************|************|**********|******|*******|******|************|************|**********|</div>
+<div class="line">|******|******|******|************|************|**********|******|*******|******|************|************|**********|</div>
 <div class="line">       |NumCmd| DAP_SWJ_Pins                              | DAP_Delay    | DAP_SWJ_Pins                              |</div>
 </div><!-- fragment --><p><b>Response:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE | BYTE | BYTE      | BYTE | BYTE   | BYTE | BYTE      |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE | BYTE | BYTE *****| BYTE | BYTE **| BYTE | BYTE *****|</div>
 <div class="line">&lt; 0x7F | 0x03 | 0x10 | Pin Input | 0x09 | Status | 0x10 | Pin Input |</div>
-<div class="line">       |******|******|***********|******|********|******|***********|</div>
+<div class="line">|******|******|******|***********|******|********|******|***********|</div>
 <div class="line">       |NumCmd| DAP_SWJ_Pins     | DAP_Delay     | DAP_SWJ_Pins     |</div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -156,13 +156,14 @@ Default values for register attributes like register size, reset value, and acce
 <p>Peripherals that provide similar functionality (Simple Timer, Complex Timer) can be grouped with the element <em>&lt;groupName&gt;</em>. Peripheral groups help structuring the list of peripherals in the debugger. All peripherals associated with the same group name are collectively listed under this group in the order they were specified in the SVD file.</p>
 <p><b>Descriptions</b></p>
 <p>On each level, the tag <em>&lt;description&gt;</em> provides verbose information about the respective element. The description field plays an important part in improving software development productivity as it gives instant access to information that otherwise would need to be looked up in the device documentation.</p>
+<p>All multiple whitespace characters (space, tab, linefeed, carriage return) may be removed from the description by any tool for further processing (i.e. SVDConv does). In order to preserve explicit linebreaks one has to use the linefeed escape sequence (i.e. \n).</p>
 <p>&#160; </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:05 for CMSIS-SVD by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:49 for CMSIS-SVD by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

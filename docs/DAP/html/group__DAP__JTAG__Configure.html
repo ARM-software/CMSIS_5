@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -117,17 +117,17 @@ $(document).ready(function(){initNavTree('group__DAP__JTAG__Configure.html','');
 <p>Configure JTAG Chain. </p>
 <p>The <b>DAP_JTAG_Configure Command</b> sets the JTAG device chain information for communication with <a class="el" href="group__DAP__transfer__gr.html">Transfer Commands</a>. The JTAG device chain needs to be iterated with <a class="el" href="group__DAP__JTAG__Sequence.html">DAP_JTAG_Sequence</a> or manually configured by the debugger on the host computer.</p>
 <p><b>DAP_JTAG_Configure Command</b>: </p>
-<div class="fragment"><div class="line">  BYTE | BYTE *| BYTE *****|</div>
+<div class="fragment"><div class="line">| BYTE | BYTE *| BYTE *****|</div>
 <div class="line">&gt; 0x15 | Count | IR Length | </div>
-<div class="line">       |*******|+++++++++++|</div>
+<div class="line">|******|*******|+++++++++++|</div>
 </div><!-- fragment --><ul>
 <li><b>Count:</b> Number of devices in chain</li>
 <li><b>IR Length</b>: JTAG IR register length (in bits) for each device.</li>
 </ul>
 <p><b>DAP_JTAG_Configure Response</b>: </p>
-<div class="fragment"><div class="line">  BYTE | BYTE **|</div>
+<div class="fragment"><div class="line">| BYTE | BYTE **|</div>
 <div class="line">&lt; 0x15 | Status |</div>
-<div class="line">       |********|</div>
+<div class="line">|******|********|</div>
 </div><!-- fragment --><ul>
 <li><b>Status:</b> <a class="el" href="group__DAP__Response__Status.html">Response Status</a> </li>
 </ul>
@@ -136,7 +136,7 @@ $(document).ready(function(){initNavTree('group__DAP__JTAG__Configure.html','');
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

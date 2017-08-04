@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -117,13 +117,13 @@ $(document).ready(function(){initNavTree('group__DAP__ResetTarget.html','');});
 <p>Reset Target with Device specific sequence. </p>
 <p>The <b>DAP_ResetTarget Command</b> requests a target reset with a device specific command sequence. This command calls the user configurable function <a class="el" href="group__DAP__Config__Initialization__gr.html#gac9d308f719319dd892cc8be7459c83f0">RESET_TARGET</a>.</p>
 <p><b>DAP_ResetTarget Command</b>: </p>
-<div class="fragment"><div class="line">  BYTE |</div>
+<div class="fragment"><div class="line">| BYTE |</div>
 <div class="line">&gt; 0x0A |</div>
-<div class="line">       | </div>
+<div class="line">|******| </div>
 </div><!-- fragment --><p><b>DAP_ResetTarget Response</b>: </p>
-<div class="fragment"><div class="line">  BYTE | BYTE   | BYTE    |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE   | BYTE    |</div>
 <div class="line">&lt; 0x0A | Status | Execute |</div>
-<div class="line">       |********|*********|</div>
+<div class="line">|******|********|*********|</div>
 </div><!-- fragment --><ul>
 <li><b>Execute:</b> indicates whether a device specific reset sequence was executed.<ul>
 <li>no device specific reset sequence is implemented.</li>
@@ -137,7 +137,7 @@ $(document).ready(function(){initNavTree('group__DAP__ResetTarget.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -117,9 +117,9 @@ $(document).ready(function(){initNavTree('group__DAP__Info.html','');});
 <p>Get Information about CMSIS-DAP Debug Unit. </p>
 <p>The <b>DAP_Info Command</b> provides configuration information about the Debug Unit itself and the capabilities.</p>
 <p><b>DAP_Info Command:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE |</div>
 <div class="line">&gt; 0x00 | ID   |</div>
-<div class="line">       |******| </div>
+<div class="line">|******|******| </div>
 </div><!-- fragment --><ul>
 <li><b>ID:</b> Request Identifier to obtain information in the Response:<ul>
 <li><b>0x01</b> = Get the <b>Vendor ID</b> (string).</li>
@@ -128,7 +128,9 @@ $(document).ready(function(){initNavTree('group__DAP__Info.html','');});
 <li><b>0x04</b> = Get the <b>CMSIS-DAP Firmware Version</b> (string).</li>
 <li><b>0x05</b> = Get the <b>Target Device Vendor</b> (string).</li>
 <li><b>0x06</b> = Get the <b>Target Device Name</b> (string).</li>
-<li><b>0xF0</b> = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit.</li>
+<li><b>0xF0</b> = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit (see below for details).</li>
+<li><b>0xF1</b> = Get the <b>Test Domain Timer</b> parameter information (see below for details).</li>
+<li><b>0xF2</b> = Get the <b>Trace Data Management</b> parameter information (see below for details).</li>
 <li><b>0xFD</b> = Get the <b>SWO Trace Buffer Size</b> (WORD).</li>
 <li><b>0xFE</b> = Get the maximum <b>Packet Count</b> (BYTE).</li>
 <li><b>0xFF</b> = Get the maximum <b>Packet Size</b> (SHORT).</li>
@@ -136,9 +138,9 @@ $(document).ready(function(){initNavTree('group__DAP__Info.html','');});
 </li>
 </ul>
 <p><b>DAP_Info Response:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE | BYTE |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE | BYTE |</div>
 <div class="line">&lt; 0x00 | Len  | Info |</div>
-<div class="line">       |******|++++++|</div>
+<div class="line">|******|******|++++++|</div>
 </div><!-- fragment --><ul>
 <li><b>Len:</b> Info length in bytes.</li>
 <li><b>Info:</b> <ul>
@@ -149,22 +151,66 @@ $(document).ready(function(){initNavTree('group__DAP__Info.html','');});
 </ul>
 </li>
 </ul>
-<p>The ID <b>Capabilities</b> obtains information about the available interface to the Device. The information BYTE contains bits that indicate which communication methods are provided to the Device.</p>
-<ul>
-<li>Bit 0: <b>1 = SWD</b> Serial Wire Debug communication is implemented (0 = not implemented).</li>
-<li>Bit 1: <b>1 = JTAG</b> communication is implemented (0 = not implemented).</li>
-<li>Bit 2: <b>1 = SWO UART</b> - UART Serial Wire Output is implemented (0 = not implemented).</li>
-<li>Bit 3: <b>1 = SWO Manchester</b> - Manchester Serial Wire Output is implemented (0 = not implemented).</li>
-</ul>
 <dl class="section note"><dt>Note</dt><dd>The ID for <b>Vendor ID</b>, <b>Product ID</b>, and <b>Serial Number</b> may return no string (indicated by Len = 0). In this case the USB Device Information is used to obtain Vendor, Product, and Serial Number.</dd>
 <dd>
-<b>Target Device Vendor</b> and <b>Target Device Name</b> are only available on Debug Units with known Target Device. Refer to <a class="el" href="group__DAP__Config__Debug__gr.html#ga792651aa4035a7ad712c6bb201db8a6a">TARGET_DEVICE_FIXED</a> for more information. If the Target Device is not known no string is returned (indicated by Len = 0). </dd></dl>
+<b>Target Device Vendor</b> and <b>Target Device Name</b> are only available on Debug Units with known Target Device. Refer to <a class="el" href="group__DAP__Config__Debug__gr.html#ga792651aa4035a7ad712c6bb201db8a6a">TARGET_DEVICE_FIXED</a> for more information. If the Target Device is not known no string is returned (indicated by Len = 0).</dd></dl>
+<hr/>
+<p><b>DAP_Info Response (for ID=0xF0):</b></p>
+<p>The ID=0xF0 <b>Capabilities</b> obtains information about the available interface to the Device. The reply consists of one or two <b>Info</b> bytes with bits that indicate the features of the <b>Debug Unit</b>. The features indicate the command scope of the CMSIS-DAP firmware. If certain features are not available, the debugger should not call the related commands as the may not be implemented. Commands that are not implemented reply with 0xFF instead of repeating the command byte.</p>
+<div class="fragment"><div class="line">| BYTE | BYTE | BYTE *| BYTE  |</div>
+<div class="line">&lt; 0x00 | Len  | Info0 | Info1 |</div>
+<div class="line">|******|******|*******|*******|</div>
+</div><!-- fragment --><ul>
+<li><b>Len:</b> <b>1 = Info0</b> present, <b>2 = Info0, Info1</b> present.</li>
+</ul>
+<p>Available transfer protocols to target:</p>
+<ul>
+<li>Info0 - Bit 0: <b>1 = SWD</b> Serial Wire Debug communication is implemented (0 = <a class="el" href="group__DAP__swd__gr.html">SWD Commands</a> not implemented).</li>
+<li>Info0 - Bit 1: <b>1 = JTAG</b> communication is implemented (0 = <a class="el" href="group__DAP__jtag__gr.html">JTAG Commands</a> not implemented).</li>
+</ul>
+<p>Serial Wire Trace (SWO) support:</p>
+<ul>
+<li>Info0 - Bit 2: <b>1 = SWO UART</b> - UART Serial Wire Output is implemented (0 = not implemented).</li>
+<li>Info0 - Bit 3: <b>1 = SWO Manchester</b> - Manchester Serial Wire Output is implemented (0 = not implemented).</li>
+</ul>
+<p>Command extensions for transfer protocol:</p>
+<ul>
+<li>Info0 - Bit 4: <b>1 = Atomic Commands</b> - <a class="el" href="group__DAP__atomic__gr.html">Atomic Commands</a> support is implemented (0 = <a class="el" href="group__DAP__atomic__gr.html">Atomic Commands</a> not implemented).</li>
+<li>Info0 - Bit 5: <b>1 = <a class="el" href="group__DAP__SWD__Sequence.html">DAP_SWD_Sequence</a></b> command is implemented (0 = <a class="el" href="group__DAP__SWD__Sequence.html">DAP_SWD_Sequence</a> not implemented).</li>
+</ul>
+<p>Time synchronisation via Test Domain Timer:</p>
+<ul>
+<li>Info0 - Bit 6: <b>1 = Test Domain Timer</b> - debug unit support for Test Domain Timer is implemented (0 = not implemented).</li>
+</ul>
+<p>Test Input management:</p>
+<ul>
+<li>Info1 - Bit 0: <b>1 = Trace Data Management</b> - Trace Data Management is implemented (0 = not implemented).</li>
+</ul>
+<hr/>
+<p><b>DAP_Info Response (for ID=0xF1):</b></p>
+<p>The ID=0xF1 <b>Test Domain Timer</b> obtains the parameter information about an optional 32-bit Test Domain Timer that may be used for various time measurements.</p>
+<div class="fragment"><div class="line">| BYTE | BYTE | WORD *****|</div>
+<div class="line">&lt; 0x00 | 0x08 | Frequency |</div>
+<div class="line">|******|******|***********|</div>
+</div><!-- fragment --><ul>
+<li><b>Frequency:</b> Input frequency of the Test Domain Timer which indicates the resolution of the 32-bit TD_TimeStamp values.</li>
+</ul>
+<hr/>
+<p><b>DAP_Info Response (for ID=0xF2):</b></p>
+<p>The ID=0xF2 <b>Trace Data Management</b> obtains the parameter information about an optional Trace Data Management.</p>
+<div class="fragment"><div class="line">| BYTE | BYTE | SHORT *****| SHORT ****|</div>
+<div class="line">&lt; 0x00 | 0x04 | BlockCount | BlockSize |</div>
+<div class="line">|******|******|************|***********|</div>
+</div><!-- fragment --><ul>
+<li><b>BlockCount:</b> Number of data blocks in the Trace Data Management.</li>
+<li><b>BlockSize:</b> Size (in bytes) of a data block in the Trace Data Management. </li>
+</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

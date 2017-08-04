@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -117,64 +117,64 @@ $(document).ready(function(){initNavTree('pdsc_components_pg.html','');});
 <div class="line">  ...</div>
 <div class="line">  &lt;components&gt;</div>
 <div class="line">    &lt;!-- component has dependency described by <span class="stringliteral">&quot;CMSIS Core&quot;</span> condition --&gt;</div>
-<div class="line">    &lt;component Cclass=<span class="stringliteral">&quot;CMSIS&quot;</span> Cgroup=<span class="stringliteral">&quot;CORE&quot;</span> Cversion=<span class="stringliteral">&quot;3.1.0&quot;</span> condition=<span class="stringliteral">&quot;CMSIS Core&quot;</span>&gt;</div>
-<div class="line">      &lt;description&gt;CMSIS-CORE <span class="keywordflow">for</span> Cortex-M, SC000, and SC300 processor.&lt;/description&gt;</div>
+<div class="line">    &lt;component Cclass=<span class="stringliteral">&quot;CMSIS&quot;</span> Cgroup=<span class="stringliteral">&quot;Core&quot;</span> Cversion=<span class="stringliteral">&quot;3.1.0&quot;</span> condition=<span class="stringliteral">&quot;CMSIS Core&quot;</span>&gt;</div>
+<div class="line">      &lt;description&gt;CMSIS-Core (Cortex-M) for Cortex-M, SC000, and SC300 processor.&lt;/description&gt;</div>
 <div class="line">      &lt;files&gt;</div>
 <div class="line">        &lt;!-- CPU independent --&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;doc&quot;</span>    name=<span class="stringliteral">&quot;CMSIS/Documentation/Core/html/index.html&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;header&quot;</span> name=<span class="stringliteral">&quot;CMSIS/Include/core_cmFunc.h&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;header&quot;</span> name=<span class="stringliteral">&quot;CMSIS/Include/core_cmInstr.h&quot;</span>/&gt;</div>
+<div class="line">        &lt;file category=&quot;doc&quot;    name=&quot;CMSIS/Documentation/Core/html/index.html&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot; name=&quot;CMSIS/Include/core_cmFunc.h&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot; name=&quot;CMSIS/Include/core_cmInstr.h&quot;/&gt;</div>
 <div class="line">        &lt;!-- CPU dependent --&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;header&quot;</span> condition=<span class="stringliteral">&quot;CM0&quot;</span>   name=<span class="stringliteral">&quot;CMSIS/Include/core_cm0.h&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;header&quot;</span> condition=<span class="stringliteral">&quot;CM0+&quot;</span>  name=<span class="stringliteral">&quot;CMSIS/Include/core_cm0plus.h&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;header&quot;</span> condition=<span class="stringliteral">&quot;CM3&quot;</span>   name=<span class="stringliteral">&quot;CMSIS/Include/core_cm3.h&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;header&quot;</span> condition=<span class="stringliteral">&quot;CM4&quot;</span>   name=<span class="stringliteral">&quot;CMSIS/Include/core_cm4.h&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;header&quot;</span> condition=<span class="stringliteral">&quot;CM4&quot;</span>   name=<span class="stringliteral">&quot;CMSIS/Include/core_cm4_simd.h&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;header&quot;</span> condition=<span class="stringliteral">&quot;SC000&quot;</span> name=<span class="stringliteral">&quot;CMSIS/Include/core_sc000.h&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;header&quot;</span> condition=<span class="stringliteral">&quot;SC300&quot;</span> name=<span class="stringliteral">&quot;CMSIS/Include/core_sc300.h&quot;</span>/&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot; condition=&quot;CM0&quot;   name=&quot;CMSIS/Include/core_cm0.h&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot; condition=&quot;CM0+&quot;  name=&quot;CMSIS/Include/core_cm0plus.h&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot; condition=&quot;CM3&quot;   name=&quot;CMSIS/Include/core_cm3.h&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot; condition=&quot;CM4&quot;   name=&quot;CMSIS/Include/core_cm4.h&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot; condition=&quot;CM4&quot;   name=&quot;CMSIS/Include/core_cm4_simd.h&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot; condition=&quot;SC000&quot; name=&quot;CMSIS/Include/core_sc000.h&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot; condition=&quot;SC300&quot; name=&quot;CMSIS/Include/core_sc300.h&quot;/&gt;</div>
 <div class="line">      &lt;/files&gt;</div>
 <div class="line">    &lt;/component&gt;</div>
 <div class="line"></div>
-<div class="line">    &lt;component Cclass=<span class="stringliteral">&quot;CMSIS&quot;</span> Cgroup=<span class="stringliteral">&quot;DSP&quot;</span> Cversion=<span class="stringliteral">&quot;1.1.0&quot;</span> condition=<span class="stringliteral">&quot;CMSIS DSP&quot;</span>&gt;</div>
-<div class="line">      &lt;description&gt;CMSIS-DSP Library <span class="keywordflow">for</span> Cortex-M0, Cortex-M3 and Cortex-M4 as well as SC000 and SC300 processor based devices&lt;/description&gt;</div>
+<div class="line">    &lt;component Cclass=&quot;CMSIS&quot; Cgroup=&quot;DSP&quot; Cversion=&quot;1.1.0&quot; condition=&quot;CMSIS DSP&quot;&gt;</div>
+<div class="line">      &lt;description&gt;CMSIS-DSP Library for Cortex-M0, Cortex-M3 and Cortex-M4 as well as SC000 and SC300 processor based devices&lt;/description&gt;</div>
 <div class="line"></div>
 <div class="line">      &lt;files&gt;</div>
 <div class="line">        &lt;!-- CPU independent --&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;doc&quot;</span> name=<span class="stringliteral">&quot;CMSIS/Documentation/DSP/html/index.html&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;header&quot;</span> name=<span class="stringliteral">&quot;CMSIS/Include/arm_math.h&quot;</span>/&gt;</div>
+<div class="line">        &lt;file category=&quot;doc&quot; name=&quot;CMSIS/Documentation/DSP/html/index.html&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot; name=&quot;CMSIS/Include/arm_math.h&quot;/&gt;</div>
 <div class="line">        &lt;!-- CPU and Compiler dependent --&gt;</div>
 <div class="line">        &lt;!-- ARMCC --&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM0_LE_ARMCC&quot;</span>  name=<span class="stringliteral">&quot;CMSIS/Lib/ARM/arm_cortexM0l_math.lib&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM0_BE_ARMCC&quot;</span>  name=<span class="stringliteral">&quot;CMSIS/Lib/ARM/arm_cortexM0b_math.lib&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM3_LE_ARMCC&quot;</span>  name=<span class="stringliteral">&quot;CMSIS/Lib/ARM/arm_cortexM3l_math.lib&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM3_BE_ARMCC&quot;</span>  name=<span class="stringliteral">&quot;CMSIS/Lib/ARM/arm_cortexM3b_math.lib&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM4_LE_ARMCC&quot;</span>  name=<span class="stringliteral">&quot;CMSIS/Lib/ARM/arm_cortexM4l_math.lib&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM4_BE_ARMCC&quot;</span>  name=<span class="stringliteral">&quot;CMSIS/Lib/ARM/arm_cortexM4b_math.lib&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM4F_LE_ARMCC&quot;</span> name=<span class="stringliteral">&quot;CMSIS/Lib/ARM/arm_cortexM4lf_math.lib&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM4F_BE_ARMCC&quot;</span> name=<span class="stringliteral">&quot;CMSIS/Lib/ARM/arm_cortexM4bf_math.lib&quot;</span>/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM0_LE_ARMCC&quot;  name=&quot;CMSIS/Lib/ARM/arm_cortexM0l_math.lib&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM0_BE_ARMCC&quot;  name=&quot;CMSIS/Lib/ARM/arm_cortexM0b_math.lib&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM3_LE_ARMCC&quot;  name=&quot;CMSIS/Lib/ARM/arm_cortexM3l_math.lib&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM3_BE_ARMCC&quot;  name=&quot;CMSIS/Lib/ARM/arm_cortexM3b_math.lib&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM4_LE_ARMCC&quot;  name=&quot;CMSIS/Lib/ARM/arm_cortexM4l_math.lib&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM4_BE_ARMCC&quot;  name=&quot;CMSIS/Lib/ARM/arm_cortexM4b_math.lib&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM4F_LE_ARMCC&quot; name=&quot;CMSIS/Lib/ARM/arm_cortexM4lf_math.lib&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM4F_BE_ARMCC&quot; name=&quot;CMSIS/Lib/ARM/arm_cortexM4bf_math.lib&quot;/&gt;</div>
 <div class="line">        &lt;!-- GCC --&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM0_LE_GCC&quot;</span>    name=<span class="stringliteral">&quot;CMSIS/Lib/GCC/libarm_cortexM0l_math.a&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM3_LE_GCC&quot;</span>    name=<span class="stringliteral">&quot;CMSIS/Lib/GCC/libarm_cortexM3l_math.a&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM4_LE_GCC&quot;</span>    name=<span class="stringliteral">&quot;CMSIS/Lib/GCC/libarm_cortexM4l_math.a&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM4F_LE_GCC&quot;</span>   name=<span class="stringliteral">&quot;CMSIS/Lib/GCC/libarm_cortexM4lf_math.a&quot;</span>/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM0_LE_GCC&quot;    name=&quot;CMSIS/Lib/GCC/libarm_cortexM0l_math.a&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM3_LE_GCC&quot;    name=&quot;CMSIS/Lib/GCC/libarm_cortexM3l_math.a&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM4_LE_GCC&quot;    name=&quot;CMSIS/Lib/GCC/libarm_cortexM4l_math.a&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM4F_LE_GCC&quot;   name=&quot;CMSIS/Lib/GCC/libarm_cortexM4lf_math.a&quot;/&gt;</div>
 <div class="line">        &lt;!-- G++ --&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM0_LE_G++&quot;</span>    name=<span class="stringliteral">&quot;CMSIS/Lib/G++/libarm_cortexM0l_math.a&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM3_LE_G++&quot;</span>    name=<span class="stringliteral">&quot;CMSIS/Lib/G++/libarm_cortexM3l_math.a&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM4_LE_G++&quot;</span>    name=<span class="stringliteral">&quot;CMSIS/Lib/G++/libarm_cortexM4l_math.a&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;library&quot;</span> condition=<span class="stringliteral">&quot;CM4F_LE_G++&quot;</span>   name=<span class="stringliteral">&quot;CMSIS/Lib/G++/libarm_cortexM4lf_math.a&quot;</span>/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM0_LE_G++&quot;    name=&quot;CMSIS/Lib/G++/libarm_cortexM0l_math.a&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM3_LE_G++&quot;    name=&quot;CMSIS/Lib/G++/libarm_cortexM3l_math.a&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM4_LE_G++&quot;    name=&quot;CMSIS/Lib/G++/libarm_cortexM4l_math.a&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;library&quot; condition=&quot;CM4F_LE_G++&quot;   name=&quot;CMSIS/Lib/G++/libarm_cortexM4lf_math.a&quot;/&gt;</div>
 <div class="line">      &lt;/files&gt;</div>
 <div class="line">    &lt;/component&gt;</div>
 <div class="line"></div>
-<div class="line">    &lt;component condition=<span class="stringliteral">&quot;ARM_CM0&quot;</span> Cclass=<span class="stringliteral">&quot;Device&quot;</span> Cgroup=<span class="stringliteral">&quot;Startup&quot;</span> Cversion=<span class="stringliteral">&quot;3.1.1&quot;</span>&gt;</div>
-<div class="line">      &lt;description&gt;System Startup <span class="keywordflow">for</span> <span class="keyword">generic</span> ARM Cortex-M0 device&lt;/description&gt;</div>
+<div class="line">    &lt;component condition=&quot;ARM_CM0&quot; Cclass=&quot;Device&quot; Cgroup=&quot;Startup&quot; Cversion=&quot;3.1.1&quot;&gt;</div>
+<div class="line">      &lt;description&gt;System Startup for generic ARM Cortex-M0 device&lt;/description&gt;</div>
 <div class="line">      &lt;files&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;header&quot;</span> name=<span class="stringliteral">&quot;Device/ARM/ARMCM0/Include/ARMCM0.h&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;header&quot;</span> name=<span class="stringliteral">&quot;Device/ARM/ARMCM0/Include/system_ARMCM0.h&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;source&quot;</span> condition=<span class="stringliteral">&quot;Compiler_ARM&quot;</span> name=<span class="stringliteral">&quot;Device/ARM/ARMCM0/Source/ARM/startup_ARMCM0.s&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;source&quot;</span> condition=<span class="stringliteral">&quot;Compiler_GCC&quot;</span> name=<span class="stringliteral">&quot;Device/ARM/ARMCM0/Source/GCC/startup_ARMCM0.S&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;source&quot;</span> condition=<span class="stringliteral">&quot;Compiler_G++&quot;</span> name=<span class="stringliteral">&quot;Device/ARM/ARMCM0/Source/G++/startup_ARMCM0.S&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;source&quot;</span> condition=<span class="stringliteral">&quot;Compiler_IAR&quot;</span> name=<span class="stringliteral">&quot;Device/ARM/ARMCM0/Source/IAR/startup_ARMCM0.s&quot;</span>/&gt;</div>
-<div class="line">        &lt;file category=<span class="stringliteral">&quot;source&quot;</span> name=<span class="stringliteral">&quot;Device/ARM/ARMCM0/Source/system_ARMCM0.c&quot;</span> attr=<span class="stringliteral">&quot;template&quot;</span>/&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot; name=&quot;Device/ARM/ARMCM0/Include/ARMCM0.h&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;header&quot; name=&quot;Device/ARM/ARMCM0/Include/system_ARMCM0.h&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;source&quot; condition=&quot;Compiler_ARM&quot; name=&quot;Device/ARM/ARMCM0/Source/ARM/startup_ARMCM0.s&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;source&quot; condition=&quot;Compiler_GCC&quot; name=&quot;Device/ARM/ARMCM0/Source/GCC/startup_ARMCM0.S&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;source&quot; condition=&quot;Compiler_G++&quot; name=&quot;Device/ARM/ARMCM0/Source/G++/startup_ARMCM0.S&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;source&quot; condition=&quot;Compiler_IAR&quot; name=&quot;Device/ARM/ARMCM0/Source/IAR/startup_ARMCM0.s&quot;/&gt;</div>
+<div class="line">        &lt;file category=&quot;source&quot; name=&quot;Device/ARM/ARMCM0/Source/system_ARMCM0.c&quot; attr=&quot;template&quot;/&gt;</div>
 <div class="line">      &lt;/files&gt;</div>
 <div class="line">    &lt;/component&gt;</div>
 <div class="line">  &lt;/components&gt;</div>
@@ -526,7 +526,7 @@ RTE_Components.h</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:42 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

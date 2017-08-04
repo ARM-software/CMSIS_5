@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -130,16 +130,17 @@ Content</h2></td></tr>
 <p>Execute atomic commands. </p>
 <p>CMSIS-DAP command set is extended with two top level commands that allow the execution of multiple DAP commands further USB communication. Executing multiple CMSIS-DAP commands is typically a requirement at the reset time of some devices. The sequence after reset can be time critical and any USB communication would violate the available time window.</p>
 <ul>
-<li><a class="el" href="group__DAP__ExecuteCommands__gr.html">DAP_ExecuteCommands</a> : execute multiple DAP commands from a single comamnd request</li>
+<li><a class="el" href="group__DAP__ExecuteCommands__gr.html">DAP_ExecuteCommands</a> : execute multiple DAP commands from a single command request</li>
 <li><a class="el" href="group__DAP__QueueCommands__gr.html">DAP_QueueCommands</a> : queue of multiple DAP commands before execution</li>
 </ul>
-<p>These two DAP commands are used to collect several other DAP commands before execution. Packet Size and Packet Count limitation (as reported via <a class="el" href="group__DAP__Info.html">DAP_Info</a>) must be respected by the debugger. </p>
+<p>These two DAP commands are used to collect several other DAP commands before execution. Packet Size and Packet Count limitation (as reported via <a class="el" href="group__DAP__Info.html">DAP_Info</a>) must be respected by the debugger.</p>
+<dl class="section note"><dt>Note</dt><dd>The <a class="el" href="group__DAP__atomic__gr.html">Atomic Commands</a> are only available when <a class="el" href="group__DAP__Info.html">DAP_Info</a> with ID=0xF0 (Capabilities) returns in <b>Info</b> - Bit 4: <b>1 = Atomic Commands</b>. </dd></dl>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

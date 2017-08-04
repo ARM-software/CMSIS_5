@@ -153,7 +153,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gac59b5713cb083702dce759c73fd90dff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__os_8h.html#adfeb153a84a81309e2d958268197617f">osThreadId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gac59b5713cb083702dce759c73fd90dff">osThreadCreate</a> (const <a class="el" href="structosThreadDef__t.html">osThreadDef_t</a> *thread_def, void *argument)</td></tr>
+<tr class="memitem:gac59b5713cb083702dce759c73fd90dff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__os_8h.html#adfeb153a84a81309e2d958268197617f">osThreadId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gac59b5713cb083702dce759c73fd90dff">osThreadCreate</a> (const <a class="el" href="cmsis__os_8h.html#structosThreadDef__t">osThreadDef_t</a> *thread_def, void *argument)</td></tr>
 <tr class="memdesc:gac59b5713cb083702dce759c73fd90dff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a thread and add it to Active Threads and set it to state READY.  <a href="#gac59b5713cb083702dce759c73fd90dff">More...</a><br/></td></tr>
 <tr class="separator:gac59b5713cb083702dce759c73fd90dff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab1df2a28925862ef8f9cf4e1c995c5a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__os_8h.html#adfeb153a84a81309e2d958268197617f">osThreadId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gab1df2a28925862ef8f9cf4e1c995c5a7">osThreadGetId</a> (void)</td></tr>
@@ -344,7 +344,7 @@ Cannot be called from <a class="el" href="functionOverview.html#CMSIS_RTOS_ISR_C
         <tr>
           <td class="memname"><a class="el" href="cmsis__os_8h.html#adfeb153a84a81309e2d958268197617f">osThreadId</a> osThreadCreate </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structosThreadDef__t.html">osThreadDef_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="cmsis__os_8h.html#structosThreadDef__t">osThreadDef_t</a> *&#160;</td>
           <td class="paramname"><em>thread_def</em>, </td>
         </tr>
         <tr>
@@ -563,7 +563,9 @@ Cannot be called from <a class="el" href="functionOverview.html#CMSIS_RTOS_ISR_C
 <li><em>osErrorResource:</em> thread_id refers to a thread that is not an active thread.</li>
 <li><em>osErrorISR:</em> <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaea135bb90eb853eff39e0800b91bbeab">osThreadTerminate</a> cannot be called from interrupt service routines.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>Cannot be called from <a class="el" href="functionOverview.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Cannot be called from <a class="el" href="functionOverview.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
+<dd>
+Avoid calling the function with a <em>thread_id</em> that does not exist or has been terminated already.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os_8h.html">cmsis_os.h</a>&quot;</span></div>
 <div class="line"> </div>
@@ -631,7 +633,7 @@ Cannot be called from <a class="el" href="functionOverview.html#CMSIS_RTOS_ISR_C
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:02 for CMSIS-RTOS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:43 for CMSIS-RTOS by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

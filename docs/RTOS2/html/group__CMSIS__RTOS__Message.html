@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -181,41 +181,51 @@ Refer to <a class="el" href="config_rtx5.html#msgQueueConfig">Message Queue Conf
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a8f8f80d37794cde9472343e4487ba3eb"></a>const char *</td>
+<a class="anchor" id="ab74e6bf80237ddc4109968cedc58c151"></a>const char *</td>
 <td class="fieldname">
 name</td>
 <td class="fielddoc">
-name of the message queue </td></tr>
+name of the message queue <p>Pointer to a string with a human readable name of the message queue object.<br/>
+Default: <span class="XML-Token">NULL</span>. </p>
+</td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a712a8f140170e6798f561e783265a279"></a>uint32_t</td>
+<a class="anchor" id="a6e93b49cb79c12f768d72580c7731f30"></a>uint32_t</td>
 <td class="fieldname">
 attr_bits</td>
 <td class="fielddoc">
-attribute bits </td></tr>
+attribute bits <p>Reserved for future use (set to '0').<br/>
+Default: <span class="XML-Token">0</span>. </p>
+</td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a8c66c30fe3b487298af0e70eb93a197a"></a>void *</td>
+<a class="anchor" id="a1e100dc33d403841ed3c344e3397868e"></a>void *</td>
 <td class="fieldname">
 cb_mem</td>
 <td class="fielddoc">
-memory for control block </td></tr>
+memory for control block <p>Pointer to a memory location for the message queue control block object. This can optionally be used for custom memory management systems.<br/>
+Default: <span class="XML-Token">NULL</span> (uses kernel memory management). </p>
+</td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a5c542fd75887b7be589b39a2062910de"></a>uint32_t</td>
+<a class="anchor" id="aa55a4335d12dc2785dc00fdc292d1159"></a>uint32_t</td>
 <td class="fieldname">
 cb_size</td>
 <td class="fielddoc">
-size of provided memory for control block </td></tr>
+size of provided memory for control block <p>The size of the memory block passed with <a class="el" href="group__CMSIS__RTOS__Message.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>. Must be the size of a message queue control block object or larger. </p>
+</td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="aa4b46f91d1f929b4d3017275d2a592aa"></a>void *</td>
+<a class="anchor" id="a4e208dc0fb049b42c4b90cbd2791c5ad"></a>void *</td>
 <td class="fieldname">
 mq_mem</td>
 <td class="fielddoc">
-memory for data storage </td></tr>
+memory for data storage <p>Pointer to a memory location for the data of the message queue object.<br/>
+Default: <span class="XML-Token">NULL</span>. </p>
+</td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a07e8199f8d810c55d154c1a3afe2991e"></a>uint32_t</td>
+<a class="anchor" id="ac1cc09f875e20c926920b57bb83c70ee"></a>uint32_t</td>
 <td class="fieldname">
 mq_size</td>
 <td class="fielddoc">
-size of provided memory for data storage </td></tr>
+size of provided memory for data storage <p>The size of the memory passed with <a class="el" href="group__CMSIS__RTOS__Message.html#a4e208dc0fb049b42c4b90cbd2791c5ad">mq_mem</a>. </p>
+</td></tr>
 </table>
 
 </div>
@@ -259,10 +269,7 @@ size of provided memory for data storage </td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>message queue ID for reference by other functions or NULL in case of error.</dd></dl>
-<p>The function <b>osMessageQueueNew</b> creates and initializes a message queue object and returns the pointer to the message queue object identifier or <span class="XML-Token">NULL</span> in case of an error.</p>
-<p>The parameter <em>msg_count</em> specifies the maximum number of messages om the queue.</p>
-<p>The parameter <em>msg_size</em> sets message size in bytes.</p>
-<p>The parameter <em>attr</em> specifies additional message queue attributes. Default attributes will be used if set to <span class="XML-Token">NULL</span>.</p>
+<p>The function <b>osMessageQueueNew</b> creates and initializes a message queue object and returns the pointer to the message queue object identifier or <span class="XML-Token">NULL</span> in case of an error. It can be safely called before the RTOS is started (call to <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>), but not before it is initialized (call to <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>).</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b></p>
 <p>Refer to <a class="el" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a> </p>
@@ -339,20 +346,18 @@ size of provided memory for data storage </td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>The blocking function <b>osMessageQueuePut</b> puts a message into the the message queue specified by parameter <em>mq_id</em>.</p>
-<p>The parameter <em>msg_ptr</em> points to the buffer with the message to be put into the queue.</p>
-<p>The parameter <em>msg_prio</em> defines the message priority (higher numbers indicate a higher priority).</p>
-<p>The parameter <em>timeout</em> specifies how long the system waits to put the message into the queue. While the system waits, the thread that is calling this function is put into the <b>BLOCKED</b> state. The parameter <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">timeout</a> can have the following values:</p>
+<p>The blocking function <b>osMessageQueuePut</b> puts the message pointed to by <em>msg_ptr</em> into the the message queue specified by parameter <em>mq_id</em>. The parameter <em>msg_prio</em> is used to sort message according their priority (higher numbers indicate a higher priority) on insertion.</p>
+<p>The parameter <em>timeout</em> specifies how long the system waits to put the message into the queue. While the system waits, the thread that is calling this function is put into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state. The parameter <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">timeout</a> can have the following values:</p>
 <ul>
-<li>when <em>timeout</em> is <span class="XML-Token">0</span>, the function returns instantly.</li>
-<li>when <em>timeout</em> is set to <b>osWaitForever</b> the function will wait for an infinite time until the message is delivered.</li>
-<li>all other values specify a time in kernel ticks for a timeout.</li>
+<li>when <em>timeout</em> is <span class="XML-Token">0</span>, the function returns instantly (i.e. try semantics).</li>
+<li>when <em>timeout</em> is set to <b>osWaitForever</b> the function will wait for an infinite time until the message is delivered (i.e. wait semantics).</li>
+<li>all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).</li>
 </ul>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> the message has been put into the queue.</li>
-<li><em>osErrorTimeout:</em> the message could not be put into the queue in the given time.</li>
-<li><em>osErrorResource:</em> not enough space in the queue.</li>
+<li><em>osErrorTimeout:</em> the message could not be put into the queue in the given time (wait-timed semantics).</li>
+<li><em>osErrorResource:</em> not enough space in the queue (try semantics).</li>
 <li><em>osErrorParameter:</em> the parameter <em>mq_id</em> is incorrect, non-zero timeout specified in an ISR.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>May be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> if the parameter <em>timeout</em> is set to <span class="XML-Token">0</span>.</dd></dl>
@@ -375,7 +380,6 @@ size of provided memory for data storage </td></tr>
 <div class="line">  uint8_t Idx;</div>
 <div class="line">} MSGQUEUE_OBJ_t;</div>
 <div class="line"> </div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a> mpid_MemPool2;                                    <span class="comment">// memory pool id</span></div>
 <div class="line"><a class="code" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mid_MsgQueue;                                   <span class="comment">// message queue id</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> Init_MsgQueue (<span class="keywordtype">void</span>) {</div>
@@ -394,24 +398,25 @@ size of provided memory for data storage </td></tr>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> Thread_MsgQueue1 (<span class="keywordtype">void</span> *argument) {</div>
-<div class="line">  MSGQUEUE_OBJ_t pMsg = 0;</div>
+<div class="line">  MSGQUEUE_OBJ_t msg;</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
 <div class="line">    ; <span class="comment">// Insert thread code here...</span></div>
-<div class="line">    pMsg-&gt;Buf[0] = 0x55;                                           <span class="comment">// do some work...</span></div>
-<div class="line">    pMsg-&gt;Idx    = 0;</div>
-<div class="line">    <a class="code" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a> (mid_MsgQueue, &amp;pMsg, NULL, NULL);</div>
+<div class="line">    msg.Buf[0] = 0x55;                                           <span class="comment">// do some work...</span></div>
+<div class="line">    msg.Idx    = 0;</div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a> (mid_MsgQueue, &amp;msg, 0, NULL);</div>
 <div class="line">    <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2">osThreadYield</a> ();                                              <span class="comment">// suspend thread</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> Thread_MsgQueue2 (<span class="keywordtype">void</span> *argument) {</div>
 <div class="line"></div>
-<div class="line">  MSGQUEUE_OBJ_t pMsg = 0;</div>
+<div class="line">  MSGQUEUE_OBJ_t msg;</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> status;</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
 <div class="line">    ; <span class="comment">// Insert thread code here...</span></div>
-<div class="line">    status = <a class="code" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a> (mid_MsgQueue, &amp;pMsg, NULL, NULL);  <span class="comment">// wait for message</span></div>
+<div class="line">    status = <a class="code" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a> (mid_MsgQueue, &amp;msg, NULL, NULL);  <span class="comment">// wait for message</span></div>
 <div class="line">    <span class="keywordflow">if</span> (status == <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>) {</div>
 <div class="line">        ; <span class="comment">// process data</span></div>
 <div class="line">    }</div>
@@ -465,19 +470,18 @@ size of provided memory for data storage </td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>The function <b>osMessageQueueGet</b> retrieves a message from the message queue specified by the parameter <em>mq_id</em> and saves it to the buffer pointed to by the parameter <em>msg_ptr</em>.</p>
-<p>The parameter <em>msg_prio</em> is a pointer to the buffer containing the message priority or token{NULL}.</p>
-<p>The parameter <em>timeout</em> specifies how long the system waits to retrieve the message from the queue. While the system waits, the thread that is calling this function is put into the <b>BLOCKED</b> state. The parameter <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">timeout</a> can have the following values:</p>
+<p>The function <b>osMessageQueueGet</b> retrieves a message from the message queue specified by the parameter <em>mq_id</em> and saves it to the buffer pointed to by the parameter <em>msg_ptr</em>. The message priority is stored to parameter <em>msg_prio</em> if not token{NULL}.</p>
+<p>The parameter <em>timeout</em> specifies how long the system waits to retrieve the message from the queue. While the system waits, the thread that is calling this function is put into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state. The parameter <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">timeout</a> can have the following values:</p>
 <ul>
-<li>when <em>timeout</em> is <span class="XML-Token">0</span>, the function returns instantly.</li>
-<li>when <em>timeout</em> is set to <b>osWaitForever</b> the function will wait for an infinite time until the message is retrieved.</li>
-<li>all other values specify a time in kernel ticks for a timeout.</li>
+<li>when <em>timeout</em> is <span class="XML-Token">0</span>, the function returns instantly (i.e. try semantics).</li>
+<li>when <em>timeout</em> is set to <b>osWaitForever</b> the function will wait for an infinite time until the message is retrieved (i.e. wait semantics).</li>
+<li>all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).</li>
 </ul>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> the message has been retrieved from the queue.</li>
-<li><em>osErrorTimeout:</em> the message could not be retrieved from the queue in the given time.</li>
-<li><em>osErrorResource:</em> nothing to get from the queue.</li>
+<li><em>osErrorTimeout:</em> the message could not be retrieved from the queue in the given time (timed-wait semantics).</li>
+<li><em>osErrorResource:</em> nothing to get from the queue (try semantics).</li>
 <li><em>osErrorParameter:</em> the parameter <em>mq_id</em> is incorrect, non-zero timeout specified in an ISR.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>May be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> if the parameter <em>timeout</em> is set to <span class="XML-Token">0</span>.</dd></dl>
@@ -655,7 +659,7 @@ size of provided memory for data storage </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:47 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

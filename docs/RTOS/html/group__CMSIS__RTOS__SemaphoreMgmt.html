@@ -123,7 +123,7 @@ Macros</h2></td></tr>
 <tr class="memitem:ga7da4c7bfb340779c9fc7b321f5ab3e3a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7da4c7bfb340779c9fc7b321f5ab3e3a">osFeature_Semaphore</a>&#160;&#160;&#160;30</td></tr>
 <tr class="memdesc:ga7da4c7bfb340779c9fc7b321f5ab3e3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">maximum count for <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga97381e8e55cd47cec390bf57c96d6edb">osSemaphoreCreate</a> function  <a href="#ga7da4c7bfb340779c9fc7b321f5ab3e3a">More...</a><br/></td></tr>
 <tr class="separator:ga7da4c7bfb340779c9fc7b321f5ab3e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9e66fe361749071e5ab87826c43c2f1b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga9e66fe361749071e5ab87826c43c2f1b">osSemaphoreDef</a>(name)&#160;&#160;&#160;const <a class="el" href="structosSemaphoreDef__t.html">osSemaphoreDef_t</a> os_semaphore_def_##name = { 0 }</td></tr>
+<tr class="memitem:ga9e66fe361749071e5ab87826c43c2f1b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga9e66fe361749071e5ab87826c43c2f1b">osSemaphoreDef</a>(name)&#160;&#160;&#160;const <a class="el" href="cmsis__os_8h.html#structosSemaphoreDef__t">osSemaphoreDef_t</a> os_semaphore_def_##name = { 0 }</td></tr>
 <tr class="memdesc:ga9e66fe361749071e5ab87826c43c2f1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a Semaphore object.  <a href="#ga9e66fe361749071e5ab87826c43c2f1b">More...</a><br/></td></tr>
 <tr class="separator:ga9e66fe361749071e5ab87826c43c2f1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga03761ee8d2c3cd4544e18364ab301dac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga03761ee8d2c3cd4544e18364ab301dac">osSemaphore</a>(name)&#160;&#160;&#160;&amp;os_semaphore_def_##name</td></tr>
@@ -132,7 +132,7 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga97381e8e55cd47cec390bf57c96d6edb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__os_8h.html#aa8968896c84094aa973683c84fa06f84">osSemaphoreId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga97381e8e55cd47cec390bf57c96d6edb">osSemaphoreCreate</a> (const <a class="el" href="structosSemaphoreDef__t.html">osSemaphoreDef_t</a> *semaphore_def, int32_t count)</td></tr>
+<tr class="memitem:ga97381e8e55cd47cec390bf57c96d6edb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__os_8h.html#aa8968896c84094aa973683c84fa06f84">osSemaphoreId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga97381e8e55cd47cec390bf57c96d6edb">osSemaphoreCreate</a> (const <a class="el" href="cmsis__os_8h.html#structosSemaphoreDef__t">osSemaphoreDef_t</a> *semaphore_def, int32_t count)</td></tr>
 <tr class="memdesc:ga97381e8e55cd47cec390bf57c96d6edb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and Initialize a Semaphore object used for managing resources.  <a href="#ga97381e8e55cd47cec390bf57c96d6edb">More...</a><br/></td></tr>
 <tr class="separator:ga97381e8e55cd47cec390bf57c96d6edb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacc15b0fc8ce1167fe43da33042e62098"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#gacc15b0fc8ce1167fe43da33042e62098">osSemaphoreWait</a> (<a class="el" href="cmsis__os_8h.html#aa8968896c84094aa973683c84fa06f84">osSemaphoreId</a> semaphore_id, uint32_t millisec)</td></tr>
@@ -232,7 +232,7 @@ CMSIS-RTOS Semaphore</div></div>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;const <a class="el" href="structosSemaphoreDef__t.html">osSemaphoreDef_t</a> os_semaphore_def_##name = { 0 }</td>
+          <td>&#160;&#160;&#160;const <a class="el" href="cmsis__os_8h.html#structosSemaphoreDef__t">osSemaphoreDef_t</a> os_semaphore_def_##name = { 0 }</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -255,7 +255,7 @@ CMSIS-RTOS Semaphore</div></div>
         <tr>
           <td class="memname"><a class="el" href="cmsis__os_8h.html#aa8968896c84094aa973683c84fa06f84">osSemaphoreId</a> osSemaphoreCreate </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structosSemaphoreDef__t.html">osSemaphoreDef_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="cmsis__os_8h.html#structosSemaphoreDef__t">osSemaphoreDef_t</a> *&#160;</td>
           <td class="paramname"><em>semaphore_def</em>, </td>
         </tr>
         <tr>
@@ -451,7 +451,7 @@ CMSIS-RTOS Semaphore</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:02 for CMSIS-RTOS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:44 for CMSIS-RTOS by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

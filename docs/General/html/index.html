@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS
-   &#160;<span id="projectnumber">Version 5.0.1</span>
+   &#160;<span id="projectnumber">Version 5.1.0</span>
    </div>
    <div id="projectbrief">Cortex Microcontroller Software Interface Standard</div>
   </td>
@@ -77,7 +77,8 @@ $(document).ready(function(){initNavTree('index.html','');});
 <p>CMSIS Version 5 supports also the <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" class="el" target="_blank">ARMv8-M architecture</a> including <a href="http://www.arm.com/products/processors/technologies/trustzone/index.php" class="el" target="_blank">TrustZone&reg; for ARMv8-M</a> hardware security extensions and the <a href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" class="el" target="_blank">Cortex-M23</a> and <a href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" class="el" target="_blank">Cortex-M33</a> processors.</p>
 <p><a class="anchor" id="CM_Components"></a>The CMSIS components are:</p>
 <ul>
-<li><a href="../../Core/html/index.html"><b>CMSIS-CORE</b></a>: API for the Cortex-M processor core and peripherals. It provides a standardized interface for Cortex-M0, Cortex-M0+, Cortex-M3, Cortex-M4, Cortex-M7, Cortex-M23, Cortex-M33, SC000, and SC300. Also included are SIMD intrinsic functions for Cortex-M4, Cortex-M7, and Cortex-M33 SIMD instructions.</li>
+<li><a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a>: API for the Cortex-M processor core and peripherals. It provides a standardized interface for Cortex-M0, Cortex-M0+, Cortex-M3, Cortex-M4, Cortex-M7, Cortex-M23, Cortex-M33, SC000, and SC300. Also included are SIMD intrinsic functions for Cortex-M4, Cortex-M7, and Cortex-M33 SIMD instructions.</li>
+<li><a href="../../Core_A/html/index.html"><b>CMSIS-Core (Cortex-A)</b></a>: API and basic run-time system for the Cortex-A5/A7/A9 processor core and peripherals.</li>
 <li><a href="../../Driver/html/index.html"><b>CMSIS-Driver</b></a>: defines generic peripheral driver interfaces for middleware making it reusable across supported devices. The API is RTOS independent and connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces.</li>
 <li><a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>: DSP Library Collection with over 60 Functions for various data types: fixed-point (fractional q7, q15, q31) and single precision floating-point (32-bit). The library is available for all Cortex-M cores. Implementations that are optimized for the SIMD instruction set are available for Cortex-M4, Cortex-M7, and Cortex-M33.</li>
 <li><a href="../../RTOS/html/index.html"><b>CMSIS-RTOS v1</b></a>: Common API for Real-Time Operating Systems along with reference implementation based on RTX. It provides a standardized programming interface that is portable to many RTOS and enables software components that can work across multiple RTOS systems.</li>
@@ -85,6 +86,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li><a href="../../Pack/html/index.html"><b>CMSIS-Pack</b></a>: describes with an XML-based package description (PDSC) file the user and device relevant parts of a file collection (called a software pack) that includes source, header and library files, documentation, Flash programming algorithms, source code templates, and example projects. Development tools and web infrastructures use the PDSC file to extract device parameters, software components, and evaluation board configurations.</li>
 <li><a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a>: System View Description for Peripherals. Describes the peripherals of a device in an XML file and can be used to create peripheral awareness in debuggers or header files with peripheral register and interrupt definitions.</li>
 <li><a href="../../DAP/html/index.html"><b>CMSIS-DAP</b></a>: Debug Access Port. Standardized firmware for a Debug Unit that connects to the CoreSight Debug Access Port. CMSIS-DAP is distributed as a separate package and is well suited for integration on evaluation boards. This component is provided as separate download.</li>
+<li><a href="../../Zone/html/index.html"><b>CMSIS-Zone</b></a>: System resource definition and partitioning. Defines methods to describe system resources and to partition these resources into multiple projects and execution areas.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Refer to <a class="el" href="index.html#CM_Pack_Content">ARM::CMSIS Pack</a> for more information on the content of the Software Pack.</dd></dl>
 <div class="image">
@@ -102,6 +104,7 @@ Motivation</h1>
 <li>Provides a compiler independent layer that allows using different compilers. CMSIS is supported by mainstream compilers.</li>
 <li>Enhances program debugging with peripheral information for debuggers and ITM channels for printf-style output and RTOS kernel awareness.</li>
 <li>CMSIS is delivered in CMSIS-Pack format which enables fast software delivery, simplifies updates, and enables consistent integration into development tools.</li>
+<li>CMSIS-Zone will simplify system resource and partitioning as it manages the configuration of multiple processors, memory areas, and peripherals.</li>
 </ul>
 <h1><a class="anchor" id="CodingRules"></a>
 Coding Rules</h1>
@@ -169,7 +172,9 @@ ARM::CMSIS Pack</h1>
 <tr>
 <td align="left"><b>Documentation</b> </td><td align="left">This documentation </td></tr>
 <tr>
-<td align="left"><b>Core</b> </td><td align="left">User code templates for Core related files, referenced in ARM.CMSIS.PDSC </td></tr>
+<td align="left"><b>Core</b> </td><td align="left">User code templates for <a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a> related files, referenced in ARM.CMSIS.PDSC </td></tr>
+<tr>
+<td align="left"><b>Core_A</b> </td><td align="left">User code templates for <a href="../../Core_A/html/index.html"><b>CMSIS-Core (Cortex-A)</b></a> related files, referenced in ARM.CMSIS.PDSC </td></tr>
 <tr>
 <td align="left"><b>DAP</b> </td><td align="left"><a href="../../DAP/html/index.html"><b>CMSIS-DAP</b></a> Debug Access Port source code and reference implementations </td></tr>
 <tr>
@@ -177,7 +182,7 @@ ARM::CMSIS Pack</h1>
 <tr>
 <td align="left"><b>DSP_Lib</b> </td><td align="left"><a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> software library source code </td></tr>
 <tr>
-<td align="left"><b>Include</b> </td><td align="left">Include files for <a href="../../Core/html/index.html"><b>CMSIS-CORE</b></a> and <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> </td></tr>
+<td align="left"><b>Include</b> </td><td align="left">Include files for <a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a> and <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> </td></tr>
 <tr>
 <td align="left"><b>Lib</b> </td><td align="left"><a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> generated libraries for ARMCC and GCC </td></tr>
 <tr>
@@ -198,7 +203,7 @@ ARM::CMSIS Pack</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:52 for CMSIS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:31 for CMSIS by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

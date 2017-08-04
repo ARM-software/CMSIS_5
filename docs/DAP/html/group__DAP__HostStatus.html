@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -121,9 +121,9 @@ $(document).ready(function(){initNavTree('group__DAP__HostStatus.html','');});
 <li>Running LED: is active when the debugger has put the target device into running state.</li>
 </ul>
 <p><b>DAP_HostStatus Command:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE **| BYTE **|</div>
+<div class="fragment"><div class="line">| BYTE | BYTE **| BYTE **|</div>
 <div class="line">&gt; 0x01 | Type   | Status | </div>
-<div class="line">       |********|********|</div>
+<div class="line">|******|********|********|</div>
 </div><!-- fragment --><ul>
 <li><b>Type:</b> specifies the type of the information that is sent in <b>Status:</b> <ul>
 <li><b>0</b> = Connect: Status indicates that the debugger is connected to the Debug Unit.</li>
@@ -137,15 +137,15 @@ $(document).ready(function(){initNavTree('group__DAP__HostStatus.html','');});
 </li>
 </ul>
 <p><b>DAP_HostStatus Response:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE **|</div>
+<div class="fragment"><div class="line">| BYTE | BYTE **|</div>
 <div class="line">&lt; 0x01 | 0x00   |</div>
-<div class="line">       |********|</div>
+<div class="line">|******|********|</div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

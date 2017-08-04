@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -129,7 +129,7 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga65c2482cc64a35d03871f3180f305926"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">osMutexRecursive</a>&#160;&#160;&#160;0x00000001U</td></tr>
-<tr class="memdesc:ga65c2482cc64a35d03871f3180f305926"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex attributes (attr_bits in <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a>).  <a href="#ga65c2482cc64a35d03871f3180f305926">More...</a><br/></td></tr>
+<tr class="memdesc:ga65c2482cc64a35d03871f3180f305926"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recursive mutex.  <a href="#ga65c2482cc64a35d03871f3180f305926">More...</a><br/></td></tr>
 <tr class="separator:ga65c2482cc64a35d03871f3180f305926"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga40fba270cb31a977b3bd551d41eb9599"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga40fba270cb31a977b3bd551d41eb9599">osMutexPrioInherit</a>&#160;&#160;&#160;0x00000002U</td></tr>
 <tr class="memdesc:ga40fba270cb31a977b3bd551d41eb9599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority inherit protocol.  <a href="#ga40fba270cb31a977b3bd551d41eb9599">More...</a><br/></td></tr>
@@ -170,8 +170,12 @@ Functions</h2></td></tr>
 <img src="Mutex.png" alt="Mutex.png"/>
 <div class="caption">
 CMSIS-RTOS Mutex</div></div>
-<p> A mutex is a special version of a <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html">semaphore</a>. Like the semaphore, it is a container for tokens. But instead of being able to have multiple tokens, a mutex can only carry one (representing the resource). Thus, a mutex token is binary and bounded. The advantage of a mutex is that it introduces thread ownership. When a thread acquires a mutex and becomes its owner, subsequent mutex acquires from that thread will succeed immediately without any latency (if <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">osMutexRecursive</a> is specified). Thus, mutex acquires/releases can be nested.</p>
-<dl class="section note"><dt>Note</dt><dd>Mutex management functions cannot be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> (ISR), unlike a binary semaphore that can be released from an ISR. </dd>
+<p> A mutex is a special version of a <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html">semaphore</a>. Like the semaphore, it is a container for tokens. But instead of being able to have multiple tokens, a mutex can only carry one (representing the resource). Thus, a mutex token is binary and bounded, i.e. it is either <em>available</em>, or <em>blocked</em> by a owning thread. The advantage of a mutex is that it introduces thread ownership. When a thread acquires a mutex and becomes its owner, subsequent mutex acquires from that thread will succeed immediately without any latency (if <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">osMutexRecursive</a> is specified). Thus, mutex acquires/releases can be nested.</p>
+<div class="image">
+<img src="mutex_states.png" alt="mutex_states.png"/>
+<div class="caption">
+CMSIS-RTOS Mutex States</div></div>
+ <dl class="section note"><dt>Note</dt><dd>Mutex management functions cannot be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> (ISR), unlike a binary semaphore that can be released from an ISR. </dd>
 <dd>
 Refer to <a class="el" href="config_rtx5.html#mutexConfig">Mutex Configuration</a> for RTX5 configuration options. </dd></dl>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
@@ -191,7 +195,8 @@ Refer to <a class="el" href="config_rtx5.html#mutexConfig">Mutex Configuration</
 <td class="fieldname">
 name</td>
 <td class="fielddoc">
-name of the mutex <p>String with a human readable name of the mutex object. </p>
+name of the mutex <p>Pointer to a string with a human readable name of the event object.<br/>
+Default: <span class="XML-Token">NULL</span>. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a6e93b49cb79c12f768d72580c7731f30"></a>uint32_t</td>
@@ -203,11 +208,11 @@ attribute bits <p>The following predefined bit masks can be assigned to set opti
 <tr>
 <th align="left">Bit Mask </th><th align="left">Description  </th></tr>
 <tr>
-<td align="left"><span class="XML-Token">osMutexRecursive</span> </td><td align="left">Mutex is recursive. The same thread can consume a mutex multiple times without locking itself. </td></tr>
+<td align="left"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">osMutexRecursive</a> </td><td align="left">Mutex is recursive. </td></tr>
 <tr>
-<td align="left"><span class="XML-Token">osMutexPrioInherit</span> </td><td align="left">Priority inheritance protocol. While a thread owns this mutex it cannot be preempted by a higher priority thread to avoid starvation. </td></tr>
+<td align="left"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga40fba270cb31a977b3bd551d41eb9599">osMutexPrioInherit</a> </td><td align="left">Priority inheritance protocol. </td></tr>
 <tr>
-<td align="left"><span class="XML-Token">osMutexRobust</span> </td><td align="left">Robust mutex. Notify threads that acquire a mutex if the previous owner was terminated. </td></tr>
+<td align="left"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gaf0e1dee376798b4d516d164981526780">osMutexRobust</a> </td><td align="left">Robust mutex. </td></tr>
 </table>
 </td></tr>
 <tr><td class="fieldtype">
@@ -215,14 +220,15 @@ attribute bits <p>The following predefined bit masks can be assigned to set opti
 <td class="fieldname">
 cb_mem</td>
 <td class="fielddoc">
-memory for control block <p>Pointer to a memory location for the mutex object. This can optionally be used for custom memory management systems. Specify NULL to use the kernel memory management. </p>
+memory for control block <p>Pointer to a memory location for the mutex control block object. This can optionally be used for custom memory management systems.<br/>
+Default: <span class="XML-Token">NULL</span> (uses kernel memory management). </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="aa55a4335d12dc2785dc00fdc292d1159"></a>uint32_t</td>
 <td class="fieldname">
 cb_size</td>
 <td class="fielddoc">
-size of provided memory for control block <p>The size of the memory block passed with <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>. Must be the size of a mutex object or larger. </p>
+size of provided memory for control block <p>The size of the memory block passed with <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>. Must be the size of a mutex control block object or larger. </p>
 </td></tr>
 </table>
 
@@ -238,11 +244,32 @@ size of provided memory for control block <p>The size of the memory block passed
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Recursive mutex.</p>
-<ul>
-<li><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a> </li>
-</ul>
-
+<p>Recursive flag in <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t" title="Attributes structure for mutex. ">osMutexAttr_t</a>.</p>
+<p>The same thread can consume a mutex multiple times without locking itself. Each time the owning thread acquires the mutex the lock count is incremented. The mutex must be released multiple times as well until the lock count reaches zero. At reaching zero the mutex is actually released and can be acquired by other threads.</p>
+<dl class="section note"><dt>Note</dt><dd>The maximum amount of recursive locks possible is implementation specific, i.e. the type size used for the lock count. If the maximum amount of recursive locks is depleted mutex acquire might fail.</dd></dl>
+<p><b>Code Example</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
+<div class="line">  </div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id;  </div>
+<div class="line">  </div>
+<div class="line"><span class="keyword">const</span> <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a> Thread_Mutex_attr = {</div>
+<div class="line">  <span class="stringliteral">&quot;myThreadMutex&quot;</span>,     <span class="comment">// human readable mutex name</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">osMutexRecursive</a>,    <span class="comment">// attr_bits</span></div>
+<div class="line">  NULL,                <span class="comment">// memory for control block   </span></div>
+<div class="line">  NULL                 <span class="comment">// size for control block</span></div>
+<div class="line">};</div>
+<div class="line">  </div>
+<div class="line"><span class="comment">// must be called from a thread context</span></div>
+<div class="line"><span class="keywordtype">void</span> UseMutexRecursively(<span class="keywordtype">int</span> count)  {</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> result = <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924">osMutexAcquire</a>(mutex_id, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>);  <span class="comment">// lock count is incremented, might fail when lock count is depleted</span></div>
+<div class="line">  <span class="keywordflow">if</span> (result == <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (count &lt; 10) {</div>
+<div class="line">      UseMutexRecursively(count + 1);</div>
+<div class="line">    }</div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gaea629705703580ff58776bf73c8db915">osMutexRelease</a>(mutex_id); <span class="comment">// lock count is decremented, actually releases the mutex on lock count zero</span></div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="ga40fba270cb31a977b3bd551d41eb9599"></a>
@@ -254,9 +281,51 @@ size of provided memory for control block <p>The size of the memory block passed
         </tr>
       </table>
 </div><div class="memdoc">
-<ul>
-<li><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a> </li>
-</ul>
+<p>Priority inheritance flag in <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t" title="Attributes structure for mutex. ">osMutexAttr_t</a>.</p>
+<p>A mutex using priority inheritance protocol transfers a waiting threads priority to the current mutex owner if the owners thread priority is lower. This assures that a low priority thread does not block a high priority thread.</p>
+<p>Otherwise a low priority thread might hold a mutex but is not granted execution time due to another mid priority thread. Without priority inheritance the high priority thread waiting for the mutex would be blocked by the mid priority thread, called priority inversion.</p>
+<p><b>Code Example</b></p>
+<p>This example reveals a blocked high priority thread if osMutexPrioInherit is removed.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
+<div class="line">  </div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id;  </div>
+<div class="line">  </div>
+<div class="line"><span class="keyword">const</span> <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a> Thread_Mutex_attr = {</div>
+<div class="line">  <span class="stringliteral">&quot;myThreadMutex&quot;</span>,     <span class="comment">// human readable mutex name</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga40fba270cb31a977b3bd551d41eb9599">osMutexPrioInherit</a>,  <span class="comment">// attr_bits</span></div>
+<div class="line">  NULL,                <span class="comment">// memory for control block   </span></div>
+<div class="line">  NULL                 <span class="comment">// size for control block</span></div>
+<div class="line">};</div>
+<div class="line">  </div>
+<div class="line"><span class="keywordtype">void</span> HighPrioThread(<span class="keywordtype">void</span> *argument) {</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a>(1000); <span class="comment">// wait 1s until start actual work</span></div>
+<div class="line">  <span class="keywordflow">while</span>(1) {</div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924">osMutexAcquire</a>(mutex_id, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>); <span class="comment">// try to acquire mutex</span></div>
+<div class="line">    <span class="comment">// do stuff</span></div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gaea629705703580ff58776bf73c8db915">osMutexRelease</a>(mutex_id);</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line">  </div>
+<div class="line"><span class="keywordtype">void</span> MidPrioThread(<span class="keywordtype">void</span> *argument) {</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a>(1000); <span class="comment">// wait 1s until start actual work</span></div>
+<div class="line">  <span class="keywordflow">while</span>(1) {</div>
+<div class="line">    <span class="comment">// do non blocking stuff</span></div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line">  </div>
+<div class="line"><span class="keywordtype">void</span> LowPrioThread(<span class="keywordtype">void</span> *argument) {</div>
+<div class="line">  <span class="keywordflow">while</span>(1) {</div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924">osMutexAcquire</a>(mutex_id, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>);</div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a>(5000); <span class="comment">// block mutex for 5s</span></div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gaea629705703580ff58776bf73c8db915">osMutexRelease</a>(mutex_id);</div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a>(5000); <span class="comment">// sleep for 5s</span></div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>During the first second the high and mid priority threads are delayed. Thus the low priority thread can start its work, acquires the mutex and delays while holding it.</p>
+<p>After the first second the high and mid priority threads become ready. Thus the high priority thread gets precedence and tries to acquire the mutex. Because the mutex is already owned by the low priority thread the high priority thread gets blocked.</p>
+<p>Finally the mid priority thread gets executed and start doing a lot of non-blocking stuff, i.e. it does not call any blocking RTOS functionality.</p>
+<p>Without osMutexPrioInherit we would stuck here forever. Even if the low priority thread gets ready after 5s. Due to its low priority the mid priority thread always gets precedence. The effect called priority inversion leads to the mid priority thread blocking the high priority thread indirectly.</p>
+<p>Using osMutexPrioInherit as shown in the example code we get rid of this situation. Due to the priority inheritance protocol the low priority thread inherites the high priority while holding the mutex. Thus the low priority thread gets precedence over the mid priority thread until it release the mutex. On osMutexRelease the high priority thread get ready and is scheduled immediately. </p>
 
 </div>
 </div>
@@ -269,9 +338,26 @@ size of provided memory for control block <p>The size of the memory block passed
         </tr>
       </table>
 </div><div class="memdoc">
-<ul>
-<li><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a> </li>
-</ul>
+<p>Robust flag in <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t" title="Attributes structure for mutex. ">osMutexAttr_t</a>.</p>
+<p>Robust mutexes are automatically released if the owning thread is terminated (either by osThreadExit or osThreadTerminate). Non-robust mutexes are not released and the user must assure mutex release manually.</p>
+<p><b>Code Example</b></p>
+<p>This example reveals a blocked mutex if osMutexRobust is removed.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
+<div class="line">  </div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id;  </div>
+<div class="line">  </div>
+<div class="line"><span class="keyword">const</span> <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a> Thread_Mutex_attr = {</div>
+<div class="line">  <span class="stringliteral">&quot;myThreadMutex&quot;</span>,     <span class="comment">// human readable mutex name</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gaf0e1dee376798b4d516d164981526780">osMutexRobust</a>,       <span class="comment">// attr_bits</span></div>
+<div class="line">  NULL,                <span class="comment">// memory for control block   </span></div>
+<div class="line">  NULL                 <span class="comment">// size for control block</span></div>
+<div class="line">};</div>
+<div class="line">  </div>
+<div class="line"><span class="keywordtype">void</span> Thread(<span class="keywordtype">void</span> *argument) {</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924">osMutexAcquire</a>(mutex_id, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga9eb9a7a797a42e4b55eb171ecc609ddb">osWaitForever</a>);</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaddaa452dd7610e4096647a566d3556fc">osThreadExit</a>();</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Due to osMutexRobust the mutex gets released automatically. A non-robust mutex would stay locked and cannot be released anymore. </p>
 
 </div>
 </div>
@@ -285,7 +371,11 @@ size of provided memory for control block <p>The size of the memory block passed
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Mutex ID identifies the mutex. </p>
+<p>Mutex ID identifies the mutex.</p>
+<p>Returned by:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a> </li>
+</ul>
 
 </div>
 </div>
@@ -310,7 +400,7 @@ size of provided memory for control block <p>The size of the memory block passed
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>mutex ID for reference by other functions or NULL in case of error.</dd></dl>
-<p>The function <b>osMutexNew</b> creates and initializes a new mutex object and returns the pointer to the mutex object identifier or <span class="XML-Token">NULL</span> in case of an error.</p>
+<p>The function <b>osMutexNew</b> creates and initializes a new mutex object and returns the pointer to the mutex object identifier or <span class="XML-Token">NULL</span> in case of an error. It can be safely called before the RTOS is started (call to <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>), but not before it is initialized (call to <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>).</p>
 <p>The parameter <em>attr</em> sets the mutex object attributes (refer to <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a>). Default attributes will be used if set to <span class="XML-Token">NULL</span>.</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
@@ -326,7 +416,6 @@ size of provided memory for control block <p>The size of the memory block passed
 <div class="line">  };</div>
 <div class="line">  </div>
 <div class="line"><span class="keywordtype">void</span> CreateMutex (<span class="keywordtype">void</span>)  {</div>
-<div class="line"> </div>
 <div class="line">  mutex_id = <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a>(&amp;Thread_Mutex_attr);</div>
 <div class="line">  <span class="keywordflow">if</span> (mutex_id != NULL)  {</div>
 <div class="line">    <span class="comment">// Mutex object created</span></div>
@@ -392,11 +481,11 @@ size of provided memory for control block <p>The size of the memory block passed
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
 <p>The blocking function <b>osMutexAcquire</b> waits until a mutex object specified by parameter <em>mutex_id</em> becomes available. If no other thread has obtained the mutex, the function instantly returns and blocks the mutex object.</p>
-<p>The parameter <em>timeout</em> specifies how long the system waits to acquire the mutex. While the system waits, the thread that is calling this function is put into the <b>BLOCKED</b> state. The parameter <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">timeout</a> can have the following values:</p>
+<p>The parameter <em>timeout</em> specifies how long the system waits to acquire the mutex. While the system waits, the thread that is calling this function is put into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state. The parameter <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">timeout</a> can have the following values:</p>
 <ul>
-<li>when <em>timeout</em> is <span class="XML-Token">0</span>, the function returns instantly.</li>
-<li>when <em>timeout</em> is set to <b>osWaitForever</b> the function will wait for an infinite time until the mutex becomes available.</li>
-<li>all other values specify a time in kernel ticks for a timeout.</li>
+<li>when <em>timeout</em> is <span class="XML-Token">0</span>, the function returns instantly (i.e. try semantics).</li>
+<li>when <em>timeout</em> is set to <b>osWaitForever</b> the function will wait for an infinite time until the mutex becomes available (i.e. wait semantics).</li>
+<li>all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).</li>
 </ul>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
@@ -445,7 +534,7 @@ size of provided memory for control block <p>The size of the memory block passed
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>The function <b>osMutexRelease</b> releases a mutex specified by parameter <em>mutex_id</em>. Other threads that currently wait for this mutex will be put into the <b>READY</b> state.</p>
+<p>The function <b>osMutexRelease</b> releases a mutex specified by parameter <em>mutex_id</em>. Other threads that currently wait for this mutex will be put into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> state.</p>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> the mutex has been correctly released.</li>
@@ -460,7 +549,7 @@ size of provided memory for control block <p>The size of the memory block passed
 <div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id;                                        <span class="comment">// Mutex id populated by the function osMutexNew()</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> ReleaseMutex (<a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id)  {</div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> status;</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> status;</div>
 <div class="line">  </div>
 <div class="line">  <span class="keywordflow">if</span> (mutex_id != NULL)  {</div>
 <div class="line">    status = <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gaea629705703580ff58776bf73c8db915">osMutexRelease</a>(mutex_id);</div>
@@ -492,7 +581,7 @@ size of provided memory for control block <p>The size of the memory block passed
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>thread ID of owner thread or NULL when mutex was not acquired.</dd></dl>
-<p>The function <b>osMutexGetOwner</b> returns the thread object ID of the thread that acquired a mutex specified by parameter <em>mutex_id</em>. In case of an error or if the mutex is not owned by the thread, it returns <span class="XML-Token">NULL</span>.</p>
+<p>The function <b>osMutexGetOwner</b> returns the thread ID of the thread that acquired a mutex specified by parameter <em>mutex_id</em>. In case of an error or if the mutex is not blocked by any thread, it returns <span class="XML-Token">NULL</span>.</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
 </div>
@@ -532,7 +621,7 @@ size of provided memory for control block <p>The size of the memory block passed
 <div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id;                            <span class="comment">// Mutex id populated by the function osMutexNew()</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> DeleteMutex (<a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id)  {</div>
-<div class="line"><a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> status;</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> status;</div>
 <div class="line">  </div>
 <div class="line">  <span class="keywordflow">if</span> (mutex_id != NULL)  {</div>
 <div class="line">    status = <a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#gabee73ad227ba4587d3db12ef9bd582bc">osMutexDelete</a>(mutex_id);</div>
@@ -549,7 +638,7 @@ size of provided memory for control block <p>The size of the memory block passed
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:47 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

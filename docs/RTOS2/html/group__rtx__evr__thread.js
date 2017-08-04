@@ -30,6 +30,6 @@ var group__rtx__evr__thread =
     [ "EvrRtxThreadEnumerate", "group__rtx__evr__thread.html#ga1999d77992b03347abdca7ec17f91cca", null ],
     [ "EvrRtxThreadFlagsWaitTimeout", "group__rtx__evr__thread.html#gadbbee398f4fab418c9b8115fc7392ff8", null ],
     [ "EvrRtxThreadDelay", "group__rtx__evr__thread.html#gadd45d32305aa45668a36f2c9f0f4c758", null ],
-    [ "EvrRtxThreadDelayUntil", "group__rtx__evr__thread.html#ga69f6e60c1e29103cced03f75c96f3591", null ],
+    [ "EvrRtxThreadDelayUntil", "group__rtx__evr__thread.html#gaf59defd6c171d2c3d3508e7136278db2", null ],
     [ "EvrRtxThreadDelayCompleted", "group__rtx__evr__thread.html#gab46562848142ce5ea806d629fd000168", null ]
 ];

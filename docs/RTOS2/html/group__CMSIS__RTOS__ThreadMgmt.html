@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -112,6 +112,7 @@ $(document).ready(function(){initNavTree('group__CMSIS__RTOS__ThreadMgmt.html','
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
+<a href="#enumval-members">Enumerator</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Thread Management<div class="ingroups"><a class="el" href="group__CMSIS__RTOS.html">CMSIS-RTOS2 API</a></div></div>  </div>
@@ -130,10 +131,10 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga249499c519f3f8eef5673009ab6cfcbe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">osThreadJoinable</a>&#160;&#160;&#160;0x00000001U</td></tr>
-<tr class="memdesc:ga249499c519f3f8eef5673009ab6cfcbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread created in joinable state.  <a href="#ga249499c519f3f8eef5673009ab6cfcbe">More...</a><br/></td></tr>
+<tr class="memdesc:ga249499c519f3f8eef5673009ab6cfcbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread created in joinable mode.  <a href="#ga249499c519f3f8eef5673009ab6cfcbe">More...</a><br/></td></tr>
 <tr class="separator:ga249499c519f3f8eef5673009ab6cfcbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa9336c1073858d6b118e2e011636246f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f">osThreadDetached</a>&#160;&#160;&#160;0x00000000U</td></tr>
-<tr class="memdesc:gaa9336c1073858d6b118e2e011636246f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread attributes (attr_bits in <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a>).  <a href="#gaa9336c1073858d6b118e2e011636246f">More...</a><br/></td></tr>
+<tr class="memdesc:gaa9336c1073858d6b118e2e011636246f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread created in detached mode (default)  <a href="#gaa9336c1073858d6b118e2e011636246f">More...</a><br/></td></tr>
 <tr class="separator:gaa9336c1073858d6b118e2e011636246f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -147,17 +148,17 @@ Typedefs</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:gad3dc89e942e38d9f3af858a0269a820d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820d">osThreadState_t</a> { <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820da7d7d4f719a1be6daa63a251563585fdd">osThreadInactive</a> = 0, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820dae9d77830b6866e287417b6e1d983e971">osThreadInactive</a> = 0, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820dad9a040e03d7e7943c0217a3359fc1e8b">osThreadReady</a> = 1, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820da59e286915944fe0e4d1ffdb1f2946f14">osThreadReady</a> = 1, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820da71dae1f35a4b4d9d2ab24e186461a17f">osThreadRunning</a> = 2, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820dac4fe336e0790188fcf7d667372eca19d">osThreadRunning</a> = 2, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820da476cd2370e6938974fb2a79811408819">osThreadBlocked</a> = 3, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820daf0e992e354fba8695957c530226a4968">osThreadBlocked</a> = 3, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820dac2a35280d5475f56352c539c9c9b42f9">osThreadTerminated</a> = 4, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820dad5b2726c2d0228f4f1a76cf6b630963c">osThreadTerminated</a> = 4, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820dac841e73a7198a42364c9450f1f54a0ef">osThreadError</a> = -1, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820da339313e26613bc12f66a852e2ff8745e">osThreadError</a> = -1, 
 <br/>
 &#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad3dc89e942e38d9f3af858a0269a820da8872f7e352370eb11ee772c7dcca6e6c">osThreadReserved</a> = 0x7FFFFFFF
 <br/>
@@ -167,7 +168,7 @@ Enumerations</h2></td></tr>
 <tr class="memitem:gad4e3e0971b41f2d17584a8c6837342ec"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec">osPriority_t</a> { <br/>
 &#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342eca6c437c7185161a3bd1e7e4669dfa17a3">osPriorityNone</a> = 0, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342eca549e79a43ff4f8b2b31afb613f5caa81">osPriorityIdle</a> = 1, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad4e3e0971b41f2d17584a8c6837342ecacd5864eac01a6916a7c866bb51a6aac1">osPriorityIdle</a> = 1, 
 <br/>
 &#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342eca61cb822239ac8f66dfbdc7291598a3d4">osPriorityLow</a> = 8, 
 <br/>
@@ -265,7 +266,7 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ecaa76da6825c4bd31c4958200bc289103b">osPriorityRealtime7</a> = 48+7, 
 <br/>
-&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342eca3943224956e1ea667c6a931c74137b79">osPriorityISR</a> = 56, 
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad4e3e0971b41f2d17584a8c6837342eca4b4fa46c3ebaf4259662a0a0a3173b7f">osPriorityISR</a> = 56, 
 <br/>
 &#160;&#160;<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ecae35f5e2f9c64ad346822521b643bdea4">osPriorityError</a> = -1, 
 <br/>
@@ -336,11 +337,11 @@ Functions</h2></td></tr>
 <h2>Thread states </h2>
 <p>Threads can be in the following states:</p>
 <ul>
-<li><b>RUNNING:</b> The thread that is currently running is in the <b>RUNNING</b> state. Only one thread at a time can be in this state.</li>
-<li><b>READY:</b> Threads which are ready to run are in the <b>READY</b> state. Once the <b>RUNNING</b> thread has terminated, or is <b>BLOCKED</b>, the next <b>READY</b> thread with the highest priority becomes the <b>RUNNING</b> thread.</li>
-<li><b>BLOCKED:</b> Threads that are blocked either delayed, waiting for an event to occur or suspended are in the <b>BLOCKED</b> state.</li>
-<li><b>TERMINATED:</b> When <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a">osThreadTerminate</a> is called, threads are <b>TERMINATED</b> with resources not yet released.</li>
-<li><b>INACTIVE:</b> Threads that are not created or have been terminated with all resources released are in the <b>INACTIVE</b> state.</li>
+<li><b>RUNNING:</b> The thread that is currently running is in the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a> state. Only one thread at a time can be in this state.</li>
+<li><b>READY:</b> Threads which are ready to run are in the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> state. Once the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a> thread has terminated, or is <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a>, the next <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> thread with the highest priority becomes the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a> thread.</li>
+<li><b>BLOCKED:</b> Threads that are blocked either delayed, waiting for an event to occur or suspended are in the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state.</li>
+<li><b>TERMINATED:</b> When <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a">osThreadTerminate</a> is called, threads are <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">TERMINATED</a> with resources not yet released.</li>
+<li><b>INACTIVE:</b> Threads that are not created or have been terminated with all resources released are in the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">INACTIVE</a> state.</li>
 </ul>
 <div class="image">
 <img src="ThreadStatus.png" alt="ThreadStatus.png"/>
@@ -348,12 +349,13 @@ Functions</h2></td></tr>
 Thread State and State Transitions</div></div>
 <p>A CMSIS-RTOS assumes that threads are scheduled as shown in the figure <b>Thread State and State Transitions</b>. The thread states change as follows:</p>
 <ul>
-<li>A thread is created using the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>. This puts the thread into the <b>READY</b> or <b>RUNNING</b> state (depending on the thread priority).</li>
-<li>CMSIS-RTOS is pre-emptive. The active thread with the highest priority becomes the <b>RUNNING</b> thread provided it does not wait for any event. The initial priority of a thread is defined with the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> but may be changed during execution using the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga861a420fb2d643115b06622903fb3bfb">osThreadSetPriority</a>.</li>
-<li>The <b>RUNNING</b> thread transfers into the <b>BLOCKED</b> state when it is delayed, waiting for an event or suspended.</li>
-<li>Active threads can be terminated any time using the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a">osThreadTerminate</a>. Threads can terminate also by just returning from the thread function. Threads that are terminated are in the <b>INACTIVE</b> state and typically do not consume any dynamic memory resources.</li>
+<li>A thread is created using the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>. This puts the thread into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a> state (depending on the thread priority).</li>
+<li>CMSIS-RTOS is pre-emptive. The active thread with the highest priority becomes the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a> thread provided it does not wait for any event. The initial priority of a thread is defined with the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> but may be changed during execution using the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga861a420fb2d643115b06622903fb3bfb">osThreadSetPriority</a>.</li>
+<li>The <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a> thread transfers into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state when it is delayed, waiting for an event or suspended.</li>
+<li>Active threads can be terminated any time using the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a">osThreadTerminate</a>. Threads can terminate also by just returning from the thread function. Threads that are terminated are in the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">INACTIVE</a> state and typically do not consume any dynamic memory resources.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Refer to <a class="el" href="config_rtx5.html#threadConfig">Thread Configuration</a> for RTX5 configuration options.</dd></dl>
+<p><a class="anchor" id="thread_examples"></a></p>
 <h1>Thread Examples </h1>
 <p>The following examples show various scenarios to create threads:</p>
 <p><b>Example 1 - Create a simple thread</b></p>
@@ -493,7 +495,8 @@ Thread State and State Transitions</div></div>
 <td class="fieldname">
 name</td>
 <td class="fielddoc">
-name of the thread <p>String with a human readable name of the thread object. </p>
+name of the thread <p>Pointer to a string with a human readable name of the thread object.<br/>
+Default: <span class="XML-Token">NULL</span>. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a6e93b49cb79c12f768d72580c7731f30"></a>uint32_t</td>
@@ -505,9 +508,9 @@ attribute bits <p>The following predefined bit masks can be assigned to set opti
 <tr>
 <th align="left">Bit Mask </th><th align="left">Description  </th></tr>
 <tr>
-<td align="left">osThreadJoinable </td><td align="left">Thread is created in a join-able state. </td></tr>
+<td align="left"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f">osThreadDetached</a> </td><td align="left">Create thread in a detached mode (default). </td></tr>
 <tr>
-<td align="left">osThreadDetached </td><td align="left">Thread is created in a detached state (default). </td></tr>
+<td align="left"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">osThreadJoinable</a> </td><td align="left">Create thread in joinable mode, see <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a>. </td></tr>
 </table>
 </td></tr>
 <tr><td class="fieldtype">
@@ -515,7 +518,8 @@ attribute bits <p>The following predefined bit masks can be assigned to set opti
 <td class="fieldname">
 cb_mem</td>
 <td class="fielddoc">
-memory for control block <p>Pointer to a memory location for the thread object. This can optionally be used for custom memory management systems. Specify <span class="XML-Token">NULL</span> to use the kernel memory management. </p>
+memory for control block <p>Pointer to a memory location for the thread control block object. This can optionally be used for custom memory management systems.<br/>
+Default: <span class="XML-Token">NULL</span> (uses kernel memory management). </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="aa55a4335d12dc2785dc00fdc292d1159"></a>uint32_t</td>
@@ -529,21 +533,23 @@ size of provided memory for control block <p>The size of the memory block passed
 <td class="fieldname">
 stack_mem</td>
 <td class="fielddoc">
-memory for stack <p>Pointer to a memory location for the thread stack. This can optionally be used for custom memory management systems. Specify <span class="XML-Token">NULL</span> to use the kernel memory management. </p>
+memory for stack <p>Pointer to a memory location for the thread stack, <b>must</b> be 64-bit aligned. This can optionally be used for custom memory management systems.<br/>
+Default: <span class="XML-Token">NULL</span> (uses kernel memory management). </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="aacbc9a219f2d6870e9ce89bb93f975c9"></a>uint32_t</td>
 <td class="fieldname">
 stack_size</td>
 <td class="fielddoc">
-size of stack <p>The size of the stack in Bytes. </p>
+size of stack <p>The size of the stack specified by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">stack_mem</a> in Bytes. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a6a5183df4c54c3e28dc8dc704f2487d5"></a><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec">osPriority_t</a></td>
 <td class="fieldname">
 priority</td>
 <td class="fielddoc">
-initial thread priority (default: osPriorityNormal) <p>Specifies the initial thread priority with a value from <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec" title="Priority values. ">osPriority_t</a>. </p>
+initial thread priority (default: osPriorityNormal) <p>Specifies the initial thread priority with a value from <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec" title="Priority values. ">osPriority_t</a>.<br/>
+Default: <span class="XML-Token">osPriorityNormal</span> </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a697f2aad6119d655d212ea10245ae394"></a><a class="el" href="cmsis__os2_8h.html#ad5ef21485fe5f60263bc0b48006202cb">TZ_ModuleId_t</a></td>
@@ -557,7 +563,8 @@ TrustZone module identifier. <p>TrustZone Thread Context Management Identifier t
 <td class="fieldname">
 reserved</td>
 <td class="fielddoc">
-reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token">0</span>. </p>
+reserved (must be 0) <p>Reserved for future use (set to '0').<br/>
+Default: <span class="XML-Token">0</span>. </p>
 </td></tr>
 </table>
 
@@ -573,7 +580,7 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
         </tr>
       </table>
 </div><div class="memdoc">
-<p>See <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a>. </p>
+<p>A thread in this state can be joined using <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a>. </p>
 
 </div>
 </div>
@@ -586,7 +593,6 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Thread created in detached state (default)</p>
 <p>A thread in this state cannot be joined using <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a>. </p>
 
 </div>
@@ -601,6 +607,13 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Entry function for threads. Setting up a new thread (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>) will start execution with a call into this entry function. The optional argument can be used to hand over arbitrary user data to the thread, i.e. to identify the thread or for runtime parameters.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">argument</td><td>Arbitrary user data set on <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -613,7 +626,14 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Thread ID identifies the thread. </p>
+<p>Thread ID identifies the thread.</p>
+<p>Returned by:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5606604d56e21ece1a654664be877439">osThreadEnumerate</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga7f9a7666df0978738cd570cb700b83fb">osMutexGetOwner</a> </li>
+</ul>
 
 </div>
 </div>
@@ -629,23 +649,29 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
 </div><div class="memdoc">
 <p>State of a thread as retrieved by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gacc0a98b42f0a5928e12dc91dc76866b9">osThreadGetState</a>. In case <b>osThreadGetState</b> fails or if it is called from an ISR, it will return <code>osThreadError</code>, otherwise it returns the thread state. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gad3dc89e942e38d9f3af858a0269a820da7d7d4f719a1be6daa63a251563585fdd"></a>osThreadInactive</em>&#160;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad3dc89e942e38d9f3af858a0269a820dae9d77830b6866e287417b6e1d983e971"></a>osThreadInactive</em>&#160;</td><td class="fielddoc">
 <p>Inactive. </p>
+<p>The thread is created but not actively used, or has been terminated. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gad3dc89e942e38d9f3af858a0269a820dad9a040e03d7e7943c0217a3359fc1e8b"></a>osThreadReady</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad3dc89e942e38d9f3af858a0269a820da59e286915944fe0e4d1ffdb1f2946f14"></a>osThreadReady</em>&#160;</td><td class="fielddoc">
 <p>Ready. </p>
+<p>The thread is ready for execution but not currently running. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gad3dc89e942e38d9f3af858a0269a820da71dae1f35a4b4d9d2ab24e186461a17f"></a>osThreadRunning</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad3dc89e942e38d9f3af858a0269a820dac4fe336e0790188fcf7d667372eca19d"></a>osThreadRunning</em>&#160;</td><td class="fielddoc">
 <p>Running. </p>
+<p>The thread is currently running. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gad3dc89e942e38d9f3af858a0269a820da476cd2370e6938974fb2a79811408819"></a>osThreadBlocked</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad3dc89e942e38d9f3af858a0269a820daf0e992e354fba8695957c530226a4968"></a>osThreadBlocked</em>&#160;</td><td class="fielddoc">
 <p>Blocked. </p>
+<p>The thread is currently blocked (delayed, waiting for an event or suspended). </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gad3dc89e942e38d9f3af858a0269a820dac2a35280d5475f56352c539c9c9b42f9"></a>osThreadTerminated</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad3dc89e942e38d9f3af858a0269a820dad5b2726c2d0228f4f1a76cf6b630963c"></a>osThreadTerminated</em>&#160;</td><td class="fielddoc">
 <p>Terminated. </p>
+<p>The thread is terminated and all its resources are freed. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gad3dc89e942e38d9f3af858a0269a820dac841e73a7198a42364c9450f1f54a0ef"></a>osThreadError</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad3dc89e942e38d9f3af858a0269a820da339313e26613bc12f66a852e2ff8745e"></a>osThreadError</em>&#160;</td><td class="fielddoc">
 <p>Error. </p>
+<p>The thread thread has raised an error condition and cannot be scheduled. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gad3dc89e942e38d9f3af858a0269a820da8872f7e352370eb11ee772c7dcca6e6c"></a>osThreadReserved</em>&#160;</td><td class="fielddoc">
 <p>Prevents enum down-size compiler optimization. </p>
@@ -663,15 +689,16 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The <b>osPriority_t</b> value specifies the priority for a thread. The default thread priority should be <em>osPriorityNormal</em>. If a Thread is active that has a higher priority than the currently executing thread, then a thread switch occurs immediately to execute the new task.</p>
-<p>To prevent from a priority inversion, a CMSIS-RTOS compliant OS may optionally implement a <b>priority inheritance</b> method. A priority inversion occurs when a high priority thread is waiting for a resource or event that is controlled by a thread with a lower priority.</p>
+<p>The <b>osPriority_t</b> value specifies the priority for a thread. The default thread priority should be <em>osPriorityNormal</em>. If an active thread becomes ready that has a higher priority than the currently running thread then a thread switch occurs immediately. The system continues executing the thread with the higher priority.</p>
+<p>To prevent from a priority inversion, a CMSIS-RTOS compliant OS may optionally implement a <b>priority inheritance</b> method. A priority inversion occurs when a high priority thread is waiting for a resource or event that is controlled by a thread with a lower priority. Thus causing the high priority thread potentially beeing blocked forever by another thread with lower priority. To come over this issue the low priority thread controlling the resource should be treated as having the higher priority until it releases the resource.</p>
 <dl class="section note"><dt>Note</dt><dd>Priority inheritance only applies to mutexes. </dd></dl>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gad4e3e0971b41f2d17584a8c6837342eca6c437c7185161a3bd1e7e4669dfa17a3"></a>osPriorityNone</em>&#160;</td><td class="fielddoc">
 <p>No priority (not initialized). </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gad4e3e0971b41f2d17584a8c6837342eca549e79a43ff4f8b2b31afb613f5caa81"></a>osPriorityIdle</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad4e3e0971b41f2d17584a8c6837342ecacd5864eac01a6916a7c866bb51a6aac1"></a>osPriorityIdle</em>&#160;</td><td class="fielddoc">
 <p>Reserved for Idle thread. </p>
+<p>This lowest priority should not be used for any other thread. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gad4e3e0971b41f2d17584a8c6837342eca61cb822239ac8f66dfbdc7291598a3d4"></a>osPriorityLow</em>&#160;</td><td class="fielddoc">
 <p>Priority: low. </p>
@@ -817,8 +844,9 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
 <tr><td class="fieldname"><em><a class="anchor" id="gad4e3e0971b41f2d17584a8c6837342ecaa76da6825c4bd31c4958200bc289103b"></a>osPriorityRealtime7</em>&#160;</td><td class="fielddoc">
 <p>Priority: realtime + 7. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gad4e3e0971b41f2d17584a8c6837342eca3943224956e1ea667c6a931c74137b79"></a>osPriorityISR</em>&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad4e3e0971b41f2d17584a8c6837342eca4b4fa46c3ebaf4259662a0a0a3173b7f"></a>osPriorityISR</em>&#160;</td><td class="fielddoc">
 <p>Reserved for ISR deferred thread. </p>
+<p>This highest priority might be used by the RTOS implementation but must not be used for any user thread. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gad4e3e0971b41f2d17584a8c6837342ecae35f5e2f9c64ad346822521b643bdea4"></a>osPriorityError</em>&#160;</td><td class="fielddoc">
 <p>System cannot determine priority or illegal priority. </p>
@@ -869,9 +897,12 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>thread ID for reference by other functions or NULL in case of error.</dd></dl>
-<p>The function <b>osThreadNew</b> starts a thread function by adding it to the list of active threads and sets it to state <b>READY</b>. Arguments for the thread function are passed using the parameter pointer <em>*argument</em>. When the priority of the created thread function is higher than the current <b>RUNNING</b> thread, the created thread function starts instantly and becomes the new <b>RUNNING</b> thread. Thread attributes are defined with the parameter pointer <em>attr</em>. Attributes include settings for thread priority, stack size, or memory allocation.</p>
+<p>The function <b>osThreadNew</b> starts a thread function by adding it to the list of active threads and sets it to state <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a>. Arguments for the thread function are passed using the parameter pointer <em>*argument</em>. When the priority of the created thread function is higher than the current <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a> thread, the created thread function starts instantly and becomes the new <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a> thread. Thread attributes are defined with the parameter pointer <em>attr</em>. Attributes include settings for thread priority, stack size, or memory allocation.</p>
+<p>The function can be safely called before the RTOS is started (call to <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>), but not before it is initialized (call to <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>).</p>
 <p>The function <b>osThreadNew</b> returns the pointer to the thread object identifier or <span class="XML-Token">NULL</span> in case of an error.</p>
-<dl class="section note"><dt>Note</dt><dd>Cannot be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Cannot be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<p><b>Code</b> <b>Example</b> </p>
+<p>Refer to the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#thread_examples">Thread Examples</a> section. </p>
 
 </div>
 </div>
@@ -899,10 +930,9 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> ThreadGetName_example (<span class="keywordtype">void</span>)  {</div>
-<div class="line">  <span class="keywordtype">char</span> id;                                           <span class="comment">// id for the currently running thread</span></div>
-<div class="line">   </div>
-<div class="line">  <span class="keywordtype">id</span> = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gac3230f3a55a297514b013ebf38f27e0a">osThreadGetName</a> ();</div>
-<div class="line">  <span class="keywordflow">if</span> (<span class="keywordtype">id</span> == NULL) {</div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a> ();</div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span>* name = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gac3230f3a55a297514b013ebf38f27e0a">osThreadGetName</a> (thread_id);</div>
+<div class="line">  <span class="keywordflow">if</span> (name == NULL) {</div>
 <div class="line">    <span class="comment">// Failed to get the thread name; not in a thread</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
@@ -1078,14 +1108,16 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>The function <b>osThreadYield</b> passes control to the next thread that is in the <b>READY</b> state. If there is no other thread in state <b>READY</b>, then the current thread continues execution and no thread switching occurs.</p>
+<p>The function <b>osThreadYield</b> passes control to the next thread with the same priority that is in the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> state. If there is no other thread with the same priority in state <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a>, then the current thread continues execution and no thread switch occurs. <b>osThreadYield</b> does not set the thread to state <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a>. Thus no thread with a lower priority will be scheduled even if threads in state <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> are available.</p>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> control has been passed to the next thread successfully.</li>
 <li><em>osError:</em> an unspecified error has occurred.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadYield</b> cannot be called from interrupt service routines.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
+<dd>
+This function <b>has no impact</b> when called when the kernel is locked, see <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line"> </div>
@@ -1122,7 +1154,8 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>The function <b>osThreadSuspend</b> suspends the execution of the thread identified by parameter <em>thread_id</em>. The thread is put into the <em>BLOCKED</em> state (<a class="el" href="cmsis__os2_8h.html#gad3dc89e942e38d9f3af858a0269a820da476cd2370e6938974fb2a79811408819">osThreadBlocked</a>). The thread is not executed until restarted with the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3dbad90eff394b02de76a452c84c5d80">osThreadResume</a>. Threads that are already <em>BLOCKED</em> are suspended and become ready after they are resumed.</p>
+<p>The function <b>osThreadSuspend</b> suspends the execution of the thread identified by parameter <em>thread_id</em>. The thread is put into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820daf0e992e354fba8695957c530226a4968">osThreadBlocked</a>). Suspending the running thread will cause a context switch to another thread in <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> state immediately. The suspended thread is not executed until explicitly resumed with the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3dbad90eff394b02de76a452c84c5d80">osThreadResume</a>.</p>
+<p>Threads that are already <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> are removed from any wait list and become ready when they are resumed. Thus it is not recommended to suspend an already blocked thread.</p>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> the thread has been suspended successfully.</li>
@@ -1130,7 +1163,9 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
 <li><em>osErrorResource:</em> thread specified by parameter <em>thread_id</em> is in an invalid thread state.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadSuspend</b> cannot be called from interrupt service routines.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
+<dd>
+This function <b>must not</b> be called to suspend the running thread when the kernel is locked, i.e. <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a>. </dd></dl>
 
 </div>
 </div>
@@ -1154,8 +1189,9 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>The function <b>osThreadResume</b> forces a thread (specified with <em>thread_id</em>) in <em>BLOCKED</em> state to resume operation.</p>
-<p>Functions that will put a thread into <em>BLOCKED</em> state are: <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a> and <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a>, <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a> and <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">osDelayUntil</a>, <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924">osMutexAcquire</a> and <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9de419d0152bf77e9bbcd1f369fb990">osThreadSuspend</a>.</p>
+<p>The function <b>osThreadResume</b> puts the thread identified by parameter <em>thread_id</em> (which has to be in <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state) back to the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> state. If the resumed thread has a higher priority than the running thread a context switch occurs immediately.</p>
+<p>The thread becomes ready regardless of the reason why the thread was blocked. Thus it is not recommended to resume a thread not suspended by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9de419d0152bf77e9bbcd1f369fb990">osThreadSuspend</a>.</p>
+<p>Functions that will put a thread into <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state are: <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a> and <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">osThreadFlagsWait</a>, <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">osDelay</a> and <a class="el" href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">osDelayUntil</a>, <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924">osMutexAcquire</a> and <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9de419d0152bf77e9bbcd1f369fb990">osThreadSuspend</a>.</p>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> the thread has been resumed successfully.</li>
@@ -1163,7 +1199,9 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
 <li><em>osErrorResource:</em> thread specified by parameter <em>thread_id</em> is in an invalid thread state.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadResume</b> cannot be called from interrupt service routines.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
+<dd>
+This function <b>may be</b> called when kernel is locked (<a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a>). Under this circumstances a potential context switch is delayed until the kernel gets unlocked, i.e. <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gaf401728b4657456198c33fe75f8d6720">osKernelUnlock</a> or <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae7d0a71b9586cbbb49fcbdf6a04f0289">osKernelRestoreLock</a>. </dd></dl>
 
 </div>
 </div>
@@ -1219,7 +1257,7 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>The function <b>osThreadJoin</b> waits for the thread specified by <em>thread_id</em> to terminate. If that thread has already terminated, then <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a> returns immediately. The thread must be joinable. By default threads are created with the attribute <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">osThreadJoinable</a>.</p>
+<p>The function <b>osThreadJoin</b> waits for the thread specified by <em>thread_id</em> to terminate. If that thread has already terminated, then <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a> returns immediately. The thread must be joinable. By default threads are created with the attribute <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f">osThreadDetached</a>.</p>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> if the thread has already been terminated and joined or once the thread has been terminated and the join operations succeeds.</li>
@@ -1275,15 +1313,17 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>The function <b>osThreadTerminate</b> removes the thread specified by parameter <em>thread_id</em> from the list of active threads. If the thread is currently <b>RUNNING</b>, the thread terminates and the execution continues with the next <b>READY</b> thread. If no such thread exists, the function will not terminate the running thread, but return <em>osErrorResource</em>.</p>
+<p>The function <b>osThreadTerminate</b> removes the thread specified by parameter <em>thread_id</em> from the list of active threads. If the thread is currently <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a>, the thread terminates and the execution continues with the next <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> thread. If no such thread exists, the function will not terminate the running thread, but return <em>osErrorResource</em>.</p>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
 <li><em>osOK:</em> the specified thread has been removed from the active thread list successfully.</li>
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
-<li><em>osErrorResource:</em> thread specified by parameter <em>thread_id</em> is in an invalid thread state or no other <b>READY</b> thread exists.</li>
+<li><em>osErrorResource:</em> thread specified by parameter <em>thread_id</em> is in an invalid thread state or no other <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> thread exists.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadTerminate</b> cannot be called from interrupt service routines.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
+<dd>
+Avoid calling the function with a <em>thread_id</em> that does not exist or has been terminated already.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line"> </div>
@@ -1416,7 +1456,7 @@ reserved (must be 0) <p>Reserved for future use. Must be <span class="XML-Token"
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:46 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

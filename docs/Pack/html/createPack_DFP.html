@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -162,7 +162,7 @@ MVCM3 Device Family Specification</div></div>
 <p><b>Code Example</b> </p>
 <ol>
 <li>
-Add a <a class="el" href="pdsc_family_pg.html#element_device">&lt;devices&gt;</a> section in the PDSC file with the following: <div class="fragment"><div class="line">&lt;devices&gt;</div>
+Add a <a class="el" href="sdf_pg.html#element_device">&lt;devices&gt;</a> section in the PDSC file with the following: <div class="fragment"><div class="line">&lt;devices&gt;</div>
 <div class="line">  &lt;family Dfamily=<span class="stringliteral">&quot;MVCM3 Series&quot;</span> Dvendor=<span class="stringliteral">&quot;Generic:5&quot;</span>&gt;</div>
 <div class="line">    &lt;processor Dcore=<span class="stringliteral">&quot;Cortex-M3&quot;</span> DcoreVersion=<span class="stringliteral">&quot;r2p1&quot;</span> Dfpu=<span class="stringliteral">&quot;0&quot;</span> Dmpu=<span class="stringliteral">&quot;0&quot;</span> Dendian=<span class="stringliteral">&quot;Little-endian&quot;</span>/&gt;</div>
 <div class="line">    &lt;description&gt;</div>
@@ -217,7 +217,7 @@ Display of microcontroller devices in development tools</div></div>
 </pre> We will address this problem in the next section.</dd></dl>
 <h1><a class="anchor" id="cp_System_Startp"></a>
 System and Startup Files</h1>
-<p><a href="http://www.keil.com/cmsis/core" class="el" target="_blank">CMSIS-CORE</a> defines the following files to be used by an embedded application:</p>
+<p><a href="http://www.keil.com/cmsis/core" class="el" target="_blank">CMSIS-Core (Cortex-M)</a> defines the following files to be used by an embedded application:</p>
 <ul>
 <li><code>startup_&lt;device&gt;.s</code> with reset handler and exception vectors. It is executed after reset and calls <code>SystemInit</code> and may contain stack and heap configurations for the user application.</li>
 <li><code>system_&lt;device&gt;.c</code> and <code>system_&lt;device&gt;.h</code> with general system configuration information (i.e. for clock and BUS setup).</li>
@@ -227,14 +227,14 @@ System and Startup Files</h1>
 <img src="SystemStartupFiles.png" alt="SystemStartupFiles.png"/>
 <div class="caption">
 System and startup files in relation to user code</div></div>
- <dl class="section note"><dt>Note</dt><dd><a href="http://www.keil.com/pack/doc/CMSIS/Core/html/_templates_pg.html" class="el" target="_blank">CMSIS-CORE</a> explains the structure of the system and startup files and how to create them.</dd></dl>
+ <dl class="section note"><dt>Note</dt><dd><a href="http://www.keil.com/pack/doc/CMSIS/Core/html/_templates_pg.html" class="el" target="_blank">CMSIS-Core (Cortex-M)</a> explains the structure of the system and startup files and how to create them.</dd></dl>
 <p>Copy the <em>content</em> of the <b>02_System_and_Startup</b> directory of the <b>Pack_with_Device_Support.zip</b> file to the <b>Files</b> directory in your working environment: </p>
 <ol>
 <li>
-Add a <code>&lt;conditions&gt;</code> section in your PDSC with the following (the <a class="el" href="cp_SWComponents.html#cp_Conditions">conditions</a> section provides more information on this step): <div class="fragment"><div class="line">&lt;condition <span class="keywordtype">id</span>=<span class="stringliteral">&quot;MVCM3 CMSIS-CORE&quot;</span>&gt;</div>
+Add a <code>&lt;conditions&gt;</code> section in your PDSC with the following (the <a class="el" href="cp_SWComponents.html#cp_Conditions">conditions</a> section provides more information on this step): <div class="fragment"><div class="line">&lt;condition <span class="keywordtype">id</span>=<span class="stringliteral">&quot;MVCM3 CMSIS-Core&quot;</span>&gt;</div>
 <div class="line">  &lt;!-- conditions selecting Devices --&gt;</div>
-<div class="line">  &lt;description&gt;MyVendor MVCM3 Series devices and CMSIS-CORE&lt;/description&gt;</div>
-<div class="line">  &lt;require Cclass=<span class="stringliteral">&quot;CMSIS&quot;</span> Cgroup=<span class="stringliteral">&quot;CORE&quot;</span>/&gt;</div>
+<div class="line">  &lt;description&gt;MyVendor MVCM3 Series devices and CMSIS-Core (Cortex-M)&lt;/description&gt;</div>
+<div class="line">  &lt;require Cclass=<span class="stringliteral">&quot;CMSIS&quot;</span> Cgroup=<span class="stringliteral">&quot;Core&quot;</span>/&gt;</div>
 <div class="line">  &lt;require Dvendor=<span class="stringliteral">&quot;Generic:5&quot;</span> Dname=<span class="stringliteral">&quot;MVCM3*&quot;</span>/&gt;</div>
 <div class="line">&lt;/condition&gt;</div>
 <div class="line">&lt;condition <span class="keywordtype">id</span>=<span class="stringliteral">&quot;Startup ARM&quot;</span>&gt;</div>
@@ -252,7 +252,7 @@ Add a <code>&lt;conditions&gt;</code> section in your PDSC with the following (t
 </div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>The assembler based <code>startup_&lt;device&gt;.s</code> file is tool dependent. Therefore, separate conditions for the various tool vendors are required.  </dd></dl>
 </li>
 <li>
-Add a <code>&lt;components&gt;</code> section in your PDSC with the following (the <a class="el" href="cp_SWComponents.html#cp_Components">components</a> section provides more information on this step): <div class="fragment"><div class="line">&lt;component Cclass=<span class="stringliteral">&quot;Device&quot;</span> Cgroup=<span class="stringliteral">&quot;Startup&quot;</span> Cversion=<span class="stringliteral">&quot;1.0.0&quot;</span> condition=<span class="stringliteral">&quot;MVCM3 CMSIS-CORE&quot;</span>&gt;</div>
+Add a <code>&lt;components&gt;</code> section in your PDSC with the following (the <a class="el" href="cp_SWComponents.html#cp_Components">components</a> section provides more information on this step): <div class="fragment"><div class="line">&lt;component Cclass=<span class="stringliteral">&quot;Device&quot;</span> Cgroup=<span class="stringliteral">&quot;Startup&quot;</span> Cversion=<span class="stringliteral">&quot;1.0.0&quot;</span> condition=<span class="stringliteral">&quot;MVCM3 CMSIS-Core&quot;</span>&gt;</div>
 <div class="line">  &lt;description&gt;System Startup <span class="keywordflow">for</span> MyVendor MVCM3 Series&lt;/description&gt;</div>
 <div class="line">  &lt;files&gt;</div>
 <div class="line">    &lt;!--  include folder --&gt;</div>
@@ -335,7 +335,7 @@ Project with SVD file</div></div>
 </ol>
 <h1><a class="anchor" id="cp_FlashProgrammingAlgorithm"></a>
 Flash Programming Algorithms</h1>
-<p><a class="el" href="flashAlgorithm.html">Flash Programming Algorithms</a> are used to erase or download applications to Flash devices. A DFP usually contains predefined Flash algorithms for programming its supported devices. The page <a class="el" href="algorithmFunc.html">Algorithm Functions</a> explains the mechanisms in more detail.</p>
+<p><a class="el" href="flashAlgorithm.html">Flash Programming</a> are used to erase or download applications to Flash devices. A DFP usually contains predefined Flash algorithms for programming its supported devices. The page <a class="el" href="algorithmFunc.html">Algorithm Functions</a> explains the mechanisms in more detail.</p>
 <p>For the MVCM3 device family, two flash algorithms have to be created. MVCM3110/250 have 16 kB of Flash, whereas MVCM3120/260 have 32 kB of Flash memory.</p>
 <p>Copy the <em>content</em> of the <b>04_Flash_Programming</b> directory of the <b>Pack_with_Device_Support.zip</b> file to the <b>working</b> directory: </p>
 <ol>
@@ -391,7 +391,7 @@ Add a new version number: <div class="fragment"><div class="line">&lt;release ve
 <img src="FPADisplay.png" alt="FPADisplay.png"/>
 <div class="caption">
 Display of Flash Programming Algorithm</div></div>
- <dl class="section note"><dt>Note</dt><dd>The page <a class="el" href="flashAlgorithm.html">Flash Programming Algorithms</a> gives more information on the subject.  </dd></dl>
+ <dl class="section note"><dt>Note</dt><dd>The page <a class="el" href="flashAlgorithm.html">Flash Programming</a> gives more information on the subject.  </dd></dl>
 </li>
 </ol>
 <h1><a class="anchor" id="cp_debugdescription"></a>
@@ -405,7 +405,7 @@ Device Properties</h1>
 </ul>
 <p>Parameters of each single device are defined in:</p>
 <ul>
-<li><a class="el" href="pdsc_family_pg.html#element_device">device</a>: attributes of a specific silicon device</li>
+<li><a class="el" href="sdf_pg.html#element_device">device</a>: attributes of a specific silicon device</li>
 <li><a class="el" href="pdsc_family_pg.html#element_variant">variant</a>: attributes of a device variant (for example, with different package or temperature range) or an OEM device or board that integrates the device.</li>
 </ul>
 <p>A device is described by the following properties:</p>
@@ -417,8 +417,8 @@ Device Properties</h1>
 <li><a class="el" href="pdsc_family_pg.html#element_compile">compile</a>: device specific general settings for the build tools</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugconfig">debugconfig</a>: default settings for a debug connection</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a>: debug port description of the device for the debugger to configure a debug connection.</li>
-<li><a class="el" href="pdsc_family_pg.html#element_debug">debug</a>: device specific information for the debugger to configure a debug connection including System View Description files.</li>
-<li><a class="el" href="pdsc_family_pg.html#element_trace">trace</a>: device specific information for the debugger to configure trace.</li>
+<li><a class="el" href="sdf_pg.html#element_debug">debug</a>: device specific information for the debugger to configure a debug connection including System View Description files.</li>
+<li><a class="el" href="sdf_pg.html#element_trace">trace</a>: device specific information for the debugger to configure trace.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_memory">memory</a>: memory layout of the device for internal and external RAM and ROM regions</li>
 <li><a class="el" href="pdsc_family_pg.html#element_algorithm">algorithm</a>: device specific Flash programming algorithms</li>
 </ul>
@@ -427,7 +427,7 @@ Device Properties</h1>
 <p>Copy the <em>content</em> of the <b>05_Device_Properties</b> directory of the <b>Pack_with_Device_Support.zip</b> file to the <b>Files</b> directory of your working environment: </p>
 <ol>
 <li>
-The <b>MVCM3 Series</b> family properties <a class="el" href="pdsc_family_pg.html#element_processor">processor</a>, <a class="el" href="pdsc_family_pg.html#element_compile">compile</a>, <a class="el" href="pdsc_family_pg.html#element_description">description</a>, and <a class="el" href="pdsc_family_pg.html#element_debug">debug</a> are already specified. There are additional common properties that can be specified on the family level: <a class="el" href="pdsc_family_pg.html#element_book">book</a> and <a class="el" href="pdsc_family_pg.html#element_feature">feature</a>. Add the following lines to the PDSC file in the <b>&lt;family&gt;</b> section: <div class="fragment"><div class="line">&lt;book      name=<span class="stringliteral">&quot;Docs/dui0552a_cortex_m3_dgug.pdf&quot;</span>   title=<span class="stringliteral">&quot;Cortex-M3 Generic User Guide&quot;</span>/&gt;</div>
+The <b>MVCM3 Series</b> family properties <a class="el" href="pdsc_family_pg.html#element_processor">processor</a>, <a class="el" href="pdsc_family_pg.html#element_compile">compile</a>, <a class="el" href="pdsc_family_pg.html#element_description">description</a>, and <a class="el" href="sdf_pg.html#element_debug">debug</a> are already specified. There are additional common properties that can be specified on the family level: <a class="el" href="pdsc_family_pg.html#element_book">book</a> and <a class="el" href="pdsc_family_pg.html#element_feature">feature</a>. Add the following lines to the PDSC file in the <b>&lt;family&gt;</b> section: <div class="fragment"><div class="line">&lt;book      name=<span class="stringliteral">&quot;Docs/dui0552a_cortex_m3_dgug.pdf&quot;</span>   title=<span class="stringliteral">&quot;Cortex-M3 Generic User Guide&quot;</span>/&gt;</div>
 <div class="line">&lt;book      name=<span class="stringliteral">&quot;Docs/MVCM3XXX_Datasheet.pdf&quot;</span>        title=<span class="stringliteral">&quot;MVCM3 Series Datasheet&quot;</span>/&gt;</div>
 <div class="line">&lt;book      name=<span class="stringliteral">&quot;Docs/MVCM3XXX_Product_Brief.pdf&quot;</span>    title=<span class="stringliteral">&quot;MVCM3 Product Brief&quot;</span>/&gt;</div>
 <div class="line">&lt;feature type=<span class="stringliteral">&quot;ExtInt&quot;</span>        n=<span class="stringliteral">&quot;16&quot;</span>/&gt;</div>
@@ -452,7 +452,7 @@ Device Specific Software Components</h2>
 <p>Finally, <a class="el" href="cp_SWComponents.html#cp_Components">software components</a> and <a class="el" href="cp_SWComponents.html#cp_Examples">example projects</a> need to be added to the DFP. </p>
 <ol>
 <li>
-Add the following lines to the PDSC file in the <b>&lt;components&gt;</b> section: <div class="fragment"><div class="line">&lt;component Cclass=<span class="stringliteral">&quot;Device&quot;</span> Cgroup=<span class="stringliteral">&quot;HAL&quot;</span> Csub=<span class="stringliteral">&quot;GPIO&quot;</span> Cversion=<span class="stringliteral">&quot;1.0.0&quot;</span> condition=<span class="stringliteral">&quot;MVCM3 CMSIS-CORE&quot;</span>&gt;</div>
+Add the following lines to the PDSC file in the <b>&lt;components&gt;</b> section: <div class="fragment"><div class="line">&lt;component Cclass=<span class="stringliteral">&quot;Device&quot;</span> Cgroup=<span class="stringliteral">&quot;HAL&quot;</span> Csub=<span class="stringliteral">&quot;GPIO&quot;</span> Cversion=<span class="stringliteral">&quot;1.0.0&quot;</span> condition=<span class="stringliteral">&quot;MVCM3 CMSIS-Core&quot;</span>&gt;</div>
 <div class="line">  &lt;description&gt;GPIO HAL <span class="keywordflow">for</span> MyVendor MVCM3 Series&lt;/description&gt;</div>
 <div class="line">  &lt;files&gt;</div>
 <div class="line">    &lt;file category=<span class="stringliteral">&quot;header&quot;</span> name=<span class="stringliteral">&quot;Device/Include/GPIO.h&quot;</span>/&gt;</div>
@@ -460,7 +460,7 @@ Add the following lines to the PDSC file in the <b>&lt;components&gt;</b> sectio
 <div class="line">  &lt;/files&gt;</div>
 <div class="line">&lt;/component&gt;</div>
 <div class="line"></div>
-<div class="line">&lt;component Cclass=<span class="stringliteral">&quot;Device&quot;</span> Cgroup=<span class="stringliteral">&quot;HAL&quot;</span> Csub=<span class="stringliteral">&quot;ADC&quot;</span> Cversion=<span class="stringliteral">&quot;1.0.0&quot;</span> condition=<span class="stringliteral">&quot;MVCM3 CMSIS-CORE&quot;</span>&gt;</div>
+<div class="line">&lt;component Cclass=<span class="stringliteral">&quot;Device&quot;</span> Cgroup=<span class="stringliteral">&quot;HAL&quot;</span> Csub=<span class="stringliteral">&quot;ADC&quot;</span> Cversion=<span class="stringliteral">&quot;1.0.0&quot;</span> condition=<span class="stringliteral">&quot;MVCM3 CMSIS-Core&quot;</span>&gt;</div>
 <div class="line">  &lt;description&gt;ADC HAL <span class="keywordflow">for</span> MyVendor MVCM3 Series&lt;/description&gt;</div>
 <div class="line">  &lt;files&gt;</div>
 <div class="line">    &lt;file category=<span class="stringliteral">&quot;header&quot;</span> name=<span class="stringliteral">&quot;Device/Include/ADC.h&quot;</span>/&gt;</div>
@@ -468,7 +468,7 @@ Add the following lines to the PDSC file in the <b>&lt;components&gt;</b> sectio
 <div class="line">  &lt;/files&gt;</div>
 <div class="line">&lt;/component&gt;</div>
 <div class="line"></div>
-<div class="line">&lt;component Cclass=<span class="stringliteral">&quot;CMSIS Driver&quot;</span> Cgroup=<span class="stringliteral">&quot;I2C&quot;</span> Cversion=<span class="stringliteral">&quot;1.0.0&quot;</span> condition=<span class="stringliteral">&quot;MVCM3 CMSIS-CORE&quot;</span> maxInstances=<span class="stringliteral">&quot;3&quot;</span>&gt;</div>
+<div class="line">&lt;component Cclass=<span class="stringliteral">&quot;CMSIS Driver&quot;</span> Cgroup=<span class="stringliteral">&quot;I2C&quot;</span> Cversion=<span class="stringliteral">&quot;1.0.0&quot;</span> condition=<span class="stringliteral">&quot;MVCM3 CMSIS-Core&quot;</span> maxInstances=<span class="stringliteral">&quot;3&quot;</span>&gt;</div>
 <div class="line">  &lt;description&gt;I2C Driver <span class="keywordflow">for</span> MVCM3 Series&lt;/description&gt;</div>
 <div class="line">  &lt;RTE_Components_h&gt;</div>
 <div class="line"><span class="preprocessor">    #define RTE_Drivers_I2C0                </span><span class="comment">/* Driver I2C0 */</span><span class="preprocessor"></span></div>
@@ -481,7 +481,7 @@ Add the following lines to the PDSC file in the <b>&lt;components&gt;</b> sectio
 <div class="line">  &lt;/files&gt;</div>
 <div class="line">&lt;/component&gt;</div>
 <div class="line"></div>
-<div class="line">&lt;component Cclass=<span class="stringliteral">&quot;CMSIS Driver&quot;</span> Cgroup=<span class="stringliteral">&quot;UART&quot;</span> Cversion=<span class="stringliteral">&quot;1.0.0&quot;</span> condition=<span class="stringliteral">&quot;MVCM3 CMSIS-CORE&quot;</span> maxInstances=<span class="stringliteral">&quot;5&quot;</span>&gt;</div>
+<div class="line">&lt;component Cclass=<span class="stringliteral">&quot;CMSIS Driver&quot;</span> Cgroup=<span class="stringliteral">&quot;UART&quot;</span> Cversion=<span class="stringliteral">&quot;1.0.0&quot;</span> condition=<span class="stringliteral">&quot;MVCM3 CMSIS-Core&quot;</span> maxInstances=<span class="stringliteral">&quot;5&quot;</span>&gt;</div>
 <div class="line">  &lt;description&gt;UART Driver <span class="keywordflow">for</span> MVCM3 Series&lt;/description&gt;</div>
 <div class="line">  &lt;RTE_Components_h&gt;</div>
 <div class="line"><span class="preprocessor">    #define RTE_Drivers_UART0               </span><span class="comment">/* Driver UART0 */</span><span class="preprocessor"></span></div>
@@ -524,7 +524,7 @@ Finally, save the PDSC file and regenerate the Pack file using the <a class="el"
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:41 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -10,5 +10,6 @@ var group__CMSIS__RTOS =
     [ "Semaphores", "group__CMSIS__RTOS__SemaphoreMgmt.html", "group__CMSIS__RTOS__SemaphoreMgmt" ],
     [ "Memory Pool", "group__CMSIS__RTOS__PoolMgmt.html", "group__CMSIS__RTOS__PoolMgmt" ],
     [ "Message Queue", "group__CMSIS__RTOS__Message.html", "group__CMSIS__RTOS__Message" ],
-    [ "Definitions", "group__CMSIS__RTOS__Definitions.html", "group__CMSIS__RTOS__Definitions" ]
+    [ "Definitions", "group__CMSIS__RTOS__Definitions.html", "group__CMSIS__RTOS__Definitions" ],
+    [ "OS Tick API", "group__CMSIS__RTOS__TickAPI.html", "group__CMSIS__RTOS__TickAPI" ]
 ];

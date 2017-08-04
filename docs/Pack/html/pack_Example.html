@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -120,15 +120,15 @@ $(document).ready(function(){initNavTree('pack_Example.html','');});
 <tr>
 <td><a class="el" href="pack_Example.html#PE_CMSIS_Driver">CMSIS_Driver</a></td><td><a href="../../Driver/html/index.html"><b>CMSIS-Driver</b></a> compliant peripheral drivers</td><td><a class="el" href="pdsc_components_pg.html#element_component">&lt;component&gt;</a> </td></tr>
 <tr>
-<td><a class="el" href="pack_Example.html#PE_Device">Device</a> </td><td><a href="../../Core/html/index.html"><b>CMSIS-CORE</b></a> files for LPC1800 series </td><td><a class="el" href="pdsc_family_pg.html#element_device">&lt;device&gt;</a> </td></tr>
+<td><a class="el" href="pack_Example.html#PE_Device">Device</a> </td><td><a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a> files for LPC1800 series </td><td><a class="el" href="sdf_pg.html#element_device">&lt;device&gt;</a> </td></tr>
 <tr>
 <td><a class="el" href="pack_Example.html#PE_Documents">Documents</a> </td><td>Documentation for devices and boards </td><td><a class="el" href="pdsc_family_pg.html#element_book">&lt;book&gt;</a> </td></tr>
 <tr>
-<td><b>Flash</b> </td><td><a class="el" href="flashAlgorithm.html">Flash Programming Algorithms</a> and a sub-directory called <b>LPC18xx43xx_IAP</b> containing a uVision project for IAP (In-Application Programming) support</td><td><a class="el" href="pdsc_family_pg.html#element_algorithm">&lt;algorithm&gt;</a> </td></tr>
+<td><b>Flash</b> </td><td><a class="el" href="flashAlgorithm.html">Flash Programming</a> and a sub-directory called <b>LPC18xx43xx_IAP</b> containing a uVision project for IAP (In-Application Programming) support</td><td><a class="el" href="pdsc_family_pg.html#element_algorithm">&lt;algorithm&gt;</a> </td></tr>
 <tr>
 <td><b>Images</b> </td><td>Images of the MCB1800 development board </td><td><a class="el" href="pdsc_boards_pg.html">&lt;board&gt;</a> </td></tr>
 <tr>
-<td><b>SVD</b> </td><td><a href="../../SVD/html/index.html"><b>SVD</b></a> file for LPC1800 series </td><td><a class="el" href="pdsc_family_pg.html#element_debug">&lt;debug&gt;</a> </td></tr>
+<td><b>SVD</b> </td><td><a href="../../SVD/html/index.html"><b>SVD</b></a> file for LPC1800 series </td><td><a class="el" href="sdf_pg.html#element_debug">&lt;debug&gt;</a> </td></tr>
 </table>
 <p><a class="anchor" id="PE_PDSC"></a></p>
 <h2>PDSC Example File </h2>
@@ -209,15 +209,15 @@ $(document).ready(function(){initNavTree('pack_Example.html','');});
 <tr>
 <td><b>dui0552a_cortex_m3_dgug.pdf</b> </td><td>Cortex-M3 Generic User Guide</td><td><a class="el" href="pdsc_family_pg.html#element_book">&lt;book&gt;</a> element of the device <a class="el" href="pdsc_family_pg.html#element_family">&lt;family&gt;</a> element </td></tr>
 <tr>
-<td><b>ES_LPC18X0.pdf</b> </td><td>LPC1800 Errata sheet </td><td><a class="el" href="pdsc_family_pg.html#element_book">&lt;book&gt;</a> element of the <a class="el" href="pdsc_family_pg.html#element_device">&lt;device&gt;</a> section </td></tr>
+<td><b>ES_LPC18X0.pdf</b> </td><td>LPC1800 Errata sheet </td><td><a class="el" href="pdsc_family_pg.html#element_book">&lt;book&gt;</a> element of the <a class="el" href="sdf_pg.html#element_device">&lt;device&gt;</a> section </td></tr>
 <tr>
-<td><b>LPC1850_30_20_10.pdf</b> </td><td>LPC1800 Data sheet </td><td><a class="el" href="pdsc_family_pg.html#element_book">&lt;book&gt;</a> element of the <a class="el" href="pdsc_family_pg.html#element_device">&lt;device&gt;</a> section </td></tr>
+<td><b>LPC1850_30_20_10.pdf</b> </td><td>LPC1800 Data sheet </td><td><a class="el" href="pdsc_family_pg.html#element_book">&lt;book&gt;</a> element of the <a class="el" href="sdf_pg.html#element_device">&lt;device&gt;</a> section </td></tr>
 <tr>
 <td><b>mcb1800.chm</b> </td><td>MCB1800/4300 User's Guide </td><td><a class="el" href="pdsc_boards_pg.html#element_board_book">&lt;book&gt;</a> element of the <a class="el" href="pdsc_boards_pg.html">&lt;boards&gt;</a> section </td></tr>
 <tr>
 <td><b>MCB1800v1-3-schematics.chm</b> </td><td>MCB1800 schematics </td><td><a class="el" href="pdsc_boards_pg.html#element_board_book">&lt;book&gt;</a> element of the <a class="el" href="pdsc_boards_pg.html">&lt;boards&gt;</a> section </td></tr>
 <tr>
-<td><b>UM10430.pdf</b> </td><td>User manual for LPC1800 </td><td><a class="el" href="pdsc_family_pg.html#element_book">&lt;book&gt;</a> element of the <a class="el" href="pdsc_family_pg.html#element_device">&lt;device&gt;</a> section </td></tr>
+<td><b>UM10430.pdf</b> </td><td>User manual for LPC1800 </td><td><a class="el" href="pdsc_family_pg.html#element_book">&lt;book&gt;</a> element of the <a class="el" href="sdf_pg.html#element_device">&lt;device&gt;</a> section </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>Some of these documents are only placeholders for copyright reasons. </dd></dl>
 </div></div><!-- contents -->
@@ -225,7 +225,7 @@ $(document).ready(function(){initNavTree('pack_Example.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:41 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

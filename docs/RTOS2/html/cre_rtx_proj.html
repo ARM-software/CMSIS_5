@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -125,6 +125,7 @@ $(document).ready(function(){initNavTree('cre_rtx_proj.html','');});
 <img src="project_window.png" alt="project_window.png"/>
 </div>
 </li>
+<li>If using the Variant: <b>Source</b> as statet above, you have to assure to use at least C99 compiler mode (Project Options -&gt; C/C++ -&gt; C99 Mode).</li>
 <li><p class="startli">You can add template files to the project by right-clicking on <b>Source Group 1</b> and selecting <b>Add New Item to 'Source Group 1'</b>. In the new window, click on <b>User Code Template</b>. On the right-hand side you will see all available template files for CMSIS-RTOS RTX:</p>
 <div class="image">
 <img src="add_item.png" alt="add_item.png"/>
@@ -132,6 +133,19 @@ $(document).ready(function(){initNavTree('cre_rtx_proj.html','');});
 </li>
 <li><a class="el" href="config_rtx5.html">Configure</a> RTX5 to the application's needs using the <b>RTX_Config.h</b> file.</li>
 </ul>
+<h1><a class="anchor" id="cre_rtx_cortexa"></a>
+Additional requirements for RTX on Cortex-A</h1>
+<p>Cortex-A based microcontrollers are less unified with respect to the interrupt and timer implementations used compared to M-class devices. Thus RTX requires additional components when an A-class device is used, namely <a href="../../Core_A/html/group__irq__ctrl__gr.html"><b>IRQ Controller (API)</b></a> and <a class="el" href="group__CMSIS__RTOS__TickAPI.html">OS Tick (API)</a> implementations.</p>
+<div class="image">
+<img src="manage_rte_cortex-a.png" alt="manage_rte_cortex-a.png"/>
+</div>
+<p>The default implementations provided along with CMSIS are</p>
+<ul>
+<li>ARM <a href="../../Core_A/html/group__GIC__functions.html">Generic Interrupt Controller (GIC)</a></li>
+<li>ARM Cortex-A5, Cortex-A9 <a href="../../Core_A/html/group__PTM__timer__functions.html">Private Timer (PTIM)</a></li>
+<li>ARM Cortex-A7 <a href="../../Core_A/html/group__PL1__timer__functions.html">Generic Physical Timer (GTIM)</a></li>
+</ul>
+<p>For devices not implementing GIC, PTIM nor GTIM please refer to the according device family pack and select the proper implementations.</p>
 <h1><a class="anchor" id="cre_rtx_proj_specifics"></a>
 Add support for RTX specific functions</h1>
 <p>If you require some of the <a class="el" href="group__rtx5__specific.html">RTX specific functions</a> in your application code, #include the <a class="el" href="theory_of_operation.html#rtx_os_h">header file rtx_os.h</a>. This enables <a class="el" href="theory_of_operation.html#lowPower">low-power</a> and <a class="el" href="theory_of_operation.html#TickLess">tick-less</a> operation modes.</p>
@@ -154,7 +168,7 @@ Component selection for Event Recorder</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:03 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:46 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -117,9 +117,9 @@ $(document).ready(function(){initNavTree('group__DAP__Connect.html','');});
 <p>Connect to Device and selected DAP mode. </p>
 <p>The <b>DAP_Connect Command</b> initializes the DAP I/O pins for the specified DAP mode (JTAG or SWD). This command calls the function <a class="el" href="group__DAP__Config__PortIO__gr.html#gab8876acfd193c31fbe5246ca6ba9249e">PORT_SWD_SETUP</a> or <a class="el" href="group__DAP__Config__PortIO__gr.html#ga33c16f83b54b07e2a62bb3423341537e">PORT_JTAG_SETUP</a> which prepares the connection to the Target Device.</p>
 <p><b>DAP_Connect Command:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE |</div>
 <div class="line">&gt; 0x02 | Port |</div>
-<div class="line">       |******| </div>
+<div class="line">|******|******| </div>
 </div><!-- fragment --><ul>
 <li><b>Port:</b> Selects the DAP port mode and configures the DAP I/O pins. The possible values are:<ul>
 <li>0 = Default mode: configuration of the DAP port mode is derived from <a class="el" href="group__DAP__Config__Debug__gr.html#ga89462514881c12c1508395050ce160eb">DAP_DEFAULT_PORT</a> (zero configuration).</li>
@@ -129,9 +129,9 @@ $(document).ready(function(){initNavTree('group__DAP__Connect.html','');});
 </li>
 </ul>
 <p><b>DAP_Connect Response:</b> </p>
-<div class="fragment"><div class="line">  BYTE | BYTE |</div>
+<div class="fragment"><div class="line">| BYTE | BYTE |</div>
 <div class="line">&lt; 0x02 | Port |</div>
-<div class="line">       |******|</div>
+<div class="line">|******|******|</div>
 </div><!-- fragment --><ul>
 <li><b>Port:</b> DAP port mode initialized. The possible values are:<ul>
 <li>0 = initialization failed; no mode pre-configured.</li>
@@ -145,7 +145,7 @@ $(document).ready(function(){initNavTree('group__DAP__Connect.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

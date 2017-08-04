@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -111,24 +111,27 @@ $(document).ready(function(){initNavTree('config_rtx5.html','');});
 <div class="title">Configure RTX v5 </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The file "RTX_Config.h" defines the configuration parameters of CMSIS-RTOS RTX and must be part of every project that is using the CMSIS-RTOS RTX kernel. The file "RTX_Config.c" contains stubs of the functions <b>osRtxIdleThread</b> and <b>osRtxErrorNotify</b> that can be adapted to the application's needs.</p>
-<p>The configuration file uses <a href="http://www.keil.com/pack/doc/CMSIS/Pack/html/_config_wizard.html" class="el" target="_blank">Configuration Wizard Annotations</a>. Depending on the development tool, the annotations might lead to a more user-friendly graphical representation of the settings. The screenshot below is a screenshot from the µVision <b>Configuration</b> <b>Wizard</b> view:</p>
+<div class="textblock"><p>The file "RTX_Config.h" defines the configuration parameters of CMSIS-RTOS RTX and must be part of every project that is using the CMSIS-RTOS RTX kernel. The configuration options are explained in detail in the following sections:</p>
+<ul>
+<li><a class="el" href="config_rtx5.html#systemConfig">System Configuration</a> covers system-wide settings for the global memory pool, tick frequency, ISR event buffer and round-robin thread switching.</li>
+<li><a class="el" href="config_rtx5.html#threadConfig">Thread Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html">Thread Management</a> functions.</li>
+<li><a class="el" href="config_rtx5.html#timerConfig">Timer Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html">Timer Management</a> functions.</li>
+<li><a class="el" href="config_rtx5.html#eventFlagsConfig">Event Flags Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__EventFlags.html">Event Flags</a> functions.</li>
+<li><a class="el" href="config_rtx5.html#mutexConfig">Mutex Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html">Mutex Management</a> functions.</li>
+<li><a class="el" href="config_rtx5.html#semaphoreConfig">Semaphore Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html">Semaphores</a> functions.</li>
+<li><a class="el" href="config_rtx5.html#memPoolConfig">Memory Pool Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html">Memory Pool</a> functions.</li>
+<li><a class="el" href="config_rtx5.html#msgQueueConfig">Message Queue Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__Message.html">Message Queue</a> functions.</li>
+</ul>
+<p>The file "RTX_Config.c" contains default implementations of the functions <a class="el" href="group__rtx5__specific__functions.html#gacc47720b9a10fcb7d3412640c8276465">osRtxIdleThread</a> and <a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a>. Both functions can simply be overwritten with a custimized behavior by redefining them as part of the user code.</p>
+<p>The configuration file uses <b>Configuration Wizard Annotations</b>. Refer to <b>Pack - Configuration Wizard Annotations</b> for details. Depending on the development tool, the annotations might lead to a more user-friendly graphical representation of the settings. The screenshot below is a screenshot from the µVision <b>Configuration</b> <b>Wizard</b> view:</p>
 <div class="image">
 <img src="config_wizard.png" alt="config_wizard.png"/>
 <div class="caption">
 RTX_Config.h in Configuration Wizard View</div></div>
-<p> The configuration options are explained on these pages:</p>
-<ul>
-<li><a class="el" href="config_rtx5.html#systemConfig">System Configuration</a></li>
-<li><a class="el" href="config_rtx5.html#threadConfig">Thread Configuration</a></li>
-<li><a class="el" href="config_rtx5.html#timerConfig">Timer Configuration</a></li>
-<li><a class="el" href="config_rtx5.html#eventFlagsConfig">Event Flags Configuration</a></li>
-<li><a class="el" href="config_rtx5.html#mutexConfig">Mutex Configuration</a></li>
-<li><a class="el" href="config_rtx5.html#semaphoreConfig">Semaphore Configuration</a></li>
-<li><a class="el" href="config_rtx5.html#memPoolConfig">Memory Pool Configuration</a></li>
-<li><a class="el" href="config_rtx5.html#msgQueueConfig">Message Queue Configuration</a></li>
-</ul>
-<h1><a class="anchor" id="systemConfig"></a>
+<p> Alternatively one can provide configuration options using the compiler command line.</p>
+<p>For example one can customize the used tick frequency to 100us by (overwriting) the configuration using </p>
+<div class="fragment"><div class="line">cc -DOS_TICK_FREQ=100</div>
+</div><!-- fragment --><h1><a class="anchor" id="systemConfig"></a>
 System Configuration</h1>
 <p>The system configuration covers system-wide settings for the global memory pool, tick frequency, ISR event buffer and round-robin thread switching.</p>
 <p><b>System Configuration Options</b> </p>
@@ -205,7 +208,7 @@ RTX_Config.h: Thread Configuration</div></div>
 Configuration of Thread Count and Stack Space</h2>
 <p>The RTX5 kernel uses a separate stack space for each thread and provides two methods for defining the stack requirements:</p>
 <ul>
-<li><b>Static allocation</b>: when <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">osThreadAttr_t::stack_mem</a> and <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#aacbc9a219f2d6870e9ce89bb93f975c9">osThreadAttr_t::stack_size</a> specify a memory area which is used for the thread stack.</li>
+<li><b>Static allocation</b>: when <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">osThreadAttr_t::stack_mem</a> and <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#aacbc9a219f2d6870e9ce89bb93f975c9">osThreadAttr_t::stack_size</a> specify a memory area which is used for the thread stack. <b>Attention:</b> The stack memory provided must be 64-bit aligned, i.e. by using uint64_t for declaration.</li>
 <li><b>Dynamic allocation</b>: when <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> is NULL or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">osThreadAttr_t::stack_mem</a> is NULL, the system allocates the stack memory from:<ul>
 <li>Object-specific Memory Pool (default Stack size) when "Object specific Memory allocation" is enabled and "Number of
        user Threads with default Stack size" is not <span class="XML-Token">0</span> and <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#aacbc9a219f2d6870e9ce89bb93f975c9">osThreadAttr_t::stack_size</a> is <span class="XML-Token">0</span> (or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> is NULL).</li>
@@ -372,7 +375,7 @@ Object-specific memory allocation</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:03 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:46 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

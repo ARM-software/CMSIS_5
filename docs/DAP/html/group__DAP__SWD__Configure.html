@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -117,9 +117,9 @@ $(document).ready(function(){initNavTree('group__DAP__SWD__Configure.html','');}
 <p>Configure SWD Protocol. </p>
 <p>The <b>DAP_SWD_Configure Command</b> sets the SWD protocol configuration. For more information about the SWD protocol refer to the <b>ARM Debug Interface v5 - Interface Specification.</b></p>
 <p><b>DAP_SWD_Configure Command</b>: </p>
-<div class="fragment"><div class="line">  BYTE | BYTE *********|</div>
+<div class="fragment"><div class="line">| BYTE | BYTE *********|</div>
 <div class="line">&gt; 0x13 | Configuration |</div>
-<div class="line">       |***************|</div>
+<div class="line">|******|***************|</div>
 </div><!-- fragment --><ul>
 <li><b>Configuration:</b> Contains information about SWD specific features <br/>
 <ul>
@@ -129,9 +129,9 @@ $(document).ready(function(){initNavTree('group__DAP__SWD__Configure.html','');}
 </li>
 </ul>
 <p><b>DAP_SWD_Configure Response</b>: </p>
-<div class="fragment"><div class="line">  BYTE | BYTE **|</div>
+<div class="fragment"><div class="line">| BYTE | BYTE **|</div>
 <div class="line">&lt; 0x13 | Status |</div>
-<div class="line">       |********|</div>
+<div class="line">|******|********|</div>
 </div><!-- fragment --><ul>
 <li><b>Status:</b> <a class="el" href="group__DAP__Response__Status.html">Response Status</a> </li>
 </ul>
@@ -140,7 +140,7 @@ $(document).ready(function(){initNavTree('group__DAP__SWD__Configure.html','');}
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

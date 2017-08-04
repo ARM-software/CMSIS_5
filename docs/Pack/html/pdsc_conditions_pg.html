@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -132,15 +132,15 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <div class="line">    &lt;accept Dcore=<span class="stringliteral">&quot;SC300&quot;</span>/&gt;</div>
 <div class="line">  &lt;/condition&gt;</div>
 <div class="line"></div>
-<div class="line">  &lt;condition <span class="keywordtype">id</span>=<span class="stringliteral">&quot;CMSIS-CORE&quot;</span>&gt;                     &lt;!-- defines the condition with the ID <span class="stringliteral">&quot;CMSIS-CORE&quot;</span> --&gt;</div>
+<div class="line">  &lt;condition <span class="keywordtype">id</span>=<span class="stringliteral">&quot;CMSIS-Core&quot;</span>&gt;                     &lt;!-- defines the condition with the ID <span class="stringliteral">&quot;CMSIS-Core&quot;</span> --&gt;</div>
 <div class="line">    &lt;description&gt;True <span class="keywordflow">if</span> the component Device Startup is selected and the device has a Cortex-M processor&lt;/description&gt;</div>
 <div class="line">    &lt;require Cclass=<span class="stringliteral">&quot;Device&quot;</span> Cgroup=<span class="stringliteral">&quot;Startup&quot;</span>/&gt;   &lt;!-- needs a software component Device Startup AND ... --&gt;</div>
 <div class="line">    &lt;require condition=<span class="stringliteral">&quot;Cortex-M&quot;</span>/&gt;               &lt;!-- ... needs that condition with ID=Cortex-M to be <span class="keyword">true</span>. --&gt;</div>
 <div class="line">  &lt;/condition&gt;</div>
 <div class="line"></div>
 <div class="line">  &lt;condition <span class="keywordtype">id</span>=<span class="stringliteral">&quot;CMSIS-DSP&quot;</span>&gt;                      &lt;!-- defines the condition with the ID <span class="stringliteral">&quot;CMSIS-DSP&quot;</span> --&gt;</div>
-<div class="line">    &lt;description&gt;True <span class="keywordflow">if</span> CMSIS-CORE == TRUE and either GCC or ARMCC and device running in little-endian byte ordering&lt;/description&gt;</div>
-<div class="line">    &lt;require condition=<span class="stringliteral">&quot;CMSIS-CORE&quot;</span>/&gt;             &lt;!-- needs a software component Device Startup AND ... --&gt;</div>
+<div class="line">    &lt;description&gt;True <span class="keywordflow">if</span> CMSIS-Core == TRUE and either GCC or ARMCC and device running in little-endian byte ordering&lt;/description&gt;</div>
+<div class="line">    &lt;require condition=<span class="stringliteral">&quot;CMSIS-Core&quot;</span>/&gt;             &lt;!-- needs a software component Device Startup AND ... --&gt;</div>
 <div class="line">    &lt;accept Tcompiler=<span class="stringliteral">&quot;GCC&quot;</span>/&gt;                     &lt;!-- ... works either with the GCC compiler OR ... --&gt;</div>
 <div class="line">    &lt;accept Tcompiler=<span class="stringliteral">&quot;ARMCC&quot;</span>/&gt;                   &lt;!-- ... the ARMCC compiler AND ... --&gt;</div>
 <div class="line">    &lt;require Dendian=<span class="stringliteral">&quot;Little-endian&quot;</span>/&gt;            &lt;!-- ... requires a device running in little-endian byte ordering --&gt;</div>
@@ -321,7 +321,7 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:42 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

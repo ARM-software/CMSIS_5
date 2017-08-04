@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -173,9 +173,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga26e0a22f49576824d853fb434cf6b079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#ga26e0a22f49576824d853fb434cf6b079">EvrRtxKernelResumed</a> (void)</td></tr>
 <tr class="memdesc:ga26e0a22f49576824d853fb434cf6b079"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful RTOS Kernel scheduler resume (Op)  <a href="#ga26e0a22f49576824d853fb434cf6b079">More...</a><br/></td></tr>
 <tr class="separator:ga26e0a22f49576824d853fb434cf6b079"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabf31210c0ae0736ff0613cbabf4975f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#gabf31210c0ae0736ff0613cbabf4975f5">EvrRtxKernelGetTickCount</a> (uint64_t count)</td></tr>
-<tr class="memdesc:gabf31210c0ae0736ff0613cbabf4975f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on RTOS kernel tick count retrieve (API)  <a href="#gabf31210c0ae0736ff0613cbabf4975f5">More...</a><br/></td></tr>
-<tr class="separator:gabf31210c0ae0736ff0613cbabf4975f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64431a63437506a6f7fe22637d4891c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#ga64431a63437506a6f7fe22637d4891c5">EvrRtxKernelGetTickCount</a> (uint32_t count)</td></tr>
+<tr class="memdesc:ga64431a63437506a6f7fe22637d4891c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on RTOS kernel tick count retrieve (API)  <a href="#ga64431a63437506a6f7fe22637d4891c5">More...</a><br/></td></tr>
+<tr class="separator:ga64431a63437506a6f7fe22637d4891c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7404f3a22af84ad4091c24811fc1bf87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#ga7404f3a22af84ad4091c24811fc1bf87">EvrRtxKernelGetTickFreq</a> (uint32_t freq)</td></tr>
 <tr class="memdesc:ga7404f3a22af84ad4091c24811fc1bf87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on RTOS kernel tick frequency retrieve (API)  <a href="#ga7404f3a22af84ad4091c24811fc1bf87">More...</a><br/></td></tr>
 <tr class="separator:ga7404f3a22af84ad4091c24811fc1bf87"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -663,14 +663,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gabf31210c0ae0736ff0613cbabf4975f5"></a>
+<a class="anchor" id="ga64431a63437506a6f7fe22637d4891c5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void EvrRtxKernelGetTickCount </td>
           <td>(</td>
-          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>count</em></td><td>)</td>
           <td></td>
         </tr>
@@ -682,10 +682,10 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>KernelGetTickCount</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga3cad48045fb59e47dc8bab75b420cb5f">osKernelGetTickCount</a> is called and its execution result is known.</p>
+<p>The event <b>KernelGetTickCount</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a> is called.</p>
 <p><b>Value</b> in the Event Recorder shows:</p>
 <ul>
-<li><b>count</b> : retrieved kernel current tick count (0 in case of a failure). </li>
+<li><b>count</b> : retrieved kernel current tick count. </li>
 </ul>
 
 </div>
@@ -709,10 +709,10 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>KernelGetTickFreq</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee">osKernelGetTickFreq</a> called and its execution result is known.</p>
+<p>The event <b>KernelGetTickFreq</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee">osKernelGetTickFreq</a> called.</p>
 <p><b>Value</b> in the Event Recorder shows:</p>
 <ul>
-<li><b>freq</b> : retrieved frequency of the kernel tick in Hz (0 in case of a failure). </li>
+<li><b>freq</b> : retrieved frequency of the kernel tick in Hz. </li>
 </ul>
 
 </div>
@@ -736,7 +736,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>KernelGetSysTimerCount</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae0fcaff6cecfb4013bb556c87afcd7d2">osKernelGetSysTimerCount</a> is called and its execution result is known.</p>
+<p>The event <b>KernelGetSysTimerCount</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae0fcaff6cecfb4013bb556c87afcd7d2">osKernelGetSysTimerCount</a> is called.</p>
 <p><b>Value</b> in the Event Recorder shows:</p>
 <ul>
 <li><b>count</b> : retrieved kernel current system timer count as 32-bit value. </li>
@@ -763,7 +763,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>KernelGetSysTimerFreq</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a">osKernelGetSysTimerFreq</a> is called and its execution result is known.</p>
+<p>The event <b>KernelGetSysTimerFreq</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a">osKernelGetSysTimerFreq</a> is called.</p>
 <p><b>Value</b> in the Event Recorder shows:</p>
 <ul>
 <li><b>freq</b> : retrieved frequency of the system timer in Hz. </li>
@@ -776,7 +776,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:46 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

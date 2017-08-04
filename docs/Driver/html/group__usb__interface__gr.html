@@ -137,16 +137,15 @@ Content</h2></td></tr>
 <p>The <b>Universal Serial Bus</b> (USB) implements a serial bus for data exchange. It is a host controlled, plug-and-play interface between a USB host and USB devices using a tiered star topology. In microcontroller (MCU) applications, the interface is often used to connect a device to a host for data exchange or control purposes.</p>
 <ul>
 <li>Wikipedia offers more information about the <a href="http://en.wikipedia.org/wiki/Universal_Serial_Bus" target="_blank"><b>Universal Serial Bus</b></a>.</li>
-<li><p class="startli">The USB Implementers Forum provides detailed documentation under <a href="http://www.usb.org"><b>www.usb.org</b></a>.</p>
-<p class="startli">Block Diagram**</p>
-</li>
+<li>The USB Implementers Forum provides detailed documentation under <a href="http://www.usb.org"><b>www.usb.org</b></a>.</li>
 </ul>
+<p><b>Block Diagram</b></p>
 <p>Typically only one USB Device is connected to a USB Host. If several USB devices must be connected to the same USB host, then the connection must be done via a USB hub.</p>
 <div class="image">
 <img src="USB_Schematics.png" alt="USB_Schematics.png"/>
 <div class="caption">
 Simplified USB Schema</div></div>
-<p>USB API**</p>
+<p><b>USB API</b></p>
 <p>The following header files define the Application Programming Interface (API) for the USB interface:</p>
 <ul>
 <li><b>Driver_USB.h</b> : Common definitions of the USBD and USBH interface</li>
@@ -154,7 +153,7 @@ Simplified USB Schema</div></div>
 <li><b>Driver_USBH.h</b> : Driver API for USB Host Peripheral</li>
 </ul>
 <p>The driver implementation is a typical part of the Device Family Pack (DFP) that supports the peripherals of the microcontroller family.</p>
-<p>Driver Functions**</p>
+<p><b>Driver Functions</b></p>
 <p>The driver functions are published in the access struct as explained in <a class="el" href="theoryOperation.html#DriverFunctions">Common Driver Functions</a></p>
 <ul>
 <li><a class="el" href="group__usbd__interface__gr.html#structARM__DRIVER__USBD">ARM_DRIVER_USBD</a> : access struct for USBD driver functions</li>
@@ -165,7 +164,7 @@ Simplified USB Schema</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:45 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:20 for CMSIS-Driver by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

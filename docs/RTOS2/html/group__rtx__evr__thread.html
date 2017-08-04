@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -209,9 +209,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gadd45d32305aa45668a36f2c9f0f4c758"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#gadd45d32305aa45668a36f2c9f0f4c758">EvrRtxThreadDelay</a> (uint32_t ticks)</td></tr>
 <tr class="memdesc:gadd45d32305aa45668a36f2c9f0f4c758"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on wait for timeout (API)  <a href="#gadd45d32305aa45668a36f2c9f0f4c758">More...</a><br/></td></tr>
 <tr class="separator:gadd45d32305aa45668a36f2c9f0f4c758"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga69f6e60c1e29103cced03f75c96f3591"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga69f6e60c1e29103cced03f75c96f3591">EvrRtxThreadDelayUntil</a> (uint64_t ticks)</td></tr>
-<tr class="memdesc:ga69f6e60c1e29103cced03f75c96f3591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on wait until specified time (API)  <a href="#ga69f6e60c1e29103cced03f75c96f3591">More...</a><br/></td></tr>
-<tr class="separator:ga69f6e60c1e29103cced03f75c96f3591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf59defd6c171d2c3d3508e7136278db2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#gaf59defd6c171d2c3d3508e7136278db2">EvrRtxThreadDelayUntil</a> (uint32_t ticks)</td></tr>
+<tr class="memdesc:gaf59defd6c171d2c3d3508e7136278db2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on wait until specified time (API)  <a href="#gaf59defd6c171d2c3d3508e7136278db2">More...</a><br/></td></tr>
+<tr class="separator:gaf59defd6c171d2c3d3508e7136278db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab46562848142ce5ea806d629fd000168"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#gab46562848142ce5ea806d629fd000168">EvrRtxThreadDelayCompleted</a> (void)</td></tr>
 <tr class="memdesc:gab46562848142ce5ea806d629fd000168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on completed wait (Op)  <a href="#gab46562848142ce5ea806d629fd000168">More...</a><br/></td></tr>
 <tr class="separator:gab46562848142ce5ea806d629fd000168"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1184,14 +1184,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga69f6e60c1e29103cced03f75c96f3591"></a>
+<a class="anchor" id="gaf59defd6c171d2c3d3508e7136278db2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void EvrRtxThreadDelayUntil </td>
           <td>(</td>
-          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>ticks</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1203,7 +1203,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ThreadDelayUntil</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">osDelayUntil</a> is called.</p>
+<p>The event <b>ThreadDelayUntil</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">osDelayUntil</a> is called.</p>
 <p><b>Value</b> in the Event Recorder shows:</p>
 <ul>
 <li><b>ticks</b> : absolute delay time in ticks. </li>
@@ -1233,7 +1233,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:46 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

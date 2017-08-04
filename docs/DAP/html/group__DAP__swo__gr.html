@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -141,7 +141,8 @@ Content</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Configure the parameters for SWO mode. </p>
 <h2>CMSIS-DAP SWO (Serial Wire Output) </h2>
-<p>CMSIS-DAP (CoreSight Debug Access Port) specifies debug protocol and interface for devices with CoreSight Debug and Trace. Currently it only supports debug but not also trace.</p>
+<p>CMSIS-DAP (CoreSight Debug Access Port) specifies debug protocol and interface for devices with CoreSight Debug and Trace.</p>
+<dl class="section note"><dt>Note</dt><dd>The <a class="el" href="group__DAP__swo__gr.html">SWO Commands</a> are only available when <a class="el" href="group__DAP__Info.html">DAP_Info</a> with ID=0xF0 (Capabilities) returns in <b>Info</b> - Bit 2: <b>1 = SWO UART</b> or Bit 3: <b>1 = SWO Manchester</b>.</dd></dl>
 <p>The following extension adds support for trace over SWO (Serial Wire Output).</p>
 <p>SWO add-on is a compatible extension of the existing CMSIS-DAP specification. Existing debugger implementations on PC do not require any modifications for debugging. They only need to be extended in order to support trace.</p>
 <p>The following new commands are added:</p>
@@ -163,7 +164,7 @@ Content</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

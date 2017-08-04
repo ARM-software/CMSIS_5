@@ -28,8 +28,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"group__CMSIS__RTOS__ThreadMgmt.html#gab9f8bd715d671c6ee27644867bc1bf65",
-"group__rtx__evr__semaphore.html#gad46ee88b57aed4c666aec773560aebad"
+"group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820da339313e26613bc12f66a852e2ff8745e",
+"group__rtx__evr__mutex.html#gaa3feba455090d50295cbf4b1447f3f87"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

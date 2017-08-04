@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.0</span>
+   &#160;<span id="projectnumber">Version 2.1.1</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -129,11 +129,38 @@ $(document).ready(function(){initNavTree('globals_func_o.html','');});
 &#160;
 
 <h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
+<li>OS_Tick_AcknowledgeIRQ()
+: <a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga57065ec4b281504ad4de13a419870b4f">os_tick.h</a>
+</li>
+<li>OS_Tick_Disable()
+: <a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga5e325c304fef5003b1dc31906f6a3056">os_tick.h</a>
+</li>
+<li>OS_Tick_Enable()
+: <a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga3e47971bf3a02599d9ecb32208adafec">os_tick.h</a>
+</li>
+<li>OS_Tick_GetClock()
+: <a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga936217ea28236fb57648973e0d8f627a">os_tick.h</a>
+</li>
+<li>OS_Tick_GetCount()
+: <a class="el" href="group__CMSIS__RTOS__TickAPI.html#gaa64a145a554f1e5077848938d7f39c92">os_tick.h</a>
+</li>
+<li>OS_Tick_GetInterval()
+: <a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga123151dc19d5a94a68f12cdbf61a9bb5">os_tick.h</a>
+</li>
+<li>OS_Tick_GetIRQn()
+: <a class="el" href="group__CMSIS__RTOS__TickAPI.html#gaa8b4eca23e3ffe2df403291958cdc905">os_tick.h</a>
+</li>
+<li>OS_Tick_GetOverflow()
+: <a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga1f9a593126b7f0b66fc526c2cebd6192">os_tick.h</a>
+</li>
+<li>OS_Tick_Setup()
+: <a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga5eeffb4d9dc6c6802fee8898096d9a59">os_tick.h</a>
+</li>
 <li>osDelay()
 : <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf6055a51390ef65b6b6edc28bf47322e">cmsis_os2.h</a>
 </li>
 <li>osDelayUntil()
-: <a class="el" href="group__CMSIS__RTOS__Wait.html#gaf0763875335699a9baa704ee36990d3c">cmsis_os2.h</a>
+: <a class="el" href="group__CMSIS__RTOS__Wait.html#ga3c807924c2d6d43bc2ffb49da3f7f3a1">cmsis_os2.h</a>
 </li>
 <li>osEventFlagsClear()
 : <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga93bf258ca0007c6641fbe8e4f2b8a1e5">cmsis_os2.h</a>
@@ -169,7 +196,7 @@ $(document).ready(function(){initNavTree('globals_func_o.html','');});
 : <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a">cmsis_os2.h</a>
 </li>
 <li>osKernelGetTickCount()
-: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga3cad48045fb59e47dc8bab75b420cb5f">cmsis_os2.h</a>
+: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">cmsis_os2.h</a>
 </li>
 <li>osKernelGetTickFreq()
 : <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee">cmsis_os2.h</a>
@@ -276,24 +303,6 @@ $(document).ready(function(){initNavTree('globals_func_o.html','');});
 <li>osRtxIdleThread()
 : <a class="el" href="group__rtx5__specific__functions.html#gacc47720b9a10fcb7d3412640c8276465">rtx_os.h</a>
 </li>
-<li>osRtxSysTimerAckIRQ()
-: <a class="el" href="group__rtx5__specific__functions.html#ga9194d74a1170a6107fb8a9bb3783dace">rtx_os.h</a>
-</li>
-<li>osRtxSysTimerDisable()
-: <a class="el" href="group__rtx5__specific__functions.html#gaf8200a879df96753af1af391fadd9f9e">rtx_os.h</a>
-</li>
-<li>osRtxSysTimerEnable()
-: <a class="el" href="group__rtx5__specific__functions.html#ga186a61d27c68b3ae841dded8f1289857">rtx_os.h</a>
-</li>
-<li>osRtxSysTimerGetCount()
-: <a class="el" href="group__rtx5__specific__functions.html#gaa1b9fdcae08625c1f32e230051c3601f">rtx_os.h</a>
-</li>
-<li>osRtxSysTimerGetFreq()
-: <a class="el" href="group__rtx5__specific__functions.html#gaa15aeddbccbc909c2ea88f9e2fe98ccf">rtx_os.h</a>
-</li>
-<li>osRtxSysTimerSetup()
-: <a class="el" href="group__rtx5__specific__functions.html#gaa10ba9022d27bfbf2f76c40663f4598d">rtx_os.h</a>
-</li>
 <li>osSemaphoreAcquire()
 : <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">cmsis_os2.h</a>
 </li>
@@ -399,7 +408,7 @@ $(document).ready(function(){initNavTree('globals_func_o.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:04 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:47 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

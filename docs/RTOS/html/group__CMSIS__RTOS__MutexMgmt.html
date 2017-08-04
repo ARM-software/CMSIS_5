@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('group__CMSIS__RTOS__MutexMgmt.html',''
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga9b522438489d7c402c95332b58bc94f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga9b522438489d7c402c95332b58bc94f3">osMutexDef</a>(name)&#160;&#160;&#160;const <a class="el" href="structosMutexDef__t.html">osMutexDef_t</a> os_mutex_def_##name = { 0 }</td></tr>
+<tr class="memitem:ga9b522438489d7c402c95332b58bc94f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga9b522438489d7c402c95332b58bc94f3">osMutexDef</a>(name)&#160;&#160;&#160;const <a class="el" href="cmsis__os_8h.html#structosMutexDef__t">osMutexDef_t</a> os_mutex_def_##name = { 0 }</td></tr>
 <tr class="memdesc:ga9b522438489d7c402c95332b58bc94f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a Mutex.  <a href="#ga9b522438489d7c402c95332b58bc94f3">More...</a><br/></td></tr>
 <tr class="separator:ga9b522438489d7c402c95332b58bc94f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1122a86faa64b4a0880c76cf68d0c934"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga1122a86faa64b4a0880c76cf68d0c934">osMutex</a>(name)&#160;&#160;&#160;&amp;os_mutex_def_##name</td></tr>
@@ -129,7 +129,7 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga5c9de56e717016e39e788064e9a291cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__os_8h.html#a3263c1ad9fd79b84f908d65e8da44ac2">osMutexId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga5c9de56e717016e39e788064e9a291cc">osMutexCreate</a> (const <a class="el" href="structosMutexDef__t.html">osMutexDef_t</a> *mutex_def)</td></tr>
+<tr class="memitem:ga5c9de56e717016e39e788064e9a291cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__os_8h.html#a3263c1ad9fd79b84f908d65e8da44ac2">osMutexId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga5c9de56e717016e39e788064e9a291cc">osMutexCreate</a> (const <a class="el" href="cmsis__os_8h.html#structosMutexDef__t">osMutexDef_t</a> *mutex_def)</td></tr>
 <tr class="memdesc:ga5c9de56e717016e39e788064e9a291cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and Initialize a Mutex object.  <a href="#ga5c9de56e717016e39e788064e9a291cc">More...</a><br/></td></tr>
 <tr class="separator:ga5c9de56e717016e39e788064e9a291cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5e1752b73f573ee015dbd9ef1edaba13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Status.html#gae2e091fefc4c767117727bd5aba4d99e">osStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga5e1752b73f573ee015dbd9ef1edaba13">osMutexWait</a> (<a class="el" href="cmsis__os_8h.html#a3263c1ad9fd79b84f908d65e8da44ac2">osMutexId</a> mutex_id, uint32_t millisec)</td></tr>
@@ -201,7 +201,7 @@ CMSIS-RTOS Mutex</div></div>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;const <a class="el" href="structosMutexDef__t.html">osMutexDef_t</a> os_mutex_def_##name = { 0 }</td>
+          <td>&#160;&#160;&#160;const <a class="el" href="cmsis__os_8h.html#structosMutexDef__t">osMutexDef_t</a> os_mutex_def_##name = { 0 }</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -224,7 +224,7 @@ CMSIS-RTOS Mutex</div></div>
         <tr>
           <td class="memname"><a class="el" href="cmsis__os_8h.html#a3263c1ad9fd79b84f908d65e8da44ac2">osMutexId</a> osMutexCreate </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structosMutexDef__t.html">osMutexDef_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="cmsis__os_8h.html#structosMutexDef__t">osMutexDef_t</a> *&#160;</td>
           <td class="paramname"><em>mutex_def</em></td><td>)</td>
           <td></td>
         </tr>
@@ -432,7 +432,7 @@ CMSIS-RTOS Mutex</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:02 for CMSIS-RTOS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:44 for CMSIS-RTOS by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

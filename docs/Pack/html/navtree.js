@@ -51,8 +51,8 @@ var NAVTREE =
       [ "Code Example", "configWizard.html#configWizard_codeExample", null ],
       [ "Tool-specific display", "configWizard.html#configWizard_display", null ]
     ] ],
-    [ "Flash Programming Algorithms", "flashAlgorithm.html", "flashAlgorithm" ],
-    [ "Simplifying debug setup using debug descriptions", "coresight_setup.html", "coresight_setup" ],
+    [ "Flash Programming", "flashAlgorithm.html", "flashAlgorithm" ],
+    [ "Debug Setup with CMSIS-Pack", "coresight_setup.html", "coresight_setup" ],
     [ "Project Description (*.CPDSC) Format", "cpdsc_pg.html", [
       [ "Definition of CMSIS project", "cpdsc_pg.html#cpdsc_definition", null ],
       [ "CPDSC top level structure", "cpdsc_pg.html#cpdsc_structure", null ],
@@ -70,6 +70,26 @@ var NAVTREE =
       [ "/package/create/project/files", "cpdsc_pg.html#cpdsc_files_pg", null ],
       [ "/package/project/create/files/.../file", "cpdsc_pg.html#element_project_file", null ],
       [ "/package/create/project/files/.../group", "cpdsc_pg.html#element_project_group", null ]
+    ] ],
+    [ "System Description File (*.SDF) Format", "sdf_pg.html", [
+      [ "SDF top level structure", "sdf_pg.html#sdf_structure", null ],
+      [ "/system_description", "sdf_pg.html#element_system_description", null ],
+      [ "/system_description/debug_and_trace_config", "sdf_pg.html#element_debug_and_trace_config", null ],
+      [ "/system_description/debug_and_trace_config/debug", "sdf_pg.html#element_debug", null ],
+      [ "/system_description/.../config_item", "sdf_pg.html#element_config_item", null ],
+      [ "/system_description/debug_and_trace_config/trace", "sdf_pg.html#element_trace", null ],
+      [ "/system_description/debug_and_trace_config/trace/trace_capture", "sdf_pg.html#element_trace_capture", null ],
+      [ "/system_description/platform", "sdf_pg.html#element_platform", null ],
+      [ "/system_description/platform/scanchain", "sdf_pg.html#element_scanchain", null ],
+      [ "/system_description/platform/scanchain/dap", "sdf_pg.html#element_dap", null ],
+      [ "/system_description/platform/scanchain/device", "sdf_pg.html#element_device", null ],
+      [ "/system_description/platform/scanchain/../../config_items", "sdf_pg.html#element_config_items", null ],
+      [ "/system_description/platform/scanchain/../../device_info_items", "sdf_pg.html#element_device_info_items", null ],
+      [ "/system_description/platform/scanchain/../../device_info_items/device_info_item", "sdf_pg.html#element_device_info_item", null ],
+      [ "/system_description/platform/topology", "sdf_pg.html#element_topology", null ],
+      [ "/system_description/platform/topology/topology_link", "sdf_pg.html#element_topology_link", null ],
+      [ "/system_description/platform/clusters", "sdf_pg.html#element_clusters", null ],
+      [ "/system_description/platform/clusters/cluster", "sdf_pg.html#element_cluster", null ]
     ] ],
     [ "CMSIS-Pack Index Files", "packIndexFile.html", [
       [ "Package Index File (pidx)", "packIndexFile.html#pidxFile", null ],

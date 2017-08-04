@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -137,6 +137,9 @@ Content</h2></td></tr>
 <tr class="memitem:group__DAP__transfer__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__transfer__gr.html">Transfer Commands</a></td></tr>
 <tr class="memdesc:group__DAP__transfer__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read and Writes to CoreSight registers. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group__DAP__TestInput__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__TestInput__gr.html">Test Input Commands</a></td></tr>
+<tr class="memdesc:group__DAP__TestInput__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Management commands for optional Test Inputs. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__DAP__atomic__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__atomic__gr.html">Atomic Commands</a></td></tr>
 <tr class="memdesc:group__DAP__atomic__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute atomic commands. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,6 +151,7 @@ Content</h2></td></tr>
 <p>Commands between Debug Unit and host computer. </p>
 <p>This section explains each command that is exchanged between the Debug Unit and the host computer. Every Command starts with a Command-ID and optional data. Depending on the Command, the CMSIS-DAP firmware replies with a Response that repeats the Command-ID and delivers additional data.</p>
 <p>Command and Response data have a package size limitation that is defined with <a class="el" href="group__DAP__Config__Debug__gr.html#gaa28bb1da2661291634c4a8fb3e227404">DAP_PACKET_SIZE</a>. This configuration setting can be obtained with the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> and is used to optimize the performance for Full-Speed or High-Speed USB. The debugger must ensure that each data package fits within the limitations of the configured <a class="el" href="group__DAP__Config__Debug__gr.html#gaa28bb1da2661291634c4a8fb3e227404">DAP_PACKET_SIZE</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>Commands that are not implemented reply with 0xFF instead of repeating the command byte. The available commands can be evaluated using the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> with 0xF0 (Capabilities).</dd></dl>
 <h2>Conventions and Command Structure </h2>
 <p>The following conventions describe the command semantic used in the following documentation:</p>
 <table class="doxtable">
@@ -160,9 +164,13 @@ Content</h2></td></tr>
 <tr>
 <td>BYTE </td><td>8-bit value. </td></tr>
 <tr>
-<td>SHORT </td><td>16-bit value. </td></tr>
+<td>SHORT </td><td>16-bit value (low byte first). </td></tr>
 <tr>
-<td>WORD </td><td>32-bit value. </td></tr>
+<td>WORD </td><td>32-bit value (low byte first). </td></tr>
+<tr>
+<td>LWORD </td><td>64-bit value (low byte first). </td></tr>
+<tr>
+<td>FLOAT </td><td>32-bit single precision floating point value (LSB first). </td></tr>
 <tr>
 <td>0x01 </td><td>Fixed HEX value in C notation. Used for example to identify a command. </td></tr>
 <tr>
@@ -181,20 +189,20 @@ Content</h2></td></tr>
 <li>The third line indicates the occurrence of the field.</li>
 </ul>
 <p><b>Examples:</b> </p>
-<div class="fragment"><div class="line">  BYTE | SHORT *| WORD ***|</div>
+<div class="fragment"><div class="line">| BYTE | SHORT *| WORD ***|</div>
 <div class="line">&gt; 0x99 | RecLen | Data    |</div>
-<div class="line">       |********|+++++++++| </div>
+<div class="line">|******|********|+++++++++| </div>
 </div><!-- fragment --><p>The Command with the Command-ID <em>0x99</em> is sent from the host computer to the Debug Unit. The value of <em>RecLen</em> indicates the number of WORDS that follow with <em>Data</em>. <em>Data</em> is repeated several times depending on the value of <em>RecLen</em>.</p>
 <p>Depending on the Command the Debug Unit may send a <b>Response</b>. </p>
-<div class="fragment"><div class="line">  BYTE ***| WORD***********|</div>
+<div class="fragment"><div class="line">| BYTE ***| WORD***********|</div>
 <div class="line">&lt; 0       | Register Value |</div>
-<div class="line">  Reserved|****************|</div>
+<div class="line">|*Reserved|****************|</div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:42 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:15 for CMSIS-DAP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

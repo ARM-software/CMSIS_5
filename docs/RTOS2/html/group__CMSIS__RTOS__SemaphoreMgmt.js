@@ -1,10 +1,10 @@
 var group__CMSIS__RTOS__SemaphoreMgmt =
 [
     [ "osSemaphoreAttr_t", "group__CMSIS__RTOS__SemaphoreMgmt.html#structosSemaphoreAttr__t", [
-      [ "name", "group__CMSIS__RTOS__SemaphoreMgmt.html#a8f8f80d37794cde9472343e4487ba3eb", null ],
-      [ "attr_bits", "group__CMSIS__RTOS__SemaphoreMgmt.html#a712a8f140170e6798f561e783265a279", null ],
-      [ "cb_mem", "group__CMSIS__RTOS__SemaphoreMgmt.html#a8c66c30fe3b487298af0e70eb93a197a", null ],
-      [ "cb_size", "group__CMSIS__RTOS__SemaphoreMgmt.html#a5c542fd75887b7be589b39a2062910de", null ]
+      [ "name", "group__CMSIS__RTOS__SemaphoreMgmt.html#ab74e6bf80237ddc4109968cedc58c151", null ],
+      [ "attr_bits", "group__CMSIS__RTOS__SemaphoreMgmt.html#a6e93b49cb79c12f768d72580c7731f30", null ],
+      [ "cb_mem", "group__CMSIS__RTOS__SemaphoreMgmt.html#a1e100dc33d403841ed3c344e3397868e", null ],
+      [ "cb_size", "group__CMSIS__RTOS__SemaphoreMgmt.html#aa55a4335d12dc2785dc00fdc292d1159", null ]
     ] ],
     [ "osSemaphoreId_t", "group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40", null ],
     [ "osSemaphoreNew", "group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a", null ],

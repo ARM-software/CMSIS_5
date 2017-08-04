@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Simplifying debug setup using debug descriptions</title>
-<title>CMSIS-Pack: Simplifying debug setup using debug descriptions</title>
+<title>Debug Setup with CMSIS-Pack</title>
+<title>CMSIS-Pack: Debug Setup with CMSIS-Pack</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -107,42 +107,20 @@ $(document).ready(function(){initNavTree('coresight_setup.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Simplifying debug setup using debug descriptions </div>  </div>
+<div class="title">Debug Setup with CMSIS-Pack </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Debug descriptions allow silicon vendors to create tool-agnostic debug and trace configurations so that the development environment settings can be reduced to simple checkboxes for selecting for example either standard run/stop debugging or complex instruction tracing.</p>
-<h1><a class="anchor" id="das_concept"></a>
-Concept</h1>
-<p>A set of standardized debug and trace methods are automatically executed by the debugger:</p>
+<div class="textblock"><p>CMSIS-Pack offers two ways to simplify the debug setup:</p>
 <ul>
-<li>Setting breakpoints and watchpoints</li>
-<li>Reading memory and registers</li>
-<li>Starting and stopping trace</li>
+<li>A <a class="el" href="debug_description.html">Debug Description</a> declares a set of standardized debug and trace methods are automatically executed by the debugger. Implementation-specific steps can be described using an XML syntax. This concept is easy to implement for basic chip configurations that mostly rely on a standard implementation of the CoreSight architecture. Most single-core devices should be able to be specified completely with debug descriptions.</li>
+<li>For more complex topologies and multi-core devices, a <a class="el" href="sdf_pg.html">System Description File</a> helps debuggers to connect to the target and access all available cores via trace. An SDF file is more complex (although also specified in XML), but is also more flexible with regards to the underlying debug architecture. </li>
 </ul>
-<p>Implementation-specific steps can be described using an XML syntax:</p>
-<ul>
-<li>Special hardware reset</li>
-<li>Trace buffer setup</li>
-<li>Patch silicon issues</li>
-</ul>
-<h1><a class="anchor" id="das_elements"></a>
-Debug description elements</h1>
-<p>A complete debug description for a device consists of the following elements:</p>
-<ul>
-<li><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> with the child element <a class="el" href="pdsc_family_pg.html#element_dbg_datapatch">dbg_datapatch</a> contains settings for the debug connection and for fixing silicon issues in software.</li>
-<li><a class="el" href="pdsc_family_pg.html#element_debugconfig">debugconfig</a> provides the default debugger configuration for a target connection.</li>
-<li><a class="el" href="pdsc_family_pg.html#element_debugvars">debugvars</a> specifies global debug access variables. They can be used in addition to pre-defined variables in order to query settings from a debug access sequences.</li>
-<li><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_dp_jtag">dp_jtag</a>, <a class="el" href="pdsc_family_pg.html#element_dp_swd">dp_swd</a>, and <a class="el" href="pdsc_family_pg.html#element_dp_cjtag">dp_cjtag</a> describes the debug port in detail.</li>
-<li><a class="el" href="pdsc_family_pg.html#element_sequences">sequences</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_sequence">sequence</a>, <a class="el" href="pdsc_family_pg.html#element_seq_control">seq_control</a>, and <a class="el" href="pdsc_family_pg.html#element_seq_block">seq_block</a> creates a configuration for debug access sequences.</li>
-<li><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_trace_serialwire">trace_serialwire</a>, <a class="el" href="pdsc_family_pg.html#element_trace_traceport">trace_traceport</a>, and <a class="el" href="pdsc_family_pg.html#element_trace_tracebuffer">trace_tracebuffer</a> sets up the trace connection.</li>
-</ul>
-<p>For more information, refer to the <a class="el" href="pdsc_SequenceNameEnum_pg.html">Debug access sequences</a>. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:42 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

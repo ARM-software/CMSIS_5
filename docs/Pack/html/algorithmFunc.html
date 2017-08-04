@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Pack
-   &#160;<span id="projectnumber">Version 1.4.9</span>
+   &#160;<span id="projectnumber">Version 1.5.0</span>
    </div>
    <div id="projectbrief">Delivery Mechanism for Software Packs</div>
   </td>
@@ -130,7 +130,23 @@ $(document).ready(function(){initNavTree('algorithmFunc.html','');});
 <tr>
 <td><a class="el" href="algorithmFunc.html#Verify">Verify</a> </td><td>optional </td><td>Compare Flash memory content with the program code. </td></tr>
 </table>
-<p>&#160;</p>
+<p>The following diagrams show how the functions of the <b>Flash Programming Algorithms</b> are executed by a development tool.</p>
+<p>The <b>Flash Erase</b> sequence is executed to erase the Flash content.</p>
+<div class="image">
+<img src="FlashErase.png" alt="FlashErase.png"/>
+<div class="caption">
+Flash Erase</div></div>
+<p> The <b>Flash Program</b> sequence is executed to program the Flash memory.</p>
+<div class="image">
+<img src="FlashProgram.png" alt="FlashProgram.png"/>
+<div class="caption">
+Flash Program</div></div>
+<p> The <b>Flash Verify</b> sequence is executed to verify the content after flash programming.</p>
+<div class="image">
+<img src="FlashVerify.png" alt="FlashVerify.png"/>
+<div class="caption">
+Flash Verify</div></div>
+ <p>&#160;</p>
 <hr/>
 <h1><a class="anchor" id="BlankCheck"></a>
 BlankCheck</h1>
@@ -409,8 +425,8 @@ Verify</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="flashAlgorithm.html">Flash Programming Algorithms</a></li>
-    <li class="footer">Generated on Wed Feb 8 2017 10:21:01 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="navelem"><a class="el" href="flashAlgorithm.html">Flash Programming</a></li>
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:41 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

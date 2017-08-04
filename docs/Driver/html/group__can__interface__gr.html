@@ -232,7 +232,7 @@ Functions</h2></td></tr>
 <li>bitrates of up to 1Mbits/s</li>
 <li><a class="el" href="group__can__interface__gr.html#Remote_Frame">Remote Frame</a> requests</li>
 </ul>
-<p><a class="anchor" id="CAN_FD"></a> CAN FD**</p>
+<p><a class="anchor" id="CAN_FD"></a><b>CAN FD</b></p>
 <p>Support for CAN FD depends on the hardware. A CMSIS-Driver that supports CAN FD has the capability <a class="el" href="group__can__interface__gr.html#structARM__CAN__CAPABILITIES">ARM_CAN_CAPABILITIES</a> data field <b>fd_mode</b> = <span class="XML-Token">1</span>, which can be retrieved with the function <a class="el" href="group__can__interface__gr.html#ga35f21cabe1637b1be964024a8f77721c">ARM_CAN_GetCapabilities</a>.</p>
 <p>CAN FD supports:</p>
 <ul>
@@ -240,7 +240,7 @@ Functions</h2></td></tr>
 <li>faster data transfers with faster bitrate used during the data phase</li>
 </ul>
 <p>CAN FD does not support <a class="el" href="group__can__interface__gr.html#Remote_Frame">Remote Frame</a> requests.</p>
-<p>Block Diagram**</p>
+<p><b>Block Diagram</b></p>
 <p>The CAN Driver API defines a <b>CAN</b> interface for middleware components. The CAN Driver supports multiple nodes, which are able to send and receive messages, but not simultaneously.</p>
 <div class="image">
 <img src="CAN_Node.png" alt="CAN_Node.png"/>
@@ -252,12 +252,12 @@ CAN Node Schematic</div></div>
 <li><b>Driver_CAN.h</b> : Driver API for CAN Bus Peripheral</li>
 </ul>
 <p>The driver implementation is a typical part of the Device Family Pack (DFP) that supports the peripherals of the microcontroller family.</p>
-<p>Driver Functions**</p>
+<p><b>Driver Functions</b></p>
 <p>The driver functions are published in the access struct as explained in <a class="el" href="theoryOperation.html#DriverFunctions">Common Driver Functions</a></p>
 <ul>
 <li><a class="el" href="group__can__interface__gr.html#structARM__DRIVER__CAN">ARM_DRIVER_CAN</a> : access struct for CAN driver functions</li>
 </ul>
-<p>Example Code**</p>
+<p><b>Example Code</b></p>
 <p>The following example code shows the usage of the CAN interface.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
@@ -425,7 +425,7 @@ CAN Message Filtering</h1>
 Remote Frame</h1>
 <p>In general, data transmission is performed on an autonomous basis with the data source node sending out Data Frames.</p>
 <p>However, sending a <b>Remote Frame</b> allows a destination node to request the data from the source node. The examples below shows the data exchange using a <b>Remote Transmission Request (RTR)</b>.</p>
-<p>Example for automatic Data Message response on RTR**</p>
+<p><b>Example for automatic Data Message response on RTR</b></p>
 <p>For automatic data message response on an RTR, the object is configured with the function <a class="el" href="group__can__interface__gr.html#ga00ec0715f6755a49dae5b60dca182630">ARM_CAN_ObjectConfigure</a> <em>obj_cfg</em> = <a class="el" href="Driver__CAN_8h.html#gaa9488554de0575bc821c9f65213c4cd0ac5d28d180ea9e4328974ffcb8b928a0c">ARM_CAN_OBJ_RX_RTR_TX_DATA</a>.</p>
 <p>In this case, the function <a class="el" href="group__can__interface__gr.html#ga0dcffd362b4093043442a030eaebbcfe">ARM_CAN_MessageSend</a> sets a data message that is transmitted when an RTR with a matching CAN ID is received. If <a class="el" href="group__can__interface__gr.html#ga0dcffd362b4093043442a030eaebbcfe">ARM_CAN_MessageSend</a> was not called before the RTR is received, the response is hardware dependent (either last data message is repeated or no data message is sent until <a class="el" href="group__can__interface__gr.html#ga0dcffd362b4093043442a030eaebbcfe">ARM_CAN_MessageSend</a> is called).</p>
 <p>After data transmission is completed, the driver calls a callback function <a class="el" href="group__can__interface__gr.html#gabfcaeac9e2ca25936ba5a29f2d594e7e">ARM_CAN_SignalObjectEvent</a> with <em>event</em> = <a class="el" href="group__CAN__events.html#ga486f0f35ebc7e3b5931ee68b56703503">ARM_CAN_EVENT_SEND_COMPLETE</a> and the related <em>obj_idx</em>.</p>
@@ -442,7 +442,7 @@ Remote Frame</h1>
 <div class="line">data_buf[4] = <span class="charliteral">&#39;5&#39;</span>;  data_buf[5] = <span class="charliteral">&#39;6&#39;</span>;</div>
 <div class="line">data_buf[6] = <span class="charliteral">&#39;7&#39;</span>;  data_buf[7] = <span class="charliteral">&#39;8&#39;</span>;</div>
 <div class="line">ptrCAN-&gt;MessageSend(0, &amp;tx_msg_info, data_buf, 8);            <span class="comment">// Start send message that will be triggered on RTR reception</span></div>
-</div><!-- fragment --><p>Example for automatic Data Message reception using RTR**</p>
+</div><!-- fragment --><p><b>Example for automatic Data Message reception using RTR</b></p>
 <p>For automatic data message reception on an RTR, the object is configured with the function <a class="el" href="group__can__interface__gr.html#ga00ec0715f6755a49dae5b60dca182630">ARM_CAN_ObjectConfigure</a> <em>obj_cfg</em> = <a class="el" href="Driver__CAN_8h.html#gaa9488554de0575bc821c9f65213c4cd0a396d7a6cd2353e1a2936405ace6417f5">ARM_CAN_OBJ_TX_RTR_RX_DATA</a>.</p>
 <p>The receiver or consumer requests data with transmission of an RTR with the <a class="el" href="group__can__interface__gr.html#ga0dcffd362b4093043442a030eaebbcfe">ARM_CAN_MessageSend</a>. This RTR requests from the transmitter or producer to send the data message. Once the data message is received, the driver calls a callback function <a class="el" href="group__can__interface__gr.html#gabfcaeac9e2ca25936ba5a29f2d594e7e">ARM_CAN_SignalObjectEvent</a> with <em>event</em> = <a class="el" href="group__CAN__events.html#ga2c1082561eeae3b2b8132e81fc241e47">ARM_CAN_EVENT_RECEIVE</a> and the related <em>obj_idx</em>. The received data message can then be read with the function <a class="el" href="group__can__interface__gr.html#gafc37084df5eab32f593c2744d35cf647">ARM_CAN_MessageRead</a>.</p>
 <p><b>Example:</b> </p>
@@ -1944,7 +1944,7 @@ The parameter <em>event</em> indicates object event that occurred during driver 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Feb 8 2017 10:20:44 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Fri Aug 4 2017 14:04:18 for CMSIS-Driver by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

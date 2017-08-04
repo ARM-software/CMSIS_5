@@ -1,6 +1,6 @@
 var NAVTREE =
 [
-  [ "CMSIS-CORE", "index.html", [
+  [ "CMSIS-Core (Cortex-M)", "index.html", [
     [ "Overview", "index.html", [
       [ "Processor Support", "index.html#ref_v6-v8M", [
         [ "Cortex-M Reference Manuals", "index.html#ref_man_sec", null ],
@@ -8,7 +8,7 @@ var NAVTREE =
       ] ],
       [ "Tested and Verified Toolchains", "index.html#tested_tools_sec", null ]
     ] ],
-    [ "Revision History of CMSIS-CORE", "core_revisionHistory.html", null ],
+    [ "Revision History of CMSIS-Core (Cortex-M)", "core_revisionHistory.html", null ],
     [ "Using CMSIS in Embedded Applications", "using_pg.html", "using_pg" ],
     [ "Using TrustZone for ARMv8-M", "using_TrustZone_pg.html", [
       [ "Simplified Use Case with TrustZone", "using_TrustZone_pg.html#useCase_TrustZone", [
@@ -22,6 +22,7 @@ var NAVTREE =
     [ "CMSIS-Core Device Templates", "templates_pg.html", "templates_pg" ],
     [ "MISRA-C Deviations", "coreMISRA_Exceptions_pg.html", null ],
     [ "Register Mapping", "regMap_pg.html", null ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Reference", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", "annotated" ],
     [ "Data Fields", "functions.html", [
@@ -34,7 +35,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"group__nvic__trustzone__functions.html#gade6a8784339946fdd50575d7e65a3268"
+"group__mpu__defines.html#gadb0a92c0928c113120567e85ff1ba05c"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

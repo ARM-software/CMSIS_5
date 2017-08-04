@@ -1,27 +1,34 @@
 var coresight_setup =
 [
-    [ "Concept", "coresight_setup.html#das_concept", null ],
-    [ "Debug description elements", "coresight_setup.html#das_elements", null ],
-    [ "Debug access sequences", "pdsc_SequenceNameEnum_pg.html", [
-      [ "Usage of debug access sequences", "pdsc_SequenceNameEnum_pg.html#usage_of_sequences", null ],
-      [ "Default debug access sequences", "pdsc_SequenceNameEnum_pg.html#default_sequences", [
-        [ "DebugPortSetup", "pdsc_SequenceNameEnum_pg.html#debugPortSetup", null ],
-        [ "DebugPortStart", "pdsc_SequenceNameEnum_pg.html#debugPortStart", null ],
-        [ "DebugPortStop", "pdsc_SequenceNameEnum_pg.html#debugPortStop", null ],
-        [ "DebugCoreStart", "pdsc_SequenceNameEnum_pg.html#debugCoreStart", null ],
-        [ "DebugCoreStop", "pdsc_SequenceNameEnum_pg.html#debugCoreStop", null ],
-        [ "ResetSystem", "pdsc_SequenceNameEnum_pg.html#resetSystem", null ],
-        [ "ResetProcessor", "pdsc_SequenceNameEnum_pg.html#resetProcessor", null ],
-        [ "ResetHardware", "pdsc_SequenceNameEnum_pg.html#resetHardware", null ],
-        [ "ResetHardwareAssert", "pdsc_SequenceNameEnum_pg.html#resetHardwareAssert", null ],
-        [ "ResetHardwareDeassert", "pdsc_SequenceNameEnum_pg.html#resetHardwareDeassert", null ],
-        [ "ResetCatchSet", "pdsc_SequenceNameEnum_pg.html#resetCatchSet", null ],
-        [ "ResetCatchClear", "pdsc_SequenceNameEnum_pg.html#resetCatchClear", null ]
+    [ "Debug Description", "debug_description.html", [
+      [ "Concept", "debug_description.html#das_concept", null ],
+      [ "Debug description elements", "debug_description.html#das_elements", null ],
+      [ "Debug access sequences", "debug_description.html#pdsc_SequenceNameEnum_pg", null ],
+      [ "Usage of debug access sequences", "debug_description.html#usage_of_sequences", null ],
+      [ "Default debug access sequences", "debug_description.html#default_sequences", [
+        [ "DebugPortSetup", "debug_description.html#debugPortSetup", null ],
+        [ "DebugPortStart", "debug_description.html#debugPortStart", null ],
+        [ "DebugPortStop", "debug_description.html#debugPortStop", null ],
+        [ "DebugCoreStart", "debug_description.html#debugCoreStart", null ],
+        [ "DebugCoreStop", "debug_description.html#debugCoreStop", null ],
+        [ "ResetSystem", "debug_description.html#resetSystem", null ],
+        [ "ResetProcessor", "debug_description.html#resetProcessor", null ],
+        [ "ResetHardware", "debug_description.html#resetHardware", null ],
+        [ "ResetHardwareAssert", "debug_description.html#resetHardwareAssert", null ],
+        [ "ResetHardwareDeassert", "debug_description.html#resetHardwareDeassert", null ],
+        [ "ResetCatchSet", "debug_description.html#resetCatchSet", null ],
+        [ "ResetCatchClear", "debug_description.html#resetCatchClear", null ]
       ] ],
-      [ "Writing debug access sequences", "pdsc_SequenceNameEnum_pg.html#writing_sequences", [
-        [ "Debug access syntax rules", "pdsc_SequenceNameEnum_pg.html#DebugSyntaxRules", null ],
-        [ "Expression rules", "pdsc_SequenceNameEnum_pg.html#ExpressionType", null ],
-        [ "Debug access functions", "pdsc_SequenceNameEnum_pg.html#DebugFunctions", null ]
+      [ "Examples of non-standard debug access sequences", "debug_description.html#nonstdExamples", [
+        [ "TraceStart", "debug_description.html#traceStart", null ],
+        [ "DebugDeviceUnlock", "debug_description.html#debugDeviceUnlock", null ],
+        [ "User-defined hardware reset sequence", "debug_description.html#hwReset", null ],
+        [ "Calling sequences in a control block", "debug_description.html#sequenceExample", null ]
+      ] ],
+      [ "Writing debug access sequences", "debug_description.html#writing_sequences", [
+        [ "Debug access syntax rules", "debug_description.html#DebugSyntaxRules", null ],
+        [ "Expression rules", "debug_description.html#ExpressionType", null ],
+        [ "Debug access functions", "debug_description.html#DebugFunctions", null ]
       ] ]
     ] ]
 ];
