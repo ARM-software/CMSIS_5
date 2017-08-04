@@ -22,7 +22,7 @@ REM -- Delete previous generated HTML files ---------------------
 
 REM -- Remove generated doxygen files ---------------------
 PUSHD ..\Documentation
-FOR %%A IN (Core, DAP, Driver, DSP, General, Pack, RTOS, RTOS2, SVD) DO IF EXIST %%A (RMDIR /S /Q %%A)
+FOR %%A IN (Core, Core_A, DAP, Driver, DSP, General, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
 POPD
 
 REM -- Generate New HTML Files ---------------------
@@ -31,6 +31,10 @@ REM -- Generate New HTML Files ---------------------
 
 pushd Core
 CALL doxygen_core.bat
+popd
+
+pushd Core_A
+CALL doxygen_core_A.bat
 popd
 
 pushd DAP
@@ -65,10 +69,15 @@ pushd SVD
 CALL doxygen_svd.bat
 popd
 
+pushd Zone
+CALL doxygen_zone.bat
+popd
+
 REM -- Copy search style sheet ---------------------
   ECHO.
   ECHO Copy search style sheets
-copy /Y Doxygen_Templates\search.css ..\Documentation\CORE\html\search\. 
+copy /Y Doxygen_Templates\search.css ..\Documentation\Core\html\search\. 
+copy /Y Doxygen_Templates\search.css ..\Documentation\Core_A\html\search\. 
 copy /Y Doxygen_Templates\search.css ..\Documentation\Driver\html\search\.
 REM copy /Y Doxygen_Templates\search.css ..\Documentation\General\html\search\. 
 copy /Y Doxygen_Templates\search.css ..\Documentation\Pack\html\search\.
@@ -77,6 +86,7 @@ copy /Y Doxygen_Templates\search.css ..\Documentation\DSP\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\DAP\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\RTOS\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\RTOS2\html\search\.
+copy /Y Doxygen_Templates\search.css ..\Documentation\Zone\html\search\. 
   
 :END
   ECHO.

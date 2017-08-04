@@ -17,14 +17,14 @@
 Wikipedia offers more information about 
 the <a href="http://en.wikipedia.org/wiki/Flash_memory#ARM_NAND_memories" target="_blank"><b>Flash Memories</b></a>, including NAND.
 
-**Block Diagram**
+<b>Block Diagram</b>
 
 <p>&nbsp;</p>
 \image html NAND_Schematics.png "Simplified NAND Flash Schematic"
 <p>&nbsp;</p>
 
 
-**NAND API**
+<b>NAND API</b>
 
 The following header files define the Application Programming Interface (API) for the NAND interface:
   - \b %Driver_NAND.h : Driver API for NAND Flash Device Interface
@@ -33,7 +33,7 @@ The driver implementation is a typical part of the Device Family Pack (DFP) that
 peripherals of the microcontroller family.
 
 
-**Driver Functions**
+<b>Driver Functions</b>
 
 The driver functions are published in the access struct as explained in \ref DriverFunctions
   - \ref ARM_DRIVER_NAND : access struct for NAND driver functions

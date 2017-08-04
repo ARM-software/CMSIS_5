@@ -31,15 +31,15 @@ be ignored.
       <accept Dcore="SC300"/>
     </condition>
 
-    <condition id="CMSIS-CORE">                     <!-- defines the condition with the ID "CMSIS-CORE" -->
+    <condition id="CMSIS-Core">                     <!-- defines the condition with the ID "CMSIS-Core" -->
       <description>True if the component Device Startup is selected and the device has a Cortex-M processor</description>
       <require Cclass="Device" Cgroup="Startup"/>   <!-- needs a software component Device Startup AND ... -->
       <require condition="Cortex-M"/>               <!-- ... needs that condition with ID=Cortex-M to be true. -->
     </condition>
 
     <condition id="CMSIS-DSP">                      <!-- defines the condition with the ID "CMSIS-DSP" -->
-      <description>True if CMSIS-CORE == TRUE and either GCC or ARMCC and device running in little-endian byte ordering</description>
-      <require condition="CMSIS-CORE"/>             <!-- needs a software component Device Startup AND ... -->
+      <description>True if CMSIS-Core == TRUE and either GCC or ARMCC and device running in little-endian byte ordering</description>
+      <require condition="CMSIS-Core"/>             <!-- needs a software component Device Startup AND ... -->
       <accept Tcompiler="GCC"/>                     <!-- ... works either with the GCC compiler OR ... -->
       <accept Tcompiler="ARMCC"/>                   <!-- ... the ARMCC compiler AND ... -->
       <require Dendian="Little-endian"/>            <!-- ... requires a device running in little-endian byte ordering -->

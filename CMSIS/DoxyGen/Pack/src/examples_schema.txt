@@ -19,7 +19,7 @@ Each example can specify attributes listing related components using Class (Ccla
         <environment name="iar" load="IAR/Blinky.ewarm" />
       </project>
       <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="Core"/>
         <component Cclass="Device" Cgroup="Startup"/>
         <keyword>Blinky</keyword>
         <keyword>Getting Started</keyword>
@@ -314,7 +314,7 @@ The environment element describes the name of the environment and the project fi
     <category>Example Project</category>
     <category>For a specific board</category>
 	...
-    <component Cclass="CMSIS" Cgroup="CORE"/>
+    <component Cclass="CMSIS" Cgroup="Core"/>
     <component Cclass="Device" Cgroup="Startup"/>
 	...
 	<keyword>Blinky</keyword>
@@ -371,7 +371,7 @@ This can be used to list all related components within an example.
 \code
 <attributes>
   ...
-  <component Cclass="CMSIS" Cgroup="CORE"/>
+  <component Cclass="CMSIS" Cgroup="Core"/>
   <component Cclass="Device" Cgroup="Startup"/>
   ...
 </attributes>

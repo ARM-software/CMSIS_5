@@ -75,6 +75,13 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <th>Description</th>
   </tr>
   <tr>
+    <td>1.5.0</td>
+    <td>Modifications compared to Version 1.4.9
+- added \ref sdf_pg
+- updates to \ref DeviceVendorEnum "Device Vendor"
+    </td>
+  </tr>
+  <tr>
     <td>1.4.9</td>
     <td>Modifications compared to Version 1.4.8
 - added Toptions attribute for use in conditions

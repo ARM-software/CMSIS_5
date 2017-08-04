@@ -2,10 +2,10 @@
  * @file     core_armv8mml.h
  * @brief    CMSIS ARMv8MML Core Peripheral Access Layer Header File
  * @version  V5.0.2
- * @date     07. December 2016
+ * @date     19. April 2017
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -60,11 +60,13 @@
   @{
  */
 
+#include "cmsis_version.h"
+ 
 /*  CMSIS ARMv8MML definitions */
-#define __ARMv8MML_CMSIS_VERSION_MAIN  ( 5U)                                       /*!< [31:16] CMSIS HAL main version */
-#define __ARMv8MML_CMSIS_VERSION_SUB   ( 0U)                                       /*!< [15:0]  CMSIS HAL sub version */
+#define __ARMv8MML_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                   /*!< \deprecated [31:16] CMSIS HAL main version */
+#define __ARMv8MML_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                    /*!< \deprecated [15:0]  CMSIS HAL sub version */
 #define __ARMv8MML_CMSIS_VERSION       ((__ARMv8MML_CMSIS_VERSION_MAIN << 16U) | \
-                                         __ARMv8MML_CMSIS_VERSION_SUB           )  /*!< CMSIS HAL version number */
+                                         __ARMv8MML_CMSIS_VERSION_SUB           )  /*!< \deprecated CMSIS HAL version number */
 
 #define __CORTEX_M                     (81U)                                       /*!< Cortex-M Core */
 
@@ -480,7 +482,7 @@ typedef struct
         uint32_t RESERVED4[15U];
   __IM  uint32_t MVFR0;                  /*!< Offset: 0x240 (R/ )  Media and VFP Feature Register 0 */
   __IM  uint32_t MVFR1;                  /*!< Offset: 0x244 (R/ )  Media and VFP Feature Register 1 */
-  __IM  uint32_t MVFR2;                  /*!< Offset: 0x248 (R/ )  Media and VFP Feature Register 1 */
+  __IM  uint32_t MVFR2;                  /*!< Offset: 0x248 (R/ )  Media and VFP Feature Register 2 */
         uint32_t RESERVED5[1U];
   __OM  uint32_t ICIALLU;                /*!< Offset: 0x250 ( /W)  I-Cache Invalidate All to PoU */
         uint32_t RESERVED6[1U];
@@ -2050,7 +2052,12 @@ typedef struct
   @{
  */
 
-#ifndef CMSIS_NVIC_VIRTUAL
+#ifdef CMSIS_NVIC_VIRTUAL
+  #ifndef CMSIS_NVIC_VIRTUAL_HEADER_FILE
+    #define CMSIS_NVIC_VIRTUAL_HEADER_FILE "cmsis_nvic_virtual.h"
+  #endif
+  #include CMSIS_NVIC_VIRTUAL_HEADER_FILE
+#else
   #define NVIC_SetPriorityGrouping    __NVIC_SetPriorityGrouping
   #define NVIC_GetPriorityGrouping    __NVIC_GetPriorityGrouping
   #define NVIC_EnableIRQ              __NVIC_EnableIRQ
@@ -2062,9 +2069,15 @@ typedef struct
   #define NVIC_GetActive              __NVIC_GetActive
   #define NVIC_SetPriority            __NVIC_SetPriority
   #define NVIC_GetPriority            __NVIC_GetPriority
+  #define NVIC_SystemReset            __NVIC_SystemReset
 #endif /* CMSIS_NVIC_VIRTUAL */
 
-#ifndef CMSIS_VECTAB_VIRTUAL
+#ifdef CMSIS_VECTAB_VIRTUAL
+  #ifndef CMSIS_VECTAB_VIRTUAL_HEADER_FILE
+    #define CMSIS_VECTAB_VIRTUAL_HEADER_FILE "cmsis_vectab_virtual.h"
+  #endif
+  #include CMSIS_VECTAB_VIRTUAL_HEADER_FILE
+#else
   #define NVIC_SetVector              __NVIC_SetVector
   #define NVIC_GetVector              __NVIC_GetVector
 #endif  /* (CMSIS_VECTAB_VIRTUAL) */
@@ -2431,7 +2444,7 @@ __STATIC_INLINE uint32_t __NVIC_GetVector(IRQn_Type IRQn)
   \brief   System Reset
   \details Initiates a system reset request to reset the MCU.
  */
-__STATIC_INLINE void NVIC_SystemReset(void)
+__STATIC_INLINE void __NVIC_SystemReset(void)
 {
   __DSB();                                                          /* Ensure all outstanding memory accesses included
                                                                        buffered write are completed before reset */
@@ -2545,6 +2558,10 @@ __STATIC_INLINE uint32_t TZ_NVIC_GetPendingIRQ_NS(IRQn_Type IRQn)
   if ((int32_t)(IRQn) >= 0)
   {
     return((uint32_t)(((NVIC_NS->ISPR[(((uint32_t)(int32_t)IRQn) >> 5UL)] & (1UL << (((uint32_t)(int32_t)IRQn) & 0x1FUL))) != 0UL) ? 1UL : 0UL));
+  }
+  else
+  {
+    return(0U);
   }
 }
 

@@ -308,7 +308,7 @@ extern void EvrRtxKernelResumed (void);
   \param[in]  count         RTOS kernel current tick count.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_GET_TICK_COUNT_DISABLE))
-extern void EvrRtxKernelGetTickCount (uint64_t count);
+extern void EvrRtxKernelGetTickCount (uint32_t count);
 #else
 #define EvrRtxKernelGetTickCount(count)
 #endif
@@ -760,7 +760,7 @@ extern void EvrRtxThreadDelay (uint32_t ticks);
   \param[in]  ticks         absolute time in ticks
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_DELAY_UNTIL_DISABLE))
-extern void EvrRtxThreadDelayUntil (uint64_t ticks);
+extern void EvrRtxThreadDelayUntil (uint32_t ticks);
 #else
 #define EvrRtxThreadDelayUntil(ticks)
 #endif

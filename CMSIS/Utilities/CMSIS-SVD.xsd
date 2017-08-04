@@ -322,9 +322,9 @@
       <!-- V1.1: Endian specifies the endianess of the processor/device -->
       <xs:element name="endian" type="endianType"/>
       <!-- V1.1: mpuPresent specifies whether or not a memory protection unit is physically present -->
-      <xs:element name="mpuPresent" type="xs:boolean"/>
+      <xs:element name="mpuPresent" type="xs:boolean" minOccurs="0"/>
       <!-- V1.1: fpuPresent specifies whether or not a floating point hardware unit is physically present -->
-      <xs:element name="fpuPresent" type="xs:boolean"/>
+      <xs:element name="fpuPresent" type="xs:boolean" minOccurs="0"/>
       <!-- V1.2: fpuDP specifies a double precision floating point hardware unit is physically present-->
       <xs:element name="fpuDP" type="xs:boolean" minOccurs="0"/>
       <!-- V1.2: icachePresent specifies that an instruction cache is physically present-->

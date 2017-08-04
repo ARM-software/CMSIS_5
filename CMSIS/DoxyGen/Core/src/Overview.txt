@@ -1,6 +1,6 @@
 /** \mainpage Overview
 
-CMSIS-CORE implements the basic run-time system for a Cortex-M device and gives the user access to the processor core and the device peripherals.
+CMSIS-Core (Cortex-M) implements the basic run-time system for a Cortex-M device and gives the user access to the processor core and the device peripherals.
 In detail it defines:
  - <b>Hardware Abstraction Layer (HAL)</b> for Cortex-M processor registers with standardized  definitions for the SysTick, NVIC, System Control Block registers, MPU registers, FPU registers, and core access functions.
  - <b>System exception names</b> to interface to system exceptions without having compatibility issues.
@@ -10,24 +10,24 @@ In detail it defines:
  - A variable to determine the <b>system clock frequency</b> which simplifies the setup the SysTick timer.
 
 
-The following sections provide details about the CMSIS-CORE:
+The following sections provide details about the CMSIS-Core (Cortex-M):
  - \ref using_pg describes the project setup and shows a simple program example.
  - \ref using_TrustZone_pg "Using TrustZone&reg; for ARMv8-M" describes how to use the security extensions available in the ARMv8-M architecture.
- - \ref templates_pg describes the files of the CMSIS-CORE in detail and explains how to adapt template files provided by ARM to silicon vendor devices.
+ - \ref templates_pg describes the files of the CMSIS-Core (Cortex-M) in detail and explains how to adapt template files provided by ARM to silicon vendor devices.
  - \ref coreMISRA_Exceptions_pg describes the violations to the MISRA standard.
  - <a href="Modules.html">\b Reference </a> describe the features and functions of the \ref device_h_pg in detail.
  - <a href="Annotated.html">\b Data \b Structures </a> describe the data structures of the \ref device_h_pg in detail.
     
 <hr>
 
-CMSIS-CORE in ARM::CMSIS Pack
+CMSIS-Core (Cortex-M) in ARM::CMSIS Pack
 -----------------------------
 
-Files relevant to CMSIS-CORE are present in the following <b>ARM::CMSIS</b> directories:
+Files relevant to CMSIS-Core (Cortex-M) are present in the following <b>ARM::CMSIS</b> directories:
 |File/Folder                   |Content                                                                 |
 |------------------------------|------------------------------------------------------------------------|
 |\b CMSIS\\Documentation\\Core | This documentation                                                     |
-|\b CMSIS\\Include             | CMSIS-CORE header files (for example core_cm3.h, core_cmInstr.h, etc.) |
+|\b CMSIS\\Core\\Include       | CMSIS-Core (Cortex-M) header files (for example core_cm3.h, core_cmInstr.h, etc.) |
 |\b Device                     | \ref using_ARM_pg "ARM reference implementations" of Cortex-M devices  |
 |\b Device\\\_Template_Vendor  | \ref templates_pg for extension by silicon vendors                     |
 
@@ -40,8 +40,7 @@ the <a href="http://www.arm.com/products/processors/instruction-set-architecture
 
 \subsection ref_man_sec Cortex-M Reference Manuals
 
-The Cortex-M Reference Manuals are generic user guides for devices that implement the various ARM Cortex-M processors. 
-These manuals contain the programmers model and detailed information about the core peripherals.
+The Cortex-M Device Generic User Guides contain the programmers model and detailed information about the core peripherals and are available for:
 
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/DUI0497A_cortex_m0_r0p0_generic_ug.pdf" target="_blank"><b>Cortex-M0 Devices Generic User Guide</b></a> (ARMv6-M architecture)
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0662b/DUI0662B_cortex_m0p_r0p1_dgug.pdf" target="_blank"><b>Cortex-M0+ Devices Generic User Guide</b></a> (ARMv6-M architecture)
@@ -49,11 +48,13 @@ These manuals contain the programmers model and detailed information about the c
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0553a/DUI0553A_cortex_m4_dgug.pdf" target="_blank"><b>Cortex-M4 Devices Generic User Guide</b></a> (ARMv7-M architecture)
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646a/DUI0646A_cortex_m7_dgug.pdf" target="_blank"><b>Cortex-M7 Devices Generic User Guide</b></a> (ARMv7-M architecture)
 
-Reference manuals for \b Cortex-M23 and \b Cortex-M33 where not available at the time of release.
+The \b Cortex-M23 and \b Cortex-M33 are described with Technical Reference Manuals that are available here:
+- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0550c/cortex_m23_r1p0_technical_reference_manual_DDI0550C_en.pdf" target="_blank"><b>Cortex-M23 Technical Reference Manual</b></a> (ARMv8-M baseline architecture)
+- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.100230_0002_00_en/cortex_m33_trm_100230_0002_00_en.pdf" target="_blank"><b>Cortex-M33 Technical Reference Manual</b></a> (ARMv8-M mainline architecture)
 
 \subsection ARMv8M ARMv8-M Architecture 
 
-ARMv8-M introduces two profiles \b Baseline (for power and area constrained applications) and \b Mainline (full-featured with optional SIMD, floating-point, and co-processor extensions).
+ARMv8-M introduces two profiles \b baseline (for power and area constrained applications) and \b mainline (full-featured with optional SIMD, floating-point, and co-processor extensions).
 Both ARMv8-M profiles are supported by CMSIS.
 
 The ARMv8-M Architecture is described in the <a href="http://developer.arm.com/products/architecture/m-profile/docs/ddi0553/latest/armv8-m-architecture-reference-manual" target="_blank"><b>ARMv8-M Architecture Reference Manual</b></a>.
@@ -62,9 +63,9 @@ The ARMv8-M Architecture is described in the <a href="http://developer.arm.com/p
 
 \section tested_tools_sec Tested and Verified Toolchains
 
-The CMSIS-CORE \ref templates_pg supplied by ARM have been tested and verified with the following toolchains:
- - ARM: ARM Compiler V5.6
- - ARM: ARM Compiler V6.6 (for Cortex-M23, Cortex-M33, ARMv8-M)
+The \ref templates_pg supplied by ARM have been tested and verified with the following toolchains:
+ - ARM: ARM Compiler V5.6 (not for Cortex-M23, Cortex-M33, ARMv8-M)
+ - ARM: ARM Compiler V6.7
  - GNU: GNU Tools ARM Embedded 5.4 2016q3
  - IAR: IAR Embedded Workbench Kickstart Edition V6.10
 
@@ -73,12 +74,22 @@ The CMSIS-CORE \ref templates_pg supplied by ARM have been tested and verified w
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 
-\page core_revisionHistory Revision History of CMSIS-CORE
+\page core_revisionHistory Revision History of CMSIS-Core (Cortex-M)
 
 <table class="cmtable" summary="Core Exception Name">
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>V5.0.2</td>
+      <td>
+         Added macros  \ref \__UNALIGNED_UINT16_READ,  \ref \__UNALIGNED_UINT16_WRITE.\n
+         Added macros  \ref \__UNALIGNED_UINT32_READ,  \ref \__UNALIGNED_UINT32_WRITE.\n
+         Deprecated macro  \ref \__UNALIGNED_UINT32.\n
+		 Changed \ref version_control_gr macros to be core agnostic. \n
+		 Added \ref mpu_functions for Cortex-M0+/M3/M4/M7.
+      </td>
     </tr>
     <tr>
       <td>V5.0.1</td>

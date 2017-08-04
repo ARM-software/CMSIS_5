@@ -24,7 +24,7 @@
 ; */
 
 
-I_T_RUN_OFS     EQU      28                     ; osRtxInfo.thread.run offset
+I_T_RUN_OFS     EQU      20                     ; osRtxInfo.thread.run offset
 TCB_SP_OFS      EQU      56                     ; TCB.SP offset
 TCB_SF_OFS      EQU      34                     ; TCB.stack_frame offset
 

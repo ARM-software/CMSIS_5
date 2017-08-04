@@ -34,7 +34,7 @@ __FPU_USED      EQU      1
 __FPU_USED      EQU      0
                 ENDIF
 
-I_T_RUN_OFS     EQU      28                     ; osRtxInfo.thread.run offset
+I_T_RUN_OFS     EQU      20                     ; osRtxInfo.thread.run offset
 TCB_SM_OFS      EQU      48                     ; TCB.stack_mem offset
 TCB_SP_OFS      EQU      56                     ; TCB.SP offset
 TCB_SF_OFS      EQU      34                     ; TCB.stack_frame offset

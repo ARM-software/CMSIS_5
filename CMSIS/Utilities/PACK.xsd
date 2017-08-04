@@ -109,6 +109,7 @@
       <xs:enumeration value="Analog Devices:1"/>
       <xs:enumeration value="ARM:82"/>
       <xs:enumeration value="ARM CMSIS:109"/>
+      <xs:enumeration value="ArteryTek:143"/>
       <xs:enumeration value="Atmel:3"/>
       <xs:enumeration value="CSR:118"/>
       <xs:enumeration value="Cypress:19"/>
@@ -122,6 +123,7 @@
       <xs:enumeration value="Evatronix:64"/>
       <xs:enumeration value="Generic:5"/>
       <xs:enumeration value="GigaDevice:123"/>
+      <xs:enumeration value="HDSC:145"/>
       <xs:enumeration value="Holtek:106"/>
       <xs:enumeration value="Hynix Semiconductor:6"/>
       <xs:enumeration value="Hyundai:35"/>
@@ -134,6 +136,7 @@
       <xs:enumeration value="MediaTek:129"/>
       <xs:enumeration value="MegaChips:128"/>
       <xs:enumeration value="Mentor Graphics Co.:24"/>
+      <xs:enumeration value="Microchip:3"/>
       <xs:enumeration value="Micronas:30"/>
       <xs:enumeration value="Microsemi:112"/>
       <xs:enumeration value="Milandr:99"/>
@@ -143,9 +146,11 @@
       <xs:enumeration value="Nuvoton:18"/>
       <xs:enumeration value="NXP:11"/>
       <xs:enumeration value="OKI SEMICONDUCTOR CO.,LTD.:108"/>
+      <xs:enumeration value="ONSemiconductor:141"/>
       <xs:enumeration value="Panasonic:131"/>
       <xs:enumeration value="Realtek Semiconductor:124"/>
       <xs:enumeration value="Redpine Signals:125"/>
+      <xs:enumeration value="RelChip:146"/>
       <xs:enumeration value="Renesas:117"/>
       <xs:enumeration value="ROHM:103"/>
       <xs:enumeration value="Samsung:47"/>
@@ -155,6 +160,7 @@
       <xs:enumeration value="Spansion:100"/>
       <xs:enumeration value="STMicroelectronics:13"/>
       <xs:enumeration value="Sunrise Micro Devices:121"/>
+      <xs:enumeration value="Synwit:144"/>
       <xs:enumeration value="TI:16"/>
       <xs:enumeration value="Texas Instruments:16"/>
       <xs:enumeration value="Toshiba:92"/>
@@ -202,7 +208,7 @@
     <xs:restriction base="xs:string">
       <xs:minLength value="0"/>
       <xs:maxLength value="32"/>
-      <xs:pattern value="\S(.*\S)?"></xs:pattern>
+      <!-- <xs:pattern value="\S(.*\S)?"></xs:pattern> not backward compatible -->
     </xs:restriction>
   </xs:simpleType>
 
@@ -867,6 +873,7 @@
       <xs:enumeration value="utility"/>
       <xs:enumeration value="image"/>
       <xs:enumeration value="other"/>
+      <xs:enumeration value="preInclude"/> <!-- restricted to a single file in CPDSC file -->
     </xs:restriction>
   </xs:simpleType>
 

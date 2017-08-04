@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        10. January 2017
- * $Revision:    V2.1.0
+ * $Date:        9. June 2017
+ * $Revision:    V2.1.1
  *
  * Project:      CMSIS-RTOS API
  * Title:        cmsis_os.h RTX header file
@@ -118,6 +118,11 @@
  *    - added: osKernelRestoreLock
  *    Updated Thread and Event Flags:
  *    - changed flags parameter and return type from int32_t to uint32_t
+ * Version 2.1.1
+ *    Additional functions allowed to be called from Interrupt Service Routines:
+ *    - osKernelGetTickCount, osKernelGetTickFreq
+ *    Changed Kernel Tick type to uint32_t:
+ *    - updated: osKernelGetTickCount, osDelayUntil
  *---------------------------------------------------------------------------*/
  
 #ifndef CMSIS_OS_H_

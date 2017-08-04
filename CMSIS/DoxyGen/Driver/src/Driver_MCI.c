@@ -24,7 +24,7 @@ es that are directly soldered to the PCB (eMMC).
 - The SD Association provides detailed documentation under <a href="http://www.sdcard.org">www.sdcard.org</a>.
 - The MultiMediaCard Association (merged with JEDEC) provides detailed documentation under <a href="http://www.jedec.org">www.jedec.org</a>.
 
-**Block Diagram**
+<b>Block Diagram</b>
 
 The MCI driver allows you to exchange data of the SD/MMC memory via SD/MMC interface.
 
@@ -42,7 +42,7 @@ The following modes are supported by SD/MMC memory cards:
 \image html SD_4BitBusMode.png  "SD memory connected via 4-bit SD Bus Mode"
 
 
-**MCI API**
+<b>MCI API</b>
 
 The following header files define the Application Programming Interface (API) for the MCI interface:
   - \b %Driver_MCI.h : Driver API for Memory Card Interface using SD/MMC interface
@@ -54,7 +54,7 @@ peripherals of the microcontroller family.
 For parameters, the value marked with (default) is the setting after the driver initialization.
 
  
-**Driver Functions**
+<b>Driver Functions</b>
 
 The driver functions are published in the access struct as explained in \ref DriverFunctions
   - \ref ARM_DRIVER_MCI : access struct for MCI driver functions

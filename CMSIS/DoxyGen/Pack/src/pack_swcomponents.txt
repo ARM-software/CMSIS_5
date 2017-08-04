@@ -269,7 +269,7 @@ Add a \ref pdsc_conditions_pg "<conditions>" section with the following:
       <accept  condition="CM0"/>
       <accept  condition="CM3"/>
       <accept  condition="CM4_CM7"/>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
+      <require Cclass="CMSIS" Cgroup="Core"/>
       <require Cclass="CMSIS" Cgroup="RTOS"/>
     </condition>
   </conditions>
@@ -544,7 +544,7 @@ Add an \ref pdsc_examples_pg "<examples>" section with the following:
         <environment name="uv" load="MyPackExample.uvprojx"/>
       </project>
       <attributes>
-        <component Cclass="CMSIS"     Cgroup="CORE"/>
+        <component Cclass="CMSIS"     Cgroup="Core"/>
         <component Cclass="Device"    Cgroup="Startup"/>
         <component Cclass="CMSIS"     Cgroup="RTOS"/>
         <component Cclass="MyVariant" Cgroup="MyGroup"/>

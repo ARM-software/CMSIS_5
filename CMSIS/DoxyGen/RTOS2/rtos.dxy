@@ -38,7 +38,7 @@ PROJECT_NAME           = CMSIS-RTOS2
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "Version 2.1.0"
+PROJECT_NUMBER         = "Version 2.1.1"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -752,6 +752,8 @@ WARN_LOGFILE           =
 
 INPUT                  = . \
                          ../../RTOS2/Include/cmsis_os2.h \
+                         ../../RTOS2/Include/os_tick.h \
+                         ../../RTOS2/Source/os_systick.c \
                          ./src/cmsis_os2.txt \
                          ./src/cmsis_os2_Kernel.txt \
                          ./src/cmsis_os2_Thread.txt \
@@ -766,6 +768,7 @@ INPUT                  = . \
                          ./src/cmsis_os2_Status.txt \
                          ./src/cmsis_os2_Migration.txt \
                          ./src/cmsis_os2_MigrationGuide.txt \
+                         ./src/cmsis_os2_tick.txt \
                          ../../RTOS2/RTX/Include/rtx_os.h \
                          ../../RTOS2/RTX/Include/rtx_evr.h \
                          ./src/rtx_evr.txt

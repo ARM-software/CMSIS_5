@@ -1,0 +1,76 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\mainpage
+
+This is a preview of \b CMSIS-Zone which is scheduled for release in Q1'2018.  The final release of CMSIS-Zone will provide:
+  - \ref XML_Format (XML based) which stores consistent system setup information.
+  - CMSIS-Zone configuration utility for system partitioning. The \ref GenDataModel "data" captured can be exported to various project and configuration files using file templates.
+  
+\b CMSIS-Zone defines methods to describe system resources and to partition these resources into multiple projects and execution areas. 
+The system resources may include multiple processors, memory areas, and peripherals. The system resource and partitioning information is stored in \ref XML_Format (XML based). 
+
+\b CMSIS-Zone includes an interactive tool that manages files in the \ref XML_Format which allows to:
+  - create system resource information from existing CMSIS-SVD and CMSIS-Pack descriptions.
+  - partition system resources into various project zones.
+  - partition a project zone into multiple execution zones.
+  - generate various configuration files for tool set-up and hardware initialization.
+
+The following diagram explains the development flow when using the \b CMSIS-Zone management tool. 
+
+\image html DevelopmentFlow.png  "CMSIS-Zone Development Flow"
+
+The following sections explain: 
+- \ref XML_Format (XML based) that stores system resource information and the configuration of project zones and execution zones.
+- \ref GenDataModel which is used to create tool set-up files and hardware configuration files.
+
+
+\section UseCases CMSIS-Zone Use Cases
+
+\b CMSIS-Zone simplifies to manage the complexity and the configuration of modern embedded systems that frequently include multiple processors and/or memory protection hardware.
+It helps to split the embedded application various projects which creates the need to partition system resources.
+And it simplifies the consistent configuration of access rights across the system, for example when using an MPU (memory protection unit).
+
+The following section describes several uses cases that benefit from \b CMSIS-Zone.
+
+\subsection UseCase_MPU MPU Protection
+
+Focused on a single core microcontroller one might want to utilize the memory protection unit (MPU) capabilities
+to segregate parts of an application. Thus the need to partition the system resources accordingly arises.
+
+\image html mpu.png  "MPU Protection"
+
+\subsection UseCase_TrustZone TrustZone Partitioning
+
+TrustZone extensions add another degree of segregation which must be handled consistently.
+In this case one has to handle MPU settings per security context and SAU configuration.
+
+\image html trustzone.png  "TrustZone Partitioning and MPU Protection"
+
+\subsection UseCase_MultiCore Multi-Core Partitioning
+
+Beside traditional single cores asymetric and hybrid multi-core devices contribute to increasing development complexity
+for embedded systems. Having multiple cores running different parts of an application concurrently needs a well defined
+resource assignment to prevent undesired misbehaviour.
+
+\image html multicore.png  "Multi-Core Partitioning"
+
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page zone_revisionHistory Revision History of CMSIS-Zone
+
+<table class="cmtable" summary="Revision History">
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>0.0.1 (Preview)</td>
+      <td>Initial specification draft</td>
+    </tr>
+</table>
+
+	
+*/

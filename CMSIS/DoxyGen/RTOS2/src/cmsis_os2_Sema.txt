@@ -13,10 +13,12 @@ semaphores, access to a group of identical peripherals can be managed (for examp
 \image html "Semaphore.png" "CMSIS-RTOS Semaphore"
 
 A semaphore object should be initialized to the maximum number of available tokens. This number of available resources is
-specified as parameter of the \ref osSemaphoreNew function. Each time a semaphore token is obtained with
-\ref osSemaphoreAcquire, the semaphore count is decremented. When the semaphore count is 0, no semaphore token can be
-obtained. The thread/ISR that tries to obtain the semaphore token needs to wait until the next token is free. Semaphores are
-released with \ref osSemaphoreRelease incrementing the semaphore count.
+specified as parameter of the \ref osSemaphoreNew function. Each time a semaphore token is obtained with \ref osSemaphoreAcquire
+(in \em available state), the semaphore count is decremented. When the semaphore count is 0 (i.e. \em depleted state), no
+more semaphore tokens can be obtained. The thread/ISR that tries to obtain the semaphore token needs to wait until the next
+token is free. Semaphores are released with \ref osSemaphoreRelease incrementing the semaphore count.
+
+\image html "semaphore_states.png" "CMSIS-RTOS Semaphore States"
 
 \note The functions \ref osSemaphoreAcquire, \ref osSemaphoreGetCount, and \ref osSemaphoreRelease can be called from
 \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -45,16 +47,57 @@ threads that might access the resource:
 osSemaphoreId_t multiplex_id;
  
 void thread_n (void)
-  {
-    multiplex_id = osSemaphoreNew(3, 3, NULL);
-    while(1)
-      {
-        osSemaphoreAcquire(multiplex_id, osWaitForever);
-        // do something
-        osSemaphoreRelease(multiplex_id);
-      }
-  }
+{
+  multiplex_id = osSemaphoreNew(3, 3, NULL);
+  while(1)
+    {
+      osSemaphoreAcquire(multiplex_id, osWaitForever);
+      // do something
+      osSemaphoreRelease(multiplex_id);
+    }
+}
 \endcode
+
+<b>Producer/Consumer Semaphore</b>
+
+The producer-consumer problem can be solved using two semaphores.
+
+A first semaphore (\token{empty_id}) counts down the available (empty) buffers, i.e.
+the producer thread can wait for available buffer slots by acquiring from this one.
+
+A second semaphore (\token{filled_id}) counts up the used (filled) buffers, i.e.
+the consumer thread can wait for available data by acquiring from this one.
+
+It is crucial for the correct behaviour that the threads acquire and release on both
+semaphores in the given sequence. According to this example one can have multiple
+producer and/or consumer threads running concurrently.
+
+\code
+#define BUFFER_SIZE 10
+osSemaphoreId_t empty_id = osSemaphoreNew(BUFFER_SIZE, BUFFER_SIZE, NULL);
+osSemaphoreId_t filled_id = osSemaphoreNew(BUFFER_SIZE, 0, NULL);
+
+void producer_thread (void)
+{
+  while(1)
+  {
+    osSemaphoreAcquire(empty_id, osWaitForever);
+    // produce data
+    osSemaphoreRelease(filled_id);
+  }
+}
+
+void consumer_thread (void)
+{
+  while(1)
+  {
+    osSemaphoreAcquire(filled_id, osWaitForever);
+    // consume data
+    osSemaphoreRelease(empty_id);
+  }
+}
+\endcode
+
 @{
 */
 
@@ -62,6 +105,8 @@ void thread_n (void)
 /**
 \typedef  osSemaphoreId_t
 \details
+Returned by:
+- \ref osSemaphoreNew
 */
 
 /**
@@ -74,7 +119,8 @@ void thread_n (void)
 \fn osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr)
 \details
 The function \b osSemaphoreNew creates and initializes a semaphore object that is used to manage access to shared resources
-and returns the pointer to the semaphore object identifier or \token{NULL} in case of an error.
+and returns the pointer to the semaphore object identifier or \token{NULL} in case of an error. It can be safely called
+before the RTOS is started (call to \ref osKernelStart), but not before it is initialized (call to \ref osKernelInitialize).
 
 The parameter \em max_count specifies the maximum number of available tokens. A \em max_count value of 1 creates a binary
 semaphore.
@@ -117,7 +163,7 @@ void Thread_Semaphore (void *argument)
   while (1) {
     ; // Insert thread code here...
  
-    val = osSemaphoreAcquire (sid_Thread_Semaphore, 10);   // wait 10 mSec
+    val = osSemaphoreAcquire (sid_Thread_Semaphore, 10);   // wait for max. 10 ticks for semaphore token to get available
     switch (val) {
     case osOK:
       ; // Use protected code here...
@@ -154,13 +200,13 @@ semaphore_id or \token{NULL} in case of an error.
 The blocking function \b osSemaphoreAcquire waits until a token of the semaphore object specified by parameter
 \a semaphore_id becomes available. If a token is available, the function instantly returns and decrements the token count. 
 
-The parameter \a timeout specifies how long the system waits to acquire the token. While the system waits, the thread/ISR
-that is calling this function is put into the \b BLOCKED state. The parameter \ref CMSIS_RTOS_TimeOutValue "timeout" can have
-the following values:
- - when \a timeout is \token{0}, the function returns instantly.
+The parameter \a timeout specifies how long the system waits to acquire the token. While the system waits, the thread
+that is calling this function is put into the \ref ThreadStates "BLOCKED" state. The parameter \ref CMSIS_RTOS_TimeOutValue
+"timeout" can have the following values:
+ - when \a timeout is \token{0}, the function returns instantly (i.e. try semantics).
  - when \a timeout is set to \b osWaitForever the function will wait for an infinite time until the semaphore becomes
-   available.
- - all other values specify a time in kernel ticks for a timeout.
+   available (i.e. wait semantics).
+ - all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).
 
 Possible \ref osStatus_t return values:
  - \em osOK: the token has been obtained.
@@ -180,8 +226,9 @@ Refer to \ref osSemaphoreNew.
 /**
 \fn osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id)
 \details
-The function \b osSemaphoreRelease releases a token of the semaphore object specified by parameter \a semaphore_id. Other
-threads/ISRs that currently wait for a token of this semaphore object will be put into the \b READY state.
+The function \b osSemaphoreRelease releases a token of the semaphore object specified by parameter \a semaphore_id. Tokens
+can only be released up to the maximum count specified at creation time, see \ref osSemaphoreNew. Other threads that
+currently wait for a token of this semaphore object will be put into the \ref ThreadStates "READY" state.
 
 Possible \ref osStatus_t return values:
  - \em osOK: the token has been correctly released and the count increased.
@@ -199,8 +246,8 @@ Refer to \ref osSemaphoreNew.
 /**
 \fn uint32_t osSemaphoreGetCount (osSemaphoreId_t semaphore_id)
 \details
-The function \b osSemaphoreGetCount returns the count of available semaphores of the semaphore object specified by parameter
-\a semaphore_id. In case of an error, it returns \token{0}.
+The function \b osSemaphoreGetCount returns the number of available tokens of the semaphore object specified by parameter
+\a semaphore_id. In case of an error it returns \token{0}.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -222,3 +269,26 @@ Possible \ref osStatus_t return values:
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 /// @}
+
+// these struct members must stay outside the group to avoid double entries in documentation
+/**
+\var osSemaphoreAttr_t::attr_bits
+\details
+Reserved for future use (set to '0').\n
+Default: \token{0}.
+
+\var osSemaphoreAttr_t::cb_mem
+\details
+Pointer to a memory location for the semaphore control block object. This can optionally be used for custom memory management systems.\n
+Default: \token{NULL} (uses kernel memory management).
+
+
+\var osSemaphoreAttr_t::cb_size
+\details
+The size of the memory block passed with \ref cb_mem. Must be the size of a semaphore control block object or larger.
+
+\var osSemaphoreAttr_t::name
+\details
+Pointer to a string with a human readable name of the semaphore object.\n
+Default: \token{NULL}.
+*/

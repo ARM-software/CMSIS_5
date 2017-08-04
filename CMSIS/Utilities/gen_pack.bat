@@ -49,6 +49,8 @@ XCOPY /Q /S /Y ..\..\Device\*.* %RELEASE_PATH%\Device\*.*
 :: -- Core files 
 XCOPY /Q /S /Y ..\..\CMSIS\Core\Include\*.* %RELEASE_PATH%\CMSIS\Include\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Core\Template\ARMv8-M\*.* %RELEASE_PATH%\CMSIS\Core\Template\ARMv8-M\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Core_A\Include\*.* %RELEASE_PATH%\CMSIS\Core_A\Include\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Core_A\Source\*.* %RELEASE_PATH%\CMSIS\Core_A\Source\*.*
 
 :: -- DAP files 
 XCOPY /Q /S /Y ..\..\CMSIS\DAP\*.* %RELEASE_PATH%\CMSIS\DAP\*.*
@@ -76,6 +78,7 @@ XCOPY /Q /S /Y ..\..\CMSIS\RTOS\RTX\*.* %RELEASE_PATH%\CMSIS\RTOS\RTX\*.*
 
 :: -- RTOS2 files 
 XCOPY /Q /S /Y ..\..\CMSIS\RTOS2\Include\*.* %RELEASE_PATH%\CMSIS\RTOS2\Include\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\RTOS2\Source\*.* %RELEASE_PATH%\CMSIS\RTOS2\Source\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\RTOS2\Template\*.* %RELEASE_PATH%\CMSIS\RTOS2\Template\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\RTOS2\RTX\*.* %RELEASE_PATH%\CMSIS\RTOS2\RTX\*.*
 
@@ -101,7 +104,7 @@ ECHO.
 ECHO Delete previous generated HTML files
 
 PUSHD ..\Documentation
-FOR %%A IN (Core, DAP, Driver, DSP, General, Pack, RTOS, RTOS2, SVD) DO IF EXIST %%A (RMDIR /S /Q %%A)
+FOR %%A IN (Core, Core_A, DAP, Driver, DSP, General, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
 POPD
 
 :: -- Generate HTML Files
@@ -110,6 +113,10 @@ ECHO Generate HTML Files
 
 pushd Core
 doxygen core.dxy
+popd
+
+pushd Core_A
+doxygen core_A.dxy
 popd
 
 pushd DAP
@@ -144,6 +151,10 @@ pushd SVD
 doxygen svd.dxy
 popd
 
+pushd Zone
+doxygen zone.dxy
+popd
+
 :: -- Copy search style sheet
 ECHO.
 ECHO Copy search style sheets
@@ -163,7 +174,7 @@ XCOPY /Q /S /Y ..\Documentation\*.* %RELEASE_PATH%\CMSIS\Documentation\*.*
 
 :: -- Remove generated doxygen files
 PUSHD ..\Documentation
-FOR %%A IN (Core, DAP, Driver, DSP, General, Pack, RTOS, RTOS2, SVD) DO IF EXIST %%A (RMDIR /S /Q %%A)
+FOR %%A IN (Core, Core_A, DAP, Driver, DSP, General, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
 POPD
 
 

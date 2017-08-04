@@ -120,11 +120,13 @@ static void *isr_queue_get (void) {
 void osRtxTick_Handler (void) {
   os_thread_t *thread;
 
-  osRtxSysTimerAckIRQ();
+  OS_Tick_AcknowledgeIRQ();
   osRtxInfo.kernel.tick++;
 
   // Process Timers
-  osRtxTimerTick();
+  if (osRtxInfo.timer.tick != NULL) {
+    osRtxInfo.timer.tick();
+  }
 
   // Process Thread Delays
   osRtxThreadDelayTick();
@@ -204,52 +206,4 @@ void osRtxPostProcess (os_object_t *object) {
   } else {
     osRtxErrorNotify(osRtxErrorISRQueueOverflow, object);
   }
-}
-
-
-//  ==== Public API ====
-
-/// Setup System Timer.
-__WEAK int32_t osRtxSysTimerSetup (void) {
-
-  // Setup SysTick Timer
-  SysTick_Setup(osRtxInfo.kernel.sys_freq / osRtxConfig.tick_freq);
-
-  return SysTick_IRQn;                  // Return IRQ number of SysTick
-}
-
-/// Enable System Timer.
-__WEAK void osRtxSysTimerEnable (void) {
-  SysTick_Enable();
-}
-
-/// Disable System Timer.
-__WEAK void osRtxSysTimerDisable (void) {
-  SysTick_Disable();
-}
-
-/// Acknowledge System Timer IRQ.
-__WEAK void osRtxSysTimerAckIRQ (void) {
-  SysTick_GetOvf();
-}
-
-/// Get System Timer count.
-__WEAK uint32_t osRtxSysTimerGetCount (void) {
-  uint32_t tick;
-  uint32_t val;
-
-  tick = (uint32_t)osRtxInfo.kernel.tick;
-  val  = SysTick_GetVal();
-  if (SysTick_GetOvf()) {
-    val = SysTick_GetVal();
-    tick++;
-  }
-  val += tick * SysTick_GetPeriod();
-
-  return val;
-}
-
-/// Get System Timer frequency.
-__WEAK uint32_t osRtxSysTimerGetFreq (void) {
-  return osRtxInfo.kernel.sys_freq;
 }

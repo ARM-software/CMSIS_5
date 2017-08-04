@@ -48,7 +48,7 @@ is allowed. A CPDSC file can describe one or more projects.
         <memory access="rw" default="0" init="1" name="IRAM2" size="0x10000" start="0x10000000"/>
       </target>
       <select>
-        <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="4.1.0"/>
+        <component Cclass="CMSIS" Cgroup="Core" Cvendor="ARM" Cversion="4.1.0"/>
         <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cvendor="ARM" Cversion="4.78.0">
           <file attr="config" category="source" name="CMSIS/RTOS/RTX/Templates/RTX_Conf_CM.c" version="4.70.1"/>
         </component>
@@ -775,7 +775,7 @@ This element lists all software components that are selected within the Manage R
     <project>
       ...
       <select>
-        <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="4.1.0"/>
+        <component Cclass="CMSIS" Cgroup="Core" Cvendor="ARM" Cversion="4.1.0"/>
         <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cvendor="ARM" Cversion="4.78.0">
           <file attr="config" category="source" name="CMSIS/RTOS/RTX/Templates/RTX_Conf_CM.c" version="4.70.1"/>
         </component>
@@ -834,7 +834,7 @@ Specify the software components.
 \code
 ...
       <select>
-        <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="4.1.0"/>
+        <component Cclass="CMSIS" Cgroup="Core" Cvendor="ARM" Cversion="4.1.0"/>
         <component Cclass="Device" Cgroup="STM32Cube Framework" Csub="Classic" Cvendor="Keil" Cversion="1.4.0">
           <file attr="config" category="header" name="CMSIS/Driver/Config/RTE_Device.h" version="2.3.1"/>
           <file attr="config" category="header" name="MDK/Templates/Inc/stm32f4xx_hal_conf.h" version="1.4.2"/>

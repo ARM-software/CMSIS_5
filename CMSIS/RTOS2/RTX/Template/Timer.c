@@ -32,7 +32,7 @@ int Init_Timers (void) {
  
   // Create one-shoot timer
   exec1 = 1;
-  tim_id1 = osTimerNew ((os_timer_func_t)&Timer1_Callback, osTimerOnce, &exec1, NULL);
+  tim_id1 = osTimerNew ((osTimerFunc_t)&Timer1_Callback, osTimerOnce, &exec1, NULL);
   if (tim_id1 != NULL) {    // One-shot timer created
     // start timer with delay 100ms
     status = osTimerStart (tim_id1, 100);            
@@ -43,7 +43,7 @@ int Init_Timers (void) {
  
   // Create periodic timer
   exec2 = 2;
-  tim_id2 = osTimerNew((os_timer_func_t)&Timer2_Callback, osTimerPeriodic, &exec2, NULL);
+  tim_id2 = osTimerNew((osTimerFunc_t)&Timer2_Callback, osTimerPeriodic, &exec2, NULL);
   if (tim_id2 != NULL) {    // Periodic timer created
     // start timer with periodic 1000ms interval
     status = osTimerStart (tim_id2, 1000);            

@@ -197,6 +197,11 @@ static const osMessageQueueAttr_t os_timer_mq_attr = {
   (uint32_t)sizeof(os_timer_mq_data)
 };
 
+#else
+
+extern void osRtxTimerThread (void *argument);
+       void osRtxTimerThread (void *argument) {}
+
 #endif  // ((OS_TIMER_THREAD_STACK_SIZE != 0) && (OS_TIMER_CB_QUEUE != 0))
 
 
@@ -434,9 +439,8 @@ extern const uint8_t *irqRtxLibRef;
        const uint8_t *irqRtxLibRef = &irqRtxLib;
 
 // Default User SVC Table
-__WEAK
 extern void * const osRtxUserSVC[];
-       void * const osRtxUserSVC[1] = { (void *)0 };
+__WEAK void * const osRtxUserSVC[1] = { (void *)0 };
 
 
 // OS Sections
@@ -511,18 +515,16 @@ const uint32_t os_cb_sections[] = {
     (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 
 #ifndef __MICROLIB
-__WEAK
-void _platform_post_stackheap_init (void);
-void _platform_post_stackheap_init (void) {
+extern void _platform_post_stackheap_init (void);
+__WEAK void _platform_post_stackheap_init (void) {
   osKernelInitialize();
 }
 #endif
 
 #elif defined(__GNUC__)
 
-__WEAK
-void software_init_hook (void);
-void software_init_hook (void) {
+extern void software_init_hook (void);
+__WEAK void software_init_hook (void) {
   osKernelInitialize();
 }
 

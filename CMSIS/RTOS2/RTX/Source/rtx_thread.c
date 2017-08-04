@@ -377,19 +377,7 @@ void osRtxThreadDelayTick (void) {
 /// \param[in]  thread          thread object.
 /// \return pointer to registers R0-R3.
 uint32_t *osRtxThreadRegPtr (os_thread_t *thread) {
-
-#if (__FPU_USED == 1U)
-  if (IS_EXTENDED_STACK_FRAME(thread->stack_frame)) {
-    // Extended Stack Frame: S16-S31, R4-R11, R0-R3, R12, LR, PC, xPSR, S0-S15, FPSCR
-    return ((uint32_t *)(thread->sp + (16U+8U)*4U));
-  } else {
-    // Basic Stack Frame:             R4-R11, R0-R3, R12, LR, PC, xPSR
-    return ((uint32_t *)(thread->sp +      8U *4U));
-  }
-#else
-  // Stack Frame: R4-R11, R0-R3, R12, LR, PC, xPSR
-  return ((uint32_t *)(thread->sp + 8U*4U));
-#endif
+  return ((uint32_t *)(thread->sp + STACK_OFFSET_R0(thread->stack_frame)));
 }
 
 /// Block running Thread execution and register it as Ready to Run.
@@ -435,6 +423,12 @@ void osRtxThreadDispatch (os_thread_t *thread) {
 
   kernel_state   = osRtxKernelGetState();
   thread_running = osRtxThreadGetRunning();
+#if (__ARM_ARCH_7A__ != 0U)
+  // On Cortex-A PendSV_Handler is executed before final context switch.
+  if ((thread_running != NULL) && (thread_running->state != osRtxThreadRunning)) {
+    thread_running = osRtxInfo.thread.run.next;
+  }
+#endif
 
   if (thread == NULL) {
     thread = osRtxInfo.thread.ready.thread_list;
@@ -761,7 +755,10 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
   }
   *ptr++   = (uint32_t)osThreadExit;    // LR
   *ptr++   = (uint32_t)func;            // PC
-  *ptr++   = XPSR_INITIAL_VALUE;        // xPSR
+  *ptr++   = xPSR_INIT(
+              (osRtxConfig.flags & osRtxConfigPrivilegedMode),
+              ((uint32_t)func & 1U)
+             );                         // xPSR
   *(ptr-8) = (uint32_t)argument;        // R0
 
   // Register post ISR processing function
@@ -1177,6 +1174,9 @@ void svcRtxThreadExit (void) {
     thread->state = osRtxThreadTerminated;
     thread->thread_prev = NULL;
     thread->thread_next = osRtxInfo.thread.terminate_list;
+    if (osRtxInfo.thread.terminate_list != NULL) {
+      osRtxInfo.thread.terminate_list->thread_prev = thread;
+    }
     osRtxInfo.thread.terminate_list = thread;
   }
 
@@ -1242,6 +1242,9 @@ osStatus_t svcRtxThreadTerminate (osThreadId_t thread_id) {
     thread->state = osRtxThreadTerminated;
     thread->thread_prev = NULL;
     thread->thread_next = osRtxInfo.thread.terminate_list;
+    if (osRtxInfo.thread.terminate_list != NULL) {
+      osRtxInfo.thread.terminate_list->thread_prev = thread;
+    }
     osRtxInfo.thread.terminate_list = thread;
   }
 
@@ -1310,7 +1313,7 @@ uint32_t svcRtxThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items
     *thread_array++ = thread;
   }
 
-  EvrRtxThreadEnumerate(thread_array, array_items, count);
+  EvrRtxThreadEnumerate(thread_array - count, array_items, count);
 
   return count;
 }

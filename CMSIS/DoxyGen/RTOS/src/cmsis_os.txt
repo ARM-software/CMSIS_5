@@ -601,7 +601,7 @@ This RTX implementation gives therefore serious benefits to the users and the so
  - The unified feature set of the CMSIS-RTOS API simplifies sharing of software components and reduces learning efforts.
  - Middleware components that use the CMSIS-RTOS API are RTOS agnostic and CMSIS-RTOS compliant middleware is easier to
    adapt.
- - This RTX implementation is available under the BSD license and can be freely distributed with project templates.
+ - This RTX implementation is available under the Apache-2.0 license and can be freely distributed with project templates.
  
 The CMSIS-RTOS RTX manages the resources of the microcontroller system and implements the concept of parallel threads that
 run concurrently. There are many advantages of using the CMSIS-RTOS RTX kernel.
@@ -1135,7 +1135,7 @@ The file \ref RTX_Conf_CM "RTX_Conf_CM.c" is used to define the configuration pa
 part of every project that is using the CMSIS-RTOS RTX kernel.
 
 The configuration file uses
-<a class="el" href="http://www.keil.com/pack/doc/CMSIS/Pack/html/_config_wizard.html" target="_blank">Configuration Wizard Annotations</a>.
+<b>Configuration Wizard Annotations</b>. Refer to <b>Pack - Configuration Wizard Annotations</b> for details.
 Depending on the development tool that is used, this might lead to a more user friendly graphical representation of the
 settings. The following is a screenshot of the same configuration file using µVision's Configuration Wizard view:
 
@@ -2278,6 +2278,7 @@ Remove the thread function from the active thread list. If the thread is current
  - \em osErrorISR: \ref osThreadTerminate cannot be called from interrupt service routines.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note Avoid calling the function with a \em thread_id that does not exist or has been terminated already.
 
 <b>Code Example</b>
 \code{.c}
@@ -2884,7 +2885,7 @@ When these signal flags are already set, the function returns instantly. Otherwi
 Signal flags that are reported as event are automatically cleared.
 
 The argument \a millisec specifies how long the system waits for the specified signal flags.
-While the system waits the tread calling this function is put into the state \b WAITING.
+While the system waits the thread calling this function is put into the state \b WAITING.
 The timeout value can have the following values:
  - when \a millisec is 0, the function returns instantly.
  - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until a specified signal is set.
@@ -3506,7 +3507,7 @@ Allocate a memory block from the mail queue that is filled with the mail informa
 The argument \a queue_id specifies a mail queue identifier that is obtain with \ref osMailCreate.
 
 The argument \a millisec specifies how long the system waits for a mail slot to become available.
-While the system waits the tread calling this function is put into the state \b WAITING.
+While the system waits the thread calling this function is put into the state \b WAITING.
 The \a millisec timeout can have the following values:
  - when \a millisec is 0, the function returns instantly.
  - when \a millisec is set to \b osWaitForever the function will wait for an infinite time until a mail slot can be allocated.
