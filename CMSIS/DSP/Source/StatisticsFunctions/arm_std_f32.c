@@ -173,6 +173,22 @@ void arm_std_f32(
   {
     arm_sqrt_f32((squareOfMean - meanOfSquares), pResult);
   }
+  
+
+#else
+  /* Run the below code for Cortex-M0 */
+
+  /* Loop over blockSize number of values */
+  blkCnt = blockSize;
+
+  while (blkCnt > 0U)
+  {
+    arm_sqrt_f32((meanOfSquares - squareOfMean), pResult);
+  }
+  else
+  {
+    arm_sqrt_f32((squareOfMean - meanOfSquares), pResult);
+  }
 
 #else
   /* Run the below code for Cortex-M0 */
