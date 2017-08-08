@@ -943,11 +943,12 @@ __STATIC_INLINE void __FPU_Enable(void) {
     "        VMOV    D30,R2,R2         \n"
     "        VMOV    D31,R2,R2         \n"
 #endif
+        //Initialise FPSCR to a known state
+    "        VMRS    R2,FPSCR          \n"
+    "        LDR     R3,=0x00086060    \n" //Mask off all bits that do not have to be preserved. Non-preserved bits can/should be zero.
+    "        AND     R2,R2,R3          \n"
+    "        VMSR    FPSCR,R2            "
   );
-
-  // Initialise FPSCR to a known state
-  // Mask off all bits that do not have to be preserved. Non-preserved bits can/should be zero.
-  __set_FPSCR(__get_FPSCR() & 0x00086060u);
 }
 
 #pragma GCC diagnostic pop

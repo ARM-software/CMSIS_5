@@ -769,8 +769,8 @@ __STATIC_INLINE void __FPU_Enable(void) {
 
 	    //Initialise VFP/NEON registers to 0
     "        MOV     R2,#0             \n"
-#if 0 // TODO: Initialize FPU registers according to available register count
-    ".if {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} >= 16 \n"
+
+#if TARGET_FEATURE_EXTENSION_REGISTER_COUNT >= 16
 	    //Initialise D16 registers to 0
     "        VMOV    D0, R2,R2         \n"
     "        VMOV    D1, R2,R2         \n"
@@ -788,9 +788,9 @@ __STATIC_INLINE void __FPU_Enable(void) {
     "        VMOV    D13,R2,R2         \n"
     "        VMOV    D14,R2,R2         \n"
     "        VMOV    D15,R2,R2         \n"
-    ".endif                            \n"
+#endif
 
-    ".if {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} == 32 \n"
+#if TARGET_FEATURE_EXTENSION_REGISTER_COUNT == 32
 	    //Initialise D32 registers to 0
     "        VMOV    D16,R2,R2         \n"
     "        VMOV    D17,R2,R2         \n"
