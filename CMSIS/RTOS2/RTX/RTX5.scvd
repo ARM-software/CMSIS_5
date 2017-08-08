@@ -713,6 +713,9 @@
       <readlist name="mp_mqueue" cond="RTX_En &amp;&amp; (QCB_Rd == 0) &amp;&amp; os_Info.mpi_message_queue" type="osRtxMpInfo_t"       offset="os_Info.mpi_message_queue" count="1" init="1"/>
       <readlist name="QCB"       cond="RTX_En &amp;&amp; (QCB_Rd == 0) &amp;&amp; os_Info.mpi_message_queue" type="osRtxMessageQueue_t" offset="mp_mqueue.block_base"      count="mp_mqueue.max_blocks" />
 
+	  <!-- Read common memory pool block info (MEM) -->
+      <readlist name="mem_info" cond="RTX_En &amp;&amp; os_Info.mem_common" type="mem_head_t" offset="os_Info.mem_common" count="1"/>
+
       <!-- Read common memory pool block info (MEM) -->
       <readlist name="mem_bl" cond="RTX_En &amp;&amp; os_Info.mem_common" type="mem_block_t" offset="os_Info.mem_common + 8" next="next"/>
 
@@ -1089,7 +1092,7 @@
           <item property="Round Robin"            value="Disabled"                      cond="(os_Config.robin_timeout == 0) &amp;&amp; (RTX_En != 0)" />
           <item property="Round Robin Tick Count" value="%d[os_Info.thread_robin_tick]" cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
           <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]"   cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
-          <item property="Global Dynamic Memory" value="Base: %x[os_Config.mem_common_addr], Size: %d[os_Config.mem_common_size]" cond="RTX_En != 0"/>
+          <item property="Global Dynamic Memory" value="Base: %x[os_Config.mem_common_addr], Size: %d[os_Config.mem_common_size], Used: %d[mem_info.used]" cond="RTX_En != 0"/>
           <item property="Stack Overrun Check"   value="%t[stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
           <item property="Stack Usage Watermark" value="%t[stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
           <item property="Default Thread Stack Size" value="%d[os_Config.thread_stack_size]" cond="RTX_En != 0"/>
