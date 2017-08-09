@@ -82,6 +82,12 @@ The \ref templates_pg supplied by ARM have been tested and verified with the fol
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.0.3</td>
+      <td>
+		 Added \ref mpu_functions for Cortex-M23/M33.
+      </td>
+    </tr>
+    <tr>
       <td>V5.0.2</td>
       <td>
          Added macros  \ref \__UNALIGNED_UINT16_READ,  \ref \__UNALIGNED_UINT16_WRITE.\n

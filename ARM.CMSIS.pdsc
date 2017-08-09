@@ -8,10 +8,12 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.1.1-dev0">
+    <release version="5.1.1-dev1">
 	  Active development...
 	  Devices:
 	  - added GCC startup and linker script for Cortex-A9
+      CMSIS-Core(M): 5.0.3 (see revision history for details)
+	  - Added MPU Functions for ARMv8-M for Cortex-M23/M33.
 	</release>
     <release version="5.1.0" date="2017-08-04">
       CMSIS-Core(M): 5.0.2 (see revision history for details)
