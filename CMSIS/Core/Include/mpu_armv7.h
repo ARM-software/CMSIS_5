@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     mpu_armv7.h
  * @brief    CMSIS MPU API for ARMv7 MPU
- * @version  V5.0.2
- * @date     09. June 2017
+ * @version  V5.0.3
+ * @date     09. August 2017
  ******************************************************************************/
 /*
  * Copyright (c) 2017 ARM Limited. All rights reserved.
@@ -176,7 +176,13 @@ __STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRI
 */
 __STATIC_INLINE void ARM_MPU_Load(ARM_MPU_Region_t const* table, uint32_t cnt) 
 {
-  orderedCpy(&(MPU->RBAR), &(table->RBAR), cnt*sizeof(ARM_MPU_Region_t)/4u);
+  static const uint32_t rowWordSize = sizeof(ARM_MPU_Region_t)/4u;
+  if (cnt > MPU_TYPE_RALIASES) {
+	orderedCpy(&(MPU->RBAR), &(table->RBAR), MPU_TYPE_RALIASES*rowWordSize);
+	ARM_MPU_Load(table+MPU_TYPE_RALIASES, cnt-MPU_TYPE_RALIASES);
+  } else {
+	orderedCpy(&(MPU->RBAR), &(table->RBAR), cnt*rowWordSize);
+  }
 }
 
 #endif
