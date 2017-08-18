@@ -49,7 +49,20 @@ __WEAK int32_t  OS_Tick_Setup (uint32_t freq, IRQHandler_t handler) {
     return (-1);
   }
 
-  NVIC_SetPriority(SysTick_IRQn, SYSTICK_IRQ_PRIORITY);
+  // Set SysTick Interrupt Priority
+#if   ((defined(__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1U)) || \
+       (defined(__CORTEX_M)           && (__CORTEX_M           == 7U)))
+  SCB->SHPR[11] =  SYSTICK_IRQ_PRIORITY;
+#elif  (defined(__ARM_ARCH_8M_BASE__) && (__ARM_ARCH_8M_BASE__ == 1U))
+  SCB->SHPR[1] |= (SYSTICK_IRQ_PRIORITY << 24);
+#elif ((defined(__ARM_ARCH_7M__)      && (__ARM_ARCH_7M__      == 1U)) || \
+       (defined(__ARM_ARCH_7EM__)     && (__ARM_ARCH_7EM__     == 1U)))
+  SCB->SHP[11]  =  SYSTICK_IRQ_PRIORITY;
+#elif  (defined(__ARM_ARCH_6M__)      && (__ARM_ARCH_6M__      == 1U))
+  SCB->SHP[1]  |= (SYSTICK_IRQ_PRIORITY << 24);
+#else
+#error "Unknown ARM Core!"
+#endif
 
   SysTick->CTRL =  SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk;
   SysTick->LOAD =  load;

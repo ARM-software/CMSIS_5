@@ -154,6 +154,12 @@ File/Folder                  | Content
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.2.1</td>
+      <td>
+       - Corrected SysTick and SVC Interrupt Priority for Cortex-M.
+      </td>
+    </tr>
+    <tr>
       <td>V5.2.0</td>
       <td>
        - Based on CMSIS-RTOS API V2.1.1.
