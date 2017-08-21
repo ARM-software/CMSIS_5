@@ -32,7 +32,7 @@ DOXYFILE_ENCODING      = UTF-8
 # title of most generated pages and in a few other places.
 # The default value is: My Project.
 
-PROJECT_NAME           = CMSIS-Core (Cortex-M)
+PROJECT_NAME           = "CMSIS-Core (Cortex-M)"
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. This
 # could be handy for archiving the generated documentation or if some version
@@ -763,6 +763,7 @@ INPUT                  = src/Overview.txt \
                          src/Ref_cmInstr.txt \
                          src/Ref_cm4_simd.txt \
                          src/Ref_FPU.txt \
+						 src/Ref_MPU.txt \
                          src/Ref_Systick.txt \
                          src/Ref_Debug.txt \
                          src/Ref_Trustzone.txt \

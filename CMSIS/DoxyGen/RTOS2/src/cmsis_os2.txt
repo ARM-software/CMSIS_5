@@ -78,6 +78,16 @@ File/Folder                  | Content
       <th>Description</th>
     </tr>
     <tr>
+      <td>V2.1.1</td>
+      <td>
+        Additional functions allowed to be called from Interrupt Service Routines:
+         - \ref osKernelGetTickCount, \ref osKernelGetTickFreq
+         
+        Changed Kernel Tick type to uint32_t:
+         - updated: \ref osKernelGetTickCount, \ref osDelayUntil
+     </td>
+    </tr>
+    <tr>
       <td>V2.1.0</td>
       <td>
         Support for critical and uncritical sections (nesting safe):
@@ -144,8 +154,17 @@ File/Folder                  | Content
       <th>Description</th>
     </tr>
     <tr>
-      <td>V5.1.1</td>
+      <td>V5.2.1</td>
       <td>
+       - Corrected SysTick and SVC Interrupt Priority for Cortex-M.
+      </td>
+    </tr>
+    <tr>
+      <td>V5.2.0</td>
+      <td>
+       - Based on CMSIS-RTOS API V2.1.1.
+       - Added support for for Cortex-A.
+       - Using OS Tick API for RTX Kernel Timer Tick.
        - Fixed potential corruption of terminated threads list.
        - Corrected MessageQueue to use actual message length (before padding).
        - Corrected parameters for ThreadEnumerate and MessageQueueInserted events.
@@ -155,7 +174,7 @@ File/Folder                  | Content
     <tr>
       <td>V5.1.0</td>
       <td>
-       - Based on CMSIS-RTOS API V2.1.
+       - Based on CMSIS-RTOS API V2.1.0.
        - Added support for Event recording.
        - Added support for IAR compiler.
        - Updated configuration files: RTX_Config.h for the configuration settings and RTX_config.c for implementing the \ref rtx5_specific.
@@ -329,11 +348,27 @@ The steps to create a microcontroller application using RTX5 are:
 
 - \ref config_rtx5 "Configure" RTX5 to the application's needs using the \b %RTX_Config.h file.
 
+\section cre_rtx_cortexa Additional requirements for RTX on Cortex-A
+
+Cortex-A based microcontrollers are less unified with respect to the interrupt and timer implementations used compared to 
+M-class devices. Thus RTX requires additional components when an A-class device is used, namely
+<a href="../../Core_A/html/group__irq__ctrl__gr.html"><b>IRQ Controller (API)</b></a> and \ref CMSIS_RTOS_TickAPI "OS Tick (API)"
+implementations. 
+
+\image html manage_rte_cortex-a.png
+
+The default implementations provided along with CMSIS are 
+- ARM <a href="../../Core_A/html/group__GIC__functions.html">Generic Interrupt Controller (GIC)</a>
+- ARM Cortex-A5, Cortex-A9 <a href="../../Core_A/html/group__PTM__timer__functions.html">Private Timer (PTIM)</a>
+- ARM Cortex-A7 <a href="../../Core_A/html/group__PL1__timer__functions.html">Generic Physical Timer (GTIM)</a>
+
+For devices not implementing GIC, PTIM nor GTIM please refer to the according device family pack and select the
+proper implementations.
+
 \section cre_rtx_proj_specifics Add support for RTX specific functions
 If you require some of the \ref rtx5_specific "RTX specific functions" in your application code, \#include the
 \ref rtx_os_h "header file rtx_os.h". This enables \ref lowPower "low-power" and \ref TickLess "tick-less" operation modes.
-  
-  
+
 \section cre_rtx_proj_er Add Event Recorder Visibility
 - To use the Event Recorder together with RTX5, select the software component <b>Compiler:Event Recorder</b>.
 - Select the \b Source variant of the software component <b>CMSIS:RTOS2 (API):Keil RTX5</b>.
@@ -569,121 +604,14 @@ void osRtxIdleThread (void) {
 
 \section kernelTimer RTX Kernel Timer Tick
 
-By default, RTX5 uses the Cortex-M
-<a href="http://www.keil.com/support/man/docs/gsac/GSAC_SYSTICKtimer.htm" target="_blank">SysTick</a> timer to generate
-periodic interrupts for the RTX kernel timer tick. CMSIS-RTOS provides \ref CMSIS_RTOS_TimerMgmt functions and several
-CMSIS-RTOS functions have a \a timeout parameter. This periodic RTX kernel timer tick interrupt is used to derive the
-required time interval. RTX5 also provides configuration options for an \ref kernelTimer_alt "alternative timer" and
-\ref TickLess "tick-less operation". 
+RTX uses the generic \ref CMSIS_RTOS_TickAPI to configure and control its periodic Kernel Tick.
 
-To handle timeout and time delays for threads, the RTX5 thread management is controlled by the RTX kernel timer tick
-interrupt. The thread context contains all CPU registers (R0 - R12), the return address (LR), the program counter (PC), and
-the processor status register (xPSR). For the Cortex-M4/M7 FPU the floating point status and registers (S0 - S32, FPSCR) are
-also part of the thread context.
+To use an alternative timer as the Kernel Tick Timer one simply needs to implement a custom version
+of the \ref CMSIS_RTOS_TickAPI.
 
-When a thread switch occurs:
- - the thread context of the current running thread is stored on the local stack of this thread.
- - the stack pointer is switched to the next running thread.
- - the thread context of this next running thread is restored and this thread starts to run.
-
- 
-\subsection kernelTimer_alt Using an Alternative Timer as RTX Kernel Timer
-
-The following functions need to be adapted to enable the usage of an alternative kernel timer:
- - \ref osRtxSysTimerSetup sets up the timer (including IRQ priority) and returns its IRQ number. Note that it is no longer
-   required to start the time in this function as a separate function is available (see next).
- - \ref osRtxSysTimerEnable starts the timer.
- - \ref osRtxSysTimerDisable stops the timer.
- - \ref osRtxSysTimerAckIRQ acknowledges the IRQ.
- - \ref osRtxSysTimerGetCount returns the current tick count as a 32-bit value. Note that this function can be called when
-   the timer is disabled. It should still provide valid tick count values.
- - \ref osRtxSysTimerGetFreq returns the timer tick frequency. Note that this function can be called when the
-   timer is disabled. It should still provide valid tick frequency values.
-
-It is important to configure the IRQ priority (it should match PendSV). This can be achieved using the ExtTick_SetupIRQ()
-function from core_cm.h. Enabling/disabling the IRQ is handled by the system.
-
-There is no need to provide an IRQ handler. Only make sure that existing SysTick_Handler is mapped to the tick IRQ.
-
-\b Code \b Example:
-
-The following code example shows an implementation for a Cortex-A core that does not come with a built-in SysTick timer.
-
-\code
-#include "RTE_Components.h"
-#include CMSIS_device_header
-#include "rtx_os.h"
- 
-int32_t osRtxSysTimerSetup (void) {
-  uint32_t load;
- 
-  /* Private Timer runs with the system frequency */
-  load = osRtxInfo.kernel.sys_freq / osRtxConfig.tick_freq;
- 
-  PTIM_SetLoadValue (load - 1U);
- 
-  /* Determine number of implemented priority bits */
-  GIC_SetPriority (PrivTimer_IRQn, 0xFFU);
- 
-  /* Set lowest priority -1 */
-  GIC_SetPriority (PrivTimer_IRQn, GIC_GetPriority(PrivTimer_IRQn)-1);
- 
-  /* Enable IRQ */
-  GIC_EnableIRQ (PrivTimer_IRQn);
- 
-  return (PrivTimer_IRQn);
-}
- 
-void osRtxSysTimerEnable (void) {
-  /* Start the Private Timer */
-  uint32_t ctrl;
- 
-  ctrl  = PTIM_GetControl();
-  /* Set bits: IRQ enable, Auto Reload, Timer enable */
-  ctrl |= 7U;
- 
-  PTIM_SetControl (ctrl);
-}
- 
-void osRtxSysTimerDisable (void) {
-  /* Stop the Private Timer */
-  uint32_t ctrl;
- 
-  ctrl  = PTIM_GetControl();
-  /* Clear bit: Timer enable */
-  ctrl &= ~1;
- 
-  PTIM_SetControl (ctrl);
-}
- 
-void osRtxSysTimerAckIRQ (void) {
-  PTIM_ClearEventFlag();
-}
- 
-uint32_t osRtxSysTimerGetCount (void) {
-  uint32_t tick;
-  uint32_t val;
- 
-  tick = (uint32_t)osRtxInfo.kernel.tick;
-  val  = PTIM_GetLoadValue();
-  val -= PTIM_GetCurrentValue();
- 
-  /* if (PTIM_GetEventFlag() != 0) */
-  if ((PTIM->ISR & 1) != 0) {
-    val  = PTIM_GetLoadValue();
-    val -= PTIM_GetCurrentValue();
-    tick++;
-  }
-  val += tick * (PTIM_GetLoadValue() + 1U);
- 
-  return val;
-}
- 
-uint32_t osRtxSysTimerGetFreq (void) {
-  /* Private Timer runs with the system frequency */
-  return osRtxInfo.kernel.sys_freq;
-}
-\endcode
+\note The OS Tick implementation provided must asure that the used timer interrupt uses the same (low) priority group 
+as the service interrupts, i.e. interrupts used by RTX must not preempt each other. Refer to the \ref Scheduler section
+for more details.
 
 \subsection TickLess Tick-less Low-Power Operation
 
@@ -803,7 +731,7 @@ Examples:
 \section CMSIS_RTOS_ISR_Calls Calls from Interrupt Service Routines 
 
 The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
-  - \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
+  - \ref osKernelGetTickCount, \ref osKernelGetTickFreq, \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
   - \ref osThreadFlagsSet
   - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
   - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
@@ -822,26 +750,31 @@ vector.
 \page config_rtx5 Configure RTX v5
 
 The file "RTX_Config.h" defines the configuration parameters of CMSIS-RTOS RTX and must be part of every project that is
-using the CMSIS-RTOS RTX kernel. The file "RTX_Config.c" contains stubs of the functions \b osRtxIdleThread and
-\b osRtxErrorNotify that can be adapted to the application's needs.
+using the CMSIS-RTOS RTX kernel. The configuration options are explained in detail in the following sections:
+- \ref systemConfig covers system-wide settings for the global memory pool, tick frequency, ISR event buffer and round-robin thread switching.
+- \ref threadConfig provides several parameters to configure the \ref CMSIS_RTOS_ThreadMgmt functions.
+- \ref timerConfig provides several parameters to configure the \ref CMSIS_RTOS_TimerMgmt functions.
+- \ref eventFlagsConfig provides several parameters to configure the \ref CMSIS_RTOS_EventFlags functions.
+- \ref mutexConfig provides several parameters to configure the \ref CMSIS_RTOS_MutexMgmt functions.
+- \ref semaphoreConfig provides several parameters to configure the \ref CMSIS_RTOS_SemaphoreMgmt functions.
+- \ref memPoolConfig provides several parameters to configure the \ref CMSIS_RTOS_PoolMgmt functions.
+- \ref msgQueueConfig provides several parameters to configure the \ref CMSIS_RTOS_Message functions.
 
-The configuration file uses
-<b>Configuration Wizard Annotations</b>. Refer to <b>Pack - Configuration Wizard Annotations</b> for details.
+The file "RTX_Config.c" contains default implementations of the functions \ref osRtxIdleThread and \ref osRtxErrorNotify. Both functions
+can simply be overwritten with a custimized behavior by redefining them as part of the user code.
+
+The configuration file uses <b>Configuration Wizard Annotations</b>. Refer to <b>Pack - Configuration Wizard Annotations</b> for details.
 Depending on the development tool, the annotations might lead to a more user-friendly graphical representation of the
 settings. The screenshot below is a screenshot from the µVision \b Configuration \b Wizard view:
 
 \image html config_wizard.png "RTX_Config.h in Configuration Wizard View"
 
-The configuration options are explained on these pages:
-- \ref systemConfig
-- \ref threadConfig
-- \ref timerConfig
-- \ref eventFlagsConfig
-- \ref mutexConfig
-- \ref semaphoreConfig
-- \ref memPoolConfig
-- \ref msgQueueConfig
+Alternatively one can provide configuration options using the compiler command line.
 
+For example one can customize the used tick frequency to 100us by (overwriting) the configuration using
+\code
+cc -DOS_TICK_FREQ=100
+\endcode
 
 \section systemConfig System Configuration
 
@@ -1247,6 +1180,38 @@ processor variants in every configuration, including ARM Cortex-M23 and Cortex-M
 /** 
 \page technicalData5 Technical Data
 
+\section technicalData_Toolchains Supported Toolchains
+
+Keil RTX5 is developed and tested using the common toolchains and development environments.
+
+\subsection technicalData_Toolchain_ARM ARM Compiler (ARM/Keil MDK, uVision5)
+
+Major parts of RTX5 are developed and optimized using ARM Compiler and ARM/Keil MDK.
+The current release is tested with the following versions:
+<ul>
+ <li>ARM Compiler 5.06 Update 5 (Build 528)</li>
+ <li>ARM Compiler 6.6.1 (Long Term Maintenance)</li>
+ <li>ARM Compiler 6.7</li>
+ <li>RTOS-aware debugging with uVision 5.24</li>
+</ul>
+
+\subsection technicalData_Toolchain_IAR IAR Embedded Workbench
+
+RTX5 has been ported to fully support IAR Embedded Workbench. The following releases are known to work:
+<ul>
+ <li>IAR Embedded Workbench 7.7 (<a href="https://github.com/ARM-software/CMSIS_5/issues/201">community report</a>)</li>
+ <li>IAR Embedded Workbench 7.80.4</li>
+ <li>IAR Embedded Workbench 8.10</li>
+</ul>
+
+\subsection technicalData_Toolchain_GCC GNU Compiler Collection
+
+RTX5 has also been ported to support GCC, maintenance mainly relays on community contribution.
+Active development is currently tested with:
+<ul>
+ <li>GCC 5.4 Release Series</li>
+</ul>
+
 \section technicalData5_ControlBlockSizes Control Block Sizes
 
 Keil RTX5 specific control block definitions (including sizes) as well as memory pool and message queue memory requirements
@@ -1475,20 +1440,25 @@ Overview of all CMSIS-RTOS C API v2 functions that are implemented in the \subpa
    - \ref osMessageQueueNew : \copybrief osMessageQueueNew
    - \ref osMessageQueuePut : \copybrief osMessageQueuePut
    - \ref osMessageQueueReset : \copybrief osMessageQueueReset
+ 
+ - \ref CMSIS_RTOS_TickAPI
+   - \ref OS_Tick_Setup : \copybrief OS_Tick_Setup
+   - \ref OS_Tick_Enable : \copybrief OS_Tick_Enable
+   - \ref OS_Tick_Disable : \copybrief OS_Tick_Disable
+   - \ref OS_Tick_AcknowledgeIRQ : \copybrief OS_Tick_AcknowledgeIRQ
+   - \ref OS_Tick_GetIRQn : \copybrief OS_Tick_GetIRQn
+   - \ref OS_Tick_GetClock : \copybrief OS_Tick_GetClock
+   - \ref OS_Tick_GetInterval : \copybrief OS_Tick_GetInterval
+   - \ref OS_Tick_GetCount : \copybrief OS_Tick_GetCount
+   - \ref OS_Tick_GetOverflow : \copybrief OS_Tick_GetOverflow
 
  - \ref rtx5_specific
    - \ref osRtxErrorNotify : \copybrief osRtxErrorNotify
    - \ref osRtxIdleThread : \copybrief osRtxIdleThread
-   - \ref osRtxSysTimerSetup : \copybrief osRtxSysTimerSetup
-   - \ref osRtxSysTimerEnable : \copybrief osRtxSysTimerEnable
-   - \ref osRtxSysTimerDisable : \copybrief osRtxSysTimerDisable
-   - \ref osRtxSysTimerAckIRQ : \copybrief osRtxSysTimerAckIRQ
-   - \ref osRtxSysTimerGetCount : \copybrief osRtxSysTimerGetCount
-   - \ref osRtxSysTimerGetFreq : \copybrief osRtxSysTimerGetFreq
 
 The following CMSIS-RTOS2 functions can be called from threads and \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines"
 (ISR):
-   - \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
+   - \ref osKernelGetTickCount, \ref osKernelGetTickFreq, \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
    - \ref osThreadFlagsSet
    - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
    - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
@@ -1503,7 +1473,7 @@ The following CMSIS-RTOS2 functions can be called from threads and \ref CMSIS_RT
 /**
 \page rtos_apicpp CMSIS-RTOS C++ API
 
-The C++11/C++14 interface is planned to be released in January 2017.
+A C++11/C++14 interface is planned for the future.
 */
 
 
@@ -1541,9 +1511,6 @@ The RTX5 kernel can be customized for different application requirements:
   \ref osRtxIdleThread to send the system to sleep mode as often as possible. In addition, use the
   \ref TickLess "tick-less low power" functions \ref osKernelSuspend and \ref osKernelResume to suspend the scheduler and to
   stop the SysTick timer.
-- If you need to specify an \ref kernelTimer "alternate hardware timer" as the system tick timer, you need to implement the
-  functions \ref osRtxSysTimerSetup, \ref osRtxSysTimerEnable, \ref osRtxSysTimerDisable, and optionally the function
-  \ref osRtxSysTimerAckIRQ.
 - If you try to find a \b runtime \b error, use the function \ref osRtxErrorNotify to debug the error.
 
 RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
@@ -1728,7 +1695,7 @@ osRtxErrorClibMutex         /**
 \details
 The function \b osRtxIdleThread is executed by the RTX kernel, when no other threads are ready to run. By default, this
 thread is an empty end-less loop that does nothing. It only waits until another task becomes ready to run. You may change the
-code of the \b osRtxIdleThread function to put the CPU into a power-saving or idle mode.
+code of the \b osRtxIdleThread function to put the CPU into a power-saving or idle mode, see \ref TickLess.
 
 The default stack size for this thread is defined in the file RTX_Config.h. Refer to \ref threadConfig.
 
@@ -1745,150 +1712,6 @@ __NO_RETURN void osRtxIdleThread (void *argument) {
 }
 \endcode
 */ 
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** 
-\fn int32_t osRtxSysTimerSetup (void);
-\details
-By default, RTX5 uses the Cortex-M SysTick timer, but using \b osRtxSysTimerSetup allows to set up an alternative system
-timer. 
-
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-\code
-int32_t osRtxSysTimerSetup (void) {
-  uint32_t load;
- 
-  /* Private Timer runs with the system frequency */
-  load = osRtxInfo.kernel.sys_freq / osRtxConfig.tick_freq;
- 
-  PTIM_SetLoadValue (load - 1U);
- 
-  /* Determine number of implemented priority bits */
-  GIC_SetPriority (PrivTimer_IRQn, 0xFFU);
- 
-  /* Set lowest priority -1 */
-  GIC_SetPriority (PrivTimer_IRQn, GIC_GetPriority(PrivTimer_IRQn)-1);
-	
-  /* Enable IRQ */
-  GIC_EnableIRQ (PrivTimer_IRQn);
- 
-  return (PrivTimer_IRQn);
-}
-\endcode
-*/ 
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** 
-\fn void osRtxSysTimerEnable (void);
-\details
-The function \b osRtxSysTimerEnable enables the alternative system timer that has been set up using \ref osRtxSysTimerSetup.
-
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-\code
-void osRtxSysTimerEnable (void) {
-  /* Start the Private Timer */
-  uint32_t ctrl;
- 
-  ctrl  = PTIM_GetControl();
-  /* Set bits: IRQ enable, Auto Reload, Timer enable */
-  ctrl |= 7U;
- 
-  PTIM_SetControl (ctrl);
-}
-\endcode
-*/ 
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** 
-\fn void osRtxSysTimerDisable (void);
-\details
-The function \b osRtxSysTimerDisable disables the alternative system timer that has been set up using \ref osRtxSysTimerSetup.
-
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-\code
-void osRtxSysTimerDisable (void) {
-  /* Stop the Private Timer */
-  uint32_t ctrl;
- 
-  ctrl  = PTIM_GetControl();
-  /* Clear bit: Timer enable */
-  ctrl &= ~1;
- 
-  PTIM_SetControl (ctrl);
-}
-\endcode
-*/ 
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** 
-\fn void osRtxSysTimerAckIRQ (void);
-\details
-
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-\code
-void osRtxSysTimerAckIRQ (void) {
-  PTIM_ClearEventFlag();
-}
-\endcode
-*/ 
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** 
-\fn uint32_t osRtxSysTimerGetCount (void);
-\details
-The function \b osRtxSysTimerGetCount returns the system timer count of the alternative timer set up by
-\ref osRtxSysTimerSetup.
-
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-\code
-uint32_t osRtxSysTimerGetCount (void) {
-  uint32_t tick;
-  uint32_t val;
- 
-  tick = (uint32_t)osRtxInfo.kernel.tick;
-  val  = PTIM_GetLoadValue();
-  val -= PTIM_GetCurrentValue();
- 
-  /* if (PTIM_GetEventFlag() != 0) */
-  if ((PTIM->ISR & 1) != 0) {
-    val  = PTIM_GetLoadValue();
-    val -= PTIM_GetCurrentValue();
-    tick++;
-  }
-  val += tick * (PTIM_GetLoadValue() + 1U);
- 
-  return val;
-}
-\endcode
-*/ 
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** 
-\fn uint32_t osRtxSysTimerGetFreq (void);
-\details
-The function \b osRtxSysTimerGetFreq returns the system timer frequency of the alternative timer set up by
-\ref osRtxSysTimerSetup.
-
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-\b Code \b Example
-\code
-uint32_t osRtxSysTimerGetFreq (void) {
-  /* Private Timer runs with the system frequency */
-  return osRtxInfo.kernel.sys_freq;
-}
-\endcode
-*/
 
 /**
 @}

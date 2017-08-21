@@ -17,12 +17,17 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        10. January 2017
- * $Revision:    V2.1.0
+ * $Date:        9. June 2017
+ * $Revision:    V2.1.1
  *
  * Project:      CMSIS-RTOS2 API
  * Title:        cmsis_os2.h header file
  *
+ * Version 2.1.1
+ *    Additional functions allowed to be called from Interrupt Service Routines:
+ *    - osKernelGetTickCount, osKernelGetTickFreq
+ *    Changed Kernel Tick type to uint32_t:
+ *    - updated: osKernelGetTickCount, osDelayUntil
  * Version 2.1.0
  *    Support for critical and uncritical sections (nesting safe):
  *    - updated: osKernelLock, osKernelUnlock
@@ -335,7 +340,7 @@ void osKernelResume (uint32_t sleep_ticks);
  
 /// Get the RTOS kernel tick count.
 /// \return RTOS kernel current tick count.
-uint64_t osKernelGetTickCount (void);
+uint32_t osKernelGetTickCount (void);
  
 /// Get the RTOS kernel tick frequency.
 /// \return frequency of the kernel tick in hertz, i.e. kernel ticks per second.
@@ -472,7 +477,7 @@ osStatus_t osDelay (uint32_t ticks);
 /// Wait until specified time.
 /// \param[in]     ticks         absolute time in ticks
 /// \return status code that indicates the execution status of the function.
-osStatus_t osDelayUntil (uint64_t ticks);
+osStatus_t osDelayUntil (uint32_t ticks);
  
  
 //  ==== Timer Management Functions ====
@@ -609,7 +614,7 @@ const char *osSemaphoreGetName (osSemaphoreId_t semaphore_id);
 /// \return status code that indicates the execution status of the function.
 osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout);
  
-/// Release a Semaphore token that was acquired by \ref osSemaphoreAcquire.
+/// Release a Semaphore token up to the initial maximum count.
 /// \param[in]     semaphore_id  semaphore ID obtained by \ref osSemaphoreNew.
 /// \return status code that indicates the execution status of the function.
 osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id);

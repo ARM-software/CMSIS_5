@@ -1,0 +1,69 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page GenDataModel Generator Data Model 
+
+The <b>Generator Data Model</b> defines the view on the <b>Zone Description</b> for code generators.
+By defining a common data model code generators can be developed independendly from actual CMSIS Zone Projects and vendor tools.
+
+The CMSIS-Zone data (structured according to the Generator Data Model) is combined with file templates using the FreeMarker
+template engine to generate arbitrary project files, see picture below..
+
+\image html generator.png "FreeMarker Template Engine"
+
+\section GenDataModel_Structure Data Model Structure
+
+The class diagram below visualizes the overall structure of the <b>Generator Data Model</b>. The root element visible to
+the templates is FmZone.
+
+\image html genmodel.png "Generator Data Model Class Diagram"
+
+According to <a href="http://freemarker.org/docs/index.html" target="_blank">FreeMarker Documentation</a>
+one can access the named attributes like
+<a href="http://freemarker.org/docs/dgui_template_exp.html#dgui_template_exp_var_hash" target="_blank">retrieving data from a hash</a>.
+The reference implementation documented in detail below make use of the default FreeMarker
+<a href="http://freemarker.org/docs/pgui_misc_beanwrapper.html" target="_blank">Bean wrapper</a>. This leads to all Java methods 
+named like \em get\<Attribute\> or \em is\<Attribute\> to be visible just as <i>\<Attribute\></i> to the template.
+
+Please take note about the multiplicities stated in the diagram:
+- 0..1 indicates an optional value which might be unavailable, consider using <a href="http://freemarker.org/docs/dgui_template_exp.html#dgui_template_exp_missing" target="_blank">missing value handler operators</a>.
+- 1 indicates a mandatory value which is guaranteed to be valid.
+- 0..* indicates a collection or hash of values which might be empty.
+- 1..* indicates a collection or hash of values which is guaranteed to contain at least one element.
+
+For detailed descriptions of the data model elements please refere to the
+<a href="../genmodel/index.html" target="_blank">JavaDoc</a> documentation for
+- <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmZone.html" target="_blank">FmZone</a>
+- <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmProcess.html" target="_blank">FmProcess</a>
+- <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmDevice.html" target="_blank">FmDevice</a>
+- <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmProcesor.html" target="_blank">FmProcesor</a>
+- <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmBlock.html" target="_blank">FmBlock</a>
+
+\section GenDataModel_Examples Template Examples
+
+To get an impression of how template files might look like please refere to the simplyfied examples
+in this section. 
+
+\subsection GenDataModel_Examples_AssignedBlocks HTML table of all assigned memory blocks
+
+This examples demonstrates how to iterate over the collection of memory blocks assigned
+to the project zone currently evaluated. The result of the template below is a HTML table
+with three columns listing block name, start address and size, respectively.
+
+\code
+<table>
+  <th>
+    <td>Name</td>
+    <td>Start</td>
+    <td>Size</td>
+  </th>
+<#list blocks as block>
+  <tr>
+    <td>${block.name}</td>
+    <td>${block.start}</td>
+    <td>${block.size}</td>
+  </tr>
+</#list>
+</table>
+\endcode
+
+*/

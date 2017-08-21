@@ -123,6 +123,10 @@
     #warning No compiler specific solution for __ALIGNED. __ALIGNED is ignored.
     #define __ALIGNED(x)
   #endif
+  #ifndef   __RESTRICT
+    #warning No compiler specific solution for __RESTRICT. __RESTRICT is ignored.
+    #define __RESTRICT
+  #endif
 
   // Workaround for missing __CLZ intrinsic in
   // various versions of the IAR compilers.
@@ -203,6 +207,10 @@
   #ifndef   __ALIGNED
     #define __ALIGNED(x)                           __attribute__((aligned(x)))
   #endif
+  #ifndef   __RESTRICT
+    #warning No compiler specific solution for __RESTRICT. __RESTRICT is ignored.
+    #define __RESTRICT
+  #endif
 
 
 /*
@@ -265,6 +273,10 @@
   #ifndef   __ALIGNED
     #define __ALIGNED(x)              __align(x)
   #endif
+  #ifndef   __RESTRICT
+    #warning No compiler specific solution for __RESTRICT. __RESTRICT is ignored.
+    #define __RESTRICT
+  #endif
 
 
 /*
@@ -325,6 +337,10 @@
   #ifndef   __ALIGNED
     #warning No compiler specific solution for __ALIGNED. __ALIGNED is ignored.
     #define __ALIGNED(x)
+  #endif
+  #ifndef   __RESTRICT
+    #warning No compiler specific solution for __RESTRICT. __RESTRICT is ignored.
+    #define __RESTRICT
   #endif
 
 

@@ -71,12 +71,9 @@ The following example code shows the usage of the I<sup>2</sup>C interface in Ma
 
 \include I2C_Demo.c
 
-\if TODO_later
 The following example code shows the usage of the I<sup>2</sup>C interface in Slave mode.
 
-Add: Code example that shows usage of slave mode.
-\endif
-
+\include I2C_SlaveDemo.c
 
 @{
 */

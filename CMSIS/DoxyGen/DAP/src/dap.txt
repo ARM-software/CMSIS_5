@@ -19,7 +19,7 @@ Benefits of CMSIS-DAP
  - Connects via 5-pin JTAG or 2-pin Serial Wire Debug (SWD).
  - Supports multi-core debugging.
  - Supports Serial Wire Output of Cortex-M devices (new in CMSIS-DAP Version 1.1.0).
- - Supports trace recording of external Performance Counter inputs (new in CMSIS-DAP Version 1.2.0).
+ - Supports trace recording of additional Test Inputs, for example power measurement (new in CMSIS-DAP Version 1.2.0).
  - Easy to deploy to Debug Units based on Cortex-M microcontrollers. 
  - Debug Unit may be integrated on an evaluation board.
  - USB using HID (Human Interface Device) driver class that avoids driver installation on host PC.
@@ -79,8 +79,8 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
       <td>V1.2.0 (Proposal)</td>
       <td>
 	     Added: \ref DAP_SWD_Sequence to enable SWD multi-drop target selection \n
-		 Added: Debug Unit Timer in the commands \ref DAP_Info, \ref DAP_Transfer \n
-         Added: \ref DAP_PerformanceCounter_gr to support trace data recording (for example power measurement)
+		 Added: Test Domain Timer values in the commands \ref DAP_Info, \ref DAP_Transfer to allow time synchronisation with \ref DAP_TestInput_gr \n
+         Added: \ref DAP_TestInput_gr to support additional test inputs optional with trace recording (for example power measurement)
       </td>
     </tr>
     <tr>

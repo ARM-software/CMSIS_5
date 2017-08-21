@@ -78,7 +78,7 @@ __ASM void Vectors(void) {
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
 __ASM void Reset_Handler(void) {
-  
+
   // Mask interrupts
   CPSID  if                           
 
@@ -103,12 +103,12 @@ goToSleep
   MRC    p15, 0, r0, c1, c0, 1       // Read CP15 Auxiliary Control Register
   ORR    r0, r0, #(1 <<  1)          // Enable L2 prefetch hint (UNK/WI since r4p1)
   MCR    p15, 0, r0, c1, c0, 1       // Write CP15 Auxiliary Control Register
-       
-  // Set Vector Base Address Register (VBAR) to point to this application's vector table
-	LDR    R0, =Vectors
-	MCR    p15, 0, R0, c12, c0, 0
 
-	// Setup Stack for each exceptional mode
+  // Set Vector Base Address Register (VBAR) to point to this application's vector table
+  LDR    R0, =Vectors
+  MCR    p15, 0, R0, c12, c0, 0
+
+  // Setup Stack for each exceptional mode
   IMPORT |Image$$FIQ_STACK$$ZI$$Limit|
   IMPORT |Image$$IRQ_STACK$$ZI$$Limit|
   IMPORT |Image$$SVC_STACK$$ZI$$Limit|
@@ -144,5 +144,5 @@ goToSleep
   Default Handler for Exceptions / Interrupts
  *----------------------------------------------------------------------------*/
 void Default_Handler(void) {
-	while(1);
+  while(1);
 }

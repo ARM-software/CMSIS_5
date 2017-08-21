@@ -57,7 +57,7 @@
 #ifndef   __UNALIGNED_UINT16_WRITE
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wpacked"
-//lint -esym(9058, T_UINT16_WRITE)  disable MISRA 2012 Rule 2.4 for T_UINT16_WRITE
+/*lint -esym(9058, T_UINT16_WRITE)*/ /* disable MISRA 2012 Rule 2.4 for T_UINT16_WRITE */
   __PACKED_STRUCT T_UINT16_WRITE { uint16_t v; };
   #pragma clang diagnostic pop
   #define __UNALIGNED_UINT16_WRITE(addr, val)    (void)((((struct T_UINT16_WRITE *)(void *)(addr))->v) = (val))
@@ -65,7 +65,7 @@
 #ifndef   __UNALIGNED_UINT16_READ
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wpacked"
-//lint -esym(9058, T_UINT16_READ)  disable MISRA 2012 Rule 2.4 for T_UINT16_READ
+/*lint -esym(9058, T_UINT16_READ)*/ /* disable MISRA 2012 Rule 2.4 for T_UINT16_READ */
   __PACKED_STRUCT T_UINT16_READ { uint16_t v; };
   #pragma clang diagnostic pop
   #define __UNALIGNED_UINT16_READ(addr)          (((const struct T_UINT16_READ *)(const void *)(addr))->v)
@@ -73,7 +73,7 @@
 #ifndef   __UNALIGNED_UINT32_WRITE
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wpacked"
-//lint -esym(9058, T_UINT32_WRITE)  disable MISRA 2012 Rule 2.4 for T_UINT32_WRITE
+/*lint -esym(9058, T_UINT32_WRITE)*/ /* disable MISRA 2012 Rule 2.4 for T_UINT32_WRITE */
   __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
   #pragma clang diagnostic pop
   #define __UNALIGNED_UINT32_WRITE(addr, val)    (void)((((struct T_UINT32_WRITE *)(void *)(addr))->v) = (val))
@@ -417,6 +417,52 @@ __STATIC_INLINE void __set_CPACR(uint32_t cpacr)
   __ASM volatile("MCR p15, 0, %0, c1, c0, 2" : : "r"(cpacr) : "memory");
 }
 
+/** \brief  Get DFSR
+    \return               Data Fault Status Register value
+ */
+__STATIC_INLINE uint32_t __get_DFSR(void)
+{
+  uint32_t result;
+  __ASM volatile("MRC p15, 0, %0, c5, c0, 0" : "=r"(result));
+  return result;
+}
+
+/** \brief  Set DFSR
+    \param [in]    dfsr  Data Fault Status value to set
+ */
+__STATIC_INLINE void __set_DFSR(uint32_t dfsr)
+{
+  __ASM volatile("MCR p15, 0, %0, c5, c0, 0" : : "r"(dfsr) : "memory");
+}
+
+/** \brief  Get IFSR
+    \return               Instruction Fault Status Register value
+ */
+__STATIC_INLINE uint32_t __get_IFSR(void)
+{
+  uint32_t result;
+  __ASM volatile("MRC p15, 0, %0, c5, c0, 1" : "=r"(result));
+  return result;
+}
+
+/** \brief  Set IFSR
+    \param [in]    ifsr  Instruction Fault Status value to set
+ */
+__STATIC_INLINE void __set_IFSR(uint32_t ifsr)
+{
+  __ASM volatile("MCR p15, 0, %0, c5, c0, 1" : : "r"(ifsr) : "memory");
+}
+
+/** \brief  Get ISR
+    \return               Interrupt Status Register value
+ */
+__STATIC_INLINE uint32_t __get_ISR(void)
+{
+  uint32_t result;
+  __ASM volatile("MRC p15, 0, %0, c12, c1, 0" : "=r"(result));
+  return result;
+}
+
 /** \brief  Get CBAR
     \return               Configuration Base Address register value
  */
@@ -587,6 +633,15 @@ __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) {
   __ASM volatile("MCR p15, 0, %0, c14, c2, 1" : : "r"(value) : "memory");
 }
 
+/** \brief  Get CNTP_CTL register
+    \return               CNTP_CTL Register value
+ */
+__STATIC_INLINE uint32_t __get_CNTP_CTL() {
+  uint32_t result;
+  __ASM volatile("MRC p15, 0, %0, c14, c2, 1" : "=r"(result));
+  return result;
+}
+
 /** \brief  Set TLBIALL
 
   TLB Invalidate All
@@ -714,8 +769,8 @@ __STATIC_INLINE void __FPU_Enable(void) {
 
 	    //Initialise VFP/NEON registers to 0
     "        MOV     R2,#0             \n"
-#if 0 // TODO: Initialize FPU registers according to available register count
-    ".if {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} >= 16 \n"
+
+#if TARGET_FEATURE_EXTENSION_REGISTER_COUNT >= 16
 	    //Initialise D16 registers to 0
     "        VMOV    D0, R2,R2         \n"
     "        VMOV    D1, R2,R2         \n"
@@ -733,9 +788,9 @@ __STATIC_INLINE void __FPU_Enable(void) {
     "        VMOV    D13,R2,R2         \n"
     "        VMOV    D14,R2,R2         \n"
     "        VMOV    D15,R2,R2         \n"
-    ".endif                            \n"
+#endif
 
-    ".if {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} == 32 \n"
+#if TARGET_FEATURE_EXTENSION_REGISTER_COUNT == 32
 	    //Initialise D32 registers to 0
     "        VMOV    D16,R2,R2         \n"
     "        VMOV    D17,R2,R2         \n"

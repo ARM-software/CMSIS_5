@@ -1428,18 +1428,21 @@ The table lists the letters and their meaning for use in the access attribute st
 
 \section element_processor /package/devices/family/.../processor
 
-Specifies attributes of the device processor. The element can occur on various levels.
-Elements of multi-processor devices can be associated with a specific processor using the attribute \elem{Pname}. If the information is relevant to
-all processors, no processor must be specified in \elem{Pname}. 
+Specifies attributes of the device processor. The element can occur on various levels. The attributes add-up over the different
+levels (family -> subFamily -> device). Elements of multi-processor devices can be associated with a specific processor using
+the attribute \elem{Pname}. If the information is relevant to all processors, no processor must be specified in \elem{Pname}.
 
 \b Example \b 1
 \code
 <package>
   ...
   <devices>
-    <family Dfamily="STM32F4" Dvendor="STMicroelectronics:13">
-      <processor Dcore="Cortex-M4" DcoreVersion="r0p1"
-                 Dfpu="FPU" Dmpu="MPU" Dendian="Little-endian" Dclock="168000000"/>
+    <family Dfamily="K20 Series" Dvendor="NXP:11">
+      <processor Dcore="Cortex-M4" DcoreVersion="r0p1"/>
+      <!-- ******************************  MK20DN128xxx5  ****************************** -->
+      <device Dname="MK20DN128xxx5">
+        <processor Dfpu="0" Dmpu="0" Dendian="Little-endian" Dclock="50000000"/>
+      </device>
       ...
     </family>
   </devices>
@@ -1493,55 +1496,55 @@ all processors, no processor must be specified in \elem{Pname}.
         Only alphabetical characters, decimal digits, '-' and '_' are allowed.
     </td>
     <td>RestrictedString</td>
-    <td>optional</td>
+    <td>required for all multi-core devices</td>
   </tr>
   <tr>
     <td>Punits</td>
     <td>Specifies the number of processor units in a symmetric multi-processor core (MPCore). Defaults to single-core CPU (\token{1}) when left empty.</td>
     <td>InstancesType</td>
-    <td>optional</td>
+    <td>required for all multi-core devices</td>
   </tr>
   <tr>
     <td>Dcore</td>
     <td>Specifies the processor core. Use predefined values as listed in the table \ref DcoreEnum "Device Cores".</td>
     <td>DcoreEnum</td>
-    <td>optional</td>
+    <td>required</td>
   </tr>
   <tr>
     <td>Dfpu</td>
     <td>Specifies whether a hardware Floating Point Unit is present in the processor.  Use predefined values as listed in the table \ref DfpuEnum "Device FPU".</td>
     <td>DfpuEnum</td>
-    <td>optional</td>
+    <td>required</td>
   </tr>
   <tr>
     <td>Dmpu</td>
     <td>Specifies whether a Memory Protection Unit is present in the processor. Use predefined values as listed in the table \ref DmpuEnum "Device MPU".</td>
     <td>DmpuEnum</td>
-    <td>optional</td>
+    <td>required</td>
   </tr>
   <tr>
     <td>Dtz</td>
-    <td>Specifies whether an ARMv8M based device implements TrustZone. Use predefined values as listed in the table \ref DtzEnum "Device TZ".</td>
+    <td>Specifies whether an ARMv8-M based device implements TrustZone. Use predefined values as listed in the table \ref DtzEnum "Device TZ".</td>
     <td>DtzEnum</td>
-    <td>optional</td>
+    <td>required for ARMv8-M based devices</td>
   </tr>
   <tr>
     <td>Ddsp</td>
-    <td>Specifies whether an ARMv8M based device supports the DSP instructions set. Use predefined values as listed in the table \ref DdspEnum "Device DSP".</td>
+    <td>Specifies whether a device supports the DSP instructions set. Use predefined values as listed in the table \ref DdspEnum "Device DSP".</td>
     <td>DdspEnum</td>
-    <td>optional</td>
+    <td>required</td>
   </tr>
   <tr>
     <td>Dendian</td>
     <td>Specifies the endianess of the processor. Use predefined values as listed in the table \ref DendianEnum "Endinaness".</td>
     <td>DendianEnum</td>
-    <td>optional</td>
+    <td>required</td>
   </tr>
   <tr>
     <td>Dclock</td>
     <td>Specifies the max clock frequency of the processor subsystem</td>
     <td>xs:unsignedInt</td>
-    <td>optional</td>
+    <td>required</td>
   </tr>
   <tr>
     <td>DcoreVersion</td>
@@ -1550,6 +1553,11 @@ all processors, no processor must be specified in \elem{Pname}.
     <td>required</td>
   </tr>
 </table>
+
+\note While the different attributes can be spreaded over the family levels, they add-up and at the leaf (device level), a
+complete set of attributes should be present (at least Dcore, Dfpu, Dmpu, Ddsp, Dendian, Dclock, and DcoreVersion). Adding-up
+means that you can overwrite previous attributes on the next level. For example, if you have a subFamily that has a general
+Dclock of 50000000 (50 Mhz), you can still specify for one of the subFamily members a different Dclock (such as 66000000).
 
 <p>&nbsp;</p>		
 
@@ -1599,7 +1607,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">ArteryTek:143</td>
     <td>ArteryTek</td>
-    <td>http://www.arterytek.com<td>
+    <td>http://www.arterytek.com</td>
   </tr>
   <tr>
     <td class="XML-Token">Atmel:3</td>
@@ -1608,7 +1616,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   </tr>
   <tr>
     <td class="XML-Token">CSR:118</td>
-    <td>CSR:</td>
+    <td>CSR</td>
     <td>http://www.csr.com</td>
   </tr>
   <tr>
@@ -1635,6 +1643,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">GigaDevice:123</td>
     <td>GigaDevice</td>
     <td>http://www.gigadevice.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">HDSC:145</td>
+    <td>HUADA Semiconductor</td>
+    <td>http://www.hdsc.com.cn</td>
   </tr>
   <tr>
     <td class="XML-Token">Holtek:106</td>
@@ -1725,6 +1738,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">Redpine Signals:125</td>
     <td>Repine Signals</td>
     <td>http://www.redpinesignals.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">RelChip:146</td>
+    <td>RelChip </td>
+    <td>http://www.relchip.com/</td>
   </tr>
   <tr>
     <td class="XML-Token">Renesas:117</td>

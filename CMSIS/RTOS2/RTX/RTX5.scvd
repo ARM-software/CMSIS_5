@@ -173,10 +173,12 @@
 
       <var name="obj_name"   type="uint8_t"  info="Object name string" size="66" />
       <var name="cb_valid"   type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
+      <var name="out_type"   type="uint8_t"  info="Output display type ID"/>
 
       <var name="ex_delay"   type="uint32_t" info="Calculated execution delay"/>
 
       <var name="stack_val"  type="uint32_t" info="Stack usage: analysis result"/>
+      <var name="stack_cur"  type="uint32_t" info="Stack usage: current (address)"/>
       <var name="stack_curp" type="uint32_t" info="Stack usage: current (in percent)"/>
       <var name="stack_curb" type="uint32_t" info="Stack usage: current (in bytes)"/>
       <var name="stack_maxb" type="uint32_t" info="Stack usage: maximum (in bytes)"/>
@@ -342,7 +344,7 @@
     </typedef>
 
     <!-- OS Runtime Information structure -->
-    <typedef name="osRtxInfo_t" info="OS Runtime Information" size="172">
+    <typedef name="osRtxInfo_t" info="OS Runtime Information" size="164">
       <member name="os_id"                      type="uint32_t"             offset="0" info="OS Identification (type is *uint8_t)"/>
       <member name="version"                    type="uint32_t"             offset="4" info="OS Version"/>
       <member name="kernel_state"               type="uint8_t"              offset="8" info="Kernel state">
@@ -354,61 +356,59 @@
         <enum name="osKernelError"     value="5"  info="Error"/>
       </member>
       <member name="kernel_blocked"             type="uint8_t"              offset="9"  info="Kernel blocked"/>
-      <member name="kernel_pendISR"             type="uint8_t"              offset="10" info="Kernel pending ISR"/>
-      <member name="kernel_pendSV"              type="uint8_t"              offset="11" info="Kernel pending SV"/>
-      <member name="kernel_sys_freq"            type="uint32_t"             offset="12" info="Kernel system frequency"/>
-      <member name="kernel_tick"                type="uint64_t"             offset="16" info="Kernel tick counter"/>
-      <member name="tick_irqn"                  type="int32_t"              offset="24" info="Tick timer IRQ number"/>
-      <member name="thread_run_curr"            type="*osRtxThread_t"       offset="28" info="Current running thread"/>
-      <member name="thread_run_next"            type="*osRtxThread_t"       offset="32" info="Next thread to run"/>
+      <member name="kernel_pendSV"              type="uint8_t"              offset="10" info="Kernel pending SV"/>
+      <member name="kernel_tick"                type="uint32_t"             offset="12" info="Kernel tick counter"/>
+      <member name="tick_irqn"                  type="int32_t"              offset="16" info="Tick timer IRQ number"/>
+      <member name="thread_run_curr"            type="*osRtxThread_t"       offset="20" info="Current running thread"/>
+      <member name="thread_run_next"            type="*osRtxThread_t"       offset="24" info="Next thread to run"/>
 
-      <!-- Inlined "osRtxObject_t" structure at offset: 36 -->
-      <member name="thread_ready_id"            type="uint8_t"              offset="36+0" info="Object Identifier" />
-      <member name="thread_ready_state"         type="uint8_t"              offset="36+1" info="Object State" />
-      <member name="thread_ready_flags"         type="uint8_t"              offset="36+2" info="Object Flags" />
-      <member name="thread_ready_rsvd"          type="uint8_t"              offset="36+3" info="Reserved" />
-      <member name="thread_ready_name"          type="uint32_t"             offset="36+4" info="Object Name (type is *uint8_t)" />
-      <member name="thread_ready_thread_list"   type="*osRtxThread_t"       offset="36+8" info="Threads List" />
+      <!-- Inlined "osRtxObject_t" structure at offset: 28 -->
+      <member name="thread_ready_id"            type="uint8_t"              offset="28+0" info="Object Identifier" />
+      <member name="thread_ready_state"         type="uint8_t"              offset="28+1" info="Object State" />
+      <member name="thread_ready_flags"         type="uint8_t"              offset="28+2" info="Object Flags" />
+      <member name="thread_ready_rsvd"          type="uint8_t"              offset="28+3" info="Reserved" />
+      <member name="thread_ready_name"          type="uint32_t"             offset="28+4" info="Object Name (type is *uint8_t)" />
+      <member name="thread_ready_thread_list"   type="*osRtxThread_t"       offset="28+8" info="Threads List" />
 
-      <member name="thread_idle"                type="*osRtxThread_t"       offset="48"  info="Idle thread"/>
-      <member name="thread_delay_list"          type="*osRtxThread_t"       offset="52"  info="Delay list"/>
-      <member name="thread_wait_list"           type="*osRtxThread_t"       offset="56"  info="Wait list (no timeout)"/>
-      <member name="thread_terminate_list"      type="*osRtxThread_t"       offset="60"  info="Terminate list"/>
+      <member name="thread_idle"                type="*osRtxThread_t"       offset="40"  info="Idle thread"/>
+      <member name="thread_delay_list"          type="*osRtxThread_t"       offset="44"  info="Delay list"/>
+      <member name="thread_wait_list"           type="*osRtxThread_t"       offset="48"  info="Wait list (no timeout)"/>
+      <member name="thread_terminate_list"      type="*osRtxThread_t"       offset="52"  info="Terminate list"/>
 
-      <member name="thread_robin_thread"        type="*osRtxThread_t"       offset="64"  info="Round Robin thread"/>
-      <member name="thread_robin_tick"          type="uint32_t"             offset="68"  info="Round Robin time tick"/>
-      <member name="thread_timeout"             type="uint32_t"             offset="72"  info="Round Robin timeout"/>
+      <member name="thread_robin_thread"        type="*osRtxThread_t"       offset="56"  info="Round Robin thread"/>
+      <member name="thread_robin_tick"          type="uint32_t"             offset="60"  info="Round Robin time tick"/>
+      <member name="thread_timeout"             type="uint32_t"             offset="64"  info="Round Robin timeout"/>
 
-      <member name="timer_list"                 type="*osRtxTimer_t"        offset="76"  info="Active timer list"/>
-      <member name="timer_thread"               type="*osRtxThread_t"       offset="80"  info="Timer thread"/>
-      <member name="timer_mq"                   type="*osRtxMessageQueue_t" offset="84"  info="Timer message queue"/>
-      <member name="timer_tick"                 type="uint32_t"             offset="88"  info="Timer tick function (type is func *)"/>
+      <member name="timer_list"                 type="*osRtxTimer_t"        offset="68"  info="Active timer list"/>
+      <member name="timer_thread"               type="*osRtxThread_t"       offset="72"  info="Timer thread"/>
+      <member name="timer_mq"                   type="*osRtxMessageQueue_t" offset="76"  info="Timer message queue"/>
+      <member name="timer_tick"                 type="uint32_t"             offset="80"  info="Timer tick function (type is func *)"/>
 
-      <member name="isr_queue_max"              type="uint16_t"             offset="92"  info="Maximum items"/>
-      <member name="isr_queue_cnt"              type="uint16_t"             offset="94"  info="Item count"/>
-      <member name="isr_queue_in"               type="uint16_t"             offset="96"  info="Incoming item index"/>
-      <member name="isr_queue_out"              type="uint16_t"             offset="98"  info="Outgoing item index"/>
-      <member name="isr_queue_data"             type="uint32_t"             offset="100" info="Queue data (type is void **)"/>
+      <member name="isr_queue_max"              type="uint16_t"             offset="84"  info="Maximum items"/>
+      <member name="isr_queue_cnt"              type="uint16_t"             offset="86"  info="Item count"/>
+      <member name="isr_queue_in"               type="uint16_t"             offset="88"  info="Incoming item index"/>
+      <member name="isr_queue_out"              type="uint16_t"             offset="90"  info="Outgoing item index"/>
+      <member name="isr_queue_data"             type="uint32_t"             offset="92"  info="Queue data (type is void **)"/>
 
-      <member name="post_process_thread"        type="uint32_t"             offset="104" info="Thread post processing function (type is func *)"/>
-      <member name="post_process_event_flags"   type="uint32_t"             offset="108" info="Event flags post processing function (type is func *)"/>
-      <member name="post_process_semaphore"     type="uint32_t"             offset="112" info="Semaphore post processing function (type is func *)"/>
-      <member name="post_process_memory_pool"   type="uint32_t"             offset="116" info="Memory pool post processing function (type is func *)"/>
-      <member name="post_process_message_queue" type="uint32_t"             offset="120" info="Message queue post processing function (type is func *)"/>
+      <member name="post_process_thread"        type="uint32_t"             offset="96"  info="Thread post processing function (type is func *)"/>
+      <member name="post_process_event_flags"   type="uint32_t"             offset="100" info="Event flags post processing function (type is func *)"/>
+      <member name="post_process_semaphore"     type="uint32_t"             offset="104" info="Semaphore post processing function (type is func *)"/>
+      <member name="post_process_memory_pool"   type="uint32_t"             offset="108" info="Memory pool post processing function (type is func *)"/>
+      <member name="post_process_message_queue" type="uint32_t"             offset="112" info="Message queue post processing function (type is func *)"/>
 
-      <member name="mem_stack"                  type="uint32_t"             offset="124" info="Stack memory (type is void *)"/>
-      <member name="mem_mp_data"                type="uint32_t"             offset="128" info="Memory pool data memory (type is void *)"/>
-      <member name="mem_mq_data"                type="uint32_t"             offset="132" info="Message queue Data memory (type is void *)"/>
-      <member name="mem_common"                 type="uint32_t"             offset="136" info="Common memory address (type is void *)"/>
+      <member name="mem_stack"                  type="uint32_t"             offset="116" info="Stack memory (type is void *)"/>
+      <member name="mem_mp_data"                type="uint32_t"             offset="120" info="Memory pool data memory (type is void *)"/>
+      <member name="mem_mq_data"                type="uint32_t"             offset="124" info="Message queue Data memory (type is void *)"/>
+      <member name="mem_common"                 type="uint32_t"             offset="128" info="Common memory address (type is void *)"/>
 
-      <member name="mpi_stack"                  type="*osRtxMpInfo_t"       offset="140" info="Stack for threads"/>
-      <member name="mpi_thread"                 type="*osRtxMpInfo_t"       offset="144" info="Thread control blocks"/>
-      <member name="mpi_timer"                  type="*osRtxMpInfo_t"       offset="148" info="Timer control blocks"/>
-      <member name="mpi_event_flags"            type="*osRtxMpInfo_t"       offset="152" info="Event flags control blocks"/>
-      <member name="mpi_mutex"                  type="*osRtxMpInfo_t"       offset="156" info="Mutex control blocks"/>
-      <member name="mpi_semaphore"              type="*osRtxMpInfo_t"       offset="160" info="Semaphore control blocks"/>
-      <member name="mpi_memory_pool"            type="*osRtxMpInfo_t"       offset="164" info="Memory pool control blocks"/>
-      <member name="mpi_message_queue"          type="*osRtxMpInfo_t"       offset="168" info="Message queue control blocks"/>
+      <member name="mpi_stack"                  type="*osRtxMpInfo_t"       offset="132" info="Stack for threads"/>
+      <member name="mpi_thread"                 type="*osRtxMpInfo_t"       offset="136" info="Thread control blocks"/>
+      <member name="mpi_timer"                  type="*osRtxMpInfo_t"       offset="140" info="Timer control blocks"/>
+      <member name="mpi_event_flags"            type="*osRtxMpInfo_t"       offset="144" info="Event flags control blocks"/>
+      <member name="mpi_mutex"                  type="*osRtxMpInfo_t"       offset="148" info="Mutex control blocks"/>
+      <member name="mpi_semaphore"              type="*osRtxMpInfo_t"       offset="152" info="Semaphore control blocks"/>
+      <member name="mpi_memory_pool"            type="*osRtxMpInfo_t"       offset="156" info="Memory pool control blocks"/>
+      <member name="mpi_message_queue"          type="*osRtxMpInfo_t"       offset="160" info="Message queue control blocks"/>
     </typedef>
 
     <!-- OS Configuration structure -->
@@ -714,7 +714,8 @@
       <readlist name="QCB"       cond="RTX_En &amp;&amp; (QCB_Rd == 0) &amp;&amp; os_Info.mpi_message_queue" type="osRtxMessageQueue_t" offset="mp_mqueue.block_base"      count="mp_mqueue.max_blocks" />
 
       <!-- Read common memory pool block info (MEM) -->
-      <readlist name="mem_bl" cond="RTX_En &amp;&amp; os_Info.mem_common" type="mem_block_t" offset="os_Info.mem_common + 8" next="next"/>
+      <readlist name="mem_head" cond="RTX_En &amp;&amp; os_Info.mem_common" type="mem_head_t"  offset="os_Info.mem_common" count="1"/>
+      <readlist name="mem_bl"   cond="RTX_En &amp;&amp; os_Info.mem_common" type="mem_block_t" offset="os_Info.mem_common + 8" next="next"/>
 
       <list cond="mem_bl._count > 1" name="i" start="0" limit="mem_bl._count-1">
         <calc>
@@ -769,6 +770,11 @@
         <!-- Stack pointer for waiting thread -->
         <calc cond="TCB[i].state != 2">
           sp = TCB[i].sp;
+        </calc>
+        
+        <!-- Save current stack pointer -->
+        <calc>
+          TCB[i].stack_cur = sp;
         </calc>
 
         <!-- Determine current stack usage -->
@@ -852,13 +858,14 @@
       <list name="i" start="0" limit="ECB._count">
         <calc>
           ECB[i].cb_valid = (ECB[i].id == 3) &amp;&amp; (ECB[i].state == 1);
-          ECB[i].wl_idx   = k;
+          ECB[i].wl_idx = k;
+          ECB[i].wl_cnt = 0;
         </calc>
 
         <!-- Create a list of threads waiting for event flags -->
-        <readlist name="EWL" type="osRtxThread_t" offset="ECB[i].thread_list" next="thread_next" />
+        <readlist name="EWL" type="osRtxThread_t" offset="ECB[i].thread_list" next="thread_next" cond="ECB[i].thread_list"/>
 
-        <calc>
+        <calc cond="ECB[i].thread_list">
           ECB[i].wl_cnt = (EWL._count - k);
           k = EWL._count;
         </calc>
@@ -887,13 +894,14 @@
       <list cond="MCB._count" name="i" start="0" limit="MCB._count">
         <calc>
           MCB[i].cb_valid = (MCB[i].id == 4) &amp;&amp; (MCB[i].state == 1);
-          MCB[i].wl_idx  = k;
+          MCB[i].wl_idx = k;
+          MCB[i].wl_cnt = 0;
         </calc>
 
         <!-- Create a list of threads waiting for mutex -->
-        <readlist name="MWL" type="osRtxThread_t" offset="MCB[i].thread_list" next="thread_next" />
+        <readlist name="MWL" type="osRtxThread_t" offset="MCB[i].thread_list" next="thread_next" cond="MCB[i].thread_list"/>
 
-        <calc>
+        <calc cond="MCB[i].thread_list">
           MCB[i].wl_cnt = (MWL._count - k);
           k = MWL._count;
         </calc>
@@ -923,13 +931,14 @@
       <list cond="SCB._count" name="i" start="0" limit="SCB._count">
         <calc>
           SCB[i].cb_valid = (SCB[i].id == 5) &amp;&amp; (SCB[i].state == 1);
-          SCB[i].wl_idx  = k;
+          SCB[i].wl_idx = k;
+          SCB[i].wl_cnt = 0;
         </calc>
 
         <!-- Create a list of threads waiting for semaphore -->
-        <readlist name="SWL" type="osRtxThread_t" offset="SCB[i].thread_list" next="thread_next" />
+        <readlist name="SWL" type="osRtxThread_t" offset="SCB[i].thread_list" next="thread_next" cond="SCB[i].thread_list"/>
 
-        <calc>
+        <calc cond="SCB[i].thread_list">
           SCB[i].wl_cnt = (SWL._count - k);
           k = SWL._count;
         </calc>
@@ -958,13 +967,14 @@
       <list cond="PCB._count" name="i" start="0" limit="PCB._count">
         <calc>
           PCB[i].cb_valid = (PCB[i].id == 6) &amp;&amp; (PCB[i].state == 1);
-          PCB[i].wl_idx   = k;
+          PCB[i].wl_idx = k;
+          PCB[i].wl_cnt = 0;
         </calc>
 
         <!-- Create a list of threads waiting for memory pool -->
-        <readlist name="PWL" type="osRtxThread_t" offset="PCB[i].thread_list" next="thread_next" />
+        <readlist name="PWL" type="osRtxThread_t" offset="PCB[i].thread_list" next="thread_next" cond="PCB[i].thread_list"/>
 
-        <calc>
+        <calc cond="PCB[i].thread_list">
           PCB[i].wl_cnt = (PWL._count - k);
           k = PWL._count;
         </calc>
@@ -995,12 +1005,13 @@
         <calc>
           QCB[i].cb_valid = (QCB[i].id == 8) &amp;&amp; (QCB[i].state == 1);
           QCB[i].wl_idx = k;
+          QCB[i].wl_cnt = 0;
         </calc>
 
         <!-- Create a list of threads waiting for message queue -->
-        <readlist name="QWL" type="osRtxThread_t" offset="QCB[i].thread_list" next="thread_next" />
+        <readlist name="QWL" type="osRtxThread_t" offset="QCB[i].thread_list" next="thread_next" cond="QCB[i].thread_list"/>
 
-        <calc>
+        <calc cond="QCB[i].thread_list">
           QCB[i].wl_cnt = (QWL._count - k);
           k = QWL._count;
         </calc>
@@ -1023,7 +1034,7 @@
         </list>
 
         <!-- Create a list of enqueued messages -->
-        <readlist name="QML" type="osRtxMessage_t" offset="QCB[i].msg_first" next="next" />
+        <readlist name="QML" type="osRtxMessage_t" offset="QCB[i].msg_first" next="next" cond="QCB[i].msg_first"/>
 
         <calc>
           QCB[i].ml_idx = j;
@@ -1042,6 +1053,12 @@
       <!-- Determine what to display -->
       <list cond="TCB._count" name="i" start="0" limit="TCB._count">
         <calc>TCB_En += TCB[i].cb_valid; </calc>
+
+        <calc cond="TCB[i].cb_valid == 0"> TCB[i].out_type = 0;</calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (stack_wmark == 0)"> TCB[i].out_type = 1; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (stack_wmark != 0)"> TCB[i].out_type = 2; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (stack_wmark == 0)"> TCB[i].out_type = 3; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (stack_wmark != 0)"> TCB[i].out_type = 4; </calc>
       </list>
       <list cond="CCB._count" name="i" start="0" limit="CCB._count">
         <calc>CCB_En += CCB[i].cb_valid; </calc>
@@ -1070,11 +1087,10 @@
           <item property="Kernel State" value="%E[os_Info.kernel_state]" cond="RTX_En != 0"/>
           <item property="Kernel Tick Count"      value="%d[os_Info.kernel_tick]"     cond="RTX_En != 0"/>
           <item property="Kernel Tick Frequency"  value="%d[os_Config.tick_freq]"     cond="RTX_En != 0" />          
-          <item property="System Timer Frequency" value="%d[os_Info.kernel_sys_freq]" cond="RTX_En != 0" />
           <item property="Round Robin"            value="Disabled"                      cond="(os_Config.robin_timeout == 0) &amp;&amp; (RTX_En != 0)" />
           <item property="Round Robin Tick Count" value="%d[os_Info.thread_robin_tick]" cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
           <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]"   cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
-          <item property="Global Dynamic Memory" value="Base: %x[os_Config.mem_common_addr], Size: %d[os_Config.mem_common_size]" cond="RTX_En != 0"/>
+          <item property="Global Dynamic Memory" value="Base: %x[os_Config.mem_common_addr], Size: %d[os_Config.mem_common_size], Used: %d[mem_head.used]" cond="RTX_En != 0"/>
           <item property="Stack Overrun Check"   value="%t[stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
           <item property="Stack Usage Watermark" value="%t[stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
           <item property="Default Thread Stack Size" value="%d[os_Config.thread_stack_size]" cond="RTX_En != 0"/>
@@ -1117,12 +1133,19 @@
         <!-- Threads -->
         <item cond="TCB_En" property="Threads" value="">
           <list name="i" start="0" limit="TCB._count">
-            <item cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0)" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority]">
+            <item>
+              <print cond="TCB[i].out_type == 1" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%"                               alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 2" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 3" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]"      value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%"                               alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 4" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]"      value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
+
               <item property="State"        value="%E[TCB[i].state &amp; 0x07]"/>
               <item property="Priority"     value="%E[TCB[i].priority]"/>
               <item property="Attributes"   value="%E[TCB[i].attr &amp; 0x01]"/>
 
-              <item property="Waiting" value="%E[TCB[i].state], Timeout: osWaitForever" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay == -1)">
+              <item>
+                <print property="Waiting" value="%E[TCB[i].state], Timeout: %d[TCB[i].ex_delay]" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay != -1)"/>
+                <print property="Waiting" value="%E[TCB[i].state], Timeout: osWaitForever"       cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay == -1)"/>
                 <!-- Wait Thread Flags -->
                 <item cond="TCB[i].state == 0x33" property="id: %x[TCB[i].thread_prev]" value=""/>
 
@@ -1152,134 +1175,14 @@
                 </list>
               </item>
 
-              <item property="Waiting" value="%E[TCB[i].state], Timeout: %d[TCB[i].ex_delay]" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay != -1)">
-                <!-- Wait Thread Flags -->
-                <item cond="TCB[i].state == 0x33" property="id: %x[TCB[i].thread_prev]" value=""/>
+              <item>
+                <print cond="stack_wmark == 0" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]"/>
+                <print cond="stack_wmark != 0" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
 
-                <list cond="TCB[i].state == 0x43" name="n" start="0" limit="ECB._count">
-                  <!-- Wait Event Flags -->
-                  <item cond="TCB[i].thread_prev == ECB[n]._addr" property="id: %x[ECB[n]._addr]%t[ECB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x53" name="n" start="0" limit="MCB._count">
-                  <!-- Wait Mutex -->
-                  <item cond="TCB[i].thread_prev == MCB[n]._addr" property="id: %x[MCB[n]._addr]%t[MCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x63" name="n" start="0" limit="SCB._count">
-                  <!-- Wait Semaphore -->
-                  <item cond="TCB[i].thread_prev == SCB[n]._addr" property="id: %x[SCB[n]._addr]%t[SCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x73" name="n" start="0" limit="PCB._count">
-                  <!-- Wait Memory Pool -->
-                  <item cond="TCB[i].thread_prev == PCB[n]._addr" property="id: %x[PCB[n]._addr]%t[PCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="(TCB[i].state == 0x83) || (TCB[i].state == 0x84)" name="n" start="0" limit="QCB._count">
-                  <!-- Wait Message Queue -->
-                  <item cond="TCB[i].thread_prev == QCB[n]._addr" property="id: %x[QCB[n]._addr]%t[QCB[n].obj_name]" value=""/>
-                </list>
-              </item>
-
-              <item property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]" cond="stack_wmark != 0">
                 <item property="Used"  value="%d[TCB[i].stack_curb]"/>
-                <item property="Max"   value="%d[TCB[i].stack_maxb]"/>
+                <item property="Max"   value="%d[TCB[i].stack_maxb]" cond="stack_wmark != 0"/>
                 <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
-                <item property="Limit" value="%x[TCB[i].stack_mem]"/>
-                <item property="Size"  value="%d[TCB[i].stack_size]"/>
-              </item>
-
-              <item property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]" cond="stack_wmark == 0">
-                <item property="Used"  value="%d[TCB[i].stack_curb]"/>
-                <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
-                <item property="Limit" value="%x[TCB[i].stack_mem]"/>
-                <item property="Size"  value="%d[TCB[i].stack_size]"/>
-              </item>
-
-              <item property="Stack Overrun" value="Overrun detected" cond="TCB[i].stack_over != 0"/>
-              <item property="Flags" value="%x[TCB[i].thread_flags]"/>
-              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1]"                 cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) == 0)"/>
-              <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1], osFlagsNoClear" cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) != 0)"/>
-              <item property="TrustZone ID" value="%d[TCB[i].tz_memory]" cond="TCB[i].tz_memory"/>
-            </item>
-
-            <item cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0)" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority]">
-              <item property="State"        value="%E[TCB[i].state &amp; 0x07]"/>
-              <item property="Priority"     value="%E[TCB[i].priority]"/>
-              <item property="Attributes"   value="%E[TCB[i].attr &amp; 0x01]"/>
-
-              <item property="Waiting" value="%E[TCB[i].state], Timeout: osWaitForever" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay == -1)">
-                <!-- Wait Thread Flags -->
-                <item cond="TCB[i].state == 0x33" property="id: %x[TCB[i].thread_prev]" value=""/>
-
-                <list cond="TCB[i].state == 0x43" name="n" start="0" limit="ECB._count">
-                  <!-- Wait Event Flags -->
-                  <item cond="TCB[i].thread_prev == ECB[n]._addr" property="id: %x[ECB[n]._addr]%t[ECB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x53" name="n" start="0" limit="MCB._count">
-                  <!-- Wait Mutex -->
-                  <item cond="TCB[i].thread_prev == MCB[n]._addr" property="id: %x[MCB[n]._addr]%t[MCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x63" name="n" start="0" limit="SCB._count">
-                  <!-- Wait Semaphore -->
-                  <item cond="TCB[i].thread_prev == SCB[n]._addr" property="id: %x[SCB[n]._addr]%t[SCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x73" name="n" start="0" limit="PCB._count">
-                  <!-- Wait Memory Pool -->
-                  <item cond="TCB[i].thread_prev == PCB[n]._addr" property="id: %x[PCB[n]._addr]%t[PCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="(TCB[i].state == 0x83) || (TCB[i].state == 0x84)" name="n" start="0" limit="QCB._count">
-                  <!-- Wait Message Queue -->
-                  <item cond="TCB[i].thread_prev == QCB[n]._addr" property="id: %x[QCB[n]._addr]%t[QCB[n].obj_name]" value=""/>
-                </list>
-              </item>
-
-              <item property="Waiting" value="%E[TCB[i].state], Timeout: %d[TCB[i].ex_delay]" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay != -1)">
-                <!-- Wait Thread Flags -->
-                <item cond="TCB[i].state == 0x33" property="id: %x[TCB[i].thread_prev]" value=""/>
-
-                <list cond="TCB[i].state == 0x43" name="n" start="0" limit="ECB._count">
-                  <!-- Wait Event Flags -->
-                  <item cond="TCB[i].thread_prev == ECB[n]._addr" property="id: %x[ECB[n]._addr]%t[ECB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x53" name="n" start="0" limit="MCB._count">
-                  <!-- Wait Mutex -->
-                  <item cond="TCB[i].thread_prev == MCB[n]._addr" property="id: %x[MCB[n]._addr]%t[MCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x63" name="n" start="0" limit="SCB._count">
-                  <!-- Wait Semaphore -->
-                  <item cond="TCB[i].thread_prev == SCB[n]._addr" property="id: %x[SCB[n]._addr]%t[SCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="TCB[i].state == 0x73" name="n" start="0" limit="PCB._count">
-                  <!-- Wait Memory Pool -->
-                  <item cond="TCB[i].thread_prev == PCB[n]._addr" property="id: %x[PCB[n]._addr]%t[PCB[n].obj_name]" value=""/>
-                </list>
-
-                <list cond="(TCB[i].state == 0x83) || (TCB[i].state == 0x84)" name="n" start="0" limit="QCB._count">
-                  <!-- Wait Message Queue -->
-                  <item cond="TCB[i].thread_prev == QCB[n]._addr" property="id: %x[QCB[n]._addr]%t[QCB[n].obj_name]" value=""/>
-                </list>
-              </item>
-
-              <item property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]" cond="stack_wmark != 0">
-                <item property="Used"  value="%d[TCB[i].stack_curb]"/>
-                <item property="Max"   value="%d[TCB[i].stack_maxb]"/>
-                <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
-                <item property="Limit" value="%x[TCB[i].stack_mem]"/>
-                <item property="Size"  value="%d[TCB[i].stack_size]"/>
-              </item>
-
-              <item property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]" cond="stack_wmark == 0">
-                <item property="Used"  value="%d[TCB[i].stack_curb]"/>
-                <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
+                <item property="Current" value="%x[TCB[i].stack_cur]"/>
                 <item property="Limit" value="%x[TCB[i].stack_mem]"/>
                 <item property="Size"  value="%d[TCB[i].stack_size]"/>
               </item>
@@ -1482,7 +1385,7 @@
     <event id="0xF100 + 0x10" level="Op"     property="KernelSuspended"           value="sleep_ticks=%d[val1]" info="Kernel execution was suspended."/>
     <event id="0xF100 + 0x11" level="API"    property="KernelResume"              value="sleep_ticks=%d[val1]" info="osKernelResume function was called."/>
     <event id="0xF100 + 0x12" level="Op"     property="KernelResumed"             value="" info="Kernel execution was resumed."/>
-    <event id="0xF100 + 0x13" level="API"    property="KernelGetTickCount"        value="count=%d[((uint64_t)val2 &lt;&lt; 32) | val1]" info="osKernelGetTickCount function was called."/>
+    <event id="0xF100 + 0x13" level="API"    property="KernelGetTickCount"        value="count=%d[val1]" info="osKernelGetTickCount function was called."/>
     <event id="0xF100 + 0x14" level="API"    property="KernelGetTickFreq"         value="freq=%d[val1]" info="osKernelGetTickFreq function was called."/>
     <event id="0xF100 + 0x15" level="API"    property="KernelGetSysTimerCount"    value="count=%d[val1]" info="osKernelGetSysTimerCount function was called."/>
     <event id="0xF100 + 0x16" level="API"    property="KernelGetSysTimerFreq"     value="freq=%d[val1]" info="osKernelGetSysTimerFreq function was called."/>
@@ -1528,7 +1431,7 @@
     <event id="0xF200 + 0x26" level="Op"     property="ThreadFlagsWaitCompleted"    value="flags=%x[val1], options=%x[val2], thread_flags=%x[val3]" info="Wait for thread flags completed."/>
     <event id="0xF200 + 0x27" level="Op"     property="ThreadFlagsWaitNotCompleted" value="flags=%x[val1], options=%x[val2]" info="Wait for thread flags not completed."/>
     <event id="0xF200 + 0x28" level="API"    property="ThreadDelay"                 value="ticks=%d[val1]" info="osDelay function was called."/>
-    <event id="0xF200 + 0x29" level="API"    property="ThreadDelayUntil"            value="ticks=%d[((uint64_t)val2 &lt;&lt; 32) | val1]" info="osDelayUntil function was called."/>
+    <event id="0xF200 + 0x29" level="API"    property="ThreadDelayUntil"            value="ticks=%d[val1]" info="osDelayUntil function was called."/>
     <event id="0xF200 + 0x2A" level="Op"     property="ThreadDelayCompleted"        value="" info="osDelay/osDelayUntil completed."/>
 
     <event id="0xF300 + 0x00" level="Error"  property="TimerError"     value="timer_id=%x[val1], status=%E[val2, rtx_t:status]" info="Timer error occurred."/>

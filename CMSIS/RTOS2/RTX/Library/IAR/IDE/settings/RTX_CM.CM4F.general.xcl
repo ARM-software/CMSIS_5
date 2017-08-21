@@ -1,10 +1,10 @@
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\arm\bin\armproc.dll" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\bin\armproc.dll" 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\arm\bin\armsim2.dll" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\bin\armsim2.dll" 
 
-"C:\Users\SupportGroup\Desktop\Julian\newStat\CMSIS_5\CMSIS\RTOS2\RTX\Library\IAR\RTX_CM4F.a" 
+"D:\GitHub\ARM-software\CMSIS_5\CMSIS\RTOS2\RTX\Library\IAR\IDE\CM4F\Exe\RTX_CM.out" 
 
---plugin "C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\arm\bin\armbat.dll" 
+--plugin "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\bin\armbat.dll" 
 
 
 

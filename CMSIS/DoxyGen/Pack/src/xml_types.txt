@@ -1,6 +1,6 @@
 /**************************************************************************************************/
 /**
-\page coresight_setup  Simplifying debug with CMSIS-Pack
+\page coresight_setup  Debug Setup with CMSIS-Pack
 
 CMSIS-Pack offers two ways to simplify the debug setup:
 - A \subpage debug_description declares a set of standardized debug and trace methods are automatically executed by the
@@ -486,7 +486,7 @@ Execute a system-wide reset via software mechanisms.
 
 Execute a processor reset via software mechanisms.
 
-\note This Default Debug Access Sequence is empty for ARMv6-M based processors.
+\note This Default Debug Access Sequence is empty for ARMv6-M and ARMv8-M based processors.
 
 \code
   <sequence name="ResetProcessor">

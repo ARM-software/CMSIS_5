@@ -1,0 +1,218 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+//  ==== OS Tick API ====
+/** 
+\addtogroup CMSIS_RTOS_TickAPI OS Tick API
+\ingroup CMSIS_RTOS
+\brief Provides a low level API between an device agnostic RTOS implementation and specific periodic timer capabilities.
+\details The CMSIS OS Tick API may be used by an arbitrary RTOS implementation to be easily potable across a wide range
+of controllers.
+
+Cortex-M devices share a common System Tick Timer to be used for RTOS timing purposes. Cortex-A devices do not have a
+common System Tick Timer but various vendor specific solution. In order to make it easier to enable an RTOS, such as RTX5,
+to support a wide range of Cortex Microcontrollers the OS Tick API is used to encapsulate the device specific timer
+implementations.
+
+A default implementation for Cortex-M System Tick Timer can be found in \ref os_systick.c.
+
+\note The default implementation is defined \c weak thus it can easily be overwritten by an alternative user implementation.
+
+\include "../../RTOS2/Source/os_systick.c"
+
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t  OS_Tick_Setup (uint32_t freq, IRQHandler_t handler)
+\details Setup the a hardware time to be used for generating periodic tick interrupts to the RTOS.
+
+The timer should be configured to generate interrupts at the given frequency.
+The given callback should be used as the interrupt handler.
+
+The timer should only be initialized and configured accordingly. It must not be started nor
+creating interrupts before \ref OS_Tick_Enable is called.
+
+For a simple Cortex-M device using the built in SystemTick timer the default implementation looks
+like the following example:
+
+\code
+#ifndef SYSTICK_IRQ_PRIORITY
+#define SYSTICK_IRQ_PRIORITY    0xFFU
+#endif
+
+static uint8_t PendST;
+
+int32_t  OS_Tick_Setup (uint32_t freq, IRQHandler_t handler) {
+  (void)handler;
+  uint32_t load;
+
+  if (freq == 0U) {
+    return (-1);
+  }
+
+  load = (SystemCoreClock / freq) - 1U;
+  if (load > 0x00FFFFFFU) {
+    return (-1);
+  }
+
+  NVIC_SetPriority(SysTick_IRQn, SYSTICK_IRQ_PRIORITY);
+
+  SysTick->CTRL =  SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk;
+  SysTick->LOAD =  load;
+  SysTick->VAL  =  0U;
+
+  PendST = 0U;
+
+  return (0);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t  OS_Tick_Enable (void)
+\details Start the timer to count and enable generation of periodic interrupts.
+
+For a simple Cortex-M device using the built in SystemTick timer the default implementation looks
+like the following example:
+
+\code
+int32_t  OS_Tick_Enable (void) {
+
+  if (PendST != 0U) {
+    PendST = 0U;
+    SCB->ICSR = SCB_ICSR_PENDSTSET_Msk;
+  }
+
+  SysTick->CTRL |=  SysTick_CTRL_ENABLE_Msk;
+
+  return (0);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t  OS_Tick_Disable (void)
+\details Stop the timer from counting and disable generation of periodic interrupts.
+
+After a call to this function the timer must not generate any further interrupt.
+
+For a simple Cortex-M device using the built in SystemTick timer the default implementation looks
+like the following example:
+
+\code
+int32_t  OS_Tick_Disable (void) {
+
+  SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
+
+  if ((SCB->ICSR & SCB_ICSR_PENDSTSET_Msk) != 0U) {
+    SCB->ICSR = SCB_ICSR_PENDSTCLR_Msk;
+    PendST = 1U;
+  }
+
+  return (0);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t  OS_Tick_AcknowledgeIRQ (void)
+\details Acknowledge the pending tick interrupt, i.e. by clear the pending flag.
+
+For a simple Cortex-M device using the built in SystemTick timer the default implementation looks
+like the following example:
+
+\code
+int32_t  OS_Tick_AcknowledgeIRQ (void) {
+  (void)SysTick->CTRL;
+  return (0);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t OS_Tick_GetIRQn (void)
+\details Return the actual numeric value to identify the interrupt used by the timer.
+
+For a simple Cortex-M device using the built in SystemTick timer the default implementation looks
+like the following example:
+
+\code
+int32_t  OS_Tick_GetIRQn (void) {
+  return (SysTick_IRQn);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t OS_Tick_GetClock (void)
+\details Return the clock frequency the timer operates at, i.e. giving the rate the internal counter value is incremented at.
+
+For a simple Cortex-M device using the built in SystemTick timer the default implementation looks
+like the following example:
+
+\code
+uint32_t OS_Tick_GetClock (void) {
+  return (SystemCoreClock);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t OS_Tick_GetInterval (void)
+\details Return the actual counting interval used for the internal counter value between to consecutive tick interrupts.
+
+For a simple Cortex-M device using the built in SystemTick timer the default implementation looks
+like the following example:
+
+\code
+uint32_t OS_Tick_GetInterval (void) {
+  return (SysTick->LOAD + 1U);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t OS_Tick_GetCount (void)
+\details Return the current value of the internal counter between 0 to \ref OS_Tick_GetInterval() - 1.
+
+This value is used to calculate subticks, i.e. OS_Tick_GetCount() / OS_Tick_GetInterval(), if a higher time resolution is needed.
+
+\note If the hardware is a down-counter (such as the Cortex-M System Tick Timer) one has to calculate the corresponding up-counter value.
+
+For a simple Cortex-M device using the built in SystemTick timer the default implementation looks
+like the following example:
+
+\code
+uint32_t OS_Tick_GetCount (void) {
+  uint32_t load = SysTick->LOAD;
+  return  (load - SysTick->VAL);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn OS_Tick_GetOverflow (void)
+\details Return the current state of the overflow signal, i.e. the timers interrupt pending bit.
+
+This information can be used to calculate an intermediate (but correct) tick value while the tick
+interrupt is pending but blocked.
+
+For a simple Cortex-M device using the built in SystemTick timer the default implementation looks
+like the following example:
+
+\code
+uint32_t OS_Tick_GetOverflow (void) {
+  return ((SysTick->CTRL >> 16) & 1U);
+}
+\endcode
+*/
+
+/** @} */ /* group CMSIS_RTOS_TickAPI */

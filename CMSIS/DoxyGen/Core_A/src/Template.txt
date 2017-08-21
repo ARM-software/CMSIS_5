@@ -129,55 +129,15 @@ The device configuration of the template files is described in detail on the fol
 \page startup_c_pg Startup File startup_<device>.c
 
 The \ref startup_c_pg contains:
+ - Exception vectors of the Cortex-A Processor with weak functions that implement default routines.
  - The reset handler which is executed after CPU reset and typically calls the \ref SystemInit function.
- - The setup values for the Main Stack Pointer (MSP).
- - Exception vectors of the Cortex-M Processor with weak functions that implement default routines.
- - Interrupt vectors that are device specific with weak functions that implement default routines.
+ - The setup values for the various stack pointers, i.e. per exceptional mode and main stack.
 
 The file exists for each supported toolchain and is the only tool-chain specific CMSIS file.
 
-To adapt the file to a new device only the interrupt vector table needs to be extended with
-the device-specific interrupt handlers. The naming convention for the interrupt handler names are
-&lt;interrupt_name&gt;_IRQHandler.  This table needs to be consistent with \ref IRQn_Type that defines all the
-IRQ numbers for each interrupt.
+\section startup_c_sec startup_Device.c Template File
 
-\b Example:
-
-The following example shows the extension of the interrupt vector table for the LPC1100 device family.
-
-\code
-                ; External Interrupts
-                DCD     WAKEUP0_IRQHandler       ; 16+ 0: Wakeup PIO0.0
-                DCD     WAKEUP1_IRQHandler       ; 16+ 1: Wakeup PIO0.1
-                DCD     WAKEUP2_IRQHandler       ; 16+ 2: Wakeup PIO0.2
-                 :       :
-                 :       :
-                DCD     EINT1_IRQHandler         ; 16+30: PIO INT1
-                DCD     EINT0_IRQHandler         ; 16+31: PIO INT0
-	 :
-	 :
-                EXPORT  WAKEUP0_IRQHandler       [WEAK]
-                EXPORT  WAKEUP1_IRQHandler       [WEAK]
-                EXPORT  WAKEUP2_IRQHandler       [WEAK]
-                 :       :
-                 :       :
-                EXPORT	EINT1_IRQHandler         [WEAK]
-                EXPORT	EINT0_IRQHandler         [WEAK]
-
-WAKEUP0_IRQHandler
-WAKEUP1_IRQHandler
-WAKEUP1_IRQHandler
-      :
-      :
-EINT1_IRQHandler
-EINT0_IRQHandler
-                B       .
-
-\endcode
-
-\section startup_s_sec startup_Device.s Template File
-
-An ARM Compiler \ref startup_s_sec for an ARMv7-M processor like Cortex-M3 is shown below.
+An ARM Compiler specific startup file for an ARMv7-A processor like Cortex-A9 is shown below.
 The files for other compiler vendors differ slightly in the syntax, but not in the overall structure.
 
 \verbinclude "Source\ARM\startup_Device.c"
@@ -219,7 +179,7 @@ The \ref device_h_pg contains the following sections that are device specific:
  - \ref irqn_defs provides interrupt numbers (IRQn) for all exceptions and interrupts of the device.
  - \ref config_perifs reflect the features of the device.
  - \ref access_perifs definitions for the \ref peripheral_gr to all device peripherals. It contains all data structures and the address mapping for device-specific peripherals.
- - <b>Access Functions for Peripherals (optioal)</b> provide additional helper functions for peripherals that are useful for programming of these peripherals. Access Functions may be provided as inline functions or can be extern references to a device-specific library provided by the silicon vendor.
+ - <b>Access Functions for Peripherals (optional)</b> provide additional helper functions for peripherals that are useful for programming of these peripherals. Access Functions may be provided as inline functions or can be extern references to a device-specific library provided by the silicon vendor.
 
 <a href="Modules.html">\b Reference </a> describes the standard features and functions of the \ref device_h_pg in detail.
 
@@ -231,6 +191,7 @@ For devices implementing an ARM GIC these are defined as:
   - IRQn 16-31 represents private peripheral interrupts (PPI), local to each processor core.
   - IRQn 32-1019 represents shared peripheral interrups (SPI), routeable to all processor cores.
   - IRQn 1020-1023 represents special interrupts, refer to the GIC Architecture Specification.
+  
 \b Example:
 
 The following example shows the extension of the interrupt vector table for Cortex-A9 class device.
@@ -263,13 +224,12 @@ typedef enum IRQn
 
 \section core_config_sect Configuration of the Processor and Core Peripherals
 
-The \ref device_h_pg  configures the Cortex-M or SecurCore processor and the core peripherals with <i>\#defines</i>
+The \ref device_h_pg configures the Cortex-A processor and the core peripherals with <i>\#defines</i>
 that are set prior to including the file <b>core_<cpu>.h</b>.
 
 The following tables list the <i>\#defines</i> along with the possible values for each processor core.
 If these <i>\#defines</i> are missing default values are used.
 
-\b core_cm0.h
 <table class="cmtable">
     <tr>
       <th>\#define</th>
@@ -284,502 +244,66 @@ If these <i>\#defines</i> are missing default values are used.
       <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
     </tr>
     <tr>
-      <td>__NVIC_PRIO_BITS</td>
-      <td>2</td>
-      <td>2</td>
-      <td>Number of priority bits implemented in the NVIC (device specific)</td>
-    </tr>
-    <tr>
-      <td>__Vendor_SysTickConfig</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>If this define is set to 1, then the default <b>SysTick_Config</b> function
-		is excluded. In this case, the file <i><b>device.h</b></i>
-		must contain a vendor specific implementation of this function.</td>
-    </tr>
-</table>
-
-\b core_cm0plus.h
-<table class="cmtable">
-    <tr>
-      <th>\#define</th>
-      <th>Value Range</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-    <tr>
-      <td>__CM0PLUS_REV</td>
-      <td>0x0000</td>
-      <td>0x0000</td>
-      <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
-    </tr>
-    <tr>
-      <td>__NVIC_PRIO_BITS</td>
-      <td>2</td>
-      <td>2</td>
-      <td>Number of priority bits implemented in the NVIC (device specific)</td>
-    </tr>
-    <tr>
-      <td>__Vendor_SysTickConfig</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>If this define is set to 1, then the default <b>SysTick_Config</b> function
-		is excluded. In this case, the file <i><b>device.h</b></i>
-		must contain a vendor specific implementation of this function.</td>
-    </tr>
-</table>
-
-\b core_cm3.h
-<table class="cmtable">
-    <tr>
-      <th>\#define</th>
-      <th>Value Range</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-    <tr>
-      <td>__CM3_REV</td>
-      <td>0x0101 | 0x0200</td>
-      <td>0x0200</td>
-      <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
-    </tr>
-    <tr>
-      <td>__NVIC_PRIO_BITS</td>
-      <td>2 .. 8</td>
-      <td>4</td>
-      <td>Number of priority bits implemented in the NVIC (device specific)</td>
-    </tr>
-    <tr>
-      <td>__MPU_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>Defines if a MPU is present or not</td>
-    </tr>
-    <tr>
-      <td>__Vendor_SysTickConfig</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>If this define is set to 1, then the default <b>SysTick_Config</b> function
-		is excluded. In this case, the file <i><b>device.h</b></i>
-		must contain a vendor specific implementation of this function.</td>
-    </tr>
-</table>
-
-\b core_cm4.h
-<table class="cmtable">
-    <tr>
-      <th>\#define</th>
-      <th>Value Range</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-    <tr>
-      <td>__CM4_REV</td>
-      <td>0x0000</td>
-      <td>0x0000</td>
-      <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
-    </tr>
-    <tr>
-      <td>__NVIC_PRIO_BITS</td>
-      <td>2 .. 8</td>
-      <td>4</td>
-      <td>Number of priority bits implemented in the NVIC (device specific)</td>
-    </tr>
-    <tr>
-      <td>__MPU_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>Defines if a MPU is present or not</td>
+      <td>__CORTEX_A</td>
+      <td>5, 7, 9</td>
+      <td>(n/a)</td>
+      <td>Core type number</td>
     </tr>
     <tr>
       <td>__FPU_PRESENT</td>
       <td>0 .. 1</td>
       <td>0</td>
-      <td>Defines if a FPU is present or not</td>
+      <td>Defines if an FPU is present or not</td>
     </tr>
     <tr>
-      <td>__Vendor_SysTickConfig</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>If this define is set to 1, then the default <b>SysTick_Config</b> function
-		is excluded. In this case, the file <i><b>device.h</b></i>
-		must contain a vendor specific implementation of this function.</td>
-    </tr>
-</table>
-
-\b core_cm7.h
-<table class="cmtable" summary="">
-    <tr>
-      <th>\#define</th>
-      <th>Value Range</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-    <tr>
-      <td>__CM7_REV</td>
-      <td>0x0000</td>
-      <td>0x0000</td>
+      <td>__GIC_PRESENT</td>
+      <td>0 ..1 </td>
+      <td>Defines if an GIC is present or not</td>
       <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
     </tr>
     <tr>
-      <td>__MPU_PRESENT</td>
+      <td>__TIM_PRESENT</td>
       <td>0 .. 1</td>
       <td>0</td>
-      <td>Defines if a MPU is present or not</td>
+      <td>Defines if a private timer is present or not</td>
     </tr>
     <tr>
-      <td>__NVIC_PRIO_BITS</td>
-      <td>2 .. 8</td>
-      <td>4</td>
-      <td>Number of priority bits implemented in the NVIC (device specific)</td>
-    </tr>
-    <tr>
-      <td>__Vendor_SysTickConfig</td>
+      <td>__L2C_PRESENT</td>
       <td>0 .. 1</td>
       <td>0</td>
-      <td>If this define is set to 1, then the default <b>SysTick_Config</b> function
-		is excluded. In this case, the file <i><b>device.h</b></i>
-		must contain a vendor specific implementation of this function.</td>
-    </tr>
-    <tr>
-      <td>__FPU_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>Defines if a FPU is present or not. See <b>__FPU_DP</b> description below.</td>
-    </tr>
-    <tr>
-      <td>__FPU_DP</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>The combination of the defines <b>__FPU_PRESENT</b> and <b>__FPU_DP</b>
-         determine the whether the FPU is with single or double precision as shown in the table below.
-	     \n\n
-	     <table class="cmtable" summary="">
-		 <tr  bgcolor="cyan">
-           <td><b>__FPU_PRESENT</b></td>
-		   <td><b>__FPU_DP</b></td>
-		   <td><b>Description</b></td>
-		 </tr>
-		 <tr>
-		   <td align="center">0</td>
-		   <td align="center"><i>ignored</i></td>
-		   <td>Processor has no FPU. The value set for <b>__FPU_DP</b> has no influence. </td>
-		 </tr>
-		 <tr>
-		   <td align="center">1</td>
-		   <td align="center">0</td>
-		   <td>Processor with FPU with single precision. The file <b>ARMCM7_SP.h</b> has preconfigured settings for this combination.</td>
-		 </tr>
-		 <tr>
-		   <td align="center">1</td>
-		   <td align="center">1</td>
-           <td>Processor with FPU with double precision. The file <b>ARMCM7_DP.h</b> has preconfigured settings for this combination.</td>
-		 </tr>
-		 </table>
-	  </td>
-    </tr>
-    <tr>
-      <td>__ICACHE_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>1</td>
-      <td>Instruction Chache present or not</td>
-    </tr>
-    <tr>
-      <td>__DCACHE_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>1</td>
-      <td>Data Chache present or not</td>
-    </tr>
-    <tr>
-      <td>__DTCM_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>1</td>
-      <td>Data Tightly Coupled Memory is present or not</td>
-    </tr>
-</table>
-
-\b core_sc000.h
-<table class="cmtable">
-    <tr>
-      <th>\#define</th>
-      <th>Value Range</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-    <tr>
-      <td>__SC000_REV</td>
-      <td>0x0000</td>
-      <td>0x0000</td>
-      <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
-    </tr>
-    <tr>
-      <td>__NVIC_PRIO_BITS</td>
-      <td>2</td>
-      <td>2</td>
-      <td>Number of priority bits implemented in the NVIC (device specific)</td>
-    </tr>
-    <tr>
-      <td>__MPU_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>Defines if a MPU is present or not</td>
-    </tr>
-    <tr>
-      <td>__Vendor_SysTickConfig</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>If this define is set to 1, then the default <b>SysTick_Config</b> function
-		is excluded. In this case, the file <i><b>device.h</b></i>
-		must contain a vendor specific implementation of this function.</td>
-    </tr>
-</table>
-
-\b core_sc300.h
-<table class="cmtable">
-    <tr>
-      <th>\#define</th>
-      <th>Value Range</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-    <tr>
-      <td>__SC300_REV</td>
-      <td>0x0000</td>
-      <td>0x0000</td>
-      <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
-    </tr>
-    <tr>
-      <td>__NVIC_PRIO_BITS</td>
-      <td>2 .. 8</td>
-      <td>4</td>
-      <td>Number of priority bits implemented in the NVIC (device specific)</td>
-    </tr>
-    <tr>
-      <td>__MPU_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>Defines if a MPU is present or not</td>
-    </tr>
-    <tr>
-      <td>__Vendor_SysTickConfig</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>If this define is set to 1, then the default <b>SysTick_Config</b> function
-		is excluded. In this case, the file <i><b>device.h</b></i>
-		must contain a vendor specific implementation of this function.</td>
-    </tr>
-</table>
-
-\b core_CM23.h or \b core_ARMv8MBL.h
-<table class="cmtable">
-    <tr>
-      <th>\#define</th>
-      <th>Value Range</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-    <tr>
-      <td>__ARMv8MBL_REV</td>
-      <td>0x0000</td>
-      <td>0x0000</td>
-      <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
-    </tr>
-    <tr>
-      <td>__MPU_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>Defines if a MPU is present or not</td>
-    </tr>
-    <tr>
-      <td>__SAUREGION_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>Defines if SAU regions are present or not</td>
-    </tr>
-    <tr>
-      <td>__VTOR_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>Defines if a VTOR register is present or not</td>
-    </tr>
-    <tr>
-      <td>__NVIC_PRIO_BITS</td>
-      <td>2</td>
-      <td>2</td>
-      <td>Number of priority bits implemented in the NVIC (device specific)</td>
-    </tr>
-    <tr>
-      <td>__Vendor_SysTickConfig</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>If this define is set to 1, then the default <b>SysTick_Config</b> function
-		is excluded. In this case, the file <i><b>device.h</b></i>
-		must contain a vendor specific implementation of this function.</td>
-    </tr>
-</table>
-
-\b core_CM33.h or \b core_ARMv8MML.h
-<table class="cmtable">
-    <tr>
-      <th>\#define</th>
-      <th>Value Range</th>
-      <th>Default</th>
-      <th>Description</th>
-    </tr>
-    <tr>
-      <td>__ARMv8MML_REV</td>
-      <td>0x0000</td>
-      <td>0x0000</td>
-      <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
-    </tr>
-    <tr>
-      <td>__MPU_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>Defines if a MPU is present or not</td>
-    </tr>
-    <tr>
-      <td>__SAUREGION_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>Defines if SAU regions are present or not</td>
-    </tr>
-    <tr>
-      <td>__FPU_PRESENT</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>Defines if a FPU is present or not</td>
-    </tr>
-    <tr>
-      <td>__NVIC_PRIO_BITS</td>
-      <td>2 .. 8</td>
-      <td>3</td>
-      <td>Number of priority bits implemented in the NVIC (device specific)</td>
-    </tr>
-    <tr>
-      <td>__Vendor_SysTickConfig</td>
-      <td>0 .. 1</td>
-      <td>0</td>
-      <td>If this define is set to 1, then the default <b>SysTick_Config</b> function
-		is excluded. In this case, the file <i><b>device.h</b></i>
-		must contain a vendor specific implementation of this function.</td>
+      <td>Defines if a level 2 cache controller is present or not</td>
     </tr>
 </table>
 
 \b Example
 
-The following code exemplifies the configuration of the Cortex-M4 Processor and Core Peripherals.
+The following code exemplifies the configuration of the Cortex-A9 Processor and Core Peripherals.
 
 \code
-#define __CM4_REV                 0x0001    /* Core revision r0p1                                 */
-#define __MPU_PRESENT             1         /* MPU present or not                                 */
-#define __NVIC_PRIO_BITS          3         /* Number of Bits used for Priority Levels            */
-#define __Vendor_SysTickConfig    0         /* Set to 1 if different SysTick Config is used       */
-#define __FPU_PRESENT             1         /* FPU present or not                                 */
-.
-.
-#include <core_cm4.h>                       /* Cortex-M4 processor and core peripherals           */
+#define __CA_REV        0x0000U    /*!< Core revision r0p0                          */
+#define __CORTEX_A           9U    /*!< Cortex-A9 Core                              */
+#define __FPU_PRESENT        1U    /*!< FPU present                                 */
+#define __GIC_PRESENT        1U    /*!< GIC present                                 */
+#define __TIM_PRESENT        0U    /*!< TIM not present                             */
+#define __L2C_PRESENT        0U    /*!< L2C not present                             */
+:
+:
+#include "core_ca.h"               /* Cortex-A processor and core peripherals       */
 \endcode
 
 
 \section core_version_sect   CMSIS Version and Processor Information
 
-Defines in the core_<i>cpu</i>.h file identify the version of the CMSIS-Core-M and the processor used.
+Defines in the core_<i>cpu</i>.h file identify the version of the CMSIS-Core-A and the processor used.
 The following shows the defines in the various core_<i>cpu</i>.h files that may be used in the \ref device_h_pg
 to verify a minimum version or ensure that the right processor core is used.
 
-\b core_cm0.h
 \code
-#define __CM0_CMSIS_VERSION_MAIN  (5U)                                 /* [31:16] CMSIS HAL main version */
-#define __CM0_CMSIS_VERSION_SUB   (0U)                                 /* [15:0]  CMSIS HAL sub version */
-#define __CM0_CMSIS_VERSION       ((__CM0_CMSIS_VERSION_MAIN << 16U) | \
-                                    __CM0_CMSIS_VERSION_SUB          ) /* CMSIS HAL version number */
- 
-#define __CORTEX_M                (0U)                                 /* Cortex-M Core */
+#define __CA_CMSIS_VERSION_MAIN  (5U)                                 /* [31:16] CMSIS Core main version */
+#define __CA_CMSIS_VERSION_SUB   (0U)                                 /* [15:0]  CMSIS Core sub version */
+#define __CA_CMSIS_VERSION       ((__CA_CMSIS_VERSION_MAIN << 16U) | \
+                                   __CA_CMSIS_VERSION_SUB          )  /* CMSIS Core version number */
 \endcode
-
-
-\b core_cm0plus.h
-\code
-#define __CM0PLUS_CMSIS_VERSION_MAIN  (5U)                                  /* [31:16] CMSIS HAL main version */
-#define __CM0PLUS_CMSIS_VERSION_SUB   (0U)                                  /* [15:0]  CMSIS HAL sub version */
-#define __CM0PLUS_CMSIS_VERSION       ((__CM0P_CMSIS_VERSION_MAIN << 16U) | \
-                                        __CM0P_CMSIS_VERSION_SUB          ) /* CMSIS HAL version number */
- 
-#define __CORTEX_M                    (0U)                                  /* Cortex-M Core */
-\endcode
-
-
-\b core_cm3.h
-\code
-#define __CM3_CMSIS_VERSION_MAIN  (5U)                                 /* [31:16] CMSIS HAL main version */
-#define __CM3_CMSIS_VERSION_SUB   (0U)                                 /* [15:0]  CMSIS HAL sub version */
-#define __CM3_CMSIS_VERSION       ((__CM3_CMSIS_VERSION_MAIN << 16U) | \
-                                    __CM3_CMSIS_VERSION_SUB          ) /* CMSIS HAL version number */
- 
-#define __CORTEX_M                (3U)                                 /* Cortex-M Core */
-\endcode
-
-\b core_cm4.h
-\code
-#define __CM4_CMSIS_VERSION_MAIN  (5U)                                 /* [31:16] CMSIS HAL main version */
-#define __CM4_CMSIS_VERSION_SUB   (0U)                                 /* [15:0]  CMSIS HAL sub version */
-#define __CM4_CMSIS_VERSION       ((__CM4_CMSIS_VERSION_MAIN << 16U) | \
-                                    __CM4_CMSIS_VERSION_SUB          ) /* CMSIS HAL version number */
- 
-#define __CORTEX_M                (4U)                                 /* Cortex-M Core */
-\endcode
-
-\b core_cm7.h
-\code
-#define __CM7_CMSIS_VERSION_MAIN  (5U)                                 /* [31:16] CMSIS HAL main version */
-#define __CM7_CMSIS_VERSION_SUB   (0U)                                 /* [15:0]  CMSIS HAL sub version */
-#define __CM7_CMSIS_VERSION       ((__CM7_CMSIS_VERSION_MAIN << 16U) | \
-                                    __CM7_CMSIS_VERSION_SUB          ) /* CMSIS HAL version number */
- 
-#define __CORTEX_M                (7U)                                 /* Cortex-M Core */
-\endcode
-
-\b core_sc000.h
-\code
-#define __SC000_CMSIS_VERSION_MAIN  (5U)                                   /* [31:16] CMSIS HAL main version */
-#define __SC000_CMSIS_VERSION_SUB   (0U)                                   /* [15:0]  CMSIS HAL sub version */
-#define __SC000_CMSIS_VERSION       ((__SC000_CMSIS_VERSION_MAIN << 16U) | \
-                                      __SC000_CMSIS_VERSION_SUB          ) /* CMSIS HAL version number */
- 
-#define __CORTEX_SC                 (0U)                                   /* Cortex secure core */
-\endcode
-
-\b core_sc300.h
-\code
-#define __SC300_CMSIS_VERSION_MAIN  (5U)                                   /* [31:16] CMSIS HAL main version */
-#define __SC300_CMSIS_VERSION_SUB   (0U)                                   /* [15:0]  CMSIS HAL sub version */
-#define __SC300_CMSIS_VERSION       ((__SC300_CMSIS_VERSION_MAIN << 16U) | \
-                                      __SC300_CMSIS_VERSION_SUB          ) /* CMSIS HAL version number */
- 
-#define __CORTEX_SC                 (300U)                                 /* Cortex secure core */
-\endcode
-
-\b core_ARMv8MBL.h
-\code
-#define __ARMv8MBL_CMSIS_VERSION_MAIN  (5U)                                       /* [31:16] CMSIS HAL main version */
-#define __ARMv8MBL_CMSIS_VERSION_SUB   (0U)                                       /* [15:0]  CMSIS HAL sub version */
-#define __ARMv8MBL_CMSIS_VERSION       ((__ARMv8MBL_CMSIS_VERSION_MAIN << 16U) | \
-                                         __ARMv8MBL_CMSIS_VERSION_SUB           ) /* CMSIS HAL version number */
- 
-#define __CORTEX_M                     (tbd)                                      /* Cortex secure core */
-\endcode
-
-\b core_ARMv8MML.h
-\code
-#define __ARMv8MML_CMSIS_VERSION_MAIN  (5U)                                       /* [31:16] CMSIS HAL main version */
-#define __ARMv8MML_CMSIS_VERSION_SUB   (0U)                                       /* [15:0]  CMSIS HAL sub version */
-#define __ARMv8MML_CMSIS_VERSION       ((__ARMv8MML_CMSIS_VERSION_MAIN << 16U) | \
-                                         __ARMv8MML_CMSIS_VERSION_SUB           ) /* CMSIS HAL version number */
- 
-#define __CORTEX_M                     (tbd)                                      /* Cortex secure core */
-\endcode
-
 
 \section device_access Device Peripheral Access Layer
 

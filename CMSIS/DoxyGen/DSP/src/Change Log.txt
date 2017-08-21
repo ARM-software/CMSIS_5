@@ -2,9 +2,15 @@
 \page ChangeLog_pg  Change Log
 
 <hr>
+<b>Version 1.5.2</b>
+
+Modified arm_math.h
+ - fixed GNU Compiler specific diagnostics.
+
+<hr>
 <b>Version 1.5.1</b>
 
-Changed copyrigth note.
+Changed copyright note.
 
 Added ARMv8M DSP libraries.
 

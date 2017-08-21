@@ -378,18 +378,18 @@ void osRtxIdleThread (void) {
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn uint64_t osKernelGetTickCount (void)
+\fn uint32_t osKernelGetTickCount (void)
 \details
-The function \b osKernelGetTickCount returns the current RTOS kernel tick count or \token{0} in case of a failure.
+The function \b osKernelGetTickCount returns the current RTOS kernel tick count.
 
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 \b Code \b Example
 \code
 #include "cmsis_os2.h"
  
 void Thread_1 (void *arg)  {                // Thread function
-  uint64_t tick;
+  uint32_t tick;
 
   tick = osKernelGetTickCount();            // retrieve the number of system ticks
   for (;;) {
@@ -398,22 +398,45 @@ void Thread_1 (void *arg)  {                // Thread function
     // ...
   }
 }\endcode
+
+Due to the limited value range used for the tick count it may overflow during runtime,
+i.e. after 2<sup>32</sup> ticks which are roughly 49days @ 1ms. Typically one has not to
+take special care of this unless a monotonic counter is needed. For such a case an additional
+64bit tick counter can be implemented as follows. The given example needs GetTick() called at
+least twice per tick overflow to work properly.
+
+\b Code \b Example
+\code
+uint64_t GetTick(void) {
+  static uint32_t tick_h = 0U;
+  static uint32_t tick_l = 0U;
+         uint32_t tick;
+
+  tick = osKernelGetTickCount();
+  if (tick < tick_l) {
+    tick_h++;
+  }
+  tick_l = tick;
+
+  return (((uint64_t)tick_h << 32) | tick_l);
+}
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn uint32_t osKernelGetTickFreq (void)
 \details
-The function \b osKernelGetTickFreq returns the frequency of the current RTOS kernel tick or \token{0} in case of a failure.
+The function \b osKernelGetTickFreq returns the frequency of the current RTOS kernel tick.
 
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \fn uint32_t osKernelGetSysTimerCount (void)
 \details
-The function \b osKernelGetSysTimerCount returns the current RTOS kernel system timer as a 32-bit value or \token{0} in case of a failure.
+The function \b osKernelGetSysTimerCount returns the current RTOS kernel system timer as a 32-bit value.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -422,7 +445,7 @@ The function \b osKernelGetSysTimerCount returns the current RTOS kernel system 
 /**
 \fn uint32_t osKernelGetSysTimerFreq (void)
 \details
-The function \b osKernelGetSysTimerFreq returns the frequency of the current RTOS kernel system timer or \token{0} in case of a failure.
+The function \b osKernelGetSysTimerFreq returns the frequency of the current RTOS kernel system timer.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */

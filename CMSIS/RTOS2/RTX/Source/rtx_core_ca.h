@@ -32,10 +32,6 @@
 #define __DOMAIN_NS             0U
 #define __EXCLUSIVE_ACCESS      1U
 
-/* CPSR initial state */
-#define CPSR_INIT_USER          0x00000010U
-#define CPSR_INIT_SYSTEM        0x0000001FU
-
 /* CPSR bit definitions */
 #define CPSR_T_BIT              0x20U
 #define CPSR_I_BIT              0x80U
@@ -50,10 +46,22 @@
 #define IS_IRQ_MODE()           ((__get_mode() != CPSR_MODE_USER) && (__get_mode() != CPSR_MODE_SYSTEM))
 #define IS_IRQ_MASKED()         (0U)
 
+#define xPSR_INIT(privileged, thumb)                                \
+  ((privileged) != 0U) ? (CPSR_MODE_SYSTEM | (((thumb) != 0U) ? CPSR_T_BIT : 0U)) : \
+                         (CPSR_MODE_USER   | (((thumb) != 0U) ? CPSR_T_BIT : 0U))
+
 #define STACK_FRAME_INIT        0x00U
 
-#define IS_VFP_D32_STACK_FRAME(n) (((n) & 0x04U) != 0U)
-#define IS_VFP_D16_STACK_FRAME(n) (((n) & 0x02U) != 0U)
+// Stack Frame:
+//  - VFP-D32: D16-31, D0-D15, FPSCR, Reserved, R4-R11, R0-R3, R12, LR, PC, CPSR
+//  - VFP-D16:         D0-D15, FPSCR, Reserved, R4-R11, R0-R3, R12, LR, PC, CPSR
+//  - Basic:                                    R4-R11, R0-R3, R12, LR, PC, CPSR
+#define STACK_OFFSET_R0(stack_frame)                                  \
+  ((((stack_frame) & 0x04U) != 0U) ? ((32U*8U) + (2U*4U) + (8U*4U)) : \
+   (((stack_frame) & 0x02U) != 0U) ? ((16U*8U) + (2U*4U) + (8U*4U)) : \
+                                                           (8U*4U))
+
+#define OS_TICK_HANDLER         osRtxTick_Handler
 
 /* Emulate M profile get_PSP: SP_usr - (8*4) */
 #if defined(__CC_ARM)
@@ -85,6 +93,9 @@ __STATIC_INLINE uint32_t __get_PSP (void) {
 }
 #endif
 
+__STATIC_INLINE void __set_CONTROL(uint32_t control) {
+}
+
 
 //  ==== Service Calls definitions ====
 
@@ -107,8 +118,6 @@ __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (void) {                                         \
   return svc##f(svcRtx##f);                                                    \
 }
-
-#define SVC0_0D SVC0_0
 
 #define SVC0_1N(f,t,t1)                                                        \
 __SVC_INDIRECT(0) t    svc##f (t(*)(t1),t1);                                   \
@@ -184,8 +193,6 @@ __STATIC_INLINE   t  __svc##f (void) {                                         \
   SVC_Setup(svcRtx##f);                                                        \
   return svc##f();                                                             \
 }
-
-#define SVC0_0D SVC0_0
 
 #define SVC0_1N(f,t,t1)                                                        \
 __SVC_INDIRECT(0) t    svc##f (t1 a1);                                         \
@@ -284,16 +291,6 @@ __STATIC_INLINE t __svc##f (void) {                                            \
   return (t) __r0;                                                             \
 }
 
-#define SVC0_0D(f,t)                                                           \
-__attribute__((always_inline))                                                 \
-__STATIC_INLINE t __svc##f (void) {                                            \
-  SVC_ArgN(0);                                                                 \
-  SVC_ArgN(1);                                                                 \
-  SVC_ArgF(svcRtx##f);                                                         \
-  SVC_Call0(SVC_In0, SVC_Out2, SVC_CL0);                                       \
-  return (((t) __r0) | (((t) __r1) << 32));                                    \
-}
-
 #define SVC0_1N(f,t,t1)                                                        \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1) {                                           \
@@ -355,47 +352,27 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
 
 //  ==== Core Peripherals functions ====
 
-extern uint32_t SystemCoreClock;        // System Clock Frequency (Core Clock)
+extern uint8_t IRQ_PendSV;
 
 /// Initialize SVC and PendSV System Service Calls (not needed on Cortex-A)
 __STATIC_INLINE void SVC_Initialize (void) {
 }
 
-/// Setup External Tick Timer Interrupt
-/// \param[in] irqn  Interrupt number
-extern void ExtTick_SetupIRQ (int32_t irqn);
-
-/// Enable External Tick Timer Interrupt
-/// \param[in] irqn  Interrupt number
-extern void ExtTick_EnableIRQ (int32_t irqn);
-
-/// Disable External Tick Timer Interrupt
-/// \param[in] irqn  Interrupt number
-extern void ExtTick_DisableIRQ (int32_t irqn);
-
-/// Get Pending SV (Service Call) and ST (SysTick) Flags
-/// \return    Pending SV&ST Flags
-__STATIC_INLINE uint8_t GetPendSV_ST (void) {
-  return (0U);
-}
-
 /// Get Pending SV (Service Call) Flag
 /// \return    Pending SV Flag
-extern uint8_t GetPendSV (void);
-
-/// Clear Pending SV (Service Call) and ST (SysTick) Flags
-__STATIC_INLINE void ClrPendSV_ST (void) {
+__STATIC_INLINE uint8_t GetPendSV (void) {
+  return (IRQ_PendSV);
 }
 
 /// Clear Pending SV (Service Call) Flag
-extern void ClrPendSV (void);
+__STATIC_INLINE void ClrPendSV (void) {
+  IRQ_PendSV = 0U;
+}
 
 /// Set Pending SV (Service Call) Flag
-extern void SetPendSV (void);
-
-/// Set Pending Flags
-/// \param[in] flags  Flags to set
-extern void SetPendFlags (uint8_t flags);
+__STATIC_INLINE void SetPendSV (void) {
+  IRQ_PendSV = 1U;
+}
 
 
 //  ==== Exclusive Access Operation ====

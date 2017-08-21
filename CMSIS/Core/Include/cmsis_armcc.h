@@ -94,7 +94,9 @@
 #ifndef   __ALIGNED
   #define __ALIGNED(x)                           __attribute__((aligned(x)))
 #endif
-
+#ifndef   __RESTRICT
+  #define __RESTRICT                             __restrict
+#endif
 
 /* ###########################  Core Function Access  ########################### */
 /** \ingroup  CMSIS_Core_FunctionInterface

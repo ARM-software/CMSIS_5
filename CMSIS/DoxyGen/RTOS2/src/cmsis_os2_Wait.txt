@@ -46,9 +46,14 @@ void Thread_1 (void *arg)  {                // Thread function
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
-\fn osStatus_t osDelayUntil (uint64_t ticks)
+\fn osStatus_t osDelayUntil (uint32_t ticks)
 \details
-The function \b osDelayUntil waits until an absolute time (specified in kernel \a ticks) is reached. 
+The function \b osDelayUntil waits until an absolute time (specified in kernel \a ticks) is reached.
+
+The corner case when the kernel tick counter overflows is handled by \b osDelayUntil. Thus it is absolutely legal
+to provide a value which is lower than the current tick value, i.e. returned by \ref osKernelGetTickCount. Typically
+as a user you do not have to take care about the overflow. The only limitation you have to have in mind is that the
+maximum delay is limited to (2<sup>32</sup>)-1 ticks.
 
 The delayed thread is put into the \ref ThreadStates "BLOCKED" state and a context switch occurs immediately. The thread
 is automatically put back to the \ref ThreadStates "READY" state when the given time is reached. If the thread will
@@ -56,7 +61,7 @@ have the highest priority in \ref ThreadStates "READY" state it will being sched
 
 Possible \ref osStatus_t return values:
  - \em osOK: the time delay is executed.
- - \em osParameter: the time is either in the past or cannot be handled (out of bounds).
+ - \em osParameter: the time cannot be handled (out of bounds).
  - \em osErrorISR: \ref osDelayUntil cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -66,7 +71,7 @@ Possible \ref osStatus_t return values:
 #include "cmsis_os2.h"
  
 void Thread_1 (void *arg)  {                // Thread function
-  uint64_t tick;
+  uint32_t tick;
 
   tick = osKernelGetTickCount();            // retrieve the number of system ticks
   for (;;) {

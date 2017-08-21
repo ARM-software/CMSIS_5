@@ -33,13 +33,13 @@ storage driver.
 
 \image html storage_sw_stack.png
 
-**Storage API**
+<b>Storage API</b>
 
 The following header files define the Application Programming Interface (API) for the Flash interface:
   - \b %Driver_Storage.h : Driver API for Storage Device Interface
 
 
-**Driver Functions**
+<b>Driver Functions</b>
 
 The driver functions are published in the access struct as explained in \ref StorageDriverFunctions
   - \ref ARM_DRIVER_STORAGE : access struct for Storage driver functions

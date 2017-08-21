@@ -22,7 +22,7 @@ Each peripheral provides a data type definition with a name that is composed of:
 
 Examples:
   - \b UART_TypeDef for the peripheral \b UART.
-  - \b LPC_UART_TypeDef for the device family \b LPC and the peripheral \b UART.
+  - \b IMX_UART_TypeDef for the device family \b IMX and the peripheral \b UART.
 
 The data type definition uses standard C data types defined by the ANSI C header file <stdint.h>.
  
@@ -39,63 +39,47 @@ The data type definition uses standard C data types defined by the ANSI C header
 The typedef <b>\<<i>device abbreviation</i>\>_UART_TypeDef</b> shown below defines the generic register layout for all UART channels in a device.
 
 \code
-typedef struct
-{
-  union {
-  __IM  uint8_t  RBR;                 // Offset: 0x000 (R/ )  Receiver Buffer Register          
-  __OM  uint8_t  THR;                 // Offset: 0x000 ( /W)  Transmit Holding Register           
-  __IOM uint8_t  DLL;                 // Offset: 0x000 (R/W)  Divisor Latch LSB                   
-        uint32_t RESERVED0;
-  };
-  union {
-  __IOM uint8_t  DLM;                 // Offset: 0x004 (R/W)  Divisor Latch MSB                   
-  __IOM uint32_t IER;                 // Offset: 0x004 (R/W)  Interrupt Enable Register           
-  };
-  union {
-  __IM  uint32_t IIR;                 // Offset: 0x008 (R/ )  Interrupt ID Register               
-  __OM  uint8_t  FCR;                 // Offset: 0x008 ( /W)  FIFO Control Register               
-  };
-  __IOM uint8_t  LCR;                 // Offset: 0x00C (R/W)  Line Control Register               
-        uint8_t  RESERVED1[7];
-  __IM  uint8_t  LSR;                 // Offset: 0x014 (R/ )  Line Status Register                
-        uint8_t  RESERVED2[7];
-  __IOM uint8_t  SCR;                 // Offset: 0x01C (R/W)  Scratch Pad Register                
-        uint8_t  RESERVED3[3];
-  __IOM uint32_t ACR;                 // Offset: 0x020 (R/W)  Autobaud Control Register           
-  __IOM uint8_t  ICR;                 // Offset: 0x024 (R/W)  IrDA Control Register               
-        uint8_t  RESERVED4[3];
-  __IOM uint8_t  FDR;                 // Offset: 0x028 (R/W)  Fractional Divider Register         
-        uint8_t  RESERVED5[7];
-  __IOM uint8_t  TER;                 // Offset: 0x030 (R/W)  Transmit Enable Register            
-        uint8_t  RESERVED6[39];
-  __IM  uint8_t  FIFOLVL;             // Offset: 0x058 (R/ )  FIFO Level Register                 
-} LPC_UART_TypeDef;
+typedef struct {
+	__O  uint32_t UART_CR;            // Offset: 0x0000 ( /W) Control Register 
+	__IO uint32_t UART_MR;            // Offset: 0x0004 (R/W) Mode Register 
+	__O  uint32_t UART_IER;           // Offset: 0x0008 ( /W) Interrupt Enable Register 
+	__O  uint32_t UART_IDR;           // Offset: 0x000C ( /W) Interrupt Disable Register 
+	__I  uint32_t UART_IMR;           // Offset: 0x0010 (R/ ) Interrupt Mask Register 
+	__I  uint32_t UART_SR;            // Offset: 0x0014 (R/ ) Status Register 
+	__I  uint32_t UART_RHR;           // Offset: 0x0018 (R/ ) Receive Holding Register 
+	__O  uint32_t UART_THR;           // Offset: 0x001C ( /W) Transmit Holding Register 
+	__IO uint32_t UART_BRGR;          // Offset: 0x0020 (R/W) Baud Rate Generator Register 
+	__IO uint32_t UART_CMPR;          // Offset: 0x0024 (R/W) Comparison Register 
+	__IO uint32_t UART_RTOR;          // Offset: 0x0028 (R/W) Receiver Time-out Register 
+	__I  uint32_t RESERVED[46];       // Offset: 0x002C (R/ ) Reserved                     
+	__IO uint32_t UART_WPMR;          // Offset: 0x00E4 (R/W) Write Protection Mode Register 
+} IMX_UART_TypeDef;
 \endcode
 
 To access the registers of the UART defined above, pointers to this register structure are defined.
 If more instances of a peripheral exist, the variables have a postfix (digit or letter) that identifies the peripheral.
 
 \b Example:
-In this example, \b LPC_UART2 and \b LPC_UART3 are two pointers to UARTs defined with above register structure.
+In this example, \b IMX_UART2 and \b IMX_UART3 are two pointers to UARTs defined with above register structure.
 \n
 \code
-#define LPC_UART2             ((LPC_UART_TypeDef      *) LPC_UART2_BASE    )
-#define LPC_UART3             ((LPC_UART_TypeDef      *) LPC_UART3_BASE    )
+#define IMX_UART2   ((IMX_UART_TypeDef *) IMX_UART2_BASE)
+#define IMX_UART3   ((IMX_UART_TypeDef *) IMX_UART3_BASE)
 \endcode
 
 \note 
- - The prefix <b>LPC</b> is optional.
+ - The prefix <b>IMX</b> is optional.
  
 The registers in the various UARTs can now be referred in the user code as shown below:\n
 \code
- val = LPC_UART2->DR   // is the data register of UART1.
+ val = IMX_UART2->SR   // is the Status Register of UART2.
 \endcode
 
 <hr>
 
 \section core_cmsis_pal_min_reqs Minimal Requirements
 \details
- To access the peripheral registers and related function in a device, the files <b><i>device.h</i></b> and <b>core_ca<i>#</i>.h</b> define as a minimum:
+ To access the peripheral registers and related function in a device, the files <b><i>device.h</i></b> and <b>core_ca.h</b> define as a minimum:
 \n\n
 - The <b>Register Layout Typedef</b> for each peripheral that defines all register names.
   RESERVED is used to introduce space into the structure for adjusting the addresses of
@@ -105,12 +89,27 @@ The registers in the various UARTs can now be referred in the user code as shown
 \code
 typedef struct
 {
-  __IOM uint32_t CTRL;                // Offset: 0x000 (R/W)  SysTick Control and Status Register 
-  __IOM uint32_t LOAD;                // Offset: 0x004 (R/W)  SysTick Reload Value Register       
-  __IOM uint32_t VAL;                 // Offset: 0x008 (R/W)  SysTick Current Value Register      
-  __IM  uint32_t CALIB;               // Offset: 0x00C (R/ )  SysTick Calibration Register        
-} SysTick_Type;
-    \endcode
+  __IOM uint32_t C_CTLR;              // Offset: 0x0000 (R/W) CPU Interface Control Register 
+  __IOM uint32_t C_PMR;               // Offset: 0x0004 (R/W) Interrupt Priority Mask Register 
+  __IOM uint32_t C_BPR;               // Offset: 0x0008 (R/W) Binary Point Register 
+  __IM  uint32_t C_IAR;               // Offset: 0x000C (R/ ) Interrupt Acknowledge Register 
+  __OM  uint32_t C_EOIR;              // Offset: 0x0010 ( /W) End Of Interrupt Register 
+  __IM  uint32_t C_RPR;               // Offset: 0x0014 (R/ ) Running Priority Register 
+  __IM  uint32_t C_HPPIR;             // Offset: 0x0018 (R/ ) Highest Priority Pending Interrupt Register 
+  __IOM uint32_t C_ABPR;              // Offset: 0x001C (R/W) Aliased Binary Point Register 
+  __IM  uint32_t C_AIAR;              // Offset: 0x0020 (R/ ) Aliased Interrupt Acknowledge Register 
+  __OM  uint32_t C_AEOIR;             // Offset: 0x0024 ( /W) Aliased End Of Interrupt Register 
+  __IM  uint32_t C_AHPPIR;            // Offset: 0x0028 (R/ ) Aliased Highest Priority Pending Interrupt Register 
+  __IOM uint32_t C_STATUSR;           // Offset: 0x002C (R/W) Error Reporting Status Register, optional 
+  __I   uint32_t RESERVED1[40];       // Offset: 0x0030 (R/ ) Reserved
+  __IOM uint32_t C_APR[4];            // Offset: 0x00D0 (R/W) Active Priority Register 
+  __IOM uint32_t C_NSAPR[4];          // Offset: 0x00E0 (R/W) Non-secure Active Priority Register 
+  __I   uint32_t RESERVED2[3];        // Offset: 0x00F6 (R/ ) Reserved
+  __IM  uint32_t C_IIDR;              // Offset: 0x00FC (R/ ) CPU Interface Identification Register 
+  __I   uint32_t RESERVED3[960];      // Offset: 0x0100 (R/ ) Reserved
+  __OM  uint32_t C_DIR;               // Offset: 0x1000 ( /W) Deactivate Interrupt Register 
+}  GICInterface_Type;
+\endcode
 
 
 - <b>Base Address</b> for each peripheral (in case of multiple peripherals
@@ -118,16 +117,16 @@ typedef struct
     \n\n
 <b>Example:</b>
 \code
-#define SysTick_BASE (SCS_BASE + 0x0010)            // SysTick Base Address     
+#define GIC_INTERFACE_BASE (0xe8202000UL)   // GIC Interface Base Address     
 \endcode
 
 
 - <b>Access Definitions</b> for each peripheral. In case of multiple peripherals that are using the same
-    <b>register layout typdef</b>, multiple access definitions exist (LPC_UART0, LPC_UART2).
+    <b>register layout typedef</b>, multiple access definitions exist.
     \n\n
 <b>Example:</b>
 \code
-#define SysTick ((SysTick_Type *) Systick_BASE)    // SysTick access definition 
+#define GICInterface   ((GICInterface_Type *) GIC_INTERFACE_BASE)   // GIC Interface Access Definition 
 \endcode
 
 
@@ -136,7 +135,7 @@ These definitions allow accessing peripheral registers with simple assignments.
 - <b>Example:</b>
   \n
 \code
-SysTick->CTRL = 0;
+GICInterface->C_CTLR |= 1;   // Enable Interface
 \endcode
 
 <hr>
@@ -160,30 +159,35 @@ Optionally, the file <b><i>device</i>.h</b> may define:
 \section core_cmsis_pal_bitfields Register Bit Fields
 \details
 
-For Core Register, macros define the position and the mask value for a bit field. It is recommended to create such definitions also
-for other peripheral registers.
+For Core Register, macros define the position and the mask value for a bit field.
 
 <b>Example:</b>
 
-Bit field definitions for register CPUID in SCB (System Control Block).
+Bit field definitions for register ACTLR in CP15.
 
 
 \code
-// SCB CPUID Register Definitions 
-#define SCB_CPUID_IMPLEMENTER_Pos      24U                                       
-#define SCB_CPUID_IMPLEMENTER_Msk      (0xFFUL << SCB_CPUID_IMPLEMENTER_Pos)     
-                                                                                 
-#define SCB_CPUID_VARIANT_Pos          20U                                       
-#define SCB_CPUID_VARIANT_Msk          (0xFUL << SCB_CPUID_VARIANT_Pos)          
-                                                                                 
-#define SCB_CPUID_ARCHITECTURE_Pos     16U                                       
-#define SCB_CPUID_ARCHITECTURE_Msk     (0xFUL << SCB_CPUID_ARCHITECTURE_Pos)     
-                                                                                 
-#define SCB_CPUID_PARTNO_Pos            4U                                       
-#define SCB_CPUID_PARTNO_Msk           (0xFFFUL << SCB_CPUID_PARTNO_Pos)         
-                                                                                 
-#define SCB_CPUID_REVISION_Pos          0U                                       
-#define SCB_CPUID_REVISION_Msk         (0xFUL)     
+// CP15 Register ACTLR
+#define ACTLR_DDI_Pos                  28U                       
+#define ACTLR_DDI_Msk                  (1UL << ACTLR_DDI_Pos)    
+                                       
+#define ACTLR_DDVM_Pos                 15U                       
+#define ACTLR_DDVM_Msk                 (1UL << ACTLR_DDVM_Pos)   
+                                       
+#define ACTLR_L1PCTL_Pos               13U                       
+#define ACTLR_L1PCTL_Msk               (3UL << ACTLR_L1PCTL_Pos) 
+                                       
+#define ACTLR_L1RADIS_Pos              12U                       
+#define ACTLR_L1RADIS_Msk              (1UL << ACTLR_L1RADIS_Pos)
+                                       
+#define ACTLR_L2RADIS_Pos              11U                       
+#define ACTLR_L2RADIS_Msk              (1UL << ACTLR_L2RADIS_Pos)
+                                       
+#define ACTLR_DODMBS_Pos               10U                       
+#define ACTLR_DODMBS_Msk               (1UL << ACTLR_DODMBS_Pos) 
+                                       
+#define ACTLR_SMP_Pos                  6U                        
+#define ACTLR_SMP_Msk                  (1UL << ACTLR_SMP_Pos)     
 \endcode
 
 The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enable access to bit fields.
@@ -191,15 +195,39 @@ The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enabl
 */
 
 /**
+\def _VAL2FLD(field, value)
+\param         field        name of bit field.
+\param         value        value for the bit field. This parameter is interpreted as an uint32_t type.
+\brief Mask and shift a bit field value for assigning the result to a peripheral register.
+\details
+The macro \ref _VAL2FLD uses the \#define's <i>_Pos</i> and <i>_Msk</i> of the related bit field to shift bit-field values for
+assigning to a register.
+ 
+<b>Example:</b>
+\code
+  ACTLR = _VAL2FLD(ACTLR_SMP, 0x1)
+\endcode
 
-\def   __I
-\def   __O
-\def   __IO  
-
-\def   __IM  
-\def   __OM  
-\def   __IOM 
 */
+#define _VAL2FLD(field, value)
+
+/**
+ 
+\def _FLD2VAL(field, value)
+\param         field        name of bit field.
+\param         value        value of the register. This parameter is interpreted as an uint32_t type.
+\brief Extract from a peripheral register value the a bit field value.
+\details
+The macro \ref _FLD2VAL uses the \#define's <i>_Pos</i> and <i>_Msk</i> of the related bit field to extract the value of a bit field from a register.
+ 
+<b>Example:</b>
+\code
+  i = _FLD2VAL(ACTLR_SMP, ACTLR);
+\endcode
+
+*/
+#define _FLD2VAL(field, value)
+
 /** @} */ 
 /*end of group peripheral_gr */
 
@@ -208,1397 +236,119 @@ The macros <b>_VAL2FLD(field, value)</b> and <b>_FLD2VAL(field, value)</b> enabl
  *                 CMSIS definitions
  ******************************************************************************/
 /**
-\defgroup CMSIS_glob_defs CMSIS Global Defines
-\brief Definitions common to all interfaces 
-    <b>IO Type Qualifiers</b> are used
-    \li to specify the access to peripheral variables.
-    \li for automatic generation of peripheral register debug information.
+\defgroup version_ctrl Version Control
+\brief Version symbols for CMSIS release specific C/C++ source code. 
+ 
 @{
 */
 
 /*  CMSIS CA definitions */
 /**
 \def __CA_CMSIS_VERSION_MAIN  
-\def __CA_CMSIS_VERSION_SUB   
-\def __CA_CMSIS_VERSION       
-                                
-\def __FPU_PRESENT
+\details
+Use this define to query the major version of CMSIS-Core(A) component. 
 
-\def __FPU_USED
-   __FPU_USED indicates whether an FPU is used or not. For this, \ref __FPU_PRESENT has to be checked prior to making use of FPU specific registers and functions.
+\b Example:
+\code
+#if __CA_CMSIS_VERSION_MAIN < 5
+#error This code needs at least CMSIS-Core(A) version 5!
+#endif
+\endcode
+
+\def __CA_CMSIS_VERSION_SUB   
+\details
+Use this define to query the minor version of CMSIS-Core(A) component. 
+
+\b Example:
+\code
+#if __CA_CMSIS_VERSION_MAIN < 5
+#error This code needs at least CMSIS-Core(A) version 5!
+#else
+#if __CA_CMSIS_VERSION_SUB < 1
+#warning Using CMSIS-Core(A) version 5.0 compatibility functions.
+#endif
+#endif
+\endcode
+
+\def __CA_CMSIS_VERSION       
+\details
+Use this define to query the full version of CMSIS-Core(A) component. 
+
+| Bits    | Name          | Function                |
+| :------ | :------------ | :-----------------------|
+| [31:16] | MAIN          | __CA_CMSIS_VERSION_MAIN |
+| [15:0]  | SUB           | __CA_CMSIS_VERSION_SUB  |
+
+
+\b Example:
+\code
+#if __CA_CMSIS_VERSION < 0x00050001
+#error This code needs at least CMSIS-Core(A) version 5.1!
+#endif
+\endcode
 
 \def __CA_REV
-\def __MPU_PRESENT             
+\brief Contains the core revision for a Cortex-A class device.
+\details
+Use this define to query the core design revision number implemented in the selected device.
+
+| Bits    | Name          | Function        |
+| :------ | :------------ | :---------------|
+| [15:8]  | REV           | Revision number |
+| [7:0]   | PATCH         | Patch number    |
+
+\b Example:
+\code
+#if __CA_REV < 0x0201
+#error This code needs at least a core revision r2p1.
+#endif
+\endcode
+
+\def __CORTEX_A
+\brief Contains the core family for a Cortex-A class device.
+\details
+Use this define to query the actual Cortex-A class device number implemented in the selected device.
+
+\b Example:
+\code
+#if __CORTEX_A == 5
+#warning Running on Cortex-A5.
+#elif __CORTEX_A == 7
+#warning Running on Cortex-A7.
+#elif __CORTEX_A == 9
+#warning Running on Cortex-A9.
+#endif
+\endcode
+
 */
 /** @} */ 
-/*end of group CMSIS_glob_defs */
-
-
+/*end of group version_ctrl */
 
 /**
-\defgroup core_reg_gr Core Register Defines
-\ingroup core_reg_func_gr
-\brief Type definitions and defines for Cortex-A processor based devices.
-@{
- */
-
-/* Core Register CPSR */
-/**
-\defgroup CMSIS_CPSR Core Register CPSR
-\brief Type definitions and defines for CPSR
-@{
-*/
-
-/**
-\struct CPSR_Type
-
-// CPSR Register Definitions 
-\def CPSR_N_Pos                  
-\def CPSR_Z_Pos                  
-\def CPSR_C_Pos                  
-\def CPSR_V_Pos                  
-\def CPSR_Q_Pos                  
-\def CPSR_IT0_Pos                
-\def CPSR_J_Pos                  
-\def CPSR_GE_Pos                 
-\def CPSR_IT1_Pos                
-\def CPSR_E_Pos                  
-\def CPSR_A_Pos                  
-\def CPSR_I_Pos                  
-\def CPSR_F_Pos                  
-\def CPSR_T_Pos                  
-\def CPSR_M_Pos                  
-*/
-/** @} */
-/* end group CMSIS_CPSR */
-
-
-/* CP15 Register SCTLR */
-/**
-\defgroup CMSIS_SCTLR Core Register SCTLR
-\brief Type definitions and defines for SCTLR
-\details Provides the top level control of the system, including its memory system.
-
-| Bits    | Name          | Function                                                      |
-| :------ | :------------ | :------------------------------------------------------------ |
-| [31]    | -             | Reserved.                                                     |
-| [30]    | TE            | Thumb Exception enable.                                       |
-| [29]    | AFE           | Access flag enable bit.                                       |
-| [28]    | TRE           | TEX remap enable bit.                                         |
-| [27:26] | -             | Reserved.                                                     |
-| [25]    | EE            | Exception Endianness bit.                                     |
-| [24:21] | -             | Reserved.                                                     |
-| [20]    | UWXN          | Unprivileged write permission implies PL1 Execute Never (XN). |
-| [19]    | WXN           | Write permission implies Execute Never (XN).                  |
-| [18:14] | -             | Reserved.                                                     |
-| [13]    | V             | Vectors bit.                                                  |
-| [12]    | I             | Instruction cache enable bit.                                 |
-| [11]    | Z             | Branch prediction enable bit.                                 |
-| [10]    | SW            | SWP and SWPB enable bit.                                      |
-| [9:3]   | -             | Reserved.                                                     |
-| [2]     | C             | Cache enable bit.                                             |
-| [1]     | A             | Alignment bit.                                                |
-| [0]     | M             | Address translation enable bit.                               |
-
-@{
-*/
-/**
-\struct SCTLR_Type
-
-\def SCTLR_TE_Pos                  
-\def SCTLR_AFE_Pos                 
-\def SCTLR_TRE_Pos                 
-\def SCTLR_NMFI_Pos                
-\def SCTLR_EE_Pos                  
-\def SCTLR_VE_Pos                  
-\def SCTLR_U_Pos                   
-\def SCTLR_FI_Pos                  
-\def SCTLR_UWXN_Pos                
-\def SCTLR_WXN_Pos                 
-\def SCTLR_HA_Pos                  
-\def SCTLR_RR_Pos                  
-\def SCTLR_V_Pos                   
-\def SCTLR_I_Pos                   
-\def SCTLR_Z_Pos                   
-\def SCTLR_SW_Pos                  
-\def SCTLR_B_Pos                   
-\def SCTLR_CP15BEN_Pos             
-\def SCTLR_C_Pos                   
-\def SCTLR_A_Pos                   
-\def SCTLR_M_Pos                   
-*/
-/** @} */
-/* end group CMSIS_SCTLR */
-
-/* CP15 Register CPACR */
-/**
-\defgroup CMSIS_CPACR Core Register CPACR
-\brief Type definitions and defines for CPACR
-@{
-*/
-/**
-\struct CPACR_Type
-
-\def CPACR_ASEDIS_Pos         
-\def CPACR_D32DIS_Pos         
-\def CPACR_cp11_Pos           
-\def CPACR_cp10_Pos           
-*/
-/** @} */
-/* end group CMSIS_CPACR */
-
-/* CP15 Register DFSR */
-/**
-\defgroup CMSIS_DFSR Core Register DFSR
-\brief Type definitions and defines for DFSR
-@{
-*/
-/**
-\struct DFSR_Type
-
-\def DFSR_CM_Pos             
-\def DFSR_Ext_Pos            
-\def DFSR_WnR_Pos            
-\def DFSR_FS1_Pos            
-\def DFSR_Domain_Pos         
-\def DFSR_FS0_Pos            
-*/
-/** @} */
-/* end group CMSIS_DFSR */
-
-/* CP15 Register IFSR */
-/**
-\defgroup CMSIS_IFSR Core Register IFSR
-\brief Type definitions and defines for IFSR
-@{
-*/
-/**
-\struct IFSR_Type
-
-\def IFSR_ExT_Pos           
-\def IFSR_FS1_Pos           
-\def IFSR_FS0_Pos           
-*/
-/** @} */
-/* end group CMSIS_IFSR */
-
-/* CP15 Register ISR */
-/**
-\defgroup CMSIS_ISR Core Register ISR
-\brief Type definitions and defines for ISR
-@{
-*/
-/**
-\struct ISR_Type
-
-\def ISR_A_Pos             
-\def ISR_I_Pos             
-\def ISR_F_Pos             
-*/
-
-/** @} */
-/* end group CMSIS_ISR */
-
-/** @} */ 
-/* end of group CMSIS_core_register */
-
-/**
-\defgroup CMSIS_Core_FunctionInterface Functions and Instructions Reference
+\defgroup CMSIS_Core_FunctionInterface Core Peripherals
 \brief 
 \details
 Hardware Abstraction Layer.
    The Core-A function interface contains:
-   - \ref L1_chache_functions 
-   - \ref L2_chache_functions 
+   - \ref FPU_functions
    - \ref GIC_functions
+   - \ref L1_cache_functions 
+   - \ref L2_cache_functions 
+   - \ref MMU_functions
    - \ref PL1_timer_functions
    - \ref PTM_timer_functions
-   - \ref FPU_functions
-   - \ref MMU_functions
 
-@{
-*/
-
-
-/* ##########################  L1 Cache functions  ################################# */
-
-/** 
-\defgroup L1_chache_functions L1 Cache Functions 
-\details Functions to controll the Level 1 Cache.
-@{
-\fn __STATIC_INLINE void L1C_EnableCaches(void) 
-\fn __STATIC_INLINE void L1C_DisableCaches(void) 
-\fn __STATIC_INLINE void L1C_EnableBTAC(void) 
-\fn __STATIC_INLINE void L1C_DisableBTAC(void) 
-\fn __STATIC_INLINE void L1C_InvalidateBTAC(void) 
-\fn __STATIC_INLINE void L1C_InvalidateICacheAll(void)
-\fn __STATIC_INLINE void L1C_CleanDCacheMVA(void *va) 
-\fn __STATIC_INLINE void L1C_InvalidateDCacheMVA(void *va) 
-\fn __STATIC_INLINE void L1C_CleanInvalidateDCacheMVA(void *va) 
-
-\fn __STATIC_INLINE void L1C_CleanInvalidateCache(uint32_t op) 
-\details
-Generic mechanism for cleaning/invalidating the entire data or unified cache to the point of coherency.
-
-\fn __STATIC_INLINE void L1C_InvalidateDCacheAll(void) 
-\fn __STATIC_INLINE void L1C_CleanDCacheAll(void) 
-\fn __STATIC_INLINE void L1C_CleanInvalidateDCacheAll(void) 
-\fn __STATIC_INLINE __ASM void __L1C_CleanInvalidateCache(uint32_t op)
-\details
-Generic mechanism for cleaning/invalidating the entire data or unified cache to the point of coherency.
-
-The parameter \b op defines which cleaning/invalidation strategy should be used:
- - 0 - Cache is invalidated using DCISW register.
- - 1 - Cache is cleaned using DCCSW register.
- - other - Cache is invalidated and cleaned using DCCISW register.
-@}
-*/
-
-/* ##########################  L2 Cache functions  ################################# */
-
-/**
-\defgroup L2_chache_functions L2C-310 Cache Controller Functions 
-\details Functions to controll the Level 2 Cache.
-*/
-/** @{ */
-
-/**
-\struct L2C_310_TypeDef
-\def L2C_310
-\fn __STATIC_INLINE void L2C_Sync(void) 
-\fn __STATIC_INLINE int L2C_GetID (void) 
-\fn __STATIC_INLINE int L2C_GetType (void) 
-\fn __STATIC_INLINE void L2C_InvAllByWay (void) 
-\fn __STATIC_INLINE void L2C_CleanInvAllByWay (void) 
-\fn __STATIC_INLINE void L2C_Enable(void) 
-\fn __STATIC_INLINE void L2C_Disable(void) 
-\fn __STATIC_INLINE void L2C_InvPa (void *pa) 
-\fn __STATIC_INLINE void L2C_CleanPa (void *pa) 
-\fn __STATIC_INLINE void L2C_CleanInvPa (void *pa) 
-*/
-
-/** @} */
-
-/* ##########################  GIC functions  ###################################### */
-/**
-\defgroup GIC_functions Generic Interrupt Controller Functions
-\details
-The Generic Interrupt Controller Functions grants access to the configuration, control and
-status registers of an ARM Generic Interrupt Controller (ARM GIC). For detailed informations
-about its capabilities and usage constraints refere to the 
-<a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ihi0048b/index.html">ARM Generic Interrupt Controller Architecture Specificaton</a>.
-*/
-
-/** @{ */
-
-/**
-\fn __STATIC_INLINE void GIC_EnableDistributor(void)
-\details Globally enable the forwarding of interrupts to the CPU interfaces.
-
-\fn __STATIC_INLINE void GIC_DisableDistributor(void)
-\details Globally disable the forwarding of interrupts to the CPU interfaces.
-\see GIC_EnableDistributor
-
-\fn __STATIC_INLINE uint32_t GIC_DistributorInfo(void)
-\details 
-Provides information about the configuration of the GIC. It indicates:
- - whether the GIC implements the Security Extensions
- - the maximum number of interrupt IDs that the GIC supports
- - the number of CPU interfaces implemented
- - if the GIC implements the Security Extensions, the maximum number of
-implemented Lockable Shared Peripheral Interrupts (LSPIs).
-
-\fn __STATIC_INLINE uint32_t GIC_DistributorImplementer(void)
-\details
-Provides information about the implementer and revision of the Distributor.
-
-\fn __STATIC_INLINE void GIC_SetTarget(IRQn_Type IRQn, uint32_t cpu_target)
-\details 
-The \ref GICDistributor_Type.D_ITARGETSR "D_ITARGETSR" registers provide an 8-bit CPU targets field
-for each interrupt supported by the GIC. This field stores the list of target processors for the
-interrupt. That is, it holds the list of CPU interfaces to which the Distributor forwards the
-interrupt if it is asserted and has sufficient priority.
-
-\fn __STATIC_INLINE uint32_t GIC_GetTarget(IRQn_Type IRQn)
-\details
-Read the current interrupt to CPU assignment for the given interrupt.
-\see GIC_SetTarget
-
-\fn __STATIC_INLINE void GIC_EnableInterface(void)
-\details
-Sets the Enable bit in the local CPUs \ref GICInterface_Type.C_CTLR "C_CTLR" register.
-Only the CPU executing the call is affected.
-
-\fn __STATIC_INLINE void GIC_DisableInterface(void)
-\details
-Resets the Enable bit in the local CPUs \ref GICInterface_Type.C_CTLR "C_CTLR" register.
-Only the CPU executing the call is affected.
-
-\fn __STATIC_INLINE IRQn_Type GIC_AcknowledgePending(void)
-\details 
-Provides the interrupt number of the highest priority interrupt pending.
-A read of this register acts as an acknowledge for the interrupt.
-
-The read returns a spurious interrupt number of 1023 if any of the following apply:
- - Forwarding of interrupts by the Distributor to the CPU interface is disabled.
- - Signaling of interrupts by the CPU interface to the connected PE is disabled.
- - There are no pending interrupts on the CPU interface with sufficient priority for the interface to signal it to the PE.
-
-\see GIC_EndInterrupt
- 
-\fn __STATIC_INLINE void GIC_EndInterrupt(IRQn_Type IRQn)
-A write to this register performs priority drop for the specified interrupt.
-
-For nested interrupts, the order of calls to this function must be the reverse of the order of interrupt
-acknowledgement, i.e. calls to \ref GIC_AcknowledgePending. Behavior is UNPREDICTABLE if:
- - This ordering constraint is not maintained.
- - The given interrupt number does not match an active interrupt, or the ID of a spurious interrupt.
- - The given interrupt number does not match the last valid interrupt value returned by \ref GIC_AcknowledgePending.
- 
-\fn __STATIC_INLINE void GIC_EnableIRQ(IRQn_Type IRQn)
-\details 
-Enables forwarding of the corresponding interrupt to the CPU interfaces.
-
-\fn __STATIC_INLINE void GIC_DisableIRQ(IRQn_Type IRQn)
-\details
-Disables forwarding of the corresponding interrupt to the CPU interfaces.
-
-\fn __STATIC_INLINE void GIC_SetPendingIRQ(IRQn_Type IRQn)
-\details
-Adds the pending state to the corresponding interrupt.
-
-\fn __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
-\details
-Removes the pending state from the corresponding interrupt.
-
-\fn __STATIC_INLINE void GIC_SetLevelModel(IRQn_Type IRQn, uint8_t edge_level, uint8_t model)
-\details
-Determines whether the corresponding interrupt is edge-triggered or level-sensitive.
-
-\note The handling model is not available on all GIC implementations.
-
-\fn __STATIC_INLINE void GIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
-\details 
-Configures the priority of the given interrupt.
-
-The available interrupt priorities are IMPLEMENTATION DEFINED. In order to
-query the actual priorities one can 
-
-\code
-GIC_SetPriority(IRQn_TIM1, UINT32_MAX);       // try to configure lowest possible priority
-uint32_t actual = GIC_GetPriority(IRQn_TIM1); // retrieve actual lowest priority usable
-\endcode
-
-\fn __STATIC_INLINE uint32_t GIC_GetPriority(IRQn_Type IRQn)
-\details 
-Can be used to retrieve the actual priority depending on the GIC implementation.
-\see GIC_SetPriority
-
-\fn __STATIC_INLINE void GIC_SetInterfacePriorityMask(uint32_t priority)
-\details
-Only interrupts with a higher priority (lower values) than the value provided are signaled.
-
-\fn __STATIC_INLINE uint32_t GIC_GetInterfacePriorityMask(void)
-\see GIC_SetInterfacePriorityMask
-
-\fn __STATIC_INLINE void GIC_SetBinaryPoint(uint32_t binary_point)
-\details
-The binary point defines the amount of priority bits used as a group priority and subpriorities.
-
-Interrupts sharing the same group priority do not preempt each other. But interrupts having a
-higher group priority (lower value) preempt interrups with a lower group priority.
-
-The subpriority defines the execution sequence of interrupts with the same group priority if
-multiple are pending at time.
-
-\fn __STATIC_INLINE uint32_t GIC_GetBinaryPoint(void)
-\details
-\see GIC_SetBinaryPoint
-
-\fn __STATIC_INLINE uint32_t GIC_GetIRQStatus(IRQn_Type IRQn)
-\details 
-The return value is a combination of GIC's \ref GICDistributor_Type::D_ISACTIVER "D_ISACTIVER" 
-and \ref GICDistributor_Type::D_ISPENDR "D_ISPENDR" registers.
-
-Bit 0 denotes interrupts pending bit (interrupt should be handled) and bit 1 denotes interrupts
-active bit (interrupt is currently handled).
-
-\fn __STATIC_INLINE void GIC_SendSGI(IRQn_Type IRQn, uint32_t target_list, uint32_t filter_list)
-\fn __STATIC_INLINE uint32_t GIC_GetHighPendingIRQ(void) 
-\fn __STATIC_INLINE uint32_t GIC_GetInterfaceId(void)
-\fn __STATIC_INLINE void GIC_DistInit(void)
-\details
-All shared peripheral interrupts (SPIs) are initialized to be
- - disabled
- - level-sensitive, 1-N model
- - priority 0x7F
- - targeting CPU0
-and the distributor is enabled.
- 
-\see
-GIC_DisableIRQ\n
-GIC_SetLevelModel\n
-GIC_SetPriority\n
-GIC_SetTarget\n
-GIC_EnableDistributor
-
-\fn __STATIC_INLINE void GIC_CPUInterfaceInit(void)
-\details
-All software generated (SGIs) and private peripheral interrupts (PPIs) are initialized to be
- - disabled
- - level-sensitive, 1-N model
- - priority 0x7F
-and the interrupt interface is enabled.
-
-The binary point is set to zero. 
-
-The interrupt priority mask is set to 0xFF.
-
-\see
-GIC_DisableIRQ\n
-GIC_SetLevelModel\n
-GIC_SetPriority\n
-GIC_EnableInterface\n
-GIC_SetBinaryPoint\n
-GIC_SetInterfacePriorityMask\n
-
-\fn __STATIC_INLINE void GIC_Enable(void)
-\details
-Initializes the distributor and the cpu interface.
-
-\see
-GIC_DistInit\n
-GIC_CPUInterfaceInit
-*/
-
-/**
-\def GICDistributor
-\struct  GICDistributor_Type
-*/
-
-/**
-\def GICInterface
-\struct  GICInterface_Type
-*/
-
-/** @} */
-
-/* ##########################  Physical Timer functions  ############################ */
-/**
-\defgroup PL1_timer_functions Physical Timer Functions
-\brief Physical timer functions (on Cortex-A7 class devices)
-*/
-/** @{ */
-
-/** \brief Physical Timer Control register */
-typedef union
-{
-  struct
-  {
-    uint32_t ENABLE:1;      /*!< \brief bit: 0      Enables the timer. */
-    uint32_t IMASK:1;       /*!< \brief bit: 1      Timer output signal mask bit. */
-    uint32_t ISTATUS:1;     /*!< \brief bit: 2      The status of the timer. */
-    uint32_t _reserved0:29; /*!< \brief bit: 3..31  Reserved */
-  } b;                      /*!< \brief Structure used for bit  access */
-  uint32_t w;               /*!< \brief Type      used for word access */
-} CNTP_CTL_Type;
-
-/** Configures the frequency the timer shall run at.
-* \param value The timer frequency in Hz.
-*/
-__STATIC_INLINE void PL1_SetCounterFrequency(uint32_t value);
-
-/** Sets the reset value of the timer.
-* \param value The value the timer is loaded with.
-*/
-__STATIC_INLINE void PL1_SetLoadValue(uint32_t value);
-
-/** Get the current counter value.
-* \return Current counter value.
-*/
-__STATIC_INLINE uint32_t PL1_GetCurrentValue();
-
-/** Configure the timer by setting the control value.
-* \param value New \ref CNTP_CTL_Type "timer control value".
-*/
-__STATIC_INLINE void PL1_SetControl(uint32_t value);
-
-/** @} */
-
-/* ##########################  Private Timer functions  ############################ */
-/**
-\defgroup PTM_timer_functions Private Timer Functions
-\brief Private timer functions (on Cortex-A5 and -A9 class devices)
-@{
-\struct Timer_Type
-\def PTIM
-\fn __STATIC_INLINE void PTIM_SetLoadValue(uint32_t value)
-\fn __STATIC_INLINE uint32_t PTIM_GetLoadValue()
-\fn __STATIC_INLINE uint32_t PTIM_GetCurrentValue()
-\fn __STATIC_INLINE void PTIM_SetControl(uint32_t value)
-\fn __STATIC_INLINE uint32_t PTIM_GetControl(void)
-\fn __STATIC_INLINE void PTIM_ClearEventFlag(void)
-@}
 */
 
 /* ##########################  FPU functions  ############################ */
 /**
 \defgroup FPU_functions Floating Point Unit Functions
-\brief FPU functions
+\ingroup CMSIS_Core_FunctionInterface
+\brief FPU Functions enable the use of Floating Point instructions and extensions.\n
+Reference: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0406c/index.html">Architecture Reference Manual Reference Manual - ARMv7-A and ARMv7-R edition</a>.
 @{
 \fn __STATIC_INLINE __ASM void __FPU_Enable(void) 
 @}
 */
 
-/* ##########################  MMU functions  ###################################### */
-/**
-\defgroup MMU_functions Memory Management Unit Functions
-\brief Functions and defines that relate to the Memory Management Unit
-*/
 
-/** @{ */
-
-/**
-\defgroup MMU_defs_gr MMU Defines and Structs
-\brief Defines and structures that relate to the Memory Management Unit
-*/
-
-/** @{ */
-
-/**
-\def SECTION_DESCRIPTOR      
-\def SECTION_B_SHIFT
-\def SECTION_C_SHIFT
-\def SECTION_TEX0_SHIFT      
-\def SECTION_TEX1_SHIFT      
-\def SECTION_TEX2_SHIFT      
-\def SECTION_XN_SHIFT        
-\def SECTION_DOMAIN_SHIFT    
-\def SECTION_P_SHIFT         
-\def SECTION_AP_SHIFT        
-\def SECTION_AP2_SHIFT       
-\def SECTION_S_SHIFT         
-\def SECTION_NG_SHIFT        
-\def SECTION_NS_SHIFT        
-\def PAGE_L1_DESCRIPTOR      
-\def PAGE_L2_4K_DESC         
-\def PAGE_L2_64K_DESC        
-\def PAGE_4K_B_SHIFT         
-\def PAGE_4K_C_SHIFT         
-\def PAGE_4K_TEX0_SHIFT      
-\def PAGE_4K_TEX1_SHIFT      
-\def PAGE_4K_TEX2_SHIFT      
-\def PAGE_64K_B_SHIFT        
-\def PAGE_64K_C_SHIFT        
-\def PAGE_64K_TEX0_SHIFT     
-\def PAGE_64K_TEX1_SHIFT     
-\def PAGE_64K_TEX2_SHIFT     
-\def PAGE_B_SHIFT            
-\def PAGE_C_SHIFT            
-\def PAGE_TEX_SHIFT          
-\def PAGE_XN_4K_SHIFT        
-\def PAGE_XN_64K_SHIFT       
-\def PAGE_DOMAIN_SHIFT       
-\def PAGE_P_SHIFT            
-\def PAGE_AP_SHIFT           
-\def PAGE_AP2_SHIFT          
-\def PAGE_S_SHIFT            
-\def PAGE_NG_SHIFT           
-\def PAGE_NS_SHIFT           
-\def OFFSET_1M               
-\def OFFSET_64K              
-\def OFFSET_4K               
-\def DESCRIPTOR_FAULT             
-
-\enum mmu_region_size_Type
-\enum mmu_memory_Type
-\enum mmu_cacheability_Type
-\enum mmu_ecc_check_Type
-\enum mmu_execute_Type
-\enum mmu_global_Type
-\enum mmu_shared_Type
-\enum mmu_secure_Type
-\enum mmu_access_Type
-
-\struct  mmu_region_attributes_Type
-
-\def section_normal(descriptor_l1, region) 
-\def section_normal_cod(descriptor_l1, region)
-\def section_normal_ro(descriptor_l1, region)
-\def section_normal_rw(descriptor_l1, region)
-\def section_so(descriptor_l1, region)
-\def section_device_ro(descriptor_l1, region)
-\def section_device_rw(descriptor_l1, region)
-\def page4k_device_rw(descriptor_l1, descriptor_l2, region)
-\def page64k_device_rw(descriptor_l1, descriptor_l2, region) 
-*/
-/** @} */
-/* end group MMU_defs_gr */
-
-/* start grouping functions */
-/** @{ */
-
-/**
-\fn __STATIC_INLINE int MMU_XNSection(uint32_t *descriptor_l1, mmu_execute_Type xn)
-\details 
-  The function sets section execution-never attribute
-
-\fn __STATIC_INLINE int MMU_DomainSection(uint32_t *descriptor_l1, uint8_t domain)
-\details 
-The function sets section domain.
-
-\fn __STATIC_INLINE int MMU_PSection(uint32_t *descriptor_l1, mmu_ecc_check_Type p_bit)
-\details
-  The function sets section parity check
-
-\fn __STATIC_INLINE int MMU_APSection(uint32_t *descriptor_l1, mmu_access_Type user, mmu_access_Type priv, uint32_t afe)
-\details 
-The function sets section access privileges
-
-\fn __STATIC_INLINE int MMU_SharedSection(uint32_t *descriptor_l1, mmu_shared_Type s_bit)
-\details
-  The function sets section shareability
-
-\fn __STATIC_INLINE int MMU_GlobalSection(uint32_t *descriptor_l1, mmu_global_Type g_bit)
-\details
-  The function sets section Global attribute
-
-\fn __STATIC_INLINE int MMU_SecureSection(uint32_t *descriptor_l1, mmu_secure_Type s_bit)
-\details
-  The function sets section Global attribute
-
-\fn __STATIC_INLINE int MMU_XNPage(uint32_t *descriptor_l2, mmu_execute_Type xn, mmu_region_size_Type page)
-\details
-  The function sets 4k/64k page execution-never attribute
-
-\fn __STATIC_INLINE int MMU_DomainPage(uint32_t *descriptor_l1, uint8_t domain)
-\details
-  The function sets 4k/64k page domain
-
-\fn __STATIC_INLINE int MMU_PPage(uint32_t *descriptor_l1, mmu_ecc_check_Type p_bit)
-\details
-  The function sets 4k/64k page parity check
-
-\fn __STATIC_INLINE int MMU_APPage(uint32_t *descriptor_l2, mmu_access_Type user, mmu_access_Type priv, uint32_t afe)
-\details
-  The function sets 4k/64k page access privileges
-\fn __STATIC_INLINE int MMU_SharedPage(uint32_t *descriptor_l2, mmu_shared_Type s_bit)
-\details
-  The function sets 4k/64k page shareability
-
-\fn __STATIC_INLINE int MMU_GlobalPage(uint32_t *descriptor_l2, mmu_global_Type g_bit)
-\details
-  The function sets 4k/64k page Global attribute
-
-\fn __STATIC_INLINE int MMU_SecurePage(uint32_t *descriptor_l1, mmu_secure_Type s_bit)
-\details
-  The function sets 4k/64k page Global attribute
-
-\fn __STATIC_INLINE int MMU_MemorySection(uint32_t *descriptor_l1, mmu_memory_Type mem, mmu_cacheability_Type outer, mmu_cacheability_Type inner)
-\details
-  The function sets section memory attributes
-
-\fn __STATIC_INLINE int MMU_MemoryPage(uint32_t *descriptor_l2, mmu_memory_Type mem, mmu_cacheability_Type outer, mmu_cacheability_Type inner, mmu_region_size_Type page)
-\details
-  The function sets 4k/64k page memory attributes
-
-\fn __STATIC_INLINE int MMU_GetSectionDescriptor(uint32_t *descriptor, mmu_region_attributes_Type reg)
-\details
-  The function creates a section descriptor.
-
-\fn __STATIC_INLINE int MMU_GetPageDescriptor(uint32_t *descriptor, uint32_t *descriptor2, mmu_region_attributes_Type reg)
-\details
-  The function creates a 4k/64k page descriptor.
-  Assumptions:
-  - TEX remap disabled, so memory type and attributes are described directly by bits in the descriptor
-  - Functions always return 0
-
-\fn __STATIC_INLINE void MMU_TTSection(uint32_t *ttb, uint32_t base_address, uint32_t count, uint32_t descriptor_l1)
-\fn __STATIC_INLINE void MMU_TTPage4k(uint32_t *ttb, uint32_t base_address, uint32_t count, uint32_t descriptor_l1, uint32_t *ttb_l2, uint32_t descriptor_l2 )
-\fn __STATIC_INLINE void MMU_TTPage64k(uint32_t *ttb, uint32_t base_address, uint32_t count, uint32_t descriptor_l1, uint32_t *ttb_l2, uint32_t descriptor_l2 )
-\fn __STATIC_INLINE void MMU_Enable(void) 
-\details 
-   Set M bit 0 to enable the MMU
-   Set AFE bit to enable simplified access permissions model
-   Clear TRE bit to disable TEX remap and A bit to disable strict alignment fault checking
-
-\fn __STATIC_INLINE void MMU_Disable(void)
-
-\fn __STATIC_INLINE void MMU_InvalidateTLB(void) 
-*/
-
-/** @} */
-/* end of MMU_func_gr */
-
-/** @} */
-/* end of MMU_functions */
-
-/** @} */
-
-/* ########################## L2C_310_TypeDef Member ########################## */
-/**
-\var L2C_310_TypeDef::ADDRESS_FILTER_END
-\brief 
-
-\var __IOM uint32_t L2C_310_TypeDef::ADDRESS_FILTER_START
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::AUX_CNT
-\brief
-
-\var __IM  uint32_t L2C_310_TypeDef::CACHE_ID
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::CACHE_SYNC
-\brief
-
-\var __IM  uint32_t L2C_310_TypeDef::CACHE_TYPE
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::CLEAN_INV_LINE_INDEX_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::CLEAN_INV_LINE_PA
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::CLEAN_INV_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::CLEAN_LINE_INDEX_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::CLEAN_LINE_PA
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::CLEAN_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::CONTROL
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::DATA_LOCK_0_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::DATA_LOCK_1_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::DATA_LOCK_2_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::DATA_LOCK_3_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::DATA_LOCK_4_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::DATA_LOCK_5_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::DATA_LOCK_6_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::DATA_LOCK_7_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::DEBUG_CONTROL
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::EVENT_CONTROL
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::EVENT_COUNTER0_CONF
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::EVENT_COUNTER1_CONF
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::INST_LOCK_0_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::INST_LOCK_1_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::INST_LOCK_2_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::INST_LOCK_3_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::INST_LOCK_4_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::INST_LOCK_5_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::INST_LOCK_6_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::INST_LOCK_7_WAY
-\brief
-
-\var __OM  uint32_t L2C_310_TypeDef::INTERRUPT_CLEAR
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::INTERRUPT_MASK
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::INV_LINE_PA
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::INV_WAY
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::LOCK_LINE_EN
-\brief
-
-\var __IM  uint32_t L2C_310_TypeDef::MASKED_INT_STATUS
-\brief
-
-\var __IM  uint32_t L2C_310_TypeDef::RAW_INT_STATUS
-\brief
-
-\var __IOM uint32_t L2C_310_TypeDef::UNLOCK_ALL_BY_WAY
-\brief
-*/
-
-/* ########################## Timer_Type Members ########################## */
-/**
-\var __IOM uint32_t Timer_Type::LOAD
-\details Private Timer Load Register
-The Timer Load Register contains the value copied to the Timer Counter Register when
-it decrements down to zero with auto reload mode enabled. Writing to the Timer Load
-Register means that you also write to the Timer Counter Register.
-
-\var __IOM uint32_t Timer_Type::COUNTER
-\details Private Timer Counter Register
-The Timer Counter Register is a decrementing counter.
-
-The Timer Counter Register decrements if the timer is enabled using the timer enable bit in the Timer Control Register.
-
-When the Timer Counter Register reaches zero and auto reload mode is enabled, it
-reloads the value in the Timer Load Register and then decrements from that value. If
-auto reload mode is not enabled, the Timer Counter Register decrements down to zero
-and stops.
-
-When the Timer Counter Register reaches zero, the timer interrupt status event flag is
-set and the interrupt ID 29 is set as pending in the Interrupt Distributor, if interrupt
-generation is enabled in the Timer Control Register.
-
-Writing to the Timer Counter Register or Timer Load Register forces the Timer Counter
-Register to decrement from the newly written value.
-
-\var __IOM uint32_t Timer_Type::CONTROL
-\details Private Timer Control Register
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31:16] | -             | Reserved.                                                      |
-| [15:8]  | Prescaler     | The prescaler modifies the clock period for the decrementing event for the Counter Register. |
-| [7:3]   | -             | Reserved.                                                      |
-| [2]     | IRQ Enable    | If set, the interrupt is set as pending in the Interrupt Distributor when the event flag is set in the Timer Status Register. |
-| [1]     | Auto Reload   | If set, each time the Counter Register reaches zero, it is reloaded with the value contained in the Timer Load Register. |
-| [0]     | Time Enabled  | If set, Timer is enabled and the counter decrements normally. |
-
-\var __IM uint32_t Timer_Type::ISR
-\details Private Timer Interrupt Status Register
-
-The event flag is a sticky bit that is automatically set when the Counter Register reaches
-zero. If the timer interrupt is enabled, Interrupt ID 29 is set as pending in the Interrupt
-Distributor after the event flag is set. The event flag is cleared when written to 1.
-
-\var __IOM uint32_t Timer_Type::WLOAD
-\details Watchdog Load Register
-
-The Watchdog Load Register contains the value copied to the Watchdog Counter
-Register when it decrements down to zero with auto reload mode enabled, in Timer
-mode. Writing to the Watchdog Load Register means that you also write to the
-Watchdog Counter Register.
-
-\var __IOM uint32_t Timer_Type::WCOUNTER
-\details Watchdog Counter Register
-
-The Watchdog Counter Register is a down counter.
-
-The behavior of the watchdog when the Watchdog Counter Register reaches zero
-depends on its current mode:
- - Timer mode: The watchdog interrupt status event flag is set and the interrupt
-   is set as pending in the Interrupt Distributor.
- - Watchdog mode: Tthe Watchdog reset status flag is set and the associated WDRESETREQ
-   reset request output pin is asserted.
-
-\var __IOM uint32_t Timer_Type::WCONTROL
-\details Watchdog Control Register
-
-| Bits    | Name            | Function                                                       |
-| :------ | :-------------- | :------------------------------------------------------------- |
-| [31:16] | -               | Reserved.                                                      |
-| [15:8]  | Prescaler       | The prescaler modifies the clock period for the decrementing event for the Counter Register. |
-| [7:4]   | -               | Reserved.                                                      |
-| [3]     | Watchdog Mode   | 0 - Timer mode (default), 1 - Watchdog mode                    |
-| [2]     | IT Enable       | Interrupt enable for timer mode.                               |
-| [1]     | Auto Reload     | 0 - Single shot mode, 1 - Continuous timer mode                |
-| [0]     | Watchdog Enable | 0 - Watchdog counter disabled, 1 - Watchdog timer enabled      |
-
-\var __IOM uint32_t Timer_Type::WISR
-\details Watchdog Interrupt Status Register
-
-| Bits    | Name            | Function                                                       |
-| :------ | :-------------- | :------------------------------------------------------------- |
-| [31:1]  | -               | Reserved.                                                      |
-| [0]     | Event Flag      | The event flag is a sticky bit that is automatically set when the Counter Register reaches zero in timer mode. |
-
-\var __IOM uint32_t Timer_Type::WRESET
-\details Watchdog Reset Status Register
-
-| Bits    | Name            | Function                                                       |
-| :------ | :-------------- | :------------------------------------------------------------- |
-| [31:1]  | -               | Reserved.                                                      |
-| [0]     | Reset Flag      | The reset flag is a sticky bit that is automatically set when the Counter Register reaches zero and a reset request is sent accordingly. (In watchdog mode) | 
-
-\var __IM uint32_t Timer_Type::WDISABLE
-\details Watchdog Disable Register
-
-Use the Watchdog Disable Register to switch from watchdog to timer mode. The
-software must write 0x12345678 then 0x87654321 successively to the Watchdog Disable
-Register so that the watchdog mode bit in the Watchdog Control Register is set to zero.
-*/
-
-/* ########################## GICInterface_Type Member ########################## */
-/**
-\var __IOM uint32_t GICInterface_Type::C_CTLR
-\details CPU Interface Control Register
-
-Enables the signaling of interrupts by the CPU interface to the connected processor, and
-provides additional top-level control of the CPU interface. In a GICv2 implementation, this
-includes control of the end of interrupt (EOI) behavior.
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31:1]  | -             | Reserved.                                                      |
-| [0]     | Enable        | Interrupt signaling: 0 - Disable. 1 - Enable.                  |
-
-\var __IM uint32_t GICInterface_Type::C_IAR
-\details CPU Interface Interrupt Acknowledge Register
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31:24] | -             | Reserved.                                                      |
-| [23:0]  | INTID         | The interrupt number of the signaled interrupt.                |
-
-\var __OM uint32_t GICInterface_Type::C_EOIR
-\details CPU Interface End Of Interrupt Register
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31:24] | -             | Reserved.                                                      |
-| [23:0]  | INTID         | The interrupt number of the finished interrupt.                |
- 
- \var __IM uint32_t GICInterface_Type::C_HPPIR
-\details CPU Interface Highest Priority Pending Interrupt Register
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31:24] | -             | Reserved.                                                      |
-| [23:0]  | INTID         | The INTID of the signaled interrupt.                           |
-
-\var  __IM uint32_t GICInterface_Type::C_IIDR
-\details CPU Interface Identification Register
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31:20] | ProductID     | An IMPLEMENTATION DEFINED product identifier                   |
-| [19:16] | Arch_version  | The version of the GIC architecture that is implemented.       |
-| [15:12] | Revision      | An IMPLEMENTATION DEFINED revision number for the CPU interface. |
-| [11:0]  | Implementer   | Contains the JEP106 code of the company that implemented the CPU interface. |
-
-
-\var __IOM uint32_t GICInterface_Type::C_PMR
-\details CPU Interface Priority Mask Register
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31:8]  | -             | Reserved.                                                      |
-| [7:0]   | Priority      | The priority mask level for the CPU interface.                 |
-
-\note IMPLEMENTATION DEFINED unsupported priority bits might be RAZ/WI.
- 
-\var __IOM uint32_t GICInterface_Type::C_BPR
-\details CPU Interface Binary Point Register
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31:3]  | -             | Reserved.                                                      |
-| [2:0]   | Binary_Point  | Controls how the 8-bit interrupt priority field is split into a group priority field and a subpriority field. |
-
-The binary point (values 0-7) defines the amount of priority bits used as subpriority. Please
-refer to the section Interrupt prioritization in the
-<a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ihi0048b/index.html">ARM Generic Interrupt Controller Architecture Specificaton</a>
-for details.
-
-\var __IOM uint32_t GICInterface_Type::C_ABPR
-\details CPU Interface Aliased Binary Point Register
-\see GICInterface_Type::C_BPR
-
-\var __OM uint32_t GICInterface_Type::C_AEOIR
-\details CPU Interface Aliased End Of Interrupt Register
-\see GICInterface_Type::C_EOIR
-
-\var __IM uint32_t GICInterface_Type::C_AHPPIR
-\details CPU Interface Aliased Highest Priority Pending Interrupt Register
-\see GICInterface_Type::C_HPPIR
-
-\var __IM uint32_t GICInterface_Type::C_AIAR
-\details CPU Interface Aliased Interrupt Acknowledge Register
-\see GICInterface_Type::C_IAR
-
-\var __IOM uint32_t GICInterface_Type::C_APR[4]
-\details CPU Interface Active Priorities Registers
-\note The register values are IMPLEMENTATION DEFINED.
-
-\var __OM uint32_t GICInterface_Type::C_DIR
-\details CPU Interface Deactivate Interrupt Register
-
-| Bits    | Name  | Function                                                       |
-| :------ | :---- | :------------------------------------------------------------- |
-| [31:24] | -     | Reserved.                                                      |
-| [23:0]  | INTID | The INTID of the interrupt to be disabled.                     |
-
-\var __IOM uint32_t GICInterface_Type::C_NSAPR[4]
-\details CPU Interface Non-secure Active Priorities Registers
-\note The register values are IMPLEMENTATION DEFINED.
-\see GICInterface_Type::C_APR[4]
-
-\var __IM uint32_t GICInterface_Type::C_RPR
-\details CPU Interface Running Priority Register
-
-| Bits    | Name     | Function                                                       |
-| :------ | :------- | :------------------------------------------------------------- |
-| [31:8]  | -        | Reserved.                                                      |
-| [7:0]   | Priority | The current running priority on the CPU interface.             |
-
-\var __IOM uint32_t GICInterface_Type::C_STATUSR
-\details CPU Interface Status Register
-
-| Bits    | Name     | Function                                                       |
-| :------ | :------- | :------------------------------------------------------------- |
-| [31:5]  | -        | Reserved.                                                      |
-| [4]     | ASV      | Attempted security violation.                                  |
-| [3]     | WROD     | Write to an RO location.                                       |
-| [2]     | RWOD     | Read of a WO location.                                         |
-| [1]     | WRD      | Write to a reserved location.                                  |
-| [0]     | RRD      | Read of a reserved location.                                   |
-*/
-
-/* ########################## GICDistributor_Type Member ########################## */
-/**
-\var __IOM uint32_t GICDistributor_Type::D_CTLR
-\details Distributor Control Register
-
-When access is Secure, in a system that supports two Security states:
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31]    | RWP           | Indicates whether a register write is in progress or not.      |
-| [30:8]  | -             | Reserved.                                                      |
-| [7]     | EINWF         | Enable 1 of N Wakeup Functionality, if available.              |
-| [6]     | DS            | Disable Security.                                              |
-| [5]     | ARE_NS        | Affinity Routing Enable, Non-secure state.                     |
-| [4]     | ARE_S         | Affinity Routing Enable, Secure state.                         |
-| [3]     | -             | Reserved.                                                      |
-| [2]     | EnableGrp1S   | Enable Secure Group 1 interrupts.                              |
-| [1]     | EnableGrp1NS  | Enable Non-secure Group 1 interrupts.                          |
-| [0]     | EnableGrp0    | Enable Group 0 interrupts.                                     |
-
-When access is Non-secure, in a system that supports two Security states:
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31]    | RWP           | Indicates whether a register write is in progress or not.      |
-| [30:5]  | -             | Reserved.                                                      |
-| [4]     | ARE_NS        | Affinity Routing Enable, Non-secure state.                     |
-| [3:2]   | -             | Reserved.                                                      |
-| [1]     | EnableGrp1A   | Enable Non-secure Group 1 interrupts.                          |
-| [0]     | EnableGrp1    | Enable Non-secure Group 1 interrupts.                          |
-
-When in a system that supports only a single Security state:
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31]    | RWP           | Indicates whether a register write is in progress or not.      |
-| [30:8]  | -             | Reserved.                                                      |
-| [7]     | EINWF         | Enable 1 of N Wakeup Functionality, if available.              |
-| [6]     | DS            | Disable Security.                                              |
-| [5]     | -             | Reserved.                                                      |
-| [4]     | ARE           | Affinity Routing Enable.                                       |
-| [3:2]   | -             | Reserved.                                                      |
-| [1]     | EnableGrp1    | Enable Group 1 interrupts.                                     |
-| [0]     | EnableGrp0    | Enable Group 0 interrupts.                                     |
-
-\var __IM uint32_t GICDistributor_Type::D_TYPER
-\details Interrupt Controller Type Register
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31:16] | -             | Reserved.                                                      |
-| [15:11] | LSPI          | Maximum number of lockable shared interrupts.                  |
-| [10]    | SecurityExtn  | Security Extensions: 0 - not implemented. 1 - implemented.     |
-| [9:8]   | -             | Reserved.                                                      |
-| [7:5]   | CPUNumber     | Number of implemented CPU interfaces [=CPUNumber+1]            |
-| [4:0]   | ITLinesNumber | Maximum number of interrups supported [=32*(ITLinesNumber+1)]. |
-
-\var __IM uint32_t GICDistributor_Type::D_IIDR
-\details Distributor Implementer Identification Register
-
-| Bits    | Name          | Function                                                       |
-| :------ | :------------ | :------------------------------------------------------------- |
-| [31:24] | ProductID     | An IMPLEMENTATION DEFINED product identifier                   |
-| [23:20] | -             | Reserved.                                                      |
-| [19:16] | Variant       | An IMPLEMENTATION DEFINED variant number.                      |
-| [15:12] | Revision      | An IMPLEMENTATION DEFINED revision number.                     |
-| [11:0]  | Implementer   | Contains the JEP106 code of the company implemented the GICD.  |
-
-\var __IOM uint8_t GICDistributor_Type::D_ITARGETSR[1020]
-\details Interrupt Processor Targets Registers
-
-Each bit in the target field corresponds to one CPU interface. A CPU targets field bit that corresponds
-to an unimplemented CPU interface is RAZ/WI.
-
-| CPU target field value | Interrupt targets |
-| :--------------------- | :---------------- |
-| 0bxxxxxxx1             | CPU interface 0   |
-| 0bxxxxxx1x             | CPU interface 1   |
-| 0bxxxxx1xx             | CPU interface 2   |
-| 0bxxxx1xxx             | CPU interface 3   |
-| 0bxxx1xxxx             | CPU interface 4   |
-| 0bxx1xxxxx             | CPU interface 5   |
-| 0bx1xxxxxx             | CPU interface 6   |
-| 0b1xxxxxxx             | CPU interface 7   |
-
-\var __IOM uint32_t GICDistributor_Type::D_IGROUPR[32]
-\details Interrupt Group Registers
-
-Each bit corresponds to one interrupt:
- - Register index is given by INTID/32
- - Bit number is given by INTID%32
- 
-And the value denotes:
-- 0 When \ref GICDistributor_Type::D_CTLR "D_CTLR".DS==1, the corresponding interrupt is Group 0\n
-    When \ref GICDistributor_Type::D_CTLR "D_CTLR".DS==0, the corresponding interrupt is Secure.
-- 1 When \ref GICDistributor_Type::D_CTLR "D_CTLR".DS==1, the corresponding interrupt is Group 1.\n
-    When \ref GICDistributor_Type::D_CTLR "D_CTLR".DS==0, the corresponding interrupt is Non-secure Group 1.
- 
-\var __IO uint32_t GICDistributor_Type::D_CLRSPI_NSR
-\details Clear Non-secure SPI Pending Register
-
-| Bits    | Name          | Function                                          |
-| :------ | :------------ | :------------------------------------------------ | 
-| [31:10] | -             | Reserved.                                         |
-| [9:0]   | INTID         | The interrupt number to clear pending state from. |
-
-\var __IO uint32_t GICDistributor_Type::D_CLRSPI_SR
-\details Clear Secure SPI Pending Register
-
-| Bits    | Name          | Function                                          |
-| :------ | :------------ | :------------------------------------------------ | 
-| [31:10] | -             | Reserved.                                         |
-| [9:0]   | INTID         | The interrupt number to clear pending state from. |
-
-\var __IOM uint32_t GICDistributor_Type::D_IGRPMODR[32]
-\details Interrupt Group Modifier Registers
-
-Each bit corresponds to one interrupt:
- - Register index is given by INTID/32
- - Bit number is given by INTID%32
- 
-\var __IOM uint64_t GICDistributor_Type::D_IROUTER[988]
-\details Interrupt Routing Registers
-
-| Bits    | Name          | Function                                                      |
-| :------ | :------------ | :------------------------------------------------------------ | 
-| [63:40] | -             | Reserved.                                                     |
-| [39:32] | Aff3          | Affinity level 3, the least significant affinity level field. |
-| [31]    | IRM           | Interrupt Routing Mode. Defines how SPIs are routed in an affinity hierarchy. |
-| [30:24] | -             | Reserved.                                                     |
-| [23:16] | Aff2          | Affinity level 2, an intermediate affinity level field.       | 
-| [15:8]  | Aff1          | Affinity level 1, an intermediate affinity level field.       |
-| [7:0]   | Aff0          | Affinity level 0, the most significant affinity level field.  |
-
-\var __IOM uint32_t GICDistributor_Type::D_NSACR[64]
-\details Non-secure Access Control Registers
-
-Each two bits corresponds to one interrupt:
- - Register index is given by INTID/16
- - Bit number is given by 2*INTID%16
-
-The possible values of each 2-bit field are:
- - 00 - Non-secure accesses to all fields associated with the corresponding interrupt are permitted.
- - 01 - Non-secure accesses are only permitted to requesting fields.
- - 10 - As 01, additionally accesses to clearing field are permitted.
- - 11 - As 10, additionally accesses to target and routing fields are permitted.
- 
-\var __IO uint32_t GICDistributor_Type::D_SETSPI_NSR
-\details Set Non-secure SPI Pending Register
-
-| Bits    | Name          | Function                                          |
-| :------ | :------------ | :------------------------------------------------ | 
-| [31:10] | -             | Reserved.                                         |
-| [9:0]   | INTID         | The interrupt number to set pending state for.    |
-
-\var __IO uint32_t GICDistributor_Type::D_SETSPI_SR
-\details Set Secure SPI Pending Register
-
-| Bits    | Name          | Function                                          |
-| :------ | :------------ | :------------------------------------------------ | 
-| [31:10] | -             | Reserved.                                         |
-| [9:0]   | INTID         | The interrupt number to set pending state for.    |
-
-\var __IOM uint8_t GICDistributor_Type::D_SPENDSGIR[16]
-\details SGI Set-Pending Registers
-Each register corresponds to one software generated interrupt (SGI).
-
-Reading from this register reveals
- - 0 - interrupt is not pending
- - 1 - interrupt is pending
- 
-Writing to this register causes
- - 0 - no effect
- - 1 - adds the pending state
- 
-\var __IOM uint8_t GICDistributor_Type::D_CPENDSGIR[16]
-\details SGI Clear-Pending Registers
-Each register corresponds to one software generated interrupt (SGI).
-
-Reading from this register reveals
- - 0 - interrupt is not pending
- - 1 - interrupt is pending
- 
-Writing to this register causes
- - 0 - no effect
- - 1 - removes the pending state
-
-\var __IOM uint32_t GICDistributor_Type::D_STATUSR
-\details Error Reporting Status Register
-
-| Bits    | Name          | Function                                          |
-| :------ | :------------ | :------------------------------------------------ | 
-| [31:4]  | -             | Reserved.                                         |
-| [3]     | WROD          | Write to an RO location.                          |
-| [2]     | RWOD          | Read of a WO location.                            |
-| [1]     | WRD           | Write to a reserved location.                     |
-| [0]     | RRD           | Read of a reserved location.                      |
-
-\var __IOM uint32_t GICDistributor_Type::D_ISENABLER[32]
-\details Interrupt Set-Enable Registers
-
-Each bit corresponds to one interrupt:
- - Register index is given by INTID/32
- - Bit number is given by INTID%32
-
-\note Bits corresponding to unimplemented interrupts are RAZ/WI.
-
-\var __IOM uint32_t GICDistributor_Type::D_ICENABLER[32]
-\details Interrupt Clear-Enable Registers
-
-Each bit corresponds to one interrupt:
- - Register index is given by INTID/32
- - Bit number is given by INTID%32
-
-\note Bits corresponding to unimplemented interrupts are RAZ/WI.
-
-\var __IOM uint32_t GICDistributor_Type::D_ISPENDR[32]
-\details Interrupt Set-Pending Registers
-
-Each bit corresponds to one interrupt:
- - Register index is given by INTID/32
- - Bit number is given by INTID%32
-
-\note Bits corresponding to unimplemented interrupts are RAZ/WI.
-
-\var __IOM uint32_t GICDistributor_Type::D_ICPENDR[32]
-\details Interrupt Clear-Pending Registers
-
-Each bit corresponds to one interrupt:
- - Register index is given by INTID/32
- - Bit number is given by INTID%32
- 
-\note Bits corresponding to unimplemented interrupts are RAZ/WI.
-
-\var __IOM uint32_t GICDistributor_Type::D_ICFGR[64]
-\details Interrupt Configuration Registers
-
-Each interrupt can be configured by two corresponding bits:
-
-| Bits           | Name          | Function                                                       |
-| :------------- | :------------ | :------------------------------------------------------------- |
-| [2*INTID%16+1] | Edge          | Interrupt is: 0 - level sensitive, 1 - edge triggered          |
-| [2*INTID%16]   | Model         | 0 - N-N Model, 1 - 1-N Model; RAZ/WI when unsupported          |
-
-\var __IOM uint8_t GICDistributor_Type::D_IPRIORITYR[1020]
-\details Interrupt Priority Registers
-
-A GIC might implement fewer than eight priority bits, but must implement at least bits [7:4] of each
-field. In each field, unimplemented bits are RAZ/WI.
-
-\note A register field corresponding to an unimplemented interrupt is RAZ/WI.
-
-\var __IOM uint32_t GICDistributor_Type::D_ISACTIVER[32]
-\details Interrupt Set-Active Registers
-
-Each bit corresponds to one interrupt:
- - Register index is given by INTID/32
- - Bit number is given by INTID%32
- 
-\note Bits corresponding to unimplemented interrupts are RAZ/WI.
-
-\var __IOM uint32_t GICDistributor_Type::D_ICACTIVER[32]
-\details Interrupt Clear-Active Registers
-
-Each bit corresponds to one interrupt:
- - Register index is given by INTID/32
- - Bit number is given by INTID%32
-
-\note Bits corresponding to unimplemented interrupts are RAZ/WI.
-
-\var __OM uint32_t GICDistributor_Type::D_SGIR
-\details Software Generated Interrupt Register
-
-| Bits    | Name             | Function                                                         |
-| :------ | :------------    | :--------------------------------------------------------------- |
-| [31:26] | -                | Reserved.                                                        |
-| [25:24] | TargetFilterList | Determines how the Distributor processes the requested SGI.      |
-| [23:16] | CPUTargetList    | When TargetListFilter is 00, this field defines the CPU interfaces to which the Distributor must forward the interrupt. |
-| [15]    | NSATT            | Specifies the required group of the SGI.                         |
-| [14:4]  | -                | Reserved.                                                        |
-| [3:0]   | INTID            | The INTID of the SGI to forward to the specified CPU interfaces. |
-
-Refer to \ref GICDistributor_Type::D_ITARGETSR "D_ITARGETSR" for details on TargetFilterList field.
-*/
-
-
-/* ########################## Private Timer Member ########################## */
-/**
-
-\var uint32_t CNTP_CTL_Type::ENABLE
-\details Enables the timer.
-
-Permitted values are:
- - 0 - Timer disabled.
- - 1 - Timer enabled.
-
-\var uint32_t CNTP_CTL_Type::IMASK
-\details Timer output signal mask bit. 
-
-Permitted values are:
- - 0 - Timer output signal is not masked.
- - 1 - Timer output signal is masked.
-
-
-\var uint32_t CNTP_CTL_Type::ISTATUS
-\details The status of the timer.
-
-This bit indicates whether the timer condition is asserted:
- - 0 - Timer condition is not asserted.
- - 1 - Timer condition is asserted.
-*/
-
-/* end of CMSIS_Core_FunctionInterface  -   currently disabled */

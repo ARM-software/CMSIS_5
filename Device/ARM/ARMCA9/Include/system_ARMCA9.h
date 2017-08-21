@@ -36,8 +36,6 @@ extern "C" {
 
 extern uint32_t SystemCoreClock;     /*!< System Clock Frequency (Core Clock)  */
 
-typedef void(*IRQHandler)();         /*!< Type Definition for Interrupt Handlers */
-
 /**
   \brief Setup the microcontroller system.
 
@@ -52,20 +50,6 @@ extern void SystemInit (void);
    Updates the SystemCoreClock with current core Clock retrieved from cpu registers.
  */
 extern void SystemCoreClockUpdate (void);
-
-/**
-  \brief  Interrupt Handler Register.
-
-   Registers an Interrupt Handler into the IRQ Table.
- */
-extern uint32_t InterruptHandlerRegister(IRQn_Type, IRQHandler);
-
-/**
-  \brief  Interrupt Handler Unregister.
-
-   Unregisters an Interrupt Handler from the IRQ Table.
- */
-extern uint32_t InterruptHandlerUnregister(IRQn_Type);
 
 /**
   \brief  Create Translation Table.

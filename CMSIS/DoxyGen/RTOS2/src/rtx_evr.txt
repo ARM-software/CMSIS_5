@@ -267,27 +267,27 @@ The event \b KernelResumed is generated when the function \ref osKernelResume su
 */
 
 /**
-\fn void EvrRtxKernelGetTickCount (uint64_t count)
+\fn void EvrRtxKernelGetTickCount (uint32_t count)
 \details
-The event \b KernelGetTickCount is generated when the function \ref osKernelGetTickCount is called and its execution result is known.
+The event \b KernelGetTickCount is generated when the function \ref osKernelGetTickCount is called.
 
 \b Value in the Event Recorder shows:
-  - \b count : retrieved kernel current tick count (0 in case of a failure).
+  - \b count : retrieved kernel current tick count.
 */
 
 /**
 \fn void EvrRtxKernelGetTickFreq (uint32_t freq)
 \details
-The event \b KernelGetTickFreq is generated when the function \ref osKernelGetTickFreq called and its execution result is known.
+The event \b KernelGetTickFreq is generated when the function \ref osKernelGetTickFreq called.
 
 \b Value in the Event Recorder shows:
-  - \b freq : retrieved frequency of the kernel tick in Hz (0 in case of a failure).
+  - \b freq : retrieved frequency of the kernel tick in Hz.
 */
 
 /**
 \fn void EvrRtxKernelGetSysTimerCount (uint32_t count)
 \details
-The event \b KernelGetSysTimerCount is generated when the function \ref osKernelGetSysTimerCount is called and its execution result is known.
+The event \b KernelGetSysTimerCount is generated when the function \ref osKernelGetSysTimerCount is called.
 
 \b Value in the Event Recorder shows:
   - \b count : retrieved kernel current system timer count as 32-bit value.
@@ -296,7 +296,7 @@ The event \b KernelGetSysTimerCount is generated when the function \ref osKernel
 /**
 \fn void EvrRtxKernelGetSysTimerFreq (uint32_t freq)
 \details
-The event \b KernelGetSysTimerFreq is generated when the function \ref osKernelGetSysTimerFreq is called and its execution result is known.
+The event \b KernelGetSysTimerFreq is generated when the function \ref osKernelGetSysTimerFreq is called.
 
 \b Value in the Event Recorder shows:
   - \b freq : retrieved frequency of the system timer in Hz.
@@ -702,7 +702,7 @@ The event \b ThreadDelay is generated when the function \ref osDelay is called.
 */
 
 /**
-\fn void EvrRtxThreadDelayUntil (uint64_t ticks)
+\fn void EvrRtxThreadDelayUntil (uint32_t ticks)
 \details
 The event \b ThreadDelayUntil is generated when the function \ref osDelayUntil is called.
 

@@ -25,7 +25,9 @@
  * limitations under the License.
  */
 
-#include <ARMCA9.h>
+#include "RTE_Components.h"
+#include CMSIS_device_header
+#include "irq_ctrl.h"
 
 #define  SYSTEM_CLOCK  12000000U
 
@@ -40,35 +42,6 @@ uint32_t SystemCoreClock = SYSTEM_CLOCK;
 void SystemCoreClockUpdate (void)
 {
   SystemCoreClock = SYSTEM_CLOCK;
-}
-
-/*----------------------------------------------------------------------------
-  IRQ Handler Register/Unregister
- *----------------------------------------------------------------------------*/
-IRQHandler IRQTable[40U] = { 0U };
-
-uint32_t IRQCount = sizeof IRQTable / 4U;
-
-uint32_t InterruptHandlerRegister (IRQn_Type irq, IRQHandler handler)
-{
-  if (irq < IRQCount) {
-    IRQTable[irq] = handler;
-    return 0U;
-  }
-  else {
-    return 1U;
-  }
-}
-
-uint32_t InterruptHandlerUnregister (IRQn_Type irq)
-{
-  if (irq < IRQCount) {
-    IRQTable[irq] = 0U;
-    return 0U;
-  }
-  else {
-    return 1U;
-  }
 }
 
 /*----------------------------------------------------------------------------
@@ -110,13 +83,11 @@ void SystemInit (void)
   L2C_Enable();
 #endif
 
-#if (__GIC_PRESENT == 1) 
-  // Enable GIC
-  GIC_Enable();
-#endif
-
 #if ((__FPU_PRESENT == 1) && (__FPU_USED == 1))
   // Enable FPU
   __FPU_Enable();
 #endif
+
+  // IRQ Initialize
+  IRQ_Initialize();
 }

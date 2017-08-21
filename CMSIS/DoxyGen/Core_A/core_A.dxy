@@ -32,13 +32,13 @@ DOXYFILE_ENCODING      = UTF-8
 # title of most generated pages and in a few other places.
 # The default value is: My Project.
 
-PROJECT_NAME           = CMSIS-Core (Cortex-A)
+PROJECT_NAME           = "CMSIS-Core (Cortex-A)"
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. This
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "Version 0.0.1"
+PROJECT_NUMBER         = "Version 1.0.0"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -754,10 +754,18 @@ INPUT                  = src/Overview.txt \
                          src/Template.txt \
                          src/MISRA.txt \
                          src/Ref_SystemAndClock.txt \
-                         ../../Core_A/Include/core_ca.h \
+						 src/ref_gic.txt \
+						 src/ref_core_register.txt \
+						 src/ref_cache.txt \
+						 src/ref_timer.txt \
+						 src/ref_mmu.txt \
                          src/core_ca.txt \
-                         ../../Core_A/Include/cmsis_armcc.h \
                          src/cmsis_armcc.txt \
+                         src/irq_ctrl.txt \
+                         ../../Core_A/Include/core_ca.h \
+                         ../../Core_A/Include/cmsis_armcc.h \
+                         ../../Core_A/Source/irq_ctrl_gic.c \
+                         ../../Core_A/Include/irq_ctrl.h \
                          ../../../Device/ARM/ARMCA9/Include/ARMCA9.h \
                          ../../../Device/ARM/ARMCA9/Include/mem_ARMCA9.h \
                          ../../../Device/ARM/ARMCA9/Include/system_ARMCA9.h \
@@ -931,13 +939,13 @@ STRIP_CODE_COMMENTS    = YES
 # function all documented functions referencing it will be listed.
 # The default value is: NO.
 
-REFERENCED_BY_RELATION = YES
+REFERENCED_BY_RELATION = NO
 
 # If the REFERENCES_RELATION tag is set to YES then for each documented function
 # all documented entities called/used by that function will be listed.
 # The default value is: NO.
 
-REFERENCES_RELATION    = YES
+REFERENCES_RELATION    = NO
 
 # If the REFERENCES_LINK_SOURCE tag is set to YES and SOURCE_BROWSER tag is set
 # to YES, then the hyperlinks from functions in REFERENCES_RELATION and
@@ -1978,7 +1986,8 @@ INCLUDE_FILE_PATTERNS  =
 # recursively expanded use the := operator instead of the = operator.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-PREDEFINED             = __L2C_PRESENT:=1 \
+PREDEFINED             = DOXYGEN \
+                         __L2C_PRESENT:=1 \
                          __CC_ARM:=1 \
                          __TARGET_FPU_VFP:=1 \
                          __CHECK_DEVICE_DEFINES:=1 \
@@ -1987,6 +1996,7 @@ PREDEFINED             = __L2C_PRESENT:=1 \
                          __TASKING__:=1 \
                          __NO_EMBEDDED_ASM:=0 \
                          __CORTEX_A:=9 \
+						 __CA_REV:=0x0000 \
                          __TARGET_ARCH_7_A:=1
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this

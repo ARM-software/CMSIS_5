@@ -123,6 +123,7 @@
       <xs:enumeration value="Evatronix:64"/>
       <xs:enumeration value="Generic:5"/>
       <xs:enumeration value="GigaDevice:123"/>
+      <xs:enumeration value="HDSC:145"/>
       <xs:enumeration value="Holtek:106"/>
       <xs:enumeration value="Hynix Semiconductor:6"/>
       <xs:enumeration value="Hyundai:35"/>
@@ -149,6 +150,7 @@
       <xs:enumeration value="Panasonic:131"/>
       <xs:enumeration value="Realtek Semiconductor:124"/>
       <xs:enumeration value="Redpine Signals:125"/>
+      <xs:enumeration value="RelChip:146"/>
       <xs:enumeration value="Renesas:117"/>
       <xs:enumeration value="ROHM:103"/>
       <xs:enumeration value="Samsung:47"/>
