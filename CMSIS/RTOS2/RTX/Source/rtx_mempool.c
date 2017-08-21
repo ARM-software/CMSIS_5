@@ -202,7 +202,7 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
     EvrRtxMemoryPoolError(NULL, osErrorParameter);
     return NULL;
   }
-  block_size = (block_size + 3U) & ~3UL;
+  block_size = OS_MEMORY_POOL_GET_ALIGNED_BLOCK_SIZE( block_size );
   if ((__CLZ(block_count) + __CLZ(block_size)) < 32) {
     EvrRtxMemoryPoolError(NULL, osErrorParameter);
     return NULL;
