@@ -46,7 +46,10 @@ SVC_Handler     PROC
                 IMPORT   osRtxUserSVC
                 IMPORT   osRtxInfo
 
-                MRS      R0,PSP                 ; Get PSP
+                TST      LR, #0x4               ; Check EXC_RETURN for bit 2
+                ITE      EQ                     ; if Equal
+                MRSEQ    R0, MSP                ; MSP was in use, put MSP in R0
+                MRSNE    R0, PSP                ; else, PSP was in use, put PSP in R0
                 LDR      R1,[R0,#24]            ; Load saved PC from stack
                 LDRB     R1,[R1,#-2]            ; Load SVC number
                 CBNZ     R1,SVC_User            ; Branch if not SVC 0

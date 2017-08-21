@@ -100,20 +100,6 @@
 #define __SVC_INDIRECT(n) __svc_indirect_r7(n)
 #endif
 
-#if    (__FPU_USED == 1U)
-#define SVC_SETUP_PSP                                                          \
-  uint32_t control = __get_CONTROL();                                          \
-  if ((control & 2U) == 0U) {                                                  \
-    __set_PSP((__get_MSP() - ((control & 4U) ? 104U : 32U)) & ~7U);            \
-  }
-#else
-#define SVC_SETUP_PSP                                                          \
-  uint32_t control = __get_CONTROL();                                          \
-  if ((control & 2U) == 0U) {                                                  \
-    __set_PSP((__get_MSP() -                          32U)  & ~7U);            \
-  }
-#endif
-
 #define SVC0_0N(f,t)                                                           \
 __SVC_INDIRECT(0) t    svc##f (t(*)());                                        \
                   t svcRtx##f (void);                                          \
@@ -135,7 +121,6 @@ __SVC_INDIRECT(0) t    svc##f (t(*)());                                        \
                   t svcRtx##f (void);                                          \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (void) {                                         \
-  SVC_SETUP_PSP                                                                \
   return svc##f(svcRtx##f);                                                    \
 }
 
@@ -160,7 +145,6 @@ __SVC_INDIRECT(0) t    svc##f (t(*)(t1),t1);                                   \
                   t svcRtx##f (t1 a1);                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1) {                                        \
-  SVC_SETUP_PSP                                                                \
   return svc##f(svcRtx##f,a1);                                                 \
 }
 
@@ -177,7 +161,6 @@ __SVC_INDIRECT(0) t    svc##f (t(*)(t1,t2),t1,t2);                             \
                   t svcRtx##f (t1 a1, t2 a2);                                  \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2) {                                 \
-  SVC_SETUP_PSP                                                                \
   return svc##f(svcRtx##f,a1,a2);                                              \
 }
 
@@ -194,7 +177,6 @@ __SVC_INDIRECT(0) t    svc##f (t(*)(t1,t2,t3),t1,t2,t3);                       \
                   t svcRtx##f (t1 a1, t2 a2, t3 a3);                           \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3) {                          \
-  SVC_SETUP_PSP                                                                \
   return svc##f(svcRtx##f,a1,a2,a3);                                           \
 }
 
@@ -211,7 +193,6 @@ __SVC_INDIRECT(0) t    svc##f (t(*)(t1,t2,t3,t4),t1,t2,t3,t4);                 \
                   t svcRtx##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
-  SVC_SETUP_PSP                                                                \
   return svc##f(svcRtx##f,a1,a2,a3,a4);                                        \
 }
 
