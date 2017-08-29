@@ -512,7 +512,10 @@ The ARM Cortex-A5 processor is a high-performance, low-power, ARM macrocell with
 virtual memory capabilities. The Cortex-A5 processor implements the ARMv7-A architecture profile and can execute 32-bit 
 ARM instructions and 16-bit and 32-bit Thumb instructions. The Cortex-A5 is the smallest member of the Cortex-A processor family.
       </description>
-   
+
+      <memory id="IROM1"                                start="0x80000000" size="0x00200000" startup="1" default="1"/>
+      <memory id="IRAM1"                                start="0x80200000" size="0x00200000" init   ="0" default="1"/>
+
       <device Dname="ARMCA5">
         <processor Dcore="Cortex-A5" DcoreVersion="r0p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
         <compile header="Device/ARM/ARMCA5/Include/ARMCA5.h" define="ARMCA5"/>
@@ -527,7 +530,10 @@ The Cortex-A7 MPCore processor is a high-performance, low-power processor that i
 The Cortex-A7 MPCore processor has one to four processors in a single multiprocessor device with a L1 cache subsystem, 
 an optional integrated GIC, and an optional L2 cache controller.
       </description>
-   
+
+      <memory id="IROM1"                                start="0x80000000" size="0x00200000" startup="1" default="1"/>
+      <memory id="IRAM1"                                start="0x80200000" size="0x00200000" init   ="0" default="1"/>
+
       <device Dname="ARMCA7">
         <processor Dcore="Cortex-A7" DcoreVersion="r0p5" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
         <compile header="Device/ARM/ARMCA7/Include/ARMCA7.h" define="ARMCA7"/>
@@ -542,6 +548,9 @@ The Cortex-A9 processor is a high-performance, low-power, ARM macrocell with an 
 The Cortex-A9 processor implements the ARMv7-A architecture and runs 32-bit ARM instructions, 16-bit and 32-bit Thumb instructions,
 and 8-bit Java bytecodes in Jazelle state.
       </description>
+
+      <memory id="IROM1"                                start="0x80000000" size="0x00200000" startup="1" default="1"/>
+      <memory id="IRAM1"                                start="0x80200000" size="0x00200000" init   ="0" default="1"/>
 
       <device Dname="ARMCA9">
         <processor Dcore="Cortex-A9" DcoreVersion="r4p1" Dfpu="DP_FPU" Dmpu="MPU" Dendian="Configurable"/>
