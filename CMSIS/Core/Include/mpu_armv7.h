@@ -115,7 +115,7 @@ __STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_Control)
 
 /** Disable the MPU.
 */
-__STATIC_INLINE void ARM_MPU_Disable()
+__STATIC_INLINE void ARM_MPU_Disable(void)
 {
   __DSB();
   __ISB();
