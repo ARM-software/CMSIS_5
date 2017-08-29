@@ -698,7 +698,7 @@ For example, for SWD multi-drop target selection (see picture) it is required to
 <b>DAP_SWD_Sequence Response</b>:
 \code
 | BYTE | BYTE **| BYTE ******|
-< 0x14 | Status | SWDIO Data |
+< 0x21 | Status | SWDIO Data |
 |******|********|++++++++++++|
 \endcode
 
