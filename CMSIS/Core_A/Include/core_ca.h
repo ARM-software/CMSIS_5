@@ -636,7 +636,7 @@ typedef union
 #define ISR_F_Msk                        (1UL << ISR_F_Pos)                     /*!< \brief ISR: F Mask */
 
 /* DACR Register */
-#define DACR_D_Pos_(n)                   (2u*n)                                 /*!< \brief DACR: Dn Position */
+#define DACR_D_Pos_(n)                   (2U*n)                                 /*!< \brief DACR: Dn Position */
 #define DACR_D_Msk_(n)                   (3UL << DACR_D_Pos_(n))                /*!< \brief DACR: Dn Mask */
 #define DACR_Dn_NOACCESS                 0U                                     /*!< \brief DACR Dn field: No access */
 #define DACR_Dn_CLIENT                   1U                                     /*!< \brief DACR Dn field: Client */
@@ -835,28 +835,28 @@ typedef struct
 /** \brief Enable Caches by setting I and C bits in SCTLR register.
 */
 __STATIC_INLINE void L1C_EnableCaches(void) {
-  __set_SCTLR( __get_SCTLR() | (1u << SCTLR_I_Pos) | (1u << SCTLR_C_Pos));
+  __set_SCTLR( __get_SCTLR() | (1U << SCTLR_I_Pos) | (1U << SCTLR_C_Pos));
   __ISB();
 }
 
 /** \brief Disable Caches by clearing I and C bits in SCTLR register.
 */
 __STATIC_INLINE void L1C_DisableCaches(void) {
-  __set_SCTLR( __get_SCTLR() & ~(1u << SCTLR_I_Pos) & ~(1u << SCTLR_C_Pos));
+  __set_SCTLR( __get_SCTLR() & ~(1U << SCTLR_I_Pos) & ~(1U << SCTLR_C_Pos));
   __ISB();
 }
 
 /** \brief  Enable Branch Prediction by setting Z bit in SCTLR register.
 */
 __STATIC_INLINE void L1C_EnableBTAC(void) {
-  __set_SCTLR( __get_SCTLR() | (1u << SCTLR_Z_Pos));
+  __set_SCTLR( __get_SCTLR() | (1U << SCTLR_Z_Pos));
   __ISB();
 }
 
 /** \brief  Disable Branch Prediction by clearing Z bit in SCTLR register.
 */
 __STATIC_INLINE void L1C_DisableBTAC(void) {
-  __set_SCTLR( __get_SCTLR() & ~(1u << SCTLR_Z_Pos));
+  __set_SCTLR( __get_SCTLR() & ~(1U << SCTLR_Z_Pos));
   __ISB();
 }
 
@@ -958,14 +958,14 @@ __STATIC_INLINE void L2C_InvAllByWay (void)
 {
   unsigned int assoc;
 
-  if (L2C_310->AUX_CNT & (1u << 16u)) {
-    assoc = 16u;
+  if (L2C_310->AUX_CNT & (1U << 16U)) {
+    assoc = 16U;
   } else {
-    assoc =  8u;
+    assoc =  8U;
   }
   
-  L2C_310->INV_WAY = (1u << assoc) - 1u;
-  while(L2C_310->INV_WAY & ((1u << assoc) - 1u)); //poll invalidate
+  L2C_310->INV_WAY = (1U << assoc) - 1U;
+  while(L2C_310->INV_WAY & ((1U << assoc) - 1U)); //poll invalidate
 
   L2C_Sync();
 }
@@ -976,14 +976,14 @@ __STATIC_INLINE void L2C_CleanInvAllByWay (void)
 {
   unsigned int assoc;
 
-  if (L2C_310->AUX_CNT & (1u << 16u)) {
-    assoc = 16u;
+  if (L2C_310->AUX_CNT & (1U << 16U)) {
+    assoc = 16U;
   } else {
-    assoc =  8u;
+    assoc =  8U;
   }
 
-  L2C_310->CLEAN_INV_WAY = (1u << assoc) - 1u;
-  while(L2C_310->CLEAN_INV_WAY & ((1u << assoc) - 1u)); //poll invalidate
+  L2C_310->CLEAN_INV_WAY = (1U << assoc) - 1U;
+  while(L2C_310->CLEAN_INV_WAY & ((1U << assoc) - 1U)); //poll invalidate
 
   L2C_Sync();
 }

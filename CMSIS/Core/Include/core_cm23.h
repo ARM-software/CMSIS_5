@@ -892,7 +892,7 @@ typedef struct
   };
 } MPU_Type;
 
-#define MPU_TYPE_RALIASES                  1u
+#define MPU_TYPE_RALIASES                  1U
 
 /* MPU Type Register Definitions */
 #define MPU_TYPE_IREGION_Pos               16U                                            /*!< MPU TYPE: IREGION Position */

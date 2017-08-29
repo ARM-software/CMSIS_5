@@ -26,10 +26,10 @@
 #define ARM_MPU_ARMV8_H
 
 /** \brief Attribute for device memory (outer only) */
-#define ARM_MPU_ATTR_DEVICE                           ( 0u )
+#define ARM_MPU_ATTR_DEVICE                           ( 0U )
 
 /** \brief Attribute for non-cacheable, normal memory */
-#define ARM_MPU_ATTR_NON_CACHEABLE                    ( 4u )
+#define ARM_MPU_ATTR_NON_CACHEABLE                    ( 4U )
 
 /** \brief Attribute for normal memory (outer and inner)
 * \param NT Non-Transient: Set to 1 for non-transient data.
@@ -38,40 +38,40 @@
 * \param WA Write Allocation: Set to 1 to use cache allocation on write miss.
 */
 #define ARM_MPU_ATTR_MEMORY_(NT, WB, RA, WA) \
-  (((NT & 1u) << 3u) | ((WB & 1u) << 2u) | ((RA & 1u) << 1u) | (WA & 1u))
+  (((NT & 1U) << 3U) | ((WB & 1U) << 2U) | ((RA & 1U) << 1U) | (WA & 1U))
 
 /** \brief Device memory type non Gathering, non Re-ordering, non Early Write Acknowledgement */
-#define ARM_MPU_ATTR_DEVICE_nGnRnE (0u)
+#define ARM_MPU_ATTR_DEVICE_nGnRnE (0U)
 
 /** \brief Device memory type non Gathering, non Re-ordering, Early Write Acknowledgement */
-#define ARM_MPU_ATTR_DEVICE_nGnRE  (1u)
+#define ARM_MPU_ATTR_DEVICE_nGnRE  (1U)
 
 /** \brief Device memory type non Gathering, Re-ordering, Early Write Acknowledgement */
-#define ARM_MPU_ATTR_DEVICE_nGRE   (2u)
+#define ARM_MPU_ATTR_DEVICE_nGRE   (2U)
 
 /** \brief Device memory type Gathering, Re-ordering, Early Write Acknowledgement */
-#define ARM_MPU_ATTR_DEVICE_GRE    (3u)
+#define ARM_MPU_ATTR_DEVICE_GRE    (3U)
 
 /** \brief Memory Attribute
 * \param O Outer memory attributes
 * \param I O == ARM_MPU_ATTR_DEVICE: Device memory attributes, else: Inner memory attributes
 */
-#define ARM_MPU_ATTR(O, I) (((O & 0xFu) << 4u) | (((O & 0xFu) != 0u) ? (I & 0xFu) : ((I & 0x3u) << 2u)))
+#define ARM_MPU_ATTR(O, I) (((O & 0xFu) << 4U) | (((O & 0xFu) != 0U) ? (I & 0xFu) : ((I & 0x3U) << 2U)))
 
 /** \brief Normal memory non-shareable  */
-#define ARM_MPU_SH_NON   (0u)
+#define ARM_MPU_SH_NON   (0U)
 
 /** \brief Normal memory outer shareable  */
-#define ARM_MPU_SH_OUTER (2u)
+#define ARM_MPU_SH_OUTER (2U)
 
 /** \brief Normal memory inner shareable  */
-#define ARM_MPU_SH_INNER (3u)
+#define ARM_MPU_SH_INNER (3U)
 
 /** \brief Memory access permissions
 * \param RO Read-Only: Set to 1 for read-only memory.
 * \param NP Non-Privileged: Set to 1 for non-privileged memory.
 */
-#define ARM_MPU_AP_(RO, NP) (((RO & 1u) << 1u) | (NP & 1u))
+#define ARM_MPU_AP_(RO, NP) (((RO & 1U) << 1U) | (NP & 1U))
 
 /** \brief Region Base Address Register value
 * \param BASE The base address bits [31:5] of a memory region. The value is zero extended. Effective address gets 32 byte aligned.
@@ -162,8 +162,8 @@ __STATIC_INLINE void ARM_MPU_Disable_NS()
 */
 __STATIC_INLINE void ARM_MPU_SetMemAttrEx(MPU_Type* mpu, uint8_t idx, uint8_t attr)
 {
-  const uint8_t reg = idx / 4u;
-  const uint32_t pos = ((idx % 4u) * 8u);
+  const uint8_t reg = idx / 4U;
+  const uint32_t pos = ((idx % 4U) * 8U);
   const uint32_t mask = 0xFFu << pos;
   
   if (reg >= (sizeof(MPU->MAIR) / sizeof(MPU->MAIR[0]))) {
@@ -200,7 +200,7 @@ __STATIC_INLINE void ARM_MPU_SetMemAttr_NS(uint8_t idx, uint8_t attr)
 __STATIC_INLINE void ARM_MPU_ClrRegionEx(MPU_Type* mpu, uint32_t rnr)
 {
   MPU->RNR = rnr;
-  MPU->RLAR = 0u;
+  MPU->RLAR = 0U;
 }
 
 /** Clear and disable the given MPU region.
@@ -264,7 +264,7 @@ __STATIC_INLINE void ARM_MPU_SetRegion_NS(uint32_t rnr, uint32_t rbar, uint32_t 
 __STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRICT src, uint32_t len)
 {
   uint32_t i;
-  for (i = 0u; i < len; ++i) 
+  for (i = 0U; i < len; ++i) 
   {
     dst[i] = src[i];
   }
@@ -278,21 +278,21 @@ __STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRI
 */
 __STATIC_INLINE void ARM_MPU_LoadEx(MPU_Type* mpu, uint32_t rnr, ARM_MPU_Region_t const* table, uint32_t cnt) 
 {
-  static const uint32_t rowWordSize = sizeof(ARM_MPU_Region_t)/4u;
-  if (cnt == 1u) {
+  static const uint32_t rowWordSize = sizeof(ARM_MPU_Region_t)/4U;
+  if (cnt == 1U) {
     mpu->RNR = rnr;
     orderedCpy(&(mpu->RBAR), &(table->RBAR), rowWordSize);
   } else {
-    uint32_t rnrBase   = rnr & ~(MPU_TYPE_RALIASES-1u);
+    uint32_t rnrBase   = rnr & ~(MPU_TYPE_RALIASES-1U);
     uint32_t rnrOffset = rnr % MPU_TYPE_RALIASES;
     
     mpu->RNR = rnrBase;
     if ((rnrOffset + cnt) > MPU_TYPE_RALIASES) {
       uint32_t c = MPU_TYPE_RALIASES - rnrOffset;
-      orderedCpy(&(mpu->RBAR)+(rnrOffset*2u), &(table->RBAR), c*rowWordSize);
+      orderedCpy(&(mpu->RBAR)+(rnrOffset*2U), &(table->RBAR), c*rowWordSize);
       ARM_MPU_LoadEx(mpu, rnr + c, table + c, cnt - c);
     } else {
-      orderedCpy(&(mpu->RBAR)+(rnrOffset*2u), &(table->RBAR), cnt*rowWordSize);
+      orderedCpy(&(mpu->RBAR)+(rnrOffset*2U), &(table->RBAR), cnt*rowWordSize);
     }
   }
 }
