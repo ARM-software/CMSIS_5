@@ -56,7 +56,7 @@
 * \param O Outer memory attributes
 * \param I O == ARM_MPU_ATTR_DEVICE: Device memory attributes, else: Inner memory attributes
 */
-#define ARM_MPU_ATTR(O, I) (((O & 0xFu) << 4U) | (((O & 0xFu) != 0U) ? (I & 0xFu) : ((I & 0x3U) << 2U)))
+#define ARM_MPU_ATTR(O, I) (((O & 0xFU) << 4U) | (((O & 0xFU) != 0U) ? (I & 0xFU) : ((I & 0x3U) << 2U)))
 
 /** \brief Normal memory non-shareable  */
 #define ARM_MPU_SH_NON   (0U)
@@ -118,7 +118,7 @@ __STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_Control)
 
 /** Disable the MPU.
 */
-__STATIC_INLINE void ARM_MPU_Disable()
+__STATIC_INLINE void ARM_MPU_Disable(void)
 {
   __DSB();
   __ISB();
@@ -144,7 +144,7 @@ __STATIC_INLINE void ARM_MPU_Enable_NS(uint32_t MPU_Control)
 
 /** Disable the Non-secure MPU.
 */
-__STATIC_INLINE void ARM_MPU_Disable_NS()
+__STATIC_INLINE void ARM_MPU_Disable_NS(void)
 {
   __DSB();
   __ISB();
@@ -164,7 +164,7 @@ __STATIC_INLINE void ARM_MPU_SetMemAttrEx(MPU_Type* mpu, uint8_t idx, uint8_t at
 {
   const uint8_t reg = idx / 4U;
   const uint32_t pos = ((idx % 4U) * 8U);
-  const uint32_t mask = 0xFFu << pos;
+  const uint32_t mask = 0xFFU << pos;
   
   if (reg >= (sizeof(MPU->MAIR) / sizeof(MPU->MAIR[0]))) {
     return; // invalid index
