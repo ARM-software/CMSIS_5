@@ -190,8 +190,8 @@ void arm_biquad_cas_df1_32x64_q31(
   int32_t shift = (int32_t) S->postShift + 1;    /*  Shift to be applied to the output */
   uint32_t sample, stage = S->numStages;         /*  loop counters                     */
   q31_t acc_l, acc_h;                            /*  temporary output               */
-  uint32_t uShift = ((uint32_t) S->postShift + 1u);
-  uint32_t lShift = 32u - uShift;                /*  Shift to be applied to the output */
+  uint32_t uShift = ((uint32_t) S->postShift + 1U);
+  uint32_t lShift = 32U - uShift;                /*  Shift to be applied to the output */
 
 
 #if defined (ARM_MATH_DSP)
@@ -219,11 +219,11 @@ void arm_biquad_cas_df1_32x64_q31(
      * acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]
      */
 
-    sample = blockSize >> 2u;
+    sample = blockSize >> 2U;
 
     /* First part of the processing with loop unrolling. Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -297,7 +297,7 @@ void arm_biquad_cas_df1_32x64_q31(
 
       /* The result is converted to 1.31 */
       /* Store the output in the destination buffer. */
-      *(pOut + 1u) = acc_h;
+      *(pOut + 1U) = acc_h;
 
       /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
 
@@ -329,7 +329,7 @@ void arm_biquad_cas_df1_32x64_q31(
       acc_h = (uint32_t) acc_l >> lShift | acc_h << uShift;
 
       /* Store the output in the destination buffer in 1.31 format. */
-      *(pOut + 2u) = acc_h;
+      *(pOut + 2U) = acc_h;
 
       /* Read the fourth input into Xn, to reuse the value */
       Xn = *pIn++;
@@ -363,7 +363,7 @@ void arm_biquad_cas_df1_32x64_q31(
       acc_h = (uint32_t) acc_l >> lShift | acc_h << uShift;
 
       /* Store the output in the destination buffer in 1.31 format. */
-      *(pOut + 3u) = acc_h;
+      *(pOut + 3U) = acc_h;
 
       /* Every time after the output is computed state should be updated. */
       /* The states should be updated as:  */
@@ -375,7 +375,7 @@ void arm_biquad_cas_df1_32x64_q31(
       Xn1 = Xn;
 
       /* update output pointer */
-      pOut += 4u;
+      pOut += 4U;
 
       /* decrement the loop counter */
       sample--;
@@ -383,9 +383,9 @@ void arm_biquad_cas_df1_32x64_q31(
 
     /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    sample = (blockSize & 0x3u);
+    sample = (blockSize & 0x3U);
 
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -476,7 +476,7 @@ void arm_biquad_cas_df1_32x64_q31(
 
     sample = blockSize;
 
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;

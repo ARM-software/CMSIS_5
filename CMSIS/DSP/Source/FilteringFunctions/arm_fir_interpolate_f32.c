@@ -154,14 +154,14 @@ void arm_fir_interpolate_f32(
 
   /* S->pState buffer contains previous frame (phaseLen - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = S->pState + (phaseLen - 1u);
+  pStateCurnt = S->pState + (phaseLen - 1U);
 
   /* Initialise  blkCnt */
   blkCnt = blockSize / 4;
   blkCntN4 = blockSize - (4 * blkCnt);
 
   /* Samples loop unrolled by 4 */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -170,12 +170,12 @@ void arm_fir_interpolate_f32(
     *pStateCurnt++ = *pSrc++;
 
     /* Address modifier index of coefficient buffer */
-    j = 1u;
+    j = 1U;
 
     /* Loop over the Interpolation factor. */
     i = (S->L);
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* Set accumulator to zero */
       acc0 = 0.0f;
@@ -191,13 +191,13 @@ void arm_fir_interpolate_f32(
 
       /* Loop over the polyPhase length. Unroll by a factor of 4.
        ** Repeat until we've computed numTaps-(4*S->L) coefficients. */
-      tapCnt = phaseLen >> 2u;
+      tapCnt = phaseLen >> 2U;
 
       x0 = *(ptr1++);
       x1 = *(ptr1++);
       x2 = *(ptr1++);
 
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
 
         /* Read the input sample */
@@ -259,9 +259,9 @@ void arm_fir_interpolate_f32(
       }
 
       /* If the polyPhase length is not a multiple of 4, compute the remaining filter taps */
-      tapCnt = phaseLen % 0x4u;
+      tapCnt = phaseLen % 0x4U;
 
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
 
         /* Read the input sample */
@@ -316,17 +316,17 @@ void arm_fir_interpolate_f32(
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
 
-  while (blkCntN4 > 0u)
+  while (blkCntN4 > 0U)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
 
     /* Address modifier index of coefficient buffer */
-    j = 1u;
+    j = 1U;
 
     /* Loop over the Interpolation factor. */
     i = S->L;
-    while (i > 0u)
+    while (i > 0U)
     {
       /* Set accumulator to zero */
       sum0 = 0.0f;
@@ -339,8 +339,8 @@ void arm_fir_interpolate_f32(
 
       /* Loop over the polyPhase length. Unroll by a factor of 4.
        ** Repeat until we've computed numTaps-(4*S->L) coefficients. */
-      tapCnt = phaseLen >> 2u;
-      while (tapCnt > 0u)
+      tapCnt = phaseLen >> 2U;
+      while (tapCnt > 0U)
       {
 
         /* Read the coefficient */
@@ -398,9 +398,9 @@ void arm_fir_interpolate_f32(
       }
 
       /* If the polyPhase length is not a multiple of 4, compute the remaining filter taps */
-      tapCnt = phaseLen % 0x4u;
+      tapCnt = phaseLen % 0x4U;
 
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
         /* Perform the multiply-accumulate */
         sum0 += *(ptr1++) * (*ptr2);
@@ -437,10 +437,10 @@ void arm_fir_interpolate_f32(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  tapCnt = (phaseLen - 1u) >> 2u;
+  tapCnt = (phaseLen - 1U) >> 2U;
 
   /* copy data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -451,10 +451,10 @@ void arm_fir_interpolate_f32(
     tapCnt--;
   }
 
-  tapCnt = (phaseLen - 1u) % 0x04u;
+  tapCnt = (phaseLen - 1U) % 0x04U;
 
   /* copy data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -486,13 +486,13 @@ void arm_fir_interpolate_f32(
 
   /* S->pState buffer contains previous frame (phaseLen - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = S->pState + (phaseLen - 1u);
+  pStateCurnt = S->pState + (phaseLen - 1U);
 
   /* Total number of intput samples */
   blkCnt = blockSize;
 
   /* Loop over the blockSize. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -500,7 +500,7 @@ void arm_fir_interpolate_f32(
     /* Loop over the Interpolation factor. */
     i = S->L;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* Set accumulator to zero */
       sum = 0.0f;
@@ -509,12 +509,12 @@ void arm_fir_interpolate_f32(
       ptr1 = pState;
 
       /* Initialize coefficient pointer */
-      ptr2 = pCoeffs + (i - 1u);
+      ptr2 = pCoeffs + (i - 1U);
 
       /* Loop over the polyPhase length */
       tapCnt = phaseLen;
 
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
         /* Perform the multiply-accumulate */
         sum += *ptr1++ * *ptr2;
@@ -548,9 +548,9 @@ void arm_fir_interpolate_f32(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  tapCnt = phaseLen - 1u;
+  tapCnt = phaseLen - 1U;
 
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 

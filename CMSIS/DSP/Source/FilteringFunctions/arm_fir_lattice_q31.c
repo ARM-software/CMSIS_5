@@ -73,11 +73,11 @@ void arm_fir_lattice_q31(
 
   pState = &S->pState[0];
 
-  blkCnt = blockSize >> 1u;
+  blkCnt = blockSize >> 1U;
 
   /* First part of the processing with loop unrolling.  Compute 2 outputs at a time.
      a second loop below computes the remaining 1 sample. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* f0(n) = x(n) */
     fcurr1 = *pSrc++;
@@ -103,8 +103,8 @@ void arm_fir_lattice_q31(
 
     /* g1(n) = f0(n) * K1  +  g0(n-1) */
     gnext1 = (q31_t) (((q63_t) fcurr1 * (k)) >> 32);
-    fnext1 = fcurr1 + (fnext1 << 1u);
-    gnext1 = gcurr1 + (gnext1 << 1u);
+    fnext1 = fcurr1 + (fnext1 << 1U);
+    gnext1 = gcurr1 + (gnext1 << 1U);
 
     /* for sample 1 processing */
     /* f1(n) = f0(n) +  K1 * g0(n-1) */
@@ -112,8 +112,8 @@ void arm_fir_lattice_q31(
 
     /* g1(n) = f0(n) * K1  +  g0(n-1) */
     gnext2 = (q31_t) (((q63_t) fcurr2 * (k)) >> 32);
-    fnext2 = fcurr2 + (fnext2 << 1u);
-    gnext2 = fcurr1 + (gnext2 << 1u);
+    fnext2 = fcurr2 + (fnext2 << 1U);
+    gnext2 = fcurr1 + (gnext2 << 1U);
 
     /* save g1(n) in state buffer */
     *px++ = fcurr2;
@@ -123,10 +123,10 @@ void arm_fir_lattice_q31(
     fcurr1 = fnext1;
     fcurr2 = fnext2;
 
-    stageCnt = (numStages - 1u);
+    stageCnt = (numStages - 1U);
 
     /* stage loop */
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
 
       /* Read the reflection coefficient */
@@ -143,16 +143,16 @@ void arm_fir_lattice_q31(
       fnext1 = (q31_t) (((q63_t) gcurr1 * k) >> 32);
       fnext2 = (q31_t) (((q63_t) gnext1 * k) >> 32);
 
-      fnext1 = fcurr1 + (fnext1 << 1u);
-      fnext2 = fcurr2 + (fnext2 << 1u);
+      fnext1 = fcurr1 + (fnext1 << 1U);
+      fnext2 = fcurr2 + (fnext2 << 1U);
 
       /* g2(n) = f1(n) * K2  +  g1(n-1) */
       gnext2 = (q31_t) (((q63_t) fcurr2 * (k)) >> 32);
-      gnext2 = gnext1 + (gnext2 << 1u);
+      gnext2 = gnext1 + (gnext2 << 1U);
 
       /* g2(n) = f1(n) * K2  +  g1(n-1) */
       gnext1 = (q31_t) (((q63_t) fcurr1 * (k)) >> 32);
-      gnext1 = gcurr1 + (gnext1 << 1u);
+      gnext1 = gcurr1 + (gnext1 << 1U);
 
       /* f1(n) is saved in fcurr1
          for next stage processing */
@@ -173,9 +173,9 @@ void arm_fir_lattice_q31(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x2u;
+  blkCnt = blockSize % 0x2U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* f0(n) = x(n) */
     fcurr1 = *pSrc++;
@@ -195,11 +195,11 @@ void arm_fir_lattice_q31(
     /* for sample 1 processing */
     /* f1(n) = f0(n) +  K1 * g0(n-1) */
     fnext1 = (q31_t) (((q63_t) gcurr1 * k) >> 32);
-    fnext1 = fcurr1 + (fnext1 << 1u);
+    fnext1 = fcurr1 + (fnext1 << 1U);
 
     /* g1(n) = f0(n) * K1  +  g0(n-1) */
     gnext1 = (q31_t) (((q63_t) fcurr1 * (k)) >> 32);
-    gnext1 = gcurr1 + (gnext1 << 1u);
+    gnext1 = gcurr1 + (gnext1 << 1U);
 
     /* save g1(n) in state buffer */
     *px++ = fcurr1;
@@ -208,10 +208,10 @@ void arm_fir_lattice_q31(
        for next stage processing */
     fcurr1 = fnext1;
 
-    stageCnt = (numStages - 1u);
+    stageCnt = (numStages - 1U);
 
     /* stage loop */
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       /* Read the reflection coefficient */
       k = *pk++;
@@ -225,11 +225,11 @@ void arm_fir_lattice_q31(
       /* Sample processing for K2, K3.... */
       /* f2(n) = f1(n) +  K2 * g1(n-1) */
       fnext1 = (q31_t) (((q63_t) gcurr1 * k) >> 32);
-      fnext1 = fcurr1 + (fnext1 << 1u);
+      fnext1 = fcurr1 + (fnext1 << 1U);
 
       /* g2(n) = f1(n) * K2  +  g1(n-1) */
       gnext1 = (q31_t) (((q63_t) fcurr1 * (k)) >> 32);
-      gnext1 = gcurr1 + (gnext1 << 1u);
+      gnext1 = gcurr1 + (gnext1 << 1U);
 
       /* f1(n) is saved in fcurr1
          for next stage processing */
@@ -273,7 +273,7 @@ void arm_fir_lattice_q31(
 
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* f0(n) = x(n) */
     fcurr = *pSrc++;
@@ -299,10 +299,10 @@ void arm_fir_lattice_q31(
        for next stage processing */
     fcurr = fnext;
 
-    stageCnt = (numStages - 1u);
+    stageCnt = (numStages - 1U);
 
     /* stage loop */
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       /* read g2(n) from state buffer */
       gcurr = *px;

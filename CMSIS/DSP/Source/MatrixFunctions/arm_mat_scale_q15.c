@@ -95,7 +95,7 @@ arm_status arm_mat_scale_q15(
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C(m,n) = A(m,n) * k */
       /* Scale, saturate and then store the results in the destination buffer. */
@@ -127,8 +127,8 @@ arm_status arm_mat_scale_q15(
       _SIMD32_OFFSET(pOut + 2) = __PKHBT(in4, in3, 16);
 
       /* update pointers to process next sampels */
-      pIn += 4u;
-      pOut += 4u;
+      pIn += 4U;
+      pOut += 4U;
 
 
       /* Decrement the numSamples loop counter */
@@ -137,7 +137,7 @@ arm_status arm_mat_scale_q15(
 
     /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    blkCnt = numSamples % 0x4u;
+    blkCnt = numSamples % 0x4U;
 
 #else
 
@@ -148,7 +148,7 @@ arm_status arm_mat_scale_q15(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C(m,n) = A(m,n) * k */
       /* Scale, saturate and then store the results in the destination buffer. */

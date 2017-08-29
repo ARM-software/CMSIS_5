@@ -68,11 +68,11 @@ void arm_mult_q15(
   q31_t mul1, mul2, mul3, mul4;                  /* temporary variables */
 
   /* loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* read two samples at a time from sourceA */
     inA1 = *__SIMD32(pSrcA)++;
@@ -114,7 +114,7 @@ void arm_mult_q15(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
 #else
 
@@ -126,7 +126,7 @@ void arm_mult_q15(
 #endif /* #if defined (ARM_MATH_DSP) */
 
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A * B */
     /* Multiply the inputs and store the result in the destination buffer */

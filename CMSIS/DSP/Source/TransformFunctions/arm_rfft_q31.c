@@ -81,7 +81,7 @@ void arm_rfft_q31(
     uint32_t L2 = S->fftLenReal >> 1;
 
     /* Calculation of RIFFT of input */
-    if (S->ifftFlagR == 1u)
+    if (S->ifftFlagR == 1U)
     {
         /*  Real IFFT core process */
         arm_split_rifft_q31(pSrc, L2, S->pTwiddleAReal,
@@ -134,16 +134,16 @@ void arm_split_rfft_q31(
     q31_t outR, outI;                              /* Temporary variables for output */
     q31_t *pCoefA, *pCoefB;                        /* Temporary pointers for twiddle factors */
     q31_t CoefA1, CoefA2, CoefB1;                  /* Temporary variables for twiddle coefficients */
-    q31_t *pOut1 = &pDst[2], *pOut2 = &pDst[(4u * fftLen) - 1u];
-    q31_t *pIn1 = &pSrc[2], *pIn2 = &pSrc[(2u * fftLen) - 1u];
+    q31_t *pOut1 = &pDst[2], *pOut2 = &pDst[(4U * fftLen) - 1U];
+    q31_t *pIn1 = &pSrc[2], *pIn2 = &pSrc[(2U * fftLen) - 1U];
 
     /* Init coefficient pointers */
-    pCoefA = &pATable[modifier * 2u];
-    pCoefB = &pBTable[modifier * 2u];
+    pCoefA = &pATable[modifier * 2U];
+    pCoefB = &pBTable[modifier * 2U];
 
-    i = fftLen - 1u;
+    i = fftLen - 1U;
 
-    while (i > 0u)
+    while (i > 0U)
     {
         /*
         outR = (pSrc[2 * i] * pATable[2 * i] - pSrc[2 * i + 1] * pATable[2 * i + 1]
@@ -192,13 +192,13 @@ void arm_split_rfft_q31(
         *pOut2-- = outR;
 
         /* update coefficient pointer */
-        pCoefB = pCoefB + (modifier * 2u);
-        pCoefA = pCoefA + ((modifier * 2u) - 1u);
+        pCoefB = pCoefB + (modifier * 2U);
+        pCoefA = pCoefA + ((modifier * 2U) - 1U);
 
         i--;
     }
-    pDst[2u * fftLen] = (pSrc[0] - pSrc[1]) >> 1;
-    pDst[(2u * fftLen) + 1u] = 0;
+    pDst[2U * fftLen] = (pSrc[0] - pSrc[1]) >> 1;
+    pDst[(2U * fftLen) + 1U] = 0;
 
     pDst[0] = (pSrc[0] + pSrc[1]) >> 1;
     pDst[1] = 0;
@@ -225,12 +225,12 @@ void arm_split_rifft_q31(
     q31_t outR, outI;                              /* Temporary variables for output */
     q31_t *pCoefA, *pCoefB;                        /* Temporary pointers for twiddle factors */
     q31_t CoefA1, CoefA2, CoefB1;                  /* Temporary variables for twiddle coefficients */
-    q31_t *pIn1 = &pSrc[0], *pIn2 = &pSrc[(2u * fftLen) + 1u];
+    q31_t *pIn1 = &pSrc[0], *pIn2 = &pSrc[(2U * fftLen) + 1U];
 
     pCoefA = &pATable[0];
     pCoefB = &pBTable[0];
 
-    while (fftLen > 0u)
+    while (fftLen > 0U)
     {
         /*
         outR = (pIn[2 * i] * pATable[2 * i] + pIn[2 * i + 1] * pATable[2 * i + 1] +
@@ -274,8 +274,8 @@ void arm_split_rifft_q31(
         *pDst++ = outI;
 
         /* update coefficient pointer */
-        pCoefB = pCoefB + (modifier * 2u);
-        pCoefA = pCoefA + ((modifier * 2u) - 1u);
+        pCoefB = pCoefB + (modifier * 2U);
+        pCoefA = pCoefA + ((modifier * 2U) - 1U);
 
         /* Decrement loop count */
         fftLen--;

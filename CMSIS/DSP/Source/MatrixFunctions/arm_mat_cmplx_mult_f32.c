@@ -80,7 +80,7 @@ arm_status arm_mat_cmplx_mult_f32(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  uint16_t col, i = 0u, j, row = numRowsA, colCnt;      /* loop counters */
+  uint16_t col, i = 0U, j, row = numRowsA, colCnt;      /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
 
 #ifdef ARM_MATH_MATRIX_CHECK
@@ -112,7 +112,7 @@ arm_status arm_mat_cmplx_mult_f32(
        ** to the starting address of the pSrcB data */
       pIn2 = pSrcB->pData;
 
-      j = 0u;
+      j = 0U;
 
       /* column loop */
       do
@@ -131,7 +131,7 @@ arm_status arm_mat_cmplx_mult_f32(
         colCnt = numColsA >> 2;
 
         /* matrix multiplication        */
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
 
           /* Reading real part of complex matrix A */
@@ -141,15 +141,15 @@ arm_status arm_mat_cmplx_mult_f32(
           c0 = *pIn2;
 
           /* Reading imaginary part of complex matrix A */
-          b0 = *(pIn1 + 1u);
+          b0 = *(pIn1 + 1U);
 
           /* Reading imaginary part of complex matrix B */
-          d0 = *(pIn2 + 1u);
+          d0 = *(pIn2 + 1U);
 
           sumReal1 += a0 * c0;
           sumImag1 += b0 * c0;
 
-          pIn1 += 2u;
+          pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
           sumReal2 -= b0 * d0;
@@ -160,13 +160,13 @@ arm_status arm_mat_cmplx_mult_f32(
           a1 = *pIn1;
           c1 = *pIn2;
 
-          b1 = *(pIn1 + 1u);
-          d1 = *(pIn2 + 1u);
+          b1 = *(pIn1 + 1U);
+          d1 = *(pIn2 + 1U);
 
           sumReal1 += a1 * c1;
           sumImag1 += b1 * c1;
 
-          pIn1 += 2u;
+          pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
           sumReal2 -= b1 * d1;
@@ -175,13 +175,13 @@ arm_status arm_mat_cmplx_mult_f32(
           a0 = *pIn1;
           c0 = *pIn2;
 
-          b0 = *(pIn1 + 1u);
-          d0 = *(pIn2 + 1u);
+          b0 = *(pIn1 + 1U);
+          d0 = *(pIn2 + 1U);
 
           sumReal1 += a0 * c0;
           sumImag1 += b0 * c0;
 
-          pIn1 += 2u;
+          pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
           sumReal2 -= b0 * d0;
@@ -192,13 +192,13 @@ arm_status arm_mat_cmplx_mult_f32(
           a1 = *pIn1;
           c1 = *pIn2;
 
-          b1 = *(pIn1 + 1u);
-          d1 = *(pIn2 + 1u);
+          b1 = *(pIn1 + 1U);
+          d1 = *(pIn2 + 1U);
 
           sumReal1 += a1 * c1;
           sumImag1 += b1 * c1;
 
-          pIn1 += 2u;
+          pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
           sumReal2 -= b1 * d1;
@@ -210,21 +210,21 @@ arm_status arm_mat_cmplx_mult_f32(
 
         /* If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.
          ** No loop unrolling is used. */
-        colCnt = numColsA % 0x4u;
+        colCnt = numColsA % 0x4U;
 
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           a1 = *pIn1;
           c1 = *pIn2;
 
-          b1 = *(pIn1 + 1u);
-          d1 = *(pIn2 + 1u);
+          b1 = *(pIn1 + 1U);
+          d1 = *(pIn2 + 1U);
 
           sumReal1 += a1 * c1;
           sumImag1 += b1 * c1;
 
-          pIn1 += 2u;
+          pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
           sumReal2 -= b1 * d1;
@@ -243,12 +243,12 @@ arm_status arm_mat_cmplx_mult_f32(
 
         /* Update the pointer pIn2 to point to the  starting address of the next column */
         j++;
-        pIn2 = pSrcB->pData + 2u * j;
+        pIn2 = pSrcB->pData + 2U * j;
 
         /* Decrement the column loop counter */
         col--;
 
-      } while (col > 0u);
+      } while (col > 0U);
 
       /* Update the pointer pInA to point to the  starting address of the next row */
       i = i + numColsB;
@@ -257,7 +257,7 @@ arm_status arm_mat_cmplx_mult_f32(
       /* Decrement the row loop counter */
       row--;
 
-    } while (row > 0u);
+    } while (row > 0U);
 
     /* Set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;

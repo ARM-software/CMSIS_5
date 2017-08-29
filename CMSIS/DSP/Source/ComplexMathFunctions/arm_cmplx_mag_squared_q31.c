@@ -65,11 +65,11 @@ void arm_cmplx_mag_squared_q31(
   uint32_t blkCnt;                               /* loop counter */
 
   /* loop Unrolling */
-  blkCnt = numSamples >> 2u;
+  blkCnt = numSamples >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[0] = (A[0] * A[0] + A[1] * A[1]) */
     real = *pSrc++;
@@ -106,9 +106,9 @@ void arm_cmplx_mag_squared_q31(
 
   /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = numSamples % 0x4u;
+  blkCnt = numSamples % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[0] = (A[0] * A[0] + A[1] * A[1]) */
     real = *pSrc++;
@@ -126,7 +126,7 @@ void arm_cmplx_mag_squared_q31(
 
   /* Run the below code for Cortex-M0 */
 
-  while (numSamples > 0u)
+  while (numSamples > 0U)
   {
     /* out = ((real * real) + (imag * imag)) */
     real = *pSrc++;

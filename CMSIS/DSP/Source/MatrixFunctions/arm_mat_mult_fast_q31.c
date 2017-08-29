@@ -80,7 +80,7 @@ arm_status arm_mat_mult_fast_q31(
   uint16_t numRowsA = pSrcA->numRows;            /* number of rows of input matrix A    */
   uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
-  uint32_t col, i = 0u, j, row = numRowsA, colCnt;  /* loop counters */
+  uint32_t col, i = 0U, j, row = numRowsA, colCnt;  /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
   q31_t inA1, inB1;
 
@@ -116,7 +116,7 @@ arm_status arm_mat_mult_fast_q31(
 
     /* The following loop performs the dot-product of each row in pSrcA with each column in pSrcB */
     /* row loop */
-    while (row > 0u)
+    while (row > 0U)
     {
 
       /* For every row wise process, the column loop counter is to be initiated */
@@ -126,14 +126,14 @@ arm_status arm_mat_mult_fast_q31(
        ** to the starting address of the pSrcB data */
       pInB = pSrcB->pData;
 
-      j = 0u;
+      j = 0U;
 
 #if defined (ARM_MATH_DSP)
       col = col >> 1;
 #endif
 
       /* column loop */
-      while (col > 0u)
+      while (col > 0U)
       {
         /* Set the variable sum, that acts as accumulator, to zero */
         sum = 0;
@@ -153,7 +153,7 @@ arm_status arm_mat_mult_fast_q31(
 #endif
 
         /* matrix multiplication */
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
 
 #if defined (ARM_MATH_DSP)
@@ -190,7 +190,7 @@ arm_status arm_mat_mult_fast_q31(
           inA1 = pInA[3];
           sum = __SMMLA(inA1, inB1, sum);
 
-          pInA += 4u;
+          pInA += 4U;
 #endif
 
           /* Decrement the loop counter */
@@ -199,8 +199,8 @@ arm_status arm_mat_mult_fast_q31(
 
 #ifdef ARM_MATH_CM0_FAMILY
         /* If the columns of pSrcA is not a multiple of 4, compute any remaining output samples here. */
-        colCnt = numColsA % 0x4u;
-        while (colCnt > 0u)
+        colCnt = numColsA % 0x4U;
+        while (colCnt > 0U)
         {
           sum = __SMMLA(*pInA++, *pInB, sum);
           pInB += numColsB;
@@ -228,7 +228,7 @@ arm_status arm_mat_mult_fast_q31(
 
 #if defined (ARM_MATH_DSP)
       i = i + numColsA;
-      px = px2 + (numColsB & 1u);
+      px = px2 + (numColsB & 1U);
       px2 = px + numColsB;
 #endif
 
@@ -242,7 +242,7 @@ arm_status arm_mat_mult_fast_q31(
 #if defined (ARM_MATH_DSP)
 
     /* Compute remaining output column */
-    if (numColsB & 1u) {
+    if (numColsB & 1U) {
 
       /* Avoid redundant computation of last element */
       row = numRowsA & (~0x1);
@@ -265,7 +265,7 @@ arm_status arm_mat_mult_fast_q31(
         colCnt = numColsA >> 2;
 
         /* matrix multiplication */
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
           inA1 = *pInA++;
           inA2 = *pInA++;
@@ -289,8 +289,8 @@ arm_status arm_mat_mult_fast_q31(
           colCnt--;
         }
 
-        colCnt = numColsA & 3u;
-        while (colCnt > 0u) {
+        colCnt = numColsA & 3U;
+        while (colCnt > 0U) {
           sum = __SMMLA(*pInA++, *pInB, sum);
           pInB += numColsB;
           colCnt--;
@@ -306,13 +306,13 @@ arm_status arm_mat_mult_fast_q31(
     }
 
     /* Compute remaining output row */
-    if (numRowsA & 1u) {
+    if (numRowsA & 1U) {
 
       /* point to last row in output matrix */
       px = pDst->pData+(numColsB)*(numRowsA-1);
 
       col = numColsB;
-      i = 0u;
+      i = 0U;
 
       /* col loop */
       while (col > 0)
@@ -329,7 +329,7 @@ arm_status arm_mat_mult_fast_q31(
         colCnt = numColsA >> 2;
 
         /* matrix multiplication */
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
           inA1 = *pInA++;
           inA2 = *pInA++;
@@ -353,8 +353,8 @@ arm_status arm_mat_mult_fast_q31(
           colCnt--;
         }
 
-        colCnt = numColsA & 3u;
-        while (colCnt > 0u) {
+        colCnt = numColsA & 3U;
+        while (colCnt > 0U) {
           sum = __SMMLA(*pInA++, *pInB, sum);
           pInB += numColsB;
           colCnt--;

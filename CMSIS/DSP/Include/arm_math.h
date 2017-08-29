@@ -590,8 +590,8 @@ extern "C"
 
     while ((data & mask) == 0)
     {
-      count += 1u;
-      mask = mask >> 1u;
+      count += 1U;
+      mask = mask >> 1U;
     }
 
     return (count);
@@ -633,7 +633,7 @@ extern "C"
 
     /* calculation of reciprocal value */
     /* running approximation for two iterations */
-    for (i = 0u; i < 2u; i++)
+    for (i = 0U; i < 2U; i++)
     {
       tempVal = (uint32_t) (((q63_t) in * out) >> 31);
       tempVal = 0x7FFFFFFFu - tempVal;
@@ -646,7 +646,7 @@ extern "C"
     *dst = out;
 
     /* return num of signbits of out = 1/in value */
-    return (signBits + 1u);
+    return (signBits + 1U);
   }
 
 
@@ -684,7 +684,7 @@ extern "C"
 
     /* calculation of reciprocal value */
     /* running approximation for two iterations */
-    for (i = 0u; i < 2u; i++)
+    for (i = 0U; i < 2U; i++)
     {
       tempVal = (uint32_t) (((q31_t) in * out) >> 15);
       tempVal = 0x7FFFu - tempVal;
@@ -4924,7 +4924,7 @@ void arm_rfft_fast_f32(
     acc += (q63_t) S->A2 * S->state[1];
 
     /* convert output to 1.31 format to add y[n-1] */
-    out = (q31_t) (acc >> 31u);
+    out = (q31_t) (acc >> 31U);
 
     /* out += y[n-1] */
     out += S->state[2];
@@ -5608,7 +5608,7 @@ void arm_rfft_fast_f32(
       y += ((q31_t) (((q63_t) y1 * fract) >> 32));
 
       /* Convert y to 1.31 format */
-      return (y << 1u);
+      return (y << 1U);
     }
   }
 
@@ -5892,7 +5892,7 @@ void arm_rfft_fast_f32(
   int32_t srcInc,
   uint32_t blockSize)
   {
-    uint32_t i = 0u;
+    uint32_t i = 0U;
     int32_t wOffset;
 
     /* Copy the value of Index pointer that points
@@ -5902,7 +5902,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* copy the input sample to the circular buffer */
       circBuffer[wOffset] = *src;
@@ -5939,7 +5939,7 @@ void arm_rfft_fast_f32(
   int32_t dstInc,
   uint32_t blockSize)
   {
-    uint32_t i = 0u;
+    uint32_t i = 0U;
     int32_t rOffset, dst_end;
 
     /* Copy the value of Index pointer that points
@@ -5950,7 +5950,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* copy the sample from the circular buffer to the destination buffer */
       *dst = circBuffer[rOffset];
@@ -5992,7 +5992,7 @@ void arm_rfft_fast_f32(
   int32_t srcInc,
   uint32_t blockSize)
   {
-    uint32_t i = 0u;
+    uint32_t i = 0U;
     int32_t wOffset;
 
     /* Copy the value of Index pointer that points
@@ -6002,7 +6002,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* copy the input sample to the circular buffer */
       circBuffer[wOffset] = *src;
@@ -6050,7 +6050,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* copy the sample from the circular buffer to the destination buffer */
       *dst = circBuffer[rOffset];
@@ -6092,7 +6092,7 @@ void arm_rfft_fast_f32(
   int32_t srcInc,
   uint32_t blockSize)
   {
-    uint32_t i = 0u;
+    uint32_t i = 0U;
     int32_t wOffset;
 
     /* Copy the value of Index pointer that points
@@ -6102,7 +6102,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* copy the input sample to the circular buffer */
       circBuffer[wOffset] = *src;
@@ -6150,7 +6150,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* copy the sample from the circular buffer to the destination buffer */
       *dst = circBuffer[rOffset];
@@ -6928,7 +6928,7 @@ void arm_rfft_fast_f32(
 
     /* 20 bits for the fractional part */
     /* shift left xfract by 11 to keep 1.31 format */
-    xfract = (X & 0x000FFFFF) << 11u;
+    xfract = (X & 0x000FFFFF) << 11U;
 
     /* Read two nearest output values from the index */
     x1 = pYData[(rI) + (int32_t)nCols * (cI)    ];
@@ -6936,7 +6936,7 @@ void arm_rfft_fast_f32(
 
     /* 20 bits for the fractional part */
     /* shift left yfract by 11 to keep 1.31 format */
-    yfract = (Y & 0x000FFFFF) << 11u;
+    yfract = (Y & 0x000FFFFF) << 11U;
 
     /* Read two nearest output values from the index */
     y1 = pYData[(rI) + (int32_t)nCols * (cI + 1)    ];
@@ -7020,19 +7020,19 @@ void arm_rfft_fast_f32(
 
     /* x1 is in 1.15(q15), xfract in 12.20 format and out is in 13.35 format */
     /* convert 13.35 to 13.31 by right shifting  and out is in 1.31 */
-    out = (q31_t) (((q63_t) x1 * (0xFFFFF - xfract)) >> 4u);
+    out = (q31_t) (((q63_t) x1 * (0xFFFFF - xfract)) >> 4U);
     acc = ((q63_t) out * (0xFFFFF - yfract));
 
     /* x2 * (xfract) * (1-yfract)  in 1.51 and adding to acc */
-    out = (q31_t) (((q63_t) x2 * (0xFFFFF - yfract)) >> 4u);
+    out = (q31_t) (((q63_t) x2 * (0xFFFFF - yfract)) >> 4U);
     acc += ((q63_t) out * (xfract));
 
     /* y1 * (1 - xfract) * (yfract)  in 1.51 and adding to acc */
-    out = (q31_t) (((q63_t) y1 * (0xFFFFF - xfract)) >> 4u);
+    out = (q31_t) (((q63_t) y1 * (0xFFFFF - xfract)) >> 4U);
     acc += ((q63_t) out * (yfract));
 
     /* y2 * (xfract) * (yfract)  in 1.51 and adding to acc */
-    out = (q31_t) (((q63_t) y2 * (xfract)) >> 4u);
+    out = (q31_t) (((q63_t) y2 * (xfract)) >> 4U);
     acc += ((q63_t) out * (yfract));
 
     /* acc is in 13.51 format and down shift acc by 36 times */

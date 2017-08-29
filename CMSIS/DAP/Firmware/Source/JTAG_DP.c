@@ -214,7 +214,7 @@ uint8_t JTAG_Transfer##speed (uint32_t request, uint32_t *data) {               
       JTAG_CYCLE_TDI(val);                  /* Set D0..D30 */                   \
       val >>= 1;                                                                \
     }                                                                           \
-    n = DAP_Data.jtag_dev.count - DAP_Data.jtag_dev.index - 1u;                 \
+    n = DAP_Data.jtag_dev.count - DAP_Data.jtag_dev.index - 1U;                 \
     if (n) {                                                                    \
       JTAG_CYCLE_TDI(val);                  /* Set D31 */                       \
       for (--n; n; n--) {                                                       \
@@ -315,7 +315,7 @@ void JTAG_WriteAbort (uint32_t data) {
     JTAG_CYCLE_TDI(data);                   /* Set D0..D30 */
     data >>= 1;
   }
-  n = DAP_Data.jtag_dev.count - DAP_Data.jtag_dev.index - 1u;
+  n = DAP_Data.jtag_dev.count - DAP_Data.jtag_dev.index - 1U;
   if (n) {
     JTAG_CYCLE_TDI(data);                   /* Set D31 */
     for (--n; n; n--) {

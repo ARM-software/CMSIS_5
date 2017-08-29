@@ -72,7 +72,7 @@ void arm_std_q31(
   uint32_t blkCnt;                               /* loop counter */
   q63_t sumOfSquares = 0;                        /* Accumulator */
 
-  if (blockSize == 1u)
+  if (blockSize == 1U)
   {
     *pResult = 0;
     return;
@@ -82,25 +82,25 @@ void arm_std_q31(
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1])  */
     /* Compute Sum of squares of the input samples
      * and then store the result in a temporary variable, sum. */
-    in = *pSrc++ >> 8u;
+    in = *pSrc++ >> 8U;
     sum += in;
     sumOfSquares += ((q63_t) (in) * (in));
-    in = *pSrc++ >> 8u;
+    in = *pSrc++ >> 8U;
     sum += in;
     sumOfSquares += ((q63_t) (in) * (in));
-    in = *pSrc++ >> 8u;
+    in = *pSrc++ >> 8U;
     sum += in;
     sumOfSquares += ((q63_t) (in) * (in));
-    in = *pSrc++ >> 8u;
+    in = *pSrc++ >> 8U;
     sum += in;
     sumOfSquares += ((q63_t) (in) * (in));
 
@@ -110,14 +110,14 @@ void arm_std_q31(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute Sum of squares of the input samples
      * and then store the result in a temporary variable, sum. */
-    in = *pSrc++ >> 8u;
+    in = *pSrc++ >> 8U;
     sum += in;
     sumOfSquares += ((q63_t) (in) * (in));
 
@@ -127,7 +127,7 @@ void arm_std_q31(
 
   /* Compute Mean of squares of the input samples
    * and then store the result in a temporary variable, meanOfSquares. */
-  meanOfSquares = sumOfSquares / (q63_t)(blockSize - 1u);
+  meanOfSquares = sumOfSquares / (q63_t)(blockSize - 1U);
 
 #else
   /* Run the below code for Cortex-M0 */
@@ -135,12 +135,12 @@ void arm_std_q31(
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute Sum of squares of the input samples
      * and then store the result in a temporary variable, sumOfSquares. */
-    in = *pSrc++ >> 8u;
+    in = *pSrc++ >> 8U;
     sumOfSquares += ((q63_t) (in) * (in));
 
     /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
@@ -153,15 +153,15 @@ void arm_std_q31(
 
   /* Compute Mean of squares of the input samples
    * and then store the result in a temporary variable, meanOfSquares. */
-  meanOfSquares = sumOfSquares / (q63_t)(blockSize - 1u);
+  meanOfSquares = sumOfSquares / (q63_t)(blockSize - 1U);
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
   /* Compute square of mean */
-  squareOfMean = sum * sum / (q63_t)(blockSize * (blockSize - 1u));
+  squareOfMean = sum * sum / (q63_t)(blockSize * (blockSize - 1U));
 
   /* Compute standard deviation and then store the result to the destination */
-  arm_sqrt_q31((meanOfSquares - squareOfMean) >> 15u, pResult);
+  arm_sqrt_q31((meanOfSquares - squareOfMean) >> 15U, pResult);
 }
 
 /**

@@ -54,12 +54,12 @@
 #define ARM_MPU_REGION_SIZE_2GB      ((uint8_t)0x1EU)
 #define ARM_MPU_REGION_SIZE_4GB      ((uint8_t)0x1FU)
 
-#define ARM_MPU_AP_NONE 0u 
-#define ARM_MPU_AP_PRIV 1u
-#define ARM_MPU_AP_URO  2u
-#define ARM_MPU_AP_FULL 3u
-#define ARM_MPU_AP_PRO  5u
-#define ARM_MPU_AP_RO   6u
+#define ARM_MPU_AP_NONE 0U 
+#define ARM_MPU_AP_PRIV 1U
+#define ARM_MPU_AP_URO  2U
+#define ARM_MPU_AP_FULL 3U
+#define ARM_MPU_AP_PRO  5U
+#define ARM_MPU_AP_RO   6U
 
 /** MPU Region Base Address Register Value
 *
@@ -131,7 +131,7 @@ __STATIC_INLINE void ARM_MPU_Disable()
 __STATIC_INLINE void ARM_MPU_ClrRegion(uint32_t rnr)
 {
   MPU->RNR = rnr;
-  MPU->RASR = 0u;
+  MPU->RASR = 0U;
 }
 
 /** Configure an MPU region.
@@ -164,7 +164,7 @@ __STATIC_INLINE void ARM_MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t r
 __STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRICT src, uint32_t len)
 {
   uint32_t i;
-  for (i = 0u; i < len; ++i) 
+  for (i = 0U; i < len; ++i) 
   {
     dst[i] = src[i];
   }
@@ -176,7 +176,7 @@ __STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRI
 */
 __STATIC_INLINE void ARM_MPU_Load(ARM_MPU_Region_t const* table, uint32_t cnt) 
 {
-  static const uint32_t rowWordSize = sizeof(ARM_MPU_Region_t)/4u;
+  static const uint32_t rowWordSize = sizeof(ARM_MPU_Region_t)/4U;
   if (cnt > MPU_TYPE_RALIASES) {
 	orderedCpy(&(MPU->RBAR), &(table->RBAR), MPU_TYPE_RALIASES*rowWordSize);
 	ARM_MPU_Load(table+MPU_TYPE_RALIASES, cnt-MPU_TYPE_RALIASES);

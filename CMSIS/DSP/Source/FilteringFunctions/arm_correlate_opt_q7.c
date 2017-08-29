@@ -84,7 +84,7 @@ void arm_correlate_opt_q7(
   q7_t *pIn2;                                    /* inputB pointer                */
   q15_t *py;                                     /* Intermediate inputB pointer   */
   q31_t acc0, acc1, acc2, acc3;                  /* Accumulators                  */
-  uint32_t j, k = 0u, blkCnt;                    /* loop counter                  */
+  uint32_t j, k = 0U, blkCnt;                    /* loop counter                  */
   int32_t inc = 1;                               /* output pointer increment          */
   uint32_t outBlockSize;                         /* loop counter                  */
   q15_t x4;                                      /* Temporary input variable      */
@@ -113,13 +113,13 @@ void arm_correlate_opt_q7(
     pIn2 = (pSrcB);
 
     /* Number of output samples is calculated */
-    outBlockSize = (2u * srcALen) - 1u;
+    outBlockSize = (2U * srcALen) - 1U;
 
     /* When srcALen > srcBLen, zero padding is done to srcB
      * to make their lengths equal.
      * Instead, (outBlockSize - (srcALen + srcBLen - 1))
      * number of output samples are made zero */
-    j = outBlockSize - (srcALen + (srcBLen - 1u));
+    j = outBlockSize - (srcALen + (srcBLen - 1U));
 
     /* Updating the pointer position to non zero value */
     pOut += j;
@@ -140,7 +140,7 @@ void arm_correlate_opt_q7(
 
     /* CORR(x, y) = Reverse order(CORR(y, x)) */
     /* Hence set the destination pointer to point to the last output sample */
-    pOut = pDst + ((srcALen + srcBLen) - 2u);
+    pOut = pDst + ((srcALen + srcBLen) - 2U);
 
     /* Destination address modifier is set to -1 */
     inc = -1;
@@ -149,11 +149,11 @@ void arm_correlate_opt_q7(
 
 
   /* Copy (srcBLen) samples in scratch buffer */
-  k = srcBLen >> 2u;
+  k = srcBLen >> 2U;
 
   /* First part of the processing with loop unrolling copies 4 data points at a time.
    ** a second loop below copies for the remaining 1 to 3 samples. */
-  while (k > 0u)
+  while (k > 0U)
   {
     /* copy second buffer in reversal manner */
     x4 = (q15_t) * pIn2++;
@@ -171,9 +171,9 @@ void arm_correlate_opt_q7(
 
   /* If the count is not a multiple of 4, copy remaining samples here.
    ** No loop unrolling is used. */
-  k = srcBLen % 0x4u;
+  k = srcBLen % 0x4U;
 
-  while (k > 0u)
+  while (k > 0U)
   {
     /* copy second buffer in reversal manner for remaining samples */
     x4 = (q15_t) * pIn2++;
@@ -183,18 +183,18 @@ void arm_correlate_opt_q7(
     k--;
   }
 
-  /* Fill (srcBLen - 1u) zeros in scratch buffer */
-  arm_fill_q15(0, pScr1, (srcBLen - 1u));
+  /* Fill (srcBLen - 1U) zeros in scratch buffer */
+  arm_fill_q15(0, pScr1, (srcBLen - 1U));
 
   /* Update temporary scratch pointer */
-  pScr1 += (srcBLen - 1u);
+  pScr1 += (srcBLen - 1U);
 
   /* Copy (srcALen) samples in scratch buffer */
-  k = srcALen >> 2u;
+  k = srcALen >> 2U;
 
   /* First part of the processing with loop unrolling copies 4 data points at a time.
    ** a second loop below copies for the remaining 1 to 3 samples. */
-  while (k > 0u)
+  while (k > 0U)
   {
     /* copy second buffer in reversal manner */
     x4 = (q15_t) * pIn1++;
@@ -212,9 +212,9 @@ void arm_correlate_opt_q7(
 
   /* If the count is not a multiple of 4, copy remaining samples here.
    ** No loop unrolling is used. */
-  k = srcALen % 0x4u;
+  k = srcALen % 0x4U;
 
-  while (k > 0u)
+  while (k > 0U)
   {
     /* copy second buffer in reversal manner for remaining samples */
     x4 = (q15_t) * pIn1++;
@@ -226,20 +226,20 @@ void arm_correlate_opt_q7(
 
 #ifndef UNALIGNED_SUPPORT_DISABLE
 
-  /* Fill (srcBLen - 1u) zeros at end of scratch buffer */
-  arm_fill_q15(0, pScr1, (srcBLen - 1u));
+  /* Fill (srcBLen - 1U) zeros at end of scratch buffer */
+  arm_fill_q15(0, pScr1, (srcBLen - 1U));
 
   /* Update pointer */
-  pScr1 += (srcBLen - 1u);
+  pScr1 += (srcBLen - 1U);
 
 #else
 
 /* Apply loop unrolling and do 4 Copies simultaneously. */
-  k = (srcBLen - 1u) >> 2u;
+  k = (srcBLen - 1U) >> 2U;
 
   /* First part of the processing with loop unrolling copies 4 data points at a time.
    ** a second loop below copies for the remaining 1 to 3 samples. */
-  while (k > 0u)
+  while (k > 0U)
   {
     /* copy second buffer in reversal manner */
     *pScr1++ = 0;
@@ -253,9 +253,9 @@ void arm_correlate_opt_q7(
 
   /* If the count is not a multiple of 4, copy remaining samples here.
    ** No loop unrolling is used. */
-  k = (srcBLen - 1u) % 0x4u;
+  k = (srcBLen - 1U) % 0x4U;
 
-  while (k > 0u)
+  while (k > 0U)
   {
     /* copy second buffer in reversal manner for remaining samples */
     *pScr1++ = 0;
@@ -273,7 +273,7 @@ void arm_correlate_opt_q7(
   pScr2 = pScratch2;
 
   /* Actual correlation process starts here */
-  blkCnt = (srcALen + srcBLen - 1u) >> 2;
+  blkCnt = (srcALen + srcBLen - 1U) >> 2;
 
   while (blkCnt > 0)
   {
@@ -292,9 +292,9 @@ void arm_correlate_opt_q7(
     /* Read next two samples from scratch1 buffer */
     x2 = *__SIMD32(pScr1)++;
 
-    tapCnt = (srcBLen) >> 2u;
+    tapCnt = (srcBLen) >> 2U;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
 
       /* Read four samples from smaller buffer */
@@ -327,7 +327,7 @@ void arm_correlate_opt_q7(
       acc3 = __SMLADX(x3, y1, acc3);
 
       /* Read four samples from smaller buffer */
-      y1 = _SIMD32_OFFSET(pScr2 + 2u);
+      y1 = _SIMD32_OFFSET(pScr2 + 2U);
 
       acc0 = __SMLAD(x2, y1, acc0);
 
@@ -345,7 +345,7 @@ void arm_correlate_opt_q7(
 
       acc3 = __SMLADX(x3, y1, acc3);
 
-      pScr2 += 4u;
+      pScr2 += 4U;
 
 
       /* Decrement the loop counter */
@@ -355,13 +355,13 @@ void arm_correlate_opt_q7(
 
 
     /* Update scratch pointer for remaining samples of smaller length sequence */
-    pScr1 -= 4u;
+    pScr1 -= 4U;
 
 
     /* apply same above for remaining samples of smaller length sequence */
-    tapCnt = (srcBLen) & 3u;
+    tapCnt = (srcBLen) & 3U;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
 
       /* accumlate the results */
@@ -370,7 +370,7 @@ void arm_correlate_opt_q7(
       acc2 += (*pScr1++ * *pScr2);
       acc3 += (*pScr1++ * *pScr2++);
 
-      pScr1 -= 3u;
+      pScr1 -= 3U;
 
       /* Decrement the loop counter */
       tapCnt--;
@@ -379,24 +379,24 @@ void arm_correlate_opt_q7(
     blkCnt--;
 
     /* Store the result in the accumulator in the destination buffer. */
-    *pOut = (q7_t) (__SSAT(acc0 >> 7u, 8));
+    *pOut = (q7_t) (__SSAT(acc0 >> 7U, 8));
     pOut += inc;
-    *pOut = (q7_t) (__SSAT(acc1 >> 7u, 8));
+    *pOut = (q7_t) (__SSAT(acc1 >> 7U, 8));
     pOut += inc;
-    *pOut = (q7_t) (__SSAT(acc2 >> 7u, 8));
+    *pOut = (q7_t) (__SSAT(acc2 >> 7U, 8));
     pOut += inc;
-    *pOut = (q7_t) (__SSAT(acc3 >> 7u, 8));
+    *pOut = (q7_t) (__SSAT(acc3 >> 7U, 8));
     pOut += inc;
 
     /* Initialization of inputB pointer */
     pScr2 = py;
 
-    pScratch1 += 4u;
+    pScratch1 += 4U;
 
   }
 
 
-  blkCnt = (srcALen + srcBLen - 1u) & 0x3;
+  blkCnt = (srcALen + srcBLen - 1U) & 0x3;
 
   /* Calculate correlation for remaining samples of Bigger length sequence */
   while (blkCnt > 0)
@@ -407,9 +407,9 @@ void arm_correlate_opt_q7(
     /* Clear Accumlators */
     acc0 = 0;
 
-    tapCnt = (srcBLen) >> 1u;
+    tapCnt = (srcBLen) >> 1U;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       acc0 += (*pScr1++ * *pScr2++);
       acc0 += (*pScr1++ * *pScr2++);
@@ -418,10 +418,10 @@ void arm_correlate_opt_q7(
       tapCnt--;
     }
 
-    tapCnt = (srcBLen) & 1u;
+    tapCnt = (srcBLen) & 1U;
 
     /* apply same above for remaining samples of smaller length sequence */
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
 
       /* accumlate the results */
@@ -434,14 +434,14 @@ void arm_correlate_opt_q7(
     blkCnt--;
 
     /* Store the result in the accumulator in the destination buffer. */
-    *pOut = (q7_t) (__SSAT(acc0 >> 7u, 8));
+    *pOut = (q7_t) (__SSAT(acc0 >> 7U, 8));
 
     pOut += inc;
 
     /* Initialization of inputB pointer */
     pScr2 = py;
 
-    pScratch1 += 1u;
+    pScratch1 += 1U;
 
   }
 

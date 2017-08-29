@@ -86,11 +86,11 @@ arm_status arm_mat_add_q15(
     /* Run the below code for Cortex-M4 and Cortex-M3 */
 
     /* Loop unrolling */
-    blkCnt = (uint32_t) numSamples >> 2u;
+    blkCnt = (uint32_t) numSamples >> 2U;
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C(m,n) = A(m,n) + B(m,n) */
       /* Add, Saturate and then store the results in the destination buffer. */
@@ -103,11 +103,11 @@ arm_status arm_mat_add_q15(
 
     /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    blkCnt = (uint32_t) numSamples % 0x4u;
+    blkCnt = (uint32_t) numSamples % 0x4U;
 
     /* q15 pointers of input and output are initialized */
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C(m,n) = A(m,n) + B(m,n) */
       /* Add, Saturate and then store the results in the destination buffer. */
@@ -126,7 +126,7 @@ arm_status arm_mat_add_q15(
 
 
     /* q15 pointers of input and output are initialized */
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C(m,n) = A(m,n) + B(m,n) */
       /* Add, Saturate and then store the results in the destination buffer. */

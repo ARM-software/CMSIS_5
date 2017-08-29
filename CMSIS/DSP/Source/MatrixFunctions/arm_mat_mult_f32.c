@@ -83,7 +83,7 @@ arm_status arm_mat_mult_f32(
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   float32_t in1, in2, in3, in4;
-  uint16_t col, i = 0u, j, row = numRowsA, colCnt;      /* loop counters */
+  uint16_t col, i = 0U, j, row = numRowsA, colCnt;      /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
 
 #ifdef ARM_MATH_MATRIX_CHECK
@@ -115,7 +115,7 @@ arm_status arm_mat_mult_f32(
        ** to the starting address of the pSrcB data */
       pIn2 = pSrcB->pData;
 
-      j = 0u;
+      j = 0U;
 
       /* column loop */
       do
@@ -127,10 +127,10 @@ arm_status arm_mat_mult_f32(
         pIn1 = pInA;
 
         /* Apply loop unrolling and compute 4 MACs simultaneously. */
-        colCnt = numColsA >> 2u;
+        colCnt = numColsA >> 2U;
 
         /* matrix multiplication        */
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           in3 = *pIn2;
@@ -150,7 +150,7 @@ arm_status arm_mat_mult_f32(
           in4 = *pIn2;
           pIn2 += numColsB;
           sum += in2 * in4;
-          pIn1 += 4u;
+          pIn1 += 4U;
 
           /* Decrement the loop count */
           colCnt--;
@@ -158,9 +158,9 @@ arm_status arm_mat_mult_f32(
 
         /* If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.
          ** No loop unrolling is used. */
-        colCnt = numColsA % 0x4u;
+        colCnt = numColsA % 0x4U;
 
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           sum += *pIn1++ * (*pIn2);
@@ -180,14 +180,14 @@ arm_status arm_mat_mult_f32(
         /* Decrement the column loop counter */
         col--;
 
-      } while (col > 0u);
+      } while (col > 0U);
 
 #else
 
   /* Run the below code for Cortex-M0 */
 
   float32_t *pInB = pSrcB->pData;                /* input data matrix pointer B */
-  uint16_t col, i = 0u, row = numRowsA, colCnt;  /* loop counters */
+  uint16_t col, i = 0U, row = numRowsA, colCnt;  /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
 
 #ifdef ARM_MATH_MATRIX_CHECK
@@ -230,7 +230,7 @@ arm_status arm_mat_mult_f32(
         /* Matrix A columns number of MAC operations are to be performed */
         colCnt = numColsA;
 
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           sum += *pIn1++ * (*pIn2);
@@ -249,7 +249,7 @@ arm_status arm_mat_mult_f32(
         /* Update the pointer pIn2 to point to the  starting address of the next column */
         pIn2 = pInB + (numColsB - col);
 
-      } while (col > 0u);
+      } while (col > 0U);
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
@@ -260,7 +260,7 @@ arm_status arm_mat_mult_f32(
       /* Decrement the row loop counter */
       row--;
 
-    } while (row > 0u);
+    } while (row > 0U);
     /* Set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
   }

@@ -22,11 +22,11 @@ void ref_lms_f32(
 
   /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[numTaps - 1u]);
+  pStateCurnt = &(S->pState[numTaps - 1U]);
 
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy the new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -99,9 +99,9 @@ void ref_lms_norm_f32(
 
   /* S->pState points to buffer which contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[numTaps - 1u]);
+  pStateCurnt = &(S->pState[numTaps - 1U]);
 
-  for(blkCnt = blockSize; blkCnt > 0u; blkCnt--)
+  for(blkCnt = blockSize; blkCnt > 0U; blkCnt--)
   {
     /* Copy the new input sample into the state buffer */
     *pStateCurnt++ = *pSrc;
@@ -179,13 +179,13 @@ void ref_lms_q31(
   q31_t coef;                                    /* Temporary variable for coef */
   q31_t acc_l, acc_h;                            /*  temporary input */
   uint32_t uShift = (uint32_t)S->postShift + 1;
-  uint32_t lShift = 32u - uShift;                /*  Shift to be applied to the output */
+  uint32_t lShift = 32U - uShift;                /*  Shift to be applied to the output */
 
   /* S->pState points to buffer which contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[(numTaps - 1u)]);
+  pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
-  for(blkCnt = blockSize; blkCnt > 0u; blkCnt--)
+  for(blkCnt = blockSize; blkCnt > 0U; blkCnt--)
   {
     /* Copy the new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -202,7 +202,7 @@ void ref_lms_q31(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Perform the multiply-accumulate */
       acc += (q63_t)(*px++) * (*pb++);
@@ -241,7 +241,7 @@ void ref_lms_q31(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Perform the multiply-accumulate */
       coef = (q31_t)(((q63_t) alpha * (*px++)) >> 32);
@@ -260,11 +260,11 @@ void ref_lms_q31(
   /* Points to the start of the pState buffer */
   pStateCurnt = S->pState;
 
-  /*  Copy (numTaps - 1u) samples  */
+  /*  Copy (numTaps - 1U) samples  */
   tapCnt = numTaps - 1;
 
   /* Copy the data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -296,17 +296,17 @@ void ref_lms_norm_q31(
   q63_t errorXmu;                   				 /* Temporary variables to store error and mu product and reciprocal of energy */
   q31_t coef;                                    /* Temporary variable for coef */
   q31_t acc_l, acc_h;                            /*  temporary input */
-  uint32_t uShift = ((uint32_t) S->postShift + 1u);
-  uint32_t lShift = 32u - uShift;                /*  Shift to be applied to the output */
+  uint32_t uShift = ((uint32_t) S->postShift + 1U);
+  uint32_t lShift = 32U - uShift;                /*  Shift to be applied to the output */
 
   energy = S->energy;
   x0 = S->x0;
 
   /* S->pState points to buffer which contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[(numTaps - 1u)]);
+  pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
-  for(blkCnt = blockSize; blkCnt > 0u; blkCnt--)
+  for(blkCnt = blockSize; blkCnt > 0U; blkCnt--)
   {
 
     /* Copy the new input sample into the state buffer */
@@ -331,7 +331,7 @@ void ref_lms_norm_q31(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Perform the multiply-accumulate */
       acc += ((q63_t) (*px++)) * (*pb++);
@@ -372,13 +372,13 @@ void ref_lms_norm_q31(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Perform the multiply-accumulate */
       /* coef is in 2.30 format */
       coef = (q31_t)(((q63_t)w * (*px++)) >> 32);
       /* get coef in 1.31 format by left shifting */
-      *pb = ref_sat_q31((q63_t)*pb + (coef << 1u));
+      *pb = ref_sat_q31((q63_t)*pb + (coef << 1U));
       /* update coefficient buffer to next coefficient */
       pb++;
 
@@ -404,11 +404,11 @@ void ref_lms_norm_q31(
   /* Points to the start of the pState buffer */
   pStateCurnt = S->pState;
 
-  /* Loop for (numTaps - 1u) samples copy */
+  /* Loop for (numTaps - 1U) samples copy */
   tapCnt = numTaps - 1;
 
   /* Copy the remaining q31_t data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -443,9 +443,9 @@ void ref_lms_q15(
 
   /* S->pState points to buffer which contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[(numTaps - 1u)]);
+  pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
-  for(blkCnt = blockSize; blkCnt > 0u; blkCnt--)
+  for(blkCnt = blockSize; blkCnt > 0U; blkCnt--)
   {
     /* Copy the new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -462,7 +462,7 @@ void ref_lms_q15(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Perform the multiply-accumulate */
       acc += (q63_t)((q31_t)(*px++) * (*pb++));
@@ -504,7 +504,7 @@ void ref_lms_q15(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Perform the multiply-accumulate */
       coef = (q31_t) * pb + (((q31_t) alpha * (*px++)) >> 15);
@@ -522,11 +522,11 @@ void ref_lms_q15(
   /* Points to the start of the pState buffer */
   pStateCurnt = S->pState;
 
-  /*  Copy (numTaps - 1u) samples  */
+  /*  Copy (numTaps - 1U) samples  */
   tapCnt = numTaps - 1;
 
   /* Copy the data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -568,9 +568,9 @@ void ref_lms_norm_q15(
 
   /* S->pState points to buffer which contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[(numTaps - 1u)]);
+  pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
-  for(blkCnt = blockSize; blkCnt > 0u; blkCnt--)
+  for(blkCnt = blockSize; blkCnt > 0U; blkCnt--)
   {
     /* Copy the new input sample into the state buffer */
     *pStateCurnt++ = *pSrc;
@@ -594,7 +594,7 @@ void ref_lms_norm_q15(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Perform the multiply-accumulate */
       acc += (q31_t)*px++ * (*pb++);
@@ -653,7 +653,7 @@ void ref_lms_norm_q15(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Perform the multiply-accumulate */
       coef = *pb + (((q31_t)w * (*px++)) >> 15);
@@ -667,7 +667,7 @@ void ref_lms_norm_q15(
     x0 = *pState;
 
     /* Advance state pointer by 1 for the next sample */
-    pState = pState + 1u;
+    pState = pState + 1U;
   }
 
   /* Save energy and x0 values for the next frame */
@@ -681,11 +681,11 @@ void ref_lms_norm_q15(
   /* Points to the start of the pState buffer */
   pStateCurnt = S->pState;
 
-  /* copy (numTaps - 1u) data */
+  /* copy (numTaps - 1U) data */
   tapCnt = numTaps - 1;
 
   /* copy data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 

@@ -8,11 +8,11 @@ void ref_correlate_f32(
   float32_t * pDst)
 {
   float32_t *pIn1 = pSrcA;                       /* inputA pointer 			*/
-  float32_t *pIn2 = pSrcB + (srcBLen - 1u);      /* inputB pointer 			*/
+  float32_t *pIn2 = pSrcB + (srcBLen - 1U);      /* inputB pointer 			*/
   float32_t sum;                                 /* Accumulator 				*/
-  uint32_t i = 0u, j;                            /* loop counters 			*/
-  uint32_t inv = 0u;                             /* Reverse order flag 	*/
-  uint32_t tot = 0u;                             /* Length 							*/
+  uint32_t i = 0U, j;                            /* loop counters 			*/
+  uint32_t inv = 0U;                             /* Reverse order flag 	*/
+  uint32_t tot = 0U;                             /* Length 							*/
 
   /* The algorithm implementation is based on the lengths of the inputs. 
    * srcB is always made to slide across srcA. 
@@ -32,7 +32,7 @@ void ref_correlate_f32(
 	 */
 
   /* Calculate the length of the remaining sequence */
-  tot = srcALen + srcBLen - 2u;
+  tot = srcALen + srcBLen - 2U;
 
   if (srcALen > srcBLen)
   {
@@ -46,7 +46,7 @@ void ref_correlate_f32(
     pIn1 = pSrcB;
 
     /* Initialization to the end of inputA pointer */
-    pIn2 = pSrcA + srcALen - 1u;
+    pIn2 = pSrcA + srcALen - 1U;
 
     /* Initialisation of the pointer after zero padding */
     pDst += tot;
@@ -61,13 +61,13 @@ void ref_correlate_f32(
   }
 
   /* Loop to calculate convolution for output length number of times */
-  for (i = 0u; i <= tot; i++)
+  for (i = 0U; i <= tot; i++)
   {
     /* Initialize sum with zero to carry on MAC operations */
     sum = 0.0f;
 
     /* Loop to perform MAC operations according to convolution equation */
-    for (j = 0u; j <= i; j++)
+    for (j = 0U; j <= i; j++)
     {
       /* Check the array limitations */
       if ((i - j < srcBLen) && (j < srcALen))
@@ -92,14 +92,14 @@ void ref_correlate_q31(
   q31_t * pDst)
 {
   q31_t *pIn1 = pSrcA;                           /* inputA pointer               */
-  q31_t *pIn2 = pSrcB + (srcBLen - 1u);          /* inputB pointer               */
+  q31_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
   q63_t sum;                                     /* Accumulators                  */
-  uint32_t i = 0u, j;                            /* loop counters */
-  uint32_t inv = 0u;                             /* Reverse order flag */
-  uint32_t tot = 0u;                             /* Length */
+  uint32_t i = 0U, j;                            /* loop counters */
+  uint32_t inv = 0U;                             /* Reverse order flag */
+  uint32_t tot = 0U;                             /* Length */
 
   /* Calculate the length of the remaining sequence */
-  tot = ((srcALen + srcBLen) - 2u);
+  tot = ((srcALen + srcBLen) - 2U);
 
   if (srcALen > srcBLen)
   {
@@ -116,7 +116,7 @@ void ref_correlate_q31(
     pIn1 = pSrcB;
 
     /* Initialization to the end of inputA pointer */
-    pIn2 = pSrcA + (srcALen - 1u);
+    pIn2 = pSrcA + (srcALen - 1U);
 
     /* Initialisation of the pointer after zero padding */
     pDst = pDst + tot;
@@ -132,13 +132,13 @@ void ref_correlate_q31(
   }
 
   /* Loop to calculate correlation for output length number of times */
-  for (i = 0u; i <= tot; i++)
+  for (i = 0U; i <= tot; i++)
   {
     /* Initialize sum with zero to carry on MAC operations */
     sum = 0;
 
     /* Loop to perform MAC operations according to correlation equation */
-    for (j = 0u; j <= i; j++)
+    for (j = 0U; j <= i; j++)
     {
       /* Check the array limitations */
       if ((((i - j) < srcBLen) && (j < srcALen)))
@@ -149,9 +149,9 @@ void ref_correlate_q31(
     }
     /* Store the output in the destination buffer */
     if (inv == 1)
-      *pDst-- = (q31_t)(sum >> 31u);
+      *pDst-- = (q31_t)(sum >> 31U);
     else
-      *pDst++ = (q31_t)(sum >> 31u);
+      *pDst++ = (q31_t)(sum >> 31U);
   }
 }
 
@@ -163,14 +163,14 @@ void ref_correlate_fast_q31(
   q31_t * pDst)
 {
   q31_t *pIn1 = pSrcA;                           /* inputA pointer               */
-  q31_t *pIn2 = pSrcB + (srcBLen - 1u);          /* inputB pointer               */
+  q31_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
   q63_t sum;                                     /* Accumulators                  */
-  uint32_t i = 0u, j;                            /* loop counters */
-  uint32_t inv = 0u;                             /* Reverse order flag */
-  uint32_t tot = 0u;                             /* Length */
+  uint32_t i = 0U, j;                            /* loop counters */
+  uint32_t inv = 0U;                             /* Reverse order flag */
+  uint32_t tot = 0U;                             /* Length */
 
   /* Calculate the length of the remaining sequence */
-  tot = ((srcALen + srcBLen) - 2u);
+  tot = ((srcALen + srcBLen) - 2U);
 
   if (srcALen > srcBLen)
   {
@@ -187,7 +187,7 @@ void ref_correlate_fast_q31(
     pIn1 = pSrcB;
 
     /* Initialization to the end of inputA pointer */
-    pIn2 = pSrcA + (srcALen - 1u);
+    pIn2 = pSrcA + (srcALen - 1U);
 
     /* Initialisation of the pointer after zero padding */
     pDst = pDst + tot;
@@ -203,13 +203,13 @@ void ref_correlate_fast_q31(
   }
 
   /* Loop to calculate correlation for output length number of times */
-  for (i = 0u; i <= tot; i++)
+  for (i = 0U; i <= tot; i++)
   {
     /* Initialize sum with zero to carry on MAC operations */
     sum = 0;
 
     /* Loop to perform MAC operations according to correlation equation */
-    for (j = 0u; j <= i; j++)
+    for (j = 0U; j <= i; j++)
     {
       /* Check the array limitations */
       if ((((i - j) < srcBLen) && (j < srcALen)))
@@ -221,9 +221,9 @@ void ref_correlate_fast_q31(
     }
     /* Store the output in the destination buffer */
     if (inv == 1)
-      *pDst-- = (q31_t)(sum << 1u);
+      *pDst-- = (q31_t)(sum << 1U);
     else
-      *pDst++ = (q31_t)(sum << 1u);
+      *pDst++ = (q31_t)(sum << 1U);
   }          
 }
 
@@ -235,14 +235,14 @@ void ref_correlate_q15(
   q15_t * pDst)
 {
   q15_t *pIn1 = pSrcA;                           /* inputA pointer               */
-  q15_t *pIn2 = pSrcB + (srcBLen - 1u);          /* inputB pointer               */
+  q15_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
   q63_t sum;                                     /* Accumulators                  */
-  uint32_t i = 0u, j;                            /* loop counters */
-  uint32_t inv = 0u;                             /* Reverse order flag */
-  uint32_t tot = 0u;                             /* Length */
+  uint32_t i = 0U, j;                            /* loop counters */
+  uint32_t inv = 0U;                             /* Reverse order flag */
+  uint32_t tot = 0U;                             /* Length */
 
   /* Calculate the length of the remaining sequence */
-  tot = ((srcALen + srcBLen) - 2u);
+  tot = ((srcALen + srcBLen) - 2U);
 
   if (srcALen > srcBLen)
   {
@@ -259,7 +259,7 @@ void ref_correlate_q15(
     pIn1 = pSrcB;
 
     /* Initialization to the end of inputA pointer */
-    pIn2 = pSrcA + (srcALen - 1u);
+    pIn2 = pSrcA + (srcALen - 1U);
 
     /* Initialisation of the pointer after zero padding */
     pDst = pDst + tot;
@@ -275,13 +275,13 @@ void ref_correlate_q15(
   }
 
   /* Loop to calculate convolution for output length number of times */
-  for (i = 0u; i <= tot; i++)
+  for (i = 0U; i <= tot; i++)
   {
     /* Initialize sum with zero to carry on MAC operations */
     sum = 0;
 
     /* Loop to perform MAC operations according to convolution equation */
-    for (j = 0u; j <= i; j++)
+    for (j = 0U; j <= i; j++)
     {
       /* Check the array limitations */
       if ((((i - j) < srcBLen) && (j < srcALen)))
@@ -292,9 +292,9 @@ void ref_correlate_q15(
     }
     /* Store the output in the destination buffer */
     if (inv == 1)
-      *pDst-- = (q15_t) ref_sat_q15(sum >> 15u);
+      *pDst-- = (q15_t) ref_sat_q15(sum >> 15U);
     else
-      *pDst++ = (q15_t) ref_sat_q15(sum >> 15u);
+      *pDst++ = (q15_t) ref_sat_q15(sum >> 15U);
   }
 }
 
@@ -306,14 +306,14 @@ void ref_correlate_fast_q15(
   q15_t * pDst)
 {
   q15_t *pIn1 = pSrcA;                           /* inputA pointer               */
-  q15_t *pIn2 = pSrcB + (srcBLen - 1u);          /* inputB pointer               */
+  q15_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
   q63_t sum;                                     /* Accumulators                  */
-  uint32_t i = 0u, j;                            /* loop counters */
-  uint32_t inv = 0u;                             /* Reverse order flag */
-  uint32_t tot = 0u;                             /* Length */
+  uint32_t i = 0U, j;                            /* loop counters */
+  uint32_t inv = 0U;                             /* Reverse order flag */
+  uint32_t tot = 0U;                             /* Length */
 
   /* Calculate the length of the remaining sequence */
-  tot = ((srcALen + srcBLen) - 2u);
+  tot = ((srcALen + srcBLen) - 2U);
 
   if (srcALen > srcBLen)
   {
@@ -330,7 +330,7 @@ void ref_correlate_fast_q15(
     pIn1 = pSrcB;
 
     /* Initialization to the end of inputA pointer */
-    pIn2 = pSrcA + (srcALen - 1u);
+    pIn2 = pSrcA + (srcALen - 1U);
 
     /* Initialisation of the pointer after zero padding */
     pDst = pDst + tot;
@@ -346,13 +346,13 @@ void ref_correlate_fast_q15(
   }
 
   /* Loop to calculate convolution for output length number of times */
-  for (i = 0u; i <= tot; i++)
+  for (i = 0U; i <= tot; i++)
   {
     /* Initialize sum with zero to carry on MAC operations */
     sum = 0;
 
     /* Loop to perform MAC operations according to convolution equation */
-    for (j = 0u; j <= i; j++)
+    for (j = 0U; j <= i; j++)
     {
       /* Check the array limitations */
       if ((((i - j) < srcBLen) && (j < srcALen)))
@@ -363,9 +363,9 @@ void ref_correlate_fast_q15(
     }
     /* Store the output in the destination buffer */
     if (inv == 1)
-      *pDst-- = (q15_t)(sum >> 15u);
+      *pDst-- = (q15_t)(sum >> 15U);
     else
-      *pDst++ = (q15_t)(sum >> 15u);
+      *pDst++ = (q15_t)(sum >> 15U);
   }
 }
 
@@ -378,14 +378,14 @@ void ref_correlate_fast_opt_q15(
   q15_t * pScratch)
 {
   q15_t *pIn1 = pSrcA;                           /* inputA pointer               */
-  q15_t *pIn2 = pSrcB + (srcBLen - 1u);          /* inputB pointer               */
+  q15_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
   q31_t sum;                                     /* Accumulators                  */
-  uint32_t i = 0u, j;                            /* loop counters */
-  uint32_t inv = 0u;                             /* Reverse order flag */
-  uint32_t tot = 0u;                             /* Length */
+  uint32_t i = 0U, j;                            /* loop counters */
+  uint32_t inv = 0U;                             /* Reverse order flag */
+  uint32_t tot = 0U;                             /* Length */
 
   /* Calculate the length of the remaining sequence */
-  tot = ((srcALen + srcBLen) - 2u);
+  tot = ((srcALen + srcBLen) - 2U);
 
   if (srcALen > srcBLen)
   {
@@ -402,7 +402,7 @@ void ref_correlate_fast_opt_q15(
     pIn1 = pSrcB;
 
     /* Initialization to the end of inputA pointer */
-    pIn2 = pSrcA + (srcALen - 1u);
+    pIn2 = pSrcA + (srcALen - 1U);
 
     /* Initialisation of the pointer after zero padding */
     pDst = pDst + tot;
@@ -418,13 +418,13 @@ void ref_correlate_fast_opt_q15(
   }
 
   /* Loop to calculate convolution for output length number of times */
-  for (i = 0u; i <= tot; i++)
+  for (i = 0U; i <= tot; i++)
   {
     /* Initialize sum with zero to carry on MAC operations */
     sum = 0;
 
     /* Loop to perform MAC operations according to convolution equation */
-    for (j = 0u; j <= i; j++)
+    for (j = 0U; j <= i; j++)
     {
       /* Check the array limitations */
       if ((((i - j) < srcBLen) && (j < srcALen)))
@@ -435,9 +435,9 @@ void ref_correlate_fast_opt_q15(
     }
     /* Store the output in the destination buffer */
     if (inv == 1)
-      *pDst-- = (q15_t) ref_sat_q15(sum >> 15u);
+      *pDst-- = (q15_t) ref_sat_q15(sum >> 15U);
     else
-      *pDst++ = (q15_t) ref_sat_q15(sum >> 15u);
+      *pDst++ = (q15_t) ref_sat_q15(sum >> 15U);
   }
 }
 
@@ -449,14 +449,14 @@ void ref_correlate_q7(
   q7_t * pDst)
 {
   q7_t *pIn1 = pSrcA;                            /* inputA pointer */
-  q7_t *pIn2 = pSrcB + (srcBLen - 1u);           /* inputB pointer */
+  q7_t *pIn2 = pSrcB + (srcBLen - 1U);           /* inputB pointer */
   q31_t sum;                                     /* Accumulator */
-  uint32_t i = 0u, j;                            /* loop counters */
-  uint32_t inv = 0u;                             /* Reverse order flag */
-  uint32_t tot = 0u;                             /* Length */
+  uint32_t i = 0U, j;                            /* loop counters */
+  uint32_t inv = 0U;                             /* Reverse order flag */
+  uint32_t tot = 0U;                             /* Length */
 
   /* Calculate the length of the remaining sequence */
-  tot = ((srcALen + srcBLen) - 2u);
+  tot = ((srcALen + srcBLen) - 2U);
 
   if (srcALen > srcBLen)
   {
@@ -473,7 +473,7 @@ void ref_correlate_q7(
     pIn1 = pSrcB;
 
     /* Initialization to the end of inputA pointer */
-    pIn2 = pSrcA + (srcALen - 1u);
+    pIn2 = pSrcA + (srcALen - 1U);
 
     /* Initialisation of the pointer after zero padding */
     pDst = pDst + tot;
@@ -489,13 +489,13 @@ void ref_correlate_q7(
   }
 
   /* Loop to calculate convolution for output length number of times */
-  for (i = 0u; i <= tot; i++)
+  for (i = 0U; i <= tot; i++)
   {
     /* Initialize sum with zero to carry on MAC operations */
     sum = 0;
 
     /* Loop to perform MAC operations according to convolution equation */
-    for (j = 0u; j <= i; j++)
+    for (j = 0U; j <= i; j++)
     {
       /* Check the array limitations */
       if ((((i - j) < srcBLen) && (j < srcALen)))
@@ -506,8 +506,8 @@ void ref_correlate_q7(
     }
     /* Store the output in the destination buffer */
     if (inv == 1)
-      *pDst-- = (q7_t) __SSAT((sum >> 7u), 8u);
+      *pDst-- = (q7_t) __SSAT((sum >> 7U), 8U);
     else
-      *pDst++ = (q7_t) __SSAT((sum >> 7u), 8u);
+      *pDst++ = (q7_t) __SSAT((sum >> 7U), 8U);
   }
 }

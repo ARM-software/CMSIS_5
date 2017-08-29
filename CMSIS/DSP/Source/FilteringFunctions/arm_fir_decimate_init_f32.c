@@ -71,7 +71,7 @@ arm_status arm_fir_decimate_init_f32(
   arm_status status;
 
   /* The size of the input block must be a multiple of the decimation factor */
-  if ((blockSize % M) != 0u)
+  if ((blockSize % M) != 0U)
   {
     /* Set status as ARM_MATH_LENGTH_ERROR */
     status = ARM_MATH_LENGTH_ERROR;
@@ -85,7 +85,7 @@ arm_status arm_fir_decimate_init_f32(
     S->pCoeffs = pCoeffs;
 
     /* Clear state buffer and size is always (blockSize + numTaps - 1) */
-    memset(pState, 0, (numTaps + (blockSize - 1u)) * sizeof(float32_t));
+    memset(pState, 0, (numTaps + (blockSize - 1U)) * sizeof(float32_t));
 
     /* Assign state pointer */
     S->pState = pState;

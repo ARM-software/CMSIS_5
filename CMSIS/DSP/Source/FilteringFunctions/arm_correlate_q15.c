@@ -84,7 +84,7 @@ void arm_correlate_q15(
   q15_t *py;                                     /* Intermediate inputB pointer  */
   q15_t *pSrc1;                                  /* Intermediate pointers        */
   q31_t x0, x1, x2, x3, c0;                      /* temporary variables for holding input and coefficient values */
-  uint32_t j, k = 0u, count, blkCnt, outBlockSize, blockSize1, blockSize2, blockSize3;  /* loop counter                 */
+  uint32_t j, k = 0U, count, blkCnt, outBlockSize, blockSize1, blockSize2, blockSize3;  /* loop counter                 */
   int32_t inc = 1;                               /* Destination address modifier */
 
 
@@ -110,13 +110,13 @@ void arm_correlate_q15(
     pIn2 = (pSrcB);
 
     /* Number of output samples is calculated */
-    outBlockSize = (2u * srcALen) - 1u;
+    outBlockSize = (2U * srcALen) - 1U;
 
     /* When srcALen > srcBLen, zero padding is done to srcB
      * to make their lengths equal.
      * Instead, (outBlockSize - (srcALen + srcBLen - 1))
      * number of output samples are made zero */
-    j = outBlockSize - (srcALen + (srcBLen - 1u));
+    j = outBlockSize - (srcALen + (srcBLen - 1U));
 
     /* Updating the pointer position to non zero value */
     pOut += j;
@@ -137,7 +137,7 @@ void arm_correlate_q15(
 
     /* CORR(x, y) = Reverse order(CORR(y, x)) */
     /* Hence set the destination pointer to point to the last output sample */
-    pOut = pDst + ((srcALen + srcBLen) - 2u);
+    pOut = pDst + ((srcALen + srcBLen) - 2U);
 
     /* Destination address modifier is set to -1 */
     inc = -1;
@@ -153,8 +153,8 @@ void arm_correlate_q15(
    * for every iteration.*/
   /* The algorithm is implemented in three stages.
    * The loop counters of each stage is initiated here. */
-  blockSize1 = srcBLen - 1u;
-  blockSize2 = srcALen - (srcBLen - 1u);
+  blockSize1 = srcBLen - 1U;
+  blockSize2 = srcALen - (srcBLen - 1U);
   blockSize3 = blockSize1;
 
   /* --------------------------
@@ -169,13 +169,13 @@ void arm_correlate_q15(
 
   /* In this stage the MAC operations are increased by 1 for every iteration.
      The count variable holds the number of MAC operations performed */
-  count = 1u;
+  count = 1U;
 
   /* Working pointer of inputA */
   px = pIn1;
 
   /* Working pointer of inputB */
-  pSrc1 = pIn2 + (srcBLen - 1u);
+  pSrc1 = pIn2 + (srcBLen - 1U);
   py = pSrc1;
 
   /* ------------------------
@@ -183,7 +183,7 @@ void arm_correlate_q15(
    * ----------------------*/
 
   /* The first loop starts here */
-  while (blockSize1 > 0u)
+  while (blockSize1 > 0U)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0;
@@ -193,7 +193,7 @@ void arm_correlate_q15(
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while (k > 0u)
+    while (k > 0U)
     {
       /* x[0] * y[srcBLen - 4] , x[1] * y[srcBLen - 3] */
       sum = __SMLALD(*__SIMD32(px)++, *__SIMD32(py)++, sum);
@@ -206,9 +206,9 @@ void arm_correlate_q15(
 
     /* If the count is not a multiple of 4, compute any remaining MACs here.
      ** No loop unrolling is used. */
-    k = count % 0x4u;
+    k = count % 0x4U;
 
-    while (k > 0u)
+    while (k > 0U)
     {
       /* Perform the multiply-accumulates */
       /* x[0] * y[srcBLen - 1] */
@@ -251,7 +251,7 @@ void arm_correlate_q15(
   py = pIn2;
 
   /* count is index by which the pointer pIn1 to be incremented */
-  count = 0u;
+  count = 0U;
 
   /* -------------------
    * Stage2 process
@@ -260,12 +260,12 @@ void arm_correlate_q15(
   /* Stage2 depends on srcBLen as in this stage srcBLen number of MACS are performed.
    * So, to loop unroll over blockSize2,
    * srcBLen should be greater than or equal to 4, to loop unroll the srcBLen loop */
-  if (srcBLen >= 4u)
+  if (srcBLen >= 4U)
   {
     /* Loop unroll over blockSize2, by 4 */
-    blkCnt = blockSize2 >> 2u;
+    blkCnt = blockSize2 >> 2U;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Set all accumulators to zero */
       acc0 = 0;
@@ -277,10 +277,10 @@ void arm_correlate_q15(
       x0 = *__SIMD32(px);
       /* read x[1], x[2] samples */
       x1 = _SIMD32_OFFSET(px + 1);
-      px += 2u;
+      px += 2U;
 
       /* Apply loop unrolling and compute 4 MACs simultaneously. */
-      k = srcBLen >> 2u;
+      k = srcBLen >> 2U;
 
       /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
@@ -323,7 +323,7 @@ void arm_correlate_q15(
         /* Read x[5], x[6] */
         x1 = _SIMD32_OFFSET(px + 3);
 
-        px += 4u;
+        px += 4U;
 
         /* acc2 +=  x[4] * y[2] + x[5] * y[3] */
         acc2 = __SMLALD(x0, c0, acc2);
@@ -335,15 +335,15 @@ void arm_correlate_q15(
 
       /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
        ** No loop unrolling is used. */
-      k = srcBLen % 0x4u;
+      k = srcBLen % 0x4U;
 
-      if (k == 1u)
+      if (k == 1U)
       {
         /* Read y[4] */
         c0 = *py;
 #ifdef  ARM_MATH_BIG_ENDIAN
 
-        c0 = c0 << 16u;
+        c0 = c0 << 16U;
 
 #else
 
@@ -361,7 +361,7 @@ void arm_correlate_q15(
         acc3 = __SMLALDX(x3, c0, acc3);
       }
 
-      if (k == 2u)
+      if (k == 2U)
       {
         /* Read y[4], y[5] */
         c0 = *__SIMD32(py);
@@ -371,7 +371,7 @@ void arm_correlate_q15(
 
         /* Read x[9] */
         x2 = _SIMD32_OFFSET(px + 1);
-        px += 2u;
+        px += 2U;
 
         /* Perform the multiply-accumulates */
         acc0 = __SMLALD(x0, c0, acc0);
@@ -380,7 +380,7 @@ void arm_correlate_q15(
         acc3 = __SMLALD(x2, c0, acc3);
       }
 
-      if (k == 3u)
+      if (k == 3U)
       {
         /* Read y[4], y[5] */
         c0 = *__SIMD32(py)++;
@@ -402,14 +402,14 @@ void arm_correlate_q15(
         /* Read y[6] */
 #ifdef  ARM_MATH_BIG_ENDIAN
 
-        c0 = c0 << 16u;
+        c0 = c0 << 16U;
 #else
 
         c0 = c0 & 0x0000FFFF;
 #endif /*      #ifdef  ARM_MATH_BIG_ENDIAN     */
         /* Read x[10] */
         x3 = _SIMD32_OFFSET(px + 2);
-        px += 3u;
+        px += 3U;
 
         /* Perform the multiply-accumulates */
         acc0 = __SMLALDX(x1, c0, acc0);
@@ -433,7 +433,7 @@ void arm_correlate_q15(
       pOut += inc;
 
       /* Increment the count by 4 as 4 output values are computed */
-      count += 4u;
+      count += 4U;
 
       /* Update the inputA and inputB pointers for next MAC calculation */
       px = pIn1 + count;
@@ -445,19 +445,19 @@ void arm_correlate_q15(
 
     /* If the blockSize2 is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    blkCnt = blockSize2 % 0x4u;
+    blkCnt = blockSize2 % 0x4U;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
 
       /* Apply loop unrolling and compute 4 MACs simultaneously. */
-      k = srcBLen >> 2u;
+      k = srcBLen >> 2U;
 
       /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-      while (k > 0u)
+      while (k > 0U)
       {
         /* Perform the multiply-accumulates */
         sum += ((q63_t) * px++ * *py++);
@@ -471,9 +471,9 @@ void arm_correlate_q15(
 
       /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
        ** No loop unrolling is used. */
-      k = srcBLen % 0x4u;
+      k = srcBLen % 0x4U;
 
-      while (k > 0u)
+      while (k > 0U)
       {
         /* Perform the multiply-accumulates */
         sum += ((q63_t) * px++ * *py++);
@@ -504,7 +504,7 @@ void arm_correlate_q15(
      * the blockSize2 loop cannot be unrolled by 4 */
     blkCnt = blockSize2;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
@@ -512,7 +512,7 @@ void arm_correlate_q15(
       /* Loop over srcBLen */
       k = srcBLen;
 
-      while (k > 0u)
+      while (k > 0U)
       {
         /* Perform the multiply-accumulate */
         sum += ((q63_t) * px++ * *py++);
@@ -551,10 +551,10 @@ void arm_correlate_q15(
 
   /* In this stage the MAC operations are decreased by 1 for every iteration.
      The count variable holds the number of MAC operations performed */
-  count = srcBLen - 1u;
+  count = srcBLen - 1U;
 
   /* Working pointer of inputA */
-  pSrc1 = (pIn1 + srcALen) - (srcBLen - 1u);
+  pSrc1 = (pIn1 + srcALen) - (srcBLen - 1U);
   px = pSrc1;
 
   /* Working pointer of inputB */
@@ -564,17 +564,17 @@ void arm_correlate_q15(
    * Stage3 process
    * ------------------*/
 
-  while (blockSize3 > 0u)
+  while (blockSize3 > 0U)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0;
 
     /* Apply loop unrolling and compute 4 MACs simultaneously. */
-    k = count >> 2u;
+    k = count >> 2U;
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while (k > 0u)
+    while (k > 0U)
     {
       /* Perform the multiply-accumulates */
       /* sum += x[srcALen - srcBLen + 4] * y[3] , sum += x[srcALen - srcBLen + 3] * y[2] */
@@ -588,9 +588,9 @@ void arm_correlate_q15(
 
     /* If the count is not a multiple of 4, compute any remaining MACs here.
      ** No loop unrolling is used. */
-    k = count % 0x4u;
+    k = count % 0x4U;
 
-    while (k > 0u)
+    while (k > 0U)
     {
       /* Perform the multiply-accumulates */
       sum = __SMLALD(*px++, *py++, sum);
@@ -620,11 +620,11 @@ void arm_correlate_q15(
 /* Run the below code for Cortex-M0 */
 
   q15_t *pIn1 = pSrcA;                           /* inputA pointer               */
-  q15_t *pIn2 = pSrcB + (srcBLen - 1u);          /* inputB pointer               */
+  q15_t *pIn2 = pSrcB + (srcBLen - 1U);          /* inputB pointer               */
   q63_t sum;                                     /* Accumulators                  */
-  uint32_t i = 0u, j;                            /* loop counters */
-  uint32_t inv = 0u;                             /* Reverse order flag */
-  uint32_t tot = 0u;                             /* Length */
+  uint32_t i = 0U, j;                            /* loop counters */
+  uint32_t inv = 0U;                             /* Reverse order flag */
+  uint32_t tot = 0U;                             /* Length */
 
   /* The algorithm implementation is based on the lengths of the inputs. */
   /* srcB is always made to slide across srcA. */
@@ -643,7 +643,7 @@ void arm_correlate_q15(
    * using convolution but with the shorter signal time shifted. */
 
   /* Calculate the length of the remaining sequence */
-  tot = ((srcALen + srcBLen) - 2u);
+  tot = ((srcALen + srcBLen) - 2U);
 
   if (srcALen > srcBLen)
   {
@@ -660,7 +660,7 @@ void arm_correlate_q15(
     pIn1 = pSrcB;
 
     /* Initialization to the end of inputA pointer */
-    pIn2 = pSrcA + (srcALen - 1u);
+    pIn2 = pSrcA + (srcALen - 1U);
 
     /* Initialisation of the pointer after zero padding */
     pDst = pDst + tot;
@@ -676,13 +676,13 @@ void arm_correlate_q15(
   }
 
   /* Loop to calculate convolution for output length number of times */
-  for (i = 0u; i <= tot; i++)
+  for (i = 0U; i <= tot; i++)
   {
     /* Initialize sum with zero to carry on MAC operations */
     sum = 0;
 
     /* Loop to perform MAC operations according to convolution equation */
-    for (j = 0u; j <= i; j++)
+    for (j = 0U; j <= i; j++)
     {
       /* Check the array limitations */
       if ((((i - j) < srcBLen) && (j < srcALen)))
@@ -693,9 +693,9 @@ void arm_correlate_q15(
     }
     /* Store the output in the destination buffer */
     if (inv == 1)
-      *pDst-- = (q15_t) __SSAT((sum >> 15u), 16u);
+      *pDst-- = (q15_t) __SSAT((sum >> 15U), 16U);
     else
-      *pDst++ = (q15_t) __SSAT((sum >> 15u), 16u);
+      *pDst++ = (q15_t) __SSAT((sum >> 15U), 16U);
   }
 
 #endif /* #if (defined(ARM_MATH_CM7) || defined(ARM_MATH_CM4) || defined(ARM_MATH_CM3)) && !defined(UNALIGNED_SUPPORT_DISABLE) */

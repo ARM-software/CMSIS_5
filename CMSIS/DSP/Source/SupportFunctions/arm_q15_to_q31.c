@@ -70,11 +70,11 @@ void arm_q15_to_q31(
   q31_t out1, out2, out3, out4;
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = (q31_t)A << 16 */
     /* convert from q15 to q31 and then store the results in the destination buffer */
@@ -84,11 +84,11 @@ void arm_q15_to_q31(
 #ifndef ARM_MATH_BIG_ENDIAN
 
     /* extract lower 16 bits to 32 bit result */
-    out1 = in1 << 16u;
+    out1 = in1 << 16U;
     /* extract upper 16 bits to 32 bit result */
     out2 = in1 & 0xFFFF0000;
     /* extract lower 16 bits to 32 bit result */
-    out3 = in2 << 16u;
+    out3 = in2 << 16U;
     /* extract upper 16 bits to 32 bit result */
     out4 = in2 & 0xFFFF0000;
 
@@ -97,11 +97,11 @@ void arm_q15_to_q31(
     /* extract upper 16 bits to 32 bit result */
     out1 = in1 & 0xFFFF0000;
     /* extract lower 16 bits to 32 bit result */
-    out2 = in1 << 16u;
+    out2 = in1 << 16U;
     /* extract upper 16 bits to 32 bit result */
     out3 = in2 & 0xFFFF0000;
     /* extract lower 16 bits to 32 bit result */
-    out4 = in2 << 16u;
+    out4 = in2 << 16U;
 
 #endif //      #ifndef ARM_MATH_BIG_ENDIAN
 
@@ -116,7 +116,7 @@ void arm_q15_to_q31(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
 #else
 
@@ -127,7 +127,7 @@ void arm_q15_to_q31(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = (q31_t)A << 16 */
     /* convert from q15 to q31 and then store the results in the destination buffer */

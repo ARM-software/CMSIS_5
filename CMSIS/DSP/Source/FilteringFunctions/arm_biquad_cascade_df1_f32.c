@@ -207,11 +207,11 @@ void arm_biquad_cascade_df1_f32(
      *    acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1]   + a2 * y[n-2]
      */
 
-    sample = blockSize >> 2u;
+    sample = blockSize >> 2U;
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the first input */
       Xn = *pIn++;
@@ -286,9 +286,9 @@ void arm_biquad_cascade_df1_f32(
 
     /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    sample = blockSize & 0x3u;
+    sample = blockSize & 0x3U;
 
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -331,7 +331,7 @@ void arm_biquad_cascade_df1_f32(
     /* decrement the loop counter */
     stage--;
 
-  } while (stage > 0u);
+  } while (stage > 0U);
 
 #else
 
@@ -358,7 +358,7 @@ void arm_biquad_cascade_df1_f32(
 
     sample = blockSize;
 
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -400,7 +400,7 @@ void arm_biquad_cascade_df1_f32(
     /* decrement the loop counter */
     stage--;
 
-  } while (stage > 0u);
+  } while (stage > 0U);
 
 #endif /* #if defined (ARM_MATH_DSP) */
 

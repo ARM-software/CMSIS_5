@@ -68,11 +68,11 @@ void arm_cmplx_mag_q31(
 
 
   /*loop Unrolling */
-  blkCnt = numSamples >> 2u;
+  blkCnt = numSamples >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* read complex input from source buffer */
     real1 = pSrc[0];
@@ -130,13 +130,13 @@ void arm_cmplx_mag_q31(
     arm_sqrt_q31(out1, &pDst[2]);
 
     /* increment destination by 8 to process next samples */
-    pSrc += 8u;
+    pSrc += 8U;
 
     /* calculate square root */
     arm_sqrt_q31(out3, &pDst[3]);
 
     /* increment destination by 4 to process next samples */
-    pDst += 4u;
+    pDst += 4U;
 
     /* Decrement the loop counter */
     blkCnt--;
@@ -144,7 +144,7 @@ void arm_cmplx_mag_q31(
 
   /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = numSamples % 0x4u;
+  blkCnt = numSamples % 0x4U;
 
 #else
 
@@ -153,7 +153,7 @@ void arm_cmplx_mag_q31(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
     real = *pSrc++;

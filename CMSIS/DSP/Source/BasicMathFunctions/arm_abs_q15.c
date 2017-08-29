@@ -67,12 +67,12 @@ void arm_abs_q15(
 
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
   simd = __SIMD32_CONST(pDst);
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = |A| */
     /* Read two inputs */
@@ -121,9 +121,9 @@ void arm_abs_q15(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = |A| */
     /* Read the input */
@@ -145,7 +145,7 @@ void arm_abs_q15(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = |A| */
     /* Read the input */

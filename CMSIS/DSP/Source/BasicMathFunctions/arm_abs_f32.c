@@ -73,11 +73,11 @@ void arm_abs_f32(
   float32_t in1, in2, in3, in4;                  /* temporary variables */
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = |A| */
     /* Calculate absolute and then store the results in the destination buffer. */
@@ -115,10 +115,10 @@ void arm_abs_f32(
 
 
     /* Update source pointer to process next sampels */
-    pSrc += 4u;
+    pSrc += 4U;
 
     /* Update destination pointer to process next sampels */
-    pDst += 4u;
+    pDst += 4U;
 
     /* Decrement the loop counter */
     blkCnt--;
@@ -126,7 +126,7 @@ void arm_abs_f32(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
 #else
 
@@ -137,7 +137,7 @@ void arm_abs_f32(
 
 #endif /*   #if defined (ARM_MATH_DSP)   */
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = |A| */
     /* Calculate absolute and then store the results in the destination buffer. */

@@ -82,7 +82,7 @@ void arm_fir_q31(
 
   /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[(numTaps - 1u)]);
+  pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
   /* Apply loop unrolling and compute 4 output values simultaneously.
    * The variables acc0 ... acc3 hold output values that are being computed:
@@ -100,7 +100,7 @@ void arm_fir_q31(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy three new input samples into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -126,7 +126,7 @@ void arm_fir_q31(
     /* Loop unrolling.  Process 3 taps at a time. */
     i = tapCnt;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* Read the b[numTaps] coefficient */
       c0 = *pb;
@@ -140,7 +140,7 @@ void arm_fir_q31(
       acc2 += ((q63_t) x2 * c0);
 
       /* Read the coefficient and state */
-      c0 = *(pb + 1u);
+      c0 = *(pb + 1U);
       x0 = *(px++);
 
       /* Perform the multiply-accumulates */
@@ -149,11 +149,11 @@ void arm_fir_q31(
       acc2 += ((q63_t) x0 * c0);
 
       /* Read the coefficient and state */
-      c0 = *(pb + 2u);
+      c0 = *(pb + 2U);
       x1 = *(px++);
 
       /* update coefficient pointer */
-      pb += 3u;
+      pb += 3U;
 
       /* Perform the multiply-accumulates */
       acc0 += ((q63_t) x2 * c0);
@@ -168,7 +168,7 @@ void arm_fir_q31(
 
     i = tapCntN3;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* Read coefficients */
       c0 = *(pb++);
@@ -194,9 +194,9 @@ void arm_fir_q31(
 
     /* The results in the 3 accumulators are in 2.30 format.  Convert to 1.31
      ** Then store the 3 outputs in the destination buffer. */
-    *pDst++ = (q31_t) (acc0 >> 31u);
-    *pDst++ = (q31_t) (acc1 >> 31u);
-    *pDst++ = (q31_t) (acc2 >> 31u);
+    *pDst++ = (q31_t) (acc0 >> 31U);
+    *pDst++ = (q31_t) (acc1 >> 31U);
+    *pDst++ = (q31_t) (acc2 >> 31U);
 
     /* Decrement the samples loop counter */
     blkCnt--;
@@ -205,7 +205,7 @@ void arm_fir_q31(
   /* If the blockSize is not a multiple of 3, compute any remaining output samples here.
    ** No loop unrolling is used. */
 
-  while (blockSize > 0u)
+  while (blockSize > 0U)
   {
     /* Copy one sample at a time into state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -226,11 +226,11 @@ void arm_fir_q31(
     {
       acc0 += (q63_t) * (px++) * (*(pb++));
       i--;
-    } while (i > 0u);
+    } while (i > 0U);
 
     /* The result is in 2.62 format.  Convert to 1.31
      ** Then store the output in the destination buffer. */
-    *pDst++ = (q31_t) (acc0 >> 31u);
+    *pDst++ = (q31_t) (acc0 >> 31U);
 
     /* Advance state pointer by 1 for the next sample */
     pState = pState + 1;
@@ -246,10 +246,10 @@ void arm_fir_q31(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  tapCnt = (numTaps - 1u) >> 2u;
+  tapCnt = (numTaps - 1U) >> 2U;
 
   /* copy data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -261,10 +261,10 @@ void arm_fir_q31(
   }
 
   /* Calculate remaining number of copies */
-  tapCnt = (numTaps - 1u) % 0x4u;
+  tapCnt = (numTaps - 1U) % 0x4U;
 
   /* Copy the remaining q31_t data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -284,12 +284,12 @@ void arm_fir_q31(
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[(numTaps - 1u)]);
+  pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
   /* Initialize blkCnt with blockSize */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy one sample at a time into state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -311,11 +311,11 @@ void arm_fir_q31(
       /* acc =  b[numTaps-1] * x[n-numTaps-1] + b[numTaps-2] * x[n-numTaps-2] + b[numTaps-3] * x[n-numTaps-3] +...+ b[0] * x[0] */
       acc += (q63_t) * px++ * *pb++;
       i--;
-    } while (i > 0u);
+    } while (i > 0U);
 
     /* The result is in 2.62 format.  Convert to 1.31
      ** Then store the output in the destination buffer. */
-    *pDst++ = (q31_t) (acc >> 31u);
+    *pDst++ = (q31_t) (acc >> 31U);
 
     /* Advance state pointer by 1 for the next sample */
     pState = pState + 1;
@@ -332,10 +332,10 @@ void arm_fir_q31(
   pStateCurnt = S->pState;
 
   /* Copy numTaps number of values */
-  tapCnt = numTaps - 1u;
+  tapCnt = numTaps - 1U;
 
   /* Copy the data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 

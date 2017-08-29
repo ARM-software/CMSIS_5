@@ -75,7 +75,7 @@ void arm_lms_init_q31(
   S->pCoeffs = pCoeffs;
 
   /* Clear state buffer and size is always blockSize + numTaps - 1 */
-  memset(pState, 0, ((uint32_t) numTaps + (blockSize - 1u)) * sizeof(q31_t));
+  memset(pState, 0, ((uint32_t) numTaps + (blockSize - 1U)) * sizeof(q31_t));
 
   /* Assign state pointer */
   S->pState = pState;

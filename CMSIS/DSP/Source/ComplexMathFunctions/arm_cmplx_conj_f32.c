@@ -82,11 +82,11 @@ void arm_cmplx_conj_f32(
   float32_t inI1, inI2, inI3, inI4;
 
   /*loop Unrolling */
-  blkCnt = numSamples >> 2u;
+  blkCnt = numSamples >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[0]+jC[1] = A[0]+ j (-1) A[1] */
     /* Calculate Complex Conjugate and then store the results in the destination buffer. */
@@ -131,13 +131,13 @@ void arm_cmplx_conj_f32(
     pDst[5] = inI3;
 
     /* increment source pointer by 8 to process next sampels */
-    pSrc += 8u;
+    pSrc += 8U;
 
     /* store imaginary sample to destination */
     pDst[7] = inI4;
 
     /* increment destination pointer by 8 to store next samples */
-    pDst += 8u;
+    pDst += 8U;
 
     /* Decrement the loop counter */
     blkCnt--;
@@ -145,7 +145,7 @@ void arm_cmplx_conj_f32(
 
   /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = numSamples % 0x4u;
+  blkCnt = numSamples % 0x4U;
 
 #else
 
@@ -154,7 +154,7 @@ void arm_cmplx_conj_f32(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* realOut + j (imagOut) = realIn + j (-1) imagIn */
     /* Calculate Complex Conjugate and then store the results in the destination buffer. */

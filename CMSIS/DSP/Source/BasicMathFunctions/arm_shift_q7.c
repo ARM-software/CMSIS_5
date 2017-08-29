@@ -75,17 +75,17 @@ void arm_shift_q7(
 
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* Getting the sign of shiftBits */
   sign = (shiftBits & 0x80);
 
   /* If the shift value is positive then do right shift else left shift */
-  if (sign == 0u)
+  if (sign == 0U)
   {
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C = A << shiftBits */
       /* Read 4 inputs */
@@ -100,7 +100,7 @@ void arm_shift_q7(
                                    __SSAT((in3 << shiftBits), 8),
                                    __SSAT((in4 << shiftBits), 8));
       /* Update source pointer to process next sampels */
-      pSrc += 4u;
+      pSrc += 4U;
 
       /* Decrement the loop counter */
       blkCnt--;
@@ -108,9 +108,9 @@ void arm_shift_q7(
 
     /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    blkCnt = blockSize % 0x4u;
+    blkCnt = blockSize % 0x4U;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C = A << shiftBits */
       /* Shift the input and then store the result in the destination buffer. */
@@ -125,7 +125,7 @@ void arm_shift_q7(
     shiftBits = -shiftBits;
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C = A >> shiftBits */
       /* Read 4 inputs */
@@ -139,7 +139,7 @@ void arm_shift_q7(
                                    (in3 >> shiftBits), (in4 >> shiftBits));
 
 
-      pSrc += 4u;
+      pSrc += 4U;
 
       /* Decrement the loop counter */
       blkCnt--;
@@ -147,9 +147,9 @@ void arm_shift_q7(
 
     /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    blkCnt = blockSize % 0x4u;
+    blkCnt = blockSize % 0x4U;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C = A >> shiftBits */
       /* Shift the input and then store the result in the destination buffer. */
@@ -169,12 +169,12 @@ void arm_shift_q7(
   sign = (shiftBits & 0x80);
 
   /* If the shift value is positive then do right shift else left shift */
-  if (sign == 0u)
+  if (sign == 0U)
   {
     /* Initialize blkCnt with number of samples */
     blkCnt = blockSize;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C = A << shiftBits */
       /* Shift the input and then store the result in the destination buffer. */
@@ -189,7 +189,7 @@ void arm_shift_q7(
     /* Initialize blkCnt with number of samples */
     blkCnt = blockSize;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C = A >> shiftBits */
       /* Shift the input and then store the result in the destination buffer. */

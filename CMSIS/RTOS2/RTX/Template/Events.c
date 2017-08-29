@@ -11,7 +11,7 @@ osThreadId_t tid_Thread_EventReceiver;                        // thread id 2
  
 osEventFlagsId_t evt_id;                                      // message queue id
  
-#define FLAGS_MSK1 0x00000001ul
+#define FLAGS_MSK1 0x00000001UL
  
 int Init_Events (void)
 {

@@ -74,11 +74,11 @@ void arm_dot_prod_q7(
 
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* read 4 samples at a time from sourceA */
     input1 = *__SIMD32(pSrcA)++;
@@ -104,9 +104,9 @@ void arm_dot_prod_q7(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
     /* Dot product and then store the results in a temporary buffer. */
@@ -125,7 +125,7 @@ void arm_dot_prod_q7(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
     /* Dot product and then store the results in a temporary buffer. */

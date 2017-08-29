@@ -52,7 +52,7 @@ void ref_fir_sparse_f32(
 
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Perform Multiplications and store in destination buffer */
     *pOut++ = *px++ * coeff;
@@ -62,9 +62,9 @@ void ref_fir_sparse_f32(
   }
 
   /* Loop over the number of taps. */
-  tapCnt = (uint32_t) numTaps - 1u;
+  tapCnt = (uint32_t) numTaps - 1U;
 
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     /* Load the coefficient value and
      * increment the coefficient buffer for the next set of state values */
@@ -95,7 +95,7 @@ void ref_fir_sparse_f32(
 
     blkCnt = blockSize;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Perform Multiply-Accumulate */
       *pOut++ += *px++ * coeff;
@@ -162,7 +162,7 @@ void ref_fir_sparse_q31(
   
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Perform Multiplications and store in the destination buffer */
     *pOut++ = (q31_t) (((q63_t) * px++ * coeff) >> 32);
@@ -172,9 +172,9 @@ void ref_fir_sparse_q31(
   }
 
   /* Loop over the number of taps. */
-  tapCnt = (uint32_t) numTaps - 1u;
+  tapCnt = (uint32_t) numTaps - 1U;
 
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     /* Load the coefficient value and           
      * increment the coefficient buffer for the next set of state values */
@@ -205,7 +205,7 @@ void ref_fir_sparse_q31(
 
     blkCnt = blockSize;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Perform Multiply-Accumulate */
       out = *pOut;
@@ -226,7 +226,7 @@ void ref_fir_sparse_q31(
   /* Output is converted into 1.31 format. */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     in = *pOut << 1;
     *pOut++ = in;
@@ -290,7 +290,7 @@ void ref_fir_sparse_q15(
 
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Perform multiplication and store in the scratch buffer */
     *pScratchOut++ = ((q31_t) * px++ * coeff);
@@ -300,9 +300,9 @@ void ref_fir_sparse_q15(
   }
 
   /* Loop over the number of taps. */
-  tapCnt = (uint32_t) numTaps - 1u;
+  tapCnt = (uint32_t) numTaps - 1U;
 
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     /* Load the coefficient value and           
      * increment the coefficient buffer for the next set of state values */
@@ -332,7 +332,7 @@ void ref_fir_sparse_q15(
 
     blkCnt = blockSize;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Perform Multiply-Accumulate */
       *pScratchOut++ += (q31_t) * px++ * coeff;
@@ -350,7 +350,7 @@ void ref_fir_sparse_q15(
   /* Loop over the blockSize. */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     *pOut++ = (q15_t) __SSAT(*pScr2++ >> 15, 16);
     blkCnt--;
@@ -413,7 +413,7 @@ void ref_fir_sparse_q7(
   /* Loop over the blockSize */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Perform multiplication and store in the scratch buffer */
     *pScratchOut++ = ((q31_t) * px++ * coeff);
@@ -423,9 +423,9 @@ void ref_fir_sparse_q7(
   }
 
   /* Loop over the number of taps. */
-  tapCnt = (uint32_t) numTaps - 1u;
+  tapCnt = (uint32_t) numTaps - 1U;
 
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     /* Load the coefficient value and           
      * increment the coefficient buffer for the next set of state values */
@@ -456,7 +456,7 @@ void ref_fir_sparse_q7(
     /* Loop over the blockSize */
     blkCnt = blockSize;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Perform Multiply-Accumulate */
       in = *pScratchOut + ((q31_t) * px++ * coeff);
@@ -475,7 +475,7 @@ void ref_fir_sparse_q7(
   /* Loop over the blockSize. */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     *pOut++ = (q7_t) __SSAT(*pScr2++ >> 7, 8);
 

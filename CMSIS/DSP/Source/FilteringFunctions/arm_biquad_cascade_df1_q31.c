@@ -65,8 +65,8 @@ void arm_biquad_cascade_df1_q31(
   uint32_t blockSize)
 {
   q63_t acc;                                     /*  accumulator                   */
-  uint32_t uShift = ((uint32_t) S->postShift + 1u);
-  uint32_t lShift = 32u - uShift;                /*  Shift to be applied to the output */
+  uint32_t uShift = ((uint32_t) S->postShift + 1U);
+  uint32_t lShift = 32U - uShift;                /*  Shift to be applied to the output */
   q31_t *pIn = pSrc;                             /*  input pointer initialization  */
   q31_t *pOut = pDst;                            /*  output pointer initialization */
   q31_t *pState = S->pState;                     /*  pState pointer initialization */
@@ -104,11 +104,11 @@ void arm_biquad_cascade_df1_q31(
      *    acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]
      */
 
-    sample = blockSize >> 2u;
+    sample = blockSize >> 2U;
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -246,9 +246,9 @@ void arm_biquad_cascade_df1_q31(
 
     /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    sample = (blockSize & 0x3u);
+    sample = (blockSize & 0x3U);
 
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -327,7 +327,7 @@ void arm_biquad_cascade_df1_q31(
 
     sample = blockSize;
 
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;

@@ -73,7 +73,7 @@ arm_status arm_fir_interpolate_init_q31(
   arm_status status;
 
   /* The filter length must be a multiple of the interpolation factor */
-  if ((numTaps % L) != 0u)
+  if ((numTaps % L) != 0U)
   {
     /* Set status as ARM_MATH_LENGTH_ERROR */
     status = ARM_MATH_LENGTH_ERROR;
@@ -92,7 +92,7 @@ arm_status arm_fir_interpolate_init_q31(
 
     /* Clear state buffer and size of buffer is always phaseLength + blockSize - 1 */
     memset(pState, 0,
-           (blockSize + ((uint32_t) S->phaseLength - 1u)) * sizeof(q31_t));
+           (blockSize + ((uint32_t) S->phaseLength - 1U)) * sizeof(q31_t));
 
     /* Assign state pointer */
     S->pState = pState;

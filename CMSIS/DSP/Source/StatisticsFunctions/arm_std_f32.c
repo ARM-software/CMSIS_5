@@ -79,7 +79,7 @@ void arm_std_f32(
   float32_t var;                                 /* Temporary varaince storage */
 #endif
 
-  if (blockSize == 1u)
+  if (blockSize == 1U)
   {
     *pResult = 0;
     return;
@@ -89,11 +89,11 @@ void arm_std_f32(
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1])  */
     /* Compute Sum of squares of the input samples
@@ -117,9 +117,9 @@ void arm_std_f32(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute Sum of squares of the input samples
@@ -152,7 +152,7 @@ void arm_std_f32(
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
     /* Compute Sum of squares of the input samples

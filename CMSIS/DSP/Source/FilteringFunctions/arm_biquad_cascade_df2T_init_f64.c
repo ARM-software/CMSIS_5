@@ -78,7 +78,7 @@ void arm_biquad_cascade_df2T_init_f64(
   S->pCoeffs = pCoeffs;
 
   /* Clear state buffer and size is always 2 * numStages */
-  memset(pState, 0, (2u * (uint32_t) numStages) * sizeof(float64_t));
+  memset(pState, 0, (2U * (uint32_t) numStages) * sizeof(float64_t));
 
   /* Assign state pointer */
   S->pState = pState;

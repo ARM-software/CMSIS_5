@@ -53,7 +53,7 @@ arm_status arm_mat_trans_q15(
   q15_t *pOut = pDst->pData;                     /* output data matrix pointer */
   uint16_t nRows = pSrc->numRows;                /* number of nRows */
   uint16_t nColumns = pSrc->numCols;             /* number of nColumns */
-  uint16_t col, row = nRows, i = 0u;             /* row and column loop counters */
+  uint16_t col, row = nRows, i = 0U;             /* row and column loop counters */
   arm_status status;                             /* status of matrix transpose */
 
 #if defined (ARM_MATH_DSP)
@@ -88,14 +88,14 @@ arm_status arm_mat_trans_q15(
     {
 
       /* Apply loop unrolling and exchange the columns with row elements */
-      col = nColumns >> 2u;
+      col = nColumns >> 2U;
 
       /* The pointer pOut is set to starting address of the column being processed */
       pOut = pDst->pData + i;
 
       /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
        ** a second loop below computes the remaining 1 to 3 samples. */
-      while (col > 0u)
+      while (col > 0U)
       {
 #ifndef UNALIGNED_SUPPORT_DISABLE
 
@@ -211,7 +211,7 @@ arm_status arm_mat_trans_q15(
       }
 
       /* Perform matrix transpose for last 3 samples here. */
-      col = nColumns % 0x4u;
+      col = nColumns % 0x4U;
 
 #else
 
@@ -241,7 +241,7 @@ arm_status arm_mat_trans_q15(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-      while (col > 0u)
+      while (col > 0U)
       {
         /* Read and store the input element in the destination */
         *pOut = *pSrcA++;
@@ -258,7 +258,7 @@ arm_status arm_mat_trans_q15(
       /* Decrement the row loop counter */
       row--;
 
-    } while (row > 0u);
+    } while (row > 0U);
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;

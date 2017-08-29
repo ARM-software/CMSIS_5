@@ -84,14 +84,14 @@ void arm_shift_q31(
   q31_t out1, out2, out3, out4;                  /* Temporary output variables */
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
 
-  if (sign == 0u)
+  if (sign == 0U)
   {
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C = A  << shiftBits */
       /* Shift the input and then store the results in the destination buffer. */
@@ -122,8 +122,8 @@ void arm_shift_q31(
       *(pDst + 3) = out4;
 
       /* Update destination pointer to process next sampels */
-      pSrc += 4u;
-      pDst += 4u;
+      pSrc += 4U;
+      pDst += 4U;
 
       /* Decrement the loop counter */
       blkCnt--;
@@ -134,7 +134,7 @@ void arm_shift_q31(
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C = A >>  shiftBits */
       /* Shift the input and then store the results in the destination buffer. */
@@ -149,8 +149,8 @@ void arm_shift_q31(
       *(pDst + 3) = (in4 >> -shiftBits);
 
 
-      pSrc += 4u;
-      pDst += 4u;
+      pSrc += 4U;
+      pDst += 4U;
 
       blkCnt--;
     }
@@ -159,7 +159,7 @@ void arm_shift_q31(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
 #else
 
@@ -172,11 +172,11 @@ void arm_shift_q31(
 #endif /* #if defined (ARM_MATH_DSP) */
 
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A (>> or <<) shiftBits */
     /* Shift the input and then store the result in the destination buffer. */
-    *pDst++ = (sign == 0u) ? clip_q63_to_q31((q63_t) * pSrc++ << shiftBits) :
+    *pDst++ = (sign == 0U) ? clip_q63_to_q31((q63_t) * pSrc++ << shiftBits) :
       (*pSrc++ >> -shiftBits);
 
     /* Decrement the loop counter */

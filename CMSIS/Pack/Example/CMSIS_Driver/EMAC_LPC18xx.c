@@ -370,11 +370,11 @@ static int32_t PowerControl (ARM_POWER_STATE state) {
         /* Set clock accuracy to 20ns (50MHz) or 50ns (20MHz) */
         if (clk >= 51000000) {
           ENET->SUBSECOND_INCR = 20;
-          ENET->ADDEND         = (50000000ull << 32) / clk;
+          ENET->ADDEND         = (50000000ULL << 32) / clk;
         }
         else {
           ENET->SUBSECOND_INCR = 50;
-          ENET->ADDEND         = (20000000ull << 32) / clk;
+          ENET->ADDEND         = (20000000ULL << 32) / clk;
         }
 
         /* Enable timestamp fine update */

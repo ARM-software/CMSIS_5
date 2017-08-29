@@ -65,11 +65,11 @@ void arm_cmplx_conj_q31(
   q31_t inI1, inI2, inI3, inI4;                  /* Temporary imaginary variables */
 
   /*loop Unrolling */
-  blkCnt = numSamples >> 2u;
+  blkCnt = numSamples >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[0]+jC[1] = A[0]+ j (-1) A[1] */
     /* Calculate Complex Conjugate and then store the results in the destination buffer. */
@@ -125,14 +125,14 @@ void arm_cmplx_conj_q31(
     pDst[3] = inI2;
 
     /* increment source pointer by 8 to proecess next samples */
-    pSrc += 8u;
+    pSrc += 8U;
 
     /* store imaginary input samples */
     pDst[5] = inI3;
     pDst[7] = inI4;
 
     /* increment destination pointer by 8 to process next samples */
-    pDst += 8u;
+    pDst += 8U;
 
     /* Decrement the loop counter */
     blkCnt--;
@@ -140,7 +140,7 @@ void arm_cmplx_conj_q31(
 
   /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = numSamples % 0x4u;
+  blkCnt = numSamples % 0x4U;
 
 #else
 
@@ -150,7 +150,7 @@ void arm_cmplx_conj_q31(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[0]+jC[1] = A[0]+ j (-1) A[1] */
     /* Calculate Complex Conjugate and then store the results in the destination buffer. */

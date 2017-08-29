@@ -138,7 +138,7 @@ uint32_t blockSize)
 
    /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
    /* pStateCurnt points to the location where the new input data should be written */
-   pStateCurnt = &(S->pState[(numTaps - 1u)]);
+   pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
    /* Apply loop unrolling and compute 8 output values simultaneously.
     * The variables acc0 ... acc7 hold output values that are being computed:
@@ -152,7 +152,7 @@ uint32_t blockSize)
 
    /* First part of the processing with loop unrolling.  Compute 8 outputs at a time.
    ** a second loop below computes the remaining 1 to 7 samples. */
-   while (blkCnt > 0u)
+   while (blkCnt > 0U)
    {
       /* Copy four new input samples into the state buffer */
       *pStateCurnt++ = *pSrc++;
@@ -194,11 +194,11 @@ uint32_t blockSize)
       x6 = *px++;
 
       /* Loop unrolling.  Process 8 taps at a time. */
-      tapCnt = numTaps >> 3u;
+      tapCnt = numTaps >> 3U;
 
       /* Loop over the number of taps.  Unroll by a factor of 8.
        ** Repeat until we've computed numTaps-8 coefficients. */
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
          /* Read the b[numTaps-1] coefficient */
          c0 = *(pb++);
@@ -345,9 +345,9 @@ uint32_t blockSize)
       }
 
       /* If the filter length is not a multiple of 8, compute the remaining filter taps */
-      tapCnt = numTaps % 0x8u;
+      tapCnt = numTaps % 0x8U;
 
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
          /* Read coefficients */
          c0 = *(pb++);
@@ -396,9 +396,9 @@ uint32_t blockSize)
 
    /* If the blockSize is not a multiple of 8, compute any remaining output samples here.
    ** No loop unrolling is used. */
-   blkCnt = blockSize % 0x8u;
+   blkCnt = blockSize % 0x8U;
 
-   while (blkCnt > 0u)
+   while (blkCnt > 0U)
    {
       /* Copy one sample at a time into state buffer */
       *pStateCurnt++ = *pSrc++;
@@ -420,7 +420,7 @@ uint32_t blockSize)
          acc0 += *px++ * *pb++;
          i--;
 
-      } while (i > 0u);
+      } while (i > 0U);
 
       /* The result is store in the destination buffer. */
       *pDst++ = acc0;
@@ -438,10 +438,10 @@ uint32_t blockSize)
    /* Points to the start of the state buffer */
    pStateCurnt = S->pState;
 
-   tapCnt = (numTaps - 1u) >> 2u;
+   tapCnt = (numTaps - 1U) >> 2U;
 
    /* copy data */
-   while (tapCnt > 0u)
+   while (tapCnt > 0U)
    {
       *pStateCurnt++ = *pState++;
       *pStateCurnt++ = *pState++;
@@ -453,10 +453,10 @@ uint32_t blockSize)
    }
 
    /* Calculate remaining number of copies */
-   tapCnt = (numTaps - 1u) % 0x4u;
+   tapCnt = (numTaps - 1U) % 0x4U;
 
    /* Copy the remaining q31_t data */
-   while (tapCnt > 0u)
+   while (tapCnt > 0U)
    {
       *pStateCurnt++ = *pState++;
 
@@ -486,12 +486,12 @@ uint32_t blockSize)
 
    /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
    /* pStateCurnt points to the location where the new input data should be written */
-   pStateCurnt = &(S->pState[(numTaps - 1u)]);
+   pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
    /* Initialize blkCnt with blockSize */
    blkCnt = blockSize;
 
-   while (blkCnt > 0u)
+   while (blkCnt > 0U)
    {
       /* Copy one sample at a time into state buffer */
       *pStateCurnt++ = *pSrc++;
@@ -514,7 +514,7 @@ uint32_t blockSize)
          acc += *px++ * *pb++;
          i--;
 
-      } while (i > 0u);
+      } while (i > 0U);
 
       /* The result is store in the destination buffer. */
       *pDst++ = acc;
@@ -533,10 +533,10 @@ uint32_t blockSize)
    pStateCurnt = S->pState;
 
    /* Copy numTaps number of values */
-   tapCnt = numTaps - 1u;
+   tapCnt = numTaps - 1U;
 
    /* Copy data */
-   while (tapCnt > 0u)
+   while (tapCnt > 0U)
    {
       *pStateCurnt++ = *pState++;
 
@@ -568,7 +568,7 @@ uint32_t blockSize)
 
    /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
    /* pStateCurnt points to the location where the new input data should be written */
-   pStateCurnt = &(S->pState[(numTaps - 1u)]);
+   pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
    /* Apply loop unrolling and compute 8 output values simultaneously.
     * The variables acc0 ... acc7 hold output values that are being computed:
@@ -582,7 +582,7 @@ uint32_t blockSize)
 
    /* First part of the processing with loop unrolling.  Compute 8 outputs at a time.
    ** a second loop below computes the remaining 1 to 7 samples. */
-   while (blkCnt > 0u)
+   while (blkCnt > 0U)
    {
       /* Copy four new input samples into the state buffer */
       *pStateCurnt++ = *pSrc++;
@@ -624,11 +624,11 @@ uint32_t blockSize)
       x6 = *px++;
 
       /* Loop unrolling.  Process 8 taps at a time. */
-      tapCnt = numTaps >> 3u;
+      tapCnt = numTaps >> 3U;
 
       /* Loop over the number of taps.  Unroll by a factor of 8.
        ** Repeat until we've computed numTaps-8 coefficients. */
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
          /* Read the b[numTaps-1] coefficient */
          c0 = *(pb++);
@@ -849,9 +849,9 @@ uint32_t blockSize)
       }
 
       /* If the filter length is not a multiple of 8, compute the remaining filter taps */
-      tapCnt = numTaps % 0x8u;
+      tapCnt = numTaps % 0x8U;
 
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
          /* Read coefficients */
          c0 = *(pb++);
@@ -909,9 +909,9 @@ uint32_t blockSize)
 
    /* If the blockSize is not a multiple of 8, compute any remaining output samples here.
    ** No loop unrolling is used. */
-   blkCnt = blockSize % 0x8u;
+   blkCnt = blockSize % 0x8U;
 
-   while (blkCnt > 0u)
+   while (blkCnt > 0U)
    {
       /* Copy one sample at a time into state buffer */
       *pStateCurnt++ = *pSrc++;
@@ -933,7 +933,7 @@ uint32_t blockSize)
          acc0 += *px++ * *pb++;
          i--;
 
-      } while (i > 0u);
+      } while (i > 0U);
 
       /* The result is store in the destination buffer. */
       *pDst++ = acc0;
@@ -951,10 +951,10 @@ uint32_t blockSize)
    /* Points to the start of the state buffer */
    pStateCurnt = S->pState;
 
-   tapCnt = (numTaps - 1u) >> 2u;
+   tapCnt = (numTaps - 1U) >> 2U;
 
    /* copy data */
-   while (tapCnt > 0u)
+   while (tapCnt > 0U)
    {
       *pStateCurnt++ = *pState++;
       *pStateCurnt++ = *pState++;
@@ -966,10 +966,10 @@ uint32_t blockSize)
    }
 
    /* Calculate remaining number of copies */
-   tapCnt = (numTaps - 1u) % 0x4u;
+   tapCnt = (numTaps - 1U) % 0x4U;
 
    /* Copy the remaining q31_t data */
-   while (tapCnt > 0u)
+   while (tapCnt > 0U)
    {
       *pStateCurnt++ = *pState++;
 

@@ -122,8 +122,8 @@ void arm_conv_q7(
 
   /* The algorithm is implemented in three stages.
      The loop counters of each stage is initiated here. */
-  blockSize1 = srcBLen - 1u;
-  blockSize2 = (srcALen - srcBLen) + 1u;
+  blockSize1 = srcBLen - 1U;
+  blockSize2 = (srcALen - srcBLen) + 1U;
   blockSize3 = blockSize1;
 
   /* --------------------------
@@ -138,7 +138,7 @@ void arm_conv_q7(
 
   /* In this stage the MAC operations are increased by 1 for every iteration.
      The count variable holds the number of MAC operations performed */
-  count = 1u;
+  count = 1U;
 
   /* Working pointer of inputA */
   px = pIn1;
@@ -152,27 +152,27 @@ void arm_conv_q7(
    * ----------------------*/
 
   /* The first stage starts here */
-  while (blockSize1 > 0u)
+  while (blockSize1 > 0U)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0;
 
     /* Apply loop unrolling and compute 4 MACs simultaneously. */
-    k = count >> 2u;
+    k = count >> 2U;
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while (k > 0u)
+    while (k > 0U)
     {
       /* x[0] , x[1] */
       in1 = (q15_t) * px++;
       in2 = (q15_t) * px++;
-      input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+      input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
       /* y[srcBLen - 1] , y[srcBLen - 2] */
       in1 = (q15_t) * py--;
       in2 = (q15_t) * py--;
-      input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+      input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
       /* x[0] * y[srcBLen - 1] */
       /* x[1] * y[srcBLen - 2] */
@@ -181,12 +181,12 @@ void arm_conv_q7(
       /* x[2] , x[3] */
       in1 = (q15_t) * px++;
       in2 = (q15_t) * px++;
-      input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+      input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
       /* y[srcBLen - 3] , y[srcBLen - 4] */
       in1 = (q15_t) * py--;
       in2 = (q15_t) * py--;
-      input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+      input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
       /* x[2] * y[srcBLen - 3] */
       /* x[3] * y[srcBLen - 4] */
@@ -198,9 +198,9 @@ void arm_conv_q7(
 
     /* If the count is not a multiple of 4, compute any remaining MACs here.
      ** No loop unrolling is used. */
-    k = count % 0x4u;
+    k = count % 0x4U;
 
-    while (k > 0u)
+    while (k > 0U)
     {
       /* Perform the multiply-accumulates */
       sum += ((q15_t) * px++ * *py--);
@@ -210,7 +210,7 @@ void arm_conv_q7(
     }
 
     /* Store the result in the accumulator in the destination buffer. */
-    *pOut++ = (q7_t) (__SSAT(sum >> 7u, 8));
+    *pOut++ = (q7_t) (__SSAT(sum >> 7U, 8));
 
     /* Update the inputA and inputB pointers for next MAC calculation */
     py = pIn2 + count;
@@ -237,11 +237,11 @@ void arm_conv_q7(
   px = pIn1;
 
   /* Working pointer of inputB */
-  pSrc2 = pIn2 + (srcBLen - 1u);
+  pSrc2 = pIn2 + (srcBLen - 1U);
   py = pSrc2;
 
   /* count is index by which the pointer pIn1 to be incremented */
-  count = 0u;
+  count = 0U;
 
   /* -------------------
    * Stage2 process
@@ -250,12 +250,12 @@ void arm_conv_q7(
   /* Stage2 depends on srcBLen as in this stage srcBLen number of MACS are performed.
    * So, to loop unroll over blockSize2,
    * srcBLen should be greater than or equal to 4 */
-  if (srcBLen >= 4u)
+  if (srcBLen >= 4U)
   {
     /* Loop unroll over blockSize2, by 4 */
-    blkCnt = blockSize2 >> 2u;
+    blkCnt = blockSize2 >> 2U;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Set all accumulators to zero */
       acc0 = 0;
@@ -269,7 +269,7 @@ void arm_conv_q7(
       x2 = *(px++);
 
       /* Apply loop unrolling and compute 4 MACs simultaneously. */
-      k = srcBLen >> 2u;
+      k = srcBLen >> 2U;
 
       /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
@@ -287,13 +287,13 @@ void arm_conv_q7(
         in1 = (q15_t) x0;
         in2 = (q15_t) x1;
 
-        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* y[srcBLen - 1]   and y[srcBLen - 2] are packed */
         in1 = (q15_t) c0;
         in2 = (q15_t) c1;
 
-        input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* acc0 += x[0] * y[srcBLen - 1] + x[1] * y[srcBLen - 2]  */
         acc0 = __SMLAD(input1, input2, acc0);
@@ -302,7 +302,7 @@ void arm_conv_q7(
         in1 = (q15_t) x1;
         in2 = (q15_t) x2;
 
-        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* acc1 += x[1] * y[srcBLen - 1] + x[2] * y[srcBLen - 2]  */
         acc1 = __SMLAD(input1, input2, acc1);
@@ -311,7 +311,7 @@ void arm_conv_q7(
         in1 = (q15_t) x2;
         in2 = (q15_t) x3;
 
-        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* acc2 += x[2] * y[srcBLen - 1] + x[3] * y[srcBLen - 2]  */
         acc2 = __SMLAD(input1, input2, acc2);
@@ -323,7 +323,7 @@ void arm_conv_q7(
         in1 = (q15_t) x3;
         in2 = (q15_t) x0;
 
-        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* acc3 += x[3] * y[srcBLen - 1] + x[4] * y[srcBLen - 2]  */
         acc3 = __SMLAD(input1, input2, acc3);
@@ -340,13 +340,13 @@ void arm_conv_q7(
         in1 = (q15_t) x2;
         in2 = (q15_t) x3;
 
-        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* y[srcBLen - 3] and y[srcBLen - 4] are packed */
         in1 = (q15_t) c0;
         in2 = (q15_t) c1;
 
-        input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* acc0 += x[2] * y[srcBLen - 3] + x[3] * y[srcBLen - 4]  */
         acc0 = __SMLAD(input1, input2, acc0);
@@ -355,7 +355,7 @@ void arm_conv_q7(
         in1 = (q15_t) x3;
         in2 = (q15_t) x0;
 
-        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* acc1 += x[3] * y[srcBLen - 3] + x[4] * y[srcBLen - 4]  */
         acc1 = __SMLAD(input1, input2, acc1);
@@ -364,7 +364,7 @@ void arm_conv_q7(
         in1 = (q15_t) x0;
         in2 = (q15_t) x1;
 
-        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* acc2 += x[4] * y[srcBLen - 3] + x[5] * y[srcBLen - 4]  */
         acc2 = __SMLAD(input1, input2, acc2);
@@ -376,7 +376,7 @@ void arm_conv_q7(
         in1 = (q15_t) x1;
         in2 = (q15_t) x2;
 
-        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* acc3 += x[5] * y[srcBLen - 3] + x[6] * y[srcBLen - 4]  */
         acc3 = __SMLAD(input1, input2, acc3);
@@ -385,9 +385,9 @@ void arm_conv_q7(
 
       /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
        ** No loop unrolling is used. */
-      k = srcBLen % 0x4u;
+      k = srcBLen % 0x4U;
 
-      while (k > 0u)
+      while (k > 0U)
       {
         /* Read y[srcBLen - 5] sample */
         c0 = *(py--);
@@ -416,13 +416,13 @@ void arm_conv_q7(
 
 
       /* Store the result in the accumulator in the destination buffer. */
-      *pOut++ = (q7_t) (__SSAT(acc0 >> 7u, 8));
-      *pOut++ = (q7_t) (__SSAT(acc1 >> 7u, 8));
-      *pOut++ = (q7_t) (__SSAT(acc2 >> 7u, 8));
-      *pOut++ = (q7_t) (__SSAT(acc3 >> 7u, 8));
+      *pOut++ = (q7_t) (__SSAT(acc0 >> 7U, 8));
+      *pOut++ = (q7_t) (__SSAT(acc1 >> 7U, 8));
+      *pOut++ = (q7_t) (__SSAT(acc2 >> 7U, 8));
+      *pOut++ = (q7_t) (__SSAT(acc3 >> 7U, 8));
 
       /* Increment the pointer pIn1 index, count by 4 */
-      count += 4u;
+      count += 4U;
 
       /* Update the inputA and inputB pointers for next MAC calculation */
       px = pIn1 + count;
@@ -434,30 +434,30 @@ void arm_conv_q7(
 
     /* If the blockSize2 is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    blkCnt = blockSize2 % 0x4u;
+    blkCnt = blockSize2 % 0x4U;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
 
       /* Apply loop unrolling and compute 4 MACs simultaneously. */
-      k = srcBLen >> 2u;
+      k = srcBLen >> 2U;
 
       /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-      while (k > 0u)
+      while (k > 0U)
       {
 
         /* Reading two inputs of SrcA buffer and packing */
         in1 = (q15_t) * px++;
         in2 = (q15_t) * px++;
-        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* Reading two inputs of SrcB buffer and packing */
         in1 = (q15_t) * py--;
         in2 = (q15_t) * py--;
-        input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* Perform the multiply-accumulates */
         sum = __SMLAD(input1, input2, sum);
@@ -465,12 +465,12 @@ void arm_conv_q7(
         /* Reading two inputs of SrcA buffer and packing */
         in1 = (q15_t) * px++;
         in2 = (q15_t) * px++;
-        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* Reading two inputs of SrcB buffer and packing */
         in1 = (q15_t) * py--;
         in2 = (q15_t) * py--;
-        input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+        input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
         /* Perform the multiply-accumulates */
         sum = __SMLAD(input1, input2, sum);
@@ -481,9 +481,9 @@ void arm_conv_q7(
 
       /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
        ** No loop unrolling is used. */
-      k = srcBLen % 0x4u;
+      k = srcBLen % 0x4U;
 
-      while (k > 0u)
+      while (k > 0U)
       {
         /* Perform the multiply-accumulates */
         sum += ((q15_t) * px++ * *py--);
@@ -493,7 +493,7 @@ void arm_conv_q7(
       }
 
       /* Store the result in the accumulator in the destination buffer. */
-      *pOut++ = (q7_t) (__SSAT(sum >> 7u, 8));
+      *pOut++ = (q7_t) (__SSAT(sum >> 7U, 8));
 
       /* Increment the pointer pIn1 index, count by 1 */
       count++;
@@ -512,7 +512,7 @@ void arm_conv_q7(
      * the blockSize2 loop cannot be unrolled by 4 */
     blkCnt = blockSize2;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
@@ -520,7 +520,7 @@ void arm_conv_q7(
       /* srcBLen number of MACS should be performed */
       k = srcBLen;
 
-      while (k > 0u)
+      while (k > 0U)
       {
         /* Perform the multiply-accumulate */
         sum += ((q15_t) * px++ * *py--);
@@ -530,7 +530,7 @@ void arm_conv_q7(
       }
 
       /* Store the result in the accumulator in the destination buffer. */
-      *pOut++ = (q7_t) (__SSAT(sum >> 7u, 8));
+      *pOut++ = (q7_t) (__SSAT(sum >> 7U, 8));
 
       /* Increment the MAC count */
       count++;
@@ -560,38 +560,38 @@ void arm_conv_q7(
      The blockSize3 variable holds the number of MAC operations performed */
 
   /* Working pointer of inputA */
-  pSrc1 = pIn1 + (srcALen - (srcBLen - 1u));
+  pSrc1 = pIn1 + (srcALen - (srcBLen - 1U));
   px = pSrc1;
 
   /* Working pointer of inputB */
-  pSrc2 = pIn2 + (srcBLen - 1u);
+  pSrc2 = pIn2 + (srcBLen - 1U);
   py = pSrc2;
 
   /* -------------------
    * Stage3 process
    * ------------------*/
 
-  while (blockSize3 > 0u)
+  while (blockSize3 > 0U)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0;
 
     /* Apply loop unrolling and compute 4 MACs simultaneously. */
-    k = blockSize3 >> 2u;
+    k = blockSize3 >> 2U;
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while (k > 0u)
+    while (k > 0U)
     {
       /* Reading two inputs, x[srcALen - srcBLen + 1] and x[srcALen - srcBLen + 2] of SrcA buffer and packing */
       in1 = (q15_t) * px++;
       in2 = (q15_t) * px++;
-      input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+      input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
       /* Reading two inputs, y[srcBLen - 1] and y[srcBLen - 2] of SrcB buffer and packing */
       in1 = (q15_t) * py--;
       in2 = (q15_t) * py--;
-      input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+      input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
       /* sum += x[srcALen - srcBLen + 1] * y[srcBLen - 1] */
       /* sum += x[srcALen - srcBLen + 2] * y[srcBLen - 2] */
@@ -600,12 +600,12 @@ void arm_conv_q7(
       /* Reading two inputs, x[srcALen - srcBLen + 3] and x[srcALen - srcBLen + 4] of SrcA buffer and packing */
       in1 = (q15_t) * px++;
       in2 = (q15_t) * px++;
-      input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+      input1 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
       /* Reading two inputs, y[srcBLen - 3] and y[srcBLen - 4] of SrcB buffer and packing */
       in1 = (q15_t) * py--;
       in2 = (q15_t) * py--;
-      input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16u);
+      input2 = ((q31_t) in1 & 0x0000FFFF) | ((q31_t) in2 << 16U);
 
       /* sum += x[srcALen - srcBLen + 3] * y[srcBLen - 3] */
       /* sum += x[srcALen - srcBLen + 4] * y[srcBLen - 4] */
@@ -617,9 +617,9 @@ void arm_conv_q7(
 
     /* If the blockSize3 is not a multiple of 4, compute any remaining MACs here.
      ** No loop unrolling is used. */
-    k = blockSize3 % 0x4u;
+    k = blockSize3 % 0x4U;
 
-    while (k > 0u)
+    while (k > 0U)
     {
       /* Perform the multiply-accumulates */
       sum += ((q15_t) * px++ * *py--);
@@ -629,7 +629,7 @@ void arm_conv_q7(
     }
 
     /* Store the result in the accumulator in the destination buffer. */
-    *pOut++ = (q7_t) (__SSAT(sum >> 7u, 8));
+    *pOut++ = (q7_t) (__SSAT(sum >> 7U, 8));
 
     /* Update the inputA and inputB pointers for next MAC calculation */
     px = ++pSrc1;
@@ -666,7 +666,7 @@ void arm_conv_q7(
     }
 
     /* Store the output in the destination buffer */
-    pDst[i] = (q7_t) __SSAT((sum >> 7u), 8u);
+    pDst[i] = (q7_t) __SSAT((sum >> 7U), 8U);
   }
 
 #endif /*   #if defined (ARM_MATH_DSP)        */

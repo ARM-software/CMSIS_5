@@ -270,7 +270,7 @@ void Reset_Handler(void) {
   pDest = &__bss_start__;
 
   for ( ; pDest < &__bss_end__ ; ) {
-    *pDest++ = 0ul;
+    *pDest++ = 0UL;
   }
 #endif /* __STARTUP_CLEAR_BSS_MULTIPLE || __STARTUP_CLEAR_BSS */
 

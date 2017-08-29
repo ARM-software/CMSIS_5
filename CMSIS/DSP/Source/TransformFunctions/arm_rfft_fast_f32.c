@@ -110,7 +110,7 @@ void stage_rfft_f32(
       pA += 2;
       pB -= 2;
       k--;
-   } while (k > 0u);
+   } while (k > 0U);
 }
 
 /* Prepares data for inverse cfft */
@@ -139,7 +139,7 @@ float32_t * p, float32_t * pOut)
    pB  =  p + 2*k ;
    pA +=  2	   ;
 
-   while (k > 0u)
+   while (k > 0U)
    {
       /* G is half of the frequency complex spectrum */
       //for k = 2:N

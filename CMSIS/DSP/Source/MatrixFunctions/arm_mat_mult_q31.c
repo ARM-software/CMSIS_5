@@ -82,7 +82,7 @@ arm_status arm_mat_mult_q31(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  uint16_t col, i = 0u, j, row = numRowsA, colCnt;      /* loop counters */
+  uint16_t col, i = 0U, j, row = numRowsA, colCnt;      /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
   q31_t a0, a1, a2, a3, b0, b1, b2, b3;
 
@@ -114,7 +114,7 @@ arm_status arm_mat_mult_q31(
        ** to the starting address of the pSrcB data */
       pIn2 = pSrcB->pData;
 
-      j = 0u;
+      j = 0U;
 
       /* column loop */
       do
@@ -130,7 +130,7 @@ arm_status arm_mat_mult_q31(
 
 
         /* matrix multiplication */
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           /* Perform the multiply-accumulates */
@@ -163,9 +163,9 @@ arm_status arm_mat_mult_q31(
 
         /* If the columns of pSrcA is not a multiple of 4, compute any remaining output samples here.
          ** No loop unrolling is used. */
-        colCnt = numColsA % 0x4u;
+        colCnt = numColsA % 0x4U;
 
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           /* Perform the multiply-accumulates */
@@ -186,14 +186,14 @@ arm_status arm_mat_mult_q31(
         /* Decrement the column loop counter */
         col--;
 
-      } while (col > 0u);
+      } while (col > 0U);
 
 #else
 
   /* Run the below code for Cortex-M0 */
 
   q31_t *pInB = pSrcB->pData;                    /* input data matrix pointer B */
-  uint16_t col, i = 0u, row = numRowsA, colCnt;  /* loop counters */
+  uint16_t col, i = 0U, row = numRowsA, colCnt;  /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
 
 
@@ -237,7 +237,7 @@ arm_status arm_mat_mult_q31(
         colCnt = numColsA;
 
         /* matrix multiplication */
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           /* Perform the multiply-accumulates */
@@ -257,7 +257,7 @@ arm_status arm_mat_mult_q31(
         /* Update the pointer pIn2 to point to the  starting address of the next column */
         pIn2 = pInB + (numColsB - col);
 
-      } while (col > 0u);
+      } while (col > 0U);
 
 #endif
 
@@ -268,7 +268,7 @@ arm_status arm_mat_mult_q31(
       /* Decrement the row loop counter */
       row--;
 
-    } while (row > 0u);
+    } while (row > 0U);
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;

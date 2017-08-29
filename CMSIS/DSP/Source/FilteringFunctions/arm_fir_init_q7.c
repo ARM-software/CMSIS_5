@@ -70,7 +70,7 @@ void arm_fir_init_q7(
   S->pCoeffs = pCoeffs;
 
   /* Clear the state buffer.  The size is always (blockSize + numTaps - 1) */
-  memset(pState, 0, (numTaps + (blockSize - 1u)) * sizeof(q7_t));
+  memset(pState, 0, (numTaps + (blockSize - 1U)) * sizeof(q7_t));
 
   /* Assign state pointer */
   S->pState = pState;

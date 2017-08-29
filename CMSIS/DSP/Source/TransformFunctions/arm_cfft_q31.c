@@ -82,7 +82,7 @@ void arm_cfft_q31(
 {
     uint32_t L = S->fftLen;
 
-    if (ifftFlag == 1u)
+    if (ifftFlag == 1U)
     {
         switch (L)
         {
@@ -161,15 +161,15 @@ void arm_cfft_radix4by2_q31(
         multAcc_32x32_keep32_R(p0, yt, sinVal);
         multSub_32x32_keep32_R(p1, xt, sinVal);
 
-        pSrc[2u * l] = p0 << 1;
-        pSrc[2u * l + 1u] = p1 << 1;
+        pSrc[2U * l] = p0 << 1;
+        pSrc[2U * l + 1U] = p1 << 1;
 
     }
 
     // first col
-    arm_radix4_butterfly_q31( pSrc, n2, (q31_t*)pCoef, 2u);
+    arm_radix4_butterfly_q31( pSrc, n2, (q31_t*)pCoef, 2U);
     // second col
-    arm_radix4_butterfly_q31( pSrc + fftLen, n2, (q31_t*)pCoef, 2u);
+    arm_radix4_butterfly_q31( pSrc + fftLen, n2, (q31_t*)pCoef, 2U);
 
     for (i = 0; i < fftLen >> 1; i++)
     {
@@ -221,15 +221,15 @@ void arm_cfft_radix4by2_inverse_q31(
         multSub_32x32_keep32_R(p0, yt, sinVal);
         multAcc_32x32_keep32_R(p1, xt, sinVal);
 
-        pSrc[2u * l] = p0 << 1;
-        pSrc[2u * l + 1u] = p1 << 1;
+        pSrc[2U * l] = p0 << 1;
+        pSrc[2U * l + 1U] = p1 << 1;
 
     }
 
     // first col
-    arm_radix4_butterfly_inverse_q31( pSrc, n2, (q31_t*)pCoef, 2u);
+    arm_radix4_butterfly_inverse_q31( pSrc, n2, (q31_t*)pCoef, 2U);
     // second col
-    arm_radix4_butterfly_inverse_q31( pSrc + fftLen, n2, (q31_t*)pCoef, 2u);
+    arm_radix4_butterfly_inverse_q31( pSrc + fftLen, n2, (q31_t*)pCoef, 2U);
 
     for (i = 0; i < fftLen >> 1; i++)
     {

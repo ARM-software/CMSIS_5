@@ -16,12 +16,12 @@ void ref_fir_decimate_f32(
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = S->pState + numTaps - 1u;
+  pStateCurnt = S->pState + numTaps - 1U;
 
   /* Total number of output samples to be computed */
   blkCnt = blockSize / S->M;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -64,10 +64,10 @@ void ref_fir_decimate_f32(
   pStateCurnt = S->pState;
 
   /* Copy numTaps number of values */
-  i = numTaps - 1u;
+  i = numTaps - 1U;
 
   /* copy data */
-  while (i > 0u)
+  while (i > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -92,12 +92,12 @@ void ref_fir_decimate_q31(
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = S->pState + numTaps - 1u;
+  pStateCurnt = S->pState + numTaps - 1U;
 
   /* Total number of output samples to be computed */
   blkCnt = blockSize / S->M;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -141,10 +141,10 @@ void ref_fir_decimate_q31(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  i = numTaps - 1u;
+  i = numTaps - 1U;
 
   /* copy data */
-  while (i > 0u)
+  while (i > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -169,12 +169,12 @@ void ref_fir_decimate_fast_q31(
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = S->pState + numTaps - 1u;
+  pStateCurnt = S->pState + numTaps - 1U;
 
   /* Total number of output samples to be computed */
   blkCnt = blockSize / S->M;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -218,10 +218,10 @@ void ref_fir_decimate_fast_q31(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  i = numTaps - 1u;
+  i = numTaps - 1U;
 
   /* copy data */
-  while (i > 0u)
+  while (i > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -246,12 +246,12 @@ void ref_fir_decimate_q15(
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = S->pState + numTaps - 1u;
+  pStateCurnt = S->pState + numTaps - 1U;
 
   /* Total number of output samples to be computed */
   blkCnt = blockSize / S->M;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -295,10 +295,10 @@ void ref_fir_decimate_q15(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  i = numTaps - 1u;
+  i = numTaps - 1U;
 
   /* copy data */
-  while (i > 0u)
+  while (i > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -323,12 +323,12 @@ void ref_fir_decimate_fast_q15(
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = S->pState + numTaps - 1u;
+  pStateCurnt = S->pState + numTaps - 1U;
 
   /* Total number of output samples to be computed */
   blkCnt = blockSize / S->M;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -372,10 +372,10 @@ void ref_fir_decimate_fast_q15(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  i = numTaps - 1u;
+  i = numTaps - 1U;
 
   /* copy data */
-  while (i > 0u)
+  while (i > 0U)
   {
     *pStateCurnt++ = *pState++;
 

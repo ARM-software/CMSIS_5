@@ -64,11 +64,11 @@ void arm_cmplx_mult_cmplx_q15(
   uint32_t blkCnt;                               /* loop counters */
 
   /* loop Unrolling */
-  blkCnt = numSamples >> 2u;
+  blkCnt = numSamples >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
@@ -126,9 +126,9 @@ void arm_cmplx_mult_cmplx_q15(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = numSamples % 0x4u;
+  blkCnt = numSamples % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
@@ -152,7 +152,7 @@ void arm_cmplx_mult_cmplx_q15(
 
   /* Run the below code for Cortex-M0 */
 
-  while (numSamples > 0u)
+  while (numSamples > 0U)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */

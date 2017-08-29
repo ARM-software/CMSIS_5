@@ -299,9 +299,9 @@ void arm_cfft_radix8by2_f32( arm_cfft_instance_f32 * S, float32_t * p1)
     }
 
     // first col
-    arm_radix8_butterfly_f32( pCol1, L, (float32_t *) S->pTwiddle, 2u);
+    arm_radix8_butterfly_f32( pCol1, L, (float32_t *) S->pTwiddle, 2U);
     // second col
-    arm_radix8_butterfly_f32( pCol2, L, (float32_t *) S->pTwiddle, 2u);
+    arm_radix8_butterfly_f32( pCol2, L, (float32_t *) S->pTwiddle, 2U);
 }
 
 void arm_cfft_radix8by4_f32( arm_cfft_instance_f32 * S, float32_t * p1)
@@ -535,13 +535,13 @@ void arm_cfft_radix8by4_f32( arm_cfft_instance_f32 * S, float32_t * p1)
     *p4++ = m2 - m3;
 
     // first col
-    arm_radix8_butterfly_f32( pCol1, L, (float32_t *) S->pTwiddle, 4u);
+    arm_radix8_butterfly_f32( pCol1, L, (float32_t *) S->pTwiddle, 4U);
     // second col
-    arm_radix8_butterfly_f32( pCol2, L, (float32_t *) S->pTwiddle, 4u);
+    arm_radix8_butterfly_f32( pCol2, L, (float32_t *) S->pTwiddle, 4U);
     // third col
-    arm_radix8_butterfly_f32( pCol3, L, (float32_t *) S->pTwiddle, 4u);
+    arm_radix8_butterfly_f32( pCol3, L, (float32_t *) S->pTwiddle, 4U);
     // fourth col
-    arm_radix8_butterfly_f32( pCol4, L, (float32_t *) S->pTwiddle, 4u);
+    arm_radix8_butterfly_f32( pCol4, L, (float32_t *) S->pTwiddle, 4U);
 }
 
 /**
@@ -568,7 +568,7 @@ void arm_cfft_f32(
     uint32_t  L = S->fftLen, l;
     float32_t invL, * pSrc;
 
-    if (ifftFlag == 1u)
+    if (ifftFlag == 1U)
     {
         /*  Conjugate input data  */
         pSrc = p1 + 1;
@@ -601,7 +601,7 @@ void arm_cfft_f32(
     if ( bitReverseFlag )
         arm_bitreversal_32((uint32_t*)p1,S->bitRevLength,S->pBitRevTable);
 
-    if (ifftFlag == 1u)
+    if (ifftFlag == 1U)
     {
         invL = 1.0f/(float32_t)L;
         /*  Conjugate and scale output data */
