@@ -2988,6 +2988,21 @@ and 8-bit Java bytecodes in Jazelle state.
       </attributes>
     </example>
 
+    <example name="CMSIS-RTOS2 RTX5 Message Queue" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/MsgQueue">
+      <description>CMSIS-RTOS2 Message Queue Example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="MsqQueue.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="RTOS2"/>
+        <component Cclass="Compiler" Cgroup="EventRecorder"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+    
     <example name="TrustZone for ARMv8-M No RTOS" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS">
       <description>Bare-metal secure/non-secure example without RTOS</description>
       <board name="uVision Simulator" vendor="Keil"/>
