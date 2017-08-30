@@ -247,7 +247,7 @@ void __CLREX(void);
     \param [in]    sat  Bit position to saturate to [1..32]
     \return             Saturated value
  */
-uint32_t __SSAT(unint32_t value, uint32_t sat);
+int32_t __SSAT(int32_t value, uint32_t sat);
 
 
 /**************************************************************************************************/
