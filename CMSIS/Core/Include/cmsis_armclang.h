@@ -1093,11 +1093,14 @@ __attribute__((always_inline)) __STATIC_INLINE int32_t __SSAT(int32_t val, uint3
   \param [in]    sat  Bit position to saturate to (0..31)
   \return             Saturated value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __USAT(uint32_t val, uint32_t sat) {
+__attribute__((always_inline)) __STATIC_INLINE int32_t __USAT(int32_t val, uint32_t sat) {
   if (sat <= 31U) {
-    const uint32_t max = (UINT32_MAX >> (32U - sat));
+    const int32_t max = (int32_t)((1U << sat) - 1U);
+    const int32_t min = 0;
     if (val > max) {
       return max;
+    } else if (val < min) {
+      return min;
     }
   }
   return val;
