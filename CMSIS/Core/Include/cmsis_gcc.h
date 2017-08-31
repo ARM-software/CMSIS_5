@@ -847,7 +847,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __DMB(void)
 
 /**
   \brief   Reverse byte order (32 bit)
-  \details Reverses the byte order in integer value.
+  \details Reverses the byte order in unsigned integer value.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -866,13 +866,13 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __REV(uint32_t value)
 
 /**
   \brief   Reverse byte order (16 bit)
-  \details Reverses the byte order in two unsigned short values.
+  \details Reverses the byte order in unsigned short value.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __REV16(uint32_t value)
+__attribute__((always_inline)) __STATIC_INLINE uint16_t __REV16(uint16_t value)
 {
-  uint32_t result;
+  uint16_t result;
 
   __ASM volatile ("rev16 %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
   return(result);
@@ -885,15 +885,15 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __REV16(uint32_t value)
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-__attribute__((always_inline)) __STATIC_INLINE int32_t __REVSH(int32_t value)
+__attribute__((always_inline)) __STATIC_INLINE int16_t __REVSH(int16_t value)
 {
 #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
-  return (short)__builtin_bswap16(value);
+  return (int16_t)__builtin_bswap16(value);
 #else
-  int32_t result;
+  int16_t result;
 
   __ASM volatile ("revsh %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
-  return(result);
+  return result;
 #endif
 }
 
@@ -936,10 +936,10 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
    __ASM volatile ("rbit %0, %1" : "=r" (result) : "r" (value) );
 #else
-  int32_t s = (4 /*sizeof(v)*/ * 8) - 1; /* extra shift needed at end */
+  uint32_t s = (4U /*sizeof(v)*/ * 8U) - 1U; /* extra shift needed at end */
 
   result = value;                      /* r will be reversed bits of v; first get LSB of v */
-  for (value >>= 1U; value; value >>= 1U)
+  for (value >>= 1U; value != 0U; value >>= 1U)
   {
     result <<= 1U;
     result |= value & 1U;
@@ -947,7 +947,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
   }
   result <<= s;                        /* shift when v's highest bits are zero */
 #endif
-  return(result);
+  return result;
 }
 
 
