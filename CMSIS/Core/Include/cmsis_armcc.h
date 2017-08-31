@@ -461,7 +461,7 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
   \return               Reversed value
  */
 #ifndef __NO_EMBEDDED_ASM
-__attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t value)
+__attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint16_t __REV16(uint16_t value)
 {
   rev16 r0, r0
   bx lr
@@ -476,7 +476,7 @@ __attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(u
   \return               Reversed value
  */
 #ifndef __NO_EMBEDDED_ASM
-__attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t value)
+__attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(int16_t value)
 {
   revsh r0, r0
   bx lr
@@ -517,17 +517,17 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 {
   uint32_t result;
-  int32_t s = (4 /*sizeof(v)*/ * 8) - 1; /* extra shift needed at end */
+  uint32_t s = (4U /*sizeof(v)*/ * 8U) - 1U; /* extra shift needed at end */
 
   result = value;                      /* r will be reversed bits of v; first get LSB of v */
-  for (value >>= 1U; value; value >>= 1U)
+  for (value >>= 1U; value != 0U; value >>= 1U)
   {
     result <<= 1U;
     result |= value & 1U;
     s--;
   }
   result <<= s;                        /* shift when v's highest bits are zero */
-  return(result);
+  return result;
 }
 #endif
 
