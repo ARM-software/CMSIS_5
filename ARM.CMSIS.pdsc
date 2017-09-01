@@ -14,8 +14,10 @@
 	  - added GCC startup and linker script for Cortex-A9
       CMSIS-Core(M): 5.0.3 (see revision history for details)
 	  - Added MPU Functions for ARMv8-M for Cortex-M23/M33.
-      CMSIS-RTOS2:
-      - RTX 5.2.1 (see revision history for details)
+    CMSIS-RTOS2:
+    - RTX 5.2.1 (see revision history for details)
+    - Message Queue Example
+    - Memory Pool Example
 	</release>
     <release version="5.1.0" date="2017-08-04">
       CMSIS-Core(M): 5.0.2 (see revision history for details)
@@ -2993,6 +2995,21 @@ and 8-bit Java bytecodes in Jazelle state.
       <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="uv" load="MsqQueue.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="RTOS2"/>
+        <component Cclass="Compiler" Cgroup="EventRecorder"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-RTOS2 RTX5 Memory Pool" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/MemPool">
+      <description>CMSIS-RTOS2 Memory Pool Example</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="uv" load="MemPool.uvprojx"/>
       </project>
       <attributes>
         <component Cclass="CMSIS" Cgroup="CORE"/>
