@@ -684,36 +684,14 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t 
   \details Returns the current value of the Floating Point Status/Control register.
   \return               Floating Point Status/Control register value
  */
-/* #define __get_FPSCR      __builtin_arm_get_fpscr */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
-{
-#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
-     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
-  uint32_t result;
-
-  __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
-  return(result);
-#else
-  return(0U);
-#endif
-}
-
+#define __get_FPSCR      __builtin_arm_get_fpscr
 
 /**
   \brief   Set FPSCR
   \details Assigns the given value to the Floating Point Status/Control register.
   \param [in]    fpscr  Floating Point Status/Control value to set
  */
-/* #define __set_FPSCR      __builtin_arm_set_fpscr */
-__attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
-{
-#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
-     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
-  __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "memory");
-#else
-  (void)fpscr;
-#endif
-}
+#define __set_FPSCR      __builtin_arm_set_fpscr
 
 #endif /* ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
            (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    ) */
