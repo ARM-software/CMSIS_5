@@ -488,7 +488,6 @@ extern "C"
 #define _SIMD32_OFFSET(addr)  (*(__SIMD32_TYPE *)  (addr))
 #define __SIMD64(addr)        (*(int64_t **) & (addr))
 
-/* #if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
 #if !defined (ARM_MATH_DSP)
   /**
    * @brief definition to pack two 16 bit values.
@@ -498,7 +497,6 @@ extern "C"
 #define __PKHTB(ARG1, ARG2, ARG3) ( (((int32_t)(ARG1) <<    0) & (int32_t)0xFFFF0000) | \
                                     (((int32_t)(ARG2) >> ARG3) & (int32_t)0x0000FFFF)  )
 
-/* #endif // defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
 #endif /* !defined (ARM_MATH_DSP) */
 
    /**
@@ -571,32 +569,6 @@ extern "C"
     return ((((q63_t) (x & 0x00000000FFFFFFFF) * y) >> 32) +
             (((q63_t) (x >> 32) * y)));
   }
-
-/*
-  #if defined (ARM_MATH_CM0_FAMILY) && defined ( __CC_ARM   )
-  #define __CLZ __clz
-  #endif
- */
-/* note: function can be removed when all toolchain support __CLZ for Cortex-M0 */
-#if defined (ARM_MATH_CM0_FAMILY) && ((defined (__ICCARM__))  )
-  CMSIS_INLINE __STATIC_INLINE uint32_t __CLZ(
-  q31_t data);
-
-  CMSIS_INLINE __STATIC_INLINE uint32_t __CLZ(
-  q31_t data)
-  {
-    uint32_t count = 0;
-    uint32_t mask = 0x80000000;
-
-    while ((data & mask) == 0)
-    {
-      count += 1U;
-      mask = mask >> 1U;
-    }
-
-    return (count);
-  }
-#endif
 
   /**
    * @brief Function to Calculates 1/in (reciprocal) value of Q31 Data type.
@@ -701,50 +673,9 @@ extern "C"
   }
 
 
-  /*
-   * @brief C custom defined intrinisic function for only M0 processors
-   */
-#if defined(ARM_MATH_CM0_FAMILY)
-  CMSIS_INLINE __STATIC_INLINE q31_t __SSAT(
-  q31_t x,
-  uint32_t y)
-  {
-    int32_t posMax, negMin;
-    uint32_t i;
-
-    posMax = 1;
-    for (i = 0; i < (y - 1); i++)
-    {
-      posMax = posMax * 2;
-    }
-
-    if (x > 0)
-    {
-      posMax = (posMax - 1);
-
-      if (x > posMax)
-      {
-        x = posMax;
-      }
-    }
-    else
-    {
-      negMin = -posMax;
-
-      if (x < negMin)
-      {
-        x = negMin;
-      }
-    }
-    return (x);
-  }
-#endif /* end of ARM_MATH_CM0_FAMILY */
-
-
-  /*
-   * @brief C custom defined intrinsic function for M3 and M0 processors
-   */
-/* #if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
+/*
+ * @brief C custom defined intrinsic function for M3 and M0 processors
+ */
 #if !defined (ARM_MATH_DSP)
 
   /*
@@ -1074,33 +1005,6 @@ extern "C"
     return (sum + (int32_t) (((int64_t) x * y) >> 32));
   }
 
-#if 0
-  /*
-   * @brief C custom defined PKHBT for unavailable DSP extension
-   */
-  CMSIS_INLINE __STATIC_INLINE uint32_t __PKHBT(
-  uint32_t x,
-  uint32_t y,
-  uint32_t leftshift)
-  {
-    return ( ((x             ) & 0x0000FFFFUL) |
-             ((y << leftshift) & 0xFFFF0000UL)  );
-  }
-
-  /*
-   * @brief C custom defined PKHTB for unavailable DSP extension
-   */
-  CMSIS_INLINE __STATIC_INLINE uint32_t __PKHTB(
-  uint32_t x,
-  uint32_t y,
-  uint32_t rightshift)
-  {
-    return ( ((x              ) & 0xFFFF0000UL) |
-             ((y >> rightshift) & 0x0000FFFFUL)  );
-  }
-#endif
-
-/* #endif // defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
 #endif /* !defined (ARM_MATH_DSP) */
 
 

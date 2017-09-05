@@ -99,8 +99,8 @@
 * Struct for a single MPU Region
 */
 typedef struct _ARM_MPU_Region_t {
-  __IOM uint32_t RBAR;                   /*!< Region Base Address Register value */
-  __IOM uint32_t RLAR;                   /*!< Region Limit Address Register value */
+  uint32_t RBAR;                   /*!< Region Base Address Register value */
+  uint32_t RLAR;                   /*!< Region Limit Address Register value */
 } ARM_MPU_Region_t;
     
 /** Enable the MPU.
