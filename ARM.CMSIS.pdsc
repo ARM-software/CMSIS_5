@@ -9,36 +9,38 @@
 
   <releases>
     <release version="5.1.1-dev1">
-	  Active development...
-	  Devices:
-	  - added GCC startup and linker script for Cortex-A9
+      Active development...
+      Devices:
+      - added GCC startup and linker script for Cortex-A9
       CMSIS-Core(M): 5.0.3 (see revision history for details)
-	  - Added MPU Functions for ARMv8-M for Cortex-M23/M33.
-    CMSIS-RTOS2:
-    - RTX 5.2.1 (see revision history for details)
-    - Message Queue Example
-    - Memory Pool Example
-	</release>
+      - Added MPU Functions for ARMv8-M for Cortex-M23/M33.
+      CMSIS-RTOS:
+      - RTX: added variant for Infineon XMC4 series affected by PMU_CM.001 errata
+      CMSIS-RTOS2:
+      - RTX 5.2.1 (see revision history for details)
+      - Message Queue Example
+      - Memory Pool Example
+    </release>
     <release version="5.1.0" date="2017-08-04">
       CMSIS-Core(M): 5.0.2 (see revision history for details)
-	  - Changed Version Control macros to be core agnostic. 
+      - Changed Version Control macros to be core agnostic. 
       - Added MPU Functions for ARMv7-M for Cortex-M0+/M3/M4/M7.
       CMSIS-Core(A): 1.0.0 (see revision history for details)
-	  - Initial release
-	  - IRQ Controller API 1.0.0
-	  CMSIS-Driver: 2.05 (see revision history for details)
-	  - All typedefs related to status have been made volatile.
+      - Initial release
+      - IRQ Controller API 1.0.0
+      CMSIS-Driver: 2.05 (see revision history for details)
+      - All typedefs related to status have been made volatile.
       CMSIS-RTOS2:
       - API 2.1.1 (see revision history for details)
       - RTX 5.2.0 (see revision history for details)
-	  - OS Tick API 1.0.0
+      - OS Tick API 1.0.0
       CMSIS-DSP: 1.5.2 (see revision history for details)
       - Fixed GNU Compiler specific diagnostics.
       CMSIS-PACK: 1.5.0 (see revision history for details)
       - added System Description File (*.SDF) Format
-	  CMSIS-Zone: 0.0.1 (Preview)
-	  - Initial specification draft
-	</release>
+      CMSIS-Zone: 0.0.1 (Preview)
+      - Initial specification draft
+    </release>
     <release version="5.0.1" date="2017-02-03">
       Package Description:
       - added taxonomy for Cclass RTOS
@@ -942,30 +944,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dendian="Big-endian"/>
     </condition>
 
-    <!-- XMC 4000 Series devices from Infineon require a special library -->
-    <condition id="CM4_LE_ARMCC_STD">
-      <description>Cortex-M4 processor based device in little endian mode for the ARM Compiler without Infineon devices</description>
-      <require Dcore="Cortex-M4" Dfpu="NO_FPU" Dendian="Little-endian"/>
-      <deny Dvendor="Infineon:7" Dname="XMC4*"/>
-      <require Tcompiler="ARMCC"/>
-    </condition>
-    <condition id="CM4_LE_ARMCC_IFX">
-      <description>Cortex-M4 processor based device in little endian mode for the ARM Compiler and Infineon devices</description>
-      <require Dcore="Cortex-M4" Dfpu="NO_FPU" Dendian="Little-endian" Dvendor="Infineon:7" Dname="XMC4*"/>
-      <require Tcompiler="ARMCC"/>
-    </condition>
-    <condition id="CM4_FP_LE_ARMCC_STD">
-      <description>Cortex-M4 processor based device using Floating Point Unit in little endian mode for the ARM Compiler without Infineon devices</description>
-      <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Little-endian"/>
-      <deny Dvendor="Infineon:7" Dname="XMC4*"/>
-      <require Tcompiler="ARMCC"/>
-    </condition>
-    <condition id="CM4_FP_LE_ARMCC_IFX">
-      <description>Cortex-M4 processor based device using Floating Point Unit in little endian mode for the ARM Compiler and Infineon devices</description>
-      <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Little-endian" Dvendor="Infineon:7" Dname="XMC4*"/>
-      <require Tcompiler="ARMCC"/>
-    </condition>
-
     <condition id="CM7_ARMCC">
       <description>Cortex-M7 processor based device for the ARM Compiler</description>
       <require condition="CM7"/>
@@ -1277,30 +1255,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Cortex-M4 processor based device using Floating Point Unit in big endian mode for the GCC Compiler</description>
       <require condition="CM4_FP_GCC"/>
       <require Dendian="Big-endian"/>
-    </condition>
-
-    <!-- XMC 4000 Series devices from Infineon require a special library -->
-    <condition id="CM4_LE_GCC_STD">
-      <description>Cortex-M4 processor based device in little endian mode for the GCC Compiler without Infineon devices</description>
-      <require Dcore="Cortex-M4" Dfpu="NO_FPU" Dendian="Little-endian"/>
-      <deny Dvendor="Infineon:7" Dname="XMC4*"/>
-      <require Tcompiler="GCC"/>
-    </condition>
-    <condition id="CM4_LE_GCC_IFX">
-      <description>Cortex-M4 processor based device in little endian mode for the GCC Compiler and Infineon devices</description>
-      <require Dcore="Cortex-M4" Dfpu="NO_FPU" Dendian="Little-endian" Dvendor="Infineon:7" Dname="XMC4*"/>
-      <require Tcompiler="GCC"/>
-    </condition>
-    <condition id="CM4_FP_LE_GCC_STD">
-      <description>Cortex-M4 processor based device using Floating Point Unit in little endian mode for the GCC Compiler without Infineon devices</description>
-      <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Little-endian"/>
-      <deny Dvendor="Infineon:7" Dname="XMC4*"/>
-      <require Tcompiler="GCC"/>
-    </condition>
-    <condition id="CM4_FP_LE_GCC_IFX">
-      <description>Cortex-M4 processor based device using Floating Point Unit in little endian mode for the GCC Compiler and Infineon devices</description>
-      <require Dcore="Cortex-M4" Dfpu="FPU" Dendian="Little-endian" Dvendor="Infineon:7" Dname="XMC4*"/>
-      <require Tcompiler="GCC"/>
     </condition>
 
     <condition id="CM7_GCC">
@@ -1837,6 +1791,14 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Cclass="Device" Cgroup="Startup"/>
       <deny    Cclass="CMSIS"  Cgroup="RTOS2" Csub="Keil RTX5"/>
     </condition>
+    <condition id="RTOS RTX IFX">
+      <description>Components required for RTOS RTX IFX</description>
+      <require condition="ARMv6_7-M Device"/>
+      <require condition="ARMCC GCC IAR"/>
+      <require Dvendor="Infineon:7" Dname="XMC4*"/>
+      <require Cclass="Device" Cgroup="Startup"/>
+      <deny    Cclass="CMSIS"  Cgroup="RTOS2" Csub="Keil RTX5"/>
+    </condition>
     <condition id="RTOS RTX5">
       <description>Components required for RTOS RTX5</description>
       <require condition="ARMv6_7_8-M Device"/>
@@ -2356,7 +2318,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-RTOS Keil RTX component -->
-    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cversion="4.81.1" Capiversion="1.0.0" condition="RTOS RTX">
+    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cversion="4.81.1" Capiversion="1.0.0" isDefaultVariant="1" condition="RTOS RTX">
       <description>CMSIS-RTOS RTX implementation for Cortex-M, SC000, and SC300</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2386,48 +2348,83 @@ and 8-bit Java bytecodes in Jazelle state.
 
         <!-- CPU and Compiler dependent -->
         <!-- ARMCC -->
-        <file category="library" condition="CM0_LE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM0_BE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM3_LE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM3_BE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM4_LE_ARMCC_STD"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM4_LE_ARMCC_IFX"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_IFX.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM4_BE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM4_FP_LE_ARMCC_STD" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM4_FP_LE_ARMCC_IFX" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_IFX.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM4_FP_BE_ARMCC"     name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM7_LE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM7_BE_ARMCC"        name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM7_FP_LE_ARMCC"     name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4.lib"      src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="CM7_FP_BE_ARMCC"     name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_B.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM0_LE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM0_BE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM3_LE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM3_BE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM4_LE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM4_BE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM4_FP_LE_ARMCC" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM4_FP_BE_ARMCC" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM7_LE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM7_BE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM7_FP_LE_ARMCC" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM7_FP_BE_ARMCC" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
         <!-- GCC -->
-        <file category="library" condition="CM0_LE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM0_BE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM3_LE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM3_BE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM4_LE_GCC_STD"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM4_LE_GCC_IFX"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_IFX.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM4_BE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM4_FP_LE_GCC_STD"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM4_FP_LE_GCC_IFX"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_IFX.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM4_FP_BE_GCC"       name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM7_LE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM7_BE_GCC"          name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM7_FP_LE_GCC"       name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4.a"     src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="CM7_FP_BE_GCC"       name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_B.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM0_LE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM0_BE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM3_LE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM3_BE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM4_LE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM4_BE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM4_FP_LE_GCC"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM4_FP_BE_GCC"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM7_LE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM7_BE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM7_FP_LE_GCC"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM7_FP_BE_GCC"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
         <!-- IAR -->
-        <file category="library" condition="CM0_LE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM0_BE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM3_LE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM3_BE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM4_LE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM4_BE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM4_FP_LE_IAR"       name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM4_FP_BE_IAR"       name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM7_LE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM7_BE_IAR"          name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM7_FP_LE_IAR"       name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4.a"        src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="CM7_FP_BE_IAR"       name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4_B.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM0_LE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM0_BE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM3_LE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM3_BE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM4_LE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM4_BE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM4_FP_LE_IAR"   name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM4_FP_BE_IAR"   name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM7_LE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM7_BE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM7_FP_LE_IAR"   name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM7_FP_BE_IAR"   name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
+      </files>
+    </component>
+    <!-- CMSIS-RTOS Keil RTX component (IFX variant) -->
+    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cvariant="IFX" Cversion="4.81.1" Capiversion="1.0.0" condition="RTOS RTX IFX">
+      <description>CMSIS-RTOS RTX implementation for Infineon XMC4 series affected by PMU_CM.001 errata</description>
+      <RTE_Components_h>
+        <!-- the following content goes into file 'RTE_Components.h' -->
+        #define RTE_CMSIS_RTOS                  /* CMSIS-RTOS */
+        #define RTE_CMSIS_RTOS_RTX              /* CMSIS-RTOS Keil RTX */
+      </RTE_Components_h>
+      <files>
+        <!-- CPU independent -->
+        <file category="doc" name="CMSIS/Documentation/RTOS/html/rtxImplementation.html"/>
+        <file category="header" name="CMSIS/RTOS/RTX/INC/cmsis_os.h"/>
+        <file category="source" attr="config"   name="CMSIS/RTOS/RTX/Templates/RTX_Conf_CM.c" version="4.70.1"/>
+
+        <!-- RTX templates -->
+        <file category="header" attr="template" name="CMSIS/RTOS/RTX/UserCodeTemplates/osObjects.h" select="CMSIS-RTOS 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS/RTX/UserCodeTemplates/main.c"      select="CMSIS-RTOS 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS/RTX/UserCodeTemplates/MailQueue.c" select="CMSIS-RTOS Mail Queue"/>
+        <file category="source" attr="template" name="CMSIS/RTOS/RTX/UserCodeTemplates/MemPool.c"   select="CMSIS-RTOS Memory Pool"/>
+        <file category="source" attr="template" name="CMSIS/RTOS/RTX/UserCodeTemplates/MsgQueue.c"  select="CMSIS-RTOS Message Queue"/>
+        <file category="source" attr="template" name="CMSIS/RTOS/RTX/UserCodeTemplates/Mutex.c"     select="CMSIS-RTOS Mutex"/>
+        <file category="source" attr="template" name="CMSIS/RTOS/RTX/UserCodeTemplates/Semaphore.c" select="CMSIS-RTOS Semaphore"/>
+        <file category="source" attr="template" name="CMSIS/RTOS/RTX/UserCodeTemplates/Thread.c"    select="CMSIS-RTOS Thread"/>
+        <file category="source" attr="template" name="CMSIS/RTOS/RTX/UserCodeTemplates/Timer.c"     select="CMSIS-RTOS Timer"/>
+        <!-- tool-chain specific template file -->
+        <file category="source" attr="template" condition="ARMCC" name="CMSIS/RTOS/RTX/SRC/ARM/SVC_Table.s" select="CMSIS-RTOS User SVC"/>
+        <file category="source" attr="template" condition="GCC"   name="CMSIS/RTOS/RTX/SRC/GCC/SVC_Table.S" select="CMSIS-RTOS User SVC"/>
+        <file category="source" attr="template" condition="IAR"   name="CMSIS/RTOS/RTX/SRC/IAR/SVC_Table.s" select="CMSIS-RTOS User SVC"/>
+
+        <!-- CPU and Compiler dependent -->
+        <!-- ARMCC -->
+        <file category="library" condition="CM4_LE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_IFX.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM4_FP_LE_ARMCC" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_IFX.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <!-- GCC -->
+        <file category="library" condition="CM4_LE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_IFX.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM4_FP_LE_GCC"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_IFX.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <!-- IAR -->
       </files>
     </component>
 
@@ -2485,8 +2482,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- ARMCC -->
         <file category="library" condition="CM0_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"    src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM3_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4_LE_ARMCC_STD"     name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4_FP_LE_ARMCC_STD"  name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_FP_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM7_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM7_FP_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM23_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
@@ -2498,8 +2495,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- GCC -->
         <file category="library" condition="CM0_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM0.a"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM3_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4_LE_GCC_STD"       name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="CM4_FP_LE_GCC_STD"    name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM4_FP_LE_GCC"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM7_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM7_FP_LE_GCC"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM23_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
@@ -2545,7 +2542,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="2.0.0" select="CMSIS-RTOS2 Semaphore"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="2.0.0" select="CMSIS-RTOS2 Thread"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.1" select="CMSIS-RTOS2 Timer"/>
-		<file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX library configuration -->
@@ -2596,7 +2593,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="2.0.0" select="CMSIS-RTOS2 Semaphore"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="2.0.0" select="CMSIS-RTOS2 Thread"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.1" select="CMSIS-RTOS2 Timer"/>
-		<file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX sources (core) -->
@@ -2681,7 +2678,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="2.0.0" select="CMSIS-RTOS2 Semaphore"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="2.0.0" select="CMSIS-RTOS2 Thread"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.1" select="CMSIS-RTOS2 Timer"/>
-		<file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX sources (core) -->
@@ -2737,7 +2734,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Semaphore.c" version="2.0.0" select="CMSIS-RTOS2 Semaphore"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Thread.c"    version="2.0.0" select="CMSIS-RTOS2 Thread"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Timer.c"     version="2.0.1" select="CMSIS-RTOS2 Timer"/>
-		<file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/svc_user.c"  version="1.0.0" select="CMSIS-RTOS2 SVC User Table"/>
         <file category="other"  name="CMSIS/RTOS2/RTX/RTX5.scvd"/>
 
         <!-- RTX sources (core) -->
