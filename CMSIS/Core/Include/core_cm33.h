@@ -1543,8 +1543,8 @@ typedef struct
 #define MPU_RNR_REGION_Msk                 (0xFFUL /*<< MPU_RNR_REGION_Pos*/)             /*!< MPU RNR: REGION Mask */
 
 /* MPU Region Base Address Register Definitions */
-#define MPU_RBAR_ADDR_Pos                   5U                                            /*!< MPU RBAR: ADDR Position */
-#define MPU_RBAR_ADDR_Msk                  (0x7FFFFFFUL << MPU_RBAR_ADDR_Pos)             /*!< MPU RBAR: ADDR Mask */
+#define MPU_RBAR_BASE_Pos                   5U                                            /*!< MPU RBAR: ADDR Position */
+#define MPU_RBAR_BASE_Msk                  (0x7FFFFFFUL << MPU_RBAR_BASE_Pos)             /*!< MPU RBAR: ADDR Mask */
 
 #define MPU_RBAR_SH_Pos                     3U                                            /*!< MPU RBAR: SH Position */
 #define MPU_RBAR_SH_Msk                    (0x3UL << MPU_RBAR_SH_Pos)                     /*!< MPU RBAR: SH Mask */
