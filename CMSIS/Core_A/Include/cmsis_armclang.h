@@ -302,6 +302,24 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint
  */
 #define __CLREX             __builtin_arm_clrex
 
+/**
+  \brief   Signed Saturate
+  \details Saturates a signed value.
+  \param [in]  value  Value to be saturated
+  \param [in]    sat  Bit position to saturate to (1..32)
+  \return             Saturated value
+ */
+#define __SSAT             __builtin_arm_ssat
+
+/**
+  \brief   Unsigned Saturate
+  \details Saturates an unsigned value.
+  \param [in]  value  Value to be saturated
+  \param [in]    sat  Bit position to saturate to (0..31)
+  \return             Saturated value
+ */
+#define __USAT             __builtin_arm_usat
+
 /** \brief  Get CPSR Register
     \return               CPSR Register value
  */

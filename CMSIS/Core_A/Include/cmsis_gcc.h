@@ -440,6 +440,34 @@ __attribute__((always_inline)) __STATIC_INLINE void __CLREX(void)
   __ASM volatile ("clrex" ::: "memory");
 }
 
+/**
+  \brief   Signed Saturate
+  \details Saturates a signed value.
+  \param [in]  value  Value to be saturated
+  \param [in]    sat  Bit position to saturate to (1..32)
+  \return             Saturated value
+ */
+#define __SSAT(ARG1,ARG2) \
+({                          \
+  int32_t __RES, __ARG1 = (ARG1); \
+  __ASM ("ssat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __RES; \
+ })
+
+/**
+  \brief   Unsigned Saturate
+  \details Saturates an unsigned value.
+  \param [in]  value  Value to be saturated
+  \param [in]    sat  Bit position to saturate to (0..31)
+  \return             Saturated value
+ */
+#define __USAT(ARG1,ARG2) \
+({                          \
+  uint32_t __RES, __ARG1 = (ARG1); \
+  __ASM ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
+  __RES; \
+ })
+
 /** \brief  Get CPSR Register
     \return               CPSR Register value
  */
