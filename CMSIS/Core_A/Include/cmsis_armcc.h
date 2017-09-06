@@ -78,39 +78,6 @@
   #define __PACKED                               __attribute__((packed))
 #endif
 
-
-/* ###########################  Core Function Access  ########################### */
-
-/**
-  \brief   Get FPSCR (Floating Point Status/Control)
-  \return               Floating Point Status/Control register value
- */
-__STATIC_INLINE uint32_t __get_FPSCR(void)
-{
-#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
-     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
-  register uint32_t __regfpscr         __ASM("fpscr");
-  return(__regfpscr);
-#else
-   return(0U);
-#endif
-}
-
-/**
-  \brief   Set FPSCR (Floating Point Status/Control)
-  \param [in]    fpscr  Floating Point Status/Control value to set
- */
-__STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
-{
-#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
-     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
-  register uint32_t __regfpscr         __ASM("fpscr");
-  __regfpscr = (fpscr);
-#else
-  (void)fpscr;
-#endif
-}
-
 /* ##########################  Core Instruction Access  ######################### */
 /**
   \brief   No Operation
@@ -305,6 +272,7 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
  */
 #define __CLREX                           __clrex
 
+
 /**
   \brief   Signed Saturate
   \details Saturates a signed value.
@@ -322,6 +290,38 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
   \return             Saturated value
  */
 #define __USAT                            __usat
+
+/* ###########################  Core Function Access  ########################### */
+
+/**
+  \brief   Get FPSCR (Floating Point Status/Control)
+  \return               Floating Point Status/Control register value
+ */
+__STATIC_INLINE uint32_t __get_FPSCR(void)
+{
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+  register uint32_t __regfpscr         __ASM("fpscr");
+  return(__regfpscr);
+#else
+   return(0U);
+#endif
+}
+
+/**
+  \brief   Set FPSCR (Floating Point Status/Control)
+  \param [in]    fpscr  Floating Point Status/Control value to set
+ */
+__STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+{
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+  register uint32_t __regfpscr         __ASM("fpscr");
+  __regfpscr = (fpscr);
+#else
+  (void)fpscr;
+#endif
+}
 
 /** \brief  Get CPSR (Current Program Status Register)
     \return               CPSR Register value
@@ -358,6 +358,15 @@ __STATIC_INLINE __ASM void __set_mode(uint32_t mode) {
   BX   r1
 }
 
+/** \brief  Get Stack Pointer
+    \return Stack Pointer
+ */
+__STATIC_INLINE __ASM uint32_t __get_SP(void)
+{
+  MOV  r0, sp
+  BX   lr
+}
+
 /** \brief  Set Stack Pointer 
     \param [in]    stack  Stack Pointer value to set
  */
@@ -365,6 +374,23 @@ __STATIC_INLINE __ASM void __set_SP(uint32_t stack)
 {
   MOV  sp, r0
   BX   lr
+}
+
+
+/** \brief  Get USR/SYS Stack Pointer
+    \return USR/SYSStack Pointer
+ */
+__STATIC_INLINE __ASM uint32_t __get_SP_usr(void)
+{
+  ARM
+  PRESERVE8
+
+  MRS     R1, CPSR
+  CPS     #0x1F       ;no effect in USR mode
+  MOV     R0, SP
+  MSR     CPSR_c, R1  ;no effect in USR mode
+  ISB
+  BX      LR
 }
 
 /** \brief  Set USR/SYS Stack Pointer
@@ -375,7 +401,6 @@ __STATIC_INLINE __ASM void __set_SP_usr(uint32_t topOfProcStack)
   ARM
   PRESERVE8
 
-  BIC     R0, R0, #7  ;ensure stack is 8-byte aligned
   MRS     R1, CPSR
   CPS     #0x1F       ;no effect in USR mode
   MOV     SP, R0
@@ -597,6 +622,14 @@ __STATIC_INLINE void __set_VBAR(uint32_t vbar)
 __STATIC_INLINE void __set_CNTFRQ(uint32_t value) {
   register uint32_t __regCNTFRQ         __ASM("cp15:0:c14:c0:0");
   __regCNTFRQ = value;
+}
+
+/** \brief  Get CNTFRQ (Counter Frequency Register)
+  result  CNTFRQ Register value
+*/
+__STATIC_INLINE uint32_t __get_CNTFRQ(void) {
+  register uint32_t __regCNTFRQ         __ASM("cp15:0:c14:c0:0");
+  return(__regCNTFRQ);
 }
 
 /** \brief  Set CNTP_TVAL (PL1 Physical TimerValue Register)

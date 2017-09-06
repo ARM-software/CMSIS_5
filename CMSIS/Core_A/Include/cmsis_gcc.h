@@ -96,73 +96,6 @@
   #define __ALIGNED(x)                           __attribute__((aligned(x)))
 #endif
 
-
-/* ###########################  Core Function Access  ########################### */
-
-/**
-  \brief   Enable IRQ Interrupts
-  \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
-           Can only be executed in Privileged modes.
- */
-__attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
-{
-  __ASM volatile ("cpsie i" : : : "memory");
-}
-
-/**
-  \brief   Disable IRQ Interrupts
-  \details Disables IRQ interrupts by setting the I-bit in the CPSR.
-  Can only be executed in Privileged modes.
- */
-__attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
-{
-  __ASM volatile ("cpsid i" : : : "memory");
-}
-
-/**
-  \brief   Get FPSCR
-  \details Returns the current value of the Floating Point Status/Control register.
-  \return Floating Point Status/Control register value
-*/
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
-{
-  #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
-       (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
-  #if __has_builtin(__builtin_arm_get_fpscr) || (__GNUC__ > 7) || (__GNUC__ == 7 && __GNUC_MINOR__ >= 2)
-    /* see https://gcc.gnu.org/ml/gcc-patches/2017-04/msg00443.html */
-    return __builtin_arm_get_fpscr();
-  #else
-    uint32_t result;
-
-    __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
-    return(result);
-  #endif
-  #else
-    return(0U);
-  #endif
-}
-
-
-/**
-  \brief   Set FPSCR
-  \details Assigns the given value to the Floating Point Status/Control register.
-  \param [in] fpscr  Floating Point Status/Control value to set
-*/
-__attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
-{
-  #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
-       (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
-  #if __has_builtin(__builtin_arm_set_fpscr) || (__GNUC__ > 7) || (__GNUC__ == 7 && __GNUC_MINOR__ >= 2)
-    /* see https://gcc.gnu.org/ml/gcc-patches/2017-04/msg00443.html */
-    __builtin_arm_set_fpscr(fpscr);
-  #else
-    __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc", "memory");
-  #endif
-  #else
-    (void)fpscr;
-  #endif
-}
-
 /* ##########################  Core Instruction Access  ######################### */
 /**
   \brief   No Operation
@@ -454,6 +387,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __CLREX(void)
   __RES; \
  })
 
+
 /**
   \brief   Unsigned Saturate
   \details Saturates an unsigned value.
@@ -467,6 +401,71 @@ __attribute__((always_inline)) __STATIC_INLINE void __CLREX(void)
   __ASM ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
   __RES; \
  })
+
+/* ###########################  Core Function Access  ########################### */
+
+/**
+  \brief   Enable IRQ Interrupts
+  \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+           Can only be executed in Privileged modes.
+ */
+__attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
+{
+  __ASM volatile ("cpsie i" : : : "memory");
+}
+
+/**
+  \brief   Disable IRQ Interrupts
+  \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  Can only be executed in Privileged modes.
+ */
+__attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
+{
+  __ASM volatile ("cpsid i" : : : "memory");
+}
+
+/**
+  \brief   Get FPSCR
+  \details Returns the current value of the Floating Point Status/Control register.
+  \return Floating Point Status/Control register value
+*/
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
+{
+  #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+       (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+  #if __has_builtin(__builtin_arm_get_fpscr) || (__GNUC__ > 7) || (__GNUC__ == 7 && __GNUC_MINOR__ >= 2)
+    /* see https://gcc.gnu.org/ml/gcc-patches/2017-04/msg00443.html */
+    return __builtin_arm_get_fpscr();
+  #else
+    uint32_t result;
+
+    __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
+    return(result);
+  #endif
+  #else
+    return(0U);
+  #endif
+}
+
+/**
+  \brief   Set FPSCR
+  \details Assigns the given value to the Floating Point Status/Control register.
+  \param [in] fpscr  Floating Point Status/Control value to set
+*/
+__attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+{
+  #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+       (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+  #if __has_builtin(__builtin_arm_set_fpscr) || (__GNUC__ > 7) || (__GNUC__ == 7 && __GNUC_MINOR__ >= 2)
+    /* see https://gcc.gnu.org/ml/gcc-patches/2017-04/msg00443.html */
+    __builtin_arm_set_fpscr(fpscr);
+  #else
+    __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc", "memory");
+  #endif
+  #else
+    (void)fpscr;
+  #endif
+}
 
 /** \brief  Get CPSR Register
     \return               CPSR Register value
@@ -500,6 +499,16 @@ __STATIC_INLINE void __set_mode(uint32_t mode) {
   __ASM volatile("MSR  cpsr_c, %0" : : "r" (mode) : "memory");
 }
 
+/** \brief  Get Stack Pointer
+    \return Stack Pointer value
+ */
+__STATIC_INLINE uint32_t __get_SP()
+{
+  uint32_t result;
+  __ASM volatile("MOV  %0, sp" : "=r" (result) : : "memory");
+  return result;
+}
+
 /** \brief  Set Stack Pointer
     \param [in]    stack  Stack Pointer value to set
  */
@@ -508,19 +517,35 @@ __STATIC_INLINE void __set_SP(uint32_t stack)
   __ASM volatile("MOV  sp, %0" : : "r" (stack) : "memory");
 }
 
+/** \brief  Get USR/SYS Stack Pointer
+    \return USR/SYS Stack Pointer value
+ */
+__STATIC_INLINE uint32_t __get_SP_usr()
+{
+  uint32_t cpsr;
+  uint32_t result;
+  __ASM volatile(
+    "MRS     %0, cpsr   \n"
+    "CPS     #0x1F      \n" // no effect in USR mode
+    "MOV     %1, sp     \n"
+    "MSR     cpsr_c, %2 \n" // no effect in USR mode
+    "ISB" :  "=r"(cpsr), "=r"(result) : "r"(cpsr) : "memory"
+   );
+  return result;
+}
+
 /** \brief  Set USR/SYS Stack Pointer
     \param [in]    topOfProcStack  USR/SYS Stack Pointer value to set
  */
 __STATIC_INLINE void __set_SP_usr(uint32_t topOfProcStack)
 {
+  uint32_t cpsr;
   __ASM volatile(
-    ".preserve8         \n"
-    "BIC     r0, r0, #7 \n" // ensure stack is 8-byte aligned
-    "MRS     r1, cpsr   \n"
+    "MRS     %0, cpsr   \n"
     "CPS     #0x1F      \n" // no effect in USR mode
-    "MOV     sp, r0     \n"
-    "MSR     cpsr_c, r1 \n" // no effect in USR mode
-    "ISB"
+    "MOV     sp, %1     \n"
+    "MSR     cpsr_c, %2 \n" // no effect in USR mode
+    "ISB" : "=r"(cpsr) : "r" (topOfProcStack), "r"(cpsr) : "memory"
    );
 }
 
@@ -571,7 +596,7 @@ __STATIC_INLINE void __set_ACTLR(uint32_t actlr)
 __STATIC_INLINE uint32_t __get_CPACR(void)
 {
   uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c1, c0, 2" : "=r"(result));
+  __ASM volatile("MRC p15, 0, %0, c1, c0, 2" : "=r"(result) : : "memory");
   return result;
 }
 
@@ -588,7 +613,7 @@ __STATIC_INLINE void __set_CPACR(uint32_t cpacr)
  */
 __STATIC_INLINE uint32_t __get_CBAR() {
   uint32_t result;
-  __ASM volatile("MRC p15, 4, %0, c15, c0, 0" : "=r"(result));
+  __ASM volatile("MRC p15, 4, %0, c15, c0, 0" : "=r"(result) : : "memory");
   return result;
 }
 
@@ -600,7 +625,7 @@ __STATIC_INLINE uint32_t __get_CBAR() {
  */
 __STATIC_INLINE uint32_t __get_TTBR0() {
   uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c2, c0, 0" : "=r"(result));
+  __ASM volatile("MRC p15, 0, %0, c2, c0, 0" : "=r"(result) : : "memory");
   return result;
 }
 
@@ -622,7 +647,7 @@ __STATIC_INLINE void __set_TTBR0(uint32_t ttbr0) {
  */
 __STATIC_INLINE uint32_t __get_DACR() {
   uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c3, c0, 0" : "=r"(result));
+  __ASM volatile("MRC p15, 0, %0, c3, c0, 0" : "=r"(result) : : "memory");
   return result;
 }
 
@@ -652,7 +677,7 @@ __STATIC_INLINE void __set_SCTLR(uint32_t sctlr)
  */
 __STATIC_INLINE uint32_t __get_SCTLR() {
   uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c1, c0, 0" : "=r"(result));
+  __ASM volatile("MRC p15, 0, %0, c1, c0, 0" : "=r"(result) : : "memory");
   return result;
 }
 
@@ -670,7 +695,7 @@ __STATIC_INLINE void __set_ACTRL(uint32_t actrl)
 __STATIC_INLINE uint32_t __get_ACTRL(void)
 {
   uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c1, c0, 1" : "=r"(result));
+  __ASM volatile("MRC p15, 0, %0, c1, c0, 1" : "=r"(result) : : "memory");
   return result;
 }
 
@@ -683,7 +708,7 @@ __STATIC_INLINE uint32_t __get_ACTRL(void)
 __STATIC_INLINE uint32_t __get_MPIDR(void)
 {
   uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c0, c0, 5" : "=r"(result));
+  __ASM volatile("MRC p15, 0, %0, c0, c0, 5" : "=r"(result) : : "memory");
   return result;
 }
 
@@ -696,7 +721,7 @@ __STATIC_INLINE uint32_t __get_MPIDR(void)
 __STATIC_INLINE uint32_t __get_VBAR(void)
 {
   uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c12, c0, 0" : "=r"(result));
+  __ASM volatile("MRC p15, 0, %0, c12, c0, 0" : "=r"(result) : : "memory");
   return result;
 }
 
@@ -721,6 +746,18 @@ __STATIC_INLINE void __set_CNTFRQ(uint32_t value) {
   __ASM volatile("MCR p15, 0, %0, c14, c0, 0" : : "r"(value) : "memory");
 }
 
+/** \brief  Get CNTFRQ
+
+    This function returns the value of the PL1 Physical Timer Counter Frequency Register (CNTFRQ).
+
+    \return               CNTFRQ Register value
+ */
+__STATIC_INLINE uint32_t __get_CNTFRQ() {
+  uint32_t result;
+  __ASM volatile("MRC p15, 0, %0, c14, c0, 0" : "=r"(result) : : "memory");
+  return result;
+}
+
 /** \brief  Set CNTP_TVAL
 
   This function assigns the given value to PL1 Physical Timer Value Register (CNTP_TVAL).
@@ -739,7 +776,7 @@ __STATIC_INLINE void __set_CNTP_TVAL(uint32_t value) {
  */
 __STATIC_INLINE uint32_t __get_CNTP_TVAL() {
   uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c14, c2, 0" : "=r"(result));
+  __ASM volatile("MRC p15, 0, %0, c14, c2, 0" : "=r"(result) : : "memory");
   return result;
 }
 
@@ -758,7 +795,7 @@ __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) {
  */
 __STATIC_INLINE uint32_t __get_CNTP_CTL() {
   uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c14, c2, 1" : "=r"(result));
+  __ASM volatile("MRC p15, 0, %0, c14, c2, 1" : "=r"(result) : : "memory");
   return result;
 }
 
@@ -822,7 +859,7 @@ __STATIC_INLINE void __set_CCSIDR(uint32_t value) {
  */
 __STATIC_INLINE uint32_t __get_CCSIDR() {
   uint32_t result;
-  __ASM volatile("MRC p15, 1, %0, c0, c0, 0" : "=r"(result));
+  __ASM volatile("MRC p15, 1, %0, c0, c0, 0" : "=r"(result) : : "memory");
   return result;
 }
 
@@ -831,7 +868,7 @@ __STATIC_INLINE uint32_t __get_CCSIDR() {
  */
 __STATIC_INLINE uint32_t __get_CLIDR() {
   uint32_t result;
-  __ASM volatile("MRC p15, 1, %0, c0, c0, 1" : "=r"(result));
+  __ASM volatile("MRC p15, 1, %0, c0, c0, 1" : "=r"(result) : : "memory");
   return result;
 }
 
