@@ -36,9 +36,15 @@
 #ifndef   __INLINE                              
   #define __INLINE                               __inline
 #endif                                          
+#ifndef   __FORCEINLINE                              
+  #define __FORCEINLINE                          __attribute__((always_inline))
+#endif                                          
 #ifndef   __STATIC_INLINE                       
   #define __STATIC_INLINE                        static __inline
 #endif                                                                                    
+#ifndef   __STATIC_FORCEINLINE                 
+  #define __STATIC_FORCEINLINE                   __attribute__((always_inline)) static __inline
+#endif                                           
 #ifndef   __NO_RETURN                           
   #define __NO_RETURN                            __declspec(noreturn)
 #endif                                          
@@ -307,7 +313,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint
 /** \brief  Get CPSR Register
     \return               CPSR Register value
  */
-__STATIC_INLINE uint32_t __get_CPSR(void)
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_CPSR(void)
 {
   uint32_t result;
   __ASM volatile("MRS %0, cpsr" : "=r" (result) );
@@ -317,7 +323,7 @@ __STATIC_INLINE uint32_t __get_CPSR(void)
 /** \brief  Set CPSR Register
     \param [in]    cpsr  CPSR value to set
  */
-__STATIC_INLINE void __set_CPSR(uint32_t cpsr)
+__attribute__((always_inline)) __STATIC_INLINE void __set_CPSR(uint32_t cpsr)
 {
 __ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "memory");
 }
@@ -325,21 +331,23 @@ __ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "memory");
 /** \brief  Get Mode
     \return                Processor Mode
  */
-__STATIC_INLINE uint32_t __get_mode(void) {
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_mode(void)
+{
 	return (__get_CPSR() & 0x1FU);
 }
 
 /** \brief  Set Mode
     \param [in]    mode  Mode value to set
  */
-__STATIC_INLINE void __set_mode(uint32_t mode) {
+__attribute__((always_inline)) __STATIC_INLINE void __set_mode(uint32_t mode)
+{
   __ASM volatile("MSR  cpsr_c, %0" : : "r" (mode) : "memory");
 }
 
 /** \brief  Get Stack Pointer
     \return Stack Pointer value
  */
-__STATIC_INLINE uint32_t __get_SP()
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_SP()
 {
   uint32_t result;
   __ASM volatile("MOV  %0, sp" : "=r" (result) : : "memory");
@@ -349,7 +357,7 @@ __STATIC_INLINE uint32_t __get_SP()
 /** \brief  Set Stack Pointer
     \param [in]    stack  Stack Pointer value to set
  */
-__STATIC_INLINE void __set_SP(uint32_t stack)
+__attribute__((always_inline)) __STATIC_INLINE void __set_SP(uint32_t stack)
 {
   __ASM volatile("MOV  sp, %0" : : "r" (stack) : "memory");
 }
@@ -357,7 +365,7 @@ __STATIC_INLINE void __set_SP(uint32_t stack)
 /** \brief  Get USR/SYS Stack Pointer
     \return USR/SYS Stack Pointer value
  */
-__STATIC_INLINE uint32_t __get_SP_usr()
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_SP_usr()
 {
   uint32_t cpsr;
   uint32_t result;
@@ -374,7 +382,7 @@ __STATIC_INLINE uint32_t __get_SP_usr()
 /** \brief  Set USR/SYS Stack Pointer
     \param [in]    topOfProcStack  USR/SYS Stack Pointer value to set
  */
-__STATIC_INLINE void __set_SP_usr(uint32_t topOfProcStack)
+__attribute__((always_inline)) __STATIC_INLINE void __set_SP_usr(uint32_t topOfProcStack)
 {
   uint32_t cpsr;
   __ASM volatile(
@@ -389,7 +397,7 @@ __STATIC_INLINE void __set_SP_usr(uint32_t topOfProcStack)
 /** \brief  Get FPEXC
     \return               Floating Point Exception Control register value
  */
-__STATIC_INLINE uint32_t __get_FPEXC(void)
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPEXC(void)
 {
 #if (__FPU_PRESENT == 1)
   uint32_t result;
@@ -403,338 +411,29 @@ __STATIC_INLINE uint32_t __get_FPEXC(void)
 /** \brief  Set FPEXC
     \param [in]    fpexc  Floating Point Exception Control value to set
  */
-__STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
+__attribute__((always_inline)) __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
 {
 #if (__FPU_PRESENT == 1)
   __ASM volatile ("VMSR fpexc, %0" : : "r" (fpexc) : "memory");
 #endif
 }
 
-/** \brief  Get ACTLR
-    \return               Auxiliary Control register value
+/*
+ * Include common core functions to access Coprocessor 15 registers
  */
-__STATIC_INLINE uint32_t __get_ACTLR(void)
-{
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c1, c0, 1" : "=r" (result) : : "memory" );
-  return(result);
-}
 
-/** \brief  Set ACTLR
-    \param [in]    actlr  Auxiliary Control value to set
- */
-__STATIC_INLINE void __set_ACTLR(uint32_t actlr)
-{
-  __ASM volatile ("MCR p15, 0, %0, c1, c0, 1" : : "r" (actlr) : "memory");
-}
-/** \brief  Get CPACR
-    \return               Coprocessor Access Control register value
- */
-__STATIC_INLINE uint32_t __get_CPACR(void)
-{
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c1, c0, 2" : "=r"(result) : : "memory");
-  return result;
-}
+#define __get_CP(cp, op1, Rt, CRn, CRm, op2) __ASM volatile("MRC p" # cp ", " # op1 ", %0, c" # CRn ", c" # CRm ", " # op2 : "=r" (Rt) : : "memory" )
+#define __set_CP(cp, op1, Rt, CRn, CRm, op2) __ASM volatile("MCR p" # cp ", " # op1 ", %0, c" # CRn ", c" # CRm ", " # op2 : : "r" (Rt) : "memory" )
 
-/** \brief  Set CPACR
-    \param [in]    cpacr  Coprocessor Access Control value to set
- */
-__STATIC_INLINE void __set_CPACR(uint32_t cpacr)
-{
-  __ASM volatile("MCR p15, 0, %0, c1, c0, 2" : : "r"(cpacr) : "memory");
-}
+#include "cmsis_cp15.h"
 
-/** \brief  Get DFSR
-    \return               Data Fault Status Register value
- */
-__STATIC_INLINE uint32_t __get_DFSR(void)
-{
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c5, c0, 0" : "=r"(result) : : "memory");
-  return result;
-}
-
-/** \brief  Set DFSR
-    \param [in]    dfsr  Data Fault Status value to set
- */
-__STATIC_INLINE void __set_DFSR(uint32_t dfsr)
-{
-  __ASM volatile("MCR p15, 0, %0, c5, c0, 0" : : "r"(dfsr) : "memory");
-}
-
-/** \brief  Get IFSR
-    \return               Instruction Fault Status Register value
- */
-__STATIC_INLINE uint32_t __get_IFSR(void)
-{
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c5, c0, 1" : "=r"(result) : : "memory");
-  return result;
-}
-
-/** \brief  Set IFSR
-    \param [in]    ifsr  Instruction Fault Status value to set
- */
-__STATIC_INLINE void __set_IFSR(uint32_t ifsr)
-{
-  __ASM volatile("MCR p15, 0, %0, c5, c0, 1" : : "r"(ifsr) : "memory");
-}
-
-/** \brief  Get ISR
-    \return               Interrupt Status Register value
- */
-__STATIC_INLINE uint32_t __get_ISR(void)
-{
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c12, c1, 0" : "=r"(result) : : "memory");
-  return result;
-}
-
-/** \brief  Get CBAR
-    \return               Configuration Base Address register value
- */
-__STATIC_INLINE uint32_t __get_CBAR() {
-  uint32_t result;
-  __ASM volatile("MRC p15, 4, %0, c15, c0, 0" : "=r"(result) : : "memory");
-  return result;
-}
-
-/** \brief  Get TTBR0
-
-    This function returns the value of the Translation Table Base Register 0.
-
-    \return               Translation Table Base Register 0 value
- */
-__STATIC_INLINE uint32_t __get_TTBR0() {
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c2, c0, 0" : "=r"(result) : : "memory");
-  return result;
-}
-
-/** \brief  Set TTBR0
-
-    This function assigns the given value to the Translation Table Base Register 0.
-
-    \param [in]    ttbr0  Translation Table Base Register 0 value to set
- */
-__STATIC_INLINE void __set_TTBR0(uint32_t ttbr0) {
-  __ASM volatile("MCR p15, 0, %0, c2, c0, 0" : : "r"(ttbr0) : "memory");
-}
-
-/** \brief  Get DACR
-
-    This function returns the value of the Domain Access Control Register.
-
-    \return               Domain Access Control Register value
- */
-__STATIC_INLINE uint32_t __get_DACR() {
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c3, c0, 0" : "=r"(result) : : "memory");
-  return result;
-}
-
-/** \brief  Set DACR
-
-    This function assigns the given value to the Domain Access Control Register.
-
-    \param [in]    dacr   Domain Access Control Register value to set
- */
-__STATIC_INLINE void __set_DACR(uint32_t dacr) {
-  __ASM volatile("MCR p15, 0, %0, c3, c0, 0" : : "r"(dacr) : "memory");
-}
-
-/** \brief  Set SCTLR
-
-    This function assigns the given value to the System Control Register.
-
-    \param [in]    sctlr  System Control Register value to set
- */
-__STATIC_INLINE void __set_SCTLR(uint32_t sctlr)
-{
-  __ASM volatile("MCR p15, 0, %0, c1, c0, 0" : : "r"(sctlr) : "memory");
-}
-
-/** \brief  Get SCTLR
-    \return               System Control Register value
- */
-__STATIC_INLINE uint32_t __get_SCTLR() {
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c1, c0, 0" : "=r"(result) : : "memory");
-  return result;
-}
-
-/** \brief  Set ACTRL
-    \param [in]    actrl  Auxiliary Control Register value to set
- */
-__STATIC_INLINE void __set_ACTRL(uint32_t actrl)
-{
-  __ASM volatile("MCR p15, 0, %0, c1, c0, 1" : : "r"(actrl) : "memory");
-}
-
-/** \brief  Get ACTRL
-    \return               Auxiliary Control Register value
- */
-__STATIC_INLINE uint32_t __get_ACTRL(void)
-{
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c1, c0, 1" : "=r"(result) : : "memory");
-  return result;
-}
-
-/** \brief  Get MPIDR
-
-    This function returns the value of the Multiprocessor Affinity Register.
-
-    \return               Multiprocessor Affinity Register value
- */
-__STATIC_INLINE uint32_t __get_MPIDR(void)
-{
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c0, c0, 5" : "=r"(result) : : "memory");
-  return result;
-}
-
- /** \brief  Get VBAR
-
-    This function returns the value of the Vector Base Address Register.
-
-    \return               Vector Base Address Register
- */
-__STATIC_INLINE uint32_t __get_VBAR(void)
-{
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c12, c0, 0" : "=r"(result) : : "memory");
-  return result;
-}
-
-/** \brief  Set VBAR
-
-    This function assigns the given value to the Vector Base Address Register.
-
-    \param [in]    vbar  Vector Base Address Register value to set
- */
-__STATIC_INLINE void __set_VBAR(uint32_t vbar)
-{
-  __ASM volatile("MCR p15, 0, %0, c12, c0, 1" : : "r"(vbar) : "memory");
-}
-
-/** \brief  Set CNTFRQ
-
-  This function assigns the given value to PL1 Physical Timer Counter Frequency Register (CNTFRQ).
-
-  \param [in]    value  CNTFRQ Register value to set
-*/
-__STATIC_INLINE void __set_CNTFRQ(uint32_t value) {
-  __ASM volatile("MCR p15, 0, %0, c14, c0, 0" : : "r"(value) : "memory");
-}
-
-/** \brief  Get CNTFRQ
-
-    This function returns the value of the PL1 Physical Timer Counter Frequency Register (CNTFRQ).
-
-    \return               CNTFRQ Register value
- */
-__STATIC_INLINE uint32_t __get_CNTFRQ() {
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c14, c0, 0" : "=r"(result) : : "memory");
-  return result;
-}
-
-/** \brief  Set CNTP_TVAL
-
-  This function assigns the given value to PL1 Physical Timer Value Register (CNTP_TVAL).
-
-  \param [in]    value  CNTP_TVAL Register value to set
-*/
-__STATIC_INLINE void __set_CNTP_TVAL(uint32_t value) {
-  __ASM volatile("MCR p15, 0, %0, c14, c2, 0" : : "r"(value) : "memory");
-}
-
-/** \brief  Get CNTP_TVAL
-
-    This function returns the value of the PL1 Physical Timer Value Register (CNTP_TVAL).
-
-    \return               CNTP_TVAL Register value
- */
-__STATIC_INLINE uint32_t __get_CNTP_TVAL() {
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c14, c2, 0" : "=r"(result) : : "memory");
-  return result;
-}
-
-/** \brief  Set CNTP_CTL
-
-  This function assigns the given value to PL1 Physical Timer Control Register (CNTP_CTL).
-
-  \param [in]    value  CNTP_CTL Register value to set
-*/
-__STATIC_INLINE void __set_CNTP_CTL(uint32_t value) {
-  __ASM volatile("MCR p15, 0, %0, c14, c2, 1" : : "r"(value) : "memory");
-}
-
-/** \brief  Get CNTP_CTL register
-    \return               CNTP_CTL Register value
- */
-__STATIC_INLINE uint32_t __get_CNTP_CTL() {
-  uint32_t result;
-  __ASM volatile("MRC p15, 0, %0, c14, c2, 1" : "=r"(result) : : "memory");
-  return result;
-}
-
-/** \brief  Set TLBIALL
-
-  TLB Invalidate All
- */
-__STATIC_INLINE void __set_TLBIALL(uint32_t value) {
-  __ASM volatile("MCR p15, 0, %0, c8, c7, 0" : : "r"(value) : "memory");
-}
-
-/** \brief  Set BPIALL.
-
-  Branch Predictor Invalidate All
- */
-__STATIC_INLINE void __set_BPIALL(uint32_t value) {
-  __ASM volatile("MCR p15, 0, %0, c7, c5, 6" : : "r"(value) : "memory");
-}
-
-/** \brief  Set ICIALLU
-
-  Instruction Cache Invalidate All
- */
-__STATIC_INLINE void __set_ICIALLU(uint32_t value) {
-  __ASM volatile("MCR p15, 0, %0, c7, c5, 0" : : "r"(value) : "memory");
-}
-
-/** \brief  Set DCCMVAC
-
-  Data cache clean
- */
-__STATIC_INLINE void __set_DCCMVAC(uint32_t value) {
-  __ASM volatile("MCR p15, 0, %0, c7, c10, 1" : : "r"(value) : "memory");
-}
-
-/** \brief  Set DCIMVAC
-
-  Data cache invalidate
- */
-__STATIC_INLINE void __set_DCIMVAC(uint32_t value) {
-  __ASM volatile("MCR p15, 0, %0, c7, c6, 1" : : "r"(value) : "memory");
-}
-
-/** \brief  Set DCCIMVAC
-
-  Data cache clean and invalidate
- */
-__STATIC_INLINE void __set_DCCIMVAC(uint32_t value) {
-  __ASM volatile("MCR p15, 0, %0, c7, c14, 1" : : "r"(value) : "memory");
-}
 
 /** \brief  Clean and Invalidate the entire data or unified cache
 
   Generic mechanism for cleaning/invalidating the entire data or unified cache to the point of coherency
  */
-__STATIC_INLINE void __L1C_CleanInvalidateCache(uint32_t op) {
+__STATIC_INLINE void __L1C_CleanInvalidateCache(uint32_t op)
+{
   __ASM volatile(
     "        PUSH    {R4-R11}                   \n"
 
@@ -792,7 +491,8 @@ __STATIC_INLINE void __L1C_CleanInvalidateCache(uint32_t op) {
 
   Critical section, called from undef handler, so systick is disabled
  */
-__STATIC_INLINE void __FPU_Enable(void) {
+__STATIC_INLINE void __FPU_Enable(void)
+{
   __ASM volatile(
 	    //Permit access to VFP/NEON, registers by modifying CPACR
     "        MRC     p15,0,R1,c1,c0,2  \n"
