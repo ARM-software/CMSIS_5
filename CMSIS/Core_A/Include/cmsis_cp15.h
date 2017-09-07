@@ -1,8 +1,8 @@
 /**************************************************************************//**
- * @file     cmsis_armclang.h
+ * @file     cmsis_cp15.h
  * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.00
- * @date     05. Apr 2017
+ * @version  V1.0.1
+ * @date     07. Sep 2017
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
@@ -262,8 +262,9 @@ __STATIC_FORCEINLINE void __set_VBAR(uint32_t vbar)
   __set_CP(15, 0, vbar, 12, 0, 1);
 }
 
-#if defined(__CORTEX_A) && (__CORTEX_A == 7U) && \
-    defined(__TIM_PRESENT) && (__TIM_PRESENT == 1U)
+#if (defined(__CORTEX_A) && (__CORTEX_A == 7U) && \
+    defined(__TIM_PRESENT) && (__TIM_PRESENT == 1U)) || \
+    defined(DOXYGEN)
 
 /** \brief  Set CNTFRQ
 
