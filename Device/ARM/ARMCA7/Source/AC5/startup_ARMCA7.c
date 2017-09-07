@@ -58,6 +58,8 @@ void FIQ_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
   Exception / Interrupt Vector Table
  *----------------------------------------------------------------------------*/
 __ASM void Vectors(void) {
+  PRESERVE8
+  
   IMPORT Undef_Handler
   IMPORT SVC_Handler
   IMPORT PAbt_Handler
@@ -78,6 +80,7 @@ __ASM void Vectors(void) {
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
 __ASM void Reset_Handler(void) {
+  PRESERVE8
 
   // Mask interrupts
   CPSID  if                           
