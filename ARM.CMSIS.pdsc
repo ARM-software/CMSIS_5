@@ -14,6 +14,7 @@
       - added GCC startup and linker script for Cortex-A9
       CMSIS-Core(M): 5.0.3 (see revision history for details)
       - Added MPU Functions for ARMv8-M for Cortex-M23/M33.
+      CMSIS-Core(A): 1.0.1 (see revision history for details)
       CMSIS-RTOS:
       - RTX: added variant for Infineon XMC4 series affected by PMU_CM.001 errata
       CMSIS-RTOS2:
