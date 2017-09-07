@@ -402,4 +402,32 @@ __STATIC_FORCEINLINE void __set_DCCIMVAC(uint32_t value)
   __set_CP(15, 0, value, 7, 14, 1);
 }
 
+
+/** \brief  Set CCSIDR
+ */
+__STATIC_FORCEINLINE void __set_CCSIDR(uint32_t value) {
+//  __ASM volatile("MCR p15, 2, %0, c0, c0, 0" : : "r"(value) : "memory");
+  __set_CP(15, 2, value, 0, 0, 0);
+}
+
+/** \brief  Get CCSIDR
+    \return CCSIDR Register value
+ */
+__STATIC_FORCEINLINE uint32_t __get_CCSIDR() {
+  uint32_t result;
+//  __ASM volatile("MRC p15, 1, %0, c0, c0, 0" : "=r"(result) : : "memory");
+  __get_CP(15, 1, result, 0, 0, 0);
+  return result;
+}
+
+/** \brief  Get CLIDR
+    \return CLIDR Register value
+ */
+__STATIC_FORCEINLINE uint32_t __get_CLIDR() {
+  uint32_t result;
+//  __ASM volatile("MRC p15, 1, %0, c0, c0, 1" : "=r"(result) : : "memory");
+  __get_CP(15, 1, result, 0, 0, 1);
+  return result;
+}
+
 #endif

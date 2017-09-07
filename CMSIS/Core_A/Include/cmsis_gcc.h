@@ -129,7 +129,7 @@
            so that all instructions following the ISB are fetched from cache or memory,
            after the instruction has been completed.
  */
-__attribute__((always_inline)) __STATIC_INLINE void __ISB(void)
+__STATIC_FORCEINLINE  void __ISB(void)
 {
   __ASM volatile ("isb 0xF":::"memory");
 }
@@ -140,7 +140,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __ISB(void)
   \details Acts as a special kind of Data Memory Barrier.
            It completes when all explicit memory accesses before this instruction complete.
  */
-__attribute__((always_inline)) __STATIC_INLINE void __DSB(void)
+__STATIC_FORCEINLINE  void __DSB(void)
 {
   __ASM volatile ("dsb 0xF":::"memory");
 }
@@ -150,7 +150,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __DSB(void)
   \details Ensures the apparent order of the explicit memory operations before
            and after the instruction, without ensuring their completion.
  */
-__attribute__((always_inline)) __STATIC_INLINE void __DMB(void)
+__STATIC_FORCEINLINE  void __DMB(void)
 {
   __ASM volatile ("dmb 0xF":::"memory");
 }
@@ -161,7 +161,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __DMB(void)
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __REV(uint32_t value)
+__STATIC_FORCEINLINE  uint32_t __REV(uint32_t value)
 {
 #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
   return __builtin_bswap32(value);
@@ -193,7 +193,7 @@ __attribute__((section(".rev16_text"))) __STATIC_INLINE uint32_t __REV16(uint32_
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-__attribute__((always_inline)) __STATIC_INLINE int32_t __REVSH(int32_t value)
+__STATIC_FORCEINLINE  int32_t __REVSH(int32_t value)
 {
 #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
   return (short)__builtin_bswap16(value);
@@ -212,7 +212,7 @@ __attribute__((always_inline)) __STATIC_INLINE int32_t __REVSH(int32_t value)
   \param [in]    op2  Number of Bits to rotate
   \return               Rotated value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
+__STATIC_FORCEINLINE  uint32_t __ROR(uint32_t op1, uint32_t op2)
 {
   return (op1 >> op2) | (op1 << (32U - op2));
 }
@@ -230,7 +230,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
+__STATIC_FORCEINLINE  uint32_t __RBIT(uint32_t value)
 {
   uint32_t result;
 
@@ -266,7 +266,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
   \param [in]    ptr  Pointer to data
   \return             value of type uint8_t at (*ptr)
  */
-__attribute__((always_inline)) __STATIC_INLINE uint8_t __LDREXB(volatile uint8_t *addr)
+__STATIC_FORCEINLINE  uint8_t __LDREXB(volatile uint8_t *addr)
 {
     uint32_t result;
 
@@ -288,7 +288,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint8_t __LDREXB(volatile uint8_t
   \param [in]    ptr  Pointer to data
   \return        value of type uint16_t at (*ptr)
  */
-__attribute__((always_inline)) __STATIC_INLINE uint16_t __LDREXH(volatile uint16_t *addr)
+__STATIC_FORCEINLINE  uint16_t __LDREXH(volatile uint16_t *addr)
 {
     uint32_t result;
 
@@ -310,7 +310,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint16_t __LDREXH(volatile uint16
   \param [in]    ptr  Pointer to data
   \return        value of type uint32_t at (*ptr)
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __LDREXW(volatile uint32_t *addr)
+__STATIC_FORCEINLINE  uint32_t __LDREXW(volatile uint32_t *addr)
 {
     uint32_t result;
 
@@ -327,7 +327,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __LDREXW(volatile uint32
   \return          0  Function succeeded
   \return          1  Function failed
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __STREXB(uint8_t value, volatile uint8_t *addr)
+__STATIC_FORCEINLINE  uint32_t __STREXB(uint8_t value, volatile uint8_t *addr)
 {
    uint32_t result;
 
@@ -344,7 +344,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __STREXB(uint8_t value, 
   \return          0  Function succeeded
   \return          1  Function failed
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __STREXH(uint16_t value, volatile uint16_t *addr)
+__STATIC_FORCEINLINE  uint32_t __STREXH(uint16_t value, volatile uint16_t *addr)
 {
    uint32_t result;
 
@@ -361,7 +361,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __STREXH(uint16_t value,
   \return          0  Function succeeded
   \return          1  Function failed
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __STREXW(uint32_t value, volatile uint32_t *addr)
+__STATIC_FORCEINLINE  uint32_t __STREXW(uint32_t value, volatile uint32_t *addr)
 {
    uint32_t result;
 
@@ -374,7 +374,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __STREXW(uint32_t value,
   \brief   Remove the exclusive lock
   \details Removes the exclusive lock which is created by LDREX.
  */
-__attribute__((always_inline)) __STATIC_INLINE void __CLREX(void)
+__STATIC_FORCEINLINE  void __CLREX(void)
 {
   __ASM volatile ("clrex" ::: "memory");
 }
@@ -415,7 +415,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __CLREX(void)
   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
            Can only be executed in Privileged modes.
  */
-__attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
+__STATIC_FORCEINLINE void __enable_irq(void)
 {
   __ASM volatile ("cpsie i" : : : "memory");
 }
@@ -425,7 +425,7 @@ __attribute__( ( always_inline ) ) __STATIC_INLINE void __enable_irq(void)
   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
   Can only be executed in Privileged modes.
  */
-__attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
+__STATIC_FORCEINLINE  void __disable_irq(void)
 {
   __ASM volatile ("cpsid i" : : : "memory");
 }
@@ -435,7 +435,7 @@ __attribute__( ( always_inline ) ) __STATIC_INLINE void __disable_irq(void)
   \details Returns the current value of the Floating Point Status/Control register.
   \return Floating Point Status/Control register value
 */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
+__STATIC_FORCEINLINE  uint32_t __get_FPSCR(void)
 {
   #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
        (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
@@ -458,7 +458,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
   \details Assigns the given value to the Floating Point Status/Control register.
   \param [in] fpscr  Floating Point Status/Control value to set
 */
-__attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+__STATIC_FORCEINLINE void __set_FPSCR(uint32_t fpscr)
 {
   #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
        (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
@@ -476,7 +476,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 /** \brief  Get CPSR Register
     \return               CPSR Register value
  */
-__STATIC_INLINE uint32_t __get_CPSR(void)
+__STATIC_FORCEINLINE uint32_t __get_CPSR(void)
 {
   uint32_t result;
   __ASM volatile("MRS %0, cpsr" : "=r" (result) );
@@ -486,7 +486,7 @@ __STATIC_INLINE uint32_t __get_CPSR(void)
 /** \brief  Set CPSR Register
     \param [in]    cpsr  CPSR value to set
  */
-__STATIC_INLINE void __set_CPSR(uint32_t cpsr)
+__STATIC_FORCEINLINE void __set_CPSR(uint32_t cpsr)
 {
 __ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "memory");
 }
@@ -494,21 +494,21 @@ __ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "memory");
 /** \brief  Get Mode
     \return                Processor Mode
  */
-__STATIC_INLINE uint32_t __get_mode(void) {
+__STATIC_FORCEINLINE uint32_t __get_mode(void) {
     return (__get_CPSR() & 0x1FU);
 }
 
 /** \brief  Set Mode
     \param [in]    mode  Mode value to set
  */
-__STATIC_INLINE void __set_mode(uint32_t mode) {
+__STATIC_FORCEINLINE void __set_mode(uint32_t mode) {
   __ASM volatile("MSR  cpsr_c, %0" : : "r" (mode) : "memory");
 }
 
 /** \brief  Get Stack Pointer
     \return Stack Pointer value
  */
-__STATIC_INLINE uint32_t __get_SP()
+__STATIC_FORCEINLINE uint32_t __get_SP()
 {
   uint32_t result;
   __ASM volatile("MOV  %0, sp" : "=r" (result) : : "memory");
@@ -518,7 +518,7 @@ __STATIC_INLINE uint32_t __get_SP()
 /** \brief  Set Stack Pointer
     \param [in]    stack  Stack Pointer value to set
  */
-__STATIC_INLINE void __set_SP(uint32_t stack)
+__STATIC_FORCEINLINE void __set_SP(uint32_t stack)
 {
   __ASM volatile("MOV  sp, %0" : : "r" (stack) : "memory");
 }
@@ -526,7 +526,7 @@ __STATIC_INLINE void __set_SP(uint32_t stack)
 /** \brief  Get USR/SYS Stack Pointer
     \return USR/SYS Stack Pointer value
  */
-__STATIC_INLINE uint32_t __get_SP_usr()
+__STATIC_FORCEINLINE uint32_t __get_SP_usr()
 {
   uint32_t cpsr;
   uint32_t result;
@@ -534,8 +534,8 @@ __STATIC_INLINE uint32_t __get_SP_usr()
     "MRS     %0, cpsr   \n"
     "CPS     #0x1F      \n" // no effect in USR mode
     "MOV     %1, sp     \n"
-    "MSR     cpsr_c, %2 \n" // no effect in USR mode
-    "ISB" :  "=r"(cpsr), "=r"(result) : "r"(cpsr) : "memory"
+    "MSR     cpsr_c, %0 \n" // no effect in USR mode
+    "ISB" :  "+r"(cpsr), "=r"(result) : : "memory"
    );
   return result;
 }
@@ -543,26 +543,26 @@ __STATIC_INLINE uint32_t __get_SP_usr()
 /** \brief  Set USR/SYS Stack Pointer
     \param [in]    topOfProcStack  USR/SYS Stack Pointer value to set
  */
-__STATIC_INLINE void __set_SP_usr(uint32_t topOfProcStack)
+__STATIC_FORCEINLINE void __set_SP_usr(uint32_t topOfProcStack)
 {
   uint32_t cpsr;
   __ASM volatile(
     "MRS     %0, cpsr   \n"
     "CPS     #0x1F      \n" // no effect in USR mode
     "MOV     sp, %1     \n"
-    "MSR     cpsr_c, %2 \n" // no effect in USR mode
-    "ISB" : "=r"(cpsr) : "r" (topOfProcStack), "r"(cpsr) : "memory"
+    "MSR     cpsr_c, %0 \n" // no effect in USR mode
+    "ISB" : "+r"(cpsr) : "r" (topOfProcStack) : "memory"
    );
 }
 
 /** \brief  Get FPEXC
     \return               Floating Point Exception Control register value
  */
-__STATIC_INLINE uint32_t __get_FPEXC(void)
+__STATIC_FORCEINLINE uint32_t __get_FPEXC(void)
 {
 #if (__FPU_PRESENT == 1)
   uint32_t result;
-  __ASM volatile("MRS %0, fpexc" : "=r" (result) );
+  __ASM volatile("VMRS %0, fpexc" : "=r" (result) );
   return(result);
 #else
   return(0);
@@ -572,10 +572,10 @@ __STATIC_INLINE uint32_t __get_FPEXC(void)
 /** \brief  Set FPEXC
     \param [in]    fpexc  Floating Point Exception Control value to set
  */
-__STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
+__STATIC_FORCEINLINE void __set_FPEXC(uint32_t fpexc)
 {
 #if (__FPU_PRESENT == 1)
-  __ASM volatile ("MSR fpexc, %0" : : "r" (fpexc) : "memory");
+  __ASM volatile ("VMSR fpexc, %0" : : "r" (fpexc) : "memory");
 #endif
 }
 
@@ -588,7 +588,7 @@ __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
 
 #include "cmsis_cp15.h"
 
-__STATIC_INLINE int32_t log2_up(uint32_t n)
+__STATIC_FORCEINLINE int32_t log2_up(uint32_t n)
 {
   int32_t log = -1;
   uint32_t t = n;
