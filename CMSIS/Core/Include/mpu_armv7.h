@@ -66,7 +66,10 @@
 * \param Region The region to be configured, number 0 to 15.
 * \param BaseAddress The base address for the region.
 */
-#define ARM_MPU_RBAR(Region, BaseAddress) ((BaseAddress & MPU_RBAR_ADDR_Msk) | (Region & MPU_RBAR_REGION_Msk) | (1UL << MPU_RBAR_VALID_Pos))
+#define ARM_MPU_RBAR(Region, BaseAddress) \
+  (((BaseAddress) & MPU_RBAR_ADDR_Msk) |  \
+   ((Region) & MPU_RBAR_REGION_Msk)    |  \
+   (MPU_RBAR_VALID_Msk))
 
 /**
 * MPU Region Attribut and Size Register Value
@@ -81,15 +84,15 @@
 * \param Size              Region size of the region to be configured, for example 4K, 8K.
 */                         
 #define ARM_MPU_RASR(DisableExec, AccessPermission, TypeExtField, IsShareable, IsCacheable, IsBufferable, SubRegionDisable, Size) \
-  ((DisableExec      << MPU_RASR_XN_Pos)     & MPU_RASR_XN_Msk)     | \
-  ((AccessPermission << MPU_RASR_AP_Pos)     & MPU_RASR_AP_Msk)     | \
-  ((TypeExtField     << MPU_RASR_TEX_Pos)    & MPU_RASR_TEX_Msk)    | \
-  ((IsShareable      << MPU_RASR_S_Pos)      & MPU_RASR_S_Msk)      | \
-  ((IsCacheable      << MPU_RASR_C_Pos)      & MPU_RASR_C_Msk)      | \
-  ((IsBufferable     << MPU_RASR_B_Pos)      & MPU_RASR_B_Msk)      | \
-  ((SubRegionDisable << MPU_RASR_SRD_Pos)    & MPU_RASR_SRD_Msk)    | \
-  ((Size             << MPU_RASR_SIZE_Pos)   & MPU_RASR_SIZE_Msk)   | \
-  ((1UL              << MPU_RASR_ENABLE_Pos) & MPU_RASR_ENABLE_Msk)
+  ((((DisableExec     ) << MPU_RASR_XN_Pos)     & MPU_RASR_XN_Msk)     | \
+   (((AccessPermission) << MPU_RASR_AP_Pos)     & MPU_RASR_AP_Msk)     | \
+   (((TypeExtField    ) << MPU_RASR_TEX_Pos)    & MPU_RASR_TEX_Msk)    | \
+   (((IsShareable     ) << MPU_RASR_S_Pos)      & MPU_RASR_S_Msk)      | \
+   (((IsCacheable     ) << MPU_RASR_C_Pos)      & MPU_RASR_C_Msk)      | \
+   (((IsBufferable    ) << MPU_RASR_B_Pos)      & MPU_RASR_B_Msk)      | \
+   (((SubRegionDisable) << MPU_RASR_SRD_Pos)    & MPU_RASR_SRD_Msk)    | \
+   (((Size            ) << MPU_RASR_SIZE_Pos)   & MPU_RASR_SIZE_Msk)   | \
+   (MPU_RASR_ENABLE_Msk))
 
 
 /**
