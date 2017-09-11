@@ -19,7 +19,5 @@
 #define RTE_CV_COREFUNC                       /* CORE Validation - Core Function tests enabled */
 #define RTE_CV_COREINSTR                      /* CORE Validation - Core Instruction tests enabled */
 #define RTE_CV_MPUFUNC                       /* CORE Validation - MPU Function tests enabled */
-#define RTE_Compiler_EventRecorder
-          #define RTE_Compiler_EventRecorder_DAP
 
 #endif /* RTE_COMPONENTS_H */

@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------------------
 cpu0.FPU=1                                            # (bool  , init-time) default = '1'      : Set whether the model has VFP support
 cpu0.DSP=1                                            # (bool  , init-time) default = '1'      : Set whether the model has the DSP extension
-cpu0.semihosting-enable=0                             # (bool  , init-time) default = '1'      : Enable semihosting SVC traps. Applications that do not use semihosting must set this parameter to false.
+cpu0.semihosting-enable=1                             # (bool  , init-time) default = '1'      : Enable semihosting SVC traps. Applications that do not use semihosting must set this parameter to false.
 cpu0.MPU_S=0x8                                        # (int   , init-time) default = '0x8'    : Number of regions in the Secure MPU. If Security Extentions are absent, this is ignored : [0x0..0x10]
 cpu0.MPU_NS=0x8                                       # (int   , init-time) default = '0x8'    : Number of regions in the Non-Secure MPU. If Security Extentions are absent, this is the total number of MPU regions : [0x0..0x10]
 cpu0.ITM=0                                            # (bool  , init-time) default = '1'      : Level of instrumentation trace supported. false : No ITM trace included, true: ITM trace included
