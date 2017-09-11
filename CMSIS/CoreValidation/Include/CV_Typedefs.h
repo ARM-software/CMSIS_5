@@ -38,11 +38,17 @@ typedef unsigned int    BOOL;
 
 #define ARRAY_SIZE(arr) (sizeof(arr)/sizeof((arr)[0]))
 
-static const int BACKSLASH = '\\';
+#if defined( __GNUC__ )
+static const int PATH_DELIMITER = '/';
+#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+static const int PATH_DELIMITER = '/';
+#else
+static const int PATH_DELIMITER = '\\';
+#endif
 
 //lint -emacro(9016,__FILENAME__) allow pointer arithmetic for truncating filename
 //lint -emacro(613,__FILENAME__) null pointer is checked 
-#define __FILENAME__ ((strrchr(__FILE__, BACKSLASH) != NULL) ? (strrchr(__FILE__, BACKSLASH) + 1) : __FILE__)
+#define __FILENAME__ ((strrchr(__FILE__, PATH_DELIMITER) != NULL) ? (strrchr(__FILE__, PATH_DELIMITER) + 1) : __FILE__)
   
 /* Assertions and test results */
 #define SET_RESULT(res, desc) (void)__set_result(__FILENAME__, __LINE__, (res), (desc));
