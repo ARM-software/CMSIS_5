@@ -4,7 +4,7 @@
  *      *** Do not modify ! ***
  *
  * Project: 'CMSIS_CV' 
- * Target:  'Cortex-M3 (GCC, FVP)' 
+ * Target:  'Cortex-M7 (AC5, FVP)' 
  */
 
 #ifndef RTE_COMPONENTS_H
@@ -14,7 +14,7 @@
 /*
  * Define the Device Header File: 
  */
-#define CMSIS_device_header "ARMCM3.h"
+#define CMSIS_device_header "ARMCM7_DP.h"
 
 #define RTE_CV_COREFUNC                       /* CORE Validation - Core Function tests enabled */
 #define RTE_CV_COREINSTR                      /* CORE Validation - Core Instruction tests enabled */

@@ -1,0 +1,12 @@
+/Objects
+/Listings
+*.d
+*.o
+result*.xml
+build*.log
+run*.log
+/CMSIS_CV.build_log.htm
+/CMSIS_CV.lnp
+/CMSIS_CV.uvguix.*
+/CMSIS_CV.uvoptx
+*.dep
