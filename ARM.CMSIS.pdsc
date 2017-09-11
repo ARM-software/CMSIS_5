@@ -2017,7 +2017,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/ARM/startup_ARMCM23.s" version="1.0.0" attr="config" condition="ARMCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/GCC/startup_ARMCM23.S" version="1.0.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMCM23/Source/GCC/gcc_arm.ld"        version="1.0.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMCM23/Source/system_ARMCM23.c"      version="1.0.0" attr="config" condition="ARMCC GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM23/Source/IAR/startup_ARMCM23.s" version="1.0.0" attr="config" condition="IAR"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM23/Source/system_ARMCM23.c"      version="1.0.0" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM23/Include/Template/partition_ARMCM23.h" version="1.0.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>
@@ -2046,7 +2047,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/ARM/startup_ARMCM33.s"         version="1.0.0" attr="config" condition="ARMCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/GCC/startup_ARMCM33.S"         version="1.0.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMCM33/Source/GCC/gcc_arm.ld"                version="1.0.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"              version="1.0.0" attr="config" condition="ARMCC GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM33/Source/IAR/startup_ARMCM33.s"         version="1.0.0" attr="config" condition="IAR"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM33/Source/system_ARMCM33.c"              version="1.0.0" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.1.0" attr="config" condition="ARMv8-M TZ Device"/>
       </files>
