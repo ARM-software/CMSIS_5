@@ -39,12 +39,9 @@ void TC_CoreAFunc_FPSCR(void) {
 #if defined(__CC_ARM)
 #define __SUBS(Rd, Rm, Rn) __ASM("SUBS " # Rd ", " # Rm ", " # Rn)
 #define __ADDS(Rd, Rm, Rn) __ASM("ADDS " # Rd ", " # Rm ", " # Rn)
-#elif defined( __GNUC__ ) && defined(__thumb__)
-#define __SUBS(Rd, Rm, Rn) __ASM("SUB %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn))
-#define __ADDS(Rd, Rm, Rn) __ASM("ADD %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn))
 #else
-#define __SUBS(Rd, Rm, Rn) __ASM("SUBS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn))
-#define __ADDS(Rd, Rm, Rn) __ASM("ADDS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn))
+#define __SUBS(Rd, Rm, Rn) __ASM("SUBS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
+#define __ADDS(Rd, Rm, Rn) __ASM("ADDS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
 #endif
 
 void TC_CoreAFunc_CPSR(void) {

@@ -134,17 +134,17 @@ void TC_CoreFunc_IPSR (void) {
 #if defined(__CC_ARM)
 #define SUBS(Rd, Rm, Rn) __ASM("SUBS " # Rd ", " # Rm ", " # Rn)
 #define ADDS(Rd, Rm, Rn) __ASM("ADDS " # Rd ", " # Rm ", " # Rn)
-#elif defined( __GNUC__ )
-#define SUBS(Rd, Rm, Rn) __ASM("SUB %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn))
-#define ADDS(Rd, Rm, Rn) __ASM("ADD %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn))
+#elif defined( __GNUC__ )  && defined(__ARM_ARCH_6M__)
+#define SUBS(Rd, Rm, Rn) __ASM("SUB %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
+#define ADDS(Rd, Rm, Rn) __ASM("ADD %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
 #elif defined(_lint)
 //lint -save -e(9026) allow function-like macro
 #define SUBS(Rd, Rm, Rn) ((Rd) = (Rm) - (Rn))
 #define ADDS(Rd, Rm, Rn) ((Rd) = (Rm) + (Rn))
 //lint -restore
 #else
-#define SUBS(Rd, Rm, Rn) __ASM("SUBS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn))
-#define ADDS(Rd, Rm, Rn) __ASM("ADDS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn))
+#define SUBS(Rd, Rm, Rn) __ASM("SUBS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
+#define ADDS(Rd, Rm, Rn) __ASM("ADDS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
 #endif
 
 /**

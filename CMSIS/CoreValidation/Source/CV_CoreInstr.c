@@ -179,15 +179,27 @@ void TC_CoreInstr_SSAT (void) {
 - Check if __USAT instrinsic saturates unsigned integer values.
 */
 void TC_CoreInstr_USAT (void) {
-  uint32_t result = __USAT(UINT32_MAX, 31U);
+  uint32_t result = __USAT(INT32_MAX, 31U);
   ASSERT_TRUE(result == (UINT32_MAX>>1U));
 
-  result = __USAT(UINT32_MAX, 16U);
+  result = __USAT(INT32_MAX, 16U);
   ASSERT_TRUE(result == UINT16_MAX);
 
-  result = __USAT(UINT32_MAX, 8U);
+  result = __USAT(INT32_MAX, 8U);
   ASSERT_TRUE(result == UINT8_MAX);
 
-  result = __USAT(UINT32_MAX, 0U);
+  result = __USAT(INT32_MAX, 0U);
+  ASSERT_TRUE(result == 0U);
+
+  result = __USAT(INT32_MIN, 31U);
+  ASSERT_TRUE(result == 0U);
+
+  result = __USAT(INT32_MIN, 16U);
+  ASSERT_TRUE(result == 0U);
+
+  result = __USAT(INT32_MIN, 8U);
+  ASSERT_TRUE(result == 0U);
+
+  result = __USAT(INT32_MIN, 0U);
   ASSERT_TRUE(result == 0U);
 }
