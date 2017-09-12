@@ -16,7 +16,7 @@
 // <o> Print Output Format <0=> Plain Text <1=> XML
 // <i> Set the test results output format to plain text or XML
 #ifndef PRINT_XML_REPORT
-#define PRINT_XML_REPORT            0
+#define PRINT_XML_REPORT            1
 #endif
 // <o> Buffer size for assertions results
 // <i> Set the buffer size for assertions results buffer
