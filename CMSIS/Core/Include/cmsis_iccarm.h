@@ -447,41 +447,13 @@ __IAR_FT int32_t __REVSH(int32_t val) {
     }
     return (r << sc);
   }  
-
-  __STATIC_INLINE int32_t __SSAT(int32_t val, uint32_t sat) {
-    if ((sat >= 1U) && (sat <= 32U)) {
-      const int32_t max = (int32_t)((1U << (sat - 1U)) - 1U);
-      const int32_t min = -1 - max ;
-      if (val > max) {
-        return max;
-      } else if (val < min) {
-        return min;
-      }
-    }
-    return val;
-  }
-
-  __STATIC_INLINE int32_t __USAT(int32_t val, uint32_t sat) {
-    if (sat <= 31U) {
-      const int32_t max = (int32_t)((1U << sat) - 1U);
-      const int32_t min = 0;
-      if (val > max) {
-        return max;
-      } else if (val < min) {
-        return min;
-      }
-    }
-    return val;
-  }
     
   __STATIC_INLINE  uint32_t __get_APSR(void) {
     uint32_t res;
     __asm("MRS      %0,APSR" : "=r" (res));
     return res;
   }
-  
-  #define __get_ASPR __iar_get_APSR
-  
+    
 #endif
 
 #if !__FPU_PRESENT
@@ -631,6 +603,33 @@ __IAR_FT void 	__TZ_set_MSPLIM_NS(uint32_t value) {
 
 #define __BKPT(value)    __asm volatile ("BKPT     %0" : : "i"(value))
 
+#if __IAR_M0_FAMILY
+  __STATIC_INLINE int32_t __SSAT(int32_t val, uint32_t sat) {
+    if ((sat >= 1U) && (sat <= 32U)) {
+      const int32_t max = (int32_t)((1U << (sat - 1U)) - 1U);
+      const int32_t min = -1 - max ;
+      if (val > max) {
+        return max;
+      } else if (val < min) {
+        return min;
+      }
+    }
+    return val;
+  }
+
+  __STATIC_INLINE int32_t __USAT(int32_t val, uint32_t sat) {
+    if (sat <= 31U) {
+      const int32_t max = (int32_t)((1U << sat) - 1U);
+      const int32_t min = 0;
+      if (val > max) {
+        return max;
+      } else if (val < min) {
+        return min;
+      }
+    }
+    return val;
+  }      
+#endif
 
 #if (__CORTEX_M >= 0x03)   /* __CORTEX_M is defined in core_cm0.h, core_cm3.h and core_cm4.h. */
 
