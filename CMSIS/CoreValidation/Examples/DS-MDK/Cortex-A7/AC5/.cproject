@@ -20,8 +20,8 @@
 							<targetPlatform id="com.arm.toolchain.baremetal.base.var.arm_compiler_5-5.1960502218.788792350" name=""/>
 							<builder buildPath="${workspace_loc:/CMSIS_CV}/Debug" id="org.eclipse.cdt.build.core.internal.builder.1105228045" keepEnvironmentInBuildfile="false" name="CDT Internal Builder" superClass="org.eclipse.cdt.build.core.internal.builder"/>
 							<tool id="com.arm.tool.c.compiler.base.var.arm_compiler_5-5.1006008870" name="ARM C Compiler 5" superClass="com.arm.tool.c.compiler.base.var.arm_compiler_5-5">
-								<option id="com.arm.tool.c.compiler.option.incpath.2039211042" name="Include path (-I)" superClass="com.arm.tool.c.compiler.option.incpath" useByScannerDiscovery="false" valueType="includePath"/>
-								<option id="com.arm.tool.c.compiler.option.defmac.1773701319" name="Define macro (-D)" superClass="com.arm.tool.c.compiler.option.defmac" useByScannerDiscovery="false" valueType="definedSymbols"/>
+								<option id="com.arm.tool.c.compiler.option.incpath.2039211042" name="Include path (-I)" superClass="com.arm.tool.c.compiler.option.incpath" useByScannerDiscovery="false"/>
+								<option id="com.arm.tool.c.compiler.option.defmac.1773701319" name="Define macro (-D)" superClass="com.arm.tool.c.compiler.option.defmac" useByScannerDiscovery="false"/>
 								<option defaultValue="com.arm.tool.c.compiler.option.optlevel.min" id="com.arm.tool.c.compiler.option.optlevel.882659687" name="Optimization level" superClass="com.arm.tool.c.compiler.option.optlevel" useByScannerDiscovery="true" valueType="enumerated"/>
 								<option id="com.arm.tool.c.compiler.option.targetcpu.1426497902" name="Target CPU (--cpu)" superClass="com.arm.tool.c.compiler.option.targetcpu" useByScannerDiscovery="true" value="Cortex-A7" valueType="string"/>
 								<option id="com.arm.tool.c.compiler.option.fppcs.1692296380" name="Floating-point PCS (--apcs)" superClass="com.arm.tool.c.compiler.option.fppcs" useByScannerDiscovery="true" value="com.arm.tool.c.compiler.option.fppcs.hard" valueType="enumerated"/>
