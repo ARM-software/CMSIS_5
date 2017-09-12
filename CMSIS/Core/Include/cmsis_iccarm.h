@@ -453,7 +453,7 @@ __IAR_FT int32_t __REVSH(int32_t val) {
     __asm("MRS      %0,APSR" : "=r" (res));
     return res;
   }
-    
+
 #endif
 
 #if !__FPU_PRESENT
