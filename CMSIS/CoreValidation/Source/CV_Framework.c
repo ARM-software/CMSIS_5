@@ -6,10 +6,15 @@
  *----------------------------------------------------------------------------*/
 #include "CV_Framework.h"
 #include "cmsis_cv.h" 
+#include "setjmp.h"
 
+static jmp_buf jump_buffer;
+  
 /* Prototypes */
 void ts_cmsis_cv(void);
 void closeDebug(void);
+void HardFault_Handler(void);
+void recover(void);
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -53,7 +58,6 @@ Program flow:
 void ts_cmsis_cv () {
   const char *fn;
   uint32_t tc, no;
-  
   (void)ritf.Init ();                           /* Init test report                 */
   (void)ritf.Open (ts.ReportTitle,              /* Write test report title          */
                    ts.Date,                     /* Write compilation date           */
@@ -66,7 +70,11 @@ void ts_cmsis_cv () {
     fn = ts.TC[tc].TFName;                /* Test function name string        */
     (void)ritf.Open_TC (no, fn);          /* Open test case #(Base + TC)      */
     if (ts.TC[tc].en != 0U)  {
-      ts.TC[tc].TestFunc();               /* Execute test case if enabled     */
+      if (setjmp(jump_buffer) == 0) {
+        ts.TC[tc].TestFunc();               /* Execute test case if enabled     */
+      } else {
+        (void)__set_result(fn, 0U, FAILED, NULL);
+      }
     }
     (void)ritf.Close_TC ();               /* Close test case                  */
   }
@@ -92,6 +100,33 @@ void cmsis_cv (void) {
   ts_cmsis_cv();
 }
 
+__USED __NO_RETURN 
+void recover(void) {
+  longjmp(jump_buffer, 1U);
+}
+
+/** Hardfault Handler
+* Catch and recover from failure states.
+*
+* The latest stack frame is modified so that the exception return
+* results in a jump to the recovery function instead back to the
+* errornous test.
+*/
+#if defined( __CC_ARM )
+__ASM void HardFault_Handler(void) {
+  IMPORT recover
+  LDR R0, =recover
+  STR R0, [SP, #24]
+}
+#else
+__USED
+void HardFault_Handler(void) {
+  __ASM(
+    "LDR R0, =recover    \n"
+    "STR R0, [SP, #24]   \n" : : : "memory"
+  );
+}
+#endif
 
 /**
 @}
