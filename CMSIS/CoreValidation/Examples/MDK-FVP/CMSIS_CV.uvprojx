@@ -5048,7 +5048,7 @@
             <IncludeLibs></IncludeLibs>
             <IncludeDir></IncludeDir>
             <Misc>-mfloat-abi=hard -mfpu=fpv5-d16 --specs=rdimon.specs</Misc>
-            <ScatterFile>.\RTE\Device\ARMCM0\gcc_arm.ld</ScatterFile>
+            <ScatterFile>.\RTE\Device\ARMCM7_DP\gcc_arm.ld</ScatterFile>
           </LDarm>
         </TargetArm>
       </TargetOption>
@@ -5962,12 +5962,17 @@
           <targetInfo name="Cortex-M4f (AC6, FVP)"/>
         </targetInfos>
       </component>
+      <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM7 CMSIS GCC">
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/>
+        <targetInfos>
+          <targetInfo name="Cortex-M7 (GCC, FVP)"/>
+        </targetInfos>
+      </component>
       <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM7 CMSIS">
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M7 (AC5, FVP)"/>
           <targetInfo name="Cortex-M7 (AC6, FVP)"/>
-          <targetInfo name="Cortex-M7 (GCC, FVP)"/>
         </targetInfos>
       </component>
     </components>
@@ -6192,31 +6197,32 @@
       </file>
       <file attr="config" category="linkerScript" condition="GCC" name="Device\ARM\ARMCM7\Source\GCC\gcc_arm.ld" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM7_DP\gcc_arm.ld</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM7 CMSIS"/>
+        <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM7 CMSIS GCC"/>
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M7 (GCC, FVP)"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceAsm" condition="GCC" name="Device\ARM\ARMCM7\Source\GCC\startup_ARMCM7.S" version="1.0.0">
-        <instance index="0">RTE\Device\ARMCM7_DP\startup_ARMCM7.S</instance>
+      <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\ARM\ARMCM7\Source\ARM\startup_ARMCM7.s" version="1.0.0">
+        <instance index="0">RTE\Device\ARMCM7_DP\startup_ARMCM7.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM7 CMSIS"/>
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M7 (AC5, FVP)"/>
           <targetInfo name="Cortex-M7 (AC6, FVP)"/>
-          <targetInfo name="Cortex-M7 (GCC, FVP)"/>
         </targetInfos>
       </file>
       <file attr="config" category="sourceC" condition="GCC" name="Device\ARM\ARMCM7\Source\GCC\startup_ARMCM7.c" version="1.0.0">
-        <instance index="0" removed="1">RTE\Device\ARMCM7_DP\startup_ARMCM7.c</instance>
+        <instance index="0">RTE\Device\ARMCM7_DP\startup_ARMCM7.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM7 CMSIS GCC"/>
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/>
-        <targetInfos/>
+        <targetInfos>
+          <targetInfo name="Cortex-M7 (GCC, FVP)"/>
+        </targetInfos>
       </file>
       <file attr="config" category="sourceC" name="Device\ARM\ARMCM7\Source\system_ARMCM7.c" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM7_DP\system_ARMCM7.c</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM7 CMSIS"/>
+        <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM7 CMSIS GCC"/>
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/>
         <targetInfos>
           <targetInfo name="Cortex-M7 (AC5, FVP)"/>
