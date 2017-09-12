@@ -1,37 +1,51 @@
 #! python
 
-from subprocess import call
-from xml.etree import ElementTree
-import os.path
+import sys
+from argparse import ArgumentParser
+from datetime import datetime
 
-print "Build CMSIS-Core Validation using MDK"
+sys.path.append('../../../Utilities/buildutils') 
 
-TARGET_FVP = 'FVP'
+from uv4cmd import Uv4Cmd 
+from fvpcmd import FvpCmd 
+from testresult import TestResult
+
+DEVICE_CM0  = 'Cortex-M0'
+DEVICE_CM3  = 'Cortex-M3'
+DEVICE_CM4f = 'Cortex-M4f'
+DEVICE_CM7  = 'Cortex-M7'
+DEVICE_CM23 = 'Cortex-M23'
+DEVICE_CM33 = 'Cortex-M33'
+
 CC_AC6 = 'AC6'
 CC_AC5 = 'AC5'
 CC_GCC = 'GCC'
 
-UV4 = "UV4.exe"
-PRJ = "CMSIS_CV.uvprojx"
-# DEVICES = [ 'Cortex-M0', 'Cortex-M3', 'Cortex-M4f', 'Cortex-M7', 'Cortex-M23', 'Cortex-M33' ]
-# DEVICES = [ 'Cortex-M0', 'Cortex-M3', 'Cortex-M4f', 'Cortex-M7' ]
-DEVICES = [ 'Cortex-M4f' ]
+TARGET_FVP = 'FVP'
+
+DEVICES = [ DEVICE_CM0, DEVICE_CM3, DEVICE_CM4f, DEVICE_CM7 ]
 COMPILERS = [ CC_AC5, CC_AC6, CC_GCC ]
 TARGETS = [ TARGET_FVP ]
 
-FVP_MODELS = { 
-    'Cortex-M0'  : [ "fvp_mps2_cortex-m0.exe", "--cyclelimit",   "2000000", "" ],
-    'Cortex-M3'  : [ "fvp_mps2_cortex-m3.exe", "--cyclelimit",   "2000000", "" ],
-    'Cortex-M4f' : [ "fvp_mps2_cortex-m4.exe", "--cyclelimit",   "5000000", "" ],
-    'Cortex-M7'  : [ "fvp_mps2_cortex-m7.exe", "--cyclelimit",   "5000000", "" ],
-    'Cortex-M23' : [ "fvp_mps2_cortex-m23.exe", "--cyclelimit", "10000000", "-f", "ARMCM23_TZ_config.txt", "-a", "cpu0=" ],
-    'Cortex-M33' : [ "fvp_mps2_cortex-m33.exe", "--cyclelimit", "10000000", "-f", "ARMCM33_DSP_FP_TZ_config.txt", "-a", "cpu0=" ]
-  } 
-
 SKIP = [ 
-    ['Cortex-M23', CC_GCC, None ], 
-    ['Cortex-M33', CC_GCC, None ] 
+    [ DEVICE_CM23, CC_GCC, None ],
+    [ DEVICE_CM33, CC_GCC, None ]
   ]
+
+APP_FORMAT = {
+  CC_AC6: "axf",
+  CC_AC5: "axf",
+  CC_GCC: "elf"
+}
+  
+FVP_MODELS = { 
+    DEVICE_CM0  : { 'cmd': "fvp_mps2_cortex-m0.exe",  'args': { 'limit': "2000000" } },
+    DEVICE_CM3  : { 'cmd': "fvp_mps2_cortex-m3.exe",  'args': { 'limit': "2000000" } },
+    DEVICE_CM4f : { 'cmd': "fvp_mps2_cortex-m4.exe",  'args': { 'limit': "5000000" } },
+    DEVICE_CM7  : { 'cmd': "fvp_mps2_cortex-m7.exe",  'args': { 'limit': "5000000" } },
+    DEVICE_CM23 : { 'cmd': "fvp_mps2_cortex-m23.exe", 'args': { 'limit': "5000000", 'config': "ARMCM23_TZ_config.txt",        'target': "cpu0" } },
+    DEVICE_CM33 : { 'cmd': "fvp_mps2_cortex-m33.exe", 'args': { 'limit': "5000000", 'config': "ARMCM33_DSP_FP_TZ_config.txt", 'target': "cpu0" } }
+  }
 
 def isSkipped(dev, cc, target):
   for skip in SKIP:
@@ -42,95 +56,67 @@ def isSkipped(dev, cc, target):
       return True
   return False
 
-def ret2result(ret):
-  if ret == 0:
-    return "successfull"
-  elif ret == 1:
-    return "successfull with warnings"
-  else:
-    return "failed!"
+def prepare(steps, args):
+  for dev in args.devices:
+    for cc in args.compilers:
+      for target in args.targets:
+        if not isSkipped(dev, cc, target):
+          config = "{dev} ({cc}, {target})".format(dev = dev, cc = cc, target = target)
+          prefix = "{dev}_{cc}_{target}".format(dev = dev, cc = cc, target = target)
+          if args.execute_only:
+            build = None
+          else:
+            build = Uv4Cmd("CMSIS_CV.uvprojx", config)
+          if args.build_only:
+            test = None
+          else:
+            test = FvpCmd(FVP_MODELS[dev]['cmd'], "Objects\CMSIS_CV."+APP_FORMAT[cc], **FVP_MODELS[dev]['args'])
+          steps += [ { 'name': config, 'prefix': prefix, 'build': build, 'test': test } ]
 
-def binary(cc):
-  if cc == CC_GCC:
-    return 'Objects/CMSIS_CV.elf'
-  else:
-    return 'Objects/CMSIS_CV.axf'
-    
-def build(dev, cc, target):
-  print "Building..."
-  config = "{dev} ({cc}, {target})".format(dev = dev, cc = cc, target = target)
-  log = "build_{dev}_{cc}_{target}.log".format(dev = dev, cc = cc, target = target)
-  print "{cmd} -t {config} -r {prj} -j0 -o {log}".format(cmd = UV4, config = config, prj = PRJ, log = log)
-  try:
-    ret = call([UV4, "-t", config, "-r", PRJ, "-j0", "-o", log])
-    print open(log, "r").read()
-    print "Build " + ret2result(ret)
-    return (ret <= 1)
-  except:
-    print "Build failed!"
-    return False
-
-def run(dev, cc, target):
-  print "Running..."
-  config = "{dev} ({cc}, {target})".format(dev = dev, cc = cc, target = target)
-  log = "run_{dev}_{cc}_{target}.log".format(dev = dev, cc = cc, target = target)
-  xml = "result_{dev}_{cc}_{target}.xml".format(dev = dev, cc = cc, target = target)
-  
-  if target == TARGET_FVP:
-    model = FVP_MODELS[dev][:]
-    app = binary(cc)
-    model[-1] = model[-1] + app
-    print ' '.join(model)
-    logfile = open(log, "w")
-    call(model, stdout=logfile)
-    
-  logfile = open(log, "r")
-  xmlfile = open(xml, "w")
-  dump = False
-  for line in logfile:
-    if dump:
-      xmlfile.write(line)
-      if line.strip() == "</report>":
-        dump = False
+def execute(steps):
+  for step in steps:
+    print step['name']
+    if step['build']:
+      step['build'].run()
     else:
-      if line.strip() == "Simulation is started":
-        dump = True
-      print line,
+      print "Skipping build"
+      
+    if (not step['build']) or step['build'].isSuccess():
+      step['test'].run()
+      step['result'] = TestResult(step['test'].getOutput())
+      step['result'].saveXml("result_{0}_{1}.xml".format(step['prefix'], datetime.now().strftime("%Y%m%d%H%M%S")))
+    else:
+      print "Skipping test"
+      
+def printSummary(steps):
+  print ""
+  print "Test Summary"
+  print "============"
+  print
+  print "Test run                       Total Exec  Pass  Fail  "
+  print "-------------------------------------------------------"
+  for step in steps:
+    try:
+      print "{0:30} {1:>4}  {2:>4}  {3:>4}  {4:>4}".format(step['name'], *step['result'].getSummary())
+    except:
+      print "{0:30} ------ NO RESULTS ------".format(step['name'])
+
+def main(argv):
+  parser = ArgumentParser()
+  parser.add_argument('-b', '--build-only', action='store_true')
+  parser.add_argument('-e', '--execute-only', action='store_true')
+  parser.add_argument('-d', '--devices', nargs='*', choices=DEVICES, default=DEVICES, help = 'Devices to be considered.')
+  parser.add_argument('-c', '--compilers', nargs='*', choices=COMPILERS, default=COMPILERS, help = 'Compilers to be considered.')
+  parser.add_argument('-t', '--targets', nargs='*', choices=TARGETS, default=TARGETS, help = 'Targets to be considered.')
+  args = parser.parse_args()
+    
+  steps = []
+
+  prepare(steps, args)
   
-  return True
-
-for dev in DEVICES:
-  for cc in COMPILERS:
-    for target in TARGETS:
-      if not isSkipped(dev, cc, target):
-        print ""
-        print "{dev} with {cc} on {target}".format(dev = dev, cc = cc, target = target)
-        success = build(dev, cc, target)
-        if success:
-          run(dev, cc, target)
-
-# Test Summary 
-print ""
-print "Test Summary"
-print "============"
-print
-print "Test run                       Total Exec  Pass  Fail  "
-print "-------------------------------------------------------"
-for dev in DEVICES:
-  for cc in COMPILERS:
-    for target in TARGETS:
-      name = "{dev} ({cc}, {target})".format(dev = dev, cc = cc, target = target)
-      if isSkipped(dev, cc, target):
-        print "{0:30} ------- skipped --------".format(name)
-      else:
-        try:
-          xml = "result_{dev}_{cc}_{target}.xml".format(dev = dev, cc = cc, target = target)
-          report = ElementTree.parse(xml).getroot()
-          summary = report[0].findall('summary')[0]
-          tests = summary.find('tcnt').text
-          executed = summary.find('exec').text
-          passed = summary.find('pass').text
-          failed = summary.find('fail').text
-          print "{0:30} {1:>4}  {2:>4}  {3:>4}  {4:>4}".format(name, tests, executed, passed, failed)
-        except:
-          print "{0:30} ------ NO RESULTS ------".format(name)
+  execute(steps)
+  
+  printSummary(steps)
+  
+if __name__ == "__main__":
+  main(sys.argv[1:])
