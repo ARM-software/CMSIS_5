@@ -2190,6 +2190,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/AC5/ARMCA5.sct"       version="1.0.0" attr="config" condition="ARMCC5"/>         
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/AC6/startup_ARMCA5.c" version="1.0.0" attr="config" condition="ARMCC6"/>             
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/AC6/ARMCA5.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>         
+        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/GCC/startup_ARMCA5.c" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="other"        name="Device/ARM/ARMCA5/Source/GCC/ARMCA5.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/system_ARMCA5.c"      version="1.0.0" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/mmu_ARMCA5.c"         version="1.0.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA5/Include/system_ARMCA5.h"     version="1.0.0" attr="config"/>
@@ -2209,6 +2211,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/AC5/ARMCA7.sct"       version="1.0.0" attr="config" condition="ARMCC5"/> 
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/AC6/startup_ARMCA7.c" version="1.0.0" attr="config" condition="ARMCC6"/>             
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/AC6/ARMCA7.sct"       version="1.0.0" attr="config" condition="ARMCC6"/> 
+        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/GCC/startup_ARMCA7.c" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="other"        name="Device/ARM/ARMCA7/Source/GCC/ARMCA7.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/system_ARMCA7.c"      version="1.0.0" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/mmu_ARMCA7.c"         version="1.0.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA7/Include/system_ARMCA7.h"     version="1.0.0" attr="config"/>
