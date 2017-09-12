@@ -117,7 +117,7 @@ void Reset_Handler(void) {
   "CPS    #0x1B                                    \n"
   "LDR    SP, =Image$$UND_STACK$$ZI$$Limit         \n"
   "CPS    #0x1F                                    \n"
-  "LDR    SP, =Image$$ARM_LIB_STACK$$ZI$$Limit     \n"
+  "LDR    SP, =Image$$SYS_STACK$$ZI$$Limit         \n"
 
   // Call SystemInit
   "BL     SystemInit                               \n"
@@ -126,7 +126,7 @@ void Reset_Handler(void) {
   "CPSIE  if                                       \n"
 
   // Call __main
-  "BL     __main                                   \n"
+  "BL     _start                                   \n"
   );
 }
 

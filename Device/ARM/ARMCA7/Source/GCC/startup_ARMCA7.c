@@ -1,6 +1,6 @@
 /******************************************************************************
- * @file     startup_ARMCA5.c
- * @brief    CMSIS Device System Source File for ARM Cortex-A5 Device Series
+ * @file     startup_ARMCA7.c
+ * @brief    CMSIS Device System Source File for ARM Cortex-A9 Device Series
  * @version  V1.00
  * @date     22 Feb 2017
  *
@@ -25,7 +25,7 @@
  * limitations under the License.
  */
 
-#include <ARMCA5.h>
+#include <ARMCA7.h>
 
 /*----------------------------------------------------------------------------
   Definitions
@@ -117,7 +117,7 @@ void Reset_Handler(void) {
   "CPS    #0x1B                                    \n"
   "LDR    SP, =Image$$UND_STACK$$ZI$$Limit         \n"
   "CPS    #0x1F                                    \n"
-  "LDR    SP, =Image$$ARM_LIB_STACK$$ZI$$Limit     \n"
+  "LDR    SP, =Image$$SYS_STACK$$ZI$$Limit         \n"
 
   // Call SystemInit
   "BL     SystemInit                               \n"
@@ -126,7 +126,7 @@ void Reset_Handler(void) {
   "CPSIE  if                                       \n"
 
   // Call __main
-  "BL     __main                                   \n"
+  "BL     _start                                   \n"
   );
 }
 
