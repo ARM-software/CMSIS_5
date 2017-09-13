@@ -37,7 +37,7 @@
       </attributes>
     </example>
 
-    <example name="CMSIS-Core Validation DS-MDK (Cortex-A5)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A5">
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A5, AC5)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A5/AC5">
       <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
       <board name="Fixed Virtual Platform" vendor="ARM"/>
       <project>
@@ -49,7 +49,7 @@
       </attributes>
     </example>
 
-    <example name="CMSIS-Core Validation DS-MDK (Cortex-A7)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A7">
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A5, AC6)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A5/AC6">
       <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
       <board name="Fixed Virtual Platform" vendor="ARM"/>
       <project>
@@ -61,7 +61,31 @@
       </attributes>
     </example>
 
-    <example name="CMSIS-Core Validation DS-MDK (Cortex-A9)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A9">
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A5, GCC)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A5/GCC">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A7, AC5)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A7/AC5">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A7, AC6)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A7/AC6">
       <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
       <board name="Fixed Virtual Platform" vendor="ARM"/>
       <project>
@@ -73,7 +97,43 @@
       </attributes>
     </example>
     
-    <example name="CMSIS-Core Validation DS-MDK GCC (Cortex-A9)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A9_GCC">
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A7, GCC)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A7/GCC">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A9, AC5)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A9/AC5">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+    
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A9, AC6)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A9/AC6">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+    
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A9, GCC)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A9/GCC">
       <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
       <board name="Fixed Virtual Platform" vendor="ARM"/>
       <project>
