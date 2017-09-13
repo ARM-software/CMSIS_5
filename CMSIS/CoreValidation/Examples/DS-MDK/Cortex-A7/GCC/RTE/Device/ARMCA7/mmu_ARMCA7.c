@@ -100,7 +100,7 @@
 //Descriptors should place all memory in domain 0
 
 #include "ARMCA7.h"
-
+#include "mem_ARMCA7.h"
 
 // L2 table pointers
 //----------------------------------------
@@ -166,13 +166,9 @@ void MMU_CreateTranslationTable(void)
      *
      */
 
-    //Define Image
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, (uint32_t)&Image$$VECTORS$$Base, 1, Sect_Normal_Cod);
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, (uint32_t)&Image$$RW_DATA$$Base, 1, Sect_Normal_RW);
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, (uint32_t)&Image$$ZI_DATA$$Base, 1, Sect_Normal_RW);
-
-    //all DRAM executable, rw, cacheable - applications may choose to divide memory into ro executable
-    MMU_TTSection (&Image$$TTB$$ZI$$Base, (uint32_t)&Image$$TTB$$ZI$$Base, 2043, Sect_Normal);
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, __ROM_BASE, __ROM_SIZE/0x100000, Sect_Normal_Cod);
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, __RAM_BASE, __RAM_SIZE/0x100000, Sect_Normal_RW);
+    MMU_TTSection (&Image$$TTB$$ZI$$Base, __TTB_BASE, 1, Sect_Normal);
 
     //--------------------- PERIPHERALS -------------------
     MMU_TTSection (&Image$$TTB$$ZI$$Base, VE_A7_MP_FLASH_BASE0    , 64, Sect_Device_RO);
