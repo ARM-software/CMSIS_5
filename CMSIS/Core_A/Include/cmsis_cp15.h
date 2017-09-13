@@ -119,7 +119,7 @@ __STATIC_FORCEINLINE uint32_t __get_ISR(void)
 /** \brief  Get CBAR
     \return               Configuration Base Address register value
  */
-__STATIC_FORCEINLINE uint32_t __get_CBAR()
+__STATIC_FORCEINLINE uint32_t __get_CBAR(void)
 {
   uint32_t result;
 //   __ASM volatile("MRC p15, 4, %0, c15, c0, 0" : "=r"(result) : : "memory");
@@ -133,7 +133,7 @@ __STATIC_FORCEINLINE uint32_t __get_CBAR()
 
     \return               Translation Table Base Register 0 value
  */
-__STATIC_FORCEINLINE uint32_t __get_TTBR0()
+__STATIC_FORCEINLINE uint32_t __get_TTBR0(void)
 {
   uint32_t result;
 //   __ASM volatile("MRC p15, 0, %0, c2, c0, 0" : "=r"(result) : : "memory");
@@ -159,7 +159,7 @@ __STATIC_FORCEINLINE void __set_TTBR0(uint32_t ttbr0)
 
     \return               Domain Access Control Register value
  */
-__STATIC_FORCEINLINE uint32_t __get_DACR()
+__STATIC_FORCEINLINE uint32_t __get_DACR(void)
 {
   uint32_t result;
 //   __ASM volatile("MRC p15, 0, %0, c3, c0, 0" : "=r"(result) : : "memory");
@@ -194,7 +194,7 @@ __STATIC_FORCEINLINE void __set_SCTLR(uint32_t sctlr)
 /** \brief  Get SCTLR
     \return               System Control Register value
  */
-__STATIC_FORCEINLINE uint32_t __get_SCTLR()
+__STATIC_FORCEINLINE uint32_t __get_SCTLR(void)
 {
   uint32_t result;
 //   __ASM volatile("MRC p15, 0, %0, c1, c0, 0" : "=r"(result) : : "memory");
@@ -284,7 +284,7 @@ __STATIC_FORCEINLINE void __set_CNTFRQ(uint32_t value)
 
     \return               CNTFRQ Register value
  */
-__STATIC_FORCEINLINE uint32_t __get_CNTFRQ()
+__STATIC_FORCEINLINE uint32_t __get_CNTFRQ(void)
 {
   uint32_t result;
   // __ASM volatile("MRC p15, 0, %0, c14, c0, 0" : "=r"(result) : : "memory");
@@ -310,7 +310,7 @@ __STATIC_FORCEINLINE void __set_CNTP_TVAL(uint32_t value)
 
     \return               CNTP_TVAL Register value
  */
-__STATIC_FORCEINLINE uint32_t __get_CNTP_TVAL()
+__STATIC_FORCEINLINE uint32_t __get_CNTP_TVAL(void)
 {
   uint32_t result;
   // __ASM volatile("MRC p15, 0, %0, c14, c2, 0" : "=r"(result) : : "memory");
@@ -333,7 +333,7 @@ __STATIC_FORCEINLINE void __set_CNTP_CTL(uint32_t value)
 /** \brief  Get CNTP_CTL register
     \return               CNTP_CTL Register value
  */
-__STATIC_FORCEINLINE uint32_t __get_CNTP_CTL()
+__STATIC_FORCEINLINE uint32_t __get_CNTP_CTL(void)
 {
   uint32_t result;
   // __ASM volatile("MRC p15, 0, %0, c14, c2, 1" : "=r"(result) : : "memory");
@@ -406,7 +406,8 @@ __STATIC_FORCEINLINE void __set_DCCIMVAC(uint32_t value)
 
 /** \brief  Set CCSIDR
  */
-__STATIC_FORCEINLINE void __set_CCSIDR(uint32_t value) {
+__STATIC_FORCEINLINE void __set_CCSIDR(uint32_t value)
+{
 //  __ASM volatile("MCR p15, 2, %0, c0, c0, 0" : : "r"(value) : "memory");
   __set_CP(15, 2, value, 0, 0, 0);
 }
@@ -414,7 +415,8 @@ __STATIC_FORCEINLINE void __set_CCSIDR(uint32_t value) {
 /** \brief  Get CCSIDR
     \return CCSIDR Register value
  */
-__STATIC_FORCEINLINE uint32_t __get_CCSIDR() {
+__STATIC_FORCEINLINE uint32_t __get_CCSIDR(void)
+{
   uint32_t result;
 //  __ASM volatile("MRC p15, 1, %0, c0, c0, 0" : "=r"(result) : : "memory");
   __get_CP(15, 1, result, 0, 0, 0);
@@ -424,7 +426,8 @@ __STATIC_FORCEINLINE uint32_t __get_CCSIDR() {
 /** \brief  Get CLIDR
     \return CLIDR Register value
  */
-__STATIC_FORCEINLINE uint32_t __get_CLIDR() {
+__STATIC_FORCEINLINE uint32_t __get_CLIDR(void)
+{
   uint32_t result;
 //  __ASM volatile("MRC p15, 1, %0, c0, c0, 1" : "=r"(result) : : "memory");
   __get_CP(15, 1, result, 0, 0, 1);
