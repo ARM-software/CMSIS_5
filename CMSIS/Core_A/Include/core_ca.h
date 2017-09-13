@@ -1459,7 +1459,8 @@ typedef union
 /** \brief Configures the frequency the timer shall run at.
 * \param [in] value The timer frequency in Hz.
 */
-__STATIC_INLINE void PL1_SetCounterFrequency(uint32_t value) {
+__STATIC_INLINE void PL1_SetCounterFrequency(uint32_t value)
+{
   __set_CNTFRQ(value);
   __ISB();
 }
@@ -1467,7 +1468,8 @@ __STATIC_INLINE void PL1_SetCounterFrequency(uint32_t value) {
 /** \brief Sets the reset value of the timer.
 * \param [in] value The value the timer is loaded with.
 */
-__STATIC_INLINE void PL1_SetLoadValue(uint32_t value) {
+__STATIC_INLINE void PL1_SetLoadValue(uint32_t value)
+{
   __set_CNTP_TVAL(value);
   __ISB();
 }
@@ -1475,14 +1477,16 @@ __STATIC_INLINE void PL1_SetLoadValue(uint32_t value) {
 /** \brief Get the current counter value.
 * \return Current counter value.
 */
-__STATIC_INLINE uint32_t PL1_GetCurrentValue() {
+__STATIC_INLINE uint32_t PL1_GetCurrentValue()
+{
   return(__get_CNTP_TVAL());
 }
 
 /** \brief Configure the timer by setting the control value.
 * \param [in] value New timer control value.
 */
-__STATIC_INLINE void PL1_SetControl(uint32_t value) {
+__STATIC_INLINE void PL1_SetControl(uint32_t value)
+{
   __set_CNTP_CTL(value);
   __ISB();
 }
@@ -1490,7 +1494,8 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value) {
 /** \brief Get the control value.
 * \return Control value.
 */
-__STATIC_INLINE uint32_t PL1_GetControl() {
+__STATIC_INLINE uint32_t PL1_GetControl()
+{
   return(__get_CNTP_CTL());
 }
 #endif
@@ -1500,54 +1505,62 @@ __STATIC_INLINE uint32_t PL1_GetControl() {
 /** \brief Set the load value to timers LOAD register.
 * \param [in] value The load value to be set.
 */
-__STATIC_INLINE void PTIM_SetLoadValue(uint32_t value) {
+__STATIC_INLINE void PTIM_SetLoadValue(uint32_t value)
+{
   PTIM->LOAD = value;
 }
 
 /** \brief Get the load value from timers LOAD register.
 * \return Timer_Type::LOAD
 */
-__STATIC_INLINE uint32_t PTIM_GetLoadValue() {
+__STATIC_INLINE uint32_t PTIM_GetLoadValue(void)
+{
   return(PTIM->LOAD);
 }
 
 /** \brief Set current counter value from its COUNTER register.
 */
-__STATIC_INLINE void PTIM_SetCurrentValue(uint32_t value) {
+__STATIC_INLINE void PTIM_SetCurrentValue(uint32_t value)
+{
   PTIM->COUNTER = value;
 }
 
 /** \brief Get current counter value from timers COUNTER register.
 * \result Timer_Type::COUNTER
 */
-__STATIC_INLINE uint32_t PTIM_GetCurrentValue() {
+__STATIC_INLINE uint32_t PTIM_GetCurrentValue(void)
+{
   return(PTIM->COUNTER);
 }
 
 /** \brief Configure the timer using its CONTROL register.
 * \param [in] value The new configuration value to be set.
 */
-__STATIC_INLINE void PTIM_SetControl(uint32_t value) {
+__STATIC_INLINE void PTIM_SetControl(uint32_t value)
+{
   PTIM->CONTROL = value;
 }
 
 /** ref Timer_Type::CONTROL Get the current timer configuration from its CONTROL register.
 * \return Timer_Type::CONTROL
 */
-__STATIC_INLINE uint32_t PTIM_GetControl(void) {
+__STATIC_INLINE uint32_t PTIM_GetControl(void)
+{
   return(PTIM->CONTROL);
 }
 
 /** ref Timer_Type::CONTROL Get the event flag in timers ISR register.
 * \return 0 - flag is not set, 1- flag is set
 */
-__STATIC_INLINE uint32_t PTIM_GetEventFlag(void) {
+__STATIC_INLINE uint32_t PTIM_GetEventFlag(void)
+{
   return (PTIM->ISR & 1UL);
 }
 
 /** ref Timer_Type::CONTROL Clears the event flag in timers ISR register.
 */
-__STATIC_INLINE void PTIM_ClearEventFlag(void) {
+__STATIC_INLINE void PTIM_ClearEventFlag(void)
+{
   PTIM->ISR = 1;
 }
 #endif
@@ -2433,7 +2446,8 @@ __STATIC_INLINE void MMU_TTPage64k(uint32_t *ttb, uint32_t base_address, uint32_
 
 /** \brief  Enable MMU
 */
-__STATIC_INLINE void MMU_Enable(void) {
+__STATIC_INLINE void MMU_Enable(void)
+{
   // Set M bit 0 to enable the MMU
   // Set AFE bit to enable simplified access permissions model
   // Clear TRE bit to disable TEX remap and A bit to disable strict alignment fault checking
@@ -2443,7 +2457,8 @@ __STATIC_INLINE void MMU_Enable(void) {
 
 /** \brief  Disable MMU
 */
-__STATIC_INLINE void MMU_Disable(void) {
+__STATIC_INLINE void MMU_Disable(void)
+{
   // Clear M bit 0 to disable the MMU
   __set_SCTLR( __get_SCTLR() & ~1);
   __ISB();
@@ -2452,7 +2467,8 @@ __STATIC_INLINE void MMU_Disable(void) {
 /** \brief  Invalidate entire unified TLB
 */
 
-__STATIC_INLINE void MMU_InvalidateTLB(void) {
+__STATIC_INLINE void MMU_InvalidateTLB(void)
+{
   __set_TLBIALL(0);
   __DSB();     //ensure completion of the invalidation
   __ISB();     //ensure instruction fetch path sees new state
