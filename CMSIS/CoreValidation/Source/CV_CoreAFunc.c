@@ -33,15 +33,19 @@ void TC_CoreAFunc_FPSCR(void) {
   __set_FPSCR(fpscr);
 
   ASSERT_TRUE(fpscr == __get_FPSCR());
+  ASSERT_TRUE((f3 < 5.781f) && (f3 > 5.780f));
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 #if defined(__CC_ARM)
 #define __SUBS(Rd, Rm, Rn) __ASM("SUBS " # Rd ", " # Rm ", " # Rn)
 #define __ADDS(Rd, Rm, Rn) __ASM("ADDS " # Rd ", " # Rm ", " # Rn)
+#elif defined( __GNUC__ ) && defined(__thumb__)
+#define __SUBS(Rd, Rm, Rn) __ASM("SUB %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn))
+#define __ADDS(Rd, Rm, Rn) __ASM("ADD %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn))
 #else
-#define __SUBS(Rd, Rm, Rn) __ASM("SUBS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
-#define __ADDS(Rd, Rm, Rn) __ASM("ADDS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
+#define __SUBS(Rd, Rm, Rn) __ASM("SUBS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn))
+#define __ADDS(Rd, Rm, Rn) __ASM("ADDS %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn))
 #endif
 
 void TC_CoreAFunc_CPSR(void) {
