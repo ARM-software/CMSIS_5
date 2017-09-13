@@ -15,6 +15,8 @@
       CMSIS-Core(M): 5.0.3 (see revision history for details)
       - Added MPU Functions for ARMv8-M for Cortex-M23/M33.
       CMSIS-Core(A): 1.0.1 (see revision history for details)
+      CMSIS-Driver:
+      - CAN Driver API V1.2.0
       CMSIS-RTOS:
       - RTX: added variant for Infineon XMC4 series affected by PMU_CM.001 errata
       CMSIS-RTOS2:
@@ -622,7 +624,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/Driver/Include/Driver_I2C.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="CAN" Capiversion="1.1.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="CAN" Capiversion="1.2.0" exclusive="0">
       <description>CAN Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__can__interface__gr.html"/>
