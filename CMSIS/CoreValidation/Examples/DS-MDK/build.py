@@ -39,9 +39,9 @@ APP_FORMAT = {
 }
   
 FVP_MODELS = { 
-    DEVICE_A5   : { 'cmd': "fvp_ve_cortex-a5x1.exe",  'args': { 'limit': "5000000" } },
-    DEVICE_A7   : { 'cmd': "fvp_ve_cortex-a7x1.exe",  'args': { 'limit': "5000000" } },
-    DEVICE_A9   : { 'cmd': "fvp_ve_cortex-a9x1.exe",  'args': { 'limit': "5000000" } }
+    DEVICE_A5   : { 'cmd': "fvp_ve_cortex-a5x1.exe",  'args': { 'limit': "5000000", 'config': "ARMCA5_config.txt" } },
+    DEVICE_A7   : { 'cmd': "fvp_ve_cortex-a7x1.exe",  'args': { 'limit': "5000000", 'config': "ARMCA7_config.txt" } },
+    DEVICE_A9   : { 'cmd': "fvp_ve_cortex-a9x1.exe",  'args': { 'limit': "5000000", 'config': "ARMCA9_config.txt" } }
   }
 
 def isSkipped(dev, cc, target):
