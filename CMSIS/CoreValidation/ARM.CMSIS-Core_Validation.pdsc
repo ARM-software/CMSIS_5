@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<package schemaVersion="1.3" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PACK.xsd">
+  <vendor>ARM</vendor>
+  <name>CMSIS-Core_Validation</name>
+  <description>CMSIS-Core Validation</description>
+  <url>http://www.keil.com/pack</url>
+  <supportContact>http://silver.arm.com/support</supportContact>
+  
+  <releases>
+    <release version="1.0.0-dev1">
+      Initial release of the CMSIS-Core Validation Suite
+    </release>
+  </releases>
+
+  <keywords>
+    <keyword>ARM</keyword>
+    <keyword>CMSIS-CORE</keyword>
+    <keyword>Core Validation</keyword>
+  </keywords>
+
+  <taxonomy>
+    <description Cclass="CMSIS-Core Validation">CMSIS-Core Validation Suite</description>
+  </taxonomy>  
+  
+  <examples>
+    <example name="CMSIS-Core Validation MDK-FVP" doc="Abstract.txt" folder="Examples/MDK-FVP">
+      <description>CMSIS-Core Validation Example for MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="uv" load="CMSIS_CV.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <component Cclass="Compiler" Cgroup="EventRecorder"/>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A5, AC5)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A5/AC5">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A5, AC6)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A5/AC6">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A5, GCC)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A5/GCC">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A7, AC5)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A7/AC5">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A7, AC6)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A7/AC6">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+    
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A7, GCC)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A7/GCC">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A9, AC5)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A9/AC5">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+    
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A9, AC6)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A9/AC6">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+    
+    <example name="CMSIS-Core Validation DS-MDK (Cortex-A9, GCC)" doc="Abstract.txt" folder="Examples/DS-MDK/Cortex-A9/GCC">
+      <description>CMSIS-Core Validation Example for DS-MDK Fixed Virtual Platform</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="ds5" load=".project"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+    
+    <example name="CMSIS-Core Validation IAR EWARM 8 (Cortex-M0)" doc="Abstract.txt" folder="Examples/IAR-EWARM8/Cortex-M0">
+      <description>CMSIS-Core Validation Example for IAR Embedded Workbench 8</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="iar" load="CMSIS_CV.eww"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-Core Validation IAR EWARM 8 (Cortex-A9)" doc="Abstract.txt" folder="Examples/IAR-EWARM8/Cortex-A9">
+      <description>CMSIS-Core Validation Example for IAR Embedded Workbench 8</description>
+      <board name="Fixed Virtual Platform" vendor="ARM"/>
+      <project>
+        <environment name="iar" load="CMSIS_CV.eww"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+      </attributes>
+    </example>
+    
+  </examples>
+  
+  <conditions>
+  
+    <!-- ARM architecture -->
+    <condition id="ARMv6-M Device">
+      <description>ARMv6-M architecture based device</description>
+      <accept Dcore="Cortex-M0"/>
+      <accept Dcore="Cortex-M0+"/>
+      <accept Dcore="SC000"/>
+    </condition>
+    <condition id="ARMv7-M Device">
+      <description>ARMv7-M architecture based device</description>
+      <accept Dcore="Cortex-M3"/>
+      <accept Dcore="Cortex-M4"/>
+      <accept Dcore="Cortex-M7"/>
+      <accept Dcore="SC300"/>
+    </condition>
+    <condition id="ARMv8-M Device">
+      <description>ARMv8-M architecture based device</description>
+      <accept Dcore="ARMV8MBL"/>
+      <accept Dcore="ARMV8MML"/>
+      <accept Dcore="Cortex-M23"/>
+      <accept Dcore="Cortex-M33"/>
+    </condition>
+    <condition id="ARMv8-M TZ Device">
+      <description>ARMv8-M architecture based device with TrustZone</description>
+      <require condition="ARMv8-M Device"/>
+      <require Dtz="TZ"/>
+    </condition>
+    <condition id="ARMv6_7-M Device">
+      <description>ARMv6_7-M architecture based device</description>
+      <accept condition="ARMv6-M Device"/>
+      <accept condition="ARMv7-M Device"/>
+    </condition>
+    <condition id="ARMv6_7_8-M Device">
+      <description>ARMv6_7_8-M architecture based device</description>
+      <accept condition="ARMv6-M Device"/>
+      <accept condition="ARMv7-M Device"/>
+      <accept condition="ARMv8-M Device"/>
+    </condition>
+    <condition id="ARMv7-A Device">
+      <description>ARMv7-A architecture based device</description>
+      <accept Dcore="Cortex-A5"/>
+      <accept Dcore="Cortex-A7"/>
+      <accept Dcore="Cortex-A9"/>
+    </condition>
+      
+    <condition id="CMSIS-Core">
+      <description>CMSIS-Core for Cortex-M and Cortex-A</description>
+      <accept condition="ARMv6_7_8-M Device"/>
+      <accept condition="ARMv7-A Device"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+
+    <condition id="CMSIS-Core Validation Framework">
+      <description>CMSIS-Core Validation Framework</description>
+      <require condition="CMSIS-Core"/>
+      <require Cclass="CMSIS-Core Validation" Cgroup="Framework"/>
+    </condition>
+
+    <condition id="MPU Tests">
+      <description>Cortex-M MPU Tests</description>
+      <require condition="CMSIS-Core Validation Framework"/>
+      <require condition="ARMv6_7_8-M Device"/>
+    </condition>
+
+    <condition id="Generic Timer Tests">
+      <description>Cortex-A Generic Timer Tests</description>
+      <require condition="CMSIS-Core Validation Framework"/>
+      <require Dcore="Cortex-A7"/>
+    </condition>
+
+  </conditions>  
+
+  <components>
+    
+    <component Cgroup="Framework" Cclass="CMSIS-Core Validation" Cversion="1.0.0" condition="CMSIS-Core">
+      <description>Test framework</description>
+      <files>
+        <!-- file category="doc"     name="Documents/CV/html/index.html"/ -->
+        <file category="include" name="Include/"/>
+        <file category="header"  name="Include/cmsis_cv.h"/>
+        <file category="header"  name="Source/Config/CV_Config.h" attr="config" version = "1.0.0" condition="ARMv6_7_8-M Device"/>
+        <file category="header"  name="Source/ConfigA/CV_Config.h" attr="config" version = "1.0.0" condition="ARMv7-A Device"/>
+        <file category="source"  name="Source/cmsis_cv.c"/>
+        <file category="source"  name="Source/CV_Framework.c"/>
+        <file category="source"  name="Source/CV_Report.c"/>
+      </files>
+    </component>
+    
+    <component Cgroup="CoreInstr" Cclass="CMSIS-Core Validation" Cversion="1.0.0" condition="CMSIS-Core Validation Framework">
+      <description>Core Instructions</description>
+      <RTE_Components_h>
+        #define RTE_CV_COREINSTR                      /* CORE Validation - Core Instruction tests enabled */
+      </RTE_Components_h>
+      <files>
+        <file category="source" name="Source/CV_CoreInstr.c"/>
+      </files>
+    </component>
+
+    <component Cgroup="CoreFunc" Cclass="CMSIS-Core Validation" Cversion="1.0.0" condition="CMSIS-Core Validation Framework">
+      <description>Core Functions</description>
+      <RTE_Components_h>
+        #define RTE_CV_COREFUNC                       /* CORE Validation - Core Function tests enabled */
+      </RTE_Components_h>
+      <files>
+        <file category="source" name="Source/CV_CoreFunc.c" condition="ARMv6_7_8-M Device"/>
+        <file category="source" name="Source/CV_CoreAFunc.c" condition="ARMv7-A Device"/>
+      </files>
+    </component>
+    
+    <component Cgroup="MPUFunc" Cclass="CMSIS-Core Validation" Cversion="1.0.0" condition="MPU Tests">
+      <description>MPU Functions</description>
+      <RTE_Components_h>
+        #define RTE_CV_MPUFUNC                       /* CORE Validation - MPU Function tests enabled */
+      </RTE_Components_h>
+      <files>
+        <file category="source" name="Source/CV_MPU_ARMv7.c" condition="ARMv6_7-M Device"/>
+        <file category="source" name="Source/CV_MPU_ARMv8.c" condition="ARMv8-M Device"/>
+      </files>
+    </component>
+    
+    <component Cgroup="GenTimer" Cclass="CMSIS-Core Validation" Cversion="1.0.0" condition="Generic Timer Tests">
+      <description>Generic Timer</description>
+      <RTE_Components_h>
+        #define RTE_CV_GENTIMER                        /* CORE Validation - Generic Timer tests enabled */
+      </RTE_Components_h>
+      <files>
+        <file category="source" name="Source/CV_GenTimer.c"/>
+      </files>
+    </component>
+  </components> <!-- end of components sections -->
+</package>

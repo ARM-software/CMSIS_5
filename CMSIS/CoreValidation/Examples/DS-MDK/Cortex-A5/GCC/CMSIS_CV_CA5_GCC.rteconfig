@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+<toolchain Tcompiler="GCC" Toutput="exe"/>
+<components>
+<component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="1.0.0">
+<package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/>
+<file category="doc" name="CMSIS/Documentation/Core_A/html/index.html"/>
+<file category="include" name="CMSIS/Core_A/Include/"/>
+</component>
+<component Cclass="CMSIS-Core Validation" Cgroup="CoreFunc" Cvendor="ARM" Cversion="1.0.0">
+<package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/>
+<file category="source" condition="ARMv7-A Device" name="Source/CV_CoreAFunc.c"/>
+</component>
+<component Cclass="CMSIS-Core Validation" Cgroup="CoreInstr" Cvendor="ARM" Cversion="1.0.0">
+<package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/>
+<file category="source" name="Source/CV_CoreInstr.c"/>
+</component>
+<component Cclass="CMSIS-Core Validation" Cgroup="Framework" Cvendor="ARM" Cversion="1.0.0">
+<package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/>
+<file category="include" name="Include/"/>
+<file category="header" name="Include/cmsis_cv.h"/>
+<file attr="config" category="header" condition="ARMv7-A Device" name="Source/ConfigA/CV_Config.h" version="1.0.0"/>
+<file category="source" name="Source/cmsis_cv.c"/>
+<file category="source" name="Source/CV_Framework.c"/>
+<file category="source" name="Source/CV_Report.c"/>
+</component>
+<component Capiversion="1.0.0" Cclass="Device" Cgroup="IRQ Controller" Csub="GIC" Cvendor="ARM" Cversion="1.0.0" deviceDependent="1">
+<package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/>
+<file category="sourceC" deviceDependent="1" name="CMSIS/Core_A/Source/irq_ctrl_gic.c"/>
+</component>
+<component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.0" deviceDependent="1">
+<package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/>
+<file category="include" deviceDependent="1" name="Device/ARM/ARMCA5/Include/"/>
+<file attr="config" category="sourceC" condition="GCC" deviceDependent="1" name="Device/ARM/ARMCA5/Source/GCC/startup_ARMCA5.c" version="1.0.0"/>
+<file attr="config" category="other" condition="GCC" deviceDependent="1" name="Device/ARM/ARMCA5/Source/GCC/ARMCA5.ld" version="1.0.0"/>
+<file attr="config" category="sourceC" deviceDependent="1" name="Device/ARM/ARMCA5/Source/system_ARMCA5.c" version="1.0.0"/>
+<file attr="config" category="sourceC" deviceDependent="1" name="Device/ARM/ARMCA5/Source/mmu_ARMCA5.c" version="1.0.0"/>
+<file attr="config" category="header" deviceDependent="1" name="Device/ARM/ARMCA5/Include/system_ARMCA5.h" version="1.0.0"/>
+<file attr="config" category="header" deviceDependent="1" name="Device/ARM/ARMCA5/Include/mem_ARMCA5.h" version="1.0.0"/>
+</component>
+</components>
+<apis>
+<api Capiversion="1.0.0" Cclass="Device" Cgroup="IRQ Controller" Cvendor="ARM" Cversion="1.0.0" exclusive="1">
+<package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/>
+<file category="header" name="CMSIS/Core_A/Include/irq_ctrl.h"/>
+</api>
+</apis>
+<device Dcore="Cortex-A5" DcoreVersion="r0p1" Dendian="Little-endian" Dfamily="ARM Cortex A5" Dfpu="SP_FPU" Dmpu="MPU" Dname="ARMCA5" Dvendor="ARM:82" Pname="">
+<url>http://www.keil.com/dd2/arm/armca5</url>
+<package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/>
+</device>
+<packages useAllLatestPacks="1"/>
+</configuration>

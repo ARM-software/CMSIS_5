@@ -1095,11 +1095,12 @@ __attribute__((always_inline)) __STATIC_INLINE void __CLREX(void)
 /**
   \brief   Signed Saturate
   \details Saturates a signed value.
-  \param [in]  value  Value to be saturated
-  \param [in]    sat  Bit position to saturate to (1..32)
+  \param [in]  ARG1  Value to be saturated
+  \param [in]  ARG2  Bit position to saturate to (1..32)
   \return             Saturated value
  */
 #define __SSAT(ARG1,ARG2) \
+__extension__ \
 ({                          \
   int32_t __RES, __ARG1 = (ARG1); \
   __ASM ("ssat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
@@ -1110,11 +1111,12 @@ __attribute__((always_inline)) __STATIC_INLINE void __CLREX(void)
 /**
   \brief   Unsigned Saturate
   \details Saturates an unsigned value.
-  \param [in]  value  Value to be saturated
-  \param [in]    sat  Bit position to saturate to (0..31)
+  \param [in]  ARG1  Value to be saturated
+  \param [in]  ARG2  Bit position to saturate to (0..31)
   \return             Saturated value
  */
 #define __USAT(ARG1,ARG2) \
+ __extension__ \
 ({                          \
   uint32_t __RES, __ARG1 = (ARG1); \
   __ASM ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
@@ -1243,7 +1245,8 @@ __attribute__((always_inline)) __STATIC_INLINE void __STRT(uint32_t value, volat
   \param [in]    sat  Bit position to saturate to (1..32)
   \return             Saturated value
  */
-__attribute__((always_inline)) __STATIC_INLINE int32_t __SSAT(int32_t val, uint32_t sat) {
+__attribute__((always_inline)) __STATIC_INLINE int32_t __SSAT(int32_t val, uint32_t sat)
+{
   if ((sat >= 1U) && (sat <= 32U)) {
     const int32_t max = (int32_t)((1U << (sat - 1U)) - 1U);
     const int32_t min = -1 - max ;
@@ -1263,14 +1266,14 @@ __attribute__((always_inline)) __STATIC_INLINE int32_t __SSAT(int32_t val, uint3
   \param [in]    sat  Bit position to saturate to (0..31)
   \return             Saturated value
  */
-__attribute__((always_inline)) __STATIC_INLINE int32_t __USAT(int32_t val, uint32_t sat) {
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __USAT(int32_t val, uint32_t sat)
+{
   if (sat <= 31U) {
-    const int32_t max = (int32_t)((1U << sat) - 1U);
-    const int32_t min = 0;
-    if (val > max) {
+    const uint32_t max = ((1U << sat) - 1U);
+    if (val > (int32_t)max) {
       return max;
-    } else if (val < min) {
-      return min;
+    } else if (val < 0) {
+      return 0U;
     }
   }
   return val;

@@ -387,6 +387,7 @@ __STATIC_FORCEINLINE  void __CLREX(void)
   \return             Saturated value
  */
 #define __SSAT(ARG1,ARG2) \
+__extension__ \
 ({                          \
   int32_t __RES, __ARG1 = (ARG1); \
   __ASM ("ssat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
@@ -402,6 +403,7 @@ __STATIC_FORCEINLINE  void __CLREX(void)
   \return             Saturated value
  */
 #define __USAT(ARG1,ARG2) \
+__extension__ \
 ({                          \
   uint32_t __RES, __ARG1 = (ARG1); \
   __ASM ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) ); \
@@ -508,7 +510,7 @@ __STATIC_FORCEINLINE void __set_mode(uint32_t mode) {
 /** \brief  Get Stack Pointer
     \return Stack Pointer value
  */
-__STATIC_FORCEINLINE uint32_t __get_SP()
+__STATIC_FORCEINLINE uint32_t __get_SP(void)
 {
   uint32_t result;
   __ASM volatile("MOV  %0, sp" : "=r" (result) : : "memory");
@@ -526,17 +528,16 @@ __STATIC_FORCEINLINE void __set_SP(uint32_t stack)
 /** \brief  Get USR/SYS Stack Pointer
     \return USR/SYS Stack Pointer value
  */
-__STATIC_FORCEINLINE uint32_t __get_SP_usr()
+__STATIC_FORCEINLINE uint32_t __get_SP_usr(void)
 {
-  uint32_t cpsr;
+  uint32_t cpsr = __get_CPSR();
   uint32_t result;
   __ASM volatile(
-    "MRS     %0, cpsr   \n"
-    "CPS     #0x1F      \n" // no effect in USR mode
-    "MOV     %1, sp     \n"
-    "MSR     cpsr_c, %0 \n" // no effect in USR mode
-    "ISB" :  "+r"(cpsr), "=r"(result) : : "memory"
+    "CPS     #0x1F  \n"
+    "MOV     %0, sp   " : "=r"(result) : : "memory"
    );
+  __set_CPSR(cpsr);
+  __ISB();
   return result;
 }
 
@@ -545,14 +546,13 @@ __STATIC_FORCEINLINE uint32_t __get_SP_usr()
  */
 __STATIC_FORCEINLINE void __set_SP_usr(uint32_t topOfProcStack)
 {
-  uint32_t cpsr;
+  uint32_t cpsr = __get_CPSR();
   __ASM volatile(
-    "MRS     %0, cpsr   \n"
-    "CPS     #0x1F      \n" // no effect in USR mode
-    "MOV     sp, %1     \n"
-    "MSR     cpsr_c, %0 \n" // no effect in USR mode
-    "ISB" : "+r"(cpsr) : "r" (topOfProcStack) : "memory"
+    "CPS     #0x1F  \n"
+    "MOV     sp, %0   " : : "r" (topOfProcStack) : "memory"
    );
+  __set_CPSR(cpsr);
+  __ISB();
 }
 
 /** \brief  Get FPEXC
