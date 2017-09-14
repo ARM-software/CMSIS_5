@@ -1026,35 +1026,22 @@
     <group>
         <name>CMSIS-Pack</name>
         <tag>CMSISPack.ComponentGroup</tag>
-        <file>
-            <name>$PROJ_DIR$\RTE\RTE_Components.h</name>
-        </file>
         <group>
-            <name>CMSIS CORE</name>
-            <tag>CMSISPack.Component</tag>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.1.1-dev1}$\CMSIS\Documentation\Core\html\index.html</name>
-            </file>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.1.1-dev1}$\CMSIS\Include\tz_context.h</name>
-            </file>
-        </group>
-        <group>
-            <name>CMSIS CORE Validation CoreFunc</name>
+            <name>CMSIS-Core Validation CoreFunc</name>
             <tag>CMSISPack.Component</tag>
             <file>
                 <name>${CMSIS_PACK_PATH_ARM#CMSIS-CORE_Validation#1.0.0-dev1}$\Source\CV_CoreFunc.c</name>
             </file>
         </group>
         <group>
-            <name>CMSIS CORE Validation CoreInstr</name>
+            <name>CMSIS-Core Validation CoreInstr</name>
             <tag>CMSISPack.Component</tag>
             <file>
                 <name>${CMSIS_PACK_PATH_ARM#CMSIS-CORE_Validation#1.0.0-dev1}$\Source\CV_CoreInstr.c</name>
             </file>
         </group>
         <group>
-            <name>CMSIS CORE Validation Framework</name>
+            <name>CMSIS-Core Validation Framework</name>
             <tag>CMSISPack.Component</tag>
             <file>
                 <name>${CMSIS_PACK_PATH_ARM#CMSIS-CORE_Validation#1.0.0-dev1}$\Source\cmsis_cv.c</name>
@@ -1073,10 +1060,23 @@
             </file>
         </group>
         <group>
-            <name>CMSIS CORE Validation MPUFunc</name>
+            <name>CMSIS-Core Validation MPUFunc</name>
             <tag>CMSISPack.Component</tag>
             <file>
                 <name>${CMSIS_PACK_PATH_ARM#CMSIS-CORE_Validation#1.0.0-dev1}$\Source\CV_MPU_ARMv8.c</name>
+            </file>
+        </group>
+        <file>
+            <name>$PROJ_DIR$\RTE\RTE_Components.h</name>
+        </file>
+        <group>
+            <name>CMSIS CORE</name>
+            <tag>CMSISPack.Component</tag>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.1.1-dev1}$\CMSIS\Documentation\Core\html\index.html</name>
+            </file>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.1.1-dev1}$\CMSIS\Include\tz_context.h</name>
             </file>
         </group>
         <group>
@@ -1094,54 +1094,54 @@
         </group>
     </group>
     <cmsisPackSettings>
-        <rte>&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
-&lt;configuration xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"&gt;
-&lt;toolchain Tcompiler="IAR" Toutput="exe"/&gt;
-&lt;components&gt;
-&lt;component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.0.2"&gt;
-&lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/&gt;
-&lt;file category="doc" name="CMSIS/Documentation/Core/html/index.html"/&gt;
-&lt;file category="include" name="CMSIS/Include/"/&gt;
-&lt;file category="header" condition="ARMv8-M TZ Device" name="CMSIS/Include/tz_context.h"/&gt;
-&lt;file attr="template" category="sourceC" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/main_s.c" select="Secure mode 'main' module for ARMv8-M" version="1.1.0"/&gt;
-&lt;file attr="template" category="sourceC" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/tz_context.c" select="RTOS Context Management (TrustZone for ARMv8-M)" version="1.1.0"/&gt;
-&lt;/component&gt;
-&lt;component Cclass="CMSIS CORE Validation" Cgroup="CoreFunc" Cvendor="ARM" Cversion="1.0.0"&gt;
-&lt;package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/&gt;
-&lt;file category="source" condition="ARMv6_7_8-M Device" name="Source/CV_CoreFunc.c"/&gt;
-&lt;/component&gt;
-&lt;component Cclass="CMSIS CORE Validation" Cgroup="CoreInstr" Cvendor="ARM" Cversion="1.0.0"&gt;
-&lt;package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/&gt;
-&lt;file category="source" name="Source/CV_CoreInstr.c"/&gt;
-&lt;/component&gt;
-&lt;component Cclass="CMSIS CORE Validation" Cgroup="Framework" Cvendor="ARM" Cversion="1.0.0"&gt;
-&lt;package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/&gt;
-&lt;file category="include" name="Include/"/&gt;
-&lt;file category="header" name="Include/cmsis_cv.h"/&gt;
-&lt;file attr="config" category="header" condition="ARMv6_7_8-M Device" name="Source/Config/CV_Config.h" version="1.0.0"/&gt;
-&lt;file category="source" name="Source/cmsis_cv.c"/&gt;
-&lt;file category="source" name="Source/CV_Framework.c"/&gt;
-&lt;file category="source" name="Source/CV_Report.c"/&gt;
-&lt;/component&gt;
-&lt;component Cclass="CMSIS CORE Validation" Cgroup="MPUFunc" Cvendor="ARM" Cversion="1.0.0"&gt;
-&lt;package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/&gt;
-&lt;file category="source" condition="ARMv8-M Device" name="Source/CV_MPU_ARMv8.c"/&gt;
-&lt;/component&gt;
-&lt;component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.1.0" deviceDependent="1"&gt;
-&lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/&gt;
-&lt;file category="include" deviceDependent="1" name="Device/ARM/ARMCM33/Include/"/&gt;
-&lt;file attr="config" category="sourceAsm" condition="IAR" deviceDependent="1" name="Device/ARM/ARMCM33/Source/IAR/startup_ARMCM33.s" version="1.0.0"/&gt;
-&lt;file attr="config" category="sourceC" deviceDependent="1" name="Device/ARM/ARMCM33/Source/system_ARMCM33.c" version="1.0.0"/&gt;
-&lt;file attr="config" category="header" condition="ARMv8-M TZ Device" deviceDependent="1" name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.1.0"/&gt;
-&lt;/component&gt;
-&lt;/components&gt;
-&lt;apis/&gt;
-&lt;device Dclock="10000000" Dcore="Cortex-M33" DcoreVersion="r0p0" Ddsp="DSP" Dendian="Little-endian" Dfamily="ARM Cortex M33" Dfpu="SP_FPU" Dmpu="MPU" Dname="ARMCM33_DSP_FP_TZ" Dtz="TZ" Dvendor="ARM:82" Pname=""&gt;
-&lt;url&gt;http://www.keil.com/dd2/arm/armcm33_dsp_fp_tz&lt;/url&gt;
-&lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/&gt;
-&lt;/device&gt;
-&lt;packages useAllLatestPacks="1"/&gt;
-&lt;/configuration&gt;
+        <rte>&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;configuration xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"&gt;
+&lt;toolchain Tcompiler="IAR" Toutput="exe"/&gt;
+&lt;components&gt;
+&lt;component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.0.2"&gt;
+&lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/&gt;
+&lt;file category="doc" name="CMSIS/Documentation/Core/html/index.html"/&gt;
+&lt;file category="include" name="CMSIS/Include/"/&gt;
+&lt;file category="header" condition="ARMv8-M TZ Device" name="CMSIS/Include/tz_context.h"/&gt;
+&lt;file attr="template" category="sourceC" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/main_s.c" select="Secure mode 'main' module for ARMv8-M" version="1.1.0"/&gt;
+&lt;file attr="template" category="sourceC" condition="ARMv8-M TZ Device" name="CMSIS/Core/Template/ARMv8-M/tz_context.c" select="RTOS Context Management (TrustZone for ARMv8-M)" version="1.1.0"/&gt;
+&lt;/component&gt;
+&lt;component Cclass="CMSIS-Core Validation" Cgroup="CoreFunc" Cvendor="ARM" Cversion="1.0.0"&gt;
+&lt;package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/&gt;
+&lt;file category="source" condition="ARMv6_7_8-M Device" name="Source/CV_CoreFunc.c"/&gt;
+&lt;/component&gt;
+&lt;component Cclass="CMSIS-Core Validation" Cgroup="CoreInstr" Cvendor="ARM" Cversion="1.0.0"&gt;
+&lt;package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/&gt;
+&lt;file category="source" name="Source/CV_CoreInstr.c"/&gt;
+&lt;/component&gt;
+&lt;component Cclass="CMSIS-Core Validation" Cgroup="Framework" Cvendor="ARM" Cversion="1.0.0"&gt;
+&lt;package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/&gt;
+&lt;file category="include" name="Include/"/&gt;
+&lt;file category="header" name="Include/cmsis_cv.h"/&gt;
+&lt;file attr="config" category="header" condition="ARMv6_7_8-M Device" name="Source/Config/CV_Config.h" version="1.0.0"/&gt;
+&lt;file category="source" name="Source/cmsis_cv.c"/&gt;
+&lt;file category="source" name="Source/CV_Framework.c"/&gt;
+&lt;file category="source" name="Source/CV_Report.c"/&gt;
+&lt;/component&gt;
+&lt;component Cclass="CMSIS-Core Validation" Cgroup="MPUFunc" Cvendor="ARM" Cversion="1.0.0"&gt;
+&lt;package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/&gt;
+&lt;file category="source" condition="ARMv8-M Device" name="Source/CV_MPU_ARMv8.c"/&gt;
+&lt;/component&gt;
+&lt;component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.1.0" deviceDependent="1"&gt;
+&lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/&gt;
+&lt;file category="include" deviceDependent="1" name="Device/ARM/ARMCM33/Include/"/&gt;
+&lt;file attr="config" category="sourceAsm" condition="IAR" deviceDependent="1" name="Device/ARM/ARMCM33/Source/IAR/startup_ARMCM33.s" version="1.0.0"/&gt;
+&lt;file attr="config" category="sourceC" deviceDependent="1" name="Device/ARM/ARMCM33/Source/system_ARMCM33.c" version="1.0.0"/&gt;
+&lt;file attr="config" category="header" condition="ARMv8-M TZ Device" deviceDependent="1" name="Device/ARM/ARMCM33/Include/Template/partition_ARMCM33.h" version="1.1.0"/&gt;
+&lt;/component&gt;
+&lt;/components&gt;
+&lt;apis/&gt;
+&lt;device Dclock="10000000" Dcore="Cortex-M33" DcoreVersion="r0p0" Ddsp="DSP" Dendian="Little-endian" Dfamily="ARM Cortex M33" Dfpu="SP_FPU" Dmpu="MPU" Dname="ARMCM33_DSP_FP_TZ" Dtz="TZ" Dvendor="ARM:82" Pname=""&gt;
+&lt;url&gt;http://www.keil.com/dd2/arm/armcm33_dsp_fp_tz&lt;/url&gt;
+&lt;package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.1-dev1"/&gt;
+&lt;/device&gt;
+&lt;packages useAllLatestPacks="1"/&gt;
+&lt;/configuration&gt;
 </rte>
     </cmsisPackSettings>
 </project>

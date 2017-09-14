@@ -1026,32 +1026,22 @@
     <group>
         <name>CMSIS-Pack</name>
         <tag>CMSISPack.ComponentGroup</tag>
-        <file>
-            <name>$PROJ_DIR$\RTE\RTE_Components.h</name>
-        </file>
         <group>
-            <name>CMSIS CORE</name>
-            <tag>CMSISPack.Component</tag>
-            <file>
-                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.1.1-dev1}$\CMSIS\Documentation\Core\html\index.html</name>
-            </file>
-        </group>
-        <group>
-            <name>CMSIS CORE Validation CoreFunc</name>
+            <name>CMSIS-Core Validation CoreFunc</name>
             <tag>CMSISPack.Component</tag>
             <file>
                 <name>${CMSIS_PACK_PATH_ARM#CMSIS-CORE_Validation#1.0.0-dev1}$\Source\CV_CoreFunc.c</name>
             </file>
         </group>
         <group>
-            <name>CMSIS CORE Validation CoreInstr</name>
+            <name>CMSIS-Core Validation CoreInstr</name>
             <tag>CMSISPack.Component</tag>
             <file>
                 <name>${CMSIS_PACK_PATH_ARM#CMSIS-CORE_Validation#1.0.0-dev1}$\Source\CV_CoreInstr.c</name>
             </file>
         </group>
         <group>
-            <name>CMSIS CORE Validation Framework</name>
+            <name>CMSIS-Core Validation Framework</name>
             <tag>CMSISPack.Component</tag>
             <file>
                 <name>${CMSIS_PACK_PATH_ARM#CMSIS-CORE_Validation#1.0.0-dev1}$\Source\cmsis_cv.c</name>
@@ -1070,10 +1060,20 @@
             </file>
         </group>
         <group>
-            <name>CMSIS CORE Validation MPUFunc</name>
+            <name>CMSIS-Core Validation MPUFunc</name>
             <tag>CMSISPack.Component</tag>
             <file>
                 <name>${CMSIS_PACK_PATH_ARM#CMSIS-CORE_Validation#1.0.0-dev1}$\Source\CV_MPU_ARMv7.c</name>
+            </file>
+        </group>
+        <file>
+            <name>$PROJ_DIR$\RTE\RTE_Components.h</name>
+        </file>
+        <group>
+            <name>CMSIS CORE</name>
+            <tag>CMSISPack.Component</tag>
+            <file>
+                <name>${CMSIS_PACK_PATH_ARM#CMSIS#5.1.1-dev1}$\CMSIS\Documentation\Core\html\index.html</name>
             </file>
         </group>
         <group>
@@ -1100,15 +1100,15 @@
 &lt;file category="doc" name="CMSIS/Documentation/Core/html/index.html"/&gt;
 &lt;file category="include" name="CMSIS/Include/"/&gt;
 &lt;/component&gt;
-&lt;component Cclass="CMSIS CORE Validation" Cgroup="CoreFunc" Cvendor="ARM" Cversion="1.0.0"&gt;
+&lt;component Cclass="CMSIS-Core Validation" Cgroup="CoreFunc" Cvendor="ARM" Cversion="1.0.0"&gt;
 &lt;package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/&gt;
 &lt;file category="source" condition="ARMv6_7_8-M Device" name="Source/CV_CoreFunc.c"/&gt;
 &lt;/component&gt;
-&lt;component Cclass="CMSIS CORE Validation" Cgroup="CoreInstr" Cvendor="ARM" Cversion="1.0.0"&gt;
+&lt;component Cclass="CMSIS-Core Validation" Cgroup="CoreInstr" Cvendor="ARM" Cversion="1.0.0"&gt;
 &lt;package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/&gt;
 &lt;file category="source" name="Source/CV_CoreInstr.c"/&gt;
 &lt;/component&gt;
-&lt;component Cclass="CMSIS CORE Validation" Cgroup="Framework" Cvendor="ARM" Cversion="1.0.0"&gt;
+&lt;component Cclass="CMSIS-Core Validation" Cgroup="Framework" Cvendor="ARM" Cversion="1.0.0"&gt;
 &lt;package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/&gt;
 &lt;file category="include" name="Include/"/&gt;
 &lt;file category="header" name="Include/cmsis_cv.h"/&gt;
@@ -1117,7 +1117,7 @@
 &lt;file category="source" name="Source/CV_Framework.c"/&gt;
 &lt;file category="source" name="Source/CV_Report.c"/&gt;
 &lt;/component&gt;
-&lt;component Cclass="CMSIS CORE Validation" Cgroup="MPUFunc" Cvendor="ARM" Cversion="1.0.0"&gt;
+&lt;component Cclass="CMSIS-Core Validation" Cgroup="MPUFunc" Cvendor="ARM" Cversion="1.0.0"&gt;
 &lt;package name="CMSIS-Core_Validation" url="http://www.keil.com/pack" vendor="ARM" version="1.0.0-dev1"/&gt;
 &lt;file category="source" condition="ARMv6_7-M Device" name="Source/CV_MPU_ARMv7.c"/&gt;
 &lt;/component&gt;
