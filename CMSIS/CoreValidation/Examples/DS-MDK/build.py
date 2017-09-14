@@ -6,6 +6,7 @@ from datetime import datetime
 
 sys.path.append('../../../Utilities/buildutils') 
 
+from buildcmd import BuildCmd
 from fvpcmd import FvpCmd 
 from testresult import TestResult
 
@@ -43,6 +44,27 @@ FVP_MODELS = {
     DEVICE_A7   : { 'cmd': "fvp_ve_cortex-a7x1.exe",  'args': { 'limit': "5000000", 'config': "ARMCA7_config.txt" } },
     DEVICE_A9   : { 'cmd': "fvp_ve_cortex-a9x1.exe",  'args': { 'limit': "5000000", 'config': "ARMCA9_config.txt" } }
   }
+  
+class EclipseCmd(BuildCmd):
+
+  def __init__(self, path, project, **kwargs):
+    BuildCmd.__init__(self)
+    self._path = path
+    self._project = project
+    self._workspace = kwargs['workspace']
+    print self._workspace
+    
+  def getCommand(self):
+    return "eclipsec.exe"
+    
+  def getArguments(self):
+    args = [ "-nosplash", "--launcher.suppressErrors", "-application", "org.eclipse.cdt.managedbuilder.core.headlessbuild", "-import", self._path, "-cleanBuild", self._project ]
+    if self._workspace: args += [ "-data", self._workspace ]
+    return args
+    
+  
+  def isSuccess(self):
+    return self._result == 0
 
 def isSkipped(dev, cc, target):
   for skip in SKIP:
@@ -61,8 +83,12 @@ def prepare(steps, args):
           config = "{dev} ({cc}, {target})".format(dev = dev, cc = cc, target = target)
           prefix = "{dev}_{cc}_{target}".format(dev = dev, cc = cc, target = target)
           build = None
-          binary = "{dev}/{cc}/Debug/CMSIS_CV_{abrev}_{cc}.{format}".format(dev = dev, abrev = DEVICE_ABREV[dev], cc = cc, format = APP_FORMAT[cc])
-          test = FvpCmd(FVP_MODELS[dev]['cmd'], binary, **FVP_MODELS[dev]['args'])
+          test = None
+          if not args.execute_only:
+            build = EclipseCmd("{dev}/{cc}".format(dev = dev, cc = cc), "CMSIS_CV_{abrev}_{cc}".format(abrev = DEVICE_ABREV[dev], cc = cc), workspace=args.workspace)
+          if not args.build_only:
+            binary = "{dev}/{cc}/Debug/CMSIS_CV_{abrev}_{cc}.{format}".format(dev = dev, abrev = DEVICE_ABREV[dev], cc = cc, format = APP_FORMAT[cc])
+            test = FvpCmd(FVP_MODELS[dev]['cmd'], binary, **FVP_MODELS[dev]['args'])
           steps += [ { 'name': config, 'prefix': prefix, 'build': build, 'test': test } ]
 
 def execute(steps):
@@ -73,7 +99,7 @@ def execute(steps):
     else:
       print "Skipping build"
       
-    if (not step['build']) or step['build'].isSuccess():
+    if step['test'] and ((not step['build']) or step['build'].isSuccess()):
       step['test'].run()
       step['result'] = TestResult(step['test'].getOutput())
       step['result'].saveXml("result_{0}_{1}.xml".format(step['prefix'], datetime.now().strftime("%Y%m%d%H%M%S")))
@@ -95,6 +121,9 @@ def printSummary(steps):
 
 def main(argv):
   parser = ArgumentParser()
+  parser.add_argument('-w', '--workspace', help = 'DS-MDK Workspace to be used.')
+  parser.add_argument('-b', '--build-only', action='store_true')
+  parser.add_argument('-e', '--execute-only', action='store_true')
   parser.add_argument('-d', '--devices', nargs='*', choices=DEVICES, default=DEVICES, help = 'Devices to be considered.')
   parser.add_argument('-c', '--compilers', nargs='*', choices=COMPILERS, default=COMPILERS, help = 'Compilers to be considered.')
   parser.add_argument('-t', '--targets', nargs='*', choices=TARGETS, default=TARGETS, help = 'Targets to be considered.')
