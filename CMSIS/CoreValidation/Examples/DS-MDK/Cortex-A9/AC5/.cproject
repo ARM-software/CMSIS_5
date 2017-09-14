@@ -46,7 +46,7 @@
 									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA9/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS_CORE_Validation&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS-Core_Validation&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA9&quot;"/>
 								</option>
 								<option id="com.arm.tool.c.compiler.option.debug.enableToolSpecificSettings.393339148" name="Enable tool specific settings" superClass="com.arm.tool.c.compiler.option.debug.enableToolSpecificSettings" useByScannerDiscovery="false" value="false" valueType="boolean"/>
@@ -66,7 +66,7 @@
 									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA9/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS_CORE_Validation&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS-Core_Validation&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA9&quot;"/>
 								</option>
 							</tool>
@@ -92,7 +92,7 @@
 									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA9/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS_CORE_Validation&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS-Core_Validation&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA9&quot;"/>
 								</option>
 								<option id="com.arm.tool.assembler.option.endian.938835271" name="Byte order" superClass="com.arm.tool.assembler.option.endian" value="com.arm.tool.c.compiler.v6.base.option.endian.little" valueType="enumerated"/>
@@ -107,6 +107,9 @@
 							<tool id="com.arm.tool.librarian.base.var.arm_compiler_5-5.2146011430" name="ARM Librarian 5" superClass="com.arm.tool.librarian.base.var.arm_compiler_5-5"/>
 						</toolChain>
 					</folderInfo>
+					<sourceEntries>
+						<entry excluding="RTE/CMSIS_CORE_Validation/CV_Config.h" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -135,6 +138,7 @@
 			<file name="RTE/Device/ARMCA5/mem_ARMCA5.h" version="1.0.0"/>
 			<file name="RTE/Device/ARMCA9/system_ARMCA9.c" version="1.0.0"/>
 			<file name="RTE/Device/ARMCA5/startup_ARMCA5.c" version="1.0.0"/>
+			<file name="RTE/CMSIS-Core_Validation/CV_Config.h" version="1.0.0"/>
 			<file name="RTE/Device/ARMCA9/system_ARMCA9.h" version="1.0.0"/>
 			<file name="RTE/Device/ARMCA9/mmu_ARMCA9.c" version="1.0.0"/>
 		</files>

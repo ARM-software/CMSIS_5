@@ -87,7 +87,7 @@ SECTIONS
         Image$$TTB$$ZI$$Limit = .;
     } > L_TTB
 
-    .data : AT (__etext)
+    .data : 
     {
         Image$$RW_DATA$$Base = .;
         __data_start__ = .;

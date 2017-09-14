@@ -26,27 +26,27 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>RTE/CMSIS_CORE_Validation/CV_CoreAFunc.c</name>
+			<name>RTE/CMSIS-Core_Validation/CV_CoreAFunc.c</name>
 			<type>1</type>
 			<locationURI>$%7Bcmsis_pack_root%7D/ARM/CMSIS-CORE_Validation/1.0.0-dev1/Source/CV_CoreAFunc.c</locationURI>
 		</link>
 		<link>
-			<name>RTE/CMSIS_CORE_Validation/CV_CoreInstr.c</name>
+			<name>RTE/CMSIS-Core_Validation/CV_CoreInstr.c</name>
 			<type>1</type>
 			<locationURI>$%7Bcmsis_pack_root%7D/ARM/CMSIS-CORE_Validation/1.0.0-dev1/Source/CV_CoreInstr.c</locationURI>
 		</link>
 		<link>
-			<name>RTE/CMSIS_CORE_Validation/CV_Framework.c</name>
+			<name>RTE/CMSIS-Core_Validation/CV_Framework.c</name>
 			<type>1</type>
 			<locationURI>$%7Bcmsis_pack_root%7D/ARM/CMSIS-CORE_Validation/1.0.0-dev1/Source/CV_Framework.c</locationURI>
 		</link>
 		<link>
-			<name>RTE/CMSIS_CORE_Validation/CV_Report.c</name>
+			<name>RTE/CMSIS-Core_Validation/CV_Report.c</name>
 			<type>1</type>
 			<locationURI>$%7Bcmsis_pack_root%7D/ARM/CMSIS-CORE_Validation/1.0.0-dev1/Source/CV_Report.c</locationURI>
 		</link>
 		<link>
-			<name>RTE/CMSIS_CORE_Validation/cmsis_cv.c</name>
+			<name>RTE/CMSIS-Core_Validation/cmsis_cv.c</name>
 			<type>1</type>
 			<locationURI>$%7Bcmsis_pack_root%7D/ARM/CMSIS-CORE_Validation/1.0.0-dev1/Source/cmsis_cv.c</locationURI>
 		</link>

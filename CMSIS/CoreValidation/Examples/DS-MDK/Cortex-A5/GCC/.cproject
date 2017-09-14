@@ -57,7 +57,7 @@
 									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA5/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS_CORE_Validation&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS-Core_Validation&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA5&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.other.1761834466" name="Other assembler flags" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.other" value="" valueType="string"/>
@@ -73,7 +73,7 @@
 									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA5/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS_CORE_Validation&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS-Core_Validation&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA5&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.warning.strictprototypes.1251238483" name="Warn if a function has no arg type (-Wstrict-prototypes)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.warning.strictprototypes" useByScannerDiscovery="true" value="true" valueType="boolean"/>
@@ -90,7 +90,7 @@
 									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA5/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS_CORE_Validation&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS-Core_Validation&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA5&quot;"/>
 								</option>
 							</tool>
@@ -125,7 +125,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="RTE/Device/ARMCA9/system_ARMCA9.h|RTE/Device/ARMCA9/system_ARMCA9.c|RTE/Device/ARMCA9/startup_ARMCA9.c|RTE/Device/ARMCA9/mmu_ARMCA9.c|RTE/Device/ARMCA9/mem_ARMCA9.h|RTE/Device/ARMCA9/ARMCA9.ld" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="RTE/CMSIS_CORE_Validation/CV_Config.h|RTE/Device/ARMCA9/system_ARMCA9.h|RTE/Device/ARMCA9/system_ARMCA9.c|RTE/Device/ARMCA9/startup_ARMCA9.c|RTE/Device/ARMCA9/mmu_ARMCA9.c|RTE/Device/ARMCA9/mem_ARMCA9.h|RTE/Device/ARMCA9/ARMCA9.ld" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -162,6 +162,7 @@
 			<file name="RTE/Device/ARMCA9/system_ARMCA9.c" version="1.0.0"/>
 			<file name="RTE/Device/ARMCA5/startup_ARMCA5.c" version="1.0.0"/>
 			<file name="RTE/Device/ARMCA9/ARMCA9.ld" version="1.0.0"/>
+			<file name="RTE/CMSIS-Core_Validation/CV_Config.h" version="1.0.0"/>
 			<file name="RTE/Device/ARMCA9/system_ARMCA9.h" version="1.0.0"/>
 			<file name="RTE/Device/ARMCA9/mmu_ARMCA9.c" version="1.0.0"/>
 		</files>

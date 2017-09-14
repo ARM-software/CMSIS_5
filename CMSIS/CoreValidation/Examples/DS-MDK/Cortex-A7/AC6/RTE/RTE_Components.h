@@ -15,5 +15,6 @@
 
 #define RTE_CV_COREFUNC                       /* CORE Validation - Core Function tests enabled */
 #define RTE_CV_COREINSTR                      /* CORE Validation - Core Instruction tests enabled */
+#define RTE_CV_GENTIMER                        /* CORE Validation - Generic Timer tests enabled */
 
 #endif /* RTE_COMPONENTS_H */
