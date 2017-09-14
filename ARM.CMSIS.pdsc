@@ -8,12 +8,17 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.1.1-dev1">
+    <release version="5.1.1-dev2">
       Active development...
+      CMSIS-Core(M): 5.0.3 (see revision history for details)
+      - Added compiler_iccarm.h to replace compiler_iar.h shipped with the compiler.
+    </release>
+    <release version="5.1.1-dev1">
       Devices:
       - added GCC startup and linker script for Cortex-A9
       CMSIS-Core(M): 5.0.3 (see revision history for details)
       - Added MPU Functions for ARMv8-M for Cortex-M23/M33.
+      - Added compiler_iccarm.h to replace compiler_iar.h shipped with the compiler.
       CMSIS-Core(A): 1.0.1 (see revision history for details)
       CMSIS-Driver:
       - CAN Driver API V1.2.0
