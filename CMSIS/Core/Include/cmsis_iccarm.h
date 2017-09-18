@@ -617,17 +617,16 @@ __IAR_FT void 	__TZ_set_MSPLIM_NS(uint32_t value) {
     return val;
   }
 
-  __STATIC_INLINE int32_t __USAT(int32_t val, uint32_t sat) {
+  __STATIC_INLINE uint32_t __USAT(int32_t val, uint32_t sat) {
     if (sat <= 31U) {
-      const int32_t max = (int32_t)((1U << sat) - 1U);
-      const int32_t min = 0;
-      if (val > max) {
+      const uint32_t max = ((1U << sat) - 1U);
+      if (val > (int32_t)max) {
         return max;
-      } else if (val < min) {
-        return min;
+      } else if (val < 0) {
+        return 0U;
       }
     }
-    return val;
+    return (uint32_t)val;
   }      
 #endif
 
