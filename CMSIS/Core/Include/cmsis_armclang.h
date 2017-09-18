@@ -1082,7 +1082,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __USAT(int32_t val, uint
       return 0U;
     }
   }
-  return val;
+  return (uint32_t)val;
 }
 
 #endif /* ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
