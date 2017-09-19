@@ -8,14 +8,14 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.1.1-dev2">
+    <release version="5.1.2-dev1">
       Active development...
       CMSIS-Core(M): 5.0.3 (see revision history for details)
       - Added compiler_iccarm.h to replace compiler_iar.h shipped with the compiler.
       CMSIS-RTOS2:
       - RTX 5.2.2 (see revision history for details)
     </release>
-    <release version="5.1.1-dev1">
+    <release version="5.1.2-dev1">
       Devices:
       - added GCC startup and linker script for Cortex-A9
       CMSIS-Core(M): 5.0.3 (see revision history for details)
@@ -30,6 +30,9 @@
       - RTX 5.2.1 (see revision history for details)
       - Message Queue Example
       - Memory Pool Example
+    <release version="5.1.1" date="2017-09-19">
+      CMSIS-RTOS2:
+      - RTX 5.2.1 (see revision history for details)
     </release>
     <release version="5.1.0" date="2017-08-04">
       CMSIS-Core(M): 5.0.2 (see revision history for details)
