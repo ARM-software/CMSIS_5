@@ -132,7 +132,7 @@
    *
    * - ARM_MATH_ARMV8MxL:
    *
-   * Define macro ARM_MATH_ARMV8MBL for building the library on ARMv8M Baseline target, ARM_MATH_ARMV8MBL for building library
+   * Define macro ARM_MATH_ARMV8MBL for building the library on ARMv8M Baseline target, ARM_MATH_ARMV8MML for building library
    * on ARMv8M Mainline target.
    *
    * - __FPU_PRESENT:
