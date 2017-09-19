@@ -203,8 +203,21 @@ Functions</h2></td></tr>
 <div class="line">    <span class="keywordflow">return</span> (-1);</div>
 <div class="line">  }</div>
 <div class="line"></div>
-<div class="line">  NVIC_SetPriority(SysTick_IRQn, SYSTICK_IRQ_PRIORITY);</div>
-<div class="line"></div>
+<div class="line">  <span class="comment">// Set SysTick Interrupt Priority</span></div>
+<div class="line"><span class="preprocessor">#if   ((defined(__ARM_ARCH_8M_MAIN__) &amp;&amp; (__ARM_ARCH_8M_MAIN__ == 1U)) || \</span></div>
+<div class="line"><span class="preprocessor">       (defined(__CORTEX_M)           &amp;&amp; (__CORTEX_M           == 7U)))</span></div>
+<div class="line"><span class="preprocessor"></span>  SCB-&gt;SHPR[11] =  SYSTICK_IRQ_PRIORITY;</div>
+<div class="line"><span class="preprocessor">#elif  (defined(__ARM_ARCH_8M_BASE__) &amp;&amp; (__ARM_ARCH_8M_BASE__ == 1U))</span></div>
+<div class="line"><span class="preprocessor"></span>  SCB-&gt;SHPR[1] |= (SYSTICK_IRQ_PRIORITY &lt;&lt; 24);</div>
+<div class="line"><span class="preprocessor">#elif ((defined(__ARM_ARCH_7M__)      &amp;&amp; (__ARM_ARCH_7M__      == 1U)) || \</span></div>
+<div class="line"><span class="preprocessor">       (defined(__ARM_ARCH_7EM__)     &amp;&amp; (__ARM_ARCH_7EM__     == 1U)))</span></div>
+<div class="line"><span class="preprocessor"></span>  SCB-&gt;SHP[11]  =  SYSTICK_IRQ_PRIORITY;</div>
+<div class="line"><span class="preprocessor">#elif  (defined(__ARM_ARCH_6M__)      &amp;&amp; (__ARM_ARCH_6M__      == 1U))</span></div>
+<div class="line"><span class="preprocessor"></span>  SCB-&gt;SHP[1]  |= (SYSTICK_IRQ_PRIORITY &lt;&lt; 24);</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#error &quot;Unknown ARM Core!&quot;</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line">  SysTick-&gt;CTRL =  SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk;</div>
 <div class="line">  SysTick-&gt;LOAD =  load;</div>
 <div class="line">  SysTick-&gt;VAL  =  0U;</div>
@@ -544,7 +557,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Aug 4 2017 14:04:47 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

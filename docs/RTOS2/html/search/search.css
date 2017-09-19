@@ -4,22 +4,16 @@
     float: left;
 }
 
-#searchli {
-    float: right;
-    display: block;
-    width: 170px;
-    height: 24px;
-}
-
 #MSearchBox {
     white-space : nowrap;
     position: absolute;
     float: none;
     display: inline;
-    margin-top: 3px;
+    margin-top: 8px;
     right: 0px;
     width: 170px;
     z-index: 102;
+    background-color: white;
 }
 
 #MSearchBox .left
@@ -54,7 +48,7 @@
     height:19px;
     background:url('search_m.png') repeat-x;
     border:none;
-    width:116px;
+    width:111px;
     margin-left:20px;
     padding-left:4px;
     color: #909090;
@@ -106,7 +100,7 @@
     display: none;
     position: absolute;
     left: 0; top: 0;
-    border: 1px solid #90A5CE;
+    border: 1px solid #8FA4CF;
     background-color: #F9FAFC;
     z-index: 1;
     padding-top: 4px;
@@ -151,7 +145,7 @@ a.SelectItem:active {
 
 a.SelectItem:hover {
     color: #FFFFFF;
-    background-color: #3D578C;
+    background-color: #3C578D;
     outline-style: none;
     text-decoration: none;
     cursor: pointer;
@@ -205,7 +199,7 @@ body.SRPage {
 
 .SRSymbol {
     font-weight: bold; 
-    color: #425E97;
+    color: #405E98;
     font-family: Arial, Verdana, sans-serif;
     text-decoration: none;
     outline: none;
@@ -213,7 +207,7 @@ body.SRPage {
 
 a.SRScope {
     display: block;
-    color: #425E97; 
+    color: #405E98; 
     font-family: Arial, Verdana, sans-serif;
     text-decoration: none;
     outline: none;
@@ -222,6 +216,10 @@ a.SRScope {
 a.SRSymbol:focus, a.SRSymbol:active,
 a.SRScope:focus, a.SRScope:active {
     text-decoration: underline;
+}
+
+span.SRScope {
+    padding-left: 4px;
 }
 
 .SRPage .SRStatus {
@@ -238,3 +236,36 @@ DIV.searchresults {
     margin-left: 10px;
     margin-right: 10px;
 }
+
+/*---------------- External search page results */
+
+.searchresult {
+    background-color: #F0F3F8;
+}
+
+.pages b {
+   color: white;
+   padding: 5px 5px 3px 5px;
+   background-image: url("../tab_a.png");
+   background-repeat: repeat-x;
+   text-shadow: 0 1px 1px #000000;
+}
+
+.pages {
+    line-height: 17px;
+    margin-left: 4px;
+    text-decoration: none;
+}
+
+.hl {
+    font-weight: bold;
+}
+
+#searchresults {
+    margin-bottom: 20px;
+}
+
+.searchpages {
+    margin-top: 10px;
+}
+
