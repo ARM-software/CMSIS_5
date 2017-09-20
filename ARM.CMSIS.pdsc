@@ -30,6 +30,7 @@
       - RTX 5.2.1 (see revision history for details)
       - Message Queue Example
       - Memory Pool Example
+    </release>
     <release version="5.1.1" date="2017-09-19">
       CMSIS-RTOS2:
       - RTX 5.2.1 (see revision history for details)
