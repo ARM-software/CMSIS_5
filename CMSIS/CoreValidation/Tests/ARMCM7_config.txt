@@ -1,0 +1,256 @@
+# Parameters:
+# instance.parameter=value       #(type, mode) default = 'def value' : description : [min..max]
+#----------------------------------------------------------------------------------------------
+armcortexm7ct.vfp-present=0                           # (bool  , init-time) default = '1'      : Set whether the model has VFP support
+armcortexm7ct.semihosting-enable=1                    # (bool  , init-time) default = '1'      : Enable semihosting SVC traps. Applications that do not use semihosting must set this parameter to false.
+armcortexm7ct.semihosting-Thumb_SVC=0xAB              # (int   , init-time) default = '0xAB'   : T32 SVC number for semihosting : [0x0..0xFF]
+armcortexm7ct.semihosting-cmd_line=""                 # (string, init-time) default = ''       : Command line available to semihosting SVC calls
+armcortexm7ct.semihosting-heap_base=0x0               # (int   , init-time) default = '0x0'    : Virtual address of heap base : [0x0..0xFFFFFFFF]
+armcortexm7ct.semihosting-heap_limit=0                # (int   , init-time) default = '0x10700000' : Virtual address of top of heap : [0x0..0xFFFFFFFF]
+armcortexm7ct.semihosting-stack_base=0                # (int   , init-time) default = '0x10700000' : Virtual address of base of descending stack : [0x0..0xFFFFFFFF]
+armcortexm7ct.semihosting-stack_limit=0               # (int   , init-time) default = '0x10800000' : Virtual address of stack limit : [0x0..0xFFFFFFFF]
+armcortexm7ct.semihosting-cwd=""                      # (string, init-time) default = ''       : Base directory for semihosting file access.
+armcortexm7ct.NUM_MPU_REGION=0x10                     # (int   , init-time) default = '0x10'   : Number of MPU regions : [0x0..0x10]
+armcortexm7ct.NUM_IRQ=0x20                            # (int   , init-time) default = '0x20'   : Number of user interrupts : [0x1..0xF0]
+armcortexm7ct.TRC=1                                   # (bool  , init-time) default = '1'      : Level of instrumentation trace supported. false : No ITM trace included, true: ITM trace included
+armcortexm7ct.LVL_WIDTH=0x3                           # (int   , init-time) default = '0x3'    : Number of bits of interrupt priority : [0x3..0x8]
+armcortexm7ct.BIGENDINIT=0                            # (bool  , init-time) default = '0'      : Initialize processor to big endian mode
+armcortexm7ct.INITVTOR=0x0                            # (int   , init-time) default = '0x0'    : vector-table offset at reset : [0x0..0xFFFFFF80]
+armcortexm7ct.min_sync_level=0x0                      # (int   , run-time ) default = '0x0'    : force minimum syncLevel (0=off=default,1=syncState,2=postInsnIO,3=postInsnAll) : [0x0..0x3]
+armcortexm7ct.cpi_mul=0x1                             # (int   , run-time ) default = '0x1'    : multiplier for calculating CPI (Cycles Per Instruction) : [0x1..0x7FFFFFFF]
+armcortexm7ct.cpi_div=0x1                             # (int   , run-time ) default = '0x1'    : divider for calculating CPI (Cycles Per Instruction) : [0x1..0x7FFFFFFF]
+armcortexm7ct.master_id=0x0                           # (int   , init-time) default = '0x0'    : Master ID presented in bus transactions : [0x0..0xFFFFFFFF]
+armcortexm7ct.DP_FLOAT=1                              # (bool  , init-time) default = '1'      : Support 8-byte floats
+armcortexm7ct.scheduler_mode=0x0                      # (int   , init-time) default = '0x0'    : Control the interleaving of instructions in this processor (0=default long quantum, 1=low latency mode, short quantum and signal checking, 2=lock-breaking mode, long quantum with additional context switches near load-exclusive instructions, 3=ISSCompare) : [0x0..0x3]
+armcortexm7ct.has_writebuffer=0                       # (bool  , init-time) default = '0'      : Implement write accesses buffering before L1 cache. May affect ext_abort behaviour.
+armcortexm7ct.dcache-size=0x8000                      # (int   , init-time) default = '0x8000' : L1 D-cache size in bytes : [0x0..0x100000]
+armcortexm7ct.dcache-ways=0x4                         # (int   , init-time) default = '0x4'    : L1 D-cache ways (sets are implicit from size) : [0x1..0x40]
+armcortexm7ct.icache-size=0x8000                      # (int   , init-time) default = '0x8000' : L1 I-cache size in bytes : [0x0..0x100000]
+armcortexm7ct.icache-ways=0x2                         # (int   , init-time) default = '0x2'    : L1 I-cache ways (sets are implicit from size) : [0x1..0x40]
+armcortexm7ct.itcm_size=0x100                         # (int   , init-time) default = '0x100'  : ITCM size in KB : [0x0..0x4000]
+armcortexm7ct.dtcm_size=0x100                         # (int   , init-time) default = '0x100'  : DTCM size in KB : [0x0..0x4000]
+armcortexm7ct.itcm_enable=0                           # (bool  , init-time) default = '0'      : Enable ITCM at reset
+armcortexm7ct.dtcm_enable=0                           # (bool  , init-time) default = '0'      : Enable DTCM at reset
+armcortexm7ct.duplicate_CADI_TCM_writes=0             # (bool  , init-time) default = '0'      : CADI writes to TCMs are also sent to downstream memory at same addresses (for validation platforms)
+armcortexm7ct.dcache-state_modelled=0                 # (bool  , run-time ) default = '0'      : Set whether D-cache has stateful implementation
+armcortexm7ct.icache-state_modelled=0                 # (bool  , run-time ) default = '0'      : Set whether I-cache has stateful implementation
+armcortexm7ct.DBGLVL=0x1                              # (int   , init-time) default = '0x1'    : 0: 2 DWT, 4 FPB; 1: 4 DWT, 8 FPB comparators : [0x0..0x1]
+armcortexm7ct.WIC=1                                   # (bool  , init-time) default = '1'      : Include support for WIC-mode deep sleep
+fvp_mps2.SCC_ID.Variant=0x0                           # (int   , init-time) default = '0x0'    : SCC_ID[23:20], X in the FGPA version 'rXpY' : [0x0..0xF]
+fvp_mps2.SCC_ID.Revision=0x1                          # (int   , init-time) default = '0x1'    : SCC_ID[3:0], Y in the FGPA version 'rXpY' : [0x0..0xF]
+fvp_mps2.iotss_systemcontrol.cpu0wait=0               # (bool  , init-time) default = '0'      : Whether to hold cpu0 in reset at boot
+fvp_mps2.iotss_systemcontrol.cpu1wait=1               # (bool  , init-time) default = '1'      : Whether to hold cpu1 in reset at boot
+fvp_mps2.platform_type=0x0                            # (int   , init-time) default = '0x0'    : 0:Original MPS2 ; 1:IoT Kit (cut-down SSE-200) ; 2:Full SSE-200 : [0x0..0x2]
+fvp_mps2.extra_psram=0                                # (bool  , init-time) default = '0'      : Increases PSRAM to 32Mb
+fvp_mps2.DISABLE_GATING=1                             # (bool  , init-time) default = '1'      : Disable Memory gating logic
+fvp_mps2.NSC_CFG_0=0                                  # (bool  , init-time) default = '0'      : Whether 0x10000000..0x1FFFFFFF is non-secure-callable
+fvp_mps2.NSC_CFG_1=0                                  # (bool  , init-time) default = '0'      : Whether 0x30000000..0x3FFFFFFF is non-secure-callable
+fvp_mps2.APBPPCEXP_DIS0=0x0                           # (int   , init-time) default = '0x0'    : Disables support for individual bits on the APBNSPPCEXP0 and APBPPPCEXP0 buses : [0x0..0xFFFF]
+fvp_mps2.APBPPCEXP_DIS1=0x0                           # (int   , init-time) default = '0x0'    : Disables support for individual bits on the APBNSPPCEXP1 and APBPPPCEXP1 buses : [0x0..0xFFFF]
+fvp_mps2.APBPPCEXP_DIS2=0x0                           # (int   , init-time) default = '0x0'    : Disables support for individual bits on the APBNSPPCEXP2 and APBPPPCEXP2 buses : [0x0..0xFFFF]
+fvp_mps2.APBPPCEXP_DIS3=0x0                           # (int   , init-time) default = '0x0'    : Disables support for individual bits on the APBNSPPCEXP3 and APBPPPCEXP3 buses : [0x0..0xFFFF]
+fvp_mps2.AHBPPCEXP_DIS0=0x0                           # (int   , init-time) default = '0x0'    : Disables support for individual bits on the AHBNSPPCEXP0 and AHBPPPCEXP0 buses : [0x0..0xFFFF]
+fvp_mps2.AHBPPCEXP_DIS1=0x0                           # (int   , init-time) default = '0x0'    : Disables support for individual bits on the AHBNSPPCEXP1 and AHBPPPCEXP1 buses : [0x0..0xFFFF]
+fvp_mps2.AHBPPCEXP_DIS2=0x0                           # (int   , init-time) default = '0x0'    : Disables support for individual bits on the AHBNSPPCEXP2 and AHBPPPCEXP2 buses : [0x0..0xFFFF]
+fvp_mps2.AHBPPCEXP_DIS3=0x0                           # (int   , init-time) default = '0x0'    : Disables support for individual bits on the AHBNSPPCEXP3 and AHBPPPCEXP3 buses : [0x0..0xFFFF]
+fvp_mps2.UART2.out_file=""                            # (string, init-time) default = ''       : Output file to hold data written by the UART (use '-' to send all output to stdout)
+fvp_mps2.UART2.in_file=""                             # (string, init-time) default = ''       : Input file for data to be read by the UART
+fvp_mps2.UART2.unbuffered_output=0                    # (bool  , init-time) default = '0'      : Unbuffered output
+fvp_mps2.UART2.in_file_escape_sequence="##"           # (string, init-time) default = '##'     : Input file escape sequence
+fvp_mps2.UART2.shutdown_on_eot=0                      # (bool  , init-time) default = '0'      : Shutdown simulation when a EOT (ASCII 4) char is transmitted (useful for regression tests when semihosting is not available)
+fvp_mps2.UART2.shutdown_tag=""                        # (string, run-time ) default = ''       : Shutdown simulation when a string is transmitted
+fvp_mps2.UART1.out_file=""                            # (string, init-time) default = ''       : Output file to hold data written by the UART (use '-' to send all output to stdout)
+fvp_mps2.UART1.in_file=""                             # (string, init-time) default = ''       : Input file for data to be read by the UART
+fvp_mps2.UART1.unbuffered_output=0                    # (bool  , init-time) default = '0'      : Unbuffered output
+fvp_mps2.UART1.in_file_escape_sequence="##"           # (string, init-time) default = '##'     : Input file escape sequence
+fvp_mps2.UART1.shutdown_on_eot=0                      # (bool  , init-time) default = '0'      : Shutdown simulation when a EOT (ASCII 4) char is transmitted (useful for regression tests when semihosting is not available)
+fvp_mps2.UART1.shutdown_tag=""                        # (string, run-time ) default = ''       : Shutdown simulation when a string is transmitted
+fvp_mps2.mps2_visualisation.rate_limit-enable=1       # (bool  , init-time) default = '1'      : Rate limit simulation.
+fvp_mps2.mps2_visualisation.disable-visualisation=0   # (bool  , init-time) default = '0'      : Enable/disable visualisation
+fvp_mps2.mps2_visualisation.window_title="CLCD %cpu%"  # (string, init-time) default = 'CLCD %cpu%' : Window title (%cpu% is replaced by cpu_name)
+fvp_mps2.mps2_visualisation.idler.delay_ms=0x32       # (int   , init-time) default = '0x32'   : Determines the period, in milliseconds of real time, between gui_callback() calls.
+fvp_mps2.telnetterminal0.mode="telnet"                # (string, init-time) default = 'telnet' : Terminal initialisation mode
+fvp_mps2.telnetterminal0.start_telnet=1               # (bool  , init-time) default = '1'      : Start telnet if nothing connected
+fvp_mps2.telnetterminal0.start_port=0x1388            # (int   , init-time) default = '0x1388' : Telnet TCP Port Number : [0x0..0xFFFFFFFF]
+fvp_mps2.telnetterminal0.quiet=0                      # (bool  , init-time) default = '0'      : Avoid output on stdout/stderr
+fvp_mps2.telnetterminal0.terminal_command=""          # (string, init-time) default = ''       : Commandline to launch a terminal application and connect to the opened TCP port. Keywords %port and %title will be replaced with the opened port number and component name respectively. An empty string (default behaviour) will launch xterm (Linux) or telnet.exe (Windows)
+fvp_mps2.telnetterminal1.mode="telnet"                # (string, init-time) default = 'telnet' : Terminal initialisation mode
+fvp_mps2.telnetterminal1.start_telnet=1               # (bool  , init-time) default = '1'      : Start telnet if nothing connected
+fvp_mps2.telnetterminal1.start_port=0x1388            # (int   , init-time) default = '0x1388' : Telnet TCP Port Number : [0x0..0xFFFFFFFF]
+fvp_mps2.telnetterminal1.quiet=0                      # (bool  , init-time) default = '0'      : Avoid output on stdout/stderr
+fvp_mps2.telnetterminal1.terminal_command=""          # (string, init-time) default = ''       : Commandline to launch a terminal application and connect to the opened TCP port. Keywords %port and %title will be replaced with the opened port number and component name respectively. An empty string (default behaviour) will launch xterm (Linux) or telnet.exe (Windows)
+fvp_mps2.telnetterminal2.mode="telnet"                # (string, init-time) default = 'telnet' : Terminal initialisation mode
+fvp_mps2.telnetterminal2.start_telnet=1               # (bool  , init-time) default = '1'      : Start telnet if nothing connected
+fvp_mps2.telnetterminal2.start_port=0x1388            # (int   , init-time) default = '0x1388' : Telnet TCP Port Number : [0x0..0xFFFFFFFF]
+fvp_mps2.telnetterminal2.quiet=0                      # (bool  , init-time) default = '0'      : Avoid output on stdout/stderr
+fvp_mps2.telnetterminal2.terminal_command=""          # (string, init-time) default = ''       : Commandline to launch a terminal application and connect to the opened TCP port. Keywords %port and %title will be replaced with the opened port number and component name respectively. An empty string (default behaviour) will launch xterm (Linux) or telnet.exe (Windows)
+fvp_mps2.PSRAM_M7.size=0x100000000                    # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.PSRAM_M7.fill1=0xDFDFDFCF                    # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.PSRAM_M7.fill2=0xCFDFDFDF                    # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.UART0.out_file=""                            # (string, init-time) default = ''       : Output file to hold data written by the UART (use '-' to send all output to stdout)
+fvp_mps2.UART0.in_file=""                             # (string, init-time) default = ''       : Input file for data to be read by the UART
+fvp_mps2.UART0.unbuffered_output=0                    # (bool  , init-time) default = '0'      : Unbuffered output
+fvp_mps2.UART0.in_file_escape_sequence="##"           # (string, init-time) default = '##'     : Input file escape sequence
+fvp_mps2.UART0.shutdown_on_eot=0                      # (bool  , init-time) default = '0'      : Shutdown simulation when a EOT (ASCII 4) char is transmitted (useful for regression tests when semihosting is not available)
+fvp_mps2.UART0.shutdown_tag=""                        # (string, run-time ) default = ''       : Shutdown simulation when a string is transmitted
+fvp_mps2.cmsdk_watchdog.simhalt=0                     # (bool  , run-time ) default = '0'      : Halt on reset.
+fvp_mps2.PSRAM.size=0x100000000                       # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.PSRAM.fill1=0xDFDFDFCF                       # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.PSRAM.fill2=0xCFDFDFDF                       # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.ssram2.size=0x100000000                      # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.ssram2.fill1=0xDFDFDFCF                      # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.ssram2.fill2=0xCFDFDFDF                      # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.ssram1.size=0x100000000                      # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.ssram1.fill1=0xDFDFDFCF                      # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.ssram1.fill2=0xCFDFDFDF                      # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.stub0.size=0x100000000                       # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.stub1.size=0x100000000                       # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.stub_i2c1.size=0x100000000                   # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.stub_i2s.size=0x100000000                    # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.stub_spi0.size=0x100000000                   # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.stub_spi2.size=0x100000000                   # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.expansion_warning_memory.abort_on_reads=0    # (bool  , init-time) default = '0'      : Abort on reads (read 0 if false)
+fvp_mps2.expansion_warning_memory.abort_on_writes=0   # (bool  , init-time) default = '0'      : Abort on writes (ignore if false)
+fvp_mps2.expansion_warning_memory.read_data=0x0       # (int   , init-time) default = '0x0'    : Data to return on reads, if not aborting
+fvp_mps2.smsc_91c111.enabled=0                        # (bool  , init-time) default = '0'      : Host interface connection enabled
+fvp_mps2.smsc_91c111.mac_address="00:02:f7:ef:4e:b4"  # (string, init-time) default = '00:02:f7:ef:4e:b4' : Host/model MAC address
+fvp_mps2.smsc_91c111.promiscuous=1                    # (bool  , init-time) default = '1'      : Put host into promiscuous mode
+fvp_mps2.hostbridge.interfaceName="ARM0"              # (string, init-time) default = 'ARM0'   : Host Interface
+fvp_mps2.hostbridge.userNetworking=0                  # (bool  , init-time) default = '0'      : Enable user-mode networking
+fvp_mps2.hostbridge.userNetSubnet="172.20.51.0/24"    # (string, init-time) default = '172.20.51.0/24' : Virtual subnet for user-mode networking
+fvp_mps2.hostbridge.userNetPorts=""                   # (string, init-time) default = ''       : Listening ports to expose in user-mode networking
+fvp_mps2.sse200.secure_watchdog.simhalt=0             # (bool  , run-time ) default = '0'      : Halt on reset.
+fvp_mps2.sse200.nonsecure_watchdog.simhalt=0          # (bool  , run-time ) default = '0'      : Halt on reset.
+fvp_mps2.sse200.secure_control_register_block.FLASH_BLOCK_CFG=0x3  # (int   , init-time) default = '0x3'    : Flash Block size configuration : [0x0..0x31]
+fvp_mps2.sse200.secure_control_register_block.SRAM_BLOCK_CFG=0x3  # (int   , init-time) default = '0x3'    : SRAM Block size configuration : [0x0..0x31]
+fvp_mps2.sse200.secure_control_register_block.FLASH_WATERMARK_SUPPORTED=1  # (bool  , init-time) default = '1'      : Flash Watermark supported
+fvp_mps2.sse200.secure_control_register_block.SRAM_WATERMARK_SUPPORTED=1  # (bool  , init-time) default = '1'      : SRAM Watermark supported
+fvp_mps2.sse200.apb_ppc_iotss_subsystem0.NONSEC_MASK=0x0  # (int   , init-time) default = '0x0'    : 16-bit wide mask for security checking of ports: 0 = check, 1 = mask : [0x0..0x1]
+fvp_mps2.sse200.apb_ppc_iotss_subsystem0.PORTx_ENABLE=0xFFFF  # (int   , init-time) default = '0xFFFF' : Enable (1) or disable (0) port x (where x is between 0-15): enable = 1, disable = 0 : [0x0..0xFFFF]
+fvp_mps2.sse200.apb_ppc_iotss_subsystem1.NONSEC_MASK=0x0  # (int   , init-time) default = '0x0'    : 16-bit wide mask for security checking of ports: 0 = check, 1 = mask : [0x0..0x1]
+fvp_mps2.sse200.apb_ppc_iotss_subsystem1.PORTx_ENABLE=0xFFFF  # (int   , init-time) default = '0xFFFF' : Enable (1) or disable (0) port x (where x is between 0-15): enable = 1, disable = 0 : [0x0..0xFFFF]
+fvp_mps2.sse200.s32k_watchdog.simhalt=0               # (bool  , run-time ) default = '0'      : Halt on reset.
+fvp_mps2.sse200.sys_ppu.use_active_signal=0           # (bool  , init-time) default = '0'      : Use device-active signal
+fvp_mps2.sse200.sys_ppu.revision="r0p0"               # (string, init-time) default = 'r0p0'   : Revision
+fvp_mps2.sse200.cpu0core_ppu.revision="r0p0"          # (string, init-time) default = 'r0p0'   : Revision
+fvp_mps2.sse200.cpu0dbg_ppu.revision="r0p0"           # (string, init-time) default = 'r0p0'   : Revision
+fvp_mps2.sse200.cpu1core_ppu.use_active_signal=0      # (bool  , init-time) default = '0'      : Use device-active signal
+fvp_mps2.sse200.cpu1core_ppu.revision="r0p0"          # (string, init-time) default = 'r0p0'   : Revision
+fvp_mps2.sse200.cpu1dbg_ppu.use_active_signal=0       # (bool  , init-time) default = '0'      : Use device-active signal
+fvp_mps2.sse200.cpu1dbg_ppu.revision="r0p0"           # (string, init-time) default = 'r0p0'   : Revision
+fvp_mps2.sse200.crypto_ppu.use_active_signal=0        # (bool  , init-time) default = '0'      : Use device-active signal
+fvp_mps2.sse200.crypto_ppu.revision="r0p0"            # (string, init-time) default = 'r0p0'   : Revision
+fvp_mps2.sse200.cordio_ppu.use_active_signal=0        # (bool  , init-time) default = '0'      : Use device-active signal
+fvp_mps2.sse200.cordio_ppu.revision="r0p0"            # (string, init-time) default = 'r0p0'   : Revision
+fvp_mps2.sse200.dbg_ppu.use_active_signal=0           # (bool  , init-time) default = '0'      : Use device-active signal
+fvp_mps2.sse200.dbg_ppu.revision="r0p0"               # (string, init-time) default = 'r0p0'   : Revision
+fvp_mps2.sse200.ram0_ppu.use_active_signal=0          # (bool  , init-time) default = '0'      : Use device-active signal
+fvp_mps2.sse200.ram0_ppu.revision="r0p0"              # (string, init-time) default = 'r0p0'   : Revision
+fvp_mps2.sse200.ram1_ppu.use_active_signal=0          # (bool  , init-time) default = '0'      : Use device-active signal
+fvp_mps2.sse200.ram1_ppu.revision="r0p0"              # (string, init-time) default = 'r0p0'   : Revision
+fvp_mps2.sse200.ram2_ppu.use_active_signal=0          # (bool  , init-time) default = '0'      : Use device-active signal
+fvp_mps2.sse200.ram2_ppu.revision="r0p0"              # (string, init-time) default = 'r0p0'   : Revision
+fvp_mps2.sse200.ram3_ppu.use_active_signal=0          # (bool  , init-time) default = '0'      : Use device-active signal
+fvp_mps2.sse200.ram3_ppu.revision="r0p0"              # (string, init-time) default = 'r0p0'   : Revision
+fvp_mps2.sse200.iotss_cpuidentity.debugger_master_id=0xFFFFFFFF  # (int   , init-time) default = '0xFFFFFFFF' :  : [0x0..0xFFFFFFFF]
+fvp_mps2.sse200.iotss_internal_sram0.size=0x100000000  # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.sse200.iotss_internal_sram0.fill1=0xDFDFDFCF  # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.sse200.iotss_internal_sram0.fill2=0xCFDFDFDF  # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.sse200.iotss_internal_sram1.size=0x100000000  # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.sse200.iotss_internal_sram1.fill1=0xDFDFDFCF  # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.sse200.iotss_internal_sram1.fill2=0xCFDFDFDF  # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.sse200.iotss_internal_sram2.size=0x100000000  # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.sse200.iotss_internal_sram2.fill1=0xDFDFDFCF  # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.sse200.iotss_internal_sram2.fill2=0xCFDFDFDF  # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.sse200.iotss_internal_sram3.size=0x100000000  # (int   , init-time) default = '0x100000000' : Memory Size
+fvp_mps2.sse200.iotss_internal_sram3.fill1=0xDFDFDFCF  # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.sse200.iotss_internal_sram3.fill2=0xCFDFDFDF  # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+fvp_mps2.sse200.bus_error_warning_memory.read_data=0x0  # (int   , init-time) default = '0x0'    : Data to return on reads, if not aborting
+fvp_mps2.sse200.exclusive_monitor_iotss_internal_sram.enable_component=1  # (bool  , init-time) default = '1'      : Enable component
+fvp_mps2.sse200.exclusive_monitor_iotss_internal_sram.number_of_monitors=0x8  # (int   , init-time) default = '0x8'    : Number of monitors : [0x1..0xFFFFFFFF]
+fvp_mps2.sse200.exclusive_monitor_iotss_internal_sram.log2_granule_size=0x0  # (int   , init-time) default = '0x0'    : log2 of address granule size : [0x0..0xB]
+fvp_mps2.sse200.exclusive_monitor_iotss_internal_sram.monitor_non_excl_stores=0  # (bool  , init-time) default = '0'      : Monitor non-exclusive stores from the same master
+fvp_mps2.sse200.exclusive_monitor_iotss_internal_sram.match_secure_state=1  # (bool  , init-time) default = '1'      : Treat the secure state like an address bit
+fvp_mps2.sse200.exclusive_monitor_iotss_internal_sram.shareability_domain=0x3  # (int   , init-time) default = '0x3'    : Maximum shareability domain of interest, transactions outside of the domain will pass through un-monitored (0-non-shared, 1-inner, 2-outer, 3-system) : [0x0..0x3]
+fvp_mps2.sse200.exclusive_monitor_iotss_internal_sram.apply_access_width_criteria_to_non_excl_stores=1  # (bool  , init-time) default = '1'      : Apply the given exclusive store width matching criteria to non-exclusive stores
+fvp_mps2.mps2_secure_control_register_block.FLASH_BLOCK_CFG=0x3  # (int   , init-time) default = '0x3'    : Flash Block size configuration : [0x0..0x31]
+fvp_mps2.mps2_secure_control_register_block.SRAM_BLOCK_CFG=0x3  # (int   , init-time) default = '0x3'    : SRAM Block size configuration : [0x0..0x31]
+fvp_mps2.mps2_secure_control_register_block.FLASH_WATERMARK_SUPPORTED=1  # (bool  , init-time) default = '1'      : Flash Watermark supported
+fvp_mps2.mps2_secure_control_register_block.SRAM_WATERMARK_SUPPORTED=1  # (bool  , init-time) default = '1'      : SRAM Watermark supported
+fvp_mps2.mps2_secure_control_register_block.APBPPCEXP_DIS0=0x0  # (int   , init-time) default = '0x0'    : Disables support for individual bits on the APBNSPPCEXP0 and APBPPPCEXP0 buses : [0x0..0xFFFF]
+fvp_mps2.mps2_secure_control_register_block.APBPPCEXP_DIS1=0x0  # (int   , init-time) default = '0x0'    : Disables support for individual bits on the APBNSPPCEXP1 and APBPPPCEXP1 buses : [0x0..0xFFFF]
+fvp_mps2.mps2_secure_control_register_block.APBPPCEXP_DIS2=0x0  # (int   , init-time) default = '0x0'    : Disables support for individual bits on the APBNSPPCEXP2 and APBPPPCEXP2 buses : [0x0..0xFFFF]
+fvp_mps2.mps2_secure_control_register_block.APBPPCEXP_DIS3=0x0  # (int   , init-time) default = '0x0'    : Disables support for individual bits on the APBNSPPCEXP3 and APBPPPCEXP3 buses : [0x0..0xFFFF]
+fvp_mps2.mps2_secure_control_register_block.AHBPPCEXP_DIS0=0x0  # (int   , init-time) default = '0x0'    : Disables support for individual bits on the AHBNSPPCEXP0 and AHBPPPCEXP0 buses : [0x0..0xFFFF]
+fvp_mps2.mps2_secure_control_register_block.AHBPPCEXP_DIS1=0x0  # (int   , init-time) default = '0x0'    : Disables support for individual bits on the AHBNSPPCEXP1 and AHBPPPCEXP1 buses : [0x0..0xFFFF]
+fvp_mps2.mps2_secure_control_register_block.AHBPPCEXP_DIS2=0x0  # (int   , init-time) default = '0x0'    : Disables support for individual bits on the AHBNSPPCEXP2 and AHBPPPCEXP2 buses : [0x0..0xFFFF]
+fvp_mps2.mps2_secure_control_register_block.AHBPPCEXP_DIS3=0x0  # (int   , init-time) default = '0x0'    : Disables support for individual bits on the AHBNSPPCEXP3 and AHBPPPCEXP3 buses : [0x0..0xFFFF]
+fvp_mps2.ahb_ppc_iotss_expansion0.NONSEC_MASK=0x0     # (int   , init-time) default = '0x0'    : 16-bit wide mask for security checking of ports: 0 = check, 1 = mask : [0x0..0x1]
+fvp_mps2.ahb_ppc_iotss_expansion1.NONSEC_MASK=0x0     # (int   , init-time) default = '0x0'    : 16-bit wide mask for security checking of ports: 0 = check, 1 = mask : [0x0..0x1]
+fvp_mps2.apb_ppc_iotss_expansion0.NONSEC_MASK=0x0     # (int   , init-time) default = '0x0'    : 16-bit wide mask for security checking of ports: 0 = check, 1 = mask : [0x0..0x1]
+fvp_mps2.apb_ppc_iotss_expansion1.NONSEC_MASK=0x0     # (int   , init-time) default = '0x0'    : 16-bit wide mask for security checking of ports: 0 = check, 1 = mask : [0x0..0x1]
+fvp_mps2.apb_ppc_iotss_expansion2.NONSEC_MASK=0x0     # (int   , init-time) default = '0x0'    : 16-bit wide mask for security checking of ports: 0 = check, 1 = mask : [0x0..0x1]
+fvp_mps2.exclusive_monitor_psram.enable_component=1   # (bool  , init-time) default = '1'      : Enable component
+fvp_mps2.exclusive_monitor_psram.number_of_monitors=0x8  # (int   , init-time) default = '0x8'    : Number of monitors : [0x1..0xFFFFFFFF]
+fvp_mps2.exclusive_monitor_psram.log2_granule_size=0x0  # (int   , init-time) default = '0x0'    : log2 of address granule size : [0x0..0xB]
+fvp_mps2.exclusive_monitor_psram.monitor_non_excl_stores=0  # (bool  , init-time) default = '0'      : Monitor non-exclusive stores from the same master
+fvp_mps2.exclusive_monitor_psram.match_secure_state=1  # (bool  , init-time) default = '1'      : Treat the secure state like an address bit
+fvp_mps2.exclusive_monitor_psram.shareability_domain=0x3  # (int   , init-time) default = '0x3'    : Maximum shareability domain of interest, transactions outside of the domain will pass through un-monitored (0-non-shared, 1-inner, 2-outer, 3-system) : [0x0..0x3]
+fvp_mps2.exclusive_monitor_psram.apply_access_width_criteria_to_non_excl_stores=1  # (bool  , init-time) default = '1'      : Apply the given exclusive store width matching criteria to non-exclusive stores
+fvp_mps2.exclusive_monitor_psram_iotss.enable_component=1  # (bool  , init-time) default = '1'      : Enable component
+fvp_mps2.exclusive_monitor_psram_iotss.number_of_monitors=0x8  # (int   , init-time) default = '0x8'    : Number of monitors : [0x1..0xFFFFFFFF]
+fvp_mps2.exclusive_monitor_psram_iotss.log2_granule_size=0x0  # (int   , init-time) default = '0x0'    : log2 of address granule size : [0x0..0xB]
+fvp_mps2.exclusive_monitor_psram_iotss.monitor_non_excl_stores=0  # (bool  , init-time) default = '0'      : Monitor non-exclusive stores from the same master
+fvp_mps2.exclusive_monitor_psram_iotss.match_secure_state=1  # (bool  , init-time) default = '1'      : Treat the secure state like an address bit
+fvp_mps2.exclusive_monitor_psram_iotss.shareability_domain=0x3  # (int   , init-time) default = '0x3'    : Maximum shareability domain of interest, transactions outside of the domain will pass through un-monitored (0-non-shared, 1-inner, 2-outer, 3-system) : [0x0..0x3]
+fvp_mps2.exclusive_monitor_psram_iotss.apply_access_width_criteria_to_non_excl_stores=1  # (bool  , init-time) default = '1'      : Apply the given exclusive store width matching criteria to non-exclusive stores
+fvp_mps2.exclusive_monitor_zbtsram1.enable_component=1  # (bool  , init-time) default = '1'      : Enable component
+fvp_mps2.exclusive_monitor_zbtsram1.number_of_monitors=0x8  # (int   , init-time) default = '0x8'    : Number of monitors : [0x1..0xFFFFFFFF]
+fvp_mps2.exclusive_monitor_zbtsram1.log2_granule_size=0x0  # (int   , init-time) default = '0x0'    : log2 of address granule size : [0x0..0xB]
+fvp_mps2.exclusive_monitor_zbtsram1.monitor_non_excl_stores=0  # (bool  , init-time) default = '0'      : Monitor non-exclusive stores from the same master
+fvp_mps2.exclusive_monitor_zbtsram1.match_secure_state=1  # (bool  , init-time) default = '1'      : Treat the secure state like an address bit
+fvp_mps2.exclusive_monitor_zbtsram1.shareability_domain=0x3  # (int   , init-time) default = '0x3'    : Maximum shareability domain of interest, transactions outside of the domain will pass through un-monitored (0-non-shared, 1-inner, 2-outer, 3-system) : [0x0..0x3]
+fvp_mps2.exclusive_monitor_zbtsram1.apply_access_width_criteria_to_non_excl_stores=1  # (bool  , init-time) default = '1'      : Apply the given exclusive store width matching criteria to non-exclusive stores
+fvp_mps2.exclusive_monitor_zbtsram2.enable_component=1  # (bool  , init-time) default = '1'      : Enable component
+fvp_mps2.exclusive_monitor_zbtsram2.number_of_monitors=0x8  # (int   , init-time) default = '0x8'    : Number of monitors : [0x1..0xFFFFFFFF]
+fvp_mps2.exclusive_monitor_zbtsram2.log2_granule_size=0x0  # (int   , init-time) default = '0x0'    : log2 of address granule size : [0x0..0xB]
+fvp_mps2.exclusive_monitor_zbtsram2.monitor_non_excl_stores=0  # (bool  , init-time) default = '0'      : Monitor non-exclusive stores from the same master
+fvp_mps2.exclusive_monitor_zbtsram2.match_secure_state=1  # (bool  , init-time) default = '1'      : Treat the secure state like an address bit
+fvp_mps2.exclusive_monitor_zbtsram2.shareability_domain=0x3  # (int   , init-time) default = '0x3'    : Maximum shareability domain of interest, transactions outside of the domain will pass through un-monitored (0-non-shared, 1-inner, 2-outer, 3-system) : [0x0..0x3]
+fvp_mps2.exclusive_monitor_zbtsram2.apply_access_width_criteria_to_non_excl_stores=1  # (bool  , init-time) default = '1'      : Apply the given exclusive store width matching criteria to non-exclusive stores
+fvp_mps2.mps2_exclusive_monitor_zbtsram1.enable_component=1  # (bool  , init-time) default = '1'      : Enable component
+fvp_mps2.mps2_exclusive_monitor_zbtsram1.number_of_monitors=0x8  # (int   , init-time) default = '0x8'    : Number of monitors : [0x1..0xFFFFFFFF]
+fvp_mps2.mps2_exclusive_monitor_zbtsram1.log2_granule_size=0x0  # (int   , init-time) default = '0x0'    : log2 of address granule size : [0x0..0xB]
+fvp_mps2.mps2_exclusive_monitor_zbtsram1.monitor_non_excl_stores=0  # (bool  , init-time) default = '0'      : Monitor non-exclusive stores from the same master
+fvp_mps2.mps2_exclusive_monitor_zbtsram1.match_secure_state=1  # (bool  , init-time) default = '1'      : Treat the secure state like an address bit
+fvp_mps2.mps2_exclusive_monitor_zbtsram1.shareability_domain=0x3  # (int   , init-time) default = '0x3'    : Maximum shareability domain of interest, transactions outside of the domain will pass through un-monitored (0-non-shared, 1-inner, 2-outer, 3-system) : [0x0..0x3]
+fvp_mps2.mps2_exclusive_monitor_zbtsram1.apply_access_width_criteria_to_non_excl_stores=1  # (bool  , init-time) default = '1'      : Apply the given exclusive store width matching criteria to non-exclusive stores
+fvp_mps2.mps2_exclusive_monitor_zbtsram2.enable_component=1  # (bool  , init-time) default = '1'      : Enable component
+fvp_mps2.mps2_exclusive_monitor_zbtsram2.number_of_monitors=0x8  # (int   , init-time) default = '0x8'    : Number of monitors : [0x1..0xFFFFFFFF]
+fvp_mps2.mps2_exclusive_monitor_zbtsram2.log2_granule_size=0x0  # (int   , init-time) default = '0x0'    : log2 of address granule size : [0x0..0xB]
+fvp_mps2.mps2_exclusive_monitor_zbtsram2.monitor_non_excl_stores=0  # (bool  , init-time) default = '0'      : Monitor non-exclusive stores from the same master
+fvp_mps2.mps2_exclusive_monitor_zbtsram2.match_secure_state=1  # (bool  , init-time) default = '1'      : Treat the secure state like an address bit
+fvp_mps2.mps2_exclusive_monitor_zbtsram2.shareability_domain=0x3  # (int   , init-time) default = '0x3'    : Maximum shareability domain of interest, transactions outside of the domain will pass through un-monitored (0-non-shared, 1-inner, 2-outer, 3-system) : [0x0..0x3]
+fvp_mps2.mps2_exclusive_monitor_zbtsram2.apply_access_width_criteria_to_non_excl_stores=1  # (bool  , init-time) default = '1'      : Apply the given exclusive store width matching criteria to non-exclusive stores
+fvp_mps2.dma0_securitymodifier.behaviour_ns_to_s=0x0  # (int   , init-time) default = '0x0'    : Behaviour for NS transactions to S space : 0:block 1:transmit 2:convert to S
+fvp_mps2.dma1_securitymodifier.behaviour_ns_to_s=0x0  # (int   , init-time) default = '0x0'    : Behaviour for NS transactions to S space : 0:block 1:transmit 2:convert to S
+fvp_mps2.dma2_securitymodifier.behaviour_ns_to_s=0x0  # (int   , init-time) default = '0x0'    : Behaviour for NS transactions to S space : 0:block 1:transmit 2:convert to S
+fvp_mps2.dma3_securitymodifier.behaviour_ns_to_s=0x0  # (int   , init-time) default = '0x0'    : Behaviour for NS transactions to S space : 0:block 1:transmit 2:convert to S
+fvp_mps2.dma0.fifo_size=0x10                          # (int   , init-time) default = '0x10'   : Channel FIFO size in bytes
+fvp_mps2.dma0.max_transfer=0x100                      # (int   , init-time) default = '0x100'  : Largest atomic transfer
+fvp_mps2.dma0.generate_clear=0                        # (bool  , init-time) default = '0'      : Generate clear response
+fvp_mps2.dma0.activate_delay=0x0                      # (int   , init-time) default = '0x0'    : request delay
+fvp_mps2.dma1.fifo_size=0x10                          # (int   , init-time) default = '0x10'   : Channel FIFO size in bytes
+fvp_mps2.dma1.max_transfer=0x100                      # (int   , init-time) default = '0x100'  : Largest atomic transfer
+fvp_mps2.dma1.generate_clear=0                        # (bool  , init-time) default = '0'      : Generate clear response
+fvp_mps2.dma1.activate_delay=0x0                      # (int   , init-time) default = '0x0'    : request delay
+fvp_mps2.dma2.fifo_size=0x10                          # (int   , init-time) default = '0x10'   : Channel FIFO size in bytes
+fvp_mps2.dma2.max_transfer=0x100                      # (int   , init-time) default = '0x100'  : Largest atomic transfer
+fvp_mps2.dma2.generate_clear=0                        # (bool  , init-time) default = '0'      : Generate clear response
+fvp_mps2.dma2.activate_delay=0x0                      # (int   , init-time) default = '0x0'    : request delay
+fvp_mps2.dma3.fifo_size=0x10                          # (int   , init-time) default = '0x10'   : Channel FIFO size in bytes
+fvp_mps2.dma3.max_transfer=0x100                      # (int   , init-time) default = '0x100'  : Largest atomic transfer
+fvp_mps2.dma3.generate_clear=0                        # (bool  , init-time) default = '0'      : Generate clear response
+fvp_mps2.dma3.activate_delay=0x0                      # (int   , init-time) default = '0x0'    : request delay
+default_ahb_slave.read_data=0x0                       # (int   , init-time) default = '0x0'    : Data to return on reads, if not aborting
+#----------------------------------------------------------------------------------------------

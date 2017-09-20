@@ -1,0 +1,238 @@
+# Parameters:
+# instance.parameter=value       #(type, mode) default = 'def value' : description : [min..max]
+#----------------------------------------------------------------------------------------------
+cluster.CLUSTER_ID=0x0                                # (int   , init-time) default = '0x0'    : Processor cluster ID value : [0x0..0xF]
+cluster.dcache-state_modelled=0                       # (bool  , run-time ) default = '0'      : Set whether D-cache has stateful implementation
+cluster.icache-state_modelled=0                       # (bool  , run-time ) default = '0'      : Set whether I-cache has stateful implementation
+cluster.device-accurate-tlb=0                         # (bool  , init-time) default = '0'      : Specify whether all TLBs are modeled
+cluster.cpi_mul=0x1                                   # (int   , run-time ) default = '0x1'    : Multiplier for calculating CPI (Cycles Per Instruction) : [0x1..0x7FFFFFFF]
+cluster.cpi_div=0x1                                   # (int   , run-time ) default = '0x1'    : Divider for calculating CPI (Cycles Per Instruction) : [0x1..0x7FFFFFFF]
+cluster.icache-hit_latency=0x0                        # (int   , run-time ) default = '0x0'    : I-Cache timing annotation latency for hit.  Intended to model the tag-lookup time.  This is only used when icache-state_modelled=true.
+cluster.icache-miss_latency=0x0                       # (int   , run-time ) default = '0x0'    : I-Cache timing annotation latency for miss.  Intended to model the time for failed tag-lookup and allocation of intermediate buffers.  This is only used when icache-state_modelled=true.
+cluster.icache-read_latency=0x0                       # (int   , run-time ) default = '0x0'    : I-Cache timing annotation latency for read accesses given in ticks per byte accessed.icache-read_access_latency must be set to 0 for per-byte latencies to be applied.  This is in addition to the hit or miss latency, and intended to correspond to the time taken to transfer across the cache upstream bus. This is only used when icache-state_modelled=true.
+cluster.icache-read_access_latency=0x0                # (int   , run-time ) default = '0x0'    : I-Cache timing annotation latency for read accesses given in ticks per access.  If this parameter is non-zero, per-access latencies will be used instead of per-byte even if icache-read_latency is set. This is in addition to the hit or miss latency, and intended to correspond to the time taken to transfer across the cache upstream bus, This is only used when icache-state_modelled=true.
+cluster.icache-maintenance_latency=0x0                # (int   , run-time ) default = '0x0'    : I-Cache timing annotation latency for cache maintenance operations given in total ticks. This is only used when icache-state_modelled=true.
+cluster.dcache-hit_latency=0x0                        # (int   , run-time ) default = '0x0'    : D-Cache timing annotation latency for hit.  Intended to model the tag-lookup time.  This is only used when dcache-state_modelled=true.
+cluster.dcache-miss_latency=0x0                       # (int   , run-time ) default = '0x0'    : D-Cache timing annotation latency for miss.  Intended to model the time for failed tag-lookup and allocation of intermediate buffers.  This is only used when dcache-state_modelled=true.
+cluster.dcache-read_latency=0x0                       # (int   , run-time ) default = '0x0'    : D-Cache timing annotation latency for read accesses given in ticks per byte accessed.dcache-read_access_latency must be set to 0 for per-byte latencies to be applied.  This is in addition to the hit or miss latency, and intended to correspond to the time taken to transfer across the cache upstream bus. This is only used when dcache-state_modelled=true.
+cluster.dcache-read_access_latency=0x0                # (int   , run-time ) default = '0x0'    : D-Cache timing annotation latency for read accesses given in ticks per access.  If this parameter is non-zero, per-access latencies will be used instead of per-byte even if dcache-read_latency is set. This is in addition to the hit or miss latency, and intended to correspond to the time taken to transfer across the cache upstream bus, This is only used when dcache-state_modelled=true.
+cluster.dcache-write_latency=0x0                      # (int   , run-time ) default = '0x0'    : D-Cache timing annotation latency for write accesses given in ticks per byte accessed. dcache-write_access_latency must be set to 0 for per-byte latencies to be applied. This is only used when dcache-state_modelled=true.
+cluster.dcache-write_access_latency=0x0               # (int   , run-time ) default = '0x0'    : D-Cache timing annotation latency for write accesses given in ticks per access. If this parameter is non-zero, per-access latencies will be used instead of per-byte even if dcache-write_latency is set. This is only used when dcache-state_modelled=true.
+cluster.dcache-maintenance_latency=0x0                # (int   , run-time ) default = '0x0'    : D-Cache timing annotation latency for cache maintenance operations given in total ticks. This is only used when dcache-state_modelled=true.
+cluster.dic-spi_count=0x40                            # (int   , init-time) default = '0x40'   : Number of shared peripheral interrupts implemented  : [0x0..0xE0]
+cluster.FILTEREN=0                                    # (bool  , init-time) default = '0'      : Enable filtering of accesses through pvbus_m0 
+cluster.FILTERSTART=0x0                               # (int   , init-time) default = '0x0'    : Base of region filtered to pvbus_m0  : [0x0..0xFFFFFFFF]
+cluster.FILTEREND=0x0                                 # (int   , init-time) default = '0x0'    : End of region filtered to pvbus_m0  : [0x0..0xFFFFFFFF]
+cluster.CFGSDISABLE=0                                 # (bool  , init-time) default = '0'      : Disable some accesses to GIC registers 
+cluster.dcache-snoop_data_transfer_latency=0x0        # (int   , run-time ) default = '0x0'    : D-Cache timing annotation latency for received snoop accesses that perform a data transfer given in ticks per byte accessed. This is only used when dcache-state_modelled=true.
+cluster.cpu0.vfp-present=1                            # (bool  , init-time) default = '1'      : Set whether the model has VFP support 
+cluster.cpu0.ase-present=0                            # (bool  , init-time) default = '1'      : Set whether model has NEON support
+cluster.cpu0.CFGEND=0                                 # (bool  , init-time) default = '0'      : Initialize to BE8 endianness
+cluster.cpu0.CFGNMFI=0                                # (bool  , init-time) default = '0'      : Enable nonmaskable FIQ interrupts on startup
+cluster.cpu0.CP15SDISABLE=0                           # (bool  , init-time) default = '0'      : Initialize to disable access to some CP15 registers
+cluster.cpu0.TEINIT=0                                 # (bool  , init-time) default = '0'      : T32 exception enable. The default has exceptions including reset handled in A32 state
+cluster.cpu0.VINITHI=0                                # (bool  , init-time) default = '0'      : Initialize with high vectors enabled
+cluster.cpu0.POWERCTLI=0x0                            # (int   , init-time) default = '0x0'    : Default power control state for processor : [0x0..0x3]
+cluster.cpu0.vfp-enable_at_reset=0                    # (bool  , init-time) default = '0'      : Enable coprocessor access and VFP at reset 
+cluster.cpu0.dcache-size=0x8000                       # (int   , init-time) default = '0x8000' : Set D-cache size in bytes  : [0x1000..0x10000]
+cluster.cpu0.icache-size=0x8000                       # (int   , init-time) default = '0x8000' : Set I-cache size in bytes  : [0x1000..0x10000]
+cluster.cpu0.semihosting-enable=1                     # (bool  , init-time) default = '1'      : Enable semihosting SVC traps. Applications that do not use semihosting must set this parameter to false
+cluster.cpu0.semihosting-hlt-enable=0                 # (bool  , init-time) default = '0'      : Enable semihosting HLT traps. Applications that use HLT semihosting must set this parameter to true and the semihosting-enable parameter to true
+cluster.cpu0.semihosting-ARM_SVC=0x123456             # (int   , init-time) default = '0x123456' : ARM SVC number for semihosting : [0x0..0xFFFFFF]
+cluster.cpu0.semihosting-Thumb_SVC=0xAB               # (int   , init-time) default = '0xAB'   : Thumb SVC number for semihosting : [0x0..0xFF]
+cluster.cpu0.semihosting-ARM_HLT=0xF000               # (int   , init-time) default = '0xF000' : ARM HLT number for semihosting : [0x0..0xFFFF]
+cluster.cpu0.semihosting-Thumb_HLT=0x3C               # (int   , init-time) default = '0x3C'   : Thumb HLT number for semihosting : [0x0..0x3F]
+cluster.cpu0.semihosting-cmd_line=""                  # (string, init-time) default = ''       : Command line available to semihosting SVC calls
+cluster.cpu0.semihosting-heap_base=0x0                # (int   , init-time) default = '0x0'    : Virtual address of heap base : [0x0..0xFFFFFFFF]
+cluster.cpu0.semihosting-heap_limit=0x0               # (int   , init-time) default = '0xFF000000' : Virtual address of top of heap : [0x0..0xFFFFFFFF]
+cluster.cpu0.semihosting-stack_base=0x0               # (int   , init-time) default = '0xFFFF0000' : Virtual address of base of descending stack : [0x0..0xFFFFFFFF]
+cluster.cpu0.semihosting-stack_limit=0x0              # (int   , init-time) default = '0xFF000000' : Virtual address of stack limit : [0x0..0xFFFFFFFF]
+cluster.cpu0.semihosting-cwd=""                       # (string, init-time) default = ''       : Base directory for semihosting file access.
+cluster.cpu0.min_sync_level=0x0                       # (int   , run-time ) default = '0x0'    : force minimum syncLevel (0=off=default,1=syncState,2=postInsnIO,3=postInsnAll) : [0x0..0x3]
+cluster.cpu0.SMPnAMP=0                                # (bool  , init-time) default = '0'      : Set whether the processor is part of a coherent domain
+motherboard.proc_id0=0xC000000                        # (int   , init-time) default = '0xC000000' : Processor ID at CoreTile Express Site 1
+motherboard.proc_id1=0xFF000000                       # (int   , init-time) default = '0xFF000000' : Processor ID at CoreTile Express Site 2
+motherboard.daughter_led_count=0x0                    # (int   , init-time) default = '0x0'    : Number of LEDs that the daughter board has : [0x0..0x20]
+motherboard.daughter_user_switch_count=0x0            # (int   , init-time) default = '0x0'    : Number of switches that the daughter board has : [0x0..0x20]
+motherboard.disable_snooping_dma=0                    # (bool  , init-time) default = '0'      : Disable DMA snooping
+motherboard.sp805_wdog.simhalt=0                      # (bool  , run-time ) default = '0'      : Halt on reset.
+motherboard.sp810_sysctrl.sysid=0x0                   # (int   , init-time) default = '0x0'    : System Identification Register.
+motherboard.sp810_sysctrl.use_s8=0                    # (bool  , init-time) default = '0'      : Use Switch 8 (S1-S4)
+motherboard.pl111_clcd.pixel_double_limit=0x12C       # (int   , init-time) default = '0x12C'  : Minimum LCD pixel width before display will be zoomed
+motherboard.pl031_rtc.RTCDR_reset_value=0x0           # (int   , init-time) default = '0x0'    : Reset value for RTCDR
+motherboard.pl031_rtc.RTCDR_use_current_time=1        # (bool  , init-time) default = '1'      : Use current Unix/POSIX time for reset value for RTCDR. If true RTCDR_reset_value is ignored
+motherboard.pl011_uart3.clock_rate=0xE10000           # (int   , init-time) default = '0xE10000' : Clock rate for PL011.
+motherboard.pl011_uart3.baud_rate=0x9600              # (int   , init-time) default = '0x9600' : Baud rate.
+motherboard.pl011_uart3.uart_enable=0                 # (bool  , init-time) default = '0'      : Enable uart when the system starts up. (clock_rate and baud_rate are only valid when this option is enabled.)
+motherboard.pl011_uart3.untimed_fifos=1               # (bool  , init-time) default = '1'      : Ignore the clock rate and transmit/receive serial data immediately
+motherboard.pl011_uart3.out_file=""                   # (string, init-time) default = ''       : Output file to hold data written by the UART (use '-' to send all output to stdout)
+motherboard.pl011_uart3.in_file=""                    # (string, init-time) default = ''       : Input file for data to be read by the UART
+motherboard.pl011_uart3.unbuffered_output=0           # (bool  , init-time) default = '0'      : Unbuffered output
+motherboard.pl011_uart3.in_file_escape_sequence="##"  # (string, init-time) default = '##'     : Input file escape sequence
+motherboard.pl011_uart3.shutdown_on_eot=0             # (bool  , init-time) default = '0'      : Shutdown simulation when a EOT (ASCII 4) char is transmitted (useful for regression tests when semihosting is not available)
+motherboard.pl011_uart3.shutdown_tag=""               # (string, run-time ) default = ''       : Shutdown simulation when a string is transmitted
+motherboard.pl011_uart3.enable_dc4=1                  # (bool  , run-time ) default = '1'      : Enable DC4 commands (try echo -e "help:\024" in a Linux shell)
+motherboard.pl011_uart3.revision="r1p4"               # (string, init-time) default = 'r1p4'   : Revision to simulate
+motherboard.pl011_uart2.clock_rate=0xE10000           # (int   , init-time) default = '0xE10000' : Clock rate for PL011.
+motherboard.pl011_uart2.baud_rate=0x9600              # (int   , init-time) default = '0x9600' : Baud rate.
+motherboard.pl011_uart2.uart_enable=0                 # (bool  , init-time) default = '0'      : Enable uart when the system starts up. (clock_rate and baud_rate are only valid when this option is enabled.)
+motherboard.pl011_uart2.untimed_fifos=1               # (bool  , init-time) default = '1'      : Ignore the clock rate and transmit/receive serial data immediately
+motherboard.pl011_uart2.out_file=""                   # (string, init-time) default = ''       : Output file to hold data written by the UART (use '-' to send all output to stdout)
+motherboard.pl011_uart2.in_file=""                    # (string, init-time) default = ''       : Input file for data to be read by the UART
+motherboard.pl011_uart2.unbuffered_output=0           # (bool  , init-time) default = '0'      : Unbuffered output
+motherboard.pl011_uart2.in_file_escape_sequence="##"  # (string, init-time) default = '##'     : Input file escape sequence
+motherboard.pl011_uart2.shutdown_on_eot=0             # (bool  , init-time) default = '0'      : Shutdown simulation when a EOT (ASCII 4) char is transmitted (useful for regression tests when semihosting is not available)
+motherboard.pl011_uart2.shutdown_tag=""               # (string, run-time ) default = ''       : Shutdown simulation when a string is transmitted
+motherboard.pl011_uart2.enable_dc4=1                  # (bool  , run-time ) default = '1'      : Enable DC4 commands (try echo -e "help:\024" in a Linux shell)
+motherboard.pl011_uart2.revision="r1p4"               # (string, init-time) default = 'r1p4'   : Revision to simulate
+motherboard.pl011_uart1.clock_rate=0xE10000           # (int   , init-time) default = '0xE10000' : Clock rate for PL011.
+motherboard.pl011_uart1.baud_rate=0x9600              # (int   , init-time) default = '0x9600' : Baud rate.
+motherboard.pl011_uart1.uart_enable=0                 # (bool  , init-time) default = '0'      : Enable uart when the system starts up. (clock_rate and baud_rate are only valid when this option is enabled.)
+motherboard.pl011_uart1.untimed_fifos=1               # (bool  , init-time) default = '1'      : Ignore the clock rate and transmit/receive serial data immediately
+motherboard.pl011_uart1.out_file=""                   # (string, init-time) default = ''       : Output file to hold data written by the UART (use '-' to send all output to stdout)
+motherboard.pl011_uart1.in_file=""                    # (string, init-time) default = ''       : Input file for data to be read by the UART
+motherboard.pl011_uart1.unbuffered_output=0           # (bool  , init-time) default = '0'      : Unbuffered output
+motherboard.pl011_uart1.in_file_escape_sequence="##"  # (string, init-time) default = '##'     : Input file escape sequence
+motherboard.pl011_uart1.shutdown_on_eot=0             # (bool  , init-time) default = '0'      : Shutdown simulation when a EOT (ASCII 4) char is transmitted (useful for regression tests when semihosting is not available)
+motherboard.pl011_uart1.shutdown_tag=""               # (string, run-time ) default = ''       : Shutdown simulation when a string is transmitted
+motherboard.pl011_uart1.enable_dc4=1                  # (bool  , run-time ) default = '1'      : Enable DC4 commands (try echo -e "help:\024" in a Linux shell)
+motherboard.pl011_uart1.revision="r1p4"               # (string, init-time) default = 'r1p4'   : Revision to simulate
+motherboard.pl011_uart0.clock_rate=0xE10000           # (int   , init-time) default = '0xE10000' : Clock rate for PL011.
+motherboard.pl011_uart0.baud_rate=0x9600              # (int   , init-time) default = '0x9600' : Baud rate.
+motherboard.pl011_uart0.uart_enable=0                 # (bool  , init-time) default = '0'      : Enable uart when the system starts up. (clock_rate and baud_rate are only valid when this option is enabled.)
+motherboard.pl011_uart0.untimed_fifos=1               # (bool  , init-time) default = '1'      : Ignore the clock rate and transmit/receive serial data immediately
+motherboard.pl011_uart0.out_file=""                   # (string, init-time) default = ''       : Output file to hold data written by the UART (use '-' to send all output to stdout)
+motherboard.pl011_uart0.in_file=""                    # (string, init-time) default = ''       : Input file for data to be read by the UART
+motherboard.pl011_uart0.unbuffered_output=0           # (bool  , init-time) default = '0'      : Unbuffered output
+motherboard.pl011_uart0.in_file_escape_sequence="##"  # (string, init-time) default = '##'     : Input file escape sequence
+motherboard.pl011_uart0.shutdown_on_eot=0             # (bool  , init-time) default = '0'      : Shutdown simulation when a EOT (ASCII 4) char is transmitted (useful for regression tests when semihosting is not available)
+motherboard.pl011_uart0.shutdown_tag=""               # (string, run-time ) default = ''       : Shutdown simulation when a string is transmitted
+motherboard.pl011_uart0.enable_dc4=1                  # (bool  , run-time ) default = '1'      : Enable DC4 commands (try echo -e "help:\024" in a Linux shell)
+motherboard.pl011_uart0.revision="r1p4"               # (string, init-time) default = 'r1p4'   : Revision to simulate
+motherboard.pl180_mci.pl180_fifo_depth=0x10           # (int   , init-time) default = '0x10'   : PL180 FIFO Depth : [0x10..0x200]
+motherboard.ve_sysregs.user_switches_value=0x0        # (int   , init-time) default = '0x0'    : User switches
+motherboard.ve_sysregs.exit_on_shutdown=0             # (bool  , init-time) default = '0'      : SYS_CFG_SHUTDOWN exits simulation
+motherboard.ve_sysregs.tilePresent=1                  # (bool  , init-time) default = '1'      : Tile fitted
+motherboard.ve_sysregs.mmbSiteDefault=0x1             # (int   , init-time) default = '0x1'    : Default MMB source (0=MB, 1=DB1, 2=DB2) : [0x0..0x2]
+motherboard.smsc_91c111.enabled=0                     # (bool  , init-time) default = '0'      : Host interface connection enabled
+motherboard.smsc_91c111.mac_address="00:02:f7:ef:4e:b4"  # (string, init-time) default = '00:02:f7:ef:4e:b4' : Host/model MAC address
+motherboard.smsc_91c111.promiscuous=1                 # (bool  , init-time) default = '1'      : Put host into promiscuous mode
+motherboard.mmc.diagnostics=0x0                       # (int   , init-time) default = '0x0'    : Diagnostics level : [0x0..0x4]
+motherboard.mmc.p_mmc_file="mmc.dat"                  # (string, init-time) default = 'mmc.dat' : MMCard filename
+motherboard.mmc.p_prodName="ARMmmc"                   # (string, init-time) default = 'ARMmmc' : Card ID Product Name (6 chars)
+motherboard.mmc.p_prodRev=0x1                         # (int   , init-time) default = '0x1'    : Card ID Product Revision
+motherboard.mmc.p_manid=0x2                           # (int   , init-time) default = '0x2'    : Card ID Manufacturer ID
+motherboard.mmc.p_OEMid=0x0                           # (int   , init-time) default = '0x0'    : Card ID OEM ID
+motherboard.mmc.p_sernum=0xCA4D0001                   # (int   , init-time) default = '0xCA4D0001' : Card Serial Number
+motherboard.mmc.p_fast_access=1                       # (bool  , init-time) default = '1'      : Don't simulate MMC block access delays
+motherboard.mmc.force_sector_addressing=0             # (bool  , init-time) default = '0'      : Use sector addressing even on small cards
+motherboard.mmc.card_type="SD"                        # (string, init-time) default = 'SD'     : Card type ('SD' or 'SDHC')
+motherboard.dummy_usb.fill1=0xDFDFDFCF                # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+motherboard.dummy_usb.fill2=0xCFDFDFDF                # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+motherboard.dummy_ram.fill1=0xDFDFDFCF                # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+motherboard.dummy_ram.fill2=0xCFDFDFDF                # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+motherboard.dummy_local_dap_rom.fill1=0xDFDFDFCF      # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+motherboard.dummy_local_dap_rom.fill2=0xCFDFDFDF      # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+motherboard.psram.fill1=0xDFDFDFCF                    # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+motherboard.psram.fill2=0xCFDFDFDF                    # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+motherboard.vram.fill1=0xDFDFDFCF                     # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+motherboard.vram.fill2=0xCFDFDFDF                     # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+motherboard.flash1.diagnostics=0x0                    # (int   , init-time) default = '0x0'    : Diagnostic level : [0x0..0x4]
+motherboard.flash1.trapwrite=0                        # (bool  , init-time) default = '0'      : Generate abort on write
+motherboard.flash1.model_blocklock=0                  # (bool  , init-time) default = '0'      : Model per-block locking
+motherboard.flash1.unphysical_writes=1                # (bool  , init-time) default = '1'      : Writes to flash are overwrite not AND
+motherboard.flash0.diagnostics=0x0                    # (int   , init-time) default = '0x0'    : Diagnostic level : [0x0..0x4]
+motherboard.flash0.trapwrite=0                        # (bool  , init-time) default = '0'      : Generate abort on write
+motherboard.flash0.model_blocklock=0                  # (bool  , init-time) default = '0'      : Model per-block locking
+motherboard.flash0.unphysical_writes=1                # (bool  , init-time) default = '1'      : Writes to flash are overwrite not AND
+motherboard.flashloader1.fname="(none)"               # (string, init-time) default = '(none)' : Filename (Default '(none)' means: Do not load any file. An empty string will cause a warning.)
+motherboard.flashloader1.fnameWrite="(none)"          # (string, init-time) default = '(none)' : FilenameWrite (Default '(none)' means: Do not save any file. An empty string will cause a warning.)
+motherboard.flashloader0.fname="(none)"               # (string, init-time) default = '(none)' : Filename (Default '(none)' means: Do not load any file. An empty string will cause a warning.)
+motherboard.flashloader0.fnameWrite="(none)"          # (string, init-time) default = '(none)' : FilenameWrite (Default '(none)' means: Do not save any file. An empty string will cause a warning.)
+motherboard.terminal_0.mode="telnet"                  # (string, init-time) default = 'telnet' : Terminal initialisation mode
+motherboard.terminal_0.start_telnet=1                 # (bool  , init-time) default = '1'      : Start telnet if nothing connected
+motherboard.terminal_0.start_port=0x1388              # (int   , init-time) default = '0x1388' : Telnet TCP Port Number : [0x0..0xFFFFFFFF]
+motherboard.terminal_0.quiet=0                        # (bool  , init-time) default = '0'      : Avoid output on stdout/stderr
+motherboard.terminal_0.terminal_command=""            # (string, init-time) default = ''       : Commandline to launch a terminal application and connect to the opened TCP port. Keywords %port and %title will be replaced with the opened port number and component name respectively. An empty string (default behaviour) will launch xterm (Linux) or telnet.exe (Windows)
+motherboard.terminal_1.mode="telnet"                  # (string, init-time) default = 'telnet' : Terminal initialisation mode
+motherboard.terminal_1.start_telnet=1                 # (bool  , init-time) default = '1'      : Start telnet if nothing connected
+motherboard.terminal_1.start_port=0x1388              # (int   , init-time) default = '0x1388' : Telnet TCP Port Number : [0x0..0xFFFFFFFF]
+motherboard.terminal_1.quiet=0                        # (bool  , init-time) default = '0'      : Avoid output on stdout/stderr
+motherboard.terminal_1.terminal_command=""            # (string, init-time) default = ''       : Commandline to launch a terminal application and connect to the opened TCP port. Keywords %port and %title will be replaced with the opened port number and component name respectively. An empty string (default behaviour) will launch xterm (Linux) or telnet.exe (Windows)
+motherboard.terminal_2.mode="telnet"                  # (string, init-time) default = 'telnet' : Terminal initialisation mode
+motherboard.terminal_2.start_telnet=1                 # (bool  , init-time) default = '1'      : Start telnet if nothing connected
+motherboard.terminal_2.start_port=0x1388              # (int   , init-time) default = '0x1388' : Telnet TCP Port Number : [0x0..0xFFFFFFFF]
+motherboard.terminal_2.quiet=0                        # (bool  , init-time) default = '0'      : Avoid output on stdout/stderr
+motherboard.terminal_2.terminal_command=""            # (string, init-time) default = ''       : Commandline to launch a terminal application and connect to the opened TCP port. Keywords %port and %title will be replaced with the opened port number and component name respectively. An empty string (default behaviour) will launch xterm (Linux) or telnet.exe (Windows)
+motherboard.terminal_3.mode="telnet"                  # (string, init-time) default = 'telnet' : Terminal initialisation mode
+motherboard.terminal_3.start_telnet=1                 # (bool  , init-time) default = '1'      : Start telnet if nothing connected
+motherboard.terminal_3.start_port=0x1388              # (int   , init-time) default = '0x1388' : Telnet TCP Port Number : [0x0..0xFFFFFFFF]
+motherboard.terminal_3.quiet=0                        # (bool  , init-time) default = '0'      : Avoid output on stdout/stderr
+motherboard.terminal_3.terminal_command=""            # (string, init-time) default = ''       : Commandline to launch a terminal application and connect to the opened TCP port. Keywords %port and %title will be replaced with the opened port number and component name respectively. An empty string (default behaviour) will launch xterm (Linux) or telnet.exe (Windows)
+motherboard.vis.trap_key=0x4A                         # (int   , init-time) default = '0x4A'   : Trap key that works with left Ctrl to toggle mouse display.
+motherboard.vis.rate_limit-enable=1                   # (bool  , init-time) default = '1'      : Rate limit simulation.
+motherboard.vis.disable_visualisation=0               # (bool  , init-time) default = '0'      : Enable/disable visualisation
+motherboard.vis.window_title="Fast Models - CLCD %cpu%"  # (string, init-time) default = 'Fast Models - CLCD %cpu%' : Window title (%cpu% is replaced by cpu_name)
+motherboard.vis.cluster0_name="Cluster0"              # (string, init-time) default = 'Cluster0' : Cluster0 name
+motherboard.vis.cluster1_name="Cluster1"              # (string, init-time) default = 'Cluster1' : Cluster1 name
+motherboard.vis.idler.delay_ms=0x32                   # (int   , init-time) default = '0x32'   : Determines the period, in milliseconds of real time, between gui_callback() calls.
+motherboard.vis.recorder.recordingFileName=""         # (string, init-time) default = ''       : recording filename (empty string disables recording)
+motherboard.vis.recorder.playbackFileName=""          # (string, init-time) default = ''       : playback filename (empty string disables playback)
+motherboard.vis.recorder.recordingTimeBase=0x5F5E100  # (int   , init-time) default = '0x5F5E100' : timebase in 1/s (relative to the master clock (e.g. 100000000 means 10 nanoseconds resolution simulated time for a 1Hz master clock)) to be used for recording (higher values -> higher time resolution, playback time base is always taken from the playback file)
+motherboard.vis.recorder.verbose=0x0                  # (int   , run-time ) default = '0x0'    : enable verbose messages (1=normal, 2=even more)
+motherboard.vis.recorder.checkInstructionCount=1      # (bool  , run-time ) default = '1'      : check instruction count in recording file against actual instruction count during playback
+motherboard.hostbridge.interfaceName="ARM0"           # (string, init-time) default = 'ARM0'   : Host Interface
+motherboard.hostbridge.userNetworking=0               # (bool  , init-time) default = '0'      : Enable user-mode networking
+motherboard.hostbridge.userNetSubnet="172.20.51.0/24"  # (string, init-time) default = '172.20.51.0/24' : Virtual subnet for user-mode networking
+motherboard.hostbridge.userNetPorts=""                # (string, init-time) default = ''       : Listening ports to expose in user-mode networking
+motherboard.vfs2.mount=""                             # (string, init-time) default = ''       : Path to host system folder to make accessible to target OS
+motherboard.virtioblockdevice.image_path=""           # (string, init-time) default = ''       : image file path
+motherboard.virtioblockdevice.read_only=0             # (bool  , init-time) default = '0'      : Only allow device to be read
+motherboard.virtioblockdevice.secure_accesses=0       # (bool  , init-time) default = '0'      : Make device generate transactions with NS=0
+motherboard.virtioblockdevice.quiet=0                 # (bool  , init-time) default = '0'      : Don't print warnings on malformed commands/descriptors
+motherboard.virtiop9device.root_path=""               # (string, init-time) default = ''       : root directory path
+motherboard.virtiop9device.mount_tag="FM"             # (string, init-time) default = 'FM'     : mount tag
+motherboard.virtiop9device.secure_accesses=0          # (bool  , init-time) default = '0'      : Make device generate transactions with NS=0
+motherboard.virtiop9device.quiet=0                    # (bool  , init-time) default = '0'      : Don't print warnings on malformed commands/descriptors
+daughterboard.dram_size=0x4                           # (int   , init-time) default = '0x4'    : Size of main memory in gigabytes (2, 4 or 8) : [0x2..0x8]
+daughterboard.dram_alias=1                            # (bool  , init-time) default = '1'      : Alias the bottom 2GB region in upper memory
+daughterboard.secure_memory=0                         # (bool  , init-time) default = '0'      : Support a region of secure memory
+daughterboard.sram.fill1=0xDFDFDFCF                   # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+daughterboard.sram.fill2=0xCFDFDFDF                   # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+daughterboard.dram.fill1=0xDFDFDFCF                   # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+daughterboard.dram.fill2=0xCFDFDFDF                   # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+daughterboard.dram_aliased.secure=0x1                 # (int   , run-time ) default = '0x1'    : Secure Port
+daughterboard.dram_aliased.normal=0x2                 # (int   , run-time ) default = '0x2'    : Normal Port
+daughterboard.dram_limit_4.secure=0x1                 # (int   , run-time ) default = '0x1'    : Secure Port
+daughterboard.dram_limit_4.normal=0x2                 # (int   , run-time ) default = '0x2'    : Normal Port
+daughterboard.dram_limit_8.secure=0x1                 # (int   , run-time ) default = '0x1'    : Secure Port
+daughterboard.dram_limit_8.normal=0x2                 # (int   , run-time ) default = '0x2'    : Normal Port
+daughterboard.secure_region.secure=0x1                # (int   , run-time ) default = '0x1'    : Secure Port
+daughterboard.secure_region.normal=0x2                # (int   , run-time ) default = '0x2'    : Normal Port
+daughterboard.nonsecure_region.secure=0x1             # (int   , run-time ) default = '0x1'    : Secure Port
+daughterboard.nonsecure_region.normal=0x2             # (int   , run-time ) default = '0x2'    : Normal Port
+daughterboard.secureRO.diagnostics=0x0                # (int   , init-time) default = '0x0'    : Diagnostic level : [0x0..0x4]
+daughterboard.secureRO.trapwrite=0                    # (bool  , init-time) default = '0'      : Generate abort on write
+daughterboard.secureRO.model_blocklock=0              # (bool  , init-time) default = '0'      : Model per-block locking
+daughterboard.secureRO.unphysical_writes=1            # (bool  , init-time) default = '1'      : Writes to flash are overwrite not AND
+daughterboard.secureROloader.fname="(none)"           # (string, init-time) default = '(none)' : Filename (Default '(none)' means: Do not load any file. An empty string will cause a warning.)
+daughterboard.secureROloader.fnameWrite="(none)"      # (string, init-time) default = '(none)' : FilenameWrite (Default '(none)' means: Do not save any file. An empty string will cause a warning.)
+daughterboard.secureSRAM.fill1=0xDFDFDFCF             # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+daughterboard.secureSRAM.fill2=0xCFDFDFDF             # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+daughterboard.secureDRAM.fill1=0xDFDFDFCF             # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+daughterboard.secureDRAM.fill2=0xCFDFDFDF             # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+daughterboard.hdlcd.diagnostics=0x0                   # (int   , init-time) default = '0x0'    : Diagnostics level : [0x0..0x4]
+daughterboard.hdlcd.disable_snooping_dma=0            # (bool  , init-time) default = '0'      : Disable DMA snooping
+daughterboard.hdlcd.force_frame_rate=0x32             # (int   , init-time) default = '0x32'   : Force frame rate to the value of the parameter in frames per simulated second, regardless of the input clock. When 0, use the input clock as a pixel clock : [0x0..0x78]
+daughterboard.dmc.fill1=0xDFDFDFCF                    # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+daughterboard.dmc.fill2=0xCFDFDFDF                    # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+daughterboard.dmc_phy.fill1=0xDFDFDFCF                # (int   , init-time) default = '0xDFDFDFCF' : Fill pattern 1, initialise memory at start of simulation with alternating fill1, fill2 pattern
+daughterboard.dmc_phy.fill2=0xCFDFDFDF                # (int   , init-time) default = '0xCFDFDFDF' : Fill pattern 2, initialise memory at start of simulation with alternating fill1, fill2 pattern
+daughterboard.exclusive_monitor.enable_component=1    # (bool  , init-time) default = '1'      : Enable component
+daughterboard.exclusive_monitor.number_of_monitors=0x8  # (int   , init-time) default = '0x8'    : Number of monitors : [0x1..0xFFFFFFFF]
+daughterboard.exclusive_monitor.match_access_width=0  # (bool  , init-time) default = '0'      : Fail STREX if not the same access width as LDREX
+daughterboard.exclusive_monitor.monitor_non_excl_stores=0  # (bool  , init-time) default = '0'      : Monitor non-exclusive stores from the same master
+daughterboard.exclusive_monitor.match_secure_state=1  # (bool  , init-time) default = '1'      : Treat the secure state like an address bit
+daughterboard.exclusive_monitor.shareability_domain=0x3  # (int   , init-time) default = '0x3'    : Maximum shareability domain of interest, transactions outside of the domain will pass through un-monitored (0-non-shared, 1-inner, 2-outer, 3-system) : [0x0..0x3]
+daughterboard.exclusive_monitor.apply_access_width_criteria_to_non_excl_stores=1  # (bool  , init-time) default = '1'      : Apply the given exclusive store width matching criteria to non-exclusive stores
+#----------------------------------------------------------------------------------------------
