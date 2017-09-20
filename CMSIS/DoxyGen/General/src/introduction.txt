@@ -205,7 +205,6 @@ In addition, each CMSIS component has its own release history:
       </td>
     </tr>
     <tr>
-    <tr>
       <td>5.1.1</td>
       <td>
         - CMSIS-Core (Cortex-M) (unchanged)
