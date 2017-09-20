@@ -157,6 +157,7 @@ File/Folder                  | Content
       <td>V5.2.1</td>
       <td>
        - Corrected SysTick and SVC Interrupt Priority for Cortex-M.
+       - Corrected IRQ and SVC exception handlers for Cortex-A.
       </td>
     </tr>
     <tr>
