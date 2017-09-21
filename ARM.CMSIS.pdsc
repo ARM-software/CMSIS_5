@@ -8,7 +8,7 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.1.2-dev1">
+    <release version="5.1.2-dev2">
       Active development...
       CMSIS-Core(M): 5.0.3 (see revision history for details)
       - Added compiler_iccarm.h to replace compiler_iar.h shipped with the compiler.
