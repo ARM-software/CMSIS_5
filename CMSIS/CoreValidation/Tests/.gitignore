@@ -1,0 +1,7 @@
+result*.xml
+*.log
+*.uvguix*
+*.uvoptx
+/**/Listings/*
+/**/Objects/*
+*.pyc
