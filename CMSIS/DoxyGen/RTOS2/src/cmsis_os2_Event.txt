@@ -228,8 +228,13 @@ The \em options parameter specifies the wait condition:
 
 If \c osFlagsNoClear is set in the options \ref osEventFlagsClear can be used to clear flags manually.
 
-The parameter \ref CMSIS_RTOS_TimeOutValue "timeout" represents a number of timer ticks and is an upper bound. The
-exact time delay depends on the actual time elapsed since the last timer tick. 
+The parameter \a timeout specifies how long the system waits for event flags. While the system waits, the thread
+that is calling this function is put into the \ref ThreadStates "BLOCKED" state. The parameter \ref CMSIS_RTOS_TimeOutValue
+"timeout" can have the following values:
+ - when \a timeout is \token{0}, the function returns instantly (i.e. try semantics).
+ - when \a timeout is set to \b osWaitForever the function will wait for an infinite time until the event flags become
+   available (i.e. wait semantics).
+ - all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).
 
 The function returns the event flags before clearing or an error code (highest bit is set, refer to \ref flags_error_codes).
 
@@ -239,7 +244,8 @@ Possible \ref flags_error_codes return values:
     - \em osFlagsErrorResource: Event flags object specified by parameter \a ef_id is not ready to be used.
     - \em osFlagsErrorParameter: Parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
 
-\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
+\token{0}.
 
 \b Code \b Example
 \code
