@@ -684,14 +684,25 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t 
   \details Returns the current value of the Floating Point Status/Control register.
   \return               Floating Point Status/Control register value
  */
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
 #define __get_FPSCR      (uint32_t)__builtin_arm_get_fpscr
+#else
+#define __get_FPSCR()      ((uint32_t)0U)
+#endif
 
 /**
   \brief   Set FPSCR
   \details Assigns the given value to the Floating Point Status/Control register.
   \param [in]    fpscr  Floating Point Status/Control value to set
  */
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+#define __get_FPSCR      (uint32_t)__builtin_arm_get_fpscr
 #define __set_FPSCR      __builtin_arm_set_fpscr
+#else
+#define __set_FPSCR(x)      ((void)(x))
+#endif
 
 #endif /* ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
            (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    ) */
