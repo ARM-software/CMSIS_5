@@ -1,7 +1,7 @@
 #! python
 
 import shutil
-from StringIO import StringIO
+from io import StringIO
 from xml.etree import ElementTree
 
 class TestResult:

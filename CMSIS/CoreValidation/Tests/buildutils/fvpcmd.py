@@ -15,9 +15,9 @@ class FvpCmd(BuildCmd):
     
   def getArguments(self):
     args = []
-    if self._args.has_key('limit'):  args += [ "--cyclelimit", self._args['limit'] ] 
-    if self._args.has_key('config'): args += [ "-f", self._args['config'] ]
-    if self._args.has_key('target'):
+    if 'limit' in self._args:  args += [ "--cyclelimit", self._args['limit'] ] 
+    if 'config' in self._args: args += [ "-f", self._args['config'] ]
+    if 'target' in self._args:
       for a in self._app:
         args += [ "-a", "{0}={1}".format(self._args['target'], a ) ]
     else:

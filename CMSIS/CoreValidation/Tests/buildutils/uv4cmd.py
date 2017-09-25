@@ -2,7 +2,6 @@
 
 import os
 from buildcmd import BuildCmd
-from string import maketrans
 from datetime import datetime
 import mmap
 
@@ -13,8 +12,9 @@ class Uv4Cmd(BuildCmd):
     self._project = project
     self._config = config
     cwd = os.getcwd()
-    self._log = cwd + "\UV4_{0}_{1}.log".format(self._config.translate(maketrans(" ", "_"), "()[],"), datetime.now().strftime("%Y%m%d%H%M%S"))
-    
+    trans = { " " : "_", "(" : None, ")" : None, "[" : None, "]" : None, "," : None }
+    self._log = cwd + "\\UV4_{0}_{1}.log".format(self._config.translate(trans), datetime.now().strftime("%Y%m%d%H%M%S"))
+
   def getCommand(self):
     return "UV4.exe"
     

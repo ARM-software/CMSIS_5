@@ -178,12 +178,12 @@ def prepare(steps, args):
 
 def execute(steps, args):
   for step in steps:
-    print step['name']
+    print(step['name'])
     if step['build'] and not args.execute_only:
       for b in step['build']:
         b.run()
     else:
-      print "Skipping build"
+      print("Skipping build")
       # step['build'].skip()
       
     if step['test'] and not args.build_only:
@@ -191,21 +191,21 @@ def execute(steps, args):
       step['result'] = TestResult(step['test'].getOutput())
       step['result'].saveXml("result_{0}_{1}.xml".format(step['prefix'], datetime.now().strftime("%Y%m%d%H%M%S")))
     else:
-      print "Skipping test"
+      print("Skipping test")
       step['test'].skip()
       
 def printSummary(steps):
-  print ""
-  print "Test Summary"
-  print "============"
-  print
-  print "Test run                       Total Exec  Pass  Fail  "
-  print "-------------------------------------------------------"
+  print("")
+  print("Test Summary")
+  print("============")
+  print()
+  print("Test run                       Total Exec  Pass  Fail  ")
+  print("-------------------------------------------------------")
   for step in steps:
     try:
-      print "{0:30} {1:>4}  {2:>4}  {3:>4}  {4:>4}".format(step['name'], *step['result'].getSummary())
+      print("{0:30} {1:>4}  {2:>4}  {3:>4}  {4:>4}".format(step['name'], *step['result'].getSummary()))
     except:
-      print "{0:30} ------ NO RESULTS ------".format(step['name'])
+      print("{0:30} ------ NO RESULTS ------".format(step['name']))
 
 def main(argv):
   parser = ArgumentParser()
@@ -221,7 +221,7 @@ def main(argv):
     for dev in args.devices:
       model = FVP_MODELS[dev]
       cmd = [ model['cmd'], '-l', '-o', model['args']['config'] ]
-      print " ".join(cmd)
+      print(" ".join(cmd))
       call(cmd)
     return 1
     
