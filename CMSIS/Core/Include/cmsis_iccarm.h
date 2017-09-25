@@ -55,7 +55,7 @@
 
 /* Define compiler macros for CPU architecture, used in CMSIS 5.
  */
-#if __ARM_ARCH_6M__ || __ARM_ARCH_7M__ || __ARM_ARCH_7EM__ || __ARM_ARCH_8M_BASE__ || __ARM_ARCH_8M_BASE__
+#if __ARM_ARCH_6M__ || __ARM_ARCH_7M__ || __ARM_ARCH_7EM__ || __ARM_ARCH_8M_BASE__ || __ARM_ARCH_8M_MAIN__
 /* Macros already defined */
 #else
   #if defined(__ARM8M_MAINLINE__) || defined(__ARM8EM_MAINLINE__)
@@ -77,7 +77,7 @@
  
 /* Alternativ core deduction for older ICCARM's */ 
 #if !defined(__ARM_ARCH_6M__) && !defined(__ARM_ARCH_7M__) && !defined(__ARM_ARCH_7EM__) && \
-    !defined(__ARM_ARCH_8M_BASE__) && !defined(__ARM_ARCH_8M_BASE__)
+    !defined(__ARM_ARCH_8M_BASE__) && !defined(__ARM_ARCH_8M_MAIN__)
   #if defined(__ARM6M__) && (__CORE__ == __ARM6M__)
     #define __ARM_ARCH_6M__ 1
   #elif defined(__ARM7M__) && (__CORE__ == __ARM7M__)
@@ -88,7 +88,7 @@
     #define __ARM_ARCH_8M_BASE__ 1
   #elif defined(__ARM8M_MAINLINE__) && (__CORE == __ARM8M_MAINLINE__)
     #define __ARM_ARCH_8M_MAIN__ 1
-  #elif defined(__ARM8EM_MAINLINE__) && (__CORE == __ARME8M_MAINLINE__)
+  #elif defined(__ARM8EM_MAINLINE__) && (__CORE == __ARM8EM_MAINLINE__)
     #define __ARM_ARCH_8M_MAIN__ 1
   #else
     #error "Unknown target."
