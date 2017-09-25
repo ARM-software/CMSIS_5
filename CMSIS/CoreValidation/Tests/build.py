@@ -23,6 +23,10 @@ DEVICE_CM7SP   = 'Cortex-M7SP'
 DEVICE_CM7DP   = 'Cortex-M7DP'
 DEVICE_CM23    = 'Cortex-M23'
 DEVICE_CM33    = 'Cortex-M33'
+DEVICE_CM23NS  = 'Cortex-M23NS'
+DEVICE_CM33NS  = 'Cortex-M33NS'
+DEVICE_CM23S   = 'Cortex-M23S'
+DEVICE_CM33S   = 'Cortex-M33S'
 DEVICE_CA5     = 'Cortex-A5'
 DEVICE_CA7     = 'Cortex-A7'
 DEVICE_CA9     = 'Cortex-A9'
@@ -36,7 +40,7 @@ CC_GCC = 'GCC'
 CC_IAR = 'IAR'
 
 MDK_ENV = {
-  'uVision' : [ DEVICE_CM0, DEVICE_CM0PLUS, DEVICE_CM3, DEVICE_CM4, DEVICE_CM4FP, DEVICE_CM7, DEVICE_CM7SP, DEVICE_CM7DP, DEVICE_CM23, DEVICE_CM33 ],
+  'uVision' : [ DEVICE_CM0, DEVICE_CM0PLUS, DEVICE_CM3, DEVICE_CM4, DEVICE_CM4FP, DEVICE_CM7, DEVICE_CM7SP, DEVICE_CM7DP, DEVICE_CM23S, DEVICE_CM33S ],
   'DS' : [ DEVICE_CA5, DEVICE_CA7, DEVICE_CA9, DEVICE_CA5NEON, DEVICE_CA7NEON, DEVICE_CA9NEON ]
 }
 
@@ -51,8 +55,8 @@ ADEVICES = {
     DEVICE_CM7     : 'CM7',
     DEVICE_CM7SP   : 'CM7SP',
     DEVICE_CM7DP   : 'CM7DP',
-    DEVICE_CM23    : 'CM23',
-    DEVICE_CM33    : 'CM33',
+    DEVICE_CM23S   : 'CM23S',
+    DEVICE_CM33S   : 'CM33S',
     DEVICE_CA5     : 'CA5',
     DEVICE_CA7     : 'CA7',
     DEVICE_CA9     : 'CA9',
@@ -61,13 +65,17 @@ ADEVICES = {
     DEVICE_CA9NEON : 'CA9neon'
   }
 
-DEVICES = [ DEVICE_CM0, DEVICE_CM0PLUS, DEVICE_CM3, DEVICE_CM4, DEVICE_CM4FP, DEVICE_CM7, DEVICE_CM7SP, DEVICE_CM7DP, DEVICE_CM23, DEVICE_CM33, DEVICE_CA5, DEVICE_CA7, DEVICE_CA9, DEVICE_CA5NEON, DEVICE_CA7NEON, DEVICE_CA9NEON ]
+DEVICES = [ DEVICE_CM0, DEVICE_CM0PLUS, DEVICE_CM3, DEVICE_CM4, DEVICE_CM4FP, DEVICE_CM7, DEVICE_CM7SP, DEVICE_CM7DP, DEVICE_CM23S, DEVICE_CM33S, DEVICE_CA5, DEVICE_CA7, DEVICE_CA9, DEVICE_CA5NEON, DEVICE_CA7NEON, DEVICE_CA9NEON ]
 COMPILERS = [ CC_AC5, CC_AC6, CC_GCC, CC_IAR ]
 TARGETS = [ TARGET_FVP ]
 
 SKIP = [ 
-    [ DEVICE_CM23, CC_AC5, None ],
-    [ DEVICE_CM33, CC_AC5, None ],
+    [ DEVICE_CM23,   CC_AC5, None ],
+    [ DEVICE_CM33,   CC_AC5, None ],
+    [ DEVICE_CM23NS, CC_AC5, None ],
+    [ DEVICE_CM33NS, CC_AC5, None ],
+    [ DEVICE_CM23S,  CC_AC5, None ],
+    [ DEVICE_CM33S,  CC_AC5, None ],
   ]
   
 FVP_MODELS = { 
@@ -79,8 +87,12 @@ FVP_MODELS = {
     DEVICE_CM7      : { 'cmd': "FVP_MPS2_Cortex-M7_MDK.exe",  'args': { 'limit': "50000000", 'config': "ARMCM7_config.txt" } },
     DEVICE_CM7SP    : { 'cmd': "FVP_MPS2_Cortex-M7_MDK.exe",  'args': { 'limit': "50000000", 'config': "ARMCM7SP_config.txt" } },
     DEVICE_CM7DP    : { 'cmd': "FVP_MPS2_Cortex-M7_MDK.exe",  'args': { 'limit': "50000000", 'config': "ARMCM7DP_config.txt" } },
-    DEVICE_CM23     : { 'cmd': "FVP_MPS2_Cortex-M23_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM23_TZ_config.txt",        'target': "cpu0" } },
-    DEVICE_CM33     : { 'cmd': "FVP_MPS2_Cortex-M33_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM33_DSP_FP_TZ_config.txt", 'target': "cpu0" } },
+    DEVICE_CM23     : { 'cmd': "FVP_MPS2_Cortex-M23_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM23_config.txt",        'target': "cpu0" } },
+    DEVICE_CM33     : { 'cmd': "FVP_MPS2_Cortex-M33_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM33_DSP_FP_config.txt", 'target': "cpu0" } },
+    DEVICE_CM23NS   : { 'cmd': "FVP_MPS2_Cortex-M23_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM23_TZ_config.txt",        'target': "cpu0" } },
+    DEVICE_CM33NS   : { 'cmd': "FVP_MPS2_Cortex-M33_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM33_DSP_FP_TZ_config.txt", 'target': "cpu0" } },
+    DEVICE_CM23S    : { 'cmd': "FVP_MPS2_Cortex-M23_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM23_TZ_config.txt",        'target': "cpu0" } },
+    DEVICE_CM33S    : { 'cmd': "FVP_MPS2_Cortex-M33_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM33_DSP_FP_TZ_config.txt", 'target': "cpu0" } },
     DEVICE_CA5      : { 'cmd': "fvp_ve_cortex-a5x1.exe",      'args': { 'limit': "70000000", 'config': "ARMCA5_config.txt" } },
     DEVICE_CA7      : { 'cmd': "fvp_ve_cortex-a7x1.exe",      'args': { 'limit': "170000000", 'config': "ARMCA7_config.txt" } },
     DEVICE_CA9      : { 'cmd': "fvp_ve_cortex-a9x1.exe",      'args': { 'limit': "70000000", 'config': "ARMCA9_config.txt" } },
