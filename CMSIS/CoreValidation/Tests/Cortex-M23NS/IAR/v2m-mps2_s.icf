@@ -1,0 +1,27 @@
+
+/***************************************************************************** 
+ * Memory setup for secure-hello example (secure_part).
+ *   
+ * In this example secure state may use 0-0x1FFFFF and 0x20000000-0x201FFFFF
+ * The NSC_region is the region that can be called from non-secure code,
+ * it is populated by the linker with veneers to function that has been
+ * declared with __cmse_nonsecure_entry.
+ *   
+ *****************************************************************************/   
+
+define memory mem with size = 4G;
+define region NSC_region    = mem:[from 0x000000C0 to 0x000000DF];
+define region ROM_S_region  = mem:[from 0x000000E0 to 0x001FFFFF];
+define region RAM_S_region  = mem:[from 0x20000000 to 0x201FFFFF];
+
+define block CSTACK with alignment = 8, size = 0x1000 { };
+define block HEAP   with alignment = 8, size = 0x1000 { };
+
+do not initialize { section .noinit };
+
+initialize by copy { rw };
+
+place at address mem:0 { section .intvec };
+place in NSC_region    { section Veneers$$CMSE };
+place in ROM_S_region  { readonly };
+place in RAM_S_region  { readwrite, zi, block CSTACK, block HEAP };
