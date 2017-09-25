@@ -245,10 +245,13 @@ __packed struct  __iar_u32 { uint32_t v; };
 #define __get_CONTROL()             (__arm_rsr("CONTROL"))
 #define __get_FAULTMASK()           (__arm_rsr("FAULTMASK"))
 
-#if __FPU_PRESENT
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
   #define __get_FPSCR()             (__arm_rsr("FPSCR"))
+  #define __set_FPSCR(VALUE)          (__arm_wsr("FPSCR", (VALUE)))
 #else
   #define __get_FPSCR()             ( 0 )
+  #define __set_FPSCR(VALUE)        ((void)VALUE)
 #endif
 
 #define __get_IPSR()                (__arm_rsr("IPSR"))
@@ -263,7 +266,6 @@ __packed struct  __iar_u32 { uint32_t v; };
 #define __set_BASEPRI_MAX(VALUE)    (__arm_wsr("BASEPRI_MAX", (VALUE)))
 #define __set_CONTROL(VALUE)        (__arm_wsr("CONTROL", (VALUE)))
 #define __set_FAULTMASK(VALUE)      (__arm_wsr("FAULTMASK", (VALUE)))
-#define __set_FPSCR(VALUE)          (__arm_wsr("FPSCR", (VALUE)))
 #define __set_MSP(VALUE)            (__arm_wsr("MSP", (VALUE)))
 #define __set_MSPLIM(VALUE)         (__arm_wsr("MSPLIM", (VALUE)))
 #define __set_PRIMASK(VALUE)        (__arm_wsr("PRIMASK", (VALUE)))
@@ -407,10 +409,11 @@ __IAR_FT int32_t __REVSH(int32_t val) {
 #define __get_APSR  __cmsis_iar_get_APSR_not_active
 #endif
 
-#if !__FPU_PRESENT
+#if (!((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+       (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     ))
 #define __get_FPSCR __cmsis_iar_get_FPSR_not_active
+#define __set_FPSCR __cmsis_iar_set_FPSR_not_active
 #endif
-
 
 #include <intrinsics.h>
 
@@ -456,8 +459,12 @@ __IAR_FT int32_t __REVSH(int32_t val) {
     
 #endif
 
-#if !__FPU_PRESENT
-#define __get_FPSCR() (0)
+#if (!((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+       (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     ))
+#undef __get_FPSCR
+#undef __set_FPSCR
+#define __get_FPSCR()       (0)
+#define __set_FPSCR(VALUE)  ((void)VALUE)
 #endif
 
 #pragma diag_suppress=Pe940
