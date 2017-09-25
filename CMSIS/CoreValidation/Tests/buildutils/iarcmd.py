@@ -1,7 +1,6 @@
 #! python
 
 from buildcmd import BuildCmd
-from string import maketrans
 from datetime import datetime
 import mmap
 
