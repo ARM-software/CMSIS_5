@@ -9,6 +9,7 @@ from subprocess import call, Popen
 sys.path.append('buildutils') 
 
 from uv4cmd import Uv4Cmd 
+from dscmd import DsCmd 
 from fvpcmd import FvpCmd 
 from iarcmd import IarCmd 
 from testresult import TestResult
@@ -160,9 +161,15 @@ def bootloaderProject(dev, cc, target):
   
 def buildStep(dev, cc, target, project):
   if (cc == CC_AC5) or (cc == CC_AC6):
-    return Uv4Cmd(project, target)
+    if dev in MDK_ENV['DS']:
+      return DsCmd(project, "CMSIS_CV_{adev}_{cc}".format(adev=ADEVICES[dev], cc = cc))
+    else:
+      return Uv4Cmd(project, target)
   elif (cc == CC_GCC):
-    return Uv4Cmd(project, target)
+    if dev in MDK_ENV['DS']:
+      return DsCmd(project, target)
+    else:
+      return Uv4Cmd(project, target)
   elif (cc == CC_IAR):
     return IarCmd(project, target)
   raise "Unknown compiler!"
