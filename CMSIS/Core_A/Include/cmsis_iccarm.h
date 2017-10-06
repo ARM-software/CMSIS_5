@@ -21,8 +21,8 @@
 // limitations under the License.
 //
 //------------------------------------------------------------------------------
- 
- 
+
+
 #ifndef __CMSIS_ICCARM_H__
 #define __CMSIS_ICCARM_H__
 
@@ -32,9 +32,9 @@
 
 #pragma system_include
 
-#define __IAR_FT _Pragma("inline=forced") __intrinsic 
+#define __IAR_FT _Pragma("inline=forced") __intrinsic
 
-#if (__VER__ >= 8000000) 
+#if (__VER__ >= 8000000)
   #define __ICCARM_V8 1
 #else
   #define __ICCARM_V8 0
@@ -44,10 +44,10 @@
 
 #ifndef __ALIGNED
   #if __ICCARM_V8
-    #define __ALIGNED(x) __attribute__((aligned(x)))  
+    #define __ALIGNED(x) __attribute__((aligned(x)))
   #elif (__VER__ >= 7080000)
     /* Needs IAR language extensions */
-    #define __ALIGNED(x) __attribute__((aligned(x)))  
+    #define __ALIGNED(x) __attribute__((aligned(x)))
   #else
     #warning No compiler specific solution for __ALIGNED.__ALIGNED is ignored.
     #define __ALIGNED(x)
@@ -91,7 +91,7 @@
   #if __ICCARM_V8
     #define __PACKED_STRUCT struct __attribute__((packed, aligned(1)))
   #else
-    #define __PACKED_STRUCT __packed struct 
+    #define __PACKED_STRUCT __packed struct
   #endif
 #endif
 
@@ -113,301 +113,314 @@
   #define __STATIC_INLINE 						static inline
 #endif
 
-#ifndef   __STATIC_FORCEINLINE                 
+#ifndef   __STATIC_FORCEINLINE
   #define __STATIC_FORCEINLINE                  _Pragma("inline=forced") static inline
-#endif                                           
-#ifndef   __FORCEINLINE                              
+#endif
+#ifndef   __FORCEINLINE
   #define __FORCEINLINE                         _Pragma("inline=forced")
-#endif                                          
+#endif
 
 #ifndef __UNALIGNED_UINT16_READ
-#pragma language=save
-#pragma language=extended
-__IAR_FT uint16_t __iar_uint16_read(void const *ptr) {
-  return *(__packed uint16_t*)(ptr);
-}
-#pragma language=restore
-#define __UNALIGNED_UINT16_READ(PTR) __iar_uint16_read(PTR)
+  #pragma language=save
+  #pragma language=extended
+  __IAR_FT uint16_t __iar_uint16_read(void const *ptr) {
+    return *(__packed uint16_t*)(ptr);
+  }
+  #pragma language=restore
+  #define __UNALIGNED_UINT16_READ(PTR) __iar_uint16_read(PTR)
 #endif
 
 
 #ifndef __UNALIGNED_UINT16_WRITE
-#pragma language=save
-#pragma language=extended
-__IAR_FT void __iar_uint16_write(void const *ptr, uint16_t val) {
-  *(__packed uint16_t*)(ptr) = val;;
-}
-#pragma language=restore
-#define __UNALIGNED_UINT16_WRITE(PTR,VAL) __iar_uint16_write(PTR,VAL)
+  #pragma language=save
+  #pragma language=extended
+  __IAR_FT void __iar_uint16_write(void const *ptr, uint16_t val) {
+    *(__packed uint16_t*)(ptr) = val;;
+  }
+  #pragma language=restore
+  #define __UNALIGNED_UINT16_WRITE(PTR,VAL) __iar_uint16_write(PTR,VAL)
 #endif
 
 #ifndef __UNALIGNED_UINT32_READ
-#pragma language=save
-#pragma language=extended
-__IAR_FT uint32_t __iar_uint32_read(void const *ptr) {
-  return *(__packed uint32_t*)(ptr);
-}
-#pragma language=restore
-#define __UNALIGNED_UINT32_READ(PTR) __iar_uint32_read(PTR)
+  #pragma language=save
+  #pragma language=extended
+  __IAR_FT uint32_t __iar_uint32_read(void const *ptr) {
+    return *(__packed uint32_t*)(ptr);
+  }
+  #pragma language=restore
+  #define __UNALIGNED_UINT32_READ(PTR) __iar_uint32_read(PTR)
 #endif
 
 #ifndef __UNALIGNED_UINT32_WRITE
-#pragma language=save
-#pragma language=extended
-__IAR_FT void __iar_uint32_write(void const *ptr, uint32_t val) {
-  *(__packed uint32_t*)(ptr) = val;;
-}
-#pragma language=restore
-#define __UNALIGNED_UINT32_WRITE(PTR,VAL) __iar_uint32_write(PTR,VAL)
+  #pragma language=save
+  #pragma language=extended
+  __IAR_FT void __iar_uint32_write(void const *ptr, uint32_t val) {
+    *(__packed uint32_t*)(ptr) = val;;
+  }
+  #pragma language=restore
+  #define __UNALIGNED_UINT32_WRITE(PTR,VAL) __iar_uint32_write(PTR,VAL)
 #endif
 
 #if 0
 #ifndef __UNALIGNED_UINT32   /* deprecated */
-#pragma language=save
-#pragma language=extended
-__packed struct  __iar_u32 { uint32_t v; };
-#pragma language=restore
-#define __UNALIGNED_UINT32(PTR) (((struct __iar_u32 *)(PTR))->v)
+  #pragma language=save
+  #pragma language=extended
+  __packed struct  __iar_u32 { uint32_t v; };
+  #pragma language=restore
+  #define __UNALIGNED_UINT32(PTR) (((struct __iar_u32 *)(PTR))->v)
 #endif
 #endif
 
 #ifndef   __USED
-#if __ICCARM_V8
-#define __USED __attribute__((used))
-#else
-#define __USED _Pragma("__root")
-#endif
+  #if __ICCARM_V8
+    #define __USED __attribute__((used))
+  #else
+    #define __USED _Pragma("__root")
+  #endif
 #endif
 
 #ifndef   __WEAK
-#if __ICCARM_V8
-#define __WEAK __attribute__((weak))
-#else
-#define __WEAK _Pragma("__weak")
-#endif
+  #if __ICCARM_V8
+    #define __WEAK __attribute__((weak))
+  #else
+    #define __WEAK _Pragma("__weak")
+  #endif
 #endif
 
 
 #ifndef __ICCARM_INTRINSICS_VERSION__
-#define __ICCARM_INTRINSICS_VERSION__  0
+  #define __ICCARM_INTRINSICS_VERSION__  0
 #endif
 
 #if __ICCARM_INTRINSICS_VERSION__ == 2
 
-#include "iccarm_builtin.h"
+  #if defined(__CLZ)
+    #undef __CLZ
+  #endif
+  #if defined(__REVSH)
+    #undef __REVSH
+  #endif
+  #if defined(__RBIT)
+    #undef __RBIT
+  #endif
+  #if defined(__SSAT)
+    #undef __SSAT
+  #endif
+  #if defined(__USAT)
+    #undef __USAT
+  #endif
 
-#define __enable_irq    		__iar_builtin_enable_interrupt
-#define __disable_irq   		__iar_builtin_disable_interrupt
-#define __enable_fault_irq 		__iar_builtin_enable_fiq
-#define __disable_fault_irq 	__iar_builtin_disable_fiq
-#define __arm_rsr 			    __iar_builtin_rsr
-#define __arm_wsr 			    __iar_builtin_wsr
+  #include "iccarm_builtin.h"
 
-#if __FPU_PRESENT
-  #define __get_FPSCR()             (__arm_rsr("FPSCR"))
-#else
-  #define __get_FPSCR()             ( 0 )
-#endif
+  #define __enable_irq    		__iar_builtin_enable_interrupt
+  #define __disable_irq   		__iar_builtin_disable_interrupt
+  #define __enable_fault_irq 		__iar_builtin_enable_fiq
+  #define __disable_fault_irq 	__iar_builtin_disable_fiq
+  #define __arm_rsr 			    __iar_builtin_rsr
+  #define __arm_wsr 			    __iar_builtin_wsr
 
-#define __set_FPSCR(VALUE)          (__arm_wsr("FPSCR", VALUE))
+  #if __FPU_PRESENT
+    #define __get_FPSCR()             (__arm_rsr("FPSCR"))
+  #else
+    #define __get_FPSCR()             ( 0 )
+  #endif
 
-#define __get_CPSR()                (__arm_rsr("CPSR"))
-#define __get_mode()                (__get_CPSR() & 0x1FU)
+  #define __set_FPSCR(VALUE)          (__arm_wsr("FPSCR", VALUE))
 
-#define __set_CPSR(VALUE)           (__arm_wsr("CPSR", (VALUE)))
-#define __set_mode(VALUE)           (__arm_wsr("CPSR_c", (VALUE)))
+  #define __get_CPSR()                (__arm_rsr("CPSR"))
+  #define __get_mode()                (__get_CPSR() & 0x1FU)
 
-
-#define __get_FPEXC() 			(__arm_rsr("FPEXC"))
-#define __set_FPEXC(VALUE) 		(__arm_wsr("FPEXC", VALUE))
-
-#define __get_CP(cp, op1, RT, CRn, CRm, op2) \
-  (RT = __arm_rsr("p" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2))
-  
-#define __set_CP(cp, op1, RT, CRn, CRm, op2) \
-  (__arm_wsr("p" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2, RT))
-
-#include "cmsis_cp15.h"
+  #define __set_CPSR(VALUE)           (__arm_wsr("CPSR", (VALUE)))
+  #define __set_mode(VALUE)           (__arm_wsr("CPSR_c", (VALUE)))
 
 
-#define __NOP    __iar_builtin_no_operation
+  #define __get_FPEXC() 			(__arm_rsr("FPEXC"))
+  #define __set_FPEXC(VALUE) 		(__arm_wsr("FPEXC", VALUE))
 
-__IAR_FT uint8_t __CLZ(uint32_t val) {
-  return __iar_builtin_CLZ(val);
-}
+  #define __get_CP(cp, op1, RT, CRn, CRm, op2) \
+    (RT = __arm_rsr("p" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2))
 
-#define __CLREX __iar_builtin_CLREX
+  #define __set_CP(cp, op1, RT, CRn, CRm, op2) \
+    (__arm_wsr("p" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2, RT))
 
-#define __DMB   __iar_builtin_DMB
-#define __DSB   __iar_builtin_DSB
-#define __ISB   __iar_builtin_ISB
+  #include "cmsis_cp15.h"
 
-#define __LDREXB  __iar_builtin_LDREXB
-#define __LDREXH  __iar_builtin_LDREXH
-#define __LDREXW  __iar_builtin_LDREX
+  #define __NOP    __iar_builtin_no_operation
 
-#define __RBIT    __iar_builtin_RBIT
-#define __REV     __iar_builtin_REV
-#define __REV16   __iar_builtin_REV16
+  __IAR_FT uint8_t __CLZ(uint32_t val) {
+    return __iar_builtin_CLZ(val);
+  }
 
-__IAR_FT int32_t __REVSH(int32_t val) {
-  return __iar_builtin_REVSH((int16_t)val);
-}
+  #define __CLREX __iar_builtin_CLREX
 
-#define __ROR     __iar_builtin_ROR
-#define __RRX     __iar_builtin_RRX
+  #define __DMB   __iar_builtin_DMB
+  #define __DSB   __iar_builtin_DSB
+  #define __ISB   __iar_builtin_ISB
 
-#define __SEV     __iar_builtin_SEV
+  #define __LDREXB  __iar_builtin_LDREXB
+  #define __LDREXH  __iar_builtin_LDREXH
+  #define __LDREXW  __iar_builtin_LDREX
 
-#define __SSAT    __iar_builtin_SSAT
-  
-#define __STREXB  __iar_builtin_STREXB
-#define __STREXH  __iar_builtin_STREXH
-#define __STREXW  __iar_builtin_STREX
+  #define __RBIT    __iar_builtin_RBIT
+  #define __REV     __iar_builtin_REV
+  #define __REV16   __iar_builtin_REV16
 
-#define __USAT    __iar_builtin_USAT
-  
-#define __WFE     __iar_builtin_WFE
-#define __WFI     __iar_builtin_WFI
+  __IAR_FT int32_t __REVSH(int32_t val) {
+    return __iar_builtin_REVSH((int16_t)val);
+  }
 
-#define __SADD8   __iar_builtin_SADD8
-#define __QADD8   __iar_builtin_QADD8
-#define __SHADD8  __iar_builtin_SHADD8
-#define __UADD8   __iar_builtin_UADD8
-#define __UQADD8  __iar_builtin_UQADD8
-#define __UHADD8  __iar_builtin_UHADD8
-#define __SSUB8   __iar_builtin_SSUB8
-#define __QSUB8   __iar_builtin_QSUB8
-#define __SHSUB8  __iar_builtin_SHSUB8
-#define __USUB8   __iar_builtin_USUB8
-#define __UQSUB8  __iar_builtin_UQSUB8
-#define __UHSUB8  __iar_builtin_UHSUB8
-#define __SADD16  __iar_builtin_SADD16
-#define __QADD16  __iar_builtin_QADD16
-#define __SHADD16 __iar_builtin_SHADD16
-#define __UADD16  __iar_builtin_UADD16
-#define __UQADD16 __iar_builtin_UQADD16
-#define __UHADD16 __iar_builtin_UHADD16
-#define __SSUB16  __iar_builtin_SSUB16
-#define __QSUB16  __iar_builtin_QSUB16
-#define __SHSUB16 __iar_builtin_SHSUB16
-#define __USUB16  __iar_builtin_USUB16
-#define __UQSUB16 __iar_builtin_UQSUB16
-#define __UHSUB16 __iar_builtin_UHSUB16
-#define __SASX    __iar_builtin_SASX
-#define __QASX    __iar_builtin_QASX
-#define __SHASX   __iar_builtin_SHASX
-#define __UASX    __iar_builtin_UASX
-#define __UQASX   __iar_builtin_UQASX
-#define __UHASX   __iar_builtin_UHASX
-#define __SSAX    __iar_builtin_SSAX
-#define __QSAX    __iar_builtin_QSAX
-#define __SHSAX   __iar_builtin_SHSAX
-#define __USAX    __iar_builtin_USAX
-#define __UQSAX   __iar_builtin_UQSAX
-#define __UHSAX   __iar_builtin_UHSAX
-#define __USAD8   __iar_builtin_USAD8
-#define __USADA8  __iar_builtin_USADA8
-#define __SSAT16  __iar_builtin_SSAT16
-#define __USAT16  __iar_builtin_USAT16
-#define __UXTB16  __iar_builtin_UXTB16
-#define __UXTAB16 __iar_builtin_UXTAB16
-#define __SXTB16  __iar_builtin_SXTB16
-#define __SXTAB16 __iar_builtin_SXTAB16
-#define __SMUAD   __iar_builtin_SMUAD
-#define __SMUADX  __iar_builtin_SMUADX
-#define __SMMLA   __iar_builtin_SMMLA
-#define __SMLAD   __iar_builtin_SMLAD
-#define __SMLADX  __iar_builtin_SMLADX
-#define __SMLALD  __iar_builtin_SMLALD
-#define __SMLALDX __iar_builtin_SMLALDX
-#define __SMUSD   __iar_builtin_SMUSD
-#define __SMUSDX  __iar_builtin_SMUSDX
-#define __SMLSD   __iar_builtin_SMLSD
-#define __SMLSDX  __iar_builtin_SMLSDX
-#define __SMLSLD  __iar_builtin_SMLSLD
-#define __SMLSLDX __iar_builtin_SMLSLDX
-#define __SEL     __iar_builtin_SEL
-#define __QADD    __iar_builtin_QADD
-#define __QSUB    __iar_builtin_QSUB
-#define __PKHBT   __iar_builtin_PKHBT
-#define __PKHTB   __iar_builtin_PKHTB
+  #define __ROR     __iar_builtin_ROR
+  #define __RRX     __iar_builtin_RRX
+
+  #define __SEV     __iar_builtin_SEV
+
+  #define __SSAT    __iar_builtin_SSAT
+
+  #define __STREXB  __iar_builtin_STREXB
+  #define __STREXH  __iar_builtin_STREXH
+  #define __STREXW  __iar_builtin_STREX
+
+  #define __USAT    __iar_builtin_USAT
+
+  #define __WFE     __iar_builtin_WFE
+  #define __WFI     __iar_builtin_WFI
+
+  #define __SADD8   __iar_builtin_SADD8
+  #define __QADD8   __iar_builtin_QADD8
+  #define __SHADD8  __iar_builtin_SHADD8
+  #define __UADD8   __iar_builtin_UADD8
+  #define __UQADD8  __iar_builtin_UQADD8
+  #define __UHADD8  __iar_builtin_UHADD8
+  #define __SSUB8   __iar_builtin_SSUB8
+  #define __QSUB8   __iar_builtin_QSUB8
+  #define __SHSUB8  __iar_builtin_SHSUB8
+  #define __USUB8   __iar_builtin_USUB8
+  #define __UQSUB8  __iar_builtin_UQSUB8
+  #define __UHSUB8  __iar_builtin_UHSUB8
+  #define __SADD16  __iar_builtin_SADD16
+  #define __QADD16  __iar_builtin_QADD16
+  #define __SHADD16 __iar_builtin_SHADD16
+  #define __UADD16  __iar_builtin_UADD16
+  #define __UQADD16 __iar_builtin_UQADD16
+  #define __UHADD16 __iar_builtin_UHADD16
+  #define __SSUB16  __iar_builtin_SSUB16
+  #define __QSUB16  __iar_builtin_QSUB16
+  #define __SHSUB16 __iar_builtin_SHSUB16
+  #define __USUB16  __iar_builtin_USUB16
+  #define __UQSUB16 __iar_builtin_UQSUB16
+  #define __UHSUB16 __iar_builtin_UHSUB16
+  #define __SASX    __iar_builtin_SASX
+  #define __QASX    __iar_builtin_QASX
+  #define __SHASX   __iar_builtin_SHASX
+  #define __UASX    __iar_builtin_UASX
+  #define __UQASX   __iar_builtin_UQASX
+  #define __UHASX   __iar_builtin_UHASX
+  #define __SSAX    __iar_builtin_SSAX
+  #define __QSAX    __iar_builtin_QSAX
+  #define __SHSAX   __iar_builtin_SHSAX
+  #define __USAX    __iar_builtin_USAX
+  #define __UQSAX   __iar_builtin_UQSAX
+  #define __UHSAX   __iar_builtin_UHSAX
+  #define __USAD8   __iar_builtin_USAD8
+  #define __USADA8  __iar_builtin_USADA8
+  #define __SSAT16  __iar_builtin_SSAT16
+  #define __USAT16  __iar_builtin_USAT16
+  #define __UXTB16  __iar_builtin_UXTB16
+  #define __UXTAB16 __iar_builtin_UXTAB16
+  #define __SXTB16  __iar_builtin_SXTB16
+  #define __SXTAB16 __iar_builtin_SXTAB16
+  #define __SMUAD   __iar_builtin_SMUAD
+  #define __SMUADX  __iar_builtin_SMUADX
+  #define __SMMLA   __iar_builtin_SMMLA
+  #define __SMLAD   __iar_builtin_SMLAD
+  #define __SMLADX  __iar_builtin_SMLADX
+  #define __SMLALD  __iar_builtin_SMLALD
+  #define __SMLALDX __iar_builtin_SMLALDX
+  #define __SMUSD   __iar_builtin_SMUSD
+  #define __SMUSDX  __iar_builtin_SMUSDX
+  #define __SMLSD   __iar_builtin_SMLSD
+  #define __SMLSDX  __iar_builtin_SMLSDX
+  #define __SMLSLD  __iar_builtin_SMLSLD
+  #define __SMLSLDX __iar_builtin_SMLSLDX
+  #define __SEL     __iar_builtin_SEL
+  #define __QADD    __iar_builtin_QADD
+  #define __QSUB    __iar_builtin_QSUB
+  #define __PKHBT   __iar_builtin_PKHBT
+  #define __PKHTB   __iar_builtin_PKHTB
 
 #else /* __ICCARM_INTRINSICS_VERSION__ == 2 */
 
+  #if !__FPU_PRESENT
+  #define __get_FPSCR __cmsis_iar_get_FPSR_not_active
+  #endif
 
-#if !__FPU_PRESENT
-#define __get_FPSCR __cmsis_iar_get_FPSR_not_active
-#endif
+  #include <intrinsics.h>
 
-#include <intrinsics.h>
+  #if !__FPU_PRESENT
+  #define __get_FPSCR() (0)
+  #endif
 
-#if !__FPU_PRESENT
-#define __get_FPSCR() (0)
-#endif
+  #pragma diag_suppress=Pe940
+  #pragma diag_suppress=Pe177
 
-#pragma diag_suppress=Pe940
-#pragma diag_suppress=Pe177
+  #define __enable_irq    		__enable_interrupt
+  #define __disable_irq   		__disable_interrupt
+  #define __enable_fault_irq 		__enable_fiq
+  #define __disable_fault_irq 	__disable_fiq
+  #define __NOP           		__no_operation
 
-#define __enable_irq    		__enable_interrupt
-#define __disable_irq   		__disable_interrupt
-#define __enable_fault_irq 		__enable_fiq
-#define __disable_fault_irq 	__disable_fiq
-#define __NOP           		__no_operation
+  #define __get_xPSR      		__get_PSR
 
-#define __get_xPSR      		__get_PSR
-     
-__IAR_FT void __set_mode(uint32_t mode)
-{
-  __ASM volatile("MSR  cpsr_c, %0" : : "r" (mode) : "memory");
-}
-	 
-__IAR_FT uint32_t __LDREXW(uint32_t volatile *ptr) {
-  return __LDREX((unsigned long *)ptr);
-}
+  __IAR_FT void __set_mode(uint32_t mode)
+  {
+    __ASM volatile("MSR  cpsr_c, %0" : : "r" (mode) : "memory");
+  }
 
-__IAR_FT uint32_t __STREXW(uint32_t value, uint32_t volatile *ptr) {
-  return __STREX(value, (unsigned long *)ptr);
-}
+  __IAR_FT uint32_t __LDREXW(uint32_t volatile *ptr) {
+    return __LDREX((unsigned long *)ptr);
+  }
 
-
-__IAR_FT uint32_t __RRX(uint32_t value) {
-  uint32_t result;
-  __ASM("RRX      %0, %1" : "=r"(result) : "r" (value) : "cc");
-  return(result);
-}
+  __IAR_FT uint32_t __STREXW(uint32_t value, uint32_t volatile *ptr) {
+    return __STREX(value, (unsigned long *)ptr);
+  }
 
 
-__IAR_FT uint32_t __ROR(uint32_t op1, uint32_t op2) {
-  return (op1 >> op2) | (op1 << ((sizeof(op1)*8)-op2));
-}
-
-__IAR_FT uint32_t __get_FPEXC(void)
-{
-#if (__FPU_PRESENT == 1)
-  uint32_t result;
-  __ASM volatile("VMRS %0, fpexc" : "=r" (result) : : "memory");
-  return(result);
-#else
-  return(0);
-#endif
-}
-
-__IAR_FT void __set_FPEXC(uint32_t fpexc)
-{
-#if (__FPU_PRESENT == 1)
-  __ASM volatile ("VMSR fpexc, %0" : : "r" (fpexc) : "memory");
-#endif
-}
+  __IAR_FT uint32_t __RRX(uint32_t value) {
+    uint32_t result;
+    __ASM("RRX      %0, %1" : "=r"(result) : "r" (value) : "cc");
+    return(result);
+  }
 
 
-#define __get_CP(cp, op1, Rt, CRn, CRm, op2) \
-	__ASM volatile("MRC p" # cp ", " # op1 ", %0, c" # CRn ", c" # CRm ", " # op2 : "=r" (Rt) : : "memory" )
-#define __set_CP(cp, op1, Rt, CRn, CRm, op2) \
-    __ASM volatile("MCR p" # cp ", " # op1 ", %0, c" # CRn ", c" # CRm ", " # op2 : : "r" (Rt) : "memory" )
+  __IAR_FT uint32_t __ROR(uint32_t op1, uint32_t op2) {
+    return (op1 >> op2) | (op1 << ((sizeof(op1)*8)-op2));
+  }
 
-#include "cmsis_cp15.h"
+  __IAR_FT uint32_t __get_FPEXC(void)
+  {
+  #if (__FPU_PRESENT == 1)
+    uint32_t result;
+    __ASM volatile("VMRS %0, fpexc" : "=r" (result) : : "memory");
+    return(result);
+  #else
+    return(0);
+  #endif
+  }
 
+  __IAR_FT void __set_FPEXC(uint32_t fpexc)
+  {
+  #if (__FPU_PRESENT == 1)
+    __ASM volatile ("VMSR fpexc, %0" : : "r" (fpexc) : "memory");
+  #endif
+  }
+
+
+  #define __get_CP(cp, op1, Rt, CRn, CRm, op2) \
+    __ASM volatile("MRC p" # cp ", " # op1 ", %0, c" # CRn ", c" # CRm ", " # op2 : "=r" (Rt) : : "memory" )
+  #define __set_CP(cp, op1, Rt, CRn, CRm, op2) \
+      __ASM volatile("MCR p" # cp ", " # op1 ", %0, c" # CRn ", c" # CRm ", " # op2 : : "r" (Rt) : "memory" )
+
+  #include "cmsis_cp15.h"
 
 #endif   /* __ICCARM_INTRINSICS_VERSION__ == 2 */
 
@@ -562,7 +575,7 @@ void __FPU_Enable(void)
 #endif
 	    //Initialise FPSCR to a known state
     "        VMRS    R2,FPSCR          \n"
-    "        MOV32   R3,#0x00086060    \n" //Mask off all bits that do not have to be preserved. Non-preserved bits can/should be zero.    
+    "        MOV32   R3,#0x00086060    \n" //Mask off all bits that do not have to be preserved. Non-preserved bits can/should be zero.
 	"        AND     R2,R2,R3          \n"
     "        VMSR    FPSCR,R2          \n");
 }
