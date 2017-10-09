@@ -1,5 +1,7 @@
 #! python
 
+import os
+import shutil
 from subprocess import call, Popen
 from tempfile import TemporaryFile
 
@@ -14,6 +16,9 @@ class BuildCmd:
   def getArguments(self):
     return []
     
+  def needsShell(self):
+    return False
+    
   def getOutput(self):
     return self._output
 
@@ -24,10 +29,11 @@ class BuildCmd:
     return self._output == 0
 
   def run(self):  
-    cmd = [ self.getCommand() ] + self.getArguments()
+    cmd = [ os.path.normpath(shutil.which(self.getCommand())) ] + self.getArguments()
     print("Running: " + ' '.join(cmd))
     try:
-      self._result = call(cmd, stdout = self._output)
+      with Popen(cmd, stdout = self._output, stderr = self._output, shell=self.needsShell()) as proc:
+        self._result = proc.wait()
     except:
       print("Fatal error!")
     self._output.seek(0)

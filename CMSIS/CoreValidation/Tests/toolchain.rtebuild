@@ -1,0 +1,97 @@
+toolchain:
+  ARMCC5:
+    env:
+      PATH             : [ "C:/tools/Keil_v5/ARM/ARMCC/bin" ]
+      ARM_TOOL_VARIANT : 'mdk_pro'
+      ARM_PRODUCT_PATH : 'C:/tools/Keil_v5/ARM/sw/mappings'
+    rte:
+      Tcompiler: "ARMCC"
+      Toptions : "AC5"
+    ccompiler:
+      cmd     : "armcc.exe"
+      output  : "-o "
+      include : "-I"
+      define  : "-D"
+    asembler:
+      cmd     : "armasm.exe"
+      output  : "-o "
+      include : "-I"
+      define  : "-D"
+    linker:
+      cmd     : "armlink.exe"
+      output  : "-o "
+      script  : "--scatter="
+  ARMCC67:
+    env:
+      PATH             : [ "C:/tools/Keil_v5/ARM/ARMCLANG/bin" ]
+      ARM_TOOL_VARIANT : 'mdk_pro'
+      ARM_PRODUCT_PATH : 'C:/tools/Keil_v5/ARM/sw/mappings'
+    rte:
+      Tcompiler: "ARMCC"
+      Toptions : "AC6"
+    ccompiler:
+      cmd     : "armclang.exe"
+      cmdfile : "@"
+      output  : "-o "
+      include : "-I"
+      define  : "-D"
+    asembler:
+      cmd     : "armclang.exe"
+      cmdfile : "@"
+      output  : "-o "
+      include : "-I"
+      define  : "-D"
+    linker:
+      cmd     : "armclang.exe"
+      cmdfile : "@"
+      output  : "-o "
+      script  : "-Wl,--scatter="
+  ARMCC66:
+    env:
+      PATH             : [ "C:/tools/Keil_v5/ARM/ARMCLANG6.6/bin" ]
+      ARM_TOOL_VARIANT : 'mdk_pro'
+      ARM_PRODUCT_PATH : 'C:/tools/Keil_v5/ARM/sw/mappings'
+    rte:
+      Tcompiler: "ARMCC"
+      Toptions : "AC6"
+    ccompiler:
+      cmd     : "armclang.exe"
+      cmdfile : "@"
+      output  : "-o "
+      include : "-I"
+      define  : "-D"
+    asembler:
+      cmd     : "armclang.exe"
+      cmdfile : "@"
+      output  : "-o "
+      include : "-I"
+      define  : "-D"
+    linker:
+      cmd     : "armclang.exe"
+      cmdfile : "@"
+      output  : "-o "
+  GCC:
+    env:
+      PATH             : [ "C:/tools/gcc-arm/bin" ]
+      ARM_TOOL_VARIANT : 'mdk_pro'
+      ARM_PRODUCT_PATH : 'C:/tools/Keil_v5/ARM/sw/mappings'
+    rte:
+      Tcompiler: "GCC"
+      Toptions : ""
+    ccompiler:
+      cmd     : "arm-none-eabi-gcc.exe"
+      cmdfile : "@"
+      output  : "-o "
+      include : "-I"
+      define  : "-D"
+    asembler:
+      cmd     : "arm-none-eabi-gcc.exe"
+      cmdfile : "@"
+      output  : "-o "
+      include : "-I"
+      define  : "-D"
+    linker:
+      cmd     : "arm-none-eabi-gcc.exe"
+      cmdfile : "@"
+      output  : "-o "
+      script  : "-T "

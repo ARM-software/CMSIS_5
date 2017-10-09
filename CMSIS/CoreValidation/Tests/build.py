@@ -8,6 +8,7 @@ from subprocess import call, Popen
 
 sys.path.append('buildutils') 
 
+from rtecmd import RteCmd 
 from uv4cmd import Uv4Cmd 
 from dscmd import DsCmd 
 from fvpcmd import FvpCmd 
@@ -42,7 +43,8 @@ CC_IAR = 'IAR'
 
 MDK_ENV = {
   'uVision' : [ DEVICE_CM0, DEVICE_CM0PLUS, DEVICE_CM3, DEVICE_CM4, DEVICE_CM4FP, DEVICE_CM7, DEVICE_CM7SP, DEVICE_CM7DP, DEVICE_CM23, DEVICE_CM33, DEVICE_CM23NS, DEVICE_CM33NS, DEVICE_CM23S, DEVICE_CM33S ],
-  'DS' : [ DEVICE_CA5, DEVICE_CA7, DEVICE_CA9, DEVICE_CA5NEON, DEVICE_CA7NEON, DEVICE_CA9NEON ]
+  'DS'      : [ ], 
+  'RTE'     : [ DEVICE_CA5, DEVICE_CA7, DEVICE_CA9, DEVICE_CA5NEON, DEVICE_CA7NEON, DEVICE_CA9NEON ]
 }
 
 TARGET_FVP = 'FVP'
@@ -118,6 +120,11 @@ def testProject(dev, cc, target):
           "{dev}/{cc}/.project".format(dev = dev, cc = cc),
           "{dev}/{cc}/Debug/CMSIS_CV_{adev}_{cc}.axf".format(dev = dev, adev=ADEVICES[dev], cc = cc)
         ]
+    elif dev in MDK_ENV['RTE']:
+      return [
+          "{dev}/{cc}/default.rtebuild".format(dev = dev, cc = cc, target=target),
+          "{dev}/{cc}/build/{target}.elf".format(dev = dev, cc = cc, target=target)
+        ]
     else:
       return [
           "{dev}/{cc}/CMSIS_CV.uvprojx".format(dev = dev, cc = cc),
@@ -128,6 +135,11 @@ def testProject(dev, cc, target):
       return [
           "{dev}/{cc}/.project".format(dev = dev, cc = cc),
           "{dev}/{cc}/Debug/CMSIS_CV_{adev}_{cc}.elf".format(dev = dev, adev=ADEVICES[dev], cc = cc)
+        ]
+    elif dev in MDK_ENV['RTE']:
+      return [
+          "{dev}/{cc}/default.rtebuild".format(dev = dev, cc = cc, target=target),
+          "{dev}/{cc}/build/{target}.elf".format(dev = dev, cc = cc, target=target)
         ]
     else:
       return [
@@ -163,11 +175,15 @@ def buildStep(dev, cc, target, project):
   if (cc == CC_AC5) or (cc == CC_AC6):
     if dev in MDK_ENV['DS']:
       return DsCmd(project, "CMSIS_CV_{adev}_{cc}".format(adev=ADEVICES[dev], cc = cc))
+    elif dev in MDK_ENV['RTE']:
+      return RteCmd(project, target)
     else:
       return Uv4Cmd(project, target)
   elif (cc == CC_GCC):
     if dev in MDK_ENV['DS']:
       return DsCmd(project, target)
+    elif dev in MDK_ENV['RTE']:
+      return RteCmd(project, target)
     else:
       return Uv4Cmd(project, target)
   elif (cc == CC_IAR):

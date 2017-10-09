@@ -1,0 +1,14 @@
+import:
+ - toolchain.rtebuild
+include: 
+ - ../Include
+source:
+ - ./main.c
+ - ../Source/cmsis_cv.c
+ - ../Source/CV_Framework.c
+ - ../Source/CV_Report.c
+packs:
+ - ARM.CMSIS
+components:
+ - CMSIS.CORE
+ - Device.Startup
