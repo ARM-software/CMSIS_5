@@ -1,0 +1,20 @@
+import:
+ - ../../test.rtebuild
+config:
+  default: FVP
+  FVP:
+    toolchain: GCC
+    cflags: [ -mcpu=cortex-a9, -marm, -mlittle-endian, -mfloat-abi=hard, -mfpu=vfpv3-d16-fp16, -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3, -std=gnu11, -Wstrict-prototypes, -c ]
+    asmflags: [ -mcpu=cortex-a9, -marm, -mlittle-endian, -mfloat-abi=hard, -mfpu=vfpv3-d16-fp16, -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3, -std=gnu11, -Wstrict-prototypes, -c ]
+    linkflags: [ -mcpu=cortex-a9, -marm, -mlittle-endian, -mfloat-abi=hard, -mfpu=vfpv3-d16-fp16, -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3, -Xlinker, --gc-sections, --specs=nano.specs, --specs=rdimon.specs ]
+    target: ARM:82/ARMCA9/Cortex-A9
+    linkscript: "${builddir}/ARMCA9.ld"
+    prebuild:
+     - [ arm-none-eabi-gcc, "-x c", "-I\"${basedir}/RTE/Device/ARMCA9\"", "-E \"${basedir}/RTE/Device/ARMCA9/ARMCA9.ld\"", -P, "-o \"${builddir}/ARMCA9.ld\"" ]
+include: 
+ - ./
+source:
+ - ../../../Source/CV_CoreAFunc.c
+ - ../../../Source/CV_CoreInstr.c
+components:
+ - Device.IRQ Controller.GIC
