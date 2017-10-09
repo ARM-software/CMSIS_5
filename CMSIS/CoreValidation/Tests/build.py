@@ -247,10 +247,18 @@ def main(argv):
   parser.add_argument('--genconfig', action='store_true')
   parser.add_argument('-b', '--build-only', action='store_true')
   parser.add_argument('-e', '--execute-only', action='store_true')
-  parser.add_argument('-d', '--devices', nargs='*', choices=DEVICES, default=DEVICES, help = 'Devices to be considered.')
+  parser.add_argument('-d', '--devices', nargs='*', choices=(DEVICES+list(ADEVICES.values())), default=DEVICES, help = 'Devices to be considered.')
   parser.add_argument('-c', '--compilers', nargs='*', choices=COMPILERS, default=COMPILERS, help = 'Compilers to be considered.')
   parser.add_argument('-t', '--targets', nargs='*', choices=TARGETS, default=TARGETS, help = 'Targets to be considered.')
   args = parser.parse_args()
+  
+  devices = set()
+  for d in args.devices:
+    if d in ADEVICES.values():
+      d = list(ADEVICES.keys())[list(ADEVICES.values()).index(d)]
+    devices.add(d)
+  
+  args.devices = list(devices)
     
   if args.genconfig:
     for dev in args.devices:

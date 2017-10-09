@@ -4,9 +4,9 @@ config:
   default: FVP
   FVP:
     toolchain: GCC
-    cflags: [ -mcpu=cortex-a7, -marm, -mlittle-endian, -mfloat-abi=hard, -mfpu=vfpv3-d16-fp16, -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3, -std=gnu11, -Wstrict-prototypes, -c ]
-    asmflags: [ -mcpu=cortex-a7, -marm, -mlittle-endian, -mfloat-abi=hard, -mfpu=vfpv3-d16-fp16, -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3, -std=gnu11, -Wstrict-prototypes, -c ]
-    linkflags: [ -mcpu=cortex-a7, -marm, -mlittle-endian, -mfloat-abi=hard, -mfpu=vfpv3-d16-fp16, -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3, -Xlinker, --gc-sections, --specs=nano.specs, --specs=rdimon.specs ]
+    cflags: [ -mcpu=cortex-a7, -marm, -mlittle-endian, -mfloat-abi=hard, -mfpu=vfpv4, -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3, -std=gnu11, -Wstrict-prototypes, -c ]
+    asmflags: [ -mcpu=cortex-a7, -marm, -mlittle-endian, -mfloat-abi=hard, -mfpu=vfpv4, -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3, -std=gnu11, -Wstrict-prototypes, -c ]
+    linkflags: [ -mcpu=cortex-a7, -marm, -mlittle-endian, -mfloat-abi=hard, -mfpu=vfpv4, -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3, -Xlinker, --gc-sections, --specs=nano.specs, --specs=rdimon.specs ]
     target: ARM:82/ARMCA7/Cortex-A7
     linkscript: "${builddir}/ARMCA7.ld"
     prebuild:
@@ -16,5 +16,6 @@ include:
 source:
  - ../../../Source/CV_CoreAFunc.c
  - ../../../Source/CV_CoreInstr.c
+ - ../../../Source/CV_GenTimer.c
 components:
  - Device.IRQ Controller.GIC
