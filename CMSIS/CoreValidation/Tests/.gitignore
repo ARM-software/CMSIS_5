@@ -13,3 +13,5 @@ result*.xml
 *.dep
 *.ewd
 *.ewt
+*.breadcrumb
+**/build/**/*

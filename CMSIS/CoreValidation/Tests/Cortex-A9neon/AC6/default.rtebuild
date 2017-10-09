@@ -1,0 +1,17 @@
+import:
+ - ../../test.rtebuild
+config:
+  default: FVP
+  FVP:
+    toolchain: ARMCC67
+    cflags: [ -c, --target=arm-arm-none-eabi, -mcpu=cortex-a9, -mfpu=neon-fp16, -mfloat-abi=hard, -marm, -mlittle-endian, -D__MICROLIB, -xc, -std=c99, -O0, -g, -Wall ]
+    asmflags: [ -c, --target=arm-arm-none-eabi, -mcpu=cortex-a9, -mfpu=neon-fp16, -mfloat-abi=hard, -marm, -mlittle-endian, -D__MICROLIB, -g, -Wall ]
+    linkflags: [ --target=arm-arm-none-eabi, "-Wl,--entry=Vectors", "-Wl,--library_type=microlib" ]
+    target: ARM:82/ARMCA9/Cortex-A9
+include: 
+ - ./
+source:
+ - ../../../Source/CV_CoreAFunc.c
+ - ../../../Source/CV_CoreInstr.c
+components:
+ - Device.IRQ Controller.GIC

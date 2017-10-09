@@ -1,0 +1,17 @@
+import:
+ - ../../test.rtebuild
+config:
+  default: FVP
+  FVP:
+    toolchain: ARMCC5
+    cflags: [ --cpu=Cortex-A9, --apcs=/hardfp, --arm, -D__MICROLIB, --c99, -O0, -g, -c ]
+    asmflags: [ --cpu=Cortex-A9, --apcs=/hardfp, --arm, -D__MICROLIB, --c99, -O0, -g, -c ]
+    linkflags: [ "--cpu=Cortex-A9", "--entry=Vectors", "--library_type=microlib" ]
+    target: ARM:82/ARMCA9/Cortex-A9
+include: 
+ - ./
+source:
+ - ../../../Source/CV_CoreAFunc.c
+ - ../../../Source/CV_CoreInstr.c
+components:
+ - Device.IRQ Controller.GIC

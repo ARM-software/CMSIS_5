@@ -1,5 +1,5 @@
 import:
- - toolchain.rtebuild
+ - ${home}/.rtebuild/toolchain.rtebuild
 include: 
  - ../Include
 source:
