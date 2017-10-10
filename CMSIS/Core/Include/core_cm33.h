@@ -85,6 +85,17 @@
     #define __FPU_USED         0U
   #endif
 
+  #if defined(__ARM_FEATURE_DSP)
+    #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1U)
+      #define __DSP_USED       1U
+    #else
+      #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
+      #define __DSP_USED         0U    
+    #endif
+  #else
+    #define __DSP_USED         0U
+  #endif
+
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
   #if defined __ARM_PCS_VFP
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
@@ -95,6 +106,17 @@
     #endif
   #else
     #define __FPU_USED         0U
+  #endif
+
+  #if defined(__ARM_FEATURE_DSP)
+    #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1U)
+      #define __DSP_USED       1U
+    #else
+      #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
+      #define __DSP_USED         0U    
+    #endif
+  #else
+    #define __DSP_USED         0U
   #endif
 
 #elif defined ( __GNUC__ )
@@ -109,6 +131,17 @@
     #define __FPU_USED         0U
   #endif
 
+  #if defined(__ARM_FEATURE_DSP)
+    #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1U)
+      #define __DSP_USED       1U
+    #else
+      #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
+      #define __DSP_USED         0U    
+    #endif
+  #else
+    #define __DSP_USED         0U
+  #endif
+
 #elif defined ( __ICCARM__ )
   #if defined __ARMVFP__
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
@@ -119,6 +152,17 @@
     #endif
   #else
     #define __FPU_USED         0U
+  #endif
+
+  #if defined(__ARM_FEATURE_DSP)
+    #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1U)
+      #define __DSP_USED       1U
+    #else
+      #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
+      #define __DSP_USED         0U    
+    #endif
+  #else
+    #define __DSP_USED         0U
   #endif
 
 #elif defined ( __TI_ARM__ )
