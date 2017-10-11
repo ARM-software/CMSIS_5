@@ -1,0 +1,16 @@
+import:
+ - ../test.rtebuild
+config:
+  default: FVP
+  FVP:
+    mcpu  : cortex-a7
+    cpu   : Cortex-A7.no_neon
+    mfpu  : vfpv4-d16
+    fpu   : vfpv4_d16
+    target: ARM:82/ARMCA7/Cortex-A7
+source:
+ - ../../Source/CV_CoreAFunc.c
+ - ../../Source/CV_CoreInstr.c
+ - ../../Source/CV_GenTimer.c
+components:
+ - Device.IRQ Controller.GIC

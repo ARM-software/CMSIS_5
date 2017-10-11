@@ -94,7 +94,7 @@
                 </option>
                 <option>
                     <name>GenStdoutInterface</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>GeneralMisraRules98</name>
@@ -352,7 +352,7 @@
                 </option>
                 <option>
                     <name>IProcessorMode2</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCOptLevel</name>
@@ -510,7 +510,7 @@
                 </option>
                 <option>
                     <name>AltRegisterNames</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>ADefines</name>
@@ -755,11 +755,11 @@
                 </option>
                 <option>
                     <name>IlinkIcfOverride</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>${CMSIS_PACK_PATH_ARM#CMSIS#5.1.2-dev2}$\.iar\config\linker\ARMCA9.icf</state>
+                    <state>$PROJ_DIR$\RTE\Device\ARMCA9\ARMCA9.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -1020,6 +1020,27 @@
         </settings>
     </configuration>
     <group>
+        <name>Test</name>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\Source\cmsis_cv.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\Source\CV_CoreAFunc.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\Source\CV_CoreInstr.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\Source\CV_Framework.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\Source\CV_Report.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\main.c</name>
+        </file>
+    </group>
+    <group>
         <name>CMSIS-Pack</name>
         <tag>CMSISPack.ComponentGroup</tag>
         <file>
@@ -1058,27 +1079,6 @@
                 <name>$PROJ_DIR$\RTE\CMSIS\ARM\system_ARMCA9.h</name>
             </file>
         </group>
-    </group>
-    <group>
-        <name>Test</name>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Source\cmsis_cv.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Source\CV_CoreAFunc.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Source\CV_CoreInstr.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Source\CV_Framework.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Source\CV_Report.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\main.c</name>
-        </file>
     </group>
     <cmsisPackSettings>
         <rte>&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;

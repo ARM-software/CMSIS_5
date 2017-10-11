@@ -151,10 +151,16 @@ def testProject(dev, cc, target):
           "{dev}/{cc}/Objects/CMSIS_CV.elf".format(dev = dev, cc = cc)
         ]
   elif (cc == CC_IAR):
-    return [
-        "{dev}/{cc}/CMSIS_CV.ewp".format(dev = dev, cc = cc),
-        "{dev}/{cc}/{target}/Exe/CMSIS_CV.out".format(dev = dev, cc = cc, target = target)
-      ]
+    if dev in MDK_ENV['RTE']:
+      return [
+          "{dev}/{cc}/default.rtebuild".format(dev = dev, cc = cc, target=target),
+          "{dev}/{cc}/build/{target}.elf".format(dev = dev, cc = cc, target=target)
+        ]
+    else:
+      return [
+          "{dev}/{cc}/CMSIS_CV.ewp".format(dev = dev, cc = cc),
+          "{dev}/{cc}/{target}/Exe/CMSIS_CV.out".format(dev = dev, cc = cc, target = target)
+        ]
   raise "Unknown compiler!"
 
 def bootloaderProject(dev, cc, target):
@@ -191,7 +197,10 @@ def buildStep(dev, cc, target, project):
     else:
       return Uv4Cmd(project, target)
   elif (cc == CC_IAR):
-    return IarCmd(project, target)
+    if dev in MDK_ENV['RTE']:
+      return RteCmd(project, target)
+    else:
+      return IarCmd(project, target)
   raise "Unknown compiler!"
   
 def prepare(steps, args):
