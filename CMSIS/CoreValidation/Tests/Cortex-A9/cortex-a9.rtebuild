@@ -4,7 +4,9 @@ config:
   default: FVP
   FVP:
     cpu   : Cortex-A9.no_neon
-    fpu   : vfp3_d16_fp16
+    mcpu  : cortex-a9
+    fpu   : vfpv3_d16_fp16
+    mfpu  : vfpv3-d16-fp16
     target: ARM:82/ARMCA9/Cortex-A9
 source:
  - ../../Source/CV_CoreAFunc.c
