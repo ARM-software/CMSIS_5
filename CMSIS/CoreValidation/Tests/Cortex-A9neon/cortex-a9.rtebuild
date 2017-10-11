@@ -1,0 +1,13 @@
+import:
+ - ../test.rtebuild
+config:
+  default: FVP
+  FVP:
+    cpu   : Cortex-A9
+    fpu   : vfp3
+    target: ARM:82/ARMCA9/Cortex-A9
+source:
+ - ../../Source/CV_CoreAFunc.c
+ - ../../Source/CV_CoreInstr.c
+components:
+ - Device.IRQ Controller.GIC

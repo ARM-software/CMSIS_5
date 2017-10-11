@@ -1,20 +1,15 @@
 import:
- - ../../test.rtebuild
+ - ../cortex-a5.rtebuild
 config:
   default: FVP
   FVP:
     toolchain: GCC
-    cflags: [ -mcpu=cortex-a5, -marm, -mlittle-endian, -mfloat-abi=hard, -mfpu=vfpv4-d16, -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3, -std=gnu11, -Wstrict-prototypes, -c ]
-    asmflags: [ -mcpu=cortex-a5, -marm, -mlittle-endian, -mfloat-abi=hard, -mfpu=vfpv4-d16, -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3, -std=gnu11, -Wstrict-prototypes, -c ]
-    linkflags: [ -mcpu=cortex-a5, -marm, -mlittle-endian, -mfloat-abi=hard, -mfpu=vfpv4-d16, -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3, -Xlinker, --gc-sections, --specs=nano.specs, --specs=rdimon.specs ]
-    target: ARM:82/ARMCA5/Cortex-A5
-    linkscript: "${builddir}/ARMCA5.ld"
+    commonflags: [ "-mcpu=${mcpu}", -marm, -mlittle-endian, -mfloat-abi=hard, "-mfpu=${mfpu}", -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -pedantic, -Wall, -Wextra, -Wshadow, -g3 ]
+    cflags:      [ "${commonflags}", -std=gnu11, -Wstrict-prototypes, -c ]
+    asmflags:    [ "${commonflags}" ]
+    linkflags:   [ "${commonflags}", -Xlinker, --gc-sections, --specs=nano.specs, --specs=rdimon.specs ]
+    linkscript: "${builddir}/${device}.ld"
     prebuild:
-     - [ arm-none-eabi-gcc, "-x c", "-I\"${basedir}/RTE/Device/ARMCA5\"", "-E \"${basedir}/RTE/Device/ARMCA5/ARMCA5.ld\"", -P, "-o \"${builddir}/ARMCA5.ld\"" ]
+     - [ arm-none-eabi-gcc, "-x c", "-I\"${basedir}/RTE/Device/${device}\"", "-E \"${basedir}/RTE/Device/${device}/${device}.ld\"", -P, "-o \"${builddir}/${device}.ld\"" ]
 include: 
  - ./
-source:
- - ../../../Source/CV_CoreAFunc.c
- - ../../../Source/CV_CoreInstr.c
-components:
- - Device.IRQ Controller.GIC
