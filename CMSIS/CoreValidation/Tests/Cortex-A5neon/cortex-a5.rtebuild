@@ -4,7 +4,7 @@ config:
   default: FVP
   FVP:
     mcpu  : cortex-a5
-    cpu   : Cortex-A5
+    cpu   : Cortex-A5.neon
     mfpu  : neon-vfpv4
     fpu   : vfpv4
     target: ARM:82/ARMCA5/Cortex-A5
