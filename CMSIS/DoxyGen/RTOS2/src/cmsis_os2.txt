@@ -402,16 +402,19 @@ also reflected in the user code template file "CMSIS-RTOS2 'main' function" supp
 Your application's \c main() should implement at least the following in the given order:
 -# Initialization and configuration of hardware including peripherals, memory, pins, clocks and the interrupt system.
 -# Update the system core clock using the respective
-   <a href=../../Core/html/group__system__init__gr.html>CMSIS-Core (Cortex-M) function</a>.
+   <a href=../../Core/html/group__system__init__gr.html>CMSIS-Core (Cortex-M)</a> or 
+   <a href=../../Core_A/html/group__system__init__gr.html>CMSIS-Core (Cortex-A)</a> function.
 -# Initialize the CMSIS-RTOS kernel using \ref osKernelInitialize.
 -# Optionally, create a new thread \c app_main, which is used as a main thread using \ref osThreadNew. Alternatively, threads
    can be created in \c main() directly.
 -# Start the RTOS scheduler using \ref osKernelStart. This function does not return in case of successful execution. Any
-   application code after \b osKernelStart will not be executed unless \b osKernelStart fails.            
+   application code after \b osKernelStart will not be executed unless \b osKernelStart fails.
 
 \note Interrupts (like SVC for example) used by the kernel are initialized in \ref osKernelInitialize. In case priorities and
 groupings in the NVIC are altered by the application after the above sequence it might be necessary to call
-\ref osKernelInitialize again.
+\ref osKernelInitialize again. You might observe weird misbehaviour possibly catched by \ref osRtxErrorNotify or causing a hard fault.
+
+\note The tick timer is configured during \ref osKernelStart. The tick interval is calculated based on the \c SystemCoreClock variable.
 
 \section Scheduler 
 

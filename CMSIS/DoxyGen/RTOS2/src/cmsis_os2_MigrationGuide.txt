@@ -15,6 +15,9 @@ Only a few incompatibilities and limitations exist:
   "main" was a running thread. Portable code would typically initialize the Kernel (\ref osKernelInitialize) and then start
   the Kernel (\ref osKernelStart) or skip that part if \c osKernelRunning indicated that it is already running.\n
   The example code below shows how to overcome this situation.
+- OS tick\n
+  RTX5 uses the \ref CMSIS_RTOS_TickAPI to configure the tick interrupts. The interval calculation is typically based on
+  \c SystemCoreClock variable. Thus one has to assure this variable is set correctly before calling \ref osKernelStart.
 - The function \c osWait is deprecated.
 - Error code incompatibility\n
   CMSIS-RTOS v1 used two different error codes for invalid parameters: \c osErrorParameter and \c osErrorValue. The new
