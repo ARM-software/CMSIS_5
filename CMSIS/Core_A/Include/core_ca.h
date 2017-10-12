@@ -1477,9 +1477,34 @@ __STATIC_INLINE void PL1_SetLoadValue(uint32_t value)
 /** \brief Get the current counter value.
 * \return Current counter value.
 */
-__STATIC_INLINE uint32_t PL1_GetCurrentValue()
+__STATIC_INLINE uint32_t PL1_GetCurrentValue(void)
 {
   return(__get_CNTP_TVAL());
+}
+
+/** \brief Get the current physical counter value.
+* \return Current physical counter value.
+*/
+__STATIC_INLINE uint64_t PL1_GetCurrentPhysicalValue(void)
+{
+  return(__get_CNTPCT());
+}
+
+/** \brief Set the physical compare value.
+* \param [in] value New physical timer compare value.
+*/
+__STATIC_INLINE void PL1_SetPhysicalCompareValue(uint64_t value)
+{
+  __set_CNTP_CVAL(value);
+  __ISB();
+}
+
+/** \brief Get the physical compare value.
+* \return Physical compare value.
+*/
+__STATIC_INLINE uint64_t PL1_GetPhysicalCompareValue(void)
+{
+  return(__get_CNTP_CVAL());
 }
 
 /** \brief Configure the timer by setting the control value.
@@ -1494,7 +1519,7 @@ __STATIC_INLINE void PL1_SetControl(uint32_t value)
 /** \brief Get the control value.
 * \return Control value.
 */
-__STATIC_INLINE uint32_t PL1_GetControl()
+__STATIC_INLINE uint32_t PL1_GetControl(void)
 {
   return(__get_CNTP_CTL());
 }

@@ -67,7 +67,12 @@ Verifications with GCC and IAR compiler are in preparation.
     </tr>
     <tr>
       <td>V1.0.1</td>
-      <td>Bug fixes and minor enhancements.</td>
+      <td>
+        <ul>
+          <li>Bug fixes and minor enhancements.</li>
+          <li>compiler_iccarm.h for IAR compiler.</li>
+        </ul>
+      </td>
     </tr>
     <tr>
       <td>V1.0.0</td>

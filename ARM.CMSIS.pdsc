@@ -8,8 +8,13 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.1.2-dev2">
+    <release version="5.1.2-dev3">
       Active development...
+      CMSIS-Core(A): 1.0.1 (see revision history for details)
+        - Added compiler_iccarm.h.
+        - Added additional access functions for physical timer.
+    </release>
+    <release version="5.1.2-dev2">
       CMSIS-Core(M): 5.0.3 (see revision history for details)
       - Added compiler_iccarm.h to replace compiler_iar.h shipped with the compiler.
       CMSIS-RTOS2:
@@ -1880,7 +1885,7 @@ and 8-bit Java bytecodes in Jazelle state.
       </files>
     </component>
 
-    <component Cclass="CMSIS" Cgroup="CORE" Cversion="1.0.0"  condition="ARMv7-A Device" >
+    <component Cclass="CMSIS" Cgroup="CORE" Cversion="1.0.1"  condition="ARMv7-A Device" >
       <description>CMSIS-CORE for Cortex-A</description>
       <files>
         <!-- CPU independent -->

@@ -108,6 +108,8 @@ static TEST_CASE TC_LIST[] = {
   TCD ( TC_GenTimer_CNTFRQ,     TC_GENTIMER_CNTFRQ    ),
   TCD ( TC_GenTimer_CNTP_TVAL,  TC_GENTIMER_CNTP_TVAL ),
   TCD ( TC_GenTimer_CNTP_CTL,   TC_GENTIMER_CNTP_CTL  ),
+  TCD ( TC_GenTimer_CNTPCT,     TC_GENTIMER_CNTPCT    ),
+  TCD ( TC_GenTimer_CNTP_CVAL,  TC_GENTIMER_CNTP_CVAL ),
 #endif
 };                                                              
 

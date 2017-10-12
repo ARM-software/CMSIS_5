@@ -5,7 +5,7 @@
 			<provider copy-of="extension" id="org.eclipse.cdt.ui.UserLanguageSettingsProvider"/>
 			<provider-reference id="org.eclipse.cdt.core.ReferencedProjectsLanguageSettingsProvider" ref="shared-provider"/>
 			<provider-reference id="org.eclipse.cdt.managedbuilder.core.MBSLanguageSettingsProvider" ref="shared-provider"/>
-			<provider class="com.arm.eclipse.builder.armcc.discovery.ArmCompiler6LanguageSettingsProvider" console="false" env-hash="1217592296065668050" id="com.arm.eclipse.builder.armcc.v6.langprovider" keep-relative-paths="false" name="ARM Compiler 6 Built-in Compiler Settings" parameter="${COMMAND} ${FLAGS} -E -P -v -dD &quot;${INPUTS}&quot;" prefer-non-shared="true">
+			<provider class="com.arm.eclipse.builder.armcc.discovery.ArmCompiler6LanguageSettingsProvider" console="false" env-hash="-814145135053679654" id="com.arm.eclipse.builder.armcc.v6.langprovider" keep-relative-paths="false" name="ARM Compiler 6 Built-in Compiler Settings" parameter="${COMMAND} ${FLAGS} -E -P -v -dD &quot;${INPUTS}&quot;" prefer-non-shared="true">
 				<language-scope id="org.eclipse.cdt.core.gcc"/>
 				<language-scope id="org.eclipse.cdt.core.g++"/>
 			</provider>

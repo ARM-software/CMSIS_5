@@ -12,6 +12,7 @@
 
 #define RTE_CV_COREINSTR  1
 #define RTE_CV_COREFUNC   1
+#define RTE_CV_GENTIMER   1
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 
@@ -60,6 +61,8 @@
 // <q27> TC_GENTIMER_CNTFRQ
 // <q28> TC_GENTIMER_CNTP_TVAL
 // <q29> TC_GENTIMER_CNTP_CTL
+// <q30> TC_GENTIMER_CNTPCT
+// <q31> TC_GENTIMER_CNTP_CVAL
 #define TC_COREINSTR_NOP_EN         1
 #define TC_COREINSTR_REV_EN         1
 #define TC_COREINSTR_REV16_EN       1
@@ -93,6 +96,9 @@
 #define TC_GENTIMER_CNTFRQ          1
 #define TC_GENTIMER_CNTP_TVAL       1
 #define TC_GENTIMER_CNTP_CTL        1
+#define TC_GENTIMER_CNTPCT          1
+#define TC_GENTIMER_CNTP_CVAL       1
+
 // </h>
 
 #endif /* __CV_CONFIG_H */
