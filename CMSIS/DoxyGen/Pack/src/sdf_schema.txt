@@ -160,7 +160,7 @@ system view of a device. These are "expert" settings that cannot be specified in
 The XML schema file <b>sdf_schema.xsd</b> defines the sections used in a <b>*.SDF</b> file. The current <b>sdf_schema.xsd</b>
 can be found under the ARM.CMSIS.*.Pack in the .\\CMSIS\\Utilities-directory.
 
-\section element_system_description /system_description
+\section sdf_element_system_description /system_description
 <table class="cmtable" summary="Element: CPDSC package">
   <tr>
     <th>Parents</th>
@@ -189,13 +189,13 @@ can be found under the ARM.CMSIS.*.Pack in the .\\CMSIS\\Utilities-directory.
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{debug_and_trace_config}</td>
+    <td>\ref sdf_element_debug_and_trace_config</td>
     <td>Description how to configure debug and trace.</td>
     <td>complexType</td>
     <td>1..1</td>
   </tr>
   <tr>
-    <td>\refelem{platform}</td>
+    <td>\ref sdf_element_platform</td>
     <td>Overall platform description.</td>
     <td>complexType</td>
     <td>1..1</td>
@@ -204,7 +204,7 @@ can be found under the ARM.CMSIS.*.Pack in the .\\CMSIS\\Utilities-directory.
 
 \delim 
 
-\section element_debug_and_trace_config /system_description/debug_and_trace_config
+\section sdf_element_debug_and_trace_config /system_description/debug_and_trace_config
 
 Describes the recommended debug and trace configuration for the device.
 
@@ -214,8 +214,8 @@ Describes the recommended debug and trace configuration for the device.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_system_description "system_description"</td>
-    <td colspan="3">\ref element_system_description "/system_description"</td>
+    <td>\ref sdf_element_system_description "system_description"</td>
+    <td colspan="3">\ref sdf_element_system_description "/system_description"</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -224,13 +224,13 @@ Describes the recommended debug and trace configuration for the device.
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{debug}</td>
+    <td>\ref sdf_element_debug</td>
     <td>Describes the debug connection configuration</td>
     <td>complexType</td>
     <td>0..1</td>  
   </tr>
   <tr>
-    <td>\refelem{trace}</td>
+    <td>\ref sdf_element_trace</td>
     <td>Describes the trace configuration</td>
     <td>complexType</td>
     <td>0..1</td>  
@@ -239,7 +239,7 @@ Describes the recommended debug and trace configuration for the device.
 
 \delim
 
-\section element_debug /system_description/debug_and_trace_config/debug
+\section sdf_element_debug /system_description/debug_and_trace_config/debug
 
 Describes the recommended debug configuration for the device.
 
@@ -249,8 +249,8 @@ Describes the recommended debug configuration for the device.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_debug_and_trace_config "debug_and_trace_config"</td>
-    <td colspan="3">\ref element_debug_and_trace_config "/system_description/debug_and_trace_config"</td>
+    <td>\ref sdf_element_debug_and_trace_config "debug_and_trace_config"</td>
+    <td colspan="3">\ref sdf_element_debug_and_trace_config "/system_description/debug_and_trace_config"</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -259,17 +259,17 @@ Describes the recommended debug configuration for the device.
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{config_item}</td>
+    <td>\ref sdf_element_config_item</td>
     <td>Describes a configuration item attribute/value pair</td>
     <td>xs:string</td>
     <td>0..*</td>  
   </tr>
 </table>
 
-For a list of applicable configuration items, refer to \ref element_config_item "config_item".
+For a list of applicable configuration items, refer to \ref sdf_element_config_item "config_item".
 \delim
 
-\section element_config_item /system_description/.../config_item
+\section sdf_element_config_item /system_description/.../config_item
 
 A <b>config_item</b> can appear in various SDF elements. This group contains individual configuration items.
 
@@ -279,16 +279,16 @@ A <b>config_item</b> can appear in various SDF elements. This group contains ind
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_debug "debug"</td>
-    <td colspan="3">\ref element_debug "/system_description/debug_and_trace_config/debug"</td>
+    <td>\ref sdf_element_debug "debug"</td>
+    <td colspan="3">\ref sdf_element_debug "/system_description/debug_and_trace_config/debug"</td>
   </tr>
   <tr>
-    <td>\ref element_trace_capture "trace_capture"</td>
-    <td colspan="3">\ref element_trace_capture "/system_description/debug_and_trace_config/trace/trace_capture"</td>
+    <td>\ref sdf_element_trace_capture "trace_capture"</td>
+    <td colspan="3">\ref sdf_element_trace_capture "/system_description/debug_and_trace_config/trace/trace_capture"</td>
   </tr>
   <tr>
-    <td>\ref element_config_items "config_items"</td>
-    <td colspan="3">\ref element_config_items "/system_description/platform/scanchain/../config_items"</td>
+    <td>\ref sdf_element_config_items "config_items"</td>
+    <td colspan="3">\ref sdf_element_config_items "/system_description/platform/scanchain/../config_items"</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -307,7 +307,7 @@ A <b>config_item</b> can appear in various SDF elements. This group contains ind
 Debug element
 -------------
 
-The \b config_items applicable to the \ref element_debug "debug" element are the following:
+The \b config_items applicable to the \ref sdf_element_debug "debug" element are the following:
 
 | Item                   | Description | 
 |------------------------|-------------|
@@ -324,7 +324,7 @@ The \b config_items applicable to the \ref element_debug "debug" element are the
 Device element
 --------------
 
-The \b config_items applicable to the \ref element_device "device" element are the following (only applicable for devices
+The \b config_items applicable to the \ref sdf_element_device "device" element are the following (only applicable for devices
 that are child elements of another device or DAP):
 
 | Item                   | Description | Use |
@@ -335,7 +335,7 @@ that are child elements of another device or DAP):
 Trace element
 -----------
 
-The \b config_items applicable to the \ref element_trace "trace" element are the following:
+The \b config_items applicable to the \ref sdf_element_trace "trace" element are the following:
 -# Parallel trace capture device configuration items ("type" = "parallel"). These "config_items" enable you to configure
    delays on the trace lines by a specified amount of time relative to the trace capture device defaults. These delays are
    used to allow for variations in target hardware. These configuration items have default values if not present.
@@ -375,7 +375,7 @@ The \b config_items applicable to the \ref element_trace "trace" element are the
 \endcode   
 \delim
 
-\section element_trace /system_description/debug_and_trace_config/trace
+\section sdf_element_trace /system_description/debug_and_trace_config/trace
 
 Describes the recommended trace configuration for the device.
 
@@ -385,8 +385,8 @@ Describes the recommended trace configuration for the device.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_debug_and_trace_config "debug_and_trace_config"</td>
-    <td colspan="3">\ref element_debug_and_trace_config "/system_description/debug_and_trace_config"</td>
+    <td>\ref sdf_element_debug_and_trace_config "debug_and_trace_config"</td>
+    <td colspan="3">\ref sdf_element_debug_and_trace_config "/system_description/debug_and_trace_config"</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -395,7 +395,7 @@ Describes the recommended trace configuration for the device.
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{trace_capture}</td>
+    <td>\ref sdf_element_trace_capture</td>
     <td>Describes the trace capture device</td>
     <td>complexType</td>
     <td>0..*</td>  
@@ -404,7 +404,7 @@ Describes the recommended trace configuration for the device.
 
 \delim
 
-\section element_trace_capture /system_description/debug_and_trace_config/trace/trace_capture
+\section sdf_element_trace_capture /system_description/debug_and_trace_config/trace/trace_capture
 
 Describes settings for the trace capture device.
 
@@ -414,8 +414,8 @@ Describes settings for the trace capture device.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_trace "trace"</td>
-    <td colspan="3">\ref element_trace "/system_description/debug_and_trace_config/trace"</td>
+    <td>\ref sdf_element_trace "trace"</td>
+    <td colspan="3">\ref sdf_element_trace "/system_description/debug_and_trace_config/trace"</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -424,7 +424,7 @@ Describes settings for the trace capture device.
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{config_item}</td>
+    <td>\ref sdf_element_config_item</td>
     <td>Describes a configuration item attribute/value pair</td>
     <td>complexType</td>
     <td>0..*</td>  
@@ -445,7 +445,7 @@ Describes settings for the trace capture device.
 
 \delim
 
-\section element_platform /system_description/platform
+\section sdf_element_platform /system_description/platform
 
 Describes the platform configuration (scanchain, topology and cluster arrangement).
 
@@ -455,8 +455,8 @@ Describes the platform configuration (scanchain, topology and cluster arrangemen
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_system_description "system_description"</td>
-    <td colspan="3">\ref element_system_description "/system_description"</td>
+    <td>\ref sdf_element_system_description "system_description"</td>
+    <td colspan="3">\ref sdf_element_system_description "/system_description"</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -465,19 +465,19 @@ Describes the platform configuration (scanchain, topology and cluster arrangemen
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{scanchain}</td>
+    <td>\ref sdf_element_scanchain</td>
     <td>Lists all DAPs/Devices in the order that they appear on the scanchain (Note - order is reverse to DAP references in PDSC files). The first device in the scanchain is one closest to target's TDI pin.</td>
     <td>complexType</td>
     <td>0..*</td>  
   </tr>
   <tr>
-    <td>\refelem{topology}</td>
+    <td>\ref sdf_element_topology</td>
     <td>Describes the system topology</td>
     <td>complexType</td>
     <td>0..1</td>  
   </tr>
   <tr>
-    <td>\refelem{clusters}</td>
+    <td>\ref sdf_element_clusters</td>
     <td>Describes the cluster arrangement</td>
     <td>complexType</td>
     <td>0..1</td>  
@@ -486,7 +486,7 @@ Describes the platform configuration (scanchain, topology and cluster arrangemen
 
 \delim
 
-\section element_scanchain /system_description/platform/scanchain
+\section sdf_element_scanchain /system_description/platform/scanchain
 
 Lists all DAPs/devices in the order that they appear on the scanchain.
 
@@ -499,8 +499,8 @@ target's TDI pin.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_platform "platform"</td>
-    <td colspan="3">\ref element_platform "/system_description/platform"</td>
+    <td>\ref sdf_element_platform "platform"</td>
+    <td colspan="3">\ref sdf_element_platform "/system_description/platform"</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -509,13 +509,13 @@ target's TDI pin.
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{dap}</td>
+    <td>\ref sdf_element_dap</td>
     <td>Describes a DAP and a list of devices associated with that DAP.</td>
     <td>complexType</td>
     <td>0..*</td>  
   </tr>
   <tr>
-    <td>\refelem{device}</td>
+    <td>\ref sdf_element_device</td>
     <td>Describes a single device on the scan chain.</td>
     <td>complexType</td>
     <td>0..*</td>  
@@ -648,7 +648,7 @@ target's TDI pin.
 \endcode
 \delim
 
-\section element_dap /system_description/platform/scanchain/dap
+\section sdf_element_dap /system_description/platform/scanchain/dap
 
 Describes a DAP and a list of devices associated with that DAP.
 
@@ -658,8 +658,8 @@ Describes a DAP and a list of devices associated with that DAP.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_scanchain "scanchain"</td>
-    <td colspan="3">\ref element_scanchain "/system_description/platform/scanchain"</td>
+    <td>\ref sdf_element_scanchain "scanchain"</td>
+    <td colspan="3">\ref sdf_element_scanchain "/system_description/platform/scanchain"</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -668,20 +668,20 @@ Describes a DAP and a list of devices associated with that DAP.
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{device}</td>
+    <td>\ref sdf_element_device</td>
     <td>List of devices associated with this DAP.</td>
     <td>complexType</td>
     <td>0..*</td>  
   </tr>
   <tr>
-    <td>\refelem{device_info_items}</td>
+    <td>\ref sdf_element_device_info_items</td>
     <td>Contains implementation details for the DAP. Applicable items for a DAP are "JTAG_IDCODE" (the JTAG ID code for the
 	    DAP) or "DPIDR" (the Debug Port Identification Register contents).</td>
     <td>complexType</td>
     <td>0..*</td>  
   </tr>
   <tr>
-    <td>\refelem{config_items}</td>
+    <td>\ref sdf_element_config_items</td>
     <td>Configuration items specific to a DAP type.</td>
     <td>complexType</td>
     <td>0..*</td>  
@@ -780,7 +780,7 @@ Describes a DAP and a list of devices associated with that DAP.
 
 \delim
 
-\section element_device /system_description/platform/scanchain/device
+\section sdf_element_device /system_description/platform/scanchain/device
 
 <table class="cmtable" summary="Element: device">
   <tr>
@@ -788,12 +788,12 @@ Describes a DAP and a list of devices associated with that DAP.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_scanchain "scanchain"</td>
-    <td colspan="3">\ref element_scanchain "/system_description/platform/scanchain"</td>
+    <td>\ref sdf_element_scanchain "scanchain"</td>
+    <td colspan="3">\ref sdf_element_scanchain "/system_description/platform/scanchain"</td>
   </tr>
   <tr>
-    <td>\ref element_dap "dap"</td>
-    <td colspan="3">\ref element_dap "/system_description/platform/scanchain/dap"</td>
+    <td>\ref sdf_element_dap "dap"</td>
+    <td colspan="3">\ref sdf_element_dap "/system_description/platform/scanchain/dap"</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -802,19 +802,19 @@ Describes a DAP and a list of devices associated with that DAP.
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{device}</td>
+    <td>\ref sdf_element_device</td>
     <td>Describes a single nested device associated with this device.</td>
     <td>complexType</td>
     <td>0..*</td>  
   </tr>
   <tr>
-    <td>\refelem{device_info_items}</td>
+    <td>\ref sdf_element_device_info_items</td>
     <td>Describes a sequence of device information items.</td>
     <td>complexType</td>
     <td>0..*</td>  
   </tr>
   <tr>
-    <td>\refelem{config_items}</td>
+    <td>\ref sdf_element_config_items</td>
     <td>Configuration items specific to this device.</td>
     <td>complexType</td>
     <td>0..*</td>  
@@ -888,9 +888,9 @@ Depending on the context, a device type can be one of the following types:
 
 \delim
 
-\section element_config_items /system_description/platform/scanchain/../../config_items
+\section sdf_element_config_items /system_description/platform/scanchain/../../config_items
 
-The configuration items are specific to the device type or DAP. Refer to \ref element_config_item for a list of applicable
+The configuration items are specific to the device type or DAP. Refer to \ref sdf_element_config_item for a list of applicable
 device information items and a code example.
 
 <table class="cmtable" summary="Element: config_items">
@@ -899,12 +899,12 @@ device information items and a code example.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_device "device"</td>
-    <td colspan="3">\ref element_device "/system_description/platform/../device"</td>
+    <td>\ref sdf_element_device "device"</td>
+    <td colspan="3">\ref sdf_element_device "/system_description/platform/../device"</td>
   </tr>
   <tr>
-    <td>\ref element_dap "dap"</td>
-    <td colspan="3">\ref element_dap "/system_description/platform/scanchain/dap"</td>
+    <td>\ref sdf_element_dap "dap"</td>
+    <td colspan="3">\ref sdf_element_dap "/system_description/platform/scanchain/dap"</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -913,7 +913,7 @@ device information items and a code example.
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{config_item}</td>
+    <td>\ref sdf_element_config_item</td>
     <td>Describes a configuration item.</td>
     <td>complexType</td>
     <td>0..*</td>  
@@ -922,10 +922,10 @@ device information items and a code example.
 
 \delim
 
-\section element_device_info_items /system_description/platform/scanchain/../../device_info_items
+\section sdf_element_device_info_items /system_description/platform/scanchain/../../device_info_items
 
 The device information items are specific to the type of device or DAP and describe implementation specific details. Refer to
-\ref element_device_info_item for a list of applicable device information items and a code example.
+\ref sdf_element_device_info_item for a list of applicable device information items and a code example.
 
 <table class="cmtable" summary="Element: device_info_items">
   <tr>
@@ -933,12 +933,12 @@ The device information items are specific to the type of device or DAP and descr
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_device "device"</td>
-    <td colspan="3">\ref element_device "/system_description/platform/../device"</td>
+    <td>\ref sdf_element_device "device"</td>
+    <td colspan="3">\ref sdf_element_device "/system_description/platform/../device"</td>
   </tr>
   <tr>
-    <td>\ref element_device "dap"</td>
-    <td colspan="3">\ref element_dap "/system_description/platform/scanchain/dap"</td>
+    <td>\ref sdf_element_device "dap"</td>
+    <td colspan="3">\ref sdf_element_dap "/system_description/platform/scanchain/dap"</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -947,7 +947,7 @@ The device information items are specific to the type of device or DAP and descr
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{device_info_item}</td>
+    <td>\ref sdf_element_device_info_item</td>
     <td>Describes a sequence of device information items.</td>
     <td>xs:string</td>
     <td>0..*</td>  
@@ -956,7 +956,7 @@ The device information items are specific to the type of device or DAP and descr
 
 \delim
 
-\section element_device_info_item /system_description/platform/scanchain/../../device_info_items/device_info_item
+\section sdf_element_device_info_item /system_description/platform/scanchain/../../device_info_items/device_info_item
 
 Describes implementation specific details of the specified device or DAP.
 
@@ -966,8 +966,8 @@ Describes implementation specific details of the specified device or DAP.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_device_info_items "device_info_items"</td>
-    <td colspan="3">\ref element_device_info_items "/system_description/platform/../../device_info_items"</td>
+    <td>\ref sdf_element_device_info_items "device_info_items"</td>
+    <td colspan="3">\ref sdf_element_device_info_items "/system_description/platform/../../device_info_items"</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -1045,7 +1045,7 @@ The following device information items are applicable for each type of "device":
 
 \delim
 
-\section element_topology /system_description/platform/topology
+\section sdf_element_topology /system_description/platform/topology
 
 Describes the system topology.
 
@@ -1055,8 +1055,8 @@ Describes the system topology.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_platform "platform"</td>
-    <td colspan="3">\ref element_platform "/system_description/platform"</td>
+    <td>\ref sdf_element_platform "platform"</td>
+    <td colspan="3">\ref sdf_element_platform "/system_description/platform"</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -1065,7 +1065,7 @@ Describes the system topology.
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{topology_link}</td>
+    <td>\ref sdf_element_topology_link</td>
     <td>Describes how CoreSight devices and cores are connected.</td>
     <td>complexType</td>
     <td>0..*</td>  
@@ -1095,7 +1095,7 @@ Describes the system topology.
 \endcode
 \delim
 
-\section element_topology_link /system_description/platform/topology/topology_link
+\section sdf_element_topology_link /system_description/platform/topology/topology_link
 
 Describes how CoreSight devices and cores are connected.
 
@@ -1105,8 +1105,8 @@ Describes how CoreSight devices and cores are connected.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_platform "topology"</td>
-    <td colspan="3">\ref element_topology "/system_description/platform/topology"</td>
+    <td>\ref sdf_element_platform "topology"</td>
+    <td colspan="3">\ref sdf_element_topology "/system_description/platform/topology"</td>
   </tr>
   <tr>
     <th>Attributes</th>
@@ -1172,7 +1172,7 @@ master="CSTMC_0"     slave="CSTPIU"                          type="ATB"
 \endcode
 \delim
 
-\section element_clusters /system_description/platform/clusters
+\section sdf_element_clusters /system_description/platform/clusters
 
 Describes the cluster arrangement.
 
@@ -1182,8 +1182,8 @@ Describes the cluster arrangement.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_platform "platform"</td>
-    <td colspan="3">\ref element_platform "/system_description/platform"</td>
+    <td>\ref sdf_element_platform "platform"</td>
+    <td colspan="3">\ref sdf_element_platform "/system_description/platform"</td>
   </tr>
   <tr>
     <th>Child Elements</th>
@@ -1192,7 +1192,7 @@ Describes the cluster arrangement.
     <th>Occurrence</th>
   </tr>
   <tr>
-    <td>\refelem{cluster}</td>
+    <td>\ref sdf_element_cluster</td>
     <td>Lists the devices that make up the cluster and a unique name for the cluster.</td>
     <td>complexType</td>
     <td>0..*</td>  
@@ -1201,7 +1201,7 @@ Describes the cluster arrangement.
 
 \delim
 
-\section element_cluster /system_description/platform/clusters/cluster
+\section sdf_element_cluster /system_description/platform/clusters/cluster
 
 Lists the devices that make up the cluster.
 
@@ -1211,8 +1211,8 @@ Lists the devices that make up the cluster.
     <th colspan="3">Element Chain</th>
   </tr>
   <tr>
-    <td>\ref element_clusters "clusters"</td>
-    <td colspan="3">\ref element_clusters "/system_description/platform/clusters"</td>
+    <td>\ref sdf_element_clusters "clusters"</td>
+    <td colspan="3">\ref sdf_element_clusters "/system_description/platform/clusters"</td>
   </tr>
   <tr>
     <th>Attributes</th>
