@@ -847,7 +847,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __DMB(void)
 
 /**
   \brief   Reverse byte order (32 bit)
-  \details Reverses the byte order in unsigned integer value.
+  \details Reverses the byte order in unsigned integer value, i.e. 0xSTUVWXYZ becomes 0xYZWXUVST.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -866,7 +866,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __REV(uint32_t value)
 
 /**
   \brief   Reverse byte order (16 bit)
-  \details Reverses the byte order in unsigned short value.
+  \details Reverses the byte order in unsigned short value, i.e. 0xWXYZ becomes 0xYZWX.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */

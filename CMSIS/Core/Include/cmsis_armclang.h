@@ -782,7 +782,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t 
 
 /**
   \brief   Reverse byte order (32 bit)
-  \details Reverses the byte order in integer value.
+  \details Reverses the byte order in unsigned integer value, i.e. 0xSTUVWXYZ becomes 0xYZWXUVST.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -791,7 +791,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t 
 
 /**
   \brief   Reverse byte order (16 bit)
-  \details Reverses the byte order in two unsigned short values.
+  \details Reverses the byte order in unsigned short value, i.e. 0xWXYZ becomes 0xYZWX.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
