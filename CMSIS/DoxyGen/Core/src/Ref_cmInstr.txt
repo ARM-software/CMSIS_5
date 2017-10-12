@@ -99,25 +99,22 @@ void __DMB(void);
 
 
 /**************************************************************************************************/
-/** \brief  Reverse byte order (32 bit)
-\details
-This function reverses the byte order in integer value.
-
-\param [in]    value  Value to reverse
-\return               Reversed value
+/**
+  \brief   Reverse byte order (32 bit)
+  \details Reverses the byte order in unsigned integer value, i.e. 0xSTUVWXYZ becomes 0xYZWXUVST.
+  \param [in]    value  Value to reverse
+  \return               Reversed value
  */
 uint32_t __REV(uint32_t value);
 
 
 /**************************************************************************************************/
-/** \brief  Reverse byte order (16 bit)
-
-\details
-This function reverses the byte order in two unsigned short values.
-
-\param [in]    value  Value to reverse
-\return               Reversed value
-*/
+/**
+  \brief   Reverse byte order (16 bit)
+  \details Reverses the byte order in unsigned short value, i.e. 0xWXYZ becomes 0xYZWX.
+  \param [in]    value  Value to reverse
+  \return               Reversed value
+ */
 uint32_t __REV16(uint32_t value);
 
 
@@ -263,9 +260,12 @@ uint32_t __USAT(uint32_t value, uint32_t sat);
 
 
 /**************************************************************************************************/
-/** \brief  Count leading zeros [not for Cortex-M0, Cortex-M0+, or SC000]
+/** \brief  Count leading zeros
 
-    This function counts the number of leading zeros of a data value [not for Cortex-M0, Cortex-M0+, or SC000].
+    This function counts the number of leading zeros of a data value.
+    
+    On ARMv6-M (Cortex-M0, Cortex-M0+, and SC000) this function is not available as a core instruction
+    instruction and thus __CLZ is implemented in software.
 
     \param [in]  value  Value to count the leading zeros
     \return             number of leading zeros in value
