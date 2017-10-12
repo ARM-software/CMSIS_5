@@ -97,6 +97,8 @@ extern void TC_MPU_Load (void);
 extern void TC_GenTimer_CNTFRQ (void);
 extern void TC_GenTimer_CNTP_TVAL (void);
 extern void TC_GenTimer_CNTP_CTL (void);
+extern void TC_GenTimer_CNTPCT(void);
+extern void TC_GenTimer_CNTP_CVAL(void);
 #endif
 
 #endif /* __CMSIS_CV_H */

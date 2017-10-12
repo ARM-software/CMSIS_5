@@ -447,6 +447,19 @@ __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
  
 #define __get_CP(cp, op1, Rt, CRn, CRm, op2) do { register uint32_t tmp __ASM("cp" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2); Rt = tmp; } while(0)
 #define __set_CP(cp, op1, Rt, CRn, CRm, op2) do { register uint32_t tmp __ASM("cp" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2); tmp = Rt; } while(0)
+#define __get_CP64(cp, op1, Rt, CRm) \
+  do { \
+    uint32_t ltmp, htmp; \
+    __ASM volatile("MRRC p" # cp ", " # op1 ", ltmp, htmp, c" # CRm); \
+    Rt = (((uint64_t)htmp) << 32U) | ((uint64_t)ltmp); \
+  } while(0)
+
+#define __set_CP64(cp, op1, Rt, CRm) \
+  do { \
+    const uint32_t ltmp = (uint32_t)Rt; \
+    const uint32_t htmp = (uint32_t)(Rt >> 32); \
+    __ASM volatile("MCRR p" # cp ", " # op1 ", ltmp, htmp, c" # CRm); \
+  } while(0)
 
 #include "cmsis_cp15.h"
 

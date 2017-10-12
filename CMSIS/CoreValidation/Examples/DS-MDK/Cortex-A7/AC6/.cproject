@@ -13,7 +13,7 @@
 					<folderInfo id="com.arm.eclipse.build.config.v6.exe.debug.base.var.arm_compiler_6-6.1968808959.1021881951." name="/" resourcePath="">
 						<toolChain id="com.arm.toolchain.v6.base.var.arm_compiler_6-6.1171348516" name="ARM Compiler 6" nonInternalBuilderId="com.arm.toolchain.v6.builder" superClass="com.arm.toolchain.v6.base.var.arm_compiler_6-6">
 							<option defaultValue="com.arm.tool.c.compiler.v6.base.options.debug.level.std" id="com.arm.toolchain.v6.base.options.debug.level.2082124093" name="Debug Level" superClass="com.arm.toolchain.v6.base.options.debug.level" valueType="enumerated"/>
-							<option id="com.arm.toolchain.v6.base.options.target.cpu_fpu.1043675356" superClass="com.arm.toolchain.v6.base.options.target.cpu_fpu" value="Cortex-A7.VFPv4.Neon" valueType="string"/>
+							<option id="com.arm.toolchain.v6.base.options.target.cpu_fpu.1043675356" superClass="com.arm.toolchain.v6.base.options.target.cpu_fpu" value="Cortex-A7.VFPv4" valueType="string"/>
 							<option id="com.arm.toolchain.v6.base.options.floatabi.1359327717" name="Float ABI" superClass="com.arm.toolchain.v6.base.options.floatabi" value="com.arm.tool.c.compiler.v6.base.option.floatabi.hard" valueType="enumerated"/>
 							<option id="com.arm.toolchain.v6.base.options.inst.394719799" name="Instruction set" superClass="com.arm.toolchain.v6.base.options.inst" value="com.arm.tool.c.compiler.v6.base.option.inst.arm" valueType="enumerated"/>
 							<option id="com.arm.toolchain.v6.base.options.libs.useMicroLib.1413293533" name="Use microlib" superClass="com.arm.toolchain.v6.base.options.libs.useMicroLib" value="true" valueType="boolean"/>
@@ -22,28 +22,15 @@
 							<builder autoBuildTarget="all" buildPath="${workspace_loc:/CMSIS_CV_CA9_AC6}/Debug" cleanBuildTarget="clean" id="org.eclipse.cdt.build.core.internal.builder.1079377147" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="org.eclipse.cdt.build.core.internal.builder"/>
 							<tool id="com.arm.tool.c.compiler.v6.base.var.arm_compiler_6-6.1485719566" name="ARM C Compiler 6" superClass="com.arm.tool.c.compiler.v6.base.var.arm_compiler_6-6">
 								<option id="com.arm.tool.c.compiler.v6.base.option.incpath.509984980" name="Include path (-I)" superClass="com.arm.tool.c.compiler.v6.base.option.incpath" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS-CORE_Validation/1.0.0-dev1/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA9/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS_CORE_Validation&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA9&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS-CORE_Validation/1.0.0-dev1/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA9/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS_CORE_Validation&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA9&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../../../../Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}&quot;"/>
 								</option>
-								<option id="com.arm.tool.c.compiler.v6.base.option.defmac.71310516" name="Define macro (-D)" superClass="com.arm.tool.c.compiler.v6.base.option.defmac" useByScannerDiscovery="false" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="_RTE_"/>
-									<listOptionValue builtIn="false" value="ARMCA9"/>
-								</option>
+								<option id="com.arm.tool.c.compiler.v6.base.option.defmac.71310516" name="Define macro (-D)" superClass="com.arm.tool.c.compiler.v6.base.option.defmac" useByScannerDiscovery="false" valueType="definedSymbols"/>
 								<option defaultValue="com.arm.tool.c.compiler.v6.base.option.optlevel.min" id="com.arm.tool.c.compiler.v6.base.option.optlevel.1116740797" name="Optimization level" superClass="com.arm.tool.c.compiler.v6.base.option.optlevel" useByScannerDiscovery="true" valueType="enumerated"/>
 								<option defaultValue="com.arm.tool.c.compiler.v6.base.options.debug.level.std" id="com.arm.tool.c.compiler.v6.base.options.debug.level.1282091065" name="Debug Level" superClass="com.arm.tool.c.compiler.v6.base.options.debug.level" useByScannerDiscovery="true" valueType="enumerated"/>
 								<option id="com.arm.tool.c.compiler.v6.base.option.cpu.1622229999" name="CPU (-mcpu)" superClass="com.arm.tool.c.compiler.v6.base.option.cpu" useByScannerDiscovery="true" value="cortex-a7" valueType="string"/>
 								<option id="com.arm.tool.c.compiler.v6.base.option.target.715551531" name="Target (--target)" superClass="com.arm.tool.c.compiler.v6.base.option.target" useByScannerDiscovery="true" value="arm-arm-none-eabi" valueType="string"/>
-								<option id="com.arm.tool.c.compiler.v6.base.option.fpu.531976415" name="FPU (-mfpu)" superClass="com.arm.tool.c.compiler.v6.base.option.fpu" useByScannerDiscovery="true" value="neon-vfpv4" valueType="string"/>
+								<option id="com.arm.tool.c.compiler.v6.base.option.fpu.531976415" name="FPU (-mfpu)" superClass="com.arm.tool.c.compiler.v6.base.option.fpu" useByScannerDiscovery="true" value="vfpv4" valueType="string"/>
 								<option id="com.arm.tool.c.compiler.v6.base.option.floatabi.1123864924" name="Float ABI (-mfloat-abi)" superClass="com.arm.tool.c.compiler.v6.base.option.floatabi" useByScannerDiscovery="true" value="com.arm.tool.c.compiler.v6.base.option.floatabi.hard" valueType="enumerated"/>
 								<option id="com.arm.tool.c.compiler.v6.base.option.inst.908271468" name="Instruction set" superClass="com.arm.tool.c.compiler.v6.base.option.inst" useByScannerDiscovery="true" value="com.arm.tool.c.compiler.v6.base.option.inst.arm" valueType="enumerated"/>
 								<option id="com.arm.tool.c.compiler.v6.base.useMicroLib.722723634" name="Use microlib (-D__MICROLIB)" superClass="com.arm.tool.c.compiler.v6.base.useMicroLib" useByScannerDiscovery="false" value="true" valueType="boolean"/>
@@ -55,11 +42,9 @@
 									<listOptionValue builtIn="false" value="ARMCA7"/>
 								</option>
 								<option id="com.arm.tool.c.compiler.v6.base.option.implicit.incpath.1150219064" name="Implicit Include paths" superClass="com.arm.tool.c.compiler.v6.base.option.implicit.incpath" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS-CORE_Validation/1.0.0-dev1/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA7/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.2-dev2/CMSIS/Core_A/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.2-dev2/Device/ARM/ARMCA7/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS-Core_Validation&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA7&quot;"/>
 								</option>
 								<inputType id="com.arm.tool.c.compiler.v6.base.input.564603213" superClass="com.arm.tool.c.compiler.v6.base.input"/>
@@ -73,33 +58,21 @@
 									<listOptionValue builtIn="false" value="ARMCA7"/>
 								</option>
 								<option id="com.arm.tool.c.compiler.v6.base.option.implicit.incpath.2073821818" name="Implicit Include paths" superClass="com.arm.tool.c.compiler.v6.base.option.implicit.incpath" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS-CORE_Validation/1.0.0-dev1/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA7/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.2-dev2/CMSIS/Core_A/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.2-dev2/Device/ARM/ARMCA7/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS-Core_Validation&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA7&quot;"/>
 								</option>
 							</tool>
 							<tool id="com.arm.tool.assembler.v6.base.var.arm_compiler_6-6.475165834" name="ARM Assembler 6" superClass="com.arm.tool.assembler.v6.base.var.arm_compiler_6-6">
 								<option id="com.arm.tool.assembler.v6.base.option.incpath.512319760" name="Include path (-I)" superClass="com.arm.tool.assembler.v6.base.option.incpath" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS-CORE_Validation/1.0.0-dev1/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA9/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS_CORE_Validation&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA9&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS-CORE_Validation/1.0.0-dev1/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA9/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS_CORE_Validation&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA9&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/../../../../Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}&quot;"/>
 								</option>
 								<option defaultValue="com.arm.tool.assembler.v6.base.options.debug.level.std" id="com.arm.tool.assembler.v6.base.options.debug.level.1754017057" name="Debug Level" superClass="com.arm.tool.assembler.v6.base.options.debug.level" valueType="enumerated"/>
 								<option id="com.arm.tool.assembler.v6.base.option.cpu.1440642309" name="CPU (-mcpu)" superClass="com.arm.tool.assembler.v6.base.option.cpu" value="cortex-a7" valueType="string"/>
 								<option id="com.arm.tool.assembler.v6.base.option.target.2099316555" name="Target (--target)" superClass="com.arm.tool.assembler.v6.base.option.target" value="arm-arm-none-eabi" valueType="string"/>
-								<option id="com.arm.tool.assembler.v6.base.option.fpu.959648840" name="FPU (-mfpu)" superClass="com.arm.tool.assembler.v6.base.option.fpu" value="neon-vfpv4" valueType="string"/>
+								<option id="com.arm.tool.assembler.v6.base.option.fpu.959648840" name="FPU (-mfpu)" superClass="com.arm.tool.assembler.v6.base.option.fpu" value="vfpv4" valueType="string"/>
 								<option id="com.arm.tool.assembler.v6.base.option.floatabi.1026121137" name="Float ABI (-mfloat-abi)" superClass="com.arm.tool.assembler.v6.base.option.floatabi" value="com.arm.tool.c.compiler.v6.base.option.floatabi.hard" valueType="enumerated"/>
 								<option id="com.arm.tool.assembler.v6.base.option.inst.1080491485" name="Instruction set" superClass="com.arm.tool.assembler.v6.base.option.inst" value="com.arm.tool.c.compiler.v6.base.option.inst.arm" valueType="enumerated"/>
 								<option id="com.arm.tool.assembler.v6.base.useMicroLib.505841516" name="Use microlib (--pd &quot;__MICROLIB SETA 1&quot;)" superClass="com.arm.tool.assembler.v6.base.useMicroLib" value="true" valueType="boolean"/>
@@ -110,11 +83,9 @@
 									<listOptionValue builtIn="false" value="ARMCA7"/>
 								</option>
 								<option id="com.arm.tool.assembler.v6.base.option.implicit.incpath.1158607348" name="Implicit Include paths" superClass="com.arm.tool.assembler.v6.base.option.implicit.incpath" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS-CORE_Validation/1.0.0-dev1/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/CMSIS/Core_A/Include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.1-dev1/Device/ARM/ARMCA7/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.2-dev2/CMSIS/Core_A/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${cmsis_pack_root}/ARM/CMSIS/5.1.2-dev2/Device/ARM/ARMCA7/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/CMSIS-Core_Validation&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}/RTE/Device/ARMCA7&quot;"/>
 								</option>
 								<inputType id="com.arm.tool.assembler.v6.base.input.1152692029" superClass="com.arm.tool.assembler.v6.base.input"/>
@@ -128,7 +99,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="RTE/CMSIS_CORE_Validation/CV_Config.h|RTE/Device/ARMCA9/system_ARMCA9.h|RTE/Device/ARMCA9/system_ARMCA9.c|RTE/Device/ARMCA9/startup_ARMCA9.c|RTE/Device/ARMCA9/mmu_ARMCA9.c|RTE/Device/ARMCA9/mem_ARMCA9.h|RTE/Device/ARMCA9/ARMCA9.sct" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="RTE/CMSIS-Core_Validation/CV_Config.h|RTE/CMSIS_CORE_Validation/CV_Config.h|RTE/Device/ARMCA9/system_ARMCA9.h|RTE/Device/ARMCA9/system_ARMCA9.c|RTE/Device/ARMCA9/startup_ARMCA9.c|RTE/Device/ARMCA9/mmu_ARMCA9.c|RTE/Device/ARMCA9/mem_ARMCA9.h|RTE/Device/ARMCA9/ARMCA9.sct" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

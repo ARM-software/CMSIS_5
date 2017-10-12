@@ -31,7 +31,6 @@
 __STATIC_FORCEINLINE uint32_t __get_ACTLR(void)
 {
   uint32_t result;
-//   __ASM volatile("MRC p15, 0, %0, c1, c0, 1" : "=r" (result) : : "memory" );
   __get_CP(15, 0, result, 1, 0, 1);
   return(result);
 }
@@ -41,7 +40,6 @@ __STATIC_FORCEINLINE uint32_t __get_ACTLR(void)
  */
 __STATIC_FORCEINLINE void __set_ACTLR(uint32_t actlr)
 {
-  // __ASM volatile ("MCR p15, 0, %0, c1, c0, 1" : : "r" (actlr) : "memory");
   __set_CP(15, 0, actlr, 1, 0, 1);
 }
 
@@ -51,7 +49,6 @@ __STATIC_FORCEINLINE void __set_ACTLR(uint32_t actlr)
 __STATIC_FORCEINLINE uint32_t __get_CPACR(void)
 {
   uint32_t result;
-//   __ASM volatile("MRC p15, 0, %0, c1, c0, 2" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 1, 0, 2);
   return result;
 }
@@ -61,7 +58,6 @@ __STATIC_FORCEINLINE uint32_t __get_CPACR(void)
  */
 __STATIC_FORCEINLINE void __set_CPACR(uint32_t cpacr)
 {
-//   __ASM volatile("MCR p15, 0, %0, c1, c0, 2" : : "r"(cpacr) : "memory");
   __set_CP(15, 0, cpacr, 1, 0, 2);
 }
 
@@ -71,7 +67,6 @@ __STATIC_FORCEINLINE void __set_CPACR(uint32_t cpacr)
 __STATIC_FORCEINLINE uint32_t __get_DFSR(void)
 {
   uint32_t result;
-//   __ASM volatile("MRC p15, 0, %0, c5, c0, 0" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 5, 0, 0);
   return result;
 }
@@ -81,7 +76,6 @@ __STATIC_FORCEINLINE uint32_t __get_DFSR(void)
  */
 __STATIC_FORCEINLINE void __set_DFSR(uint32_t dfsr)
 {
-//   __ASM volatile("MCR p15, 0, %0, c5, c0, 0" : : "r"(dfsr) : "memory");
   __set_CP(15, 0, dfsr, 5, 0, 0);
 }
 
@@ -91,7 +85,6 @@ __STATIC_FORCEINLINE void __set_DFSR(uint32_t dfsr)
 __STATIC_FORCEINLINE uint32_t __get_IFSR(void)
 {
   uint32_t result;
-//   __ASM volatile("MRC p15, 0, %0, c5, c0, 1" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 5, 0, 1);
   return result;
 }
@@ -101,7 +94,6 @@ __STATIC_FORCEINLINE uint32_t __get_IFSR(void)
  */
 __STATIC_FORCEINLINE void __set_IFSR(uint32_t ifsr)
 {
-//   __ASM volatile("MCR p15, 0, %0, c5, c0, 1" : : "r"(ifsr) : "memory");
   __set_CP(15, 0, ifsr, 5, 0, 1);
 }
 
@@ -111,7 +103,6 @@ __STATIC_FORCEINLINE void __set_IFSR(uint32_t ifsr)
 __STATIC_FORCEINLINE uint32_t __get_ISR(void)
 {
   uint32_t result;
-//   __ASM volatile("MRC p15, 0, %0, c12, c1, 0" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 12, 1, 0);
   return result;
 }
@@ -122,7 +113,6 @@ __STATIC_FORCEINLINE uint32_t __get_ISR(void)
 __STATIC_FORCEINLINE uint32_t __get_CBAR(void)
 {
   uint32_t result;
-//   __ASM volatile("MRC p15, 4, %0, c15, c0, 0" : "=r"(result) : : "memory");
   __get_CP(15, 4, result, 15, 0, 0);
   return result;
 }
@@ -136,7 +126,6 @@ __STATIC_FORCEINLINE uint32_t __get_CBAR(void)
 __STATIC_FORCEINLINE uint32_t __get_TTBR0(void)
 {
   uint32_t result;
-//   __ASM volatile("MRC p15, 0, %0, c2, c0, 0" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 2, 0, 0);
   return result;
 }
@@ -149,7 +138,6 @@ __STATIC_FORCEINLINE uint32_t __get_TTBR0(void)
  */
 __STATIC_FORCEINLINE void __set_TTBR0(uint32_t ttbr0)
 {
-//   __ASM volatile("MCR p15, 0, %0, c2, c0, 0" : : "r"(ttbr0) : "memory");
   __set_CP(15, 0, ttbr0, 2, 0, 0);
 }
 
@@ -162,7 +150,6 @@ __STATIC_FORCEINLINE void __set_TTBR0(uint32_t ttbr0)
 __STATIC_FORCEINLINE uint32_t __get_DACR(void)
 {
   uint32_t result;
-//   __ASM volatile("MRC p15, 0, %0, c3, c0, 0" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 3, 0, 0);
   return result;
 }
@@ -175,7 +162,6 @@ __STATIC_FORCEINLINE uint32_t __get_DACR(void)
  */
 __STATIC_FORCEINLINE void __set_DACR(uint32_t dacr)
 {
-//   __ASM volatile("MCR p15, 0, %0, c3, c0, 0" : : "r"(dacr) : "memory");
   __set_CP(15, 0, dacr, 3, 0, 0);
 }
 
@@ -187,7 +173,6 @@ __STATIC_FORCEINLINE void __set_DACR(uint32_t dacr)
  */
 __STATIC_FORCEINLINE void __set_SCTLR(uint32_t sctlr)
 {
-//   __ASM volatile("MCR p15, 0, %0, c1, c0, 0" : : "r"(sctlr) : "memory");
   __set_CP(15, 0, sctlr, 1, 0, 0);
 }
 
@@ -197,7 +182,6 @@ __STATIC_FORCEINLINE void __set_SCTLR(uint32_t sctlr)
 __STATIC_FORCEINLINE uint32_t __get_SCTLR(void)
 {
   uint32_t result;
-//   __ASM volatile("MRC p15, 0, %0, c1, c0, 0" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 1, 0, 0);
   return result;
 }
@@ -207,7 +191,6 @@ __STATIC_FORCEINLINE uint32_t __get_SCTLR(void)
  */
 __STATIC_FORCEINLINE void __set_ACTRL(uint32_t actrl)
 {
-//   __ASM volatile("MCR p15, 0, %0, c1, c0, 1" : : "r"(actrl) : "memory");
   __set_CP(15, 0, actrl, 1, 0, 1);
 }
 
@@ -217,7 +200,6 @@ __STATIC_FORCEINLINE void __set_ACTRL(uint32_t actrl)
 __STATIC_FORCEINLINE uint32_t __get_ACTRL(void)
 {
   uint32_t result;
-//   __ASM volatile("MRC p15, 0, %0, c1, c0, 1" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 1, 0, 1);
   return result;
 }
@@ -231,7 +213,6 @@ __STATIC_FORCEINLINE uint32_t __get_ACTRL(void)
 __STATIC_FORCEINLINE uint32_t __get_MPIDR(void)
 {
   uint32_t result;
-//   __ASM volatile("MRC p15, 0, %0, c0, c0, 5" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 0, 0, 5);
   return result;
 }
@@ -245,7 +226,6 @@ __STATIC_FORCEINLINE uint32_t __get_MPIDR(void)
 __STATIC_FORCEINLINE uint32_t __get_VBAR(void)
 {
   uint32_t result;
-//   __ASM volatile("MRC p15, 0, %0, c12, c0, 0" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 12, 0, 0);
   return result;
 }
@@ -258,7 +238,6 @@ __STATIC_FORCEINLINE uint32_t __get_VBAR(void)
  */
 __STATIC_FORCEINLINE void __set_VBAR(uint32_t vbar)
 {
-//   __ASM volatile("MCR p15, 0, %0, c12, c0, 1" : : "r"(vbar) : "memory");
   __set_CP(15, 0, vbar, 12, 0, 1);
 }
 
@@ -274,7 +253,6 @@ __STATIC_FORCEINLINE void __set_VBAR(uint32_t vbar)
 */
 __STATIC_FORCEINLINE void __set_CNTFRQ(uint32_t value)
 {
-  // __ASM volatile("MCR p15, 0, %0, c14, c0, 0" : : "r"(value) : "memory");
   __set_CP(15, 0, value, 14, 0, 0);
 }
 
@@ -287,7 +265,6 @@ __STATIC_FORCEINLINE void __set_CNTFRQ(uint32_t value)
 __STATIC_FORCEINLINE uint32_t __get_CNTFRQ(void)
 {
   uint32_t result;
-  // __ASM volatile("MRC p15, 0, %0, c14, c0, 0" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 14, 0 , 0);
   return result;
 }
@@ -300,7 +277,6 @@ __STATIC_FORCEINLINE uint32_t __get_CNTFRQ(void)
 */
 __STATIC_FORCEINLINE void __set_CNTP_TVAL(uint32_t value)
 {
-  // __ASM volatile("MCR p15, 0, %0, c14, c2, 0" : : "r"(value) : "memory");
   __set_CP(15, 0, value, 14, 2, 0);
 }
 
@@ -313,8 +289,44 @@ __STATIC_FORCEINLINE void __set_CNTP_TVAL(uint32_t value)
 __STATIC_FORCEINLINE uint32_t __get_CNTP_TVAL(void)
 {
   uint32_t result;
-  // __ASM volatile("MRC p15, 0, %0, c14, c2, 0" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 14, 2, 0);
+  return result;
+}
+
+/** \brief  Get CNTPCT
+
+    This function returns the value of the 64 bits PL1 Physical Count Register (CNTPCT).
+
+    \return               CNTPCT Register value
+ */
+__STATIC_FORCEINLINE uint64_t __get_CNTPCT(void)
+{
+  uint64_t result;
+  __get_CP64(15, 0, result, 14);
+  return result;
+}
+
+/** \brief  Set CNTP_CVAL
+
+  This function assigns the given value to 64bits PL1 Physical Timer CompareValue Register (CNTP_CVAL).
+
+  \param [in]    value  CNTP_CVAL Register value to set
+*/
+__STATIC_FORCEINLINE void __set_CNTP_CVAL(uint64_t value)
+{
+  __set_CP64(15, 2, value, 14);
+}
+
+/** \brief  Get CNTP_CVAL
+
+    This function returns the value of the 64 bits PL1 Physical Timer CompareValue Register (CNTP_CVAL).
+
+    \return               CNTP_CVAL Register value
+ */
+__STATIC_FORCEINLINE uint64_t __get_CNTP_CVAL(void)
+{
+  uint64_t result;
+  __get_CP64(15, 2, result, 14);
   return result;
 }
 
@@ -326,7 +338,6 @@ __STATIC_FORCEINLINE uint32_t __get_CNTP_TVAL(void)
 */
 __STATIC_FORCEINLINE void __set_CNTP_CTL(uint32_t value)
 {
-  // __ASM volatile("MCR p15, 0, %0, c14, c2, 1" : : "r"(value) : "memory");
   __set_CP(15, 0, value, 14, 2, 1);
 }
 
@@ -336,7 +347,6 @@ __STATIC_FORCEINLINE void __set_CNTP_CTL(uint32_t value)
 __STATIC_FORCEINLINE uint32_t __get_CNTP_CTL(void)
 {
   uint32_t result;
-  // __ASM volatile("MRC p15, 0, %0, c14, c2, 1" : "=r"(result) : : "memory");
   __get_CP(15, 0, result, 14, 2, 1);
   return result;
 }
@@ -349,7 +359,6 @@ __STATIC_FORCEINLINE uint32_t __get_CNTP_CTL(void)
  */
 __STATIC_FORCEINLINE void __set_TLBIALL(uint32_t value)
 {
-//   __ASM volatile("MCR p15, 0, %0, c8, c7, 0" : : "r"(value) : "memory");
   __set_CP(15, 0, value, 8, 7, 0);
 }
 
@@ -359,7 +368,6 @@ __STATIC_FORCEINLINE void __set_TLBIALL(uint32_t value)
  */
 __STATIC_FORCEINLINE void __set_BPIALL(uint32_t value)
 {
-//   __ASM volatile("MCR p15, 0, %0, c7, c5, 6" : : "r"(value) : "memory");
   __set_CP(15, 0, value, 7, 5, 6);
 }
 
@@ -369,7 +377,6 @@ __STATIC_FORCEINLINE void __set_BPIALL(uint32_t value)
  */
 __STATIC_FORCEINLINE void __set_ICIALLU(uint32_t value)
 {
-//   __ASM volatile("MCR p15, 0, %0, c7, c5, 0" : : "r"(value) : "memory");
   __set_CP(15, 0, value, 7, 5, 0);
 }
 
@@ -379,7 +386,6 @@ __STATIC_FORCEINLINE void __set_ICIALLU(uint32_t value)
  */
 __STATIC_FORCEINLINE void __set_DCCMVAC(uint32_t value)
 {
-//   __ASM volatile("MCR p15, 0, %0, c7, c10, 1" : : "r"(value) : "memory");
   __set_CP(15, 0, value, 7, 10, 1);
 }
 
@@ -389,7 +395,6 @@ __STATIC_FORCEINLINE void __set_DCCMVAC(uint32_t value)
  */
 __STATIC_FORCEINLINE void __set_DCIMVAC(uint32_t value)
 {
-//   __ASM volatile("MCR p15, 0, %0, c7, c6, 1" : : "r"(value) : "memory");
   __set_CP(15, 0, value, 7, 6, 1);
 }
 
@@ -399,7 +404,6 @@ __STATIC_FORCEINLINE void __set_DCIMVAC(uint32_t value)
  */
 __STATIC_FORCEINLINE void __set_DCCIMVAC(uint32_t value)
 {
-//   __ASM volatile("MCR p15, 0, %0, c7, c14, 1" : : "r"(value) : "memory");
   __set_CP(15, 0, value, 7, 14, 1);
 }
 

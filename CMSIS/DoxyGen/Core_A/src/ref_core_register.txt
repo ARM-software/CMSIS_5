@@ -782,6 +782,30 @@ Consider \ref __get_MPIDR to access this register.
 /** @} */
 /* end group CMSIS_MPIDR */
 
+/* CNTFRQ Register */
+/**
+\defgroup CMSIS_CNTFRQ Counter Frequency register (CNTFRQ)
+\ingroup CMSIS_core_register
+\brief Indicates the clock frequency of the system counter.
+\details
+Consider \ref __get_CNTFRQ and \ref __set_CNTFRQ to access this register.
+
+Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
+@{
+*/
+/**
+\fn __STATIC_INLINE void __set_CNTFRQ(uint32_t value) 
+\details
+  This function assigns the given value to \ref CMSIS_CNTFRQ.
+
+\fn __STATIC_INLINE uint32_t __get_CNTFRQ() 
+\details
+  This function returns the value of the \ref CMSIS_CNTFRQ.
+*/
+
+/** @} */
+/* end group CMSIS_CNTFRQ */
+
 /* CNTP_CTL Register */
 /**
 \defgroup CMSIS_CNTP_CTL PL1 Physical Timer Control register (CNTP_CTL)
@@ -814,6 +838,30 @@ Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
 /** @} */
 /* end group CMSIS_CNTP_CTL */
 
+/* CNTP_CVAL Register */
+/**
+\defgroup CMSIS_CNTP_CVAL PL1 Physical Timer Compare Value register (CNTP_CVAL)
+\ingroup CMSIS_core_register
+\brief Holds the 64-bit compare value for the PL1 physical timer.
+\details
+Consider \ref __get_CNTP_CVAL and \ref __set_CNTP_CVAL to access this register.
+
+Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
+@{
+*/
+/**
+\fn __STATIC_INLINE void __set_CNTP_CVAL(uint32_t value) 
+\details
+  This function assigns the given value to \ref CMSIS_CNTP_CVAL.
+
+\fn __STATIC_INLINE uint32_t __get_CNTP_CVAL() 
+\details
+  This function returns the value of the \ref CMSIS_CNTP_CVAL.
+*/
+
+/** @} */
+/* end group CMSIS_CNTP_CVAL */
+
 /* CNTP_TVAL Register */
 /**
 \defgroup CMSIS_CNTP_TVAL PL1 Physical Timer Value register (CNTP_TVAL)
@@ -837,6 +885,26 @@ Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
 
 /** @} */
 /* end group CMSIS_CNTP_TVAL */
+
+/* CNTPCT Register */
+/**
+\defgroup CMSIS_CNTPCT PL1 Physical Count register (CNTPCT)
+\ingroup CMSIS_core_register
+\brief Holds the 64-bit physical count value.
+\details
+Consider \ref __get_CNTPCT to access this register.
+
+Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
+@{
+*/
+/**
+\fn __STATIC_INLINE uint64_t __get_CNTPCT() 
+\details
+  This function returns the value of the \ref CMSIS_CNTPCT.
+*/
+
+/** @} */
+/* end group CMSIS_CNTPCT */
 
 /* Stack Pointer */
 /**
