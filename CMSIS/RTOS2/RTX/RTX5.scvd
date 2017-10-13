@@ -754,14 +754,6 @@
           TCB[i].cb_valid = (TCB[i].id == 1) &amp;&amp; (TCB[i].state != 0) &amp;&amp; (TCB[i].sp != 0);
         </calc>
 
-        <!-- Determine stack usage -->
-        <calc cond="TCB[i].sp != 0">
-          TCB[i].stack_val  = __CalcMemUsed (TCB[i].stack_mem, TCB[i].stack_size, 0xCCCCCCCC, 0xE25A2EA5);
-          TCB[i].stack_over = TCB[i].stack_val >> 31;
-          TCB[i].stack_maxb = TCB[i].stack_over ? TCB[i].stack_size : TCB[i].stack_val &amp; 0xFFFFF;
-          TCB[i].stack_maxp = TCB[i].stack_over ? 100 : (TCB[i].stack_val >> 20) &amp; 0x1FF;
-        </calc>
-
         <!-- Stack pointer for running thread -->
         <calc cond="TCB[i].state == 2">
           sp = __GetRegVal ("PSP");
@@ -784,6 +776,31 @@
           TCB[i].stack_curp  = TCB[i].stack_curb;
           TCB[i].stack_curp *= 100;
           TCB[i].stack_curp /= TCB[i].stack_size;
+        </calc>
+
+        <!-- Check for current sp overflow -->
+        <calc cond="TCB[i].sp != 0">
+          TCB[i].stack_over = (sp &lt;= TCB[i].stack_mem) ? 1 : 0;
+        </calc>
+
+        <!-- Check also control values to determine maximum stack usage -->
+        <calc cond="(TCB[i].sp != 0) &amp;&amp; (TCB[i].stack_over == 0) &amp;&amp; (TCB[i].stack_size &lt; 65536)">
+          TCB[i].stack_val  = __CalcMemUsed (TCB[i].stack_mem, TCB[i].stack_size, 0xCCCCCCCC, 0xE25A2EA5);
+          TCB[i].stack_over =  TCB[i].stack_val >> 31;
+          TCB[i].stack_maxb =  TCB[i].stack_val &amp; 0xFFFFF;
+          TCB[i].stack_maxp = (TCB[i].stack_val >> 20) &amp; 0x1FF;
+        </calc>
+
+        <!-- Set max usage in case of stack overflow -->
+        <calc cond="(TCB[i].sp != 0) &amp;&amp; (TCB[i].stack_over != 0)">
+          TCB[i].stack_maxb = TCB[i].stack_size;
+          TCB[i].stack_maxp = 100;
+        </calc>
+
+        <!-- Adjust maximum usage in case if current sp below max -->
+        <calc cond="(TCB[i].sp != 0) &amp;&amp; (TCB[i].stack_curb &gt;= TCB[i].stack_maxb)">
+          TCB[i].stack_maxb = TCB[i].stack_curb;
+          TCB[i].stack_maxp = TCB[i].stack_curp;
         </calc>
 
         <calc>
