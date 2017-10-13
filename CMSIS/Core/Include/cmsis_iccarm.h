@@ -445,15 +445,15 @@ __packed struct  __iar_u32 { uint32_t v; };
     #undef __get_APSR
 
     __STATIC_INLINE uint8_t __CLZ(uint32_t data) {
-      if (data == 0u) { return 32u; }
+      if (data == 0U) { return 32U; }
 
       uint32_t count = 0;
-      uint32_t mask = 0x80000000;
+      uint32_t mask = 0x80000000U;
 
       while ((data & mask) == 0)
       {
-        count += 1u;
-        mask = mask >> 1u;
+        count += 1U;
+        mask = mask >> 1U;
       }
       return (count);
     }
