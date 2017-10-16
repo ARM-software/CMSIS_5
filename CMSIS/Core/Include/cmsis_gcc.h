@@ -380,7 +380,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PRIMASK(void)
 {
   uint32_t result;
 
-  __ASM volatile ("MRS %0, primask" : "=r" (result) );
+  __ASM volatile ("MRS %0, primask" : "=r" (result) :: "memory" );
   return(result);
 }
 
@@ -395,7 +395,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PRIMASK_NS(void
 {
   uint32_t result;
 
-  __ASM volatile ("MRS %0, primask_ns" : "=r" (result) );
+  __ASM volatile ("MRS %0, primask_ns" : "=r" (result) :: "memory" );
   return(result);
 }
 #endif
