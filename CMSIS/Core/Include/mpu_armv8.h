@@ -278,7 +278,7 @@ __STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRI
 */
 __STATIC_INLINE void ARM_MPU_LoadEx(MPU_Type* mpu, uint32_t rnr, ARM_MPU_Region_t const* table, uint32_t cnt) 
 {
-  static const uint32_t rowWordSize = sizeof(ARM_MPU_Region_t)/4U;
+  const uint32_t rowWordSize = sizeof(ARM_MPU_Region_t)/4U;
   if (cnt == 1U) {
     mpu->RNR = rnr;
     orderedCpy(&(mpu->RBAR), &(table->RBAR), rowWordSize);

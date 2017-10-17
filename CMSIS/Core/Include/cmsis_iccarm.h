@@ -441,19 +441,19 @@ __packed struct  __iar_u32 { uint32_t v; };
     __STATIC_INLINE uint8_t __CLZ(uint32_t data) {
       if (data == 0u) { return 32u; }
 
-      uint32_t count = 0;
-      uint32_t mask = 0x80000000;
+      uint32_t count = 0U;
+      uint32_t mask = 0x80000000U;
 
-      while ((data & mask) == 0)
+      while ((data & mask) == 0U)
       {
-        count += 1u;
-        mask = mask >> 1u;
+        count += 1U;
+        mask = mask >> 1U;
       }
-      return (count);
+      return count;
     }
 
     __STATIC_INLINE uint32_t __RBIT(uint32_t v) {
-      uint8_t sc = 31;
+      uint8_t sc = 31U;
       uint32_t r = v;
       for (v >>= 1U; v; v >>= 1U)
       {
