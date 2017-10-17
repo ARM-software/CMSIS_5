@@ -123,7 +123,8 @@
 #ifndef __UNALIGNED_UINT16_READ
   #pragma language=save
   #pragma language=extended
-  __IAR_FT uint16_t __iar_uint16_read(void const *ptr) {
+  __IAR_FT uint16_t __iar_uint16_read(void const *ptr)
+  {
     return *(__packed uint16_t*)(ptr);
   }
   #pragma language=restore
@@ -134,7 +135,8 @@
 #ifndef __UNALIGNED_UINT16_WRITE
   #pragma language=save
   #pragma language=extended
-  __IAR_FT void __iar_uint16_write(void const *ptr, uint16_t val) {
+  __IAR_FT void __iar_uint16_write(void const *ptr, uint16_t val)
+  {
     *(__packed uint16_t*)(ptr) = val;;
   }
   #pragma language=restore
@@ -144,7 +146,8 @@
 #ifndef __UNALIGNED_UINT32_READ
   #pragma language=save
   #pragma language=extended
-  __IAR_FT uint32_t __iar_uint32_read(void const *ptr) {
+  __IAR_FT uint32_t __iar_uint32_read(void const *ptr)
+  {
     return *(__packed uint32_t*)(ptr);
   }
   #pragma language=restore
@@ -154,7 +157,8 @@
 #ifndef __UNALIGNED_UINT32_WRITE
   #pragma language=save
   #pragma language=extended
-  __IAR_FT void __iar_uint32_write(void const *ptr, uint32_t val) {
+  __IAR_FT void __iar_uint32_write(void const *ptr, uint32_t val)
+  {
     *(__packed uint32_t*)(ptr) = val;;
   }
   #pragma language=restore
@@ -268,7 +272,8 @@
   #define __REV     __iar_builtin_REV
   #define __REV16   __iar_builtin_REV16
 
-  __IAR_FT int16_t __REVSH(int16_t val) {
+  __IAR_FT int16_t __REVSH(int16_t val)
+  {
     return (int16_t) __iar_builtin_REVSH(val);
   }
 
@@ -379,23 +384,27 @@
     __ASM volatile("MSR  cpsr_c, %0" : : "r" (mode) : "memory");
   }
 
-  __IAR_FT uint32_t __LDREXW(uint32_t volatile *ptr) {
+  __IAR_FT uint32_t __LDREXW(uint32_t volatile *ptr)
+  {
     return __LDREX((unsigned long *)ptr);
   }
 
-  __IAR_FT uint32_t __STREXW(uint32_t value, uint32_t volatile *ptr) {
+  __IAR_FT uint32_t __STREXW(uint32_t value, uint32_t volatile *ptr)
+  {
     return __STREX(value, (unsigned long *)ptr);
   }
 
 
-  __IAR_FT uint32_t __RRX(uint32_t value) {
+  __IAR_FT uint32_t __RRX(uint32_t value)
+  {
     uint32_t result;
     __ASM("RRX      %0, %1" : "=r"(result) : "r" (value) : "cc");
     return(result);
   }
 
 
-  __IAR_FT uint32_t __ROR(uint32_t op1, uint32_t op2) {
+  __IAR_FT uint32_t __ROR(uint32_t op1, uint32_t op2)
+  {
     return (op1 >> op2) | (op1 << ((sizeof(op1)*8)-op2));
   }
 

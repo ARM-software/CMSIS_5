@@ -502,14 +502,16 @@ __ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "memory");
 /** \brief  Get Mode
     \return                Processor Mode
  */
-__STATIC_FORCEINLINE uint32_t __get_mode(void) {
+__STATIC_FORCEINLINE uint32_t __get_mode(void)
+{
     return (__get_CPSR() & 0x1FU);
 }
 
 /** \brief  Set Mode
     \param [in]    mode  Mode value to set
  */
-__STATIC_FORCEINLINE void __set_mode(uint32_t mode) {
+__STATIC_FORCEINLINE void __set_mode(uint32_t mode)
+{
   __ASM volatile("MSR  cpsr_c, %0" : : "r" (mode) : "memory");
 }
 
@@ -629,8 +631,10 @@ __STATIC_INLINE void __L1C_MaintainDCacheSetWay(uint32_t level, uint32_t maint)
   log2_linesize = (ccsidr & 0x00000007) + 2 + 2;
   log2_num_ways = log2_up(num_ways);
   shift_way = 32 - log2_num_ways;
-  for(int way = num_ways-1; way >= 0; way--) {
-    for(int set = num_sets-1; set >= 0; set--) {
+  for(int way = num_ways-1; way >= 0; way--)
+  {
+    for(int set = num_sets-1; set >= 0; set--)
+    {
       Dummy = (level << 1) | (set << log2_linesize) | (way << shift_way);
       switch (maint)
       {
@@ -656,7 +660,8 @@ __STATIC_INLINE void __L1C_MaintainDCacheSetWay(uint32_t level, uint32_t maint)
 
   Generic mechanism for cleaning/invalidating the entire data or unified cache to the point of coherency
  */
-__STATIC_INLINE void __L1C_CleanInvalidateCache(uint32_t op) {
+__STATIC_INLINE void __L1C_CleanInvalidateCache(uint32_t op)
+{
   register volatile uint32_t clidr;
   uint32_t cache_type;
   clidr =  __get_CLIDR();
@@ -675,7 +680,8 @@ __STATIC_INLINE void __L1C_CleanInvalidateCache(uint32_t op) {
 
   Critical section, called from undef handler, so systick is disabled
  */
-__STATIC_INLINE void __FPU_Enable(void) {
+__STATIC_INLINE void __FPU_Enable(void)
+{
   __ASM volatile(
         //Permit access to VFP/NEON, registers by modifying CPACR
     "        MRC     p15,0,R1,c1,c0,2  \n"

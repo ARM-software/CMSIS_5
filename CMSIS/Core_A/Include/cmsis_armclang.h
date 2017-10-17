@@ -184,7 +184,8 @@
 __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 {
   op2 %= 32U;
-  if (op2 == 0U) {
+  if (op2 == 0U)
+  {
     return op1;
   }
   return (op1 >> op2) | (op1 << (32U - op2));
