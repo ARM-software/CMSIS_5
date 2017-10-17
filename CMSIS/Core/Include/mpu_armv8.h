@@ -172,11 +172,11 @@ __STATIC_INLINE void ARM_MPU_SetMemAttrEx(MPU_Type* mpu, uint8_t idx, uint8_t at
   const uint32_t pos = ((idx % 4U) * 8U);
   const uint32_t mask = 0xFFU << pos;
   
-  if (reg >= (sizeof(MPU->MAIR) / sizeof(MPU->MAIR[0]))) {
+  if (reg >= (sizeof(mpu->MAIR) / sizeof(mpu->MAIR[0]))) {
     return; // invalid index
   }
   
-  MPU->MAIR[reg] = ((MPU->MAIR[reg] & ~mask) | ((attr << pos) & mask));
+  mpu->MAIR[reg] = ((mpu->MAIR[reg] & ~mask) | ((attr << pos) & mask));
 }
 
 /** Set the memory attribute encoding.
@@ -205,8 +205,8 @@ __STATIC_INLINE void ARM_MPU_SetMemAttr_NS(uint8_t idx, uint8_t attr)
 */
 __STATIC_INLINE void ARM_MPU_ClrRegionEx(MPU_Type* mpu, uint32_t rnr)
 {
-  MPU->RNR = rnr;
-  MPU->RLAR = 0U;
+  mpu->RNR = rnr;
+  mpu->RLAR = 0U;
 }
 
 /** Clear and disable the given MPU region.
@@ -235,9 +235,9 @@ __STATIC_INLINE void ARM_MPU_ClrRegion_NS(uint32_t rnr)
 */   
 __STATIC_INLINE void ARM_MPU_SetRegionEx(MPU_Type* mpu, uint32_t rnr, uint32_t rbar, uint32_t rlar)
 {
-  MPU->RNR = rnr;
-  MPU->RBAR = rbar;
-  MPU->RLAR = rlar;
+  mpu->RNR = rnr;
+  mpu->RBAR = rbar;
+  mpu->RLAR = rlar;
 }
 
 /** Configure the given MPU region.
