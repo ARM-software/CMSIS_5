@@ -372,6 +372,8 @@ void TC_CoreFunc_FPSCR(void) {
 
 #if (defined (__FPU_USED   ) && (__FPU_USED    == 1U))
   ASSERT_TRUE(result != fpscr);
+#else
+  (void)result;
 #endif
 }
 #endif

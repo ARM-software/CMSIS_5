@@ -12,7 +12,7 @@
  *      Test implementation
  *----------------------------------------------------------------------------*/
 
-static void ClearMpu() {
+static void ClearMpu(void) {
   for(uint32_t i = 0U; i < 8U; ++i) {
     MPU->RNR = i;
     MPU->RBAR = 0U;

@@ -239,7 +239,7 @@
             <wLevel>3</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-mcpu=cortex-m33 -Wall -Wextra -Wstrict-prototypes -Wshadow</MiscControls>
+              <MiscControls>-march=armv8-m.main -mtune=cortex-m33 -Wall -Wextra -Wstrict-prototypes -Wshadow</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>.;..\..\..\Include</IncludePath>
@@ -249,7 +249,7 @@
             <bBE>0</bBE>
             <interw>1</interw>
             <VariousControls>
-              <MiscControls>-mcpu=cortex-m33 -Wall</MiscControls>
+              <MiscControls>-march=armv8-m.main -mtune=cortex-m33 -Wall</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>.;..\..\..\Include</IncludePath>
@@ -266,7 +266,7 @@
             <BSSAddressRange></BSSAddressRange>
             <IncludeLibs></IncludeLibs>
             <IncludeDir></IncludeDir>
-            <Misc>-mcpu=cortex-m33 --specs=rdimon.specs</Misc>
+            <Misc>-march=armv8-m.main -mtune=cortex-m33 --specs=rdimon.specs</Misc>
             <ScatterFile>.\RTE\Device\ARMCM33\gcc_arm.ld</ScatterFile>
           </LDarm>
         </TargetArm>
