@@ -157,7 +157,7 @@ __STATIC_FORCEINLINE  void __DMB(void)
 
 /**
   \brief   Reverse byte order (32 bit)
-  \details Reverses the byte order in unsigned integer value, i.e. 0xSTUVWXYZ becomes 0xYZWXUVST.
+  \details Reverses the byte order in unsigned integer value. For example, 0x12345678 becomes 0x78563412.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -169,18 +169,18 @@ __STATIC_FORCEINLINE  uint32_t __REV(uint32_t value)
   uint32_t result;
 
   __ASM volatile ("rev %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
-  return(result);
+  return result;
 #endif
 }
 
 /**
   \brief   Reverse byte order (16 bit)
-  \details Reverses the byte order in unsigned short value, i.e. 0xWXYZ becomes 0xYZWX.
+  \details Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 0x34127856.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
 #ifndef __NO_EMBEDDED_ASM
-__attribute__((section(".rev16_text"))) __STATIC_INLINE uint16_t __REV16(uint16_t value)
+__attribute__((section(".rev16_text"))) __STATIC_INLINE uint32_t __REV16(uint32_t value)
 {
   uint32_t result;
   __ASM volatile("rev16 %0, %1" : "=r" (result) : "r" (value));
@@ -189,20 +189,20 @@ __attribute__((section(".rev16_text"))) __STATIC_INLINE uint16_t __REV16(uint16_
 #endif
 
 /**
-  \brief   Reverse byte order in signed short value
-  \details Reverses the byte order in a signed short value with sign extension to integer.
+  \brief   Reverse byte order (16 bit)
+  \details Reverses the byte order in a 16-bit value and returns the signed 16-bit result. For example, 0x0080 becomes 0x8000.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-__STATIC_FORCEINLINE  int32_t __REVSH(int32_t value)
+__STATIC_FORCEINLINE  int16_t __REVSH(int16_t value)
 {
 #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
-  return (short)__builtin_bswap16(value);
+  return (int16_t)__builtin_bswap16(value);
 #else
-  int32_t result;
+  int16_t result;
 
   __ASM volatile ("revsh %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
-  return(result);
+  return result;
 #endif
 }
 
@@ -215,8 +215,13 @@ __STATIC_FORCEINLINE  int32_t __REVSH(int32_t value)
  */
 __STATIC_FORCEINLINE  uint32_t __ROR(uint32_t op1, uint32_t op2)
 {
+  op2 %= 32U;
+  if (op2 == 0U) {
+    return op1;
+  }
   return (op1 >> op2) | (op1 << (32U - op2));
 }
+
 
 /**
   \brief   Breakpoint

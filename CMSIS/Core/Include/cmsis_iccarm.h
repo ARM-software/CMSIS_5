@@ -307,17 +307,14 @@ __packed struct  __iar_u32 { uint32_t v; };
   #define __TZ_get_MSPLIM_NS()        (__arm_rsr("MSPLIM_NS"))
   #define __TZ_set_MSPLIM_NS(VALUE)   (__arm_wsr("MSPLIM_NS", (VALUE)))
 
-  #define __NOP    __iar_builtin_no_operation
+  #define __NOP     __iar_builtin_no_operation
 
-  __IAR_FT uint8_t __CLZ(uint32_t val) {
-    return __iar_builtin_CLZ(val);
-  }
+  #define __CLZ     __iar_builtin_CLZ  
+  #define __CLREX   __iar_builtin_CLREX
 
-  #define __CLREX __iar_builtin_CLREX
-
-  #define __DMB   __iar_builtin_DMB
-  #define __DSB   __iar_builtin_DSB
-  #define __ISB   __iar_builtin_ISB
+  #define __DMB     __iar_builtin_DMB
+  #define __DSB     __iar_builtin_DSB
+  #define __ISB     __iar_builtin_ISB
 
   #define __LDREXB  __iar_builtin_LDREXB
   #define __LDREXH  __iar_builtin_LDREXH
@@ -326,10 +323,7 @@ __packed struct  __iar_u32 { uint32_t v; };
   #define __RBIT    __iar_builtin_RBIT
   #define __REV     __iar_builtin_REV
   #define __REV16   __iar_builtin_REV16
-
-  __IAR_FT int32_t __REVSH(int32_t val) {
-    return __iar_builtin_REVSH((int16_t)val);
-  }
+  #define __REVSH   __iar_builtin_REVSH
 
   #define __ROR     __iar_builtin_ROR
   #define __RRX     __iar_builtin_RRX
@@ -445,15 +439,15 @@ __packed struct  __iar_u32 { uint32_t v; };
     #undef __get_APSR
 
     __STATIC_INLINE uint8_t __CLZ(uint32_t data) {
-      if (data == 0U) { return 32U; }
+      if (data == 0u) { return 32u; }
 
       uint32_t count = 0;
-      uint32_t mask = 0x80000000U;
+      uint32_t mask = 0x80000000;
 
       while ((data & mask) == 0)
       {
-        count += 1U;
-        mask = mask >> 1U;
+        count += 1u;
+        mask = mask >> 1u;
       }
       return (count);
     }

@@ -49,14 +49,11 @@ void TC_CoreInstr_REV (void) {
 /**
 \brief Test case: TC_CoreInstr_REV16
 \details
-- Check if __REV16 instrinsic swaps the bytes in a halfword.
+- Check if __REV16 instrinsic swaps the bytes in both halfwords independendly.
 */
 void TC_CoreInstr_REV16(void) {
-  uint16_t result = __REV16(0x4711U);
-  ASSERT_TRUE(result == 0x1147U);
-
-  result = __REV16(0x4711U);
-  ASSERT_TRUE(result == 0x1147U);
+  uint32_t result = __REV16(0x47110815U);
+  ASSERT_TRUE(result == 0x11471508U); 
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -69,8 +66,11 @@ void TC_CoreInstr_REVSH(void) {
   int16_t result = __REVSH(0x4711);
   ASSERT_TRUE(result == 0x1147);
 
-  result = __REVSH(-4711);
-  ASSERT_TRUE(result == -26131);
+  result = __REVSH((int16_t)0x8000);
+  ASSERT_TRUE(result == 0x0080);
+
+  result = __REVSH(0x0080);
+  ASSERT_TRUE(result == (int16_t)0x8000);
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -127,7 +127,7 @@ void TC_CoreInstr_RBIT (void) {
 */
 
 void TC_CoreInstr_CLZ (void) {
-  int32_t result = __CLZ(0x00U);
+  uint32_t result = __CLZ(0x00U);
   ASSERT_TRUE(result == 32);
 
   result = __CLZ(0x00000001U);
