@@ -251,17 +251,14 @@
 
   #include "cmsis_cp15.h"
 
-  #define __NOP    __iar_builtin_no_operation
+  #define __NOP     __iar_builtin_no_operation
 
-  __IAR_FT uint8_t __CLZ(uint32_t val) {
-    return __iar_builtin_CLZ(val);
-  }
+  #define __CLZ     __iar_builtin_CLZ
+  #define __CLREX   __iar_builtin_CLREX
 
-  #define __CLREX __iar_builtin_CLREX
-
-  #define __DMB   __iar_builtin_DMB
-  #define __DSB   __iar_builtin_DSB
-  #define __ISB   __iar_builtin_ISB
+  #define __DMB     __iar_builtin_DMB
+  #define __DSB     __iar_builtin_DSB
+  #define __ISB     __iar_builtin_ISB
 
   #define __LDREXB  __iar_builtin_LDREXB
   #define __LDREXH  __iar_builtin_LDREXH
@@ -270,10 +267,7 @@
   #define __RBIT    __iar_builtin_RBIT
   #define __REV     __iar_builtin_REV
   #define __REV16   __iar_builtin_REV16
-
-  __IAR_FT int32_t __REVSH(int32_t val) {
-    return __iar_builtin_REVSH((int16_t)val);
-  }
+  #define __REVSH   __iar_builtin_REVSH
 
   #define __ROR     __iar_builtin_ROR
   #define __RRX     __iar_builtin_RRX

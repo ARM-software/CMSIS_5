@@ -148,40 +148,29 @@
 
 /**
   \brief   Reverse byte order (32 bit)
-  \details Reverses the byte order in unsigned integer value, i.e. 0xSTUVWXYZ becomes 0xYZWXUVST.
+  \details Reverses the byte order in unsigned integer value. For example, 0x12345678 becomes 0x78563412.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#define __REV                             __builtin_bswap32
+#define __REV(value)   __builtin_bswap32(value)
 
 /**
   \brief   Reverse byte order (16 bit)
-  \details Reverses the byte order in unsigned short value, i.e. 0xWXYZ becomes 0xYZWX.
+  \details Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 0x34127856.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#ifndef __NO_EMBEDDED_ASM
-__attribute__((section(".rev16_text"))) __STATIC_INLINE uint16_t __REV16(uint16_t value)
-{
-  uint32_t result;
-  __ASM volatile("rev16 %0, %1" : "=r" (result) : "r" (value));
-  return result;
-}
-#endif
+#define __REV16(value) __ROR(__REV(value), 16)
+
 
 /**
-  \brief   Reverse byte order in signed short value
+  \brief   Reverse byte order (16 bit)
+  \details Reverses the byte order in a 16-bit value and returns the signed 16-bit result. For example, 0x0080 becomes 0x8000.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#ifndef __NO_EMBEDDED_ASM
-__attribute__((section(".revsh_text"))) __STATIC_INLINE int32_t __REVSH(int32_t value)
-{
-  int32_t result;
-  __ASM volatile("revsh %0, %1" : "=r" (result) : "r" (value));
-  return result;
-}
-#endif
+#define __REVSH(value) (int16_t)__builtin_bswap16(value)
+
 
 /**
   \brief   Rotate Right in unsigned value (32 bit)
@@ -190,31 +179,36 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE int32_t __REVSH(int32_t 
   \param [in]    op2  Number of Bits to rotate
   \return               Rotated value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
+__STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 {
+  op2 %= 32U;
+  if (op2 == 0U) {
+    return op1;
+  }
   return (op1 >> op2) | (op1 << (32U - op2));
 }
+
 
 /**
   \brief   Breakpoint
   \param [in]    value  is ignored by the processor.
                  If required, a debugger can use it to store additional information about the breakpoint.
  */
-#define __BKPT(value)                       __ASM volatile ("bkpt "#value)
+#define __BKPT(value)   __ASM volatile ("bkpt "#value)
 
 /**
   \brief   Reverse bit order of value
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#define __RBIT                            __builtin_arm_rbit
+#define __RBIT          __builtin_arm_rbit
 
 /**
   \brief   Count leading zeros
   \param [in]  value  Value to count the leading zeros
   \return             number of leading zeros in value
  */
-#define __CLZ                             __builtin_clz
+#define __CLZ           (uint8_t)__builtin_clz
 
 /**
   \brief   LDR Exclusive (8 bit)
@@ -315,7 +309,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint
 /** \brief  Get CPSR Register
     \return               CPSR Register value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_CPSR(void)
+__STATIC_FORCEINLINE uint32_t __get_CPSR(void)
 {
   uint32_t result;
   __ASM volatile("MRS %0, cpsr" : "=r" (result) );
@@ -325,7 +319,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_CPSR(void)
 /** \brief  Set CPSR Register
     \param [in]    cpsr  CPSR value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_CPSR(uint32_t cpsr)
+__STATIC_FORCEINLINE void __set_CPSR(uint32_t cpsr)
 {
 __ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "memory");
 }
@@ -333,7 +327,7 @@ __ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "memory");
 /** \brief  Get Mode
     \return                Processor Mode
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_mode(void)
+__STATIC_FORCEINLINE uint32_t __get_mode(void)
 {
 	return (__get_CPSR() & 0x1FU);
 }
@@ -341,7 +335,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_mode(void)
 /** \brief  Set Mode
     \param [in]    mode  Mode value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_mode(uint32_t mode)
+__STATIC_FORCEINLINE void __set_mode(uint32_t mode)
 {
   __ASM volatile("MSR  cpsr_c, %0" : : "r" (mode) : "memory");
 }
@@ -349,7 +343,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_mode(uint32_t mode)
 /** \brief  Get Stack Pointer
     \return Stack Pointer value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_SP()
+__STATIC_FORCEINLINE uint32_t __get_SP()
 {
   uint32_t result;
   __ASM volatile("MOV  %0, sp" : "=r" (result) : : "memory");
@@ -359,7 +353,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_SP()
 /** \brief  Set Stack Pointer
     \param [in]    stack  Stack Pointer value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_SP(uint32_t stack)
+__STATIC_FORCEINLINE void __set_SP(uint32_t stack)
 {
   __ASM volatile("MOV  sp, %0" : : "r" (stack) : "memory");
 }
@@ -367,7 +361,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_SP(uint32_t stack)
 /** \brief  Get USR/SYS Stack Pointer
     \return USR/SYS Stack Pointer value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_SP_usr()
+__STATIC_FORCEINLINE uint32_t __get_SP_usr()
 {
   uint32_t cpsr;
   uint32_t result;
@@ -384,7 +378,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_SP_usr()
 /** \brief  Set USR/SYS Stack Pointer
     \param [in]    topOfProcStack  USR/SYS Stack Pointer value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_SP_usr(uint32_t topOfProcStack)
+__STATIC_FORCEINLINE void __set_SP_usr(uint32_t topOfProcStack)
 {
   uint32_t cpsr;
   __ASM volatile(
@@ -399,7 +393,7 @@ __attribute__((always_inline)) __STATIC_INLINE void __set_SP_usr(uint32_t topOfP
 /** \brief  Get FPEXC
     \return               Floating Point Exception Control register value
  */
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPEXC(void)
+__STATIC_FORCEINLINE uint32_t __get_FPEXC(void)
 {
 #if (__FPU_PRESENT == 1)
   uint32_t result;
@@ -413,7 +407,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPEXC(void)
 /** \brief  Set FPEXC
     \param [in]    fpexc  Floating Point Exception Control value to set
  */
-__attribute__((always_inline)) __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
+__STATIC_FORCEINLINE void __set_FPEXC(uint32_t fpexc)
 {
 #if (__FPU_PRESENT == 1)
   __ASM volatile ("VMSR fpexc, %0" : : "r" (fpexc) : "memory");

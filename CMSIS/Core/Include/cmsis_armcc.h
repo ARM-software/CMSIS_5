@@ -445,9 +445,10 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
                    __schedule_barrier();\
                 } while (0U)
 
+                  
 /**
   \brief   Reverse byte order (32 bit)
-  \details Reverses the byte order in unsigned integer value, i.e. 0xSTUVWXYZ becomes 0xYZWXUVST.
+  \details Reverses the byte order in unsigned integer value. For example, 0x12345678 becomes 0x78563412.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -456,12 +457,12 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 
 /**
   \brief   Reverse byte order (16 bit)
-  \details Reverses the byte order in unsigned short value, i.e. 0xWXYZ becomes 0xYZWX.
+  \details Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 0x34127856.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
 #ifndef __NO_EMBEDDED_ASM
-__attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint16_t __REV16(uint16_t value)
+__attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t value)
 {
   rev16 r0, r0
   bx lr
@@ -470,8 +471,8 @@ __attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint16_t __REV16(u
 
 
 /**
-  \brief   Reverse byte order in signed short value
-  \details Reverses the byte order in a signed short value with sign extension to integer.
+  \brief   Reverse byte order (16 bit)
+  \details Reverses the byte order in a 16-bit value and returns the signed 16-bit result. For example, 0x0080 becomes 0x8000.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
