@@ -25,6 +25,8 @@
 #ifndef __CMSIS_ARMCLANG_H
 #define __CMSIS_ARMCLANG_H
 
+#pragma system_include         /* treat file as system include file for MISRA check */
+
 #ifndef __ARM_COMPAT_H
 #include <arm_compat.h>    /* Compatibility header for ARM Compiler 5 intrinsics */
 #endif
