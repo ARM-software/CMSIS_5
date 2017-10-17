@@ -895,7 +895,8 @@ __STATIC_FORCEINLINE int16_t __REVSH(int16_t value)
 __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 {
   op2 %= 32U;
-  if (op2 == 0U) {
+  if (op2 == 0U)
+  {
     return op1;
   }
   return (op1 >> op2) | (op1 << (32U - op2));
@@ -1238,12 +1239,16 @@ __STATIC_FORCEINLINE void __STRT(uint32_t value, volatile uint32_t *ptr)
  */
 __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
 {
-  if ((sat >= 1U) && (sat <= 32U)) {
+  if ((sat >= 1U) && (sat <= 32U))
+  {
     const int32_t max = (int32_t)((1U << (sat - 1U)) - 1U);
     const int32_t min = -1 - max ;
-    if (val > max) {
+    if (val > max)
+    {
       return max;
-    } else if (val < min) {
+    }
+    else if (val < min)
+    {
       return min;
     }
   }
@@ -1259,11 +1264,15 @@ __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
  */
 __STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat)
 {
-  if (sat <= 31U) {
+  if (sat <= 31U)
+  {
     const uint32_t max = ((1U << sat) - 1U);
-    if (val > (int32_t)max) {
+    if (val > (int32_t)max)
+    {
       return max;
-    } else if (val < 0) {
+    }
+    else if (val < 0)
+    {
       return 0U;
     }
   }
