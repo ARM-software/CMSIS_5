@@ -267,7 +267,10 @@
   #define __RBIT    __iar_builtin_RBIT
   #define __REV     __iar_builtin_REV
   #define __REV16   __iar_builtin_REV16
-  #define __REVSH   __iar_builtin_REVSH
+
+  __IAR_FT int16_t __REVSH(int16_t val) {
+    return (int16_t) __iar_builtin_REVSH(val);
+  }
 
   #define __ROR     __iar_builtin_ROR
   #define __RRX     __iar_builtin_RRX
