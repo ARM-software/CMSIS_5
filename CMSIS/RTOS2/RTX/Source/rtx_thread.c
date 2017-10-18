@@ -1194,13 +1194,6 @@ osStatus_t svcRtxThreadTerminate (osThreadId_t thread_id) {
     return osErrorParameter;
   }
 
-  // Don't allow termination of timer or idle thread
-  if ((thread == osRtxInfo.timer.thread) ||
-      (thread == osRtxInfo.thread.idle)) {
-    EvrRtxThreadError(thread, osErrorParameter);
-    return osErrorResource;
-  }
-
   // Check object state
   switch (thread->state & osRtxThreadStateMask) {
     case osRtxThreadRunning:
