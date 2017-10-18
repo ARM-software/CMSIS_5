@@ -78,8 +78,10 @@ __STATIC_INLINE uint32_t __get_PSP (void) {
   register uint32_t ret;
 
   __asm volatile (
+#if !defined ( __ICCARM__ )
     ".syntax unified\n\t"
     ".arm\n\t"
+#endif
     "sub  sp,sp,#4\n\t"
     "stm  sp,{sp}^\n\t"
     "pop  {%[ret]}\n\t"
