@@ -436,6 +436,10 @@ __packed struct  __iar_u32 { uint32_t v; };
     #define __set_FPSCR __cmsis_iar_set_FPSR_not_active
   #endif
 
+  #ifdef __INTRINSICS_INCLUDED
+  #error intrinsics.h is already included previously!
+  #endif
+  
   #include <intrinsics.h>
 
   #if __IAR_M0_FAMILY
