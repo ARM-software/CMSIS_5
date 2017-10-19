@@ -1,6 +1,30 @@
 # Parameters:
 # instance.parameter=value       #(type, mode) default = 'def value' : description : [min..max]
 #----------------------------------------------------------------------------------------------
+armcortexm0plusct.semihosting-enable=1                # (bool  , init-time) default = '1'      : Enable semihosting SVC traps. Applications that do not use semihosting must set this parameter to false.
+armcortexm0plusct.semihosting-Thumb_SVC=0xAB          # (int   , init-time) default = '0xAB'   : T32 SVC number for semihosting : [0x0..0xFF]
+armcortexm0plusct.semihosting-cmd_line=""             # (string, init-time) default = ''       : Command line available to semihosting SVC calls
+armcortexm0plusct.semihosting-heap_base=0x0           # (int   , init-time) default = '0x0'    : Virtual address of heap base : [0x0..0xFFFFFFFF]
+armcortexm0plusct.semihosting-heap_limit=0x0          # (int   , init-time) default = '0x10700000' : Virtual address of top of heap : [0x0..0xFFFFFFFF]
+armcortexm0plusct.semihosting-stack_base=0x0          # (int   , init-time) default = '0x10700000' : Virtual address of base of descending stack : [0x0..0xFFFFFFFF]
+armcortexm0plusct.semihosting-stack_limit=0x0         # (int   , init-time) default = '0x10800000' : Virtual address of stack limit : [0x0..0xFFFFFFFF]
+armcortexm0plusct.semihosting-cwd=""                  # (string, init-time) default = ''       : Base directory for semihosting file access.
+armcortexm0plusct.NUM_MPU_REGION=0x8                  # (int   , init-time) default = '0x0'    : Number of MPU regions : [0x0..0x8]
+armcortexm0plusct.NUM_IRQ=0x20                        # (int   , init-time) default = '0x20'   : Number of user interrupts : [0x0..0x20]
+armcortexm0plusct.BIGENDINIT=0                        # (bool  , init-time) default = '0'      : Initialize processor to big endian mode
+armcortexm0plusct.min_sync_level=0x0                  # (int   , run-time ) default = '0x0'    : force minimum syncLevel (0=off=default,1=syncState,2=postInsnIO,3=postInsnAll) : [0x0..0x3]
+armcortexm0plusct.cpi_mul=0x1                         # (int   , run-time ) default = '0x1'    : multiplier for calculating CPI (Cycles Per Instruction) : [0x1..0x7FFFFFFF]
+armcortexm0plusct.cpi_div=0x1                         # (int   , run-time ) default = '0x1'    : divider for calculating CPI (Cycles Per Instruction) : [0x1..0x7FFFFFFF]
+armcortexm0plusct.master_id=0x0                       # (int   , init-time) default = '0x0'    : Master ID presented in bus transactions : [0x0..0xFFFFFFFF]
+armcortexm0plusct.VTOR=1                              # (bool  , init-time) default = '1'      : Include Vector Table Offset Register
+armcortexm0plusct.DBG=1                               # (bool  , init-time) default = '1'      : Set whether debug extensions are implemented
+armcortexm0plusct.BKPT=0x4                            # (int   , init-time) default = '0x4'    : Number of breakpoint unit comparators implemented : [0x0..0x4]
+armcortexm0plusct.WPT=0x2                             # (int   , init-time) default = '0x2'    : Number of watchpoint unit comparators implemented : [0x0..0x2]
+armcortexm0plusct.USER=1                              # (bool  , init-time) default = '1'      : Enable support for Unprivileged/Privileged Extension
+armcortexm0plusct.SYST=1                              # (bool  , init-time) default = '1'      : Enable support for SysTick timer functionality
+armcortexm0plusct.WIC=1                               # (bool  , init-time) default = '1'      : Include support for WIC-mode deep sleep
+armcortexm0plusct.IRQDIS=0x0                          # (int   , init-time) default = '0x0'    : IRQ line disable mask. Bit n of this 32-bit parameter disables IRQ[n] : [0x0..0xFFFFFFFF]
+armcortexm0plusct.IOP=0                               # (bool  , init-time) default = '0'      : Send all d-side transactions to the port, io_port_out. Transactions which do not match should be returned to the port, io_port_in
 fvp_mps2.SCC_ID.Variant=0x0                           # (int   , init-time) default = '0x0'    : SCC_ID[23:20], X in the FGPA version 'rXpY' : [0x0..0xF]
 fvp_mps2.SCC_ID.Revision=0x1                          # (int   , init-time) default = '0x1'    : SCC_ID[3:0], Y in the FGPA version 'rXpY' : [0x0..0xF]
 fvp_mps2.iotss_systemcontrol.cpu0wait=0               # (bool  , init-time) default = '0'      : Whether to hold cpu0 in reset at boot
@@ -217,23 +241,4 @@ fvp_mps2.dma3.fifo_size=0x10                          # (int   , init-time) defa
 fvp_mps2.dma3.max_transfer=0x100                      # (int   , init-time) default = '0x100'  : Largest atomic transfer
 fvp_mps2.dma3.generate_clear=0                        # (bool  , init-time) default = '0'      : Generate clear response
 fvp_mps2.dma3.activate_delay=0x0                      # (int   , init-time) default = '0x0'    : request delay
-armcortexm0ct.semihosting-enable=1                    # (bool  , init-time) default = '1'      : Enable semihosting SVC traps. Applications that do not use semihosting must set this parameter to false.
-armcortexm0ct.semihosting-Thumb_SVC=0xAB              # (int   , init-time) default = '0xAB'   : T32 SVC number for semihosting : [0x0..0xFF]
-armcortexm0ct.semihosting-cmd_line=""                 # (string, init-time) default = ''       : Command line available to semihosting SVC calls
-armcortexm0ct.semihosting-heap_base=0x0               # (int   , init-time) default = '0x0'    : Virtual address of heap base : [0x0..0xFFFFFFFF]
-armcortexm0ct.semihosting-heap_limit=0x0              # (int   , init-time) default = '0x10700000' : Virtual address of top of heap : [0x0..0xFFFFFFFF]
-armcortexm0ct.semihosting-stack_base=0x0              # (int   , init-time) default = '0x10700000' : Virtual address of base of descending stack : [0x0..0xFFFFFFFF]
-armcortexm0ct.semihosting-stack_limit=0x0             # (int   , init-time) default = '0x10800000' : Virtual address of stack limit : [0x0..0xFFFFFFFF]
-armcortexm0ct.semihosting-cwd=""                      # (string, init-time) default = ''       : Base directory for semihosting file access.
-armcortexm0ct.NUM_IRQ=0x20                            # (int   , init-time) default = '0x20'   : Number of user interrupts : [0x1..0x20]
-armcortexm0ct.BIGENDINIT=0                            # (bool  , init-time) default = '0'      : Initialize processor to big endian mode
-armcortexm0ct.min_sync_level=0x0                      # (int   , run-time ) default = '0x0'    : force minimum syncLevel (0=off=default,1=syncState,2=postInsnIO,3=postInsnAll) : [0x0..0x3]
-armcortexm0ct.cpi_mul=0x1                             # (int   , run-time ) default = '0x1'    : multiplier for calculating CPI (Cycles Per Instruction) : [0x1..0x7FFFFFFF]
-armcortexm0ct.cpi_div=0x1                             # (int   , run-time ) default = '0x1'    : divider for calculating CPI (Cycles Per Instruction) : [0x1..0x7FFFFFFF]
-armcortexm0ct.master_id=0x0                           # (int   , init-time) default = '0x0'    : Master ID presented in bus transactions : [0x0..0xFFFFFFFF]
-armcortexm0ct.DBG=1                                   # (bool  , init-time) default = '1'      : Set whether debug extensions are implemented
-armcortexm0ct.BKPT=0x4                                # (int   , init-time) default = '0x4'    : Number of breakpoint unit comparators implemented : [0x0..0x4]
-armcortexm0ct.WPT=0x2                                 # (int   , init-time) default = '0x2'    : Number of watchpoint unit comparators implemented : [0x0..0x2]
-armcortexm0ct.SYST=1                                  # (bool  , init-time) default = '1'      : Enable support for SysTick timer functionality
-armcortexm0ct.WIC=1                                   # (bool  , init-time) default = '1'      : Include support for WIC-mode deep sleep
 #----------------------------------------------------------------------------------------------
