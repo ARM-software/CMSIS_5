@@ -14,6 +14,11 @@
 #define RTE_CV_COREFUNC  1
 #define RTE_CV_MPUFUNC   1
 
+#if defined(STM32L053xx)
+#define WDT_IRQn WWDG_IRQn
+#define WDT_IRQHandler WWDG_IRQHandler
+#define DISABLE_SEMIHOSTING
+#endif 
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 

@@ -99,10 +99,8 @@ static TEST_CASE TC_LIST[] = {
   #endif
 #endif
 #ifdef RTE_CV_MPUFUNC
-#if defined(__MPU_PRESENT) && __MPU_PRESENT
   TCD ( TC_MPU_SetClear,       TC_MPU_SETCLEAR_EN       ),
   TCD ( TC_MPU_Load,           TC_MPU_LOAD_EN           ),
-#endif
 #endif
 #ifdef RTE_CV_GENTIMER
   TCD ( TC_GenTimer_CNTFRQ,     TC_GENTIMER_CNTFRQ    ),
