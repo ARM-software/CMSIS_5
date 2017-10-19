@@ -362,6 +362,10 @@
   #define __get_FPSCR __cmsis_iar_get_FPSR_not_active
   #endif
 
+  #ifdef __INTRINSICS_INCLUDED
+  #error intrinsics.h is already included previously!
+  #endif
+  
   #include <intrinsics.h>
 
   #if !__FPU_PRESENT
