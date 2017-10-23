@@ -242,16 +242,16 @@
   #define __set_FPEXC(VALUE) 		(__arm_wsr("FPEXC", VALUE))
 
   #define __get_CP(cp, op1, RT, CRn, CRm, op2) \
-    (RT = __arm_rsr("p" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2))
+    ((RT) = __arm_rsr("p" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2))
 
   #define __set_CP(cp, op1, RT, CRn, CRm, op2) \
-    (__arm_wsr("p" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2, RT))
+    (__arm_wsr("p" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2, (RT)))
 
   #define __get_CP64(cp, op1, RT, CRm) \
-    (RT = __arm_rsr("p" # cp ":" # op1 ":c" # CRm))
+    ((RT) = __arm_rsr("p" # cp ":" # op1 ":c" # CRm))
 
   #define __set_CP64(cp, op1, RT, CRm) \
-    (__arm_wsr("p" # cp ":" # op1 ":c" # CRm, RT))
+    (__arm_wsr("p" # cp ":" # op1 ":c" # CRm, (RT)))
 
   #include "cmsis_cp15.h"
 
