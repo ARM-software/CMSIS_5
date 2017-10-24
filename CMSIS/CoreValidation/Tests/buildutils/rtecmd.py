@@ -8,16 +8,17 @@ import mmap
 
 class RteCmd(BuildCmd):
 
-  def __init__(self, project, config):
+  def __init__(self, project, config, subcmd = "build"):
     BuildCmd.__init__(self)
     self._project = project
     self._config = config
+    self._subcmd = subcmd
 
   def getCommand(self):
     return "python.exe"
     
   def getArguments(self):
-    return [ os.path.normpath(shutil.which("rtebuild.py")), "-c", self._config, os.path.abspath(self._project) ]
+    return [ os.path.normpath(shutil.which("rtebuild.py")), "-c", os.path.abspath(self._project), "-t", self._config, self._subcmd ]
 
   def needsShell(self):
     return True
