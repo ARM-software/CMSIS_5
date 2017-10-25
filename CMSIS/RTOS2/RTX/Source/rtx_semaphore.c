@@ -122,12 +122,12 @@ void osRtxSemaphorePostProcess (os_semaphore_t *semaphore) {
 //  ==== Service Calls ====
 
 //  Service Calls definitions
-SVC0_3M(SemaphoreNew,      osSemaphoreId_t, uint32_t, uint32_t, const osSemaphoreAttr_t *)
-SVC0_1 (SemaphoreGetName,  const char *,    osSemaphoreId_t)
-SVC0_2 (SemaphoreAcquire,  osStatus_t,      osSemaphoreId_t, uint32_t)
-SVC0_1 (SemaphoreRelease,  osStatus_t,      osSemaphoreId_t)
-SVC0_1 (SemaphoreGetCount, uint32_t,        osSemaphoreId_t)
-SVC0_1 (SemaphoreDelete,   osStatus_t,      osSemaphoreId_t)
+SVC0_3(SemaphoreNew,      osSemaphoreId_t, uint32_t, uint32_t, const osSemaphoreAttr_t *)
+SVC0_1(SemaphoreGetName,  const char *,    osSemaphoreId_t)
+SVC0_2(SemaphoreAcquire,  osStatus_t,      osSemaphoreId_t, uint32_t)
+SVC0_1(SemaphoreRelease,  osStatus_t,      osSemaphoreId_t)
+SVC0_1(SemaphoreGetCount, uint32_t,        osSemaphoreId_t)
+SVC0_1(SemaphoreDelete,   osStatus_t,      osSemaphoreId_t)
 
 /// Create and Initialize a Semaphore object.
 /// \note API identical to osSemaphoreNew

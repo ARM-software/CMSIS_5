@@ -161,12 +161,6 @@ __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
   return svc##f(svcRtx##f,a1,a2,a3,a4);                                        \
 }
 
-#define SVC0_0M SVC0_0
-#define SVC0_1M SVC0_1
-#define SVC0_2M SVC0_2
-#define SVC0_3M SVC0_3
-#define SVC0_4M SVC0_4
-
 #elif defined(__ICCARM__)
 
 #define SVC_Setup(f)                                                           \
@@ -240,12 +234,6 @@ __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
   SVC_Setup(svcRtx##f);                                                        \
   return svc##f(a1,a2,a3,a4);                                                  \
 }
-
-#define SVC0_0M SVC0_0
-#define SVC0_1M SVC0_1
-#define SVC0_2M SVC0_2
-#define SVC0_3M SVC0_3
-#define SVC0_4M SVC0_4
 
 #else   // !(defined(__CC_ARM) || defined(__ICCARM__))
 
@@ -342,12 +330,6 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
   SVC_Call0(SVC_In4, SVC_Out1, SVC_CL0);                                       \
   return (t) __r0;                                                             \
 }
-
-#define SVC0_0M SVC0_0
-#define SVC0_1M SVC0_1
-#define SVC0_2M SVC0_2
-#define SVC0_3M SVC0_3
-#define SVC0_4M SVC0_4
 
 #endif
 

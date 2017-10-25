@@ -225,16 +225,16 @@ void osRtxMessageQueuePostProcess (os_message_t *msg) {
 
 //  ==== Service Calls ====
 
-SVC0_3M(MessageQueueNew,         osMessageQueueId_t, uint32_t, uint32_t, const osMessageQueueAttr_t *)
-SVC0_1 (MessageQueueGetName,     const char *,       osMessageQueueId_t)
-SVC0_4 (MessageQueuePut,         osStatus_t,         osMessageQueueId_t, const void *, uint8_t,   uint32_t)
-SVC0_4 (MessageQueueGet,         osStatus_t,         osMessageQueueId_t,       void *, uint8_t *, uint32_t)
-SVC0_1 (MessageQueueGetCapacity, uint32_t,           osMessageQueueId_t)
-SVC0_1 (MessageQueueGetMsgSize,  uint32_t,           osMessageQueueId_t)
-SVC0_1 (MessageQueueGetCount,    uint32_t,           osMessageQueueId_t)
-SVC0_1 (MessageQueueGetSpace,    uint32_t,           osMessageQueueId_t)
-SVC0_1 (MessageQueueReset,       osStatus_t,         osMessageQueueId_t)
-SVC0_1 (MessageQueueDelete,      osStatus_t,         osMessageQueueId_t)
+SVC0_3(MessageQueueNew,         osMessageQueueId_t, uint32_t, uint32_t, const osMessageQueueAttr_t *)
+SVC0_1(MessageQueueGetName,     const char *,       osMessageQueueId_t)
+SVC0_4(MessageQueuePut,         osStatus_t,         osMessageQueueId_t, const void *, uint8_t,   uint32_t)
+SVC0_4(MessageQueueGet,         osStatus_t,         osMessageQueueId_t,       void *, uint8_t *, uint32_t)
+SVC0_1(MessageQueueGetCapacity, uint32_t,           osMessageQueueId_t)
+SVC0_1(MessageQueueGetMsgSize,  uint32_t,           osMessageQueueId_t)
+SVC0_1(MessageQueueGetCount,    uint32_t,           osMessageQueueId_t)
+SVC0_1(MessageQueueGetSpace,    uint32_t,           osMessageQueueId_t)
+SVC0_1(MessageQueueReset,       osStatus_t,         osMessageQueueId_t)
+SVC0_1(MessageQueueDelete,      osStatus_t,         osMessageQueueId_t)
 
 /// Create and Initialize a Message Queue object.
 /// \note API identical to osMessageQueueNew

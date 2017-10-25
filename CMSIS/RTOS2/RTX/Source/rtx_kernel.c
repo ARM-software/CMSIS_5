@@ -65,9 +65,9 @@ static void KernelUnblock (void) {
 //  ==== Service Calls ====
 
 //  Service Calls definitions
-SVC0_0M(KernelInitialize,       osStatus_t)
+SVC0_0 (KernelInitialize,       osStatus_t)
 SVC0_3 (KernelGetInfo,          osStatus_t, osVersion_t *, char *, uint32_t)
-SVC0_0M(KernelStart,            osStatus_t)
+SVC0_0 (KernelStart,            osStatus_t)
 SVC0_0 (KernelLock,             int32_t)
 SVC0_0 (KernelUnlock,           int32_t)
 SVC0_1 (KernelRestoreLock,      int32_t, int32_t)
