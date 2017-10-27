@@ -13,6 +13,8 @@
       CMSIS-Core(A): 1.0.1 (see revision history for details)
         - Added compiler_iccarm.h.
         - Added additional access functions for physical timer.
+      Devices:
+       - Added device ARMCM0plus_MPU for Cortex-M0+ with MPU.
     </release>
     <release version="5.1.2-dev2">
       CMSIS-Core(M): 5.0.3 (see revision history for details)
@@ -249,6 +251,11 @@ The Cortex-M0+ processor is an entry-level 32-bit ARM Cortex processor designed 
       <device Dname="ARMCM0P">
         <processor Dcore="Cortex-M0+" DcoreVersion="r0p1" Dfpu="NO_FPU" Dmpu="NO_MPU" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM0plus/Include/ARMCM0plus.h" define="ARMCM0P"/>
+      </device>
+
+      <device Dname="ARMCM0P_MPU">
+        <processor Dcore="Cortex-M0+" DcoreVersion="r0p1" Dfpu="NO_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="10000000"/>
+        <compile header="Device/ARM/ARMCM0plus/Include/ARMCM0plus_MPU.h" define="ARMCM0P_MPU"/>
       </device>
     </family>
 
@@ -1668,7 +1675,7 @@ and 8-bit Java bytecodes in Jazelle state.
 
     <condition id="ARMCM0+ CMSIS">
       <description>Generic ARM Cortex-M0+ device startup and depends on CMSIS Core</description>
-      <require Dvendor="ARM:82" Dname="ARMCM0P"/>
+      <require Dvendor="ARM:82" Dname="ARMCM0P*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
     <condition id="ARMCM0+ CMSIS GCC">
@@ -2803,6 +2810,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>uVision Simulator</description>
       <mountedDevice    deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM0"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM0P"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM0P_MPU"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM3"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM4"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM4_FP"/>
