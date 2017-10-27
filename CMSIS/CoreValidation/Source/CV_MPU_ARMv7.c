@@ -8,8 +8,6 @@
 #include "CV_Framework.h"
 #include "cmsis_cv.h"
 
-#if defined(__MPU_PRESENT) && (__MPU_PRESENT != 0)
-
 /*-----------------------------------------------------------------------------
  *      Test implementation
  *----------------------------------------------------------------------------*/
@@ -115,4 +113,3 @@ void TC_MPU_Load(void)
   #undef ASSERT_MPU_REGION
 }
 
-#endif

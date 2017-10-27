@@ -86,26 +86,26 @@ SKIP = [
   ]
   
 FVP_MODELS = { 
-    DEVICE_CM0      : { 'cmd': "FVP_MPS2_Cortex-M0_MDK.exe",  'args': { 'limit': "50000000", 'config': "ARMCM0_config.txt" } },
-    DEVICE_CM0PLUS  : { 'cmd': "FVP_MPS2_Cortex-M0_MDK.exe",  'args': { 'limit': "50000000", 'config': "ARMCM0plus_config.txt" } },
-    DEVICE_CM3      : { 'cmd': "FVP_MPS2_Cortex-M3_MDK.exe",  'args': { 'limit': "50000000", 'config': "ARMCM3_config.txt" } },
-    DEVICE_CM4      : { 'cmd': "FVP_MPS2_Cortex-M4_MDK.exe",  'args': { 'limit': "50000000", 'config': "ARMCM4_config.txt" } },
-    DEVICE_CM4FP    : { 'cmd': "FVP_MPS2_Cortex-M4_MDK.exe",  'args': { 'limit': "50000000", 'config': "ARMCM4FP_config.txt" } },
-    DEVICE_CM7      : { 'cmd': "FVP_MPS2_Cortex-M7_MDK.exe",  'args': { 'limit': "50000000", 'config': "ARMCM7_config.txt" } },
-    DEVICE_CM7SP    : { 'cmd': "FVP_MPS2_Cortex-M7_MDK.exe",  'args': { 'limit': "50000000", 'config': "ARMCM7SP_config.txt" } },
-    DEVICE_CM7DP    : { 'cmd': "FVP_MPS2_Cortex-M7_MDK.exe",  'args': { 'limit': "50000000", 'config': "ARMCM7DP_config.txt" } },
-    DEVICE_CM23     : { 'cmd': "FVP_MPS2_Cortex-M23_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM23_config.txt",           'target': "cpu0" } },
-    DEVICE_CM33     : { 'cmd': "FVP_MPS2_Cortex-M33_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM33_config.txt",           'target': "cpu0" } },
-    DEVICE_CM23NS   : { 'cmd': "FVP_MPS2_Cortex-M23_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM23_TZ_config.txt",        'target': "cpu0" } },
-    DEVICE_CM33NS   : { 'cmd': "FVP_MPS2_Cortex-M33_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM33_DSP_FP_TZ_config.txt", 'target': "cpu0" } },
-    DEVICE_CM23S    : { 'cmd': "FVP_MPS2_Cortex-M23_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM23_TZ_config.txt",        'target': "cpu0" } },
-    DEVICE_CM33S    : { 'cmd': "FVP_MPS2_Cortex-M33_MDK.exe", 'args': { 'limit': "50000000", 'config': "ARMCM33_DSP_FP_TZ_config.txt", 'target': "cpu0" } },
-    DEVICE_CA5      : { 'cmd': "fvp_ve_cortex-a5x1.exe",      'args': { 'limit': "70000000", 'config': "ARMCA5_config.txt" } },
-    DEVICE_CA7      : { 'cmd': "fvp_ve_cortex-a7x1.exe",      'args': { 'limit': "170000000", 'config': "ARMCA7_config.txt" } },
-    DEVICE_CA9      : { 'cmd': "fvp_ve_cortex-a9x1.exe",      'args': { 'limit': "70000000", 'config': "ARMCA9_config.txt" } },
-    DEVICE_CA5NEON  : { 'cmd': "fvp_ve_cortex-a5x1.exe",      'args': { 'limit': "70000000", 'config': "ARMCA5neon_config.txt" } },
-    DEVICE_CA7NEON  : { 'cmd': "fvp_ve_cortex-a7x1.exe",      'args': { 'limit': "170000000", 'config': "ARMCA7neon_config.txt" } },
-    DEVICE_CA9NEON  : { 'cmd': "fvp_ve_cortex-a9x1.exe",      'args': { 'limit': "70000000", 'config': "ARMCA9neon_config.txt" } }
+    DEVICE_CM0      : { 'cmd': "FVP_MPS2_Cortex-M0_MDK.exe",      'args': { 'limit': "50000000", 'config': "ARMCM0_config.txt" } },
+    DEVICE_CM0PLUS  : { 'cmd': "FVP_MPS2_Cortex-M0plus_MDK.exe",  'args': { 'limit': "50000000", 'config': "ARMCM0plus_config.txt" } },
+    DEVICE_CM3      : { 'cmd': "FVP_MPS2_Cortex-M3_MDK.exe",      'args': { 'limit': "50000000", 'config': "ARMCM3_config.txt" } },
+    DEVICE_CM4      : { 'cmd': "FVP_MPS2_Cortex-M4_MDK.exe",      'args': { 'limit': "50000000", 'config': "ARMCM4_config.txt" } },
+    DEVICE_CM4FP    : { 'cmd': "FVP_MPS2_Cortex-M4_MDK.exe",      'args': { 'limit': "50000000", 'config': "ARMCM4FP_config.txt" } },
+    DEVICE_CM7      : { 'cmd': "FVP_MPS2_Cortex-M7_MDK.exe",      'args': { 'limit': "50000000", 'config': "ARMCM7_config.txt" } },
+    DEVICE_CM7SP    : { 'cmd': "FVP_MPS2_Cortex-M7_MDK.exe",      'args': { 'limit': "50000000", 'config': "ARMCM7SP_config.txt" } },
+    DEVICE_CM7DP    : { 'cmd': "FVP_MPS2_Cortex-M7_MDK.exe",      'args': { 'limit': "50000000", 'config': "ARMCM7DP_config.txt" } },
+    DEVICE_CM23     : { 'cmd': "FVP_MPS2_Cortex-M23_MDK.exe",     'args': { 'limit': "50000000", 'config': "ARMCM23_config.txt",           'target': "cpu0" } },
+    DEVICE_CM33     : { 'cmd': "FVP_MPS2_Cortex-M33_MDK.exe",     'args': { 'limit': "50000000", 'config': "ARMCM33_config.txt",           'target': "cpu0" } },
+    DEVICE_CM23NS   : { 'cmd': "FVP_MPS2_Cortex-M23_MDK.exe",     'args': { 'limit': "50000000", 'config': "ARMCM23_TZ_config.txt",        'target': "cpu0" } },
+    DEVICE_CM33NS   : { 'cmd': "FVP_MPS2_Cortex-M33_MDK.exe",     'args': { 'limit': "50000000", 'config': "ARMCM33_DSP_FP_TZ_config.txt", 'target': "cpu0" } },
+    DEVICE_CM23S    : { 'cmd': "FVP_MPS2_Cortex-M23_MDK.exe",     'args': { 'limit': "50000000", 'config': "ARMCM23_TZ_config.txt",        'target': "cpu0" } },
+    DEVICE_CM33S    : { 'cmd': "FVP_MPS2_Cortex-M33_MDK.exe",     'args': { 'limit': "50000000", 'config': "ARMCM33_DSP_FP_TZ_config.txt", 'target': "cpu0" } },
+    DEVICE_CA5      : { 'cmd': "fvp_ve_cortex-a5x1.exe",          'args': { 'limit': "70000000", 'config': "ARMCA5_config.txt" } },
+    DEVICE_CA7      : { 'cmd': "fvp_ve_cortex-a7x1.exe",          'args': { 'limit': "170000000", 'config': "ARMCA7_config.txt" } },
+    DEVICE_CA9      : { 'cmd': "fvp_ve_cortex-a9x1.exe",          'args': { 'limit': "70000000", 'config': "ARMCA9_config.txt" } },
+    DEVICE_CA5NEON  : { 'cmd': "fvp_ve_cortex-a5x1.exe",          'args': { 'limit': "70000000", 'config': "ARMCA5neon_config.txt" } },
+    DEVICE_CA7NEON  : { 'cmd': "fvp_ve_cortex-a7x1.exe",          'args': { 'limit': "170000000", 'config': "ARMCA7neon_config.txt" } },
+    DEVICE_CA9NEON  : { 'cmd': "fvp_ve_cortex-a9x1.exe",          'args': { 'limit': "70000000", 'config': "ARMCA9neon_config.txt" } }
   }
 
 def isSkipped(dev, cc, target):
@@ -118,7 +118,13 @@ def isSkipped(dev, cc, target):
   return False
   
 def testProject(dev, cc, target):
-  if (cc == CC_AC5) or (cc == CC_AC6):
+  rtebuild = "{dev}/{cc}/default.rtebuild".format(dev = dev, cc = cc, target=target)
+  if os.path.exists(rtebuild):
+    return [
+        rtebuild,
+        "{dev}/{cc}/build/{target}.elf".format(dev = dev, cc = cc, target=target)
+      ]
+  elif (cc == CC_AC5) or (cc == CC_AC6):
     if dev in MDK_ENV['DS']:
       return [
           "{dev}/{cc}/.project".format(dev = dev, cc = cc),
@@ -164,7 +170,13 @@ def testProject(dev, cc, target):
   raise "Unknown compiler!"
 
 def bootloaderProject(dev, cc, target):
-  if (cc == CC_AC5) or (cc == CC_AC6):
+  rtebuild = "{dev}/{cc}/Bootloader/default.rtebuild".format(dev = dev, cc = cc, target=target)
+  if os.path.exists(rtebuild):
+    return [
+        rtebuild,
+        "{dev}/{cc}/Bootloader/build/{target}.elf".format(dev = dev, cc = cc, target=target)
+      ]
+  elif (cc == CC_AC5) or (cc == CC_AC6):
     return [
         "{dev}/{cc}/Bootloader/Bootloader.uvprojx".format(dev = dev, cc = cc),
         "{dev}/{cc}/Bootloader/Objects/Bootloader.axf".format(dev = dev, cc = cc)
@@ -182,26 +194,18 @@ def bootloaderProject(dev, cc, target):
   raise "Unknown compiler!"
   
 def buildStep(dev, cc, target, project):
-  if (cc == CC_AC5) or (cc == CC_AC6):
-    if dev in MDK_ENV['DS']:
-      return DsCmd(project, "CMSIS_CV_{adev}_{cc}".format(adev=ADEVICES[dev], cc = cc))
-    elif dev in MDK_ENV['RTE']:
-      return RteCmd(project, target)
-    else:
-      return Uv4Cmd(project, target)
-  elif (cc == CC_GCC):
-    if dev in MDK_ENV['DS']:
-      return DsCmd(project, target)
-    elif dev in MDK_ENV['RTE']:
-      return RteCmd(project, target)
-    else:
-      return Uv4Cmd(project, target)
-  elif (cc == CC_IAR):
-    if dev in MDK_ENV['RTE']:
-      return RteCmd(project, target)
-    else:
-      return IarCmd(project, target)
-  raise "Unknown compiler!"
+  STEP_TYPES = {
+    ".uvprojx"  : Uv4Cmd,
+    ".ewp"      : IarCmd,
+    ".rtebuild" : RteCmd
+  }
+  
+  projectfile, projectext = os.path.splitext(project)
+  
+  if not projectext in STEP_TYPES:
+    raise "Unknown project type '"+projectext+"'!"
+    
+  return STEP_TYPES[projectext](project, target)
   
 def prepare(steps, args):
   for dev in args.devices:

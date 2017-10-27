@@ -38,9 +38,7 @@ typedef unsigned int    BOOL;
 
 #define ARRAY_SIZE(arr) (sizeof(arr)/sizeof((arr)[0]))
 
-#if defined( __GNUC__ )
-static const int PATH_DELIMITER = '/';
-#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+#if defined( __GNUC__ ) || defined ( __clang__ )
 static const int PATH_DELIMITER = '/';
 #else
 static const int PATH_DELIMITER = '\\';

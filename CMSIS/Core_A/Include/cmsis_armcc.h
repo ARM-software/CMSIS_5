@@ -448,19 +448,20 @@ __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
  * Include common core functions to access Coprocessor 15 registers
  */
  
-#define __get_CP(cp, op1, Rt, CRn, CRm, op2) do { register uint32_t tmp __ASM("cp" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2); Rt = tmp; } while(0)
-#define __set_CP(cp, op1, Rt, CRn, CRm, op2) do { register uint32_t tmp __ASM("cp" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2); tmp = Rt; } while(0)
+#define __get_CP(cp, op1, Rt, CRn, CRm, op2) do { register uint32_t tmp __ASM("cp" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2); (Rt) = tmp; } while(0)
+#define __set_CP(cp, op1, Rt, CRn, CRm, op2) do { register uint32_t tmp __ASM("cp" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2); tmp = (Rt); } while(0)
 #define __get_CP64(cp, op1, Rt, CRm) \
   do { \
     uint32_t ltmp, htmp; \
     __ASM volatile("MRRC p" # cp ", " # op1 ", ltmp, htmp, c" # CRm); \
-    Rt = (((uint64_t)htmp) << 32U) | ((uint64_t)ltmp); \
+    (Rt) = ((((uint64_t)htmp) << 32U) | ((uint64_t)ltmp)); \
   } while(0)
 
 #define __set_CP64(cp, op1, Rt, CRm) \
   do { \
-    const uint32_t ltmp = (uint32_t)Rt; \
-    const uint32_t htmp = (uint32_t)(Rt >> 32); \
+    const uint64_t tmp = (Rt); \
+    const uint32_t ltmp = (uint32_t)(tmp); \
+    const uint32_t htmp = (uint32_t)(tmp >> 32U); \
     __ASM volatile("MCRR p" # cp ", " # op1 ", ltmp, htmp, c" # CRm); \
   } while(0)
 
@@ -548,7 +549,7 @@ __STATIC_INLINE __ASM void __FPU_Enable(void)
 
         //Initialise VFP/NEON registers to 0
         MOV     R2,#0
-  IF {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} >= 16
+
         //Initialise D16 registers to 0
         VMOV    D0, R2,R2
         VMOV    D1, R2,R2
@@ -566,7 +567,7 @@ __STATIC_INLINE __ASM void __FPU_Enable(void)
         VMOV    D13,R2,R2
         VMOV    D14,R2,R2
         VMOV    D15,R2,R2
-  ENDIF
+
   IF {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} == 32
         //Initialise D32 registers to 0
         VMOV    D16,R2,R2
