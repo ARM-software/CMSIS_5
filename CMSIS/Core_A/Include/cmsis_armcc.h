@@ -549,7 +549,7 @@ __STATIC_INLINE __ASM void __FPU_Enable(void)
 
         //Initialise VFP/NEON registers to 0
         MOV     R2,#0
-  IF {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} >= 16
+
         //Initialise D16 registers to 0
         VMOV    D0, R2,R2
         VMOV    D1, R2,R2
@@ -567,7 +567,7 @@ __STATIC_INLINE __ASM void __FPU_Enable(void)
         VMOV    D13,R2,R2
         VMOV    D14,R2,R2
         VMOV    D15,R2,R2
-  ENDIF
+
   IF {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} == 32
         //Initialise D32 registers to 0
         VMOV    D16,R2,R2
