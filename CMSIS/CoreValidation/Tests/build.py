@@ -122,51 +122,23 @@ def testProject(dev, cc, target):
   if os.path.exists(rtebuild):
     return [
         rtebuild,
-        "{dev}/{cc}/build/{target}.elf".format(dev = dev, cc = cc, target=target)
+        "{dev}/{cc}/build/{target}/{target}.elf".format(dev = dev, cc = cc, target=target)
       ]
   elif (cc == CC_AC5) or (cc == CC_AC6):
-    if dev in MDK_ENV['DS']:
-      return [
-          "{dev}/{cc}/.project".format(dev = dev, cc = cc),
-          "{dev}/{cc}/Debug/CMSIS_CV_{adev}_{cc}.axf".format(dev = dev, adev=ADEVICES[dev], cc = cc)
-        ]
-    elif dev in MDK_ENV['RTE']:
-      return [
-          "{dev}/{cc}/default.rtebuild".format(dev = dev, cc = cc, target=target),
-          "{dev}/{cc}/build/{target}.elf".format(dev = dev, cc = cc, target=target)
-        ]
-    else:
-      return [
-          "{dev}/{cc}/CMSIS_CV.uvprojx".format(dev = dev, cc = cc),
-          "{dev}/{cc}/Objects/CMSIS_CV.axf".format(dev = dev, cc = cc)
-        ]
+    return [
+        "{dev}/{cc}/CMSIS_CV.uvprojx".format(dev = dev, cc = cc),
+        "{dev}/{cc}/Objects/CMSIS_CV.axf".format(dev = dev, cc = cc)
+      ]
   elif (cc == CC_GCC):
-    if dev in MDK_ENV['DS']:
-      return [
-          "{dev}/{cc}/.project".format(dev = dev, cc = cc),
-          "{dev}/{cc}/Debug/CMSIS_CV_{adev}_{cc}.elf".format(dev = dev, adev=ADEVICES[dev], cc = cc)
-        ]
-    elif dev in MDK_ENV['RTE']:
-      return [
-          "{dev}/{cc}/default.rtebuild".format(dev = dev, cc = cc, target=target),
-          "{dev}/{cc}/build/{target}.elf".format(dev = dev, cc = cc, target=target)
-        ]
-    else:
-      return [
-          "{dev}/{cc}/CMSIS_CV.uvprojx".format(dev = dev, cc = cc),
-          "{dev}/{cc}/Objects/CMSIS_CV.elf".format(dev = dev, cc = cc)
-        ]
+    return [
+        "{dev}/{cc}/CMSIS_CV.uvprojx".format(dev = dev, cc = cc),
+        "{dev}/{cc}/Objects/CMSIS_CV.elf".format(dev = dev, cc = cc)
+      ]
   elif (cc == CC_IAR):
-    if dev in MDK_ENV['RTE']:
-      return [
-          "{dev}/{cc}/default.rtebuild".format(dev = dev, cc = cc, target=target),
-          "{dev}/{cc}/build/{target}.elf".format(dev = dev, cc = cc, target=target)
-        ]
-    else:
-      return [
-          "{dev}/{cc}/CMSIS_CV.ewp".format(dev = dev, cc = cc),
-          "{dev}/{cc}/{target}/Exe/CMSIS_CV.out".format(dev = dev, cc = cc, target = target)
-        ]
+    return [
+        "{dev}/{cc}/CMSIS_CV.ewp".format(dev = dev, cc = cc),
+        "{dev}/{cc}/{target}/Exe/CMSIS_CV.out".format(dev = dev, cc = cc, target = target)
+      ]
   raise "Unknown compiler!"
 
 def bootloaderProject(dev, cc, target):
@@ -174,7 +146,7 @@ def bootloaderProject(dev, cc, target):
   if os.path.exists(rtebuild):
     return [
         rtebuild,
-        "{dev}/{cc}/Bootloader/build/{target}.elf".format(dev = dev, cc = cc, target=target)
+        "{dev}/{cc}/Bootloader/build/{target}/{target}.elf".format(dev = dev, cc = cc, target=target)
       ]
   elif (cc == CC_AC5) or (cc == CC_AC6):
     return [
