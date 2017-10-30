@@ -118,9 +118,8 @@ identifier string for the kernel. It can be safely called before the RTOS is ini
 Possible \ref osStatus_t return values:
 - \em osOK in case of success.
 - \em osError if an unspecific error occurred.
-- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
 
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -144,16 +143,14 @@ void info (void) {
 \fn osKernelState_t osKernelGetState (void)
 \details
 The function \b osKernelGetState returns the current state of the kernel and can be safely called before the RTOS is
-initialized or started (call to \ref osKernelInitialize or \ref osKernelStart). In case it fails or if it is called from an
-ISR, it will return \c osKernelError, otherwise it returns the kernel state (refer to \ref osKernelState_t for the list of
-kernel states).
+initialized or started (call to \ref osKernelInitialize or \ref osKernelStart). In case it fails it will return \c osKernelError,
+otherwise it returns the kernel state (refer to \ref osKernelState_t for the list of kernel states).
 
 Possible \ref osKernelState_t return values:
-- \ref osKernelError if an unspecific error occurred or it has been called from an
-  \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+- \ref osKernelError if an unspecific error occurred.
 - the actual kernel state otherwise.
 
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
