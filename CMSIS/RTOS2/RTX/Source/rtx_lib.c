@@ -534,7 +534,8 @@ __WEAK void software_init_hook (void) {
 // C/C++ Standard Library Multithreading Interface
 // ===============================================
 
-#if (( defined(__CC_ARM) || \
+#if ( !defined(RTX_NO_MULTITHREAD_CLIB) && \
+     ( defined(__CC_ARM) || \
       (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))) && \
       !defined(__MICROLIB))
 
