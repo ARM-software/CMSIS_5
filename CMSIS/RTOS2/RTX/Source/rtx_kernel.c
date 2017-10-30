@@ -512,11 +512,7 @@ osStatus_t osKernelInitialize (void) {
 ///  Get RTOS Kernel Information.
 osStatus_t osKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size) {
   EvrRtxKernelGetInfo(version, id_buf, id_size);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxKernelError(osErrorISR);
-    return osErrorISR;
-  }
-  if (IS_PRIVILEGED()) {
+  if (IS_PRIVILEGED() || IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return svcRtxKernelGetInfo(version, id_buf, id_size);
   } else {
     return  __svcKernelGetInfo(version, id_buf, id_size);
@@ -525,11 +521,7 @@ osStatus_t osKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size
 
 /// Get the current RTOS Kernel state.
 osKernelState_t osKernelGetState (void) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxKernelGetState(osKernelError);
-    return osKernelError;
-  }
-  if (IS_PRIVILEGED()) {
+  if (IS_PRIVILEGED() || IS_IRQ_MODE() || IS_IRQ_MASKED()) {
     return svcRtxKernelGetState();
   } else {
     return  __svcKernelGetState();
