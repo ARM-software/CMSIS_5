@@ -17,12 +17,15 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        9. June 2017
- * $Revision:    V2.1.1
+ * $Date:        30. October 2017
+ * $Revision:    V2.1.2
  *
  * Project:      CMSIS-RTOS2 API
  * Title:        cmsis_os2.h header file
  *
+ * Version 2.1.2
+ *    Additional functions allowed to be called from Interrupt Service Routines:
+ *    - osKernelGetInfo, osKernelGetState
  * Version 2.1.1
  *    Additional functions allowed to be called from Interrupt Service Routines:
  *    - osKernelGetTickCount, osKernelGetTickFreq
