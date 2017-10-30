@@ -349,8 +349,8 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
 
 //  ==== Core Peripherals functions ====
 
-/// Initialize SVC and PendSV System Service Calls
-__STATIC_INLINE void SVC_Initialize (void) {
+/// Setup SVC and PendSV System Service Calls
+__STATIC_INLINE void SVC_Setup (void) {
 #if   ((__ARM_ARCH_8M_MAIN__ == 1U) || (defined(__CORTEX_M) && (__CORTEX_M == 7U)))
   uint32_t p, n;
 

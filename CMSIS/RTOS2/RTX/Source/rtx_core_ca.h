@@ -338,8 +338,8 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
 
 extern uint8_t IRQ_PendSV;
 
-/// Initialize SVC and PendSV System Service Calls (not needed on Cortex-A)
-__STATIC_INLINE void SVC_Initialize (void) {
+/// Setup SVC and PendSV System Service Calls (not needed on Cortex-A)
+__STATIC_INLINE void SVC_Setup (void) {
 }
 
 /// Get Pending SV (Service Call) Flag

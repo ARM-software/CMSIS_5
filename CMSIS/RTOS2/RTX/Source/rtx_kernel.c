@@ -195,9 +195,6 @@ osStatus_t svcRtxKernelInitialize (void) {
   }
 #endif
 
-  // Initialize SVC and PendSV System Service Calls
-  SVC_Initialize();
-
   osRtxInfo.kernel.state = osRtxKernelReady;
 
   EvrRtxKernelInitializeCompleted();
@@ -262,6 +259,9 @@ osStatus_t svcRtxKernelStart (void) {
       }
     }
   }
+
+  // Setup SVC and PendSV System Service Calls
+  SVC_Setup();
 
   // Setup RTOS Tick
   if (OS_Tick_Setup(osRtxConfig.tick_freq, OS_TICK_HANDLER) != 0U) {
