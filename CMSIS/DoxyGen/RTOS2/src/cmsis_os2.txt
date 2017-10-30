@@ -154,6 +154,12 @@ File/Folder                  | Content
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.2.3</td>
+      <td>
+       - Corrected SysTick and PendSV handlers for ARMv8-M Baseline.
+      </td>
+    </tr>
+    <tr>
       <td>V5.2.2</td>
       <td>
        - Corrected IRQ and SVC exception handlers for Cortex-A.
