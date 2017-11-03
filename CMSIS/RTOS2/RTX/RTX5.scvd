@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
-  <component name="RTOS" version="5.0.0"/>    <!-- name and version of the component  -->
+  <component name="CMSIS:RTOS2:Keil RTX5" brief="RTX5" version="5.2.3"/>    <!-- name and version of the component  -->
 
   <typedefs>
     <!-- Attributes structure for thread -->
@@ -1107,7 +1107,8 @@
           <item property="Round Robin"            value="Disabled"                      cond="(os_Config.robin_timeout == 0) &amp;&amp; (RTX_En != 0)" />
           <item property="Round Robin Tick Count" value="%d[os_Info.thread_robin_tick]" cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
           <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]"   cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
-          <item property="Global Dynamic Memory" value="Base: %x[os_Config.mem_common_addr], Size: %d[os_Config.mem_common_size], Used: %d[mem_head.used]" cond="RTX_En != 0"/>
+          <item property="Global Dynamic Memory" value="Not used"                                                                                          cond="(os_Config.mem_common_size == 0) &amp;&amp; (RTX_En != 0)"/>
+          <item property="Global Dynamic Memory" value="Base: %x[os_Config.mem_common_addr], Size: %d[os_Config.mem_common_size], Used: %d[mem_head.used]" cond="(os_Config.mem_common_size != 0) &amp;&amp; (RTX_En != 0)"/>
           <item property="Stack Overrun Check"   value="%t[stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
           <item property="Stack Usage Watermark" value="%t[stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
           <item property="Default Thread Stack Size" value="%d[os_Config.thread_stack_size]" cond="RTX_En != 0"/>
