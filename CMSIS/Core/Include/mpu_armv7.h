@@ -186,12 +186,12 @@ __STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRI
 __STATIC_INLINE void ARM_MPU_Load(ARM_MPU_Region_t const* table, uint32_t cnt) 
 {
   const uint32_t rowWordSize = sizeof(ARM_MPU_Region_t)/4U;
-  if (cnt > MPU_TYPE_RALIASES) {
+  while (cnt > MPU_TYPE_RALIASES) {
     orderedCpy(&(MPU->RBAR), &(table->RBAR), MPU_TYPE_RALIASES*rowWordSize);
-    ARM_MPU_Load(table+MPU_TYPE_RALIASES, cnt-MPU_TYPE_RALIASES);
-  } else {
-    orderedCpy(&(MPU->RBAR), &(table->RBAR), cnt*rowWordSize);
+    table += MPU_TYPE_RALIASES;
+    cnt -= MPU_TYPE_RALIASES;
   }
+  orderedCpy(&(MPU->RBAR), &(table->RBAR), cnt*rowWordSize);
 }
 
 #endif
