@@ -293,13 +293,17 @@ __STATIC_INLINE void ARM_MPU_LoadEx(MPU_Type* mpu, uint32_t rnr, ARM_MPU_Region_
     uint32_t rnrOffset = rnr % MPU_TYPE_RALIASES;
     
     mpu->RNR = rnrBase;
-    if ((rnrOffset + cnt) > MPU_TYPE_RALIASES) {
+    while ((rnrOffset + cnt) > MPU_TYPE_RALIASES) {
       uint32_t c = MPU_TYPE_RALIASES - rnrOffset;
       orderedCpy(&(mpu->RBAR)+(rnrOffset*2U), &(table->RBAR), c*rowWordSize);
-      ARM_MPU_LoadEx(mpu, rnr + c, table + c, cnt - c);
-    } else {
-      orderedCpy(&(mpu->RBAR)+(rnrOffset*2U), &(table->RBAR), cnt*rowWordSize);
+      table += c;
+      cnt -= c;
+      rnrOffset = 0U;
+      rnrBase += MPU_TYPE_RALIASES;
+      mpu->RNR = rnrBase;
     }
+    
+    orderedCpy(&(mpu->RBAR)+(rnrOffset*2U), &(table->RBAR), cnt*rowWordSize);
   }
 }
 
