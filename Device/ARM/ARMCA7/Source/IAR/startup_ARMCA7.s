@@ -1,5 +1,5 @@
 /******************************************************************************
- * @file     startup_ARMCA9.s
+ * @file     startup_ARMCA7.s
  * @brief    CMSIS Device System Source File for ARM Cortex-A9 Device Series
  * @version  V1.00
  * @date     01 Nov 2017
@@ -25,7 +25,7 @@
  * limitations under the License.
  */
 
-  MODULE  ?startup_ARMCA9
+  MODULE  ?startup_ARMCA7
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
@@ -63,7 +63,7 @@ Vectors:
   LDR    PC, =FIQ_Handler
 
 
-  section .text:CODE:NOROOT(2)
+  section .text:CODE:NOROOT(4)
 
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset

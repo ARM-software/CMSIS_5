@@ -1,6 +1,6 @@
 /******************************************************************************
  * @file     startup_ARMCA9.s
- * @brief    CMSIS Device System Source File for ARM Cortex-A9 Device Series
+ * @brief    CMSIS Device System Source File for ARM Cortex-A5 Device Series
  * @version  V1.00
  * @date     01 Nov 2017
  *
@@ -25,7 +25,7 @@
  * limitations under the License.
  */
 
-  MODULE  ?startup_ARMCA9
+  MODULE  ?startup_ARMCA5
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
@@ -52,7 +52,7 @@
   section RESET:CODE:NOROOT(2)
   PUBLIC  Vectors
 
-Vectors:
+Vectors:  
   LDR    PC, =Reset_Handler
   LDR    PC, =Undef_Handler
   LDR    PC, =SVC_Handler
@@ -63,7 +63,7 @@ Vectors:
   LDR    PC, =FIQ_Handler
 
 
-  section .text:CODE:NOROOT(2)
+  section .text:CODE:NOROOT(4)
 
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
