@@ -48,7 +48,7 @@
   #define __STATIC_FORCEINLINE                   __attribute__((always_inline)) static __inline
 #endif                                           
 #ifndef   __NO_RETURN                           
-  #define __NO_RETURN                            __declspec(noreturn)
+  #define __NO_RETURN                            __attribute__((__noreturn__))
 #endif                                          
 #ifndef   __USED                                
   #define __USED                                 __attribute__((used))
