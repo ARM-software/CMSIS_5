@@ -74,7 +74,11 @@
 #endif
 
 #ifndef   __NO_RETURN
-  #define __NO_RETURN _Pragma("object_attribute=__noreturn")
+  #if __ICCARM_V8
+    #define __NO_RETURN __attribute__((__noreturn__))
+  #else
+    #define __NO_RETURN _Pragma("object_attribute=__noreturn")
+  #endif
 #endif
 
 #ifndef   __PACKED

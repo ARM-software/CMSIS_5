@@ -116,7 +116,7 @@
 
 #ifndef   __NO_RETURN
   #if __ICCARM_V8
-    #define __NO_RETURN __attribute__((noreturn))
+    #define __NO_RETURN __attribute__((__noreturn__))
   #else
     #define __NO_RETURN _Pragma("object_attribute=__noreturn")
   #endif
