@@ -2481,7 +2481,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-RTOS2 Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.2.3" Capiversion="2.1." condition="RTOS2 RTX5 Lib">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.2.3" Capiversion="2.1.2" condition="RTOS2 RTX5 Lib">
       <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and ARMv8-M (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
