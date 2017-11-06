@@ -3,10 +3,10 @@ import:
 config:
   FVP:
     toolchain: ICCARM
-    commonflags : [ --debug, --endian=little, "--cpu=${cpu}", -e, "--fpu=${fpu}" ]
-    cflags      : [ "${commonflags}", "--dlib_config DLib_Config_Full.h" ]
+    commonflags : [ "--cpu ${cpu}", "--fpu ${fpu}", --endian little ]
+    cflags      : [ "${commonflags}", --debug, "--dlib_config DLib_Config_Full.h" ]
     asmflags    : [ "${commonflags}" ]
-    linkflags   : [ --semihosting, "--entry __iar_program_start", --vfe, "--text_out locale" ]
+    linkflags   : [ "--cpu ${cpu}", --semihosting, "--entry Vectors", --vfe, "--text_out locale" ]
     linkscript: "${basedir}/RTE/Device/${device}/${device}.icf"
 include: 
  - ./
