@@ -19,6 +19,7 @@
       - RTX 5.2.3 (see revision history for details)
       Devices:
        - Added device ARMCM0plus_MPU for Cortex-M0+ with MPU.
+       - Added IAR startup code for Cortex-A9
     </release>
     <release version="5.1.2-dev2">
       CMSIS-Core(M): 5.0.3 (see revision history for details)
@@ -48,7 +49,7 @@
     </release>
     <release version="5.1.0" date="2017-08-04">
       CMSIS-Core(M): 5.0.2 (see revision history for details)
-      - Changed Version Control macros to be core agnostic. 
+      - Changed Version Control macros to be core agnostic.
       - Added MPU Functions for ARMv7-M for Cortex-M0+/M3/M4/M7.
       CMSIS-Core(A): 1.0.0 (see revision history for details)
       - Initial release
@@ -542,8 +543,8 @@ ARMv8-M Mainline based device with TrustZone
     <family Dfamily="ARM Cortex A5" Dvendor="ARM:82">
       <book name="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0433c/index.html" title="Cortex-A5 Technical Reference Manual"/>
       <description>
-The ARM Cortex-A5 processor is a high-performance, low-power, ARM macrocell with an L1 cache subsystem that provides full 
-virtual memory capabilities. The Cortex-A5 processor implements the ARMv7-A architecture profile and can execute 32-bit 
+The ARM Cortex-A5 processor is a high-performance, low-power, ARM macrocell with an L1 cache subsystem that provides full
+virtual memory capabilities. The Cortex-A5 processor implements the ARMv7-A architecture profile and can execute 32-bit
 ARM instructions and 16-bit and 32-bit Thumb instructions. The Cortex-A5 is the smallest member of the Cortex-A processor family.
       </description>
 
@@ -555,13 +556,13 @@ ARM instructions and 16-bit and 32-bit Thumb instructions. The Cortex-A5 is the 
         <compile header="Device/ARM/ARMCA5/Include/ARMCA5.h" define="ARMCA5"/>
       </device>
     </family>
-    
+
     <!-- ******************************  Cortex-A7  ****************************** -->
     <family Dfamily="ARM Cortex A7" Dvendor="ARM:82">
       <book name="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0464f/index.html" title="Cortex-A7 MPCore Technical Reference Manual"/>
       <description>
-The Cortex-A7 MPCore processor is a high-performance, low-power processor that implements the ARMv7-A architecture. 
-The Cortex-A7 MPCore processor has one to four processors in a single multiprocessor device with a L1 cache subsystem, 
+The Cortex-A7 MPCore processor is a high-performance, low-power processor that implements the ARMv7-A architecture.
+The Cortex-A7 MPCore processor has one to four processors in a single multiprocessor device with a L1 cache subsystem,
 an optional integrated GIC, and an optional L2 cache controller.
       </description>
 
@@ -1792,7 +1793,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dvendor="ARM:82" Dname="ARMCA5"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-    
+
     <condition id="ARMCA7 CMSIS">
       <description>Generic ARM Cortex-A7 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMCA7"/>
@@ -1804,7 +1805,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dvendor="ARM:82" Dname="ARMCA9"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-    
+
     <!-- CMSIS DSP -->
     <condition id="CMSIS DSP">
       <description>Components required for DSP</description>
@@ -1865,7 +1866,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
     </condition>
-    
+
     <!-- OS Tick -->
     <condition id="OS Tick PTIM">
       <description>Components required for OS Tick Private Timer</description>
@@ -2213,20 +2214,22 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCA5/Include/"/>
         <!-- startup / system / mmu files -->
-        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/AC5/startup_ARMCA5.c" version="1.0.0" attr="config" condition="ARMCC5"/>             
-        <file category="linkerScript" name="Device/ARM/ARMCA5/Source/AC5/ARMCA5.sct"       version="1.0.0" attr="config" condition="ARMCC5"/>         
-        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/AC6/startup_ARMCA5.c" version="1.0.0" attr="config" condition="ARMCC6"/>             
-        <file category="linkerScript" name="Device/ARM/ARMCA5/Source/AC6/ARMCA5.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>         
+        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/AC5/startup_ARMCA5.c" version="1.0.0" attr="config" condition="ARMCC5"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA5/Source/AC5/ARMCA5.sct"       version="1.0.0" attr="config" condition="ARMCC5"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA5/Source/AC6/startup_ARMCA5.c" version="1.0.0" attr="config" condition="ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA5/Source/AC6/ARMCA5.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/GCC/startup_ARMCA5.c" version="1.0.0" attr="config" condition="GCC"/>
         <file category="other"        name="Device/ARM/ARMCA5/Source/GCC/ARMCA5.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCA5/Source/IAR/startup_ARMCA5.s" version="1.0.0" attr="config" condition="IAR"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA5/Source/IAR/ARMCA5.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/system_ARMCA5.c"      version="1.0.0" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/mmu_ARMCA5.c"         version="1.0.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA5/Include/system_ARMCA5.h"     version="1.0.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA5/Include/mem_ARMCA5.h"        version="1.0.0" attr="config"/>
-        
+
       </files>
     </component>
-    
+
     <!-- Cortex-A7 -->
     <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.0" condition="ARMCA7 CMSIS">
       <description>System and Startup for Generic ARM Cortex-A7 device</description>
@@ -2234,16 +2237,18 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCA7/Include/"/>
         <!-- startup / system / mmu files -->
-        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/AC5/startup_ARMCA7.c" version="1.0.0" attr="config" condition="ARMCC5"/>             
-        <file category="linkerScript" name="Device/ARM/ARMCA7/Source/AC5/ARMCA7.sct"       version="1.0.0" attr="config" condition="ARMCC5"/> 
-        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/AC6/startup_ARMCA7.c" version="1.0.0" attr="config" condition="ARMCC6"/>             
-        <file category="linkerScript" name="Device/ARM/ARMCA7/Source/AC6/ARMCA7.sct"       version="1.0.0" attr="config" condition="ARMCC6"/> 
+        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/AC5/startup_ARMCA7.c" version="1.0.0" attr="config" condition="ARMCC5"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA7/Source/AC5/ARMCA7.sct"       version="1.0.0" attr="config" condition="ARMCC5"/>
+        <file category="sourceC"      name="Device/ARM/ARMCA7/Source/AC6/startup_ARMCA7.c" version="1.0.0" attr="config" condition="ARMCC6"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA7/Source/AC6/ARMCA7.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/GCC/startup_ARMCA7.c" version="1.0.0" attr="config" condition="GCC"/>
         <file category="other"        name="Device/ARM/ARMCA7/Source/GCC/ARMCA7.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCA7/Source/IAR/startup_ARMCA7.s" version="1.0.0" attr="config" condition="IAR"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA7/Source/IAR/ARMCA7.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/system_ARMCA7.c"      version="1.0.0" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/mmu_ARMCA7.c"         version="1.0.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA7/Include/system_ARMCA7.h"     version="1.0.0" attr="config"/>
-        <file category="header"       name="Device/ARM/ARMCA7/Include/mem_ARMCA7.h"        version="1.0.0" attr="config"/>        
+        <file category="header"       name="Device/ARM/ARMCA7/Include/mem_ARMCA7.h"        version="1.0.0" attr="config"/>
       </files>
     </component>
 
@@ -2257,9 +2262,11 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/AC5/startup_ARMCA9.c" version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/AC5/ARMCA9.sct"       version="1.0.0" attr="config" condition="ARMCC5"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/AC6/startup_ARMCA9.c" version="1.0.0" attr="config" condition="ARMCC6"/>
-        <file category="linkerScript" name="Device/ARM/ARMCA9/Source/AC6/ARMCA9.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>      
+        <file category="linkerScript" name="Device/ARM/ARMCA9/Source/AC6/ARMCA9.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/GCC/startup_ARMCA9.c" version="1.0.0" attr="config" condition="GCC"/>
-        <file category="other"        name="Device/ARM/ARMCA9/Source/GCC/ARMCA9.ld"        version="1.0.0" attr="config" condition="GCC"/>      
+        <file category="other"        name="Device/ARM/ARMCA9/Source/GCC/ARMCA9.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCA9/Source/IAR/startup_ARMCA9.s" version="1.0.0" attr="config" condition="IAR"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA9/Source/IAR/ARMCA9.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/system_ARMCA9.c"      version="1.0.0" attr="config"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/mmu_ARMCA9.c"         version="1.0.0" attr="config"/>
         <file category="header"       name="Device/ARM/ARMCA9/Include/system_ARMCA9.h"     version="1.0.0" attr="config"/>
@@ -2832,7 +2839,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_DSP_FP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_DSP_FP_TZ"/>
     </board>
-   
+
     <board name="Fixed Virtual Platform" vendor="ARM">
       <description>Fixed Virtual Platform</description>
       <mountedDevice    deviceIndex="0" Dvendor="ARM:82" Dname="ARMCA5"/>
@@ -3053,7 +3060,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <category>Getting Started</category>
       </attributes>
     </example>
-    
+
     <example name="TrustZone for ARMv8-M No RTOS" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/TrustZoneV8M/NoRTOS">
       <description>Bare-metal secure/non-secure example without RTOS</description>
       <board name="uVision Simulator" vendor="Keil"/>
