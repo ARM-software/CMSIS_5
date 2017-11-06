@@ -164,6 +164,7 @@ File/Folder                  | Content
       <td>V5.2.3</td>
       <td>
        - Based on CMSIS-RTOS API V2.1.2.
+       - Added TrustZone Module Identifier configuration for Idle and Timer Thread.
        - Moved SVC/PendSV handler priority setup from osKernelInitialize to osKernelStart (User Priority Grouping can be updated after osKernelInitialize but before osKernelStart).
        - Corrected SysTick and PendSV handlers for ARMv8-M Baseline.
        - Corrected memory allocation for stack and data when "Object specific Memory allocation" configuration is used.
