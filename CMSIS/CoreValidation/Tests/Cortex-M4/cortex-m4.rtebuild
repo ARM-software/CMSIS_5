@@ -1,0 +1,15 @@
+import:
+ - ../test.rtebuild
+config:
+  default: FVP
+  FVP:
+    cpu   : Cortex-M4
+    mcpu  : cortex-m4
+    fpu   : none
+    mfpu  : none
+    target: ARM:82/ARMCM4/Cortex-M4
+source:
+ - ../../Source/CV_CoreFunc.c
+ - ../../Source/CV_CoreInstr.c
+ - ../../Source/CV_MPU_ARMv7.c
+ 
