@@ -24,10 +24,7 @@
  * Title:        Code template for secure main function
  *
  *---------------------------------------------------------------------------*/
- 
-/* Use CMSE intrinsics */
-#include <arm_cmse.h>
- 
+
 #include "RTE_Components.h"
 #include CMSIS_device_header
  
