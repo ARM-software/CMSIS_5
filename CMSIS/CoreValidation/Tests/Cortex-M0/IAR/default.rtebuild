@@ -1,0 +1,13 @@
+import:
+ - ../cortex-m0.rtebuild
+targets:
+  FVP:
+    toolchain: ICCARM
+    commonflags : [ "--cpu ${cpu}", "--fpu ${fpu}", --endian little ]
+    cflags      : [ "${commonflags}", --debug, -On, -e, "--dlib_config DLib_Config_Full.h" ]
+    asmflags    : [ "${commonflags}" ]
+    linkflags   : [ "--cpu ${cpu}", "--fpu ${fpu}", "--entry Reset_Handler", --semihosting, --vfe, "--text_out locale" ]
+    linkscript  : "${basedir}/RTE/Device/${device}/${device}.icf"
+    idetemplates: [ "debug.ewp.jnj" ]
+include: 
+ - ./

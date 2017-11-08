@@ -1,0 +1,15 @@
+import:
+ - ../test.rtebuild
+config:
+  default: FVP
+  FVP:
+    cpu   : Cortex-M7
+    mcpu  : cortex-m7
+    fpu   : FPv5-SP
+    mfpu  : fpv5-sp-d16
+    target: ARM:82/ARMCM7_SP/Cortex-M7
+source:
+ - ../../Source/CV_CoreFunc.c
+ - ../../Source/CV_CoreInstr.c
+ - ../../Source/CV_MPU_ARMv7.c
+ 

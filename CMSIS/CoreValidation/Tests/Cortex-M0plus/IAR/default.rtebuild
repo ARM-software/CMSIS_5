@@ -6,9 +6,7 @@ config:
     commonflags : [ "--endian little", "--cpu ${cpu}", "--fpu ${fpu}" ]
     cflags      : [ "${commonflags}", --debug, -e, "--dlib_config DLib_Config_Full.h" ]
     asmflags    : [ "${commonflags}" ]
-    linkflags   : [ --semihosting, "--entry __iar_program_start", --vfe, "--text_out locale" ]
+    linkflags   : [ --semihosting, "--entry Reset_Handler", --vfe, "--text_out locale" ]
     linkscript: "${basedir}/RTE/Device/${device}/${device}.icf"
 include: 
  - ./
-source:
- - RTE/Device/${device}/startup_${device}.s
