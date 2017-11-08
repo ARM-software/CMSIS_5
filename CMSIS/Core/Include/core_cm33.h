@@ -74,7 +74,7 @@
     For this, __FPU_PRESENT has to be checked prior to making use of FPU specific registers and functions.
 */
 #if defined ( __CC_ARM )
-  #if defined __TARGET_FPU_VFP
+  #if defined (__TARGET_FPU_VFP)
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
@@ -85,8 +85,8 @@
     #define __FPU_USED         0U
   #endif
 
-  #if defined(__ARM_FEATURE_DSP)
-    #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1U)
+  #if defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1U)
+    #if defined (__DSP_PRESENT) && (__DSP_PRESENT == 1U)
       #define __DSP_USED       1U
     #else
       #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
@@ -97,7 +97,7 @@
   #endif
 
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-  #if defined __ARM_PCS_VFP
+  #if defined (__ARM_PCS_VFP)
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
@@ -108,8 +108,8 @@
     #define __FPU_USED         0U
   #endif
 
-  #if defined(__ARM_FEATURE_DSP)
-    #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1U)
+  #if defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1U)
+    #if defined (__DSP_PRESENT) && (__DSP_PRESENT == 1U)
       #define __DSP_USED       1U
     #else
       #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
@@ -131,8 +131,8 @@
     #define __FPU_USED         0U
   #endif
 
-  #if defined(__ARM_FEATURE_DSP)
-    #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1U)
+  #if defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1U)
+    #if defined (__DSP_PRESENT) && (__DSP_PRESENT == 1U)
       #define __DSP_USED       1U
     #else
       #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
@@ -143,7 +143,7 @@
   #endif
 
 #elif defined ( __ICCARM__ )
-  #if defined __ARMVFP__
+  #if defined (__ARMVFP__)
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
@@ -154,8 +154,8 @@
     #define __FPU_USED         0U
   #endif
 
-  #if defined(__ARM_FEATURE_DSP)
-    #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1U)
+  #if defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1U)
+    #if defined (__DSP_PRESENT) && (__DSP_PRESENT == 1U)
       #define __DSP_USED       1U
     #else
       #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
@@ -166,7 +166,7 @@
   #endif
 
 #elif defined ( __TI_ARM__ )
-  #if defined __TI_VFP_SUPPORT__
+  #if defined (__TI_VFP_SUPPORT__)
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
@@ -178,7 +178,7 @@
   #endif
 
 #elif defined ( __TASKING__ )
-  #if defined __FPU_VFP__
+  #if defined (__FPU_VFP__)
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
