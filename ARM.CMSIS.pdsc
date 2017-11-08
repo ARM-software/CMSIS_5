@@ -1665,6 +1665,184 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dendian="Big-endian"/>
     </condition>
 
+    <condition id="CM23_IAR">
+      <description>Cortex-M23 processor based device for the IAR Compiler</description>
+      <require condition="CM23"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM23_LE_IAR">
+      <description>Cortex-M23 processor based device in little endian mode for the IAR Compiler</description>
+      <require condition="CM23_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM23_BE_IAR">
+      <description>Cortex-M23 processor based device in big endian mode for the IAR Compiler</description>
+      <require condition="CM23_IAR"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_IAR">
+      <description>Cortex-M33 processor based device for the IAR Compiler</description>
+      <require condition="CM33"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM33_LE_IAR">
+      <description>Cortex-M33 processor based device in little endian mode for the IAR Compiler</description>
+      <require condition="CM33_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_BE_IAR">
+      <description>Cortex-M33 processor based device in big endian mode for the IAR Compiler</description>
+      <require condition="CM33_IAR"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_FP_IAR">
+      <description>Cortex-M33 processor based device using Floating Point Unit for the IAR Compiler</description>
+      <require condition="CM33_FP"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM33_FP_LE_IAR">
+      <description>Cortex-M33 processor based device using Floating Point Unit in little endian mode for the IAR Compiler</description>
+      <require condition="CM33_FP_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_FP_BE_IAR">
+      <description>Cortex-M33 processor based device using Floating Point Unit in big endian mode for the IAR Compiler</description>
+      <require condition="CM33_FP_IAR"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM33_NODSP_NOFPU_IAR">
+      <description>CM33, no DSP, no FPU, IAR Compiler</description>
+      <require condition="CM33_NODSP_NOFPU"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM33_DSP_NOFPU_IAR">
+      <description>CM33, DSP, no FPU, IAR Compiler</description>
+      <require condition="CM33_DSP_NOFPU"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM33_NODSP_SP_IAR">
+      <description>CM33, no DSP, SP FPU, IAR Compiler</description>
+      <require condition="CM33_NODSP_SP"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM33_DSP_SP_IAR">
+      <description>CM33, DSP, SP FPU, IAR Compiler</description>
+      <require condition="CM33_DSP_SP"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM33_NODSP_NOFPU_LE_IAR">
+      <description>CM33, little endian, no DSP, no FPU, IAR Compiler</description>
+      <require condition="CM33_NODSP_NOFPU_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_DSP_NOFPU_LE_IAR">
+      <description>CM33, little endian, DSP, no FPU, IAR Compiler</description>
+      <require condition="CM33_DSP_NOFPU_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_NODSP_SP_LE_IAR">
+      <description>CM33, little endian, no DSP, SP FPU, IAR Compiler</description>
+      <require condition="CM33_NODSP_SP_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM33_DSP_SP_LE_IAR">
+      <description>CM33, little endian, DSP, SP FPU, IAR Compiler</description>
+      <require condition="CM33_DSP_SP_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+
+    <condition id="ARMv8MBL_IAR">
+      <description>ARMv8-M Baseline processor based device for the IAR Compiler</description>
+      <require condition="ARMv8MBL"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="ARMv8MBL_LE_IAR">
+      <description>ARMv8-M Baseline processor based device in little endian mode for the IAR Compiler</description>
+      <require condition="ARMv8MBL_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MBL_BE_IAR">
+      <description>ARMv8-M Baseline processor based device in big endian mode for the IAR Compiler</description>
+      <require condition="ARMv8MBL_IAR"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="ARMv8MML_IAR">
+      <description>ARMv8-M Mainline processor based device for the IAR Compiler</description>
+      <require condition="ARMv8MML"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="ARMv8MML_LE_IAR">
+      <description>ARMv8-M Mainline processor based device in little endian mode for the IAR Compiler</description>
+      <require condition="ARMv8MML_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_BE_IAR">
+      <description>ARMv8-M Mainline processor based device in big endian mode for the IAR Compiler</description>
+      <require condition="ARMv8MML_IAR"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="ARMv8MML_FP_IAR">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit for the IAR Compiler</description>
+      <require condition="ARMv8MML_FP"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="ARMv8MML_FP_LE_IAR">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit in little endian mode for the IAR Compiler</description>
+      <require condition="ARMv8MML_FP_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_FP_BE_IAR">
+      <description>ARMv8-M Mainline processor based device using Floating Point Unit in big endian mode for the IAR Compiler</description>
+      <require condition="ARMv8MML_FP_IAR"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="ARMv8MML_NODSP_NOFPU_IAR">
+      <description>ARMv8MML, no DSP, no FPU, IAR Compiler</description>
+      <require condition="ARMv8MML_NODSP_NOFPU"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_NOFPU_IAR">
+      <description>ARMv8MML, DSP, no FPU, IAR Compiler</description>
+      <require condition="ARMv8MML_DSP_NOFPU"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="ARMv8MML_NODSP_SP_IAR">
+      <description>ARMv8MML, no DSP, SP FPU, IAR Compiler</description>
+      <require condition="ARMv8MML_NODSP_SP"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_SP_IAR">
+      <description>ARMv8MML, DSP, SP FPU, IAR Compiler</description>
+      <require condition="ARMv8MML_DSP_SP"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="ARMv8MML_NODSP_NOFPU_LE_IAR">
+      <description>ARMv8MML, little endian, no DSP, no FPU, IAR Compiler</description>
+      <require condition="ARMv8MML_NODSP_NOFPU_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_NOFPU_LE_IAR">
+      <description>ARMv8MML, little endian, DSP, no FPU, IAR Compiler</description>
+      <require condition="ARMv8MML_DSP_NOFPU_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_NODSP_SP_LE_IAR">
+      <description>ARMv8MML, little endian, no DSP, SP FPU, IAR Compiler</description>
+      <require condition="ARMv8MML_NODSP_SP_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="ARMv8MML_DSP_SP_LE_IAR">
+      <description>ARMv8MML, little endian, DSP, SP FPU, IAR Compiler</description>
+      <require condition="ARMv8MML_DSP_SP_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+
     <!-- conditions selecting single devices and CMSIS Core -->
     <!-- used for component startup, GCC version is used for C-Startup -->
     <condition id="ARMCM0 CMSIS">
@@ -1862,7 +2040,7 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="RTOS2 RTX5 NS">
       <description>Components required for RTOS2 RTX5 in Non-Secure Domain</description>
       <require condition="ARMv8-M TZ Device"/>
-      <require condition="ARMCC GCC"/>
+      <require condition="ARMCC GCC IAR"/>
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
     </condition>
@@ -2687,6 +2865,12 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm4f.s"        condition="CM4_FP_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"         condition="CM7_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm4f.s"        condition="CM7_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s"    condition="CM23_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="CM33_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="CM33_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s"    condition="ARMv8MBL_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="ARMv8MML_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="ARMv8MML_FP_IAR"/>
         <!-- OS Tick (SysTick) -->
         <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
       </files>
@@ -2809,6 +2993,13 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.S"    condition="ARMv8MBL_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.S"    condition="ARMv8MML_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.S" condition="ARMv8MML_FP_GCC"/>
+        <!-- RTX sources (IAR handlers) -->
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl_ns.S"    condition="CM23_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.S"    condition="CM33_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.S"    condition="CM33_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl_ns.S"    condition="ARMv8MBL_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.S"    condition="ARMv8MML_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.S"    condition="ARMv8MML_FP_IAR"/>
         <!-- OS Tick (SysTick) -->
         <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
       </files>
