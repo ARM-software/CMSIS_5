@@ -1,0 +1,15 @@
+import:
+ - ../cortex-m33.rtebuild
+targets:
+  FVP:
+    toolchain: ICCARM
+    commonflags : [ "--cpu ${cpu}", "--fpu ${fpu}", --endian little ]
+    cflags      : [ "${commonflags}", --debug, -On, -e, "--dlib_config DLib_Config_Full.h" ]
+    asmflags    : [ "${commonflags}" ]
+    linkflags   : [ "--cpu ${cpu}", "--fpu ${fpu}", --semihosting, --no-entry, --vfe, "--text_out locale" ]
+    linkscript  : "${basedir}/v2m-mps2_ns.icf"
+    idetemplates: [ "debug.ewp.jnj" ]
+include: 
+ - ./
+object:
+  - ./Bootloader/build/${targetName}/veneer.lib

@@ -1,0 +1,17 @@
+import:
+ - ${home}/.rtebuild/toolchain.rtebuild
+targets:
+  default: FVP
+  FVP:
+    cpu   : Cortex-M23
+    mcpu  : cortex-m23
+    fpu   : None
+    mfpu  : None
+    target: ARM:82/ARMCM23_TZ/Cortex-M23
+  FVP_OS: 
+    extends: FVP
+packs:
+ - ARM.CMSIS
+components:
+ - CMSIS.CORE
+ - Device.Startup
