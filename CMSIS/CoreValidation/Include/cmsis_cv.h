@@ -46,6 +46,15 @@ extern void TC_CoreInstr_USAT (void);
     extern void TC_CoreFunc_APSR (void);
     extern void TC_CoreFunc_PSP (void);
     extern void TC_CoreFunc_MSP (void);
+    
+    #if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+         (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
+
+    extern void TC_CoreFunc_PSPLIM (void);
+    extern void TC_CoreFunc_MSPLIM (void);
+
+    #endif
+    
     extern void TC_CoreFunc_PRIMASK (void);
 
     #if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \

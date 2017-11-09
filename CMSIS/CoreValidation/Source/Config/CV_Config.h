@@ -41,6 +41,8 @@
 // <q12> TC_CoreFunc_APSR
 // <q13> TC_CoreFunc_PSP
 // <q14> TC_CoreFunc_MSP
+// <q13> TC_CoreFunc_PSPLIM
+// <q14> TC_CoreFunc_MSPLIM
 // <q15> TC_CoreFunc_PRIMASK
 // <q16> TC_CoreFunc_FAULTMASK
 // <q17> TC_CoreFunc_BASEPRI
@@ -64,6 +66,8 @@
 #define TC_COREFUNC_APSR_EN         1
 #define TC_COREFUNC_PSP_EN          1
 #define TC_COREFUNC_MSP_EN          1
+#define TC_COREFUNC_PSPLIM_EN       1
+#define TC_COREFUNC_MSPLIM_EN       1
 #define TC_COREFUNC_PRIMASK_EN      1
 #define TC_COREFUNC_FAULTMASK_EN    1
 #define TC_COREFUNC_BASEPRI_EN      1
