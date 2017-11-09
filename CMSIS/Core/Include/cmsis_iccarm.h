@@ -256,8 +256,8 @@ __packed struct  __iar_u32 { uint32_t v; };
   #define __disable_irq       __iar_builtin_disable_interrupt
   #define __enable_fault_irq  __iar_builtin_enable_fiq
   #define __enable_irq        __iar_builtin_enable_interrupt
-  #define __arm_rsr 			    __iar_builtin_rsr
-  #define __arm_wsr 			    __iar_builtin_wsr
+  #define __arm_rsr           __iar_builtin_rsr
+  #define __arm_wsr           __iar_builtin_wsr
 
 
   #define __get_APSR()                (__arm_rsr("APSR"))
@@ -313,7 +313,7 @@ __packed struct  __iar_u32 { uint32_t v; };
 
   #define __NOP     __iar_builtin_no_operation
 
-  #define __CLZ     __iar_builtin_CLZ  
+  #define __CLZ     __iar_builtin_CLZ
   #define __CLREX   __iar_builtin_CLREX
 
   #define __DMB     __iar_builtin_DMB
@@ -439,7 +439,7 @@ __packed struct  __iar_u32 { uint32_t v; };
   #ifdef __INTRINSICS_INCLUDED
   #error intrinsics.h is already included previously!
   #endif
-  
+
   #include <intrinsics.h>
 
   #if __IAR_M0_FAMILY
@@ -534,7 +534,7 @@ __packed struct  __iar_u32 { uint32_t v; };
     }
 
 
-    #define __enable_fault_irq 	__enable_fiq
+    #define __enable_fault_irq  __enable_fiq
     #define __disable_fault_irq __disable_fiq
 
 
@@ -548,6 +548,54 @@ __packed struct  __iar_u32 { uint32_t v; };
   #if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
        (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
 
+   __IAR_FT uint32_t __get_MSPLIM(void)
+    {
+      uint32_t res;
+    #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
+         (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+      // without main extensions, the non-secure MSPLIM is RAZ/WI
+      res = 0U;
+    #else
+      __asm volatile("MRS      %0,MSPLIM" : "=r" (res));
+    #endif
+      return res;
+    }
+
+    __IAR_FT void   __set_MSPLIM(uint32_t value)
+    {
+    #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
+         (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+      // without main extensions, the non-secure MSPLIM is RAZ/WI
+      (void)value;
+    #else
+      __asm volatile("MSR      MSPLIM,%0" :: "r" (value));
+    #endif
+    }
+
+    __IAR_FT uint32_t __get_PSPLIM(void)
+    {
+      uint32_t res;
+    #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
+         (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+      // without main extensions, the non-secure PSPLIM is RAZ/WI
+      res = 0U;
+    #else
+      __asm volatile("MRS      %0,PSPLIM" : "=r" (res));
+    #endif
+      return res;
+    }
+
+    __IAR_FT void   __set_PSPLIM(uint32_t value)
+    {
+    #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
+         (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+      // without main extensions, the non-secure PSPLIM is RAZ/WI
+      (void)value;
+    #else
+      __asm volatile("MSR      PSPLIM,%0" :: "r" (value));
+    #endif
+    }
+
     __IAR_FT uint32_t __TZ_get_CONTROL_NS(void)
     {
       uint32_t res;
@@ -555,101 +603,101 @@ __packed struct  __iar_u32 { uint32_t v; };
       return res;
     }
 
-    __IAR_FT void 	__TZ_set_CONTROL_NS(uint32_t value)
+    __IAR_FT void   __TZ_set_CONTROL_NS(uint32_t value)
     {
       __asm volatile("MSR      CONTROL_NS,%0" :: "r" (value));
     }
 
-    __IAR_FT uint32_t 	__TZ_get_PSP_NS(void)
+    __IAR_FT uint32_t   __TZ_get_PSP_NS(void)
     {
       uint32_t res;
       __asm volatile("MRS      %0,PSP_NS" : "=r" (res));
       return res;
     }
 
-    __IAR_FT void 	__TZ_set_PSP_NS(uint32_t value)
+    __IAR_FT void   __TZ_set_PSP_NS(uint32_t value)
     {
       __asm volatile("MSR      PSP_NS,%0" :: "r" (value));
     }
 
-    __IAR_FT uint32_t 	__TZ_get_MSP_NS(void)
+    __IAR_FT uint32_t   __TZ_get_MSP_NS(void)
     {
       uint32_t res;
       __asm volatile("MRS      %0,MSP_NS" : "=r" (res));
       return res;
     }
 
-    __IAR_FT void 	__TZ_set_MSP_NS(uint32_t value)
+    __IAR_FT void   __TZ_set_MSP_NS(uint32_t value)
     {
       __asm volatile("MSR      MSP_NS,%0" :: "r" (value));
     }
 
-    __IAR_FT uint32_t 	__TZ_get_SP_NS(void)
+    __IAR_FT uint32_t   __TZ_get_SP_NS(void)
     {
       uint32_t res;
       __asm volatile("MRS      %0,SP_NS" : "=r" (res));
       return res;
     }
-    __IAR_FT void 	__TZ_set_SP_NS(uint32_t value)
+    __IAR_FT void   __TZ_set_SP_NS(uint32_t value)
     {
       __asm volatile("MSR      SP_NS,%0" :: "r" (value));
     }
 
-    __IAR_FT uint32_t 	__TZ_get_PRIMASK_NS(void)
+    __IAR_FT uint32_t   __TZ_get_PRIMASK_NS(void)
     {
       uint32_t res;
       __asm volatile("MRS      %0,PRIMASK_NS" : "=r" (res));
       return res;
     }
 
-    __IAR_FT void 	__TZ_set_PRIMASK_NS(uint32_t value)
+    __IAR_FT void   __TZ_set_PRIMASK_NS(uint32_t value)
     {
       __asm volatile("MSR      PRIMASK_NS,%0" :: "r" (value));
     }
 
-    __IAR_FT uint32_t 	__TZ_get_BASEPRI_NS(void)
+    __IAR_FT uint32_t   __TZ_get_BASEPRI_NS(void)
     {
       uint32_t res;
       __asm volatile("MRS      %0,BASEPRI_NS" : "=r" (res));
       return res;
     }
 
-    __IAR_FT void 	__TZ_set_BASEPRI_NS(uint32_t value)
+    __IAR_FT void   __TZ_set_BASEPRI_NS(uint32_t value)
     {
       __asm volatile("MSR      BASEPRI_NS,%0" :: "r" (value));
     }
 
-    __IAR_FT uint32_t 	__TZ_get_FAULTMASK_NS(void)
+    __IAR_FT uint32_t   __TZ_get_FAULTMASK_NS(void)
     {
       uint32_t res;
       __asm volatile("MRS      %0,FAULTMASK_NS" : "=r" (res));
       return res;
     }
 
-    __IAR_FT void 	__TZ_set_FAULTMASK_NS(uint32_t value)
+    __IAR_FT void   __TZ_set_FAULTMASK_NS(uint32_t value)
     {
       __asm volatile("MSR      FAULTMASK_NS,%0" :: "r" (value));
     }
 
-    __IAR_FT uint32_t 	__TZ_get_PSPLIM_NS(void)
+    __IAR_FT uint32_t   __TZ_get_PSPLIM_NS(void)
     {
       uint32_t res;
       __asm volatile("MRS      %0,PSPLIM_NS" : "=r" (res));
       return res;
     }
-    __IAR_FT void 	__TZ_set_PSPLIM_NS(uint32_t value)
+    __IAR_FT void   __TZ_set_PSPLIM_NS(uint32_t value)
     {
       __asm volatile("MSR      PSPLIM_NS,%0" :: "r" (value));
     }
 
-    __IAR_FT uint32_t 	__TZ_get_MSPLIM_NS(void)
+    __IAR_FT uint32_t   __TZ_get_MSPLIM_NS(void)
     {
       uint32_t res;
       __asm volatile("MRS      %0,MSPLIM_NS" : "=r" (res));
       return res;
     }
 
-    __IAR_FT void 	__TZ_set_MSPLIM_NS(uint32_t value)
+    __IAR_FT void   __TZ_set_MSPLIM_NS(uint32_t value)
     {
       __asm volatile("MSR      MSPLIM_NS,%0" :: "r" (value));
     }
