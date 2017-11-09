@@ -809,7 +809,9 @@ and 8-bit Java bytecodes in Jazelle state.
     </condition>
     <condition id="CM4_FP">
       <description>Cortex-M4 processor based device using Floating Point Unit</description>
-      <require Dcore="Cortex-M4" Dfpu="FPU"/>
+      <accept Dcore="Cortex-M4" Dfpu="FPU"/>
+      <accept Dcore="Cortex-M4" Dfpu="SP_FPU"/>
+      <accept Dcore="Cortex-M4" Dfpu="DP_FPU"/>
     </condition>
     <condition id="CM7">
       <description>Cortex-M7 processor based device</description>
