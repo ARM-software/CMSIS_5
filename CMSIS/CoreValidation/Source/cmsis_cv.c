@@ -22,18 +22,18 @@ void WDT_IRQHandler(void);
 void (*TST_IRQHandler)(void);
 
 void WDT_IRQHandler(void) {
-  if (TST_IRQHandler != NULL) TST_IRQHandler(); 
+  if (TST_IRQHandler != NULL) TST_IRQHandler();
 }
 
 /*-----------------------------------------------------------------------------
  *      Init test suite
  *----------------------------------------------------------------------------*/
-static void TS_Init (void) {    
+static void TS_Init (void) {
   TST_IRQHandler = NULL;
-  
+
 #ifdef RTE_CV_MEASURETICKS
   StartCortexCycleCounter();
-#endif 
+#endif
 }
 
 /*-----------------------------------------------------------------------------
@@ -57,8 +57,18 @@ static TEST_CASE TC_LIST[] = {
     TCD ( TC_CoreFunc_Control,   TC_COREFUNC_CONTROL_EN   ),
     TCD ( TC_CoreFunc_IPSR,      TC_COREFUNC_IPSR_EN      ),
     TCD ( TC_CoreFunc_APSR,      TC_COREFUNC_APSR_EN      ),
+
     TCD ( TC_CoreFunc_PSP,       TC_COREFUNC_PSP_EN       ),
     TCD ( TC_CoreFunc_MSP,       TC_COREFUNC_MSP_EN       ),
+
+    #if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+         (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
+
+    TCD ( TC_CoreFunc_PSPLIM,    TC_COREFUNC_PSPLIM_EN    ),
+    TCD ( TC_CoreFunc_MSPLIM,    TC_COREFUNC_MSPLIM_EN    ),
+
+    #endif
+
     TCD ( TC_CoreFunc_PRIMASK,   TC_COREFUNC_PRIMASK_EN   ),
 
     #if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
@@ -109,7 +119,7 @@ static TEST_CASE TC_LIST[] = {
   TCD ( TC_GenTimer_CNTPCT,     TC_GENTIMER_CNTPCT    ),
   TCD ( TC_GenTimer_CNTP_CVAL,  TC_GENTIMER_CNTP_CVAL ),
 #endif
-};                                                              
+};
 
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
 #pragma clang diagnostic push
@@ -121,11 +131,11 @@ static TEST_CASE TC_LIST[] = {
 TEST_SUITE ts = {
   __FILE__, __DATE__, __TIME__,
   "CMSIS-CORE Test Suite",
-  TS_Init,  
+  TS_Init,
   1,
   TC_LIST,
-  ARRAY_SIZE (TC_LIST),  
-};  
+  ARRAY_SIZE (TC_LIST),
+};
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
 #pragma clang diagnostic pop
 #endif
