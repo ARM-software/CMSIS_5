@@ -201,7 +201,7 @@ osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argume
   timer->finfo.fp  = (void *)func;
   timer->finfo.arg = argument;
 
-  EvrRtxTimerCreated(timer);
+  EvrRtxTimerCreated(timer, timer->name);
 
   return timer;
 }

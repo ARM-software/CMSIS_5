@@ -190,7 +190,7 @@ osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
   // Register post ISR processing function
   osRtxInfo.post_process.semaphore = osRtxSemaphorePostProcess;
 
-  EvrRtxSemaphoreCreated(semaphore);
+  EvrRtxSemaphoreCreated(semaphore, semaphore->name);
 
   return semaphore;
 }

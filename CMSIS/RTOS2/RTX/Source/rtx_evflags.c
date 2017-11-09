@@ -219,7 +219,7 @@ osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
   // Register post ISR processing function
   osRtxInfo.post_process.event_flags = osRtxEventFlagsPostProcess;
 
-  EvrRtxEventFlagsCreated(ef);
+  EvrRtxEventFlagsCreated(ef, ef->name);
 
   return ef;
 }

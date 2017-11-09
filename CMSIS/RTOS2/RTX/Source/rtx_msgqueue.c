@@ -343,7 +343,7 @@ osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
   // Register post ISR processing function
   osRtxInfo.post_process.message_queue = osRtxMessageQueuePostProcess;
 
-  EvrRtxMessageQueueCreated(mq);
+  EvrRtxMessageQueueCreated(mq, mq->name);
 
   return mq;
 }

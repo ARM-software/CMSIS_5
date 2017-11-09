@@ -359,7 +359,7 @@ In case when \ref osThreadAttr_t "thread attributes" are provided in the API cal
 */
 
 /**
-\fn void EvrRtxThreadCreated (osThreadId_t thread_id)
+\fn void EvrRtxThreadCreated (osThreadId_t thread_id, uint32_t thread_addr)
 \details
 The event \b ThreadCreated is generated when the function \ref osThreadNew successfully creates a thread object.
 
@@ -526,7 +526,7 @@ The event \b ThreadJoined is generated when the function \ref osThreadJoin succe
 /**
 \fn void EvrRtxThreadBlocked (osThreadId_t thread_id, uint32_t timeout)
 \details
-The event \b ThreadBlocked is generated when the current running thread operation is blocked.
+The event \b ThreadBlocked is generated when the current running thread execution is blocked.
 
 \b Value in the Event Recorder shows:
   - \b thread_id : thread ID.
@@ -536,7 +536,7 @@ The event \b ThreadBlocked is generated when the current running thread operatio
 /**
 \fn void EvrRtxThreadUnblocked (osThreadId_t thread_id, uint32_t ret_val)
 \details
-The event \b ThreadUnblocked is generated when the delayed thread operation is unblocked.
+The event \b ThreadUnblocked is generated when the blocked thread execution is unblocked.
 
 \b Value in the Event Recorder shows:
   - \b thread_id : thread ID.
@@ -544,9 +544,18 @@ The event \b ThreadUnblocked is generated when the delayed thread operation is u
 */
 
 /**
-\fn void EvrRtxThreadSwitch (osThreadId_t thread_id)
+\fn void EvrRtxThreadPreempted (osThreadId_t thread_id)
 \details
-The event \b ThreadSwitch is generated when the running thread switch is executed.
+The event \b ThreadPreempted is generated when current running thread execution is preempted.
+
+\b Value in the Event Recorder shows:
+  - \b thread_id : thread ID.
+*/
+
+/**
+\fn void EvrRtxThreadSwitched (osThreadId_t thread_id)
+\details
+The event \b ThreadSwitched is generated when current running thread execution switches.
 
 \b Value in the Event Recorder shows:
   - \b thread_id : thread ID.
@@ -570,7 +579,7 @@ The event \b ThreadTerminate is generated when the function \ref osThreadTermina
 /**
 \fn void EvrRtxThreadDestroyed (osThreadId_t thread_id)
 \details
-The event \b ThreadDestroyed is generated when the functions \ref osThreadExit and \ref osThreadTerminate successfully terminate the thread.
+The event \b ThreadDestroyed is generated when the function \ref osThreadExit or \ref osThreadTerminate successfully terminates the thread.
 
 \b Value in the Event Recorder shows:
   - \b thread_id : thread ID.
@@ -784,7 +793,7 @@ In case when \ref osTimerAttr_t "timer attributes" are provided in the API call 
 */
 
 /**
-\fn void EvrRtxTimerCreated (osTimerId_t timer_id)
+\fn void EvrRtxTimerCreated (osTimerId_t timer_id, const char *name)
 \details
 The event \b TimerCreated is generated when the function \ref osTimerNew successfully creates a timer object.
 
@@ -922,7 +931,7 @@ In case when \ref osEventFlagsAttr_t "event flags attributes" are provided in th
 */
 
 /**
-\fn void EvrRtxEventFlagsCreated (osEventFlagsId_t ef_id)
+\fn void EvrRtxEventFlagsCreated (osEventFlagsId_t ef_id, const char *name)
 \details
 The event \b EventFlagsCreated is generated when the function \ref osEventFlagsNew successfully creates a event flags object.
 
@@ -1119,7 +1128,7 @@ In case when \ref osMutexAttr_t "mutex attributes" are provided in the API call 
 */
 
 /**
-\fn void EvrRtxMutexCreated (osMutexId_t mutex_id)
+\fn void EvrRtxMutexCreated (osMutexId_t mutex_id, const char *name)
 \details
 The event \b MutexCreated is generated when the function \ref osMutexNew successfully creates a mutex object.
 
@@ -1289,7 +1298,7 @@ In case when \ref osSemaphoreAttr_t "semaphore attributes" are provided in the A
 */
 
 /**
-\fn void EvrRtxSemaphoreCreated (osSemaphoreId_t semaphore_id)
+\fn void EvrRtxSemaphoreCreated (osSemaphoreId_t semaphore_id, const char *name)
 \details
 The event \b SemaphoreCreated is generated when the function \ref osSemaphoreNew successfully creates a semaphore object.
 
@@ -1457,7 +1466,7 @@ In case when \ref osMemoryPoolAttr_t "memory pool attributes" are provided in th
 */
 
 /**
-\fn void EvrRtxMemoryPoolCreated (osMemoryPoolId_t mp_id)
+\fn void EvrRtxMemoryPoolCreated (osMemoryPoolId_t mp_id, const char *name)
 \details
 The event \b MemoryPoolCreated is generated when the function \ref osMemoryPoolNew successfully creates a memory pool object.
 
@@ -1668,7 +1677,7 @@ In case when \ref osMessageQueueAttr_t "message queue attributes" are provided i
 */
 
 /**
-\fn void EvrRtxMessageQueueCreated (osMessageQueueId_t mq_id)
+\fn void EvrRtxMessageQueueCreated (osMessageQueueId_t mq_id, const char *name)
 \details
 The event \b MessageQueueCreated is generated when the function \ref osMessageQueueNew successfully creates a message queue object.
 

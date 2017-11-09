@@ -130,7 +130,7 @@ osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
   mutex->owner_next   = NULL;
   mutex->lock         = 0U;
 
-  EvrRtxMutexCreated(mutex);
+  EvrRtxMutexCreated(mutex, mutex->name);
 
   return mutex;
 }

@@ -403,6 +403,8 @@ void osRtxThreadBlock (os_thread_t *thread) {
   if (next != NULL) {
     next->thread_prev = thread;
   }
+
+  EvrRtxThreadPreempted(thread);
 }
 
 /// Switch to specified Thread.
@@ -412,7 +414,7 @@ void osRtxThreadSwitch (os_thread_t *thread) {
   thread->state = osRtxThreadRunning;
   osRtxInfo.thread.run.next = thread;
   osRtxThreadStackCheck();
-  EvrRtxThreadSwitch(thread);
+  EvrRtxThreadSwitched(thread);
 }
 
 /// Dispatch specified Thread or Ready Thread with Highest Priority.
@@ -764,7 +766,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
   // Register post ISR processing function
   osRtxInfo.post_process.thread = osRtxThreadPostProcess;
 
-  EvrRtxThreadCreated(thread);
+  EvrRtxThreadCreated(thread, thread->thread_addr);
 
   osRtxThreadDispatch(thread);
 
@@ -948,6 +950,7 @@ osStatus_t svcRtxThreadYield (void) {
       (thread_ready->priority == thread_running->priority)) {
     osRtxThreadListRemove(thread_ready);
     osRtxThreadReadyPut(thread_running);
+    EvrRtxThreadPreempted(thread_running);
     osRtxThreadSwitch(thread_ready);
   }
 

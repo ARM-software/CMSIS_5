@@ -289,7 +289,7 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
   // Register post ISR processing function
   osRtxInfo.post_process.memory_pool = osRtxMemoryPoolPostProcess;
 
-  EvrRtxMemoryPoolCreated(mp);
+  EvrRtxMemoryPoolCreated(mp, mp->name);
 
   return mp;
 }
