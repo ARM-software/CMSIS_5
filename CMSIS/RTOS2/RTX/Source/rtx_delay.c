@@ -51,7 +51,7 @@ osStatus_t svcRtxDelayUntil (uint32_t ticks) {
 
   ticks -= osRtxInfo.kernel.tick;
   if (ticks == 0xFFFFFFFFU) {
-    EvrRtxThreadError(NULL, osErrorParameter);
+    EvrRtxThreadError(NULL, (int32_t)osErrorParameter);
     return osErrorParameter;
   }
   if (ticks == 0U) {
@@ -70,7 +70,7 @@ osStatus_t svcRtxDelayUntil (uint32_t ticks) {
 osStatus_t osDelay (uint32_t ticks) {
   EvrRtxThreadDelay(ticks);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxThreadError(NULL, osErrorISR);
+    EvrRtxThreadError(NULL, (int32_t)osErrorISR);
     return osErrorISR;
   }
   return __svcDelay(ticks);
@@ -80,7 +80,7 @@ osStatus_t osDelay (uint32_t ticks) {
 osStatus_t osDelayUntil (uint32_t ticks) {
   EvrRtxThreadDelayUntil(ticks);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxThreadError(NULL, osErrorISR);
+    EvrRtxThreadError(NULL, (int32_t)osErrorISR);
     return osErrorISR;
   }
   return __svcDelayUntil(ticks);

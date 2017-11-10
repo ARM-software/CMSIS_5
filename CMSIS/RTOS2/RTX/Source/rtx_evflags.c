@@ -200,7 +200,7 @@ osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
       ef = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_event_flags_t), 1U);
     }
     if (ef == NULL) {
-      EvrRtxEventFlagsError(NULL, osErrorNoMemory);
+      EvrRtxEventFlagsError(NULL, (int32_t)osErrorNoMemory);
       return NULL;
     }
     flags = osRtxFlagSystemObject;
@@ -258,13 +258,13 @@ uint32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
       (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
-    EvrRtxEventFlagsError(ef, osErrorParameter);
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
-    EvrRtxEventFlagsError(ef, osErrorResource);
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorResource);
     return ((uint32_t)osErrorResource);
   }
 
@@ -304,13 +304,13 @@ uint32_t svcRtxEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
       (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
-    EvrRtxEventFlagsError(ef, osErrorParameter);
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
-    EvrRtxEventFlagsError(ef, osErrorResource);
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorResource);
     return ((uint32_t)osErrorResource);
   }
 
@@ -351,6 +351,7 @@ uint32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
   os_thread_t      *running_thread;
   uint32_t          event_flags;
 
+  // Check running thread
   running_thread = osRtxThreadGetRunning();
   if (running_thread == NULL) {
     EvrRtxEventFlagsError(ef, osRtxErrorKernelNotRunning);
@@ -360,13 +361,13 @@ uint32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
       (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
-    EvrRtxEventFlagsError(ef, osErrorParameter);
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
-    EvrRtxEventFlagsError(ef, osErrorResource);
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorResource);
     return ((uint32_t)osErrorResource);
   }
 
@@ -402,13 +403,13 @@ osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags)) {
-    EvrRtxEventFlagsError(ef, osErrorParameter);
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     return osErrorParameter;
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
-    EvrRtxEventFlagsError(ef, osErrorResource);
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorResource);
     return osErrorResource;
   }
 
@@ -451,13 +452,13 @@ uint32_t isrRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
       (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
-    EvrRtxEventFlagsError(ef, osErrorParameter);
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
-    EvrRtxEventFlagsError(ef, osErrorResource);
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorResource);
     return ((uint32_t)osErrorResource);
   }
 
@@ -482,13 +483,13 @@ uint32_t isrRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) || (timeout != 0U) ||
       (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
-    EvrRtxEventFlagsError(ef, osErrorParameter);
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
-    EvrRtxEventFlagsError(ef, osErrorResource);
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorResource);
     return ((uint32_t)osErrorResource);
   }
 
@@ -511,7 +512,7 @@ uint32_t isrRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
 osEventFlagsId_t osEventFlagsNew (const osEventFlagsAttr_t *attr) {
   EvrRtxEventFlagsNew(attr);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxEventFlagsError(NULL, osErrorISR);
+    EvrRtxEventFlagsError(NULL, (int32_t)osErrorISR);
     return NULL;
   }
   return __svcEventFlagsNew(attr);
@@ -569,7 +570,7 @@ uint32_t osEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t opti
 osStatus_t osEventFlagsDelete (osEventFlagsId_t ef_id) {
   EvrRtxEventFlagsDelete(ef_id);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxEventFlagsError(ef_id, osErrorISR);
+    EvrRtxEventFlagsError(ef_id, (int32_t)osErrorISR);
     return osErrorISR;
   }
   return __svcEventFlagsDelete(ef_id);

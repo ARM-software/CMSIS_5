@@ -88,7 +88,7 @@ osStatus_t svcRtxKernelInitialize (void) {
     return osOK;
   }
   if (osRtxInfo.kernel.state != osKernelInactive) {
-    EvrRtxKernelError(osError);
+    EvrRtxKernelError((int32_t)osError);
     return osError;
   }
 
@@ -101,7 +101,7 @@ osStatus_t svcRtxKernelInitialize (void) {
   }
 
   if ((osRtxConfig.isr_queue.data == NULL) || (osRtxConfig.isr_queue.max == 0U)) {
-    EvrRtxKernelError(osError);
+    EvrRtxKernelError((int32_t)osError);
     return osError;
   }
   osRtxInfo.isr_queue.data = osRtxConfig.isr_queue.data;
@@ -244,7 +244,7 @@ osStatus_t svcRtxKernelStart (void) {
   if (osRtxInfo.thread.idle == NULL) {
     osRtxInfo.thread.idle = svcRtxThreadNew(osRtxIdleThread, NULL, osRtxConfig.idle_thread_attr);
     if (osRtxInfo.thread.idle == NULL) {
-      EvrRtxKernelError(osError);
+      EvrRtxKernelError((int32_t)osError);
       return osError;
     }
   }
@@ -254,7 +254,7 @@ osStatus_t svcRtxKernelStart (void) {
     if (osRtxInfo.timer.thread == NULL) {
       osRtxInfo.timer.thread = svcRtxThreadNew(osRtxTimerThread, NULL, osRtxConfig.timer_thread_attr);
       if (osRtxInfo.timer.thread == NULL) {
-        EvrRtxKernelError(osError);
+        EvrRtxKernelError((int32_t)osError);
         return osError;
       }
     }
@@ -277,7 +277,7 @@ osStatus_t svcRtxKernelStart (void) {
   // Switch to Ready Thread with highest Priority
   thread = osRtxThreadListGet(&osRtxInfo.thread.ready);
   if (thread == NULL) {
-    EvrRtxKernelError(osError);
+    EvrRtxKernelError((int32_t)osError);
     return osError;
   }
   osRtxThreadSwitch(thread);
@@ -311,7 +311,7 @@ int32_t svcRtxKernelLock (void) {
     return 0;
   }
 
-  EvrRtxKernelError(osError);
+  EvrRtxKernelError((int32_t)osError);
   return osError;
 }
  
@@ -329,7 +329,7 @@ int32_t svcRtxKernelUnlock (void) {
     return 0;
   }
 
-  EvrRtxKernelError(osError);
+  EvrRtxKernelError((int32_t)osError);
   return osError;
 }
 
@@ -353,7 +353,7 @@ int32_t svcRtxKernelRestoreLock (int32_t lock) {
     }
   }
 
-  EvrRtxKernelError(osError);
+  EvrRtxKernelError((int32_t)osError);
   return osError;
 }
 
@@ -503,7 +503,7 @@ uint32_t svcRtxKernelGetSysTimerFreq (void) {
 osStatus_t osKernelInitialize (void) {
   EvrRtxKernelInitialize();
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxKernelError(osErrorISR);
+    EvrRtxKernelError((int32_t)osErrorISR);
     return osErrorISR;
   }
   return __svcKernelInitialize();
@@ -532,7 +532,7 @@ osKernelState_t osKernelGetState (void) {
 osStatus_t osKernelStart (void) {
   EvrRtxKernelStart();
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxKernelError(osErrorISR);
+    EvrRtxKernelError((int32_t)osErrorISR);
     return osErrorISR;
   }
   return __svcKernelStart();
@@ -542,7 +542,7 @@ osStatus_t osKernelStart (void) {
 int32_t osKernelLock (void) {
   EvrRtxKernelLock();
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxKernelError(osErrorISR);
+    EvrRtxKernelError((int32_t)osErrorISR);
     return osErrorISR;
   }
   return __svcKernelLock();
@@ -552,7 +552,7 @@ int32_t osKernelLock (void) {
 int32_t osKernelUnlock (void) {
   EvrRtxKernelUnlock();
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxKernelError(osErrorISR);
+    EvrRtxKernelError((int32_t)osErrorISR);
     return osErrorISR;
   }
   return __svcKernelUnlock();
@@ -562,7 +562,7 @@ int32_t osKernelUnlock (void) {
 int32_t osKernelRestoreLock (int32_t lock) {
   EvrRtxKernelRestoreLock(lock);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxKernelError(osErrorISR);
+    EvrRtxKernelError((int32_t)osErrorISR);
     return osErrorISR;
   }
   return __svcKernelRestoreLock(lock);
@@ -572,7 +572,7 @@ int32_t osKernelRestoreLock (int32_t lock) {
 uint32_t osKernelSuspend (void) {
   EvrRtxKernelSuspend();
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxKernelError(osErrorISR);
+    EvrRtxKernelError((int32_t)osErrorISR);
     return 0U;
   }
   return __svcKernelSuspend();
@@ -582,7 +582,7 @@ uint32_t osKernelSuspend (void) {
 void osKernelResume (uint32_t sleep_ticks) {
   EvrRtxKernelResume(sleep_ticks);
   if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
-    EvrRtxKernelError(osErrorISR);
+    EvrRtxKernelError((int32_t)osErrorISR);
     return;
   }
   __svcKernelResume(sleep_ticks);
