@@ -33,10 +33,10 @@ osThreadId_t tid_phaseD;                /* Thread id of thread: phase_d      */
 osThreadId_t tid_clock;                 /* Thread id of thread: clock        */
 
 struct phases_t {
-	int_fast8_t phaseA;
-	int_fast8_t phaseB;
-	int_fast8_t phaseC;
-	int_fast8_t phaseD;
+  int_fast8_t phaseA;
+  int_fast8_t phaseB;
+  int_fast8_t phaseC;
+  int_fast8_t phaseD;
 } g_phases;
 
 osMutexId_t phases_mut_id;
@@ -156,5 +156,3 @@ int main (void) {
 
   while(1);
 }
-
-
