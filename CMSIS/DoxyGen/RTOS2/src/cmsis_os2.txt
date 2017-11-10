@@ -168,6 +168,7 @@ File/Folder                  | Content
        - Moved SVC/PendSV handler priority setup from osKernelInitialize to osKernelStart (User Priority Grouping can be updated after osKernelInitialize but before osKernelStart).
        - Corrected SysTick and PendSV handlers for ARMv8-M Baseline.
        - Corrected memory allocation for stack and data when "Object specific Memory allocation" configuration is used.
+       - Added support for ARMv8-M IAR compiler.
       </td>
     </tr>
     <tr>

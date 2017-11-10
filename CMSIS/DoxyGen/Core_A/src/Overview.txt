@@ -50,8 +50,8 @@ The following Technical Reference Manuals describe the various ARM Cortex-A proc
 The \ref templates_pg supplied by ARM have been tested and verified with the following toolchains:
  - ARM: ARM Compiler V5.6
  - ARM: ARM Compiler V6.7
-
-Verifications with GCC and IAR compiler are in preparation.
+ - GNU: GNU Tools for ARM Embedded 6.3.1 20170620
+ - IAR: IAR Embedded Workbench 8.11.2.13589
  
 <hr>
 */
@@ -66,11 +66,14 @@ Verifications with GCC and IAR compiler are in preparation.
       <th>Description</th>
     </tr>
     <tr>
-      <td>V1.0.1</td>
+      <td>V1.1.0</td>
       <td>
         <ul>
+          <li>Added compiler_iccarm.h for IAR compiler.</li>
+          <li>Added missing core access functions for Arm Compiler 5.</li>
+          <li>Aligned access function to coprocessor 15.</li>
+          <li>Additional generic Timer functions.</li>
           <li>Bug fixes and minor enhancements.</li>
-          <li>compiler_iccarm.h for IAR compiler.</li>
         </ul>
       </td>
     </tr>
