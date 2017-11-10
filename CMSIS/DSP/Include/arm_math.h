@@ -3,8 +3,8 @@
  * Title:        arm_math.h
  * Description:  Public header file for CMSIS DSP Library
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        19. September 2017
+ * $Revision:    V.1.5.2
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */

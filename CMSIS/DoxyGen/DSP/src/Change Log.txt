@@ -6,6 +6,7 @@
 
 Modified arm_math.h
  - fixed GNU Compiler specific diagnostics.
+ - moved __SSAT and __USAT to CMSIS-Core
 
 <hr>
 <b>Version 1.5.1</b>

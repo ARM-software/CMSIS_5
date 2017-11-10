@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        20. May 2015
- * $Revision:    V1.10
+ * $Date:        29. August 2017
+ * $Revision:    V1.11
  *
  * Project:      CMSIS-DAP Source
  * Title:        JTAG_DP.c CMSIS-DAP JTAG DP I/O

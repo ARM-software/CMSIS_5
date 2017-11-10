@@ -8,24 +8,45 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.2.0-rc1">
+      CMSIS-Core(M): 5.1.0 (see revision history for details)
+        - Added MPU Functions for ARMv8-M for Cortex-M23/M33.
+        - Added compiler_iccarm.h to replace compiler_iar.h shipped with the compiler.
+      CMSIS-Core(A): 1.1.0 (see revision history for details)
+        - Added compiler_iccarm.h.
+        - Added additional access functions for physical timer.
+      CMSIS-DAP: 1.2.0 (see revision history for details)
+      CMSIS-DSP: 1.5.2 (see revision history for details)
+      CMSIS-Driver:
+        - CAN Driver API V1.2.0
+      CMSIS-RTOS:
+        - RTX: added variant for Infineon XMC4 series affected by PMU_CM.001 errata.
+      CMSIS-RTOS2:
+        - API 2.1.2 (see revision history for details)
+        - RTX 5.2.3 (see revision history for details)
+      Devices:
+        - Added GCC startup and linker script for Cortex-A9.
+        - Added device ARMCM0plus_MPU for Cortex-M0+ with MPU.
+        - Added IAR startup code for Cortex-A9
+    </release>
     <release version="5.1.2-dev3">
       Active development...
       CMSIS-Core(A): 1.0.1 (see revision history for details)
         - Added compiler_iccarm.h.
         - Added additional access functions for physical timer.
       CMSIS-RTOS2:
-      - API 2.1.2 (see revision history for details)
+        - API 2.1.2 (see revision history for details)
       CMSIS-RTOS2:
-      - RTX 5.2.3 (see revision history for details)
+        - RTX 5.2.3 (see revision history for details)
       Devices:
-       - Added device ARMCM0plus_MPU for Cortex-M0+ with MPU.
-       - Added IAR startup code for Cortex-A9
+        - Added device ARMCM0plus_MPU for Cortex-M0+ with MPU.
+        - Added IAR startup code for Cortex-A9
     </release>
     <release version="5.1.2-dev2">
       CMSIS-Core(M): 5.0.3 (see revision history for details)
-      - Added compiler_iccarm.h to replace compiler_iar.h shipped with the compiler.
+        - Added compiler_iccarm.h to replace compiler_iar.h shipped with the compiler.
       CMSIS-RTOS2:
-      - RTX 5.2.2 (see revision history for details)
+        - RTX 5.2.2 (see revision history for details)
     </release>
     <release version="5.1.2-dev1">
       Devices:
