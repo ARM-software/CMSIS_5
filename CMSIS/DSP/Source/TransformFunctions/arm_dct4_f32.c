@@ -72,7 +72,7 @@
  * Note that the implementation of Inverse DCT4 and DCT4 is same, hence same process function can be used for both.
  *
  * \par Lengths supported by the transform:
- *  As DCT4 internally uses Real FFT, it supports all the lengths supported by arm_rfft_f32().
+ *  As DCT4 internally uses Real FFT, it supports all the lengths 128, 512, 2048 and 8192.
  * The library provides separate functions for Q15, Q31, and floating-point data types.
  * \par Instance Structure
  * The instances for Real FFT and FFT, cosine values table and twiddle factor table are stored in an instance data structure.
