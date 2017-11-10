@@ -40,7 +40,7 @@
  * Computes the trigonometric sine function using a combination of table lookup
  * and linear interpolation.  There are separate functions for
  * Q15, Q31, and floating-point data types.
- * The input to the floating-point version is in radians while the
+ * The input to the floating-point version is in radians and in the range [0 2*pi) while the
  * fixed-point Q15 and Q31 have a scaled input with the range
  * [0 +0.9999] mapping to [0 2*pi).  The fixed-point range is chosen so that a
  * value of 2*pi wraps around to 0.
