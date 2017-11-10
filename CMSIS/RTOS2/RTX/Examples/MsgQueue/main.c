@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- *      Name:    BLinky.c
+ *      Name:    main.c
  *      Purpose: RTX example program
  *
  *---------------------------------------------------------------------------*/
@@ -25,7 +25,7 @@
 #include "RTE_Components.h"
 #include  CMSIS_device_header
 #include "cmsis_os2.h"
- 
+
 #ifdef RTE_Compiler_EventRecorder
 #include "EventRecorder.h"
 #endif
@@ -52,7 +52,7 @@ static const osThreadAttr_t msgAttr = {
 
 void app_main (void *argument) {
   (void)argument;
-  
+
   osStatus_t status;
   uint32_t cnt = 0UL; 
   msg_t msg = {
@@ -60,7 +60,7 @@ void app_main (void *argument) {
     .len = 4U,
     .data = { 0 }
   };
-  
+
   while(1) {
     // Produce a new message and put it to the queue
     ++cnt;
@@ -84,18 +84,18 @@ void app_main (void *argument) {
 
 void app_msg (void *argument) {
   (void)argument;
-  
+
   osStatus_t status;
   uint32_t cnt;
   msg_t msg;
-  
+
   while(1) {
     // Defer message processing
     status = osDelay(osMessageQueueGetSpace(msgQueue)*100U);
     if (status != osOK) {
       printf("app_msg: osDelay failed.\n");
     }
-    
+
     // Wait forever until a message could be received
     status = osMessageQueueGet(msgQueue, &msg, NULL, osWaitForever);
     if (status != osOK) {
@@ -114,7 +114,7 @@ void app_msg (void *argument) {
  *---------------------------------------------------------------------------*/
 
 int main (void) {
- 
+
   // System Initialization
   SystemCoreClockUpdate();
 #ifdef RTE_Compiler_EventRecorder
@@ -123,7 +123,7 @@ int main (void) {
   EventRecorderEnable    (EventRecordAll, 0xFE, 0xFE); 
 #endif
   // ...
- 
+
   osKernelInitialize();                                   // Initialize CMSIS-RTOS
   osThreadNew(app_main, NULL, NULL);                      // Create application main thread
   osThreadNew(app_msg, NULL, &msgAttr);                   // Create message receiver thread

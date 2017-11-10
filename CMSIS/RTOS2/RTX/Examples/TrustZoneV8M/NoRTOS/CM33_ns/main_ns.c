@@ -32,18 +32,18 @@ volatile int val1, val2;
 int func3 (int x); 
 
 int func3 (int x)  {
-	return (x+4);
+  return (x+4);
 }
 
 /* Non-secure main() */
 int main(void) {
-	
-	/* Call non-secure callable function func1 */
-	val1 = func1 (1);
-	
-	/* Call non-secure callable function func2
-	   with callback to non-secure function func3 */
-	val2 = func2 (func3, 2);
-	
+ 
+  /* Call non-secure callable function func1 */
+  val1 = func1 (1);
+ 
+  /* Call non-secure callable function func2
+     with callback to non-secure function func3 */
+  val2 = func2 (func3, 2);
+ 
   while (1);
 }
