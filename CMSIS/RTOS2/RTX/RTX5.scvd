@@ -1432,25 +1432,26 @@
     <event id="0xF200 + 0x15" level="Op"     property="ThreadJoined"                value="thread_id=%x[val1]" info="Thread joined."/>
     <event id="0xF200 + 0x16" level="Op"     property="ThreadBlocked"               value="thread_id=%x[val1], timeout=%d[val2]" info="Current running thread execution was blocked."/>
     <event id="0xF200 + 0x17" level="Op"     property="ThreadUnblocked"             value="thread_id=%x[val1], ret_val=%E[val2, rtx_t:status]" info="Thread execution was unblocked."/>
-    <event id="0xF200 + 0x18" level="Op"     property="ThreadSwitch"                value="thread_id=%x[val1]" info="Switched execution of the current running thread."/>
-    <event id="0xF200 + 0x19" level="API"    property="ThreadExit"                  value="" info="osThreadExit function was called."/>
-    <event id="0xF200 + 0x1A" level="API"    property="ThreadTerminate"             value="thread_id=%x[val1]" info="osThreadTerminate function was called."/>
-    <event id="0xF200 + 0x1B" level="Op"     property="ThreadDestroyed"             value="thread_id=%x[val1]" info="Thread execution was terminated."/>
-    <event id="0xF200 + 0x1C" level="API"    property="ThreadGetCount"              value="count=%d[val1]" info="osThreadGetCount function was called and number of active threads was retrieved."/>
-    <event id="0xF200 + 0x1D" level="API"    property="ThreadEnumerate"             value="thread_array=%x[val1], array_items=%d[val2], count=%d[val3]" info="osThreadEnumerate function was called and active threads were enumerated."/>
-    <event id="0xF200 + 0x1E" level="API"    property="ThreadFlagsSet"              value="thread_id=%x[val1], flags=%x[val2]" info="osThreadFlagsSet function was called."/>
-    <event id="0xF200 + 0x1F" level="Op"     property="ThreadFlagsSetDone"          value="thread_id=%x[val1], thread_flags=%x[val2]" info="Thread flags were set."/>
-    <event id="0xF200 + 0x20" level="API"    property="ThreadFlagsClear"            value="flags=%x[val1]" info="osThreadFlagsClear function was called."/>
-    <event id="0xF200 + 0x21" level="Op"     property="ThreadFlagsClearDone"        value="thread_flags=%x[val1]" info="Thread flags were cleared."/>
-    <event id="0xF200 + 0x22" level="API"    property="ThreadFlagsGet"              value="thread_flags=%x[val1]" info="osThreadFlagsGet function was called and thread flags were retrieved."/>
-    <event id="0xF200 + 0x23" level="API"    property="ThreadFlagsWait"             value="flags=%x[val1], options=%x[val2], timeout=%d[val3]" info="osThreadFlagsWait function was called."/>
-    <event id="0xF200 + 0x24" level="Op"     property="ThreadFlagsWaitPending"      value="flags=%x[val1], options=%x[val2], timeout=%d[val3]" info="Waiting for thread flags to become signaled."/>
-    <event id="0xF200 + 0x25" level="Op"     property="ThreadFlagsWaitTimeout"      value="" info="Waiting for thread flags timed out."/>
-    <event id="0xF200 + 0x26" level="Op"     property="ThreadFlagsWaitCompleted"    value="flags=%x[val1], options=%x[val2], thread_flags=%x[val3]" info="Wait for thread flags completed."/>
-    <event id="0xF200 + 0x27" level="Op"     property="ThreadFlagsWaitNotCompleted" value="flags=%x[val1], options=%x[val2]" info="Wait for thread flags not completed."/>
-    <event id="0xF200 + 0x28" level="API"    property="ThreadDelay"                 value="ticks=%d[val1]" info="osDelay function was called."/>
-    <event id="0xF200 + 0x29" level="API"    property="ThreadDelayUntil"            value="ticks=%d[val1]" info="osDelayUntil function was called."/>
-    <event id="0xF200 + 0x2A" level="Op"     property="ThreadDelayCompleted"        value="" info="osDelay/osDelayUntil completed."/>
+    <event id="0xF200 + 0x18" level="Op"     property="ThreadPreempted"             value="thread_id=%x[val1]" info="Current running thread execution was preempted."/>
+    <event id="0xF200 + 0x19" level="Op"     property="ThreadSwitched"              value="thread_id=%x[val1]" info="Switched execution of the current running thread."/>
+    <event id="0xF200 + 0x1A" level="API"    property="ThreadExit"                  value="" info="osThreadExit function was called."/>
+    <event id="0xF200 + 0x1B" level="API"    property="ThreadTerminate"             value="thread_id=%x[val1]" info="osThreadTerminate function was called."/>
+    <event id="0xF200 + 0x1C" level="Op"     property="ThreadDestroyed"             value="thread_id=%x[val1]" info="Thread execution was terminated."/>
+    <event id="0xF200 + 0x1D" level="API"    property="ThreadGetCount"              value="count=%d[val1]" info="osThreadGetCount function was called and number of active threads was retrieved."/>
+    <event id="0xF200 + 0x1E" level="API"    property="ThreadEnumerate"             value="thread_array=%x[val1], array_items=%d[val2], count=%d[val3]" info="osThreadEnumerate function was called and active threads were enumerated."/>
+    <event id="0xF200 + 0x1F" level="API"    property="ThreadFlagsSet"              value="thread_id=%x[val1], flags=%x[val2]" info="osThreadFlagsSet function was called."/>
+    <event id="0xF200 + 0x20" level="Op"     property="ThreadFlagsSetDone"          value="thread_id=%x[val1], thread_flags=%x[val2]" info="Thread flags were set."/>
+    <event id="0xF200 + 0x21" level="API"    property="ThreadFlagsClear"            value="flags=%x[val1]" info="osThreadFlagsClear function was called."/>
+    <event id="0xF200 + 0x22" level="Op"     property="ThreadFlagsClearDone"        value="thread_flags=%x[val1]" info="Thread flags were cleared."/>
+    <event id="0xF200 + 0x23" level="API"    property="ThreadFlagsGet"              value="thread_flags=%x[val1]" info="osThreadFlagsGet function was called and thread flags were retrieved."/>
+    <event id="0xF200 + 0x24" level="API"    property="ThreadFlagsWait"             value="flags=%x[val1], options=%x[val2], timeout=%d[val3]" info="osThreadFlagsWait function was called."/>
+    <event id="0xF200 + 0x25" level="Op"     property="ThreadFlagsWaitPending"      value="flags=%x[val1], options=%x[val2], timeout=%d[val3]" info="Waiting for thread flags to become signaled."/>
+    <event id="0xF200 + 0x26" level="Op"     property="ThreadFlagsWaitTimeout"      value="" info="Waiting for thread flags timed out."/>
+    <event id="0xF200 + 0x27" level="Op"     property="ThreadFlagsWaitCompleted"    value="flags=%x[val1], options=%x[val2], thread_flags=%x[val3]" info="Wait for thread flags completed."/>
+    <event id="0xF200 + 0x28" level="Op"     property="ThreadFlagsWaitNotCompleted" value="flags=%x[val1], options=%x[val2]" info="Wait for thread flags not completed."/>
+    <event id="0xF200 + 0x29" level="API"    property="ThreadDelay"                 value="ticks=%d[val1]" info="osDelay function was called."/>
+    <event id="0xF200 + 0x2A" level="API"    property="ThreadDelayUntil"            value="ticks=%d[val1]" info="osDelayUntil function was called."/>
+    <event id="0xF200 + 0x2B" level="Op"     property="ThreadDelayCompleted"        value="" info="osDelay/osDelayUntil completed."/>
 
     <event id="0xF300 + 0x00" level="Error"  property="TimerError"     value="timer_id=%x[val1], status=%E[val2, rtx_t:status]" info="Timer error occurred."/>
     <event id="0xF300 + 0x01" level="Op"     property="TimerCallback"  value="func=%S[val1], argument=%x[val2]" info="Timer callback function was called."/>
