@@ -389,8 +389,13 @@ uint32_t TZ_InitContextSystem_S (void);
  
 /**
   \brief Allocate context memory for calling secure software modules in TrustZone
-  \details Allocates the secure memory regions for thread execution. The parameter \em module describes the set of secure functions that are called by the non-secure thread. This function should be called by an RTOS kernel at the start of a thread.
-  \param[in]  module   identifies software modules called from non-secure mode
+  \details 
+    Allocates the secure memory regions for thread execution. The parameter \em module describes
+    the set of secure functions that are called by the non-secure thread.
+    Set \em module to zero if no secure calls are used/allowed. This leads to no secure memory to be assigned
+    which results in zero being returned as memory id as well.
+    This function should be called by an RTOS kernel at the start of a thread.
+  \param[in]  module   A non-zero value identifies software modules called from non-secure mode. zero is used if no secure calls are used/allowed.
   \return value != 0 id TrustZone memory slot identify
   \return value 0    no memory available or internal error
  */
@@ -398,7 +403,10 @@ TZ_MemoryId_t TZ_AllocModuleContext_S (TZ_ModuleId_t module);
 
 /**
   \brief Free context memory that was previously allocated with \ref TZ_AllocModuleContext_S
-  \details De-allocates the secure memory regions. The parameter \em id refers to a TrustZone memory slot that has been obtained with \ref TZ_AllocModuleContext_S.  This function should be called by an RTOS kernel at the termination of a thread.
+  \details
+    De-allocates the secure memory regions.
+    The parameter \em id refers to a TrustZone memory slot that has been obtained with \ref TZ_AllocModuleContext_S.
+    This function should be called by an RTOS kernel at the termination of a thread.
   \param[in]  id  TrustZone memory slot identifier
   \return execution status (1: success, 0: error)
  */
@@ -406,7 +414,11 @@ uint32_t TZ_FreeModuleContext_S (TZ_MemoryId_t id);
  
 /**
   \brief Load secure context (called on RTOS thread context switch)
-  \details Prepare the secure context for execution so that a thread in the non-secure state can call secure library modules. The parameter \em id refers to a TrustZone memory slot that has been obtained with \ref TZ_AllocModuleContext_S. This function should be called by an RTOS kernel at thread context switch before running a thread.
+  \details
+    Prepare the secure context for execution so that a thread in the non-secure state can
+    call secure library modules. The parameter \em id refers to a TrustZone memory slot that has been
+    obtained with \ref TZ_AllocModuleContext_S which might be zero if not used.
+    This function should be called by an RTOS kernel at thread context switch before running a thread.
   \param[in]  id  TrustZone memory slot identifier
   \return execution status (1: success, 0: error)
  */
@@ -414,7 +426,11 @@ uint32_t TZ_LoadContext_S (TZ_MemoryId_t id);
  
 /**
   \brief Store secure context (called on RTOS thread context switch)
-  \details Free the secure context that has been previously loaded with \ref TZ_LoadContext_S. The parameter \em id refers to a TrustZone memory slot that has been obtained with \ref TZ_AllocModuleContext_S. This function should be called by an RTOS kernel at thread context switch after running a thread.
+  \details
+    Free the secure context that has been previously loaded with \ref TZ_LoadContext_S. The parameter
+    \em id refers to a TrustZone memory slot that has been obtained with \ref TZ_AllocModuleContext_S
+    which might be zero if not used.
+    This function should be called by an RTOS kernel at thread context switch after running a thread.
   \param[in]  id  TrustZone memory slot identifier
   \return execution status (1: success, 0: error)
  */
