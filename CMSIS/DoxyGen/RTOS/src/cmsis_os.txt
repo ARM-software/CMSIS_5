@@ -3546,6 +3546,8 @@ Put the memory block specified with \a mail into the mail queue specified by \a 
  - \em osOK: the message is put into the queue.
  - \em osErrorValue: \a mail was previously not allocated as memory slot.
  - \em osErrorParameter: a parameter is invalid or outside of a permitted range.
+ 
+\note \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" can call this function.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
