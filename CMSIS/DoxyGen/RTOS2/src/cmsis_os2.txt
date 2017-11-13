@@ -1676,7 +1676,7 @@ error function \b osRtxErrorNotify for an object specified by parameter \a objec
 The parameter \a code passes the actual error code to this function:
 | Error Code                   | Description                                                                       |
 |------------------------------|-----------------------------------------------------------------------------------|
-| osRtxErrorStackUnderflow     | Stack underflow detected for thread (thread_id=object_id)                         |
+| osRtxErrorStackUnderflow     | Stack overflow detected for thread (thread_id=object_id)                          |
 | osRtxErrorISRQueueOverflow   | ISR Queue overflow detected when inserting object (object_id)                     |
 | osRtxErrorTimerQueueOverflow | User Timer Callback Queue overflow detected for timer (timer_id=object_id)        |
 | osRtxErrorClibSpace          | Standard C/C++ library libspace not available: increase \c OS_THREAD_LIBSPACE_NUM |
@@ -1697,7 +1697,7 @@ uint32_t osRtxErrorNotify (uint32_t code, void *object_id) {
  
   switch (code) {
     case osRtxErrorStackUnderflow:
-      // Stack underflow detected for thread (thread_id=object_id)
+      // Stack overflow detected for thread (thread_id=object_id)
       break;
     case osRtxErrorISRQueueOverflow:
       // ISR Queue overflow detected when inserting object (object_id)
