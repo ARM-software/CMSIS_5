@@ -10,7 +10,7 @@
       <TargetName>FVP</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC>6070000::V6.7::.\ARMCLANG</pArmCC>
+      <uAC6>1</uAC6>
       <pCCUsed>6070000::V6.7::.\ARMCLANG</pCCUsed>
       <TargetOption>
         <TargetCommonOption>
