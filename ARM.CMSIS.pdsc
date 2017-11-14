@@ -19,6 +19,7 @@
       CMSIS-DSP: 1.5.2 (see revision history for details)
       CMSIS-Driver:
         - CAN Driver API V1.2.0
+        - NAND Driver API V2.3.0
       CMSIS-RTOS:
         - RTX: added variant for Infineon XMC4 series affected by PMU_CM.001 errata.
       CMSIS-RTOS2:
@@ -694,7 +695,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/Driver/Include/Driver_MCI.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="NAND" Capiversion="2.2.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="NAND" Capiversion="2.3.0" exclusive="0">
       <description>NAND Flash Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__nand__interface__gr.html" />
