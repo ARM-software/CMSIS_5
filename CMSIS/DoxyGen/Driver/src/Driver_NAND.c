@@ -831,10 +831,36 @@ int32_t ARM_NAND_InquireECC (int32_t index, ARM_NAND_ECC_INFO *info)  {
 /**
 \fn int32_t ARM_NAND_InquireECC (int32_t index, ARM_NAND_ECC_INFO *info)
 \details
-The function \b  reads error correction code information.
+The function \b ARM_NAND_InquireECC reads error correction code information.
 
-The parameter \em index is the device number. \n
+The parameter \em index is the ECC index and is used to retrieve different ECC configurations. \n
 The parameter \em info is a pointer of type \ref ARM_NAND_ECC_INFO. The data fields store the information.
+
+When multiple different ECC configurations exist, ARM_NAND_ECC_INFO structure exists for each configuration. Parameter
+\em index denotes which configuration will be retrieved. Value of index should start with zero to retrieve first ECC
+configuration and should be incremented in order to retrieve next ECC configuration. When index is out of range function
+ARM_NAND_InquireECC returns with error.
+
+Parameter \em index is used by \ref ARM_NAND_ECC(n) in \ref ARM_NAND_ReadData, \ref ARM_NAND_WriteData and
+\ref ARM_NAND_ExecuteSequence to select suitable ECC configuration.
+
+<b>Example</b>
+\code
+extern ARM_DRIVER_NAND Driver_NAND0; 
+
+ARM_NAND_ECC_INFO ecc;
+int32_t idx;
+ 
+idx = 0;
+while (Driver_NAND0.InquireECC (idx, &ecc) == ARM_DRIVER_OK) {
+  // Examine retrieved ECC configuration
+  if (ecc.type == 2) {
+    // Algorithm ECC0 protects Main+Spare
+  }
+  // ..
+  idx++;
+}
+\endcode
 *******************************************************************************************************************/
 
 void ARM_NAND_SignalEvent (uint32_t dev_num, uint32_t event)  {
