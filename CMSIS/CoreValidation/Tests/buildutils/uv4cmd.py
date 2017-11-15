@@ -1,14 +1,14 @@
 #! python
 
 import os
+import shutil
 from buildcmd import BuildCmd
 from datetime import datetime
-import mmap
 
 class Uv4Cmd(BuildCmd):
 
-  def __init__(self, project, config):
-    BuildCmd.__init__(self)
+  def __init__(self, project, config, env=os.environ):
+    BuildCmd.__init__(self, env=env)
     self._project = project
     self._config = config
     cwd = os.getcwd()
@@ -19,7 +19,7 @@ class Uv4Cmd(BuildCmd):
     return "UV4.exe"
     
   def getArguments(self):
-    return [ "-t", self._config, "-cr", self._project, "-j0", "-o", self._log ]
+    return [ "-t", self._config, "-r", self._project, "-j0", "-o", self._log ]
   
   def isSuccess(self):
     return self._result <= 1
