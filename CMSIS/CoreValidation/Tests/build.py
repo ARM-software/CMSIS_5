@@ -1,10 +1,11 @@
 #! python
 
 import sys
-import os.path
+import os
 from argparse import ArgumentParser
 from datetime import datetime
 from subprocess import call, Popen
+from pathlib import Path
 
 sys.path.append('buildutils') 
 
@@ -14,6 +15,15 @@ from dscmd import DsCmd
 from fvpcmd import FvpCmd 
 from iarcmd import IarCmd 
 from testresult import TestResult
+
+try:
+  rtebuildhome = os.path.join(os.path.abspath(Path.home()), ".rtebuild")
+  sys.path.append(rtebuildhome)
+  import buildenv
+except ModuleNotFoundError:
+  print("No custom buildenv.py found in "+rtebuildhome)
+  buildenv = None
+  pass
 
 DEVICE_CM0     = 'Cortex-M0'
 DEVICE_CM0PLUS = 'Cortex-M0plus'
@@ -36,16 +46,11 @@ DEVICE_CA5NEON = 'Cortex-A5neon'
 DEVICE_CA7NEON = 'Cortex-A7neon'
 DEVICE_CA9NEON = 'Cortex-A9neon'
 
-CC_AC6 = 'AC6'
-CC_AC5 = 'AC5'
-CC_GCC = 'GCC'
-CC_IAR = 'IAR'
-
-MDK_ENV = {
-  'uVision' : [ DEVICE_CM0, DEVICE_CM0PLUS, DEVICE_CM3, DEVICE_CM4, DEVICE_CM4FP, DEVICE_CM7, DEVICE_CM7SP, DEVICE_CM7DP, DEVICE_CM23, DEVICE_CM33, DEVICE_CM23NS, DEVICE_CM33NS, DEVICE_CM23S, DEVICE_CM33S ],
-  'DS'      : [ ], 
-  'RTE'     : [ DEVICE_CA5, DEVICE_CA7, DEVICE_CA9, DEVICE_CA5NEON, DEVICE_CA7NEON, DEVICE_CA9NEON ]
-}
+CC_AC6    = 'AC6'
+CC_AC6LTM = 'AC6LTM'
+CC_AC5    = 'AC5'
+CC_GCC    = 'GCC'
+CC_IAR    = 'IAR'
 
 TARGET_FVP = 'FVP'
 
@@ -73,16 +78,24 @@ ADEVICES = {
   }
 
 DEVICES = [ DEVICE_CM0, DEVICE_CM0PLUS, DEVICE_CM3, DEVICE_CM4, DEVICE_CM4FP, DEVICE_CM7, DEVICE_CM7SP, DEVICE_CM7DP, DEVICE_CM23, DEVICE_CM33, DEVICE_CM23NS, DEVICE_CM33NS, DEVICE_CM23S, DEVICE_CM33S, DEVICE_CA5, DEVICE_CA7, DEVICE_CA9, DEVICE_CA5NEON, DEVICE_CA7NEON, DEVICE_CA9NEON ]
-COMPILERS = [ CC_AC5, CC_AC6, CC_GCC, CC_IAR ]
+COMPILERS = [ CC_AC5, CC_AC6, CC_AC6LTM, CC_GCC, CC_IAR ]
 TARGETS = [ TARGET_FVP ]
 
 SKIP = [ 
-    [ DEVICE_CM23,   CC_AC5, None ],
-    [ DEVICE_CM33,   CC_AC5, None ],
-    [ DEVICE_CM23NS, CC_AC5, None ],
-    [ DEVICE_CM33NS, CC_AC5, None ],
-    [ DEVICE_CM23S,  CC_AC5, None ],
-    [ DEVICE_CM33S,  CC_AC5, None ],
+    [ DEVICE_CM23,    CC_AC5,    None ],
+    [ DEVICE_CM33,    CC_AC5,    None ],
+    [ DEVICE_CM23NS,  CC_AC5,    None ],
+    [ DEVICE_CM33NS,  CC_AC5,    None ],
+    [ DEVICE_CM23S,   CC_AC5,    None ],
+    [ DEVICE_CM33S,   CC_AC5,    None ],
+    [ DEVICE_CM0,     CC_AC6LTM, None ],
+    [ DEVICE_CM0PLUS, CC_AC6LTM, None ],
+    [ DEVICE_CM23,    CC_AC6LTM, None ],
+    [ DEVICE_CM33,    CC_AC6LTM, None ],
+    [ DEVICE_CM23NS,  CC_AC6LTM, None ],
+    [ DEVICE_CM33NS,  CC_AC6LTM, None ],
+    [ DEVICE_CM23S,   CC_AC6LTM, None ],
+    [ DEVICE_CM33S,   CC_AC6LTM, None ],
   ]
   
 FVP_MODELS = { 
@@ -129,6 +142,11 @@ def testProject(dev, cc, target):
         "{dev}/{cc}/CMSIS_CV.uvprojx".format(dev = dev, cc = cc),
         "{dev}/{cc}/Objects/CMSIS_CV.axf".format(dev = dev, cc = cc)
       ]
+  elif (cc == CC_AC6LTM):
+    return [
+        "{dev}/{cc}/CMSIS_CV.uvprojx".format(dev = dev, cc = CC_AC6),
+        "{dev}/{cc}/Objects/CMSIS_CV.axf".format(dev = dev, cc = CC_AC6)
+      ]
   elif (cc == CC_GCC):
     return [
         "{dev}/{cc}/CMSIS_CV.uvprojx".format(dev = dev, cc = cc),
@@ -153,6 +171,11 @@ def bootloaderProject(dev, cc, target):
         "{dev}/{cc}/Bootloader/Bootloader.uvprojx".format(dev = dev, cc = cc),
         "{dev}/{cc}/Bootloader/Objects/Bootloader.axf".format(dev = dev, cc = cc)
       ] 
+  elif (cc == CC_AC6LTM):
+    return [
+        "{dev}/{cc}/Bootloader/Bootloader.uvprojx".format(dev = dev, cc = CC_AC6),
+        "{dev}/{cc}/Bootloader/Objects/Bootloader.axf".format(dev = dev, cc = CC_AC6)
+      ] 
   elif (cc == CC_GCC):
     return [
         "{dev}/{cc}/Bootloader/Bootloader.uvprojx".format(dev = dev, cc = cc),
@@ -165,7 +188,7 @@ def bootloaderProject(dev, cc, target):
       ]
   raise "Unknown compiler!"
   
-def buildStep(dev, cc, target, project):
+def buildStep(dev, cc, target, project, env=os.environ):
   STEP_TYPES = {
     ".uvprojx"  : Uv4Cmd,
     ".ewp"      : IarCmd,
@@ -177,7 +200,7 @@ def buildStep(dev, cc, target, project):
   if not projectext in STEP_TYPES:
     raise "Unknown project type '"+projectext+"'!"
     
-  return STEP_TYPES[projectext](project, target)
+  return STEP_TYPES[projectext](project, target, env)
   
 def prepare(steps, args):
   for dev in args.devices:
@@ -187,13 +210,17 @@ def prepare(steps, args):
           config = "{dev} ({cc}, {target})".format(dev = dev, cc = cc, target = target)
           prefix = "{dev}_{cc}_{target}".format(dev = dev, cc = cc, target = target)
           
+          env = os.environ
+          if hasattr(buildenv, "env_"+cc):
+            env = getattr(buildenv, "env_"+cc)()
+
           rv = testProject(dev, cc, target)
-          build = [ buildStep(dev, cc, target, rv[0]) ]
+          build = [ buildStep(dev, cc, target, rv[0], env=env) ]
           binary = [ rv[1] ]
           
           bl = bootloaderProject(dev, cc, target)
           if os.path.isfile(bl[0]):
-            build = [ buildStep(dev, cc, target, bl[0]) ] + build
+            build = [ buildStep(dev, cc, target, bl[0], env=env) ] + build
             binary = [ bl[1] ] + binary
 
           if target == TARGET_FVP:
