@@ -51,6 +51,13 @@ periodic_id = osTimerNew(periodic_Callback, osTimerPeriodic, (void *)5, NULL); /
                                                                                // to the callback function
 osTimerStart(one_shot_id, 500);
 osTimerStart(periodic_id, 1500);
+ 
+// start the one-shot timer again after it has triggered the first time:
+osTimerStart(one_shot_id, 500);
+ 
+// when timers are not needed any longer free the resources:
+osTimerDelete(one_shot_id);
+osTimerDelete(periodic_id);
 \endcode
 
 @{
@@ -63,11 +70,11 @@ The \ref osTimerType_t specifies the a repeating (periodic) or one-shot timer fo
 
 \var osTimerType_t::osTimerOnce
 \details
-The timer is not automatically restarted once it has elapsed.
+The timer is not automatically restarted once it has elapsed. It can be restarted manually using \ref osTimerStart as needed.
 
 \var osTimerType_t::osTimerPeriodic
 \details 
-The timer repeats automatically and triggers the callback continuously.
+The timer repeats automatically and triggers the callback continuously while running, see \ref osTimerStart and \ref osTimerStop.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
