@@ -377,7 +377,7 @@ extern osRtxInfo_t osRtxInfo;           ///< OS Runtime Information
 //  ==== OS External Functions ====
  
 /// OS Error Codes
-#define osRtxErrorStackUnderflow        1U ///< Stack overflow, i.e. stack pointer below its lower memory limit for decending stacks.
+#define osRtxErrorStackUnderflow        1U ///< Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks.
 #define osRtxErrorISRQueueOverflow      2U ///< ISR Queue overflow detected when inserting object.
 #define osRtxErrorTimerQueueOverflow    3U ///< User Timer Callback Queue overflow detected for timer.
 #define osRtxErrorClibSpace             4U ///< Standard C/C++ library libspace not available: increase \c OS_THREAD_LIBSPACE_NUM.
