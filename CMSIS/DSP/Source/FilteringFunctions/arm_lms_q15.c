@@ -91,12 +91,12 @@ void arm_lms_q15(
 
   /* S->pState points to buffer which contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[(numTaps - 1u)]);
+  pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
   /* Initializing blkCnt with blockSize */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy the new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -111,9 +111,9 @@ void arm_lms_q15(
     acc = 0;
 
     /* Loop unrolling.  Process 4 taps at a time. */
-    tapCnt = numTaps >> 2u;
+    tapCnt = numTaps >> 2U;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* acc +=  b[N] * x[n-N] + b[N-1] * x[n-N-1] */
       /* Perform the multiply-accumulate */
@@ -137,9 +137,9 @@ void arm_lms_q15(
     }
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
-    tapCnt = numTaps % 0x4u;
+    tapCnt = numTaps % 0x4U;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Perform the multiply-accumulate */
       acc += (q63_t) (((q31_t) (*px++) * (*pb++)));
@@ -179,10 +179,10 @@ void arm_lms_q15(
     pb = pCoeffs;
 
     /* Loop unrolling.  Process 4 taps at a time. */
-    tapCnt = numTaps >> 2u;
+    tapCnt = numTaps >> 2U;
 
     /* Update filter coefficients */
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       coef = (q31_t) * pb + (((q31_t) alpha * (*px++)) >> 15);
       *pb++ = (q15_t) __SSAT((coef), 16);
@@ -198,9 +198,9 @@ void arm_lms_q15(
     }
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
-    tapCnt = numTaps % 0x4u;
+    tapCnt = numTaps % 0x4U;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Perform the multiply-accumulate */
       coef = (q31_t) * pb + (((q31_t) alpha * (*px++)) >> 15);
@@ -223,9 +223,9 @@ void arm_lms_q15(
   pStateCurnt = S->pState;
 
   /* Calculation of count for copying integer writes */
-  tapCnt = (numTaps - 1u) >> 2;
+  tapCnt = (numTaps - 1U) >> 2;
 
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
 
 #ifndef UNALIGNED_SUPPORT_DISABLE
@@ -244,10 +244,10 @@ void arm_lms_q15(
   }
 
   /* Calculation of count for remaining q15_t data */
-  tapCnt = (numTaps - 1u) % 0x4u;
+  tapCnt = (numTaps - 1U) % 0x4U;
 
   /* copy data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -261,12 +261,12 @@ void arm_lms_q15(
 
   /* S->pState points to buffer which contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[(numTaps - 1u)]);
+  pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy the new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -283,7 +283,7 @@ void arm_lms_q15(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Perform the multiply-accumulate */
       acc += (q63_t) ((q31_t) (*px++) * (*pb++));
@@ -325,7 +325,7 @@ void arm_lms_q15(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Perform the multiply-accumulate */
       coef = (q31_t) * pb + (((q31_t) alpha * (*px++)) >> 15);
@@ -347,11 +347,11 @@ void arm_lms_q15(
   /* Points to the start of the pState buffer */
   pStateCurnt = S->pState;
 
-  /*  Copy (numTaps - 1u) samples  */
-  tapCnt = (numTaps - 1u);
+  /*  Copy (numTaps - 1U) samples  */
+  tapCnt = (numTaps - 1U);
 
   /* Copy the data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 

@@ -72,11 +72,11 @@ void arm_scale_q15(
 
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Reading 2 inputs from memory */
     inA1 = *__SIMD32(pSrc)++;
@@ -112,9 +112,9 @@ void arm_scale_q15(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A * scale */
     /* Scale the input and then store the result in the destination buffer. */
@@ -131,7 +131,7 @@ void arm_scale_q15(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A * scale */
     /* Scale the input and then store the result in the destination buffer. */

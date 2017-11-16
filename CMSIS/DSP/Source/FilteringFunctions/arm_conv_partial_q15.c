@@ -83,7 +83,7 @@ arm_status arm_conv_partial_q15(
   arm_status status;                             /* status of Partial convolution */
 
   /* Check for range of output samples to be calculated */
-  if ((firstIndex + numPoints) > ((srcALen + (srcBLen - 1u))))
+  if ((firstIndex + numPoints) > ((srcALen + (srcBLen - 1U))))
   {
     /* Set status as ARM_MATH_ARGUMENT_ERROR */
     status = ARM_MATH_ARGUMENT_ERROR;
@@ -122,7 +122,7 @@ arm_status arm_conv_partial_q15(
     blockSize3 = ((int32_t)check > (int32_t)srcALen) ? (int32_t)check - (int32_t)srcALen : 0;
     blockSize3 = ((int32_t)firstIndex > (int32_t)srcALen - 1) ? blockSize3 - (int32_t)firstIndex + (int32_t)srcALen : blockSize3;
     blockSize1 = (((int32_t) srcBLen - 1) - (int32_t) firstIndex);
-    blockSize1 = (blockSize1 > 0) ? ((check > (srcBLen - 1u)) ? blockSize1 :
+    blockSize1 = (blockSize1 > 0) ? ((check > (srcBLen - 1U)) ? blockSize1 :
                                      (int32_t) numPoints) : 0;
     blockSize2 = (int32_t) check - ((blockSize3 + blockSize1) +
                                     (int32_t) firstIndex);
@@ -155,7 +155,7 @@ arm_status arm_conv_partial_q15(
        The count variable holds the number of MAC operations performed.
        Since the partial convolution starts from firstIndex
        Number of Macs to be performed is firstIndex + 1 */
-    count = 1u + firstIndex;
+    count = 1U + firstIndex;
 
     /* Working pointer of inputA */
     px = pIn1;
@@ -173,7 +173,7 @@ arm_status arm_conv_partial_q15(
     /* Second part of this stage computes the MAC operations greater than or equal to 4 */
 
     /* The first part of the stage starts here */
-    while ((count < 4u) && (blockSize1 > 0))
+    while ((count < 4U) && (blockSize1 > 0))
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
@@ -182,7 +182,7 @@ arm_status arm_conv_partial_q15(
        * inputA samples and inputB samples */
       k = count;
 
-      while (k > 0u)
+      while (k > 0U)
       {
         /* Perform the multiply-accumulates */
         sum = __SMLALD(*px++, *py--, sum);
@@ -217,11 +217,11 @@ arm_status arm_conv_partial_q15(
       sum = 0;
 
       /* Apply loop unrolling and compute 4 MACs simultaneously. */
-      k = count >> 2u;
+      k = count >> 2U;
 
       /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-      while (k > 0u)
+      while (k > 0U)
       {
         /* Perform the multiply-accumulates */
         /* x[0], x[1] are multiplied with y[srcBLen - 1], y[srcBLen - 2] respectively */
@@ -235,13 +235,13 @@ arm_status arm_conv_partial_q15(
 
       /* For the next MAC operations, the pointer py is used without SIMD
        * So, py is incremented by 1 */
-      py = py + 1u;
+      py = py + 1U;
 
       /* If the count is not a multiple of 4, compute any remaining MACs here.
        ** No loop unrolling is used. */
-      k = count % 0x4u;
+      k = count % 0x4U;
 
-      while (k > 0u)
+      while (k > 0U)
       {
         /* Perform the multiply-accumulates */
         sum = __SMLALD(*px++, *py--, sum);
@@ -254,7 +254,7 @@ arm_status arm_conv_partial_q15(
       *pOut++ = (q15_t) (__SSAT((sum >> 15), 16));
 
       /* Update the inputA and inputB pointers for next MAC calculation */
-      py = ++pSrc2 - 1u;
+      py = ++pSrc2 - 1U;
       px = pIn1;
 
       /* Increment the MAC count */
@@ -285,11 +285,11 @@ arm_status arm_conv_partial_q15(
     }
 
     /* Working pointer of inputB */
-    pSrc2 = pIn2 + (srcBLen - 1u);
+    pSrc2 = pIn2 + (srcBLen - 1U);
     py = pSrc2;
 
     /* count is the index by which the pointer pIn1 to be incremented */
-    count = 0u;
+    count = 0U;
 
 
   /* --------------------
@@ -299,14 +299,14 @@ arm_status arm_conv_partial_q15(
   /* Stage2 depends on srcBLen as in this stage srcBLen number of MACS are performed.
    * So, to loop unroll over blockSize2,
    * srcBLen should be greater than or equal to 4 */
-  if (srcBLen >= 4u)
+  if (srcBLen >= 4U)
   {
     /* Loop unroll over blockSize2, by 4 */
-    blkCnt = blockSize2 >> 2u;
+    blkCnt = blockSize2 >> 2U;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
-      py = py - 1u;
+      py = py - 1U;
 
       /* Set all accumulators to zero */
       acc0 = 0;
@@ -319,11 +319,11 @@ arm_status arm_conv_partial_q15(
       x0 = *__SIMD32(px);
       /* read x[1], x[2] samples */
       x1 = _SIMD32_OFFSET(px+1);
-      px+= 2u;
+      px+= 2U;
 
 
       /* Apply loop unrolling and compute 4 MACs simultaneously. */
-      k = srcBLen >> 2u;
+      k = srcBLen >> 2U;
 
       /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
@@ -365,7 +365,7 @@ arm_status arm_conv_partial_q15(
 
         /* Read x[5], x[6] */
         x1 = _SIMD32_OFFSET(px+3);
-        px += 4u;
+        px += 4U;
 
         /* acc2 +=  x[4] * y[srcBLen - 3] + x[5] * y[srcBLen - 4] */
         acc2 = __SMLALDX(x0, c0, acc2);
@@ -380,16 +380,16 @@ arm_status arm_conv_partial_q15(
 
       /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
        ** No loop unrolling is used. */
-      k = srcBLen % 0x4u;
+      k = srcBLen % 0x4U;
 
-      if (k == 1u)
+      if (k == 1U)
       {
         /* Read y[srcBLen - 5] */
         c0 = *(py+1);
 
 #ifdef  ARM_MATH_BIG_ENDIAN
 
-        c0 = c0 << 16u;
+        c0 = c0 << 16U;
 
 #else
 
@@ -408,7 +408,7 @@ arm_status arm_conv_partial_q15(
         acc3 = __SMLALDX(x3, c0, acc3);
       }
 
-      if (k == 2u)
+      if (k == 2U)
       {
         /* Read y[srcBLen - 5], y[srcBLen - 6] */
         c0 = _SIMD32_OFFSET(py);
@@ -418,7 +418,7 @@ arm_status arm_conv_partial_q15(
 
         /* Read x[9] */
         x2 = _SIMD32_OFFSET(px+1);
-        px += 2u;
+        px += 2U;
 
         /* Perform the multiply-accumulates */
         acc0 = __SMLALDX(x0, c0, acc0);
@@ -427,7 +427,7 @@ arm_status arm_conv_partial_q15(
         acc3 = __SMLALDX(x2, c0, acc3);
       }
 
-      if (k == 3u)
+      if (k == 3U)
       {
         /* Read y[srcBLen - 5], y[srcBLen - 6] */
         c0 = _SIMD32_OFFSET(py);
@@ -448,7 +448,7 @@ arm_status arm_conv_partial_q15(
 
 #ifdef  ARM_MATH_BIG_ENDIAN
 
-        c0 = c0 << 16u;
+        c0 = c0 << 16U;
 #else
 
         c0 = c0 & 0x0000FFFF;
@@ -456,7 +456,7 @@ arm_status arm_conv_partial_q15(
 
         /* Read x[10] */
         x3 =  _SIMD32_OFFSET(px+2);
-        px += 3u;
+        px += 3U;
 
         /* Perform the multiply-accumulates */
         acc0 = __SMLALDX(x1, c0, acc0);
@@ -485,10 +485,17 @@ arm_status arm_conv_partial_q15(
 #endif /*      #ifndef  ARM_MATH_BIG_ENDIAN    */
 
       /* Increment the pointer pIn1 index, count by 4 */
-      count += 4u;
+      count += 4U;
 
       /* Update the inputA and inputB pointers for next MAC calculation */
-      px = pIn1 + count;
+      if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
+      {
+        px = pIn1 + firstIndex - srcBLen + 1 + count;
+      }
+      else
+      {
+        px = pIn1 + count;
+      }
       py = pSrc2;
 
         /* Decrement the loop counter */
@@ -497,19 +504,19 @@ arm_status arm_conv_partial_q15(
 
       /* If the blockSize2 is not a multiple of 4, compute any remaining output samples here.
        ** No loop unrolling is used. */
-      blkCnt = (uint32_t) blockSize2 % 0x4u;
+      blkCnt = (uint32_t) blockSize2 % 0x4U;
 
-      while (blkCnt > 0u)
+      while (blkCnt > 0U)
       {
         /* Accumulator is made zero for every iteration */
         sum = 0;
 
         /* Apply loop unrolling and compute 4 MACs simultaneously. */
-        k = srcBLen >> 2u;
+        k = srcBLen >> 2U;
 
         /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
          ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-        while (k > 0u)
+        while (k > 0U)
         {
           /* Perform the multiply-accumulates */
           sum += (q63_t) ((q31_t) * px++ * *py--);
@@ -523,9 +530,9 @@ arm_status arm_conv_partial_q15(
 
         /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
          ** No loop unrolling is used. */
-        k = srcBLen % 0x4u;
+        k = srcBLen % 0x4U;
 
-        while (k > 0u)
+        while (k > 0U)
         {
           /* Perform the multiply-accumulates */
           sum += (q63_t) ((q31_t) * px++ * *py--);
@@ -541,7 +548,14 @@ arm_status arm_conv_partial_q15(
         count++;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        px = pIn1 + count;
+        if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
+        {
+          px = pIn1 + firstIndex - srcBLen + 1 + count;
+        }
+        else
+        {
+          px = pIn1 + count;
+        }
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -554,7 +568,7 @@ arm_status arm_conv_partial_q15(
        * the blockSize2 loop cannot be unrolled by 4 */
       blkCnt = (uint32_t) blockSize2;
 
-      while (blkCnt > 0u)
+      while (blkCnt > 0U)
       {
         /* Accumulator is made zero for every iteration */
         sum = 0;
@@ -562,7 +576,7 @@ arm_status arm_conv_partial_q15(
         /* srcBLen number of MACS should be performed */
         k = srcBLen;
 
-        while (k > 0u)
+        while (k > 0U)
         {
           /* Perform the multiply-accumulate */
           sum += (q63_t) ((q31_t) * px++ * *py--);
@@ -578,7 +592,14 @@ arm_status arm_conv_partial_q15(
         count++;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        px = pIn1 + count;
+        if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
+        {
+          px = pIn1 + firstIndex - srcBLen + 1 + count;
+        }
+        else
+        {
+          px = pIn1 + count;
+        }
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -600,15 +621,15 @@ arm_status arm_conv_partial_q15(
 
     /* In this stage the MAC operations are decreased by 1 for every iteration.
        The count variable holds the number of MAC operations performed */
-    count = srcBLen - 1u;
+    count = srcBLen - 1U;
 
     /* Working pointer of inputA */
-    pSrc1 = (pIn1 + srcALen) - (srcBLen - 1u);
+    pSrc1 = (pIn1 + srcALen) - (srcBLen - 1U);
     px = pSrc1;
 
     /* Working pointer of inputB */
-    pSrc2 = pIn2 + (srcBLen - 1u);
-    pIn2 = pSrc2 - 1u;
+    pSrc2 = pIn2 + (srcBLen - 1U);
+    pIn2 = pSrc2 - 1U;
     py = pIn2;
 
     /* -------------------
@@ -620,19 +641,19 @@ arm_status arm_conv_partial_q15(
     /* Second part of this stage computes the MAC operations less than or equal to 4 */
 
     /* The first part of the stage starts here */
-    j = count >> 2u;
+    j = count >> 2U;
 
-    while ((j > 0u) && (blockSize3 > 0))
+    while ((j > 0U) && (blockSize3 > 0))
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
 
       /* Apply loop unrolling and compute 4 MACs simultaneously. */
-      k = count >> 2u;
+      k = count >> 2U;
 
       /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-      while (k > 0u)
+      while (k > 0U)
       {
         /* x[srcALen - srcBLen + 1], x[srcALen - srcBLen + 2] are multiplied
          * with y[srcBLen - 1], y[srcBLen - 2] respectively */
@@ -647,13 +668,13 @@ arm_status arm_conv_partial_q15(
 
       /* For the next MAC operations, the pointer py is used without SIMD
        * So, py is incremented by 1 */
-      py = py + 1u;
+      py = py + 1U;
 
       /* If the count is not a multiple of 4, compute any remaining MACs here.
        ** No loop unrolling is used. */
-      k = count % 0x4u;
+      k = count % 0x4U;
 
-      while (k > 0u)
+      while (k > 0U)
       {
         /* sum += x[srcALen - srcBLen + 5] * y[srcBLen - 5] */
         sum = __SMLALD(*px++, *py--, sum);
@@ -681,7 +702,7 @@ arm_status arm_conv_partial_q15(
     /* The second part of the stage starts here */
     /* SIMD is not used for the next MAC operations,
      * so pointer py is updated to read only one sample at a time */
-    py = py + 1u;
+    py = py + 1U;
 
     while (blockSize3 > 0)
     {
@@ -691,7 +712,7 @@ arm_status arm_conv_partial_q15(
       /* Apply loop unrolling and compute 4 MACs simultaneously. */
       k = count;
 
-      while (k > 0u)
+      while (k > 0U)
       {
         /* Perform the multiply-accumulates */
         /* sum +=  x[srcALen-1] * y[srcBLen-1] */
@@ -733,7 +754,7 @@ arm_status arm_conv_partial_q15(
   arm_status status;                             /* status of Partial convolution */
 
   /* Check for range of output samples to be calculated */
-  if ((firstIndex + numPoints) > ((srcALen + (srcBLen - 1u))))
+  if ((firstIndex + numPoints) > ((srcALen + (srcBLen - 1U))))
   {
     /* Set status as ARM_ARGUMENT_ERROR */
     status = ARM_MATH_ARGUMENT_ERROR;
@@ -758,7 +779,7 @@ arm_status arm_conv_partial_q15(
       }
 
       /* Store the output in the destination buffer */
-      pDst[i] = (q15_t) __SSAT((sum >> 15u), 16u);
+      pDst[i] = (q15_t) __SSAT((sum >> 15U), 16U);
     }
     /* set status as ARM_SUCCESS as there are no argument errors */
     status = ARM_MATH_SUCCESS;

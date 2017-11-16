@@ -1,0 +1,15 @@
+import:
+ - ../test.rtebuild
+config:
+  default: FVP
+  FVP:
+    mcpu  : cortex-a5
+    cpu   : Cortex-A5.neon
+    mfpu  : neon-vfpv4
+    fpu   : vfpv4
+    target: ARM:82/ARMCA5/Cortex-A5
+source:
+ - ../../Source/CV_CoreAFunc.c
+ - ../../Source/CV_CoreInstr.c
+components:
+ - Device.IRQ Controller.GIC

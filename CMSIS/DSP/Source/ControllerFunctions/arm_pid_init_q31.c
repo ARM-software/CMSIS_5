@@ -85,7 +85,7 @@ void arm_pid_init_q31(
   if (resetStateFlag)
   {
     /* Clear the state buffer.  The size will be always 3 samples */
-    memset(S->state, 0, 3u * sizeof(q31_t));
+    memset(S->state, 0, 3U * sizeof(q31_t));
   }
 
 }

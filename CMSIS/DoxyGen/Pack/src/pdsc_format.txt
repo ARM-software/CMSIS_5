@@ -928,7 +928,7 @@ The table lists predefined Component Classes.
 	<td>Components providing interfaces for Evaluation and Development Boards</td>
   <tr>
     <td class="XML-Token">CMSIS</td>
-    <td>Components defined by Cortex Microcontroller Software Interface Standard (e.g. <a class=el href="../../Core/html/index.html">CMSIS-Core (Cortex-M)</a>, <a class=el href="../../DSP/html/index.html">CMSIS-DSP</a> and <a class=el href="../../RTOS/html/index.html">CMSIS-RTOS</a>)</td>
+    <td>Components defined by Cortex Microcontroller Software Interface Standard (e.g. <a class=el href="../../Core/html/index.html">CMSIS-Core(M)</a>, <a class=el href="../../Core_A/html/index.html">CMSIS-Core(A)</a>, <a class=el href="../../DSP/html/index.html">CMSIS-DSP</a> and <a class=el href="../../RTOS/html/index.html">CMSIS-RTOS</a>)</td>
   </tr>
   <tr>
     <td class="XML-Token">Device</td>
@@ -996,8 +996,9 @@ No other Component Groups have been defined so far.
     <th>Description</th>
   </tr>
   <tr>
-    <td class="XML-Token">Core</td>
-	<td>A component containing device support in accordance to the <a class=el href="../../Core/html/index.html">CMSIS-Core (Cortex-M)</a> specification (startup, system and device files)</td>
+    <td class="XML-Token">CORE</td>
+	<td>A component containing device support in accordance to the <a class=el href="../../Core/html/index.html">CMSIS-Core(M)</a>
+  or <a class=el href="../../Core_A/html/index.html">CMSIS-Core(A)</a> specifications (startup, system and device files)</td>
   </tr>
   <tr>
     <td class="XML-Token">DSP</td>

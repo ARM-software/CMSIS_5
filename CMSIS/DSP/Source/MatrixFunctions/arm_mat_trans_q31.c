@@ -59,7 +59,7 @@ arm_status arm_mat_trans_q31(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  uint16_t blkCnt, i = 0u, row = nRows;          /* loop counters */
+  uint16_t blkCnt, i = 0U, row = nRows;          /* loop counters */
   arm_status status;                             /* status of matrix transpose */
 
 
@@ -81,14 +81,14 @@ arm_status arm_mat_trans_q31(
     do
     {
       /* Apply loop unrolling and exchange the columns with row elements */
-      blkCnt = nColumns >> 2u;
+      blkCnt = nColumns >> 2U;
 
       /* The pointer px is set to starting address of the column being processed */
       px = pOut + i;
 
       /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
        ** a second loop below computes the remaining 1 to 3 samples. */
-      while (blkCnt > 0u)
+      while (blkCnt > 0U)
       {
         /* Read and store the input element in the destination */
         *px = *pIn++;
@@ -119,9 +119,9 @@ arm_status arm_mat_trans_q31(
       }
 
       /* Perform matrix transpose for last 3 samples here. */
-      blkCnt = nColumns % 0x4u;
+      blkCnt = nColumns % 0x4U;
 
-      while (blkCnt > 0u)
+      while (blkCnt > 0U)
       {
         /* Read and store the input element in the destination */
         *px = *pIn++;
@@ -137,7 +137,7 @@ arm_status arm_mat_trans_q31(
 
   /* Run the below code for Cortex-M0 */
 
-  uint16_t col, i = 0u, row = nRows;             /* loop counters */
+  uint16_t col, i = 0U, row = nRows;             /* loop counters */
   arm_status status;                             /* status of matrix transpose */
 
 
@@ -163,7 +163,7 @@ arm_status arm_mat_trans_q31(
       /* Initialize column loop counter */
       col = nColumns;
 
-      while (col > 0u)
+      while (col > 0U)
       {
         /* Read and store the input element in the destination */
         *px = *pIn++;
@@ -183,7 +183,7 @@ arm_status arm_mat_trans_q31(
       row--;
 
     }
-    while (row > 0u);            /* row loop end */
+    while (row > 0U);            /* row loop end */
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;

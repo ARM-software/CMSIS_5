@@ -82,7 +82,7 @@ void arm_cfft_q15(
 {
     uint32_t L = S->fftLen;
 
-    if (ifftFlag == 1u)
+    if (ifftFlag == 1U)
     {
         switch (L)
         {
@@ -177,7 +177,7 @@ void arm_cfft_radix4by2_q15(
 
     #else
 
-        out1 = __SMUSDX(R, coeff) >> 16u;
+        out1 = __SMUSDX(R, coeff) >> 16U;
         out2 = __SMUAD(coeff, R);
 
     #endif //     #ifndef ARM_MATH_BIG_ENDIAN
@@ -198,26 +198,26 @@ void arm_cfft_radix4by2_q15(
 
         l = i + n2;
 
-        xt = (pSrc[2 * i] >> 1u) - (pSrc[2 * l] >> 1u);
-        pSrc[2 * i] = ((pSrc[2 * i] >> 1u) + (pSrc[2 * l] >> 1u)) >> 1u;
+        xt = (pSrc[2 * i] >> 1U) - (pSrc[2 * l] >> 1U);
+        pSrc[2 * i] = ((pSrc[2 * i] >> 1U) + (pSrc[2 * l] >> 1U)) >> 1U;
 
-        yt = (pSrc[2 * i + 1] >> 1u) - (pSrc[2 * l + 1] >> 1u);
+        yt = (pSrc[2 * i + 1] >> 1U) - (pSrc[2 * l + 1] >> 1U);
         pSrc[2 * i + 1] =
-        ((pSrc[2 * l + 1] >> 1u) + (pSrc[2 * i + 1] >> 1u)) >> 1u;
+        ((pSrc[2 * l + 1] >> 1U) + (pSrc[2 * i + 1] >> 1U)) >> 1U;
 
-        pSrc[2u * l] = (((int16_t) (((q31_t) xt * cosVal) >> 16)) +
+        pSrc[2U * l] = (((int16_t) (((q31_t) xt * cosVal) >> 16)) +
                   ((int16_t) (((q31_t) yt * sinVal) >> 16)));
 
-        pSrc[2u * l + 1u] = (((int16_t) (((q31_t) yt * cosVal) >> 16)) -
+        pSrc[2U * l + 1U] = (((int16_t) (((q31_t) yt * cosVal) >> 16)) -
                        ((int16_t) (((q31_t) xt * sinVal) >> 16)));
     }
 
 #endif //    #if defined (ARM_MATH_DSP)
 
     // first col
-    arm_radix4_butterfly_q15( pSrc, n2, (q15_t*)pCoef, 2u);
+    arm_radix4_butterfly_q15( pSrc, n2, (q15_t*)pCoef, 2U);
     // second col
-    arm_radix4_butterfly_q15( pSrc + fftLen, n2, (q15_t*)pCoef, 2u);
+    arm_radix4_butterfly_q15( pSrc + fftLen, n2, (q15_t*)pCoef, 2U);
 
     for (i = 0; i < fftLen >> 1; i++)
     {
@@ -283,7 +283,7 @@ void arm_cfft_radix4by2_inverse_q15(
         out2 = __SMUADX(coeff, R);
     #else
 
-        out1 = __SMUADX(R, coeff) >> 16u;
+        out1 = __SMUADX(R, coeff) >> 16U;
         out2 = __SMUSD(__QSUB(0, coeff), R);
 
     #endif //     #ifndef ARM_MATH_BIG_ENDIAN
@@ -303,26 +303,26 @@ void arm_cfft_radix4by2_inverse_q15(
         ia++;
 
         l = i + n2;
-        xt = (pSrc[2 * i] >> 1u) - (pSrc[2 * l] >> 1u);
-        pSrc[2 * i] = ((pSrc[2 * i] >> 1u) + (pSrc[2 * l] >> 1u)) >> 1u;
+        xt = (pSrc[2 * i] >> 1U) - (pSrc[2 * l] >> 1U);
+        pSrc[2 * i] = ((pSrc[2 * i] >> 1U) + (pSrc[2 * l] >> 1U)) >> 1U;
 
-        yt = (pSrc[2 * i + 1] >> 1u) - (pSrc[2 * l + 1] >> 1u);
+        yt = (pSrc[2 * i + 1] >> 1U) - (pSrc[2 * l + 1] >> 1U);
         pSrc[2 * i + 1] =
-          ((pSrc[2 * l + 1] >> 1u) + (pSrc[2 * i + 1] >> 1u)) >> 1u;
+          ((pSrc[2 * l + 1] >> 1U) + (pSrc[2 * i + 1] >> 1U)) >> 1U;
 
-        pSrc[2u * l] = (((int16_t) (((q31_t) xt * cosVal) >> 16)) -
+        pSrc[2U * l] = (((int16_t) (((q31_t) xt * cosVal) >> 16)) -
                         ((int16_t) (((q31_t) yt * sinVal) >> 16)));
 
-        pSrc[2u * l + 1u] = (((int16_t) (((q31_t) yt * cosVal) >> 16)) +
+        pSrc[2U * l + 1U] = (((int16_t) (((q31_t) yt * cosVal) >> 16)) +
                            ((int16_t) (((q31_t) xt * sinVal) >> 16)));
     }
 
 #endif //    #if defined (ARM_MATH_DSP)
 
     // first col
-    arm_radix4_butterfly_inverse_q15( pSrc, n2, (q15_t*)pCoef, 2u);
+    arm_radix4_butterfly_inverse_q15( pSrc, n2, (q15_t*)pCoef, 2U);
     // second col
-    arm_radix4_butterfly_inverse_q15( pSrc + fftLen, n2, (q15_t*)pCoef, 2u);
+    arm_radix4_butterfly_inverse_q15( pSrc + fftLen, n2, (q15_t*)pCoef, 2U);
 
     for (i = 0; i < fftLen >> 1; i++)
     {

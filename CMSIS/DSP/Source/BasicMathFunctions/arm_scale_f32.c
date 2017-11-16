@@ -87,11 +87,11 @@ void arm_scale_f32(
   float32_t in1, in2, in3, in4;                  /* temporary variabels */
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A * scale */
     /* Scale the input and then store the results in the destination buffer. */
@@ -121,8 +121,8 @@ void arm_scale_f32(
     *(pDst + 3) = in4;
 
     /* update pointers to process next samples */
-    pSrc += 4u;
-    pDst += 4u;
+    pSrc += 4U;
+    pDst += 4U;
 
     /* Decrement the loop counter */
     blkCnt--;
@@ -130,7 +130,7 @@ void arm_scale_f32(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
 #else
 
@@ -141,7 +141,7 @@ void arm_scale_f32(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A * scale */
     /* Scale the input and then store the result in the destination buffer. */

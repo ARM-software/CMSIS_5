@@ -104,11 +104,11 @@ void arm_biquad_cascade_df1_fast_q15(
      *    acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]
      *    acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]
      */
-    sample = blockSize >> 1u;
+    sample = blockSize >> 1U;
 
     /* First part of the processing with loop unrolling.  Compute 2 outputs at a time.
      ** a second loop below computes the remaining 1 sample. */
-    while (sample > 0u)
+    while (sample > 0U)
     {
 
       /* Read the input */
@@ -198,7 +198,7 @@ void arm_biquad_cascade_df1_fast_q15(
     /* If the blockSize is not a multiple of 2, compute any remaining output samples here.
      ** No loop unrolling is used. */
 
-    if ((blockSize & 0x1u) != 0u)
+    if ((blockSize & 0x1U) != 0U)
     {
       /* Read the input */
       in = *pIn++;
@@ -264,7 +264,7 @@ void arm_biquad_cascade_df1_fast_q15(
     /* Decrement the loop counter */
     stage--;
 
-  } while (stage > 0u);
+  } while (stage > 0U);
 }
 
 

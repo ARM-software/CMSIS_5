@@ -62,22 +62,27 @@ SVC_Handler     PROC
                 IMPORT   TZ_StoreContext_S
                 ENDIF
 
-                MRS      R0,PSP                 ; Get PSP
+                TST      LR,#0x04               ; Determine return stack from EXC_RETURN bit 2
+                ITE      EQ
+                MRSEQ    R0,MSP                 ; Get MSP if return stack is MSP
+                MRSNE    R0,PSP                 ; Get PSP if return stack is PSP
+
                 LDR      R1,[R0,#24]            ; Load saved PC from stack
                 LDRB     R1,[R1,#-2]            ; Load SVC number
                 CMP      R1,#0
                 BNE      SVC_User               ; Branch if not SVC 0
 
-                PUSH     {R0,LR}                ; Save PSP and EXC_RETURN
+                PUSH     {R0,LR}                ; Save SP and EXC_RETURN
                 LDM      R0,{R0-R3,R12}         ; Load function parameters and address from stack
                 BLX      R12                    ; Call service function
-                POP      {R12,LR}               ; Restore PSP and EXC_RETURN
+                POP      {R12,LR}               ; Restore SP and EXC_RETURN
                 STM      R12,{R0-R1}            ; Store function return values
 
 SVC_Context
                 LDR      R3,=osRtxInfo+I_T_RUN_OFS; Load address of osRtxInfo.run
                 LDM      R3,{R1,R2}             ; Load osRtxInfo.thread.run: curr & next
                 CMP      R1,R2                  ; Check if thread switch is required
+                IT       EQ
                 BXEQ     LR                     ; Exit when threads are the same
 
                 IF       __FPU_USED = 1
@@ -86,7 +91,7 @@ SVC_Context
                 BNE      SVC_ContextSwitch
                 LDR      R1,=0xE000EF34         ; FPCCR Address
                 LDR      R0,[R1]                ; Load FPCCR
-                BIC      R0,#1                  ; Clear LSPACT (Lazy state)
+                BIC      R0,R0,#1               ; Clear LSPACT (Lazy state)
                 STR      R0,[R1]                ; Store FPCCR
                 B        SVC_ContextSwitch
                 ELSE
@@ -107,6 +112,7 @@ SVC_ContextSave1
                 STMDB    R0!,{R4-R11}           ; Save R4..R11
                 IF       __FPU_USED = 1
                 TST      LR,#0x10               ; Check if extended stack frame
+                IT       EQ
                 VSTMDBEQ R0!,{S16-S31}          ;  Save VFP S16.S31
                 ENDIF
 
@@ -140,6 +146,7 @@ SVC_ContextRestore1
 
                 IF       __FPU_USED = 1
                 TST      LR,#0x10               ; Check if extended stack frame
+                IT       EQ
                 VLDMIAEQ R0!,{S16-S31}          ;  Restore VFP S16..S31
                 ENDIF
                 LDMIA    R0!,{R4-R11}           ; Restore R4..R11
@@ -151,21 +158,19 @@ SVC_Exit
                 BX       LR                     ; Exit from handler
 
 SVC_User
-                PUSH     {R4,LR}                ; Save registers
                 LDR      R2,=osRtxUserSVC       ; Load address of SVC table
                 LDR      R3,[R2]                ; Load SVC maximum number
                 CMP      R1,R3                  ; Check SVC number range
-                BHI      SVC_Done               ; Branch if out of range
+                BHI      SVC_Exit               ; Branch if out of range
 
-                LDR      R4,[R2,R1,LSL #2]      ; Load address of SVC function
-
+                PUSH     {R0,LR}                ; Save SP and EXC_RETURN
+                LDR      R12,[R2,R1,LSL #2]     ; Load address of SVC function
                 LDM      R0,{R0-R3}             ; Load function parameters from stack
-                BLX      R4                     ; Call service function
-                MRS      R4,PSP                 ; Get PSP
-                STR      R0,[R4]                ; Store function return value
+                BLX      R12                    ; Call service function
+                POP      {R12,LR}               ; Restore SP and EXC_RETURN
+                STR      R0,[R12]               ; Store function return value
 
-SVC_Done
-                POP      {R4,PC}                ; Return from handler
+                BX       LR                     ; Return from handler
 
                 ALIGN
                 ENDP
@@ -175,9 +180,9 @@ PendSV_Handler  PROC
                 EXPORT   PendSV_Handler
                 IMPORT   osRtxPendSV_Handler
 
-                PUSH     {R4,LR}                ; Save EXC_RETURN
+                PUSH     {R0,LR}                ; Save EXC_RETURN
                 BL       osRtxPendSV_Handler    ; Call osRtxPendSV_Handler
-                POP      {R4,LR}                ; Restore EXC_RETURN
+                POP      {R0,LR}                ; Restore EXC_RETURN
                 B        Sys_Context
 
                 ALIGN
@@ -188,9 +193,9 @@ SysTick_Handler PROC
                 EXPORT   SysTick_Handler
                 IMPORT   osRtxTick_Handler
 
-                PUSH     {R4,LR}                ; Save EXC_RETURN
+                PUSH     {R0,LR}                ; Save EXC_RETURN
                 BL       osRtxTick_Handler      ; Call osRtxTick_Handler
-                POP      {R4,LR}                ; Restore EXC_RETURN
+                POP      {R0,LR}                ; Restore EXC_RETURN
                 B        Sys_Context
 
                 ALIGN
@@ -208,6 +213,7 @@ Sys_Context     PROC
                 LDR      R3,=osRtxInfo+I_T_RUN_OFS; Load address of osRtxInfo.run
                 LDM      R3,{R1,R2}             ; Load osRtxInfo.thread.run: curr & next
                 CMP      R1,R2                  ; Check if thread switch is required
+                IT       EQ
                 BXEQ     LR                     ; Exit when threads are the same
 
 Sys_ContextSave
@@ -218,6 +224,7 @@ Sys_ContextSave
                 BL       TZ_StoreContext_S      ; Store secure context
                 POP      {R1,R2,R3,LR}          ; Restore registers and EXC_RETURN
                 TST      LR,#0x40               ; Check domain of interrupted thread
+                IT       NE
                 MRSNE    R0,PSP                 ; Get PSP
                 BNE      Sys_ContextSave2       ; Branch if secure
                 ENDIF
@@ -227,6 +234,7 @@ Sys_ContextSave1
                 STMDB    R0!,{R4-R11}           ; Save R4..R11
                 IF       __FPU_USED = 1
                 TST      LR,#0x10               ; Check if extended stack frame
+                IT       EQ
                 VSTMDBEQ R0!,{S16-S31}          ;  Save VFP S16.S31
                 ENDIF
 
@@ -260,6 +268,7 @@ Sys_ContextRestore1
 
                 IF       __FPU_USED = 1
                 TST      LR,#0x10               ; Check if extended stack frame
+                IT       EQ
                 VLDMIAEQ R0!,{S16-S31}          ;  Restore VFP S16..S31
                 ENDIF
                 LDMIA    R0!,{R4-R11}           ; Restore R4..R11

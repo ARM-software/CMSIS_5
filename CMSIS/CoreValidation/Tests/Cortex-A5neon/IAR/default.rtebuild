@@ -1,0 +1,12 @@
+import:
+ - ../cortex-a5.rtebuild
+config:
+  FVP:
+    toolchain: ICCARM
+    commonflags : [ "--cpu ${cpu}", "--fpu ${fpu}", --endian little ]
+    cflags      : [ "${commonflags}", --debug, "--dlib_config DLib_Config_Full.h", -e ]
+    asmflags    : [ "${commonflags}" ]
+    linkflags   : [ "--cpu ${cpu}", --semihosting, "--entry Vectors", --vfe, "--text_out locale" ]
+    linkscript: "${basedir}/RTE/Device/${device}/${device}.icf"
+include: 
+ - ./

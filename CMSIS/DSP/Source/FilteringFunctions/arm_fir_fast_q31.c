@@ -79,7 +79,7 @@ void arm_fir_fast_q31(
 
   /* S->pState points to buffer which contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[(numTaps - 1u)]);
+  pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
   /* Apply loop unrolling and compute 4 output values simultaneously.
    * The variables acc0 ... acc3 hold output values that are being computed:
@@ -93,7 +93,7 @@ void arm_fir_fast_q31(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy four new input samples into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -123,7 +123,7 @@ void arm_fir_fast_q31(
     tapCnt = numTaps >> 2;
     i = tapCnt;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* Read the b[numTaps] coefficient */
       c0 = *pb;
@@ -144,10 +144,10 @@ void arm_fir_fast_q31(
       multAcc_32x32_keep32_R(acc3, x3, c0);
 
       /* Read the b[numTaps-1] coefficient */
-      c0 = *(pb + 1u);
+      c0 = *(pb + 1U);
 
       /* Read x[n-numTaps-4] sample */
-      x0 = *(px + 1u);
+      x0 = *(px + 1U);
 
       /* Perform the multiply-accumulates */
       multAcc_32x32_keep32_R(acc0, x1, c0);
@@ -156,10 +156,10 @@ void arm_fir_fast_q31(
       multAcc_32x32_keep32_R(acc3, x0, c0);
 
       /* Read the b[numTaps-2] coefficient */
-      c0 = *(pb + 2u);
+      c0 = *(pb + 2U);
 
       /* Read x[n-numTaps-5] sample */
-      x1 = *(px + 2u);
+      x1 = *(px + 2U);
 
       /* Perform the multiply-accumulates */
       multAcc_32x32_keep32_R(acc0, x2, c0);
@@ -168,10 +168,10 @@ void arm_fir_fast_q31(
       multAcc_32x32_keep32_R(acc3, x1, c0);
 
       /* Read the b[numTaps-3] coefficients */
-      c0 = *(pb + 3u);
+      c0 = *(pb + 3U);
 
       /* Read x[n-numTaps-6] sample */
-      x2 = *(px + 3u);
+      x2 = *(px + 3U);
 
       /* Perform the multiply-accumulates */
       multAcc_32x32_keep32_R(acc0, x3, c0);
@@ -180,8 +180,8 @@ void arm_fir_fast_q31(
       multAcc_32x32_keep32_R(acc3, x2, c0);
 
       /* update coefficient pointer */
-      pb += 4u;
-      px += 4u;
+      pb += 4U;
+      px += 4U;
 
       /* Decrement the loop counter */
       i--;
@@ -189,8 +189,8 @@ void arm_fir_fast_q31(
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
 
-    i = numTaps - (tapCnt * 4u);
-    while (i > 0u)
+    i = numTaps - (tapCnt * 4U);
+    while (i > 0U)
     {
       /* Read coefficients */
       c0 = *(pb++);
@@ -230,9 +230,9 @@ void arm_fir_fast_q31(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 4u;
+  blkCnt = blockSize % 4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy one sample at a time into state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -253,7 +253,7 @@ void arm_fir_fast_q31(
     {
       multAcc_32x32_keep32_R(acc0, (*px++), (*(pb++)));
       i--;
-    } while (i > 0u);
+    } while (i > 0U);
 
     /* The result is in 2.30 format.  Convert to 1.31
      ** Then store the output in the destination buffer. */
@@ -274,10 +274,10 @@ void arm_fir_fast_q31(
   pStateCurnt = S->pState;
 
   /* Calculate remaining number of copies */
-  tapCnt = (numTaps - 1u);
+  tapCnt = (numTaps - 1U);
 
   /* Copy the remaining q31_t data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 

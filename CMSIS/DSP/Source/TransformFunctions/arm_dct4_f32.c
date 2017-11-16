@@ -72,7 +72,7 @@
  * Note that the implementation of Inverse DCT4 and DCT4 is same, hence same process function can be used for both.
  *
  * \par Lengths supported by the transform:
- *  As DCT4 internally uses Real FFT, it supports all the lengths supported by arm_rfft_f32().
+ *  As DCT4 internally uses Real FFT, it supports all the lengths 128, 512, 2048 and 8192.
  * The library provides separate functions for Q15, Q31, and floating-point data types.
  * \par Instance Structure
  * The instances for Real FFT and FFT, cosine values table and twiddle factor table are stored in an instance data structure.
@@ -168,7 +168,7 @@ void arm_dct4_f32(
   pS1 = pState;
 
   /* pS2 initialized to pState+N-1, so that it points to the end of the state buffer */
-  pS2 = pState + (S->N - 1u);
+  pS2 = pState + (S->N - 1U);
 
   /* pbuff initialized to input buffer */
   pbuff = pInlineBuffer;
@@ -178,7 +178,7 @@ void arm_dct4_f32(
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /* Initializing the loop counter to N/2 >> 2 for loop unrolling by 4 */
-  i = (uint32_t) S->Nby2 >> 2u;
+  i = (uint32_t) S->Nby2 >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
@@ -201,7 +201,7 @@ void arm_dct4_f32(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
   /* pbuff initialized to input buffer */
   pbuff = pInlineBuffer;
@@ -210,7 +210,7 @@ void arm_dct4_f32(
   pS1 = pState;
 
   /* Initializing the loop counter to N/4 instead of N for loop unrolling */
-  i = (uint32_t) S->N >> 2u;
+  i = (uint32_t) S->N >> 2U;
 
   /* Processing with loop unrolling 4 times as N is always multiple of 4.
    * Compute 4 outputs at a time */
@@ -224,7 +224,7 @@ void arm_dct4_f32(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
 
   /* ---------------------------------------------------------
@@ -245,7 +245,7 @@ void arm_dct4_f32(
   /* Getting only real part from the output and Converting to DCT-IV */
 
   /* Initializing the loop counter to N >> 2 for loop unrolling by 4 */
-  i = ((uint32_t) S->N - 1u) >> 2u;
+  i = ((uint32_t) S->N - 1U) >> 2U;
 
   /* pbuff initialized to input buffer. */
   pbuff = pInlineBuffer;
@@ -286,13 +286,13 @@ void arm_dct4_f32(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  i = ((uint32_t) S->N - 1u) % 0x4u;
+  i = ((uint32_t) S->N - 1U) % 0x4U;
 
-  while (i > 0u)
+  while (i > 0U)
   {
     /* Calculating Y4(1) to Y4(N-1) from Y2 using equation Y4(k) = Y2(k) - Y4(k-1) */
     /* pState pointer (pS1) is incremented twice as the real values are located alternatively in the array */
@@ -309,7 +309,7 @@ void arm_dct4_f32(
         /*------------ Normalizing the output by multiplying with the normalizing factor ----------*/
 
   /* Initializing the loop counter to N/4 instead of N for loop unrolling */
-  i = (uint32_t) S->N >> 2u;
+  i = (uint32_t) S->N >> 2U;
 
   /* pbuff initialized to the pInlineBuffer(now contains the output values) */
   pbuff = pInlineBuffer;
@@ -332,7 +332,7 @@ void arm_dct4_f32(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
 
 #else
@@ -352,7 +352,7 @@ void arm_dct4_f32(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
   /* pbuff initialized to input buffer */
   pbuff = pInlineBuffer;
@@ -370,7 +370,7 @@ void arm_dct4_f32(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
 
   /* ---------------------------------------------------------
@@ -405,7 +405,7 @@ void arm_dct4_f32(
   pS1++;
 
   /* Initializing the loop counter */
-  i = ((uint32_t) S->N - 1u);
+  i = ((uint32_t) S->N - 1U);
 
   do
   {
@@ -419,7 +419,7 @@ void arm_dct4_f32(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
 
         /*------------ Normalizing the output by multiplying with the normalizing factor ----------*/
@@ -438,7 +438,7 @@ void arm_dct4_f32(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
 #endif /* #if defined (ARM_MATH_DSP) */
 

@@ -61,16 +61,16 @@ void arm_min_q31(
   uint32_t blkCnt, outIndex, count;              /* loop counter */
 
   /* Initialise the count value. */
-  count = 0u;
+  count = 0U;
   /* Initialise the index value to zero. */
-  outIndex = 0u;
+  outIndex = 0U;
   /* Load first input value that act as reference value for comparision */
   out = *pSrc++;
 
   /* Loop unrolling */
-  blkCnt = (blockSize - 1u) >> 2u;
+  blkCnt = (blockSize - 1U) >> 2U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Initialize minVal to the next consecutive values one by one */
     minVal1 = *pSrc++;
@@ -81,7 +81,7 @@ void arm_min_q31(
     {
       /* Update the minimum value and its index */
       out = minVal1;
-      outIndex = count + 1u;
+      outIndex = count + 1U;
     }
 
     /* compare for the minimum value */
@@ -89,7 +89,7 @@ void arm_min_q31(
     {
       /* Update the minimum value and its index */
       out = minVal2;
-      outIndex = count + 2u;
+      outIndex = count + 2U;
     }
 
     /* Initialize minVal to the next consecutive values one by one */
@@ -101,7 +101,7 @@ void arm_min_q31(
     {
       /* Update the minimum value and its index */
       out = minVal1;
-      outIndex = count + 3u;
+      outIndex = count + 3U;
     }
 
     /* compare for the minimum value */
@@ -109,17 +109,17 @@ void arm_min_q31(
     {
       /* Update the minimum value and its index */
       out = minVal2;
-      outIndex = count + 4u;
+      outIndex = count + 4U;
     }
 
-    count += 4u;
+    count += 4U;
 
     /* Decrement the loop counter */
     blkCnt--;
   }
 
-  /* if (blockSize - 1u) is not multiple of 4 */
-  blkCnt = (blockSize - 1u) % 4u;
+  /* if (blockSize - 1U) is not multiple of 4 */
+  blkCnt = (blockSize - 1U) % 4U;
 
 #else
   /* Run the below code for Cortex-M0 */
@@ -128,15 +128,15 @@ void arm_min_q31(
   uint32_t blkCnt, outIndex;                     /* loop counter */
 
   /* Initialise the index value to zero. */
-  outIndex = 0u;
+  outIndex = 0U;
   /* Load first input value that act as reference value for comparision */
   out = *pSrc++;
 
-  blkCnt = (blockSize - 1u);
+  blkCnt = (blockSize - 1U);
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Initialize minVal to the next consecutive values one by one */
     minVal1 = *pSrc++;

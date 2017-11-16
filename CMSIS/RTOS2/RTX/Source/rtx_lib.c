@@ -96,7 +96,7 @@ __attribute__((section(".data.os.thread.mpi"))) =
 
 // Memory Pool for Thread Stack
 #if (OS_THREAD_USER_STACK_SIZE != 0)
-static uint64_t os_thread_stack[OS_THREAD_USER_STACK_SIZE/8] \
+static uint64_t os_thread_stack[2 + OS_THREAD_NUM + (OS_THREAD_USER_STACK_SIZE/8)] \
 __attribute__((section(".bss.os.thread.stack")));
 #endif
 
@@ -128,7 +128,12 @@ static const osThreadAttr_t os_idle_thread_attr = {
   &os_idle_thread_stack,
   (uint32_t)sizeof(os_idle_thread_stack),
   osPriorityIdle,
-  0U, 0U
+#if defined(OS_IDLE_THREAD_TZ_MOD_ID)
+  (uint32_t)OS_IDLE_THREAD_TZ_MOD_ID,
+#else
+  0U,
+#endif
+  0U
 };
 
 
@@ -176,7 +181,12 @@ static const osThreadAttr_t os_timer_thread_attr = {
   &os_timer_thread_stack,
   (uint32_t)sizeof(os_timer_thread_stack),
   (osPriority_t)OS_TIMER_THREAD_PRIO,
-  0U, 0U
+#if defined(OS_TIMER_THREAD_TZ_MOD_ID)
+  (uint32_t)OS_TIMER_THREAD_TZ_MOD_ID,
+#else
+  0U,
+#endif
+  0U
 };
 
 // Timer Message Queue Control Block
@@ -291,7 +301,7 @@ __attribute__((section(".data.os.mempool.mpi"))) =
 #if ((OS_MEMPOOL_DATA_SIZE & 7) != 0)
 #error "Invalid Data Memory size for Memory Pools!"
 #endif
-static uint64_t os_mp_data[OS_MEMPOOL_DATA_SIZE/8] \
+static uint64_t os_mp_data[2 + OS_MEMPOOL_NUM + (OS_MEMPOOL_DATA_SIZE/8)] \
 __attribute__((section(".bss.os.mempool.mem")));
 #endif
 
@@ -321,7 +331,7 @@ __attribute__((section(".data.os.msgqueue.mpi"))) =
 #if ((OS_MSGQUEUE_DATA_SIZE & 7) != 0)
 #error "Invalid Data Memory size for Message Queues!"
 #endif
-static uint64_t os_mq_data[OS_MSGQUEUE_DATA_SIZE/8] \
+static uint64_t os_mq_data[2 + OS_MSGQUEUE_NUM + (OS_MSGQUEUE_DATA_SIZE/8)] \
 __attribute__((section(".bss.os.msgqueue.mem")));
 #endif
 
@@ -355,17 +365,17 @@ const osRtxConfig_t osRtxConfig = {
   { 
     // Memory Pools (Variable Block Size)
 #if ((OS_THREAD_OBJ_MEM != 0) && (OS_THREAD_USER_STACK_SIZE != 0))
-    &os_thread_stack, (uint32_t)OS_THREAD_USER_STACK_SIZE,
+    &os_thread_stack, sizeof(os_thread_stack),
 #else
     NULL, 0U,
 #endif
 #if ((OS_MEMPOOL_OBJ_MEM != 0) && (OS_MEMPOOL_DATA_SIZE != 0))
-    &os_mp_data, (uint32_t)OS_MEMPOOL_DATA_SIZE,
+    &os_mp_data, sizeof(os_mp_data),
 #else
     NULL, 0U,
 #endif
 #if ((OS_MSGQUEUE_OBJ_MEM != 0) && (OS_MSGQUEUE_DATA_SIZE != 0))
-    &os_mq_data, (uint32_t)OS_MSGQUEUE_DATA_SIZE,
+    &os_mq_data, sizeof(os_mq_data),
 #else
     NULL, 0U,
 #endif
@@ -534,7 +544,8 @@ __WEAK void software_init_hook (void) {
 // C/C++ Standard Library Multithreading Interface
 // ===============================================
 
-#if (( defined(__CC_ARM) || \
+#if ( !defined(RTX_NO_MULTITHREAD_CLIB) && \
+     ( defined(__CC_ARM) || \
       (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))) && \
       !defined(__MICROLIB))
 

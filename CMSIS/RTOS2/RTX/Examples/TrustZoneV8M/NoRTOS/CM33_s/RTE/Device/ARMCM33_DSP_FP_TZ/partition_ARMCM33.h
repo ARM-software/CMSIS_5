@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     partition_ARMCM33.h
  * @brief    CMSIS-CORE Initial Setup for Secure / Non-Secure Zones for ARMCM33
- * @version  V5.00
- * @date     04. November 2016
+ * @version  V5.0.1
+ * @date     07. December 2016
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
@@ -316,9 +316,45 @@
 */
 
 /*
-// <o>Floating Point Unit usage <0=> Secure state only <1=> Secure and Non-Secure state 
+// <e>Setup behaviour of Floating Point Unit
 */
-#define TZ_FPU_NS_USAGE 1 
+#define TZ_FPU_NS_USAGE 1
+
+/*
+// <o>Floating Point Unit usage
+//     <0=> Secure state only
+//     <3=> Secure and Non-Secure state
+//   <i> Value for SCB->NSACR register bits CP10, CP11
+*/
+#define SCB_NSACR_CP10_11_VAL       3
+
+/*
+// <o>Treat floating-point registers as Secure
+//     <0=> Disabled
+//     <1=> Enabled
+//   <i> Value for FPU->FPCCR register bit TS
+*/
+#define FPU_FPCCR_TS_VAL            0
+
+/*
+// <o>Clear on return (CLRONRET) accessibility
+//     <0=> Secure and Non-Secure state
+//     <1=> Secure state only
+//   <i> Value for FPU->FPCCR register bit CLRONRETS
+*/
+#define FPU_FPCCR_CLRONRETS_VAL     0
+
+/*
+// <o>Clear floating-point caller saved registers on exception return
+//     <0=> Disabled
+//     <1=> Enabled
+//   <i> Value for FPU->FPCCR register bit CLRONRET
+*/
+#define FPU_FPCCR_CLRONRET_VAL      1
+
+/*
+// </e>
+*/
 
 /*
 // <h>Setup Interrupt Target
@@ -1134,15 +1170,23 @@ __STATIC_INLINE void TZ_SAU_Setup (void)
                    ((SCB_CSR_DEEPSLEEPS_VAL     << SCB_SCR_SLEEPDEEPS_Pos)     & SCB_SCR_SLEEPDEEPS_Msk);
 
     SCB->AIRCR = (SCB->AIRCR & ~(SCB_AIRCR_VECTKEY_Msk   | SCB_AIRCR_SYSRESETREQS_Msk |
-                                 SCB_AIRCR_BFHFNMINS_Msk |  SCB_AIRCR_PRIS_Msk)        )                     |
+                                 SCB_AIRCR_BFHFNMINS_Msk | SCB_AIRCR_PRIS_Msk          ))                    |
                    ((0x05FAU                    << SCB_AIRCR_VECTKEY_Pos)      & SCB_AIRCR_VECTKEY_Msk)      |
                    ((SCB_AIRCR_SYSRESETREQS_VAL << SCB_AIRCR_SYSRESETREQS_Pos) & SCB_AIRCR_SYSRESETREQS_Msk) |
                    ((SCB_AIRCR_PRIS_VAL         << SCB_AIRCR_PRIS_Pos)         & SCB_AIRCR_PRIS_Msk)         |
                    ((SCB_AIRCR_BFHFNMINS_VAL    << SCB_AIRCR_BFHFNMINS_Pos)    & SCB_AIRCR_BFHFNMINS_Msk);
   #endif /* defined (SCB_CSR_AIRCR_INIT) && (SCB_CSR_AIRCR_INIT == 1U) */
 
-  #if defined (__FPU_USED) && (__FPU_USED == 1U) && defined (TZ_FPU_NS_USAGE) && (TZ_FPU_NS_USAGE == 1U)
-    SCB->NSACR |= (0x3U << 10U);  /* enable non-secure access to CP10 and CP11 */
+  #if defined (__FPU_USED) && (__FPU_USED == 1U) && \
+      defined (TZ_FPU_NS_USAGE) && (TZ_FPU_NS_USAGE == 1U)
+
+    SCB->NSACR = (SCB->NSACR & ~(SCB_NSACR_CP10_Msk | SCB_NSACR_CP10_Msk)) |
+                   ((SCB_NSACR_CP10_11_VAL << SCB_NSACR_CP10_Pos) & (SCB_NSACR_CP10_Msk | SCB_NSACR_CP11_Msk));
+
+    FPU->FPCCR = (FPU->FPCCR & ~(FPU_FPCCR_TS_Msk | FPU_FPCCR_CLRONRETS_Msk | FPU_FPCCR_CLRONRET_Msk)) |
+                   ((FPU_FPCCR_TS_VAL        << FPU_FPCCR_TS_Pos       ) & FPU_FPCCR_TS_Msk       ) |
+                   ((FPU_FPCCR_CLRONRETS_VAL << FPU_FPCCR_CLRONRETS_Pos) & FPU_FPCCR_CLRONRETS_Msk) |
+                   ((FPU_FPCCR_CLRONRET_VAL  << FPU_FPCCR_CLRONRET_Pos ) & FPU_FPCCR_CLRONRET_Msk );
   #endif
 
   #if defined (NVIC_INIT_ITNS0) && (NVIC_INIT_ITNS0 == 1U)

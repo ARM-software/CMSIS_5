@@ -414,6 +414,7 @@ The following callback notification unit events are generated:
 \def ARM_CAN_UNIT_STATE_INACTIVE
 \def ARM_CAN_UNIT_STATE_ACTIVE
 \def ARM_CAN_UNIT_STATE_PASSIVE
+\def ARM_CAN_UNIT_STATE_BUS_OFF
 \def ARM_CAN_LEC_NO_ERROR
 \def ARM_CAN_LEC_BIT_ERROR
 \def ARM_CAN_LEC_STUFF_ERROR
@@ -432,6 +433,8 @@ The CAN driver generates callback unit events that are notified via the function
 
 The following callback notification unit events are generated:
 @{
+\def ARM_CAN_EVENT_UNIT_INACTIVE
+\sa \ref ARM_CAN_SignalUnitEvent
 \def ARM_CAN_EVENT_UNIT_ACTIVE
 \sa \ref ARM_CAN_SignalUnitEvent
 \def ARM_CAN_EVENT_UNIT_WARNING
@@ -1138,9 +1141,10 @@ The following defines give information about the current unit involvement in bus
 
 Unit State                             | Description
 :--------------------------------------|:------------
-\ref ARM_CAN_UNIT_STATE_INACTIVE       | Unit is not active on bus (initialize or error bus off).
-\ref ARM_CAN_UNIT_STATE_ACTIVE         | Unit is active on bus (can generate active error frame).
-\ref ARM_CAN_UNIT_STATE_PASSIVE        | Error passive (can not generate active error frame). Unit is interacting on the bus but does not send active error or overload frames.
+\ref ARM_CAN_UNIT_STATE_INACTIVE       | Unit state: Not active on the bus. Unit is in initialization state.
+\ref ARM_CAN_UNIT_STATE_ACTIVE         | Unit state: Active on the bus. Unit can generate active error frames.
+\ref ARM_CAN_UNIT_STATE_PASSIVE        | Unit state: Error passive. Unit is interacting on the bus but does not send active error frames.
+\ref ARM_CAN_UNIT_STATE_BUS_OFF        | Unit state: Bus-off. Unit does not participate on the bus but monitors it and can recover to active state.
 
 The following defines are error codes of the last error that happened on the bus:
 
@@ -1169,10 +1173,11 @@ The following callback notifications are generated:
 
 Parameter \em event                | Value |Description
 :----------------------------------|:-----:|:-------------------------------------------------
-\ref ARM_CAN_EVENT_UNIT_ACTIVE     |   0   | Unit became active on the bus.
-\ref ARM_CAN_EVENT_UNIT_WARNING    |   1   | Unit error counter reached >= \token{96}.
-\ref ARM_CAN_EVENT_UNIT_PASSIVE    |   2   | Unit became passive on the bus.
-\ref ARM_CAN_EVENT_UNIT_BUS_OFF    |   3   | Unit became inactive on the bus.
+\ref ARM_CAN_EVENT_UNIT_INACTIVE   |   0   | Unit entered Inactive state.
+\ref ARM_CAN_EVENT_UNIT_ACTIVE     |   1   | Unit entered Error Active state.
+\ref ARM_CAN_EVENT_UNIT_WARNING    |   2   | Unit entered Error Warning state (one or both error counters >= \token{96}).
+\ref ARM_CAN_EVENT_UNIT_PASSIVE    |   3   | Unit entered Error Passive state.
+\ref ARM_CAN_EVENT_UNIT_BUS_OFF    |   4   | Unit entered Bus-off state.
 
 \sa \ref ARM_CAN_GetStatus 
 *******************************************************************************************************************/

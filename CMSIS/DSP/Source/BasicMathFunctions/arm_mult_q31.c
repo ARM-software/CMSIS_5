@@ -67,11 +67,11 @@ void arm_mult_q31(
   q31_t out1, out2, out3, out4;                  /* temporary output variables */
 
   /* loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A * B */
     /* Multiply the inputs and then store the results in the destination buffer. */
@@ -94,10 +94,10 @@ void arm_mult_q31(
     out3 = __SSAT(out3, 31);
     out4 = __SSAT(out4, 31);
 
-    *pDst++ = out1 << 1u;
-    *pDst++ = out2 << 1u;
-    *pDst++ = out3 << 1u;
-    *pDst++ = out4 << 1u;
+    *pDst++ = out1 << 1U;
+    *pDst++ = out2 << 1U;
+    *pDst++ = out3 << 1U;
+    *pDst++ = out4 << 1U;
 
     /* Decrement the blockSize loop counter */
     blkCnt--;
@@ -105,9 +105,9 @@ void arm_mult_q31(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A * B */
     /* Multiply the inputs and then store the results in the destination buffer. */
@@ -115,7 +115,7 @@ void arm_mult_q31(
     inB1 = *pSrcB++;
     out1 = ((q63_t) inA1 * inB1) >> 32;
     out1 = __SSAT(out1, 31);
-    *pDst++ = out1 << 1u;
+    *pDst++ = out1 << 1U;
 
     /* Decrement the blockSize loop counter */
     blkCnt--;
@@ -129,7 +129,7 @@ void arm_mult_q31(
   blkCnt = blockSize;
 
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A * B */
     /* Multiply the inputs and then store the results in the destination buffer. */

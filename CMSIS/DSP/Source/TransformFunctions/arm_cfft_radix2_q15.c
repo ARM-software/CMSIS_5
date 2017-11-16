@@ -69,7 +69,7 @@ void arm_cfft_radix2_q15(
   q15_t * pSrc)
 {
 
-  if (S->ifftFlag == 1u)
+  if (S->ifftFlag == 1U)
   {
     arm_radix2_butterfly_inverse_q15(pSrc, S->fftLen,
                                      S->pTwiddle, S->twidCoefModifier);
@@ -111,7 +111,7 @@ void arm_radix2_butterfly_q15(
   // loop for groups
   for (i = 0; i < n2; i++)
   {
-    coeff = _SIMD32_OFFSET(pCoef + (ia * 2u));
+    coeff = _SIMD32_OFFSET(pCoef + (ia * 2U));
 
     ia = ia + twidCoefModifier;
 
@@ -136,15 +136,15 @@ void arm_radix2_butterfly_q15(
 
 #else
 
-    out1 = __SMUSDX(R, coeff) >> 16u;
+    out1 = __SMUSDX(R, coeff) >> 16U;
     out2 = __SMUAD(coeff, R);
 
 #endif //     #ifndef ARM_MATH_BIG_ENDIAN
 
-    _SIMD32_OFFSET(pSrc + (2u * l)) =
+    _SIMD32_OFFSET(pSrc + (2U * l)) =
       (q31_t) ((out2) & 0xFFFF0000) | (out1 & 0x0000FFFF);
 
-    coeff = _SIMD32_OFFSET(pCoef + (ia * 2u));
+    coeff = _SIMD32_OFFSET(pCoef + (ia * 2U));
 
     ia = ia + twidCoefModifier;
 
@@ -171,17 +171,17 @@ void arm_radix2_butterfly_q15(
 
 #else
 
-    out1 = __SMUSDX(R, coeff) >> 16u;
+    out1 = __SMUSDX(R, coeff) >> 16U;
     out2 = __SMUAD(coeff, R);
 
 #endif //     #ifndef ARM_MATH_BIG_ENDIAN
 
-    _SIMD32_OFFSET(pSrc + (2u * l)) =
+    _SIMD32_OFFSET(pSrc + (2U * l)) =
       (q31_t) ((out2) & 0xFFFF0000) | (out1 & 0x0000FFFF);
 
   }                             // groups loop end
 
-  twidCoefModifier = twidCoefModifier << 1u;
+  twidCoefModifier = twidCoefModifier << 1U;
 
   // loop for stage
   for (k = fftLen / 2; k > 2; k = k >> 1)
@@ -193,7 +193,7 @@ void arm_radix2_butterfly_q15(
     // loop for groups
     for (j = 0; j < n2; j++)
     {
-      coeff = _SIMD32_OFFSET(pCoef + (ia * 2u));
+      coeff = _SIMD32_OFFSET(pCoef + (ia * 2U));
 
       ia = ia + twidCoefModifier;
 
@@ -217,12 +217,12 @@ void arm_radix2_butterfly_q15(
 
 #else
 
-        out1 = __SMUSDX(R, coeff) >> 16u;
+        out1 = __SMUSDX(R, coeff) >> 16U;
         out2 = __SMUAD(coeff, R);
 
 #endif //     #ifndef ARM_MATH_BIG_ENDIAN
 
-        _SIMD32_OFFSET(pSrc + (2u * l)) =
+        _SIMD32_OFFSET(pSrc + (2U * l)) =
           (q31_t) ((out2) & 0xFFFF0000) | (out1 & 0x0000FFFF);
 
         i += n1;
@@ -244,26 +244,26 @@ void arm_radix2_butterfly_q15(
 
 #else
 
-        out1 = __SMUSDX(R, coeff) >> 16u;
+        out1 = __SMUSDX(R, coeff) >> 16U;
         out2 = __SMUAD(coeff, R);
 
 #endif //     #ifndef ARM_MATH_BIG_ENDIAN
 
-        _SIMD32_OFFSET(pSrc + (2u * l)) =
+        _SIMD32_OFFSET(pSrc + (2U * l)) =
           (q31_t) ((out2) & 0xFFFF0000) | (out1 & 0x0000FFFF);
 
       }                         // butterfly loop end
 
     }                           // groups loop end
 
-    twidCoefModifier = twidCoefModifier << 1u;
+    twidCoefModifier = twidCoefModifier << 1U;
   }                             // stages loop end
 
   n1 = n2;
   n2 = n2 >> 1;
   ia = 0;
 
-  coeff = _SIMD32_OFFSET(pCoef + (ia * 2u));
+  coeff = _SIMD32_OFFSET(pCoef + (ia * 2U));
 
   ia = ia + twidCoefModifier;
 
@@ -280,7 +280,7 @@ void arm_radix2_butterfly_q15(
 
     _SIMD32_OFFSET(pSrc + (2 * i)) = __QADD16(T, S);
 
-    _SIMD32_OFFSET(pSrc + (2u * l)) = R;
+    _SIMD32_OFFSET(pSrc + (2U * l)) = R;
 
     i += n1;
     l = i + n2;
@@ -293,7 +293,7 @@ void arm_radix2_butterfly_q15(
 
     _SIMD32_OFFSET(pSrc + (2 * i)) = __QADD16(T, S);
 
-    _SIMD32_OFFSET(pSrc + (2u * l)) = R;
+    _SIMD32_OFFSET(pSrc + (2U * l)) = R;
 
   }                             // groups loop end
 
@@ -323,24 +323,24 @@ void arm_radix2_butterfly_q15(
     for (i = j; i < fftLen; i += n1)
     {
       l = i + n2;
-      xt = (pSrc[2 * i] >> 1u) - (pSrc[2 * l] >> 1u);
-      pSrc[2 * i] = ((pSrc[2 * i] >> 1u) + (pSrc[2 * l] >> 1u)) >> 1u;
+      xt = (pSrc[2 * i] >> 1U) - (pSrc[2 * l] >> 1U);
+      pSrc[2 * i] = ((pSrc[2 * i] >> 1U) + (pSrc[2 * l] >> 1U)) >> 1U;
 
-      yt = (pSrc[2 * i + 1] >> 1u) - (pSrc[2 * l + 1] >> 1u);
+      yt = (pSrc[2 * i + 1] >> 1U) - (pSrc[2 * l + 1] >> 1U);
       pSrc[2 * i + 1] =
-        ((pSrc[2 * l + 1] >> 1u) + (pSrc[2 * i + 1] >> 1u)) >> 1u;
+        ((pSrc[2 * l + 1] >> 1U) + (pSrc[2 * i + 1] >> 1U)) >> 1U;
 
-      pSrc[2u * l] = (((int16_t) (((q31_t) xt * cosVal) >> 16)) +
+      pSrc[2U * l] = (((int16_t) (((q31_t) xt * cosVal) >> 16)) +
                       ((int16_t) (((q31_t) yt * sinVal) >> 16)));
 
-      pSrc[2u * l + 1u] = (((int16_t) (((q31_t) yt * cosVal) >> 16)) -
+      pSrc[2U * l + 1U] = (((int16_t) (((q31_t) yt * cosVal) >> 16)) -
                            ((int16_t) (((q31_t) xt * sinVal) >> 16)));
 
     }                           // butterfly loop end
 
   }                             // groups loop end
 
-  twidCoefModifier = twidCoefModifier << 1u;
+  twidCoefModifier = twidCoefModifier << 1U;
 
   // loop for stage
   for (k = fftLen / 2; k > 2; k = k >> 1)
@@ -361,22 +361,22 @@ void arm_radix2_butterfly_q15(
       {
         l = i + n2;
         xt = pSrc[2 * i] - pSrc[2 * l];
-        pSrc[2 * i] = (pSrc[2 * i] + pSrc[2 * l]) >> 1u;
+        pSrc[2 * i] = (pSrc[2 * i] + pSrc[2 * l]) >> 1U;
 
         yt = pSrc[2 * i + 1] - pSrc[2 * l + 1];
-        pSrc[2 * i + 1] = (pSrc[2 * l + 1] + pSrc[2 * i + 1]) >> 1u;
+        pSrc[2 * i + 1] = (pSrc[2 * l + 1] + pSrc[2 * i + 1]) >> 1U;
 
-        pSrc[2u * l] = (((int16_t) (((q31_t) xt * cosVal) >> 16)) +
+        pSrc[2U * l] = (((int16_t) (((q31_t) xt * cosVal) >> 16)) +
                         ((int16_t) (((q31_t) yt * sinVal) >> 16)));
 
-        pSrc[2u * l + 1u] = (((int16_t) (((q31_t) yt * cosVal) >> 16)) -
+        pSrc[2U * l + 1U] = (((int16_t) (((q31_t) yt * cosVal) >> 16)) -
                              ((int16_t) (((q31_t) xt * sinVal) >> 16)));
 
       }                         // butterfly loop end
 
     }                           // groups loop end
 
-    twidCoefModifier = twidCoefModifier << 1u;
+    twidCoefModifier = twidCoefModifier << 1U;
   }                             // stages loop end
 
   n1 = n2;
@@ -401,15 +401,15 @@ void arm_radix2_butterfly_q15(
       yt = pSrc[2 * i + 1] - pSrc[2 * l + 1];
       pSrc[2 * i + 1] = (pSrc[2 * l + 1] + pSrc[2 * i + 1]);
 
-      pSrc[2u * l] = xt;
+      pSrc[2U * l] = xt;
 
-      pSrc[2u * l + 1u] = yt;
+      pSrc[2U * l + 1U] = yt;
 
     }                           // butterfly loop end
 
   }                             // groups loop end
 
-  twidCoefModifier = twidCoefModifier << 1u;
+  twidCoefModifier = twidCoefModifier << 1U;
 
 #endif //             #if defined (ARM_MATH_DSP)
 
@@ -440,7 +440,7 @@ void arm_radix2_butterfly_inverse_q15(
   // loop for groups
   for (i = 0; i < n2; i++)
   {
-    coeff = _SIMD32_OFFSET(pCoef + (ia * 2u));
+    coeff = _SIMD32_OFFSET(pCoef + (ia * 2U));
 
     ia = ia + twidCoefModifier;
 
@@ -464,15 +464,15 @@ void arm_radix2_butterfly_inverse_q15(
     out2 = __SMUADX(coeff, R);
 #else
 
-    out1 = __SMUADX(R, coeff) >> 16u;
+    out1 = __SMUADX(R, coeff) >> 16U;
     out2 = __SMUSD(__QSUB(0, coeff), R);
 
 #endif //     #ifndef ARM_MATH_BIG_ENDIAN
 
-    _SIMD32_OFFSET(pSrc + (2u * l)) =
+    _SIMD32_OFFSET(pSrc + (2U * l)) =
       (q31_t) ((out2) & 0xFFFF0000) | (out1 & 0x0000FFFF);
 
-    coeff = _SIMD32_OFFSET(pCoef + (ia * 2u));
+    coeff = _SIMD32_OFFSET(pCoef + (ia * 2U));
 
     ia = ia + twidCoefModifier;
 
@@ -498,17 +498,17 @@ void arm_radix2_butterfly_inverse_q15(
     out2 = __SMUADX(coeff, R);
 #else
 
-    out1 = __SMUADX(R, coeff) >> 16u;
+    out1 = __SMUADX(R, coeff) >> 16U;
     out2 = __SMUSD(__QSUB(0, coeff), R);
 
 #endif //     #ifndef ARM_MATH_BIG_ENDIAN
 
-    _SIMD32_OFFSET(pSrc + (2u * l)) =
+    _SIMD32_OFFSET(pSrc + (2U * l)) =
       (q31_t) ((out2) & 0xFFFF0000) | (out1 & 0x0000FFFF);
 
   }                             // groups loop end
 
-  twidCoefModifier = twidCoefModifier << 1u;
+  twidCoefModifier = twidCoefModifier << 1U;
 
   // loop for stage
   for (k = fftLen / 2; k > 2; k = k >> 1)
@@ -520,7 +520,7 @@ void arm_radix2_butterfly_inverse_q15(
     // loop for groups
     for (j = 0; j < n2; j++)
     {
-      coeff = _SIMD32_OFFSET(pCoef + (ia * 2u));
+      coeff = _SIMD32_OFFSET(pCoef + (ia * 2U));
 
       ia = ia + twidCoefModifier;
 
@@ -544,12 +544,12 @@ void arm_radix2_butterfly_inverse_q15(
 
 #else
 
-        out1 = __SMUADX(R, coeff) >> 16u;
+        out1 = __SMUADX(R, coeff) >> 16U;
         out2 = __SMUSD(__QSUB(0, coeff), R);
 
 #endif //     #ifndef ARM_MATH_BIG_ENDIAN
 
-        _SIMD32_OFFSET(pSrc + (2u * l)) =
+        _SIMD32_OFFSET(pSrc + (2U * l)) =
           (q31_t) ((out2) & 0xFFFF0000) | (out1 & 0x0000FFFF);
 
         i += n1;
@@ -570,19 +570,19 @@ void arm_radix2_butterfly_inverse_q15(
         out2 = __SMUADX(coeff, R);
 #else
 
-        out1 = __SMUADX(R, coeff) >> 16u;
+        out1 = __SMUADX(R, coeff) >> 16U;
         out2 = __SMUSD(__QSUB(0, coeff), R);
 
 #endif //     #ifndef ARM_MATH_BIG_ENDIAN
 
-        _SIMD32_OFFSET(pSrc + (2u * l)) =
+        _SIMD32_OFFSET(pSrc + (2U * l)) =
           (q31_t) ((out2) & 0xFFFF0000) | (out1 & 0x0000FFFF);
 
       }                         // butterfly loop end
 
     }                           // groups loop end
 
-    twidCoefModifier = twidCoefModifier << 1u;
+    twidCoefModifier = twidCoefModifier << 1U;
   }                             // stages loop end
 
   n1 = n2;
@@ -592,7 +592,7 @@ void arm_radix2_butterfly_inverse_q15(
   // loop for groups
   for (j = 0; j < n2; j++)
   {
-    coeff = _SIMD32_OFFSET(pCoef + (ia * 2u));
+    coeff = _SIMD32_OFFSET(pCoef + (ia * 2U));
 
     ia = ia + twidCoefModifier;
 
@@ -609,13 +609,13 @@ void arm_radix2_butterfly_inverse_q15(
 
       _SIMD32_OFFSET(pSrc + (2 * i)) = __QADD16(T, S);
 
-      _SIMD32_OFFSET(pSrc + (2u * l)) = R;
+      _SIMD32_OFFSET(pSrc + (2U * l)) = R;
 
     }                           // butterfly loop end
 
   }                             // groups loop end
 
-  twidCoefModifier = twidCoefModifier << 1u;
+  twidCoefModifier = twidCoefModifier << 1U;
 
 #else
 
@@ -642,24 +642,24 @@ void arm_radix2_butterfly_inverse_q15(
     for (i = j; i < fftLen; i += n1)
     {
       l = i + n2;
-      xt = (pSrc[2 * i] >> 1u) - (pSrc[2 * l] >> 1u);
-      pSrc[2 * i] = ((pSrc[2 * i] >> 1u) + (pSrc[2 * l] >> 1u)) >> 1u;
+      xt = (pSrc[2 * i] >> 1U) - (pSrc[2 * l] >> 1U);
+      pSrc[2 * i] = ((pSrc[2 * i] >> 1U) + (pSrc[2 * l] >> 1U)) >> 1U;
 
-      yt = (pSrc[2 * i + 1] >> 1u) - (pSrc[2 * l + 1] >> 1u);
+      yt = (pSrc[2 * i + 1] >> 1U) - (pSrc[2 * l + 1] >> 1U);
       pSrc[2 * i + 1] =
-        ((pSrc[2 * l + 1] >> 1u) + (pSrc[2 * i + 1] >> 1u)) >> 1u;
+        ((pSrc[2 * l + 1] >> 1U) + (pSrc[2 * i + 1] >> 1U)) >> 1U;
 
-      pSrc[2u * l] = (((int16_t) (((q31_t) xt * cosVal) >> 16)) -
+      pSrc[2U * l] = (((int16_t) (((q31_t) xt * cosVal) >> 16)) -
                       ((int16_t) (((q31_t) yt * sinVal) >> 16)));
 
-      pSrc[2u * l + 1u] = (((int16_t) (((q31_t) yt * cosVal) >> 16)) +
+      pSrc[2U * l + 1U] = (((int16_t) (((q31_t) yt * cosVal) >> 16)) +
                            ((int16_t) (((q31_t) xt * sinVal) >> 16)));
 
     }                           // butterfly loop end
 
   }                             // groups loop end
 
-  twidCoefModifier = twidCoefModifier << 1u;
+  twidCoefModifier = twidCoefModifier << 1U;
 
   // loop for stage
   for (k = fftLen / 2; k > 2; k = k >> 1)
@@ -680,22 +680,22 @@ void arm_radix2_butterfly_inverse_q15(
       {
         l = i + n2;
         xt = pSrc[2 * i] - pSrc[2 * l];
-        pSrc[2 * i] = (pSrc[2 * i] + pSrc[2 * l]) >> 1u;
+        pSrc[2 * i] = (pSrc[2 * i] + pSrc[2 * l]) >> 1U;
 
         yt = pSrc[2 * i + 1] - pSrc[2 * l + 1];
-        pSrc[2 * i + 1] = (pSrc[2 * l + 1] + pSrc[2 * i + 1]) >> 1u;
+        pSrc[2 * i + 1] = (pSrc[2 * l + 1] + pSrc[2 * i + 1]) >> 1U;
 
-        pSrc[2u * l] = (((int16_t) (((q31_t) xt * cosVal) >> 16)) -
+        pSrc[2U * l] = (((int16_t) (((q31_t) xt * cosVal) >> 16)) -
                         ((int16_t) (((q31_t) yt * sinVal) >> 16)));
 
-        pSrc[2u * l + 1u] = (((int16_t) (((q31_t) yt * cosVal) >> 16)) +
+        pSrc[2U * l + 1U] = (((int16_t) (((q31_t) yt * cosVal) >> 16)) +
                              ((int16_t) (((q31_t) xt * sinVal) >> 16)));
 
       }                         // butterfly loop end
 
     }                           // groups loop end
 
-    twidCoefModifier = twidCoefModifier << 1u;
+    twidCoefModifier = twidCoefModifier << 1U;
   }                             // stages loop end
 
   n1 = n2;
@@ -717,9 +717,9 @@ void arm_radix2_butterfly_inverse_q15(
     yt = pSrc[2 * i + 1] - pSrc[2 * l + 1];
     pSrc[2 * i + 1] = (pSrc[2 * l + 1] + pSrc[2 * i + 1]);
 
-    pSrc[2u * l] = xt;
+    pSrc[2U * l] = xt;
 
-    pSrc[2u * l + 1u] = yt;
+    pSrc[2U * l + 1U] = yt;
 
   }                             // groups loop end
 

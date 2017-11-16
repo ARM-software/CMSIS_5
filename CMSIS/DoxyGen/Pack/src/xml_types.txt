@@ -359,7 +359,7 @@ Connect to the target debug port and power it up.
       <control while="(ReadDP(DP_CTRL_STAT) &amp; 0xA8000000) != 0xA8000000" timeout="300000"/>
       
       <!-- JTAG Specific Part of sequence -->
-      <control if="__protocol == 1">
+      <control if="(__protocol &amp; 0xFFFF) == 1">
       
         <block>
           // Init AP Transfer Mode, Transaction Counter, and Lane Mask (Normal Transfer Mode, Include all Byte Lanes)
@@ -370,7 +370,7 @@ Connect to the target debug port and power it up.
       </control>
       
       <!-- SWD Specific Part of sequence -->
-      <control if="__protocol == 2">
+      <control if="(__protocol &amp; 0xFFFF) == 2">
       
         <block>
           // Init AP Transfer Mode, Transaction Counter, and Lane Mask (Normal Transfer Mode, Include all Byte Lanes)
@@ -476,7 +476,7 @@ Execute a system-wide reset via software mechanisms.
     </block>
 
     <!-- Reset Recovery: Wait for DHCSR.S_RESET_ST bit to clear on read -->
-    <control while="(Read32(DHCSR_Addr) &amp; 0x02000000) == 0" timeout="500000"/>
+    <control while="(Read32(DHCSR_Addr) &amp; 0x02000000)" timeout="500000"/>
     
   </sequence>
 \endcode
@@ -503,7 +503,7 @@ Execute a processor reset via software mechanisms.
     </block>
     
     <!-- Reset Recovery: Wait for DHCSR.S_RESET_ST bit to clear on read -->
-    <control while="(Read32(DHCSR_Addr) &amp; 0x02000000) == 0" timeout="500000"/>
+    <control while="(Read32(DHCSR_Addr) &amp; 0x02000000)" timeout="500000"/>
 
   </sequence>
 \endcode

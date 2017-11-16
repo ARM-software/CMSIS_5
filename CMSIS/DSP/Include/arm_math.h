@@ -3,8 +3,8 @@
  * Title:        arm_math.h
  * Description:  Public header file for CMSIS DSP Library
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        19. September 2017
+ * $Revision:    V.1.5.2
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -132,7 +132,7 @@
    *
    * - ARM_MATH_ARMV8MxL:
    *
-   * Define macro ARM_MATH_ARMV8MBL for building the library on ARMv8M Baseline target, ARM_MATH_ARMV8MBL for building library
+   * Define macro ARM_MATH_ARMV8MBL for building the library on ARMv8M Baseline target, ARM_MATH_ARMV8MML for building library
    * on ARMv8M Mainline target.
    *
    * - __FPU_PRESENT:
@@ -488,7 +488,6 @@ extern "C"
 #define _SIMD32_OFFSET(addr)  (*(__SIMD32_TYPE *)  (addr))
 #define __SIMD64(addr)        (*(int64_t **) & (addr))
 
-/* #if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
 #if !defined (ARM_MATH_DSP)
   /**
    * @brief definition to pack two 16 bit values.
@@ -498,7 +497,6 @@ extern "C"
 #define __PKHTB(ARG1, ARG2, ARG3) ( (((int32_t)(ARG1) <<    0) & (int32_t)0xFFFF0000) | \
                                     (((int32_t)(ARG2) >> ARG3) & (int32_t)0x0000FFFF)  )
 
-/* #endif // defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
 #endif /* !defined (ARM_MATH_DSP) */
 
    /**
@@ -572,32 +570,6 @@ extern "C"
             (((q63_t) (x >> 32) * y)));
   }
 
-/*
-  #if defined (ARM_MATH_CM0_FAMILY) && defined ( __CC_ARM   )
-  #define __CLZ __clz
-  #endif
- */
-/* note: function can be removed when all toolchain support __CLZ for Cortex-M0 */
-#if defined (ARM_MATH_CM0_FAMILY) && ((defined (__ICCARM__))  )
-  CMSIS_INLINE __STATIC_INLINE uint32_t __CLZ(
-  q31_t data);
-
-  CMSIS_INLINE __STATIC_INLINE uint32_t __CLZ(
-  q31_t data)
-  {
-    uint32_t count = 0;
-    uint32_t mask = 0x80000000;
-
-    while ((data & mask) == 0)
-    {
-      count += 1u;
-      mask = mask >> 1u;
-    }
-
-    return (count);
-  }
-#endif
-
   /**
    * @brief Function to Calculates 1/in (reciprocal) value of Q31 Data type.
    */
@@ -633,7 +605,7 @@ extern "C"
 
     /* calculation of reciprocal value */
     /* running approximation for two iterations */
-    for (i = 0u; i < 2u; i++)
+    for (i = 0U; i < 2U; i++)
     {
       tempVal = (uint32_t) (((q63_t) in * out) >> 31);
       tempVal = 0x7FFFFFFFu - tempVal;
@@ -646,7 +618,7 @@ extern "C"
     *dst = out;
 
     /* return num of signbits of out = 1/in value */
-    return (signBits + 1u);
+    return (signBits + 1U);
   }
 
 
@@ -684,7 +656,7 @@ extern "C"
 
     /* calculation of reciprocal value */
     /* running approximation for two iterations */
-    for (i = 0u; i < 2u; i++)
+    for (i = 0U; i < 2U; i++)
     {
       tempVal = (uint32_t) (((q31_t) in * out) >> 15);
       tempVal = 0x7FFFu - tempVal;
@@ -701,50 +673,9 @@ extern "C"
   }
 
 
-  /*
-   * @brief C custom defined intrinisic function for only M0 processors
-   */
-#if defined(ARM_MATH_CM0_FAMILY)
-  CMSIS_INLINE __STATIC_INLINE q31_t __SSAT(
-  q31_t x,
-  uint32_t y)
-  {
-    int32_t posMax, negMin;
-    uint32_t i;
-
-    posMax = 1;
-    for (i = 0; i < (y - 1); i++)
-    {
-      posMax = posMax * 2;
-    }
-
-    if (x > 0)
-    {
-      posMax = (posMax - 1);
-
-      if (x > posMax)
-      {
-        x = posMax;
-      }
-    }
-    else
-    {
-      negMin = -posMax;
-
-      if (x < negMin)
-      {
-        x = negMin;
-      }
-    }
-    return (x);
-  }
-#endif /* end of ARM_MATH_CM0_FAMILY */
-
-
-  /*
-   * @brief C custom defined intrinsic function for M3 and M0 processors
-   */
-/* #if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
+/*
+ * @brief C custom defined intrinsic function for M3 and M0 processors
+ */
 #if !defined (ARM_MATH_DSP)
 
   /*
@@ -1074,33 +1005,6 @@ extern "C"
     return (sum + (int32_t) (((int64_t) x * y) >> 32));
   }
 
-#if 0
-  /*
-   * @brief C custom defined PKHBT for unavailable DSP extension
-   */
-  CMSIS_INLINE __STATIC_INLINE uint32_t __PKHBT(
-  uint32_t x,
-  uint32_t y,
-  uint32_t leftshift)
-  {
-    return ( ((x             ) & 0x0000FFFFUL) |
-             ((y << leftshift) & 0xFFFF0000UL)  );
-  }
-
-  /*
-   * @brief C custom defined PKHTB for unavailable DSP extension
-   */
-  CMSIS_INLINE __STATIC_INLINE uint32_t __PKHTB(
-  uint32_t x,
-  uint32_t y,
-  uint32_t rightshift)
-  {
-    return ( ((x              ) & 0xFFFF0000UL) |
-             ((y >> rightshift) & 0x0000FFFFUL)  );
-  }
-#endif
-
-/* #endif // defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
 #endif /* !defined (ARM_MATH_DSP) */
 
 
@@ -4924,7 +4828,7 @@ void arm_rfft_fast_f32(
     acc += (q63_t) S->A2 * S->state[1];
 
     /* convert output to 1.31 format to add y[n-1] */
-    out = (q31_t) (acc >> 31u);
+    out = (q31_t) (acc >> 31U);
 
     /* out += y[n-1] */
     out += S->state[2];
@@ -5608,7 +5512,7 @@ void arm_rfft_fast_f32(
       y += ((q31_t) (((q63_t) y1 * fract) >> 32));
 
       /* Convert y to 1.31 format */
-      return (y << 1u);
+      return (y << 1U);
     }
   }
 
@@ -5892,7 +5796,7 @@ void arm_rfft_fast_f32(
   int32_t srcInc,
   uint32_t blockSize)
   {
-    uint32_t i = 0u;
+    uint32_t i = 0U;
     int32_t wOffset;
 
     /* Copy the value of Index pointer that points
@@ -5902,7 +5806,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* copy the input sample to the circular buffer */
       circBuffer[wOffset] = *src;
@@ -5939,7 +5843,7 @@ void arm_rfft_fast_f32(
   int32_t dstInc,
   uint32_t blockSize)
   {
-    uint32_t i = 0u;
+    uint32_t i = 0U;
     int32_t rOffset, dst_end;
 
     /* Copy the value of Index pointer that points
@@ -5950,7 +5854,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* copy the sample from the circular buffer to the destination buffer */
       *dst = circBuffer[rOffset];
@@ -5992,7 +5896,7 @@ void arm_rfft_fast_f32(
   int32_t srcInc,
   uint32_t blockSize)
   {
-    uint32_t i = 0u;
+    uint32_t i = 0U;
     int32_t wOffset;
 
     /* Copy the value of Index pointer that points
@@ -6002,7 +5906,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* copy the input sample to the circular buffer */
       circBuffer[wOffset] = *src;
@@ -6050,7 +5954,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* copy the sample from the circular buffer to the destination buffer */
       *dst = circBuffer[rOffset];
@@ -6092,7 +5996,7 @@ void arm_rfft_fast_f32(
   int32_t srcInc,
   uint32_t blockSize)
   {
-    uint32_t i = 0u;
+    uint32_t i = 0U;
     int32_t wOffset;
 
     /* Copy the value of Index pointer that points
@@ -6102,7 +6006,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* copy the input sample to the circular buffer */
       circBuffer[wOffset] = *src;
@@ -6150,7 +6054,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* copy the sample from the circular buffer to the destination buffer */
       *dst = circBuffer[rOffset];
@@ -6928,7 +6832,7 @@ void arm_rfft_fast_f32(
 
     /* 20 bits for the fractional part */
     /* shift left xfract by 11 to keep 1.31 format */
-    xfract = (X & 0x000FFFFF) << 11u;
+    xfract = (X & 0x000FFFFF) << 11U;
 
     /* Read two nearest output values from the index */
     x1 = pYData[(rI) + (int32_t)nCols * (cI)    ];
@@ -6936,7 +6840,7 @@ void arm_rfft_fast_f32(
 
     /* 20 bits for the fractional part */
     /* shift left yfract by 11 to keep 1.31 format */
-    yfract = (Y & 0x000FFFFF) << 11u;
+    yfract = (Y & 0x000FFFFF) << 11U;
 
     /* Read two nearest output values from the index */
     y1 = pYData[(rI) + (int32_t)nCols * (cI + 1)    ];
@@ -7020,19 +6924,19 @@ void arm_rfft_fast_f32(
 
     /* x1 is in 1.15(q15), xfract in 12.20 format and out is in 13.35 format */
     /* convert 13.35 to 13.31 by right shifting  and out is in 1.31 */
-    out = (q31_t) (((q63_t) x1 * (0xFFFFF - xfract)) >> 4u);
+    out = (q31_t) (((q63_t) x1 * (0xFFFFF - xfract)) >> 4U);
     acc = ((q63_t) out * (0xFFFFF - yfract));
 
     /* x2 * (xfract) * (1-yfract)  in 1.51 and adding to acc */
-    out = (q31_t) (((q63_t) x2 * (0xFFFFF - yfract)) >> 4u);
+    out = (q31_t) (((q63_t) x2 * (0xFFFFF - yfract)) >> 4U);
     acc += ((q63_t) out * (xfract));
 
     /* y1 * (1 - xfract) * (yfract)  in 1.51 and adding to acc */
-    out = (q31_t) (((q63_t) y1 * (0xFFFFF - xfract)) >> 4u);
+    out = (q31_t) (((q63_t) y1 * (0xFFFFF - xfract)) >> 4U);
     acc += ((q63_t) out * (yfract));
 
     /* y2 * (xfract) * (yfract)  in 1.51 and adding to acc */
-    out = (q31_t) (((q63_t) y2 * (xfract)) >> 4u);
+    out = (q31_t) (((q63_t) y2 * (xfract)) >> 4U);
     acc += ((q63_t) out * (yfract));
 
     /* acc is in 13.51 format and down shift acc by 36 times */

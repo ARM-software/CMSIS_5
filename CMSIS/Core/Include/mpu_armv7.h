@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     mpu_armv7.h
  * @brief    CMSIS MPU API for ARMv7 MPU
- * @version  V5.0.2
- * @date     09. June 2017
+ * @version  V5.0.3
+ * @date     09. August 2017
  ******************************************************************************/
 /*
  * Copyright (c) 2017 ARM Limited. All rights reserved.
@@ -21,6 +21,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ 
+#if   defined ( __ICCARM__ )
+  #pragma system_include         /* treat file as system include file for MISRA check */
+#elif defined (__clang__)
+  #pragma clang system_header   /* treat file as system include file */
+#endif
  
 #ifndef ARM_MPU_ARMV7_H
 #define ARM_MPU_ARMV7_H
@@ -54,19 +60,22 @@
 #define ARM_MPU_REGION_SIZE_2GB      ((uint8_t)0x1EU)
 #define ARM_MPU_REGION_SIZE_4GB      ((uint8_t)0x1FU)
 
-#define ARM_MPU_AP_NONE 0u 
-#define ARM_MPU_AP_PRIV 1u
-#define ARM_MPU_AP_URO  2u
-#define ARM_MPU_AP_FULL 3u
-#define ARM_MPU_AP_PRO  5u
-#define ARM_MPU_AP_RO   6u
+#define ARM_MPU_AP_NONE 0U 
+#define ARM_MPU_AP_PRIV 1U
+#define ARM_MPU_AP_URO  2U
+#define ARM_MPU_AP_FULL 3U
+#define ARM_MPU_AP_PRO  5U
+#define ARM_MPU_AP_RO   6U
 
 /** MPU Region Base Address Register Value
 *
 * \param Region The region to be configured, number 0 to 15.
 * \param BaseAddress The base address for the region.
 */
-#define ARM_MPU_RBAR(Region, BaseAddress) ((BaseAddress & MPU_RBAR_ADDR_Msk) | (Region & MPU_RBAR_REGION_Msk) | (1UL << MPU_RBAR_VALID_Pos))
+#define ARM_MPU_RBAR(Region, BaseAddress) \
+  (((BaseAddress) & MPU_RBAR_ADDR_Msk) |  \
+   ((Region) & MPU_RBAR_REGION_Msk)    |  \
+   (MPU_RBAR_VALID_Msk))
 
 /**
 * MPU Region Attribut and Size Register Value
@@ -81,15 +90,15 @@
 * \param Size              Region size of the region to be configured, for example 4K, 8K.
 */                         
 #define ARM_MPU_RASR(DisableExec, AccessPermission, TypeExtField, IsShareable, IsCacheable, IsBufferable, SubRegionDisable, Size) \
-  ((DisableExec      << MPU_RASR_XN_Pos)     & MPU_RASR_XN_Msk)     | \
-  ((AccessPermission << MPU_RASR_AP_Pos)     & MPU_RASR_AP_Msk)     | \
-  ((TypeExtField     << MPU_RASR_TEX_Pos)    & MPU_RASR_TEX_Msk)    | \
-  ((IsShareable      << MPU_RASR_S_Pos)      & MPU_RASR_S_Msk)      | \
-  ((IsCacheable      << MPU_RASR_C_Pos)      & MPU_RASR_C_Msk)      | \
-  ((IsBufferable     << MPU_RASR_B_Pos)      & MPU_RASR_B_Msk)      | \
-  ((SubRegionDisable << MPU_RASR_SRD_Pos)    & MPU_RASR_SRD_Msk)    | \
-  ((Size             << MPU_RASR_SIZE_Pos)   & MPU_RASR_SIZE_Msk)   | \
-  ((1UL              << MPU_RASR_ENABLE_Pos) & MPU_RASR_ENABLE_Msk)
+  ((((DisableExec     ) << MPU_RASR_XN_Pos)     & MPU_RASR_XN_Msk)     | \
+   (((AccessPermission) << MPU_RASR_AP_Pos)     & MPU_RASR_AP_Msk)     | \
+   (((TypeExtField    ) << MPU_RASR_TEX_Pos)    & MPU_RASR_TEX_Msk)    | \
+   (((IsShareable     ) << MPU_RASR_S_Pos)      & MPU_RASR_S_Msk)      | \
+   (((IsCacheable     ) << MPU_RASR_C_Pos)      & MPU_RASR_C_Msk)      | \
+   (((IsBufferable    ) << MPU_RASR_B_Pos)      & MPU_RASR_B_Msk)      | \
+   (((SubRegionDisable) << MPU_RASR_SRD_Pos)    & MPU_RASR_SRD_Msk)    | \
+   (((Size            ) << MPU_RASR_SIZE_Pos)   & MPU_RASR_SIZE_Msk)   | \
+   (MPU_RASR_ENABLE_Msk))
 
 
 /**
@@ -115,7 +124,7 @@ __STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_Control)
 
 /** Disable the MPU.
 */
-__STATIC_INLINE void ARM_MPU_Disable()
+__STATIC_INLINE void ARM_MPU_Disable(void)
 {
   __DSB();
   __ISB();
@@ -131,7 +140,7 @@ __STATIC_INLINE void ARM_MPU_Disable()
 __STATIC_INLINE void ARM_MPU_ClrRegion(uint32_t rnr)
 {
   MPU->RNR = rnr;
-  MPU->RASR = 0u;
+  MPU->RASR = 0U;
 }
 
 /** Configure an MPU region.
@@ -164,7 +173,7 @@ __STATIC_INLINE void ARM_MPU_SetRegionEx(uint32_t rnr, uint32_t rbar, uint32_t r
 __STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRICT src, uint32_t len)
 {
   uint32_t i;
-  for (i = 0u; i < len; ++i) 
+  for (i = 0U; i < len; ++i) 
   {
     dst[i] = src[i];
   }
@@ -176,7 +185,13 @@ __STATIC_INLINE void orderedCpy(volatile uint32_t* dst, const uint32_t* __RESTRI
 */
 __STATIC_INLINE void ARM_MPU_Load(ARM_MPU_Region_t const* table, uint32_t cnt) 
 {
-  orderedCpy(&(MPU->RBAR), &(table->RBAR), cnt*sizeof(ARM_MPU_Region_t)/4u);
+  const uint32_t rowWordSize = sizeof(ARM_MPU_Region_t)/4U;
+  while (cnt > MPU_TYPE_RALIASES) {
+    orderedCpy(&(MPU->RBAR), &(table->RBAR), MPU_TYPE_RALIASES*rowWordSize);
+    table += MPU_TYPE_RALIASES;
+    cnt -= MPU_TYPE_RALIASES;
+  }
+  orderedCpy(&(MPU->RBAR), &(table->RBAR), cnt*rowWordSize);
 }
 
 #endif

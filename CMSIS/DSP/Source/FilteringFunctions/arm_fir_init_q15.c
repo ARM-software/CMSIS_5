@@ -90,7 +90,7 @@ arm_status arm_fir_init_q15(
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /* The Number of filter coefficients in the filter must be even and at least 4 */
-  if (numTaps & 0x1u)
+  if (numTaps & 0x1U)
   {
     status = ARM_MATH_ARGUMENT_ERROR;
   }
@@ -124,7 +124,7 @@ arm_status arm_fir_init_q15(
   S->pCoeffs = pCoeffs;
 
   /* Clear the state buffer.  The size is always (blockSize + numTaps - 1) */
-  memset(pState, 0, (numTaps + (blockSize - 1u)) * sizeof(q15_t));
+  memset(pState, 0, (numTaps + (blockSize - 1U)) * sizeof(q15_t));
 
   /* Assign state pointer */
   S->pState = pState;

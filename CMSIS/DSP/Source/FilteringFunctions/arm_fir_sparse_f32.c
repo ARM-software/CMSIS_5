@@ -168,9 +168,9 @@ void arm_fir_sparse_f32(
 
   /* Loop over the blockSize. Unroll by a factor of 4.
    * Compute 4 Multiplications at a time. */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Perform Multiplications and store in destination buffer */
     *pOut++ = *px++ * coeff;
@@ -184,9 +184,9 @@ void arm_fir_sparse_f32(
 
   /* If the blockSize is not a multiple of 4,
    * compute the remaining samples */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Perform Multiplications and store in destination buffer */
     *pOut++ = *px++ * coeff;
@@ -209,9 +209,9 @@ void arm_fir_sparse_f32(
   }
 
   /* Loop over the number of taps. */
-  tapCnt = (uint32_t) numTaps - 2u;
+  tapCnt = (uint32_t) numTaps - 2U;
 
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
 
     /* Working pointer for state buffer is updated */
@@ -230,9 +230,9 @@ void arm_fir_sparse_f32(
 
     /* Loop over the blockSize. Unroll by a factor of 4.
      * Compute 4 MACS at a time. */
-    blkCnt = blockSize >> 2u;
+    blkCnt = blockSize >> 2U;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Perform Multiply-Accumulate */
       *pOut++ += *px++ * coeff;
@@ -246,9 +246,9 @@ void arm_fir_sparse_f32(
 
     /* If the blockSize is not a multiple of 4,
      * compute the remaining samples */
-    blkCnt = blockSize % 0x4u;
+    blkCnt = blockSize % 0x4U;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Perform Multiply-Accumulate */
       *pOut++ += *px++ * coeff;
@@ -293,9 +293,9 @@ void arm_fir_sparse_f32(
 
 	/* Loop over the blockSize. Unroll by a factor of 4.
 	 * Compute 4 MACS at a time. */
-	blkCnt = blockSize >> 2u;
+	blkCnt = blockSize >> 2U;
 
-	while (blkCnt > 0u)
+	while (blkCnt > 0U)
 	{
 		/* Perform Multiply-Accumulate */
 		*pOut++ += *px++ * coeff;
@@ -309,9 +309,9 @@ void arm_fir_sparse_f32(
 
 	/* If the blockSize is not a multiple of 4,
 	 * compute the remaining samples */
-	blkCnt = blockSize % 0x4u;
+	blkCnt = blockSize % 0x4U;
 
-	while (blkCnt > 0u)
+	while (blkCnt > 0U)
 	{
 		/* Perform Multiply-Accumulate */
 		*pOut++ += *px++ * coeff;
@@ -326,7 +326,7 @@ void arm_fir_sparse_f32(
 
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Perform Multiplications and store in destination buffer */
     *pOut++ = *px++ * coeff;
@@ -349,9 +349,9 @@ void arm_fir_sparse_f32(
   }
 
   /* Loop over the number of taps. */
-  tapCnt = (uint32_t) numTaps - 2u;
+  tapCnt = (uint32_t) numTaps - 2U;
 
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
 
     /* Working pointer for state buffer is updated */
@@ -370,7 +370,7 @@ void arm_fir_sparse_f32(
 
     blkCnt = blockSize;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Perform Multiply-Accumulate */
       *pOut++ += *px++ * coeff;
@@ -415,7 +415,7 @@ void arm_fir_sparse_f32(
 
 	blkCnt = blockSize;
 
-	while (blkCnt > 0u)
+	while (blkCnt > 0U)
 	{
 		/* Perform Multiply-Accumulate */
 		*pOut++ += *px++ * coeff;

@@ -71,7 +71,7 @@ const arm_cfft_radix2_instance_f32 * S,
 float32_t * pSrc)
 {
 
-   if (S->ifftFlag == 1u)
+   if (S->ifftFlag == 1U)
    {
       /*  Complex IFFT radix-2  */
       arm_radix2_butterfly_inverse_f32(pSrc, S->fftLen, S->pTwiddle,
@@ -84,7 +84,7 @@ float32_t * pSrc)
       S->twidCoefModifier);
    }
 
-   if (S->bitReverseFlag == 1u)
+   if (S->bitReverseFlag == 1U)
    {
       /*  Bit Reversal */
       arm_bitreversal_f32(pSrc, S->fftLen, S->bitRevFactor, S->pBitRevTable);
@@ -166,7 +166,7 @@ uint16_t twidCoefModifier)
       i++;
    }                             // groups loop end
 
-   twidCoefModifier <<= 1u;
+   twidCoefModifier <<= 1U;
 
    // loop for stage
    for (k = n2; k > 2; k = k >> 1)
@@ -209,7 +209,7 @@ uint16_t twidCoefModifier)
          } while ( i < fftLen );                        // butterfly loop end
          j++;
       } while ( j < n2);                          // groups loop end
-      twidCoefModifier <<= 1u;
+      twidCoefModifier <<= 1U;
    }                             // stages loop end
 
    // loop for butterfly
@@ -272,7 +272,7 @@ uint16_t twidCoefModifier)
          } while (i < fftLen);
          j++;
       } while (j < n2);
-      twidCoefModifier <<= 1u;
+      twidCoefModifier <<= 1U;
    }
 
 #endif //    #if defined (ARM_MATH_DSP)
@@ -325,7 +325,7 @@ float32_t onebyfftLen)
       pSrc[2 * l + 1] = p2 + p3;
    }                             // groups loop end
 
-   twidCoefModifier <<= 1u;
+   twidCoefModifier <<= 1U;
 
    // loop for stage
    for (k = fftLen / 2; k > 2; k = k >> 1)
@@ -369,7 +369,7 @@ float32_t onebyfftLen)
          j++;
       } while (j < n2);                      // groups loop end
 
-      twidCoefModifier <<= 1u;
+      twidCoefModifier <<= 1U;
    }                             // stages loop end
 
    // loop for butterfly
@@ -438,7 +438,7 @@ float32_t onebyfftLen)
          j++;
       } while ( j < n2 );                      // groups loop end
 
-      twidCoefModifier = twidCoefModifier << 1u;
+      twidCoefModifier = twidCoefModifier << 1U;
    }                             // stages loop end
 
    n1 = n2;
@@ -461,10 +461,10 @@ float32_t onebyfftLen)
       p3 = yt * onebyfftLen;
 
       pSrc[2 * i] = p0;
-      pSrc[2u * l] = p2;
+      pSrc[2U * l] = p2;
 
       pSrc[2 * i + 1] = p1;
-      pSrc[2u * l + 1u] = p3;
+      pSrc[2U * l + 1U] = p3;
    }                             // butterfly loop end
 
 #endif //      #if defined (ARM_MATH_DSP)

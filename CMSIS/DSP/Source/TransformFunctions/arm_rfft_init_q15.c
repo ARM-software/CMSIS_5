@@ -2178,40 +2178,40 @@ arm_status arm_rfft_init_q15(
     /*  Initialization of coef modifier depending on the FFT length */
     switch (S->fftLenReal)
     {
-    case 8192u:
-        S->twidCoefRModifier = 1u;
+    case 8192U:
+        S->twidCoefRModifier = 1U;
         S->pCfft = &arm_cfft_sR_q15_len4096;
         break;
-    case 4096u:
-        S->twidCoefRModifier = 2u;
+    case 4096U:
+        S->twidCoefRModifier = 2U;
         S->pCfft = &arm_cfft_sR_q15_len2048;
         break;
-    case 2048u:
-        S->twidCoefRModifier = 4u;
+    case 2048U:
+        S->twidCoefRModifier = 4U;
         S->pCfft = &arm_cfft_sR_q15_len1024;
         break;
-    case 1024u:
-        S->twidCoefRModifier = 8u;
+    case 1024U:
+        S->twidCoefRModifier = 8U;
         S->pCfft = &arm_cfft_sR_q15_len512;
         break;
-    case 512u:
-        S->twidCoefRModifier = 16u;
+    case 512U:
+        S->twidCoefRModifier = 16U;
         S->pCfft = &arm_cfft_sR_q15_len256;
         break;
-    case 256u:
-        S->twidCoefRModifier = 32u;
+    case 256U:
+        S->twidCoefRModifier = 32U;
         S->pCfft = &arm_cfft_sR_q15_len128;
         break;
-    case 128u:
-        S->twidCoefRModifier = 64u;
+    case 128U:
+        S->twidCoefRModifier = 64U;
         S->pCfft = &arm_cfft_sR_q15_len64;
         break;
-    case 64u:
-        S->twidCoefRModifier = 128u;
+    case 64U:
+        S->twidCoefRModifier = 128U;
         S->pCfft = &arm_cfft_sR_q15_len32;
         break;
-    case 32u:
-        S->twidCoefRModifier = 256u;
+    case 32U:
+        S->twidCoefRModifier = 256U;
         S->pCfft = &arm_cfft_sR_q15_len16;
         break;
     default:

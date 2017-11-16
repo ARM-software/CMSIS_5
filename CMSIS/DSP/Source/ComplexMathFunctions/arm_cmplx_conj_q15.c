@@ -64,11 +64,11 @@ void arm_cmplx_conj_q15(
   q31_t zero = 0;
 
   /*loop Unrolling */
-  blkCnt = numSamples >> 2u;
+  blkCnt = numSamples >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[0]+jC[1] = A[0]+ j (-1) A[1] */
     /* Calculate Complex Conjugate and then store the results in the destination buffer. */
@@ -109,9 +109,9 @@ void arm_cmplx_conj_q15(
 
   /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = numSamples % 0x4u;
+  blkCnt = numSamples % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[0]+jC[1] = A[0]+ j (-1) A[1] */
     /* Calculate Complex Conjugate and then store the results in the destination buffer. */
@@ -128,7 +128,7 @@ void arm_cmplx_conj_q15(
 
   /* Run the below code for Cortex-M0 */
 
-  while (numSamples > 0u)
+  while (numSamples > 0U)
   {
     /* realOut + j (imagOut) = realIn+ j (-1) imagIn */
     /* Calculate Complex Conjugate and then store the results in the destination buffer. */

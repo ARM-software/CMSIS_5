@@ -55,17 +55,22 @@ irqRtxLib:
         .cantunwind
 SVC_Handler:
 
+        MOV      R0,LR
+        LSRS     R0,R0,#3               // Determine return stack from EXC_RETURN bit 2
+        BCC      SVC_MSP                // Branch if return stack is MSP
         MRS      R0,PSP                 // Get PSP
+
+SVC_Number:
         LDR      R1,[R0,#24]            // Load saved PC from stack
         SUBS     R1,R1,#2               // Point to SVC instruction
         LDRB     R1,[R1]                // Load SVC number
         CMP      R1,#0
         BNE      SVC_User               // Branch if not SVC 0
 
-        PUSH     {R0,LR}                // Save PSP and EXC_RETURN
+        PUSH     {R0,LR}                // Save SP and EXC_RETURN
         LDM      R0,{R0-R3}             // Load function parameters from stack
         BLX      R7                     // Call service function
-        POP      {R2,R3}                // Restore PSP and EXC_RETURN
+        POP      {R2,R3}                // Restore SP and EXC_RETURN
         STMIA    R2!,{R0-R1}            // Store function return values
         MOV      LR,R3                  // Set EXC_RETURN
 
@@ -90,7 +95,7 @@ SVC_ContextSave:
 
 SVC_ContextSave1:
         MRS      R0,PSP                 // Get PSP
-        SUBS     R0,R0,#32              // Adjust PSP
+        SUBS     R0,R0,#32              // Calculate SP
         STR      R0,[R1,#TCB_SP_OFS]    // Store SP
         STMIA    R0!,{R4-R7}            // Save R4..R7
         MOV      R4,R8
@@ -152,23 +157,27 @@ SVC_ContextRestore2:
 SVC_Exit:
         BX       LR                     // Exit from handler
 
+SVC_MSP:
+        MRS      R0,MSP                 // Get MSP
+        B        SVC_Number
+
 SVC_User:
-        PUSH     {R4,LR}                // Save registers
         LDR      R2,=osRtxUserSVC       // Load address of SVC table
         LDR      R3,[R2]                // Load SVC maximum number
         CMP      R1,R3                  // Check SVC number range
-        BHI      SVC_Done               // Branch if out of range
+        BHI      SVC_Exit               // Branch if out of range
 
+        PUSH     {R0,LR}                // Save SP and EXC_RETURN
         LSLS     R1,R1,#2
-        LDR      R4,[R2,R1]             // Load address of SVC function
+        LDR      R3,[R2,R1]             // Load address of SVC function
+        MOV      R12,R3
+        LDMIA    R0,{R0-R3}             // Load function parameters from stack
+        BLX      R12                    // Call service function
+        POP      {R2,R3}                // Restore SP and EXC_RETURN
+        STR      R0,[R2]                // Store function return value
+        MOV      LR,R3                  // Set EXC_RETURN
 
-        LDM      R0,{R0-R3}             // Load function parameters from stack
-        BLX      R4                     // Call service function
-        MRS      R4,PSP                 // Get PSP
-        STR      R0,[R4]                // Store function return value
-
-SVC_Done:
-        POP      {R4,PC}                // Return from handler
+        BX       LR                     // Return from handler
 
         .fnend
         .size    SVC_Handler, .-SVC_Handler
@@ -229,8 +238,9 @@ Sys_ContextSave:
         BL       TZ_StoreContext_S      // Store secure context
         MOV      LR,R7                  // Set EXC_RETURN
         POP      {R1,R2,R3,R7}          // Restore registers
-        LSLS     R7,R7,#25              // Check domain of interrupted thread
-        BMI      Sys_ContextSave1       // Branch if secure
+        MOV      R0,LR                  // Get EXC_RETURN
+        LSLS     R0,R0,#25              // Check domain of interrupted thread
+        BPL      Sys_ContextSave1       // Branch if non-secure
         MRS      R0,PSP                 // Get PSP
         STR      R0,[R1,#TCB_SP_OFS]    // Store SP
         B        Sys_ContextSave2

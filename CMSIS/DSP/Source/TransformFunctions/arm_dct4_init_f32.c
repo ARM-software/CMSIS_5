@@ -16481,19 +16481,19 @@ arm_status arm_dct4_init_f32(
   switch (N)
   {
     /* Initialize the table modifier values */
-  case 8192u:
+  case 8192U:
     S->pTwiddle = twiddlePtr[3];
     S->pCosFactor = pCosFactor[3];
     break;
-  case 2048u:
+  case 2048U:
     S->pTwiddle = twiddlePtr[2];
     S->pCosFactor = pCosFactor[2];
     break;
-  case 512u:
+  case 512U:
     S->pTwiddle = twiddlePtr[1];
     S->pCosFactor = pCosFactor[1];
     break;
-  case 128u:
+  case 128U:
     S->pTwiddle = twiddlePtr[0];
     S->pCosFactor = pCosFactor[0];
     break;
@@ -16502,7 +16502,7 @@ arm_status arm_dct4_init_f32(
   }
 
   /* Initialize the RFFT/RIFFT */
-  arm_rfft_init_f32(S->pRfft, S->pCfft, S->N, 0u, 1u);
+  arm_rfft_init_f32(S->pRfft, S->pCfft, S->N, 0U, 1U);
 
   /* return the status of DCT4 Init function */
   return (status);

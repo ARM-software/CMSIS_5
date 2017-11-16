@@ -35,7 +35,7 @@ q31_t ref_pid_q31(
 	acc += (q63_t) S->A2 * S->state[1];
 
 	/* convert output to 1.31 format to add y[n-1] */
-	out = (q31_t) (acc >> 31u);
+	out = (q31_t) (acc >> 31U);
 
 	/* out += y[n-1] */
 	out += S->state[2];

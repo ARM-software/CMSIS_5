@@ -79,7 +79,7 @@ void arm_cfft_radix4_q31(
   const arm_cfft_radix4_instance_q31 * S,
   q31_t * pSrc)
 {
-  if (S->ifftFlag == 1u)
+  if (S->ifftFlag == 1U)
   {
     /* Complex IFFT radix-4 */
     arm_radix4_butterfly_inverse_q31(pSrc, S->fftLen, S->pTwiddle, S->twidCoefModifier);
@@ -90,7 +90,7 @@ void arm_cfft_radix4_q31(
     arm_radix4_butterfly_q31(pSrc, S->fftLen, S->pTwiddle, S->twidCoefModifier);
   }
 
-  if (S->bitReverseFlag == 1u)
+  if (S->bitReverseFlag == 1U)
   {
     /*  Bit Reversal */
     arm_bitreversal_q31(pSrc, S->fftLen, S->bitRevFactor, S->pBitRevTable);
@@ -173,9 +173,9 @@ void arm_radix4_butterfly_q31(
   n2 = fftLen;
   n1 = n2;
   /* n2 = fftLen/4 */
-  n2 >>= 2u;
-  i0 = 0u;
-  ia1 = 0u;
+  n2 >>= 2U;
+  i0 = 0U;
+  ia1 = 0U;
 
   j = n2;
 
@@ -183,7 +183,7 @@ void arm_radix4_butterfly_q31(
   do
   {
     /*  index calculation for the input as, */
-    /*  pSrc[i0 + 0], pSrc[i0 + fftLen/4], pSrc[i0 + fftLen/2u], pSrc[i0 + 3fftLen/4] */
+    /*  pSrc[i0 + 0], pSrc[i0 + fftLen/4], pSrc[i0 + fftLen/2U], pSrc[i0 + 3fftLen/4] */
     i1 = i0 + n2;
     i2 = i1 + n2;
     i3 = i2 + n2;
@@ -192,48 +192,48 @@ void arm_radix4_butterfly_q31(
 
     /*  Butterfly implementation */
     /* xa + xc */
-    r1 = (pSrc[(2u * i0)] >> 4u) + (pSrc[(2u * i2)] >> 4u);
+    r1 = (pSrc[(2U * i0)] >> 4U) + (pSrc[(2U * i2)] >> 4U);
     /* xa - xc */
-    r2 = (pSrc[2u * i0] >> 4u) - (pSrc[2u * i2] >> 4u);
+    r2 = (pSrc[2U * i0] >> 4U) - (pSrc[2U * i2] >> 4U);
 
     /* xb + xd */
-    t1 = (pSrc[2u * i1] >> 4u) + (pSrc[2u * i3] >> 4u);
+    t1 = (pSrc[2U * i1] >> 4U) + (pSrc[2U * i3] >> 4U);
 
     /* ya + yc */
-    s1 = (pSrc[(2u * i0) + 1u] >> 4u) + (pSrc[(2u * i2) + 1u] >> 4u);
+    s1 = (pSrc[(2U * i0) + 1U] >> 4U) + (pSrc[(2U * i2) + 1U] >> 4U);
     /* ya - yc */
-    s2 = (pSrc[(2u * i0) + 1u] >> 4u) - (pSrc[(2u * i2) + 1u] >> 4u);
+    s2 = (pSrc[(2U * i0) + 1U] >> 4U) - (pSrc[(2U * i2) + 1U] >> 4U);
 
     /* xa' = xa + xb + xc + xd */
-    pSrc[2u * i0] = (r1 + t1);
+    pSrc[2U * i0] = (r1 + t1);
     /* (xa + xc) - (xb + xd) */
     r1 = r1 - t1;
     /* yb + yd */
-    t2 = (pSrc[(2u * i1) + 1u] >> 4u) + (pSrc[(2u * i3) + 1u] >> 4u);
+    t2 = (pSrc[(2U * i1) + 1U] >> 4U) + (pSrc[(2U * i3) + 1U] >> 4U);
 
     /* ya' = ya + yb + yc + yd */
-    pSrc[(2u * i0) + 1u] = (s1 + t2);
+    pSrc[(2U * i0) + 1U] = (s1 + t2);
 
     /* (ya + yc) - (yb + yd) */
     s1 = s1 - t2;
 
     /* yb - yd */
-    t1 = (pSrc[(2u * i1) + 1u] >> 4u) - (pSrc[(2u * i3) + 1u] >> 4u);
+    t1 = (pSrc[(2U * i1) + 1U] >> 4U) - (pSrc[(2U * i3) + 1U] >> 4U);
     /* xb - xd */
-    t2 = (pSrc[2u * i1] >> 4u) - (pSrc[2u * i3] >> 4u);
+    t2 = (pSrc[2U * i1] >> 4U) - (pSrc[2U * i3] >> 4U);
 
     /*  index calculation for the coefficients */
-    ia2 = 2u * ia1;
-    co2 = pCoef[ia2 * 2u];
-    si2 = pCoef[(ia2 * 2u) + 1u];
+    ia2 = 2U * ia1;
+    co2 = pCoef[ia2 * 2U];
+    si2 = pCoef[(ia2 * 2U) + 1U];
 
     /* xc' = (xa-xb+xc-xd)co2 + (ya-yb+yc-yd)(si2) */
-    pSrc[2u * i1] = (((int32_t) (((q63_t) r1 * co2) >> 32)) +
-                     ((int32_t) (((q63_t) s1 * si2) >> 32))) << 1u;
+    pSrc[2U * i1] = (((int32_t) (((q63_t) r1 * co2) >> 32)) +
+                     ((int32_t) (((q63_t) s1 * si2) >> 32))) << 1U;
 
     /* yc' = (ya-yb+yc-yd)co2 - (xa-xb+xc-xd)(si2) */
-    pSrc[(2u * i1) + 1u] = (((int32_t) (((q63_t) s1 * co2) >> 32)) -
-                            ((int32_t) (((q63_t) r1 * si2) >> 32))) << 1u;
+    pSrc[(2U * i1) + 1U] = (((int32_t) (((q63_t) s1 * co2) >> 32)) -
+                            ((int32_t) (((q63_t) r1 * si2) >> 32))) << 1U;
 
     /* (xa - xc) + (yb - yd) */
     r1 = r2 + t1;
@@ -245,35 +245,35 @@ void arm_radix4_butterfly_q31(
     /* (ya - yc) + (xb - xd) */
     s2 = s2 + t2;
 
-    co1 = pCoef[ia1 * 2u];
-    si1 = pCoef[(ia1 * 2u) + 1u];
+    co1 = pCoef[ia1 * 2U];
+    si1 = pCoef[(ia1 * 2U) + 1U];
 
     /* xb' = (xa+yb-xc-yd)co1 + (ya-xb-yc+xd)(si1) */
-    pSrc[2u * i2] = (((int32_t) (((q63_t) r1 * co1) >> 32)) +
-                     ((int32_t) (((q63_t) s1 * si1) >> 32))) << 1u;
+    pSrc[2U * i2] = (((int32_t) (((q63_t) r1 * co1) >> 32)) +
+                     ((int32_t) (((q63_t) s1 * si1) >> 32))) << 1U;
 
     /* yb' = (ya-xb-yc+xd)co1 - (xa+yb-xc-yd)(si1) */
-    pSrc[(2u * i2) + 1u] = (((int32_t) (((q63_t) s1 * co1) >> 32)) -
-                            ((int32_t) (((q63_t) r1 * si1) >> 32))) << 1u;
+    pSrc[(2U * i2) + 1U] = (((int32_t) (((q63_t) s1 * co1) >> 32)) -
+                            ((int32_t) (((q63_t) r1 * si1) >> 32))) << 1U;
 
     /*  index calculation for the coefficients */
-    ia3 = 3u * ia1;
-    co3 = pCoef[ia3 * 2u];
-    si3 = pCoef[(ia3 * 2u) + 1u];
+    ia3 = 3U * ia1;
+    co3 = pCoef[ia3 * 2U];
+    si3 = pCoef[(ia3 * 2U) + 1U];
 
     /* xd' = (xa-yb-xc+yd)co3 + (ya+xb-yc-xd)(si3) */
-    pSrc[2u * i3] = (((int32_t) (((q63_t) r2 * co3) >> 32)) +
-                     ((int32_t) (((q63_t) s2 * si3) >> 32))) << 1u;
+    pSrc[2U * i3] = (((int32_t) (((q63_t) r2 * co3) >> 32)) +
+                     ((int32_t) (((q63_t) s2 * si3) >> 32))) << 1U;
 
     /* yd' = (ya+xb-yc-xd)co3 - (xa-yb-xc+yd)(si3) */
-    pSrc[(2u * i3) + 1u] = (((int32_t) (((q63_t) s2 * co3) >> 32)) -
-                            ((int32_t) (((q63_t) r2 * si3) >> 32))) << 1u;
+    pSrc[(2U * i3) + 1U] = (((int32_t) (((q63_t) s2 * co3) >> 32)) -
+                            ((int32_t) (((q63_t) r2 * si3) >> 32))) << 1U;
 
     /*  Twiddle coefficients index modifier */
     ia1 = ia1 + twidCoefModifier;
 
     /*  Updating input index */
-    i0 = i0 + 1u;
+    i0 = i0 + 1U;
 
   } while (--j);
 
@@ -287,78 +287,78 @@ void arm_radix4_butterfly_q31(
 
   /* each stage in middle stages provides two down scaling of the input */
 
-  twidCoefModifier <<= 2u;
+  twidCoefModifier <<= 2U;
 
 
-  for (k = fftLen / 4u; k > 4u; k >>= 2u)
+  for (k = fftLen / 4U; k > 4U; k >>= 2U)
   {
     /*  Initializations for the first stage */
     n1 = n2;
-    n2 >>= 2u;
-    ia1 = 0u;
+    n2 >>= 2U;
+    ia1 = 0U;
 
     /*  Calculation of first stage */
-    for (j = 0u; j <= (n2 - 1u); j++)
+    for (j = 0U; j <= (n2 - 1U); j++)
     {
       /*  index calculation for the coefficients */
       ia2 = ia1 + ia1;
       ia3 = ia2 + ia1;
-      co1 = pCoef[ia1 * 2u];
-      si1 = pCoef[(ia1 * 2u) + 1u];
-      co2 = pCoef[ia2 * 2u];
-      si2 = pCoef[(ia2 * 2u) + 1u];
-      co3 = pCoef[ia3 * 2u];
-      si3 = pCoef[(ia3 * 2u) + 1u];
+      co1 = pCoef[ia1 * 2U];
+      si1 = pCoef[(ia1 * 2U) + 1U];
+      co2 = pCoef[ia2 * 2U];
+      si2 = pCoef[(ia2 * 2U) + 1U];
+      co3 = pCoef[ia3 * 2U];
+      si3 = pCoef[(ia3 * 2U) + 1U];
       /*  Twiddle coefficients index modifier */
       ia1 = ia1 + twidCoefModifier;
 
       for (i0 = j; i0 < fftLen; i0 += n1)
       {
         /*  index calculation for the input as, */
-        /*  pSrc[i0 + 0], pSrc[i0 + fftLen/4], pSrc[i0 + fftLen/2u], pSrc[i0 + 3fftLen/4] */
+        /*  pSrc[i0 + 0], pSrc[i0 + fftLen/4], pSrc[i0 + fftLen/2U], pSrc[i0 + 3fftLen/4] */
         i1 = i0 + n2;
         i2 = i1 + n2;
         i3 = i2 + n2;
 
         /*  Butterfly implementation */
         /* xa + xc */
-        r1 = pSrc[2u * i0] + pSrc[2u * i2];
+        r1 = pSrc[2U * i0] + pSrc[2U * i2];
         /* xa - xc */
-        r2 = pSrc[2u * i0] - pSrc[2u * i2];
+        r2 = pSrc[2U * i0] - pSrc[2U * i2];
 
         /* ya + yc */
-        s1 = pSrc[(2u * i0) + 1u] + pSrc[(2u * i2) + 1u];
+        s1 = pSrc[(2U * i0) + 1U] + pSrc[(2U * i2) + 1U];
         /* ya - yc */
-        s2 = pSrc[(2u * i0) + 1u] - pSrc[(2u * i2) + 1u];
+        s2 = pSrc[(2U * i0) + 1U] - pSrc[(2U * i2) + 1U];
 
         /* xb + xd */
-        t1 = pSrc[2u * i1] + pSrc[2u * i3];
+        t1 = pSrc[2U * i1] + pSrc[2U * i3];
 
         /* xa' = xa + xb + xc + xd */
-        pSrc[2u * i0] = (r1 + t1) >> 2u;
+        pSrc[2U * i0] = (r1 + t1) >> 2U;
         /* xa + xc -(xb + xd) */
         r1 = r1 - t1;
 
         /* yb + yd */
-        t2 = pSrc[(2u * i1) + 1u] + pSrc[(2u * i3) + 1u];
+        t2 = pSrc[(2U * i1) + 1U] + pSrc[(2U * i3) + 1U];
         /* ya' = ya + yb + yc + yd */
-        pSrc[(2u * i0) + 1u] = (s1 + t2) >> 2u;
+        pSrc[(2U * i0) + 1U] = (s1 + t2) >> 2U;
 
         /* (ya + yc) - (yb + yd) */
         s1 = s1 - t2;
 
         /* (yb - yd) */
-        t1 = pSrc[(2u * i1) + 1u] - pSrc[(2u * i3) + 1u];
+        t1 = pSrc[(2U * i1) + 1U] - pSrc[(2U * i3) + 1U];
         /* (xb - xd) */
-        t2 = pSrc[2u * i1] - pSrc[2u * i3];
+        t2 = pSrc[2U * i1] - pSrc[2U * i3];
 
         /* xc' = (xa-xb+xc-xd)co2 + (ya-yb+yc-yd)(si2) */
-        pSrc[2u * i1] = (((int32_t) (((q63_t) r1 * co2) >> 32)) +
-                         ((int32_t) (((q63_t) s1 * si2) >> 32))) >> 1u;
+        pSrc[2U * i1] = (((int32_t) (((q63_t) r1 * co2) >> 32)) +
+                         ((int32_t) (((q63_t) s1 * si2) >> 32))) >> 1U;
 
         /* yc' = (ya-yb+yc-yd)co2 - (xa-xb+xc-xd)(si2) */
-        pSrc[(2u * i1) + 1u] = (((int32_t) (((q63_t) s1 * co2) >> 32)) -
-                                ((int32_t) (((q63_t) r1 * si2) >> 32))) >> 1u;
+        pSrc[(2U * i1) + 1U] = (((int32_t) (((q63_t) s1 * co2) >> 32)) -
+                                ((int32_t) (((q63_t) r1 * si2) >> 32))) >> 1U;
 
         /* (xa - xc) + (yb - yd) */
         r1 = r2 + t1;
@@ -371,23 +371,23 @@ void arm_radix4_butterfly_q31(
         s2 = s2 + t2;
 
         /* xb' = (xa+yb-xc-yd)co1 + (ya-xb-yc+xd)(si1) */
-        pSrc[2u * i2] = (((int32_t) (((q63_t) r1 * co1) >> 32)) +
-                         ((int32_t) (((q63_t) s1 * si1) >> 32))) >> 1u;
+        pSrc[2U * i2] = (((int32_t) (((q63_t) r1 * co1) >> 32)) +
+                         ((int32_t) (((q63_t) s1 * si1) >> 32))) >> 1U;
 
         /* yb' = (ya-xb-yc+xd)co1 - (xa+yb-xc-yd)(si1) */
-        pSrc[(2u * i2) + 1u] = (((int32_t) (((q63_t) s1 * co1) >> 32)) -
-                                ((int32_t) (((q63_t) r1 * si1) >> 32))) >> 1u;
+        pSrc[(2U * i2) + 1U] = (((int32_t) (((q63_t) s1 * co1) >> 32)) -
+                                ((int32_t) (((q63_t) r1 * si1) >> 32))) >> 1U;
 
         /* xd' = (xa-yb-xc+yd)co3 + (ya+xb-yc-xd)(si3) */
-        pSrc[2u * i3] = (((int32_t) (((q63_t) r2 * co3) >> 32)) +
-                         ((int32_t) (((q63_t) s2 * si3) >> 32))) >> 1u;
+        pSrc[2U * i3] = (((int32_t) (((q63_t) r2 * co3) >> 32)) +
+                         ((int32_t) (((q63_t) s2 * si3) >> 32))) >> 1U;
 
         /* yd' = (ya+xb-yc-xd)co3 - (xa-yb-xc+yd)(si3) */
-        pSrc[(2u * i3) + 1u] = (((int32_t) (((q63_t) s2 * co3) >> 32)) -
-                                ((int32_t) (((q63_t) r2 * si3) >> 32))) >> 1u;
+        pSrc[(2U * i3) + 1U] = (((int32_t) (((q63_t) s2 * co3) >> 32)) -
+                                ((int32_t) (((q63_t) r2 * si3) >> 32))) >> 1U;
       }
     }
-    twidCoefModifier <<= 2u;
+    twidCoefModifier <<= 2U;
   }
 #else
   uint32_t n1, n2, ia1, ia2, ia3, i0, j, k;
@@ -415,9 +415,9 @@ void arm_radix4_butterfly_q31(
   n2 = fftLen;
   n1 = n2;
   /* n2 = fftLen/4 */
-  n2 >>= 2u;
+  n2 >>= 2U;
 
-  ia1 = 0u;
+  ia1 = 0U;
 
   j = n2;
 
@@ -433,24 +433,24 @@ void arm_radix4_butterfly_q31(
 
     /*  Butterfly implementation */
     /* xa + xc */
-    r1 = (pSi0[0] >> 4u) + (pSi2[0] >> 4u);
+    r1 = (pSi0[0] >> 4U) + (pSi2[0] >> 4U);
     /* xa - xc */
-    r2 = (pSi0[0] >> 4u) - (pSi2[0] >> 4u);
+    r2 = (pSi0[0] >> 4U) - (pSi2[0] >> 4U);
 
     /* xb + xd */
-    t1 = (pSi1[0] >> 4u) + (pSi3[0] >> 4u);
+    t1 = (pSi1[0] >> 4U) + (pSi3[0] >> 4U);
 
     /* ya + yc */
-    s1 = (pSi0[1] >> 4u) + (pSi2[1] >> 4u);
+    s1 = (pSi0[1] >> 4U) + (pSi2[1] >> 4U);
     /* ya - yc */
-    s2 = (pSi0[1] >> 4u) - (pSi2[1] >> 4u);
+    s2 = (pSi0[1] >> 4U) - (pSi2[1] >> 4U);
 
     /* xa' = xa + xb + xc + xd */
     *pSi0++ = (r1 + t1);
     /* (xa + xc) - (xb + xd) */
     r1 = r1 - t1;
     /* yb + yd */
-    t2 = (pSi1[1] >> 4u) + (pSi3[1] >> 4u);
+    t2 = (pSi1[1] >> 4U) + (pSi3[1] >> 4U);
 
     /* ya' = ya + yb + yc + yd */
     *pSi0++ = (s1 + t2);
@@ -459,22 +459,22 @@ void arm_radix4_butterfly_q31(
     s1 = s1 - t2;
 
     /* yb - yd */
-    t1 = (pSi1[1] >> 4u) - (pSi3[1] >> 4u);
+    t1 = (pSi1[1] >> 4U) - (pSi3[1] >> 4U);
     /* xb - xd */
-    t2 = (pSi1[0] >> 4u) - (pSi3[0] >> 4u);
+    t2 = (pSi1[0] >> 4U) - (pSi3[0] >> 4U);
 
     /*  index calculation for the coefficients */
-    ia2 = 2u * ia1;
-    co2 = pCoef[ia2 * 2u];
-    si2 = pCoef[(ia2 * 2u) + 1u];
+    ia2 = 2U * ia1;
+    co2 = pCoef[ia2 * 2U];
+    si2 = pCoef[(ia2 * 2U) + 1U];
 
     /* xc' = (xa-xb+xc-xd)co2 + (ya-yb+yc-yd)(si2) */
     *pSi1++ = (((int32_t) (((q63_t) r1 * co2) >> 32)) +
-                     ((int32_t) (((q63_t) s1 * si2) >> 32))) << 1u;
+                     ((int32_t) (((q63_t) s1 * si2) >> 32))) << 1U;
 
     /* yc' = (ya-yb+yc-yd)co2 - (xa-xb+xc-xd)(si2) */
     *pSi1++ = (((int32_t) (((q63_t) s1 * co2) >> 32)) -
-                            ((int32_t) (((q63_t) r1 * si2) >> 32))) << 1u;
+                            ((int32_t) (((q63_t) r1 * si2) >> 32))) << 1U;
 
     /* (xa - xc) + (yb - yd) */
     r1 = r2 + t1;
@@ -486,29 +486,29 @@ void arm_radix4_butterfly_q31(
     /* (ya - yc) + (xb - xd) */
     s2 = s2 + t2;
 
-    co1 = pCoef[ia1 * 2u];
-    si1 = pCoef[(ia1 * 2u) + 1u];
+    co1 = pCoef[ia1 * 2U];
+    si1 = pCoef[(ia1 * 2U) + 1U];
 
     /* xb' = (xa+yb-xc-yd)co1 + (ya-xb-yc+xd)(si1) */
     *pSi2++ = (((int32_t) (((q63_t) r1 * co1) >> 32)) +
-                     ((int32_t) (((q63_t) s1 * si1) >> 32))) << 1u;
+                     ((int32_t) (((q63_t) s1 * si1) >> 32))) << 1U;
 
     /* yb' = (ya-xb-yc+xd)co1 - (xa+yb-xc-yd)(si1) */
     *pSi2++ = (((int32_t) (((q63_t) s1 * co1) >> 32)) -
-                            ((int32_t) (((q63_t) r1 * si1) >> 32))) << 1u;
+                            ((int32_t) (((q63_t) r1 * si1) >> 32))) << 1U;
 
     /*  index calculation for the coefficients */
-    ia3 = 3u * ia1;
-    co3 = pCoef[ia3 * 2u];
-    si3 = pCoef[(ia3 * 2u) + 1u];
+    ia3 = 3U * ia1;
+    co3 = pCoef[ia3 * 2U];
+    si3 = pCoef[(ia3 * 2U) + 1U];
 
     /* xd' = (xa-yb-xc+yd)co3 + (ya+xb-yc-xd)(si3) */
     *pSi3++ = (((int32_t) (((q63_t) r2 * co3) >> 32)) +
-                     ((int32_t) (((q63_t) s2 * si3) >> 32))) << 1u;
+                     ((int32_t) (((q63_t) s2 * si3) >> 32))) << 1U;
 
     /* yd' = (ya+xb-yc-xd)co3 - (xa-yb-xc+yd)(si3) */
     *pSi3++ = (((int32_t) (((q63_t) s2 * co3) >> 32)) -
-                            ((int32_t) (((q63_t) r2 * si3) >> 32))) << 1u;
+                            ((int32_t) (((q63_t) r2 * si3) >> 32))) << 1U;
 
     /*  Twiddle coefficients index modifier */
     ia1 = ia1 + twidCoefModifier;
@@ -525,28 +525,28 @@ void arm_radix4_butterfly_q31(
 
   /* each stage in middle stages provides two down scaling of the input */
 
-  twidCoefModifier <<= 2u;
+  twidCoefModifier <<= 2U;
 
 
-  for (k = fftLen / 4u; k > 4u; k >>= 2u)
+  for (k = fftLen / 4U; k > 4U; k >>= 2U)
   {
     /*  Initializations for the first stage */
     n1 = n2;
-    n2 >>= 2u;
-    ia1 = 0u;
+    n2 >>= 2U;
+    ia1 = 0U;
 
     /*  Calculation of first stage */
-    for (j = 0u; j <= (n2 - 1u); j++)
+    for (j = 0U; j <= (n2 - 1U); j++)
     {
       /*  index calculation for the coefficients */
       ia2 = ia1 + ia1;
       ia3 = ia2 + ia1;
-      co1 = pCoef[ia1 * 2u];
-      si1 = pCoef[(ia1 * 2u) + 1u];
-      co2 = pCoef[ia2 * 2u];
-      si2 = pCoef[(ia2 * 2u) + 1u];
-      co3 = pCoef[ia3 * 2u];
-      si3 = pCoef[(ia3 * 2u) + 1u];
+      co1 = pCoef[ia1 * 2U];
+      si1 = pCoef[(ia1 * 2U) + 1U];
+      co2 = pCoef[ia2 * 2U];
+      si2 = pCoef[(ia2 * 2U) + 1U];
+      co3 = pCoef[ia3 * 2U];
+      si3 = pCoef[(ia3 * 2U) + 1U];
       /*  Twiddle coefficients index modifier */
       ia1 = ia1 + twidCoefModifier;
 
@@ -577,7 +577,7 @@ void arm_radix4_butterfly_q31(
 
 
         /* xa' = xa + xb + xc + xd */
-        pSi0[0] = (r1 + t1) >> 2u;
+        pSi0[0] = (r1 + t1) >> 2U;
         /* xa + xc -(xb + xd) */
         r1 = r1 - t1;
 
@@ -585,7 +585,7 @@ void arm_radix4_butterfly_q31(
         t2 = pSi1[1] + pSi3[1];
 
         /* ya' = ya + yb + yc + yd */
-        pSi0[1] = (s1 + t2) >> 2u;
+        pSi0[1] = (s1 + t2) >> 2U;
         pSi0 += 2 * n1;
 
         /* (ya + yc) - (yb + yd) */
@@ -600,11 +600,11 @@ void arm_radix4_butterfly_q31(
 
         /* xc' = (xa-xb+xc-xd)co2 + (ya-yb+yc-yd)(si2) */
         pSi1[0] = (((int32_t) (((q63_t) r1 * co2) >> 32)) +
-                         ((int32_t) (((q63_t) s1 * si2) >> 32))) >> 1u;
+                         ((int32_t) (((q63_t) s1 * si2) >> 32))) >> 1U;
 
         /* yc' = (ya-yb+yc-yd)co2 - (xa-xb+xc-xd)(si2) */
         pSi1[1] = (((int32_t) (((q63_t) s1 * co2) >> 32)) -
-                                ((int32_t) (((q63_t) r1 * si2) >> 32))) >> 1u;
+                                ((int32_t) (((q63_t) r1 * si2) >> 32))) >> 1U;
         pSi1 += 2 * n1;
 
         /* (xa - xc) + (yb - yd) */
@@ -619,24 +619,24 @@ void arm_radix4_butterfly_q31(
 
         /* xb' = (xa+yb-xc-yd)co1 + (ya-xb-yc+xd)(si1) */
         pSi2[0] = (((int32_t) (((q63_t) r1 * co1) >> 32)) +
-                         ((int32_t) (((q63_t) s1 * si1) >> 32))) >> 1u;
+                         ((int32_t) (((q63_t) s1 * si1) >> 32))) >> 1U;
 
         /* yb' = (ya-xb-yc+xd)co1 - (xa+yb-xc-yd)(si1) */
         pSi2[1] = (((int32_t) (((q63_t) s1 * co1) >> 32)) -
-                                ((int32_t) (((q63_t) r1 * si1) >> 32))) >> 1u;
+                                ((int32_t) (((q63_t) r1 * si1) >> 32))) >> 1U;
         pSi2 += 2 * n1;
 
         /* xd' = (xa-yb-xc+yd)co3 + (ya+xb-yc-xd)(si3) */
         pSi3[0] = (((int32_t) (((q63_t) r2 * co3) >> 32)) +
-                         ((int32_t) (((q63_t) s2 * si3) >> 32))) >> 1u;
+                         ((int32_t) (((q63_t) s2 * si3) >> 32))) >> 1U;
 
         /* yd' = (ya+xb-yc-xd)co3 - (xa-yb-xc+yd)(si3) */
         pSi3[1] = (((int32_t) (((q63_t) s2 * co3) >> 32)) -
-                                ((int32_t) (((q63_t) r2 * si3) >> 32))) >> 1u;
+                                ((int32_t) (((q63_t) r2 * si3) >> 32))) >> 1U;
         pSi3 += 2 * n1;
       }
     }
-    twidCoefModifier <<= 2u;
+    twidCoefModifier <<= 2U;
   }
 #endif
 
@@ -711,7 +711,7 @@ void arm_radix4_butterfly_q31(
     ya_out = ya + yb + yc + yd;
 
     /* pointer updation for writing */
-    ptr1 = ptr1 - 8u;
+    ptr1 = ptr1 - 8U;
 
     /* writing xa' and ya' */
     *ptr1++ = xa_out;
@@ -828,9 +828,9 @@ void arm_radix4_butterfly_inverse_q31(
   n2 = fftLen;
   n1 = n2;
   /* n2 = fftLen/4 */
-  n2 >>= 2u;
-  i0 = 0u;
-  ia1 = 0u;
+  n2 >>= 2U;
+  i0 = 0U;
+  ia1 = 0U;
 
   j = n2;
 
@@ -840,54 +840,54 @@ void arm_radix4_butterfly_inverse_q31(
     /* input is in 1.31(q31) format and provide 4 guard bits for the input */
 
     /*  index calculation for the input as, */
-    /*  pSrc[i0 + 0], pSrc[i0 + fftLen/4], pSrc[i0 + fftLen/2u], pSrc[i0 + 3fftLen/4] */
+    /*  pSrc[i0 + 0], pSrc[i0 + fftLen/4], pSrc[i0 + fftLen/2U], pSrc[i0 + 3fftLen/4] */
     i1 = i0 + n2;
     i2 = i1 + n2;
     i3 = i2 + n2;
 
     /*  Butterfly implementation */
     /* xa + xc */
-    r1 = (pSrc[2u * i0] >> 4u) + (pSrc[2u * i2] >> 4u);
+    r1 = (pSrc[2U * i0] >> 4U) + (pSrc[2U * i2] >> 4U);
     /* xa - xc */
-    r2 = (pSrc[2u * i0] >> 4u) - (pSrc[2u * i2] >> 4u);
+    r2 = (pSrc[2U * i0] >> 4U) - (pSrc[2U * i2] >> 4U);
 
     /* xb + xd */
-    t1 = (pSrc[2u * i1] >> 4u) + (pSrc[2u * i3] >> 4u);
+    t1 = (pSrc[2U * i1] >> 4U) + (pSrc[2U * i3] >> 4U);
 
     /* ya + yc */
-    s1 = (pSrc[(2u * i0) + 1u] >> 4u) + (pSrc[(2u * i2) + 1u] >> 4u);
+    s1 = (pSrc[(2U * i0) + 1U] >> 4U) + (pSrc[(2U * i2) + 1U] >> 4U);
     /* ya - yc */
-    s2 = (pSrc[(2u * i0) + 1u] >> 4u) - (pSrc[(2u * i2) + 1u] >> 4u);
+    s2 = (pSrc[(2U * i0) + 1U] >> 4U) - (pSrc[(2U * i2) + 1U] >> 4U);
 
     /* xa' = xa + xb + xc + xd */
-    pSrc[2u * i0] = (r1 + t1);
+    pSrc[2U * i0] = (r1 + t1);
     /* (xa + xc) - (xb + xd) */
     r1 = r1 - t1;
     /* yb + yd */
-    t2 = (pSrc[(2u * i1) + 1u] >> 4u) + (pSrc[(2u * i3) + 1u] >> 4u);
+    t2 = (pSrc[(2U * i1) + 1U] >> 4U) + (pSrc[(2U * i3) + 1U] >> 4U);
     /* ya' = ya + yb + yc + yd */
-    pSrc[(2u * i0) + 1u] = (s1 + t2);
+    pSrc[(2U * i0) + 1U] = (s1 + t2);
 
     /* (ya + yc) - (yb + yd) */
     s1 = s1 - t2;
 
     /* yb - yd */
-    t1 = (pSrc[(2u * i1) + 1u] >> 4u) - (pSrc[(2u * i3) + 1u] >> 4u);
+    t1 = (pSrc[(2U * i1) + 1U] >> 4U) - (pSrc[(2U * i3) + 1U] >> 4U);
     /* xb - xd */
-    t2 = (pSrc[2u * i1] >> 4u) - (pSrc[2u * i3] >> 4u);
+    t2 = (pSrc[2U * i1] >> 4U) - (pSrc[2U * i3] >> 4U);
 
     /*  index calculation for the coefficients */
-    ia2 = 2u * ia1;
-    co2 = pCoef[ia2 * 2u];
-    si2 = pCoef[(ia2 * 2u) + 1u];
+    ia2 = 2U * ia1;
+    co2 = pCoef[ia2 * 2U];
+    si2 = pCoef[(ia2 * 2U) + 1U];
 
     /* xc' = (xa-xb+xc-xd)co2 - (ya-yb+yc-yd)(si2) */
-    pSrc[2u * i1] = (((int32_t) (((q63_t) r1 * co2) >> 32)) -
-                     ((int32_t) (((q63_t) s1 * si2) >> 32))) << 1u;
+    pSrc[2U * i1] = (((int32_t) (((q63_t) r1 * co2) >> 32)) -
+                     ((int32_t) (((q63_t) s1 * si2) >> 32))) << 1U;
 
     /* yc' = (ya-yb+yc-yd)co2 + (xa-xb+xc-xd)(si2) */
-    pSrc[2u * i1 + 1u] = (((int32_t) (((q63_t) s1 * co2) >> 32)) +
-                          ((int32_t) (((q63_t) r1 * si2) >> 32))) << 1u;
+    pSrc[2U * i1 + 1U] = (((int32_t) (((q63_t) s1 * co2) >> 32)) +
+                          ((int32_t) (((q63_t) r1 * si2) >> 32))) << 1U;
 
     /* (xa - xc) - (yb - yd) */
     r1 = r2 - t1;
@@ -899,35 +899,35 @@ void arm_radix4_butterfly_inverse_q31(
     /* (ya - yc) - (xb - xd) */
     s2 = s2 - t2;
 
-    co1 = pCoef[ia1 * 2u];
-    si1 = pCoef[(ia1 * 2u) + 1u];
+    co1 = pCoef[ia1 * 2U];
+    si1 = pCoef[(ia1 * 2U) + 1U];
 
     /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
-    pSrc[2u * i2] = (((int32_t) (((q63_t) r1 * co1) >> 32)) -
-                     ((int32_t) (((q63_t) s1 * si1) >> 32))) << 1u;
+    pSrc[2U * i2] = (((int32_t) (((q63_t) r1 * co1) >> 32)) -
+                     ((int32_t) (((q63_t) s1 * si1) >> 32))) << 1U;
 
     /* yb' = (ya-xb-yc+xd)co1 + (xa+yb-xc-yd)(si1) */
-    pSrc[(2u * i2) + 1u] = (((int32_t) (((q63_t) s1 * co1) >> 32)) +
-                            ((int32_t) (((q63_t) r1 * si1) >> 32))) << 1u;
+    pSrc[(2U * i2) + 1U] = (((int32_t) (((q63_t) s1 * co1) >> 32)) +
+                            ((int32_t) (((q63_t) r1 * si1) >> 32))) << 1U;
 
     /*  index calculation for the coefficients */
-    ia3 = 3u * ia1;
-    co3 = pCoef[ia3 * 2u];
-    si3 = pCoef[(ia3 * 2u) + 1u];
+    ia3 = 3U * ia1;
+    co3 = pCoef[ia3 * 2U];
+    si3 = pCoef[(ia3 * 2U) + 1U];
 
     /* xd' = (xa-yb-xc+yd)co3 - (ya+xb-yc-xd)(si3) */
-    pSrc[2u * i3] = (((int32_t) (((q63_t) r2 * co3) >> 32)) -
-                     ((int32_t) (((q63_t) s2 * si3) >> 32))) << 1u;
+    pSrc[2U * i3] = (((int32_t) (((q63_t) r2 * co3) >> 32)) -
+                     ((int32_t) (((q63_t) s2 * si3) >> 32))) << 1U;
 
     /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
-    pSrc[(2u * i3) + 1u] = (((int32_t) (((q63_t) s2 * co3) >> 32)) +
-                            ((int32_t) (((q63_t) r2 * si3) >> 32))) << 1u;
+    pSrc[(2U * i3) + 1U] = (((int32_t) (((q63_t) s2 * co3) >> 32)) +
+                            ((int32_t) (((q63_t) r2 * si3) >> 32))) << 1U;
 
     /*  Twiddle coefficients index modifier */
     ia1 = ia1 + twidCoefModifier;
 
     /*  Updating input index */
-    i0 = i0 + 1u;
+    i0 = i0 + 1U;
 
   } while (--j);
 
@@ -937,77 +937,77 @@ void arm_radix4_butterfly_inverse_q31(
 
   /* Start of Middle stages process */
 
-  twidCoefModifier <<= 2u;
+  twidCoefModifier <<= 2U;
 
   /*  Calculation of second stage to excluding last stage */
-  for (k = fftLen / 4u; k > 4u; k >>= 2u)
+  for (k = fftLen / 4U; k > 4U; k >>= 2U)
   {
     /*  Initializations for the first stage */
     n1 = n2;
-    n2 >>= 2u;
-    ia1 = 0u;
+    n2 >>= 2U;
+    ia1 = 0U;
 
-    for (j = 0; j <= (n2 - 1u); j++)
+    for (j = 0; j <= (n2 - 1U); j++)
     {
       /*  index calculation for the coefficients */
       ia2 = ia1 + ia1;
       ia3 = ia2 + ia1;
-      co1 = pCoef[ia1 * 2u];
-      si1 = pCoef[(ia1 * 2u) + 1u];
-      co2 = pCoef[ia2 * 2u];
-      si2 = pCoef[(ia2 * 2u) + 1u];
-      co3 = pCoef[ia3 * 2u];
-      si3 = pCoef[(ia3 * 2u) + 1u];
+      co1 = pCoef[ia1 * 2U];
+      si1 = pCoef[(ia1 * 2U) + 1U];
+      co2 = pCoef[ia2 * 2U];
+      si2 = pCoef[(ia2 * 2U) + 1U];
+      co3 = pCoef[ia3 * 2U];
+      si3 = pCoef[(ia3 * 2U) + 1U];
       /*  Twiddle coefficients index modifier */
       ia1 = ia1 + twidCoefModifier;
 
       for (i0 = j; i0 < fftLen; i0 += n1)
       {
         /*  index calculation for the input as, */
-        /*  pSrc[i0 + 0], pSrc[i0 + fftLen/4], pSrc[i0 + fftLen/2u], pSrc[i0 + 3fftLen/4] */
+        /*  pSrc[i0 + 0], pSrc[i0 + fftLen/4], pSrc[i0 + fftLen/2U], pSrc[i0 + 3fftLen/4] */
         i1 = i0 + n2;
         i2 = i1 + n2;
         i3 = i2 + n2;
 
         /*  Butterfly implementation */
         /* xa + xc */
-        r1 = pSrc[2u * i0] + pSrc[2u * i2];
+        r1 = pSrc[2U * i0] + pSrc[2U * i2];
         /* xa - xc */
-        r2 = pSrc[2u * i0] - pSrc[2u * i2];
+        r2 = pSrc[2U * i0] - pSrc[2U * i2];
 
         /* ya + yc */
-        s1 = pSrc[(2u * i0) + 1u] + pSrc[(2u * i2) + 1u];
+        s1 = pSrc[(2U * i0) + 1U] + pSrc[(2U * i2) + 1U];
         /* ya - yc */
-        s2 = pSrc[(2u * i0) + 1u] - pSrc[(2u * i2) + 1u];
+        s2 = pSrc[(2U * i0) + 1U] - pSrc[(2U * i2) + 1U];
 
         /* xb + xd */
-        t1 = pSrc[2u * i1] + pSrc[2u * i3];
+        t1 = pSrc[2U * i1] + pSrc[2U * i3];
 
         /* xa' = xa + xb + xc + xd */
-        pSrc[2u * i0] = (r1 + t1) >> 2u;
+        pSrc[2U * i0] = (r1 + t1) >> 2U;
         /* xa + xc -(xb + xd) */
         r1 = r1 - t1;
         /* yb + yd */
-        t2 = pSrc[(2u * i1) + 1u] + pSrc[(2u * i3) + 1u];
+        t2 = pSrc[(2U * i1) + 1U] + pSrc[(2U * i3) + 1U];
         /* ya' = ya + yb + yc + yd */
-        pSrc[(2u * i0) + 1u] = (s1 + t2) >> 2u;
+        pSrc[(2U * i0) + 1U] = (s1 + t2) >> 2U;
 
         /* (ya + yc) - (yb + yd) */
         s1 = s1 - t2;
 
         /* (yb - yd) */
-        t1 = pSrc[(2u * i1) + 1u] - pSrc[(2u * i3) + 1u];
+        t1 = pSrc[(2U * i1) + 1U] - pSrc[(2U * i3) + 1U];
         /* (xb - xd) */
-        t2 = pSrc[2u * i1] - pSrc[2u * i3];
+        t2 = pSrc[2U * i1] - pSrc[2U * i3];
 
         /* xc' = (xa-xb+xc-xd)co2 - (ya-yb+yc-yd)(si2) */
-        pSrc[2u * i1] = (((int32_t) (((q63_t) r1 * co2) >> 32u)) -
-                         ((int32_t) (((q63_t) s1 * si2) >> 32u))) >> 1u;
+        pSrc[2U * i1] = (((int32_t) (((q63_t) r1 * co2) >> 32U)) -
+                         ((int32_t) (((q63_t) s1 * si2) >> 32U))) >> 1U;
 
         /* yc' = (ya-yb+yc-yd)co2 + (xa-xb+xc-xd)(si2) */
-        pSrc[(2u * i1) + 1u] =
-          (((int32_t) (((q63_t) s1 * co2) >> 32u)) +
-           ((int32_t) (((q63_t) r1 * si2) >> 32u))) >> 1u;
+        pSrc[(2U * i1) + 1U] =
+          (((int32_t) (((q63_t) s1 * co2) >> 32U)) +
+           ((int32_t) (((q63_t) r1 * si2) >> 32U))) >> 1U;
 
         /* (xa - xc) - (yb - yd) */
         r1 = r2 - t1;
@@ -1020,23 +1020,23 @@ void arm_radix4_butterfly_inverse_q31(
         s2 = s2 - t2;
 
         /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
-        pSrc[2u * i2] = (((int32_t) (((q63_t) r1 * co1) >> 32)) -
-                         ((int32_t) (((q63_t) s1 * si1) >> 32))) >> 1u;
+        pSrc[2U * i2] = (((int32_t) (((q63_t) r1 * co1) >> 32)) -
+                         ((int32_t) (((q63_t) s1 * si1) >> 32))) >> 1U;
 
         /* yb' = (ya-xb-yc+xd)co1 + (xa+yb-xc-yd)(si1) */
-        pSrc[(2u * i2) + 1u] = (((int32_t) (((q63_t) s1 * co1) >> 32)) +
-                                ((int32_t) (((q63_t) r1 * si1) >> 32))) >> 1u;
+        pSrc[(2U * i2) + 1U] = (((int32_t) (((q63_t) s1 * co1) >> 32)) +
+                                ((int32_t) (((q63_t) r1 * si1) >> 32))) >> 1U;
 
         /* xd' = (xa-yb-xc+yd)co3 - (ya+xb-yc-xd)(si3) */
-        pSrc[(2u * i3)] = (((int32_t) (((q63_t) r2 * co3) >> 32)) -
-                           ((int32_t) (((q63_t) s2 * si3) >> 32))) >> 1u;
+        pSrc[(2U * i3)] = (((int32_t) (((q63_t) r2 * co3) >> 32)) -
+                           ((int32_t) (((q63_t) s2 * si3) >> 32))) >> 1U;
 
         /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
-        pSrc[(2u * i3) + 1u] = (((int32_t) (((q63_t) s2 * co3) >> 32)) +
-                                ((int32_t) (((q63_t) r2 * si3) >> 32))) >> 1u;
+        pSrc[(2U * i3) + 1U] = (((int32_t) (((q63_t) s2 * co3) >> 32)) +
+                                ((int32_t) (((q63_t) r2 * si3) >> 32))) >> 1U;
       }
     }
-    twidCoefModifier <<= 2u;
+    twidCoefModifier <<= 2U;
   }
 #else
   uint32_t n1, n2, ia1, ia2, ia3, i0, j, k;
@@ -1063,9 +1063,9 @@ void arm_radix4_butterfly_inverse_q31(
   n2 = fftLen;
   n1 = n2;
   /* n2 = fftLen/4 */
-  n2 >>= 2u;
+  n2 >>= 2U;
 
-  ia1 = 0u;
+  ia1 = 0U;
 
   j = n2;
 
@@ -1078,24 +1078,24 @@ void arm_radix4_butterfly_inverse_q31(
   {
     /*  Butterfly implementation */
     /* xa + xc */
-    r1 = (pSi0[0] >> 4u) + (pSi2[0] >> 4u);
+    r1 = (pSi0[0] >> 4U) + (pSi2[0] >> 4U);
     /* xa - xc */
-    r2 = (pSi0[0] >> 4u) - (pSi2[0] >> 4u);
+    r2 = (pSi0[0] >> 4U) - (pSi2[0] >> 4U);
 
     /* xb + xd */
-    t1 = (pSi1[0] >> 4u) + (pSi3[0] >> 4u);
+    t1 = (pSi1[0] >> 4U) + (pSi3[0] >> 4U);
 
     /* ya + yc */
-    s1 = (pSi0[1] >> 4u) + (pSi2[1] >> 4u);
+    s1 = (pSi0[1] >> 4U) + (pSi2[1] >> 4U);
     /* ya - yc */
-    s2 = (pSi0[1] >> 4u) - (pSi2[1] >> 4u);
+    s2 = (pSi0[1] >> 4U) - (pSi2[1] >> 4U);
 
     /* xa' = xa + xb + xc + xd */
     *pSi0++ = (r1 + t1);
     /* (xa + xc) - (xb + xd) */
     r1 = r1 - t1;
     /* yb + yd */
-    t2 = (pSi1[1] >> 4u) + (pSi3[1] >> 4u);
+    t2 = (pSi1[1] >> 4U) + (pSi3[1] >> 4U);
     /* ya' = ya + yb + yc + yd */
     *pSi0++ = (s1 + t2);
 
@@ -1103,22 +1103,22 @@ void arm_radix4_butterfly_inverse_q31(
     s1 = s1 - t2;
 
     /* yb - yd */
-    t1 = (pSi1[1] >> 4u) - (pSi3[1] >> 4u);
+    t1 = (pSi1[1] >> 4U) - (pSi3[1] >> 4U);
     /* xb - xd */
-    t2 = (pSi1[0] >> 4u) - (pSi3[0] >> 4u);
+    t2 = (pSi1[0] >> 4U) - (pSi3[0] >> 4U);
 
     /*  index calculation for the coefficients */
-    ia2 = 2u * ia1;
-    co2 = pCoef[ia2 * 2u];
-    si2 = pCoef[(ia2 * 2u) + 1u];
+    ia2 = 2U * ia1;
+    co2 = pCoef[ia2 * 2U];
+    si2 = pCoef[(ia2 * 2U) + 1U];
 
     /* xc' = (xa-xb+xc-xd)co2 - (ya-yb+yc-yd)(si2) */
     *pSi1++ = (((int32_t) (((q63_t) r1 * co2) >> 32)) -
-                     ((int32_t) (((q63_t) s1 * si2) >> 32))) << 1u;
+                     ((int32_t) (((q63_t) s1 * si2) >> 32))) << 1U;
 
     /* yc' = (ya-yb+yc-yd)co2 + (xa-xb+xc-xd)(si2) */
     *pSi1++ = (((int32_t) (((q63_t) s1 * co2) >> 32)) +
-                          ((int32_t) (((q63_t) r1 * si2) >> 32))) << 1u;
+                          ((int32_t) (((q63_t) r1 * si2) >> 32))) << 1U;
 
     /* (xa - xc) - (yb - yd) */
     r1 = r2 - t1;
@@ -1130,29 +1130,29 @@ void arm_radix4_butterfly_inverse_q31(
     /* (ya - yc) - (xb - xd) */
     s2 = s2 - t2;
 
-    co1 = pCoef[ia1 * 2u];
-    si1 = pCoef[(ia1 * 2u) + 1u];
+    co1 = pCoef[ia1 * 2U];
+    si1 = pCoef[(ia1 * 2U) + 1U];
 
     /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
     *pSi2++ = (((int32_t) (((q63_t) r1 * co1) >> 32)) -
-                     ((int32_t) (((q63_t) s1 * si1) >> 32))) << 1u;
+                     ((int32_t) (((q63_t) s1 * si1) >> 32))) << 1U;
 
     /* yb' = (ya-xb-yc+xd)co1 + (xa+yb-xc-yd)(si1) */
     *pSi2++ = (((int32_t) (((q63_t) s1 * co1) >> 32)) +
-                            ((int32_t) (((q63_t) r1 * si1) >> 32))) << 1u;
+                            ((int32_t) (((q63_t) r1 * si1) >> 32))) << 1U;
 
     /*  index calculation for the coefficients */
-    ia3 = 3u * ia1;
-    co3 = pCoef[ia3 * 2u];
-    si3 = pCoef[(ia3 * 2u) + 1u];
+    ia3 = 3U * ia1;
+    co3 = pCoef[ia3 * 2U];
+    si3 = pCoef[(ia3 * 2U) + 1U];
 
     /* xd' = (xa-yb-xc+yd)co3 - (ya+xb-yc-xd)(si3) */
     *pSi3++ = (((int32_t) (((q63_t) r2 * co3) >> 32)) -
-                     ((int32_t) (((q63_t) s2 * si3) >> 32))) << 1u;
+                     ((int32_t) (((q63_t) s2 * si3) >> 32))) << 1U;
 
     /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
     *pSi3++ = (((int32_t) (((q63_t) s2 * co3) >> 32)) +
-                            ((int32_t) (((q63_t) r2 * si3) >> 32))) << 1u;
+                            ((int32_t) (((q63_t) r2 * si3) >> 32))) << 1U;
 
     /*  Twiddle coefficients index modifier */
     ia1 = ia1 + twidCoefModifier;
@@ -1165,27 +1165,27 @@ void arm_radix4_butterfly_inverse_q31(
 
   /* Start of Middle stages process */
 
-  twidCoefModifier <<= 2u;
+  twidCoefModifier <<= 2U;
 
   /*  Calculation of second stage to excluding last stage */
-  for (k = fftLen / 4u; k > 4u; k >>= 2u)
+  for (k = fftLen / 4U; k > 4U; k >>= 2U)
   {
     /*  Initializations for the first stage */
     n1 = n2;
-    n2 >>= 2u;
-    ia1 = 0u;
+    n2 >>= 2U;
+    ia1 = 0U;
 
-    for (j = 0; j <= (n2 - 1u); j++)
+    for (j = 0; j <= (n2 - 1U); j++)
     {
       /*  index calculation for the coefficients */
       ia2 = ia1 + ia1;
       ia3 = ia2 + ia1;
-      co1 = pCoef[ia1 * 2u];
-      si1 = pCoef[(ia1 * 2u) + 1u];
-      co2 = pCoef[ia2 * 2u];
-      si2 = pCoef[(ia2 * 2u) + 1u];
-      co3 = pCoef[ia3 * 2u];
-      si3 = pCoef[(ia3 * 2u) + 1u];
+      co1 = pCoef[ia1 * 2U];
+      si1 = pCoef[(ia1 * 2U) + 1U];
+      co2 = pCoef[ia2 * 2U];
+      si2 = pCoef[(ia2 * 2U) + 1U];
+      co3 = pCoef[ia3 * 2U];
+      si3 = pCoef[(ia3 * 2U) + 1U];
       /*  Twiddle coefficients index modifier */
       ia1 = ia1 + twidCoefModifier;
 
@@ -1216,14 +1216,14 @@ void arm_radix4_butterfly_inverse_q31(
 
 
         /* xa' = xa + xb + xc + xd */
-        pSi0[0] = (r1 + t1) >> 2u;
+        pSi0[0] = (r1 + t1) >> 2U;
         /* xa + xc -(xb + xd) */
         r1 = r1 - t1;
         /* yb + yd */
         t2 = pSi1[1] + pSi3[1];
 
         /* ya' = ya + yb + yc + yd */
-        pSi0[1] = (s1 + t2) >> 2u;
+        pSi0[1] = (s1 + t2) >> 2U;
         pSi0 += 2 * n1;
 
         /* (ya + yc) - (yb + yd) */
@@ -1237,14 +1237,14 @@ void arm_radix4_butterfly_inverse_q31(
 
 
         /* xc' = (xa-xb+xc-xd)co2 - (ya-yb+yc-yd)(si2) */
-        pSi1[0] = (((int32_t) (((q63_t) r1 * co2) >> 32u)) -
-                         ((int32_t) (((q63_t) s1 * si2) >> 32u))) >> 1u;
+        pSi1[0] = (((int32_t) (((q63_t) r1 * co2) >> 32U)) -
+                         ((int32_t) (((q63_t) s1 * si2) >> 32U))) >> 1U;
 
         /* yc' = (ya-yb+yc-yd)co2 + (xa-xb+xc-xd)(si2) */
         pSi1[1] =
 
-          (((int32_t) (((q63_t) s1 * co2) >> 32u)) +
-           ((int32_t) (((q63_t) r1 * si2) >> 32u))) >> 1u;
+          (((int32_t) (((q63_t) s1 * co2) >> 32U)) +
+           ((int32_t) (((q63_t) r1 * si2) >> 32U))) >> 1U;
         pSi1 += 2 * n1;
 
         /* (xa - xc) - (yb - yd) */
@@ -1259,24 +1259,24 @@ void arm_radix4_butterfly_inverse_q31(
 
         /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
         pSi2[0] = (((int32_t) (((q63_t) r1 * co1) >> 32)) -
-                         ((int32_t) (((q63_t) s1 * si1) >> 32))) >> 1u;
+                         ((int32_t) (((q63_t) s1 * si1) >> 32))) >> 1U;
 
         /* yb' = (ya-xb-yc+xd)co1 + (xa+yb-xc-yd)(si1) */
         pSi2[1] = (((int32_t) (((q63_t) s1 * co1) >> 32)) +
-                                ((int32_t) (((q63_t) r1 * si1) >> 32))) >> 1u;
+                                ((int32_t) (((q63_t) r1 * si1) >> 32))) >> 1U;
         pSi2 += 2 * n1;
 
         /* xd' = (xa-yb-xc+yd)co3 - (ya+xb-yc-xd)(si3) */
         pSi3[0] = (((int32_t) (((q63_t) r2 * co3) >> 32)) -
-                           ((int32_t) (((q63_t) s2 * si3) >> 32))) >> 1u;
+                           ((int32_t) (((q63_t) s2 * si3) >> 32))) >> 1U;
 
         /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
         pSi3[1] = (((int32_t) (((q63_t) s2 * co3) >> 32)) +
-                                ((int32_t) (((q63_t) r2 * si3) >> 32))) >> 1u;
+                                ((int32_t) (((q63_t) r2 * si3) >> 32))) >> 1U;
         pSi3 += 2 * n1;
       }
     }
-    twidCoefModifier <<= 2u;
+    twidCoefModifier <<= 2U;
   }
 #endif
 
@@ -1351,7 +1351,7 @@ void arm_radix4_butterfly_inverse_q31(
     ya_out = ya + yb + yc + yd;
 
     /* pointer updation for writing */
-    ptr1 = ptr1 - 8u;
+    ptr1 = ptr1 - 8U;
 
     /* writing xa' and ya' */
     *ptr1++ = xa_out;

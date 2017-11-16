@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        9. June 2017
- * $Revision:    V2.1.1
+ * $Date:        30. October 2017
+ * $Revision:    V2.1.2
  *
  * Project:      CMSIS-RTOS API
  * Title:        cmsis_os.h RTX header file
@@ -123,6 +123,9 @@
  *    - osKernelGetTickCount, osKernelGetTickFreq
  *    Changed Kernel Tick type to uint32_t:
  *    - updated: osKernelGetTickCount, osDelayUntil
+ * Version 2.1.2
+ *    Additional functions allowed to be called from Interrupt Service Routines:
+ *    - osKernelGetInfo, osKernelGetState
  *---------------------------------------------------------------------------*/
  
 #ifndef CMSIS_OS_H_

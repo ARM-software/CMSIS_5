@@ -87,19 +87,19 @@ void arm_fir_interpolate_q31(
   blkCntN2 = blockSize - (2 * blkCnt);
 
   /* Samples loop unrolled by 2 */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
     *pStateCurnt++ = *pSrc++;
 
     /* Address modifier index of coefficient buffer */
-    j = 1u;
+    j = 1U;
 
     /* Loop over the Interpolation factor. */
     i = (S->L);
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* Set accumulator to zero */
       acc0 = 0;
@@ -113,11 +113,11 @@ void arm_fir_interpolate_q31(
 
       /* Loop over the polyPhase length. Unroll by a factor of 4.
        ** Repeat until we've computed numTaps-(4*S->L) coefficients. */
-      tapCnt = phaseLen >> 2u;
+      tapCnt = phaseLen >> 2U;
 
       x0 = *(ptr1++);
 
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
 
         /* Read the input sample */
@@ -173,9 +173,9 @@ void arm_fir_interpolate_q31(
       }
 
       /* If the polyPhase length is not a multiple of 4, compute the remaining filter taps */
-      tapCnt = phaseLen % 0x4u;
+      tapCnt = phaseLen % 0x4U;
 
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
 
         /* Read the input sample */
@@ -227,17 +227,17 @@ void arm_fir_interpolate_q31(
   blkCnt = blkCntN2;
 
   /* Loop over the blockSize. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
 
     /* Address modifier index of coefficient buffer */
-    j = 1u;
+    j = 1U;
 
     /* Loop over the Interpolation factor. */
     i = S->L;
-    while (i > 0u)
+    while (i > 0U)
     {
       /* Set accumulator to zero */
       sum0 = 0;
@@ -251,7 +251,7 @@ void arm_fir_interpolate_q31(
       /* Loop over the polyPhase length. Unroll by a factor of 4.
        ** Repeat until we've computed numTaps-(4*S->L) coefficients. */
       tapCnt = phaseLen >> 2;
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
 
         /* Read the coefficient */
@@ -309,9 +309,9 @@ void arm_fir_interpolate_q31(
       }
 
       /* If the polyPhase length is not a multiple of 4, compute the remaining filter taps */
-      tapCnt = phaseLen & 0x3u;
+      tapCnt = phaseLen & 0x3U;
 
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
         /* Read the coefficient */
         c0 = *(ptr2);
@@ -354,10 +354,10 @@ void arm_fir_interpolate_q31(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  tapCnt = (phaseLen - 1u) >> 2u;
+  tapCnt = (phaseLen - 1U) >> 2U;
 
   /* copy data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -368,10 +368,10 @@ void arm_fir_interpolate_q31(
     tapCnt--;
   }
 
-  tapCnt = (phaseLen - 1u) % 0x04u;
+  tapCnt = (phaseLen - 1U) % 0x04U;
 
   /* copy data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -411,7 +411,7 @@ void arm_fir_interpolate_q31(
   blkCnt = blockSize;
 
   /* Loop over the blockSize. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -419,7 +419,7 @@ void arm_fir_interpolate_q31(
     /* Loop over the Interpolation factor. */
     i = S->L;
 
-    while (i > 0u)
+    while (i > 0U)
     {
       /* Set accumulator to zero */
       sum = 0;
@@ -428,11 +428,11 @@ void arm_fir_interpolate_q31(
       ptr1 = pState;
 
       /* Initialize coefficient pointer */
-      ptr2 = pCoeffs + (i - 1u);
+      ptr2 = pCoeffs + (i - 1U);
 
       tapCnt = phaseLen;
 
-      while (tapCnt > 0u)
+      while (tapCnt > 0U)
       {
         /* Read the coefficient */
         c0 = *(ptr2);
@@ -472,10 +472,10 @@ void arm_fir_interpolate_q31(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  tapCnt = phaseLen - 1u;
+  tapCnt = phaseLen - 1U;
 
   /* copy data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 

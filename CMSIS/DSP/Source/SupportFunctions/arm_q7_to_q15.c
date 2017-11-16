@@ -74,11 +74,11 @@ void arm_q7_to_q15(
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = (q15_t) A << 8 */
     /* convert from q7 to q15 and then store the results in the destination buffer */
@@ -90,8 +90,8 @@ void arm_q7_to_q15(
     /* extend remainig two q7_t values to q15_t values */
     in2 = __SXTB16(in);
 
-    in1 = in1 << 8u;
-    in2 = in2 << 8u;
+    in1 = in1 << 8U;
+    in2 = in2 << 8U;
 
     in1 = in1 & 0xFF00FF00;
     in2 = in2 & 0xFF00FF00;
@@ -117,7 +117,7 @@ void arm_q7_to_q15(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
 #else
 
@@ -128,7 +128,7 @@ void arm_q7_to_q15(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = (q15_t) A << 8 */
     /* convert from q7 to q15 and then store the results in the destination buffer */

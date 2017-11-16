@@ -94,11 +94,11 @@ arm_status arm_mat_sub_q31(
     /* Run the below code for Cortex-M4 and Cortex-M3 */
 
     /* Loop Unrolling */
-    blkCnt = numSamples >> 2u;
+    blkCnt = numSamples >> 2U;
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C(m,n) = A(m,n) - B(m,n) */
       /* Subtract, saturate and then store the results in the destination buffer. */
@@ -147,9 +147,9 @@ arm_status arm_mat_sub_q31(
       pOut[3] = out2;
 
       /* update pointers to process next samples */
-      pIn1 += 4u;
-      pIn2 += 4u;
-      pOut += 4u;
+      pIn1 += 4U;
+      pIn2 += 4U;
+      pOut += 4U;
 
       /* Decrement the loop counter */
       blkCnt--;
@@ -157,7 +157,7 @@ arm_status arm_mat_sub_q31(
 
     /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    blkCnt = numSamples % 0x4u;
+    blkCnt = numSamples % 0x4U;
 
 #else
 
@@ -168,7 +168,7 @@ arm_status arm_mat_sub_q31(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C(m,n) = A(m,n) - B(m,n) */
       /* Subtract, saturate and then store the results in the destination buffer. */

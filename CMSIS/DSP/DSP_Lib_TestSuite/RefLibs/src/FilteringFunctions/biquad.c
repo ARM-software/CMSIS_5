@@ -31,7 +31,7 @@ void ref_biquad_cascade_df2T_f32(
 
       sample = blockSize;
 
-      while (sample > 0u)
+      while (sample > 0U)
       {
          /* Read the input */
          Xn = *pIn++;
@@ -66,7 +66,7 @@ void ref_biquad_cascade_df2T_f32(
       /* decrement the loop counter */
       stage--;
 
-   } while (stage > 0u);
+   } while (stage > 0U);
 }
 
 
@@ -103,7 +103,7 @@ void ref_biquad_cascade_stereo_df2T_f32(
 
         sample = blockSize;
 
-        while (sample > 0u)
+        while (sample > 0U)
         {
             /* Read the input */
             Xn1a = *pIn++; //Channel a
@@ -145,7 +145,7 @@ void ref_biquad_cascade_stereo_df2T_f32(
         /* decrement the loop counter */
         stage--;
 
-    } while (stage > 0u);
+    } while (stage > 0U);
 	
 }
 
@@ -180,7 +180,7 @@ void ref_biquad_cascade_df2T_f64(
 
       sample = blockSize;
 
-      while (sample > 0u)
+      while (sample > 0U)
       {
          /* Read the input */
          Xn = *pIn++;
@@ -215,7 +215,7 @@ void ref_biquad_cascade_df2T_f64(
       /* decrement the loop counter */
       stage--;
 
-   } while (stage > 0u);
+   } while (stage > 0U);
 }
 
 void ref_biquad_cascade_df1_f32(
@@ -255,7 +255,7 @@ void ref_biquad_cascade_df1_f32(
 
     sample = blockSize;
 
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -297,7 +297,7 @@ void ref_biquad_cascade_df1_f32(
     /* decrement the loop counter */
     stage--;
 
-  } while (stage > 0u);
+  } while (stage > 0U);
 }
 
 void ref_biquad_cas_df1_32x64_q31(
@@ -318,8 +318,8 @@ void ref_biquad_cas_df1_32x64_q31(
   int32_t shift = (int32_t) S->postShift + 1;    /*  Shift to be applied to the output 	*/
   uint32_t sample, stage = S->numStages;         /*  loop counters                     	*/
   q31_t acc_l, acc_h;                            /*  temporary output               		*/
-  uint32_t uShift = ((uint32_t) S->postShift + 1u);
-  uint32_t lShift = 32u - uShift;                /*  Shift to be applied to the output 	*/
+  uint32_t uShift = ((uint32_t) S->postShift + 1U);
+  uint32_t lShift = 32U - uShift;                /*  Shift to be applied to the output 	*/
 
   do
   {
@@ -338,7 +338,7 @@ void ref_biquad_cas_df1_32x64_q31(
 
     sample = blockSize;
 
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -396,8 +396,8 @@ void ref_biquad_cascade_df1_q31(
   uint32_t blockSize)
 {	
   q63_t acc;                                     /*  accumulator                   */
-  uint32_t uShift = ((uint32_t) S->postShift + 1u);
-  uint32_t lShift = 32u - uShift;                /*  Shift to be applied to the output */
+  uint32_t uShift = ((uint32_t) S->postShift + 1U);
+  uint32_t lShift = 32U - uShift;                /*  Shift to be applied to the output */
   q31_t *pIn = pSrc;                             /*  input pointer initialization  */
   q31_t *pOut = pDst;                            /*  output pointer initialization */
   q31_t *pState = S->pState;                     /*  pState pointer initialization */
@@ -428,7 +428,7 @@ void ref_biquad_cascade_df1_q31(
 
     sample = blockSize;
 
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -518,7 +518,7 @@ void ref_biquad_cascade_df1_fast_q31(
 		
     sample = blockSize;
 
-   while (sample > 0u)
+   while (sample > 0U)
    {
       /* Read the input */
       Xn = *pIn++;
@@ -597,7 +597,7 @@ void ref_biquad_cascade_df1_fast_q15(
 
     sample = blockSize;
 
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -672,7 +672,7 @@ void ref_biquad_cascade_df1_q15(
 
     sample = blockSize;
 
-    while (sample > 0u)
+    while (sample > 0U)
     {
       /* Read the input */
       Xn = *pIn++;

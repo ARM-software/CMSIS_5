@@ -95,7 +95,7 @@ void arm_dct4_q31(
   pS1 = pState;
 
   /* pS2 initialized to pState+N-1, so that it points to the end of the state buffer */
-  pS2 = pState + (S->N - 1u);
+  pS2 = pState + (S->N - 1U);
 
   /* pbuff initialized to input buffer */
   pbuff = pInlineBuffer;
@@ -105,7 +105,7 @@ void arm_dct4_q31(
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /* Initializing the loop counter to N/2 >> 2 for loop unrolling by 4 */
-  i = S->Nby2 >> 2u;
+  i = S->Nby2 >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
@@ -128,7 +128,7 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
   /* pbuff initialized to input buffer */
   pbuff = pInlineBuffer;
@@ -137,7 +137,7 @@ void arm_dct4_q31(
   pS1 = pState;
 
   /* Initializing the loop counter to N/4 instead of N for loop unrolling */
-  i = S->N >> 2u;
+  i = S->N >> 2U;
 
   /* Processing with loop unrolling 4 times as N is always multiple of 4.
    * Compute 4 outputs at a time */
@@ -151,7 +151,7 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
 
   /* ---------------------------------------------------------
@@ -176,7 +176,7 @@ void arm_dct4_q31(
   /* Getting only real part from the output and Converting to DCT-IV */
 
   /* Initializing the loop counter to N >> 2 for loop unrolling by 4 */
-  i = (S->N - 1u) >> 2u;
+  i = (S->N - 1U) >> 2U;
 
   /* pbuff initialized to input buffer. */
   pbuff = pInlineBuffer;
@@ -185,7 +185,7 @@ void arm_dct4_q31(
   pS1 = pState;
 
   /* Calculating Y4(0) from Y2(0) using Y4(0) = Y2(0)/2 */
-  in = *pS1++ >> 1u;
+  in = *pS1++ >> 1U;
   /* input buffer acts as inplace, so output values are stored in the input itself. */
   *pbuff++ = in;
 
@@ -217,13 +217,13 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  i = (S->N - 1u) % 0x4u;
+  i = (S->N - 1U) % 0x4U;
 
-  while (i > 0u)
+  while (i > 0U)
   {
     /* Calculating Y4(1) to Y4(N-1) from Y2 using equation Y4(k) = Y2(k) - Y4(k-1) */
     /* pState pointer (pS1) is incremented twice as the real values are located alternatively in the array */
@@ -240,7 +240,7 @@ void arm_dct4_q31(
         /*------------ Normalizing the output by multiplying with the normalizing factor ----------*/
 
   /* Initializing the loop counter to N/4 instead of N for loop unrolling */
-  i = S->N >> 2u;
+  i = S->N >> 2U;
 
   /* pbuff initialized to the pInlineBuffer(now contains the output values) */
   pbuff = pInlineBuffer;
@@ -263,7 +263,7 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
 
 #else
@@ -283,7 +283,7 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
   /* pbuff initialized to input buffer */
   pbuff = pInlineBuffer;
@@ -301,7 +301,7 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
 
   /* ---------------------------------------------------------
@@ -332,7 +332,7 @@ void arm_dct4_q31(
   pS1 = pState;
 
   /* Calculating Y4(0) from Y2(0) using Y4(0) = Y2(0)/2 */
-  in = *pS1++ >> 1u;
+  in = *pS1++ >> 1U;
   /* input buffer acts as inplace, so output values are stored in the input itself. */
   *pbuff++ = in;
 
@@ -340,9 +340,9 @@ void arm_dct4_q31(
   pS1++;
 
   /* Initializing the loop counter */
-  i = (S->N - 1u);
+  i = (S->N - 1U);
 
-  while (i > 0u)
+  while (i > 0U)
   {
     /* Calculating Y4(1) to Y4(N-1) from Y2 using equation Y4(k) = Y2(k) - Y4(k-1) */
     /* pState pointer (pS1) is incremented twice as the real values are located alternatively in the array */
@@ -372,7 +372,7 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while (i > 0u);
+  } while (i > 0U);
 
 #endif /* #if defined (ARM_MATH_DSP) */
 

@@ -49,47 +49,47 @@ uint16_t * pBitRevTab)
    float32_t in;
 
    /*  Initializations */
-   j = 0u;
-   fftLenBy2 = fftSize >> 1u;
-   fftLenBy2p1 = (fftSize >> 1u) + 1u;
+   j = 0U;
+   fftLenBy2 = fftSize >> 1U;
+   fftLenBy2p1 = (fftSize >> 1U) + 1U;
 
    /* Bit Reversal Implementation */
-   for (i = 0u; i <= (fftLenBy2 - 2u); i += 2u)
+   for (i = 0U; i <= (fftLenBy2 - 2U); i += 2U)
    {
       if (i < j)
       {
          /*  pSrc[i] <-> pSrc[j]; */
-         in = pSrc[2u * i];
-         pSrc[2u * i] = pSrc[2u * j];
-         pSrc[2u * j] = in;
+         in = pSrc[2U * i];
+         pSrc[2U * i] = pSrc[2U * j];
+         pSrc[2U * j] = in;
 
-         /*  pSrc[i+1u] <-> pSrc[j+1u] */
-         in = pSrc[(2u * i) + 1u];
-         pSrc[(2u * i) + 1u] = pSrc[(2u * j) + 1u];
-         pSrc[(2u * j) + 1u] = in;
+         /*  pSrc[i+1U] <-> pSrc[j+1U] */
+         in = pSrc[(2U * i) + 1U];
+         pSrc[(2U * i) + 1U] = pSrc[(2U * j) + 1U];
+         pSrc[(2U * j) + 1U] = in;
 
          /*  pSrc[i+fftLenBy2p1] <-> pSrc[j+fftLenBy2p1] */
-         in = pSrc[2u * (i + fftLenBy2p1)];
-         pSrc[2u * (i + fftLenBy2p1)] = pSrc[2u * (j + fftLenBy2p1)];
-         pSrc[2u * (j + fftLenBy2p1)] = in;
+         in = pSrc[2U * (i + fftLenBy2p1)];
+         pSrc[2U * (i + fftLenBy2p1)] = pSrc[2U * (j + fftLenBy2p1)];
+         pSrc[2U * (j + fftLenBy2p1)] = in;
 
-         /*  pSrc[i+fftLenBy2p1+1u] <-> pSrc[j+fftLenBy2p1+1u] */
-         in = pSrc[(2u * (i + fftLenBy2p1)) + 1u];
-         pSrc[(2u * (i + fftLenBy2p1)) + 1u] =
-         pSrc[(2u * (j + fftLenBy2p1)) + 1u];
-         pSrc[(2u * (j + fftLenBy2p1)) + 1u] = in;
+         /*  pSrc[i+fftLenBy2p1+1U] <-> pSrc[j+fftLenBy2p1+1U] */
+         in = pSrc[(2U * (i + fftLenBy2p1)) + 1U];
+         pSrc[(2U * (i + fftLenBy2p1)) + 1U] =
+         pSrc[(2U * (j + fftLenBy2p1)) + 1U];
+         pSrc[(2U * (j + fftLenBy2p1)) + 1U] = in;
 
       }
 
-      /*  pSrc[i+1u] <-> pSrc[j+1u] */
-      in = pSrc[2u * (i + 1u)];
-      pSrc[2u * (i + 1u)] = pSrc[2u * (j + fftLenBy2)];
-      pSrc[2u * (j + fftLenBy2)] = in;
+      /*  pSrc[i+1U] <-> pSrc[j+1U] */
+      in = pSrc[2U * (i + 1U)];
+      pSrc[2U * (i + 1U)] = pSrc[2U * (j + fftLenBy2)];
+      pSrc[2U * (j + fftLenBy2)] = in;
 
-      /*  pSrc[i+2u] <-> pSrc[j+2u] */
-      in = pSrc[(2u * (i + 1u)) + 1u];
-      pSrc[(2u * (i + 1u)) + 1u] = pSrc[(2u * (j + fftLenBy2)) + 1u];
-      pSrc[(2u * (j + fftLenBy2)) + 1u] = in;
+      /*  pSrc[i+2U] <-> pSrc[j+2U] */
+      in = pSrc[(2U * (i + 1U)) + 1U];
+      pSrc[(2U * (i + 1U)) + 1U] = pSrc[(2U * (j + fftLenBy2)) + 1U];
+      pSrc[(2U * (j + fftLenBy2)) + 1U] = in;
 
       /*  Reading the index for the bit reversal */
       j = *pBitRevTab;
@@ -120,47 +120,47 @@ uint16_t * pBitRevTable)
    q31_t in;
 
    /*  Initializations      */
-   j = 0u;
-   fftLenBy2 = fftLen / 2u;
-   fftLenBy2p1 = (fftLen / 2u) + 1u;
+   j = 0U;
+   fftLenBy2 = fftLen / 2U;
+   fftLenBy2p1 = (fftLen / 2U) + 1U;
 
    /* Bit Reversal Implementation */
-   for (i = 0u; i <= (fftLenBy2 - 2u); i += 2u)
+   for (i = 0U; i <= (fftLenBy2 - 2U); i += 2U)
    {
       if (i < j)
       {
          /*  pSrc[i] <-> pSrc[j]; */
-         in = pSrc[2u * i];
-         pSrc[2u * i] = pSrc[2u * j];
-         pSrc[2u * j] = in;
+         in = pSrc[2U * i];
+         pSrc[2U * i] = pSrc[2U * j];
+         pSrc[2U * j] = in;
 
-         /*  pSrc[i+1u] <-> pSrc[j+1u] */
-         in = pSrc[(2u * i) + 1u];
-         pSrc[(2u * i) + 1u] = pSrc[(2u * j) + 1u];
-         pSrc[(2u * j) + 1u] = in;
+         /*  pSrc[i+1U] <-> pSrc[j+1U] */
+         in = pSrc[(2U * i) + 1U];
+         pSrc[(2U * i) + 1U] = pSrc[(2U * j) + 1U];
+         pSrc[(2U * j) + 1U] = in;
 
          /*  pSrc[i+fftLenBy2p1] <-> pSrc[j+fftLenBy2p1] */
-         in = pSrc[2u * (i + fftLenBy2p1)];
-         pSrc[2u * (i + fftLenBy2p1)] = pSrc[2u * (j + fftLenBy2p1)];
-         pSrc[2u * (j + fftLenBy2p1)] = in;
+         in = pSrc[2U * (i + fftLenBy2p1)];
+         pSrc[2U * (i + fftLenBy2p1)] = pSrc[2U * (j + fftLenBy2p1)];
+         pSrc[2U * (j + fftLenBy2p1)] = in;
 
-         /*  pSrc[i+fftLenBy2p1+1u] <-> pSrc[j+fftLenBy2p1+1u] */
-         in = pSrc[(2u * (i + fftLenBy2p1)) + 1u];
-         pSrc[(2u * (i + fftLenBy2p1)) + 1u] =
-         pSrc[(2u * (j + fftLenBy2p1)) + 1u];
-         pSrc[(2u * (j + fftLenBy2p1)) + 1u] = in;
+         /*  pSrc[i+fftLenBy2p1+1U] <-> pSrc[j+fftLenBy2p1+1U] */
+         in = pSrc[(2U * (i + fftLenBy2p1)) + 1U];
+         pSrc[(2U * (i + fftLenBy2p1)) + 1U] =
+         pSrc[(2U * (j + fftLenBy2p1)) + 1U];
+         pSrc[(2U * (j + fftLenBy2p1)) + 1U] = in;
 
       }
 
-      /*  pSrc[i+1u] <-> pSrc[j+1u] */
-      in = pSrc[2u * (i + 1u)];
-      pSrc[2u * (i + 1u)] = pSrc[2u * (j + fftLenBy2)];
-      pSrc[2u * (j + fftLenBy2)] = in;
+      /*  pSrc[i+1U] <-> pSrc[j+1U] */
+      in = pSrc[2U * (i + 1U)];
+      pSrc[2U * (i + 1U)] = pSrc[2U * (j + fftLenBy2)];
+      pSrc[2U * (j + fftLenBy2)] = in;
 
-      /*  pSrc[i+2u] <-> pSrc[j+2u] */
-      in = pSrc[(2u * (i + 1u)) + 1u];
-      pSrc[(2u * (i + 1u)) + 1u] = pSrc[(2u * (j + fftLenBy2)) + 1u];
-      pSrc[(2u * (j + fftLenBy2)) + 1u] = in;
+      /*  pSrc[i+2U] <-> pSrc[j+2U] */
+      in = pSrc[(2U * (i + 1U)) + 1U];
+      pSrc[(2U * (i + 1U)) + 1U] = pSrc[(2U * (j + fftLenBy2)) + 1U];
+      pSrc[(2U * (j + fftLenBy2)) + 1U] = in;
 
       /*  Reading the index for the bit reversal */
       j = *pBitRevTable;
@@ -193,32 +193,32 @@ uint16_t * pBitRevTab)
    uint32_t i, j;
 
    /*  Initializations */
-   j = 0u;
-   fftLenBy2 = fftLen / 2u;
-   fftLenBy2p1 = (fftLen / 2u) + 1u;
+   j = 0U;
+   fftLenBy2 = fftLen / 2U;
+   fftLenBy2p1 = (fftLen / 2U) + 1U;
 
    /* Bit Reversal Implementation */
-   for (i = 0u; i <= (fftLenBy2 - 2u); i += 2u)
+   for (i = 0U; i <= (fftLenBy2 - 2U); i += 2U)
    {
       if (i < j)
       {
          /*  pSrc[i] <-> pSrc[j]; */
-         /*  pSrc[i+1u] <-> pSrc[j+1u] */
+         /*  pSrc[i+1U] <-> pSrc[j+1U] */
          in = pSrc[i];
          pSrc[i] = pSrc[j];
          pSrc[j] = in;
 
          /*  pSrc[i + fftLenBy2p1] <-> pSrc[j + fftLenBy2p1];  */
-         /*  pSrc[i + fftLenBy2p1+1u] <-> pSrc[j + fftLenBy2p1+1u] */
+         /*  pSrc[i + fftLenBy2p1+1U] <-> pSrc[j + fftLenBy2p1+1U] */
          in = pSrc[i + fftLenBy2p1];
          pSrc[i + fftLenBy2p1] = pSrc[j + fftLenBy2p1];
          pSrc[j + fftLenBy2p1] = in;
       }
 
-      /*  pSrc[i+1u] <-> pSrc[j+fftLenBy2];         */
-      /*  pSrc[i+2] <-> pSrc[j+fftLenBy2+1u]  */
-      in = pSrc[i + 1u];
-      pSrc[i + 1u] = pSrc[j + fftLenBy2];
+      /*  pSrc[i+1U] <-> pSrc[j+fftLenBy2];         */
+      /*  pSrc[i+2] <-> pSrc[j+fftLenBy2+1U]  */
+      in = pSrc[i + 1U];
+      pSrc[i + 1U] = pSrc[j + fftLenBy2];
       pSrc[j + fftLenBy2] = in;
 
       /*  Reading the index for the bit reversal */

@@ -71,7 +71,7 @@ arm_status arm_fir_decimate_init_q31(
   arm_status status;
 
   /* The size of the input block must be a multiple of the decimation factor */
-  if ((blockSize % M) != 0u)
+  if ((blockSize % M) != 0U)
   {
     /* Set status as ARM_MATH_LENGTH_ERROR */
     status = ARM_MATH_LENGTH_ERROR;

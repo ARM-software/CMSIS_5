@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        20. May 2015
- * $Revision:    V1.10
+ * $Date:        29. August 2017
+ * $Revision:    V1.11
  *
  * Project:      CMSIS-DAP Source
  * Title:        JTAG_DP.c CMSIS-DAP JTAG DP I/O
@@ -214,7 +214,7 @@ uint8_t JTAG_Transfer##speed (uint32_t request, uint32_t *data) {               
       JTAG_CYCLE_TDI(val);                  /* Set D0..D30 */                   \
       val >>= 1;                                                                \
     }                                                                           \
-    n = DAP_Data.jtag_dev.count - DAP_Data.jtag_dev.index - 1u;                 \
+    n = DAP_Data.jtag_dev.count - DAP_Data.jtag_dev.index - 1U;                 \
     if (n) {                                                                    \
       JTAG_CYCLE_TDI(val);                  /* Set D31 */                       \
       for (--n; n; n--) {                                                       \
@@ -315,7 +315,7 @@ void JTAG_WriteAbort (uint32_t data) {
     JTAG_CYCLE_TDI(data);                   /* Set D0..D30 */
     data >>= 1;
   }
-  n = DAP_Data.jtag_dev.count - DAP_Data.jtag_dev.index - 1u;
+  n = DAP_Data.jtag_dev.count - DAP_Data.jtag_dev.index - 1U;
   if (n) {
     JTAG_CYCLE_TDI(data);                   /* Set D31 */
     for (--n; n; n--) {

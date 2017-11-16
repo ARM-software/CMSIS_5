@@ -269,8 +269,67 @@ Provides the typedef for the callback function \ref ARM_NAND_SignalEvent.
 
 /**
 \struct     ARM_NAND_ECC_INFO
+
 \details
-Structure with information about the Error Correction Code for a NAND.
+Stores the characteristics of a ECC (Error Correction Code) algorithm and provides the information about necessary
+application data handling in order to protect stored data from NAND bit errors.
+
+ECC algorithms applied on NAND memory typically operate on NAND device page level which is virtually divided to multiple
+main and spare areas. Data from main and spare area is taken into account when generating ECC data which is also stored
+into spare area. ECC codeword defines how much data will be protected and how much ECC data will be generated.
+
+To describe how application data must be organized, ECC information structure specifies protection \em type which
+defines the protected part of data. As main and spare are of different size, two different algorithms could be
+provided, we can describe them as ECC0 and ECC1. Type can then have the following values:
+
+Type| Description 
+:---|:-----------
+ 0  | ECC algorithm not used
+ 1  | ECC0 algorithm protects main data
+ 2  | ECC0 algorithm protects main and spare data
+ 3  | ECC0 algorithm protects main and ECC1 algorithm protects spare data
+
+Virtual page division is described with page layout (\em page_layout), number of pages (\em page_count) and
+virtual page size (\em page_size or \em virtual_page_size). Virtual page size used by ECC algorithm can be defined
+by either \em page_size or \em virtual_page_size, depending on the \em page_size values:
+
+Value| Main + Spare size
+:----|:-----------
+ 0   | 512 + 16
+ 1   | 1024 + 32
+ 2   | 2048 + 64
+ 3   | 4096 + 128
+ 4   | 8192 + 256
+ 8   | 512 + 28
+ 9   | 1024 + 56
+ 10  | 2048 + 112
+ 11  | 4096 + 224
+ 12  | 8192 + 448
+ 15  | Not used, use virtual_page_size
+
+Structure member \em virtual_page_size is an array of two 16-bit values. First field of array (i.e. \em virtual_page_size[0])
+contains main area size while second (i.e. \em virtual_page_size[1]) contains spare area size. Number of virtual pages N
+is defined with \em page_count and must be calculated as N = 2 ^ page_count.
+
+Page layout defines main and spare ordering and two different page layouts are possible. First ordering assumes that
+spare area follows after every main area, while in second case all main areas build one contiguous region followed by
+contiguous region of spare areas. This is defined by member \em page_layout:
+
+Layout| Description 
+:-----|:-----------
+ 0    | Single spare follows after single main: Main0,Spare0 ... MainN-1,SpareN-1
+ 1    | Contiguous spare follows after contiguous main: Main0 ... MainN-1,Spare0 ... SpareN-1
+
+ECC codeword size defines the size of data that is protected by ECC algorithm and is different for main and spare
+area. All structure members that define the codeword are therefore arrays of two 16-bit values. Codeword offset defines
+where ECC protected data starts in main (\em codeword_offset[0]) or spare (\em codeword_offset[1]) area, codeword
+size (\em codeword_size) defines the number of data that is protected i.e. data over which ECC is calculated and
+codeword gap (\em codeword_gap) defines the space between two consecutive codeword regions.
+
+Generated ECC data is stored into spare area and is described similar as codeword, with offset from start of spare area
+(\em ecc_offset), size of generated data (\em ecc_size) and gap (\em ecc_gap) between two consecutive ECC data regions.
+
+Number of bits that ECC algorithm can correct per codeword is defined with \em correctable_bits.
 
 <b>Parameter for:</b>
   - \ref ARM_NAND_InquireECC
@@ -772,10 +831,36 @@ int32_t ARM_NAND_InquireECC (int32_t index, ARM_NAND_ECC_INFO *info)  {
 /**
 \fn int32_t ARM_NAND_InquireECC (int32_t index, ARM_NAND_ECC_INFO *info)
 \details
-The function \b  reads error correction code information.
+The function \b ARM_NAND_InquireECC reads error correction code information.
 
-The parameter \em index is the device number. \n
+The parameter \em index is the ECC index and is used to retrieve different ECC configurations. \n
 The parameter \em info is a pointer of type \ref ARM_NAND_ECC_INFO. The data fields store the information.
+
+When multiple different ECC configurations exist, ARM_NAND_ECC_INFO structure exists for each configuration. Parameter
+\em index denotes which configuration will be retrieved. Value of index should start with zero to retrieve first ECC
+configuration and should be incremented in order to retrieve next ECC configuration. When index is out of range function
+ARM_NAND_InquireECC returns with error.
+
+Parameter \em index is used by \ref ARM_NAND_ECC(n) in \ref ARM_NAND_ReadData, \ref ARM_NAND_WriteData and
+\ref ARM_NAND_ExecuteSequence to select suitable ECC configuration.
+
+<b>Example</b>
+\code
+extern ARM_DRIVER_NAND Driver_NAND0; 
+
+ARM_NAND_ECC_INFO ecc;
+int32_t idx;
+ 
+idx = 0;
+while (Driver_NAND0.InquireECC (idx, &ecc) == ARM_DRIVER_OK) {
+  // Examine retrieved ECC configuration
+  if (ecc.type == 2) {
+    // Algorithm ECC0 protects Main+Spare
+  }
+  // ..
+  idx++;
+}
+\endcode
 *******************************************************************************************************************/
 
 void ARM_NAND_SignalEvent (uint32_t dev_num, uint32_t event)  {

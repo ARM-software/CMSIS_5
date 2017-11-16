@@ -146,7 +146,7 @@ void arm_fir_lattice_f32(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
 
     /* Read two samples from input buffer */
@@ -198,13 +198,13 @@ void arm_fir_lattice_f32(
     fcurr4 = fnext4;
 
     /* Loop unrolling.  Process 4 taps at a time . */
-    stageCnt = (numStages - 1u) >> 2u;
+    stageCnt = (numStages - 1U) >> 2U;
 
     /* Loop over the number of taps.  Unroll by a factor of 4.
      ** Repeat until we've computed numStages-3 coefficients. */
 
     /* Process 2nd, 3rd, 4th and 5th taps ... here */
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       /* Read g1(n-1), g3(n-1) .... from state */
       gcurr1 = *px;
@@ -310,9 +310,9 @@ void arm_fir_lattice_f32(
     }
 
     /* If the (filter length -1) is not a multiple of 4, compute the remaining filter taps */
-    stageCnt = (numStages - 1u) % 0x4u;
+    stageCnt = (numStages - 1U) % 0x4U;
 
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       gcurr1 = *px;
 
@@ -353,9 +353,9 @@ void arm_fir_lattice_f32(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* f0(n) = x(n) */
     fcurr1 = *pSrc++;
@@ -382,10 +382,10 @@ void arm_fir_lattice_f32(
        for next stage processing */
     fcurr1 = fnext1;
 
-    stageCnt = (numStages - 1u);
+    stageCnt = (numStages - 1U);
 
     /* stage loop */
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       /* read g2(n) from state buffer */
       gcurr1 = *px;
@@ -426,7 +426,7 @@ void arm_fir_lattice_f32(
 
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* f0(n) = x(n) */
     fcurr = *pSrc++;
@@ -453,10 +453,10 @@ void arm_fir_lattice_f32(
        for next stage processing */
     fcurr = fnext;
 
-    stageCnt = (numStages - 1u);
+    stageCnt = (numStages - 1U);
 
     /* stage loop */
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       /* read g2(n) from state buffer */
       gcurr = *px;

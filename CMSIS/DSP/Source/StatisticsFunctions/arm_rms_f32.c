@@ -74,11 +74,11 @@ void arm_rms_f32(
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /* loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A[0] * A[0] + A[1] * A[1] + A[2] * A[2] + ... + A[blockSize-1] * A[blockSize-1] */
     /* Compute sum of the squares and then store the result in a temporary variable, sum  */
@@ -97,7 +97,7 @@ void arm_rms_f32(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
 #else
   /* Run the below code for Cortex-M0 */
@@ -107,7 +107,7 @@ void arm_rms_f32(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = A[0] * A[0] + A[1] * A[1] + A[2] * A[2] + ... + A[blockSize-1] * A[blockSize-1] */
     /* Compute sum of the squares and then store the results in a temporary variable, sum  */

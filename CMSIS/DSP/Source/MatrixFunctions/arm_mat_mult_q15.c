@@ -84,7 +84,7 @@ arm_status arm_mat_mult_q15(
   uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
   uint16_t numRowsB = pSrcB->numRows;            /* number of rows of input matrix A    */
-  uint16_t col, i = 0u, row = numRowsB, colCnt;  /* loop counters */
+  uint16_t col, i = 0U, row = numRowsB, colCnt;  /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
 
 #ifndef UNALIGNED_SUPPORT_DISABLE
@@ -121,7 +121,7 @@ arm_status arm_mat_mult_q15(
 
       /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
        ** a second loop below computes the remaining 1 to 3 samples. */
-      while (col > 0u)
+      while (col > 0U)
       {
 #ifndef UNALIGNED_SUPPORT_DISABLE
 
@@ -234,9 +234,9 @@ arm_status arm_mat_mult_q15(
 
       /* If the columns of pSrcB is not a multiple of 4, compute any remaining output samples here.
        ** No loop unrolling is used. */
-      col = numColsB % 0x4u;
+      col = numColsB % 0x4U;
 
-      while (col > 0u)
+      while (col > 0U)
       {
         /* Read and store the input element in the destination */
         *px = *pInB++;
@@ -253,11 +253,11 @@ arm_status arm_mat_mult_q15(
       /* Decrement the row loop counter */
       row--;
 
-    } while (row > 0u);
+    } while (row > 0U);
 
     /* Reset the variables for the usage in the following multiplication process */
     row = numRowsA;
-    i = 0u;
+    i = 0U;
     px = pDst->pData;
 
     /* The following loop performs the dot-product of each row in pSrcA with each column in pSrcB */
@@ -285,7 +285,7 @@ arm_status arm_mat_mult_q15(
 
 
         /* matrix multiplication */
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
 #ifndef UNALIGNED_SUPPORT_DISABLE
@@ -328,9 +328,9 @@ arm_status arm_mat_mult_q15(
         }
 
         /* process remaining column samples */
-        colCnt = numColsA & 3u;
+        colCnt = numColsA & 3U;
 
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           sum += *pInA++ * *pInB++;
@@ -346,14 +346,14 @@ arm_status arm_mat_mult_q15(
         /* Decrement the column loop counter */
         col--;
 
-      } while (col > 0u);
+      } while (col > 0U);
 
       i = i + numColsA;
 
       /* Decrement the row loop counter */
       row--;
 
-    } while (row > 0u);
+    } while (row > 0U);
 
 #else
 
@@ -368,7 +368,7 @@ arm_status arm_mat_mult_q15(
   uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
   uint16_t numRowsA = pSrcA->numRows;            /* number of rows of input matrix A    */
-  uint16_t col, i = 0u, row = numRowsA, colCnt;  /* loop counters */
+  uint16_t col, i = 0U, row = numRowsA, colCnt;  /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
 
 #ifdef ARM_MATH_MATRIX_CHECK
@@ -411,7 +411,7 @@ arm_status arm_mat_mult_q15(
         colCnt = numColsA;
 
         /* matrix multiplication */
-        while (colCnt > 0u)
+        while (colCnt > 0U)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           /* Perform the multiply-accumulates */
@@ -432,7 +432,7 @@ arm_status arm_mat_mult_q15(
         /* Update the pointer pIn2 to point to the  starting address of the next column */
         pIn2 = pInB + (numColsB - col);
 
-      } while (col > 0u);
+      } while (col > 0U);
 
       /* Update the pointer pSrcA to point to the  starting address of the next row */
       i = i + numColsB;
@@ -441,7 +441,7 @@ arm_status arm_mat_mult_q15(
       /* Decrement the row loop counter */
       row--;
 
-    } while (row > 0u);
+    } while (row > 0U);
 
 #endif /* #if defined (ARM_MATH_DSP) */
     /* set status as ARM_MATH_SUCCESS */

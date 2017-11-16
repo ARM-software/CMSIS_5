@@ -69,11 +69,11 @@ void arm_abs_q7(
   q31_t out1, out2, out3, out4;                  /* temporary output variables */
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = |A| */
     /* Read inputs */
@@ -109,8 +109,8 @@ void arm_abs_q7(
     *(pDst + 3) = (q7_t) out4;
 
     /* update pointers to process next samples */
-    pSrc += 4u;
-    pDst += 4u;
+    pSrc += 4U;
+    pDst += 4U;
 
     /* Decrement the loop counter */
     blkCnt--;
@@ -118,7 +118,7 @@ void arm_abs_q7(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 #else
 
   /* Run the below code for Cortex-M0 */
@@ -126,7 +126,7 @@ void arm_abs_q7(
 
 #endif /* #define ARM_MATH_CM0_FAMILY */
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C = |A| */
     /* Read the input */

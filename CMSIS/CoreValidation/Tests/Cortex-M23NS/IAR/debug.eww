@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+    <project>
+        <path>$WS_DIR$\debug.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\Bootloader\debug.ewp</path>
+    </project>
+    <batchBuild />
+</workspace>

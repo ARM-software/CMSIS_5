@@ -113,7 +113,7 @@ void arm_fir_sparse_q31(
    * Compute 4 Multiplications at a time. */
   blkCnt = blockSize >> 2;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Perform Multiplications and store in the destination buffer */
     *pOut++ = (q31_t) (((q63_t) * px++ * coeff) >> 32);
@@ -127,9 +127,9 @@ void arm_fir_sparse_q31(
 
   /* If the blockSize is not a multiple of 4,
    * compute the remaining samples */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Perform Multiplications and store in the destination buffer */
     *pOut++ = (q31_t) (((q63_t) * px++ * coeff) >> 32);
@@ -152,9 +152,9 @@ void arm_fir_sparse_q31(
   }
 
   /* Loop over the number of taps. */
-  tapCnt = (uint32_t) numTaps - 2u;
+  tapCnt = (uint32_t) numTaps - 2U;
 
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     /* Working pointer for state buffer is updated */
     py = pState;
@@ -174,7 +174,7 @@ void arm_fir_sparse_q31(
      * Compute 4 MACS at a time. */
     blkCnt = blockSize >> 2;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       out = *pOut;
       out += ((q63_t) * px++ * coeff) >> 32;
@@ -198,9 +198,9 @@ void arm_fir_sparse_q31(
 
     /* If the blockSize is not a multiple of 4,
      * compute the remaining samples */
-    blkCnt = blockSize % 0x4u;
+    blkCnt = blockSize % 0x4U;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Perform Multiply-Accumulate */
       out = *pOut;
@@ -248,7 +248,7 @@ void arm_fir_sparse_q31(
 	 * Compute 4 MACS at a time. */
 	blkCnt = blockSize >> 2;
 
-	while (blkCnt > 0u)
+	while (blkCnt > 0U)
 	{
 		out = *pOut;
 		out += ((q63_t) * px++ * coeff) >> 32;
@@ -272,9 +272,9 @@ void arm_fir_sparse_q31(
 
 	/* If the blockSize is not a multiple of 4,
 	 * compute the remaining samples */
-	blkCnt = blockSize % 0x4u;
+	blkCnt = blockSize % 0x4U;
 
-	while (blkCnt > 0u)
+	while (blkCnt > 0U)
 	{
 		/* Perform Multiply-Accumulate */
 		out = *pOut;
@@ -293,7 +293,7 @@ void arm_fir_sparse_q31(
    * process 4 output samples at a time. */
   blkCnt = blockSize >> 2;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     in = *pOut << 1;
     *pOut++ = in;
@@ -310,9 +310,9 @@ void arm_fir_sparse_q31(
 
   /* If the blockSize is not a multiple of 4,
    * process the remaining output samples */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     in = *pOut << 1;
     *pOut++ = in;
@@ -326,7 +326,7 @@ void arm_fir_sparse_q31(
   /* Run the below code for Cortex-M0 */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Perform Multiplications and store in the destination buffer */
     *pOut++ = (q31_t) (((q63_t) * px++ * coeff) >> 32);
@@ -349,9 +349,9 @@ void arm_fir_sparse_q31(
   }
 
   /* Loop over the number of taps. */
-  tapCnt = (uint32_t) numTaps - 2u;
+  tapCnt = (uint32_t) numTaps - 2U;
 
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     /* Working pointer for state buffer is updated */
     py = pState;
@@ -369,7 +369,7 @@ void arm_fir_sparse_q31(
 
     blkCnt = blockSize;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Perform Multiply-Accumulate */
       out = *pOut;
@@ -415,7 +415,7 @@ void arm_fir_sparse_q31(
 
 	blkCnt = blockSize;
 
-	while (blkCnt > 0u)
+	while (blkCnt > 0U)
 	{
 		/* Perform Multiply-Accumulate */
 		out = *pOut;
@@ -432,7 +432,7 @@ void arm_fir_sparse_q31(
   /* Output is converted into 1.31 format. */
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     in = *pOut << 1;
     *pOut++ = in;

@@ -1,0 +1,15 @@
+import:
+ - ../test.rtebuild
+targets:
+  default: FVP
+  FVP:
+    cpu   : Cortex-M33.no_dsp
+    mcpu  : cortex-m33
+    fpu   : None
+    mfpu  : none
+    target: ARM:82/ARMCM33/Cortex-M33
+source:
+ - ../../Source/CV_CoreFunc.c
+ - ../../Source/CV_CoreInstr.c
+ - ../../Source/CV_MPU_ARMv8.c
+ 

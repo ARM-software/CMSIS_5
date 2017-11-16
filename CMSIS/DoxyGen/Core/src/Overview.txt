@@ -17,7 +17,7 @@ The following sections provide details about the CMSIS-Core (Cortex-M):
  - \ref coreMISRA_Exceptions_pg describes the violations to the MISRA standard.
  - <a href="Modules.html">\b Reference </a> describe the features and functions of the \ref device_h_pg in detail.
  - <a href="Annotated.html">\b Data \b Structures </a> describe the data structures of the \ref device_h_pg in detail.
-    
+
 <hr>
 
 CMSIS-Core (Cortex-M) in ARM::CMSIS Pack
@@ -35,7 +35,7 @@ Files relevant to CMSIS-Core (Cortex-M) are present in the following <b>ARM::CMS
 
 \section ref_v6-v8M Processor Support
 
-CMSIS supports the complete range of <a href="http://www.arm.com/products/processors/cortex-m/index.php" target="_blank"><b>Cortex-M processors</b></a> (with exception of Cortex-M1) and 
+CMSIS supports the complete range of <a href="http://www.arm.com/products/processors/cortex-m/index.php" target="_blank"><b>Cortex-M processors</b></a> (with exception of Cortex-M1) and
 the <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>ARMv8-M architecture</b></a> including security extensions.
 
 \subsection ref_man_sec Cortex-M Reference Manuals
@@ -52,22 +52,23 @@ The \b Cortex-M23 and \b Cortex-M33 are described with Technical Reference Manua
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0550c/cortex_m23_r1p0_technical_reference_manual_DDI0550C_en.pdf" target="_blank"><b>Cortex-M23 Technical Reference Manual</b></a> (ARMv8-M baseline architecture)
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.100230_0002_00_en/cortex_m33_trm_100230_0002_00_en.pdf" target="_blank"><b>Cortex-M33 Technical Reference Manual</b></a> (ARMv8-M mainline architecture)
 
-\subsection ARMv8M ARMv8-M Architecture 
+\subsection ARMv8M ARMv8-M Architecture
 
 ARMv8-M introduces two profiles \b baseline (for power and area constrained applications) and \b mainline (full-featured with optional SIMD, floating-point, and co-processor extensions).
 Both ARMv8-M profiles are supported by CMSIS.
 
 The ARMv8-M Architecture is described in the <a href="http://developer.arm.com/products/architecture/m-profile/docs/ddi0553/latest/armv8-m-architecture-reference-manual" target="_blank"><b>ARMv8-M Architecture Reference Manual</b></a>.
-    
+
 <hr>
 
 \section tested_tools_sec Tested and Verified Toolchains
 
 The \ref templates_pg supplied by ARM have been tested and verified with the following toolchains:
- - ARM: ARM Compiler V5.6 (not for Cortex-M23, Cortex-M33, ARMv8-M)
- - ARM: ARM Compiler V6.7
- - GNU: GNU Tools ARM Embedded 5.4 2016q3
- - IAR: IAR Embedded Workbench Kickstart Edition V6.10
+ - ARM: ARM Compiler 5.06 update 6 (not for Cortex-M23, Cortex-M33, ARMv8-M)
+ - ARM: ARM Compiler 6.9
+ - ARM: ARM Compiler 6.6.1 (not for Cortex-M0, Cortex-M23, Cortex-M33, ARMv8-M)
+ - GNU: GNU Tools for ARM Embedded 6.3.1 20170620
+ - IAR: IAR ANSI C/C++ Compiler for ARM 8.20.1.14183
 
 <hr>
 */
@@ -82,13 +83,21 @@ The \ref templates_pg supplied by ARM have been tested and verified with the fol
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.1.0</td>
+      <td>
+        Added MPU Functions for ARMv8-M for Cortex-M23/M33.\n
+        Moved __SSAT and __USAT intrinsics to CMSIS-Core.\n
+        Aligned __REV, __REV16 and __REVSH intrinsics along supported compilers.\n
+      </td>
+    </tr>
+    <tr>
       <td>V5.0.2</td>
       <td>
          Added macros  \ref \__UNALIGNED_UINT16_READ,  \ref \__UNALIGNED_UINT16_WRITE.\n
          Added macros  \ref \__UNALIGNED_UINT32_READ,  \ref \__UNALIGNED_UINT32_WRITE.\n
          Deprecated macro  \ref \__UNALIGNED_UINT32.\n
-		 Changed \ref version_control_gr macros to be core agnostic. \n
-		 Added \ref mpu_functions for Cortex-M0+/M3/M4/M7.
+     Changed \ref version_control_gr macros to be core agnostic. \n
+     Added \ref mpu_functions for Cortex-M0+/M3/M4/M7.
       </td>
     </tr>
     <tr>
@@ -101,7 +110,7 @@ The \ref templates_pg supplied by ARM have been tested and verified with the fol
     <tr>
       <td>V5.00</td>
       <td>
-	     Added: Cortex-M23, Cortex-M33 support.\n	 
+       Added: Cortex-M23, Cortex-M33 support.\n
          Added: macro __SAU_PRESENT with __SAU_REGION_PRESENT. \n
          Replaced: macro __SAU_PRESENT with __SAU_REGION_PRESENT. \n
          Reworked: SAU register and functions. \n
@@ -146,7 +155,7 @@ The \ref templates_pg supplied by ARM have been tested and verified with the fol
          Added: check if macro is defined before use. \n
          Corrected: function \ref SCB_DisableDCache. \n
          Corrected: macros \ref \_VAL2FLD, \ref \_FLD2VAL. \n
-		 Added: NVIC function virtualization with macros \ref CMSIS_NVIC_VIRTUAL and \ref CMSIS_VECTAB_VIRTUAL.
+     Added: NVIC function virtualization with macros \ref CMSIS_NVIC_VIRTUAL and \ref CMSIS_VECTAB_VIRTUAL.
       </td>
     </tr>
     <tr>
@@ -170,19 +179,19 @@ The \ref templates_pg supplied by ARM have been tested and verified with the fol
     <tr>
       <td>V4.20</td>
       <td>
-         Corrected: MISRA-C:2004 violations. \n	  
+         Corrected: MISRA-C:2004 violations. \n
          Corrected: predefined macro for TI CCS Compiler. \n
          Corrected: function \ref __SHADD16 in arm_math.h. \n
          Updated: cache functions for Cortex-M7. \n
          Added: macros \ref _VAL2FLD, \ref _FLD2VAL to core\_*.h. \n
          Updated: functions \ref __QASX, \ref __QSAX, \ref __SHASX, \ref __SHSAX. \n
-		 Corrected: potential bug in function \ref __SHADD16.
-	  </td>
+     Corrected: potential bug in function \ref __SHADD16.
+    </td>
     </tr>
     <tr>
       <td>V4.10</td>
       <td>
-         Corrected: MISRA-C:2004 violations. \n	  
+         Corrected: MISRA-C:2004 violations. \n
          Corrected: intrinsic functions \ref __DSB, \ref __DMB, \ref __ISB. \n
          Corrected: register definitions for ITCMCR register. \n
          Corrected: register definitions for \ref CONTROL_Type register. \n
@@ -190,53 +199,51 @@ The \ref templates_pg supplied by ARM have been tested and verified with the fol
          Added: register definitions for \ref APSR_Type, \ref IPSR_Type, \ref xPSR_Type register. \n
          Added: \ref __set_BASEPRI_MAX function to core_cmFunc.h. \n
          Added: intrinsic functions \ref __RBIT, \ref __CLZ  for Cortex-M0/CortexM0+. \n
-	  </td>
+      </td>
     </tr>
     <tr>
       <td>V4.00</td>
       <td>
-	     Added: Cortex-M7 support.\n	 
-         Added: intrinsic functions for \ref __RRX, \ref __LDRBT, \ref __LDRHT, \ref __LDRT, \ref __STRBT, \ref __STRHT, and \ref __STRT  \n
-	  </td>
+        Added: Cortex-M7 support.\n
+        Added: intrinsic functions for \ref __RRX, \ref __LDRBT, \ref __LDRHT, \ref __LDRT, \ref __STRBT, \ref __STRHT, and \ref __STRT  \n
+      </td>
     </tr>
     <tr>
       <td>V3.40</td>
-      <td>Corrected: C++ include guard settings.\n	  
-	  </td>
+      <td>Corrected: C++ include guard settings.\n</td>
     </tr>
     <tr>
       <td>V3.30</td>
       <td>Added: COSMIC tool chain support.\n
           Corrected: GCC __SMLALDX instruction intrinsic for Cortex-M4.\n
           Corrected: GCC __SMLALD instruction intrinsic for Cortex-M4.\n
-          Corrected: GCC/CLang warnings.\n	  
-	  </td>
+          Corrected: GCC/CLang warnings.\n
+      </td>
     </tr>
     <tr>
       <td>V3.20</td>
       <td>Added: \ref __BKPT instruction intrinsic.\n
           Added: \ref __SMMLA instruction intrinsic for Cortex-M4.\n
-          Corrected: \ref ITM_SendChar.\n	  
-          Corrected: \ref __enable_irq, \ref __disable_irq and inline assembly for GCC Compiler.\n	  
+          Corrected: \ref ITM_SendChar.\n
+          Corrected: \ref __enable_irq, \ref __disable_irq and inline assembly for GCC Compiler.\n
           Corrected: \ref NVIC_GetPriority and VTOR_TBLOFF for Cortex-M0/M0+, SC000. \n
-          Corrected: rework of in-line assembly functions to remove potential compiler warnings.\n	  
+          Corrected: rework of in-line assembly functions to remove potential compiler warnings.\n
       </td>
     </tr>
     <tr>
       <td>V3.01</td>
-      <td>Added support for Cortex-M0+ processor. \n
-	  </td>
+      <td>Added support for Cortex-M0+ processor.\n</td>
     </tr>
     <tr>
       <td>V3.00</td>
       <td>Added support for GNU GCC ARM Embedded Compiler. \n
-		  Added function \ref __ROR.\n
-		  Added \ref regMap_pg for TPIU, DWT. \n
-		  Added support for \ref core_config_sect "SC000 and SC300 processors".\n
-		  Corrected \ref ITM_SendChar function. \n
-		  Corrected the functions \ref __STREXB, \ref __STREXH, \ref __STREXW for the GNU GCC compiler section. \n
-		  Documentation restructured.
-	  </td>
+        Added function \ref __ROR.\n
+        Added \ref regMap_pg for TPIU, DWT. \n
+        Added support for \ref core_config_sect "SC000 and SC300 processors".\n
+        Corrected \ref ITM_SendChar function. \n
+        Corrected the functions \ref __STREXB, \ref __STREXH, \ref __STREXW for the GNU GCC compiler section. \n
+        Documentation restructured.
+      </td>
     </tr>
     <tr>
       <td>V2.10</td>

@@ -18,7 +18,7 @@ void ref_iir_lattice_f32(
   pState = &S->pState[0];
 
   /* Sample processing */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Read Sample from input buffer */
     /* fN(n) = x(n) */
@@ -38,7 +38,7 @@ void ref_iir_lattice_f32(
     /* Process sample for numStages */
     tapCnt = numStages;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       gcurr = *px1++;
       /* Process sample for last taps */
@@ -63,7 +63,7 @@ void ref_iir_lattice_f32(
     *pDst++ = acc;
 
     /* Advance the state pointer by 1 to process the next group of samples */
-    pState = pState + 1u;
+    pState = pState + 1U;
     blkCnt--;
   }
 
@@ -77,7 +77,7 @@ void ref_iir_lattice_f32(
   tapCnt = numStages;
 
   /* Copy the data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -104,7 +104,7 @@ void ref_iir_lattice_q31(
   pState = &S->pState[0];
 
   /* Sample processing */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Read Sample from input buffer */
     /* fN(n) = x(n) */
@@ -123,7 +123,7 @@ void ref_iir_lattice_q31(
 
     tapCnt = numStages;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       gcurr = *px1++;
       /* Process sample */
@@ -152,10 +152,10 @@ void ref_iir_lattice_q31(
     *px2++ = fnext;
 
     /* write out into pDst */
-    *pDst++ = (q31_t) (acc >> 31u);
+    *pDst++ = (q31_t) (acc >> 31U);
 
     /* Advance the state pointer by 1 to process the next group of samples */
-    pState = pState + 1u;
+    pState = pState + 1U;
     blkCnt--;
   }
 
@@ -169,7 +169,7 @@ void ref_iir_lattice_q31(
   tapCnt = numStages;
 
   /* Copy the remaining q31_t data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -198,7 +198,7 @@ void ref_iir_lattice_q15(
   pState = &S->pState[0];
 
   /* Sample processing */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Read Sample from input buffer */
     /* fN(n) = x(n) */
@@ -217,7 +217,7 @@ void ref_iir_lattice_q15(
 
     tapCnt = numStages;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       gcurr = *px1++;
       /* Process sample */
@@ -248,7 +248,7 @@ void ref_iir_lattice_q15(
     *pDst++ = out;
 
     /* Advance the state pointer by 1 to process the next group of samples */
-    pState = pState + 1u;
+    pState = pState + 1U;
     blkCnt--;
   }
 
@@ -261,7 +261,7 @@ void ref_iir_lattice_q15(
   stgCnt = numStages;
 
   /* copy data */
-  while (stgCnt > 0u)
+  while (stgCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 

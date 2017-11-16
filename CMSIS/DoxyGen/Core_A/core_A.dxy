@@ -38,7 +38,7 @@ PROJECT_NAME           = "CMSIS-Core (Cortex-A)"
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "Version 1.0.0"
+PROJECT_NUMBER         = "Version 1.1.0"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -754,16 +754,17 @@ INPUT                  = src/Overview.txt \
                          src/Template.txt \
                          src/MISRA.txt \
                          src/Ref_SystemAndClock.txt \
-						 src/ref_gic.txt \
-						 src/ref_core_register.txt \
-						 src/ref_cache.txt \
-						 src/ref_timer.txt \
-						 src/ref_mmu.txt \
+                         src/ref_gic.txt \
+                         src/ref_core_register.txt \
+                         src/ref_cache.txt \
+                         src/ref_timer.txt \
+                         src/ref_mmu.txt \
                          src/core_ca.txt \
                          src/cmsis_armcc.txt \
                          src/irq_ctrl.txt \
                          ../../Core_A/Include/core_ca.h \
                          ../../Core_A/Include/cmsis_armcc.h \
+                         ../../Core_A/Include/cmsis_cp15.h \
                          ../../Core_A/Source/irq_ctrl_gic.c \
                          ../../Core_A/Include/irq_ctrl.h \
                          ../../../Device/ARM/ARMCA9/Include/ARMCA9.h \
@@ -1996,7 +1997,7 @@ PREDEFINED             = DOXYGEN \
                          __TASKING__:=1 \
                          __NO_EMBEDDED_ASM:=0 \
                          __CORTEX_A:=9 \
-						 __CA_REV:=0x0000 \
+             __CA_REV:=0x0000 \
                          __TARGET_ARCH_7_A:=1
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this

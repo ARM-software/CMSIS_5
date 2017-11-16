@@ -64,6 +64,13 @@
       <xs:minLength value="1"/>
     </xs:restriction>
   </xs:simpleType>
+
+  <xs:simpleType name="descriptionStringType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[\p{IsBasicLatin}\p{IsLatin-1Supplement}]*" />
+    </xs:restriction>
+  </xs:simpleType>
+  
   <!-- cpuType specifies a selection of Cortex-M and Secure-Cores. This list will get extended as new processors are released -->
   <xs:simpleType name="cpuNameType">
     <xs:restriction base="xs:token">
@@ -72,7 +79,9 @@
       <xs:enumeration value="CM0+"/>
       <xs:enumeration value="CM1"/>
       <xs:enumeration value="SC000"/>
+      <xs:enumeration value="CM23"/>
       <xs:enumeration value="CM3"/>
+      <xs:enumeration value="CM33"/>
       <xs:enumeration value="SC300"/>
       <xs:enumeration value="CM4"/>
       <xs:enumeration value="CM7"/>

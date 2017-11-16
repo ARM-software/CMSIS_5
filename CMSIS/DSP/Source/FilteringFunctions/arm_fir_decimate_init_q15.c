@@ -73,7 +73,7 @@ arm_status arm_fir_decimate_init_q15(
   arm_status status;
 
   /* The size of the input block must be a multiple of the decimation factor */
-  if ((blockSize % M) != 0u)
+  if ((blockSize % M) != 0U)
   {
     /* Set status as ARM_MATH_LENGTH_ERROR */
     status = ARM_MATH_LENGTH_ERROR;
@@ -87,7 +87,7 @@ arm_status arm_fir_decimate_init_q15(
     S->pCoeffs = pCoeffs;
 
     /* Clear the state buffer.  The size of buffer is always (blockSize + numTaps - 1) */
-    memset(pState, 0, (numTaps + (blockSize - 1u)) * sizeof(q15_t));
+    memset(pState, 0, (numTaps + (blockSize - 1U)) * sizeof(q15_t));
 
     /* Assign state pointer */
     S->pState = pState;

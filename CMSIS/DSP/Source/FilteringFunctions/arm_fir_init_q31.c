@@ -72,7 +72,7 @@ void arm_fir_init_q31(
   S->pCoeffs = pCoeffs;
 
   /* Clear state buffer and state array size is (blockSize + numTaps - 1) */
-  memset(pState, 0, (blockSize + ((uint32_t) numTaps - 1u)) * sizeof(q31_t));
+  memset(pState, 0, (blockSize + ((uint32_t) numTaps - 1U)) * sizeof(q31_t));
 
   /* Assign state pointer */
   S->pState = pState;

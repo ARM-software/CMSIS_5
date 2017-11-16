@@ -1,0 +1,17 @@
+result*.xml
+*.log
+*.uvguix*
+*.uvoptx
+/**/Listings/*
+/**/Objects/*
+*.pyc
+/**/Exe/*
+/**/List/*
+/**/Obj/*
+/**/Settings
+*.custom_argvars
+*.dep
+*.ewd
+*.ewt
+*.breadcrumb
+**/build/**/*

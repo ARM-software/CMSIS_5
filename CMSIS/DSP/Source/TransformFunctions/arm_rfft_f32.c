@@ -95,7 +95,7 @@ void arm_rfft_f32(
 
 
   /* Calculation of Real IFFT of input */
-  if (S->ifftFlagR == 1u)
+  if (S->ifftFlagR == 1U)
   {
     /*  Real IFFT core process */
     arm_split_rifft_f32(pSrc, S->fftLenBy2, S->pTwiddleAReal,
@@ -109,7 +109,7 @@ void arm_rfft_f32(
                                      S_CFFT->onebyfftLen);
 
     /* Bit reversal process */
-    if (S->bitReverseFlagR == 1u)
+    if (S->bitReverseFlagR == 1U)
     {
       arm_bitreversal_f32(pDst, S_CFFT->fftLen,
                           S_CFFT->bitRevFactor, S_CFFT->pBitRevTable);
@@ -125,7 +125,7 @@ void arm_rfft_f32(
                              S_CFFT->pTwiddle, S_CFFT->twidCoefModifier);
 
     /* Bit reversal process */
-    if (S->bitReverseFlagR == 1u)
+    if (S->bitReverseFlagR == 1U)
     {
       arm_bitreversal_f32(pSrc, S_CFFT->fftLen,
                           S_CFFT->bitRevFactor, S_CFFT->pBitRevTable);
@@ -166,16 +166,16 @@ void arm_split_rfft_f32(
   float32_t outR, outI;                          /* Temporary variables for output */
   float32_t *pCoefA, *pCoefB;                    /* Temporary pointers for twiddle factors */
   float32_t CoefA1, CoefA2, CoefB1;              /* Temporary variables for twiddle coefficients */
-  float32_t *pDst1 = &pDst[2], *pDst2 = &pDst[(4u * fftLen) - 1u];      /* temp pointers for output buffer */
-  float32_t *pSrc1 = &pSrc[2], *pSrc2 = &pSrc[(2u * fftLen) - 1u];      /* temp pointers for input buffer */
+  float32_t *pDst1 = &pDst[2], *pDst2 = &pDst[(4U * fftLen) - 1U];      /* temp pointers for output buffer */
+  float32_t *pSrc1 = &pSrc[2], *pSrc2 = &pSrc[(2U * fftLen) - 1U];      /* temp pointers for input buffer */
 
   /* Init coefficient pointers */
-  pCoefA = &pATable[modifier * 2u];
-  pCoefB = &pBTable[modifier * 2u];
+  pCoefA = &pATable[modifier * 2U];
+  pCoefB = &pBTable[modifier * 2U];
 
-  i = fftLen - 1u;
+  i = fftLen - 1U;
 
-  while (i > 0u)
+  while (i > 0U)
   {
     /*
        outR = (pSrc[2 * i] * pATable[2 * i] - pSrc[2 * i + 1] * pATable[2 * i + 1]
@@ -221,15 +221,15 @@ void arm_split_rfft_f32(
     *pDst2-- = outR;
 
     /* update coefficient pointer */
-    pCoefB = pCoefB + (modifier * 2u);
-    pCoefA = pCoefA + ((modifier * 2u) - 1u);
+    pCoefB = pCoefB + (modifier * 2U);
+    pCoefA = pCoefA + ((modifier * 2U) - 1U);
 
     i--;
 
   }
 
-  pDst[2u * fftLen] = pSrc[0] - pSrc[1];
-  pDst[(2u * fftLen) + 1u] = 0.0f;
+  pDst[2U * fftLen] = pSrc[0] - pSrc[1];
+  pDst[(2U * fftLen) + 1U] = 0.0f;
 
   pDst[0] = pSrc[0] + pSrc[1];
   pDst[1] = 0.0f;
@@ -259,12 +259,12 @@ void arm_split_rifft_f32(
   float32_t outR, outI;                          /* Temporary variables for output */
   float32_t *pCoefA, *pCoefB;                    /* Temporary pointers for twiddle factors */
   float32_t CoefA1, CoefA2, CoefB1;              /* Temporary variables for twiddle coefficients */
-  float32_t *pSrc1 = &pSrc[0], *pSrc2 = &pSrc[(2u * fftLen) + 1u];
+  float32_t *pSrc1 = &pSrc[0], *pSrc2 = &pSrc[(2U * fftLen) + 1U];
 
   pCoefA = &pATable[0];
   pCoefB = &pBTable[0];
 
-  while (fftLen > 0u)
+  while (fftLen > 0U)
   {
     /*
        outR = (pIn[2 * i] * pATable[2 * i] + pIn[2 * i + 1] * pATable[2 * i + 1] +
@@ -308,8 +308,8 @@ void arm_split_rifft_f32(
     *pDst++ = outI;
 
     /* update coefficient pointer */
-    pCoefB = pCoefB + (modifier * 2u);
-    pCoefA = pCoefA + ((modifier * 2u) - 1u);
+    pCoefB = pCoefB + (modifier * 2U);
+    pCoefA = pCoefA + ((modifier * 2U) - 1U);
 
     /* Decrement loop count */
     fftLen--;

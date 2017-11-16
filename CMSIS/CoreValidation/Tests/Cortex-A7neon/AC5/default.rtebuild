@@ -1,0 +1,11 @@
+import:
+ - ../cortex-a7.rtebuild
+config:
+  default: FVP
+  FVP:
+    toolchain: ARMCC5
+    cflags: [ "--cpu=${cpu}", --apcs=/hardfp, --arm, -D__MICROLIB, --c99, -O0, -g, -c ]
+    asmflags: [ "--cpu=${cpu}", --apcs=/hardfp, --arm, -D__MICROLIB, --c99, -O0, -g, -c ]
+    linkflags: [ "--cpu=${cpu}", "--entry=Vectors", "--library_type=microlib" ]
+include: 
+ - ./

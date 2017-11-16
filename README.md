@@ -1,6 +1,6 @@
 # CMSIS Version 5
 
-The branch *master* of this GitHub repository contains the CMSIS Version 5.1.0.  The [documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
+The branch *master* of this GitHub repository contains the CMSIS Version 5.2.0.  The [documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
 
 Use [Issues](https://github.com/ARM-software/CMSIS_5#issues-and-labels) to provide feedback and report problems for CMSIS Version 5. 
 
@@ -11,7 +11,7 @@ A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) i
 ## What's Hot
  - CMSIS-RTOS2: RTX 5 is now available for IAR, GCC, ARM Compiler 5, ARM Compiler 6
  - CMSIS-RTOS2: FreeRTOS adoption (release) is available https://github.com/ARM-software/CMSIS-FreeRTOS
- - CMSIS-Core: compiler agonstic features extended to simplify transition on LLVM based front-end
+ - CMSIS-Core: compiler agnostic features extended to simplify transition on LLVM based front-end
  - CMSIS-Core-A: preview of the CMSIS-Core for Cortex-A
  - Coming soon: CMSIS-RTOS2 for Cortex-A
 

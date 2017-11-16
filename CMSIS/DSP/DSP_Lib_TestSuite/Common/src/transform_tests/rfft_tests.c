@@ -26,11 +26,11 @@
             /* Initialize the RFFT and CFFT Instances */                \
             arm_rfft_init_##suffix(                                     \
                 &rfft_inst_fut,                                         \
-                (uint32_t) fftlen, ifft_flag, 1u);                      \
+                (uint32_t) fftlen, ifft_flag, 1U);                      \
                                                                         \
             arm_rfft_init_##suffix(                                     \
                 &rfft_inst_ref,                                         \
-                (uint32_t) fftlen, ifft_flag, 1u);                      \
+                (uint32_t) fftlen, ifft_flag, 1U);                      \
                                                                         \
             if (ifft_flag)                                               \
             {                                                           \
@@ -74,11 +74,11 @@
             return JTEST_TEST_PASSED;                                   \
     }
 
-RFFT_DEFINE_TEST(q31, forward, 0u, TYPE_FROM_ABBREV(q31), TYPE_FROM_ABBREV(q31));
-RFFT_DEFINE_TEST(q15, forward, 0u, TYPE_FROM_ABBREV(q15), TYPE_FROM_ABBREV(q15));
-//RFFT_DEFINE_TEST(f32, inverse, 1u, TYPE_FROM_ABBREV(f32), TYPE_FROM_ABBREV(f32));
-RFFT_DEFINE_TEST(q31, inverse, 1u, TYPE_FROM_ABBREV(q31), TYPE_FROM_ABBREV(q31));
-RFFT_DEFINE_TEST(q15, inverse, 1u, TYPE_FROM_ABBREV(q15), TYPE_FROM_ABBREV(q15));
+RFFT_DEFINE_TEST(q31, forward, 0U, TYPE_FROM_ABBREV(q31), TYPE_FROM_ABBREV(q31));
+RFFT_DEFINE_TEST(q15, forward, 0U, TYPE_FROM_ABBREV(q15), TYPE_FROM_ABBREV(q15));
+//RFFT_DEFINE_TEST(f32, inverse, 1U, TYPE_FROM_ABBREV(f32), TYPE_FROM_ABBREV(f32));
+RFFT_DEFINE_TEST(q31, inverse, 1U, TYPE_FROM_ABBREV(q31), TYPE_FROM_ABBREV(q31));
+RFFT_DEFINE_TEST(q15, inverse, 1U, TYPE_FROM_ABBREV(q15), TYPE_FROM_ABBREV(q15));
 
 /*--------------------------------------------------------------------------------*/
 /* Collect all tests in a group */

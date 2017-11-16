@@ -70,11 +70,11 @@ void arm_cmplx_mult_real_q15(
   q31_t mul1, mul2, mul3, mul4;                  /* Temporary variables to hold intermediate data */
 
   /* loop Unrolling */
-  blkCnt = numSamples >> 2u;
+  blkCnt = numSamples >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[2 * i] = A[2 * i] * B[i].            */
     /* C[2 * i + 1] = A[2 * i + 1] * B[i].        */
@@ -103,10 +103,10 @@ void arm_cmplx_mult_real_q15(
 #endif /* #ifndef ARM_MATH_BIG_ENDIAN */
 
     /* saturate the result */
-    out1 = (q15_t) __SSAT(mul1 >> 15u, 16);
-    out2 = (q15_t) __SSAT(mul2 >> 15u, 16);
-    out3 = (q15_t) __SSAT(mul3 >> 15u, 16);
-    out4 = (q15_t) __SSAT(mul4 >> 15u, 16);
+    out1 = (q15_t) __SSAT(mul1 >> 15U, 16);
+    out2 = (q15_t) __SSAT(mul2 >> 15U, 16);
+    out3 = (q15_t) __SSAT(mul3 >> 15U, 16);
+    out4 = (q15_t) __SSAT(mul4 >> 15U, 16);
 
     /* pack real and imaginary outputs and store them to destination */
     *__SIMD32(pCmplxDst)++ = __PKHBT(out1, out2, 16);
@@ -132,10 +132,10 @@ void arm_cmplx_mult_real_q15(
 
 #endif /* #ifndef ARM_MATH_BIG_ENDIAN */
 
-    out1 = (q15_t) __SSAT(mul1 >> 15u, 16);
-    out2 = (q15_t) __SSAT(mul2 >> 15u, 16);
-    out3 = (q15_t) __SSAT(mul3 >> 15u, 16);
-    out4 = (q15_t) __SSAT(mul4 >> 15u, 16);
+    out1 = (q15_t) __SSAT(mul1 >> 15U, 16);
+    out2 = (q15_t) __SSAT(mul2 >> 15U, 16);
+    out3 = (q15_t) __SSAT(mul3 >> 15U, 16);
+    out4 = (q15_t) __SSAT(mul4 >> 15U, 16);
 
     *__SIMD32(pCmplxDst)++ = __PKHBT(out1, out2, 16);
     *__SIMD32(pCmplxDst)++ = __PKHBT(out3, out4, 16);
@@ -146,9 +146,9 @@ void arm_cmplx_mult_real_q15(
 
   /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = numSamples % 0x4u;
+  blkCnt = numSamples % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[2 * i] = A[2 * i] * B[i].            */
     /* C[2 * i + 1] = A[2 * i + 1] * B[i].        */
@@ -167,7 +167,7 @@ void arm_cmplx_mult_real_q15(
 
   /* Run the below code for Cortex-M0 */
 
-  while (numSamples > 0u)
+  while (numSamples > 0U)
   {
     /* realOut = realA * realB.            */
     /* imagOut = imagA * realB.                */

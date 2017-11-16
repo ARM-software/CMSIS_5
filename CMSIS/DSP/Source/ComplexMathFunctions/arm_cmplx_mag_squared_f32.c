@@ -86,11 +86,11 @@ void arm_cmplx_mag_squared_f32(
   float32_t out1, out2, out3, out4;              /* Temporary variables to hold output values */
 
   /*loop Unrolling */
-  blkCnt = numSamples >> 2u;
+  blkCnt = numSamples >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[0] = (A[0] * A[0] + A[1] * A[1]) */
     /* read real input sample from source buffer */
@@ -160,13 +160,13 @@ void arm_cmplx_mag_squared_f32(
     pDst[2] = out3;
 
     /* increment destination pointer by 8 to process next samples */
-    pSrc += 8u;
+    pSrc += 8U;
 
     /* store output to destination */
     pDst[3] = out4;
 
     /* increment destination pointer by 4 to process next samples */
-    pDst += 4u;
+    pDst += 4U;
 
     /* Decrement the loop counter */
     blkCnt--;
@@ -174,7 +174,7 @@ void arm_cmplx_mag_squared_f32(
 
   /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = numSamples % 0x4u;
+  blkCnt = numSamples % 0x4U;
 
 #else
 
@@ -184,7 +184,7 @@ void arm_cmplx_mag_squared_f32(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* C[0] = (A[0] * A[0] + A[1] * A[1]) */
     real = *pSrc++;

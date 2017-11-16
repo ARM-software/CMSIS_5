@@ -76,7 +76,7 @@ void arm_fir_fast_q15(
 
   /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[(numTaps - 1u)]);
+  pStateCurnt = &(S->pState[(numTaps - 1U)]);
 
   /* Apply loop unrolling and compute 4 output values simultaneously.
    * The variables acc0 ... acc3 hold output values that are being computed:
@@ -91,7 +91,7 @@ void arm_fir_fast_q15(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy four new input samples into the state buffer.
      ** Use 32-bit SIMD to move the 16-bit data.  Only requires two copies. */
@@ -164,7 +164,7 @@ void arm_fir_fast_q15(
       acc0 = __SMLAD(x2, c0, acc0);
 
       /* Read state x[n-N-6], x[n-N-7] with offset */
-      x2 = _SIMD32_OFFSET(px + 2u);
+      x2 = _SIMD32_OFFSET(px + 2U);
 
       /* acc2 +=  b[N-2] * x[n-N-4] + b[N-3] * x[n-N-5] */
       acc2 = __SMLAD(x0, c0, acc2);
@@ -183,7 +183,7 @@ void arm_fir_fast_q15(
       acc3 = __SMLADX(x1, c0, acc3);
 
       /* Update state pointer for next state reading */
-      px += 4u;
+      px += 4U;
 
       /* Decrement tap count */
       tapCnt--;
@@ -192,7 +192,7 @@ void arm_fir_fast_q15(
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps.
      ** This is always be 2 taps since the filter length is even. */
-    if ((numTaps & 0x3u) != 0u)
+    if ((numTaps & 0x3U) != 0U)
     {
 
       /* Read last two coefficients */
@@ -249,7 +249,7 @@ void arm_fir_fast_q15(
 #endif /*      #ifndef ARM_MATH_BIG_ENDIAN       */
 
     /* Advance the state pointer by 4 to process the next group of 4 samples */
-    pState = pState + 4u;
+    pState = pState + 4U;
 
     /* Decrement the loop counter */
     blkCnt--;
@@ -257,8 +257,8 @@ void arm_fir_fast_q15(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
-  while (blkCnt > 0u)
+  blkCnt = blockSize % 0x4U;
+  while (blkCnt > 0U)
   {
     /* Copy two samples into state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -270,7 +270,7 @@ void arm_fir_fast_q15(
     px = pState;
     pb = pCoeffs;
 
-    tapCnt = numTaps >> 1u;
+    tapCnt = numTaps >> 1U;
 
     do
     {
@@ -280,14 +280,14 @@ void arm_fir_fast_q15(
 
       tapCnt--;
     }
-    while (tapCnt > 0u);
+    while (tapCnt > 0U);
 
     /* The result is in 2.30 format.  Convert to 1.15 with saturation.
      ** Then store the output in the destination buffer. */
     *pDst++ = (q15_t) (__SSAT((acc0 >> 15), 16));
 
     /* Advance state pointer by 1 for the next sample */
-    pState = pState + 1u;
+    pState = pState + 1U;
 
     /* Decrement the loop counter */
     blkCnt--;
@@ -301,9 +301,9 @@ void arm_fir_fast_q15(
   pStateCurnt = S->pState;
 
   /* Calculation of count for copying integer writes */
-  tapCnt = (numTaps - 1u) >> 2;
+  tapCnt = (numTaps - 1U) >> 2;
 
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -315,10 +315,10 @@ void arm_fir_fast_q15(
   }
 
   /* Calculation of count for remaining q15_t data */
-  tapCnt = (numTaps - 1u) % 0x4u;
+  tapCnt = (numTaps - 1U) % 0x4U;
 
   /* copy remaining data */
-  while (tapCnt > 0u)
+  while (tapCnt > 0U)
   {
     *pStateCurnt++ = *pState++;
 

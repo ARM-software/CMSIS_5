@@ -1,0 +1,17 @@
+import:
+ - ${home}/.rtebuild/toolchain.rtebuild
+config:
+  FVP:
+    lintflags : [ "Config/MISRA_C_2012_Config.lnt", "-wlib(4)", "-wlib(1)", "+ffn", "-width(0)", "-hf1", "-\"format=%f(%l): %t %n: %m (%t <a href=\\q/userContent/LintMsgRef.html#%n\\q>%n</a>)\"" ]
+include: 
+ - ../Include
+source:
+ - ./main.c
+ - ../Source/cmsis_cv.c
+ - ../Source/CV_Framework.c
+ - ../Source/CV_Report.c
+packs:
+ - ARM.CMSIS
+components:
+ - CMSIS.CORE
+ - Device.Startup

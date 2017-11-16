@@ -174,7 +174,8 @@ IRQ_Handler\
                 IMPORT  IRQ_EndOfInterrupt
 
                 SUB     LR, LR, #4                  ; Pre-adjust LR
-                SRSFD   SP!, #MODE_IRQ              ; Save LR_irq and SPRS_irq
+                SRSFD   SP!, #MODE_SVC              ; Save LR_irq and SPRS_irq on to the SVC stack
+                CPS     #MODE_SVC                   ; Change to SVC mode
                 PUSH    {R0-R3, R12, LR}            ; Save APCS corruptible registers
 
                 MOV     R3, SP                      ; Move SP into R3
@@ -194,21 +195,9 @@ IRQ_Handler\
                 CMP     R0, #0                      ; Check if handler address is 0
                 BEQ     IRQ_End                     ; If 0, end interrupt and return
 
-                CPS     #MODE_SVC                   ; Change to SVC mode
-
-                MOV     R3, SP                      ; Move SP into R3
-                AND     R3, R3, #4                  ; Get stack adjustment to ensure 8-byte alignment
-                SUB     SP, SP, R3                  ; Adjust stack
-                PUSH    {R3, R4}                    ; Store stack adjustment(R3) and alignment dummy(R4)
-
                 CPSIE   i                           ; Re-enable interrupts
                 BLX     R0                          ; Call IRQ handler
                 CPSID   i                           ; Disable interrupts
-
-                POP     {R3, R4}                    ; Restore stack adjustment(R3) and alignment dummy(R4)
-                ADD     SP, SP, R3                  ; Unadjust stack
-
-                CPS     #MODE_IRQ                   ; Change to IRQ mode
 
 IRQ_End
                 MOV     R0, R4                      ; Move interrupt ID to R0
@@ -395,19 +384,18 @@ osRtxContextSave
 
                 VMRS    R2, FPSCR
                 STMDB   R3!, {R2,R12}               ; Push FPSCR, maintain 8-byte alignment
-                IF {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} == 16
-                VSTMDB  R3!, {D0-D15}
-                LDRB    R2, [R0, #TCB_SP_FRAME]     ; Record in TCB that VFP/D16 state is stacked
-                ORR     R2, R2, #2
-                STRB    R2, [R0, #TCB_SP_FRAME]
-                ENDIF
+
+                VSTMDB  R3!, {D0-D15}               ; Save D0-D15
                 IF {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} == 32
-                VSTMDB  R3!, {D0-D15}
-                VSTMDB  R3!, {D16-D31}
-                LDRB    R2, [R0, #TCB_SP_FRAME]     ; Record in TCB that NEON/D32 state is stacked
-                ORR     R2, R2, #4
-                STRB    R2, [R0, #TCB_SP_FRAME]
+                VSTMDB  R3!, {D16-D31}              ; Save D16-D31
                 ENDIF
+                LDRB    R2, [R0, #TCB_SP_FRAME]
+                IF {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} == 32
+                ORR     R2, R2, #4                  ; NEON state
+                ELSE
+                ORR     R2, R2, #2                  ; VFP state
+                ENDIF
+                STRB    R2, [R0, #TCB_SP_FRAME]     ; Record VFP/NEON state
 
 osRtxContextSave1
                 STR     R3, [R0, #TCB_SP_OFS]       ; Store user sp to osRtxInfo.thread.run.curr
@@ -425,11 +413,11 @@ osRtxContextRestore
                 BEQ     osRtxContextRestore1        ; No VFP
                 ISB                                 ; Only sync if we enabled VFP, otherwise we will context switch before next VFP instruction anyway
                 IF {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} == 32
-                VLDMIA  R3!, {D16-D31}
+                VLDMIA  R3!, {D16-D31}              ; Restore D16-D31
                 ENDIF
-                VLDMIA  R3!, {D0-D15}
+                VLDMIA  R3!, {D0-D15}               ; Restore D0-D15
                 LDR     R2, [R3]
-                VMSR    FPSCR, R2
+                VMSR    FPSCR, R2                   ; Restore FPSCR
                 ADD     R3, R3, #8
 
 osRtxContextRestore1
@@ -438,6 +426,7 @@ osRtxContextRestore1
                 ADD     R3, R3, #32                 ; Adjust sp
                 PUSH    {R3}                        ; Push sp onto stack
                 LDMIA   SP, {SP}^                   ; Restore SP_usr
+                ADD     SP, SP, #4                  ; Adjust SP_svc
                 LDMIA   R12!, {R0-R3}               ; Restore User R0-R3
                 LDR     LR, [R12, #12]              ; Load SPSR into LR
                 MSR     SPSR_CXSF, LR               ; Restore SPSR

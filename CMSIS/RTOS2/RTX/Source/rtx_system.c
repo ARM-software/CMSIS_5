@@ -150,6 +150,7 @@ void osRtxTick_Handler (void) {
           if ((thread != NULL) && (thread->priority == osRtxInfo.thread.robin.thread->priority)) {
             osRtxThreadListRemove(thread);
             osRtxThreadReadyPut(osRtxInfo.thread.robin.thread);
+            EvrRtxThreadPreempted(osRtxInfo.thread.robin.thread);
             osRtxThreadSwitch(thread);
             osRtxInfo.thread.robin.thread = thread;
             osRtxInfo.thread.robin.tick   = osRtxInfo.thread.robin.timeout;

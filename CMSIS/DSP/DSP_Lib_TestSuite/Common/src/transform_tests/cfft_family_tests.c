@@ -151,8 +151,8 @@
     /*                         TYPE_FROM_ABBREV(q15),                  \ */
     /*                         ifft_flag) */
 
-CFFT_FAMILY_DEFINE_ALL_TESTS(forward, 0u);
-CFFT_FAMILY_DEFINE_ALL_TESTS(inverse, 1u);
+CFFT_FAMILY_DEFINE_ALL_TESTS(forward, 0U);
+CFFT_FAMILY_DEFINE_ALL_TESTS(inverse, 1U);
 
 /*--------------------------------------------------------------------------------*/
 /* Collect all tests in a group */

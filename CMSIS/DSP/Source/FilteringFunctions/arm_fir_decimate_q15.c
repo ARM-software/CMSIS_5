@@ -84,7 +84,7 @@ void arm_fir_decimate_q15(
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = S->pState + (numTaps - 1u);
+  pStateCurnt = S->pState + (numTaps - 1U);
 
 
   /* Total number of output samples to be computed */
@@ -92,7 +92,7 @@ void arm_fir_decimate_q15(
   blkCntN3 = outBlockSize - (2 * blkCnt);
 
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = 2 * S->M;
@@ -121,7 +121,7 @@ void arm_fir_decimate_q15(
 
     /* Loop over the number of taps.  Unroll by a factor of 4.
      ** Repeat until we've computed numTaps-4 coefficients. */
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Read the Read b[numTaps-1] and b[numTaps-2]  coefficients */
       c0 = *__SIMD32(pb)++;
@@ -154,9 +154,9 @@ void arm_fir_decimate_q15(
     }
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
-    tapCnt = numTaps % 0x4u;
+    tapCnt = numTaps % 0x4U;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Read coefficients */
       c0 = *pb++;
@@ -189,7 +189,7 @@ void arm_fir_decimate_q15(
 
 
 
-  while (blkCntN3 > 0u)
+  while (blkCntN3 > 0U)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -214,7 +214,7 @@ void arm_fir_decimate_q15(
 
     /* Loop over the number of taps.  Unroll by a factor of 4.
      ** Repeat until we've computed numTaps-4 coefficients. */
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Read the Read b[numTaps-1] and b[numTaps-2]  coefficients */
       c0 = *__SIMD32(pb)++;
@@ -239,9 +239,9 @@ void arm_fir_decimate_q15(
     }
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
-    tapCnt = numTaps % 0x4u;
+    tapCnt = numTaps % 0x4U;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Read coefficients */
       c0 = *pb++;
@@ -275,10 +275,10 @@ void arm_fir_decimate_q15(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  i = (numTaps - 1u) >> 2u;
+  i = (numTaps - 1U) >> 2U;
 
   /* copy data */
-  while (i > 0u)
+  while (i > 0U)
   {
     *__SIMD32(pStateCurnt)++ = *__SIMD32(pState)++;
     *__SIMD32(pStateCurnt)++ = *__SIMD32(pState)++;
@@ -287,10 +287,10 @@ void arm_fir_decimate_q15(
     i--;
   }
 
-  i = (numTaps - 1u) % 0x04u;
+  i = (numTaps - 1U) % 0x04U;
 
   /* copy data */
-  while (i > 0u)
+  while (i > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -324,14 +324,14 @@ void arm_fir_decimate_q15(
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = S->pState + (numTaps - 1u);
+  pStateCurnt = S->pState + (numTaps - 1U);
 
 
   /* Total number of output samples to be computed */
   blkCnt = outBlockSize / 2;
   blkCntN3 = outBlockSize - (2 * blkCnt);
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = 2 * S->M;
@@ -360,7 +360,7 @@ void arm_fir_decimate_q15(
 
     /* Loop over the number of taps.  Unroll by a factor of 4.
      ** Repeat until we've computed numTaps-4 coefficients. */
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Read the Read b[numTaps-1] coefficients */
       c0 = *pb++;
@@ -411,9 +411,9 @@ void arm_fir_decimate_q15(
     }
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
-    tapCnt = numTaps % 0x4u;
+    tapCnt = numTaps % 0x4U;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Read coefficients */
       c0 = *pb++;
@@ -444,7 +444,7 @@ void arm_fir_decimate_q15(
     blkCnt--;
   }
 
-  while (blkCntN3 > 0u)
+  while (blkCntN3 > 0U)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -469,7 +469,7 @@ void arm_fir_decimate_q15(
 
     /* Loop over the number of taps.  Unroll by a factor of 4.
      ** Repeat until we've computed numTaps-4 coefficients. */
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Read the Read b[numTaps-1] coefficients */
       c0 = *pb++;
@@ -512,9 +512,9 @@ void arm_fir_decimate_q15(
     }
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
-    tapCnt = numTaps % 0x4u;
+    tapCnt = numTaps % 0x4U;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Read coefficients */
       c0 = *pb++;
@@ -548,10 +548,10 @@ void arm_fir_decimate_q15(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  i = (numTaps - 1u) >> 2u;
+  i = (numTaps - 1U) >> 2U;
 
   /* copy data */
-  while (i > 0u)
+  while (i > 0U)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -562,10 +562,10 @@ void arm_fir_decimate_q15(
     i--;
   }
 
-  i = (numTaps - 1u) % 0x04u;
+  i = (numTaps - 1U) % 0x04U;
 
   /* copy data */
-  while (i > 0u)
+  while (i > 0U)
   {
     *pStateCurnt++ = *pState++;
 
@@ -602,12 +602,12 @@ void arm_fir_decimate_q15(
 
   /* S->pState buffer contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = S->pState + (numTaps - 1u);
+  pStateCurnt = S->pState + (numTaps - 1U);
 
   /* Total number of output samples to be computed */
   blkCnt = outBlockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -629,7 +629,7 @@ void arm_fir_decimate_q15(
 
     tapCnt = numTaps;
 
-    while (tapCnt > 0u)
+    while (tapCnt > 0U)
     {
       /* Read coefficients */
       c0 = *pb++;
@@ -663,10 +663,10 @@ void arm_fir_decimate_q15(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  i = numTaps - 1u;
+  i = numTaps - 1U;
 
   /* copy data */
-  while (i > 0u)
+  while (i > 0U)
   {
     *pStateCurnt++ = *pState++;
 

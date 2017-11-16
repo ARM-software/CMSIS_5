@@ -78,8 +78,10 @@ __STATIC_INLINE uint32_t __get_PSP (void) {
   register uint32_t ret;
 
   __asm volatile (
+#if !defined ( __ICCARM__ )
     ".syntax unified\n\t"
     ".arm\n\t"
+#endif
     "sub  sp,sp,#4\n\t"
     "stm  sp,{sp}^\n\t"
     "pop  {%[ret]}\n\t"
@@ -159,15 +161,9 @@ __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
   return svc##f(svcRtx##f,a1,a2,a3,a4);                                        \
 }
 
-#define SVC0_0M SVC0_0
-#define SVC0_1M SVC0_1
-#define SVC0_2M SVC0_2
-#define SVC0_3M SVC0_3
-#define SVC0_4M SVC0_4
-
 #elif defined(__ICCARM__)
 
-#define SVC_Setup(f)                                                           \
+#define SVC_ArgF(f)                                                            \
   __asm(                                                                       \
     "mov r12,%0\n"                                                             \
     :: "r"(&f): "r12"                                                          \
@@ -181,7 +177,7 @@ __SVC_INDIRECT(0) t    svc##f ();                                              \
                   t svcRtx##f (void);                                          \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (void) {                                         \
-  SVC_Setup(svcRtx##f);                                                        \
+  SVC_ArgF(svcRtx##f);                                                         \
   svc##f();                                                                    \
 }
 
@@ -190,7 +186,7 @@ __SVC_INDIRECT(0) t    svc##f ();                                              \
                   t svcRtx##f (void);                                          \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (void) {                                         \
-  SVC_Setup(svcRtx##f);                                                        \
+  SVC_ArgF(svcRtx##f);                                                         \
   return svc##f();                                                             \
 }
 
@@ -199,7 +195,7 @@ __SVC_INDIRECT(0) t    svc##f (t1 a1);                                         \
                   t svcRtx##f (t1 a1);                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1) {                                        \
-  SVC_Setup(svcRtx##f);                                                        \
+  SVC_ArgF(svcRtx##f);                                                         \
   svc##f(a1);                                                                  \
 }
 
@@ -208,7 +204,7 @@ __SVC_INDIRECT(0) t    svc##f (t1 a1);                                         \
                   t svcRtx##f (t1 a1);                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1) {                                        \
-  SVC_Setup(svcRtx##f);                                                        \
+  SVC_ArgF(svcRtx##f);                                                         \
   return svc##f(a1);                                                           \
 }
 
@@ -217,7 +213,7 @@ __SVC_INDIRECT(0) t    svc##f (t1 a1, t2 a2);                                  \
                   t svcRtx##f (t1 a1, t2 a2);                                  \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2) {                                 \
-  SVC_Setup(svcRtx##f);                                                        \
+  SVC_ArgF(svcRtx##f);                                                         \
   return svc##f(a1,a2);                                                        \
 }
 
@@ -226,7 +222,7 @@ __SVC_INDIRECT(0) t    svc##f (t1 a1, t2 a2, t3 a3);                           \
                   t svcRtx##f (t1 a1, t2 a2, t3 a3);                           \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3) {                          \
-  SVC_Setup(svcRtx##f);                                                        \
+  SVC_ArgF(svcRtx##f);                                                         \
   return svc##f(a1,a2,a3);                                                     \
 }
 
@@ -235,15 +231,9 @@ __SVC_INDIRECT(0) t    svc##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
                   t svcRtx##f (t1 a1, t2 a2, t3 a3, t4 a4);                    \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
-  SVC_Setup(svcRtx##f);                                                        \
+  SVC_ArgF(svcRtx##f);                                                         \
   return svc##f(a1,a2,a3,a4);                                                  \
 }
-
-#define SVC0_0M SVC0_0
-#define SVC0_1M SVC0_1
-#define SVC0_2M SVC0_2
-#define SVC0_3M SVC0_3
-#define SVC0_4M SVC0_4
 
 #else   // !(defined(__CC_ARM) || defined(__ICCARM__))
 
@@ -341,12 +331,6 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
   return (t) __r0;                                                             \
 }
 
-#define SVC0_0M SVC0_0
-#define SVC0_1M SVC0_1
-#define SVC0_2M SVC0_2
-#define SVC0_3M SVC0_3
-#define SVC0_4M SVC0_4
-
 #endif
 
 
@@ -354,8 +338,8 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
 
 extern uint8_t IRQ_PendSV;
 
-/// Initialize SVC and PendSV System Service Calls (not needed on Cortex-A)
-__STATIC_INLINE void SVC_Initialize (void) {
+/// Setup SVC and PendSV System Service Calls (not needed on Cortex-A)
+__STATIC_INLINE void SVC_Setup (void) {
 }
 
 /// Get Pending SV (Service Call) Flag

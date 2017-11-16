@@ -18,7 +18,7 @@ void ref_fir_lattice_f32(
 
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* f0(n) = x(n) */
     fcurr = *pSrc++;
@@ -45,10 +45,10 @@ void ref_fir_lattice_f32(
        for next stage processing */
     fcurr = fnext;
 
-    stageCnt = (numStages - 1u);
+    stageCnt = (numStages - 1U);
 
     /* stage loop */
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       /* read g2(n) from state buffer */
       gcurr = *px;
@@ -94,7 +94,7 @@ void ref_fir_lattice_q31(
 
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* f0(n) = x(n) */
     fcurr = *pSrc++;
@@ -120,10 +120,10 @@ void ref_fir_lattice_q31(
        for next stage processing */
     fcurr = fnext;
 
-    stageCnt = (numStages - 1u);
+    stageCnt = (numStages - 1U);
 
     /* stage loop */
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       /* read g2(n) from state buffer */
       gcurr = *px;
@@ -171,7 +171,7 @@ void ref_fir_lattice_q15(
 
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* f0(n) = x(n) */
     fcurnt = *pSrc++;
@@ -187,12 +187,12 @@ void ref_fir_lattice_q15(
 
     /* for sample 1 processing */
     /* f1(n) = f0(n) +  K1 * g0(n-1) */
-    fnext = ((gcurnt * (*pk)) >> 15u) + fcurnt;
+    fnext = ((gcurnt * (*pk)) >> 15U) + fcurnt;
     fnext = ref_sat_q15(fnext);
 
 
     /* g1(n) = f0(n) * K1  +  g0(n-1) */
-    gnext = ((fcurnt * (*pk++)) >> 15u) + gcurnt;
+    gnext = ((fcurnt * (*pk++)) >> 15U) + gcurnt;
     gnext = ref_sat_q15(gnext);
 
     /* save f0(n) in state buffer */
@@ -202,10 +202,10 @@ void ref_fir_lattice_q15(
        for next stage processing */
     fcurnt = fnext;
 
-    stageCnt = (numStages - 1u);
+    stageCnt = (numStages - 1U);
 
     /* stage loop */
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       /* read g1(n-1) from state buffer */
       gcurnt = *px;
@@ -215,11 +215,11 @@ void ref_fir_lattice_q15(
 
       /* Sample processing for K2, K3.... */
       /* f2(n) = f1(n) +  K2 * g1(n-1) */
-      fnext = ((gcurnt * (*pk)) >> 15u) + fcurnt;
+      fnext = ((gcurnt * (*pk)) >> 15U) + fcurnt;
       fnext = ref_sat_q15(fnext);
 
       /* g2(n) = f1(n) * K2  +  g1(n-1) */
-      gnext = ((fcurnt * (*pk++)) >> 15u) + gcurnt;
+      gnext = ((fcurnt * (*pk++)) >> 15U) + gcurnt;
       gnext = ref_sat_q15(gnext);
 
 

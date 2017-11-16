@@ -332,7 +332,9 @@ to configure the priority of an interrupt. It is equipped with the standard Syst
         - \token{CM0+}: ARM Cortex-M0+
         - \token{CM1}: ARM Cortex-M1 
         - \token{SC000}: ARM Secure Core SC000
+        - \token{CM23}: ARM Cortex-M23
         - \token{CM3}: ARM Cortex-M3
+        - \token{CM33}: ARM Cortex-M33
         - \token{SC300}: ARM Secure Core SC300
         - \token{CM4}: ARM Cortex-M4
         - \token{CM7}: ARM Cortex-M7
@@ -375,7 +377,7 @@ to configure the priority of an interrupt. It is equipped with the standard Syst
     </tr>
     <tr>
         <td>fpuPresent </td>
-        <td>Indicate whether the processor is equipped with a hardware floating point unit (FPU). Cortex-M4 and Cortex-M7 are the only available Cortex-M processor with an optional FPU. This tag is either set to \token{true} or \token{false}, \token{1} or \token{0}.</td>
+        <td>Indicate whether the processor is equipped with a hardware floating point unit (FPU). Cortex-M4, Cortex-M7 and Cortex-M33 are the only available Cortex-M processor with an optional FPU. This tag is either set to \token{true} or \token{false}, \token{1} or \token{0}.</td>
         <td>boolean </td>
         <td>1..1 </td>
     </tr>

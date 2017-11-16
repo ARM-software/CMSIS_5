@@ -68,17 +68,17 @@ void arm_shift_q15(
 
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* Getting the sign of shiftBits */
   sign = (shiftBits & 0x80);
 
   /* If the shift value is positive then do right shift else left shift */
-  if (sign == 0u)
+  if (sign == 0U)
   {
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Read 2 inputs */
       in1 = *pSrc++;
@@ -118,9 +118,9 @@ void arm_shift_q15(
 
     /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    blkCnt = blockSize % 0x4u;
+    blkCnt = blockSize % 0x4U;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C = A << shiftBits */
       /* Shift and then store the results in the destination buffer. */
@@ -134,7 +134,7 @@ void arm_shift_q15(
   {
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* Read 2 inputs */
       in1 = *pSrc++;
@@ -175,9 +175,9 @@ void arm_shift_q15(
 
     /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    blkCnt = blockSize % 0x4u;
+    blkCnt = blockSize % 0x4U;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C = A >> shiftBits */
       /* Shift the inputs and then store the results in the destination buffer. */
@@ -196,12 +196,12 @@ void arm_shift_q15(
   sign = (shiftBits & 0x80);
 
   /* If the shift value is positive then do right shift else left shift */
-  if (sign == 0u)
+  if (sign == 0U)
   {
     /* Initialize blkCnt with number of samples */
     blkCnt = blockSize;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C = A << shiftBits */
       /* Shift and then store the results in the destination buffer. */
@@ -216,7 +216,7 @@ void arm_shift_q15(
     /* Initialize blkCnt with number of samples */
     blkCnt = blockSize;
 
-    while (blkCnt > 0u)
+    while (blkCnt > 0U)
     {
       /* C = A >> shiftBits */
       /* Shift the inputs and then store the results in the destination buffer. */

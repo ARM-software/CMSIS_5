@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armcc.h
  * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.00
- * @date     22. Feb 2017
+ * @version  V1.0.1
+ * @date     07. Sep 2017
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
@@ -41,8 +41,14 @@
 #ifndef   __INLINE                              
   #define __INLINE                               __inline
 #endif                                          
+#ifndef   __FORCEINLINE                              
+  #define __FORCEINLINE                          __forceinline
+#endif                                          
 #ifndef   __STATIC_INLINE                       
   #define __STATIC_INLINE                        static __inline
+#endif                                                                                   
+#ifndef   __STATIC_FORCEINLINE                 
+  #define __STATIC_FORCEINLINE                   static __forceinline
 #endif                                                                                   
 #ifndef   __NO_RETURN                           
   #define __NO_RETURN                            __declspec(noreturn)
@@ -77,39 +83,6 @@
 #ifndef   __PACKED                              
   #define __PACKED                               __attribute__((packed))
 #endif
-
-
-/* ###########################  Core Function Access  ########################### */
-
-/**
-  \brief   Get FPSCR (Floating Point Status/Control)
-  \return               Floating Point Status/Control register value
- */
-__STATIC_INLINE uint32_t __get_FPSCR(void)
-{
-#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
-     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
-  register uint32_t __regfpscr         __ASM("fpscr");
-  return(__regfpscr);
-#else
-   return(0U);
-#endif
-}
-
-/**
-  \brief   Set FPSCR (Floating Point Status/Control)
-  \param [in]    fpscr  Floating Point Status/Control value to set
- */
-__STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
-{
-#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
-     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
-  register uint32_t __regfpscr         __ASM("fpscr");
-  __regfpscr = (fpscr);
-#else
-  (void)fpscr;
-#endif
-}
 
 /* ##########################  Core Instruction Access  ######################### */
 /**
@@ -161,6 +134,7 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 
 /**
   \brief   Reverse byte order (32 bit)
+  \details Reverses the byte order in unsigned integer value. For example, 0x12345678 becomes 0x78563412.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -168,6 +142,7 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 
 /**
   \brief   Reverse byte order (16 bit)
+  \details Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 0x34127856.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -180,12 +155,13 @@ __attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(u
 #endif
 
 /**
-  \brief   Reverse byte order in signed short value
+  \brief   Reverse byte order (16 bit)
+  \details Reverses the byte order in a 16-bit value and returns the signed 16-bit result. For example, 0x0080 becomes 0x8000.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
 #ifndef __NO_EMBEDDED_ASM
-__attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t value)
+__attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(int16_t value)
 {
   revsh r0, r0
   bx lr
@@ -305,6 +281,57 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(in
  */
 #define __CLREX                           __clrex
 
+
+/**
+  \brief   Signed Saturate
+  \details Saturates a signed value.
+  \param [in]  value  Value to be saturated
+  \param [in]    sat  Bit position to saturate to (1..32)
+  \return             Saturated value
+ */
+#define __SSAT                            __ssat
+
+/**
+  \brief   Unsigned Saturate
+  \details Saturates an unsigned value.
+  \param [in]  value  Value to be saturated
+  \param [in]    sat  Bit position to saturate to (0..31)
+  \return             Saturated value
+ */
+#define __USAT                            __usat
+
+/* ###########################  Core Function Access  ########################### */
+
+/**
+  \brief   Get FPSCR (Floating Point Status/Control)
+  \return               Floating Point Status/Control register value
+ */
+__STATIC_INLINE uint32_t __get_FPSCR(void)
+{
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+  register uint32_t __regfpscr         __ASM("fpscr");
+  return(__regfpscr);
+#else
+   return(0U);
+#endif
+}
+
+/**
+  \brief   Set FPSCR (Floating Point Status/Control)
+  \param [in]    fpscr  Floating Point Status/Control value to set
+ */
+__STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+{
+#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+  register uint32_t __regfpscr         __ASM("fpscr");
+  __regfpscr = (fpscr);
+#else
+  (void)fpscr;
+#endif
+}
+
 /** \brief  Get CPSR (Current Program Status Register)
     \return               CPSR Register value
  */
@@ -327,17 +354,28 @@ __STATIC_INLINE void __set_CPSR(uint32_t cpsr)
 /** \brief  Get Mode
     \return                Processor Mode
  */
-__STATIC_INLINE uint32_t __get_mode(void) {
+__STATIC_INLINE uint32_t __get_mode(void)
+{
   return (__get_CPSR() & 0x1FU);
 }
 
 /** \brief  Set Mode
     \param [in]    mode  Mode value to set
  */
-__STATIC_INLINE __ASM void __set_mode(uint32_t mode) {
+__STATIC_INLINE __ASM void __set_mode(uint32_t mode)
+{
   MOV  r1, lr
   MSR  CPSR_C, r0
   BX   r1
+}
+
+/** \brief  Get Stack Pointer
+    \return Stack Pointer
+ */
+__STATIC_INLINE __ASM uint32_t __get_SP(void)
+{
+  MOV  r0, sp
+  BX   lr
 }
 
 /** \brief  Set Stack Pointer 
@@ -349,6 +387,23 @@ __STATIC_INLINE __ASM void __set_SP(uint32_t stack)
   BX   lr
 }
 
+
+/** \brief  Get USR/SYS Stack Pointer
+    \return USR/SYSStack Pointer
+ */
+__STATIC_INLINE __ASM uint32_t __get_SP_usr(void)
+{
+  ARM
+  PRESERVE8
+
+  MRS     R1, CPSR
+  CPS     #0x1F       ;no effect in USR mode
+  MOV     R0, SP
+  MSR     CPSR_c, R1  ;no effect in USR mode
+  ISB
+  BX      LR
+}
+
 /** \brief  Set USR/SYS Stack Pointer
     \param [in]    topOfProcStack  USR/SYS Stack Pointer value to set
  */
@@ -357,7 +412,6 @@ __STATIC_INLINE __ASM void __set_SP_usr(uint32_t topOfProcStack)
   ARM
   PRESERVE8
 
-  BIC     R0, R0, #7  ;ensure stack is 8-byte aligned
   MRS     R1, CPSR
   CPS     #0x1F       ;no effect in USR mode
   MOV     SP, R0
@@ -390,280 +444,34 @@ __STATIC_INLINE void __set_FPEXC(uint32_t fpexc)
 #endif
 }
 
-/** \brief  Get ACTLR (Auxiliary Control Register)
-    \return               Auxiliary Control Register value
+/*
+ * Include common core functions to access Coprocessor 15 registers
  */
-__STATIC_INLINE uint32_t __get_ACTLR(void)
-{
-  register uint32_t __regACTLR         __ASM("cp15:0:c1:c0:1");
-  return __regACTLR;
-}
+ 
+#define __get_CP(cp, op1, Rt, CRn, CRm, op2) do { register uint32_t tmp __ASM("cp" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2); (Rt) = tmp; } while(0)
+#define __set_CP(cp, op1, Rt, CRn, CRm, op2) do { register uint32_t tmp __ASM("cp" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2); tmp = (Rt); } while(0)
+#define __get_CP64(cp, op1, Rt, CRm) \
+  do { \
+    uint32_t ltmp, htmp; \
+    __ASM volatile("MRRC p" # cp ", " # op1 ", ltmp, htmp, c" # CRm); \
+    (Rt) = ((((uint64_t)htmp) << 32U) | ((uint64_t)ltmp)); \
+  } while(0)
 
-/** \brief  Set ACTLR (Auxiliary Control Register)
-    \param [in]    actlr  Auxiliary Control value to set
- */
-__STATIC_INLINE void __set_ACTLR(uint32_t actlr)
-{
-  register uint32_t __regACTLR         __ASM("cp15:0:c1:c0:1");
-  __regACTLR = actlr;
-}
+#define __set_CP64(cp, op1, Rt, CRm) \
+  do { \
+    const uint64_t tmp = (Rt); \
+    const uint32_t ltmp = (uint32_t)(tmp); \
+    const uint32_t htmp = (uint32_t)(tmp >> 32U); \
+    __ASM volatile("MCRR p" # cp ", " # op1 ", ltmp, htmp, c" # CRm); \
+  } while(0)
 
-/** \brief  Get CPACR (Coprocessor Access Control Register)
-    \return               Coprocessor Access Control Register value
- */
-__STATIC_INLINE uint32_t __get_CPACR(void)
-{
-  register uint32_t __regCPACR         __ASM("cp15:0:c1:c0:2");
-  return __regCPACR;
-}
-
-/** \brief  Set CPACR (Coprocessor Access Control Register)
-    \param [in]    cpacr  Coprocessor Access Control value to set
- */
-__STATIC_INLINE void __set_CPACR(uint32_t cpacr)
-{
-  register uint32_t __regCPACR         __ASM("cp15:0:c1:c0:2");
-  __regCPACR = cpacr;
-}
-
-/** \brief  Get DFSR (Data Fault Status Register)
-    \return               Data Fault Status Register value
- */
-__STATIC_INLINE uint32_t __get_DFSR(void)
-{
-  register uint32_t __regDFSR         __ASM("cp15:0:c5:c0:0");
-  return __regDFSR;
-}
-
-/** \brief  Set DFSR (Data Fault Status Register)
-    \param [in]    dfsr  Data Fault Status value to set
- */
-__STATIC_INLINE void __set_DFSR(uint32_t dfsr)
-{
-  register uint32_t __regDFSR         __ASM("cp15:0:c5:c0:0");
-  __regDFSR = dfsr;
-}
-
-/** \brief  Get IFSR (Instruction Fault Status Register)
-    \return               Instruction Fault Status Register value
- */
-__STATIC_INLINE uint32_t __get_IFSR(void)
-{
-  register uint32_t __regIFSR         __ASM("cp15:0:c5:c0:1");
-  return __regIFSR;
-}
-
-/** \brief  Set IFSR (Instruction Fault Status Register)
-    \param [in]    ifsr  Instruction Fault Status value to set
- */
-__STATIC_INLINE void __set_IFSR(uint32_t ifsr)
-{
-  register uint32_t __regIFSR         __ASM("cp15:0:c5:c0:1");
-  __regIFSR = ifsr;
-}
-
-/** \brief  Get ISR (Interrupt Status Register)
-    \return               Interrupt Status Register value
- */
-__STATIC_INLINE uint32_t __get_ISR(void)
-{
-  register uint32_t __regISR         __ASM("cp15:0:c5:c0:1");
-  return __regISR;
-}
-
-/** \brief  Get CBAR (Configuration Base Address Register)
-    \return               Configuration Base Address Register value
- */
-__STATIC_INLINE uint32_t __get_CBAR() {
-  register uint32_t __regCBAR         __ASM("cp15:4:c15:c0:0");
-  return(__regCBAR);
-}
-
-/** \brief  Get TTBR0 (Translation Table Base Register 0)
-    \return               Translation Table Base Register 0 value
- */
-__STATIC_INLINE uint32_t __get_TTBR0() {
-  register uint32_t __regTTBR0        __ASM("cp15:0:c2:c0:0");
-  return(__regTTBR0);
-}
-
-/** \brief  Set TTBR0 Translation Table Base Register 0
-    \param [in]    ttbr0  Translation Table Base Register 0 value to set
- */
-__STATIC_INLINE void __set_TTBR0(uint32_t ttbr0) {
-  register uint32_t __regTTBR0        __ASM("cp15:0:c2:c0:0");
-  __regTTBR0 = ttbr0;
-}
-
-/** \brief  Get DACR (Domain Access Control Register)
-    \return               Domain Access Control Register value
- */
-__STATIC_INLINE uint32_t __get_DACR() {
-  register uint32_t __regDACR         __ASM("cp15:0:c3:c0:0");
-  return(__regDACR);
-}
-
-/** \brief  Set DACR (Domain Access Control Register)
-    \param [in]    dacr   Domain Access Control Register value to set
- */
-__STATIC_INLINE void __set_DACR(uint32_t dacr) {
-  register uint32_t __regDACR         __ASM("cp15:0:c3:c0:0");
-  __regDACR = dacr;
-}
-
-/** \brief  Set SCTLR (System Control Register).
-    \param [in]    sctlr  System Control Register value to set
- */
-__STATIC_INLINE void __set_SCTLR(uint32_t sctlr)
-{
-  register uint32_t __regSCTLR         __ASM("cp15:0:c1:c0:0");
-  __regSCTLR = sctlr;
-}
-
-/** \brief  Get SCTLR (System Control Register).
-    \return               System Control Register value
- */
-__STATIC_INLINE uint32_t __get_SCTLR() {
-  register uint32_t __regSCTLR         __ASM("cp15:0:c1:c0:0");
-  return(__regSCTLR);
-}
-
-/** \brief  Set ACTRL (Auxiliary Control Register)
-    \param [in]    actrl  Auxiliary Control Register value to set
- */
-__STATIC_INLINE void __set_ACTRL(uint32_t actrl)
-{
-  register uint32_t __regACTRL         __ASM("cp15:0:c1:c0:1");
-  __regACTRL = actrl;
-}
-
-/** \brief  Get ACTRL (Auxiliary Control Register)
-    \return               Auxiliary Control Register value
- */
-__STATIC_INLINE uint32_t __get_ACTRL(void)
-{
-  register uint32_t __regACTRL         __ASM("cp15:0:c1:c0:1");
-  return(__regACTRL);
-}
-
-/** \brief  Get MPIDR (Multiprocessor Affinity Register)
-    \return               Multiprocessor Affinity Register value
- */
-__STATIC_INLINE uint32_t __get_MPIDR(void)
-{
-  register uint32_t __regMPIDR         __ASM("cp15:0:c0:c0:5");
-  return(__regMPIDR);
-}
-
- /** \brief  Get VBAR (Vector Base Address Register)
-    \return               Vector Base Address Register
- */
-__STATIC_INLINE uint32_t __get_VBAR(void)
-{
-  register uint32_t __regVBAR         __ASM("cp15:0:c12:c0:0");
-  return(__regVBAR);
-}
-
-/** \brief  Set VBAR (Vector Base Address Register)
-    \param [in]    vbar  Vector Base Address Register value to set
- */
-__STATIC_INLINE void __set_VBAR(uint32_t vbar)
-{
-  register uint32_t __regVBAR          __ASM("cp15:0:c12:c0:0");
-  __regVBAR = vbar;
-}
-
-/** \brief  Set CNTFRQ (Counter Frequency Register)
-  \param [in]    value  CNTFRQ Register value to set
-*/
-__STATIC_INLINE void __set_CNTFRQ(uint32_t value) {
-  register uint32_t __regCNTFRQ         __ASM("cp15:0:c14:c0:0");
-  __regCNTFRQ = value;
-}
-
-/** \brief  Set CNTP_TVAL (PL1 Physical TimerValue Register)
-  \param [in]    value  CNTP_TVAL Register value to set
-*/
-__STATIC_INLINE void __set_CNTP_TVAL(uint32_t value) {
-  register uint32_t __regCNTP_TVAL         __ASM("cp15:0:c14:c2:0");
-  __regCNTP_TVAL = value;
-}
-
-/** \brief  Get CNTP_TVAL (PL1 Physical TimerValue Register)
-    \return               CNTP_TVAL Register value
- */
-__STATIC_INLINE uint32_t __get_CNTP_TVAL() {
-  register uint32_t __regCNTP_TVAL         __ASM("cp15:0:c14:c2:0");
-  return(__regCNTP_TVAL);
-}
-
-/** \brief  Set CNTP_CTL (PL1 Physical Timer Control Register)
-  \param [in]    value  CNTP_CTL Register value to set
-*/
-__STATIC_INLINE void __set_CNTP_CTL(uint32_t value) {
-  register uint32_t __regCNTP_CTL          __ASM("cp15:0:c14:c2:1");
-  __regCNTP_CTL = value;
-}
-
-/** \brief  Get CNTP_CTL register
-    \return               CNTP_CTL Register value
- */
-__STATIC_INLINE uint32_t __get_CNTP_CTL() {
-  register uint32_t __regCNTP_CTL          __ASM("cp15:0:c14:c2:1");
-  return(__regCNTP_CTL);
-}
-
-/** \brief  Set TLBIALL (Invalidate Entire Unified TLB)
- */
-__STATIC_INLINE void __set_TLBIALL(uint32_t value) {
-  register uint32_t __TLBIALL              __ASM("cp15:0:c8:c7:0");
-  __TLBIALL = value;
-}
-
-/** \brief  Set BPIALL (Branch Predictor Invalidate All)
-* \param [in] value    BPIALL value to set
-*/
-__STATIC_INLINE void __set_BPIALL(uint32_t value) {
-  register uint32_t __BPIALL            __ASM("cp15:0:c7:c5:6");
-  __BPIALL = value;
-}
-
-/** \brief  Set ICIALLU (Instruction Cache Invalidate All)
- * \param [in] value    ICIALLU value to set
- */
-__STATIC_INLINE void __set_ICIALLU(uint32_t value) {
-  register uint32_t __ICIALLU         __ASM("cp15:0:c7:c5:0");
-  __ICIALLU = value;
-}
-
-/** \brief  Set DCCMVAC (Clean data or unified cache line by MVA to PoC)
- * \param [in] value    DCCMVAC value to set
- */
-__STATIC_INLINE void __set_DCCMVAC(uint32_t value) {
-  register uint32_t __DCCMVAC         __ASM("cp15:0:c7:c10:1");
-  __DCCMVAC = value;
-}
-
-/** \brief  Set DCIMVAC (Invalidate data or unified cache line by MVA to PoC)
- * \param [in] value    DCIMVAC value to set
- */
-__STATIC_INLINE void __set_DCIMVAC(uint32_t value) {
-  register uint32_t __DCIMVAC         __ASM("cp15:0:c7:c6:1");
-  __DCIMVAC = value;
-}
-
-/** \brief  Set DCCIMVAC (Clean and Invalidate data or unified cache line by MVA to PoC)
- * \param [in] value    DCCIMVAC value to set
- */
-__STATIC_INLINE void __set_DCCIMVAC(uint32_t value) {
-  register uint32_t __DCCIMVAC        __ASM("cp15:0:c7:c14:1");
-  __DCCIMVAC = value;
-}
+#include "cmsis_cp15.h"
 
 /** \brief  Clean and Invalidate the entire data or unified cache
  * \param [in] op 0 - invalidate, 1 - clean, otherwise - invalidate and clean
  */
-__STATIC_INLINE __ASM void __L1C_CleanInvalidateCache(uint32_t op) {
+__STATIC_INLINE __ASM void __L1C_CleanInvalidateCache(uint32_t op)
+{
         ARM
 
         PUSH    {R4-R11}
@@ -722,7 +530,8 @@ Finished
 
   Critical section, called from undef handler, so systick is disabled
  */
-__STATIC_INLINE __ASM void __FPU_Enable(void) {
+__STATIC_INLINE __ASM void __FPU_Enable(void)
+{
         ARM
 
         //Permit access to VFP/NEON, registers by modifying CPACR
@@ -740,7 +549,7 @@ __STATIC_INLINE __ASM void __FPU_Enable(void) {
 
         //Initialise VFP/NEON registers to 0
         MOV     R2,#0
-  IF {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} >= 16
+
         //Initialise D16 registers to 0
         VMOV    D0, R2,R2
         VMOV    D1, R2,R2
@@ -758,7 +567,7 @@ __STATIC_INLINE __ASM void __FPU_Enable(void) {
         VMOV    D13,R2,R2
         VMOV    D14,R2,R2
         VMOV    D15,R2,R2
-  ENDIF
+
   IF {TARGET_FEATURE_EXTENSION_REGISTER_COUNT} == 32
         //Initialise D32 registers to 0
         VMOV    D16,R2,R2

@@ -1,0 +1,23 @@
+
+/***************************************************************************** 
+ * Memory setup for secure-hello example (secure_part).
+ *   
+ * In this example non-secure state may use 0x200000-0x1FFFFF and 
+ * 0x201FFFFF-0x203FFFFF.
+ *   
+ *****************************************************************************/   
+
+define memory mem with size = 4G;
+define region ROM_NS_region = mem:[from 0x00200000 to 0x003FFFFF];
+define region RAM_NS_region = mem:[from 0x20200000 to 0x203FFFFF];
+
+define block CSTACK with alignment = 8, size = 0x1000 { };
+define block HEAP   with alignment = 8, size = 0x1000 { };
+
+do not initialize { section .noinit };
+
+initialize by copy { rw };
+
+place at address mem:0x00200000 { section .intvec };
+place in ROM_NS_region { readonly };
+place in RAM_NS_region { readwrite, block CSTACK, block HEAP };

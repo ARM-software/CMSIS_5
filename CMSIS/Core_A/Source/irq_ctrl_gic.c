@@ -55,7 +55,7 @@ __WEAK int32_t IRQ_Initialize (void) {
 __WEAK int32_t IRQ_SetHandler (IRQn_ID_t irqn, IRQHandler_t handler) {
   int32_t status;
 
-  if ((irqn >= 0) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 0) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     IRQTable[irqn] = handler;
     status =  0;
   } else {
@@ -70,7 +70,7 @@ __WEAK int32_t IRQ_SetHandler (IRQn_ID_t irqn, IRQHandler_t handler) {
 __WEAK IRQHandler_t IRQ_GetHandler (IRQn_ID_t irqn) {
   IRQHandler_t h;
 
-  if ((irqn >= 0) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 0) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     h = IRQTable[irqn];
   } else {
     h = (IRQHandler_t)0;
@@ -84,7 +84,7 @@ __WEAK IRQHandler_t IRQ_GetHandler (IRQn_ID_t irqn) {
 __WEAK int32_t IRQ_Enable (IRQn_ID_t irqn) {
   int32_t status;
 
-  if ((irqn >= 0) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 0) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     GIC_EnableIRQ ((IRQn_Type)irqn);
     status = 0;
   } else {
@@ -99,7 +99,7 @@ __WEAK int32_t IRQ_Enable (IRQn_ID_t irqn) {
 __WEAK int32_t IRQ_Disable (IRQn_ID_t irqn) {
   int32_t status;
 
-  if ((irqn >= 0) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 0) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     GIC_DisableIRQ ((IRQn_Type)irqn);
     status = 0;
   } else {
@@ -114,7 +114,7 @@ __WEAK int32_t IRQ_Disable (IRQn_ID_t irqn) {
 __WEAK uint32_t IRQ_GetEnableState (IRQn_ID_t irqn) {
   uint32_t enable;
 
-  if ((irqn >= 0) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 0) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     enable = GIC_GetEnableIRQ((IRQn_Type)irqn);
   } else {
     enable = 0U;
@@ -126,15 +126,13 @@ __WEAK uint32_t IRQ_GetEnableState (IRQn_ID_t irqn) {
 
 /// Configure interrupt request mode.
 __WEAK int32_t IRQ_SetMode (IRQn_ID_t irqn, uint32_t mode) {
-  int32_t status;
   uint32_t val;
   uint8_t cfg;
   uint8_t secure;
   uint8_t cpu;
+  int32_t status = 0;
 
-  status = 0;
-
-  if ((irqn >= 0) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 0) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     // Check triggering mode
     val = (mode & IRQ_MODE_TRIG_Msk);
 
@@ -143,6 +141,7 @@ __WEAK int32_t IRQ_SetMode (IRQn_ID_t irqn, uint32_t mode) {
     } else if (val == IRQ_MODE_TRIG_EDGE) {
       cfg = 0x02U;
     } else {
+      cfg = 0x00U;
       status = -1;
     }
 
@@ -157,15 +156,16 @@ __WEAK int32_t IRQ_SetMode (IRQn_ID_t irqn, uint32_t mode) {
     val = mode & IRQ_MODE_DOMAIN_Msk;
 
     if (val == IRQ_MODE_DOMAIN_NONSECURE) {
-      secure = 0;
+      secure = 0U;
     } else {
       // Check security extensions support
       val = GIC_DistributorInfo() & (1UL << 10U);
 
       if (val != 0U) {
         // Security extensions are supported
-        secure = 1;
+        secure = 1U;
       } else {
+        secure = 0U;
         status = -1;
       }
     }
@@ -174,7 +174,7 @@ __WEAK int32_t IRQ_SetMode (IRQn_ID_t irqn, uint32_t mode) {
     val = mode & IRQ_MODE_CPU_Msk;
 
     if (val == IRQ_MODE_CPU_ALL) {
-      cpu = 0xFF;
+      cpu = 0xFFU;
     } else {
       cpu = val >> IRQ_MODE_CPU_Pos;
     }
@@ -199,7 +199,7 @@ __WEAK uint32_t IRQ_GetMode (IRQn_ID_t irqn) {
   uint32_t mode;
   uint32_t val;
 
-  if ((irqn >= 0) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 0) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     mode = IRQ_MODE_TYPE_IRQ;
 
     // Get trigger mode
@@ -272,7 +272,7 @@ __WEAK IRQn_ID_t IRQ_GetActiveFIQ (void) {
 __WEAK int32_t IRQ_EndOfInterrupt (IRQn_ID_t irqn) {
   int32_t status;
 
-  if ((irqn >= 0) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 0) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     GIC_EndInterrupt ((IRQn_Type)irqn);
 
     if (irqn == 0) {
@@ -292,7 +292,7 @@ __WEAK int32_t IRQ_EndOfInterrupt (IRQn_ID_t irqn) {
 __WEAK int32_t IRQ_SetPending (IRQn_ID_t irqn) {
   int32_t status;
 
-  if ((irqn >= 0) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 0) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     GIC_SetPendingIRQ ((IRQn_Type)irqn);
     status = 0;
   } else {
@@ -306,7 +306,7 @@ __WEAK int32_t IRQ_SetPending (IRQn_ID_t irqn) {
 __WEAK uint32_t IRQ_GetPending (IRQn_ID_t irqn) {
   uint32_t pending;
 
-  if ((irqn >= 16) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 16) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     pending = GIC_GetPendingIRQ ((IRQn_Type)irqn);
   } else {
     pending = 0U;
@@ -320,7 +320,7 @@ __WEAK uint32_t IRQ_GetPending (IRQn_ID_t irqn) {
 __WEAK int32_t IRQ_ClearPending (IRQn_ID_t irqn) {
   int32_t status;
 
-  if ((irqn >= 16) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 16) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     GIC_ClearPendingIRQ ((IRQn_Type)irqn);
     status = 0;
   } else {
@@ -335,7 +335,7 @@ __WEAK int32_t IRQ_ClearPending (IRQn_ID_t irqn) {
 __WEAK int32_t IRQ_SetPriority (IRQn_ID_t irqn, uint32_t priority) {
   int32_t status;
 
-  if ((irqn >= 0) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 0) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     GIC_SetPriority ((IRQn_Type)irqn, priority);
     status = 0;
   } else {
@@ -350,7 +350,7 @@ __WEAK int32_t IRQ_SetPriority (IRQn_ID_t irqn, uint32_t priority) {
 __WEAK uint32_t IRQ_GetPriority (IRQn_ID_t irqn) {
   uint32_t priority;
 
-  if ((irqn >= 0) && (irqn < IRQ_GIC_LINE_COUNT)) {
+  if ((irqn >= 0) && (irqn < (IRQn_ID_t)IRQ_GIC_LINE_COUNT)) {
     priority = GIC_GetPriority ((IRQn_Type)irqn);
   } else {
     priority = IRQ_PRIORITY_ERROR;

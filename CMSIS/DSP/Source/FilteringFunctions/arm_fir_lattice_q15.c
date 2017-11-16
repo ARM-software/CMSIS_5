@@ -72,11 +72,11 @@ void arm_fir_lattice_q15(
 
   pState = &S->pState[0];
 
-  blkCnt = blockSize >> 2u;
+  blkCnt = blockSize >> 2U;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
 
     /* Read two samples from input buffer */
@@ -95,19 +95,19 @@ void arm_fir_lattice_q15(
 
     /* Process first sample for first tap */
     /* f1(n) = f0(n) +  K1 * g0(n-1) */
-    fnext1 = (q31_t) ((gcurnt1 * (*pk)) >> 15u) + fcurnt1;
+    fnext1 = (q31_t) ((gcurnt1 * (*pk)) >> 15U) + fcurnt1;
     fnext1 = __SSAT(fnext1, 16);
 
     /* g1(n) = f0(n) * K1  +  g0(n-1) */
-    gnext1 = (q31_t) ((fcurnt1 * (*pk)) >> 15u) + gcurnt1;
+    gnext1 = (q31_t) ((fcurnt1 * (*pk)) >> 15U) + gcurnt1;
     gnext1 = __SSAT(gnext1, 16);
 
     /* Process second sample for first tap */
     /* for sample 2 processing */
-    fnext2 = (q31_t) ((fcurnt1 * (*pk)) >> 15u) + fcurnt2;
+    fnext2 = (q31_t) ((fcurnt1 * (*pk)) >> 15U) + fcurnt2;
     fnext2 = __SSAT(fnext2, 16);
 
-    gnext2 = (q31_t) ((fcurnt2 * (*pk)) >> 15u) + fcurnt1;
+    gnext2 = (q31_t) ((fcurnt2 * (*pk)) >> 15U) + fcurnt1;
     gnext2 = __SSAT(gnext2, 16);
 
 
@@ -121,15 +121,15 @@ void arm_fir_lattice_q15(
     *px++ = (q15_t) fcurnt4;
 
     /* Process third sample for first tap */
-    fnext3 = (q31_t) ((fcurnt2 * (*pk)) >> 15u) + fcurnt3;
+    fnext3 = (q31_t) ((fcurnt2 * (*pk)) >> 15U) + fcurnt3;
     fnext3 = __SSAT(fnext3, 16);
-    gnext3 = (q31_t) ((fcurnt3 * (*pk)) >> 15u) + fcurnt2;
+    gnext3 = (q31_t) ((fcurnt3 * (*pk)) >> 15U) + fcurnt2;
     gnext3 = __SSAT(gnext3, 16);
 
     /* Process fourth sample for first tap */
-    fnext4 = (q31_t) ((fcurnt3 * (*pk)) >> 15u) + fcurnt4;
+    fnext4 = (q31_t) ((fcurnt3 * (*pk)) >> 15U) + fcurnt4;
     fnext4 = __SSAT(fnext4, 16);
-    gnext4 = (q31_t) ((fcurnt4 * (*pk++)) >> 15u) + fcurnt3;
+    gnext4 = (q31_t) ((fcurnt4 * (*pk++)) >> 15U) + fcurnt3;
     gnext4 = __SSAT(gnext4, 16);
 
     /* Update of f values for next coefficient set processing */
@@ -140,14 +140,14 @@ void arm_fir_lattice_q15(
 
 
     /* Loop unrolling.  Process 4 taps at a time . */
-    stageCnt = (numStages - 1u) >> 2;
+    stageCnt = (numStages - 1U) >> 2;
 
 
     /* Loop over the number of taps.  Unroll by a factor of 4.
      ** Repeat until we've computed numStages-3 coefficients. */
 
     /* Process 2nd, 3rd, 4th and 5th taps ... here */
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       /* Read g1(n-1), g3(n-1) .... from state */
       gcurnt1 = *px;
@@ -158,33 +158,33 @@ void arm_fir_lattice_q15(
       /* Process first sample for 2nd, 6th .. tap */
       /* Sample processing for K2, K6.... */
       /* f1(n) = f0(n) +  K1 * g0(n-1) */
-      fnext1 = (q31_t) ((gcurnt1 * (*pk)) >> 15u) + fcurnt1;
+      fnext1 = (q31_t) ((gcurnt1 * (*pk)) >> 15U) + fcurnt1;
       fnext1 = __SSAT(fnext1, 16);
 
 
       /* Process second sample for 2nd, 6th .. tap */
       /* for sample 2 processing */
-      fnext2 = (q31_t) ((gnext1 * (*pk)) >> 15u) + fcurnt2;
+      fnext2 = (q31_t) ((gnext1 * (*pk)) >> 15U) + fcurnt2;
       fnext2 = __SSAT(fnext2, 16);
       /* Process third sample for 2nd, 6th .. tap */
-      fnext3 = (q31_t) ((gnext2 * (*pk)) >> 15u) + fcurnt3;
+      fnext3 = (q31_t) ((gnext2 * (*pk)) >> 15U) + fcurnt3;
       fnext3 = __SSAT(fnext3, 16);
       /* Process fourth sample for 2nd, 6th .. tap */
       /* fnext4 = fcurnt4 + (*pk) * gnext3; */
-      fnext4 = (q31_t) ((gnext3 * (*pk)) >> 15u) + fcurnt4;
+      fnext4 = (q31_t) ((gnext3 * (*pk)) >> 15U) + fcurnt4;
       fnext4 = __SSAT(fnext4, 16);
 
       /* g1(n) = f0(n) * K1  +  g0(n-1) */
       /* Calculation of state values for next stage */
-      gnext4 = (q31_t) ((fcurnt4 * (*pk)) >> 15u) + gnext3;
+      gnext4 = (q31_t) ((fcurnt4 * (*pk)) >> 15U) + gnext3;
       gnext4 = __SSAT(gnext4, 16);
-      gnext3 = (q31_t) ((fcurnt3 * (*pk)) >> 15u) + gnext2;
+      gnext3 = (q31_t) ((fcurnt3 * (*pk)) >> 15U) + gnext2;
       gnext3 = __SSAT(gnext3, 16);
 
-      gnext2 = (q31_t) ((fcurnt2 * (*pk)) >> 15u) + gnext1;
+      gnext2 = (q31_t) ((fcurnt2 * (*pk)) >> 15U) + gnext1;
       gnext2 = __SSAT(gnext2, 16);
 
-      gnext1 = (q31_t) ((fcurnt1 * (*pk++)) >> 15u) + gcurnt1;
+      gnext1 = (q31_t) ((fcurnt1 * (*pk++)) >> 15U) + gcurnt1;
       gnext1 = __SSAT(gnext1, 16);
 
 
@@ -197,33 +197,33 @@ void arm_fir_lattice_q15(
       /* Sample processing for K3, K7.... */
       /* Process first sample for 3rd, 7th .. tap */
       /* f3(n) = f2(n) +  K3 * g2(n-1) */
-      fcurnt1 = (q31_t) ((gcurnt1 * (*pk)) >> 15u) + fnext1;
+      fcurnt1 = (q31_t) ((gcurnt1 * (*pk)) >> 15U) + fnext1;
       fcurnt1 = __SSAT(fcurnt1, 16);
 
       /* Process second sample for 3rd, 7th .. tap */
-      fcurnt2 = (q31_t) ((gnext1 * (*pk)) >> 15u) + fnext2;
+      fcurnt2 = (q31_t) ((gnext1 * (*pk)) >> 15U) + fnext2;
       fcurnt2 = __SSAT(fcurnt2, 16);
 
       /* Process third sample for 3rd, 7th .. tap */
-      fcurnt3 = (q31_t) ((gnext2 * (*pk)) >> 15u) + fnext3;
+      fcurnt3 = (q31_t) ((gnext2 * (*pk)) >> 15U) + fnext3;
       fcurnt3 = __SSAT(fcurnt3, 16);
 
       /* Process fourth sample for 3rd, 7th .. tap */
-      fcurnt4 = (q31_t) ((gnext3 * (*pk)) >> 15u) + fnext4;
+      fcurnt4 = (q31_t) ((gnext3 * (*pk)) >> 15U) + fnext4;
       fcurnt4 = __SSAT(fcurnt4, 16);
 
       /* Calculation of state values for next stage */
       /* g3(n) = f2(n) * K3  +  g2(n-1) */
-      gnext4 = (q31_t) ((fnext4 * (*pk)) >> 15u) + gnext3;
+      gnext4 = (q31_t) ((fnext4 * (*pk)) >> 15U) + gnext3;
       gnext4 = __SSAT(gnext4, 16);
 
-      gnext3 = (q31_t) ((fnext3 * (*pk)) >> 15u) + gnext2;
+      gnext3 = (q31_t) ((fnext3 * (*pk)) >> 15U) + gnext2;
       gnext3 = __SSAT(gnext3, 16);
 
-      gnext2 = (q31_t) ((fnext2 * (*pk)) >> 15u) + gnext1;
+      gnext2 = (q31_t) ((fnext2 * (*pk)) >> 15U) + gnext1;
       gnext2 = __SSAT(gnext2, 16);
 
-      gnext1 = (q31_t) ((fnext1 * (*pk++)) >> 15u) + gcurnt1;
+      gnext1 = (q31_t) ((fnext1 * (*pk++)) >> 15U) + gcurnt1;
       gnext1 = __SSAT(gnext1, 16);
 
       /* Read g1(n-1), g3(n-1) .... from state */
@@ -235,33 +235,33 @@ void arm_fir_lattice_q15(
       /* Sample processing for K4, K8.... */
       /* Process first sample for 4th, 8th .. tap */
       /* f4(n) = f3(n) +  K4 * g3(n-1) */
-      fnext1 = (q31_t) ((gcurnt1 * (*pk)) >> 15u) + fcurnt1;
+      fnext1 = (q31_t) ((gcurnt1 * (*pk)) >> 15U) + fcurnt1;
       fnext1 = __SSAT(fnext1, 16);
 
       /* Process second sample for 4th, 8th .. tap */
       /* for sample 2 processing */
-      fnext2 = (q31_t) ((gnext1 * (*pk)) >> 15u) + fcurnt2;
+      fnext2 = (q31_t) ((gnext1 * (*pk)) >> 15U) + fcurnt2;
       fnext2 = __SSAT(fnext2, 16);
 
       /* Process third sample for 4th, 8th .. tap */
-      fnext3 = (q31_t) ((gnext2 * (*pk)) >> 15u) + fcurnt3;
+      fnext3 = (q31_t) ((gnext2 * (*pk)) >> 15U) + fcurnt3;
       fnext3 = __SSAT(fnext3, 16);
 
       /* Process fourth sample for 4th, 8th .. tap */
-      fnext4 = (q31_t) ((gnext3 * (*pk)) >> 15u) + fcurnt4;
+      fnext4 = (q31_t) ((gnext3 * (*pk)) >> 15U) + fcurnt4;
       fnext4 = __SSAT(fnext4, 16);
 
       /* g4(n) = f3(n) * K4  +  g3(n-1) */
       /* Calculation of state values for next stage */
-      gnext4 = (q31_t) ((fcurnt4 * (*pk)) >> 15u) + gnext3;
+      gnext4 = (q31_t) ((fcurnt4 * (*pk)) >> 15U) + gnext3;
       gnext4 = __SSAT(gnext4, 16);
 
-      gnext3 = (q31_t) ((fcurnt3 * (*pk)) >> 15u) + gnext2;
+      gnext3 = (q31_t) ((fcurnt3 * (*pk)) >> 15U) + gnext2;
       gnext3 = __SSAT(gnext3, 16);
 
-      gnext2 = (q31_t) ((fcurnt2 * (*pk)) >> 15u) + gnext1;
+      gnext2 = (q31_t) ((fcurnt2 * (*pk)) >> 15U) + gnext1;
       gnext2 = __SSAT(gnext2, 16);
-      gnext1 = (q31_t) ((fcurnt1 * (*pk++)) >> 15u) + gcurnt1;
+      gnext1 = (q31_t) ((fcurnt1 * (*pk++)) >> 15U) + gcurnt1;
       gnext1 = __SSAT(gnext1, 16);
 
 
@@ -274,39 +274,39 @@ void arm_fir_lattice_q15(
       /* Sample processing for K5, K9.... */
       /* Process first sample for 5th, 9th .. tap */
       /* f5(n) = f4(n) +  K5 * g4(n-1) */
-      fcurnt1 = (q31_t) ((gcurnt1 * (*pk)) >> 15u) + fnext1;
+      fcurnt1 = (q31_t) ((gcurnt1 * (*pk)) >> 15U) + fnext1;
       fcurnt1 = __SSAT(fcurnt1, 16);
 
       /* Process second sample for 5th, 9th .. tap */
-      fcurnt2 = (q31_t) ((gnext1 * (*pk)) >> 15u) + fnext2;
+      fcurnt2 = (q31_t) ((gnext1 * (*pk)) >> 15U) + fnext2;
       fcurnt2 = __SSAT(fcurnt2, 16);
 
       /* Process third sample for 5th, 9th .. tap */
-      fcurnt3 = (q31_t) ((gnext2 * (*pk)) >> 15u) + fnext3;
+      fcurnt3 = (q31_t) ((gnext2 * (*pk)) >> 15U) + fnext3;
       fcurnt3 = __SSAT(fcurnt3, 16);
 
       /* Process fourth sample for 5th, 9th .. tap */
-      fcurnt4 = (q31_t) ((gnext3 * (*pk)) >> 15u) + fnext4;
+      fcurnt4 = (q31_t) ((gnext3 * (*pk)) >> 15U) + fnext4;
       fcurnt4 = __SSAT(fcurnt4, 16);
 
       /* Calculation of state values for next stage */
       /* g5(n) = f4(n) * K5  +  g4(n-1) */
-      gnext4 = (q31_t) ((fnext4 * (*pk)) >> 15u) + gnext3;
+      gnext4 = (q31_t) ((fnext4 * (*pk)) >> 15U) + gnext3;
       gnext4 = __SSAT(gnext4, 16);
-      gnext3 = (q31_t) ((fnext3 * (*pk)) >> 15u) + gnext2;
+      gnext3 = (q31_t) ((fnext3 * (*pk)) >> 15U) + gnext2;
       gnext3 = __SSAT(gnext3, 16);
-      gnext2 = (q31_t) ((fnext2 * (*pk)) >> 15u) + gnext1;
+      gnext2 = (q31_t) ((fnext2 * (*pk)) >> 15U) + gnext1;
       gnext2 = __SSAT(gnext2, 16);
-      gnext1 = (q31_t) ((fnext1 * (*pk++)) >> 15u) + gcurnt1;
+      gnext1 = (q31_t) ((fnext1 * (*pk++)) >> 15U) + gcurnt1;
       gnext1 = __SSAT(gnext1, 16);
 
       stageCnt--;
     }
 
     /* If the (filter length -1) is not a multiple of 4, compute the remaining filter taps */
-    stageCnt = (numStages - 1u) % 0x4u;
+    stageCnt = (numStages - 1U) % 0x4U;
 
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       gcurnt1 = *px;
 
@@ -314,25 +314,25 @@ void arm_fir_lattice_q15(
       *px++ = (q15_t) gnext4;
 
       /* Process four samples for last three taps here */
-      fnext1 = (q31_t) ((gcurnt1 * (*pk)) >> 15u) + fcurnt1;
+      fnext1 = (q31_t) ((gcurnt1 * (*pk)) >> 15U) + fcurnt1;
       fnext1 = __SSAT(fnext1, 16);
-      fnext2 = (q31_t) ((gnext1 * (*pk)) >> 15u) + fcurnt2;
+      fnext2 = (q31_t) ((gnext1 * (*pk)) >> 15U) + fcurnt2;
       fnext2 = __SSAT(fnext2, 16);
 
-      fnext3 = (q31_t) ((gnext2 * (*pk)) >> 15u) + fcurnt3;
+      fnext3 = (q31_t) ((gnext2 * (*pk)) >> 15U) + fcurnt3;
       fnext3 = __SSAT(fnext3, 16);
 
-      fnext4 = (q31_t) ((gnext3 * (*pk)) >> 15u) + fcurnt4;
+      fnext4 = (q31_t) ((gnext3 * (*pk)) >> 15U) + fcurnt4;
       fnext4 = __SSAT(fnext4, 16);
 
       /* g1(n) = f0(n) * K1  +  g0(n-1) */
-      gnext4 = (q31_t) ((fcurnt4 * (*pk)) >> 15u) + gnext3;
+      gnext4 = (q31_t) ((fcurnt4 * (*pk)) >> 15U) + gnext3;
       gnext4 = __SSAT(gnext4, 16);
-      gnext3 = (q31_t) ((fcurnt3 * (*pk)) >> 15u) + gnext2;
+      gnext3 = (q31_t) ((fcurnt3 * (*pk)) >> 15U) + gnext2;
       gnext3 = __SSAT(gnext3, 16);
-      gnext2 = (q31_t) ((fcurnt2 * (*pk)) >> 15u) + gnext1;
+      gnext2 = (q31_t) ((fcurnt2 * (*pk)) >> 15U) + gnext1;
       gnext2 = __SSAT(gnext2, 16);
-      gnext1 = (q31_t) ((fcurnt1 * (*pk++)) >> 15u) + gcurnt1;
+      gnext1 = (q31_t) ((fcurnt1 * (*pk++)) >> 15U) + gcurnt1;
       gnext1 = __SSAT(gnext1, 16);
 
       /* Update of f values for next coefficient set processing */
@@ -365,9 +365,9 @@ void arm_fir_lattice_q15(
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4U;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* f0(n) = x(n) */
     fcurnt1 = *pSrc++;
@@ -383,12 +383,12 @@ void arm_fir_lattice_q15(
 
     /* for sample 1 processing */
     /* f1(n) = f0(n) +  K1 * g0(n-1) */
-    fnext1 = (((q31_t) gcurnt1 * (*pk)) >> 15u) + fcurnt1;
+    fnext1 = (((q31_t) gcurnt1 * (*pk)) >> 15U) + fcurnt1;
     fnext1 = __SSAT(fnext1, 16);
 
 
     /* g1(n) = f0(n) * K1  +  g0(n-1) */
-    gnext1 = (((q31_t) fcurnt1 * (*pk++)) >> 15u) + gcurnt1;
+    gnext1 = (((q31_t) fcurnt1 * (*pk++)) >> 15U) + gcurnt1;
     gnext1 = __SSAT(gnext1, 16);
 
     /* save g1(n) in state buffer */
@@ -398,10 +398,10 @@ void arm_fir_lattice_q15(
        for next stage processing */
     fcurnt1 = fnext1;
 
-    stageCnt = (numStages - 1u);
+    stageCnt = (numStages - 1U);
 
     /* stage loop */
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       /* read g2(n) from state buffer */
       gcurnt1 = *px;
@@ -411,11 +411,11 @@ void arm_fir_lattice_q15(
 
       /* Sample processing for K2, K3.... */
       /* f2(n) = f1(n) +  K2 * g1(n-1) */
-      fnext1 = (((q31_t) gcurnt1 * (*pk)) >> 15u) + fcurnt1;
+      fnext1 = (((q31_t) gcurnt1 * (*pk)) >> 15U) + fcurnt1;
       fnext1 = __SSAT(fnext1, 16);
 
       /* g2(n) = f1(n) * K2  +  g1(n-1) */
-      gnext1 = (((q31_t) fcurnt1 * (*pk++)) >> 15u) + gcurnt1;
+      gnext1 = (((q31_t) fcurnt1 * (*pk++)) >> 15U) + gcurnt1;
       gnext1 = __SSAT(gnext1, 16);
 
 
@@ -447,7 +447,7 @@ void arm_fir_lattice_q15(
 
   blkCnt = blockSize;
 
-  while (blkCnt > 0u)
+  while (blkCnt > 0U)
   {
     /* f0(n) = x(n) */
     fcurnt = *pSrc++;
@@ -463,12 +463,12 @@ void arm_fir_lattice_q15(
 
     /* for sample 1 processing */
     /* f1(n) = f0(n) +  K1 * g0(n-1) */
-    fnext = ((gcurnt * (*pk)) >> 15u) + fcurnt;
+    fnext = ((gcurnt * (*pk)) >> 15U) + fcurnt;
     fnext = __SSAT(fnext, 16);
 
 
     /* g1(n) = f0(n) * K1  +  g0(n-1) */
-    gnext = ((fcurnt * (*pk++)) >> 15u) + gcurnt;
+    gnext = ((fcurnt * (*pk++)) >> 15U) + gcurnt;
     gnext = __SSAT(gnext, 16);
 
     /* save f0(n) in state buffer */
@@ -478,10 +478,10 @@ void arm_fir_lattice_q15(
        for next stage processing */
     fcurnt = fnext;
 
-    stageCnt = (numStages - 1u);
+    stageCnt = (numStages - 1U);
 
     /* stage loop */
-    while (stageCnt > 0u)
+    while (stageCnt > 0U)
     {
       /* read g1(n-1) from state buffer */
       gcurnt = *px;
@@ -491,11 +491,11 @@ void arm_fir_lattice_q15(
 
       /* Sample processing for K2, K3.... */
       /* f2(n) = f1(n) +  K2 * g1(n-1) */
-      fnext = ((gcurnt * (*pk)) >> 15u) + fcurnt;
+      fnext = ((gcurnt * (*pk)) >> 15U) + fcurnt;
       fnext = __SSAT(fnext, 16);
 
       /* g2(n) = f1(n) * K2  +  g1(n-1) */
-      gnext = ((fcurnt * (*pk++)) >> 15u) + gcurnt;
+      gnext = ((fcurnt * (*pk++)) >> 15U) + gcurnt;
       gnext = __SSAT(gnext, 16);
 
 
