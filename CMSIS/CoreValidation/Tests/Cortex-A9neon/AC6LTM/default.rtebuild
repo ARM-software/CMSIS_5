@@ -1,0 +1,12 @@
+import:
+ - ../cortex-a9.rtebuild
+config:
+  default: FVP
+  FVP:
+    toolchain: ARMCC6_LTM
+    commonflags: [ -c, --target=arm-arm-none-eabi, "-mcpu=${mcpu}", "-mfpu=${mfpu}", -mfloat-abi=hard, -marm, -mlittle-endian, -D__MICROLIB, -g, -Wall ]
+    cflags:      [ "${commonflags}", -xc, -std=c99, -O0 ]
+    asmflags:    [ "${commonflags}" ]
+    linkflags:   [ --target=arm-arm-none-eabi, "-Wl,--entry=Vectors", "-Wl,--library_type=microlib" ]
+include: 
+ - ./
