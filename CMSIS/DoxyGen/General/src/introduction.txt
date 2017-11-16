@@ -191,16 +191,16 @@ In addition, each CMSIS component has its own release history:
       <th>Description</th>
     </tr>
     <tr>
-      <td>5.1.2</td>
+      <td>5.2.0</td>
       <td>
-        - CMSIS-Core (Cortex-M) (unchanged)
-        - CMSIS-Core (Cortex-A) (unchanged)
-        - CMSIS-Driver 2.05 (unchanged)
-        - CMSIS-DSP 1.5.2 (unchanged)
-        - CMSIS-RTOS 2.1.1 (unchanged)
+        - CMSIS-Core (Cortex-M) 5.1.0 MPU fuctions for ARMv8-M, cmsis_iccarm.h replacing cmsis_iar.h
+        - CMSIS-Core (Cortex-A) 1.1.0 cmsis_iccarm.h, additional physical timer access functions
+        - CMSIS-Driver 2.6.0 Enhanced CAN and NAND driver interface.
+        - CMSIS-DSP 1.5.2 Fixed diagnostics and moved SSAT/USST intrinsics to CMSIS-Core.
+        - CMSIS-RTOS 2.1.2 Relaxed some ISR-callable restrictions.
         - CMSIS-PACK 1.5.0 (unchanged)
         - CMSIS-SVD 1.3.3 (unchanged)
-        - CMSIS-DAP 1.1.0 (unchanged)
+        - CMSIS-DAP 1.2.0 (unchanged)
         - CMSIS-Zone 0.0.1 (unchanged)
       </td>
     </tr>

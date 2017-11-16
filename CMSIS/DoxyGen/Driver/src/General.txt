@@ -61,6 +61,13 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
       <th>Description</th>
     </tr>
     <tr>
+      <td>2.6.0</td>
+      <td>
+- Enhanced CAN-Driver API with explicit BUSOFF state.
+- Enhanced NAND-Driver API for ECC handling.
+      </td>
+    </tr>
+    <tr>
       <td>2.05</td>
       <td>Modifications compared to Version 2.04:
  - Changed: All typedefs related to status have been made volatile. 
