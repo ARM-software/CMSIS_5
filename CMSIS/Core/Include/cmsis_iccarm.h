@@ -276,10 +276,24 @@ __packed struct  __iar_u32 { uint32_t v; };
 
   #define __get_IPSR()                (__arm_rsr("IPSR"))
   #define __get_MSP()                 (__arm_rsr("MSP"))
-  #define __get_MSPLIM()              (__arm_rsr("MSPLIM"))
+  #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
+       (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+    // without main extensions, the non-secure MSPLIM is RAZ/WI
+    #define __get_MSPLIM()            (0U)
+  #else
+    #define __get_MSPLIM()            (__arm_rsr("MSPLIM"))
+  #endif
   #define __get_PRIMASK()             (__arm_rsr("PRIMASK"))
   #define __get_PSP()                 (__arm_rsr("PSP"))
-  #define __get_PSPLIM()              (__arm_rsr("PSPLIM"))
+  
+  #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
+       (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+    // without main extensions, the non-secure PSPLIM is RAZ/WI
+    #define __get_PSPLIM()            (0U)
+  #else
+    #define __get_PSPLIM()            (__arm_rsr("PSPLIM"))
+  #endif
+  
   #define __get_xPSR()                (__arm_rsr("xPSR"))
 
   #define __set_BASEPRI(VALUE)        (__arm_wsr("BASEPRI", (VALUE)))
@@ -287,10 +301,23 @@ __packed struct  __iar_u32 { uint32_t v; };
   #define __set_CONTROL(VALUE)        (__arm_wsr("CONTROL", (VALUE)))
   #define __set_FAULTMASK(VALUE)      (__arm_wsr("FAULTMASK", (VALUE)))
   #define __set_MSP(VALUE)            (__arm_wsr("MSP", (VALUE)))
-  #define __set_MSPLIM(VALUE)         (__arm_wsr("MSPLIM", (VALUE)))
+  
+  #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
+       (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+    // without main extensions, the non-secure MSPLIM is RAZ/WI
+    #define __set_MSPLIM(VALUE)       ((void)(VALUE))
+  #else
+    #define __set_MSPLIM(VALUE)       (__arm_wsr("MSPLIM", (VALUE)))
+  #endif
   #define __set_PRIMASK(VALUE)        (__arm_wsr("PRIMASK", (VALUE)))
   #define __set_PSP(VALUE)            (__arm_wsr("PSP", (VALUE)))
-  #define __set_PSPLIM(VALUE)         (__arm_wsr("PSPLIM", (VALUE)))
+  #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
+       (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+    // without main extensions, the non-secure PSPLIM is RAZ/WI
+    #define __set_PSPLIM(VALUE)       ((void)(VALUE))
+  #else
+    #define __set_PSPLIM(VALUE)       (__arm_wsr("PSPLIM", (VALUE)))
+  #endif
 
   #define __TZ_get_CONTROL_NS()       (__arm_rsr("CONTROL_NS"))
   #define __TZ_set_CONTROL_NS(VALUE)  (__arm_wsr("CONTROL_NS", (VALUE)))
