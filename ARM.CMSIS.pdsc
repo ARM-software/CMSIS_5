@@ -8,7 +8,7 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.2.0">
+    <release version="5.2.0" date="2017-11-16">
       CMSIS-Core(M): 5.1.0 (see revision history for details)
         - Added MPU Functions for ARMv8-M for Cortex-M23/M33.
         - Added compiler_iccarm.h to replace compiler_iar.h shipped with the compiler.
