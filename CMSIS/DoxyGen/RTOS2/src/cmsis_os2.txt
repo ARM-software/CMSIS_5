@@ -1219,9 +1219,9 @@ Keil RTX5 is developed and tested using the common toolchains and development en
 Major parts of RTX5 are developed and optimized using ARM Compiler and ARM/Keil MDK.
 The current release is tested with the following versions:
 <ul>
- <li>ARM Compiler 5.06 Update 5 (Build 528)</li>
+ <li>ARM Compiler 5.06 Update 6</li>
  <li>ARM Compiler 6.6.1 (Long Term Maintenance)</li>
- <li>ARM Compiler 6.7</li>
+ <li>ARM Compiler 6.9</li>
  <li>RTOS-aware debugging with uVision 5.24</li>
 </ul>
 
@@ -1231,7 +1231,7 @@ RTX5 has been ported to fully support IAR Embedded Workbench. The following rele
 <ul>
  <li>IAR Embedded Workbench 7.7 (<a href="https://github.com/ARM-software/CMSIS_5/issues/201">community report</a>)</li>
  <li>IAR Embedded Workbench 7.80.4</li>
- <li>IAR Embedded Workbench 8.10</li>
+ <li><b>IAR Embedded Workbench 8.20.1</b></li>
 </ul>
 
 \subsection technicalData_Toolchain_GCC GNU Compiler Collection
@@ -1239,7 +1239,7 @@ RTX5 has been ported to fully support IAR Embedded Workbench. The following rele
 RTX5 has also been ported to support GCC, maintenance mainly relays on community contribution.
 Active development is currently tested with:
 <ul>
- <li>GCC 5.4 Release Series</li>
+ <li>GNU Tools for ARM Embedded 6.3.1 20170620</li>
 </ul>
 
 \section technicalData5_ControlBlockSizes Control Block Sizes
