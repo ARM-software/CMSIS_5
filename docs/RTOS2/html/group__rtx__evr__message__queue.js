@@ -2,7 +2,7 @@ var group__rtx__evr__message__queue =
 [
     [ "EvrRtxMessageQueueError", "group__rtx__evr__message__queue.html#ga8ded1d43703e0885a81e65251c6df405", null ],
     [ "EvrRtxMessageQueueNew", "group__rtx__evr__message__queue.html#gaa7b18f18f3f53d6afb39ac1abe257000", null ],
-    [ "EvrRtxMessageQueueCreated", "group__rtx__evr__message__queue.html#ga98c28cc50887badfff48ff577f6d3433", null ],
+    [ "EvrRtxMessageQueueCreated", "group__rtx__evr__message__queue.html#ga36d6982377c1f54a227ba6fbb9458b79", null ],
     [ "EvrRtxMessageQueueGetName", "group__rtx__evr__message__queue.html#gad0ef8ee59d2ec189351c5884f5f8e945", null ],
     [ "EvrRtxMessageQueuePut", "group__rtx__evr__message__queue.html#ga401536a603e5a805cc6089b4de11d3d3", null ],
     [ "EvrRtxMessageQueuePutPending", "group__rtx__evr__message__queue.html#ga4b1b6191c6ca87dff4714e25b5845828", null ],

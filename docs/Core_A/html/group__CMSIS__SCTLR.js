@@ -26,6 +26,6 @@ var group__CMSIS__SCTLR =
       [ "WXN", "unionSCTLR__Type.html#a551d0505856acaef4dd1ecca54cb540d", null ],
       [ "Z", "unionSCTLR__Type.html#a37f6910db32361f44a268f93b9ff7b20", null ]
     ] ],
-    [ "__get_SCTLR", "group__CMSIS__SCTLR.html#ga743a830af5cda6408a7d963c61f771eb", null ],
+    [ "__get_SCTLR", "group__CMSIS__SCTLR.html#ga3070304d6180433c91c4e6daef3f3c73", null ],
     [ "__set_SCTLR", "group__CMSIS__SCTLR.html#gaf9b8e96ddd2e76c4475cf957600fd57a", null ]
 ];

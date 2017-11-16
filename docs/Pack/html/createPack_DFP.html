@@ -162,7 +162,7 @@ MVCM3 Device Family Specification</div></div>
 <p><b>Code Example</b> </p>
 <ol>
 <li>
-Add a <a class="el" href="sdf_pg.html#element_device">&lt;devices&gt;</a> section in the PDSC file with the following: <div class="fragment"><div class="line">&lt;devices&gt;</div>
+Add a <a class="el" href="pdsc_family_pg.html#element_device">&lt;devices&gt;</a> section in the PDSC file with the following: <div class="fragment"><div class="line">&lt;devices&gt;</div>
 <div class="line">  &lt;family Dfamily=<span class="stringliteral">&quot;MVCM3 Series&quot;</span> Dvendor=<span class="stringliteral">&quot;Generic:5&quot;</span>&gt;</div>
 <div class="line">    &lt;processor Dcore=<span class="stringliteral">&quot;Cortex-M3&quot;</span> DcoreVersion=<span class="stringliteral">&quot;r2p1&quot;</span> Dfpu=<span class="stringliteral">&quot;0&quot;</span> Dmpu=<span class="stringliteral">&quot;0&quot;</span> Dendian=<span class="stringliteral">&quot;Little-endian&quot;</span>/&gt;</div>
 <div class="line">    &lt;description&gt;</div>
@@ -405,7 +405,7 @@ Device Properties</h1>
 </ul>
 <p>Parameters of each single device are defined in:</p>
 <ul>
-<li><a class="el" href="sdf_pg.html#element_device">device</a>: attributes of a specific silicon device</li>
+<li><a class="el" href="pdsc_family_pg.html#element_device">device</a>: attributes of a specific silicon device</li>
 <li><a class="el" href="pdsc_family_pg.html#element_variant">variant</a>: attributes of a device variant (for example, with different package or temperature range) or an OEM device or board that integrates the device.</li>
 </ul>
 <p>A device is described by the following properties:</p>
@@ -417,8 +417,8 @@ Device Properties</h1>
 <li><a class="el" href="pdsc_family_pg.html#element_compile">compile</a>: device specific general settings for the build tools</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugconfig">debugconfig</a>: default settings for a debug connection</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a>: debug port description of the device for the debugger to configure a debug connection.</li>
-<li><a class="el" href="sdf_pg.html#element_debug">debug</a>: device specific information for the debugger to configure a debug connection including System View Description files.</li>
-<li><a class="el" href="sdf_pg.html#element_trace">trace</a>: device specific information for the debugger to configure trace.</li>
+<li><a class="el" href="pdsc_family_pg.html#element_debug">debug</a>: device specific information for the debugger to configure a debug connection including System View Description files.</li>
+<li><a class="el" href="pdsc_family_pg.html#element_trace">trace</a>: device specific information for the debugger to configure trace.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_memory">memory</a>: memory layout of the device for internal and external RAM and ROM regions</li>
 <li><a class="el" href="pdsc_family_pg.html#element_algorithm">algorithm</a>: device specific Flash programming algorithms</li>
 </ul>
@@ -427,7 +427,7 @@ Device Properties</h1>
 <p>Copy the <em>content</em> of the <b>05_Device_Properties</b> directory of the <b>Pack_with_Device_Support.zip</b> file to the <b>Files</b> directory of your working environment: </p>
 <ol>
 <li>
-The <b>MVCM3 Series</b> family properties <a class="el" href="pdsc_family_pg.html#element_processor">processor</a>, <a class="el" href="pdsc_family_pg.html#element_compile">compile</a>, <a class="el" href="pdsc_family_pg.html#element_description">description</a>, and <a class="el" href="sdf_pg.html#element_debug">debug</a> are already specified. There are additional common properties that can be specified on the family level: <a class="el" href="pdsc_family_pg.html#element_book">book</a> and <a class="el" href="pdsc_family_pg.html#element_feature">feature</a>. Add the following lines to the PDSC file in the <b>&lt;family&gt;</b> section: <div class="fragment"><div class="line">&lt;book      name=<span class="stringliteral">&quot;Docs/dui0552a_cortex_m3_dgug.pdf&quot;</span>   title=<span class="stringliteral">&quot;Cortex-M3 Generic User Guide&quot;</span>/&gt;</div>
+The <b>MVCM3 Series</b> family properties <a class="el" href="pdsc_family_pg.html#element_processor">processor</a>, <a class="el" href="pdsc_family_pg.html#element_compile">compile</a>, <a class="el" href="pdsc_family_pg.html#element_description">description</a>, and <a class="el" href="pdsc_family_pg.html#element_debug">debug</a> are already specified. There are additional common properties that can be specified on the family level: <a class="el" href="pdsc_family_pg.html#element_book">book</a> and <a class="el" href="pdsc_family_pg.html#element_feature">feature</a>. Add the following lines to the PDSC file in the <b>&lt;family&gt;</b> section: <div class="fragment"><div class="line">&lt;book      name=<span class="stringliteral">&quot;Docs/dui0552a_cortex_m3_dgug.pdf&quot;</span>   title=<span class="stringliteral">&quot;Cortex-M3 Generic User Guide&quot;</span>/&gt;</div>
 <div class="line">&lt;book      name=<span class="stringliteral">&quot;Docs/MVCM3XXX_Datasheet.pdf&quot;</span>        title=<span class="stringliteral">&quot;MVCM3 Series Datasheet&quot;</span>/&gt;</div>
 <div class="line">&lt;book      name=<span class="stringliteral">&quot;Docs/MVCM3XXX_Product_Brief.pdf&quot;</span>    title=<span class="stringliteral">&quot;MVCM3 Product Brief&quot;</span>/&gt;</div>
 <div class="line">&lt;feature type=<span class="stringliteral">&quot;ExtInt&quot;</span>        n=<span class="stringliteral">&quot;16&quot;</span>/&gt;</div>
@@ -524,7 +524,7 @@ Finally, save the PDSC file and regenerate the Pack file using the <a class="el"
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:10 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:20 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

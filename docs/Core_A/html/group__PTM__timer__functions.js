@@ -15,8 +15,8 @@ var group__PTM__timer__functions =
     [ "PTIM", "group__PTM__timer__functions.html#gaaaf976e808e92970c4853195f46f86aa", null ],
     [ "PTIM_ClearEventFlag", "group__PTM__timer__functions.html#ga59dca62df390bc4bce18559fc7d28578", null ],
     [ "PTIM_GetControl", "group__PTM__timer__functions.html#ga34f0ceea142a4be1479cb552bf8bc4d1", null ],
-    [ "PTIM_GetCurrentValue", "group__PTM__timer__functions.html#ga71a3512b1a8eeb3a875ee2bd9049a707", null ],
-    [ "PTIM_GetLoadValue", "group__PTM__timer__functions.html#ga306ef25d86c7d56bfbfa694a73097b9b", null ],
+    [ "PTIM_GetCurrentValue", "group__PTM__timer__functions.html#gaaccd88ab7931c379817f71d7c0183586", null ],
+    [ "PTIM_GetLoadValue", "group__PTM__timer__functions.html#gacca3bf92e93c69e538ff4618317f7bfa", null ],
     [ "PTIM_SetControl", "group__PTM__timer__functions.html#gaabc1dba029389fe0e2a6297952df7972", null ],
     [ "PTIM_SetLoadValue", "group__PTM__timer__functions.html#ga30516fed24977be8eecf3efd8b6a2fea", null ]
 ];

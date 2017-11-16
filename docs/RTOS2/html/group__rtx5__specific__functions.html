@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -157,7 +157,7 @@ Functions</h2></td></tr>
 <tr>
 <th>Error Code </th><th>Description  </th></tr>
 <tr>
-<td>osRtxErrorStackUnderflow </td><td>Stack underflow detected for thread (thread_id=object_id) </td></tr>
+<td>osRtxErrorStackUnderflow </td><td>Stack overflow detected for thread (thread_id=object_id) </td></tr>
 <tr>
 <td>osRtxErrorISRQueueOverflow </td><td>ISR Queue overflow detected when inserting object (object_id) </td></tr>
 <tr>
@@ -177,7 +177,7 @@ Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">switch</span> (code) {</div>
 <div class="line">    <span class="keywordflow">case</span> <a class="code" href="rtx__os_8h.html#a42206aa2524b8fab613d26bea0f73c44">osRtxErrorStackUnderflow</a>:</div>
-<div class="line">      <span class="comment">// Stack underflow detected for thread (thread_id=object_id)</span></div>
+<div class="line">      <span class="comment">// Stack overflow detected for thread (thread_id=object_id)</span></div>
 <div class="line">      <span class="keywordflow">break</span>;</div>
 <div class="line">    <span class="keywordflow">case</span> <a class="code" href="rtx__os_8h.html#a7377235f9fa3cedee06f682cd93f3e88">osRtxErrorISRQueueOverflow</a>:</div>
 <div class="line">      <span class="comment">// ISR Queue overflow detected when inserting object (object_id)</span></div>
@@ -232,7 +232,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

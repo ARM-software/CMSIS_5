@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -213,12 +213,15 @@ cmsis_os2.h header file</h1>
 <div class="line"><span class="comment"> *</span></div>
 <div class="line"><span class="comment"> * ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment"> *</span></div>
-<div class="line"><span class="comment"> * $Date:        9. June 2017</span></div>
-<div class="line"><span class="comment"> * $Revision:    V2.1.1</span></div>
+<div class="line"><span class="comment"> * $Date:        30. October 2017</span></div>
+<div class="line"><span class="comment"> * $Revision:    V2.1.2</span></div>
 <div class="line"><span class="comment"> *</span></div>
 <div class="line"><span class="comment"> * Project:      CMSIS-RTOS2 API</span></div>
 <div class="line"><span class="comment"> * Title:        cmsis_os2.h header file</span></div>
 <div class="line"><span class="comment"> *</span></div>
+<div class="line"><span class="comment"> * Version 2.1.2</span></div>
+<div class="line"><span class="comment"> *    Additional functions allowed to be called from Interrupt Service Routines:</span></div>
+<div class="line"><span class="comment"> *    - osKernelGetInfo, osKernelGetState</span></div>
 <div class="line"><span class="comment"> * Version 2.1.1</span></div>
 <div class="line"><span class="comment"> *    Additional functions allowed to be called from Interrupt Service Routines:</span></div>
 <div class="line"><span class="comment"> *    - osKernelGetTickCount, osKernelGetTickFreq</span></div>
@@ -241,9 +244,9 @@ cmsis_os2.h header file</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#if   defined(__CC_ARM)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __NO_RETURN __declspec(noreturn)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#elif defined(__ARMCC_VERSION) &amp;&amp; (__ARMCC_VERSION &gt;= 6010050)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __NO_RETURN __attribute__((noreturn))</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __NO_RETURN __attribute__((__noreturn__))</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#elif defined(__GNUC__)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __NO_RETURN __attribute__((noreturn))</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __NO_RETURN __attribute__((__noreturn__))</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#elif defined(__ICCARM__)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define __NO_RETURN __noreturn</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#else</span></div>
@@ -950,7 +953,7 @@ cmsis_os2.h header file</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

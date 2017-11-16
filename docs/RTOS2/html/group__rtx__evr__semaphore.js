@@ -2,7 +2,7 @@ var group__rtx__evr__semaphore =
 [
     [ "EvrRtxSemaphoreError", "group__rtx__evr__semaphore.html#ga96a0209384296a283c7b1d23a3395fa1", null ],
     [ "EvrRtxSemaphoreNew", "group__rtx__evr__semaphore.html#ga5639f03e935ab79844777664a518c2ec", null ],
-    [ "EvrRtxSemaphoreCreated", "group__rtx__evr__semaphore.html#gad46ee88b57aed4c666aec773560aebad", null ],
+    [ "EvrRtxSemaphoreCreated", "group__rtx__evr__semaphore.html#ga31f9d55abcc5f398ea3810177cbf2bf3", null ],
     [ "EvrRtxSemaphoreGetName", "group__rtx__evr__semaphore.html#ga17d8aa861b6e669cc68c3c41e3e12332", null ],
     [ "EvrRtxSemaphoreAcquire", "group__rtx__evr__semaphore.html#gafd91c9bb268a48b394571a9fc1809019", null ],
     [ "EvrRtxSemaphoreAcquirePending", "group__rtx__evr__semaphore.html#gabbaaf85deaf4645414987fc1c3289343", null ],

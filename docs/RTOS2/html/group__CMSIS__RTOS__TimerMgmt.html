@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -199,6 +199,13 @@ Behavior of a Periodic Timer</div></div>
 <div class="line">                                                                               <span class="comment">// to the callback function</span></div>
 <div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(one_shot_id, 500);</div>
 <div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(periodic_id, 1500);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// start the one-shot timer again after it has triggered the first time:</span></div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a>(one_shot_id, 500);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// when timers are not needed any longer free the resources:</span></div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad0001dd74721ab461789324806db2453">osTimerDelete</a>(one_shot_id);</div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad0001dd74721ab461789324806db2453">osTimerDelete</a>(periodic_id);</div>
 </div><!-- fragment --> </li>
 </ol>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
@@ -301,11 +308,11 @@ Returned by:</p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7dc24a4c2b90334427081c3da7a71915a2e0e1f31c742c84b497c4d7143357bdb"></a>osTimerOnce</em>&#160;</td><td class="fielddoc">
 <p>One-shot timer. </p>
-<p>The timer is not automatically restarted once it has elapsed. </p>
+<p>The timer is not automatically restarted once it has elapsed. It can be restarted manually using <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a> as needed. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35"></a>osTimerPeriodic</em>&#160;</td><td class="fielddoc">
 <p>Repeating timer. </p>
-<p>The timer repeats automatically and triggers the callback continuously. </p>
+<p>The timer repeats automatically and triggers the callback continuously while running, see <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a> and <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gabd7a89356da7717293eb0bc5d87b8ac9">osTimerStop</a>. </p>
 </td></tr>
 </table>
 
@@ -626,7 +633,7 @@ Returned by:</p>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

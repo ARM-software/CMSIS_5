@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.05</span>
+   &#160;<span id="projectnumber">Version 2.6.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('group__can__status__code__ctrls.html',
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga911a65cc31304d57d283a21476d9ade7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__status__code__ctrls.html#ga911a65cc31304d57d283a21476d9ade7">ARM_CAN_UNIT_STATE_INACTIVE</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga911a65cc31304d57d283a21476d9ade7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unit state: Not active on bus (initialize or error bus off)  <a href="#ga911a65cc31304d57d283a21476d9ade7">More...</a><br/></td></tr>
+<tr class="memdesc:ga911a65cc31304d57d283a21476d9ade7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unit state: Not active on bus (initialization)  <a href="#ga911a65cc31304d57d283a21476d9ade7">More...</a><br/></td></tr>
 <tr class="separator:ga911a65cc31304d57d283a21476d9ade7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5f72c295ee2b829a8ae33b96466cc0e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__status__code__ctrls.html#ga5f72c295ee2b829a8ae33b96466cc0e8">ARM_CAN_UNIT_STATE_ACTIVE</a>&#160;&#160;&#160;(1U)</td></tr>
 <tr class="memdesc:ga5f72c295ee2b829a8ae33b96466cc0e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unit state: Active on bus (can generate active error frame)  <a href="#ga5f72c295ee2b829a8ae33b96466cc0e8">More...</a><br/></td></tr>
@@ -128,6 +128,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gace2db0f930f935054c21242f735e1922"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__status__code__ctrls.html#gace2db0f930f935054c21242f735e1922">ARM_CAN_UNIT_STATE_PASSIVE</a>&#160;&#160;&#160;(2U)</td></tr>
 <tr class="memdesc:gace2db0f930f935054c21242f735e1922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unit state: Error passive (can not generate active error frame)  <a href="#gace2db0f930f935054c21242f735e1922">More...</a><br/></td></tr>
 <tr class="separator:gace2db0f930f935054c21242f735e1922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd78b515410235cd77d0a10213ff4192"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__status__code__ctrls.html#gadd78b515410235cd77d0a10213ff4192">ARM_CAN_UNIT_STATE_BUS_OFF</a>&#160;&#160;&#160;(3U)</td></tr>
+<tr class="memdesc:gadd78b515410235cd77d0a10213ff4192"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unit state: Bus-off (can recover to active state)  <a href="#gadd78b515410235cd77d0a10213ff4192">More...</a><br/></td></tr>
+<tr class="separator:gadd78b515410235cd77d0a10213ff4192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5332a311f44caec256d59087c705e1e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__can__status__code__ctrls.html#ga5332a311f44caec256d59087c705e1e9">ARM_CAN_LEC_NO_ERROR</a>&#160;&#160;&#160;(0U)</td></tr>
 <tr class="memdesc:ga5332a311f44caec256d59087c705e1e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Last error code: No error.  <a href="#ga5332a311f44caec256d59087c705e1e9">More...</a><br/></td></tr>
 <tr class="separator:ga5332a311f44caec256d59087c705e1e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,7 +164,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Unit state: Not active on bus (initialize or error bus off) </p>
+<p>Unit state: Not active on bus (initialization) </p>
 
 </div>
 </div>
@@ -190,6 +193,20 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Unit state: Error passive (can not generate active error frame) </p>
+
+</div>
+</div>
+<a class="anchor" id="gadd78b515410235cd77d0a10213ff4192"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_CAN_UNIT_STATE_BUS_OFF&#160;&#160;&#160;(3U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unit state: Bus-off (can recover to active state) </p>
 
 </div>
 </div>
@@ -282,7 +299,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:43:49 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:02 for CMSIS-Driver by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

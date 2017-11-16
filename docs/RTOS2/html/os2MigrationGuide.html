@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -117,6 +117,8 @@ $(document).ready(function(){initNavTree('os2MigrationGuide.html','');});
 <li>Kernel startup<br/>
  The function <code>osKernelRunning</code> has been deprecated. "main" was usually a running thread in v1 implementations, which is not the case in v2 anymore. It was also possible to not even initialize and start the Kernel, but just to assume that "main" was a running thread. Portable code would typically initialize the Kernel (<a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>) and then start the Kernel (<a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>) or skip that part if <code>osKernelRunning</code> indicated that it is already running.<br/>
  The example code below shows how to overcome this situation.</li>
+<li>OS tick<br/>
+ RTX5 uses the <a class="el" href="group__CMSIS__RTOS__TickAPI.html">OS Tick API</a> to configure the tick interrupts. The interval calculation is typically based on <code>SystemCoreClock</code> variable. Thus one has to assure this variable is set correctly before calling <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>.</li>
 <li>The function <code>osWait</code> is deprecated.</li>
 <li>Error code incompatibility<br/>
  CMSIS-RTOS v1 used two different error codes for invalid parameters: <code>osErrorParameter</code> and <code>osErrorValue</code>. The new version only uses a common <a class="el" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eac24adca6a5d072c9f01c32178ba0d109">osErrorParameter</a> code. Therefore, code relying on osErrorValue is not compatible. The following functions are affected:<ul>
@@ -262,7 +264,7 @@ Level 3 Migration - Full transition to API v2</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="os2Migration.html">Migration from API v1 to API v2</a></li>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -4,7 +4,7 @@ var pdsc_devices_pg =
     [ "/package/devices/family element", "pdsc_family_pg.html", [
       [ "/package/devices/family", "pdsc_family_pg.html#element_family", null ],
       [ "/package/devices/family/subFamily", "pdsc_family_pg.html#element_subFamily", null ],
-      [ "/system_description/platform/scanchain/device", "pdsc_family_pg.html#element_device", null ],
+      [ "/package/devices/family/../device", "pdsc_family_pg.html#element_device", null ],
       [ "/package/devices/family/.../algorithm", "pdsc_family_pg.html#element_algorithm", null ],
       [ "/package/devices/family/.../book", "pdsc_family_pg.html#element_book", null ],
       [ "/package/devices/family/.../compile", "pdsc_family_pg.html#element_compile", null ],
@@ -27,9 +27,9 @@ var pdsc_devices_pg =
         [ "Expression rules", "pdsc_family_pg.html#ExpressionType", null ],
         [ "Debug access functions", "pdsc_family_pg.html#DebugFunctions", null ]
       ] ],
-      [ "/system_description/debug_and_trace_config/debug", "pdsc_family_pg.html#element_debug", null ],
+      [ "/package/devices/family/.../debug", "pdsc_family_pg.html#element_debug", null ],
       [ "/package/devices/family/.../debug/datapatch", "pdsc_family_pg.html#element_dbg_datapatch", null ],
-      [ "/system_description/debug_and_trace_config/trace", "pdsc_family_pg.html#element_trace", null ],
+      [ "/package/devices/family/.../trace", "pdsc_family_pg.html#element_trace", null ],
       [ "/package/devices/family/.../trace/serialwire", "pdsc_family_pg.html#element_trace_serialwire", null ],
       [ "/package/devices/family/.../trace/traceport", "pdsc_family_pg.html#element_trace_traceport", null ],
       [ "/package/devices/family/.../trace/tracebuffer", "pdsc_family_pg.html#element_trace_tracebuffer", null ],

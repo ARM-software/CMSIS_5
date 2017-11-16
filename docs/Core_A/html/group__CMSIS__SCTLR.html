@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.0.0</span>
+   &#160;<span id="projectnumber">Version 1.1.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -133,12 +133,12 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf9b8e96ddd2e76c4475cf957600fd57a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__SCTLR.html#gaf9b8e96ddd2e76c4475cf957600fd57a">__set_SCTLR</a> (uint32_t sctlr)</td></tr>
-<tr class="memdesc:gaf9b8e96ddd2e76c4475cf957600fd57a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set SCTLR (System Control Register).  <a href="#gaf9b8e96ddd2e76c4475cf957600fd57a">More...</a><br/></td></tr>
+<tr class="memitem:gaf9b8e96ddd2e76c4475cf957600fd57a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__SCTLR.html#gaf9b8e96ddd2e76c4475cf957600fd57a">__set_SCTLR</a> (uint32_t sctlr)</td></tr>
+<tr class="memdesc:gaf9b8e96ddd2e76c4475cf957600fd57a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set SCTLR.  <a href="#gaf9b8e96ddd2e76c4475cf957600fd57a">More...</a><br/></td></tr>
 <tr class="separator:gaf9b8e96ddd2e76c4475cf957600fd57a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga743a830af5cda6408a7d963c61f771eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__SCTLR.html#ga743a830af5cda6408a7d963c61f771eb">__get_SCTLR</a> ()</td></tr>
-<tr class="memdesc:ga743a830af5cda6408a7d963c61f771eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get SCTLR (System Control Register).  <a href="#ga743a830af5cda6408a7d963c61f771eb">More...</a><br/></td></tr>
-<tr class="separator:ga743a830af5cda6408a7d963c61f771eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3070304d6180433c91c4e6daef3f3c73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__SCTLR.html#ga3070304d6180433c91c4e6daef3f3c73">__get_SCTLR</a> (void)</td></tr>
+<tr class="memdesc:ga3070304d6180433c91c4e6daef3f3c73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get SCTLR.  <a href="#ga3070304d6180433c91c4e6daef3f3c73">More...</a><br/></td></tr>
+<tr class="separator:ga3070304d6180433c91c4e6daef3f3c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>In a VMSAv7 implementation, the SCTLR bit assignments are:</p>
@@ -182,15 +182,16 @@ Functions</h2></td></tr>
 <tr>
 <td align="left">[0] </td><td align="left">M </td><td align="left">Address translation enable bit. </td></tr>
 </table>
-<p>Consider using <a class="el" href="group__CMSIS__SCTLR.html#ga743a830af5cda6408a7d963c61f771eb">__get_SCTLR</a> and <a class="el" href="group__CMSIS__SCTLR.html#gaf9b8e96ddd2e76c4475cf957600fd57a">__set_SCTLR</a> for accessing this register. </p>
+<p>Consider using <a class="el" href="group__CMSIS__SCTLR.html#ga3070304d6180433c91c4e6daef3f3c73">__get_SCTLR</a> and <a class="el" href="group__CMSIS__SCTLR.html#gaf9b8e96ddd2e76c4475cf957600fd57a">__set_SCTLR</a> for accessing this register. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga743a830af5cda6408a7d963c61f771eb"></a>
+<a class="anchor" id="ga3070304d6180433c91c4e6daef3f3c73"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint32_t __get_SCTLR </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -214,6 +215,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function assigns the given value to the System Control Register.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">sctlr</td><td>System Control Register value to set</td></tr>
@@ -229,7 +231,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:43:46 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:05:59 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -186,13 +186,13 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:aea20a2b373e98ae88a7cf7e4a56b118f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#aea20a2b373e98ae88a7cf7e4a56b118f">osRtxVersionAPI</a>&#160;&#160;&#160;20010001</td></tr>
+<tr class="memitem:aea20a2b373e98ae88a7cf7e4a56b118f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#aea20a2b373e98ae88a7cf7e4a56b118f">osRtxVersionAPI</a>&#160;&#160;&#160;20010002</td></tr>
 <tr class="memdesc:aea20a2b373e98ae88a7cf7e4a56b118f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel Information.  <a href="#aea20a2b373e98ae88a7cf7e4a56b118f">More...</a><br/></td></tr>
 <tr class="separator:aea20a2b373e98ae88a7cf7e4a56b118f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad854168120979e8c60630e0140e104e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#ad854168120979e8c60630e0140e104e8">osRtxVersionKernel</a>&#160;&#160;&#160;50020001</td></tr>
-<tr class="memdesc:ad854168120979e8c60630e0140e104e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel version (5.2.1)  <a href="#ad854168120979e8c60630e0140e104e8">More...</a><br/></td></tr>
+<tr class="memitem:ad854168120979e8c60630e0140e104e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#ad854168120979e8c60630e0140e104e8">osRtxVersionKernel</a>&#160;&#160;&#160;50020003</td></tr>
+<tr class="memdesc:ad854168120979e8c60630e0140e104e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel version (5.2.3)  <a href="#ad854168120979e8c60630e0140e104e8">More...</a><br/></td></tr>
 <tr class="separator:ad854168120979e8c60630e0140e104e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47e0637d30eed2357b238cbb19dbb058"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a47e0637d30eed2357b238cbb19dbb058">osRtxKernelId</a>&#160;&#160;&#160;&quot;RTX V5.2.1&quot;</td></tr>
+<tr class="memitem:a47e0637d30eed2357b238cbb19dbb058"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a47e0637d30eed2357b238cbb19dbb058">osRtxKernelId</a>&#160;&#160;&#160;&quot;RTX V5.2.3&quot;</td></tr>
 <tr class="memdesc:a47e0637d30eed2357b238cbb19dbb058"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel identification string.  <a href="#a47e0637d30eed2357b238cbb19dbb058">More...</a><br/></td></tr>
 <tr class="separator:a47e0637d30eed2357b238cbb19dbb058"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad78a646169b7b4bfa2a278d08fe21fa5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#ad78a646169b7b4bfa2a278d08fe21fa5">osRtxIdInvalid</a>&#160;&#160;&#160;0x00U</td></tr>
@@ -324,12 +324,16 @@ Macros</h2></td></tr>
 <tr class="memdesc:a42206aa2524b8fab613d26bea0f73c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Error Codes.  <a href="#a42206aa2524b8fab613d26bea0f73c44">More...</a><br/></td></tr>
 <tr class="separator:a42206aa2524b8fab613d26bea0f73c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7377235f9fa3cedee06f682cd93f3e88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a7377235f9fa3cedee06f682cd93f3e88">osRtxErrorISRQueueOverflow</a>&#160;&#160;&#160;2U</td></tr>
+<tr class="memdesc:a7377235f9fa3cedee06f682cd93f3e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">ISR Queue overflow detected when inserting object.  <a href="#a7377235f9fa3cedee06f682cd93f3e88">More...</a><br/></td></tr>
 <tr class="separator:a7377235f9fa3cedee06f682cd93f3e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad420018f26e751ec55d3922a283beb0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#aad420018f26e751ec55d3922a283beb0">osRtxErrorTimerQueueOverflow</a>&#160;&#160;&#160;3U</td></tr>
+<tr class="memdesc:aad420018f26e751ec55d3922a283beb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">User Timer Callback Queue overflow detected for timer.  <a href="#aad420018f26e751ec55d3922a283beb0">More...</a><br/></td></tr>
 <tr class="separator:aad420018f26e751ec55d3922a283beb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14a24724f6e87744ba84674ef76e4256"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a14a24724f6e87744ba84674ef76e4256">osRtxErrorClibSpace</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="memdesc:a14a24724f6e87744ba84674ef76e4256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard C/C++ library libspace not available: increase <code>OS_THREAD_LIBSPACE_NUM</code>.  <a href="#a14a24724f6e87744ba84674ef76e4256">More...</a><br/></td></tr>
 <tr class="separator:a14a24724f6e87744ba84674ef76e4256"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac749c24b9cf6c49b392b015ed0517cfc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#ac749c24b9cf6c49b392b015ed0517cfc">osRtxErrorClibMutex</a>&#160;&#160;&#160;5U</td></tr>
+<tr class="memdesc:ac749c24b9cf6c49b392b015ed0517cfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard C/C++ library mutex initialization failed.  <a href="#ac749c24b9cf6c49b392b015ed0517cfc">More...</a><br/></td></tr>
 <tr class="separator:ac749c24b9cf6c49b392b015ed0517cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0eb4da5bed45820d732e23483b870152"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a0eb4da5bed45820d732e23483b870152">osRtxConfigPrivilegedMode</a>&#160;&#160;&#160;(1UL&lt;&lt;0)</td></tr>
 <tr class="memdesc:a0eb4da5bed45820d732e23483b870152"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Configuration flags.  <a href="#a0eb4da5bed45820d732e23483b870152">More...</a><br/></td></tr>
@@ -1159,11 +1163,11 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxVersionAPI&#160;&#160;&#160;20010001</td>
+          <td class="memname">#define osRtxVersionAPI&#160;&#160;&#160;20010002</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API version (2.1.1) </p>
+<p>API version (2.1.2) </p>
 
 </div>
 </div>
@@ -1172,7 +1176,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxVersionKernel&#160;&#160;&#160;50020001</td>
+          <td class="memname">#define osRtxVersionKernel&#160;&#160;&#160;50020003</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1184,7 +1188,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxKernelId&#160;&#160;&#160;&quot;RTX V5.2.1&quot;</td>
+          <td class="memname">#define osRtxKernelId&#160;&#160;&#160;&quot;RTX V5.2.3&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1732,6 +1736,7 @@ Message Queue Control Blocks. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks. </p>
 
 </div>
 </div>
@@ -1900,7 +1905,7 @@ Message Queue Control Blocks. </td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_a43355fbfff7212ac2193223a73d577c.html">RTOS2</a></li><li class="navelem"><a class="el" href="dir_002cf2dd0f795cc97a8d08cc3fa6e516.html">RTX</a></li><li class="navelem"><a class="el" href="dir_061ad8d12aa7dc7d03c29112cd6e086d.html">Include</a></li><li class="navelem"><a class="el" href="rtx__os_8h.html">rtx_os.h</a></li>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

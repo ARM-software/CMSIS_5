@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -198,6 +198,8 @@ RTX_Config.h: Thread Configuration</div></div>
 <tr>
 <td align="left">Idle Thread Stack size [bytes] </td><td align="left"><code>OS_IDLE_THREAD_STACK_SIZE</code> </td><td align="left">Defines stack size for Idle thread. Default value is <span class="XML-Token">200</span>. Value range is <span class="XML-Token">[72-1073741824]</span> bytes, in multiples of <span class="XML-Token">8</span>. </td></tr>
 <tr>
+<td align="left">Idle Thread TrustZone Module ID </td><td align="left"><code>OS_IDLE_THREAD_TZ_MOD_ID</code> </td><td align="left">Defines the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a697f2aad6119d655d212ea10245ae394">TrustZone Module ID</a> the Idle Thread shall use. This needs to be set to a non-zero value if the Idle Thread need to call secure functions. Default value is <span class="XML-Token">0</span>. </td></tr>
+<tr>
 <td align="left">Stack overrun checking </td><td align="left"><code>OS_STACK_CHECK</code> </td><td align="left">Enable stack overrun checks at thread switch. </td></tr>
 <tr>
 <td align="left">Stack usage watermark </td><td align="left"><code>OS_STACK_WATERMARK</code> </td><td align="left">Initialize thread stack with watermark pattern for analyzing stack usage. Enabling this option increases significantly the execution time of thread creation. </td></tr>
@@ -261,6 +263,8 @@ RTX_Config.h: Timer Configuration</div></div>
 <td>Timer Thread Priority </td><td><code>OS_TIMER_THREAD_PRIO</code> </td><td>Defines priority for timer thread. Default value is <span class="XML-Token">40</span>. Value range is <span class="XML-Token">[8-48]</span>, in multiples of <span class="XML-Token">8</span>. The numbers have the following priority correlation: <span class="XML-Token">8=Low</span>; <span class="XML-Token">16=Below Normal</span>; <span class="XML-Token">24=Normal</span>; <span class="XML-Token">32=Above Normal</span>; <span class="XML-Token">40=High</span>; <span class="XML-Token">48=Realtime</span> </td></tr>
 <tr>
 <td>Timer Thread Stack size [bytes] </td><td><code>OS_TIMER_THREAD_STACK_SIZE</code> </td><td>Defines stack size for Timer thread. May be set to 0 when timers are not used. Default value is <span class="XML-Token">200</span>. Value range is <span class="XML-Token">[0-1073741824]</span>, in multiples of <span class="XML-Token">8</span>. </td></tr>
+<tr>
+<td>Timer Thread TrustZone Module ID </td><td><code>OS_TIMER_THREAD_TZ_MOD_ID</code> </td><td>Defines the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a697f2aad6119d655d212ea10245ae394">TrustZone Module ID</a> the Timer Thread shall use. This needs to be set to a non-zero value if any Timer Callbacks need to call secure functions. Default value is <span class="XML-Token">0</span>. </td></tr>
 <tr>
 <td>Timer Callback Queue entries </td><td><code>OS_TIMER_CB_QUEUE</code> </td><td>Number of concurrent active timer callback functions. May be set to 0 when timers are not used. Default value is <span class="XML-Token">4</span>. Value range is <span class="XML-Token">[0-256]</span>. </td></tr>
 </table>
@@ -375,7 +379,7 @@ Object-specific memory allocation</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

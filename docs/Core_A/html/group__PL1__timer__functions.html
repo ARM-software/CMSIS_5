@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.0.0</span>
+   &#160;<span id="projectnumber">Version 1.1.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -136,6 +136,15 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8a212e9457005edfb9f14afbf937ebf9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PL1__timer__functions.html#ga8a212e9457005edfb9f14afbf937ebf9">PL1_GetCurrentValue</a> ()</td></tr>
 <tr class="memdesc:ga8a212e9457005edfb9f14afbf937ebf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current counter value.  <a href="#ga8a212e9457005edfb9f14afbf937ebf9">More...</a><br/></td></tr>
 <tr class="separator:ga8a212e9457005edfb9f14afbf937ebf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac66bd336d2353f70aa8ebfc73aa3fc43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PL1__timer__functions.html#gac66bd336d2353f70aa8ebfc73aa3fc43">PL1_GetCurrentPhysicalValue</a> (void)</td></tr>
+<tr class="memdesc:gac66bd336d2353f70aa8ebfc73aa3fc43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current physical counter value.  <a href="#gac66bd336d2353f70aa8ebfc73aa3fc43">More...</a><br/></td></tr>
+<tr class="separator:gac66bd336d2353f70aa8ebfc73aa3fc43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab34067824971064a829e17b791070643"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PL1__timer__functions.html#gab34067824971064a829e17b791070643">PL1_SetPhysicalCompareValue</a> (uint64_t value)</td></tr>
+<tr class="memdesc:gab34067824971064a829e17b791070643"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the physical compare value.  <a href="#gab34067824971064a829e17b791070643">More...</a><br/></td></tr>
+<tr class="separator:gab34067824971064a829e17b791070643"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga341ae7d1ae29f4dc5dae6310fa453164"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PL1__timer__functions.html#ga341ae7d1ae29f4dc5dae6310fa453164">PL1_GetPhysicalCompareValue</a> (void)</td></tr>
+<tr class="memdesc:ga341ae7d1ae29f4dc5dae6310fa453164"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the physical compare value.  <a href="#ga341ae7d1ae29f4dc5dae6310fa453164">More...</a><br/></td></tr>
+<tr class="separator:ga341ae7d1ae29f4dc5dae6310fa453164"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2e2ea7eac12a90c6243000172bf774e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PL1__timer__functions.html#ga2e2ea7eac12a90c6243000172bf774e1">PL1_SetControl</a> (uint32_t value)</td></tr>
 <tr class="memdesc:ga2e2ea7eac12a90c6243000172bf774e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the timer by setting the control value.  <a href="#ga2e2ea7eac12a90c6243000172bf774e1">More...</a><br/></td></tr>
 <tr class="separator:ga2e2ea7eac12a90c6243000172bf774e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,6 +161,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint32_t PL1_GetControl </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -164,6 +174,23 @@ Control value. </dd></dl>
 
 </div>
 </div>
+<a class="anchor" id="gac66bd336d2353f70aa8ebfc73aa3fc43"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint64_t PL1_GetCurrentPhysicalValue </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Current physical counter value. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ga8a212e9457005edfb9f14afbf937ebf9"></a>
 <div class="memitem">
 <div class="memproto">
@@ -171,6 +198,7 @@ Control value. </dd></dl>
         <tr>
           <td class="memname"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint32_t PL1_GetCurrentValue </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -180,6 +208,23 @@ Control value. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Current counter value.</dd>
 <dd>
 Current counter value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga341ae7d1ae29f4dc5dae6310fa453164"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint64_t PL1_GetPhysicalCompareValue </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Physical compare value. </dd></dl>
 
 </div>
 </div>
@@ -255,12 +300,34 @@ Current counter value. </dd></dl>
 
 </div>
 </div>
+<a class="anchor" id="gab34067824971064a829e17b791070643"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void PL1_SetPhysicalCompareValue </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>New physical timer compare value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:43:46 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:05:59 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

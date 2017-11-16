@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['irq_5fctrl_5fh_5f',['IRQ_CTRL_H_',['../irq__ctrl_8h.html#ad98f7b2e49c628cc86ee5ad15f5b28a6',1,'irq_ctrl.h']]],
   ['irq_5fmode',['IRQ_MODE',['../startup__ARMCA9_8c.html#a015e07338bc15a48ad76695362eea25f',1,'startup_ARMCA9.c']]],
   ['irq_5fmode_5fcpu_5fmsk',['IRQ_MODE_CPU_Msk',['../irq__ctrl_8h.html#a96f739279c27f3e56ede4f28de4a48d8',1,'irq_ctrl.h']]],
   ['irq_5fmode_5fcpu_5fpos',['IRQ_MODE_CPU_Pos',['../irq__ctrl_8h.html#ab7527409c193021e65aaf4d519caea46',1,'irq_ctrl.h']]],

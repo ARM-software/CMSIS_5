@@ -170,9 +170,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> </td><td>Describe a debug port relevant to all devices of the family. </td><td>DebugPortType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_debug">debug</a> </td><td>Specify debug options that are relevant to all devices of the family. </td><td>DebugType </td><td>0..*  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td>Specify debug options that are relevant to all devices of the family. </td><td>DebugType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td>Specify trace options that are relevant to all devices of the family. </td><td>TraceType </td><td>0..*  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td>Specify trace options that are relevant to all devices of the family. </td><td>TraceType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_memory">memory</a> </td><td>Specify memory areas that are available for all devices of the family. </td><td>MemoryType </td><td>0..*  </td></tr>
 <tr>
@@ -188,7 +188,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td>A optional sub-family that is used to group devices. </td><td>group </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td>Individual devices that belong to the device family. </td><td>DeviceType </td><td>0..*  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td>Individual devices that belong to the device family. </td><td>DeviceType </td><td>0..*  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -247,9 +247,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> </td><td>Describe a debug port relevant to all devices of the sub-family. </td><td>DebugPortType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_debug">debug</a> </td><td>Specify debug options that are relevant to all devices of the sub-family. </td><td>DebugType </td><td>0..*  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td>Specify debug options that are relevant to all devices of the sub-family. </td><td>DebugType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td>Specify trace options that are relevant to all devices of the sub-family. </td><td>TraceType </td><td>0..*  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td>Specify trace options that are relevant to all devices of the sub-family. </td><td>TraceType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_memory">memory</a> </td><td>Specify memory areas that are available in all device of the sub-family. </td><td>MemoryType </td><td>0..*  </td></tr>
 <tr>
@@ -261,12 +261,12 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_feature">feature</a> </td><td>Specify features available in devices of the sub-family. </td><td>FeatureType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td>List individual devices that belong to the device sub-family. </td><td>DeviceType </td><td>0..*  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td>List individual devices that belong to the device sub-family. </td><td>DeviceType </td><td>0..*  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
 <h1><a class="anchor" id="element_device"></a>
-/system_description/platform/scanchain/device</h1>
+/package/devices/family/../device</h1>
 <p>Define properties that are specific to a device. Properties defined on upper levels get inherited, unless they can be overwritten. Multiple &lt;device&gt; elements can be defined.</p>
 <p><b>Example</b> </p>
 <div class="fragment"><div class="line">&lt;subFamily DsubFamily=<span class="stringliteral">&quot;STM32F405&quot;</span>&gt;</div>
@@ -319,9 +319,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> </td><td>Describe a debug port specific to this device. </td><td>DebugPortType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_debug">debug</a> </td><td>Specify debug options specific to this device. </td><td>DebugType </td><td>0..*  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td>Specify debug options specific to this device. </td><td>DebugType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td>Specify trace options specific to this device. </td><td>TraceType </td><td>0..*  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td>Specify trace options specific to this device. </td><td>TraceType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugvars">debugvars</a> </td><td>Define debug access variables for user-defined settings specific to this device. </td><td>DebugVarsType </td><td>0..1  </td></tr>
 <tr>
@@ -359,7 +359,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -408,7 +408,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -451,7 +451,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -491,7 +491,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -540,7 +540,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -605,7 +605,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -774,7 +774,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -877,7 +877,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -1236,7 +1236,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -1314,7 +1314,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -1458,7 +1458,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -1599,7 +1599,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Child&#160;Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
@@ -2307,7 +2307,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <p>&#160;</p>
 <hr/>
 <h1><a class="anchor" id="element_debug"></a>
-/system_description/debug_and_trace_config/debug</h1>
+/package/devices/family/.../debug</h1>
 <p>Describes configuration settings, default values, and patches for data accesses for a debug connection. Multiple <b>debug</b> elements can be defined which are either specific to a processor identified by attribute <b>Pname</b>, or which apply to all connections.</p>
 <p><b>Example</b> <b>1</b> </p>
 <div class="fragment"><div class="line">&lt;family Dfamily=<span class="stringliteral">&quot;LPC4300 Series&quot;</span> Dvendor=<span class="stringliteral">&quot;NXP:11&quot;</span>&gt;</div>
@@ -2341,7 +2341,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -2403,7 +2403,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_debug">debug</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_debug">/system_description/debug_and_trace_config/debug</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_debug">/package/devices/family/.../debug</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -2438,7 +2438,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <p>&#160;</p>
 <hr/>
 <h1><a class="anchor" id="element_trace"></a>
-/system_description/debug_and_trace_config/trace</h1>
+/package/devices/family/.../trace</h1>
 <p>Describes device capabilities and possible configuration settings for capturing trace. Multiple <b>trace</b> elements can be defined which are either specific to a processor identified by attribute <b>Pname</b>, or which apply to all connections.</p>
 <p><b>Example</b> </p>
 <div class="fragment"><div class="line">&lt;family Dfamily=<span class="stringliteral">&quot;LPC4300 Series&quot;</span> Dvendor=<span class="stringliteral">&quot;NXP:11&quot;</span>&gt;</div>
@@ -2463,7 +2463,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -2497,7 +2497,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_trace">/system_description/debug_and_trace_config/trace</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_trace">/package/devices/family/.../trace</a>  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -2519,7 +2519,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_trace">/system_description/debug_and_trace_config/trace</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_trace">/package/devices/family/.../trace</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -2554,7 +2554,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_trace">/system_description/debug_and_trace_config/trace</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_trace">/package/devices/family/.../trace</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -2588,7 +2588,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/scanchain/device</a>  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -2616,9 +2616,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> </td><td>Describe a debug port specific to this device. </td><td>DebugPortType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_debug">debug</a> </td><td>Specify debug options specific to this device. </td><td>DebugType </td><td>0..*  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> </td><td>Specify debug options specific to this device. </td><td>DebugType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td>Specify trace options specific to this device. </td><td>TraceType </td><td>0..*  </td></tr>
+<td><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> </td><td>Specify trace options specific to this device. </td><td>TraceType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_debugvars">debugvars</a> </td><td>Define debug access variables for user-defined settings specific to this device. </td><td>DebugVarsType </td><td>0..1  </td></tr>
 <tr>
@@ -2632,7 +2632,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li><li class="navelem"><a class="el" href="pdsc_devices_pg.html">/package/devices element</a></li>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:10 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:21 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"group__flash__interface__gr.html#gabeb4ad43b1e6fa4ed956cd5c9371d327":[5,6,6],
+"group__flash__interface__gr.html#gac047b7509356e888502e0424a9d189ae":[5,6,17],
 "group__flash__interface__gr.html#gae23af293e9f8a67cdb19c7d0d562d415":[5,6,10],
 "group__flash__interface__gr.html#structARM__DRIVER__FLASH":[5,6,3],
 "group__flash__interface__gr.html#structARM__FLASH__CAPABILITIES":[5,6,4],
@@ -106,8 +108,8 @@ var NAVTREEINDEX2 =
 "group__mci__interface__gr.html#a02df0162d3a653c36158a7b6a76f6175":[5,4,6,2],
 "group__mci__interface__gr.html#a072a194948489d4dbd2409b94fdca56b":[5,4,6,25],
 "group__mci__interface__gr.html#a084188480d589cdc8d3e164b9f41bea9":[5,4,6,13],
-"group__mci__interface__gr.html#a13c956ba993083f1e59379968e2badbe":[5,4,6,27],
 "group__mci__interface__gr.html#a13c956ba993083f1e59379968e2badbe":[5,4,7,7],
+"group__mci__interface__gr.html#a13c956ba993083f1e59379968e2badbe":[5,4,6,27],
 "group__mci__interface__gr.html#a1896a7548bb6fab285f23cc0d0b23d7d":[5,4,6,6],
 "group__mci__interface__gr.html#a1ee73c19020d5f1bedf7c013d0e5f730":[5,4,6,17],
 "group__mci__interface__gr.html#a21d4bc1a03e161bd33693619039a6afa":[5,4,7,5],
@@ -123,8 +125,8 @@ var NAVTREEINDEX2 =
 "group__mci__interface__gr.html#a5c3dcb2f8aa6f65408d9a6741abb7b3e":[5,4,6,15],
 "group__mci__interface__gr.html#a5e38e4ee9cebcc99904e287adc8e6217":[5,4,6,22],
 "group__mci__interface__gr.html#a617bf7fb73b49a20398b90098ecc3ec0":[5,4,6,14],
-"group__mci__interface__gr.html#a61e2a440b27d7d22c866ad4427f4b825":[5,4,6,21],
 "group__mci__interface__gr.html#a61e2a440b27d7d22c866ad4427f4b825":[5,4,7,6],
+"group__mci__interface__gr.html#a61e2a440b27d7d22c866ad4427f4b825":[5,4,6,21],
 "group__mci__interface__gr.html#a639bebbcb9a3a743f4f232fec82e2bfc":[5,4,6,20],
 "group__mci__interface__gr.html#a6e0f47a92f626a971c5197fca6545505":[5,4,5,11],
 "group__mci__interface__gr.html#a73334c737658b227ef3097343d5c78bb":[5,4,5,5],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "group__nand__driver__ecc__codes.html":[5,5,4],
 "group__nand__driver__ecc__codes.html#ga15c79a12200c16f953936635f930df1d":[5,5,4,1],
 "group__nand__driver__ecc__codes.html#gac2eb4475f12a443209165d29fe200030":[5,5,4,0],
-"group__nand__driver__ecc__codes.html#gaee653288a88318ee33d1db81baa69bbc":[5,5,4,2],
-"group__nand__driver__flag__codes.html":[5,5,2],
-"group__nand__driver__flag__codes.html#gaf40631ba62411e0ac06c3a945d608581":[5,5,2,0]
+"group__nand__driver__ecc__codes.html#gaee653288a88318ee33d1db81baa69bbc":[5,5,4,2]
 };

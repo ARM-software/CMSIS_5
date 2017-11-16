@@ -2,7 +2,7 @@ var group__rtx__evr__thread =
 [
     [ "EvrRtxThreadError", "group__rtx__evr__thread.html#ga4a2879b06201a29d8c223253d41cca43", null ],
     [ "EvrRtxThreadNew", "group__rtx__evr__thread.html#ga396ce41f68401a885f0ae46a54e8dd1f", null ],
-    [ "EvrRtxThreadCreated", "group__rtx__evr__thread.html#ga18fd5da10c8a5b39ad587ab610d9f51e", null ],
+    [ "EvrRtxThreadCreated", "group__rtx__evr__thread.html#gae2215445440bcb53b65a9b7181ecffa9", null ],
     [ "EvrRtxThreadGetName", "group__rtx__evr__thread.html#ga4f849a33d2c95754b11a499d77503b5c", null ],
     [ "EvrRtxThreadGetId", "group__rtx__evr__thread.html#ga40c0d21a5c0d128f09966aeeca37ecba", null ],
     [ "EvrRtxThreadGetState", "group__rtx__evr__thread.html#ga1c3120fb155ca19ea5c9089a446ef19d", null ],
@@ -22,7 +22,8 @@ var group__rtx__evr__thread =
     [ "EvrRtxThreadJoined", "group__rtx__evr__thread.html#ga86ac910ac88d8fe54206a12d7ed69a27", null ],
     [ "EvrRtxThreadBlocked", "group__rtx__evr__thread.html#gab9efd66ed2edb439c5081806c9b63cf9", null ],
     [ "EvrRtxThreadUnblocked", "group__rtx__evr__thread.html#ga3faae4d941ddecfe773ef9f3efe8b901", null ],
-    [ "EvrRtxThreadSwitch", "group__rtx__evr__thread.html#ga2829dfe558a469d913f4eb0ccd6d29c6", null ],
+    [ "EvrRtxThreadPreempted", "group__rtx__evr__thread.html#gabe470d5bb1373c59c51470fd20b55bcb", null ],
+    [ "EvrRtxThreadSwitched", "group__rtx__evr__thread.html#gae3bc50d5f154463c7f6647544bb5ecab", null ],
     [ "EvrRtxThreadExit", "group__rtx__evr__thread.html#gaa557f9732a8a2120f08cfb2694aa26fb", null ],
     [ "EvrRtxThreadTerminate", "group__rtx__evr__thread.html#ga6abe7d167bd5bb91c3d6bf6d2bb417aa", null ],
     [ "EvrRtxThreadDestroyed", "group__rtx__evr__thread.html#gaa5aa707fc2d6b44bfcb86bce2e2e90f3", null ],

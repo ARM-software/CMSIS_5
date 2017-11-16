@@ -2,7 +2,7 @@ var group__rtx__evr__memory__pool =
 [
     [ "EvrRtxMemoryPoolError", "group__rtx__evr__memory__pool.html#ga7e1a37b0c5dd0a97507c025ab1a62ec8", null ],
     [ "EvrRtxMemoryPoolNew", "group__rtx__evr__memory__pool.html#gaf2fd4c91acf1379e93cd9886c515b9c5", null ],
-    [ "EvrRtxMemoryPoolCreated", "group__rtx__evr__memory__pool.html#ga5b361415e483ea24c0af489697e419b2", null ],
+    [ "EvrRtxMemoryPoolCreated", "group__rtx__evr__memory__pool.html#gadad71c7b04493c03647ca0929ea087b1", null ],
     [ "EvrRtxMemoryPoolGetName", "group__rtx__evr__memory__pool.html#gaeface1ee4957cdb59292e13c38a672d7", null ],
     [ "EvrRtxMemoryPoolAlloc", "group__rtx__evr__memory__pool.html#ga425c8a0e13c6fb13262d99a4dcabd507", null ],
     [ "EvrRtxMemoryPoolAllocPending", "group__rtx__evr__memory__pool.html#ga2fbd33e3d84b4f37e9f9b80576b26907", null ],

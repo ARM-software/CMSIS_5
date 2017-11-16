@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -125,9 +125,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga51f59bf99b315f016ca752eddd1911d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__mutex.html#ga51f59bf99b315f016ca752eddd1911d5">EvrRtxMutexNew</a> (const <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:ga51f59bf99b315f016ca752eddd1911d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on mutex create and initialize (API)  <a href="#ga51f59bf99b315f016ca752eddd1911d5">More...</a><br/></td></tr>
 <tr class="separator:ga51f59bf99b315f016ca752eddd1911d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9944964bee7bef949a2f4d8d8bc1dbcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__mutex.html#ga9944964bee7bef949a2f4d8d8bc1dbcf">EvrRtxMutexCreated</a> (<a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id)</td></tr>
-<tr class="memdesc:ga9944964bee7bef949a2f4d8d8bc1dbcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful mutex create (Op)  <a href="#ga9944964bee7bef949a2f4d8d8bc1dbcf">More...</a><br/></td></tr>
-<tr class="separator:ga9944964bee7bef949a2f4d8d8bc1dbcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga712b32609cfb3ceded746ee6a86d2442"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__mutex.html#ga712b32609cfb3ceded746ee6a86d2442">EvrRtxMutexCreated</a> (<a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id, const char *name)</td></tr>
+<tr class="memdesc:ga712b32609cfb3ceded746ee6a86d2442"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful mutex create (Op)  <a href="#ga712b32609cfb3ceded746ee6a86d2442">More...</a><br/></td></tr>
+<tr class="separator:ga712b32609cfb3ceded746ee6a86d2442"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga457302507cedf0ea969cbb110af606b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__mutex.html#ga457302507cedf0ea969cbb110af606b8">EvrRtxMutexGetName</a> (<a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id, const char *name)</td></tr>
 <tr class="memdesc:ga457302507cedf0ea969cbb110af606b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on mutex name retrieve (API)  <a href="#ga457302507cedf0ea969cbb110af606b8">More...</a><br/></td></tr>
 <tr class="separator:ga457302507cedf0ea969cbb110af606b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -255,7 +255,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">attr</td><td>mutex attributes</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">attr</td><td>mutex attributes.</td></tr>
   </table>
   </dd>
 </dl>
@@ -268,7 +268,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga9944964bee7bef949a2f4d8d8bc1dbcf"></a>
+<a class="anchor" id="ga712b32609cfb3ceded746ee6a86d2442"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -276,14 +276,25 @@ Functions</h2></td></tr>
           <td class="memname">void EvrRtxMutexCreated </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a>&#160;</td>
-          <td class="paramname"><em>mutex_id</em></td><td>)</td>
+          <td class="paramname"><em>mutex_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">mutex_id</td><td>mutex ID obtained by <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mutex_id</td><td>mutex ID obtained by <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>pointer to mutex object name.</td></tr>
   </table>
   </dd>
 </dl>
@@ -321,7 +332,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">mutex_id</td><td>mutex ID obtained by <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>pointer to mutex object name</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>pointer to mutex object name.</td></tr>
   </table>
   </dd>
 </dl>
@@ -465,7 +476,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">mutex_id</td><td>mutex ID obtained by <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">lock</td><td>current number of times mutex object is locked</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lock</td><td>current number of times mutex object is locked.</td></tr>
   </table>
   </dd>
 </dl>
@@ -558,7 +569,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">mutex_id</td><td>mutex ID obtained by <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">lock</td><td>current number of times mutex object is locked</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lock</td><td>current number of times mutex object is locked.</td></tr>
   </table>
   </dd>
 </dl>
@@ -669,7 +680,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

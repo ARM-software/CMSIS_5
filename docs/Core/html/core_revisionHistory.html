@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.0.2</span>
+   &#160;<span id="projectnumber">Version 5.1.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -115,6 +115,11 @@ $(document).ready(function(){initNavTree('core_revisionHistory.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>V5.1.0 </td><td>Added MPU Functions for ARMv8-M for Cortex-M23/M33.<br/>
+ Moved __SSAT and __USAT intrinsics to CMSIS-Core.<br/>
+ Aligned __REV, __REV16 and __REVSH intrinsics along supported compilers.<br/>
+   </td></tr>
+<tr>
 <td>V5.0.2 </td><td>Added macros <a class="el" href="group__compiler__conntrol__gr.html#gabe8693a7200e573101551d49a1772fb9">__UNALIGNED_UINT16_READ</a>, <a class="el" href="group__compiler__conntrol__gr.html#gadb9cd73446f7e11e92383cd327a23407">__UNALIGNED_UINT16_WRITE</a>.<br/>
  Added macros <a class="el" href="group__compiler__conntrol__gr.html#ga254322c344d954c9f829719a50a88e87">__UNALIGNED_UINT32_READ</a>, <a class="el" href="group__compiler__conntrol__gr.html#gabb2180285c417aa9120a360c51f64b4b">__UNALIGNED_UINT32_WRITE</a>.<br/>
  Deprecated macro <a class="el" href="group__compiler__conntrol__gr.html#ga27fd2ec6767ca1ab66d36b5cc0103268">__UNALIGNED_UINT32</a>.<br/>
@@ -194,7 +199,7 @@ Beta 1 </td><td>Renamed: cmsis_armcc_V6.h to cmsis_armclang.h.<br/>
    </td></tr>
 <tr>
 <td>V3.40 </td><td>Corrected: C++ include guard settings.<br/>
-   </td></tr>
+  </td></tr>
 <tr>
 <td>V3.30 </td><td>Added: COSMIC tool chain support.<br/>
  Corrected: GCC __SMLALDX instruction intrinsic for Cortex-M4.<br/>
@@ -210,8 +215,8 @@ Beta 1 </td><td>Renamed: cmsis_armcc_V6.h to cmsis_armclang.h.<br/>
  Corrected: rework of in-line assembly functions to remove potential compiler warnings.<br/>
    </td></tr>
 <tr>
-<td>V3.01 </td><td>Added support for Cortex-M0+ processor. <br/>
-   </td></tr>
+<td>V3.01 </td><td>Added support for Cortex-M0+ processor.<br/>
+  </td></tr>
 <tr>
 <td>V3.00 </td><td>Added support for GNU GCC ARM Embedded Compiler. <br/>
  Added function <a class="el" href="group__intrinsic__CPU__gr.html#gaf66beb577bb9d90424c3d1d7f684c024">__ROR</a>.<br/>
@@ -246,7 +251,7 @@ Beta 1 </td><td>Renamed: cmsis_armcc_V6.h to cmsis_armclang.h.<br/>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:43:44 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:05:57 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

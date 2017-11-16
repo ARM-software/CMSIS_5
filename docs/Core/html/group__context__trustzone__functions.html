@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.0.2</span>
+   &#160;<span id="projectnumber">Version 5.1.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -151,10 +151,10 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Allocates the secure memory regions for thread execution. The parameter <em>module</em> describes the set of secure functions that are called by the non-secure thread. This function should be called by an RTOS kernel at the start of a thread. </p>
+<p>Allocates the secure memory regions for thread execution. The parameter <em>module</em> describes the set of secure functions that are called by the non-secure thread. Set <em>module</em> to zero if no secure calls are used/allowed. This leads to no secure memory to be assigned which results in zero being returned as memory id as well. This function should be called by an RTOS kernel at the start of a thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">module</td><td>identifies software modules called from non-secure mode </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">module</td><td>A non-zero value identifies software modules called from non-secure mode. zero is used if no secure calls are used/allowed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -219,7 +219,7 @@ value 0 no memory available or internal error </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Prepare the secure context for execution so that a thread in the non-secure state can call secure library modules. The parameter <em>id</em> refers to a TrustZone memory slot that has been obtained with <a class="el" href="group__context__trustzone__functions.html#gacd016f166bee549a0d3e970132e64a90">TZ_AllocModuleContext_S</a>. This function should be called by an RTOS kernel at thread context switch before running a thread. </p>
+<p>Prepare the secure context for execution so that a thread in the non-secure state can call secure library modules. The parameter <em>id</em> refers to a TrustZone memory slot that has been obtained with <a class="el" href="group__context__trustzone__functions.html#gacd016f166bee549a0d3e970132e64a90">TZ_AllocModuleContext_S</a> which might be zero if not used. This function should be called by an RTOS kernel at thread context switch before running a thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td>TrustZone memory slot identifier </td></tr>
@@ -243,7 +243,7 @@ value 0 no memory available or internal error </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Free the secure context that has been previously loaded with <a class="el" href="group__context__trustzone__functions.html#ga4748f6bcdd5fed279ac5a6cd7eca2689">TZ_LoadContext_S</a>. The parameter <em>id</em> refers to a TrustZone memory slot that has been obtained with <a class="el" href="group__context__trustzone__functions.html#gacd016f166bee549a0d3e970132e64a90">TZ_AllocModuleContext_S</a>. This function should be called by an RTOS kernel at thread context switch after running a thread. </p>
+<p>Free the secure context that has been previously loaded with <a class="el" href="group__context__trustzone__functions.html#ga4748f6bcdd5fed279ac5a6cd7eca2689">TZ_LoadContext_S</a>. The parameter <em>id</em> refers to a TrustZone memory slot that has been obtained with <a class="el" href="group__context__trustzone__functions.html#gacd016f166bee549a0d3e970132e64a90">TZ_AllocModuleContext_S</a> which might be zero if not used. This function should be called by an RTOS kernel at thread context switch after running a thread. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td>TrustZone memory slot identifier </td></tr>
@@ -259,7 +259,7 @@ value 0 no memory available or internal error </dd></dl>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:43:44 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:05:58 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

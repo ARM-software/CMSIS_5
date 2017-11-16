@@ -9,5 +9,6 @@ var searchData=
   ['vccq_5f1v8',['vccq_1v8',['../group__mci__interface__gr.html#a1896a7548bb6fab285f23cc0d0b23d7d',1,'ARM_MCI_CAPABILITIES::vccq_1v8()'],['../group__nand__interface__gr.html#a1896a7548bb6fab285f23cc0d0b23d7d',1,'ARM_NAND_CAPABILITIES::vccq_1v8()']]],
   ['vdd',['vdd',['../group__mci__interface__gr.html#a414baec222a72be862e262f02b821dce',1,'ARM_MCI_CAPABILITIES']]],
   ['vdd_5f1v8',['vdd_1v8',['../group__mci__interface__gr.html#abeb0330f882ebed8cabde782652233dd',1,'ARM_MCI_CAPABILITIES']]],
+  ['virtual_5fpage_5fsize',['virtual_page_size',['../group__nand__interface__gr.html#aa270f95e67fdf1e9137c61f2045b7636',1,'ARM_NAND_ECC_INFO']]],
   ['vpp',['vpp',['../group__nand__interface__gr.html#a75b97f7c917bba90b2f5c747d6857d23',1,'ARM_NAND_CAPABILITIES']]]
 ];

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -556,7 +556,7 @@ Default: <span class="XML-Token">osPriorityNormal</span> </p>
 <td class="fieldname">
 tz_module</td>
 <td class="fielddoc">
-TrustZone module identifier. <p>TrustZone Thread Context Management Identifier to allocate context memory for threads. The RTOS kernel that runs in non-secure state calls the interface functions defined by the header file TZ_context.h. See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZone RTOS Context Management</a>. </p>
+TrustZone module identifier. <p>TrustZone Thread Context Management Identifier to allocate context memory for threads. The RTOS kernel that runs in non-secure state calls the interface functions defined by the header file TZ_context.h. Can safely be set to zero for threads not using secure calls at all. See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZone RTOS Context Management</a>. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a66f538babc389986738ec70104e0562b"></a>uint32_t</td>
@@ -1456,7 +1456,7 @@ Avoid calling the function with a <em>thread_id</em> that does not exist or has 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

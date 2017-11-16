@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.0.0</span>
+   &#160;<span id="projectnumber">Version 1.1.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -119,11 +119,11 @@ $(document).ready(function(){initNavTree('group__CMSIS__TTBR.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaad56a0aec50ecfe5a2fb2f1cf7ea105c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__TTBR.html#gaad56a0aec50ecfe5a2fb2f1cf7ea105c">__get_TTBR0</a> ()</td></tr>
-<tr class="memdesc:gaad56a0aec50ecfe5a2fb2f1cf7ea105c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get TTBR0 (Translation Table Base Register 0)  <a href="#gaad56a0aec50ecfe5a2fb2f1cf7ea105c">More...</a><br/></td></tr>
-<tr class="separator:gaad56a0aec50ecfe5a2fb2f1cf7ea105c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2ccad052f77c18897c5ceaaf307711e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__TTBR.html#gad2ccad052f77c18897c5ceaaf307711e">__set_TTBR0</a> (uint32_t ttbr0)</td></tr>
-<tr class="memdesc:gad2ccad052f77c18897c5ceaaf307711e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set TTBR0 Translation Table Base Register 0.  <a href="#gad2ccad052f77c18897c5ceaaf307711e">More...</a><br/></td></tr>
+<tr class="memitem:ga678997bc01f6d8d48b1d407cec24809d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__TTBR.html#ga678997bc01f6d8d48b1d407cec24809d">__get_TTBR0</a> (void)</td></tr>
+<tr class="memdesc:ga678997bc01f6d8d48b1d407cec24809d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get TTBR0.  <a href="#ga678997bc01f6d8d48b1d407cec24809d">More...</a><br/></td></tr>
+<tr class="separator:ga678997bc01f6d8d48b1d407cec24809d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2ccad052f77c18897c5ceaaf307711e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__TTBR.html#gad2ccad052f77c18897c5ceaaf307711e">__set_TTBR0</a> (uint32_t ttbr0)</td></tr>
+<tr class="memdesc:gad2ccad052f77c18897c5ceaaf307711e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set TTBR0.  <a href="#gad2ccad052f77c18897c5ceaaf307711e">More...</a><br/></td></tr>
 <tr class="separator:gad2ccad052f77c18897c5ceaaf307711e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
@@ -167,20 +167,22 @@ The width of TTBR1 BADDR field is fixed at <code>x=14</code>.</dd></dl>
 <td align="left">[x-1:0] </td><td align="left">- </td><td align="left">Reserved. </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>The width of TBBR0/TBBR1 BADDR fields depends on the settings in TTBCR T0SZ/T1SZ fields respectively, giving <code>x=14-TnSZ</code>.</dd></dl>
-<p>Consider using <a class="el" href="group__CMSIS__TTBR.html#gaad56a0aec50ecfe5a2fb2f1cf7ea105c">__get_TTBR0</a> and <a class="el" href="group__CMSIS__TTBR.html#gad2ccad052f77c18897c5ceaaf307711e">__set_TTBR0</a> for accessing TTBR0 register. </p>
+<p>Consider using <a class="el" href="group__CMSIS__TTBR.html#ga678997bc01f6d8d48b1d407cec24809d">__get_TTBR0</a> and <a class="el" href="group__CMSIS__TTBR.html#gad2ccad052f77c18897c5ceaaf307711e">__set_TTBR0</a> for accessing TTBR0 register. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaad56a0aec50ecfe5a2fb2f1cf7ea105c"></a>
+<a class="anchor" id="ga678997bc01f6d8d48b1d407cec24809d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint32_t __get_TTBR0 </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function returns the value of the Translation Table Base Register 0.</p>
 <dl class="section return"><dt>Returns</dt><dd>Translation Table Base Register 0 value</dd></dl>
 <p>This function returns the value of the Translation Table Base Register 0. </p>
 
@@ -199,6 +201,7 @@ The width of TTBR1 BADDR field is fixed at <code>x=14</code>.</dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function assigns the given value to the Translation Table Base Register 0.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ttbr0</td><td>Translation Table Base Register 0 value to set</td></tr>
@@ -214,7 +217,7 @@ The width of TTBR1 BADDR field is fixed at <code>x=14</code>.</dd></dl>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:43:46 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:05:59 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

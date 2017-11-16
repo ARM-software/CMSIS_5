@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Driver
-   &#160;<span id="projectnumber">Version 2.05</span>
+   &#160;<span id="projectnumber">Version 2.6.0</span>
    </div>
    <div id="projectbrief">Peripheral Interface for Middleware and Application Code</div>
   </td>
@@ -119,6 +119,9 @@ $(document).ready(function(){initNavTree('group__CAN__unit__events.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:gaa2347c172c8a8f42ac66cb42cd7a08db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CAN__unit__events.html#gaa2347c172c8a8f42ac66cb42cd7a08db">ARM_CAN_EVENT_UNIT_INACTIVE</a>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="memdesc:gaa2347c172c8a8f42ac66cb42cd7a08db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unit entered Inactive state.  <a href="#gaa2347c172c8a8f42ac66cb42cd7a08db">More...</a><br/></td></tr>
+<tr class="separator:gaa2347c172c8a8f42ac66cb42cd7a08db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0e65231ccb20684d7c8eac80385f8c18"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CAN__unit__events.html#ga0e65231ccb20684d7c8eac80385f8c18">ARM_CAN_EVENT_UNIT_ACTIVE</a>&#160;&#160;&#160;(1U)</td></tr>
 <tr class="memdesc:ga0e65231ccb20684d7c8eac80385f8c18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unit entered Error Active state.  <a href="#ga0e65231ccb20684d7c8eac80385f8c18">More...</a><br/></td></tr>
 <tr class="separator:ga0e65231ccb20684d7c8eac80385f8c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -129,7 +132,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga9c529d6697fe21e69639224322f8c4b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unit entered Error Passive state.  <a href="#ga9c529d6697fe21e69639224322f8c4b4">More...</a><br/></td></tr>
 <tr class="separator:ga9c529d6697fe21e69639224322f8c4b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafa4f992a97b4ca0f079aec2990a69bed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CAN__unit__events.html#gafa4f992a97b4ca0f079aec2990a69bed">ARM_CAN_EVENT_UNIT_BUS_OFF</a>&#160;&#160;&#160;(4U)</td></tr>
-<tr class="memdesc:gafa4f992a97b4ca0f079aec2990a69bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unit entered bus off state.  <a href="#gafa4f992a97b4ca0f079aec2990a69bed">More...</a><br/></td></tr>
+<tr class="memdesc:gafa4f992a97b4ca0f079aec2990a69bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unit entered Bus-off state.  <a href="#gafa4f992a97b4ca0f079aec2990a69bed">More...</a><br/></td></tr>
 <tr class="separator:gafa4f992a97b4ca0f079aec2990a69bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
@@ -137,6 +140,21 @@ Macros</h2></td></tr>
 <p>The CAN driver generates callback unit events that are notified via the function <a class="el" href="group__can__interface__gr.html#ga38795d1ed135ce3bd87f31ef1596bccf">ARM_CAN_SignalUnitEvent</a>.</p>
 <p>The following callback notification unit events are generated: </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gaa2347c172c8a8f42ac66cb42cd7a08db"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_CAN_EVENT_UNIT_INACTIVE&#160;&#160;&#160;(0U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unit entered Inactive state. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="group__can__interface__gr.html#ga38795d1ed135ce3bd87f31ef1596bccf">ARM_CAN_SignalUnitEvent</a> </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ga0e65231ccb20684d7c8eac80385f8c18"></a>
 <div class="memitem">
 <div class="memproto">
@@ -192,7 +210,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Unit entered bus off state. </p>
+<p>Unit entered Bus-off state. </p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="group__can__interface__gr.html#ga38795d1ed135ce3bd87f31ef1596bccf">ARM_CAN_SignalUnitEvent</a> </dd></dl>
 
 </div>
@@ -202,7 +220,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:43:49 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:02 for CMSIS-Driver by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

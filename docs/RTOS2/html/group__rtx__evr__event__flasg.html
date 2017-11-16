@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -125,9 +125,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gae798cdc4cb10ada732e592318037cba7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__event__flasg.html#gae798cdc4cb10ada732e592318037cba7">EvrRtxEventFlagsNew</a> (const <a class="el" href="group__CMSIS__RTOS__EventFlags.html#structosEventFlagsAttr__t">osEventFlagsAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:gae798cdc4cb10ada732e592318037cba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on event flags create and initialize (API)  <a href="#gae798cdc4cb10ada732e592318037cba7">More...</a><br/></td></tr>
 <tr class="separator:gae798cdc4cb10ada732e592318037cba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc22beb78fe50e6172de74672850aff2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__event__flasg.html#gadc22beb78fe50e6172de74672850aff2">EvrRtxEventFlagsCreated</a> (<a class="el" href="group__CMSIS__RTOS__EventFlags.html#gafdbab933146d6d81d7cca7287e267a50">osEventFlagsId_t</a> ef_id)</td></tr>
-<tr class="memdesc:gadc22beb78fe50e6172de74672850aff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful event flags create (Op)  <a href="#gadc22beb78fe50e6172de74672850aff2">More...</a><br/></td></tr>
-<tr class="separator:gadc22beb78fe50e6172de74672850aff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1f48b9787e3a7d4f56449ed1dd12f26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__event__flasg.html#gaa1f48b9787e3a7d4f56449ed1dd12f26">EvrRtxEventFlagsCreated</a> (<a class="el" href="group__CMSIS__RTOS__EventFlags.html#gafdbab933146d6d81d7cca7287e267a50">osEventFlagsId_t</a> ef_id, const char *name)</td></tr>
+<tr class="memdesc:gaa1f48b9787e3a7d4f56449ed1dd12f26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful event flags create (Op)  <a href="#gaa1f48b9787e3a7d4f56449ed1dd12f26">More...</a><br/></td></tr>
+<tr class="separator:gaa1f48b9787e3a7d4f56449ed1dd12f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae9ebcbc09a1c15c719d95fe7b8c2ee18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__event__flasg.html#gae9ebcbc09a1c15c719d95fe7b8c2ee18">EvrRtxEventFlagsGetName</a> (<a class="el" href="group__CMSIS__RTOS__EventFlags.html#gafdbab933146d6d81d7cca7287e267a50">osEventFlagsId_t</a> ef_id, const char *name)</td></tr>
 <tr class="memdesc:gae9ebcbc09a1c15c719d95fe7b8c2ee18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on event flags name retrieve (API)  <a href="#gae9ebcbc09a1c15c719d95fe7b8c2ee18">More...</a><br/></td></tr>
 <tr class="separator:gae9ebcbc09a1c15c719d95fe7b8c2ee18"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -234,7 +234,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">attr</td><td>event flags attributes</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">attr</td><td>event flags attributes.</td></tr>
   </table>
   </dd>
 </dl>
@@ -247,7 +247,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gadc22beb78fe50e6172de74672850aff2"></a>
+<a class="anchor" id="gaa1f48b9787e3a7d4f56449ed1dd12f26"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -255,14 +255,25 @@ Functions</h2></td></tr>
           <td class="memname">void EvrRtxEventFlagsCreated </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__EventFlags.html#gafdbab933146d6d81d7cca7287e267a50">osEventFlagsId_t</a>&#160;</td>
-          <td class="paramname"><em>ef_id</em></td><td>)</td>
+          <td class="paramname"><em>ef_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ef_id</td><td>event flags ID obtained by <a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab14b1caeb12ffa42cce1bfe889cd07df">osEventFlagsNew</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ef_id</td><td>event flags ID obtained by <a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab14b1caeb12ffa42cce1bfe889cd07df">osEventFlagsNew</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>pointer to event flags object name.</td></tr>
   </table>
   </dd>
 </dl>
@@ -399,7 +410,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

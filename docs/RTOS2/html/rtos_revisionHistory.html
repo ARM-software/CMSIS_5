@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -117,6 +117,11 @@ CMSIS-RTOS API Version 2</h1>
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>V2.1.2 </td><td>Additional functions allowed to be called from Interrupt Service Routines:<ul>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga6f7764e7250c5c5364c00c45a5d1d199">osKernelGetInfo</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga48b69b81012fce051f639be288b243ba">osKernelGetState</a>   </li>
+</ul>
+</td></tr>
+<tr>
 <td>V2.1.1 </td><td><p class="starttd">Additional functions allowed to be called from Interrupt Service Routines:</p>
 <ul>
 <li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee">osKernelGetTickFreq</a></li>
@@ -170,6 +175,21 @@ CMSIS-RTOS RTX Version 5</h1>
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>V5.2.3 </td><td><ul>
+<li>Based on CMSIS-RTOS API V2.1.2.</li>
+<li>Added TrustZone Module Identifier configuration for Idle and Timer Thread.</li>
+<li>Moved SVC/PendSV handler priority setup from osKernelInitialize to osKernelStart (User Priority Grouping can be updated after osKernelInitialize but before osKernelStart).</li>
+<li>Corrected SysTick and PendSV handlers for ARMv8-M Baseline.</li>
+<li>Corrected memory allocation for stack and data when "Object specific Memory allocation" configuration is used.</li>
+<li>Added support for ARMv8-M IAR compiler.   </li>
+</ul>
+</td></tr>
+<tr>
+<td>V5.2.2 </td><td><ul>
+<li>Corrected IRQ and SVC exception handlers for Cortex-A.   </li>
+</ul>
+</td></tr>
+<tr>
 <td>V5.2.1 </td><td><ul>
 <li>Corrected SysTick and SVC Interrupt Priority for Cortex-M.   </li>
 </ul>
@@ -204,7 +224,7 @@ CMSIS-RTOS RTX Version 5</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['ecc_5ferror',['ecc_error',['../group__nand__interface__gr.html#a7707d2200a3bf8f49b148ffc8ded7636',1,'ARM_NAND_STATUS']]],
+  ['ecc_5fgap',['ecc_gap',['../group__nand__interface__gr.html#a94d6b62b24d96ff83c985325d8825dd3',1,'ARM_NAND_ECC_INFO']]],
   ['ecc_5foffset',['ecc_offset',['../group__nand__interface__gr.html#a22d6a1813a47a7044f7acb478f8e9eb8',1,'ARM_NAND_ECC_INFO']]],
   ['ecc_5fsize',['ecc_size',['../group__nand__interface__gr.html#a22365f6a2af1171a1c3629c8ae5fe001',1,'ARM_NAND_ECC_INFO']]],
   ['edl',['edl',['../group__can__interface__gr.html#ab6883964c9d4bdf60616684e8d2459df',1,'ARM_CAN_MSG_INFO']]],

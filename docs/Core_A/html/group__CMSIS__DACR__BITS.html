@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.0.0</span>
+   &#160;<span id="projectnumber">Version 1.1.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -119,7 +119,7 @@ $(document).ready(function(){initNavTree('group__CMSIS__DACR__BITS.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga2c014e929b74e6ded5e89a74903ce975"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__DACR__BITS.html#ga2c014e929b74e6ded5e89a74903ce975">DACR_D_Pos_</a>(n)&#160;&#160;&#160;(2u*n)</td></tr>
+<tr class="memitem:ga2c014e929b74e6ded5e89a74903ce975"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__DACR__BITS.html#ga2c014e929b74e6ded5e89a74903ce975">DACR_D_Pos_</a>(n)&#160;&#160;&#160;(2U*n)</td></tr>
 <tr class="memdesc:ga2c014e929b74e6ded5e89a74903ce975"><td class="mdescLeft">&#160;</td><td class="mdescRight">DACR: Dn Position.  <a href="#ga2c014e929b74e6ded5e89a74903ce975">More...</a><br/></td></tr>
 <tr class="separator:ga2c014e929b74e6ded5e89a74903ce975"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga41b90c8a7338fbe5e5b06be083ba22fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__DACR__BITS.html#ga41b90c8a7338fbe5e5b06be083ba22fe">DACR_D_Msk_</a>(n)&#160;&#160;&#160;(3UL &lt;&lt; DACR_D_Pos_(n))</td></tr>
@@ -144,7 +144,7 @@ Macros</h2></td></tr>
 <p>Get the bit mask for domain n access permission.</p>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line"><span class="comment">// clear access permission for domain 7</span></div>
-<div class="line"><a class="code" href="group__CMSIS__DACR.html#ga72e050de5b19cd6b683f6c234968b78b">__set_DACR</a>(<a class="code" href="group__CMSIS__DACR.html#ga1f9c7e5375f922d9df7cdf42db43abdc">__get_DACR</a>() &amp; ~<a class="code" href="group__CMSIS__DACR__BITS.html#ga41b90c8a7338fbe5e5b06be083ba22fe">DACR_D_Msk_</a>(7));</div>
+<div class="line"><a class="code" href="group__CMSIS__DACR.html#ga72e050de5b19cd6b683f6c234968b78b">__set_DACR</a>(<a class="code" href="group__CMSIS__DACR.html#ga10278deb975c653555ee70178546aaa6">__get_DACR</a>() &amp; ~<a class="code" href="group__CMSIS__DACR__BITS.html#ga41b90c8a7338fbe5e5b06be083ba22fe">DACR_D_Msk_</a>(7));</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -157,14 +157,14 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">n</td><td>)</td>
-          <td>&#160;&#160;&#160;(2u*n)</td>
+          <td>&#160;&#160;&#160;(2U*n)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Get the bit position for domain n access permission.</p>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line"><span class="comment">// retrieve access permission for domain 5</span></div>
-<div class="line">uint32_t domain5 = (<a class="code" href="group__CMSIS__DACR.html#ga1f9c7e5375f922d9df7cdf42db43abdc">__get_DACR</a>() &amp; <a class="code" href="group__CMSIS__DACR__BITS.html#ga41b90c8a7338fbe5e5b06be083ba22fe">DACR_D_Msk_</a>(5)) &gt;&gt; <a class="code" href="group__CMSIS__DACR__BITS.html#ga2c014e929b74e6ded5e89a74903ce975">DACR_D_Pos_</a>(5);</div>
+<div class="line">uint32_t domain5 = (<a class="code" href="group__CMSIS__DACR.html#ga10278deb975c653555ee70178546aaa6">__get_DACR</a>() &amp; <a class="code" href="group__CMSIS__DACR__BITS.html#ga41b90c8a7338fbe5e5b06be083ba22fe">DACR_D_Msk_</a>(5)) &gt;&gt; <a class="code" href="group__CMSIS__DACR__BITS.html#ga2c014e929b74e6ded5e89a74903ce975">DACR_D_Pos_</a>(5);</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -173,7 +173,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:43:46 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:05:59 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

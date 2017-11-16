@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -526,7 +526,12 @@ size of provided memory for control block <p>The size of the memory block passed
 <td><b>osFlagsNoClear</b> </td><td>Do not clear flags which have been specified to wait for. </td></tr>
 </table>
 <p>If <code>osFlagsNoClear</code> is set in the options <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga93bf258ca0007c6641fbe8e4f2b8a1e5">osEventFlagsClear</a> can be used to clear flags manually.</p>
-<p>The parameter <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">timeout</a> represents a number of timer ticks and is an upper bound. The exact time delay depends on the actual time elapsed since the last timer tick.</p>
+<p>The parameter <em>timeout</em> specifies how long the system waits for event flags. While the system waits, the thread that is calling this function is put into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state. The parameter <a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">timeout</a> can have the following values:</p>
+<ul>
+<li>when <em>timeout</em> is <span class="XML-Token">0</span>, the function returns instantly (i.e. try semantics).</li>
+<li>when <em>timeout</em> is set to <b>osWaitForever</b> the function will wait for an infinite time until the event flags become available (i.e. wait semantics).</li>
+<li>all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).</li>
+</ul>
 <p>The function returns the event flags before clearing or an error code (highest bit is set, refer to <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a>).</p>
 <p>Possible <a class="el" href="group__flags__error__codes.html">Flags Functions Error Codes</a> return values:</p>
 <ul>
@@ -535,7 +540,7 @@ size of provided memory for control block <p>The size of the memory block passed
 <li><em>osFlagsErrorResource:</em> Event flags object specified by parameter <em>ef_id</em> is not ready to be used.</li>
 <li><em>osFlagsErrorParameter:</em> Parameter <em>ef_id</em> does not identify a valid event flags object or <em>flags</em> has highest bit set.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>May be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> if the parameter <em>timeout</em> is set to <span class="XML-Token">0</span>.</dd></dl>
 <p><b>Code</b> <b>Example</b> </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span>                                        <span class="comment">// CMSIS RTOS header file</span></div>
 <div class="line"> </div>
@@ -633,7 +638,7 @@ size of provided memory for control block <p>The size of the memory block passed
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

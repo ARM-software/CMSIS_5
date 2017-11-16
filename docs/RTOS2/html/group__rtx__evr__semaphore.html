@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -125,9 +125,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5639f03e935ab79844777664a518c2ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__semaphore.html#ga5639f03e935ab79844777664a518c2ec">EvrRtxSemaphoreNew</a> (uint32_t max_count, uint32_t initial_count, const <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#structosSemaphoreAttr__t">osSemaphoreAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:ga5639f03e935ab79844777664a518c2ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on semaphore create and initialize (API)  <a href="#ga5639f03e935ab79844777664a518c2ec">More...</a><br/></td></tr>
 <tr class="separator:ga5639f03e935ab79844777664a518c2ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad46ee88b57aed4c666aec773560aebad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__semaphore.html#gad46ee88b57aed4c666aec773560aebad">EvrRtxSemaphoreCreated</a> (<a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> semaphore_id)</td></tr>
-<tr class="memdesc:gad46ee88b57aed4c666aec773560aebad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful semaphore create (Op)  <a href="#gad46ee88b57aed4c666aec773560aebad">More...</a><br/></td></tr>
-<tr class="separator:gad46ee88b57aed4c666aec773560aebad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31f9d55abcc5f398ea3810177cbf2bf3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__semaphore.html#ga31f9d55abcc5f398ea3810177cbf2bf3">EvrRtxSemaphoreCreated</a> (<a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> semaphore_id, const char *name)</td></tr>
+<tr class="memdesc:ga31f9d55abcc5f398ea3810177cbf2bf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful semaphore create (Op)  <a href="#ga31f9d55abcc5f398ea3810177cbf2bf3">More...</a><br/></td></tr>
+<tr class="separator:ga31f9d55abcc5f398ea3810177cbf2bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga17d8aa861b6e669cc68c3c41e3e12332"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__semaphore.html#ga17d8aa861b6e669cc68c3c41e3e12332">EvrRtxSemaphoreGetName</a> (<a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> semaphore_id, const char *name)</td></tr>
 <tr class="memdesc:ga17d8aa861b6e669cc68c3c41e3e12332"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on semaphore name retrieve (API)  <a href="#ga17d8aa861b6e669cc68c3c41e3e12332">More...</a><br/></td></tr>
 <tr class="separator:ga17d8aa861b6e669cc68c3c41e3e12332"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -288,7 +288,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gad46ee88b57aed4c666aec773560aebad"></a>
+<a class="anchor" id="ga31f9d55abcc5f398ea3810177cbf2bf3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -296,14 +296,25 @@ Functions</h2></td></tr>
           <td class="memname">void EvrRtxSemaphoreCreated </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a>&#160;</td>
-          <td class="paramname"><em>semaphore_id</em></td><td>)</td>
+          <td class="paramname"><em>semaphore_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">semaphore_id</td><td>semaphore ID obtained by <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">semaphore_id</td><td>semaphore ID obtained by <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>pointer to semaphore object name.</td></tr>
   </table>
   </dd>
 </dl>
@@ -665,7 +676,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

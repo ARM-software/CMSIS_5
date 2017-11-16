@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -243,9 +243,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga396ce41f68401a885f0ae46a54e8dd1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga396ce41f68401a885f0ae46a54e8dd1f">EvrRtxThreadNew</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd51f99a6eb50b94eee75f27cae815eb">osThreadFunc_t</a> func, void *argument, const <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:ga396ce41f68401a885f0ae46a54e8dd1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on thread create and intialize (API)  <a href="group__rtx__evr__thread.html#ga396ce41f68401a885f0ae46a54e8dd1f">More...</a><br/></td></tr>
 <tr class="separator:ga396ce41f68401a885f0ae46a54e8dd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga18fd5da10c8a5b39ad587ab610d9f51e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga18fd5da10c8a5b39ad587ab610d9f51e">EvrRtxThreadCreated</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
-<tr class="memdesc:ga18fd5da10c8a5b39ad587ab610d9f51e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful thread create (Op)  <a href="group__rtx__evr__thread.html#ga18fd5da10c8a5b39ad587ab610d9f51e">More...</a><br/></td></tr>
-<tr class="separator:ga18fd5da10c8a5b39ad587ab610d9f51e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2215445440bcb53b65a9b7181ecffa9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#gae2215445440bcb53b65a9b7181ecffa9">EvrRtxThreadCreated</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id, uint32_t thread_addr)</td></tr>
+<tr class="memdesc:gae2215445440bcb53b65a9b7181ecffa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful thread create (Op)  <a href="group__rtx__evr__thread.html#gae2215445440bcb53b65a9b7181ecffa9">More...</a><br/></td></tr>
+<tr class="separator:gae2215445440bcb53b65a9b7181ecffa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4f849a33d2c95754b11a499d77503b5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga4f849a33d2c95754b11a499d77503b5c">EvrRtxThreadGetName</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id, const char *name)</td></tr>
 <tr class="memdesc:ga4f849a33d2c95754b11a499d77503b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on thread name retrieve (API)  <a href="group__rtx__evr__thread.html#ga4f849a33d2c95754b11a499d77503b5c">More...</a><br/></td></tr>
 <tr class="separator:ga4f849a33d2c95754b11a499d77503b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -301,11 +301,14 @@ Functions</h2></td></tr>
 <tr class="memdesc:gab9efd66ed2edb439c5081806c9b63cf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on thread execution block (Op)  <a href="group__rtx__evr__thread.html#gab9efd66ed2edb439c5081806c9b63cf9">More...</a><br/></td></tr>
 <tr class="separator:gab9efd66ed2edb439c5081806c9b63cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3faae4d941ddecfe773ef9f3efe8b901"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga3faae4d941ddecfe773ef9f3efe8b901">EvrRtxThreadUnblocked</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id, uint32_t ret_val)</td></tr>
-<tr class="memdesc:ga3faae4d941ddecfe773ef9f3efe8b901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on blocked thread release (Op)  <a href="group__rtx__evr__thread.html#ga3faae4d941ddecfe773ef9f3efe8b901">More...</a><br/></td></tr>
+<tr class="memdesc:ga3faae4d941ddecfe773ef9f3efe8b901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on thread execution unblock (Op)  <a href="group__rtx__evr__thread.html#ga3faae4d941ddecfe773ef9f3efe8b901">More...</a><br/></td></tr>
 <tr class="separator:ga3faae4d941ddecfe773ef9f3efe8b901"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2829dfe558a469d913f4eb0ccd6d29c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga2829dfe558a469d913f4eb0ccd6d29c6">EvrRtxThreadSwitch</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
-<tr class="memdesc:ga2829dfe558a469d913f4eb0ccd6d29c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on current running thread switch (Op)  <a href="group__rtx__evr__thread.html#ga2829dfe558a469d913f4eb0ccd6d29c6">More...</a><br/></td></tr>
-<tr class="separator:ga2829dfe558a469d913f4eb0ccd6d29c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe470d5bb1373c59c51470fd20b55bcb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#gabe470d5bb1373c59c51470fd20b55bcb">EvrRtxThreadPreempted</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
+<tr class="memdesc:gabe470d5bb1373c59c51470fd20b55bcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on running thread pre-emption (Op)  <a href="group__rtx__evr__thread.html#gabe470d5bb1373c59c51470fd20b55bcb">More...</a><br/></td></tr>
+<tr class="separator:gabe470d5bb1373c59c51470fd20b55bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae3bc50d5f154463c7f6647544bb5ecab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#gae3bc50d5f154463c7f6647544bb5ecab">EvrRtxThreadSwitched</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
+<tr class="memdesc:gae3bc50d5f154463c7f6647544bb5ecab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on running thread switch (Op)  <a href="group__rtx__evr__thread.html#gae3bc50d5f154463c7f6647544bb5ecab">More...</a><br/></td></tr>
+<tr class="separator:gae3bc50d5f154463c7f6647544bb5ecab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa557f9732a8a2120f08cfb2694aa26fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#gaa557f9732a8a2120f08cfb2694aa26fb">EvrRtxThreadExit</a> (void)</td></tr>
 <tr class="memdesc:gaa557f9732a8a2120f08cfb2694aa26fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on thread exit (API)  <a href="group__rtx__evr__thread.html#gaa557f9732a8a2120f08cfb2694aa26fb">More...</a><br/></td></tr>
 <tr class="separator:gaa557f9732a8a2120f08cfb2694aa26fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -369,9 +372,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga6387808c22d6e186057ed744618d2487"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__timer.html#ga6387808c22d6e186057ed744618d2487">EvrRtxTimerNew</a> (<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaacf768c1ec64b020598afb985d7b30be">osTimerFunc_t</a> func, <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#ga7dc24a4c2b90334427081c3da7a71915">osTimerType_t</a> type, void *argument, const <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#structosTimerAttr__t">osTimerAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:ga6387808c22d6e186057ed744618d2487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on timer create and initialize (API)  <a href="group__rtx__evr__timer.html#ga6387808c22d6e186057ed744618d2487">More...</a><br/></td></tr>
 <tr class="separator:ga6387808c22d6e186057ed744618d2487"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3fb6204c5db9d92bf63a3070cd2b6895"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__timer.html#ga3fb6204c5db9d92bf63a3070cd2b6895">EvrRtxTimerCreated</a> (<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> timer_id)</td></tr>
-<tr class="memdesc:ga3fb6204c5db9d92bf63a3070cd2b6895"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful timer create (Op)  <a href="group__rtx__evr__timer.html#ga3fb6204c5db9d92bf63a3070cd2b6895">More...</a><br/></td></tr>
-<tr class="separator:ga3fb6204c5db9d92bf63a3070cd2b6895"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71dd40a818f1098052915bbfb6c17e88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__timer.html#ga71dd40a818f1098052915bbfb6c17e88">EvrRtxTimerCreated</a> (<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> timer_id, const char *name)</td></tr>
+<tr class="memdesc:ga71dd40a818f1098052915bbfb6c17e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful timer create (Op)  <a href="group__rtx__evr__timer.html#ga71dd40a818f1098052915bbfb6c17e88">More...</a><br/></td></tr>
+<tr class="separator:ga71dd40a818f1098052915bbfb6c17e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga601e3617903900524062c4f9069d052f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__timer.html#ga601e3617903900524062c4f9069d052f">EvrRtxTimerGetName</a> (<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> timer_id, const char *name)</td></tr>
 <tr class="memdesc:ga601e3617903900524062c4f9069d052f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on timer name retrieve (API)  <a href="group__rtx__evr__timer.html#ga601e3617903900524062c4f9069d052f">More...</a><br/></td></tr>
 <tr class="separator:ga601e3617903900524062c4f9069d052f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -402,9 +405,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gae798cdc4cb10ada732e592318037cba7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__event__flasg.html#gae798cdc4cb10ada732e592318037cba7">EvrRtxEventFlagsNew</a> (const <a class="el" href="group__CMSIS__RTOS__EventFlags.html#structosEventFlagsAttr__t">osEventFlagsAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:gae798cdc4cb10ada732e592318037cba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on event flags create and initialize (API)  <a href="group__rtx__evr__event__flasg.html#gae798cdc4cb10ada732e592318037cba7">More...</a><br/></td></tr>
 <tr class="separator:gae798cdc4cb10ada732e592318037cba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc22beb78fe50e6172de74672850aff2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__event__flasg.html#gadc22beb78fe50e6172de74672850aff2">EvrRtxEventFlagsCreated</a> (<a class="el" href="group__CMSIS__RTOS__EventFlags.html#gafdbab933146d6d81d7cca7287e267a50">osEventFlagsId_t</a> ef_id)</td></tr>
-<tr class="memdesc:gadc22beb78fe50e6172de74672850aff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful event flags create (Op)  <a href="group__rtx__evr__event__flasg.html#gadc22beb78fe50e6172de74672850aff2">More...</a><br/></td></tr>
-<tr class="separator:gadc22beb78fe50e6172de74672850aff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1f48b9787e3a7d4f56449ed1dd12f26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__event__flasg.html#gaa1f48b9787e3a7d4f56449ed1dd12f26">EvrRtxEventFlagsCreated</a> (<a class="el" href="group__CMSIS__RTOS__EventFlags.html#gafdbab933146d6d81d7cca7287e267a50">osEventFlagsId_t</a> ef_id, const char *name)</td></tr>
+<tr class="memdesc:gaa1f48b9787e3a7d4f56449ed1dd12f26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful event flags create (Op)  <a href="group__rtx__evr__event__flasg.html#gaa1f48b9787e3a7d4f56449ed1dd12f26">More...</a><br/></td></tr>
+<tr class="separator:gaa1f48b9787e3a7d4f56449ed1dd12f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae9ebcbc09a1c15c719d95fe7b8c2ee18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__event__flasg.html#gae9ebcbc09a1c15c719d95fe7b8c2ee18">EvrRtxEventFlagsGetName</a> (<a class="el" href="group__CMSIS__RTOS__EventFlags.html#gafdbab933146d6d81d7cca7287e267a50">osEventFlagsId_t</a> ef_id, const char *name)</td></tr>
 <tr class="memdesc:gae9ebcbc09a1c15c719d95fe7b8c2ee18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on event flags name retrieve (API)  <a href="group__rtx__evr__event__flasg.html#gae9ebcbc09a1c15c719d95fe7b8c2ee18">More...</a><br/></td></tr>
 <tr class="separator:gae9ebcbc09a1c15c719d95fe7b8c2ee18"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -450,9 +453,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga51f59bf99b315f016ca752eddd1911d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__mutex.html#ga51f59bf99b315f016ca752eddd1911d5">EvrRtxMutexNew</a> (const <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:ga51f59bf99b315f016ca752eddd1911d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on mutex create and initialize (API)  <a href="group__rtx__evr__mutex.html#ga51f59bf99b315f016ca752eddd1911d5">More...</a><br/></td></tr>
 <tr class="separator:ga51f59bf99b315f016ca752eddd1911d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9944964bee7bef949a2f4d8d8bc1dbcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__mutex.html#ga9944964bee7bef949a2f4d8d8bc1dbcf">EvrRtxMutexCreated</a> (<a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id)</td></tr>
-<tr class="memdesc:ga9944964bee7bef949a2f4d8d8bc1dbcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful mutex create (Op)  <a href="group__rtx__evr__mutex.html#ga9944964bee7bef949a2f4d8d8bc1dbcf">More...</a><br/></td></tr>
-<tr class="separator:ga9944964bee7bef949a2f4d8d8bc1dbcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga712b32609cfb3ceded746ee6a86d2442"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__mutex.html#ga712b32609cfb3ceded746ee6a86d2442">EvrRtxMutexCreated</a> (<a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id, const char *name)</td></tr>
+<tr class="memdesc:ga712b32609cfb3ceded746ee6a86d2442"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful mutex create (Op)  <a href="group__rtx__evr__mutex.html#ga712b32609cfb3ceded746ee6a86d2442">More...</a><br/></td></tr>
+<tr class="separator:ga712b32609cfb3ceded746ee6a86d2442"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga457302507cedf0ea969cbb110af606b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__mutex.html#ga457302507cedf0ea969cbb110af606b8">EvrRtxMutexGetName</a> (<a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> mutex_id, const char *name)</td></tr>
 <tr class="memdesc:ga457302507cedf0ea969cbb110af606b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on mutex name retrieve (API)  <a href="group__rtx__evr__mutex.html#ga457302507cedf0ea969cbb110af606b8">More...</a><br/></td></tr>
 <tr class="separator:ga457302507cedf0ea969cbb110af606b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -492,9 +495,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5639f03e935ab79844777664a518c2ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__semaphore.html#ga5639f03e935ab79844777664a518c2ec">EvrRtxSemaphoreNew</a> (uint32_t max_count, uint32_t initial_count, const <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#structosSemaphoreAttr__t">osSemaphoreAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:ga5639f03e935ab79844777664a518c2ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on semaphore create and initialize (API)  <a href="group__rtx__evr__semaphore.html#ga5639f03e935ab79844777664a518c2ec">More...</a><br/></td></tr>
 <tr class="separator:ga5639f03e935ab79844777664a518c2ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad46ee88b57aed4c666aec773560aebad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__semaphore.html#gad46ee88b57aed4c666aec773560aebad">EvrRtxSemaphoreCreated</a> (<a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> semaphore_id)</td></tr>
-<tr class="memdesc:gad46ee88b57aed4c666aec773560aebad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful semaphore create (Op)  <a href="group__rtx__evr__semaphore.html#gad46ee88b57aed4c666aec773560aebad">More...</a><br/></td></tr>
-<tr class="separator:gad46ee88b57aed4c666aec773560aebad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31f9d55abcc5f398ea3810177cbf2bf3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__semaphore.html#ga31f9d55abcc5f398ea3810177cbf2bf3">EvrRtxSemaphoreCreated</a> (<a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> semaphore_id, const char *name)</td></tr>
+<tr class="memdesc:ga31f9d55abcc5f398ea3810177cbf2bf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful semaphore create (Op)  <a href="group__rtx__evr__semaphore.html#ga31f9d55abcc5f398ea3810177cbf2bf3">More...</a><br/></td></tr>
+<tr class="separator:ga31f9d55abcc5f398ea3810177cbf2bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga17d8aa861b6e669cc68c3c41e3e12332"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__semaphore.html#ga17d8aa861b6e669cc68c3c41e3e12332">EvrRtxSemaphoreGetName</a> (<a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> semaphore_id, const char *name)</td></tr>
 <tr class="memdesc:ga17d8aa861b6e669cc68c3c41e3e12332"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on semaphore name retrieve (API)  <a href="group__rtx__evr__semaphore.html#ga17d8aa861b6e669cc68c3c41e3e12332">More...</a><br/></td></tr>
 <tr class="separator:ga17d8aa861b6e669cc68c3c41e3e12332"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -534,9 +537,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf2fd4c91acf1379e93cd9886c515b9c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__memory__pool.html#gaf2fd4c91acf1379e93cd9886c515b9c5">EvrRtxMemoryPoolNew</a> (uint32_t block_count, uint32_t block_size, const <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#structosMemoryPoolAttr__t">osMemoryPoolAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:gaf2fd4c91acf1379e93cd9886c515b9c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on memory pool create and initialize (API)  <a href="group__rtx__evr__memory__pool.html#gaf2fd4c91acf1379e93cd9886c515b9c5">More...</a><br/></td></tr>
 <tr class="separator:gaf2fd4c91acf1379e93cd9886c515b9c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b361415e483ea24c0af489697e419b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__memory__pool.html#ga5b361415e483ea24c0af489697e419b2">EvrRtxMemoryPoolCreated</a> (<a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a> mp_id)</td></tr>
-<tr class="memdesc:ga5b361415e483ea24c0af489697e419b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful memory pool create (Op)  <a href="group__rtx__evr__memory__pool.html#ga5b361415e483ea24c0af489697e419b2">More...</a><br/></td></tr>
-<tr class="separator:ga5b361415e483ea24c0af489697e419b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadad71c7b04493c03647ca0929ea087b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__memory__pool.html#gadad71c7b04493c03647ca0929ea087b1">EvrRtxMemoryPoolCreated</a> (<a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a> mp_id, const char *name)</td></tr>
+<tr class="memdesc:gadad71c7b04493c03647ca0929ea087b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful memory pool create (Op)  <a href="group__rtx__evr__memory__pool.html#gadad71c7b04493c03647ca0929ea087b1">More...</a><br/></td></tr>
+<tr class="separator:gadad71c7b04493c03647ca0929ea087b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeface1ee4957cdb59292e13c38a672d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__memory__pool.html#gaeface1ee4957cdb59292e13c38a672d7">EvrRtxMemoryPoolGetName</a> (<a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga2e44473caf338266f56800960294f960">osMemoryPoolId_t</a> mp_id, const char *name)</td></tr>
 <tr class="memdesc:gaeface1ee4957cdb59292e13c38a672d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on memory pool name retrieve (API)  <a href="group__rtx__evr__memory__pool.html#gaeface1ee4957cdb59292e13c38a672d7">More...</a><br/></td></tr>
 <tr class="separator:gaeface1ee4957cdb59292e13c38a672d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -588,9 +591,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa7b18f18f3f53d6afb39ac1abe257000"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__message__queue.html#gaa7b18f18f3f53d6afb39ac1abe257000">EvrRtxMessageQueueNew</a> (uint32_t msg_count, uint32_t msg_size, const <a class="el" href="group__CMSIS__RTOS__Message.html#structosMessageQueueAttr__t">osMessageQueueAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:gaa7b18f18f3f53d6afb39ac1abe257000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on message queue create and initialization (API)  <a href="group__rtx__evr__message__queue.html#gaa7b18f18f3f53d6afb39ac1abe257000">More...</a><br/></td></tr>
 <tr class="separator:gaa7b18f18f3f53d6afb39ac1abe257000"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga98c28cc50887badfff48ff577f6d3433"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__message__queue.html#ga98c28cc50887badfff48ff577f6d3433">EvrRtxMessageQueueCreated</a> (<a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mq_id)</td></tr>
-<tr class="memdesc:ga98c28cc50887badfff48ff577f6d3433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful message queue create (Op)  <a href="group__rtx__evr__message__queue.html#ga98c28cc50887badfff48ff577f6d3433">More...</a><br/></td></tr>
-<tr class="separator:ga98c28cc50887badfff48ff577f6d3433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga36d6982377c1f54a227ba6fbb9458b79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__message__queue.html#ga36d6982377c1f54a227ba6fbb9458b79">EvrRtxMessageQueueCreated</a> (<a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mq_id, const char *name)</td></tr>
+<tr class="memdesc:ga36d6982377c1f54a227ba6fbb9458b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful message queue create (Op)  <a href="group__rtx__evr__message__queue.html#ga36d6982377c1f54a227ba6fbb9458b79">More...</a><br/></td></tr>
+<tr class="separator:ga36d6982377c1f54a227ba6fbb9458b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad0ef8ee59d2ec189351c5884f5f8e945"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__message__queue.html#gad0ef8ee59d2ec189351c5884f5f8e945">EvrRtxMessageQueueGetName</a> (<a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mq_id, const char *name)</td></tr>
 <tr class="memdesc:gad0ef8ee59d2ec189351c5884f5f8e945"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on message queue name retrieve(API)  <a href="group__rtx__evr__message__queue.html#gad0ef8ee59d2ec189351c5884f5f8e945">More...</a><br/></td></tr>
 <tr class="separator:gad0ef8ee59d2ec189351c5884f5f8e945"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -905,7 +908,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">thread_id</td><td>thread ID obtained by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">thread_flags</td><td>thread flags after setting </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">thread_flags</td><td>thread flags after setting. </td></tr>
   </table>
   </dd>
 </dl>
@@ -949,7 +952,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">thread_flags</td><td>thread flags before clearing </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">thread_flags</td><td>thread flags before clearing. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1091,7 +1094,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">flags</td><td>flags to wait for. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">options</td><td>flags options (osFlagsXxxx). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">thread_flags</td><td>thread flags before clearing </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">thread_flags</td><td>thread flags before clearing. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1190,7 +1193,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ef_id</td><td>event flags ID obtained by <a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab14b1caeb12ffa42cce1bfe889cd07df">osEventFlagsNew</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_flags</td><td>event flags after setting </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_flags</td><td>event flags after setting. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1256,7 +1259,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ef_id</td><td>event flags ID obtained by <a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab14b1caeb12ffa42cce1bfe889cd07df">osEventFlagsNew</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_flags</td><td>event flags before clearing </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_flags</td><td>event flags before clearing. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1483,7 +1486,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_a43355fbfff7212ac2193223a73d577c.html">RTOS2</a></li><li class="navelem"><a class="el" href="dir_002cf2dd0f795cc97a8d08cc3fa6e516.html">RTX</a></li><li class="navelem"><a class="el" href="dir_061ad8d12aa7dc7d03c29112cd6e086d.html">Include</a></li><li class="navelem"><a class="el" href="rtx__evr_8h.html">rtx_evr.h</a></li>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

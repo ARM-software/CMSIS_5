@@ -1,5 +1,11 @@
 var NAVTREEINDEX5 =
 {
+"group__usbd__interface__gr.html#a71d312ce5c5335c6a035da55c25848e4":[5,11,0,2,5],
+"group__usbd__interface__gr.html#a72d905bc20735bafda40d73c91829709":[5,11,0,3,2],
+"group__usbd__interface__gr.html#a84439aa5677d330d257a4b43e48d6426":[5,11,0,2,2],
+"group__usbd__interface__gr.html#a8834b281da48583845c044a81566c1b3":[5,11,0,2,0],
+"group__usbd__interface__gr.html#a9fcafd15149d35022b05cf3c396e714e":[5,11,0,2,11],
+"group__usbd__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650":[5,11,0,3,3],
 "group__usbd__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650":[5,11,0,4,3],
 "group__usbd__interface__gr.html#aa961d5fb2bd3d2960578f1ac3b903070":[5,11,0,4,0],
 "group__usbd__interface__gr.html#ab22b96a3efad48f5a542f46c1b224800":[5,11,0,4,2],

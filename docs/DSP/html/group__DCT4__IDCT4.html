@@ -164,7 +164,7 @@ Discrete Cosine Transform - type-IV</div></div>
 </div>
  where <code>n = 0,1,2,.....N-1</code> </dd></dl>
 <dl class="section user"><dt></dt><dd>The DCT4 matrices become involutory (i.e. they are self-inverse) by multiplying with an overall scale factor of sqrt(2/N). The symmetry of the transform matrix indicates that the fast algorithms for the forward and inverse transform computation are identical. Note that the implementation of Inverse DCT4 and DCT4 is same, hence same process function can be used for both.</dd></dl>
-<dl class="section user"><dt>Lengths supported by the transform:</dt><dd>As DCT4 internally uses Real FFT, it supports all the lengths supported by <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc" title="Processing function for the floating-point RFFT/RIFFT. ">arm_rfft_f32()</a>. The library provides separate functions for Q15, Q31, and floating-point data types. </dd></dl>
+<dl class="section user"><dt>Lengths supported by the transform:</dt><dd>As DCT4 internally uses Real FFT, it supports all the lengths 128, 512, 2048 and 8192. The library provides separate functions for Q15, Q31, and floating-point data types. </dd></dl>
 <dl class="section user"><dt>Instance Structure</dt><dd>The instances for Real FFT and FFT, cosine values table and twiddle factor table are stored in an instance data structure. A separate instance structure must be defined for each transform. There are separate instance structure declarations for each of the 3 supported data types.</dd></dl>
 <dl class="section user"><dt>Initialization Functions</dt><dd>There is also an associated initialization function for each data type. The initialization function performs the following operations:<ul>
 <li>Sets the values of the internal structure fields.</li>
@@ -525,7 +525,7 @@ Discrete Cosine Transform - type-IV</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:43:58 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:10 for CMSIS-DSP by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

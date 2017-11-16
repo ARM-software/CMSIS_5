@@ -129,12 +129,12 @@ Concept</h1>
 Debug description elements</h1>
 <p>A complete debug description for a device consists of the following elements:</p>
 <ul>
-<li><a class="el" href="sdf_pg.html#element_debug">debug</a> with the child element <a class="el" href="pdsc_family_pg.html#element_dbg_datapatch">dbg_datapatch</a> contains settings for the debug connection and for fixing silicon issues in software.</li>
+<li><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> with the child element <a class="el" href="pdsc_family_pg.html#element_dbg_datapatch">dbg_datapatch</a> contains settings for the debug connection and for fixing silicon issues in software.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugconfig">debugconfig</a> provides the default debugger configuration for a target connection.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugvars">debugvars</a> specifies global debug access variables. They can be used in addition to pre-defined variables in order to query settings from a debug access sequences.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_dp_jtag">dp_jtag</a>, <a class="el" href="pdsc_family_pg.html#element_dp_swd">dp_swd</a>, and <a class="el" href="pdsc_family_pg.html#element_dp_cjtag">dp_cjtag</a> describes the debug port in detail.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_sequences">sequences</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_sequence">sequence</a>, <a class="el" href="pdsc_family_pg.html#element_seq_control">seq_control</a>, and <a class="el" href="pdsc_family_pg.html#element_seq_block">seq_block</a> creates a configuration for debug access sequences.</li>
-<li><a class="el" href="sdf_pg.html#element_trace">trace</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_trace_serialwire">trace_serialwire</a>, <a class="el" href="pdsc_family_pg.html#element_trace_traceport">trace_traceport</a>, and <a class="el" href="pdsc_family_pg.html#element_trace_tracebuffer">trace_tracebuffer</a> sets up the trace connection.</li>
+<li><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_trace_serialwire">trace_serialwire</a>, <a class="el" href="pdsc_family_pg.html#element_trace_traceport">trace_traceport</a>, and <a class="el" href="pdsc_family_pg.html#element_trace_tracebuffer">trace_tracebuffer</a> sets up the trace connection.</li>
 </ul>
 <h1><a class="anchor" id="pdsc_SequenceNameEnum_pg"></a>
 Debug access sequences</h1>
@@ -352,7 +352,7 @@ DebugPortStart</h2>
 <div class="line"><span class="stringliteral">    &lt;control while=&quot;(ReadDP(DP_CTRL_STAT) &amp;amp; 0xA8000000) != 0xA8000000&quot; timeout=&quot;300000&quot;/&gt;</span></div>
 <div class="line"><span class="stringliteral">    </span></div>
 <div class="line"><span class="stringliteral">    &lt;!-- JTAG Specific Part of sequence --&gt;</span></div>
-<div class="line"><span class="stringliteral">    &lt;control if=&quot;__protocol == 1&quot;&gt;</span></div>
+<div class="line"><span class="stringliteral">    &lt;control if=&quot;(__protocol &amp;amp; 0xFFFF) == 1&quot;&gt;</span></div>
 <div class="line"><span class="stringliteral">    </span></div>
 <div class="line"><span class="stringliteral">      &lt;block&gt;</span></div>
 <div class="line"><span class="stringliteral">        // Init AP Transfer Mode, Transaction Counter, and Lane Mask (Normal Transfer Mode, Include all Byte Lanes)</span></div>
@@ -363,7 +363,7 @@ DebugPortStart</h2>
 <div class="line"><span class="stringliteral">    &lt;/control&gt;</span></div>
 <div class="line"><span class="stringliteral">    </span></div>
 <div class="line"><span class="stringliteral">    &lt;!-- SWD Specific Part of sequence --&gt;</span></div>
-<div class="line"><span class="stringliteral">    &lt;control if=&quot;__protocol == 2&quot;&gt;</span></div>
+<div class="line"><span class="stringliteral">    &lt;control if=&quot;(__protocol &amp;amp; 0xFFFF) == 2&quot;&gt;</span></div>
 <div class="line"><span class="stringliteral">    </span></div>
 <div class="line"><span class="stringliteral">      &lt;block&gt;</span></div>
 <div class="line"><span class="stringliteral">        // Init AP Transfer Mode, Transaction Counter, and Lane Mask (Normal Transfer Mode, Include all Byte Lanes)</span></div>
@@ -449,7 +449,7 @@ ResetSystem</h2>
 <div class="line">  &lt;/block&gt;</div>
 <div class="line"></div>
 <div class="line">  &lt;!-- Reset Recovery: Wait <span class="keywordflow">for</span> DHCSR.S_RESET_ST bit to clear on read --&gt;</div>
-<div class="line">  &lt;control <span class="keywordflow">while</span>=<span class="stringliteral">&quot;(Read32(DHCSR_Addr) &amp;amp; 0x02000000) == 0&quot;</span> timeout=<span class="stringliteral">&quot;500000&quot;</span>/&gt;</div>
+<div class="line">  &lt;control <span class="keywordflow">while</span>=<span class="stringliteral">&quot;(Read32(DHCSR_Addr) &amp;amp; 0x02000000)&quot;</span> timeout=<span class="stringliteral">&quot;500000&quot;</span>/&gt;</div>
 <div class="line">  </div>
 <div class="line">&lt;/sequence&gt;</div>
 </div><!-- fragment --><h2><a class="anchor" id="resetProcessor"></a>
@@ -470,7 +470,7 @@ ResetProcessor</h2>
 <div class="line">  &lt;/block&gt;</div>
 <div class="line">  </div>
 <div class="line">  &lt;!-- Reset Recovery: Wait <span class="keywordflow">for</span> DHCSR.S_RESET_ST bit to clear on read --&gt;</div>
-<div class="line">  &lt;control <span class="keywordflow">while</span>=<span class="stringliteral">&quot;(Read32(DHCSR_Addr) &amp;amp; 0x02000000) == 0&quot;</span> timeout=<span class="stringliteral">&quot;500000&quot;</span>/&gt;</div>
+<div class="line">  &lt;control <span class="keywordflow">while</span>=<span class="stringliteral">&quot;(Read32(DHCSR_Addr) &amp;amp; 0x02000000)&quot;</span> timeout=<span class="stringliteral">&quot;500000&quot;</span>/&gt;</div>
 <div class="line"></div>
 <div class="line">&lt;/sequence&gt;</div>
 </div><!-- fragment --><h2><a class="anchor" id="resetHardware"></a>
@@ -1256,7 +1256,7 @@ Debug access functions</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="coresight_setup.html">Debug Setup with CMSIS-Pack</a></li>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:11 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:21 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

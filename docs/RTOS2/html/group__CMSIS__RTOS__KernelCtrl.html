@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -394,9 +394,8 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 <ul>
 <li><em>osOK</em> in case of success.</li>
 <li><em>osError</em> if an unspecific error occurred.</li>
-<li><em>osErrorISR</em> if called from an <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routine</a>.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> info (<span class="keywordtype">void</span>) {</div>
 <div class="line">  <span class="keywordtype">char</span> infobuf[100];</div>
@@ -427,13 +426,13 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>current RTOS Kernel state.</dd></dl>
-<p>The function <b>osKernelGetState</b> returns the current state of the kernel and can be safely called before the RTOS is initialized or started (call to <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a> or <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>). In case it fails or if it is called from an ISR, it will return <code>osKernelError</code>, otherwise it returns the kernel state (refer to <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga08326469274b668140ca934b168a5ad4">osKernelState_t</a> for the list of kernel states).</p>
+<p>The function <b>osKernelGetState</b> returns the current state of the kernel and can be safely called before the RTOS is initialized or started (call to <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a> or <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>). In case it fails it will return <code>osKernelError</code>, otherwise it returns the kernel state (refer to <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga08326469274b668140ca934b168a5ad4">osKernelState_t</a> for the list of kernel states).</p>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga08326469274b668140ca934b168a5ad4">osKernelState_t</a> return values:</p>
 <ul>
-<li><a class="el" href="cmsis__os2_8h.html#ga08326469274b668140ca934b168a5ad4a0545c92c18ce8e6b24e82a0d694a0b4a">osKernelError</a> if an unspecific error occurred or it has been called from an <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routine</a>.</li>
+<li><a class="el" href="cmsis__os2_8h.html#ga08326469274b668140ca934b168a5ad4a0545c92c18ce8e6b24e82a0d694a0b4a">osKernelError</a> if an unspecific error occurred.</li>
 <li>the actual kernel state otherwise.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>) {</div>
 <div class="line">  <span class="comment">// System Initialization</span></div>
@@ -802,7 +801,7 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

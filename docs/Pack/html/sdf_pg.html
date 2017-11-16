@@ -256,7 +256,7 @@ $(document).ready(function(){initNavTree('sdf_pg.html','');});
 </div><!-- fragment --><h1><a class="anchor" id="sdf_structure"></a>
 SDF top level structure</h1>
 <p>The XML schema file <b>sdf_schema.xsd</b> defines the sections used in a <b>*.SDF</b> file. The current <b>sdf_schema.xsd</b> can be found under the ARM.CMSIS.*.Pack in the .\CMSIS\Utilities-directory.</p>
-<h1><a class="anchor" id="element_system_description"></a>
+<h1><a class="anchor" id="sdf_element_system_description"></a>
 /system_description</h1>
 <table  class="cmtable" summary="Element: CPDSC package">
 <tr>
@@ -270,64 +270,64 @@ SDF top level structure</h1>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_debug_and_trace_config">debug_and_trace_config</a> </td><td>Description how to configure debug and trace. </td><td>complexType </td><td>1..1  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_debug_and_trace_config">/system_description/debug_and_trace_config</a> </td><td>Description how to configure debug and trace. </td><td>complexType </td><td>1..1  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_platform">platform</a> </td><td>Overall platform description. </td><td>complexType </td><td>1..1  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_platform">/system_description/platform</a> </td><td>Overall platform description. </td><td>complexType </td><td>1..1  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_debug_and_trace_config"></a>
+<h1><a class="anchor" id="sdf_element_debug_and_trace_config"></a>
 /system_description/debug_and_trace_config</h1>
 <p>Describes the recommended debug and trace configuration for the device.</p>
 <table  class="cmtable" summary="Element: debug_and_trace_config">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_system_description">system_description</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_system_description">/system_description</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_system_description">system_description</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_system_description">/system_description</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_debug">debug</a> </td><td>Describes the debug connection configuration </td><td>complexType </td><td>0..1  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_debug">/system_description/debug_and_trace_config/debug</a> </td><td>Describes the debug connection configuration </td><td>complexType </td><td>0..1  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td>Describes the trace configuration </td><td>complexType </td><td>0..1  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_trace">/system_description/debug_and_trace_config/trace</a> </td><td>Describes the trace configuration </td><td>complexType </td><td>0..1  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_debug"></a>
+<h1><a class="anchor" id="sdf_element_debug"></a>
 /system_description/debug_and_trace_config/debug</h1>
 <p>Describes the recommended debug configuration for the device.</p>
 <table  class="cmtable" summary="Element: debug">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_debug_and_trace_config">debug_and_trace_config</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_debug_and_trace_config">/system_description/debug_and_trace_config</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_debug_and_trace_config">debug_and_trace_config</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_debug_and_trace_config">/system_description/debug_and_trace_config</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_config_item">config_item</a> </td><td>Describes a configuration item attribute/value pair </td><td>xs:string </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_config_item">/system_description/.../config_item</a> </td><td>Describes a configuration item attribute/value pair </td><td>xs:string </td><td>0..*  </td></tr>
 </table>
-<p>For a list of applicable configuration items, refer to <a class="el" href="sdf_pg.html#element_config_item">config_item</a>. </p>
+<p>For a list of applicable configuration items, refer to <a class="el" href="sdf_pg.html#sdf_element_config_item">config_item</a>. </p>
 <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_config_item"></a>
+<h1><a class="anchor" id="sdf_element_config_item"></a>
 /system_description/.../config_item</h1>
 <p>A <b>config_item</b> can appear in various SDF elements. This group contains individual configuration items.</p>
 <table  class="cmtable" summary="Element: config_item">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_debug">debug</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_debug">/system_description/debug_and_trace_config/debug</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_debug">debug</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_debug">/system_description/debug_and_trace_config/debug</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_trace_capture">trace_capture</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_trace_capture">/system_description/debug_and_trace_config/trace/trace_capture</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_trace_capture">trace_capture</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_trace_capture">/system_description/debug_and_trace_config/trace/trace_capture</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_config_items">config_items</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_config_items">/system_description/platform/scanchain/../config_items</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_config_items">config_items</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_config_items">/system_description/platform/scanchain/../config_items</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
 <td>name </td><td>Name of the configuration item. </td><td>xs:string </td><td>required  </td></tr>
 </table>
 <h2>Debug element </h2>
-<p>The <b>config_items</b> applicable to the <a class="el" href="sdf_pg.html#element_debug">debug</a> element are the following:</p>
+<p>The <b>config_items</b> applicable to the <a class="el" href="sdf_pg.html#sdf_element_debug">debug</a> element are the following:</p>
 <table class="doxtable">
 <tr>
 <th>Item </th><th>Description  </th></tr>
@@ -351,7 +351,7 @@ SDF top level structure</h1>
 <td>Linked_SRST_TRST </td><td>Target hardware has System Reset and TAP reset physically linked (True/False) - Default Value:False </td></tr>
 </table>
 <h2>Device element </h2>
-<p>The <b>config_items</b> applicable to the <a class="el" href="sdf_pg.html#element_device">device</a> element are the following (only applicable for devices that are child elements of another device or DAP):</p>
+<p>The <b>config_items</b> applicable to the <a class="el" href="sdf_pg.html#sdf_element_device">device</a> element are the following (only applicable for devices that are child elements of another device or DAP):</p>
 <table class="doxtable">
 <tr>
 <th>Item </th><th>Description </th><th>Use  </th></tr>
@@ -361,7 +361,7 @@ SDF top level structure</h1>
 <td>CORESIGHT_AP_INDEX </td><td>the access port index of the device </td><td>Required </td></tr>
 </table>
 <h2>Trace element </h2>
-<p>The <b>config_items</b> applicable to the <a class="el" href="sdf_pg.html#element_trace">trace</a> element are the following:</p>
+<p>The <b>config_items</b> applicable to the <a class="el" href="sdf_pg.html#sdf_element_trace">trace</a> element are the following:</p>
 <ol type="1">
 <li>Parallel trace capture device configuration items ("type" = "parallel"). These "config_items" enable you to configure delays on the trace lines by a specified amount of time relative to the trace capture device defaults. These delays are used to allow for variations in target hardware. These configuration items have default values if not present. <table class="doxtable">
 <tr>
@@ -408,33 +408,33 @@ SDF top level structure</h1>
 <div class="line">...</div>
 </div><!-- fragment --> <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_trace"></a>
+<h1><a class="anchor" id="sdf_element_trace"></a>
 /system_description/debug_and_trace_config/trace</h1>
 <p>Describes the recommended trace configuration for the device.</p>
 <table  class="cmtable" summary="Element: trace">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_debug_and_trace_config">debug_and_trace_config</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_debug_and_trace_config">/system_description/debug_and_trace_config</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_debug_and_trace_config">debug_and_trace_config</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_debug_and_trace_config">/system_description/debug_and_trace_config</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_trace_capture">trace_capture</a> </td><td>Describes the trace capture device </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_trace_capture">/system_description/debug_and_trace_config/trace/trace_capture</a> </td><td>Describes the trace capture device </td><td>complexType </td><td>0..*  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_trace_capture"></a>
+<h1><a class="anchor" id="sdf_element_trace_capture"></a>
 /system_description/debug_and_trace_config/trace/trace_capture</h1>
 <p>Describes settings for the trace capture device.</p>
 <table  class="cmtable" summary="Element: trace_capture">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_trace">trace</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_trace">/system_description/debug_and_trace_config/trace</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_trace">trace</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_trace">/system_description/debug_and_trace_config/trace</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_config_item">config_item</a> </td><td>Describes a configuration item attribute/value pair </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_config_item">/system_description/.../config_item</a> </td><td>Describes a configuration item attribute/value pair </td><td>complexType </td><td>0..*  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -442,26 +442,26 @@ SDF top level structure</h1>
 </table>
 <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_platform"></a>
+<h1><a class="anchor" id="sdf_element_platform"></a>
 /system_description/platform</h1>
 <p>Describes the platform configuration (scanchain, topology and cluster arrangement).</p>
 <table  class="cmtable" summary="Element: platform">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_system_description">system_description</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_system_description">/system_description</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_system_description">system_description</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_system_description">/system_description</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_scanchain">scanchain</a> </td><td>Lists all DAPs/Devices in the order that they appear on the scanchain (Note - order is reverse to DAP references in PDSC files). The first device in the scanchain is one closest to target's TDI pin. </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_scanchain">/system_description/platform/scanchain</a> </td><td>Lists all DAPs/Devices in the order that they appear on the scanchain (Note - order is reverse to DAP references in PDSC files). The first device in the scanchain is one closest to target's TDI pin. </td><td>complexType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_topology">topology</a> </td><td>Describes the system topology </td><td>complexType </td><td>0..1  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_topology">/system_description/platform/topology</a> </td><td>Describes the system topology </td><td>complexType </td><td>0..1  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_clusters">clusters</a> </td><td>Describes the cluster arrangement </td><td>complexType </td><td>0..1  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_clusters">/system_description/platform/clusters</a> </td><td>Describes the cluster arrangement </td><td>complexType </td><td>0..1  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_scanchain"></a>
+<h1><a class="anchor" id="sdf_element_scanchain"></a>
 /system_description/platform/scanchain</h1>
 <p>Lists all DAPs/devices in the order that they appear on the scanchain.</p>
 <dl class="section note"><dt>Note</dt><dd>The order is reverse to the DAP references in PDSC files. The first device in the scanchain is the one closest to the target's TDI pin.</dd></dl>
@@ -469,13 +469,13 @@ SDF top level structure</h1>
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_platform">platform</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_platform">/system_description/platform</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_platform">platform</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_platform">/system_description/platform</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_dap">dap</a> </td><td>Describes a DAP and a list of devices associated with that DAP. </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_dap">/system_description/platform/scanchain/dap</a> </td><td>Describes a DAP and a list of devices associated with that DAP. </td><td>complexType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td>Describes a single device on the scan chain. </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_device">/system_description/platform/scanchain/device</a> </td><td>Describes a single device on the scan chain. </td><td>complexType </td><td>0..*  </td></tr>
 </table>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line">...</div>
@@ -601,22 +601,22 @@ SDF top level structure</h1>
 <div class="line">...</div>
 </div><!-- fragment --> <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_dap"></a>
+<h1><a class="anchor" id="sdf_element_dap"></a>
 /system_description/platform/scanchain/dap</h1>
 <p>Describes a DAP and a list of devices associated with that DAP.</p>
 <table  class="cmtable" summary="Element: dap">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_scanchain">scanchain</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_scanchain">/system_description/platform/scanchain</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_scanchain">scanchain</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_scanchain">/system_description/platform/scanchain</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td>List of devices associated with this DAP. </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_device">/system_description/platform/scanchain/device</a> </td><td>List of devices associated with this DAP. </td><td>complexType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device_info_items">device_info_items</a> </td><td>Contains implementation details for the DAP. Applicable items for a DAP are "JTAG_IDCODE" (the JTAG ID code for the DAP) or "DPIDR" (the Debug Port Identification Register contents). </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_device_info_items">/system_description/platform/scanchain/../../device_info_items</a> </td><td>Contains implementation details for the DAP. Applicable items for a DAP are "JTAG_IDCODE" (the JTAG ID code for the DAP) or "DPIDR" (the Debug Port Identification Register contents). </td><td>complexType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_config_items">config_items</a> </td><td>Configuration items specific to a DAP type. </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_config_items">/system_description/platform/scanchain/../../config_items</a> </td><td>Configuration items specific to a DAP type. </td><td>complexType </td><td>0..*  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -682,23 +682,23 @@ SDF top level structure</h1>
 <div class="line">&lt;/system_description&gt;</div>
 </div><!-- fragment --><p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_device"></a>
+<h1><a class="anchor" id="sdf_element_device"></a>
 /system_description/platform/scanchain/device</h1>
 <table  class="cmtable" summary="Element: device">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_scanchain">scanchain</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_scanchain">/system_description/platform/scanchain</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_scanchain">scanchain</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_scanchain">/system_description/platform/scanchain</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_dap">dap</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_dap">/system_description/platform/scanchain/dap</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_dap">dap</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_dap">/system_description/platform/scanchain/dap</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td>Describes a single nested device associated with this device. </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_device">/system_description/platform/scanchain/device</a> </td><td>Describes a single nested device associated with this device. </td><td>complexType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device_info_items">device_info_items</a> </td><td>Describes a sequence of device information items. </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_device_info_items">/system_description/platform/scanchain/../../device_info_items</a> </td><td>Describes a sequence of device information items. </td><td>complexType </td><td>0..*  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_config_items">config_items</a> </td><td>Configuration items specific to this device. </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_config_items">/system_description/platform/scanchain/../../config_items</a> </td><td>Configuration items specific to this device. </td><td>complexType </td><td>0..*  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -735,48 +735,48 @@ SDF top level structure</h1>
 <div class="line">&lt;/system_description&gt;</div>
 </div><!-- fragment --><p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_config_items"></a>
+<h1><a class="anchor" id="sdf_element_config_items"></a>
 /system_description/platform/scanchain/../../config_items</h1>
-<p>The configuration items are specific to the device type or DAP. Refer to <a class="el" href="sdf_pg.html#element_config_item">/system_description/.../config_item</a> for a list of applicable device information items and a code example.</p>
+<p>The configuration items are specific to the device type or DAP. Refer to <a class="el" href="sdf_pg.html#sdf_element_config_item">/system_description/.../config_item</a> for a list of applicable device information items and a code example.</p>
 <table  class="cmtable" summary="Element: config_items">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_device">/system_description/platform/../device</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_dap">dap</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_dap">/system_description/platform/scanchain/dap</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_dap">dap</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_dap">/system_description/platform/scanchain/dap</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_config_item">config_item</a> </td><td>Describes a configuration item. </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_config_item">/system_description/.../config_item</a> </td><td>Describes a configuration item. </td><td>complexType </td><td>0..*  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_device_info_items"></a>
+<h1><a class="anchor" id="sdf_element_device_info_items"></a>
 /system_description/platform/scanchain/../../device_info_items</h1>
-<p>The device information items are specific to the type of device or DAP and describe implementation specific details. Refer to <a class="el" href="sdf_pg.html#element_device_info_item">/system_description/platform/scanchain/../../device_info_items/device_info_item</a> for a list of applicable device information items and a code example.</p>
+<p>The device information items are specific to the type of device or DAP and describe implementation specific details. Refer to <a class="el" href="sdf_pg.html#sdf_element_device_info_item">/system_description/platform/scanchain/../../device_info_items/device_info_item</a> for a list of applicable device information items and a code example.</p>
 <table  class="cmtable" summary="Element: device_info_items">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device">/system_description/platform/../device</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_device">device</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_device">/system_description/platform/../device</a>  </td></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device">dap</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_dap">/system_description/platform/scanchain/dap</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_device">dap</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_dap">/system_description/platform/scanchain/dap</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device_info_item">device_info_item</a> </td><td>Describes a sequence of device information items. </td><td>xs:string </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_device_info_item">/system_description/platform/scanchain/../../device_info_items/device_info_item</a> </td><td>Describes a sequence of device information items. </td><td>xs:string </td><td>0..*  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_device_info_item"></a>
+<h1><a class="anchor" id="sdf_element_device_info_item"></a>
 /system_description/platform/scanchain/../../device_info_items/device_info_item</h1>
 <p>Describes implementation specific details of the specified device or DAP.</p>
 <table  class="cmtable" summary="Element: device_info_item">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_device_info_items">device_info_items</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_device_info_items">/system_description/platform/../../device_info_items</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_device_info_items">device_info_items</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_device_info_items">/system_description/platform/../../device_info_items</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -868,18 +868,18 @@ SDF top level structure</h1>
 <div class="line">  ...</div>
 </div><!-- fragment --><p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_topology"></a>
+<h1><a class="anchor" id="sdf_element_topology"></a>
 /system_description/platform/topology</h1>
 <p>Describes the system topology.</p>
 <table  class="cmtable" summary="Element: topology">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_platform">platform</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_platform">/system_description/platform</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_platform">platform</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_platform">/system_description/platform</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_topology_link">topology_link</a> </td><td>Describes how CoreSight devices and cores are connected. </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_topology_link">/system_description/platform/topology/topology_link</a> </td><td>Describes how CoreSight devices and cores are connected. </td><td>complexType </td><td>0..*  </td></tr>
 </table>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line">&lt;system_description version=<span class="stringliteral">&quot;2.0&quot;</span>&gt;</div>
@@ -902,14 +902,14 @@ SDF top level structure</h1>
 <div class="line">&lt;/system_description&gt;</div>
 </div><!-- fragment --> <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_topology_link"></a>
+<h1><a class="anchor" id="sdf_element_topology_link"></a>
 /system_description/platform/topology/topology_link</h1>
 <p>Describes how CoreSight devices and cores are connected.</p>
 <table  class="cmtable" summary="Element: topology_link">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_platform">topology</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_topology">/system_description/platform/topology</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_platform">topology</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_topology">/system_description/platform/topology</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -938,29 +938,29 @@ SDF top level structure</h1>
 <div class="line">master=<span class="stringliteral">&quot;CSTMC_0&quot;</span>     slave=<span class="stringliteral">&quot;CSTPIU&quot;</span>                          type=<span class="stringliteral">&quot;ATB&quot;</span></div>
 </div><!-- fragment --> <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_clusters"></a>
+<h1><a class="anchor" id="sdf_element_clusters"></a>
 /system_description/platform/clusters</h1>
 <p>Describes the cluster arrangement.</p>
 <table  class="cmtable" summary="Element: clusters">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_platform">platform</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_platform">/system_description/platform</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_platform">platform</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_platform">/system_description/platform</a>  </td></tr>
 <tr>
 <th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_cluster">cluster</a> </td><td>Lists the devices that make up the cluster and a unique name for the cluster. </td><td>complexType </td><td>0..*  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_cluster">/system_description/platform/clusters/cluster</a> </td><td>Lists the devices that make up the cluster and a unique name for the cluster. </td><td>complexType </td><td>0..*  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
-<h1><a class="anchor" id="element_cluster"></a>
+<h1><a class="anchor" id="sdf_element_cluster"></a>
 /system_description/platform/clusters/cluster</h1>
 <p>Lists the devices that make up the cluster.</p>
 <table  class="cmtable" summary="Element: cluster">
 <tr>
 <th>Parents </th><th colspan="3">Element Chain  </th></tr>
 <tr>
-<td><a class="el" href="sdf_pg.html#element_clusters">clusters</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#element_clusters">/system_description/platform/clusters</a>  </td></tr>
+<td><a class="el" href="sdf_pg.html#sdf_element_clusters">clusters</a> </td><td colspan="3"><a class="el" href="sdf_pg.html#sdf_element_clusters">/system_description/platform/clusters</a>  </td></tr>
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
@@ -975,7 +975,7 @@ SDF top level structure</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:11 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:21 for CMSIS-Pack by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

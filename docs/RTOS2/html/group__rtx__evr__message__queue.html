@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -125,9 +125,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa7b18f18f3f53d6afb39ac1abe257000"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__message__queue.html#gaa7b18f18f3f53d6afb39ac1abe257000">EvrRtxMessageQueueNew</a> (uint32_t msg_count, uint32_t msg_size, const <a class="el" href="group__CMSIS__RTOS__Message.html#structosMessageQueueAttr__t">osMessageQueueAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:gaa7b18f18f3f53d6afb39ac1abe257000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on message queue create and initialization (API)  <a href="#gaa7b18f18f3f53d6afb39ac1abe257000">More...</a><br/></td></tr>
 <tr class="separator:gaa7b18f18f3f53d6afb39ac1abe257000"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga98c28cc50887badfff48ff577f6d3433"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__message__queue.html#ga98c28cc50887badfff48ff577f6d3433">EvrRtxMessageQueueCreated</a> (<a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mq_id)</td></tr>
-<tr class="memdesc:ga98c28cc50887badfff48ff577f6d3433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful message queue create (Op)  <a href="#ga98c28cc50887badfff48ff577f6d3433">More...</a><br/></td></tr>
-<tr class="separator:ga98c28cc50887badfff48ff577f6d3433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga36d6982377c1f54a227ba6fbb9458b79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__message__queue.html#ga36d6982377c1f54a227ba6fbb9458b79">EvrRtxMessageQueueCreated</a> (<a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mq_id, const char *name)</td></tr>
+<tr class="memdesc:ga36d6982377c1f54a227ba6fbb9458b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful message queue create (Op)  <a href="#ga36d6982377c1f54a227ba6fbb9458b79">More...</a><br/></td></tr>
+<tr class="separator:ga36d6982377c1f54a227ba6fbb9458b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad0ef8ee59d2ec189351c5884f5f8e945"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__message__queue.html#gad0ef8ee59d2ec189351c5884f5f8e945">EvrRtxMessageQueueGetName</a> (<a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mq_id, const char *name)</td></tr>
 <tr class="memdesc:gad0ef8ee59d2ec189351c5884f5f8e945"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on message queue name retrieve(API)  <a href="#gad0ef8ee59d2ec189351c5884f5f8e945">More...</a><br/></td></tr>
 <tr class="separator:gad0ef8ee59d2ec189351c5884f5f8e945"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -315,7 +315,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga98c28cc50887badfff48ff577f6d3433"></a>
+<a class="anchor" id="ga36d6982377c1f54a227ba6fbb9458b79"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -323,14 +323,25 @@ Functions</h2></td></tr>
           <td class="memname">void EvrRtxMessageQueueCreated </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a>&#160;</td>
-          <td class="paramname"><em>mq_id</em></td><td>)</td>
+          <td class="paramname"><em>mq_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">mq_id</td><td>message queue ID obtained by <a class="el" href="group__CMSIS__RTOS__Message.html#ga24e895a00f9d484db33aaf784c57bfed">osMessageQueueNew</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mq_id</td><td>message queue ID obtained by <a class="el" href="group__CMSIS__RTOS__Message.html#ga24e895a00f9d484db33aaf784c57bfed">osMessageQueueNew</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>pointer to message queue object name.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1103,7 +1114,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

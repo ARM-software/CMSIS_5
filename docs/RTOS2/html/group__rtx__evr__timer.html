@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -128,9 +128,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga6387808c22d6e186057ed744618d2487"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__timer.html#ga6387808c22d6e186057ed744618d2487">EvrRtxTimerNew</a> (<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaacf768c1ec64b020598afb985d7b30be">osTimerFunc_t</a> func, <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#ga7dc24a4c2b90334427081c3da7a71915">osTimerType_t</a> type, void *argument, const <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#structosTimerAttr__t">osTimerAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:ga6387808c22d6e186057ed744618d2487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on timer create and initialize (API)  <a href="#ga6387808c22d6e186057ed744618d2487">More...</a><br/></td></tr>
 <tr class="separator:ga6387808c22d6e186057ed744618d2487"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3fb6204c5db9d92bf63a3070cd2b6895"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__timer.html#ga3fb6204c5db9d92bf63a3070cd2b6895">EvrRtxTimerCreated</a> (<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> timer_id)</td></tr>
-<tr class="memdesc:ga3fb6204c5db9d92bf63a3070cd2b6895"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful timer create (Op)  <a href="#ga3fb6204c5db9d92bf63a3070cd2b6895">More...</a><br/></td></tr>
-<tr class="separator:ga3fb6204c5db9d92bf63a3070cd2b6895"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71dd40a818f1098052915bbfb6c17e88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__timer.html#ga71dd40a818f1098052915bbfb6c17e88">EvrRtxTimerCreated</a> (<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> timer_id, const char *name)</td></tr>
+<tr class="memdesc:ga71dd40a818f1098052915bbfb6c17e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful timer create (Op)  <a href="#ga71dd40a818f1098052915bbfb6c17e88">More...</a><br/></td></tr>
+<tr class="separator:ga71dd40a818f1098052915bbfb6c17e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga601e3617903900524062c4f9069d052f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__timer.html#ga601e3617903900524062c4f9069d052f">EvrRtxTimerGetName</a> (<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> timer_id, const char *name)</td></tr>
 <tr class="memdesc:ga601e3617903900524062c4f9069d052f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on timer name retrieve (API)  <a href="#ga601e3617903900524062c4f9069d052f">More...</a><br/></td></tr>
 <tr class="separator:ga601e3617903900524062c4f9069d052f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -329,7 +329,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga3fb6204c5db9d92bf63a3070cd2b6895"></a>
+<a class="anchor" id="ga71dd40a818f1098052915bbfb6c17e88"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -337,14 +337,25 @@ Functions</h2></td></tr>
           <td class="memname">void EvrRtxTimerCreated </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a>&#160;</td>
-          <td class="paramname"><em>timer_id</em></td><td>)</td>
+          <td class="paramname"><em>timer_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>pointer to timer object name.</td></tr>
   </table>
   </dd>
 </dl>
@@ -381,7 +392,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>pointer to timer object name.</td></tr>
   </table>
   </dd>
@@ -420,7 +431,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ticks</td><td><a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">time ticks</a> value of the timer.</td></tr>
   </table>
   </dd>
@@ -449,7 +460,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -476,7 +487,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -503,7 +514,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -540,8 +551,8 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">running</td><td>running state: 0 not running, 1 running</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">running</td><td>running state: 0 not running, 1 running.</td></tr>
   </table>
   </dd>
 </dl>
@@ -569,7 +580,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -596,7 +607,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>timer ID obtained by <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -613,7 +624,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

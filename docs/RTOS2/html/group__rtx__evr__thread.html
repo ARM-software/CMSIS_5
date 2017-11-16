@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.1</span>
+   &#160;<span id="projectnumber">Version 2.1.2</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -125,9 +125,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga396ce41f68401a885f0ae46a54e8dd1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga396ce41f68401a885f0ae46a54e8dd1f">EvrRtxThreadNew</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd51f99a6eb50b94eee75f27cae815eb">osThreadFunc_t</a> func, void *argument, const <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:ga396ce41f68401a885f0ae46a54e8dd1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on thread create and intialize (API)  <a href="#ga396ce41f68401a885f0ae46a54e8dd1f">More...</a><br/></td></tr>
 <tr class="separator:ga396ce41f68401a885f0ae46a54e8dd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga18fd5da10c8a5b39ad587ab610d9f51e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga18fd5da10c8a5b39ad587ab610d9f51e">EvrRtxThreadCreated</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
-<tr class="memdesc:ga18fd5da10c8a5b39ad587ab610d9f51e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful thread create (Op)  <a href="#ga18fd5da10c8a5b39ad587ab610d9f51e">More...</a><br/></td></tr>
-<tr class="separator:ga18fd5da10c8a5b39ad587ab610d9f51e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2215445440bcb53b65a9b7181ecffa9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#gae2215445440bcb53b65a9b7181ecffa9">EvrRtxThreadCreated</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id, uint32_t thread_addr)</td></tr>
+<tr class="memdesc:gae2215445440bcb53b65a9b7181ecffa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful thread create (Op)  <a href="#gae2215445440bcb53b65a9b7181ecffa9">More...</a><br/></td></tr>
+<tr class="separator:gae2215445440bcb53b65a9b7181ecffa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4f849a33d2c95754b11a499d77503b5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga4f849a33d2c95754b11a499d77503b5c">EvrRtxThreadGetName</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id, const char *name)</td></tr>
 <tr class="memdesc:ga4f849a33d2c95754b11a499d77503b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on thread name retrieve (API)  <a href="#ga4f849a33d2c95754b11a499d77503b5c">More...</a><br/></td></tr>
 <tr class="separator:ga4f849a33d2c95754b11a499d77503b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,11 +183,14 @@ Functions</h2></td></tr>
 <tr class="memdesc:gab9efd66ed2edb439c5081806c9b63cf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on thread execution block (Op)  <a href="#gab9efd66ed2edb439c5081806c9b63cf9">More...</a><br/></td></tr>
 <tr class="separator:gab9efd66ed2edb439c5081806c9b63cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3faae4d941ddecfe773ef9f3efe8b901"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga3faae4d941ddecfe773ef9f3efe8b901">EvrRtxThreadUnblocked</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id, uint32_t ret_val)</td></tr>
-<tr class="memdesc:ga3faae4d941ddecfe773ef9f3efe8b901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on blocked thread release (Op)  <a href="#ga3faae4d941ddecfe773ef9f3efe8b901">More...</a><br/></td></tr>
+<tr class="memdesc:ga3faae4d941ddecfe773ef9f3efe8b901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on thread execution unblock (Op)  <a href="#ga3faae4d941ddecfe773ef9f3efe8b901">More...</a><br/></td></tr>
 <tr class="separator:ga3faae4d941ddecfe773ef9f3efe8b901"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2829dfe558a469d913f4eb0ccd6d29c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga2829dfe558a469d913f4eb0ccd6d29c6">EvrRtxThreadSwitch</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
-<tr class="memdesc:ga2829dfe558a469d913f4eb0ccd6d29c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on current running thread switch (Op)  <a href="#ga2829dfe558a469d913f4eb0ccd6d29c6">More...</a><br/></td></tr>
-<tr class="separator:ga2829dfe558a469d913f4eb0ccd6d29c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe470d5bb1373c59c51470fd20b55bcb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#gabe470d5bb1373c59c51470fd20b55bcb">EvrRtxThreadPreempted</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
+<tr class="memdesc:gabe470d5bb1373c59c51470fd20b55bcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on running thread pre-emption (Op)  <a href="#gabe470d5bb1373c59c51470fd20b55bcb">More...</a><br/></td></tr>
+<tr class="separator:gabe470d5bb1373c59c51470fd20b55bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae3bc50d5f154463c7f6647544bb5ecab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#gae3bc50d5f154463c7f6647544bb5ecab">EvrRtxThreadSwitched</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
+<tr class="memdesc:gae3bc50d5f154463c7f6647544bb5ecab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on running thread switch (Op)  <a href="#gae3bc50d5f154463c7f6647544bb5ecab">More...</a><br/></td></tr>
+<tr class="separator:gae3bc50d5f154463c7f6647544bb5ecab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa557f9732a8a2120f08cfb2694aa26fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#gaa557f9732a8a2120f08cfb2694aa26fb">EvrRtxThreadExit</a> (void)</td></tr>
 <tr class="memdesc:gaa557f9732a8a2120f08cfb2694aa26fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on thread exit (API)  <a href="#gaa557f9732a8a2120f08cfb2694aa26fb">More...</a><br/></td></tr>
 <tr class="separator:gaa557f9732a8a2120f08cfb2694aa26fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -342,7 +345,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga18fd5da10c8a5b39ad587ab610d9f51e"></a>
+<a class="anchor" id="gae2215445440bcb53b65a9b7181ecffa9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -350,14 +353,25 @@ Functions</h2></td></tr>
           <td class="memname">void EvrRtxThreadCreated </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a>&#160;</td>
-          <td class="paramname"><em>thread_id</em></td><td>)</td>
+          <td class="paramname"><em>thread_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>thread_addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">thread_id</td><td>thread ID obtained by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">thread_id</td><td>thread ID obtained by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">thread_addr</td><td>thread entry address.</td></tr>
   </table>
   </dd>
 </dl>
@@ -395,7 +409,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">thread_id</td><td>thread ID obtained by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>pointer to thread object name</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>pointer to thread object name.</td></tr>
   </table>
   </dd>
 </dl>
@@ -920,7 +934,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ThreadBlocked</b> is generated when the current running thread operation is blocked.</p>
+<p>The event <b>ThreadBlocked</b> is generated when the current running thread execution is blocked.</p>
 <p><b>Value</b> in the Event Recorder shows:</p>
 <ul>
 <li><b>thread_id</b> : thread ID.</li>
@@ -959,7 +973,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ThreadUnblocked</b> is generated when the delayed thread operation is unblocked.</p>
+<p>The event <b>ThreadUnblocked</b> is generated when the blocked thread execution is unblocked.</p>
 <p><b>Value</b> in the Event Recorder shows:</p>
 <ul>
 <li><b>thread_id</b> : thread ID.</li>
@@ -968,12 +982,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga2829dfe558a469d913f4eb0ccd6d29c6"></a>
+<a class="anchor" id="gabe470d5bb1373c59c51470fd20b55bcb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void EvrRtxThreadSwitch </td>
+          <td class="memname">void EvrRtxThreadPreempted </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a>&#160;</td>
           <td class="paramname"><em>thread_id</em></td><td>)</td>
@@ -987,7 +1001,34 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ThreadSwitch</b> is generated when the running thread switch is executed.</p>
+<p>The event <b>ThreadPreempted</b> is generated when current running thread execution is preempted.</p>
+<p><b>Value</b> in the Event Recorder shows:</p>
+<ul>
+<li><b>thread_id</b> : thread ID. </li>
+</ul>
+
+</div>
+</div>
+<a class="anchor" id="gae3bc50d5f154463c7f6647544bb5ecab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EvrRtxThreadSwitched </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a>&#160;</td>
+          <td class="paramname"><em>thread_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">thread_id</td><td>thread ID obtained by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The event <b>ThreadSwitched</b> is generated when current running thread execution switches.</p>
 <p><b>Value</b> in the Event Recorder shows:</p>
 <ul>
 <li><b>thread_id</b> : thread ID. </li>
@@ -1058,7 +1099,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ThreadDestroyed</b> is generated when the functions <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaddaa452dd7610e4096647a566d3556fc">osThreadExit</a> and <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a">osThreadTerminate</a> successfully terminate the thread.</p>
+<p>The event <b>ThreadDestroyed</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaddaa452dd7610e4096647a566d3556fc">osThreadExit</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a">osThreadTerminate</a> successfully terminates the thread.</p>
 <p><b>Value</b> in the Event Recorder shows:</p>
 <ul>
 <li><b>thread_id</b> : thread ID. </li>
@@ -1172,7 +1213,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ticks</td><td><a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">time ticks</a> value</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ticks</td><td><a class="el" href="theory_of_operation.html#CMSIS_RTOS_TimeOutValue">time ticks</a> value.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1199,7 +1240,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ticks</td><td>absolute time in ticks</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ticks</td><td>absolute time in ticks.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1233,7 +1274,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 19 2017 15:44:13 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 
