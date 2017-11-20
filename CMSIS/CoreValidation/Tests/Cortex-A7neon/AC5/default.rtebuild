@@ -4,8 +4,8 @@ config:
   default: FVP
   FVP:
     toolchain: ARMCC5
-    cflags: [ "--cpu=${cpu}", --apcs=/hardfp, --arm, -D__MICROLIB, --c99, -O0, -g, -c ]
-    asmflags: [ "--cpu=${cpu}", --apcs=/hardfp, --arm, -D__MICROLIB, --c99, -O0, -g, -c ]
-    linkflags: [ "--cpu=${cpu}", "--entry=Vectors", "--library_type=microlib" ]
+    cflags: [ "--cpu=${cpu}", --apcs=/hardfp, --arm, --c99, -O0, -g, -c ]
+    asmflags: [ "--cpu=${cpu}", --apcs=/hardfp, --arm, --c99, -O0, -g, -c ]
+    linkflags: [ "--cpu=${cpu}", "--entry=Vectors" ]
 include: 
  - ./
