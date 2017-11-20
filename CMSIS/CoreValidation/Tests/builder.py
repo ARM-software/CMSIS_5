@@ -122,7 +122,7 @@ def images(step, config):
   return images
 
 def storeResult(step, config, cmd):
-  result = format("{dev}/{cc}/result_{target}_{now}.xml", config['device'], config['compiler'], config['target'], now = datetime.now().strftime("%Y%m%d%H%M%S"))
+  result = format("result_{dev}_{cc}_{target}_{now}.xml", config['device'], config['compiler'], config['target'], now = datetime.now().strftime("%Y%m%d%H%M%S"))
   step.storeResult(cmd, result)
   
 def create():
