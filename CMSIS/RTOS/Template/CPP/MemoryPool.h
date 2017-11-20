@@ -54,7 +54,7 @@ private:
     osPoolId    _pool_id;
     osPoolDef_t _pool_def;
 #ifdef CMSIS_OS_RTX
-    uint32_t    _pool_m[3+((sizeof(T)+3)/4)*(pool_sz)];
+    uint32_t    _pool_m[OS_MEMORY_POOL_GET_ALIGNED_BLOCK_SIZE(sizeof(T))*(pool_sz)];
 #endif
 };
 

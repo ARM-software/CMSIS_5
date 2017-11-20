@@ -634,7 +634,11 @@ osStatus_t osSemaphoreDelete (osSemaphoreId_t semaphore_id);
  
  
 //  ==== Memory Pool Management Functions ====
- 
+
+// Macro to capture the knowledge of alignment requirements for block_size, so clients can use this macro
+// instead of replicating the alignment knowledge locally.
+#define          OS_MEMORY_POOL_GET_ALIGNED_BLOCK_SIZE(unaligned_block_size)    ( (unaligned_block_size + 3U) & ~3UL ) 
+
 /// Create and Initialize a Memory Pool object.
 /// \param[in]     block_count   maximum number of memory blocks in memory pool.
 /// \param[in]     block_size    memory block size in bytes.
