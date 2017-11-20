@@ -4,6 +4,7 @@ import os
 import shutil
 import sys
 
+from datetime import datetime
 from buildutils.builder import Device, Compiler, Axis, Step, BuildStep, RunModelStep, Builder, Filter
 
 TARGET_FVP = 'FVP'
@@ -31,8 +32,8 @@ FVP_MODELS = {
     Device.CA9NEON  : { 'cmd': "fvp_ve_cortex-a9x1.exe",          'args': { 'limit': "100000000", 'config': "config/ARMCA9neon_config.txt" } }
   }
 
-def format(str, dev, cc, target = "FVP"):
-  return str.format(dev = dev.value[0], cc = cc.value, target = target)
+def format(str, dev, cc, target = "FVP", **kwargs):
+  return str.format(dev = dev.value[0], cc = cc.value, target = target, **kwargs)
   
 def testProject(dev, cc, target):
   rtebuild = format("{dev}/{cc}/default.rtebuild", dev = dev, cc = cc, target=target)
@@ -119,6 +120,10 @@ def images(step, config):
   images += [ testProject(dev, cc, target)[1] ]
   
   return images
+
+def storeResult(step, config, cmd):
+  result = format("{dev}/{cc}/result_{target}_{now}.xml", config['device'], config['compiler'], config['target'], now = datetime.now().strftime("%Y%m%d%H%M%S"))
+  step.storeResult(cmd, result)
   
 def create():
   deviceAxis = Axis("device", abbrev="d", values=Device, desc="Device(s) to be considered.")
@@ -132,6 +137,7 @@ def create():
   runStep = RunModelStep("run", abbrev="r", desc="Run the selected configurations.")
   runStep.images = images
   runStep.model = lambda step, config: FVP_MODELS[config['device']]
+  runStep.post = storeResult
   
   filterAC5 = Filter().addAxis(compilerAxis, Compiler.AC5).addAxis(deviceAxis, "CM[23]3*")
   filterAC6LTM = Filter().addAxis(compilerAxis, Compiler.AC6LTM).addAxis(deviceAxis, "CM[23]3*").addAxis(deviceAxis, "CM0*")
