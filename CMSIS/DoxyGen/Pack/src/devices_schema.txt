@@ -1595,6 +1595,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.ambiqmicro.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Amiccom:147</td>
+    <td>Amiccom</td>
+    <td>http://www.amiccom.co.tw</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Analog Devices:1</td>
     <td>Analog Devices</td>
     <td>http://www.analog.com</td>
