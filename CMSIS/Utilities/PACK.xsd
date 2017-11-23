@@ -106,6 +106,7 @@
       <xs:enumeration value="Altera:85"/>
       <xs:enumeration value="Altium:65"/>
       <xs:enumeration value="Ambiq Micro:120"/>
+      <xs:enumeration value="Amiccom:147"/>
       <xs:enumeration value="Analog Devices:1"/>
       <xs:enumeration value="ARM:82"/>
       <xs:enumeration value="ARM CMSIS:109"/>
