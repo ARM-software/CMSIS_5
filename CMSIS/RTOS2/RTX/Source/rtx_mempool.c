@@ -240,20 +240,15 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
     } else {
       mp = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_memory_pool_t), 1U);
     }
-    if (mp == NULL) {
-      EvrRtxMemoryPoolError(NULL, (int32_t)osErrorNoMemory);
-      return NULL;
-    }
     flags = osRtxFlagSystemObject;
   } else {
     flags = 0U;
   }
 
   // Allocate data memory if not provided
-  if (mp_mem == NULL) {
+  if ((mp != NULL) && (mp_mem == NULL)) {
     mp_mem = osRtxMemoryAlloc(osRtxInfo.mem.mp_data, size, 0U);
     if (mp_mem == NULL) {
-      EvrRtxMemoryPoolError(NULL, (int32_t)osErrorNoMemory);
       if (flags & osRtxFlagSystemObject) {
         if (osRtxInfo.mpi.memory_pool != NULL) {
           osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
@@ -261,24 +256,29 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
           osRtxMemoryFree(osRtxInfo.mem.common, mp);
         }
       }
-      return NULL;
+      mp = NULL;
+    } else {
+      memset(mp_mem, 0, size);
     }
-    memset(mp_mem, 0, size);
     flags |= osRtxFlagSystemMemory;
   }
 
-  // Initialize control block
-  mp->id          = osRtxIdMemoryPool;
-  mp->state       = osRtxObjectActive;
-  mp->flags       = flags;
-  mp->name        = name;
-  mp->thread_list = NULL;
-  osRtxMemoryPoolInit(&mp->mp_info, block_count, block_size, mp_mem);
+  if (mp != NULL) {
+    // Initialize control block
+    mp->id          = osRtxIdMemoryPool;
+    mp->state       = osRtxObjectActive;
+    mp->flags       = flags;
+    mp->name        = name;
+    mp->thread_list = NULL;
+    osRtxMemoryPoolInit(&mp->mp_info, block_count, block_size, mp_mem);
 
-  // Register post ISR processing function
-  osRtxInfo.post_process.memory_pool = osRtxMemoryPoolPostProcess;
+    // Register post ISR processing function
+    osRtxInfo.post_process.memory_pool = osRtxMemoryPoolPostProcess;
 
-  EvrRtxMemoryPoolCreated(mp, mp->name);
+    EvrRtxMemoryPoolCreated(mp, mp->name);
+  } else {
+    EvrRtxMemoryPoolError(NULL, (int32_t)osErrorNoMemory);
+  }
 
   return mp;
 }
@@ -325,18 +325,21 @@ void *svcRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
 
   // Allocate memory
   block = osRtxMemoryPoolAlloc(&mp->mp_info);
-  if (block == NULL) {
+  if (block != NULL) {
+    EvrRtxMemoryPoolAllocated(mp, block);
+  } else {
     // No memory available
     if (timeout != 0U) {
       EvrRtxMemoryPoolAllocPending(mp, timeout);
       // Suspend current Thread
-      osRtxThreadListPut((os_object_t*)mp, osRtxThreadGetRunning());
-      osRtxThreadWaitEnter(osRtxThreadWaitingMemoryPool, timeout);
+      if (osRtxThreadWaitEnter(osRtxThreadWaitingMemoryPool, timeout)) {
+        osRtxThreadListPut((os_object_t*)mp, osRtxThreadGetRunning());
+      } else {
+        EvrRtxMemoryPoolAllocTimeout(mp);
+      }
     } else {
       EvrRtxMemoryPoolAllocFailed(mp);
     }
-  } else {
-    EvrRtxMemoryPoolAllocated(mp, block);
   }
 
   return block;

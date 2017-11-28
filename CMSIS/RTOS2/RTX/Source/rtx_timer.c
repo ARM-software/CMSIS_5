@@ -171,29 +171,29 @@ osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argume
     } else {
       timer = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_timer_t), 1U);
     }
-    if (timer == NULL) {
-      EvrRtxTimerError(NULL, (int32_t)osErrorNoMemory);
-      return NULL;
-    }
     flags = osRtxFlagSystemObject;
   } else {
     flags = 0U;
   }
 
-  // Initialize control block
-  timer->id        = osRtxIdTimer;
-  timer->state     = osRtxTimerStopped;
-  timer->flags     = flags;
-  timer->type      = (uint8_t)type;
-  timer->name      = name;
-  timer->prev      = NULL;
-  timer->next      = NULL;
-  timer->tick      = 0U;
-  timer->load      = 0U;
-  timer->finfo.fp  = (void *)func;
-  timer->finfo.arg = argument;
+  if (timer != NULL) {
+    // Initialize control block
+    timer->id         = osRtxIdTimer;
+    timer->state      = osRtxTimerStopped;
+    timer->flags      = flags;
+    timer->type       = (uint8_t)type;
+    timer->name       = name;
+    timer->prev       = NULL;
+    timer->next       = NULL;
+    timer->tick       = 0U;
+    timer->load       = 0U;
+    timer->finfo.fp   = (void *)func;
+    timer->finfo.arg  = argument;
 
-  EvrRtxTimerCreated(timer, timer->name);
+    EvrRtxTimerCreated(timer, timer->name);
+  } else {
+    EvrRtxTimerError(NULL, (int32_t)osErrorNoMemory);
+  }
 
   return timer;
 }
@@ -232,22 +232,20 @@ osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
   }
 
   // Check object state
-  switch (timer->state) {
-    case osRtxTimerStopped:
-      if (osRtxInfo.timer.tick == NULL) {
-        EvrRtxTimerError(timer, (int32_t)osErrorResource);
-        return osErrorResource;
-      }
-      timer->state = osRtxTimerRunning;
-      timer->load  = ticks;
-      break;
-    case osRtxTimerRunning:
-      TimerRemove(timer);
-      break;
-    case osRtxTimerInactive:
-    default:
+  if (timer->state == osRtxTimerInactive) {
+    EvrRtxTimerError(timer, (int32_t)osErrorResource);
+    return osErrorResource;
+  }
+  if (timer->state == osRtxTimerRunning) {
+    TimerRemove(timer);
+  } else {
+    if (osRtxInfo.timer.tick == NULL) {
       EvrRtxTimerError(timer, (int32_t)osErrorResource);
       return osErrorResource;
+    } else {
+      timer->state = osRtxTimerRunning;
+      timer->load  = ticks;
+    }
   }
 
   TimerInsert(timer, ticks);
@@ -287,6 +285,7 @@ osStatus_t svcRtxTimerStop (osTimerId_t timer_id) {
 /// \note API identical to osTimerIsRunning
 uint32_t svcRtxTimerIsRunning (osTimerId_t timer_id) {
   os_timer_t *timer = (os_timer_t *)timer_id;
+  uint32_t    is_running;
 
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
@@ -297,11 +296,13 @@ uint32_t svcRtxTimerIsRunning (osTimerId_t timer_id) {
   // Check object state
   if (timer->state == osRtxTimerRunning) {
     EvrRtxTimerIsRunning(timer, 1U);
-    return 1U;
+    is_running = 1U;
+  } else {
+    EvrRtxTimerIsRunning(timer, 0U);
+    is_running = 0;
   }
 
-  EvrRtxTimerIsRunning(timer, 0U);
-  return 0U;
+  return is_running;
 }
 
 /// Delete a timer.
@@ -316,16 +317,12 @@ osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
   }
 
   // Check object state
-  switch (timer->state) {
-    case osRtxTimerStopped:
-      break;
-    case osRtxTimerRunning:
-      TimerRemove(timer);
-      break;
-    case osRtxTimerInactive:
-    default:
-      EvrRtxTimerError(timer, (int32_t)osErrorResource);
-      return osErrorResource;
+  if (timer->state == osRtxTimerInactive) {
+    EvrRtxTimerError(timer, (int32_t)osErrorResource);
+    return osErrorResource;
+  }
+  if (timer->state == osRtxTimerRunning) {
+    TimerRemove(timer);
   }
 
   // Mark object as inactive

@@ -190,27 +190,27 @@ osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
     } else {
       ef = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_event_flags_t), 1U);
     }
-    if (ef == NULL) {
-      EvrRtxEventFlagsError(NULL, (int32_t)osErrorNoMemory);
-      return NULL;
-    }
     flags = osRtxFlagSystemObject;
   } else {
     flags = 0U;
   }
 
-  // Initialize control block
-  ef->id          = osRtxIdEventFlags;
-  ef->state       = osRtxObjectActive;
-  ef->flags       = flags;
-  ef->name        = name;
-  ef->thread_list = NULL;
-  ef->event_flags = 0U;
+  if (ef != NULL) {
+    // Initialize control block
+    ef->id          = osRtxIdEventFlags;
+    ef->state       = osRtxObjectActive;
+    ef->flags       = flags;
+    ef->name        = name;
+    ef->thread_list = NULL;
+    ef->event_flags = 0U;
 
-  // Register post ISR processing function
-  osRtxInfo.post_process.event_flags = osRtxEventFlagsPostProcess;
+    // Register post ISR processing function
+    osRtxInfo.post_process.event_flags = osRtxEventFlagsPostProcess;
 
-  EvrRtxEventFlagsCreated(ef, ef->name);
+    EvrRtxEventFlagsCreated(ef, ef->name);
+  } else {
+    EvrRtxEventFlagsError(NULL, (int32_t)osErrorNoMemory);
+  }
 
   return ef;
 }
@@ -366,24 +366,27 @@ uint32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
   event_flags = EventFlagsCheck(ef, flags, options);
   if (event_flags != 0U) {
     EvrRtxEventFlagsWaitCompleted(ef, flags, options, event_flags);
-    return event_flags;
+  } else {
+    // Check if timeout is specified
+    if (timeout != 0U) {
+      EvrRtxEventFlagsWaitPending(ef, flags, options, timeout);
+      // Store waiting flags and options
+      running_thread->wait_flags = flags;
+      running_thread->flags_options = (uint8_t)options;
+      // Suspend current Thread
+      if (osRtxThreadWaitEnter(osRtxThreadWaitingEventFlags, timeout)) {
+        osRtxThreadListPut((os_object_t*)ef, running_thread, running_thread);
+      } else {
+        EvrRtxEventFlagsWaitTimeout(ef);
+      }
+      event_flags = (uint32_t)osErrorTimeout;
+    } else {
+      EvrRtxEventFlagsWaitNotCompleted(ef, flags, options);
+      event_flags = (uint32_t)osErrorResource;
+    }
   }
 
-  // Check if timeout is specified
-  if (timeout != 0U) {
-    EvrRtxEventFlagsWaitPending(ef, flags, options, timeout);
-    // Store waiting flags and options
-    running_thread->wait_flags = flags;
-    running_thread->flags_options = (uint8_t)options;
-    // Suspend current Thread
-    osRtxThreadListPut((os_object_t*)ef, running_thread);
-    osRtxThreadWaitEnter(osRtxThreadWaitingEventFlags, timeout);
-    return ((uint32_t)osErrorTimeout);
-  }
-
-  EvrRtxEventFlagsWaitNotCompleted(ef, flags, options);
-
-  return ((uint32_t)osErrorResource);
+  return event_flags;
 }
 
 /// Delete an Event Flags object.
@@ -497,12 +500,12 @@ uint32_t isrRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
   event_flags = EventFlagsCheck(ef, flags, options);
   if (event_flags != 0U) {
     EvrRtxEventFlagsWaitCompleted(ef, flags, options, event_flags);
-    return ((uint32_t)event_flags);
+  } else {
+    EvrRtxEventFlagsWaitNotCompleted(ef, flags, options);
+    event_flags = (uint32_t)osErrorResource;
   }
 
-  EvrRtxEventFlagsWaitNotCompleted(ef, flags, options);
-
-  return ((uint32_t)osErrorResource);
+  return event_flags;
 }
 
 

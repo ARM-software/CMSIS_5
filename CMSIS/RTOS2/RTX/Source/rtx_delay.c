@@ -32,11 +32,11 @@
 /// \note API identical to osDelay
 osStatus_t svcRtxDelay (uint32_t ticks) {
 
-  if (ticks == 0U) {
-    return osOK;
+  if (ticks != 0U) {
+    if (!osRtxThreadWaitEnter(osRtxThreadWaitingDelay, ticks)) {
+      EvrRtxThreadDelayCompleted();
+    }
   }
-
-  osRtxThreadWaitEnter(osRtxThreadWaitingDelay, ticks);
 
   return osOK;
 }
@@ -50,11 +50,12 @@ osStatus_t svcRtxDelayUntil (uint32_t ticks) {
     EvrRtxThreadError(NULL, (int32_t)osErrorParameter);
     return osErrorParameter;
   }
-  if (ticks == 0U) {
-    return osOK;
-  }
 
-  osRtxThreadWaitEnter(osRtxThreadWaitingDelay, ticks);
+  if (ticks != 0U) {
+    if (!osRtxThreadWaitEnter(osRtxThreadWaitingDelay, ticks)) {
+      EvrRtxThreadDelayCompleted();
+    }
+  }
 
   return osOK;
 }

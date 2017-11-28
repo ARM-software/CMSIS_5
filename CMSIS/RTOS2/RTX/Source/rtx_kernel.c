@@ -283,61 +283,80 @@ osStatus_t svcRtxKernelStart (void) {
 /// Lock the RTOS Kernel scheduler.
 /// \note API identical to osKernelLock
 int32_t svcRtxKernelLock (void) {
+  int32_t lock;
 
-  if (osRtxInfo.kernel.state == osRtxKernelLocked) {
-    EvrRtxKernelLocked(1);
-    return 1;
+  switch (osRtxInfo.kernel.state) {
+    case osRtxKernelRunning:
+      osRtxInfo.kernel.state = osRtxKernelLocked;
+      EvrRtxKernelLocked(0);
+      lock = 0;
+      break;
+    case osRtxKernelLocked:
+      EvrRtxKernelLocked(1);
+      lock = 1;
+      break;
+    default:
+      EvrRtxKernelError((int32_t)osError);
+      lock = (int32_t)osError;
+      break;
   }
-  if (osRtxInfo.kernel.state == osRtxKernelRunning) {
-    osRtxInfo.kernel.state = osRtxKernelLocked;
-    EvrRtxKernelLocked(0);
-    return 0;
-  }
-
-  EvrRtxKernelError((int32_t)osError);
-  return osError;
+  return lock;
 }
  
 /// Unlock the RTOS Kernel scheduler.
 /// \note API identical to osKernelUnlock
 int32_t svcRtxKernelUnlock (void) {
+  int32_t lock;
 
-  if (osRtxInfo.kernel.state == osRtxKernelLocked) {
-    osRtxInfo.kernel.state = osRtxKernelRunning;
-    EvrRtxKernelUnlocked(1);
-    return 1;
+  switch (osRtxInfo.kernel.state) {
+    case osRtxKernelRunning:
+      EvrRtxKernelUnlocked(0);
+      lock = 0;
+      break;
+    case osRtxKernelLocked:
+      osRtxInfo.kernel.state = osRtxKernelRunning;
+      EvrRtxKernelUnlocked(1);
+      lock = 1;
+      break;
+    default:
+      EvrRtxKernelError((int32_t)osError);
+      lock = (int32_t)osError;
+      break;
   }
-  if (osRtxInfo.kernel.state == osRtxKernelRunning) {
-    EvrRtxKernelUnlocked(0);
-    return 0;
-  }
-
-  EvrRtxKernelError((int32_t)osError);
-  return osError;
+  return lock;
 }
 
 /// Restore the RTOS Kernel scheduler lock state.
 /// \note API identical to osKernelRestoreLock
 int32_t svcRtxKernelRestoreLock (int32_t lock) {
+  int32_t lock_new;
 
-  if ((osRtxInfo.kernel.state == osRtxKernelRunning) || 
-      (osRtxInfo.kernel.state == osRtxKernelLocked)) {
-    switch (lock) {
-      case 1:
-        osRtxInfo.kernel.state = osRtxKernelLocked;
-        EvrRtxKernelLockRestored(1);
-        return 1;
-      case 0:
-        osRtxInfo.kernel.state = osRtxKernelRunning;
-        EvrRtxKernelLockRestored(0);
-        return 0;
-      default:
-        break;
-    }
+  switch (osRtxInfo.kernel.state) {
+    case osRtxKernelRunning:
+    case osRtxKernelLocked:
+      switch (lock) {
+        case 0:
+          osRtxInfo.kernel.state = osRtxKernelRunning;
+          EvrRtxKernelLockRestored(0);
+          lock_new = 0;
+          break;
+        case 1:
+          osRtxInfo.kernel.state = osRtxKernelLocked;
+          EvrRtxKernelLockRestored(1);
+          lock_new = 1;
+          break;
+        default:
+          EvrRtxKernelError((int32_t)osError);
+          lock_new = (int32_t)osError;
+          break;
+      }
+      break;
+    default:
+      EvrRtxKernelError((int32_t)osError);
+      lock_new = (int32_t)osError;
+      break;
   }
-
-  EvrRtxKernelError((int32_t)osError);
-  return osError;
+  return lock_new;
 }
 
 /// Suspend the RTOS Kernel scheduler.

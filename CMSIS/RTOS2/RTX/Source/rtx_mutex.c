@@ -101,28 +101,28 @@ osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
     } else {
       mutex = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_mutex_t), 1U);
     }
-    if (mutex == NULL) {
-      EvrRtxMutexError(NULL, (int32_t)osErrorNoMemory);
-      return NULL;
-    }
     flags = osRtxFlagSystemObject;
   } else {
     flags = 0U;
   }
 
-  // Initialize control block
-  mutex->id           = osRtxIdMutex;
-  mutex->state        = osRtxObjectActive;
-  mutex->flags        = flags;
-  mutex->attr         = (uint8_t)attr_bits;
-  mutex->name         = name;
-  mutex->thread_list  = NULL;
-  mutex->owner_thread = NULL;
-  mutex->owner_prev   = NULL;
-  mutex->owner_next   = NULL;
-  mutex->lock         = 0U;
+  if (mutex != NULL) {
+    // Initialize control block
+    mutex->id           = osRtxIdMutex;
+    mutex->state        = osRtxObjectActive;
+    mutex->flags        = flags;
+    mutex->attr         = (uint8_t)attr_bits;
+    mutex->name         = name;
+    mutex->thread_list  = NULL;
+    mutex->owner_thread = NULL;
+    mutex->owner_prev   = NULL;
+    mutex->owner_next   = NULL;
+    mutex->lock         = 0U;
 
-  EvrRtxMutexCreated(mutex, mutex->name);
+    EvrRtxMutexCreated(mutex, mutex->name);
+  } else {
+    EvrRtxMutexError(NULL, (int32_t)osErrorNoMemory);
+  }
 
   return mutex;
 }
@@ -154,6 +154,7 @@ const char *svcRtxMutexGetName (osMutexId_t mutex_id) {
 osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
   os_mutex_t  *mutex = (os_mutex_t *)mutex_id;
   os_thread_t *runnig_thread;
+  osStatus_t   status;
 
   // Check running thread
   runnig_thread = osRtxThreadGetRunning();
@@ -186,42 +187,47 @@ osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
     runnig_thread->mutex_list = mutex;
     mutex->lock = 1U;
     EvrRtxMutexAcquired(mutex, mutex->lock);
-    return osOK;
-  }
+    status = osOK;
+  } else {
 
-  // Check if Mutex is recursive and running Thread is the owner
-  if ((mutex->attr & osMutexRecursive) && (mutex->owner_thread == runnig_thread)) {
-    // Increment lock counter
-    if (mutex->lock == osRtxMutexLockLimit) {
-      EvrRtxMutexError(mutex, osRtxErrorMutexLockLimit);
-      return osErrorResource;
-    }
-    mutex->lock++;
-    EvrRtxMutexAcquired(mutex, mutex->lock);
-    return osOK;
-  }
-
-  // Check if timeout is specified
-  if (timeout != 0U) {
-    // Check if Priority inheritance protocol is enabled
-    if (mutex->attr & osMutexPrioInherit) {
-      // Raise priority of owner Thread if lower than priority of running Thread
-      if (mutex->owner_thread->priority < runnig_thread->priority) {
-        mutex->owner_thread->priority = runnig_thread->priority;
-        osRtxThreadListSort(mutex->owner_thread);
+    // Check if Mutex is recursive and running Thread is the owner
+    if ((mutex->attr & osMutexRecursive) && (mutex->owner_thread == runnig_thread)) {
+      // Try to increment lock counter
+      if (mutex->lock == osRtxMutexLockLimit) {
+        EvrRtxMutexError(mutex, osRtxErrorMutexLockLimit);
+        status = osErrorResource;
+      } else {
+        mutex->lock++;
+        EvrRtxMutexAcquired(mutex, mutex->lock);
+        status = osOK;
+      }
+    } else {
+      // Check if timeout is specified
+      if (timeout != 0U) {
+        // Check if Priority inheritance protocol is enabled
+        if (mutex->attr & osMutexPrioInherit) {
+          // Raise priority of owner Thread if lower than priority of running Thread
+          if (mutex->owner_thread->priority < runnig_thread->priority) {
+            mutex->owner_thread->priority = runnig_thread->priority;
+            osRtxThreadListSort(mutex->owner_thread);
+          }
+        }
+        EvrRtxMutexAcquirePending(mutex, timeout);
+        // Suspend current Thread
+        if (osRtxThreadWaitEnter(osRtxThreadWaitingMutex, timeout)) {
+          osRtxThreadListPut((os_object_t*)mutex, runnig_thread);
+        } else {
+          EvrRtxMutexAcquireTimeout(mutex);
+        }
+        status = osErrorTimeout;
+      } else {
+        EvrRtxMutexNotAcquired(mutex);
+        status = osErrorResource;
       }
     }
-    EvrRtxMutexAcquirePending(mutex, timeout);
-    // Suspend current Thread
-    osRtxThreadListPut((os_object_t*)mutex, runnig_thread);
-    osRtxThreadWaitEnter(osRtxThreadWaitingMutex, timeout);
-    return osErrorTimeout;
   }
 
-  // Mutex was not acquired
-  EvrRtxMutexNotAcquired(mutex);
-
-  return osErrorResource;
+  return status;
 }
 
 /// Release a Mutex that was acquired by osMutexAcquire.
@@ -269,50 +275,49 @@ osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
   EvrRtxMutexReleased(mutex, mutex->lock);
 
   // Check Lock counter
-  if (mutex->lock != 0U) {
-    return osOK;
-  }
+  if (mutex->lock == 0U) {
 
-  // Remove Mutex from Thread owner list
-  if (mutex->owner_next != NULL) {
-    mutex->owner_next->owner_prev = mutex->owner_prev;
-  }
-  if (mutex->owner_prev != NULL) {
-    mutex->owner_prev->owner_next = mutex->owner_next;
-  } else {
-    runnig_thread->mutex_list = mutex->owner_next;
-  }
-
-  // Restore running Thread priority
-  if (mutex->attr & osMutexPrioInherit) {
-    priority = runnig_thread->priority_base;
-    mutex0   = runnig_thread->mutex_list;
-    while (mutex0) {
-      // Mutexes owned by running Thread
-      if ((mutex0->thread_list != NULL) && (mutex0->thread_list->priority > priority)) {
-        // Higher priority Thread is waiting for Mutex
-        priority = mutex0->thread_list->priority;
-      }
-      mutex0 = mutex0->owner_next;
+    // Remove Mutex from Thread owner list
+    if (mutex->owner_next != NULL) {
+      mutex->owner_next->owner_prev = mutex->owner_prev;
     }
-    runnig_thread->priority = priority;
-  }
+    if (mutex->owner_prev != NULL) {
+      mutex->owner_prev->owner_next = mutex->owner_next;
+    } else {
+      runnig_thread->mutex_list = mutex->owner_next;
+    }
 
-  // Check if Thread is waiting for a Mutex
-  if (mutex->thread_list != NULL) {
-    // Wakeup waiting Thread with highest Priority
-    thread = osRtxThreadListGet((os_object_t*)mutex);
-    osRtxThreadWaitExit(thread, (uint32_t)osOK, false);
-    // Thread is the new Mutex owner
-    mutex->owner_thread = thread;
-    mutex->owner_next   = thread->mutex_list;
-    mutex->owner_prev   = NULL;
-    thread->mutex_list  = mutex;
-    mutex->lock = 1U;
-    EvrRtxMutexAcquired(mutex, 1U);
-  }
+    // Restore running Thread priority
+    if (mutex->attr & osMutexPrioInherit) {
+      priority = runnig_thread->priority_base;
+      mutex0   = runnig_thread->mutex_list;
+      while (mutex0) {
+        // Mutexes owned by running Thread
+        if ((mutex0->thread_list != NULL) && (mutex0->thread_list->priority > priority)) {
+          // Higher priority Thread is waiting for Mutex
+          priority = mutex0->thread_list->priority;
+        }
+        mutex0 = mutex0->owner_next;
+      }
+      runnig_thread->priority = priority;
+    }
 
-  osRtxThreadDispatch(NULL);
+    // Check if Thread is waiting for a Mutex
+    if (mutex->thread_list != NULL) {
+      // Wakeup waiting Thread with highest Priority
+      thread = osRtxThreadListGet((os_object_t*)mutex);
+      osRtxThreadWaitExit(thread, (uint32_t)osOK, false);
+      // Thread is the new Mutex owner
+      mutex->owner_thread = thread;
+      mutex->owner_next   = thread->mutex_list;
+      mutex->owner_prev   = NULL;
+      thread->mutex_list  = mutex;
+      mutex->lock = 1U;
+      EvrRtxMutexAcquired(mutex, 1U);
+    }
+
+    osRtxThreadDispatch(NULL);
+  }
 
   return osOK;
 }
