@@ -510,68 +510,92 @@ uint32_t isrRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
 
 /// Create and Initialize an Event Flags object.
 osEventFlagsId_t osEventFlagsNew (const osEventFlagsAttr_t *attr) {
+  osEventFlagsId_t ef_id;
+
   EvrRtxEventFlagsNew(attr);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxEventFlagsError(NULL, (int32_t)osErrorISR);
-    return NULL;
+    ef_id = NULL;
+  } else {
+    ef_id = __svcEventFlagsNew(attr);
   }
-  return __svcEventFlagsNew(attr);
+  return ef_id;
 }
 
 /// Get name of an Event Flags object.
 const char *osEventFlagsGetName (osEventFlagsId_t ef_id) {
+  const char *name;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxEventFlagsGetName(ef_id, NULL);
-    return NULL;
+    name = NULL;
+  } else {
+    name = __svcEventFlagsGetName(ef_id);
   }
-  return __svcEventFlagsGetName(ef_id);
+  return name;
 }
 
 /// Set the specified Event Flags.
 uint32_t osEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
+  uint32_t event_flags;
+
   EvrRtxEventFlagsSet(ef_id, flags);
   if (IsIrqMode() || IsIrqMasked()) {
-    return isrRtxEventFlagsSet(ef_id, flags);
+    event_flags = isrRtxEventFlagsSet(ef_id, flags);
   } else {
-    return  __svcEventFlagsSet(ef_id, flags);
+    event_flags =  __svcEventFlagsSet(ef_id, flags);
   }
+  return event_flags;
 }
 
 /// Clear the specified Event Flags.
 uint32_t osEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
+  uint32_t event_flags;
+
   EvrRtxEventFlagsClear(ef_id, flags);
   if (IsIrqMode() || IsIrqMasked()) {
-    return svcRtxEventFlagsClear(ef_id, flags);
+    event_flags = svcRtxEventFlagsClear(ef_id, flags);
   } else {
-    return  __svcEventFlagsClear(ef_id, flags);
+    event_flags =  __svcEventFlagsClear(ef_id, flags);
   }
+  return event_flags;
 }
 
 /// Get the current Event Flags.
 uint32_t osEventFlagsGet (osEventFlagsId_t ef_id) {
+  uint32_t event_flags;
+
   if (IsIrqMode() || IsIrqMasked()) {
-    return svcRtxEventFlagsGet(ef_id);
+    event_flags = svcRtxEventFlagsGet(ef_id);
   } else {
-    return  __svcEventFlagsGet(ef_id);
+    event_flags =  __svcEventFlagsGet(ef_id);
   }
+  return event_flags;
 }
 
 /// Wait for one or more Event Flags to become signaled.
 uint32_t osEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout) {
+  uint32_t event_flags;
+
   EvrRtxEventFlagsWait(ef_id, flags, options, timeout);
   if (IsIrqMode() || IsIrqMasked()) {
-    return isrRtxEventFlagsWait(ef_id, flags, options, timeout);
+    event_flags = isrRtxEventFlagsWait(ef_id, flags, options, timeout);
   } else {
-    return  __svcEventFlagsWait(ef_id, flags, options, timeout);
+    event_flags =  __svcEventFlagsWait(ef_id, flags, options, timeout);
   }
+  return event_flags;
 }
 
 /// Delete an Event Flags object.
 osStatus_t osEventFlagsDelete (osEventFlagsId_t ef_id) {
+  osStatus_t status;
+
   EvrRtxEventFlagsDelete(ef_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxEventFlagsError(ef_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcEventFlagsDelete(ef_id);
   }
-  return __svcEventFlagsDelete(ef_id);
+  return status;
 }

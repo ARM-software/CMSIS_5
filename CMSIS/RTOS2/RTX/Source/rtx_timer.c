@@ -358,58 +358,82 @@ SVC0_1(TimerDelete,    osStatus_t,   osTimerId_t)
 
 /// Create and Initialize a timer.
 osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr) {
+  osTimerId_t timer_id;
+
   EvrRtxTimerNew(func, type, argument, attr);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxTimerError(NULL, (int32_t)osErrorISR);
-    return NULL;
+    timer_id = NULL;
+  } else {
+    timer_id = __svcTimerNew(func, type, argument, attr);
   }
-  return __svcTimerNew(func, type, argument, attr);
+  return timer_id;
 }
 
 /// Get name of a timer.
 const char *osTimerGetName (osTimerId_t timer_id) {
+  const char *name;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxTimerGetName(timer_id, NULL);
-    return NULL;
+    name = NULL;
+  } else {
+    name = __svcTimerGetName(timer_id);
   }
-  return __svcTimerGetName(timer_id);
+  return name;
 }
 
 /// Start or restart a timer.
 osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t ticks) {
+  osStatus_t status;
+
   EvrRtxTimerStart(timer_id, ticks);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxTimerError(timer_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcTimerStart(timer_id, ticks);
   }
-  return __svcTimerStart(timer_id, ticks);
+  return status;
 }
 
 /// Stop a timer.
 osStatus_t osTimerStop (osTimerId_t timer_id) {
+  osStatus_t status;
+
   EvrRtxTimerStop(timer_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxTimerError(timer_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcTimerStop(timer_id);
   }
-  return __svcTimerStop(timer_id);
+  return status;
 }
 
 /// Check if a timer is running.
 uint32_t osTimerIsRunning (osTimerId_t timer_id) {
+  uint32_t is_running;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxTimerIsRunning(timer_id, 0U);
-    return 0U;
+    is_running = 0U;
+  } else {
+    is_running = __svcTimerIsRunning(timer_id);
   }
-  return __svcTimerIsRunning(timer_id);
+  return is_running;
 }
 
 /// Delete a timer.
 osStatus_t osTimerDelete (osTimerId_t timer_id) {
+  osStatus_t status;
+
   EvrRtxTimerDelete(timer_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxTimerError(timer_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcTimerDelete(timer_id);
   }
-  return __svcTimerDelete(timer_id);
+  return status;
 }

@@ -439,58 +439,82 @@ SVC0_1(MutexDelete,   osStatus_t,   osMutexId_t)
 
 /// Create and Initialize a Mutex object.
 osMutexId_t osMutexNew (const osMutexAttr_t *attr) {
+  osMutexId_t mutex_id;
+
   EvrRtxMutexNew(attr);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMutexError(NULL, (int32_t)osErrorISR);
-    return NULL;
+    mutex_id = NULL;
+  } else {
+    mutex_id = __svcMutexNew(attr);
   }
-  return __svcMutexNew(attr);
+  return mutex_id;
 }
 
 /// Get name of a Mutex object.
 const char *osMutexGetName (osMutexId_t mutex_id) {
+  const char *name;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMutexGetName(mutex_id, NULL);
-    return NULL;
+    name = NULL;
+  } else {
+    name = __svcMutexGetName(mutex_id);
   }
-  return __svcMutexGetName(mutex_id);
+  return name;
 }
 
 /// Acquire a Mutex or timeout if it is locked.
 osStatus_t osMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
+  osStatus_t status;
+
   EvrRtxMutexAcquire(mutex_id, timeout);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMutexError(mutex_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcMutexAcquire(mutex_id, timeout);
   }
-  return __svcMutexAcquire(mutex_id, timeout);
+  return status;
 }
 
 /// Release a Mutex that was acquired by \ref osMutexAcquire.
 osStatus_t osMutexRelease (osMutexId_t mutex_id) {
+  osStatus_t status;
+
   EvrRtxMutexRelease(mutex_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMutexError(mutex_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcMutexRelease(mutex_id);
   }
-  return __svcMutexRelease(mutex_id);
+  return status;
 }
 
 /// Get Thread which owns a Mutex object.
 osThreadId_t osMutexGetOwner (osMutexId_t mutex_id) {
+  osThreadId_t thread;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMutexGetOwner(mutex_id, NULL);
-    return NULL;
+    thread = NULL;
+  } else {
+    thread = __svcMutexGetOwner(mutex_id);
   }
-  return __svcMutexGetOwner(mutex_id);
+  return thread;
 }
 
 /// Delete a Mutex object.
 osStatus_t osMutexDelete (osMutexId_t mutex_id) {
+  osStatus_t status;
+
   EvrRtxMutexDelete(mutex_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMutexError(mutex_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcMutexDelete(mutex_id);
   }
-  return __svcMutexDelete(mutex_id);
+  return status;
 }

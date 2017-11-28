@@ -566,12 +566,9 @@ static uint32_t os_kernel_is_active (void) {
   if (os_kernel_active == 0U) {
     if (osKernelGetState() > osKernelReady) {
       os_kernel_active = 1U;
-      return 1U;
     }
-    return 0U;
-  } else {
-    return 1U;
   }
+  return (uint32_t)os_kernel_active;
 }
 
 // Provide libspace for current thread
@@ -580,23 +577,21 @@ void *__user_perthread_libspace (void) {
   osThreadId_t id;
   uint32_t     n;
 
-  if (!os_kernel_is_active()) {
-    return (void *)&os_libspace[OS_THREAD_LIBSPACE_NUM][0];
-  }
-
-  id = osThreadGetId();
-  for (n = 0U; n < OS_THREAD_LIBSPACE_NUM; n++) {
-    if (os_libspace_id[n] == NULL) {
-      os_libspace_id[n] = id;
-      return (void *)&os_libspace[n][0];
+  if (os_kernel_is_active() != 0U) {
+    id = osThreadGetId();
+    for (n = 0U; n < (uint32_t)OS_THREAD_LIBSPACE_NUM; n++) {
+      if (os_libspace_id[n] == NULL) {
+        os_libspace_id[n] = id;
+      }
+      if (os_libspace_id[n] == id) {
+        break;
+      }
     }
-    if (os_libspace_id[n] == id) {
-      return (void *)&os_libspace[n][0];
+    if (n == (uint32_t)OS_THREAD_LIBSPACE_NUM) {
+      osRtxErrorNotify(osRtxErrorClibSpace, id);
     }
-  }
-
-  if (n == OS_THREAD_LIBSPACE_NUM) {
-    osRtxErrorNotify(osRtxErrorClibSpace, id);
+  } else {
+    n = OS_THREAD_LIBSPACE_NUM;
   }
 
   return (void *)&os_libspace[n][0];
@@ -609,12 +604,16 @@ typedef void *mutex;
 __USED
 int _mutex_initialize(mutex *m);
 int _mutex_initialize(mutex *m) {
+  int result;
+
   *m = osMutexNew(NULL);
-  if (*m == NULL) {
+  if (*m != NULL) {
+    result = 1;
+  } else {
+    result = 0;
     osRtxErrorNotify(osRtxErrorClibMutex, m);
-    return 0;
   }
-  return 1;
+  return result;
 }
 
 // Acquire mutex

@@ -68,20 +68,28 @@ SVC0_1(DelayUntil, osStatus_t, uint32_t)
 
 /// Wait for Timeout (Time Delay).
 osStatus_t osDelay (uint32_t ticks) {
+  osStatus_t status;
+
   EvrRtxThreadDelay(ticks);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(NULL, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcDelay(ticks);
   }
-  return __svcDelay(ticks);
+  return status;
 }
 
 /// Wait until specified time.
 osStatus_t osDelayUntil (uint32_t ticks) {
+  osStatus_t status;
+
   EvrRtxThreadDelayUntil(ticks);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(NULL, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcDelayUntil(ticks);
   }
-  return __svcDelayUntil(ticks);
+  return status;
 }

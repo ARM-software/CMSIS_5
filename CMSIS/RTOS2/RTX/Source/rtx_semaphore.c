@@ -427,58 +427,79 @@ osStatus_t isrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 
 /// Create and Initialize a Semaphore object.
 osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr) {
+  osSemaphoreId_t semaphore_id;
+
   EvrRtxSemaphoreNew(max_count, initial_count, attr);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxSemaphoreError(NULL, (int32_t)osErrorISR);
-    return NULL;
+    semaphore_id = NULL;
+  } else {
+    semaphore_id = __svcSemaphoreNew(max_count, initial_count, attr);
   }
-  return __svcSemaphoreNew(max_count, initial_count, attr);
+  return semaphore_id;
 }
 
 /// Get name of a Semaphore object.
 const char *osSemaphoreGetName (osSemaphoreId_t semaphore_id) {
+  const char *name;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxSemaphoreGetName(semaphore_id, NULL);
-    return NULL;
+    name = NULL;
+  } else {
+    name = __svcSemaphoreGetName(semaphore_id);
   }
-  return __svcSemaphoreGetName(semaphore_id);
+  return name;
 }
 
 /// Acquire a Semaphore token or timeout if no tokens are available.
 osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
+  osStatus_t status;
+
   EvrRtxSemaphoreAcquire(semaphore_id, timeout);
   if (IsIrqMode() || IsIrqMasked()) {
-    return isrRtxSemaphoreAcquire(semaphore_id, timeout);
+    status = isrRtxSemaphoreAcquire(semaphore_id, timeout);
   } else {
-    return  __svcSemaphoreAcquire(semaphore_id, timeout);
+    status =  __svcSemaphoreAcquire(semaphore_id, timeout);
   }
+  return status;
 }
 
 /// Release a Semaphore token that was acquired by osSemaphoreAcquire.
 osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id) {
+  osStatus_t status;
+
   EvrRtxSemaphoreRelease(semaphore_id);
   if (IsIrqMode() || IsIrqMasked()) {
-    return isrRtxSemaphoreRelease(semaphore_id);
+    status = isrRtxSemaphoreRelease(semaphore_id);
   } else {
-    return  __svcSemaphoreRelease(semaphore_id);
+    status =  __svcSemaphoreRelease(semaphore_id);
   }
+  return status;
 }
 
 /// Get current Semaphore token count.
 uint32_t osSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
+  uint32_t count;
+
   if (IsIrqMode() || IsIrqMasked()) {
-    return svcRtxSemaphoreGetCount(semaphore_id);
+    count = svcRtxSemaphoreGetCount(semaphore_id);
   } else {
-    return  __svcSemaphoreGetCount(semaphore_id);
+    count =  __svcSemaphoreGetCount(semaphore_id);
   }
+  return count;
 }
 
 /// Delete a Semaphore object.
 osStatus_t osSemaphoreDelete (osSemaphoreId_t semaphore_id) {
+  osStatus_t status;
+
   EvrRtxSemaphoreDelete(semaphore_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxSemaphoreError(semaphore_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcSemaphoreDelete(semaphore_id);
   }
-  return __svcSemaphoreDelete(semaphore_id);
+  return status;
 }

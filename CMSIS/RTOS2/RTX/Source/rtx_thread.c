@@ -1501,126 +1501,178 @@ uint32_t isrRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
 
 /// Create a thread and add it to Active Threads.
 osThreadId_t osThreadNew (osThreadFunc_t func, void *argument, const osThreadAttr_t *attr) {
+  osThreadId_t thread_id;
+
   EvrRtxThreadNew(func, argument, attr);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(NULL, (int32_t)osErrorISR);
-    return NULL;
+    thread_id = NULL;
+  } else {
+    thread_id = __svcThreadNew(func, argument, attr);
   }
-  return __svcThreadNew(func, argument, attr);
+  return thread_id;
 }
 
 /// Get name of a thread.
 const char *osThreadGetName (osThreadId_t thread_id) {
+  const char *name;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetName(thread_id, NULL);
-    return NULL;
+    name = NULL;
+  } else {
+    name = __svcThreadGetName(thread_id);
   }
-  return __svcThreadGetName(thread_id);
+  return name;
 }
 
 /// Return the thread ID of the current running thread.
 osThreadId_t osThreadGetId (void) {
+  osThreadId_t thread_id;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetId(NULL);
-    return NULL;
+    thread_id = NULL;
+  } else {
+    thread_id = __svcThreadGetId();
   }
-  return __svcThreadGetId();
+  return thread_id;
 }
 
 /// Get current thread state of a thread.
 osThreadState_t osThreadGetState (osThreadId_t thread_id) {
+  osThreadState_t state;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetState(thread_id, osThreadError);
-    return osThreadError;
+    state = osThreadError;
+  } else {
+    state = __svcThreadGetState(thread_id);
   }
-  return __svcThreadGetState(thread_id);
+  return state;
 }
 
 /// Get stack size of a thread.
 uint32_t osThreadGetStackSize (osThreadId_t thread_id) {
+  uint32_t stack_size;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetStackSize(thread_id, 0U);
-    return 0U;
+    stack_size = 0U;
+  } else {
+    stack_size = __svcThreadGetStackSize(thread_id);
   }
-  return __svcThreadGetStackSize(thread_id);
+  return stack_size;
 }
 
 /// Get available stack space of a thread based on stack watermark recording during execution.
 uint32_t osThreadGetStackSpace (osThreadId_t thread_id) {
+  uint32_t stack_space;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetStackSpace(thread_id, 0U);
-    return 0U;
+    stack_space = 0U;
+  } else {
+    stack_space = __svcThreadGetStackSpace(thread_id);
   }
-  return __svcThreadGetStackSpace(thread_id);
+  return stack_space;
 }
 
 /// Change priority of a thread.
 osStatus_t osThreadSetPriority (osThreadId_t thread_id, osPriority_t priority) {
+  osStatus_t status;
+
   EvrRtxThreadSetPriority(thread_id, priority);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(thread_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcThreadSetPriority(thread_id, priority);
   }
-  return __svcThreadSetPriority(thread_id, priority);
+  return status;
 }
 
 /// Get current priority of a thread.
 osPriority_t osThreadGetPriority (osThreadId_t thread_id) {
+  osPriority_t priority;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetPriority(thread_id, osPriorityError);
-    return osPriorityError;
+    priority = osPriorityError;
+  } else {
+    priority = __svcThreadGetPriority(thread_id);
   }
-  return __svcThreadGetPriority(thread_id);
+  return priority;
 }
 
 /// Pass control to next thread that is in state READY.
 osStatus_t osThreadYield (void) {
+  osStatus_t status;
+
   EvrRtxThreadYield();
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(NULL, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcThreadYield();
   }
-  return __svcThreadYield();
+  return status;
 }
 
 /// Suspend execution of a thread.
 osStatus_t osThreadSuspend (osThreadId_t thread_id) {
+  osStatus_t status;
+
   EvrRtxThreadSuspend(thread_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(thread_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcThreadSuspend(thread_id);
   }
-  return __svcThreadSuspend(thread_id);
+  return status;
 }
 
 /// Resume execution of a thread.
 osStatus_t osThreadResume (osThreadId_t thread_id) {
+  osStatus_t status;
+
   EvrRtxThreadResume(thread_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(thread_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcThreadResume(thread_id);
   }
-  return __svcThreadResume(thread_id);
+  return status;
 }
 
 /// Detach a thread (thread storage can be reclaimed when thread terminates).
 osStatus_t osThreadDetach (osThreadId_t thread_id) {
+  osStatus_t status;
+
   EvrRtxThreadDetach(thread_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(thread_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcThreadDetach(thread_id);
   }
-  return __svcThreadDetach(thread_id);
+  return status;
 }
 
 /// Wait for specified thread to terminate.
 osStatus_t osThreadJoin (osThreadId_t thread_id) {
+  osStatus_t status;
+
   EvrRtxThreadJoin(thread_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(thread_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcThreadJoin(thread_id);
   }
-  return __svcThreadJoin(thread_id);
+  return status;
 }
 
 /// Terminate execution of current running thread.
@@ -1633,67 +1685,94 @@ __NO_RETURN void osThreadExit (void) {
 
 /// Terminate execution of a thread.
 osStatus_t osThreadTerminate (osThreadId_t thread_id) {
+  osStatus_t status;
+
   EvrRtxThreadTerminate(thread_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(thread_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcThreadTerminate(thread_id);
   }
-  return __svcThreadTerminate(thread_id);
+  return status;
 }
 
 /// Get number of active threads.
 uint32_t osThreadGetCount (void) {
+  uint32_t count;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetCount(0U);
-    return 0U;
+    count = 0U;
+  } else {
+    count = __svcThreadGetCount();
   }
-  return __svcThreadGetCount();
+  return count;
 }
 
 /// Enumerate active threads.
 uint32_t osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items) {
+  uint32_t count;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadEnumerate(thread_array, array_items, 0U);
-    return 0U;
+    count = 0U;
+  } else {
+    count = __svcThreadEnumerate(thread_array, array_items);
   }
-  return __svcThreadEnumerate(thread_array, array_items);
+  return count;
 }
 
 /// Set the specified Thread Flags of a thread.
 uint32_t osThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
+  uint32_t thread_flags;
+
   EvrRtxThreadFlagsSet(thread_id, flags);
   if (IsIrqMode() || IsIrqMasked()) {
-    return isrRtxThreadFlagsSet(thread_id, flags);
+    thread_flags = isrRtxThreadFlagsSet(thread_id, flags);
   } else {
-    return  __svcThreadFlagsSet(thread_id, flags);
+    thread_flags =  __svcThreadFlagsSet(thread_id, flags);
   }
+  return thread_flags;
 }
 
 /// Clear the specified Thread Flags of current running thread.
 uint32_t osThreadFlagsClear (uint32_t flags) {
+  uint32_t thread_flags;
+
   EvrRtxThreadFlagsClear(flags);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(NULL, (int32_t)osErrorISR);
-    return ((uint32_t)osErrorISR);
+    thread_flags = (uint32_t)osErrorISR;
+  } else {
+    thread_flags = __svcThreadFlagsClear(flags);
   }
-  return __svcThreadFlagsClear(flags);
+  return thread_flags;
 }
 
 /// Get the current Thread Flags of current running thread.
 uint32_t osThreadFlagsGet (void) {
+  uint32_t thread_flags;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadFlagsGet(0U);
-    return 0U;
+    thread_flags = 0U;
+  } else {
+    thread_flags = __svcThreadFlagsGet();
   }
-  return __svcThreadFlagsGet();
+  return thread_flags;
 }
 
 /// Wait for one or more Thread Flags of the current running thread to become signaled.
 uint32_t osThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout) {
+  uint32_t thread_flags;
+
   EvrRtxThreadFlagsWait(flags, options, timeout);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(NULL, (int32_t)osErrorISR);
-    return ((uint32_t)osErrorISR);
+    thread_flags = (uint32_t)osErrorISR;
+  } else {
+    thread_flags = __svcThreadFlagsWait(flags, options, timeout);
   }
-  return __svcThreadFlagsWait(flags, options, timeout);
+  return thread_flags;
 }

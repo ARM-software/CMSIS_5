@@ -812,95 +812,129 @@ osStatus_t isrRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
 
 /// Create and Initialize a Message Queue object.
 osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, const osMessageQueueAttr_t *attr) {
+  osMessageQueueId_t mq_id;
+
   EvrRtxMessageQueueNew(msg_count, msg_size, attr);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMessageQueueError(NULL, (int32_t)osErrorISR);
-    return NULL;
+    mq_id = NULL;
+  } else {
+    mq_id = __svcMessageQueueNew(msg_count, msg_size, attr);
   }
-  return __svcMessageQueueNew(msg_count, msg_size, attr);
+  return mq_id;
 }
 
 /// Get name of a Message Queue object.
 const char *osMessageQueueGetName (osMessageQueueId_t mq_id) {
+  const char *name;
+
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMessageQueueGetName(mq_id, NULL);
-    return NULL;
+    name = NULL;
+  } else {
+    name = __svcMessageQueueGetName(mq_id);
   }
-  return __svcMessageQueueGetName(mq_id);
+  return name;
 }
 
 /// Put a Message into a Queue or timeout if Queue is full.
 osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout) {
+  osStatus_t status;
+
   EvrRtxMessageQueuePut(mq_id, msg_ptr, msg_prio, timeout);
   if (IsIrqMode() || IsIrqMasked()) {
-    return isrRtxMessageQueuePut(mq_id, msg_ptr, msg_prio, timeout);
+    status = isrRtxMessageQueuePut(mq_id, msg_ptr, msg_prio, timeout);
   } else {
-    return  __svcMessageQueuePut(mq_id, msg_ptr, msg_prio, timeout);
+    status =  __svcMessageQueuePut(mq_id, msg_ptr, msg_prio, timeout);
   }
+  return status;
 }
 
 /// Get a Message from a Queue or timeout if Queue is empty.
 osStatus_t osMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout) {
+  osStatus_t status;
+
   EvrRtxMessageQueueGet(mq_id, msg_ptr, msg_prio, timeout);
   if (IsIrqMode() || IsIrqMasked()) {
-    return isrRtxMessageQueueGet(mq_id, msg_ptr, msg_prio, timeout);
+    status = isrRtxMessageQueueGet(mq_id, msg_ptr, msg_prio, timeout);
   } else {
-    return  __svcMessageQueueGet(mq_id, msg_ptr, msg_prio, timeout);
+    status =  __svcMessageQueueGet(mq_id, msg_ptr, msg_prio, timeout);
   }
+  return status;
 }
 
 /// Get maximum number of messages in a Message Queue.
 uint32_t osMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
+  uint32_t capacity;
+
   if (IsIrqMode() || IsIrqMasked()) {
-    return svcRtxMessageQueueGetCapacity(mq_id);
+    capacity = svcRtxMessageQueueGetCapacity(mq_id);
   } else {
-    return  __svcMessageQueueGetCapacity(mq_id);
+    capacity =  __svcMessageQueueGetCapacity(mq_id);
   }
+  return capacity;
 }
 
 /// Get maximum message size in a Memory Pool.
 uint32_t osMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
+  uint32_t msg_size;
+
   if (IsIrqMode() || IsIrqMasked()) {
-    return svcRtxMessageQueueGetMsgSize(mq_id);
+    msg_size = svcRtxMessageQueueGetMsgSize(mq_id);
   } else {
-    return  __svcMessageQueueGetMsgSize(mq_id);
+    msg_size =  __svcMessageQueueGetMsgSize(mq_id);
   }
+  return msg_size;
 }
 
 /// Get number of queued messages in a Message Queue.
 uint32_t osMessageQueueGetCount (osMessageQueueId_t mq_id) {
+  uint32_t count;
+
   if (IsIrqMode() || IsIrqMasked()) {
-    return svcRtxMessageQueueGetCount(mq_id);
+    count = svcRtxMessageQueueGetCount(mq_id);
   } else {
-    return  __svcMessageQueueGetCount(mq_id);
+    count =  __svcMessageQueueGetCount(mq_id);
   }
+  return count;
 }
 
 /// Get number of available slots for messages in a Message Queue.
 uint32_t osMessageQueueGetSpace (osMessageQueueId_t mq_id) {
+  uint32_t space;
+
   if (IsIrqMode() || IsIrqMasked()) {
-    return svcRtxMessageQueueGetSpace(mq_id);
+    space = svcRtxMessageQueueGetSpace(mq_id);
   } else {
-    return  __svcMessageQueueGetSpace(mq_id);
+    space =  __svcMessageQueueGetSpace(mq_id);
   }
+  return space;
 }
 
 /// Reset a Message Queue to initial empty state.
 osStatus_t osMessageQueueReset (osMessageQueueId_t mq_id) {
+  osStatus_t status;
+
   EvrRtxMessageQueueReset(mq_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMessageQueueError(mq_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcMessageQueueReset(mq_id);
   }
-  return __svcMessageQueueReset(mq_id);
+  return status;
 }
 
 /// Delete a Message Queue object.
 osStatus_t osMessageQueueDelete (osMessageQueueId_t mq_id) {
+  osStatus_t status;
+
   EvrRtxMessageQueueDelete(mq_id);
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMessageQueueError(mq_id, (int32_t)osErrorISR);
-    return osErrorISR;
+    status = osErrorISR;
+  } else {
+    status = __svcMessageQueueDelete(mq_id);
   }
-  return __svcMessageQueueDelete(mq_id);
+  return status;
 }
