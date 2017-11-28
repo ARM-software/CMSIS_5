@@ -28,10 +28,6 @@
 
 //  ==== Service Calls ====
 
-//  Service Calls definitions
-SVC0_1(Delay,      osStatus_t, uint32_t)
-SVC0_1(DelayUntil, osStatus_t, uint32_t)
-
 /// Wait for Timeout (Time Delay).
 /// \note API identical to osDelay
 osStatus_t svcRtxDelay (uint32_t ticks) {
@@ -62,6 +58,10 @@ osStatus_t svcRtxDelayUntil (uint32_t ticks) {
 
   return osOK;
 }
+
+//  Service Calls definitions
+SVC0_1(Delay,      osStatus_t, uint32_t)
+SVC0_1(DelayUntil, osStatus_t, uint32_t)
 
 
 //  ==== Public API ====

@@ -121,14 +121,6 @@ void osRtxSemaphorePostProcess (os_semaphore_t *semaphore) {
 
 //  ==== Service Calls ====
 
-//  Service Calls definitions
-SVC0_3(SemaphoreNew,      osSemaphoreId_t, uint32_t, uint32_t, const osSemaphoreAttr_t *)
-SVC0_1(SemaphoreGetName,  const char *,    osSemaphoreId_t)
-SVC0_2(SemaphoreAcquire,  osStatus_t,      osSemaphoreId_t, uint32_t)
-SVC0_1(SemaphoreRelease,  osStatus_t,      osSemaphoreId_t)
-SVC0_1(SemaphoreGetCount, uint32_t,        osSemaphoreId_t)
-SVC0_1(SemaphoreDelete,   osStatus_t,      osSemaphoreId_t)
-
 /// Create and Initialize a Semaphore object.
 /// \note API identical to osSemaphoreNew
 osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr) {
@@ -356,6 +348,14 @@ osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
 
   return osOK;
 }
+
+//  Service Calls definitions
+SVC0_3(SemaphoreNew,      osSemaphoreId_t, uint32_t, uint32_t, const osSemaphoreAttr_t *)
+SVC0_1(SemaphoreGetName,  const char *,    osSemaphoreId_t)
+SVC0_2(SemaphoreAcquire,  osStatus_t,      osSemaphoreId_t, uint32_t)
+SVC0_1(SemaphoreRelease,  osStatus_t,      osSemaphoreId_t)
+SVC0_1(SemaphoreGetCount, uint32_t,        osSemaphoreId_t)
+SVC0_1(SemaphoreDelete,   osStatus_t,      osSemaphoreId_t)
 
 
 //  ==== ISR Calls ====

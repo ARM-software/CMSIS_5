@@ -64,14 +64,6 @@ void osRtxMutexOwnerRelease (os_mutex_t *mutex_list) {
 
 //  ==== Service Calls ====
 
-//  Service Calls definitions
-SVC0_1(MutexNew,      osMutexId_t,  const osMutexAttr_t *)
-SVC0_1(MutexGetName,  const char *, osMutexId_t)
-SVC0_2(MutexAcquire,  osStatus_t,   osMutexId_t, uint32_t)
-SVC0_1(MutexRelease,  osStatus_t,   osMutexId_t)
-SVC0_1(MutexGetOwner, osThreadId_t, osMutexId_t)
-SVC0_1(MutexDelete,   osStatus_t,   osMutexId_t)
-
 /// Create and Initialize a Mutex object.
 /// \note API identical to osMutexNew
 osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
@@ -433,6 +425,14 @@ osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
 
   return osOK;
 }
+
+//  Service Calls definitions
+SVC0_1(MutexNew,      osMutexId_t,  const osMutexAttr_t *)
+SVC0_1(MutexGetName,  const char *, osMutexId_t)
+SVC0_2(MutexAcquire,  osStatus_t,   osMutexId_t, uint32_t)
+SVC0_1(MutexRelease,  osStatus_t,   osMutexId_t)
+SVC0_1(MutexGetOwner, osThreadId_t, osMutexId_t)
+SVC0_1(MutexDelete,   osStatus_t,   osMutexId_t)
 
 
 //  ==== Public API ====

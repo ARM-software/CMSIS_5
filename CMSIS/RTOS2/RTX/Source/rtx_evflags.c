@@ -156,15 +156,6 @@ void osRtxEventFlagsPostProcess (os_event_flags_t *ef) {
 
 //  ==== Service Calls ====
 
-//  Service Calls definitions
-SVC0_1(EventFlagsNew,     osEventFlagsId_t, const osEventFlagsAttr_t *)
-SVC0_1(EventFlagsGetName, const char *,     osEventFlagsId_t)
-SVC0_2(EventFlagsSet,     uint32_t,         osEventFlagsId_t, uint32_t)
-SVC0_2(EventFlagsClear,   uint32_t,         osEventFlagsId_t, uint32_t)
-SVC0_1(EventFlagsGet,     uint32_t,         osEventFlagsId_t)
-SVC0_4(EventFlagsWait,    uint32_t,         osEventFlagsId_t, uint32_t, uint32_t, uint32_t)
-SVC0_1(EventFlagsDelete,  osStatus_t,       osEventFlagsId_t)
-
 /// Create and Initialize an Event Flags object.
 /// \note API identical to osEventFlagsNew
 osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
@@ -438,6 +429,15 @@ osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
 
   return osOK;
 }
+
+//  Service Calls definitions
+SVC0_1(EventFlagsNew,     osEventFlagsId_t, const osEventFlagsAttr_t *)
+SVC0_1(EventFlagsGetName, const char *,     osEventFlagsId_t)
+SVC0_2(EventFlagsSet,     uint32_t,         osEventFlagsId_t, uint32_t)
+SVC0_2(EventFlagsClear,   uint32_t,         osEventFlagsId_t, uint32_t)
+SVC0_1(EventFlagsGet,     uint32_t,         osEventFlagsId_t)
+SVC0_4(EventFlagsWait,    uint32_t,         osEventFlagsId_t, uint32_t, uint32_t, uint32_t)
+SVC0_1(EventFlagsDelete,  osStatus_t,       osEventFlagsId_t)
 
 
 //  ==== ISR Calls ====

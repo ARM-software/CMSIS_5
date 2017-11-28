@@ -131,14 +131,6 @@ __WEAK void osRtxTimerThread (void *argument) {
 
 //  ==== Service Calls ====
 
-//  Service Calls definitions
-SVC0_4(TimerNew,       osTimerId_t,  osTimerFunc_t, osTimerType_t, void *, const osTimerAttr_t *)
-SVC0_1(TimerGetName,   const char *, osTimerId_t)
-SVC0_2(TimerStart,     osStatus_t,   osTimerId_t, uint32_t)
-SVC0_1(TimerStop,      osStatus_t,   osTimerId_t)
-SVC0_1(TimerIsRunning, uint32_t,     osTimerId_t)
-SVC0_1(TimerDelete,    osStatus_t,   osTimerId_t)
-
 /// Create and Initialize a timer.
 /// \note API identical to osTimerNew
 osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr) {
@@ -352,6 +344,14 @@ osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
 
   return osOK;
 }
+
+//  Service Calls definitions
+SVC0_4(TimerNew,       osTimerId_t,  osTimerFunc_t, osTimerType_t, void *, const osTimerAttr_t *)
+SVC0_1(TimerGetName,   const char *, osTimerId_t)
+SVC0_2(TimerStart,     osStatus_t,   osTimerId_t, uint32_t)
+SVC0_1(TimerStop,      osStatus_t,   osTimerId_t)
+SVC0_1(TimerIsRunning, uint32_t,     osTimerId_t)
+SVC0_1(TimerDelete,    osStatus_t,   osTimerId_t)
 
 
 //  ==== Public API ====

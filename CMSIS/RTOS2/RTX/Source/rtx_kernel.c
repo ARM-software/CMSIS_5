@@ -64,21 +64,6 @@ static void KernelUnblock (void) {
 
 //  ==== Service Calls ====
 
-//  Service Calls definitions
-SVC0_0 (KernelInitialize,       osStatus_t)
-SVC0_3 (KernelGetInfo,          osStatus_t, osVersion_t *, char *, uint32_t)
-SVC0_0 (KernelStart,            osStatus_t)
-SVC0_0 (KernelLock,             int32_t)
-SVC0_0 (KernelUnlock,           int32_t)
-SVC0_1 (KernelRestoreLock,      int32_t, int32_t)
-SVC0_0 (KernelSuspend,          uint32_t)
-SVC0_1N(KernelResume,           void, uint32_t)
-SVC0_0 (KernelGetState,         osKernelState_t)
-SVC0_0 (KernelGetTickCount,     uint32_t)
-SVC0_0 (KernelGetTickFreq,      uint32_t)
-SVC0_0 (KernelGetSysTimerCount, uint32_t)
-SVC0_0 (KernelGetSysTimerFreq,  uint32_t)
-
 /// Initialize the RTOS Kernel.
 /// \note API identical to osKernelInitialize
 osStatus_t svcRtxKernelInitialize (void) {
@@ -493,6 +478,21 @@ uint32_t svcRtxKernelGetSysTimerFreq (void) {
   EvrRtxKernelGetSysTimerFreq(freq);
   return freq;
 }
+
+//  Service Calls definitions
+SVC0_0 (KernelInitialize,       osStatus_t)
+SVC0_3 (KernelGetInfo,          osStatus_t, osVersion_t *, char *, uint32_t)
+SVC0_0 (KernelStart,            osStatus_t)
+SVC0_0 (KernelLock,             int32_t)
+SVC0_0 (KernelUnlock,           int32_t)
+SVC0_1 (KernelRestoreLock,      int32_t, int32_t)
+SVC0_0 (KernelSuspend,          uint32_t)
+SVC0_1N(KernelResume,           void, uint32_t)
+SVC0_0 (KernelGetState,         osKernelState_t)
+SVC0_0 (KernelGetTickCount,     uint32_t)
+SVC0_0 (KernelGetTickFreq,      uint32_t)
+SVC0_0 (KernelGetSysTimerCount, uint32_t)
+SVC0_0 (KernelGetSysTimerFreq,  uint32_t)
 
 
 //  ==== Public API ====

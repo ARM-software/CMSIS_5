@@ -176,17 +176,6 @@ void osRtxMemoryPoolPostProcess (os_memory_pool_t *mp) {
 
 //  ==== Service Calls ====
 
-//  Service Calls definitions
-SVC0_3(MemoryPoolNew,          osMemoryPoolId_t, uint32_t, uint32_t, const osMemoryPoolAttr_t *)
-SVC0_1(MemoryPoolGetName,      const char *,     osMemoryPoolId_t)
-SVC0_2(MemoryPoolAlloc,        void *,           osMemoryPoolId_t, uint32_t)
-SVC0_2(MemoryPoolFree,         osStatus_t,       osMemoryPoolId_t, void *)
-SVC0_1(MemoryPoolGetCapacity,  uint32_t,         osMemoryPoolId_t)
-SVC0_1(MemoryPoolGetBlockSize, uint32_t,         osMemoryPoolId_t)
-SVC0_1(MemoryPoolGetCount,     uint32_t,         osMemoryPoolId_t)
-SVC0_1(MemoryPoolGetSpace,     uint32_t,         osMemoryPoolId_t)
-SVC0_1(MemoryPoolDelete,       osStatus_t,       osMemoryPoolId_t)
-
 /// Create and Initialize a Memory Pool object.
 /// \note API identical to osMemoryPoolNew
 osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size, const osMemoryPoolAttr_t *attr) {
@@ -530,6 +519,17 @@ osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
 
   return osOK;
 }
+
+//  Service Calls definitions
+SVC0_3(MemoryPoolNew,          osMemoryPoolId_t, uint32_t, uint32_t, const osMemoryPoolAttr_t *)
+SVC0_1(MemoryPoolGetName,      const char *,     osMemoryPoolId_t)
+SVC0_2(MemoryPoolAlloc,        void *,           osMemoryPoolId_t, uint32_t)
+SVC0_2(MemoryPoolFree,         osStatus_t,       osMemoryPoolId_t, void *)
+SVC0_1(MemoryPoolGetCapacity,  uint32_t,         osMemoryPoolId_t)
+SVC0_1(MemoryPoolGetBlockSize, uint32_t,         osMemoryPoolId_t)
+SVC0_1(MemoryPoolGetCount,     uint32_t,         osMemoryPoolId_t)
+SVC0_1(MemoryPoolGetSpace,     uint32_t,         osMemoryPoolId_t)
+SVC0_1(MemoryPoolDelete,       osStatus_t,       osMemoryPoolId_t)
 
 
 //  ==== ISR Calls ====

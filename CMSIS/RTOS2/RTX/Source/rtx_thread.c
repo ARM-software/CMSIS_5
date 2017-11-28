@@ -543,29 +543,6 @@ void osRtxThreadPostProcess (os_thread_t *thread) {
 
 //  ==== Service Calls ====
 
-//  Service Calls definitions
-SVC0_3 (ThreadNew,           osThreadId_t,    osThreadFunc_t, void *, const osThreadAttr_t *)
-SVC0_1 (ThreadGetName,       const char *,    osThreadId_t)
-SVC0_0 (ThreadGetId,         osThreadId_t)
-SVC0_1 (ThreadGetState,      osThreadState_t, osThreadId_t)
-SVC0_1 (ThreadGetStackSize,  uint32_t, osThreadId_t)
-SVC0_1 (ThreadGetStackSpace, uint32_t, osThreadId_t)
-SVC0_2 (ThreadSetPriority,   osStatus_t,      osThreadId_t, osPriority_t)
-SVC0_1 (ThreadGetPriority,   osPriority_t,    osThreadId_t)
-SVC0_0 (ThreadYield,         osStatus_t)
-SVC0_1 (ThreadSuspend,       osStatus_t,      osThreadId_t)
-SVC0_1 (ThreadResume,        osStatus_t,      osThreadId_t)
-SVC0_1 (ThreadDetach,        osStatus_t,      osThreadId_t)
-SVC0_1 (ThreadJoin,          osStatus_t,      osThreadId_t)
-SVC0_0N(ThreadExit,          void)
-SVC0_1 (ThreadTerminate,     osStatus_t,      osThreadId_t)
-SVC0_0 (ThreadGetCount,      uint32_t)
-SVC0_2 (ThreadEnumerate,     uint32_t,        osThreadId_t *, uint32_t)
-SVC0_2 (ThreadFlagsSet,      uint32_t,        osThreadId_t, uint32_t)
-SVC0_1 (ThreadFlagsClear,    uint32_t,        uint32_t)
-SVC0_0 (ThreadFlagsGet,      uint32_t)
-SVC0_3 (ThreadFlagsWait,     uint32_t,        uint32_t, uint32_t, uint32_t)
-
 /// Create a thread and add it to Active Threads.
 /// \note API identical to osThreadNew
 osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThreadAttr_t *attr) {
@@ -1460,6 +1437,29 @@ uint32_t svcRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeo
 
   return ((uint32_t)osErrorResource);
 }
+
+//  Service Calls definitions
+SVC0_3 (ThreadNew,           osThreadId_t,    osThreadFunc_t, void *, const osThreadAttr_t *)
+SVC0_1 (ThreadGetName,       const char *,    osThreadId_t)
+SVC0_0 (ThreadGetId,         osThreadId_t)
+SVC0_1 (ThreadGetState,      osThreadState_t, osThreadId_t)
+SVC0_1 (ThreadGetStackSize,  uint32_t, osThreadId_t)
+SVC0_1 (ThreadGetStackSpace, uint32_t, osThreadId_t)
+SVC0_2 (ThreadSetPriority,   osStatus_t,      osThreadId_t, osPriority_t)
+SVC0_1 (ThreadGetPriority,   osPriority_t,    osThreadId_t)
+SVC0_0 (ThreadYield,         osStatus_t)
+SVC0_1 (ThreadSuspend,       osStatus_t,      osThreadId_t)
+SVC0_1 (ThreadResume,        osStatus_t,      osThreadId_t)
+SVC0_1 (ThreadDetach,        osStatus_t,      osThreadId_t)
+SVC0_1 (ThreadJoin,          osStatus_t,      osThreadId_t)
+SVC0_0N(ThreadExit,          void)
+SVC0_1 (ThreadTerminate,     osStatus_t,      osThreadId_t)
+SVC0_0 (ThreadGetCount,      uint32_t)
+SVC0_2 (ThreadEnumerate,     uint32_t,        osThreadId_t *, uint32_t)
+SVC0_2 (ThreadFlagsSet,      uint32_t,        osThreadId_t, uint32_t)
+SVC0_1 (ThreadFlagsClear,    uint32_t,        uint32_t)
+SVC0_0 (ThreadFlagsGet,      uint32_t)
+SVC0_3 (ThreadFlagsWait,     uint32_t,        uint32_t, uint32_t, uint32_t)
 
 
 //  ==== ISR Calls ====
