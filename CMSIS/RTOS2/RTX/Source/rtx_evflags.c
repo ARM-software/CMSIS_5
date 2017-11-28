@@ -33,12 +33,12 @@
 /// \param[in]  flags           specifies the flags to set.
 /// \return event flags after setting.
 static uint32_t EventFlagsSet (os_event_flags_t *ef, uint32_t flags) {
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   uint32_t primask = __get_PRIMASK();
 #endif
   uint32_t event_flags;
 
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   __disable_irq();
 
   ef->event_flags |= flags;
@@ -59,12 +59,12 @@ static uint32_t EventFlagsSet (os_event_flags_t *ef, uint32_t flags) {
 /// \param[in]  flags           specifies the flags to clear.
 /// \return event flags before clearing.
 static uint32_t EventFlagsClear (os_event_flags_t *ef, uint32_t flags) {
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   uint32_t primask = __get_PRIMASK();
 #endif
   uint32_t event_flags;
 
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   __disable_irq();
 
   event_flags = ef->event_flags;
@@ -86,13 +86,13 @@ static uint32_t EventFlagsClear (os_event_flags_t *ef, uint32_t flags) {
 /// \param[in]  options         specifies flags options (osFlagsXxxx).
 /// \return event flags before clearing or 0 if specified flags have not been set.
 static uint32_t EventFlagsCheck (os_event_flags_t *ef, uint32_t flags, uint32_t options) {
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   uint32_t primask;
 #endif
   uint32_t event_flags;
 
   if ((options & osFlagsNoClear) == 0U) {
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
     primask = __get_PRIMASK();
     __disable_irq();
 
@@ -511,7 +511,7 @@ uint32_t isrRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
 /// Create and Initialize an Event Flags object.
 osEventFlagsId_t osEventFlagsNew (const osEventFlagsAttr_t *attr) {
   EvrRtxEventFlagsNew(attr);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxEventFlagsError(NULL, (int32_t)osErrorISR);
     return NULL;
   }
@@ -520,7 +520,7 @@ osEventFlagsId_t osEventFlagsNew (const osEventFlagsAttr_t *attr) {
 
 /// Get name of an Event Flags object.
 const char *osEventFlagsGetName (osEventFlagsId_t ef_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxEventFlagsGetName(ef_id, NULL);
     return NULL;
   }
@@ -530,7 +530,7 @@ const char *osEventFlagsGetName (osEventFlagsId_t ef_id) {
 /// Set the specified Event Flags.
 uint32_t osEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
   EvrRtxEventFlagsSet(ef_id, flags);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return isrRtxEventFlagsSet(ef_id, flags);
   } else {
     return  __svcEventFlagsSet(ef_id, flags);
@@ -540,7 +540,7 @@ uint32_t osEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
 /// Clear the specified Event Flags.
 uint32_t osEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
   EvrRtxEventFlagsClear(ef_id, flags);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return svcRtxEventFlagsClear(ef_id, flags);
   } else {
     return  __svcEventFlagsClear(ef_id, flags);
@@ -549,7 +549,7 @@ uint32_t osEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
 
 /// Get the current Event Flags.
 uint32_t osEventFlagsGet (osEventFlagsId_t ef_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return svcRtxEventFlagsGet(ef_id);
   } else {
     return  __svcEventFlagsGet(ef_id);
@@ -559,7 +559,7 @@ uint32_t osEventFlagsGet (osEventFlagsId_t ef_id) {
 /// Wait for one or more Event Flags to become signaled.
 uint32_t osEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout) {
   EvrRtxEventFlagsWait(ef_id, flags, options, timeout);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return isrRtxEventFlagsWait(ef_id, flags, options, timeout);
   } else {
     return  __svcEventFlagsWait(ef_id, flags, options, timeout);
@@ -569,7 +569,7 @@ uint32_t osEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t opti
 /// Delete an Event Flags object.
 osStatus_t osEventFlagsDelete (osEventFlagsId_t ef_id) {
   EvrRtxEventFlagsDelete(ef_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxEventFlagsError(ef_id, (int32_t)osErrorISR);
     return osErrorISR;
   }

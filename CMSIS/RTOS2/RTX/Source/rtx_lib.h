@@ -29,7 +29,8 @@
 #include <string.h>
 #include <stdbool.h>
 #include "rtx_core_c.h"                 // Cortex core definitions
-#if ((__ARM_ARCH_8M_BASE__ != 0) || (__ARM_ARCH_8M_MAIN__ != 0))
+#if ((defined(__ARM_ARCH_8M_BASE__) && (__ARM_ARCH_8M_BASE__ != 0)) || \
+     (defined(__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ != 0)))
 #include "tz_context.h"                 // TrustZone Context API
 #endif
 #include "os_tick.h"

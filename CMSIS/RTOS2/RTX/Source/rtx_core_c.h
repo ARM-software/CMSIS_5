@@ -29,35 +29,16 @@
 #include "RTE_Components.h"
 #include CMSIS_device_header
 
-#ifndef __ARM_ARCH_6M__
-#define __ARM_ARCH_6M__         0U
-#endif
-#ifndef __ARM_ARCH_7A__
-#define __ARM_ARCH_7A__         0U
-#endif
-#ifndef __ARM_ARCH_7M__
-#define __ARM_ARCH_7M__         0U
-#endif
-#ifndef __ARM_ARCH_7EM__
-#define __ARM_ARCH_7EM__        0U
-#endif
-#ifndef __ARM_ARCH_8M_BASE__
-#define __ARM_ARCH_8M_BASE__    0U
-#endif
-#ifndef __ARM_ARCH_8M_MAIN__
-#define __ARM_ARCH_8M_MAIN__    0U
-#endif
-
-#if   ((__ARM_ARCH_6M__      + \
-        __ARM_ARCH_7A__      + \
-        __ARM_ARCH_7M__      + \
-        __ARM_ARCH_7EM__     + \
-        __ARM_ARCH_8M_BASE__ + \
-        __ARM_ARCH_8M_MAIN__) != 1U)
+#if ((!defined(__ARM_ARCH_6M__))      && \
+     (!defined(__ARM_ARCH_7A__))      && \
+     (!defined(__ARM_ARCH_7M__))      && \
+     (!defined(__ARM_ARCH_7EM__))     && \
+     (!defined(__ARM_ARCH_8M_BASE__)) && \
+     (!defined(__ARM_ARCH_8M_MAIN__)))
 #error "Unknown ARM Architecture!"
 #endif
 
-#if (__ARM_ARCH_7A__ != 0U)
+#if   (defined(__ARM_ARCH_7A__) && (__ARM_ARCH_7A__ != 0))
 #include "rtx_core_ca.h"
 #else
 #include "rtx_core_cm.h"

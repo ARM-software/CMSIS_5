@@ -26,44 +26,83 @@
 #ifndef RTX_CORE_CA_H_
 #define RTX_CORE_CA_H_
 
+#ifndef RTX_CORE_C_H_
 #include "RTE_Components.h"
 #include CMSIS_device_header
+#endif
 
-#define __DOMAIN_NS             0U
-#define __EXCLUSIVE_ACCESS      1U
+#include <stdbool.h>
+typedef bool bool_t;
+#define FALSE                   ((bool_t)0)
+#define TRUE                    ((bool_t)1)
 
-/* CPSR bit definitions */
+#define DOMAIN_NS               0
+#define EXCLUSIVE_ACCESS        1
+
+#define OS_TICK_HANDLER         osRtxTick_Handler
+
+// CPSR bit definitions
 #define CPSR_T_BIT              0x20U
 #define CPSR_I_BIT              0x80U
 #define CPSR_F_BIT              0x40U
 
-/* CPSR mode bitmasks */
+// CPSR mode bitmasks
 #define CPSR_MODE_USER          0x10U
 #define CPSR_MODE_SYSTEM        0x1FU
 
-/* Determine privilege level */
-#define IS_PRIVILEGED()          (__get_mode() != CPSR_MODE_USER)
-#define IS_IRQ_MODE()           ((__get_mode() != CPSR_MODE_USER) && (__get_mode() != CPSR_MODE_SYSTEM))
-#define IS_IRQ_MASKED()         (0U)
+/// xPSR_Initialization Value
+/// \param[in]  privileged      true=privileged, false=unprivileged
+/// \param[in]  thumb           true=Thumb, false=ARM
+/// \return                     xPSR Init Value
+__STATIC_INLINE uint32_t xPSR_InitVal (bool_t privileged, bool_t thumb) {
+  uint32_t psr;
 
-#define xPSR_INIT(privileged, thumb)                                \
-  ((privileged) != 0U) ? (CPSR_MODE_SYSTEM | (((thumb) != 0U) ? CPSR_T_BIT : 0U)) : \
-                         (CPSR_MODE_USER   | (((thumb) != 0U) ? CPSR_T_BIT : 0U))
-
-#define STACK_FRAME_INIT        0x00U
+  if (privileged) {
+    if (thumb) {
+      psr = CPSR_MODE_SYSTEM | CPSR_T_BIT;
+    } else {
+      psr = CPSR_MODE_SYSTEM;
+    }
+  } else {
+    if (thumb) {
+      psr = CPSR_MODE_USER   | CPSR_T_BIT;
+    } else {
+      psr = CPSR_MODE_USER;
+    }
+  }
+  
+  return psr;
+}
 
 // Stack Frame:
 //  - VFP-D32: D16-31, D0-D15, FPSCR, Reserved, R4-R11, R0-R3, R12, LR, PC, CPSR
 //  - VFP-D16:         D0-D15, FPSCR, Reserved, R4-R11, R0-R3, R12, LR, PC, CPSR
 //  - Basic:                                    R4-R11, R0-R3, R12, LR, PC, CPSR
-#define STACK_OFFSET_R0(stack_frame)                                  \
-  ((((stack_frame) & 0x04U) != 0U) ? ((32U*8U) + (2U*4U) + (8U*4U)) : \
-   (((stack_frame) & 0x02U) != 0U) ? ((16U*8U) + (2U*4U) + (8U*4U)) : \
-                                                           (8U*4U))
 
-#define OS_TICK_HANDLER         osRtxTick_Handler
+/// Stack Frame Initialization Value
+#define STACK_FRAME_INIT        0x00U
 
-/* Emulate M profile get_PSP: SP_usr - (8*4) */
+/// Stack Offset of Register R0
+/// \param[in]  stack_frame     Stack Frame
+/// \return                     R0 Offset
+__STATIC_INLINE uint32_t StackOffsetR0 (uint8_t stack_frame) {
+  uint32_t offset;
+
+  if        ((stack_frame & 0x04U) != 0U) {
+    offset = (32U*8U) + (2U*4U) + (8U*4U);
+  } else if ((stack_frame & 0x02U) != 0U) {
+    offset = (16U*8U) + (2U*4U) + (8U*4U);
+  } else {
+    offset =                      (8U*4U);
+  }
+  return offset;
+}
+
+
+//  ==== Emulated Cortex-M functions ====
+
+/// Get xPSR Register - emulate M profile: SP_usr - (8*4)
+/// \return      xPSR Register value
 #if defined(__CC_ARM)
 static __asm    uint32_t __get_PSP (void) {
   arm
@@ -77,8 +116,8 @@ static __asm    uint32_t __get_PSP (void) {
 __STATIC_INLINE uint32_t __get_PSP (void) {
   register uint32_t ret;
 
-  __asm volatile (
-#if !defined ( __ICCARM__ )
+  __ASM volatile (
+#ifndef __ICCARM__
     ".syntax unified\n\t"
     ".arm\n\t"
 #endif
@@ -95,7 +134,57 @@ __STATIC_INLINE uint32_t __get_PSP (void) {
 }
 #endif
 
+/// Set Control Register - not needed for A profile
+/// \param[in]  control         Control Register value to set
 __STATIC_INLINE void __set_CONTROL(uint32_t control) {
+  (void)control;
+}
+
+
+//  ==== Core functions ====
+
+/// Check if running Privileged
+/// \return     true=privileged, false=unprivileged
+__STATIC_INLINE bool_t IsPrivileged (void) {
+  return (__get_mode() != CPSR_MODE_USER);
+}
+
+/// Check if in IRQ Mode
+/// \return     true=IRQ, false=thread
+__STATIC_INLINE bool_t IsIrqMode (void) {
+  return ((__get_mode() != CPSR_MODE_USER) && (__get_mode() != CPSR_MODE_SYSTEM));
+}
+
+/// Check if IRQ is Masked
+/// \return     true=masked, false=not masked
+__STATIC_INLINE bool_t IsIrqMasked (void) {
+  return  FALSE;
+#endif
+}
+
+
+//  ==== Core Peripherals functions ====
+
+extern uint8_t IRQ_PendSV;
+
+/// Setup SVC and PendSV System Service Calls (not needed on Cortex-A)
+__STATIC_INLINE void SVC_Setup (void) {
+}
+
+/// Get Pending SV (Service Call) Flag
+/// \return     Pending SV Flag
+__STATIC_INLINE uint8_t GetPendSV (void) {
+  return (IRQ_PendSV);
+}
+
+/// Clear Pending SV (Service Call) Flag
+__STATIC_INLINE void ClrPendSV (void) {
+  IRQ_PendSV = 0U;
+}
+
+/// Set Pending SV (Service Call) Flag
+__STATIC_INLINE void SetPendSV (void) {
+  IRQ_PendSV = 1U;
 }
 
 
@@ -256,7 +345,6 @@ register uint32_t __rf   __ASM(SVC_RegF) = (uint32_t)f
 
 #define SVC_Out0
 #define SVC_Out1 "=r"(__r0)
-#define SVC_Out2 "=r"(__r0),"=r"(__r1)
 
 #define SVC_CL0
 #define SVC_CL1 "r1"
@@ -334,34 +422,9 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
 #endif
 
 
-//  ==== Core Peripherals functions ====
-
-extern uint8_t IRQ_PendSV;
-
-/// Setup SVC and PendSV System Service Calls (not needed on Cortex-A)
-__STATIC_INLINE void SVC_Setup (void) {
-}
-
-/// Get Pending SV (Service Call) Flag
-/// \return    Pending SV Flag
-__STATIC_INLINE uint8_t GetPendSV (void) {
-  return (IRQ_PendSV);
-}
-
-/// Clear Pending SV (Service Call) Flag
-__STATIC_INLINE void ClrPendSV (void) {
-  IRQ_PendSV = 0U;
-}
-
-/// Set Pending SV (Service Call) Flag
-__STATIC_INLINE void SetPendSV (void) {
-  IRQ_PendSV = 1U;
-}
-
-
 //  ==== Exclusive Access Operation ====
 
-#if (__EXCLUSIVE_ACCESS == 1U)
+#if (EXCLUSIVE_ACCESS == 1)
 
 /// Atomic Access Operation: Write (8-bit)
 /// \param[in]  mem             Memory address
@@ -1078,7 +1141,7 @@ __STATIC_INLINE void atomic_link_put (void **root, void *link) {
 }
 #endif
 
-#endif  // (__EXCLUSIVE_ACCESS == 1U)
+#endif  // (EXCLUSIVE_ACCESS == 1)
 
 
 #endif  // RTX_CORE_CA_H_

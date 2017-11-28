@@ -67,7 +67,7 @@ uint32_t osRtxMemoryPoolInit (os_mp_info_t *mp_info, uint32_t block_count, uint3
 /// \param[in]  mp_info         memory pool info.
 /// \return address of the allocated memory block or NULL in case of no memory is available.
 void *osRtxMemoryPoolAlloc (os_mp_info_t *mp_info) {
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   uint32_t primask = __get_PRIMASK();
 #endif
   void *block;
@@ -77,7 +77,7 @@ void *osRtxMemoryPoolAlloc (os_mp_info_t *mp_info) {
     return NULL;
   }
 
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   __disable_irq();
 
   if (mp_info->used_blocks < mp_info->max_blocks) {
@@ -111,7 +111,7 @@ void *osRtxMemoryPoolAlloc (os_mp_info_t *mp_info) {
 /// \param[in]  block           address of the allocated memory block to be returned to the memory pool.
 /// \return status code that indicates the execution status of the function.
 osStatus_t osRtxMemoryPoolFree (os_mp_info_t *mp_info, void *block) {
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   uint32_t primask = __get_PRIMASK();
 #endif
   osStatus_t status;
@@ -121,7 +121,7 @@ osStatus_t osRtxMemoryPoolFree (os_mp_info_t *mp_info, void *block) {
     return osErrorParameter;
   }
 
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   __disable_irq();
 
   if (mp_info->used_blocks != 0U) {
@@ -602,7 +602,7 @@ osStatus_t isrRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
 /// Create and Initialize a Memory Pool object.
 osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, const osMemoryPoolAttr_t *attr) {
   EvrRtxMemoryPoolNew(block_count, block_size, attr);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMemoryPoolError(NULL, (int32_t)osErrorISR);
     return NULL;
   }
@@ -611,7 +611,7 @@ osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, con
 
 /// Get name of a Memory Pool object.
 const char *osMemoryPoolGetName (osMemoryPoolId_t mp_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMemoryPoolGetName(mp_id, NULL);
     return NULL;
   }
@@ -621,7 +621,7 @@ const char *osMemoryPoolGetName (osMemoryPoolId_t mp_id) {
 /// Allocate a memory block from a Memory Pool.
 void *osMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
   EvrRtxMemoryPoolAlloc(mp_id, timeout);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return isrRtxMemoryPoolAlloc(mp_id, timeout);
   } else {
     return  __svcMemoryPoolAlloc(mp_id, timeout);
@@ -631,7 +631,7 @@ void *osMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
 /// Return an allocated memory block back to a Memory Pool.
 osStatus_t osMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
   EvrRtxMemoryPoolFree(mp_id, block);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return isrRtxMemoryPoolFree(mp_id, block);
   } else {
     return  __svcMemoryPoolFree(mp_id, block);
@@ -640,7 +640,7 @@ osStatus_t osMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
 
 /// Get maximum number of memory blocks in a Memory Pool.
 uint32_t osMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return svcRtxMemoryPoolGetCapacity(mp_id);
   } else {
     return  __svcMemoryPoolGetCapacity(mp_id);
@@ -649,7 +649,7 @@ uint32_t osMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
 
 /// Get memory block size in a Memory Pool.
 uint32_t osMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return svcRtxMemoryPoolGetBlockSize(mp_id);
   } else {
     return  __svcMemoryPoolGetBlockSize(mp_id);
@@ -658,7 +658,7 @@ uint32_t osMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
 
 /// Get number of memory blocks used in a Memory Pool.
 uint32_t osMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return svcRtxMemoryPoolGetCount(mp_id);
   } else {
     return  __svcMemoryPoolGetCount(mp_id);
@@ -667,7 +667,7 @@ uint32_t osMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
 
 /// Get number of memory blocks available in a Memory Pool.
 uint32_t osMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return svcRtxMemoryPoolGetSpace(mp_id);
   } else {
     return  __svcMemoryPoolGetSpace(mp_id);
@@ -677,7 +677,7 @@ uint32_t osMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
 /// Delete a Memory Pool object.
 osStatus_t osMemoryPoolDelete (osMemoryPoolId_t mp_id) {
   EvrRtxMemoryPoolDelete(mp_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMemoryPoolError(mp_id, (int32_t)osErrorISR);
     return osErrorISR;
   }

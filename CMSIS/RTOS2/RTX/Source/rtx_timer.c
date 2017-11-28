@@ -359,7 +359,7 @@ osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
 /// Create and Initialize a timer.
 osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr) {
   EvrRtxTimerNew(func, type, argument, attr);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxTimerError(NULL, (int32_t)osErrorISR);
     return NULL;
   }
@@ -368,7 +368,7 @@ osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, 
 
 /// Get name of a timer.
 const char *osTimerGetName (osTimerId_t timer_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxTimerGetName(timer_id, NULL);
     return NULL;
   }
@@ -378,7 +378,7 @@ const char *osTimerGetName (osTimerId_t timer_id) {
 /// Start or restart a timer.
 osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t ticks) {
   EvrRtxTimerStart(timer_id, ticks);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxTimerError(timer_id, (int32_t)osErrorISR);
     return osErrorISR;
   }
@@ -388,7 +388,7 @@ osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t ticks) {
 /// Stop a timer.
 osStatus_t osTimerStop (osTimerId_t timer_id) {
   EvrRtxTimerStop(timer_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxTimerError(timer_id, (int32_t)osErrorISR);
     return osErrorISR;
   }
@@ -397,7 +397,7 @@ osStatus_t osTimerStop (osTimerId_t timer_id) {
 
 /// Check if a timer is running.
 uint32_t osTimerIsRunning (osTimerId_t timer_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxTimerIsRunning(timer_id, 0U);
     return 0U;
   }
@@ -407,7 +407,7 @@ uint32_t osTimerIsRunning (osTimerId_t timer_id) {
 /// Delete a timer.
 osStatus_t osTimerDelete (osTimerId_t timer_id) {
   EvrRtxTimerDelete(timer_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxTimerError(timer_id, (int32_t)osErrorISR);
     return osErrorISR;
   }

@@ -440,7 +440,7 @@ osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
 /// Create and Initialize a Mutex object.
 osMutexId_t osMutexNew (const osMutexAttr_t *attr) {
   EvrRtxMutexNew(attr);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMutexError(NULL, (int32_t)osErrorISR);
     return NULL;
   }
@@ -449,7 +449,7 @@ osMutexId_t osMutexNew (const osMutexAttr_t *attr) {
 
 /// Get name of a Mutex object.
 const char *osMutexGetName (osMutexId_t mutex_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMutexGetName(mutex_id, NULL);
     return NULL;
   }
@@ -459,7 +459,7 @@ const char *osMutexGetName (osMutexId_t mutex_id) {
 /// Acquire a Mutex or timeout if it is locked.
 osStatus_t osMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
   EvrRtxMutexAcquire(mutex_id, timeout);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMutexError(mutex_id, (int32_t)osErrorISR);
     return osErrorISR;
   }
@@ -469,7 +469,7 @@ osStatus_t osMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
 /// Release a Mutex that was acquired by \ref osMutexAcquire.
 osStatus_t osMutexRelease (osMutexId_t mutex_id) {
   EvrRtxMutexRelease(mutex_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMutexError(mutex_id, (int32_t)osErrorISR);
     return osErrorISR;
   }
@@ -478,7 +478,7 @@ osStatus_t osMutexRelease (osMutexId_t mutex_id) {
 
 /// Get Thread which owns a Mutex object.
 osThreadId_t osMutexGetOwner (osMutexId_t mutex_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMutexGetOwner(mutex_id, NULL);
     return NULL;
   }
@@ -488,7 +488,7 @@ osThreadId_t osMutexGetOwner (osMutexId_t mutex_id) {
 /// Delete a Mutex object.
 osStatus_t osMutexDelete (osMutexId_t mutex_id) {
   EvrRtxMutexDelete(mutex_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxMutexError(mutex_id, (int32_t)osErrorISR);
     return osErrorISR;
   }

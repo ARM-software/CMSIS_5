@@ -69,7 +69,7 @@ osStatus_t svcRtxDelayUntil (uint32_t ticks) {
 /// Wait for Timeout (Time Delay).
 osStatus_t osDelay (uint32_t ticks) {
   EvrRtxThreadDelay(ticks);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(NULL, (int32_t)osErrorISR);
     return osErrorISR;
   }
@@ -79,7 +79,7 @@ osStatus_t osDelay (uint32_t ticks) {
 /// Wait until specified time.
 osStatus_t osDelayUntil (uint32_t ticks) {
   EvrRtxThreadDelayUntil(ticks);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(NULL, (int32_t)osErrorISR);
     return osErrorISR;
   }

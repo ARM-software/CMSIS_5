@@ -2846,7 +2846,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>EVR_RTX_DISABLE __DOMAIN_NS=1U</Define>
+              <Define>EVR_RTX_DISABLE DOMAIN_NS=1</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
@@ -2864,7 +2864,7 @@
             <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls>--no_hide_all</MiscControls>
-              <Define>__DOMAIN_NS=1</Define>
+              <Define>DOMAIN_NS=1</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -4102,7 +4102,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>EVR_RTX_DISABLE __DOMAIN_NS=1U</Define>
+              <Define>EVR_RTX_DISABLE DOMAIN_NS=1</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
@@ -4120,7 +4120,7 @@
             <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls>--no_hide_all</MiscControls>
-              <Define>__DOMAIN_NS=1</Define>
+              <Define>DOMAIN_NS=1</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -5358,7 +5358,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>EVR_RTX_DISABLE __DOMAIN_NS=1U</Define>
+              <Define>EVR_RTX_DISABLE DOMAIN_NS=1</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\Config;..\..\..\Include;..\..\..\..\Include</IncludePath>
             </VariousControls>
@@ -5376,7 +5376,7 @@
             <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls>--no_hide_all</MiscControls>
-              <Define>__DOMAIN_NS=1</Define>
+              <Define>DOMAIN_NS=1</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

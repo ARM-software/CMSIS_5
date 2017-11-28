@@ -32,12 +32,12 @@
 /// \param[in]  semaphore       semaphore object.
 /// \return 1 - success, 0 - failure.
 static uint32_t SemaphoreTokenDecrement (os_semaphore_t *semaphore) {
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   uint32_t primask = __get_PRIMASK();
 #endif
   uint32_t ret;
 
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   __disable_irq();
 
   if (semaphore->tokens != 0U) {
@@ -65,12 +65,12 @@ static uint32_t SemaphoreTokenDecrement (os_semaphore_t *semaphore) {
 /// \param[in]  semaphore       semaphore object.
 /// \return 1 - success, 0 - failure.
 static uint32_t SemaphoreTokenIncrement (os_semaphore_t *semaphore) {
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   uint32_t primask = __get_PRIMASK();
 #endif
   uint32_t ret;
 
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   __disable_irq();
 
   if (semaphore->tokens < semaphore->max_tokens) {
@@ -428,7 +428,7 @@ osStatus_t isrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 /// Create and Initialize a Semaphore object.
 osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr) {
   EvrRtxSemaphoreNew(max_count, initial_count, attr);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxSemaphoreError(NULL, (int32_t)osErrorISR);
     return NULL;
   }
@@ -437,7 +437,7 @@ osSemaphoreId_t osSemaphoreNew (uint32_t max_count, uint32_t initial_count, cons
 
 /// Get name of a Semaphore object.
 const char *osSemaphoreGetName (osSemaphoreId_t semaphore_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxSemaphoreGetName(semaphore_id, NULL);
     return NULL;
   }
@@ -447,7 +447,7 @@ const char *osSemaphoreGetName (osSemaphoreId_t semaphore_id) {
 /// Acquire a Semaphore token or timeout if no tokens are available.
 osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
   EvrRtxSemaphoreAcquire(semaphore_id, timeout);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return isrRtxSemaphoreAcquire(semaphore_id, timeout);
   } else {
     return  __svcSemaphoreAcquire(semaphore_id, timeout);
@@ -457,7 +457,7 @@ osStatus_t osSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
 /// Release a Semaphore token that was acquired by osSemaphoreAcquire.
 osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id) {
   EvrRtxSemaphoreRelease(semaphore_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return isrRtxSemaphoreRelease(semaphore_id);
   } else {
     return  __svcSemaphoreRelease(semaphore_id);
@@ -466,7 +466,7 @@ osStatus_t osSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 
 /// Get current Semaphore token count.
 uint32_t osSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return svcRtxSemaphoreGetCount(semaphore_id);
   } else {
     return  __svcSemaphoreGetCount(semaphore_id);
@@ -476,7 +476,7 @@ uint32_t osSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
 /// Delete a Semaphore object.
 osStatus_t osSemaphoreDelete (osSemaphoreId_t semaphore_id) {
   EvrRtxSemaphoreDelete(semaphore_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxSemaphoreError(semaphore_id, (int32_t)osErrorISR);
     return osErrorISR;
   }

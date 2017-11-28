@@ -33,12 +33,12 @@
 /// \param[in]  flags           specifies the flags to set.
 /// \return thread flags after setting.
 static uint32_t ThreadFlagsSet (os_thread_t *thread, uint32_t flags) {
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   uint32_t primask = __get_PRIMASK();
 #endif
   uint32_t thread_flags;
 
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   __disable_irq();
 
   thread->thread_flags |= flags;
@@ -59,12 +59,12 @@ static uint32_t ThreadFlagsSet (os_thread_t *thread, uint32_t flags) {
 /// \param[in]  flags           specifies the flags to clear.
 /// \return thread flags before clearing.
 static uint32_t ThreadFlagsClear (os_thread_t *thread, uint32_t flags) {
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   uint32_t primask = __get_PRIMASK();
 #endif
   uint32_t thread_flags;
 
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   __disable_irq();
 
   thread_flags = thread->thread_flags;
@@ -86,13 +86,13 @@ static uint32_t ThreadFlagsClear (os_thread_t *thread, uint32_t flags) {
 /// \param[in]  options         specifies flags options (osFlagsXxxx).
 /// \return thread flags before clearing or 0 if specified flags have not been set.
 static uint32_t ThreadFlagsCheck (os_thread_t *thread, uint32_t flags, uint32_t options) {
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
   uint32_t primask;
 #endif
   uint32_t thread_flags;
 
   if ((options & osFlagsNoClear) == 0U) {
-#if (__EXCLUSIVE_ACCESS == 0U)
+#if (EXCLUSIVE_ACCESS == 0)
     primask = __get_PRIMASK();
     __disable_irq();
 
@@ -377,7 +377,7 @@ void osRtxThreadDelayTick (void) {
 /// \param[in]  thread          thread object.
 /// \return pointer to registers R0-R3.
 uint32_t *osRtxThreadRegPtr (os_thread_t *thread) {
-  return ((uint32_t *)(thread->sp + STACK_OFFSET_R0(thread->stack_frame)));
+  return ((uint32_t *)(thread->sp + StackOffsetR0(thread->stack_frame)));
 }
 
 /// Block running Thread execution and register it as Ready to Run.
@@ -425,7 +425,7 @@ void osRtxThreadDispatch (os_thread_t *thread) {
 
   kernel_state   = osRtxKernelGetState();
   thread_running = osRtxThreadGetRunning();
-#if (__ARM_ARCH_7A__ != 0U)
+#if (defined(__ARM_ARCH_7A__) && (__ARM_ARCH_7A__ != 0))
   // On Cortex-A PendSV_Handler is executed before final context switch.
   if ((thread_running != NULL) && (thread_running->state != osRtxThreadRunning)) {
     thread_running = osRtxInfo.thread.run.next;
@@ -578,7 +578,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
   const char   *name;
   uint32_t     *ptr;
   uint32_t      n;
-#if (__DOMAIN_NS == 1U)
+#if (DOMAIN_NS == 1)
   TZ_ModuleId_t tz_module;
   TZ_MemoryId_t tz_memory;
 #endif
@@ -597,7 +597,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
     stack_mem  = attr->stack_mem;
     stack_size = attr->stack_size;
     priority   = attr->priority;
-#if (__DOMAIN_NS == 1U)
+#if (DOMAIN_NS == 1)
     tz_module  = attr->tz_module;
 #endif
     if (thread != NULL) {
@@ -632,7 +632,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
     stack_mem  = NULL;
     stack_size = 0U;
     priority   = osPriorityNormal;
-#if (__DOMAIN_NS == 1U)
+#if (DOMAIN_NS == 1)
     tz_module  = 0U;
 #endif
   }
@@ -688,7 +688,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
     flags |= osRtxFlagSystemMemory;
   }
 
-#if (__DOMAIN_NS == 1U)
+#if (DOMAIN_NS == 1)
   // Allocate secure process stack
   if (tz_module != 0U) {
     tz_memory = TZ_AllocModuleContext_S(tz_module);
@@ -729,7 +729,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
   thread->delay         = 0U;
   thread->priority      = (int8_t)priority;
   thread->priority_base = (int8_t)priority;
-  thread->stack_frame   = STACK_FRAME_INIT;
+  thread->stack_frame   = STACK_FRAME_INIT_VAL;
   thread->flags_options = 0U;
   thread->wait_flags    = 0U;
   thread->thread_flags  = 0U;
@@ -738,7 +738,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
   thread->stack_size    = stack_size;
   thread->sp            = (uint32_t)stack_mem + stack_size - 64U;
   thread->thread_addr   = (uint32_t)func;
-#if (__DOMAIN_NS == 1U)
+#if (DOMAIN_NS == 1)
   thread->tz_memory     = tz_memory;
 #endif
 
@@ -757,7 +757,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
   }
   *ptr++   = (uint32_t)osThreadExit;    // LR
   *ptr++   = (uint32_t)func;            // PC
-  *ptr++   = xPSR_INIT(
+  *ptr++   = xPSR_InitVal(
               (osRtxConfig.flags & osRtxConfigPrivilegedMode),
               ((uint32_t)func & 1U)
              );                         // xPSR
@@ -1040,7 +1040,7 @@ static void osRtxThreadFree (os_thread_t *thread) {
   // Mark object as inactive
   thread->state = osRtxThreadInactive;
 
-#if (__DOMAIN_NS == 1U)
+#if (DOMAIN_NS == 1)
   // Free secure process stack
   if (thread->tz_memory != 0U) {
     TZ_FreeModuleContext_S(thread->tz_memory);
@@ -1502,7 +1502,7 @@ uint32_t isrRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
 /// Create a thread and add it to Active Threads.
 osThreadId_t osThreadNew (osThreadFunc_t func, void *argument, const osThreadAttr_t *attr) {
   EvrRtxThreadNew(func, argument, attr);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(NULL, (int32_t)osErrorISR);
     return NULL;
   }
@@ -1511,7 +1511,7 @@ osThreadId_t osThreadNew (osThreadFunc_t func, void *argument, const osThreadAtt
 
 /// Get name of a thread.
 const char *osThreadGetName (osThreadId_t thread_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetName(thread_id, NULL);
     return NULL;
   }
@@ -1520,7 +1520,7 @@ const char *osThreadGetName (osThreadId_t thread_id) {
 
 /// Return the thread ID of the current running thread.
 osThreadId_t osThreadGetId (void) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetId(NULL);
     return NULL;
   }
@@ -1529,7 +1529,7 @@ osThreadId_t osThreadGetId (void) {
 
 /// Get current thread state of a thread.
 osThreadState_t osThreadGetState (osThreadId_t thread_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetState(thread_id, osThreadError);
     return osThreadError;
   }
@@ -1538,7 +1538,7 @@ osThreadState_t osThreadGetState (osThreadId_t thread_id) {
 
 /// Get stack size of a thread.
 uint32_t osThreadGetStackSize (osThreadId_t thread_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetStackSize(thread_id, 0U);
     return 0U;
   }
@@ -1547,7 +1547,7 @@ uint32_t osThreadGetStackSize (osThreadId_t thread_id) {
 
 /// Get available stack space of a thread based on stack watermark recording during execution.
 uint32_t osThreadGetStackSpace (osThreadId_t thread_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetStackSpace(thread_id, 0U);
     return 0U;
   }
@@ -1557,7 +1557,7 @@ uint32_t osThreadGetStackSpace (osThreadId_t thread_id) {
 /// Change priority of a thread.
 osStatus_t osThreadSetPriority (osThreadId_t thread_id, osPriority_t priority) {
   EvrRtxThreadSetPriority(thread_id, priority);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(thread_id, (int32_t)osErrorISR);
     return osErrorISR;
   }
@@ -1566,7 +1566,7 @@ osStatus_t osThreadSetPriority (osThreadId_t thread_id, osPriority_t priority) {
 
 /// Get current priority of a thread.
 osPriority_t osThreadGetPriority (osThreadId_t thread_id) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetPriority(thread_id, osPriorityError);
     return osPriorityError;
   }
@@ -1576,7 +1576,7 @@ osPriority_t osThreadGetPriority (osThreadId_t thread_id) {
 /// Pass control to next thread that is in state READY.
 osStatus_t osThreadYield (void) {
   EvrRtxThreadYield();
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(NULL, (int32_t)osErrorISR);
     return osErrorISR;
   }
@@ -1586,7 +1586,7 @@ osStatus_t osThreadYield (void) {
 /// Suspend execution of a thread.
 osStatus_t osThreadSuspend (osThreadId_t thread_id) {
   EvrRtxThreadSuspend(thread_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(thread_id, (int32_t)osErrorISR);
     return osErrorISR;
   }
@@ -1596,7 +1596,7 @@ osStatus_t osThreadSuspend (osThreadId_t thread_id) {
 /// Resume execution of a thread.
 osStatus_t osThreadResume (osThreadId_t thread_id) {
   EvrRtxThreadResume(thread_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(thread_id, (int32_t)osErrorISR);
     return osErrorISR;
   }
@@ -1606,7 +1606,7 @@ osStatus_t osThreadResume (osThreadId_t thread_id) {
 /// Detach a thread (thread storage can be reclaimed when thread terminates).
 osStatus_t osThreadDetach (osThreadId_t thread_id) {
   EvrRtxThreadDetach(thread_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(thread_id, (int32_t)osErrorISR);
     return osErrorISR;
   }
@@ -1616,7 +1616,7 @@ osStatus_t osThreadDetach (osThreadId_t thread_id) {
 /// Wait for specified thread to terminate.
 osStatus_t osThreadJoin (osThreadId_t thread_id) {
   EvrRtxThreadJoin(thread_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(thread_id, (int32_t)osErrorISR);
     return osErrorISR;
   }
@@ -1634,7 +1634,7 @@ __NO_RETURN void osThreadExit (void) {
 /// Terminate execution of a thread.
 osStatus_t osThreadTerminate (osThreadId_t thread_id) {
   EvrRtxThreadTerminate(thread_id);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(thread_id, (int32_t)osErrorISR);
     return osErrorISR;
   }
@@ -1643,7 +1643,7 @@ osStatus_t osThreadTerminate (osThreadId_t thread_id) {
 
 /// Get number of active threads.
 uint32_t osThreadGetCount (void) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadGetCount(0U);
     return 0U;
   }
@@ -1652,7 +1652,7 @@ uint32_t osThreadGetCount (void) {
 
 /// Enumerate active threads.
 uint32_t osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadEnumerate(thread_array, array_items, 0U);
     return 0U;
   }
@@ -1662,7 +1662,7 @@ uint32_t osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items) {
 /// Set the specified Thread Flags of a thread.
 uint32_t osThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
   EvrRtxThreadFlagsSet(thread_id, flags);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     return isrRtxThreadFlagsSet(thread_id, flags);
   } else {
     return  __svcThreadFlagsSet(thread_id, flags);
@@ -1672,7 +1672,7 @@ uint32_t osThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
 /// Clear the specified Thread Flags of current running thread.
 uint32_t osThreadFlagsClear (uint32_t flags) {
   EvrRtxThreadFlagsClear(flags);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(NULL, (int32_t)osErrorISR);
     return ((uint32_t)osErrorISR);
   }
@@ -1681,7 +1681,7 @@ uint32_t osThreadFlagsClear (uint32_t flags) {
 
 /// Get the current Thread Flags of current running thread.
 uint32_t osThreadFlagsGet (void) {
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadFlagsGet(0U);
     return 0U;
   }
@@ -1691,7 +1691,7 @@ uint32_t osThreadFlagsGet (void) {
 /// Wait for one or more Thread Flags of the current running thread to become signaled.
 uint32_t osThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout) {
   EvrRtxThreadFlagsWait(flags, options, timeout);
-  if (IS_IRQ_MODE() || IS_IRQ_MASKED()) {
+  if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxThreadError(NULL, (int32_t)osErrorISR);
     return ((uint32_t)osErrorISR);
   }
