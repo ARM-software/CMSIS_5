@@ -205,6 +205,6 @@ void osRtxPostProcess (os_object_t *object) {
       osRtxInfo.kernel.pendSV = 1U;
     }
   } else {
-    osRtxErrorNotify(osRtxErrorISRQueueOverflow, object);
+    (void)osRtxErrorNotify(osRtxErrorISRQueueOverflow, object);
   }
 }

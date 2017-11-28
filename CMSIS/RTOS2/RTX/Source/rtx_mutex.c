@@ -420,9 +420,9 @@ osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
   // Free object memory
   if (mutex->flags & osRtxFlagSystemObject) {
     if (osRtxInfo.mpi.mutex != NULL) {
-      osRtxMemoryPoolFree(osRtxInfo.mpi.mutex, mutex);
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.mutex, mutex);
     } else {
-      osRtxMemoryFree(osRtxInfo.mem.common, mutex);
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, mutex);
     }
   }
 

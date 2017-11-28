@@ -516,7 +516,7 @@ __WEAK void osRtxThreadStackCheck (void) {
   if (thread != NULL) {
     if ((thread->sp <= (uint32_t)thread->stack_mem) ||
         (*((uint32_t *)thread->stack_mem) != osRtxStackMagicWord)) {
-      osRtxErrorNotify(osRtxErrorStackUnderflow, thread);
+      (void)osRtxErrorNotify(osRtxErrorStackUnderflow, thread);
     }
   }
 }
@@ -651,9 +651,9 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
     if (stack_mem == NULL) {
       if (flags & osRtxFlagSystemObject) {
         if (osRtxInfo.mpi.thread != NULL) {
-          osRtxMemoryPoolFree(osRtxInfo.mpi.thread, thread);
+          (void)osRtxMemoryPoolFree(osRtxInfo.mpi.thread, thread);
         } else {
-          osRtxMemoryFree(osRtxInfo.mem.common, thread);
+          (void)osRtxMemoryFree(osRtxInfo.mem.common, thread);
         }
       }
       thread = NULL;
@@ -669,16 +669,16 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
       EvrRtxThreadError(NULL, osRtxErrorTZ_AllocContext_S);
       if (flags & osRtxFlagSystemMemory) {
         if (flags & osRtxThreadFlagDefStack) {
-          osRtxMemoryPoolFree(osRtxInfo.mpi.stack, thread->stack_mem);
+          (void)osRtxMemoryPoolFree(osRtxInfo.mpi.stack, thread->stack_mem);
         } else {
-          osRtxMemoryFree(osRtxInfo.mem.stack, thread->stack_mem);
+          (void)osRtxMemoryFree(osRtxInfo.mem.stack, thread->stack_mem);
         }
       }
       if (flags & osRtxFlagSystemObject) {
         if (osRtxInfo.mpi.thread != NULL) {
-          osRtxMemoryPoolFree(osRtxInfo.mpi.thread, thread);
+          (void)osRtxMemoryPoolFree(osRtxInfo.mpi.thread, thread);
         } else {
-          osRtxMemoryFree(osRtxInfo.mem.common, thread);
+          (void)osRtxMemoryFree(osRtxInfo.mem.common, thread);
         }
       }
       thread = NULL;
@@ -1029,25 +1029,25 @@ static void osRtxThreadFree (os_thread_t *thread) {
 #if (DOMAIN_NS == 1)
   // Free secure process stack
   if (thread->tz_memory != 0U) {
-    TZ_FreeModuleContext_S(thread->tz_memory);
+    (void)TZ_FreeModuleContext_S(thread->tz_memory);
   }
 #endif
 
   // Free stack memory
   if (thread->flags & osRtxFlagSystemMemory) {
     if (thread->flags & osRtxThreadFlagDefStack) {
-      osRtxMemoryPoolFree(osRtxInfo.mpi.stack, thread->stack_mem);
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.stack, thread->stack_mem);
     } else {
-      osRtxMemoryFree(osRtxInfo.mem.stack, thread->stack_mem);
+      (void)osRtxMemoryFree(osRtxInfo.mem.stack, thread->stack_mem);
     }
   }
 
   // Free object memory
   if (thread->flags & osRtxFlagSystemObject) {
     if (osRtxInfo.mpi.thread != NULL) {
-      osRtxMemoryPoolFree(osRtxInfo.mpi.thread, thread);
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.thread, thread);
     } else {
-      osRtxMemoryFree(osRtxInfo.mem.common, thread);
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, thread);
     }
   }
 }

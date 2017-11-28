@@ -251,9 +251,9 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
     if (mp_mem == NULL) {
       if (flags & osRtxFlagSystemObject) {
         if (osRtxInfo.mpi.memory_pool != NULL) {
-          osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
+          (void)osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
         } else {
-          osRtxMemoryFree(osRtxInfo.mem.common, mp);
+          (void)osRtxMemoryFree(osRtxInfo.mem.common, mp);
         }
       }
       mp = NULL;
@@ -270,7 +270,7 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
     mp->flags       = flags;
     mp->name        = name;
     mp->thread_list = NULL;
-    osRtxMemoryPoolInit(&mp->mp_info, block_count, block_size, mp_mem);
+    (void)osRtxMemoryPoolInit(&mp->mp_info, block_count, block_size, mp_mem);
 
     // Register post ISR processing function
     osRtxInfo.post_process.memory_pool = osRtxMemoryPoolPostProcess;
@@ -506,15 +506,15 @@ osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
 
   // Free data memory
   if (mp->flags & osRtxFlagSystemMemory) {
-    osRtxMemoryFree(osRtxInfo.mem.mp_data, mp->mp_info.block_base);
+    (void)osRtxMemoryFree(osRtxInfo.mem.mp_data, mp->mp_info.block_base);
   }
 
   // Free object memory
   if (mp->flags & osRtxFlagSystemObject) {
     if (osRtxInfo.mpi.memory_pool != NULL) {
-      osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
     } else {
-      osRtxMemoryFree(osRtxInfo.mem.common, mp);
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, mp);
     }
   }
 

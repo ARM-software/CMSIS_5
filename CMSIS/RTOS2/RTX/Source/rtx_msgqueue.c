@@ -72,7 +72,7 @@ static void MessageQueuePut (os_message_queue_t *mq, os_message_t *msg) {
     __enable_irq();
   }
 #else
-  atomic_inc32(&mq->msg_count);
+  (void)atomic_inc32(&mq->msg_count);
 #endif
 }
 
@@ -172,7 +172,7 @@ void osRtxMessageQueuePostProcess (os_message_t *msg) {
     MessageQueueRemove(mq, msg);
     // Free memory
     msg->state = osRtxObjectInactive;
-    osRtxMemoryPoolFree(&mq->mp_info, msg);
+    (void)osRtxMemoryPoolFree(&mq->mp_info, msg);
     // Check if Thread is waiting to send a Message
     if ((mq->thread_list != NULL) && (mq->thread_list->state == osRtxThreadWaitingMessagePut)) {
       // Try to allocate memory
@@ -214,7 +214,7 @@ void osRtxMessageQueuePostProcess (os_message_t *msg) {
       EvrRtxMessageQueueRetrieved(mq, (void *)reg[2]);
       // Free memory
       msg->state = osRtxObjectInactive;
-      osRtxMemoryPoolFree(&mq->mp_info, msg);
+      (void)osRtxMemoryPoolFree(&mq->mp_info, msg);
     } else {
       EvrRtxMessageQueueInserted(mq, (void *)msg->prev);
       MessageQueuePut(mq, msg);
@@ -301,9 +301,9 @@ osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
     if (mq_mem == NULL) {
       if (flags & osRtxFlagSystemObject) {
         if (osRtxInfo.mpi.message_queue != NULL) {
-          osRtxMemoryPoolFree(osRtxInfo.mpi.message_queue, mq);
+          (void)osRtxMemoryPoolFree(osRtxInfo.mpi.message_queue, mq);
         } else {
-          osRtxMemoryFree(osRtxInfo.mem.common, mq);
+          (void)osRtxMemoryFree(osRtxInfo.mem.common, mq);
         }
       }
       mq = NULL;
@@ -324,7 +324,7 @@ osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
     mq->msg_count   = 0U;
     mq->msg_first   = NULL;
     mq->msg_last    = NULL;
-    osRtxMemoryPoolInit(&mq->mp_info, msg_count, block_size, mq_mem);
+    (void)osRtxMemoryPoolInit(&mq->mp_info, msg_count, block_size, mq_mem);
 
     // Register post ISR processing function
     osRtxInfo.post_process.message_queue = osRtxMessageQueuePostProcess;
@@ -466,7 +466,7 @@ osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
     EvrRtxMessageQueueRetrieved(mq, msg_ptr);
     // Free memory
     msg->state = osRtxObjectInactive;
-    osRtxMemoryPoolFree(&mq->mp_info, msg);
+    (void)osRtxMemoryPoolFree(&mq->mp_info, msg);
     // Check if Thread is waiting to send a Message
     if ((mq->thread_list != NULL) && (mq->thread_list->state == osRtxThreadWaitingMessagePut)) {
       // Try to allocate memory
@@ -631,7 +631,7 @@ osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
     EvrRtxMessageQueueRetrieved(mq, NULL);
     // Free memory
     msg->state = osRtxObjectInactive;
-    osRtxMemoryPoolFree(&mq->mp_info, msg);
+    (void)osRtxMemoryPoolFree(&mq->mp_info, msg);
   }
 
   // Check if Threads are waiting to send Messages
@@ -695,15 +695,15 @@ osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
 
   // Free data memory
   if (mq->flags & osRtxFlagSystemMemory) {
-    osRtxMemoryFree(osRtxInfo.mem.mq_data, mq->mp_info.block_base);
+    (void)osRtxMemoryFree(osRtxInfo.mem.mq_data, mq->mp_info.block_base);
   }
 
   // Free object memory
   if (mq->flags & osRtxFlagSystemObject) {
     if (osRtxInfo.mpi.message_queue != NULL) {
-      osRtxMemoryPoolFree(osRtxInfo.mpi.message_queue, mq);
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.message_queue, mq);
     } else {
-      osRtxMemoryFree(osRtxInfo.mem.common, mq);
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, mq);
     }
   }
 

@@ -527,7 +527,7 @@ const uint32_t os_cb_sections[] = {
 #ifndef __MICROLIB
 extern void _platform_post_stackheap_init (void);
 __WEAK void _platform_post_stackheap_init (void) {
-  osKernelInitialize();
+  (void)osKernelInitialize();
 }
 #endif
 
@@ -535,7 +535,7 @@ __WEAK void _platform_post_stackheap_init (void) {
 
 extern void software_init_hook (void);
 __WEAK void software_init_hook (void) {
-  osKernelInitialize();
+  (void)osKernelInitialize();
 }
 
 #endif
@@ -588,7 +588,7 @@ void *__user_perthread_libspace (void) {
       }
     }
     if (n == (uint32_t)OS_THREAD_LIBSPACE_NUM) {
-      osRtxErrorNotify(osRtxErrorClibSpace, id);
+      (void)osRtxErrorNotify(osRtxErrorClibSpace, id);
     }
   } else {
     n = OS_THREAD_LIBSPACE_NUM;
@@ -611,7 +611,7 @@ int _mutex_initialize(mutex *m) {
     result = 1;
   } else {
     result = 0;
-    osRtxErrorNotify(osRtxErrorClibMutex, m);
+    (void)osRtxErrorNotify(osRtxErrorClibMutex, m);
   }
   return result;
 }
@@ -620,8 +620,8 @@ int _mutex_initialize(mutex *m) {
 __USED
 void _mutex_acquire(mutex *m);
 void _mutex_acquire(mutex *m) {
-  if (os_kernel_is_active()) {
-    osMutexAcquire(*m, osWaitForever);
+  if (os_kernel_is_active() != 0U) {
+    (void)osMutexAcquire(*m, osWaitForever);
   }
 }
 
@@ -629,8 +629,8 @@ void _mutex_acquire(mutex *m) {
 __USED
 void _mutex_release(mutex *m);
 void _mutex_release(mutex *m) {
-  if (os_kernel_is_active()) {
-    osMutexRelease(*m);
+  if (os_kernel_is_active() != 0U) {
+    (void)osMutexRelease(*m);
   }
 }
 
@@ -638,7 +638,7 @@ void _mutex_release(mutex *m) {
 __USED
 void _mutex_free(mutex *m);
 void _mutex_free(mutex *m) {
-  osMutexDelete(*m);
+  (void)osMutexDelete(*m);
 }
 
 #endif

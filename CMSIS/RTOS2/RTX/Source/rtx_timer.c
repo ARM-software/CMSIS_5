@@ -98,7 +98,7 @@ void osRtxTimerTick (void) {
     TimerUnlink(timer);
     status = osMessageQueuePut(osRtxInfo.timer.mq, &timer->finfo, 0U, 0U);
     if (status != osOK) {
-      osRtxErrorNotify(osRtxErrorTimerQueueOverflow, timer);
+      (void)osRtxErrorNotify(osRtxErrorTimerQueueOverflow, timer);
     }
     if (timer->type == osRtxTimerPeriodic) {
       TimerInsert(timer, timer->load);
@@ -331,9 +331,9 @@ osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
   // Free object memory
   if (timer->flags & osRtxFlagSystemObject) {
     if (osRtxInfo.mpi.timer != NULL) {
-      osRtxMemoryPoolFree(osRtxInfo.mpi.timer, timer);
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.timer, timer);
     } else {
-      osRtxMemoryFree(osRtxInfo.mem.common, timer);
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, timer);
     }
   }
 

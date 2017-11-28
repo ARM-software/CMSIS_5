@@ -347,9 +347,9 @@ osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
   // Free object memory
   if (semaphore->flags & osRtxFlagSystemObject) {
     if (osRtxInfo.mpi.semaphore != NULL) {
-      osRtxMemoryPoolFree(osRtxInfo.mpi.semaphore, semaphore);
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.semaphore, semaphore);
     } else {
-      osRtxMemoryFree(osRtxInfo.mem.common, semaphore);
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, semaphore);
     }
   }
 

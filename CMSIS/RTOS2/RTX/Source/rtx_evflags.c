@@ -422,9 +422,9 @@ osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
   // Free object memory
   if (ef->flags & osRtxFlagSystemObject) {
     if (osRtxInfo.mpi.event_flags != NULL) {
-      osRtxMemoryPoolFree(osRtxInfo.mpi.event_flags, ef);
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.event_flags, ef);
     } else {
-      osRtxMemoryFree(osRtxInfo.mem.common, ef);
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, ef);
     }
   }
 
