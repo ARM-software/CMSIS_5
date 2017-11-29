@@ -27,7 +27,7 @@
 
 
 //  Memory Pool Header structure
-typedef struct mem_head_s {
+typedef struct {
   uint32_t size;                // Memory Pool size
   uint32_t used;                // Used Memory
 } mem_head_t;
@@ -40,6 +40,22 @@ typedef struct mem_block_s {
 
 #define MB_INFO_LEN_MASK        0xFFFFFFFCU
 #define MB_INFO_TYPE_MASK       0x00000003U
+
+//  Memory Head Pointer
+__STATIC_INLINE mem_head_t *MemHeadPtr (void *mem) {
+  return ((mem_head_t *)mem);
+}
+
+//  Memory Block Pointer
+__STATIC_INLINE mem_block_t *MemBlockPtr (void *mem, uint32_t offset) {
+  uint32_t     addr;
+  mem_block_t *ptr;
+
+  addr = (uint32_t)mem + offset;
+  ptr  = (mem_block_t *)addr;
+
+  return ptr;
+}
 
 
 //  ==== Library functions ====
@@ -58,12 +74,12 @@ __WEAK uint32_t osRtxMemoryInit (void *mem, uint32_t size) {
     return 0U;
   }
 
-  head = (mem_head_t *)mem;
+  head = MemHeadPtr(mem);
   head->size = size;
   head->used = sizeof(mem_head_t) + sizeof(mem_block_t);
 
-  ptr = (mem_block_t *)((uint32_t)mem + sizeof(mem_head_t));
-  ptr->next = (mem_block_t *)((uint32_t)mem + size - sizeof(mem_block_t));
+  ptr = MemBlockPtr(mem, sizeof(mem_head_t));
+  ptr->next = MemBlockPtr(mem, size - sizeof(mem_block_t));
   ptr->next->next = NULL;
   ptr->info = 0U;
 
@@ -78,7 +94,9 @@ __WEAK uint32_t osRtxMemoryInit (void *mem, uint32_t size) {
 /// \param[in]  type            memory block type: 0 - generic, 1 - control block
 /// \return allocated memory block or NULL in case of no memory is available.
 __WEAK void *osRtxMemoryAlloc (void *mem, uint32_t size, uint32_t type) {
-  mem_block_t *p, *p_new, *ptr;
+  mem_block_t *ptr;
+  mem_block_t *p, *p_new;
+  uint32_t     block_size;
   uint32_t     hole_size;
 
   if ((mem == NULL) || (size == 0U) || ((type & ~MB_INFO_TYPE_MASK) != 0U)) {
@@ -87,16 +105,16 @@ __WEAK void *osRtxMemoryAlloc (void *mem, uint32_t size, uint32_t type) {
   }
 
   // Add header to size
-  size += sizeof(mem_block_t);
+  block_size = size + sizeof(mem_block_t);
   // Make sure that block is 8-byte aligned
-  size = (size + 7U) & ~((uint32_t)7U);
+  block_size = (block_size + 7U) & ~((uint32_t)7U);
 
   // Search for hole big enough
-  p = (mem_block_t *)((uint32_t)mem + sizeof(mem_head_t));
+  p = MemBlockPtr(mem, sizeof(mem_head_t));
   for (;;) {
     hole_size  = (uint32_t)p->next - (uint32_t)p;
     hole_size -= p->info & MB_INFO_LEN_MASK;
-    if (hole_size >= size) {
+    if (hole_size >= block_size) {
       // Hole found
       break;
     }
@@ -108,19 +126,19 @@ __WEAK void *osRtxMemoryAlloc (void *mem, uint32_t size, uint32_t type) {
     }
   }
 
-  ((mem_head_t *)mem)->used += size;
+  (MemHeadPtr(mem))->used += block_size;
 
   if (p->info == 0U) {
     // No block allocated, set info of first element
-    p->info = size | type;
-    ptr = (mem_block_t *)((uint32_t)p + sizeof(mem_block_t));
+    p->info = block_size | type;
+    ptr = MemBlockPtr(p, sizeof(mem_block_t));
   } else {
     // Insert new element into the list
-    p_new = (mem_block_t *)((uint32_t)p + (p->info & MB_INFO_LEN_MASK));
+    p_new = MemBlockPtr(p, p->info & MB_INFO_LEN_MASK);
     p_new->next = p->next;
-    p_new->info = size | type;
+    p_new->info = block_size | type;
     p->next = p_new;
-    ptr = (mem_block_t *)((uint32_t)p_new + sizeof(mem_block_t));
+    ptr = MemBlockPtr(p_new, sizeof(mem_block_t));
   }
 
   EvrRtxMemoryAlloc(mem, size, type, ptr);
@@ -133,18 +151,20 @@ __WEAK void *osRtxMemoryAlloc (void *mem, uint32_t size, uint32_t type) {
 /// \param[in]  block           memory block to be returned to the memory pool.
 /// \return 1 - success, 0 - failure.
 __WEAK uint32_t osRtxMemoryFree (void *mem, void *block) {
-  mem_block_t *p, *p_prev, *ptr;
+  const mem_block_t *ptr;
+        mem_block_t *p, *p_prev;
 
   if ((mem == NULL) || (block == NULL)) {
     EvrRtxMemoryFree(mem, block, 0U);
     return 0U;
   }
 
-  ptr = (mem_block_t *)((uint32_t)block - sizeof(mem_block_t));
+  ptr = MemBlockPtr(block, 0U);
+  ptr--;
 
   // Search for header
   p_prev = NULL;
-  p = (mem_block_t *)((uint32_t)mem + sizeof(mem_head_t));
+  p = MemBlockPtr(mem, sizeof(mem_head_t));
   while (p != ptr) {
     p_prev = p;
     p = p->next;
@@ -155,7 +175,7 @@ __WEAK uint32_t osRtxMemoryFree (void *mem, void *block) {
     }
   }
 
-  ((mem_head_t *)mem)->used -= p->info & MB_INFO_LEN_MASK;
+  (MemHeadPtr(mem))->used -= p->info & MB_INFO_LEN_MASK;
 
   if (p_prev == NULL) {
     // Release first block, only set info to 0

@@ -33,11 +33,12 @@
 /// \return 1 - success, 0 - failure.
 void osRtxMutexOwnerRelease (os_mutex_t *mutex_list) {
   os_mutex_t  *mutex;
+  os_mutex_t  *mutex_next;
   os_thread_t *thread;
 
   mutex = mutex_list;
-  while (mutex) {
-    mutex_list = mutex->owner_next;
+  while (mutex != NULL) {
+    mutex_next = mutex->owner_next;
     // Check if Mutex is Robust
     if ((mutex->attr & osMutexRobust) != 0U) {
       // Clear Lock counter
@@ -46,7 +47,7 @@ void osRtxMutexOwnerRelease (os_mutex_t *mutex_list) {
       // Check if Thread is waiting for a Mutex
       if (mutex->thread_list != NULL) {
         // Wakeup waiting Thread with highest Priority
-        thread = osRtxThreadListGet((os_object_t*)mutex);
+        thread = osRtxThreadListGet(osRtxObject(mutex));
         osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
         // Thread is the new Mutex owner
         mutex->owner_thread = thread;
@@ -57,7 +58,7 @@ void osRtxMutexOwnerRelease (os_mutex_t *mutex_list) {
         EvrRtxMutexAcquired(mutex, 1U);
       }
     }
-    mutex = mutex_list;
+    mutex = mutex_next;
   }
 }
 
@@ -130,7 +131,7 @@ static osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
 /// Get name of a Mutex object.
 /// \note API identical to osMutexGetName
 static const char *svcRtxMutexGetName (osMutexId_t mutex_id) {
-  os_mutex_t *mutex = (os_mutex_t *)mutex_id;
+  os_mutex_t *mutex = osRtxMutexId(mutex_id);
 
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
@@ -152,7 +153,7 @@ static const char *svcRtxMutexGetName (osMutexId_t mutex_id) {
 /// Acquire a Mutex or timeout if it is locked.
 /// \note API identical to osMutexAcquire
 static osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
-  os_mutex_t  *mutex = (os_mutex_t *)mutex_id;
+  os_mutex_t  *mutex = osRtxMutexId(mutex_id);
   os_thread_t *runnig_thread;
   osStatus_t   status;
 
@@ -214,7 +215,7 @@ static osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
         EvrRtxMutexAcquirePending(mutex, timeout);
         // Suspend current Thread
         if (osRtxThreadWaitEnter(osRtxThreadWaitingMutex, timeout)) {
-          osRtxThreadListPut((os_object_t*)mutex, runnig_thread);
+          osRtxThreadListPut(osRtxObject(mutex), runnig_thread);
         } else {
           EvrRtxMutexAcquireTimeout(mutex);
         }
@@ -232,11 +233,11 @@ static osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
 /// Release a Mutex that was acquired by osMutexAcquire.
 /// \note API identical to osMutexRelease
 static osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
-  os_mutex_t  *mutex = (os_mutex_t *)mutex_id;
-  os_mutex_t  *mutex0;
-  os_thread_t *thread;
-  os_thread_t *runnig_thread;
-  int8_t       priority;
+        os_mutex_t  *mutex = osRtxMutexId(mutex_id);
+  const os_mutex_t  *mutex0;
+        os_thread_t *thread;
+        os_thread_t *runnig_thread;
+        int8_t       priority;
 
   // Check running thread
   runnig_thread = osRtxThreadGetRunning();
@@ -304,7 +305,7 @@ static osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
     // Check if Thread is waiting for a Mutex
     if (mutex->thread_list != NULL) {
       // Wakeup waiting Thread with highest Priority
-      thread = osRtxThreadListGet((os_object_t*)mutex);
+      thread = osRtxThreadListGet(osRtxObject(mutex));
       osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
       // Thread is the new Mutex owner
       mutex->owner_thread = thread;
@@ -324,7 +325,7 @@ static osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
 /// Get Thread which owns a Mutex object.
 /// \note API identical to osMutexGetOwner
 static osThreadId_t svcRtxMutexGetOwner (osMutexId_t mutex_id) {
-  os_mutex_t *mutex = (os_mutex_t *)mutex_id;
+  os_mutex_t *mutex = osRtxMutexId(mutex_id);
 
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
@@ -352,10 +353,10 @@ static osThreadId_t svcRtxMutexGetOwner (osMutexId_t mutex_id) {
 /// Delete a Mutex object.
 /// \note API identical to osMutexDelete
 static osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
-  os_mutex_t  *mutex = (os_mutex_t *)mutex_id;
-  os_mutex_t  *mutex0;
-  os_thread_t *thread;
-  int8_t       priority;
+        os_mutex_t  *mutex = osRtxMutexId(mutex_id);
+  const os_mutex_t  *mutex0;
+        os_thread_t *thread;
+        int8_t       priority;
 
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
@@ -408,7 +409,7 @@ static osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
     // Unblock waiting threads
     if (mutex->thread_list != NULL) {
       do {
-        thread = osRtxThreadListGet((os_object_t*)mutex);
+        thread = osRtxThreadListGet(osRtxObject(mutex));
         osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, FALSE);
       } while (mutex->thread_list != NULL);
     }

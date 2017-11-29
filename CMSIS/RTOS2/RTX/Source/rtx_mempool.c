@@ -35,6 +35,7 @@
 /// \param[in]  block_mem       pointer to memory for block storage.
 /// \return 1 - success, 0 - failure.
 uint32_t osRtxMemoryPoolInit (os_mp_info_t *mp_info, uint32_t block_count, uint32_t block_size, void *block_mem) {
+  void *mem;
   void *block;
 
   // Check parameters
@@ -48,17 +49,18 @@ uint32_t osRtxMemoryPoolInit (os_mp_info_t *mp_info, uint32_t block_count, uint3
   mp_info->block_size  = block_size;
   mp_info->block_base  = block_mem;
   mp_info->block_free  = block_mem;
-  mp_info->block_lim   = (uint8_t *)block_mem + (block_count * block_size);
+  mp_info->block_lim   = &(((uint8_t *)block_mem)[block_count * block_size]);
 
   EvrRtxMemoryBlockInit(mp_info, block_count, block_size, block_mem);
 
   // Link all free blocks
+  mem = block_mem;
   while (--block_count != 0U) {
-    block = (uint8_t *)block_mem + block_size;
-    *((void **)block_mem) = block;
-    block_mem = block;
+    block = &((uint8_t *)mem)[block_size];
+    *((void **)mem) = block;
+    mem = block;
   }
-  *((void **)block_mem) = NULL;
+  *((void **)mem) = NULL;
 
   return 1U;
 }
@@ -150,6 +152,9 @@ osStatus_t osRtxMemoryPoolFree (os_mp_info_t *mp_info, void *block) {
   return status;
 }
 
+
+//  ==== Post ISR processing ====
+
 /// Memory Pool post ISR processing.
 /// \param[in]  mp              memory pool object.
 static void osRtxMemoryPoolPostProcess (os_memory_pool_t *mp) {
@@ -166,7 +171,7 @@ static void osRtxMemoryPoolPostProcess (os_memory_pool_t *mp) {
     block = osRtxMemoryPoolAlloc(&mp->mp_info);
     if (block != NULL) {
       // Wakeup waiting Thread with highest Priority
-      thread = osRtxThreadListGet((os_object_t*)mp);
+      thread = osRtxThreadListGet(osRtxObject(mp));
       osRtxThreadWaitExit(thread, (uint32_t)block, FALSE);
       EvrRtxMemoryPoolAllocated(mp, block);
     }
@@ -182,6 +187,8 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
   os_memory_pool_t *mp;
   void             *mp_mem;
   uint32_t          mp_size;
+  uint32_t          b_count;
+  uint32_t          b_size;
   uint32_t          size;
   uint8_t           flags;
   const char       *name;
@@ -191,13 +198,14 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
     EvrRtxMemoryPoolError(NULL, (int32_t)osErrorParameter);
     return NULL;
   }
-  block_size = (block_size + 3U) & ~3UL;
-  if ((__CLZ(block_count) + __CLZ(block_size)) < 32U) {
+  b_count =  block_count;
+  b_size  = (block_size + 3U) & ~3UL;
+  if ((__CLZ(b_count) + __CLZ(b_size)) < 32U) {
     EvrRtxMemoryPoolError(NULL, (int32_t)osErrorParameter);
     return NULL;
   }
 
-  size = block_count * block_size;
+  size = b_count * b_size;
 
   // Process attributes
   if (attr != NULL) {
@@ -270,7 +278,7 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
     mp->flags       = flags;
     mp->name        = name;
     mp->thread_list = NULL;
-    (void)osRtxMemoryPoolInit(&mp->mp_info, block_count, block_size, mp_mem);
+    (void)osRtxMemoryPoolInit(&mp->mp_info, b_count, b_size, mp_mem);
 
     // Register post ISR processing function
     osRtxInfo.post_process.memory_pool = osRtxMemoryPoolPostProcess;
@@ -286,7 +294,7 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
 /// Get name of a Memory Pool object.
 /// \note API identical to osMemoryPoolGetName
 static const char *svcRtxMemoryPoolGetName (osMemoryPoolId_t mp_id) {
-  os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
+  os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
@@ -308,7 +316,7 @@ static const char *svcRtxMemoryPoolGetName (osMemoryPoolId_t mp_id) {
 /// Allocate a memory block from a Memory Pool.
 /// \note API identical to osMemoryPoolAlloc
 static void *svcRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
-  os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
+  os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
   void             *block;
 
   // Check parameters
@@ -333,7 +341,7 @@ static void *svcRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
       EvrRtxMemoryPoolAllocPending(mp, timeout);
       // Suspend current Thread
       if (osRtxThreadWaitEnter(osRtxThreadWaitingMemoryPool, timeout)) {
-        osRtxThreadListPut((os_object_t*)mp, osRtxThreadGetRunning());
+        osRtxThreadListPut(osRtxObject(mp), osRtxThreadGetRunning());
       } else {
         EvrRtxMemoryPoolAllocTimeout(mp);
       }
@@ -348,7 +356,8 @@ static void *svcRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
 /// Return an allocated memory block back to a Memory Pool.
 /// \note API identical to osMemoryPoolFree
 static osStatus_t svcRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
-  os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
+  os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
+  void             *block0;
   os_thread_t      *thread;
   osStatus_t        status;
 
@@ -371,12 +380,12 @@ static osStatus_t svcRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
     // Check if Thread is waiting to allocate memory
     if (mp->thread_list != NULL) {
       // Allocate memory
-      block = osRtxMemoryPoolAlloc(&mp->mp_info);
-      if (block != NULL) {
+      block0 = osRtxMemoryPoolAlloc(&mp->mp_info);
+      if (block0 != NULL) {
         // Wakeup waiting Thread with highest Priority
-        thread = osRtxThreadListGet((os_object_t*)mp);
-        osRtxThreadWaitExit(thread, (uint32_t)block, TRUE);
-        EvrRtxMemoryPoolAllocated(mp, block);
+        thread = osRtxThreadListGet(osRtxObject(mp));
+        osRtxThreadWaitExit(thread, (uint32_t)block0, TRUE);
+        EvrRtxMemoryPoolAllocated(mp, block0);
       }
     }
   } else {
@@ -389,7 +398,7 @@ static osStatus_t svcRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
 /// Get maximum number of memory blocks in a Memory Pool.
 /// \note API identical to osMemoryPoolGetCapacity
 static uint32_t svcRtxMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
-  os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
+  os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
@@ -411,7 +420,7 @@ static uint32_t svcRtxMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
 /// Get memory block size in a Memory Pool.
 /// \note API identical to osMemoryPoolGetBlockSize
 static uint32_t svcRtxMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
-  os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
+  os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
@@ -433,7 +442,7 @@ static uint32_t svcRtxMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
 /// Get number of memory blocks used in a Memory Pool.
 /// \note API identical to osMemoryPoolGetCount
 static uint32_t svcRtxMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
-  os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
+  os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
@@ -455,7 +464,7 @@ static uint32_t svcRtxMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
 /// Get number of memory blocks available in a Memory Pool.
 /// \note API identical to osMemoryPoolGetSpace
 static uint32_t svcRtxMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
-  os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
+  os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
 
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
@@ -477,7 +486,7 @@ static uint32_t svcRtxMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
 /// Delete a Memory Pool object.
 /// \note API identical to osMemoryPoolDelete
 static osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
-  os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
+  os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
   os_thread_t      *thread;
 
   // Check parameters
@@ -498,7 +507,7 @@ static osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
   // Unblock waiting threads
   if (mp->thread_list != NULL) {
     do {
-      thread = osRtxThreadListGet((os_object_t*)mp);
+      thread = osRtxThreadListGet(osRtxObject(mp));
       osRtxThreadWaitExit(thread, 0U, FALSE);
     } while (mp->thread_list != NULL);
     osRtxThreadDispatch(NULL);
@@ -541,7 +550,7 @@ SVC0_1(MemoryPoolDelete,       osStatus_t,       osMemoryPoolId_t)
 /// \note API identical to osMemoryPoolAlloc
 __STATIC_INLINE
 void *isrRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
-  os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
+  os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
   void             *block;
 
   // Check parameters
@@ -571,7 +580,7 @@ void *isrRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
 /// \note API identical to osMemoryPoolFree
 __STATIC_INLINE
 osStatus_t isrRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
-  os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
+  os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
   osStatus_t        status;
 
   // Check parameters
@@ -590,7 +599,7 @@ osStatus_t isrRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
   status = osRtxMemoryPoolFree(&mp->mp_info, block);
   if (status == osOK) {
     // Register post ISR processing
-    osRtxPostProcess((os_object_t *)mp);
+    osRtxPostProcess(osRtxObject(mp));
     EvrRtxMemoryPoolDeallocated(mp, block);
   } else {
     EvrRtxMemoryPoolFreeFailed(mp, block);

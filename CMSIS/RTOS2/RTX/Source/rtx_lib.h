@@ -54,24 +54,113 @@
 
 //  ==== Inline functions ====
 
-// Kernel Inline functions
-__STATIC_INLINE uint8_t      osRtxKernelGetState   (void) { return osRtxInfo.kernel.state; }
+// Thread ID
+__STATIC_INLINE os_thread_t *osRtxThreadId (osThreadId_t thread_id) {
+  return ((os_thread_t *)thread_id);
+}
+// Timer ID
+__STATIC_INLINE os_timer_t *osRtxTimerId (osTimerId_t timer_id) {
+  return ((os_timer_t *)timer_id);
+}
+// Event Flags ID
+__STATIC_INLINE os_event_flags_t *osRtxEventFlagsId (osEventFlagsId_t ef_id) {
+  return ((os_event_flags_t *)ef_id);
+}
+// Mutex ID
+__STATIC_INLINE os_mutex_t *osRtxMutexId (osMutexId_t mutex_id) {
+  return ((os_mutex_t *)mutex_id);
+}
+// Semaphore ID
+__STATIC_INLINE os_semaphore_t *osRtxSemaphoreId (osSemaphoreId_t semaphore_id) {
+  return ((os_semaphore_t *)semaphore_id);
+}
+// Memory Pool ID
+__STATIC_INLINE os_memory_pool_t *osRtxMemoryPoolId (osMemoryPoolId_t mp_id) {
+  return ((os_memory_pool_t *)mp_id);
+}
+// Message Queue ID
+__STATIC_INLINE os_message_queue_t *osRtxMessageQueueId (osMessageQueueId_t mq_id) {
+  return ((os_message_queue_t *)mq_id);
+}
 
-// Thread Inline functions
-__STATIC_INLINE os_thread_t *osRtxThreadGetRunning (void) { return osRtxInfo.thread.run.curr; }
-__STATIC_INLINE void         osRtxThreadSetRunning (os_thread_t *thread) { osRtxInfo.thread.run.curr = thread; }
+// Generic Object
+__STATIC_INLINE os_object_t *osRtxObject (void *object) {
+  return ((os_object_t *)object);
+}
+
+// Thread Object
+__STATIC_INLINE os_thread_t *osRtxThreadObject (os_object_t *object) {
+  return ((os_thread_t *)object);
+}
+// Timer Object
+__STATIC_INLINE os_timer_t *osRtxTimerObject (os_object_t *object) {
+  return ((os_timer_t *)object);
+}
+// Event Flags Object
+__STATIC_INLINE os_event_flags_t *osRtxEventFlagsObject (os_object_t *object) {
+  return ((os_event_flags_t *)object);
+}
+// Mutex Object
+__STATIC_INLINE os_mutex_t *osRtxMutexObject (os_object_t *object) {
+  return ((os_mutex_t *)object);
+}
+// Semaphore Object
+__STATIC_INLINE os_semaphore_t *osRtxSemaphoreObject (os_object_t *object) {
+  return ((os_semaphore_t *)object);
+}
+// Memory Pool Object
+__STATIC_INLINE os_memory_pool_t *osRtxMemoryPoolObject (os_object_t *object) {
+  return ((os_memory_pool_t *)object);
+}
+// Message Queue Object
+__STATIC_INLINE os_message_queue_t *osRtxMessageQueueObject (os_object_t *object) {
+  return ((os_message_queue_t *)object);
+}
+// Message Object
+__STATIC_INLINE os_message_t *osRtxMessageObject (os_object_t *object) {
+  return ((os_message_t *)object);
+}
+
+// Kernel State
+__STATIC_INLINE osKernelState_t osRtxKernelState (void) {
+  return ((osKernelState_t)(osRtxInfo.kernel.state));
+}
+
+// Thread State
+__STATIC_INLINE osThreadState_t osRtxThreadState (const os_thread_t *thread) {
+  uint8_t state = thread->state & osRtxThreadStateMask;
+  return ((osThreadState_t)state);
+}
+
+// Thread Priority
+__STATIC_INLINE osPriority_t osRtxThreadPriority (const os_thread_t *thread) {
+  return ((osPriority_t)thread->priority);
+}
+
+// Kernel Get State
+__STATIC_INLINE uint8_t osRtxKernelGetState (void) {
+  return osRtxInfo.kernel.state;
+}
+
+// Thread Get/Set Running
+__STATIC_INLINE os_thread_t *osRtxThreadGetRunning (void) {
+  return osRtxInfo.thread.run.curr;
+}
+__STATIC_INLINE void osRtxThreadSetRunning (os_thread_t *thread) {
+  osRtxInfo.thread.run.curr = thread;
+}
 
 
 //  ==== Library functions ====
 
 // Thread Library functions
-extern void         osRtxThreadListPut    (volatile os_object_t *object, os_thread_t *thread);
-extern os_thread_t *osRtxThreadListGet    (volatile os_object_t *object);
+extern void         osRtxThreadListPut    (os_object_t *object, os_thread_t *thread);
+extern os_thread_t *osRtxThreadListGet    (os_object_t *object);
 extern void         osRtxThreadListSort   (os_thread_t *thread);
 extern void         osRtxThreadListRemove (os_thread_t *thread);
 extern void         osRtxThreadReadyPut   (os_thread_t *thread);
 extern void         osRtxThreadDelayTick  (void);
-extern uint32_t    *osRtxThreadRegPtr     (os_thread_t *thread);
+extern uint32_t    *osRtxThreadRegPtr     (const os_thread_t *thread);
 extern void         osRtxThreadSwitch     (os_thread_t *thread);
 extern void         osRtxThreadDispatch   (os_thread_t *thread);
 extern void         osRtxThreadWaitExit   (os_thread_t *thread, uint32_t ret_val, bool_t dispatch);
@@ -91,7 +180,7 @@ extern void    *osRtxMemoryAlloc(void *mem, uint32_t size, uint32_t type);
 extern uint32_t osRtxMemoryFree (void *mem, void *block);
 
 // Memory Pool Library functions
-extern uint32_t   osRtxMemoryPoolInit  (os_mp_info_t *mp_info, uint32_t blocks, uint32_t block_size, void *block_mem);
+extern uint32_t   osRtxMemoryPoolInit  (os_mp_info_t *mp_info, uint32_t block_count, uint32_t block_size, void *block_mem);
 extern void      *osRtxMemoryPoolAlloc (os_mp_info_t *mp_info);
 extern osStatus_t osRtxMemoryPoolFree  (os_mp_info_t *mp_info, void *block);
 

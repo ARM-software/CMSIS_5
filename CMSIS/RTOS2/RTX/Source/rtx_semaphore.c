@@ -111,7 +111,7 @@ static void osRtxSemaphorePostProcess (os_semaphore_t *semaphore) {
     // Try to acquire token
     if (SemaphoreTokenDecrement(semaphore) != 0U) {
       // Wakeup waiting Thread with highest Priority
-      thread = osRtxThreadListGet((os_object_t*)semaphore);
+      thread = osRtxThreadListGet(osRtxObject(semaphore));
       osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
       EvrRtxSemaphoreAcquired(semaphore);
     }
@@ -190,7 +190,7 @@ static osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_
 /// Get name of a Semaphore object.
 /// \note API identical to osSemaphoreGetName
 static const char *svcRtxSemaphoreGetName (osSemaphoreId_t semaphore_id) {
-  os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
+  os_semaphore_t *semaphore = osRtxSemaphoreId(semaphore_id);
 
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
@@ -212,7 +212,7 @@ static const char *svcRtxSemaphoreGetName (osSemaphoreId_t semaphore_id) {
 /// Acquire a Semaphore token or timeout if no tokens are available.
 /// \note API identical to osSemaphoreAcquire
 static osStatus_t svcRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
-  os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
+  os_semaphore_t *semaphore = osRtxSemaphoreId(semaphore_id);
   osStatus_t      status;
 
   // Check parameters
@@ -237,7 +237,7 @@ static osStatus_t svcRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t
       EvrRtxSemaphoreAcquirePending(semaphore, timeout);
       // Suspend current Thread
       if (osRtxThreadWaitEnter(osRtxThreadWaitingSemaphore, timeout)) {
-        osRtxThreadListPut((os_object_t*)semaphore, osRtxThreadGetRunning());
+        osRtxThreadListPut(osRtxObject(semaphore), osRtxThreadGetRunning());
       } else {
         EvrRtxSemaphoreAcquireTimeout(semaphore);
       }
@@ -254,7 +254,7 @@ static osStatus_t svcRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t
 /// Release a Semaphore token that was acquired by osSemaphoreAcquire.
 /// \note API identical to osSemaphoreRelease
 static osStatus_t svcRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
-  os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
+  os_semaphore_t *semaphore = osRtxSemaphoreId(semaphore_id);
   os_thread_t    *thread;
   osStatus_t      status;
 
@@ -274,7 +274,7 @@ static osStatus_t svcRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
   if (semaphore->thread_list != NULL) {
     EvrRtxSemaphoreReleased(semaphore);
     // Wakeup waiting Thread with highest Priority
-    thread = osRtxThreadListGet((os_object_t*)semaphore);
+    thread = osRtxThreadListGet(osRtxObject(semaphore));
     osRtxThreadWaitExit(thread, (uint32_t)osOK, TRUE);
     EvrRtxSemaphoreAcquired(semaphore);
     status = osOK;
@@ -295,7 +295,7 @@ static osStatus_t svcRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 /// Get current Semaphore token count.
 /// \note API identical to osSemaphoreGetCount
 static uint32_t svcRtxSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
-  os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
+  os_semaphore_t *semaphore = osRtxSemaphoreId(semaphore_id);
 
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
@@ -317,7 +317,7 @@ static uint32_t svcRtxSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
 /// Delete a Semaphore object.
 /// \note API identical to osSemaphoreDelete
 static osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
-  os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
+  os_semaphore_t *semaphore = osRtxSemaphoreId(semaphore_id);
   os_thread_t    *thread;
 
   // Check parameters
@@ -338,7 +338,7 @@ static osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
   // Unblock waiting threads
   if (semaphore->thread_list != NULL) {
     do {
-      thread = osRtxThreadListGet((os_object_t*)semaphore);
+      thread = osRtxThreadListGet(osRtxObject(semaphore));
       osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, FALSE);
     } while (semaphore->thread_list != NULL);
     osRtxThreadDispatch(NULL);
@@ -373,7 +373,7 @@ SVC0_1(SemaphoreDelete,   osStatus_t,      osSemaphoreId_t)
 /// \note API identical to osSemaphoreAcquire
 __STATIC_INLINE
 osStatus_t isrRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
-  os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
+  os_semaphore_t *semaphore = osRtxSemaphoreId(semaphore_id);
   osStatus_t      status;
 
   // Check parameters
@@ -405,7 +405,7 @@ osStatus_t isrRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeou
 /// \note API identical to osSemaphoreRelease
 __STATIC_INLINE
 osStatus_t isrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
-  os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
+  os_semaphore_t *semaphore = osRtxSemaphoreId(semaphore_id);
   osStatus_t      status;
 
   // Check parameters
@@ -423,7 +423,7 @@ osStatus_t isrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
   // Try to release token
   if (SemaphoreTokenIncrement(semaphore) != 0U) {
     // Register post ISR processing
-    osRtxPostProcess((os_object_t *)semaphore);
+    osRtxPostProcess(osRtxObject(semaphore));
     EvrRtxSemaphoreReleased(semaphore);
     status = osOK;
   } else {

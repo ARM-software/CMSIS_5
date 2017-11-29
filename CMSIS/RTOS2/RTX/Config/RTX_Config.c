@@ -56,6 +56,7 @@ __WEAK uint32_t osRtxErrorNotify (uint32_t code, void *object_id) {
       // Standard C/C++ library mutex initialization failed
       break;
     default:
+      // Reserved
       break;
   }
   for (;;) {}

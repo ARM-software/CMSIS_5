@@ -154,9 +154,11 @@ static void MessageQueueRemove (os_message_queue_t *mq, const os_message_t *msg)
 /// \param[in]  msg             message object.
 static void osRtxMessageQueuePostProcess (os_message_t *msg) {
   os_message_queue_t *mq;
+  os_message_t       *msg0;
   os_thread_t        *thread;
-  uint32_t           *reg;
-  void              **ptr;
+  const uint32_t     *reg;
+  const void         *ptr_src;
+        void         *ptr_dst;
 
   if (msg->state == osRtxObjectInactive) {
     return;
@@ -164,8 +166,7 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
 
   if (msg->flags != 0U) {
     // Remove Message
-    ptr = (void *)((uint8_t *)msg + sizeof(os_message_t));
-    mq = *ptr;
+    mq = *((os_message_queue_t **)(void *)&msg[1]);
     if (mq->state == osRtxObjectInactive) {
       return;
     }
@@ -176,21 +177,22 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
     // Check if Thread is waiting to send a Message
     if ((mq->thread_list != NULL) && (mq->thread_list->state == osRtxThreadWaitingMessagePut)) {
       // Try to allocate memory
-      msg = osRtxMemoryPoolAlloc(&mq->mp_info);
-      if (msg != NULL) {
+      msg0 = osRtxMemoryPoolAlloc(&mq->mp_info);
+      if (msg0 != NULL) {
         // Wakeup waiting Thread with highest Priority
-        thread = osRtxThreadListGet((os_object_t*)mq);
+        thread = osRtxThreadListGet(osRtxObject(mq));
         osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
         // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
         reg = osRtxThreadRegPtr(thread);
-        memcpy((uint8_t *)msg + sizeof(os_message_t), (void *)reg[2], mq->msg_size);
+        ptr_src = (const void *)reg[2];
+        memcpy(&msg0[1], ptr_src, mq->msg_size);
         // Store Message into Queue
-        msg->id       = osRtxIdMessage;
-        msg->state    = osRtxObjectActive;
-        msg->flags    = 0U;
-        msg->priority = (uint8_t)reg[3];
-        MessageQueuePut(mq, msg);
-        EvrRtxMessageQueueInserted(mq, (void *)reg[2]);
+        msg0->id       = osRtxIdMessage;
+        msg0->state    = osRtxObjectActive;
+        msg0->flags    = 0U;
+        msg0->priority = (uint8_t)reg[3];
+        MessageQueuePut(mq, msg0);
+        EvrRtxMessageQueueInserted(mq, ptr_src);
       }
     }
   } else {
@@ -199,24 +201,26 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
     if (mq->state == osRtxObjectInactive) {
       return;
     }
+    ptr_src = (const void *)msg->prev;
     // Check if Thread is waiting to receive a Message
     if ((mq->thread_list != NULL) && (mq->thread_list->state == osRtxThreadWaitingMessageGet)) {
-      EvrRtxMessageQueueInserted(mq, (void *)msg->prev);
+      EvrRtxMessageQueueInserted(mq, ptr_src);
       // Wakeup waiting Thread with highest Priority
-      thread = osRtxThreadListGet((os_object_t*)mq);
+      thread = osRtxThreadListGet(osRtxObject(mq));
       osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
       // Copy Message (R2: void *msg_ptr, R3: uint8_t *msg_prio)
       reg = osRtxThreadRegPtr(thread);
-      memcpy((void *)reg[2], (uint8_t *)msg + sizeof(os_message_t), mq->msg_size);
+      ptr_dst = (void *)reg[2];
+      memcpy(ptr_dst, &msg[1], mq->msg_size);
       if (reg[3] != 0U) {
         *((uint8_t *)reg[3]) = msg->priority;
       }
-      EvrRtxMessageQueueRetrieved(mq, (void *)reg[2]);
+      EvrRtxMessageQueueRetrieved(mq, ptr_dst);
       // Free memory
       msg->state = osRtxObjectInactive;
       (void)osRtxMemoryPoolFree(&mq->mp_info, msg);
     } else {
-      EvrRtxMessageQueueInserted(mq, (void *)msg->prev);
+      EvrRtxMessageQueueInserted(mq, ptr_src);
       MessageQueuePut(mq, msg);
     }
   }
@@ -327,7 +331,7 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
     (void)osRtxMemoryPoolInit(&mq->mp_info, msg_count, block_size, mq_mem);
 
     // Register post ISR processing function
-    osRtxInfo.post_process.message_queue = osRtxMessageQueuePostProcess;
+    osRtxInfo.post_process.message = osRtxMessageQueuePostProcess;
 
     EvrRtxMessageQueueCreated(mq, mq->name);
   } else {
@@ -340,7 +344,7 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
 /// Get name of a Message Queue object.
 /// \note API identical to osMessageQueueGetName
 static const char *svcRtxMessageQueueGetName (osMessageQueueId_t mq_id) {
-  os_message_queue_t *mq = (os_message_queue_t *)mq_id;
+  os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
 
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
@@ -362,10 +366,11 @@ static const char *svcRtxMessageQueueGetName (osMessageQueueId_t mq_id) {
 /// Put a Message into a Queue or timeout if Queue is full.
 /// \note API identical to osMessageQueuePut
 static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout) {
-  os_message_queue_t *mq = (os_message_queue_t *)mq_id;
+  os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
   os_message_t       *msg;
   os_thread_t        *thread;
   uint32_t           *reg;
+  void               *ptr;
   osStatus_t          status;
 
   // Check parameters
@@ -384,22 +389,23 @@ static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *m
   if ((mq->thread_list != NULL) && (mq->thread_list->state == osRtxThreadWaitingMessageGet)) {
     EvrRtxMessageQueueInserted(mq, msg_ptr);
     // Wakeup waiting Thread with highest Priority
-    thread = osRtxThreadListGet((os_object_t*)mq);
+    thread = osRtxThreadListGet(osRtxObject(mq));
     osRtxThreadWaitExit(thread, (uint32_t)osOK, TRUE);
     // Copy Message (R2: void *msg_ptr, R3: uint8_t *msg_prio)
     reg = osRtxThreadRegPtr(thread);
-    memcpy((void *)reg[2], msg_ptr, mq->msg_size);
+    ptr = (void *)reg[2];
+    memcpy(ptr, msg_ptr, mq->msg_size);
     if (reg[3] != 0U) {
       *((uint8_t *)reg[3]) = msg_prio;
     }
-    EvrRtxMessageQueueRetrieved(mq, (void *)reg[2]);
+    EvrRtxMessageQueueRetrieved(mq, ptr);
     status = osOK;
   } else {
     // Try to allocate memory
     msg = osRtxMemoryPoolAlloc(&mq->mp_info);
     if (msg != NULL) {
       // Copy Message
-      memcpy((uint8_t *)msg + sizeof(os_message_t), msg_ptr, mq->msg_size);
+      memcpy(&msg[1], msg_ptr, mq->msg_size);
       // Put Message into Queue
       msg->id       = osRtxIdMessage;
       msg->state    = osRtxObjectActive;
@@ -414,7 +420,7 @@ static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *m
         EvrRtxMessageQueuePutPending(mq, msg_ptr, timeout);
         // Suspend current Thread
         if (osRtxThreadWaitEnter(osRtxThreadWaitingMessagePut, timeout)) {
-          osRtxThreadListPut((os_object_t*)mq, osRtxThreadGetRunning());
+          osRtxThreadListPut(osRtxObject(mq), osRtxThreadGetRunning());
           // Save arguments (R2: const void *msg_ptr, R3: uint8_t msg_prio)
           reg = (uint32_t *)(__get_PSP());
           reg[2] = (uint32_t)msg_ptr;
@@ -436,10 +442,11 @@ static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *m
 /// Get a Message from a Queue or timeout if Queue is empty.
 /// \note API identical to osMessageQueueGet
 static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout) {
-  os_message_queue_t *mq = (os_message_queue_t *)mq_id;
+  os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
   os_message_t       *msg;
   os_thread_t        *thread;
   uint32_t           *reg;
+  const void         *ptr;
   osStatus_t          status;
 
   // Check parameters
@@ -459,7 +466,7 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
   if (msg != NULL) {
     MessageQueueRemove(mq, msg);
     // Copy Message
-    memcpy(msg_ptr, (uint8_t *)msg + sizeof(os_message_t), mq->msg_size);
+    memcpy(msg_ptr, &msg[1], mq->msg_size);
     if (msg_prio != NULL) {
       *msg_prio = msg->priority;
     }
@@ -473,18 +480,19 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
       msg = osRtxMemoryPoolAlloc(&mq->mp_info);
       if (msg != NULL) {
         // Wakeup waiting Thread with highest Priority
-        thread = osRtxThreadListGet((os_object_t*)mq);
+        thread = osRtxThreadListGet(osRtxObject(mq));
         osRtxThreadWaitExit(thread, (uint32_t)osOK, TRUE);
         // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
         reg = osRtxThreadRegPtr(thread);
-        memcpy((uint8_t *)msg + sizeof(os_message_t), (void *)reg[2], mq->msg_size);
+        ptr = (const void *)reg[2];
+        memcpy(&msg[1], ptr, mq->msg_size);
         // Store Message into Queue
         msg->id       = osRtxIdMessage;
         msg->state    = osRtxObjectActive;
         msg->flags    = 0U;
         msg->priority = (uint8_t)reg[3];
         MessageQueuePut(mq, msg);
-        EvrRtxMessageQueueInserted(mq, (void *)reg[2]);
+        EvrRtxMessageQueueInserted(mq, ptr);
       }
     }
     status = osOK;
@@ -494,7 +502,7 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
       EvrRtxMessageQueueGetPending(mq, msg_ptr, timeout);
       // Suspend current Thread
       if (osRtxThreadWaitEnter(osRtxThreadWaitingMessageGet, timeout)) {
-        osRtxThreadListPut((os_object_t*)mq, osRtxThreadGetRunning());
+        osRtxThreadListPut(osRtxObject(mq), osRtxThreadGetRunning());
         // Save arguments (R2: void *msg_ptr, R3: uint8_t *msg_prio)
         reg = (uint32_t *)(__get_PSP());
         reg[2] = (uint32_t)msg_ptr;
@@ -515,7 +523,7 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
 /// Get maximum number of messages in a Message Queue.
 /// \note API identical to osMessageGetCapacity
 static uint32_t svcRtxMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
-  os_message_queue_t *mq = (os_message_queue_t *)mq_id;
+  os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
 
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
@@ -537,7 +545,7 @@ static uint32_t svcRtxMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
 /// Get maximum message size in a Memory Pool.
 /// \note API identical to osMessageGetMsgSize
 static uint32_t svcRtxMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
-  os_message_queue_t *mq = (os_message_queue_t *)mq_id;
+  os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
 
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
@@ -559,7 +567,7 @@ static uint32_t svcRtxMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
 /// Get number of queued messages in a Message Queue.
 /// \note API identical to osMessageGetCount
 static uint32_t svcRtxMessageQueueGetCount (osMessageQueueId_t mq_id) {
-  os_message_queue_t *mq = (os_message_queue_t *)mq_id;
+  os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
 
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
@@ -581,7 +589,7 @@ static uint32_t svcRtxMessageQueueGetCount (osMessageQueueId_t mq_id) {
 /// Get number of available slots for messages in a Message Queue.
 /// \note API identical to osMessageGetSpace
 static uint32_t svcRtxMessageQueueGetSpace (osMessageQueueId_t mq_id) {
-  os_message_queue_t *mq = (os_message_queue_t *)mq_id;
+  os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
 
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
@@ -603,10 +611,11 @@ static uint32_t svcRtxMessageQueueGetSpace (osMessageQueueId_t mq_id) {
 /// Reset a Message Queue to initial empty state.
 /// \note API identical to osMessageQueueReset
 static osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
-  os_message_queue_t *mq = (os_message_queue_t *)mq_id;
+  os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
   os_message_t       *msg;
   os_thread_t        *thread;
-  uint32_t           *reg;
+  const uint32_t     *reg;
+  const void         *ptr;
 
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
@@ -641,18 +650,19 @@ static osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
       msg = osRtxMemoryPoolAlloc(&mq->mp_info);
       if (msg != NULL) {
         // Wakeup waiting Thread with highest Priority
-        thread = osRtxThreadListGet((os_object_t*)mq);
+        thread = osRtxThreadListGet(osRtxObject(mq));
         osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
         // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
         reg = osRtxThreadRegPtr(thread);
-        memcpy((uint8_t *)msg + sizeof(os_message_t), (void *)reg[2], mq->msg_size);
+        ptr = (const void *)reg[2];
+        memcpy(&msg[1], ptr, mq->msg_size);
         // Store Message into Queue
         msg->id       = osRtxIdMessage;
         msg->state    = osRtxObjectActive;
         msg->flags    = 0U;
         msg->priority = (uint8_t)reg[3];
         MessageQueuePut(mq, msg);
-        EvrRtxMessageQueueInserted(mq, (void *)reg[2]);
+        EvrRtxMessageQueueInserted(mq, ptr);
       }
     } while ((msg != NULL) && (mq->thread_list != NULL));
     osRtxThreadDispatch(NULL);
@@ -666,7 +676,7 @@ static osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
 /// Delete a Message Queue object.
 /// \note API identical to osMessageQueueDelete
 static osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
-  os_message_queue_t *mq = (os_message_queue_t *)mq_id;
+  os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
   os_thread_t        *thread;
 
   // Check parameters
@@ -687,8 +697,8 @@ static osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
   // Unblock waiting threads
   if (mq->thread_list != NULL) {
     do {
-      thread = osRtxThreadListGet((os_object_t*)mq);
-      osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, false);
+      thread = osRtxThreadListGet(osRtxObject(mq));
+      osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, FALSE);
     } while (mq->thread_list != NULL);
     osRtxThreadDispatch(NULL);
   }
@@ -731,9 +741,8 @@ SVC0_1(MessageQueueDelete,      osStatus_t,         osMessageQueueId_t)
 /// \note API identical to osMessageQueuePut
 __STATIC_INLINE
 osStatus_t isrRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout) {
-  os_message_queue_t *mq = (os_message_queue_t *)mq_id;
+  os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
   os_message_t       *msg;
-  const void        **ptr;
   osStatus_t          status;
 
   // Check parameters
@@ -752,17 +761,15 @@ osStatus_t isrRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
   msg = osRtxMemoryPoolAlloc(&mq->mp_info);
   if (msg != NULL) {
     // Copy Message
-    memcpy((uint8_t *)msg + sizeof(os_message_t), msg_ptr, mq->msg_size);
+    memcpy(&msg[1], msg_ptr, mq->msg_size);
     msg->id       = osRtxIdMessage;
     msg->state    = osRtxObjectActive;
     msg->flags    = 0U;
     msg->priority = msg_prio;
     // Register post ISR processing
-     ptr = (void *)&msg->prev;
-    *ptr = msg_ptr;
-     ptr = (void *)&msg->next;
-    *ptr = mq;
-    osRtxPostProcess((os_object_t *)msg);
+    *((const void **)(void *)&msg->prev) = msg_ptr;
+    *(      (void **)        &msg->next) = mq;
+    osRtxPostProcess(osRtxObject(msg));
     EvrRtxMessageQueueInsertPending(mq, msg_ptr);
     status = osOK;
   } else {
@@ -778,9 +785,8 @@ osStatus_t isrRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
 /// \note API identical to osMessageQueueGet
 __STATIC_INLINE
 osStatus_t isrRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout) {
-  os_message_queue_t *mq = (os_message_queue_t *)mq_id;
+  os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
   os_message_t       *msg;
-  void              **ptr;
   osStatus_t          status;
 
   // Check parameters
@@ -799,14 +805,13 @@ osStatus_t isrRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
   msg = MessageQueueGet(mq);
   if (msg != NULL) {
     // Copy Message
-    memcpy(msg_ptr, (uint8_t *)msg + sizeof(os_message_t), mq->msg_size);
+    memcpy(msg_ptr, &msg[1], mq->msg_size);
     if (msg_prio != NULL) {
       *msg_prio = msg->priority;
     }
     // Register post ISR processing
-     ptr = (void *)((uint8_t *)msg + sizeof(os_message_t));
-    *ptr = mq;
-    osRtxPostProcess((os_object_t *)msg);
+    *((os_message_queue_t **)(void *)&msg[1]) = mq;
+    osRtxPostProcess(osRtxObject(msg));
     EvrRtxMessageQueueRetrieved(mq, msg_ptr);
     status = osOK;
   } else {

@@ -115,7 +115,9 @@ __WEAK void osRtxTimerThread (void *argument) {
   osStatus_t       status;
   (void)           argument;
 
-  osRtxInfo.timer.mq = osMessageQueueNew(osRtxConfig.timer_mq_mcnt, sizeof(os_timer_finfo_t), osRtxConfig.timer_mq_attr);
+  osRtxInfo.timer.mq = osRtxMessageQueueId(
+    osMessageQueueNew(osRtxConfig.timer_mq_mcnt, sizeof(os_timer_finfo_t), osRtxConfig.timer_mq_attr)
+  );
   if (osRtxInfo.timer.mq == NULL) {
     return;
   }
@@ -123,8 +125,8 @@ __WEAK void osRtxTimerThread (void *argument) {
   for (;;) {
     status = osMessageQueueGet(osRtxInfo.timer.mq, &finfo, NULL, osWaitForever);
     if (status == osOK) {
-      EvrRtxTimerCallback(*(osTimerFunc_t)finfo.fp, finfo.arg);
-      (*(osTimerFunc_t)finfo.fp)(finfo.arg);
+      EvrRtxTimerCallback(finfo.func, finfo.arg);
+      (finfo.func)(finfo.arg);
     }
   }
 }
@@ -187,7 +189,7 @@ static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void 
     timer->next       = NULL;
     timer->tick       = 0U;
     timer->load       = 0U;
-    timer->finfo.fp   = (void *)func;
+    timer->finfo.func = func;
     timer->finfo.arg  = argument;
 
     EvrRtxTimerCreated(timer, timer->name);
@@ -201,7 +203,7 @@ static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void 
 /// Get name of a timer.
 /// \note API identical to osTimerGetName
 static const char *svcRtxTimerGetName (osTimerId_t timer_id) {
-  os_timer_t *timer = (os_timer_t *)timer_id;
+  os_timer_t *timer = osRtxTimerId(timer_id);
 
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
@@ -223,7 +225,7 @@ static const char *svcRtxTimerGetName (osTimerId_t timer_id) {
 /// Start or restart a timer.
 /// \note API identical to osTimerStart
 static osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
-  os_timer_t *timer = (os_timer_t *)timer_id;
+  os_timer_t *timer = osRtxTimerId(timer_id);
 
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer) || (ticks == 0U)) {
@@ -258,7 +260,7 @@ static osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
 /// Stop a timer.
 /// \note API identical to osTimerStop
 static osStatus_t svcRtxTimerStop (osTimerId_t timer_id) {
-  os_timer_t *timer = (os_timer_t *)timer_id;
+  os_timer_t *timer = osRtxTimerId(timer_id);
 
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
@@ -284,7 +286,7 @@ static osStatus_t svcRtxTimerStop (osTimerId_t timer_id) {
 /// Check if a timer is running.
 /// \note API identical to osTimerIsRunning
 static uint32_t svcRtxTimerIsRunning (osTimerId_t timer_id) {
-  os_timer_t *timer = (os_timer_t *)timer_id;
+  os_timer_t *timer = osRtxTimerId(timer_id);
   uint32_t    is_running;
 
   // Check parameters
@@ -308,7 +310,7 @@ static uint32_t svcRtxTimerIsRunning (osTimerId_t timer_id) {
 /// Delete a timer.
 /// \note API identical to osTimerDelete
 static osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
-  os_timer_t *timer = (os_timer_t *)timer_id;
+  os_timer_t *timer = osRtxTimerId(timer_id);
 
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer)) {

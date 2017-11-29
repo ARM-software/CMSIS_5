@@ -199,6 +199,7 @@ static osStatus_t svcRtxKernelInitialize (void) {
 ///  Get RTOS Kernel Information.
 /// \note API identical to osKernelGetInfo
 static osStatus_t svcRtxKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size) {
+  uint32_t size;
 
   if (version != NULL) {
     version->api    = osRtxVersionAPI;
@@ -207,9 +208,11 @@ static osStatus_t svcRtxKernelGetInfo (osVersion_t *version, char *id_buf, uint3
 
   if ((id_buf != NULL) && (id_size != 0U)) {
     if (id_size > sizeof(osRtxKernelId)) {
-      id_size = sizeof(osRtxKernelId);
+      size = sizeof(osRtxKernelId);
+    } else {
+      size = id_size;
     }
-    memcpy(id_buf, osRtxKernelId, id_size);
+    memcpy(id_buf, osRtxKernelId, size);
   }
 
   EvrRtxKernelInfoRetrieved(version, id_buf);
@@ -220,8 +223,9 @@ static osStatus_t svcRtxKernelGetInfo (osVersion_t *version, char *id_buf, uint3
 /// Get the current RTOS Kernel state.
 /// \note API identical to osKernelGetState
 static osKernelState_t svcRtxKernelGetState (void) {
-  EvrRtxKernelGetState((osKernelState_t)(osRtxInfo.kernel.state));
-  return ((osKernelState_t)(osRtxInfo.kernel.state));
+  osKernelState_t state = osRtxKernelState();
+  EvrRtxKernelGetState(state);
+  return state;
 }
 
 /// Start the RTOS Kernel scheduler.
@@ -358,9 +362,9 @@ static int32_t svcRtxKernelRestoreLock (int32_t lock) {
 /// Suspend the RTOS Kernel scheduler.
 /// \note API identical to osKernelSuspend
 static uint32_t svcRtxKernelSuspend (void) {
-  os_thread_t *thread;
-  os_timer_t  *timer;
-  uint32_t     delay;
+  const os_thread_t *thread;
+  const os_timer_t  *timer;
+  uint32_t           delay;
 
   if (osRtxInfo.kernel.state != osRtxKernelRunning) {
     EvrRtxKernelError(osRtxErrorKernelNotRunning);

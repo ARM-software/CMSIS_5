@@ -31,7 +31,7 @@
 /// Put Object into ISR Queue.
 /// \param[in]  object          object.
 /// \return 1 - success, 0 - failure.
-static uint32_t isr_queue_put (void *object) {
+static uint32_t isr_queue_put (os_object_t *object) {
 #if (EXCLUSIVE_ACCESS == 0)
   uint32_t primask = __get_PRIMASK();
 #else
@@ -74,14 +74,14 @@ static uint32_t isr_queue_put (void *object) {
 
 /// Get Object from ISR Queue.
 /// \return object or NULL.
-static void *isr_queue_get (void) {
+static os_object_t *isr_queue_get (void) {
 #if (EXCLUSIVE_ACCESS == 0)
-  uint32_t primask = __get_PRIMASK();
+  uint32_t     primask = __get_PRIMASK();
 #else
-  uint32_t n;
+  uint32_t     n;
 #endif
-  uint16_t max;
-  void    *ret;
+  uint16_t     max;
+  os_object_t *ret;
 
   max = osRtxInfo.isr_queue.max;
 
@@ -90,7 +90,7 @@ static void *isr_queue_get (void) {
 
   if (osRtxInfo.isr_queue.cnt != 0U) {
     osRtxInfo.isr_queue.cnt--;
-    ret = osRtxInfo.isr_queue.data[osRtxInfo.isr_queue.out];
+    ret = osRtxObject(osRtxInfo.isr_queue.data[osRtxInfo.isr_queue.out]);
     if (++osRtxInfo.isr_queue.out == max) {
       osRtxInfo.isr_queue.out = 0U;
     }
@@ -104,7 +104,7 @@ static void *isr_queue_get (void) {
 #else
   if (atomic_dec16_nz(&osRtxInfo.isr_queue.cnt) != 0U) {
     n = atomic_inc16_lim(&osRtxInfo.isr_queue.out, max);
-    ret = osRtxInfo.isr_queue.data[n];
+    ret = osRtxObject(osRtxInfo.isr_queue.data[n]);
   } else {
     ret = NULL;
   }
@@ -172,21 +172,22 @@ void osRtxPendSV_Handler (void) {
     }
     switch (object->id) {
       case osRtxIdThread:
-        osRtxInfo.post_process.thread((os_thread_t *)object);
+        osRtxInfo.post_process.thread(osRtxThreadObject(object));
         break;
       case osRtxIdEventFlags:
-        osRtxInfo.post_process.event_flags((os_event_flags_t *)object);
+        osRtxInfo.post_process.event_flags(osRtxEventFlagsObject(object));
         break;
       case osRtxIdSemaphore:
-        osRtxInfo.post_process.semaphore((os_semaphore_t *)object);
+        osRtxInfo.post_process.semaphore(osRtxSemaphoreObject(object));
         break;
       case osRtxIdMemoryPool:
-        osRtxInfo.post_process.memory_pool((os_memory_pool_t *)object);
+        osRtxInfo.post_process.memory_pool(osRtxMemoryPoolObject(object));
         break;
       case osRtxIdMessage:
-        osRtxInfo.post_process.message_queue((os_message_t *)object);
+        osRtxInfo.post_process.message(osRtxMessageObject(object));
         break;
       default:
+        // Should never come here
         break;
     }
   }

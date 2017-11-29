@@ -85,13 +85,13 @@ __attribute__((section(".bss.os.thread.stack")));
 // Memory Pool for Thread Control Blocks
 static osRtxMpInfo_t os_mpi_thread \
 __attribute__((section(".data.os.thread.mpi"))) =
-{ (uint32_t)OS_THREAD_NUM, 0U, (uint32_t)osRtxThreadCbSize, &os_thread_cb, NULL, NULL };
+{ (uint32_t)OS_THREAD_NUM, 0U, (uint32_t)osRtxThreadCbSize, &os_thread_cb[0], NULL, NULL };
 
 // Memory Pool for Thread Default Stack
 #if (OS_THREAD_DEF_STACK_NUM != 0)
 static osRtxMpInfo_t os_mpi_def_stack \
 __attribute__((section(".data.os.thread.mpi"))) =
-{ (uint32_t)OS_THREAD_DEF_STACK_NUM, 0U, (uint32_t)OS_STACK_SIZE, &os_thread_def_stack, NULL, NULL };
+{ (uint32_t)OS_THREAD_DEF_STACK_NUM, 0U, (uint32_t)OS_STACK_SIZE, &os_thread_def_stack[0], NULL, NULL };
 #endif
 
 // Memory Pool for Thread Stack
@@ -125,7 +125,7 @@ static const osThreadAttr_t os_idle_thread_attr = {
   osThreadDetached,
   &os_idle_thread_cb,
   (uint32_t)sizeof(os_idle_thread_cb),
-  &os_idle_thread_stack,
+  &os_idle_thread_stack[0],
   (uint32_t)sizeof(os_idle_thread_stack),
   osPriorityIdle,
 #if defined(OS_IDLE_THREAD_TZ_MOD_ID)
@@ -153,7 +153,7 @@ __attribute__((section(".bss.os.timer.cb")));
 // Memory Pool for Timer Control Blocks
 static osRtxMpInfo_t os_mpi_timer \
 __attribute__((section(".data.os.timer.mpi"))) =
-{ (uint32_t)OS_TIMER_NUM, 0U, (uint32_t)osRtxTimerCbSize, &os_timer_cb, NULL, NULL };
+{ (uint32_t)OS_TIMER_NUM, 0U, (uint32_t)osRtxTimerCbSize, &os_timer_cb[0], NULL, NULL };
 
 #endif  // (OS_TIMER_OBJ_MEM != 0)
 
@@ -178,7 +178,7 @@ static const osThreadAttr_t os_timer_thread_attr = {
   osThreadDetached,
   &os_timer_thread_cb,
   (uint32_t)sizeof(os_timer_thread_cb),
-  &os_timer_thread_stack,
+  &os_timer_thread_stack[0],
   (uint32_t)sizeof(os_timer_thread_stack),
   (osPriority_t)OS_TIMER_THREAD_PRIO,
 #if defined(OS_TIMER_THREAD_TZ_MOD_ID)
@@ -203,7 +203,7 @@ static const osMessageQueueAttr_t os_timer_mq_attr = {
   0U,
   &os_timer_mq_cb,
   (uint32_t)sizeof(os_timer_mq_cb),
-  &os_timer_mq_data,
+  &os_timer_mq_data[0],
   (uint32_t)sizeof(os_timer_mq_data)
 };
 
@@ -231,7 +231,7 @@ __attribute__((section(".bss.os.evflags.cb")));
 // Memory Pool for Event Flags Control Blocks
 static osRtxMpInfo_t os_mpi_ef \
 __attribute__((section(".data.os.evflags.mpi"))) =
-{ (uint32_t)OS_EVFLAGS_NUM, 0U, (uint32_t)osRtxEventFlagsCbSize, &os_ef_cb, NULL, NULL };
+{ (uint32_t)OS_EVFLAGS_NUM, 0U, (uint32_t)osRtxEventFlagsCbSize, &os_ef_cb[0], NULL, NULL };
 
 #endif  // (OS_EVFLAGS_OBJ_MEM != 0)
 
@@ -252,7 +252,7 @@ __attribute__((section(".bss.os.mutex.cb")));
 // Memory Pool for Mutex Control Blocks
 static osRtxMpInfo_t os_mpi_mutex \
 __attribute__((section(".data.os.mutex.mpi"))) =
-{ (uint32_t)OS_MUTEX_NUM, 0U, (uint32_t)osRtxMutexCbSize, &os_mutex_cb, NULL, NULL };
+{ (uint32_t)OS_MUTEX_NUM, 0U, (uint32_t)osRtxMutexCbSize, &os_mutex_cb[0], NULL, NULL };
 
 #endif  // (OS_MUTEX_OBJ_MEM != 0)
 
@@ -273,7 +273,7 @@ __attribute__((section(".bss.os.semaphore.cb")));
 // Memory Pool for Semaphore Control Blocks
 static osRtxMpInfo_t os_mpi_semaphore \
 __attribute__((section(".data.os.semaphore.mpi"))) =
-{ (uint32_t)OS_SEMAPHORE_NUM, 0U, (uint32_t)osRtxSemaphoreCbSize, &os_semaphore_cb, NULL, NULL };
+{ (uint32_t)OS_SEMAPHORE_NUM, 0U, (uint32_t)osRtxSemaphoreCbSize, &os_semaphore_cb[0], NULL, NULL };
 
 #endif  // (OS_SEMAPHORE_OBJ_MEM != 0)
 
@@ -294,7 +294,7 @@ __attribute__((section(".bss.os.mempool.cb")));
 // Memory Pool for Memory Pool Control Blocks
 static osRtxMpInfo_t os_mpi_mp \
 __attribute__((section(".data.os.mempool.mpi"))) =
-{ (uint32_t)OS_MEMPOOL_NUM, 0U, (uint32_t)osRtxMemoryPoolCbSize, &os_mp_cb, NULL, NULL };
+{ (uint32_t)OS_MEMPOOL_NUM, 0U, (uint32_t)osRtxMemoryPoolCbSize, &os_mp_cb[0], NULL, NULL };
 
 // Memory Pool for Memory Pool Data Storage
 #if (OS_MEMPOOL_DATA_SIZE != 0)
@@ -324,7 +324,7 @@ __attribute__((section(".bss.os.msgqueue.cb")));
 // Memory Pool for Message Queue Control Blocks
 static osRtxMpInfo_t os_mpi_mq \
 __attribute__((section(".data.os.msgqueue.mpi"))) =
-{ (uint32_t)OS_MSGQUEUE_NUM, 0U, (uint32_t)osRtxMessageQueueCbSize, &os_mq_cb, NULL, NULL };
+{ (uint32_t)OS_MSGQUEUE_NUM, 0U, (uint32_t)osRtxMessageQueueCbSize, &os_mq_cb[0], NULL, NULL };
 
 // Memory Pool for Message Queue Data Storage
 #if (OS_MSGQUEUE_DATA_SIZE != 0)
@@ -341,9 +341,11 @@ __attribute__((section(".bss.os.msgqueue.mem")));
 // OS Configuration
 // ================
 
-__USED
-__attribute__((section(".rodata")))
-const osRtxConfig_t osRtxConfig = {
+
+const osRtxConfig_t osRtxConfig \
+__USED \
+__attribute__((section(".rodata"))) =
+{
   0U   // Flags
 #if (OS_PRIVILEGE_MODE != 0)
   | osRtxConfigPrivilegedMode
@@ -361,26 +363,26 @@ const osRtxConfig_t osRtxConfig = {
 #else
   0U,
 #endif
-  { &os_isr_queue[0], sizeof(os_isr_queue)/sizeof(void *), 0U },
+  { &os_isr_queue[0], (uint16_t)(sizeof(os_isr_queue)/sizeof(void *)), 0U },
   { 
     // Memory Pools (Variable Block Size)
 #if ((OS_THREAD_OBJ_MEM != 0) && (OS_THREAD_USER_STACK_SIZE != 0))
-    &os_thread_stack, sizeof(os_thread_stack),
+    &os_thread_stack[0], sizeof(os_thread_stack),
 #else
     NULL, 0U,
 #endif
 #if ((OS_MEMPOOL_OBJ_MEM != 0) && (OS_MEMPOOL_DATA_SIZE != 0))
-    &os_mp_data, sizeof(os_mp_data),
+    &os_mp_data[0], sizeof(os_mp_data),
 #else
     NULL, 0U,
 #endif
 #if ((OS_MSGQUEUE_OBJ_MEM != 0) && (OS_MSGQUEUE_DATA_SIZE != 0))
-    &os_mq_data, sizeof(os_mq_data),
+    &os_mq_data[0], sizeof(os_mq_data),
 #else
     NULL, 0U,
 #endif
 #if (OS_DYNAMIC_MEM_SIZE != 0)
-    &os_mem, (uint32_t)OS_DYNAMIC_MEM_SIZE,
+    &os_mem[0], (uint32_t)OS_DYNAMIC_MEM_SIZE,
 #else
     NULL, 0U
 #endif
@@ -497,8 +499,9 @@ __asm (".global os_cb_sections");
 
 extern const uint32_t os_cb_sections[];
 
-__attribute__((section(".rodata")))
-const uint32_t os_cb_sections[] = {
+const uint32_t os_cb_sections[] \
+__attribute__((section(".rodata"))) =
+{
   (uint32_t)&__os_thread_cb_start__,
   (uint32_t)&__os_thread_cb_end__,
   (uint32_t)&__os_timer_cb_start__,
@@ -552,7 +555,7 @@ __WEAK void software_init_hook (void) {
 #define LIBSPACE_SIZE 96
 
 // Memory for libspace
-static uint32_t os_libspace[OS_THREAD_LIBSPACE_NUM+1][LIBSPACE_SIZE/sizeof(uint32_t)] \
+static uint32_t os_libspace[OS_THREAD_LIBSPACE_NUM+1][LIBSPACE_SIZE/4] \
 __attribute__((section(".bss.os")));
 
 // Thread IDs for libspace
