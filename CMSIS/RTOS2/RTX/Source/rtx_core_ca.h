@@ -80,7 +80,7 @@ __STATIC_INLINE uint32_t xPSR_InitVal (bool_t privileged, bool_t thumb) {
 //  - Basic:                                    R4-R11, R0-R3, R12, LR, PC, CPSR
 
 /// Stack Frame Initialization Value
-#define STACK_FRAME_INIT        0x00U
+#define STACK_FRAME_INIT_VAL    0x00U
 
 /// Stack Offset of Register R0
 /// \param[in]  stack_frame     Stack Frame
@@ -159,7 +159,6 @@ __STATIC_INLINE bool_t IsIrqMode (void) {
 /// \return     true=masked, false=not masked
 __STATIC_INLINE bool_t IsIrqMasked (void) {
   return  FALSE;
-#endif
 }
 
 
