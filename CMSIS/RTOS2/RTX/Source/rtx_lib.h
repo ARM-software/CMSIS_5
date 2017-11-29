@@ -56,84 +56,103 @@
 
 // Thread ID
 __STATIC_INLINE os_thread_t *osRtxThreadId (osThreadId_t thread_id) {
+  //lint -e{9079} -e{9087} "cast from pointer to void to pointer to object type" [MISRA Note 2]
   return ((os_thread_t *)thread_id);
 }
 // Timer ID
 __STATIC_INLINE os_timer_t *osRtxTimerId (osTimerId_t timer_id) {
+  //lint -e{9079} -e{9087} "cast from pointer to void to pointer to object type" [MISRA Note 2]
   return ((os_timer_t *)timer_id);
 }
 // Event Flags ID
 __STATIC_INLINE os_event_flags_t *osRtxEventFlagsId (osEventFlagsId_t ef_id) {
+  //lint -e{9079} -e{9087} "cast from pointer to void to pointer to object type" [MISRA Note 2]
   return ((os_event_flags_t *)ef_id);
 }
 // Mutex ID
 __STATIC_INLINE os_mutex_t *osRtxMutexId (osMutexId_t mutex_id) {
+  //lint -e{9079} -e{9087} "cast from pointer to void to pointer to object type" [MISRA Note 2]
   return ((os_mutex_t *)mutex_id);
 }
 // Semaphore ID
 __STATIC_INLINE os_semaphore_t *osRtxSemaphoreId (osSemaphoreId_t semaphore_id) {
+  //lint -e{9079} -e{9087} "cast from pointer to void to pointer to object type" [MISRA Note 2]
   return ((os_semaphore_t *)semaphore_id);
 }
 // Memory Pool ID
 __STATIC_INLINE os_memory_pool_t *osRtxMemoryPoolId (osMemoryPoolId_t mp_id) {
+  //lint -e{9079} -e{9087} "cast from pointer to void to pointer to object type" [MISRA Note 2]
   return ((os_memory_pool_t *)mp_id);
 }
 // Message Queue ID
 __STATIC_INLINE os_message_queue_t *osRtxMessageQueueId (osMessageQueueId_t mq_id) {
+  //lint -e{9079} -e{9087} "cast from pointer to void to pointer to object type" [MISRA Note 2]
   return ((os_message_queue_t *)mq_id);
 }
 
 // Generic Object
 __STATIC_INLINE os_object_t *osRtxObject (void *object) {
+  //lint -e{9079} -e{9087} "cast from pointer to void to pointer to object type" [MISRA Note 3]
   return ((os_object_t *)object);
 }
 
 // Thread Object
 __STATIC_INLINE os_thread_t *osRtxThreadObject (os_object_t *object) {
+  //lint -e{740} -e{826} -e{9087} "cast from pointer to generic object to specific object" [MISRA Note 4]
   return ((os_thread_t *)object);
 }
 // Timer Object
 __STATIC_INLINE os_timer_t *osRtxTimerObject (os_object_t *object) {
+  //lint -e{740} -e{826} -e{9087} "cast from pointer to generic object to specific object" [MISRA Note 4]
   return ((os_timer_t *)object);
 }
 // Event Flags Object
 __STATIC_INLINE os_event_flags_t *osRtxEventFlagsObject (os_object_t *object) {
+  //lint -e{740} -e{826} -e{9087} "cast from pointer to generic object to specific object" [MISRA Note 4]
   return ((os_event_flags_t *)object);
 }
 // Mutex Object
 __STATIC_INLINE os_mutex_t *osRtxMutexObject (os_object_t *object) {
+  //lint -e{740} -e{826} -e{9087} "cast from pointer to generic object to specific object" [MISRA Note 4]
   return ((os_mutex_t *)object);
 }
 // Semaphore Object
 __STATIC_INLINE os_semaphore_t *osRtxSemaphoreObject (os_object_t *object) {
+  //lint -e{740} -e{826} -e{9087} "cast from pointer to generic object to specific object" [MISRA Note 4]
   return ((os_semaphore_t *)object);
 }
 // Memory Pool Object
 __STATIC_INLINE os_memory_pool_t *osRtxMemoryPoolObject (os_object_t *object) {
+  //lint -e{740} -e{826} -e{9087} "cast from pointer to generic object to specific object" [MISRA Note 4]
   return ((os_memory_pool_t *)object);
 }
 // Message Queue Object
 __STATIC_INLINE os_message_queue_t *osRtxMessageQueueObject (os_object_t *object) {
+  //lint -e{740} -e{826} -e{9087} "cast from pointer to generic object to specific object" [MISRA Note 4]
   return ((os_message_queue_t *)object);
 }
 // Message Object
 __STATIC_INLINE os_message_t *osRtxMessageObject (os_object_t *object) {
+  //lint -e{740} -e{826} -e{9087} "cast from pointer to generic object to specific object" [MISRA Note 4]
   return ((os_message_t *)object);
 }
 
 // Kernel State
 __STATIC_INLINE osKernelState_t osRtxKernelState (void) {
+  //lint -e{9030} -e{9034} "cast to enum"
   return ((osKernelState_t)(osRtxInfo.kernel.state));
 }
 
 // Thread State
 __STATIC_INLINE osThreadState_t osRtxThreadState (const os_thread_t *thread) {
   uint8_t state = thread->state & osRtxThreadStateMask;
+  //lint -e{9030} -e{9034} "cast to enum"
   return ((osThreadState_t)state);
 }
 
 // Thread Priority
 __STATIC_INLINE osPriority_t osRtxThreadPriority (const os_thread_t *thread) {
+  //lint -e{9030} -e{9034} "cast to enum"
   return ((osPriority_t)thread->priority);
 }
 

@@ -77,15 +77,19 @@ static osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
   if (attr != NULL) {
     name      = attr->name;
     attr_bits = attr->attr_bits;
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     mutex     = attr->cb_mem;
     if (mutex != NULL) {
+      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)mutex & 3U) != 0U) || (attr->cb_size < sizeof(os_mutex_t))) {
         EvrRtxMutexError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
         EvrRtxMutexError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     }
@@ -98,8 +102,10 @@ static osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
   // Allocate object memory if not provided
   if (mutex == NULL) {
     if (osRtxInfo.mpi.mutex != NULL) {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mutex = osRtxMemoryPoolAlloc(osRtxInfo.mpi.mutex);
     } else {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mutex = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_mutex_t), 1U);
     }
     flags = osRtxFlagSystemObject;
@@ -136,12 +142,14 @@ static const char *svcRtxMutexGetName (osMutexId_t mutex_id) {
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
     EvrRtxMutexGetName(mutex, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Check object state
   if (mutex->state == osRtxObjectInactive) {
     EvrRtxMutexGetName(mutex, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -161,18 +169,21 @@ static osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
   runnig_thread = osRtxThreadGetRunning();
   if (runnig_thread == NULL) {
     EvrRtxMutexError(mutex, osRtxErrorKernelNotRunning);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osError;
   }
 
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
     EvrRtxMutexError(mutex, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (mutex->state == osRtxObjectInactive) {
     EvrRtxMutexError(mutex, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -243,30 +254,35 @@ static osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
   runnig_thread = osRtxThreadGetRunning();
   if (runnig_thread == NULL) {
     EvrRtxMutexError(mutex, osRtxErrorKernelNotRunning);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osError;
   }
 
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
     EvrRtxMutexError(mutex, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (mutex->state == osRtxObjectInactive) {
     EvrRtxMutexError(mutex, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
   // Check if running Thread is not the owner
   if (mutex->owner_thread != runnig_thread) {
     EvrRtxMutexError(mutex, osRtxErrorMutexNotOwned);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
   // Check if Mutex is not locked
   if (mutex->lock == 0U) {
     EvrRtxMutexError(mutex, osRtxErrorMutexNotLocked);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -330,18 +346,21 @@ static osThreadId_t svcRtxMutexGetOwner (osMutexId_t mutex_id) {
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
     EvrRtxMutexGetOwner(mutex, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Check object state
   if (mutex->state == osRtxObjectInactive) {
     EvrRtxMutexGetOwner(mutex, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Check if Mutex is not locked
   if (mutex->lock == 0U) {
     EvrRtxMutexGetOwner(mutex, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -361,12 +380,14 @@ static osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
   // Check parameters
   if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
     EvrRtxMutexError(mutex, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (mutex->state == osRtxObjectInactive) {
     EvrRtxMutexError(mutex, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -432,12 +453,14 @@ static osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
 }
 
 //  Service Calls definitions
+//lint ++flb "Library Begin" [MISRA Note 11]
 SVC0_1(MutexNew,      osMutexId_t,  const osMutexAttr_t *)
 SVC0_1(MutexGetName,  const char *, osMutexId_t)
 SVC0_2(MutexAcquire,  osStatus_t,   osMutexId_t, uint32_t)
 SVC0_1(MutexRelease,  osStatus_t,   osMutexId_t)
 SVC0_1(MutexGetOwner, osThreadId_t, osMutexId_t)
 SVC0_1(MutexDelete,   osStatus_t,   osMutexId_t)
+//lint --flb "Library End"
 
 
 //  ==== Public API ====

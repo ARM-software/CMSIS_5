@@ -43,6 +43,7 @@ typedef struct mem_block_s {
 
 //  Memory Head Pointer
 __STATIC_INLINE mem_head_t *MemHeadPtr (void *mem) {
+  //lint -e{9079} -e{9087} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
   return ((mem_head_t *)mem);
 }
 
@@ -51,6 +52,7 @@ __STATIC_INLINE mem_block_t *MemBlockPtr (void *mem, uint32_t offset) {
   uint32_t     addr;
   mem_block_t *ptr;
 
+  //lint --e{923} --e{9078} "cast between pointer and unsigned int" [MISRA Note 8]
   addr = (uint32_t)mem + offset;
   ptr  = (mem_block_t *)addr;
 
@@ -68,9 +70,11 @@ __WEAK uint32_t osRtxMemoryInit (void *mem, uint32_t size) {
   mem_head_t  *head;
   mem_block_t *ptr;
 
+  //lint -e{923} "cast from pointer to unsigned int" [MISRA Note 7]
   if ((mem == NULL) || (((uint32_t)mem & 7U) != 0U) || ((size & 7U) != 0U) ||
       (size < (sizeof(mem_head_t) + (2U*sizeof(mem_block_t))))) {
     EvrRtxMemoryInit(mem, size, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -101,6 +105,7 @@ __WEAK void *osRtxMemoryAlloc (void *mem, uint32_t size, uint32_t type) {
 
   if ((mem == NULL) || (size == 0U) || ((type & ~MB_INFO_TYPE_MASK) != 0U)) {
     EvrRtxMemoryAlloc(mem, size, type, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -112,6 +117,7 @@ __WEAK void *osRtxMemoryAlloc (void *mem, uint32_t size, uint32_t type) {
   // Search for hole big enough
   p = MemBlockPtr(mem, sizeof(mem_head_t));
   for (;;) {
+    //lint -e{923} -e{9078} "cast from pointer to unsigned int"
     hole_size  = (uint32_t)p->next - (uint32_t)p;
     hole_size -= p->info & MB_INFO_LEN_MASK;
     if (hole_size >= block_size) {
@@ -122,6 +128,7 @@ __WEAK void *osRtxMemoryAlloc (void *mem, uint32_t size, uint32_t type) {
     if (p->next == NULL) {
       // Failed (end of list)
       EvrRtxMemoryAlloc(mem, size, type, NULL);
+      //lint -e{904} "Return statement before end of function" [MISRA Note 1]
       return NULL;
     }
   }
@@ -156,6 +163,7 @@ __WEAK uint32_t osRtxMemoryFree (void *mem, void *block) {
 
   if ((mem == NULL) || (block == NULL)) {
     EvrRtxMemoryFree(mem, block, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -171,6 +179,7 @@ __WEAK uint32_t osRtxMemoryFree (void *mem, void *block) {
     if (p == NULL) {
       // Not found
       EvrRtxMemoryFree(mem, block, 0U);
+      //lint -e{904} "Return statement before end of function" [MISRA Note 1]
       return 0U;
     }
   }

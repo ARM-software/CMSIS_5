@@ -100,6 +100,11 @@ __STATIC_INLINE uint32_t StackOffsetR0 (uint8_t stack_frame) {
 
 //  ==== Core functions ====
 
+//lint -sem(__get_CONTROL, pure)
+//lint -sem(__get_IPSR,    pure)
+//lint -sem(__get_PRIMASK, pure)
+//lint -sem(__get_BASEPRI, pure)
+
 /// Check if running Privileged
 /// \return     true=privileged, false=unprivileged
 __STATIC_INLINE bool_t IsPrivileged (void) {
@@ -184,6 +189,8 @@ __STATIC_INLINE void SetPendSV (void) {
 
 
 //  ==== Service Calls definitions ====
+
+//lint -save -e9023 -e9024 -e9026 "Function-like macros using '#/##'" [MISRA Note 10]
 
 #if defined(__CC_ARM)
 
@@ -325,6 +332,8 @@ __STATIC_INLINE   t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                   \
 
 #else   // !(defined(__CC_ARM) || defined(__ICCARM__))
 
+//lint -esym(522,__svc*) "Functions '__svc*' are impure (side-effects)"
+
 #if   ((defined(__ARM_ARCH_7M__)      && (__ARM_ARCH_7M__      != 0)) ||       \
        (defined(__ARM_ARCH_7EM__)     && (__ARM_ARCH_7EM__     != 0)) ||       \
        (defined(__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ != 0)))
@@ -427,10 +436,14 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
 
 #endif
 
+//lint -restore [MISRA Note 10]
+
 
 //  ==== Exclusive Access Operation ====
 
 #if (EXCLUSIVE_ACCESS == 1)
+
+//lint ++flb "Library Begin" [MISRA Note 12]
 
 /// Atomic Access Operation: Write (8-bit)
 /// \param[in]  mem             Memory address
@@ -1192,6 +1205,8 @@ __STATIC_INLINE void atomic_link_put (void **root, void *link) {
   );
 }
 #endif
+
+//lint --flb "Library End" [MISRA Note 12]
 
 #endif  // (EXCLUSIVE_ACCESS == 1)
 

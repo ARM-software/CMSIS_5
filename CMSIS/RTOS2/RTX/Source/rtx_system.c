@@ -117,6 +117,9 @@ static os_object_t *isr_queue_get (void) {
 //  ==== Library Functions ====
 
 /// Tick Handler.
+//lint -esym(714,osRtxTick_Handler) "Referenced by Exception handlers"
+//lint -esym(759,osRtxTick_Handler) "Prototype in header"
+//lint -esym(765,osRtxTick_Handler) "Global scope"
 void osRtxTick_Handler (void) {
   os_thread_t *thread;
 
@@ -162,6 +165,9 @@ void osRtxTick_Handler (void) {
 }
 
 /// Pending Service Call Handler.
+//lint -esym(714,osRtxPendSV_Handler) "Referenced by Exception handlers"
+//lint -esym(759,osRtxPendSV_Handler) "Prototype in header"
+//lint -esym(765,osRtxPendSV_Handler) "Global scope"
 void osRtxPendSV_Handler (void) {
   os_object_t *object;
 

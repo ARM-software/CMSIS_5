@@ -28,6 +28,7 @@
 
 //  OS Runtime Information
 osRtxInfo_t osRtxInfo __attribute__((section(".data.os"))) =
+//lint -e{785} "Initialize only OS ID, OS Version and Kernel State"
 { .os_id = osRtxKernelId, .version = osRtxVersionKernel, .kernel.state = osRtxKernelInactive };
 
 
@@ -70,20 +71,24 @@ static osStatus_t svcRtxKernelInitialize (void) {
 
   if (osRtxInfo.kernel.state == osRtxKernelReady) {
     EvrRtxKernelInitializeCompleted();
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osOK;
   }
   if (osRtxInfo.kernel.state != osRtxKernelInactive) {
     EvrRtxKernelError((int32_t)osError);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osError;
   }
 
   if (osRtxConfig.thread_stack_size < (64U + 8U)) {
     EvrRtxKernelError(osRtxErrorInvalidThreadStack);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osError;
   }
 
   if ((osRtxConfig.isr_queue.data == NULL) || (osRtxConfig.isr_queue.max == 0U)) {
     EvrRtxKernelError((int32_t)osError);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osError;
   }
 
@@ -91,6 +96,7 @@ static osStatus_t svcRtxKernelInitialize (void) {
   // Initialize Secure Process Stack
   if (TZ_InitContextSystem_S() == 0U) {
     EvrRtxKernelError(osRtxErrorTZ_InitContext_S);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osError;
   }
 #endif
@@ -235,12 +241,14 @@ static osStatus_t svcRtxKernelStart (void) {
 
   if (osRtxInfo.kernel.state != osRtxKernelReady) {
     EvrRtxKernelError(osRtxErrorKernelNotReady);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osError;
   }
 
   // Thread startup (Idle and Timer Thread)
   if (!osRtxThreadStartup()) {
     EvrRtxKernelError((int32_t)osError);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osError;
   }
 
@@ -250,6 +258,7 @@ static osStatus_t svcRtxKernelStart (void) {
   // Setup RTOS Tick
   if (OS_Tick_Setup(osRtxConfig.tick_freq, OS_TICK_HANDLER) != 0) {
     EvrRtxKernelError((int32_t)osError);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osError;
   }
   osRtxInfo.tick_irqn = OS_Tick_GetIRQn();
@@ -261,6 +270,7 @@ static osStatus_t svcRtxKernelStart (void) {
   thread = osRtxThreadListGet(&osRtxInfo.thread.ready);
   if (thread == NULL) {
     EvrRtxKernelError((int32_t)osError);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osError;
   }
   osRtxThreadSwitch(thread);
@@ -368,6 +378,7 @@ static uint32_t svcRtxKernelSuspend (void) {
 
   if (osRtxInfo.kernel.state != osRtxKernelRunning) {
     EvrRtxKernelError(osRtxErrorKernelNotRunning);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -405,6 +416,7 @@ static void svcRtxKernelResume (uint32_t sleep_ticks) {
 
   if (osRtxInfo.kernel.state != osRtxKernelSuspended) {
     EvrRtxKernelResumed();
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return;
   }
 
@@ -499,6 +511,7 @@ static uint32_t svcRtxKernelGetSysTimerFreq (void) {
 }
 
 //  Service Calls definitions
+//lint ++flb "Library Begin" [MISRA Note 11]
 SVC0_0 (KernelInitialize,       osStatus_t)
 SVC0_3 (KernelGetInfo,          osStatus_t, osVersion_t *, char *, uint32_t)
 SVC0_0 (KernelStart,            osStatus_t)
@@ -512,6 +525,7 @@ SVC0_0 (KernelGetTickCount,     uint32_t)
 SVC0_0 (KernelGetTickFreq,      uint32_t)
 SVC0_0 (KernelGetSysTimerCount, uint32_t)
 SVC0_0 (KernelGetSysTimerFreq,  uint32_t)
+//lint --flb "Library End"
 
 
 //  ==== Public API ====

@@ -90,6 +90,7 @@ static void osRtxTimerTick (void) {
 
   timer = osRtxInfo.timer.list;
   if (timer == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return;
   }
 
@@ -119,10 +120,12 @@ __WEAK void osRtxTimerThread (void *argument) {
     osMessageQueueNew(osRtxConfig.timer_mq_mcnt, sizeof(os_timer_finfo_t), osRtxConfig.timer_mq_attr)
   );
   if (osRtxInfo.timer.mq == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return;
   }
   osRtxInfo.timer.tick = osRtxTimerTick;
   for (;;) {
+    //lint -e{934} "Taking address of near auto variable"
     status = osMessageQueueGet(osRtxInfo.timer.mq, &finfo, NULL, osWaitForever);
     if (status == osOK) {
       EvrRtxTimerCallback(finfo.func, finfo.arg);
@@ -143,21 +146,26 @@ static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void 
   // Check parameters
   if ((func == NULL) || ((type != osTimerOnce) && (type != osTimerPeriodic))) {
     EvrRtxTimerError(NULL, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Process attributes
   if (attr != NULL) {
     name  = attr->name;
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     timer = attr->cb_mem;
     if (timer != NULL) {
+      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)timer & 3U) != 0U) || (attr->cb_size < sizeof(os_timer_t))) {
         EvrRtxTimerError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
         EvrRtxTimerError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     }
@@ -169,8 +177,10 @@ static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void 
   // Allocate object memory if not provided
   if (timer == NULL) {
     if (osRtxInfo.mpi.timer != NULL) {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       timer = osRtxMemoryPoolAlloc(osRtxInfo.mpi.timer);
     } else {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       timer = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_timer_t), 1U);
     }
     flags = osRtxFlagSystemObject;
@@ -208,12 +218,14 @@ static const char *svcRtxTimerGetName (osTimerId_t timer_id) {
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
     EvrRtxTimerGetName(timer, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Check object state
   if (timer->state == osRtxObjectInactive) {
     EvrRtxTimerGetName(timer, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -230,12 +242,14 @@ static osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer) || (ticks == 0U)) {
     EvrRtxTimerError(timer, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (timer->state == osRtxTimerInactive) {
     EvrRtxTimerError(timer, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
   if (timer->state == osRtxTimerRunning) {
@@ -243,6 +257,7 @@ static osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
   } else {
     if (osRtxInfo.timer.tick == NULL) {
       EvrRtxTimerError(timer, (int32_t)osErrorResource);
+      //lint -e{904} "Return statement before end of function" [MISRA Note 1]
       return osErrorResource;
     } else {
       timer->state = osRtxTimerRunning;
@@ -265,12 +280,14 @@ static osStatus_t svcRtxTimerStop (osTimerId_t timer_id) {
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
     EvrRtxTimerError(timer, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (timer->state != osRtxTimerRunning) {
     EvrRtxTimerError(timer, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -292,6 +309,7 @@ static uint32_t svcRtxTimerIsRunning (osTimerId_t timer_id) {
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
     EvrRtxTimerIsRunning(timer, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -315,12 +333,14 @@ static osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
   // Check parameters
   if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
     EvrRtxTimerError(timer, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (timer->state == osRtxTimerInactive) {
     EvrRtxTimerError(timer, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
   if (timer->state == osRtxTimerRunning) {
@@ -345,12 +365,14 @@ static osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
 }
 
 //  Service Calls definitions
+//lint ++flb "Library Begin" [MISRA Note 11]
 SVC0_4(TimerNew,       osTimerId_t,  osTimerFunc_t, osTimerType_t, void *, const osTimerAttr_t *)
 SVC0_1(TimerGetName,   const char *, osTimerId_t)
 SVC0_2(TimerStart,     osStatus_t,   osTimerId_t, uint32_t)
 SVC0_1(TimerStop,      osStatus_t,   osTimerId_t)
 SVC0_1(TimerIsRunning, uint32_t,     osTimerId_t)
 SVC0_1(TimerDelete,    osStatus_t,   osTimerId_t)
+//lint --flb "Library End"
 
 
 //  ==== Public API ====

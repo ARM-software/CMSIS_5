@@ -31,6 +31,8 @@
 
 #ifdef RTE_Compiler_EventRecorder
 
+//lint -e923 -e9074 -e9078 -emacro((835,845),EventID) [MISRA Note 13]
+
 #include "EventRecorder.h"              // Keil::Compiler:Event Recorder
 
 /// RTOS component number
@@ -245,6 +247,8 @@
 #define EvtRtxMessageQueueDestroyed         EventID(EventLevelOp,     EvtRtxMessageQueueNo, 0x18U)
 
 #endif  // RTE_Compiler_EventRecorder
+
+//lint -esym(522, EvrRtx*) "Functions 'EvrRtx*' can be overridden (do not lack side-effects)"
 
 
 //  ==== Memory Events ====

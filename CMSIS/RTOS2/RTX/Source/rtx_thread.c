@@ -136,6 +136,7 @@ void osRtxThreadListPut (os_object_t *object, os_thread_t *thread) {
   int32_t      priority;
 
   if (thread == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return;
   }
 
@@ -324,6 +325,7 @@ void osRtxThreadDelayTick (void) {
 
   thread = osRtxInfo.thread.delay_list;
   if (thread == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return;
   }
 
@@ -377,6 +379,7 @@ void osRtxThreadDelayTick (void) {
 /// \return pointer to registers R0-R3.
 uint32_t *osRtxThreadRegPtr (const os_thread_t *thread) {
   uint32_t addr = thread->sp + StackOffsetR0(thread->stack_frame);
+  //lint -e{923} -e{9078} "cast from unsigned int to pointer"
   return ((uint32_t *)addr);
 }
 
@@ -486,17 +489,20 @@ bool_t osRtxThreadWaitEnter (uint8_t state, uint32_t timeout) {
 
   // Check if Kernel is running
   if (osRtxKernelGetState() != osRtxKernelRunning) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return FALSE;
   }
 
   // Check running thread
   thread = osRtxThreadGetRunning();
   if (thread == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return FALSE;
   }
 
   // Check if any thread is ready
   if (osRtxInfo.thread.ready.thread_list == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return FALSE;
   }
 
@@ -511,11 +517,15 @@ bool_t osRtxThreadWaitEnter (uint8_t state, uint32_t timeout) {
 }
 
 /// Check current running Thread Stack.
+//lint -esym(759,osRtxThreadStackCheck) "Prototype in header"
+//lint -esym(765,osRtxThreadStackCheck) "Global scope (can be overridden)"
 __WEAK void osRtxThreadStackCheck (void) {
   os_thread_t *thread;
 
   thread = osRtxThreadGetRunning();
   if (thread != NULL) {
+    //lint -e{923} "cast from pointer to unsigned int"
+    //lint -e{9079} -e{9087} "cast between pointers to different object types"
     if ((thread->sp <= (uint32_t)thread->stack_mem) ||
         (*((uint32_t *)thread->stack_mem) != osRtxStackMagicWord)) {
       (void)osRtxErrorNotify(osRtxErrorStackUnderflow, thread);
@@ -534,6 +544,7 @@ static void osRtxThreadPostProcess (os_thread_t *thread) {
   // Check thread state
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadTerminated)) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return;
   }
 
@@ -570,6 +581,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
   // Check parameters
   if (func == NULL) {
     EvrRtxThreadError(NULL, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -577,7 +589,9 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
   if (attr != NULL) {
     name       = attr->name;
     attr_bits  = attr->attr_bits;
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     thread     = attr->cb_mem;
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     stack_mem  = attr->stack_mem;
     stack_size = attr->stack_size;
     priority   = attr->priority;
@@ -585,19 +599,24 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
     tz_module  = attr->tz_module;
 #endif
     if (thread != NULL) {
+      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)thread & 3U) != 0U) || (attr->cb_size < sizeof(os_thread_t))) {
         EvrRtxThreadError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
         EvrRtxThreadError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     }
     if (stack_mem != NULL) {
+      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)stack_mem & 7U) != 0U) || (stack_size == 0U)) {
         EvrRtxThreadError(NULL, osRtxErrorInvalidThreadStack);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     }
@@ -606,6 +625,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
     } else {
       if ((priority < osPriorityIdle) || (priority > osPriorityISR)) {
         EvrRtxThreadError(NULL, osRtxErrorInvalidPriority);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     }
@@ -624,14 +644,17 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
   // Check stack size
   if ((stack_size != 0U) && (((stack_size & 7U) != 0U) || (stack_size < (64U + 8U)))) {
     EvrRtxThreadError(NULL, osRtxErrorInvalidThreadStack);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Allocate object memory if not provided
   if (thread == NULL) {
     if (osRtxInfo.mpi.thread != NULL) {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       thread = osRtxMemoryPoolAlloc(osRtxInfo.mpi.thread);
     } else {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       thread = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_thread_t), 1U);
     }
     flags = osRtxFlagSystemObject;
@@ -644,14 +667,17 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
     if (stack_size == 0U) {
       stack_size = osRtxConfig.thread_stack_size;
       if (osRtxInfo.mpi.stack != NULL) {
+        //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
         stack_mem = osRtxMemoryPoolAlloc(osRtxInfo.mpi.stack);
         if (stack_mem != NULL) {
           flags |= osRtxThreadFlagDefStack;
         }
       } else {
+        //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
         stack_mem = osRtxMemoryAlloc(osRtxInfo.mem.stack, stack_size, 0U);
       }
     } else {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       stack_mem = osRtxMemoryAlloc(osRtxInfo.mem.stack, stack_size, 0U);
     }
     if (stack_mem == NULL) {
@@ -696,6 +722,9 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
 
   if (thread != NULL) {
     // Initialize control block
+    //lint --e{923}  --e{9078} "cast between pointers and unsigned int"
+    //lint --e{9079} --e{9087} "cast between pointers to different object types"
+    //lint --e{9074} "conversion between a pointer to function and another type"
     thread->id            = osRtxIdThread;
     thread->state         = osRtxThreadReady;
     thread->flags         = flags;
@@ -723,6 +752,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
   #endif
 
     // Initialize stack
+    //lint --e{613} false detection: "Possible use of null pointer"
     ptr = (uint32_t *)stack_mem;
     ptr[0] = osRtxStackMagicWord;
     if ((osRtxConfig.flags & osRtxConfigStackWatermark) != 0U) {
@@ -766,12 +796,14 @@ static const char *svcRtxThreadGetName (osThreadId_t thread_id) {
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread)) {
     EvrRtxThreadGetName(thread, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Check object state
   if (thread->state == osRtxObjectInactive) {
     EvrRtxThreadGetName(thread, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -799,6 +831,7 @@ static osThreadState_t svcRtxThreadGetState (osThreadId_t thread_id) {
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread)) {
     EvrRtxThreadGetState(thread, osThreadError);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osThreadError;
   }
 
@@ -817,12 +850,14 @@ static uint32_t svcRtxThreadGetStackSize (osThreadId_t thread_id) {
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread)) {
     EvrRtxThreadGetStackSize(thread, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
   // Check object state
   if (thread->state == osRtxObjectInactive) {
     EvrRtxThreadGetStackSize(thread, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -841,20 +876,25 @@ static uint32_t svcRtxThreadGetStackSpace (osThreadId_t thread_id) {
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread)) {
     EvrRtxThreadGetStackSpace(thread, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
   // Check object state
   if (thread->state == osRtxObjectInactive) {
     EvrRtxThreadGetStackSpace(thread, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
+  // Check if stack watermark is not enabled
   if ((osRtxConfig.flags & osRtxConfigStackWatermark) == 0U) {
     EvrRtxThreadGetStackSpace(thread, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
+  //lint -e{9079} "conversion from pointer to void to pointer to other type"
   stack = thread->stack_mem;
   if (*stack++ == osRtxStackMagicWord) {
     for (space = 4U; space < thread->stack_size; space += 4U) {
@@ -880,6 +920,7 @@ static osStatus_t svcRtxThreadSetPriority (osThreadId_t thread_id, osPriority_t 
   if ((thread == NULL) || (thread->id != osRtxIdThread) ||
       (priority < osPriorityIdle) || (priority > osPriorityISR)) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
@@ -887,6 +928,7 @@ static osStatus_t svcRtxThreadSetPriority (osThreadId_t thread_id, osPriority_t 
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadTerminated)) {
     EvrRtxThreadError(thread, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -909,6 +951,7 @@ static osPriority_t svcRtxThreadGetPriority (osThreadId_t thread_id) {
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread)) {
     EvrRtxThreadGetPriority(thread, osPriorityError);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osPriorityError;
   }
 
@@ -916,6 +959,7 @@ static osPriority_t svcRtxThreadGetPriority (osThreadId_t thread_id) {
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadTerminated)) {
     EvrRtxThreadGetPriority(thread, osPriorityError);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osPriorityError;
   }
 
@@ -957,6 +1001,7 @@ static osStatus_t svcRtxThreadSuspend (osThreadId_t thread_id) {
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread)) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
@@ -1013,12 +1058,14 @@ static osStatus_t svcRtxThreadResume (osThreadId_t thread_id) {
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread)) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if ((thread->state & osRtxThreadStateMask) != osRtxThreadBlocked) {
     EvrRtxThreadError(thread, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -1073,18 +1120,21 @@ static osStatus_t svcRtxThreadDetach (osThreadId_t thread_id) {
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread)) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object attributes
   if ((thread->attr & osThreadJoinable) == 0U) {
     EvrRtxThreadError(thread, osRtxErrorThreadNotJoinable);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
   // Check object state
   if (thread->state == osRtxThreadInactive) {
     EvrRtxThreadError(thread, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -1109,12 +1159,14 @@ static osStatus_t svcRtxThreadJoin (osThreadId_t thread_id) {
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread)) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object attributes
   if ((thread->attr & osThreadJoinable) == 0U) {
     EvrRtxThreadError(thread, osRtxErrorThreadNotJoinable);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -1122,6 +1174,7 @@ static osStatus_t svcRtxThreadJoin (osThreadId_t thread_id) {
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadRunning)) {
     EvrRtxThreadError(thread, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -1152,12 +1205,14 @@ static void svcRtxThreadExit (void) {
   // Check running thread
   thread = osRtxThreadGetRunning();
   if (thread == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return;
   }
 
   // Check if switch to next Ready Thread is possible
   if ((osRtxKernelGetState() != osRtxKernelRunning) ||
       (osRtxInfo.thread.ready.thread_list == NULL)) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return;
   }
 
@@ -1200,6 +1255,7 @@ static osStatus_t svcRtxThreadTerminate (osThreadId_t thread_id) {
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread)) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
@@ -1310,6 +1366,7 @@ static uint32_t svcRtxThreadEnumerate (osThreadId_t *thread_array, uint32_t arra
   // Check parameters
   if ((thread_array == NULL) || (array_items == 0U)) {
     EvrRtxThreadEnumerate(thread_array, array_items, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -1358,6 +1415,7 @@ static uint32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
   if ((thread == NULL) || (thread->id != osRtxIdThread) ||
       ((flags & ~(((uint32_t)1U << osRtxThreadFlagsLimit) - 1U)) != 0U)) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorParameter);
   }
 
@@ -1365,6 +1423,7 @@ static uint32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadTerminated)) {
     EvrRtxThreadError(thread, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorResource);
   }
 
@@ -1400,12 +1459,14 @@ static uint32_t svcRtxThreadFlagsClear (uint32_t flags) {
   thread = osRtxThreadGetRunning();
   if (thread == NULL) {
     EvrRtxThreadError(NULL, osRtxErrorKernelNotRunning);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osError);
   }
 
   // Check parameters
   if ((flags & ~(((uint32_t)1U << osRtxThreadFlagsLimit) - 1U)) != 0U) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorParameter);
   }
 
@@ -1413,6 +1474,7 @@ static uint32_t svcRtxThreadFlagsClear (uint32_t flags) {
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadTerminated)) {
     EvrRtxThreadError(thread, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorResource);
   }
 
@@ -1433,6 +1495,7 @@ static uint32_t svcRtxThreadFlagsGet (void) {
   thread = osRtxThreadGetRunning();
   if (thread == NULL) {
     EvrRtxThreadFlagsGet(0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -1440,6 +1503,7 @@ static uint32_t svcRtxThreadFlagsGet (void) {
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadTerminated)) {
     EvrRtxThreadFlagsGet(0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -1458,12 +1522,14 @@ static uint32_t svcRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_
   thread = osRtxThreadGetRunning();
   if (thread == NULL) {
     EvrRtxThreadError(NULL, osRtxErrorKernelNotRunning);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osError);
   }
 
   // Check parameters
   if ((flags & ~(((uint32_t)1U << osRtxThreadFlagsLimit) - 1U)) != 0U) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorParameter);
   }
 
@@ -1492,6 +1558,7 @@ static uint32_t svcRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_
 }
 
 //  Service Calls definitions
+//lint ++flb "Library Begin" [MISRA Note 11]
 SVC0_3 (ThreadNew,           osThreadId_t,    osThreadFunc_t, void *, const osThreadAttr_t *)
 SVC0_1 (ThreadGetName,       const char *,    osThreadId_t)
 SVC0_0 (ThreadGetId,         osThreadId_t)
@@ -1513,6 +1580,7 @@ SVC0_2 (ThreadFlagsSet,      uint32_t,        osThreadId_t, uint32_t)
 SVC0_1 (ThreadFlagsClear,    uint32_t,        uint32_t)
 SVC0_0 (ThreadFlagsGet,      uint32_t)
 SVC0_3 (ThreadFlagsWait,     uint32_t,        uint32_t, uint32_t, uint32_t)
+//lint --flb "Library End"
 
 
 //  ==== ISR Calls ====
@@ -1528,6 +1596,7 @@ uint32_t isrRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
   if ((thread == NULL) || (thread->id != osRtxIdThread) ||
       ((flags & ~(((uint32_t)1U << osRtxThreadFlagsLimit) - 1U)) != 0U)) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorParameter);
   }
 
@@ -1535,6 +1604,7 @@ uint32_t isrRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadTerminated)) {
     EvrRtxThreadError(thread, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorResource);
   }
 

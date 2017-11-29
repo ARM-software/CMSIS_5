@@ -103,6 +103,7 @@ static void osRtxSemaphorePostProcess (os_semaphore_t *semaphore) {
   os_thread_t *thread;
 
   if (semaphore->state == osRtxObjectInactive) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return;
   }
 
@@ -131,21 +132,26 @@ static osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_
   // Check parameters
   if ((max_count == 0U) || (max_count > osRtxSemaphoreTokenLimit) || (initial_count > max_count)) {
     EvrRtxSemaphoreError(NULL, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Process attributes
   if (attr != NULL) {
     name      = attr->name;
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     semaphore = attr->cb_mem;
     if (semaphore != NULL) {
+      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)semaphore & 3U) != 0U) || (attr->cb_size < sizeof(os_semaphore_t))) {
         EvrRtxSemaphoreError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
         EvrRtxSemaphoreError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     }
@@ -157,8 +163,10 @@ static osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_
   // Allocate object memory if not provided
   if (semaphore == NULL) {
     if (osRtxInfo.mpi.semaphore != NULL) {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       semaphore = osRtxMemoryPoolAlloc(osRtxInfo.mpi.semaphore);
     } else {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       semaphore = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_semaphore_t), 1U);
     }
     flags = osRtxFlagSystemObject;
@@ -195,12 +203,14 @@ static const char *svcRtxSemaphoreGetName (osSemaphoreId_t semaphore_id) {
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
     EvrRtxSemaphoreGetName(semaphore, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
     EvrRtxSemaphoreGetName(semaphore, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -218,12 +228,14 @@ static osStatus_t svcRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -261,12 +273,14 @@ static osStatus_t svcRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -300,12 +314,14 @@ static uint32_t svcRtxSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
     EvrRtxSemaphoreGetCount(semaphore, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
     EvrRtxSemaphoreGetCount(semaphore, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -323,12 +339,14 @@ static osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -359,12 +377,14 @@ static osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
 }
 
 //  Service Calls definitions
+//lint ++flb "Library Begin" [MISRA Note 11]
 SVC0_3(SemaphoreNew,      osSemaphoreId_t, uint32_t, uint32_t, const osSemaphoreAttr_t *)
 SVC0_1(SemaphoreGetName,  const char *,    osSemaphoreId_t)
 SVC0_2(SemaphoreAcquire,  osStatus_t,      osSemaphoreId_t, uint32_t)
 SVC0_1(SemaphoreRelease,  osStatus_t,      osSemaphoreId_t)
 SVC0_1(SemaphoreGetCount, uint32_t,        osSemaphoreId_t)
 SVC0_1(SemaphoreDelete,   osStatus_t,      osSemaphoreId_t)
+//lint --flb "Library End"
 
 
 //  ==== ISR Calls ====
@@ -379,12 +399,14 @@ osStatus_t isrRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeou
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore) || (timeout != 0U)) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -411,12 +433,14 @@ osStatus_t isrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
   // Check parameters
   if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (semaphore->state == osRtxObjectInactive) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 

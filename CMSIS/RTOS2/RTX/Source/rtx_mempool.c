@@ -35,11 +35,13 @@
 /// \param[in]  block_mem       pointer to memory for block storage.
 /// \return 1 - success, 0 - failure.
 uint32_t osRtxMemoryPoolInit (os_mp_info_t *mp_info, uint32_t block_count, uint32_t block_size, void *block_mem) {
+  //lint --e{9079} --e{9087} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
   void *mem;
   void *block;
 
   // Check parameters
   if ((mp_info == NULL) || (block_count == 0U) || (block_size  == 0U) || (block_mem   == NULL)) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -76,6 +78,7 @@ void *osRtxMemoryPoolAlloc (os_mp_info_t *mp_info) {
 
   if (mp_info == NULL) {
     EvrRtxMemoryBlockAlloc(NULL, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -86,6 +89,7 @@ void *osRtxMemoryPoolAlloc (os_mp_info_t *mp_info) {
     mp_info->used_blocks++;
     block = mp_info->block_free;
     if (block != NULL) {
+      //lint --e{9079} --e{9087} "conversion from pointer to void to pointer to other type"
       mp_info->block_free = *((void **)block);
     }
   } else {
@@ -118,8 +122,10 @@ osStatus_t osRtxMemoryPoolFree (os_mp_info_t *mp_info, void *block) {
 #endif
   osStatus_t status;
 
+  //lint -e{946} "Relational operator applied to pointers"
   if ((mp_info == NULL) || (block < mp_info->block_base) || (block >= mp_info->block_lim)) {
     EvrRtxMemoryBlockFree(mp_info, block, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
@@ -128,6 +134,7 @@ osStatus_t osRtxMemoryPoolFree (os_mp_info_t *mp_info, void *block) {
 
   if (mp_info->used_blocks != 0U) {
     mp_info->used_blocks--;
+    //lint --e{9079} --e{9087} "conversion from pointer to void to pointer to other type"
     *((void **)block) = mp_info->block_free;
     mp_info->block_free = block;
     status = osOK;
@@ -162,16 +169,19 @@ static void osRtxMemoryPoolPostProcess (os_memory_pool_t *mp) {
   os_thread_t *thread;
 
   if (mp->state == osRtxObjectInactive) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return;
   }
 
   // Check if Thread is waiting to allocate memory
   if (mp->thread_list != NULL) {
     // Allocate memory
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
     block = osRtxMemoryPoolAlloc(&mp->mp_info);
     if (block != NULL) {
       // Wakeup waiting Thread with highest Priority
       thread = osRtxThreadListGet(osRtxObject(mp));
+      //lint -e{923} "cast from pointer to unsigned int"
       osRtxThreadWaitExit(thread, (uint32_t)block, FALSE);
       EvrRtxMemoryPoolAllocated(mp, block);
     }
@@ -196,12 +206,14 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
   // Check parameters
   if ((block_count == 0U) || (block_size  == 0U)) {
     EvrRtxMemoryPoolError(NULL, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
   b_count =  block_count;
   b_size  = (block_size + 3U) & ~3UL;
   if ((__CLZ(b_count) + __CLZ(b_size)) < 32U) {
     EvrRtxMemoryPoolError(NULL, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -210,28 +222,36 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
   // Process attributes
   if (attr != NULL) {
     name    = attr->name;
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     mp      = attr->cb_mem;
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     mp_mem  = attr->mp_mem;
     mp_size = attr->mp_size;
     if (mp != NULL) {
+      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)mp & 3U) != 0U) || (attr->cb_size < sizeof(os_memory_pool_t))) {
         EvrRtxMemoryPoolError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
         EvrRtxMemoryPoolError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     }
     if (mp_mem != NULL) {
+      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)mp_mem & 3U) != 0U) || (mp_size < size)) {
         EvrRtxMemoryPoolError(NULL, osRtxErrorInvalidDataMemory);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     } else {
       if (mp_size != 0U) {
         EvrRtxMemoryPoolError(NULL, osRtxErrorInvalidDataMemory);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     }
@@ -244,8 +264,10 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
   // Allocate object memory if not provided
   if (mp == NULL) {
     if (osRtxInfo.mpi.memory_pool != NULL) {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mp = osRtxMemoryPoolAlloc(osRtxInfo.mpi.memory_pool);
     } else {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mp = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_memory_pool_t), 1U);
     }
     flags = osRtxFlagSystemObject;
@@ -255,6 +277,7 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
 
   // Allocate data memory if not provided
   if ((mp != NULL) && (mp_mem == NULL)) {
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
     mp_mem = osRtxMemoryAlloc(osRtxInfo.mem.mp_data, size, 0U);
     if (mp_mem == NULL) {
       if ((flags & osRtxFlagSystemObject) != 0U) {
@@ -299,12 +322,14 @@ static const char *svcRtxMemoryPoolGetName (osMemoryPoolId_t mp_id) {
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolGetName(mp, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
     EvrRtxMemoryPoolGetName(mp, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -322,12 +347,14 @@ static void *svcRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -364,12 +391,14 @@ static osStatus_t svcRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -384,6 +413,7 @@ static osStatus_t svcRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
       if (block0 != NULL) {
         // Wakeup waiting Thread with highest Priority
         thread = osRtxThreadListGet(osRtxObject(mp));
+        //lint -e{923} "cast from pointer to unsigned int"
         osRtxThreadWaitExit(thread, (uint32_t)block0, TRUE);
         EvrRtxMemoryPoolAllocated(mp, block0);
       }
@@ -403,12 +433,14 @@ static uint32_t svcRtxMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolGetCapacity(mp, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
     EvrRtxMemoryPoolGetCapacity(mp, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -425,12 +457,14 @@ static uint32_t svcRtxMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolGetBlockSize(mp, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
     EvrRtxMemoryPoolGetBlockSize(mp, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -447,12 +481,14 @@ static uint32_t svcRtxMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolGetCount(mp, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
     EvrRtxMemoryPoolGetCount(mp, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -469,12 +505,14 @@ static uint32_t svcRtxMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolGetSpace(mp, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
     EvrRtxMemoryPoolGetSpace(mp, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -492,12 +530,14 @@ static osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -533,6 +573,7 @@ static osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
 }
 
 //  Service Calls definitions
+//lint ++flb "Library Begin" [MISRA Note 11]
 SVC0_3(MemoryPoolNew,          osMemoryPoolId_t, uint32_t, uint32_t, const osMemoryPoolAttr_t *)
 SVC0_1(MemoryPoolGetName,      const char *,     osMemoryPoolId_t)
 SVC0_2(MemoryPoolAlloc,        void *,           osMemoryPoolId_t, uint32_t)
@@ -542,6 +583,7 @@ SVC0_1(MemoryPoolGetBlockSize, uint32_t,         osMemoryPoolId_t)
 SVC0_1(MemoryPoolGetCount,     uint32_t,         osMemoryPoolId_t)
 SVC0_1(MemoryPoolGetSpace,     uint32_t,         osMemoryPoolId_t)
 SVC0_1(MemoryPoolDelete,       osStatus_t,       osMemoryPoolId_t)
+//lint --flb "Library End"
 
 
 //  ==== ISR Calls ====
@@ -556,12 +598,14 @@ void *isrRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool) || (timeout != 0U)) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -586,12 +630,14 @@ osStatus_t isrRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
   // Check parameters
   if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (mp->state == osRtxObjectInactive) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 

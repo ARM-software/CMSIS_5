@@ -48,6 +48,7 @@ static osStatus_t svcRtxDelayUntil (uint32_t ticks) {
   ticks -= osRtxInfo.kernel.tick;
   if (ticks == 0xFFFFFFFFU) {
     EvrRtxThreadError(NULL, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
@@ -61,8 +62,10 @@ static osStatus_t svcRtxDelayUntil (uint32_t ticks) {
 }
 
 //  Service Calls definitions
+//lint ++flb "Library Begin" [MISRA Note 11]
 SVC0_1(Delay,      osStatus_t, uint32_t)
 SVC0_1(DelayUntil, osStatus_t, uint32_t)
+//lint --flb "Library End"
 
 
 //  ==== Public API ====

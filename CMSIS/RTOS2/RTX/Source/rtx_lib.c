@@ -180,6 +180,7 @@ static const osThreadAttr_t os_timer_thread_attr = {
   (uint32_t)sizeof(os_timer_thread_cb),
   &os_timer_thread_stack[0],
   (uint32_t)sizeof(os_timer_thread_stack),
+  //lint -e{9030} -e{9034} "cast from signed to enum"
   (osPriority_t)OS_TIMER_THREAD_PRIO,
 #if defined(OS_TIMER_THREAD_TZ_MOD_ID)
   (uint32_t)OS_TIMER_THREAD_TZ_MOD_ID,
@@ -346,6 +347,7 @@ const osRtxConfig_t osRtxConfig \
 __USED \
 __attribute__((section(".rodata"))) =
 {
+  //lint -e{835} "Zero argument to operator"
   0U   // Flags
 #if (OS_PRIVILEGE_MODE != 0)
   | osRtxConfigPrivilegedMode
@@ -446,11 +448,17 @@ __attribute__((section(".rodata"))) =
 
 
 // Non weak reference to library irq module
+//lint -esym(526,irqRtxLib)    "Defined by Exception handlers"
+//lint -esym(714,irqRtxLibRef) "Non weak reference"
+//lint -esym(765,irqRtxLibRef) "Global scope"
 extern       uint8_t  irqRtxLib;
 extern const uint8_t *irqRtxLibRef;
        const uint8_t *irqRtxLibRef = &irqRtxLib;
 
 // Default User SVC Table
+//lint -esym(714,osRtxUserSVC) "Referenced by Exception handlers"
+//lint -esym(765,osRtxUserSVC) "Global scope"
+//lint -e{9067} "extern array declared without size"
 extern void * const osRtxUserSVC[];
 __WEAK void * const osRtxUserSVC[1] = { (void *)0 };
 
@@ -459,6 +467,7 @@ __WEAK void * const osRtxUserSVC[1] = { (void *)0 };
 // ===========
 
 #if (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
+//lint -e{19} "Linker symbols"
 __asm (
   ".weakref __os_thread_cb_start__,    .bss.os.thread.cb$$Base\n\t"
   ".weakref __os_thread_cb_end__,      .bss.os.thread.cb$$Limit\n\t"
@@ -480,25 +489,30 @@ __asm (
 #if (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)) || \
     (defined(__GNUC__) && !defined(__CC_ARM))
 
-extern __attribute__((weak)) uint32_t __os_thread_cb_start__;
-extern __attribute__((weak)) uint32_t __os_thread_cb_end__;
-extern __attribute__((weak)) uint32_t __os_timer_cb_start__;
-extern __attribute__((weak)) uint32_t __os_timer_cb_end__;
-extern __attribute__((weak)) uint32_t __os_evflags_cb_start__;
-extern __attribute__((weak)) uint32_t __os_evflags_cb_end__;
-extern __attribute__((weak)) uint32_t __os_mutex_cb_start__;
-extern __attribute__((weak)) uint32_t __os_mutex_cb_end__;
-extern __attribute__((weak)) uint32_t __os_semaphore_cb_start__;
-extern __attribute__((weak)) uint32_t __os_semaphore_cb_end__;
-extern __attribute__((weak)) uint32_t __os_mempool_cb_start__;
-extern __attribute__((weak)) uint32_t __os_mempool_cb_end__;
-extern __attribute__((weak)) uint32_t __os_msgqueue_cb_start__;
-extern __attribute__((weak)) uint32_t __os_msgqueue_cb_end__;
+extern __attribute__((weak)) uint32_t __os_thread_cb_start__;    //lint -esym(526,__os_thread_cb_start__)
+extern __attribute__((weak)) uint32_t __os_thread_cb_end__;      //lint -esym(526,__os_thread_cb_end__)
+extern __attribute__((weak)) uint32_t __os_timer_cb_start__;     //lint -esym(526,__os_timer_cb_start__)
+extern __attribute__((weak)) uint32_t __os_timer_cb_end__;       //lint -esym(526,__os_timer_cb_end__)
+extern __attribute__((weak)) uint32_t __os_evflags_cb_start__;   //lint -esym(526,__os_evflags_cb_start__)
+extern __attribute__((weak)) uint32_t __os_evflags_cb_end__;     //lint -esym(526,__os_evflags_cb_end__)
+extern __attribute__((weak)) uint32_t __os_mutex_cb_start__;     //lint -esym(526,__os_mutex_cb_start__)
+extern __attribute__((weak)) uint32_t __os_mutex_cb_end__;       //lint -esym(526,__os_mutex_cb_end__)
+extern __attribute__((weak)) uint32_t __os_semaphore_cb_start__; //lint -esym(526,__os_semaphore_cb_start__)
+extern __attribute__((weak)) uint32_t __os_semaphore_cb_end__;   //lint -esym(526,__os_semaphore_cb_end__)
+extern __attribute__((weak)) uint32_t __os_mempool_cb_start__;   //lint -esym(526,__os_mempool_cb_start__)
+extern __attribute__((weak)) uint32_t __os_mempool_cb_end__;     //lint -esym(526,__os_mempool_cb_end__)
+extern __attribute__((weak)) uint32_t __os_msgqueue_cb_start__;  //lint -esym(526,__os_msgqueue_cb_start__)
+extern __attribute__((weak)) uint32_t __os_msgqueue_cb_end__;    //lint -esym(526,__os_msgqueue_cb_end__)
 
+//lint -e{19} "Global symbol"
 __asm (".global os_cb_sections");
 
+//lint -e{9067} "extern array declared without size"
 extern const uint32_t os_cb_sections[];
 
+//lint -esym(714,os_cb_sections) "Referenced by debugger"
+//lint -esym(765,os_cb_sections) "Global scope"
+//lint -e{923} -e{9078} "cast from pointer to unsigned int"
 const uint32_t os_cb_sections[] \
 __attribute__((section(".rodata"))) =
 {
@@ -528,6 +542,8 @@ __attribute__((section(".rodata"))) =
     (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 
 #ifndef __MICROLIB
+//lint -esym(714,_platform_post_stackheap_init) "Referenced by C library"
+//lint -esym(765,_platform_post_stackheap_init) "Global scope"
 extern void _platform_post_stackheap_init (void);
 __WEAK void _platform_post_stackheap_init (void) {
   (void)osKernelInitialize();
@@ -553,6 +569,10 @@ __WEAK void software_init_hook (void) {
       !defined(__MICROLIB))
 
 #define LIBSPACE_SIZE 96
+
+//lint -esym(714,__user_perthread_libspace,_mutex_*) "Referenced by C library"
+//lint -esym(765,__user_perthread_libspace,_mutex_*) "Global scope"
+//lint -esym(9003, os_libspace*) "variables 'os_libspace*' defined at module scope"
 
 // Memory for libspace
 static uint32_t os_libspace[OS_THREAD_LIBSPACE_NUM+1][LIBSPACE_SIZE/4] \
@@ -597,11 +617,16 @@ void *__user_perthread_libspace (void) {
     n = OS_THREAD_LIBSPACE_NUM;
   }
 
+  //lint -e{9087} "cast between pointers to different object types"
   return (void *)&os_libspace[n][0];
 }
 
 // Mutex identifier
 typedef void *mutex;
+
+//lint -save "Function prototypes defined in C library"
+//lint -e970 "Use of 'int' outside of a typedef"
+//lint -e818 "Pointer 'm' could be declared as pointing to const"
 
 // Initialize mutex
 __USED
@@ -643,5 +668,7 @@ void _mutex_free(mutex *m);
 void _mutex_free(mutex *m) {
   (void)osMutexDelete(*m);
 }
+
+//lint -restore
 
 #endif

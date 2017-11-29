@@ -136,6 +136,7 @@ static void osRtxEventFlagsPostProcess (os_event_flags_t *ef) {
   uint32_t     event_flags;
 
   if (ef->state == osRtxObjectInactive) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return;
   }
 
@@ -166,15 +167,19 @@ static osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
   // Process attributes
   if (attr != NULL) {
     name = attr->name;
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     ef   = attr->cb_mem;
     if (ef != NULL) {
+      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)ef & 3U) != 0U) || (attr->cb_size < sizeof(os_event_flags_t))) {
         EvrRtxEventFlagsError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
         EvrRtxEventFlagsError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     }
@@ -186,8 +191,10 @@ static osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
   // Allocate object memory if not provided
   if (ef == NULL) {
     if (osRtxInfo.mpi.event_flags != NULL) {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       ef = osRtxMemoryPoolAlloc(osRtxInfo.mpi.event_flags);
     } else {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       ef = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_event_flags_t), 1U);
     }
     flags = osRtxFlagSystemObject;
@@ -223,12 +230,14 @@ static const char *svcRtxEventFlagsGetName (osEventFlagsId_t ef_id) {
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags)) {
     EvrRtxEventFlagsGetName(ef, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsGetName(ef, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -250,12 +259,14 @@ static uint32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
       ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorResource);
   }
 
@@ -296,12 +307,14 @@ static uint32_t svcRtxEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
       ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorResource);
   }
 
@@ -321,12 +334,14 @@ static uint32_t svcRtxEventFlagsGet (osEventFlagsId_t ef_id) {
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags)) {
     EvrRtxEventFlagsGet(ef, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsGet(ef, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -346,6 +361,7 @@ static uint32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, ui
   running_thread = osRtxThreadGetRunning();
   if (running_thread == NULL) {
     EvrRtxEventFlagsError(ef, osRtxErrorKernelNotRunning);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osError);
   }
 
@@ -353,12 +369,14 @@ static uint32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, ui
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
       ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorResource);
   }
 
@@ -398,12 +416,14 @@ static osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -434,6 +454,7 @@ static osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
 }
 
 //  Service Calls definitions
+//lint ++flb "Library Begin" [MISRA Note 11]
 SVC0_1(EventFlagsNew,     osEventFlagsId_t, const osEventFlagsAttr_t *)
 SVC0_1(EventFlagsGetName, const char *,     osEventFlagsId_t)
 SVC0_2(EventFlagsSet,     uint32_t,         osEventFlagsId_t, uint32_t)
@@ -441,6 +462,7 @@ SVC0_2(EventFlagsClear,   uint32_t,         osEventFlagsId_t, uint32_t)
 SVC0_1(EventFlagsGet,     uint32_t,         osEventFlagsId_t)
 SVC0_4(EventFlagsWait,    uint32_t,         osEventFlagsId_t, uint32_t, uint32_t, uint32_t)
 SVC0_1(EventFlagsDelete,  osStatus_t,       osEventFlagsId_t)
+//lint --flb "Library End"
 
 
 //  ==== ISR Calls ====
@@ -456,12 +478,14 @@ uint32_t isrRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
       ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorResource);
   }
 
@@ -487,12 +511,14 @@ uint32_t isrRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) || (timeout != 0U) ||
       ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorParameter);
   }
 
   // Check object state
   if (ef->state == osRtxObjectInactive) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorResource);
   }
 

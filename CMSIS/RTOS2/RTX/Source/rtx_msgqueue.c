@@ -161,13 +161,16 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
         void         *ptr_dst;
 
   if (msg->state == osRtxObjectInactive) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return;
   }
 
   if (msg->flags != 0U) {
     // Remove Message
+    //lint -e{9079} -e{9087} "cast between pointers to different object types"
     mq = *((os_message_queue_t **)(void *)&msg[1]);
     if (mq->state == osRtxObjectInactive) {
+      //lint -e{904} "Return statement before end of function" [MISRA Note 1]
       return;
     }
     MessageQueueRemove(mq, msg);
@@ -177,6 +180,7 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
     // Check if Thread is waiting to send a Message
     if ((mq->thread_list != NULL) && (mq->thread_list->state == osRtxThreadWaitingMessagePut)) {
       // Try to allocate memory
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       msg0 = osRtxMemoryPoolAlloc(&mq->mp_info);
       if (msg0 != NULL) {
         // Wakeup waiting Thread with highest Priority
@@ -184,6 +188,7 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
         osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
         // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
         reg = osRtxThreadRegPtr(thread);
+        //lint -e{923} "cast from unsigned int to pointer"
         ptr_src = (const void *)reg[2];
         memcpy(&msg0[1], ptr_src, mq->msg_size);
         // Store Message into Queue
@@ -197,10 +202,13 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
     }
   } else {
     // New Message
+    //lint -e{9079} -e{9087} "cast between pointers to different object types"
     mq = (void *)msg->next;
     if (mq->state == osRtxObjectInactive) {
+      //lint -e{904} "Return statement before end of function" [MISRA Note 1]
       return;
     }
+    //lint -e{9087} "cast between pointers to different object types"
     ptr_src = (const void *)msg->prev;
     // Check if Thread is waiting to receive a Message
     if ((mq->thread_list != NULL) && (mq->thread_list->state == osRtxThreadWaitingMessageGet)) {
@@ -210,9 +218,11 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
       osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
       // Copy Message (R2: void *msg_ptr, R3: uint8_t *msg_prio)
       reg = osRtxThreadRegPtr(thread);
+      //lint -e{923} "cast from unsigned int to pointer"
       ptr_dst = (void *)reg[2];
       memcpy(ptr_dst, &msg[1], mq->msg_size);
       if (reg[3] != 0U) {
+        //lint -e{923} -e{9078} "cast from unsigned int to pointer"
         *((uint8_t *)reg[3]) = msg->priority;
       }
       EvrRtxMessageQueueRetrieved(mq, ptr_dst);
@@ -243,11 +253,13 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
   // Check parameters
   if ((msg_count == 0U) || (msg_size  == 0U)) {
     EvrRtxMessageQueueError(NULL, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
   block_size = ((msg_size + 3U) & ~3UL) + sizeof(os_message_t);
   if ((__CLZ(msg_count) + __CLZ(block_size)) < 32U) {
     EvrRtxMessageQueueError(NULL, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -256,28 +268,36 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
   // Process attributes
   if (attr != NULL) {
     name    = attr->name;
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     mq      = attr->cb_mem;
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     mq_mem  = attr->mq_mem;
     mq_size = attr->mq_size;
     if (mq != NULL) {
+      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)mq & 3U) != 0U) || (attr->cb_size < sizeof(os_message_queue_t))) {
         EvrRtxMessageQueueError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     } else {
       if (attr->cb_size != 0U) {
         EvrRtxMessageQueueError(NULL, osRtxErrorInvalidControlBlock);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     }
     if (mq_mem != NULL) {
+      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
       if ((((uint32_t)mq_mem & 3U) != 0U) || (mq_size < size)) {
         EvrRtxMessageQueueError(NULL, osRtxErrorInvalidDataMemory);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     } else {
       if (mq_size != 0U) {
         EvrRtxMessageQueueError(NULL, osRtxErrorInvalidDataMemory);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
       }
     }
@@ -290,8 +310,10 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
   // Allocate object memory if not provided
   if (mq == NULL) {
     if (osRtxInfo.mpi.message_queue != NULL) {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mq = osRtxMemoryPoolAlloc(osRtxInfo.mpi.message_queue);
     } else {
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mq = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_message_queue_t), 1U);
     }
     flags = osRtxFlagSystemObject;
@@ -301,6 +323,7 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
 
   // Allocate data memory if not provided
   if ((mq != NULL) && (mq_mem == NULL)) {
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
     mq_mem = osRtxMemoryAlloc(osRtxInfo.mem.mq_data, size, 0U);
     if (mq_mem == NULL) {
       if ((flags & osRtxFlagSystemObject) != 0U) {
@@ -349,12 +372,14 @@ static const char *svcRtxMessageQueueGetName (osMessageQueueId_t mq_id) {
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueGetName(mq, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
   // Check object state
   if (mq->state == osRtxObjectInactive) {
     EvrRtxMessageQueueGetName(mq, NULL);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
 
@@ -376,12 +401,14 @@ static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *m
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue) || (msg_ptr == NULL)) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (mq->state == osRtxObjectInactive) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -393,15 +420,18 @@ static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *m
     osRtxThreadWaitExit(thread, (uint32_t)osOK, TRUE);
     // Copy Message (R2: void *msg_ptr, R3: uint8_t *msg_prio)
     reg = osRtxThreadRegPtr(thread);
+    //lint -e{923} "cast from unsigned int to pointer"
     ptr = (void *)reg[2];
     memcpy(ptr, msg_ptr, mq->msg_size);
     if (reg[3] != 0U) {
+      //lint -e{923} -e{9078} "cast from unsigned int to pointer"
       *((uint8_t *)reg[3]) = msg_prio;
     }
     EvrRtxMessageQueueRetrieved(mq, ptr);
     status = osOK;
   } else {
     // Try to allocate memory
+    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
     msg = osRtxMemoryPoolAlloc(&mq->mp_info);
     if (msg != NULL) {
       // Copy Message
@@ -422,8 +452,11 @@ static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *m
         if (osRtxThreadWaitEnter(osRtxThreadWaitingMessagePut, timeout)) {
           osRtxThreadListPut(osRtxObject(mq), osRtxThreadGetRunning());
           // Save arguments (R2: const void *msg_ptr, R3: uint8_t msg_prio)
+          //lint -e{923} -e{9078} "cast from unsigned int to pointer"
           reg = (uint32_t *)(__get_PSP());
+          //lint -e{923} -e{9078} "cast from pointer to unsigned int"
           reg[2] = (uint32_t)msg_ptr;
+          //lint -e{923} -e{9078} "cast from pointer to unsigned int"
           reg[3] = (uint32_t)msg_prio;
         } else {
           EvrRtxMessageQueuePutTimeout(mq);
@@ -452,12 +485,14 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue) || (msg_ptr == NULL)) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (mq->state == osRtxObjectInactive) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -477,6 +512,7 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
     // Check if Thread is waiting to send a Message
     if ((mq->thread_list != NULL) && (mq->thread_list->state == osRtxThreadWaitingMessagePut)) {
       // Try to allocate memory
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       msg = osRtxMemoryPoolAlloc(&mq->mp_info);
       if (msg != NULL) {
         // Wakeup waiting Thread with highest Priority
@@ -484,6 +520,7 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
         osRtxThreadWaitExit(thread, (uint32_t)osOK, TRUE);
         // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
         reg = osRtxThreadRegPtr(thread);
+        //lint -e{923} "cast from unsigned int to pointer"
         ptr = (const void *)reg[2];
         memcpy(&msg[1], ptr, mq->msg_size);
         // Store Message into Queue
@@ -504,8 +541,11 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
       if (osRtxThreadWaitEnter(osRtxThreadWaitingMessageGet, timeout)) {
         osRtxThreadListPut(osRtxObject(mq), osRtxThreadGetRunning());
         // Save arguments (R2: void *msg_ptr, R3: uint8_t *msg_prio)
+        //lint -e{923} -e{9078} "cast from unsigned int to pointer"
         reg = (uint32_t *)(__get_PSP());
+        //lint -e{923} -e{9078} "cast from pointer to unsigned int"
         reg[2] = (uint32_t)msg_ptr;
+        //lint -e{923} -e{9078} "cast from pointer to unsigned int"
         reg[3] = (uint32_t)msg_prio;
       } else {
         EvrRtxMessageQueueGetTimeout(mq);
@@ -528,12 +568,14 @@ static uint32_t svcRtxMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueGetCapacity(mq, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
   // Check object state
   if (mq->state == osRtxObjectInactive) {
     EvrRtxMessageQueueGetCapacity(mq, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -550,12 +592,14 @@ static uint32_t svcRtxMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueGetMsgSize(mq, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
   // Check object state
   if (mq->state == osRtxObjectInactive) {
     EvrRtxMessageQueueGetMsgSize(mq, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -572,12 +616,14 @@ static uint32_t svcRtxMessageQueueGetCount (osMessageQueueId_t mq_id) {
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueGetCount(mq, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
   // Check object state
   if (mq->state == osRtxObjectInactive) {
     EvrRtxMessageQueueGetCount(mq, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -594,12 +640,14 @@ static uint32_t svcRtxMessageQueueGetSpace (osMessageQueueId_t mq_id) {
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueGetSpace(mq, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
   // Check object state
   if (mq->state == osRtxObjectInactive) {
     EvrRtxMessageQueueGetSpace(mq, 0U);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
 
@@ -620,12 +668,14 @@ static osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (mq->state == osRtxObjectInactive) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -647,6 +697,7 @@ static osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
   if ((mq->thread_list != NULL) && (mq->thread_list->state == osRtxThreadWaitingMessagePut)) {
     do {
       // Try to allocate memory
+      //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       msg = osRtxMemoryPoolAlloc(&mq->mp_info);
       if (msg != NULL) {
         // Wakeup waiting Thread with highest Priority
@@ -654,6 +705,7 @@ static osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
         osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
         // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
         reg = osRtxThreadRegPtr(thread);
+        //lint -e{923} "cast from unsigned int to pointer"
         ptr = (const void *)reg[2];
         memcpy(&msg[1], ptr, mq->msg_size);
         // Store Message into Queue
@@ -682,12 +734,14 @@ static osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (mq->state == osRtxObjectInactive) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -723,6 +777,7 @@ static osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
 }
 
 //  Service Calls definitions
+//lint ++flb "Library Begin" [MISRA Note 11]
 SVC0_3(MessageQueueNew,         osMessageQueueId_t, uint32_t, uint32_t, const osMessageQueueAttr_t *)
 SVC0_1(MessageQueueGetName,     const char *,       osMessageQueueId_t)
 SVC0_4(MessageQueuePut,         osStatus_t,         osMessageQueueId_t, const void *, uint8_t,   uint32_t)
@@ -733,6 +788,7 @@ SVC0_1(MessageQueueGetCount,    uint32_t,           osMessageQueueId_t)
 SVC0_1(MessageQueueGetSpace,    uint32_t,           osMessageQueueId_t)
 SVC0_1(MessageQueueReset,       osStatus_t,         osMessageQueueId_t)
 SVC0_1(MessageQueueDelete,      osStatus_t,         osMessageQueueId_t)
+//lint --flb "Library End"
 
 
 //  ==== ISR Calls ====
@@ -748,16 +804,19 @@ osStatus_t isrRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue) || (msg_ptr == NULL) || (timeout != 0U)) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (mq->state == osRtxObjectInactive) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
   // Try to allocate memory
+  //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
   msg = osRtxMemoryPoolAlloc(&mq->mp_info);
   if (msg != NULL) {
     // Copy Message
@@ -767,7 +826,9 @@ osStatus_t isrRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
     msg->flags    = 0U;
     msg->priority = msg_prio;
     // Register post ISR processing
+    //lint -e{9079} -e{9087} "cast between pointers to different object types"
     *((const void **)(void *)&msg->prev) = msg_ptr;
+    //lint -e{9079} -e{9087} "cast between pointers to different object types"
     *(      (void **)        &msg->next) = mq;
     osRtxPostProcess(osRtxObject(msg));
     EvrRtxMessageQueueInsertPending(mq, msg_ptr);
@@ -792,12 +853,14 @@ osStatus_t isrRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
   // Check parameters
   if ((mq == NULL) || (mq->id != osRtxIdMessageQueue) || (msg_ptr == NULL) || (timeout != 0U)) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorParameter);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
   // Check object state
   if (mq->state == osRtxObjectInactive) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
@@ -810,6 +873,7 @@ osStatus_t isrRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
       *msg_prio = msg->priority;
     }
     // Register post ISR processing
+    //lint -e{9079} -e{9087} "cast between pointers to different object types"
     *((os_message_queue_t **)(void *)&msg[1]) = mq;
     osRtxPostProcess(osRtxObject(msg));
     EvrRtxMessageQueueRetrieved(mq, msg_ptr);

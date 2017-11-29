@@ -26,6 +26,7 @@
 #ifndef RTX_CORE_C_H_
 #define RTX_CORE_C_H_
 
+//lint -emacro((923,9078),SCB) "cast from unsigned long to pointer" [MISRA Note 9]
 #include "RTE_Components.h"
 #include CMSIS_device_header
 
