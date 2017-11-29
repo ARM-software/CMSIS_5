@@ -30,7 +30,7 @@
 
 /// Wait for Timeout (Time Delay).
 /// \note API identical to osDelay
-osStatus_t svcRtxDelay (uint32_t ticks) {
+static osStatus_t svcRtxDelay (uint32_t ticks) {
 
   if (ticks != 0U) {
     if (!osRtxThreadWaitEnter(osRtxThreadWaitingDelay, ticks)) {
@@ -43,7 +43,7 @@ osStatus_t svcRtxDelay (uint32_t ticks) {
 
 /// Wait until specified time.
 /// \note API identical to osDelayUntil
-osStatus_t svcRtxDelayUntil (uint32_t ticks) {
+static osStatus_t svcRtxDelayUntil (uint32_t ticks) {
 
   ticks -= osRtxInfo.kernel.tick;
   if (ticks == 0xFFFFFFFFU) {

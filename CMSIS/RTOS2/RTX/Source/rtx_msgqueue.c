@@ -148,11 +148,11 @@ static void MessageQueueRemove (os_message_queue_t *mq, const os_message_t *msg)
 }
 
 
-//  ==== Library functions ====
+//  ==== Post ISR processing ====
 
 /// Message Queue post ISR processing.
 /// \param[in]  msg             message object.
-void osRtxMessageQueuePostProcess (os_message_t *msg) {
+static void osRtxMessageQueuePostProcess (os_message_t *msg) {
   os_message_queue_t *mq;
   os_thread_t        *thread;
   uint32_t           *reg;
@@ -227,7 +227,7 @@ void osRtxMessageQueuePostProcess (os_message_t *msg) {
 
 /// Create and Initialize a Message Queue object.
 /// \note API identical to osMessageQueueNew
-osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t msg_size, const osMessageQueueAttr_t *attr) {
+static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t msg_size, const osMessageQueueAttr_t *attr) {
   os_message_queue_t *mq;
   void               *mq_mem;
   uint32_t            mq_size;
@@ -339,7 +339,7 @@ osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
 
 /// Get name of a Message Queue object.
 /// \note API identical to osMessageQueueGetName
-const char *svcRtxMessageQueueGetName (osMessageQueueId_t mq_id) {
+static const char *svcRtxMessageQueueGetName (osMessageQueueId_t mq_id) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
 
   // Check parameters
@@ -361,7 +361,7 @@ const char *svcRtxMessageQueueGetName (osMessageQueueId_t mq_id) {
 
 /// Put a Message into a Queue or timeout if Queue is full.
 /// \note API identical to osMessageQueuePut
-osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout) {
+static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
   os_message_t       *msg;
   os_thread_t        *thread;
@@ -435,7 +435,7 @@ osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
 
 /// Get a Message from a Queue or timeout if Queue is empty.
 /// \note API identical to osMessageQueueGet
-osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout) {
+static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
   os_message_t       *msg;
   os_thread_t        *thread;
@@ -514,7 +514,7 @@ osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
 
 /// Get maximum number of messages in a Message Queue.
 /// \note API identical to osMessageGetCapacity
-uint32_t svcRtxMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
+static uint32_t svcRtxMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
 
   // Check parameters
@@ -536,7 +536,7 @@ uint32_t svcRtxMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
 
 /// Get maximum message size in a Memory Pool.
 /// \note API identical to osMessageGetMsgSize
-uint32_t svcRtxMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
+static uint32_t svcRtxMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
 
   // Check parameters
@@ -558,7 +558,7 @@ uint32_t svcRtxMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
 
 /// Get number of queued messages in a Message Queue.
 /// \note API identical to osMessageGetCount
-uint32_t svcRtxMessageQueueGetCount (osMessageQueueId_t mq_id) {
+static uint32_t svcRtxMessageQueueGetCount (osMessageQueueId_t mq_id) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
 
   // Check parameters
@@ -580,7 +580,7 @@ uint32_t svcRtxMessageQueueGetCount (osMessageQueueId_t mq_id) {
 
 /// Get number of available slots for messages in a Message Queue.
 /// \note API identical to osMessageGetSpace
-uint32_t svcRtxMessageQueueGetSpace (osMessageQueueId_t mq_id) {
+static uint32_t svcRtxMessageQueueGetSpace (osMessageQueueId_t mq_id) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
 
   // Check parameters
@@ -602,7 +602,7 @@ uint32_t svcRtxMessageQueueGetSpace (osMessageQueueId_t mq_id) {
 
 /// Reset a Message Queue to initial empty state.
 /// \note API identical to osMessageQueueReset
-osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
+static osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
   os_message_t       *msg;
   os_thread_t        *thread;
@@ -665,7 +665,7 @@ osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
 
 /// Delete a Message Queue object.
 /// \note API identical to osMessageQueueDelete
-osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
+static osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
   os_message_queue_t *mq = (os_message_queue_t *)mq_id;
   os_thread_t        *thread;
 

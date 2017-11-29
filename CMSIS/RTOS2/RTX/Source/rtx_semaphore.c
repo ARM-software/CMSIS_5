@@ -95,11 +95,11 @@ static uint32_t SemaphoreTokenIncrement (os_semaphore_t *semaphore) {
 }
 
 
-//  ==== Library functions ====
+//  ==== Post ISR processing ====
 
 /// Semaphore post ISR processing.
 /// \param[in]  semaphore       semaphore object.
-void osRtxSemaphorePostProcess (os_semaphore_t *semaphore) {
+static void osRtxSemaphorePostProcess (os_semaphore_t *semaphore) {
   os_thread_t *thread;
 
   if (semaphore->state == osRtxObjectInactive) {
@@ -123,7 +123,7 @@ void osRtxSemaphorePostProcess (os_semaphore_t *semaphore) {
 
 /// Create and Initialize a Semaphore object.
 /// \note API identical to osSemaphoreNew
-osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr) {
+static osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr) {
   os_semaphore_t *semaphore;
   uint8_t         flags;
   const char     *name;
@@ -189,7 +189,7 @@ osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
 
 /// Get name of a Semaphore object.
 /// \note API identical to osSemaphoreGetName
-const char *svcRtxSemaphoreGetName (osSemaphoreId_t semaphore_id) {
+static const char *svcRtxSemaphoreGetName (osSemaphoreId_t semaphore_id) {
   os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
 
   // Check parameters
@@ -211,7 +211,7 @@ const char *svcRtxSemaphoreGetName (osSemaphoreId_t semaphore_id) {
 
 /// Acquire a Semaphore token or timeout if no tokens are available.
 /// \note API identical to osSemaphoreAcquire
-osStatus_t svcRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
+static osStatus_t svcRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
   os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
   osStatus_t      status;
 
@@ -253,7 +253,7 @@ osStatus_t svcRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeou
 
 /// Release a Semaphore token that was acquired by osSemaphoreAcquire.
 /// \note API identical to osSemaphoreRelease
-osStatus_t svcRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
+static osStatus_t svcRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
   os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
   os_thread_t    *thread;
   osStatus_t      status;
@@ -294,7 +294,7 @@ osStatus_t svcRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 
 /// Get current Semaphore token count.
 /// \note API identical to osSemaphoreGetCount
-uint32_t svcRtxSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
+static uint32_t svcRtxSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
   os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
 
   // Check parameters
@@ -316,7 +316,7 @@ uint32_t svcRtxSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
 
 /// Delete a Semaphore object.
 /// \note API identical to osSemaphoreDelete
-osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
+static osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
   os_semaphore_t *semaphore = (os_semaphore_t *)semaphore_id;
   os_thread_t    *thread;
 

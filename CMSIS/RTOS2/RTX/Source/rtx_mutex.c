@@ -66,7 +66,7 @@ void osRtxMutexOwnerRelease (os_mutex_t *mutex_list) {
 
 /// Create and Initialize a Mutex object.
 /// \note API identical to osMutexNew
-osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
+static osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
   os_mutex_t *mutex;
   uint32_t    attr_bits;
   uint8_t     flags;
@@ -129,7 +129,7 @@ osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
 
 /// Get name of a Mutex object.
 /// \note API identical to osMutexGetName
-const char *svcRtxMutexGetName (osMutexId_t mutex_id) {
+static const char *svcRtxMutexGetName (osMutexId_t mutex_id) {
   os_mutex_t *mutex = (os_mutex_t *)mutex_id;
 
   // Check parameters
@@ -151,7 +151,7 @@ const char *svcRtxMutexGetName (osMutexId_t mutex_id) {
 
 /// Acquire a Mutex or timeout if it is locked.
 /// \note API identical to osMutexAcquire
-osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
+static osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
   os_mutex_t  *mutex = (os_mutex_t *)mutex_id;
   os_thread_t *runnig_thread;
   osStatus_t   status;
@@ -231,7 +231,7 @@ osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
 
 /// Release a Mutex that was acquired by osMutexAcquire.
 /// \note API identical to osMutexRelease
-osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
+static osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
   os_mutex_t  *mutex = (os_mutex_t *)mutex_id;
   os_mutex_t  *mutex0;
   os_thread_t *thread;
@@ -323,7 +323,7 @@ osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
 
 /// Get Thread which owns a Mutex object.
 /// \note API identical to osMutexGetOwner
-osThreadId_t svcRtxMutexGetOwner (osMutexId_t mutex_id) {
+static osThreadId_t svcRtxMutexGetOwner (osMutexId_t mutex_id) {
   os_mutex_t *mutex = (os_mutex_t *)mutex_id;
 
   // Check parameters
@@ -351,7 +351,7 @@ osThreadId_t svcRtxMutexGetOwner (osMutexId_t mutex_id) {
 
 /// Delete a Mutex object.
 /// \note API identical to osMutexDelete
-osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
+static osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
   os_mutex_t  *mutex = (os_mutex_t *)mutex_id;
   os_mutex_t  *mutex0;
   os_thread_t *thread;

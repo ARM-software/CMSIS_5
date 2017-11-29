@@ -175,7 +175,8 @@ os_thread_t *osRtxThreadListGet (volatile os_object_t *object) {
 
 /// Retrieve Thread list root.
 /// \param[in]  thread          thread object.
-void *osRtxThreadListRoot (os_thread_t *thread) {
+#ifndef EVR_RTX_DISABLE
+static void *osRtxThreadListRoot (os_thread_t *thread) {
   os_thread_t *thread0;
 
   thread0 = thread;
@@ -184,6 +185,7 @@ void *osRtxThreadListRoot (os_thread_t *thread) {
   }
   return thread0;
 }
+#endif
 
 /// Re-sort a Thread in linked Object list by Priority (Highest at Head).
 /// \param[in]  thread          thread object.
@@ -219,7 +221,7 @@ void osRtxThreadListRemove (os_thread_t *thread) {
 
 /// Unlink a Thread from specified linked list.
 /// \param[in]  thread          thread object.
-void osRtxThreadListUnlink (os_thread_t **thread_list, os_thread_t *thread) {
+static void osRtxThreadListUnlink (os_thread_t **thread_list, os_thread_t *thread) {
 
   if (thread->thread_next != NULL) {
     thread->thread_next->thread_prev = thread->thread_prev;
@@ -243,7 +245,7 @@ void osRtxThreadReadyPut (os_thread_t *thread) {
 /// Insert a Thread into the Delay list sorted by Delay (Lowest at Head).
 /// \param[in]  thread          thread object.
 /// \param[in]  delay           delay value.
-void osRtxThreadDelayInsert (os_thread_t *thread, uint32_t delay) {
+static void osRtxThreadDelayInsert (os_thread_t *thread, uint32_t delay) {
   os_thread_t *prev, *next;
 
   if (delay == osWaitForever) {
@@ -289,7 +291,7 @@ void osRtxThreadDelayInsert (os_thread_t *thread, uint32_t delay) {
 
 /// Remove a Thread from the Delay list.
 /// \param[in]  thread          thread object.
-void osRtxThreadDelayRemove (os_thread_t *thread) {
+static void osRtxThreadDelayRemove (os_thread_t *thread) {
 
   if (thread->delay == osWaitForever) {
     if ((thread->delay_prev != NULL) || (osRtxInfo.thread.wait_list == thread)) {
@@ -381,7 +383,7 @@ uint32_t *osRtxThreadRegPtr (os_thread_t *thread) {
 
 /// Block running Thread execution and register it as Ready to Run.
 /// \param[in]  thread          running thread object.
-void osRtxThreadBlock (os_thread_t *thread) {
+static void osRtxThreadBlock (os_thread_t *thread) {
   os_thread_t *prev, *next;
   int32_t      priority;
 
@@ -521,9 +523,12 @@ __WEAK void osRtxThreadStackCheck (void) {
   }
 }
 
+
+//  ==== Post ISR processing ====
+
 /// Thread post ISR processing.
 /// \param[in]  thread          thread object.
-void osRtxThreadPostProcess (os_thread_t *thread) {
+static void osRtxThreadPostProcess (os_thread_t *thread) {
   uint32_t thread_flags;
 
   if ((thread->state == osRtxThreadInactive) ||
@@ -546,7 +551,7 @@ void osRtxThreadPostProcess (os_thread_t *thread) {
 
 /// Create a thread and add it to Active Threads.
 /// \note API identical to osThreadNew
-osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThreadAttr_t *attr) {
+static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThreadAttr_t *attr) {
   os_thread_t  *thread;
   uint32_t      attr_bits;
   void         *stack_mem;
@@ -753,7 +758,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
 
 /// Get name of a thread.
 /// \note API identical to osThreadGetName
-const char *svcRtxThreadGetName (osThreadId_t thread_id) {
+static const char *svcRtxThreadGetName (osThreadId_t thread_id) {
   os_thread_t *thread = (os_thread_t *)thread_id;
 
   // Check parameters
@@ -775,7 +780,7 @@ const char *svcRtxThreadGetName (osThreadId_t thread_id) {
 
 /// Return the thread ID of the current running thread.
 /// \note API identical to osThreadGetId
-osThreadId_t svcRtxThreadGetId (void) {
+static osThreadId_t svcRtxThreadGetId (void) {
   os_thread_t *thread;
 
   thread = osRtxThreadGetRunning();
@@ -785,7 +790,7 @@ osThreadId_t svcRtxThreadGetId (void) {
 
 /// Get current thread state of a thread.
 /// \note API identical to osThreadGetState
-osThreadState_t svcRtxThreadGetState (osThreadId_t thread_id) {
+static osThreadState_t svcRtxThreadGetState (osThreadId_t thread_id) {
   os_thread_t *thread = (os_thread_t *)thread_id;
 
   // Check parameters
@@ -801,7 +806,7 @@ osThreadState_t svcRtxThreadGetState (osThreadId_t thread_id) {
 
 /// Get stack size of a thread.
 /// \note API identical to osThreadGetStackSize
-uint32_t svcRtxThreadGetStackSize (osThreadId_t thread_id) {
+static uint32_t svcRtxThreadGetStackSize (osThreadId_t thread_id) {
   os_thread_t *thread = (os_thread_t *)thread_id;
 
   // Check parameters
@@ -823,7 +828,7 @@ uint32_t svcRtxThreadGetStackSize (osThreadId_t thread_id) {
 
 /// Get available stack space of a thread based on stack watermark recording during execution.
 /// \note API identical to osThreadGetStackSpace
-uint32_t svcRtxThreadGetStackSpace (osThreadId_t thread_id) {
+static uint32_t svcRtxThreadGetStackSpace (osThreadId_t thread_id) {
   os_thread_t *thread = (os_thread_t *)thread_id;
   uint32_t    *stack;
   uint32_t     space;
@@ -863,7 +868,7 @@ uint32_t svcRtxThreadGetStackSpace (osThreadId_t thread_id) {
 
 /// Change priority of a thread.
 /// \note API identical to osThreadSetPriority
-osStatus_t svcRtxThreadSetPriority (osThreadId_t thread_id, osPriority_t priority) {
+static osStatus_t svcRtxThreadSetPriority (osThreadId_t thread_id, osPriority_t priority) {
   os_thread_t *thread = (os_thread_t *)thread_id;
 
   // Check parameters
@@ -892,7 +897,7 @@ osStatus_t svcRtxThreadSetPriority (osThreadId_t thread_id, osPriority_t priorit
 
 /// Get current priority of a thread.
 /// \note API identical to osThreadGetPriority
-osPriority_t svcRtxThreadGetPriority (osThreadId_t thread_id) {
+static osPriority_t svcRtxThreadGetPriority (osThreadId_t thread_id) {
   os_thread_t *thread = (os_thread_t *)thread_id;
 
   // Check parameters
@@ -915,7 +920,7 @@ osPriority_t svcRtxThreadGetPriority (osThreadId_t thread_id) {
 
 /// Pass control to next thread that is in state READY.
 /// \note API identical to osThreadYield
-osStatus_t svcRtxThreadYield (void) {
+static osStatus_t svcRtxThreadYield (void) {
   uint8_t      kernel_state;
   os_thread_t *thread_running;
   os_thread_t *thread_ready;
@@ -937,7 +942,7 @@ osStatus_t svcRtxThreadYield (void) {
 
 /// Suspend execution of a thread.
 /// \note API identical to osThreadSuspend
-osStatus_t svcRtxThreadSuspend (osThreadId_t thread_id) {
+static osStatus_t svcRtxThreadSuspend (osThreadId_t thread_id) {
   os_thread_t *thread = (os_thread_t *)thread_id;
   osStatus_t   status;
 
@@ -994,7 +999,7 @@ osStatus_t svcRtxThreadSuspend (osThreadId_t thread_id) {
 
 /// Resume execution of a thread.
 /// \note API identical to osThreadResume
-osStatus_t svcRtxThreadResume (osThreadId_t thread_id) {
+static osStatus_t svcRtxThreadResume (osThreadId_t thread_id) {
   os_thread_t *thread = (os_thread_t *)thread_id;
 
   // Check parameters
@@ -1054,7 +1059,7 @@ static void osRtxThreadFree (os_thread_t *thread) {
 
 /// Detach a thread (thread storage can be reclaimed when thread terminates).
 /// \note API identical to osThreadDetach
-osStatus_t svcRtxThreadDetach (osThreadId_t thread_id) {
+static osStatus_t svcRtxThreadDetach (osThreadId_t thread_id) {
   os_thread_t *thread = (os_thread_t *)thread_id;
 
   // Check parameters
@@ -1089,7 +1094,7 @@ osStatus_t svcRtxThreadDetach (osThreadId_t thread_id) {
 
 /// Wait for specified thread to terminate.
 /// \note API identical to osThreadJoin
-osStatus_t svcRtxThreadJoin (osThreadId_t thread_id) {
+static osStatus_t svcRtxThreadJoin (osThreadId_t thread_id) {
   os_thread_t *thread = (os_thread_t *)thread_id;
   osStatus_t   status;
 
@@ -1133,7 +1138,7 @@ osStatus_t svcRtxThreadJoin (osThreadId_t thread_id) {
 
 /// Terminate execution of current running thread.
 /// \note API identical to osThreadExit
-void svcRtxThreadExit (void) {
+static void svcRtxThreadExit (void) {
   os_thread_t *thread;
 
   // Check running thread
@@ -1180,7 +1185,7 @@ void svcRtxThreadExit (void) {
 
 /// Terminate execution of a thread.
 /// \note API identical to osThreadTerminate
-osStatus_t svcRtxThreadTerminate (osThreadId_t thread_id) {
+static osStatus_t svcRtxThreadTerminate (osThreadId_t thread_id) {
   os_thread_t *thread = (os_thread_t *)thread_id;
   osStatus_t   status;
 
@@ -1258,7 +1263,7 @@ osStatus_t svcRtxThreadTerminate (osThreadId_t thread_id) {
 
 /// Get number of active threads.
 /// \note API identical to osThreadGetCount
-uint32_t svcRtxThreadGetCount (void) {
+static uint32_t svcRtxThreadGetCount (void) {
   os_thread_t *thread;
   uint32_t     count;
 
@@ -1284,7 +1289,7 @@ uint32_t svcRtxThreadGetCount (void) {
 
 /// Enumerate active threads.
 /// \note API identical to osThreadEnumerate
-uint32_t svcRtxThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items) {
+static uint32_t svcRtxThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items) {
   os_thread_t *thread;
   uint32_t     count;
 
@@ -1323,7 +1328,7 @@ uint32_t svcRtxThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items
 
 /// Set the specified Thread Flags of a thread.
 /// \note API identical to osThreadFlagsSet
-uint32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
+static uint32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
   os_thread_t *thread = (os_thread_t *)thread_id;
   uint32_t     thread_flags;
   uint32_t     thread_flags0;
@@ -1366,7 +1371,7 @@ uint32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
 
 /// Clear the specified Thread Flags of current running thread.
 /// \note API identical to osThreadFlagsClear
-uint32_t svcRtxThreadFlagsClear (uint32_t flags) {
+static uint32_t svcRtxThreadFlagsClear (uint32_t flags) {
   os_thread_t *thread;
   uint32_t     thread_flags;
 
@@ -1399,7 +1404,7 @@ uint32_t svcRtxThreadFlagsClear (uint32_t flags) {
 
 /// Get the current Thread Flags of current running thread.
 /// \note API identical to osThreadFlagsGet
-uint32_t svcRtxThreadFlagsGet (void) {
+static uint32_t svcRtxThreadFlagsGet (void) {
   os_thread_t *thread;
 
   thread = osRtxThreadGetRunning();
@@ -1422,7 +1427,7 @@ uint32_t svcRtxThreadFlagsGet (void) {
 
 /// Wait for one or more Thread Flags of the current running thread to become signaled.
 /// \note API identical to osThreadFlagsWait
-uint32_t svcRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout) {
+static uint32_t svcRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout) {
   os_thread_t *thread;
   uint32_t     thread_flags;
 
@@ -1519,6 +1524,39 @@ uint32_t isrRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
   EvrRtxThreadFlagsSetDone(thread, thread_flags);
 
   return thread_flags;
+}
+
+
+//  ==== Library functions ====
+
+/// Thread startup (Idle and Timer Thread).
+/// \return true - success, false - failure.
+bool_t osRtxThreadStartup (void) {
+  bool_t ret = TRUE;
+
+  // Create Idle Thread
+  if (osRtxInfo.thread.idle == NULL) {
+    osRtxInfo.thread.idle = osRtxThreadId(
+      svcRtxThreadNew(osRtxIdleThread, NULL, osRtxConfig.idle_thread_attr)
+    );
+    if (osRtxInfo.thread.idle == NULL) {
+      ret = FALSE;
+    }
+  }
+
+  // Create Timer Thread
+  if (osRtxConfig.timer_mq_mcnt != 0U) {
+    if (osRtxInfo.timer.thread == NULL) {
+      osRtxInfo.timer.thread = osRtxThreadId(
+        svcRtxThreadNew(osRtxTimerThread, NULL, osRtxConfig.timer_thread_attr)
+      );
+      if (osRtxInfo.timer.thread == NULL) {
+        ret = FALSE;
+      }
+    }
+  }
+
+  return ret;
 }
 
 

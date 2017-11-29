@@ -84,7 +84,7 @@ static void TimerUnlink (const os_timer_t *timer) {
 //  ==== Library functions ====
 
 /// Timer Tick (called each SysTick).
-void osRtxTimerTick (void) {
+static void osRtxTimerTick (void) {
   os_timer_t *timer;
   osStatus_t  status;
 
@@ -133,7 +133,7 @@ __WEAK void osRtxTimerThread (void *argument) {
 
 /// Create and Initialize a timer.
 /// \note API identical to osTimerNew
-osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr) {
+static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr) {
   os_timer_t *timer;
   uint8_t     flags;
   const char *name;
@@ -200,7 +200,7 @@ osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argume
 
 /// Get name of a timer.
 /// \note API identical to osTimerGetName
-const char *svcRtxTimerGetName (osTimerId_t timer_id) {
+static const char *svcRtxTimerGetName (osTimerId_t timer_id) {
   os_timer_t *timer = (os_timer_t *)timer_id;
 
   // Check parameters
@@ -222,7 +222,7 @@ const char *svcRtxTimerGetName (osTimerId_t timer_id) {
 
 /// Start or restart a timer.
 /// \note API identical to osTimerStart
-osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
+static osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
   os_timer_t *timer = (os_timer_t *)timer_id;
 
   // Check parameters
@@ -257,7 +257,7 @@ osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
 
 /// Stop a timer.
 /// \note API identical to osTimerStop
-osStatus_t svcRtxTimerStop (osTimerId_t timer_id) {
+static osStatus_t svcRtxTimerStop (osTimerId_t timer_id) {
   os_timer_t *timer = (os_timer_t *)timer_id;
 
   // Check parameters
@@ -283,7 +283,7 @@ osStatus_t svcRtxTimerStop (osTimerId_t timer_id) {
 
 /// Check if a timer is running.
 /// \note API identical to osTimerIsRunning
-uint32_t svcRtxTimerIsRunning (osTimerId_t timer_id) {
+static uint32_t svcRtxTimerIsRunning (osTimerId_t timer_id) {
   os_timer_t *timer = (os_timer_t *)timer_id;
   uint32_t    is_running;
 
@@ -307,7 +307,7 @@ uint32_t svcRtxTimerIsRunning (osTimerId_t timer_id) {
 
 /// Delete a timer.
 /// \note API identical to osTimerDelete
-osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
+static osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
   os_timer_t *timer = (os_timer_t *)timer_id;
 
   // Check parameters

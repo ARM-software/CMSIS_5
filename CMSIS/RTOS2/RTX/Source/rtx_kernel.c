@@ -66,7 +66,7 @@ static void KernelUnblock (void) {
 
 /// Initialize the RTOS Kernel.
 /// \note API identical to osKernelInitialize
-osStatus_t svcRtxKernelInitialize (void) {
+static osStatus_t svcRtxKernelInitialize (void) {
 
   if (osRtxInfo.kernel.state == osRtxKernelReady) {
     EvrRtxKernelInitializeCompleted();
@@ -77,9 +77,6 @@ osStatus_t svcRtxKernelInitialize (void) {
     return osError;
   }
 
-  // Initialize osRtxInfo
-  memset(&osRtxInfo.kernel, 0, sizeof(osRtxInfo) - offsetof(osRtxInfo_t, kernel));
-
   if (osRtxConfig.thread_stack_size < (64U + 8U)) {
     EvrRtxKernelError(osRtxErrorInvalidThreadStack);
     return osError;
@@ -89,6 +86,18 @@ osStatus_t svcRtxKernelInitialize (void) {
     EvrRtxKernelError((int32_t)osError);
     return osError;
   }
+
+#if (DOMAIN_NS == 1)
+  // Initialize Secure Process Stack
+  if (TZ_InitContextSystem_S() == 0U) {
+    EvrRtxKernelError(osRtxErrorTZ_InitContext_S);
+    return osError;
+  }
+#endif
+
+  // Initialize osRtxInfo
+  memset(&osRtxInfo.kernel, 0, sizeof(osRtxInfo) - offsetof(osRtxInfo_t, kernel));
+
   osRtxInfo.isr_queue.data = osRtxConfig.isr_queue.data;
   osRtxInfo.isr_queue.max  = osRtxConfig.isr_queue.max;
 
@@ -180,14 +189,6 @@ osStatus_t svcRtxKernelInitialize (void) {
     }
   }
 
-#if (DOMAIN_NS == 1)
-  // Initialize Secure Process Stack
-  if (TZ_InitContextSystem_S() == 0U) {
-    EvrRtxKernelError(osRtxErrorTZ_InitContext_S);
-    return osError;
-  }
-#endif
-
   osRtxInfo.kernel.state = osRtxKernelReady;
 
   EvrRtxKernelInitializeCompleted();
@@ -197,7 +198,7 @@ osStatus_t svcRtxKernelInitialize (void) {
 
 ///  Get RTOS Kernel Information.
 /// \note API identical to osKernelGetInfo
-osStatus_t svcRtxKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size) {
+static osStatus_t svcRtxKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size) {
 
   if (version != NULL) {
     version->api    = osRtxVersionAPI;
@@ -218,14 +219,14 @@ osStatus_t svcRtxKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_
 
 /// Get the current RTOS Kernel state.
 /// \note API identical to osKernelGetState
-osKernelState_t svcRtxKernelGetState (void) {
+static osKernelState_t svcRtxKernelGetState (void) {
   EvrRtxKernelGetState((osKernelState_t)(osRtxInfo.kernel.state));
   return ((osKernelState_t)(osRtxInfo.kernel.state));
 }
 
 /// Start the RTOS Kernel scheduler.
 /// \note API identical to osKernelStart
-osStatus_t svcRtxKernelStart (void) {
+static osStatus_t svcRtxKernelStart (void) {
   os_thread_t *thread;
 
   if (osRtxInfo.kernel.state != osRtxKernelReady) {
@@ -233,24 +234,10 @@ osStatus_t svcRtxKernelStart (void) {
     return osError;
   }
 
-  // Create Idle Thread
-  if (osRtxInfo.thread.idle == NULL) {
-    osRtxInfo.thread.idle = svcRtxThreadNew(osRtxIdleThread, NULL, osRtxConfig.idle_thread_attr);
-    if (osRtxInfo.thread.idle == NULL) {
-      EvrRtxKernelError((int32_t)osError);
-      return osError;
-    }
-  }
-
-  // Create Timer Thread
-  if (osRtxConfig.timer_mq_mcnt != 0U) {
-    if (osRtxInfo.timer.thread == NULL) {
-      osRtxInfo.timer.thread = svcRtxThreadNew(osRtxTimerThread, NULL, osRtxConfig.timer_thread_attr);
-      if (osRtxInfo.timer.thread == NULL) {
-        EvrRtxKernelError((int32_t)osError);
-        return osError;
-      }
-    }
+  // Thread startup (Idle and Timer Thread)
+  if (!osRtxThreadStartup()) {
+    EvrRtxKernelError((int32_t)osError);
+    return osError;
   }
 
   // Setup SVC and PendSV System Service Calls
@@ -258,6 +245,7 @@ osStatus_t svcRtxKernelStart (void) {
 
   // Setup RTOS Tick
   if (OS_Tick_Setup(osRtxConfig.tick_freq, OS_TICK_HANDLER) != 0) {
+    EvrRtxKernelError((int32_t)osError);
     return osError;
   }
   osRtxInfo.tick_irqn = OS_Tick_GetIRQn();
@@ -290,7 +278,7 @@ osStatus_t svcRtxKernelStart (void) {
 
 /// Lock the RTOS Kernel scheduler.
 /// \note API identical to osKernelLock
-int32_t svcRtxKernelLock (void) {
+static int32_t svcRtxKernelLock (void) {
   int32_t lock;
 
   switch (osRtxInfo.kernel.state) {
@@ -313,7 +301,7 @@ int32_t svcRtxKernelLock (void) {
  
 /// Unlock the RTOS Kernel scheduler.
 /// \note API identical to osKernelUnlock
-int32_t svcRtxKernelUnlock (void) {
+static int32_t svcRtxKernelUnlock (void) {
   int32_t lock;
 
   switch (osRtxInfo.kernel.state) {
@@ -336,7 +324,7 @@ int32_t svcRtxKernelUnlock (void) {
 
 /// Restore the RTOS Kernel scheduler lock state.
 /// \note API identical to osKernelRestoreLock
-int32_t svcRtxKernelRestoreLock (int32_t lock) {
+static int32_t svcRtxKernelRestoreLock (int32_t lock) {
   int32_t lock_new;
 
   switch (osRtxInfo.kernel.state) {
@@ -369,7 +357,7 @@ int32_t svcRtxKernelRestoreLock (int32_t lock) {
 
 /// Suspend the RTOS Kernel scheduler.
 /// \note API identical to osKernelSuspend
-uint32_t svcRtxKernelSuspend (void) {
+static uint32_t svcRtxKernelSuspend (void) {
   os_thread_t *thread;
   os_timer_t  *timer;
   uint32_t     delay;
@@ -406,7 +394,7 @@ uint32_t svcRtxKernelSuspend (void) {
 
 /// Resume the RTOS Kernel scheduler.
 /// \note API identical to osKernelResume
-void svcRtxKernelResume (uint32_t sleep_ticks) {
+static void svcRtxKernelResume (uint32_t sleep_ticks) {
   os_thread_t *thread;
   os_timer_t  *timer;
   uint32_t     delay;
@@ -469,21 +457,21 @@ void svcRtxKernelResume (uint32_t sleep_ticks) {
 
 /// Get the RTOS kernel tick count.
 /// \note API identical to osKernelGetTickCount
-uint32_t svcRtxKernelGetTickCount (void) {
+static uint32_t svcRtxKernelGetTickCount (void) {
   EvrRtxKernelGetTickCount(osRtxInfo.kernel.tick);
   return osRtxInfo.kernel.tick;
 }
 
 /// Get the RTOS kernel tick frequency.
 /// \note API identical to osKernelGetTickFreq
-uint32_t svcRtxKernelGetTickFreq (void) {
+static uint32_t svcRtxKernelGetTickFreq (void) {
   EvrRtxKernelGetTickFreq(osRtxConfig.tick_freq);
   return osRtxConfig.tick_freq;
 }
 
 /// Get the RTOS kernel system timer count.
 /// \note API identical to osKernelGetSysTimerCount
-uint32_t svcRtxKernelGetSysTimerCount (void) {
+static uint32_t svcRtxKernelGetSysTimerCount (void) {
   uint32_t tick;
   uint32_t count;
 
@@ -500,7 +488,7 @@ uint32_t svcRtxKernelGetSysTimerCount (void) {
 
 /// Get the RTOS kernel system timer frequency.
 /// \note API identical to osKernelGetSysTimerFreq
-uint32_t svcRtxKernelGetSysTimerFreq (void) {
+static uint32_t svcRtxKernelGetSysTimerFreq (void) {
   uint32_t freq = OS_Tick_GetClock();
   EvrRtxKernelGetSysTimerFreq(freq);
   return freq;

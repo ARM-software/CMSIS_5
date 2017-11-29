@@ -152,7 +152,7 @@ osStatus_t osRtxMemoryPoolFree (os_mp_info_t *mp_info, void *block) {
 
 /// Memory Pool post ISR processing.
 /// \param[in]  mp              memory pool object.
-void osRtxMemoryPoolPostProcess (os_memory_pool_t *mp) {
+static void osRtxMemoryPoolPostProcess (os_memory_pool_t *mp) {
   void        *block;
   os_thread_t *thread;
 
@@ -178,7 +178,7 @@ void osRtxMemoryPoolPostProcess (os_memory_pool_t *mp) {
 
 /// Create and Initialize a Memory Pool object.
 /// \note API identical to osMemoryPoolNew
-osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size, const osMemoryPoolAttr_t *attr) {
+static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size, const osMemoryPoolAttr_t *attr) {
   os_memory_pool_t *mp;
   void             *mp_mem;
   uint32_t          mp_size;
@@ -285,7 +285,7 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
 
 /// Get name of a Memory Pool object.
 /// \note API identical to osMemoryPoolGetName
-const char *svcRtxMemoryPoolGetName (osMemoryPoolId_t mp_id) {
+static const char *svcRtxMemoryPoolGetName (osMemoryPoolId_t mp_id) {
   os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
 
   // Check parameters
@@ -307,7 +307,7 @@ const char *svcRtxMemoryPoolGetName (osMemoryPoolId_t mp_id) {
 
 /// Allocate a memory block from a Memory Pool.
 /// \note API identical to osMemoryPoolAlloc
-void *svcRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
+static void *svcRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
   os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
   void             *block;
 
@@ -347,7 +347,7 @@ void *svcRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
 
 /// Return an allocated memory block back to a Memory Pool.
 /// \note API identical to osMemoryPoolFree
-osStatus_t svcRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
+static osStatus_t svcRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
   os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
   os_thread_t      *thread;
   osStatus_t        status;
@@ -388,7 +388,7 @@ osStatus_t svcRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
 
 /// Get maximum number of memory blocks in a Memory Pool.
 /// \note API identical to osMemoryPoolGetCapacity
-uint32_t svcRtxMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
+static uint32_t svcRtxMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
   os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
 
   // Check parameters
@@ -410,7 +410,7 @@ uint32_t svcRtxMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
 
 /// Get memory block size in a Memory Pool.
 /// \note API identical to osMemoryPoolGetBlockSize
-uint32_t svcRtxMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
+static uint32_t svcRtxMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
   os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
 
   // Check parameters
@@ -432,7 +432,7 @@ uint32_t svcRtxMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
 
 /// Get number of memory blocks used in a Memory Pool.
 /// \note API identical to osMemoryPoolGetCount
-uint32_t svcRtxMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
+static uint32_t svcRtxMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
   os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
 
   // Check parameters
@@ -454,7 +454,7 @@ uint32_t svcRtxMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
 
 /// Get number of memory blocks available in a Memory Pool.
 /// \note API identical to osMemoryPoolGetSpace
-uint32_t svcRtxMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
+static uint32_t svcRtxMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
   os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
 
   // Check parameters
@@ -476,7 +476,7 @@ uint32_t svcRtxMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
 
 /// Delete a Memory Pool object.
 /// \note API identical to osMemoryPoolDelete
-osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
+static osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
   os_memory_pool_t *mp = (os_memory_pool_t *)mp_id;
   os_thread_t      *thread;
 

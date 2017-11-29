@@ -126,11 +126,11 @@ static uint32_t EventFlagsCheck (os_event_flags_t *ef, uint32_t flags, uint32_t 
 }
 
 
-//  ==== Library functions ====
+//  ==== Post ISR processing ====
 
 /// Event Flags post ISR processing.
 /// \param[in]  ef              event flags object.
-void osRtxEventFlagsPostProcess (os_event_flags_t *ef) {
+static void osRtxEventFlagsPostProcess (os_event_flags_t *ef) {
   os_thread_t *thread;
   os_thread_t *thread_next;
   uint32_t     event_flags;
@@ -158,7 +158,7 @@ void osRtxEventFlagsPostProcess (os_event_flags_t *ef) {
 
 /// Create and Initialize an Event Flags object.
 /// \note API identical to osEventFlagsNew
-osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
+static osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
   os_event_flags_t *ef;
   uint8_t           flags;
   const char       *name;
@@ -217,7 +217,7 @@ osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
 
 /// Get name of an Event Flags object.
 /// \note API identical to osEventFlagsGetName
-const char *svcRtxEventFlagsGetName (osEventFlagsId_t ef_id) {
+static const char *svcRtxEventFlagsGetName (osEventFlagsId_t ef_id) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
 
   // Check parameters
@@ -239,7 +239,7 @@ const char *svcRtxEventFlagsGetName (osEventFlagsId_t ef_id) {
 
 /// Set the specified Event Flags.
 /// \note API identical to osEventFlagsSet
-uint32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
+static uint32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
   os_thread_t      *thread;
   os_thread_t      *thread_next;
@@ -288,7 +288,7 @@ uint32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
 
 /// Clear the specified Event Flags.
 /// \note API identical to osEventFlagsClear
-uint32_t svcRtxEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
+static uint32_t svcRtxEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
   uint32_t          event_flags;
 
@@ -315,7 +315,7 @@ uint32_t svcRtxEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
 
 /// Get the current Event Flags.
 /// \note API identical to osEventFlagsGet
-uint32_t svcRtxEventFlagsGet (osEventFlagsId_t ef_id) {
+static uint32_t svcRtxEventFlagsGet (osEventFlagsId_t ef_id) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
 
   // Check parameters
@@ -337,7 +337,7 @@ uint32_t svcRtxEventFlagsGet (osEventFlagsId_t ef_id) {
 
 /// Wait for one or more Event Flags to become signaled.
 /// \note API identical to osEventFlagsWait
-uint32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout) {
+static uint32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
   os_thread_t      *running_thread;
   uint32_t          event_flags;
@@ -391,7 +391,7 @@ uint32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
 
 /// Delete an Event Flags object.
 /// \note API identical to osEventFlagsDelete
-osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
+static osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
   os_event_flags_t *ef = (os_event_flags_t *)ef_id;
   os_thread_t      *thread;
 
