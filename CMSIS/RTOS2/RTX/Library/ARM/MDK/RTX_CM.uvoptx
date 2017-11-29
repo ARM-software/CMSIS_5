@@ -153,15 +153,33 @@
         <newCpu>0</newCpu>
         <uProt>0</uProt>
       </DebugFlag>
-      <LintExecutable></LintExecutable>
+      <LintExecutable>C:\Lint\lint-nt.exe</LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
       <bAutoGenD>0</bAutoGenD>
-      <LntExFlags>0</LntExFlags>
-      <pMisraName></pMisraName>
-      <pszMrule></pszMrule>
-      <pSingCmds></pSingCmds>
-      <pMultCmds></pMultCmds>
+      <LntExFlags>63</LntExFlags>
+      <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
+      <pszMrule>MISRA_C_2012_Config</pszMrule>
+      <pSingCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pSingCmds>
+      <pMultCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pMultCmds>
       <pMisraNamep></pMisraNamep>
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
@@ -301,15 +319,33 @@
         <newCpu>0</newCpu>
         <uProt>0</uProt>
       </DebugFlag>
-      <LintExecutable></LintExecutable>
+      <LintExecutable>C:\Lint\lint-nt.exe</LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
       <bAutoGenD>0</bAutoGenD>
-      <LntExFlags>0</LntExFlags>
-      <pMisraName></pMisraName>
-      <pszMrule></pszMrule>
-      <pSingCmds></pSingCmds>
-      <pMultCmds></pMultCmds>
+      <LntExFlags>63</LntExFlags>
+      <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
+      <pszMrule>MISRA_C_2012_Config</pszMrule>
+      <pSingCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pSingCmds>
+      <pMultCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pMultCmds>
       <pMisraNamep></pMisraNamep>
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
@@ -449,15 +485,33 @@
         <newCpu>0</newCpu>
         <uProt>0</uProt>
       </DebugFlag>
-      <LintExecutable></LintExecutable>
+      <LintExecutable>C:\Lint\lint-nt.exe</LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
       <bAutoGenD>0</bAutoGenD>
-      <LntExFlags>0</LntExFlags>
-      <pMisraName></pMisraName>
-      <pszMrule></pszMrule>
-      <pSingCmds></pSingCmds>
-      <pMultCmds></pMultCmds>
+      <LntExFlags>63</LntExFlags>
+      <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
+      <pszMrule>MISRA_C_2012_Config</pszMrule>
+      <pSingCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pSingCmds>
+      <pMultCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pMultCmds>
       <pMisraNamep></pMisraNamep>
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
@@ -602,15 +656,33 @@
         <newCpu>0</newCpu>
         <uProt>0</uProt>
       </DebugFlag>
-      <LintExecutable></LintExecutable>
+      <LintExecutable>C:\Lint\lint-nt.exe</LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
       <bAutoGenD>0</bAutoGenD>
-      <LntExFlags>0</LntExFlags>
-      <pMisraName></pMisraName>
-      <pszMrule></pszMrule>
-      <pSingCmds></pSingCmds>
-      <pMultCmds></pMultCmds>
+      <LntExFlags>63</LntExFlags>
+      <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
+      <pszMrule>MISRA_C_2012_Config</pszMrule>
+      <pSingCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pSingCmds>
+      <pMultCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pMultCmds>
       <pMisraNamep></pMisraNamep>
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
@@ -755,15 +827,33 @@
         <newCpu>0</newCpu>
         <uProt>0</uProt>
       </DebugFlag>
-      <LintExecutable></LintExecutable>
+      <LintExecutable>C:\Lint\lint-nt.exe</LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
       <bAutoGenD>0</bAutoGenD>
-      <LntExFlags>0</LntExFlags>
-      <pMisraName></pMisraName>
-      <pszMrule></pszMrule>
-      <pSingCmds></pSingCmds>
-      <pMultCmds></pMultCmds>
+      <LntExFlags>63</LntExFlags>
+      <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
+      <pszMrule>MISRA_C_2012_Config</pszMrule>
+      <pSingCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pSingCmds>
+      <pMultCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pMultCmds>
       <pMisraNamep></pMisraNamep>
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
@@ -908,15 +998,33 @@
         <newCpu>0</newCpu>
         <uProt>0</uProt>
       </DebugFlag>
-      <LintExecutable></LintExecutable>
+      <LintExecutable>C:\Lint\lint-nt.exe</LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
       <bAutoGenD>0</bAutoGenD>
-      <LntExFlags>0</LntExFlags>
-      <pMisraName></pMisraName>
-      <pszMrule></pszMrule>
-      <pSingCmds></pSingCmds>
-      <pMultCmds></pMultCmds>
+      <LntExFlags>63</LntExFlags>
+      <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
+      <pszMrule>MISRA_C_2012_Config</pszMrule>
+      <pSingCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pSingCmds>
+      <pMultCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pMultCmds>
       <pMisraNamep></pMisraNamep>
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
@@ -1061,15 +1169,33 @@
         <newCpu>0</newCpu>
         <uProt>0</uProt>
       </DebugFlag>
-      <LintExecutable></LintExecutable>
+      <LintExecutable>C:\Lint\lint-nt.exe</LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
       <bAutoGenD>0</bAutoGenD>
-      <LntExFlags>0</LntExFlags>
-      <pMisraName></pMisraName>
-      <pszMrule></pszMrule>
-      <pSingCmds></pSingCmds>
-      <pMultCmds></pMultCmds>
+      <LntExFlags>63</LntExFlags>
+      <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
+      <pszMrule>MISRA_C_2012_Config</pszMrule>
+      <pSingCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pSingCmds>
+      <pMultCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pMultCmds>
       <pMisraNamep></pMisraNamep>
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
@@ -1214,15 +1340,33 @@
         <newCpu>0</newCpu>
         <uProt>0</uProt>
       </DebugFlag>
-      <LintExecutable></LintExecutable>
+      <LintExecutable>C:\Lint\lint-nt.exe</LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
       <bAutoGenD>0</bAutoGenD>
-      <LntExFlags>0</LntExFlags>
-      <pMisraName></pMisraName>
-      <pszMrule></pszMrule>
-      <pSingCmds></pSingCmds>
-      <pMultCmds></pMultCmds>
+      <LntExFlags>63</LntExFlags>
+      <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
+      <pszMrule>MISRA_C_2012_Config</pszMrule>
+      <pSingCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pSingCmds>
+      <pMultCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pMultCmds>
       <pMisraNamep></pMisraNamep>
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
@@ -1367,15 +1511,33 @@
         <newCpu>0</newCpu>
         <uProt>0</uProt>
       </DebugFlag>
-      <LintExecutable></LintExecutable>
+      <LintExecutable>C:\Lint\lint-nt.exe</LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
       <bAutoGenD>0</bAutoGenD>
-      <LntExFlags>0</LntExFlags>
-      <pMisraName></pMisraName>
-      <pszMrule></pszMrule>
-      <pSingCmds></pSingCmds>
-      <pMultCmds></pMultCmds>
+      <LntExFlags>63</LntExFlags>
+      <pMisraName>.\Lint\MISRA_C_2012_Config.lnt</pMisraName>
+      <pszMrule>MISRA_C_2012_Config</pszMrule>
+      <pSingCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pSingCmds>
+      <pMultCmds>+rw(__restrict)
+-esym(526,__builtin_*)
+-esym(628,__builtin_*)
+-sem(__builtin_clz, pure)
+-ecall(534,__disable_irq)
++doffsetof(t,m)=((size_t)&amp;((t*)0)-&gt;m)
+-emacro((413,923,9078),offsetof)
+-emacro(835,osRtxConfigPrivilegedMode)
+--uEVR_RTX_DISABLE
+</pMultCmds>
       <pMisraNamep></pMisraNamep>
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
