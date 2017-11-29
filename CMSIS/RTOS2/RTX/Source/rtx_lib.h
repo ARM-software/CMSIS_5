@@ -27,7 +27,6 @@
 #define RTX_LIB_H_
 
 #include <string.h>
-#include <stdbool.h>
 #include "rtx_core_c.h"                 // Cortex core definitions
 #if ((defined(__ARM_ARCH_8M_BASE__) && (__ARM_ARCH_8M_BASE__ != 0)) || \
      (defined(__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ != 0)))
@@ -80,8 +79,8 @@ extern uint32_t    *osRtxThreadRegPtr      (os_thread_t  *thread);
 extern void         osRtxThreadBlock       (os_thread_t  *thread);
 extern void         osRtxThreadSwitch      (os_thread_t  *thread);
 extern void         osRtxThreadDispatch    (os_thread_t  *thread);
-extern void         osRtxThreadWaitExit    (os_thread_t  *thread, uint32_t ret_val, bool dispatch);
-extern bool         osRtxThreadWaitEnter   (uint8_t state, uint32_t timeout);
+extern void         osRtxThreadWaitExit    (os_thread_t  *thread, uint32_t ret_val, bool_t dispatch);
+extern bool_t       osRtxThreadWaitEnter   (uint8_t state, uint32_t timeout);
 extern void         osRtxThreadStackCheck  (void);
 
 // Timer Library functions

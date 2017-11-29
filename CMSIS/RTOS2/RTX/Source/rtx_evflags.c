@@ -146,7 +146,7 @@ void osRtxEventFlagsPostProcess (os_event_flags_t *ef) {
     event_flags = EventFlagsCheck(ef, thread->wait_flags, thread->flags_options);
     if (event_flags != 0U) {
       osRtxThreadListRemove(thread);
-      osRtxThreadWaitExit(thread, event_flags, false);
+      osRtxThreadWaitExit(thread, event_flags, FALSE);
       EvrRtxEventFlagsWaitCompleted(ef, thread->wait_flags, thread->flags_options, event_flags);
     }
     thread = thread_next;
@@ -168,7 +168,7 @@ osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
     name = attr->name;
     ef   = attr->cb_mem;
     if (ef != NULL) {
-      if (((uint32_t)ef & 3U) || (attr->cb_size < sizeof(os_event_flags_t))) {
+      if ((((uint32_t)ef & 3U) != 0U) || (attr->cb_size < sizeof(os_event_flags_t))) {
         EvrRtxEventFlagsError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
@@ -248,7 +248,7 @@ uint32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
-      (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
+      ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }
@@ -274,7 +274,7 @@ uint32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
         event_flags = event_flags0;
       }
       osRtxThreadListRemove(thread);
-      osRtxThreadWaitExit(thread, event_flags0, false);
+      osRtxThreadWaitExit(thread, event_flags0, FALSE);
       EvrRtxEventFlagsWaitCompleted(ef, thread->wait_flags, thread->flags_options, event_flags0);
     }
     thread = thread_next;
@@ -294,7 +294,7 @@ uint32_t svcRtxEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
-      (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
+      ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }
@@ -351,7 +351,7 @@ uint32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
-      (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
+      ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }
@@ -414,13 +414,13 @@ osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
   if (ef->thread_list != NULL) {
     do {
       thread = osRtxThreadListGet((os_object_t*)ef);
-      osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, false);
+      osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, FALSE);
     } while (ef->thread_list != NULL);
     osRtxThreadDispatch(NULL);
   }
 
   // Free object memory
-  if (ef->flags & osRtxFlagSystemObject) {
+  if ((ef->flags & osRtxFlagSystemObject) != 0U) {
     if (osRtxInfo.mpi.event_flags != NULL) {
       (void)osRtxMemoryPoolFree(osRtxInfo.mpi.event_flags, ef);
     } else {
@@ -454,7 +454,7 @@ uint32_t isrRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
-      (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
+      ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }
@@ -485,7 +485,7 @@ uint32_t isrRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
 
   // Check parameters
   if ((ef == NULL) || (ef->id != osRtxIdEventFlags) || (timeout != 0U) ||
-      (flags & ~((1U << osRtxEventFlagsLimit) - 1U))) {
+      ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }

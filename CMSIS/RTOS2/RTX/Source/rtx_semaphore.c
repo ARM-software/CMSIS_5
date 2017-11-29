@@ -112,7 +112,7 @@ void osRtxSemaphorePostProcess (os_semaphore_t *semaphore) {
     if (SemaphoreTokenDecrement(semaphore) != 0U) {
       // Wakeup waiting Thread with highest Priority
       thread = osRtxThreadListGet((os_object_t*)semaphore);
-      osRtxThreadWaitExit(thread, (uint32_t)osOK, false);
+      osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
       EvrRtxSemaphoreAcquired(semaphore);
     }
   }
@@ -139,7 +139,7 @@ osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_count, 
     name      = attr->name;
     semaphore = attr->cb_mem;
     if (semaphore != NULL) {
-      if (((uint32_t)semaphore & 3U) || (attr->cb_size < sizeof(os_semaphore_t))) {
+      if ((((uint32_t)semaphore & 3U) != 0U) || (attr->cb_size < sizeof(os_semaphore_t))) {
         EvrRtxSemaphoreError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
@@ -275,7 +275,7 @@ osStatus_t svcRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
     EvrRtxSemaphoreReleased(semaphore);
     // Wakeup waiting Thread with highest Priority
     thread = osRtxThreadListGet((os_object_t*)semaphore);
-    osRtxThreadWaitExit(thread, (uint32_t)osOK, true);
+    osRtxThreadWaitExit(thread, (uint32_t)osOK, TRUE);
     EvrRtxSemaphoreAcquired(semaphore);
     status = osOK;
   } else {
@@ -339,13 +339,13 @@ osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
   if (semaphore->thread_list != NULL) {
     do {
       thread = osRtxThreadListGet((os_object_t*)semaphore);
-      osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, false);
+      osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, FALSE);
     } while (semaphore->thread_list != NULL);
     osRtxThreadDispatch(NULL);
   }
 
   // Free object memory
-  if (semaphore->flags & osRtxFlagSystemObject) {
+  if ((semaphore->flags & osRtxFlagSystemObject) != 0U) {
     if (osRtxInfo.mpi.semaphore != NULL) {
       (void)osRtxMemoryPoolFree(osRtxInfo.mpi.semaphore, semaphore);
     } else {

@@ -33,7 +33,7 @@
 
 // Dynamic Memory
 #if (OS_DYNAMIC_MEM_SIZE != 0)
-#if ((OS_DYNAMIC_MEM_SIZE & 7) != 0)
+#if ((OS_DYNAMIC_MEM_SIZE % 8) != 0)
 #error "Invalid Dynamic Memory size!"
 #endif
 static uint64_t os_mem[OS_DYNAMIC_MEM_SIZE/8] \
@@ -53,11 +53,11 @@ __attribute__((section(".bss.os")));
 // Thread Configuration
 // ====================
 
-#if (((OS_STACK_SIZE & 7) != 0) || (OS_STACK_SIZE < 72))
+#if (((OS_STACK_SIZE % 8) != 0) || (OS_STACK_SIZE < 72))
 #error "Invalid default Thread Stack size!"
 #endif
 
-#if (((OS_IDLE_THREAD_STACK_SIZE & 7) != 0) || (OS_IDLE_THREAD_STACK_SIZE < 72))
+#if (((OS_IDLE_THREAD_STACK_SIZE % 8) != 0) || (OS_IDLE_THREAD_STACK_SIZE < 72))
 #error "Invalid Idle Thread Stack size!"
 #endif
 
@@ -68,7 +68,7 @@ __attribute__((section(".bss.os")));
 #error "Invalid number of user Threads!"
 #endif
 
-#if ((OS_THREAD_USER_STACK_SIZE != 0) && ((OS_THREAD_USER_STACK_SIZE & 7) != 0))
+#if ((OS_THREAD_USER_STACK_SIZE != 0) && ((OS_THREAD_USER_STACK_SIZE % 8) != 0))
 #error "Invalid total Stack size!"
 #endif
 
@@ -160,7 +160,7 @@ __attribute__((section(".data.os.timer.mpi"))) =
 
 #if ((OS_TIMER_THREAD_STACK_SIZE != 0) && (OS_TIMER_CB_QUEUE != 0))
 
-#if (((OS_TIMER_THREAD_STACK_SIZE & 7) != 0) || (OS_TIMER_THREAD_STACK_SIZE < 96))
+#if (((OS_TIMER_THREAD_STACK_SIZE % 8) != 0) || (OS_TIMER_THREAD_STACK_SIZE < 96))
 #error "Invalid Timer Thread Stack size!"
 #endif
 
@@ -298,7 +298,7 @@ __attribute__((section(".data.os.mempool.mpi"))) =
 
 // Memory Pool for Memory Pool Data Storage
 #if (OS_MEMPOOL_DATA_SIZE != 0)
-#if ((OS_MEMPOOL_DATA_SIZE & 7) != 0)
+#if ((OS_MEMPOOL_DATA_SIZE % 8) != 0)
 #error "Invalid Data Memory size for Memory Pools!"
 #endif
 static uint64_t os_mp_data[2 + OS_MEMPOOL_NUM + (OS_MEMPOOL_DATA_SIZE/8)] \
@@ -328,7 +328,7 @@ __attribute__((section(".data.os.msgqueue.mpi"))) =
 
 // Memory Pool for Message Queue Data Storage
 #if (OS_MSGQUEUE_DATA_SIZE != 0)
-#if ((OS_MSGQUEUE_DATA_SIZE & 7) != 0)
+#if ((OS_MSGQUEUE_DATA_SIZE % 8) != 0)
 #error "Invalid Data Memory size for Message Queues!"
 #endif
 static uint64_t os_mq_data[2 + OS_MSGQUEUE_NUM + (OS_MSGQUEUE_DATA_SIZE/8)] \

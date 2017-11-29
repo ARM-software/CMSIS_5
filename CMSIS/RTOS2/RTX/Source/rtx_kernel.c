@@ -72,7 +72,7 @@ osStatus_t svcRtxKernelInitialize (void) {
     EvrRtxKernelInitializeCompleted();
     return osOK;
   }
-  if (osRtxInfo.kernel.state != osKernelInactive) {
+  if (osRtxInfo.kernel.state != osRtxKernelInactive) {
     EvrRtxKernelError((int32_t)osError);
     return osError;
   }
@@ -115,61 +115,69 @@ osStatus_t svcRtxKernelInitialize (void) {
   }
 
   // Initialize Memory Pools (Fixed Block Size)
-  if ((osRtxConfig.mpi.stack != NULL) &&
-      (osRtxMemoryPoolInit(osRtxConfig.mpi.stack,
-                           osRtxConfig.mpi.stack->max_blocks,
-                           osRtxConfig.mpi.stack->block_size,
-                           osRtxConfig.mpi.stack->block_base) != 0U)) {
-    osRtxInfo.mpi.stack = osRtxConfig.mpi.stack;
+  if (osRtxConfig.mpi.stack != NULL) {
+    if (osRtxMemoryPoolInit(osRtxConfig.mpi.stack,
+                            osRtxConfig.mpi.stack->max_blocks,
+                            osRtxConfig.mpi.stack->block_size,
+                            osRtxConfig.mpi.stack->block_base) != 0U) {
+      osRtxInfo.mpi.stack = osRtxConfig.mpi.stack;
+    }
   }
-  if ((osRtxConfig.mpi.thread != NULL) &&
-      (osRtxMemoryPoolInit(osRtxConfig.mpi.thread,
-                           osRtxConfig.mpi.thread->max_blocks,
-                           osRtxConfig.mpi.thread->block_size,
-                           osRtxConfig.mpi.thread->block_base) != 0U)) {
-    osRtxInfo.mpi.thread = osRtxConfig.mpi.thread;
+  if (osRtxConfig.mpi.thread != NULL) {
+    if (osRtxMemoryPoolInit(osRtxConfig.mpi.thread,
+                            osRtxConfig.mpi.thread->max_blocks,
+                            osRtxConfig.mpi.thread->block_size,
+                            osRtxConfig.mpi.thread->block_base) != 0U) {
+      osRtxInfo.mpi.thread = osRtxConfig.mpi.thread;
+    }
   }
-  if ((osRtxConfig.mpi.timer != NULL) &&
-      (osRtxMemoryPoolInit(osRtxConfig.mpi.timer,
-                           osRtxConfig.mpi.timer->max_blocks,
-                           osRtxConfig.mpi.timer->block_size,
-                           osRtxConfig.mpi.timer->block_base) != 0U)) {
-    osRtxInfo.mpi.timer = osRtxConfig.mpi.timer;
+  if (osRtxConfig.mpi.timer != NULL) {
+    if (osRtxMemoryPoolInit(osRtxConfig.mpi.timer,
+                            osRtxConfig.mpi.timer->max_blocks,
+                            osRtxConfig.mpi.timer->block_size,
+                            osRtxConfig.mpi.timer->block_base) != 0U) {
+      osRtxInfo.mpi.timer = osRtxConfig.mpi.timer;
+    }
   }
-  if ((osRtxConfig.mpi.event_flags != NULL) &&
-      (osRtxMemoryPoolInit(osRtxConfig.mpi.event_flags,
-                           osRtxConfig.mpi.event_flags->max_blocks,
-                           osRtxConfig.mpi.event_flags->block_size,
-                           osRtxConfig.mpi.event_flags->block_base) != 0U)) {
-    osRtxInfo.mpi.event_flags = osRtxConfig.mpi.event_flags;
+  if (osRtxConfig.mpi.event_flags != NULL) {
+    if (osRtxMemoryPoolInit(osRtxConfig.mpi.event_flags,
+                            osRtxConfig.mpi.event_flags->max_blocks,
+                            osRtxConfig.mpi.event_flags->block_size,
+                            osRtxConfig.mpi.event_flags->block_base) != 0U) {
+      osRtxInfo.mpi.event_flags = osRtxConfig.mpi.event_flags;
+    }
   }
-  if ((osRtxConfig.mpi.mutex != NULL) &&
-      (osRtxMemoryPoolInit(osRtxConfig.mpi.mutex,
-                           osRtxConfig.mpi.mutex->max_blocks,
-                           osRtxConfig.mpi.mutex->block_size,
-                           osRtxConfig.mpi.mutex->block_base) != 0U)) {
-    osRtxInfo.mpi.mutex = osRtxConfig.mpi.mutex;
+  if (osRtxConfig.mpi.mutex != NULL) {
+    if (osRtxMemoryPoolInit(osRtxConfig.mpi.mutex,
+                            osRtxConfig.mpi.mutex->max_blocks,
+                            osRtxConfig.mpi.mutex->block_size,
+                            osRtxConfig.mpi.mutex->block_base) != 0U) {
+      osRtxInfo.mpi.mutex = osRtxConfig.mpi.mutex;
+    }
   }
-  if ((osRtxConfig.mpi.semaphore != NULL) &&
-      (osRtxMemoryPoolInit(osRtxConfig.mpi.semaphore,
-                           osRtxConfig.mpi.semaphore->max_blocks,
-                           osRtxConfig.mpi.semaphore->block_size,
-                           osRtxConfig.mpi.semaphore->block_base) != 0U)) {
-    osRtxInfo.mpi.semaphore = osRtxConfig.mpi.semaphore;
+  if (osRtxConfig.mpi.semaphore != NULL) {
+    if (osRtxMemoryPoolInit(osRtxConfig.mpi.semaphore,
+                            osRtxConfig.mpi.semaphore->max_blocks,
+                            osRtxConfig.mpi.semaphore->block_size,
+                            osRtxConfig.mpi.semaphore->block_base) != 0U) {
+      osRtxInfo.mpi.semaphore = osRtxConfig.mpi.semaphore;
+    }
   }
-  if ((osRtxConfig.mpi.memory_pool != NULL) &&
-      (osRtxMemoryPoolInit(osRtxConfig.mpi.memory_pool,
-                           osRtxConfig.mpi.memory_pool->max_blocks,
-                           osRtxConfig.mpi.memory_pool->block_size,
-                           osRtxConfig.mpi.memory_pool->block_base) != 0U)) {
-    osRtxInfo.mpi.memory_pool = osRtxConfig.mpi.memory_pool;
+  if (osRtxConfig.mpi.memory_pool != NULL) {
+    if (osRtxMemoryPoolInit(osRtxConfig.mpi.memory_pool,
+                            osRtxConfig.mpi.memory_pool->max_blocks,
+                            osRtxConfig.mpi.memory_pool->block_size,
+                            osRtxConfig.mpi.memory_pool->block_base) != 0U) {
+      osRtxInfo.mpi.memory_pool = osRtxConfig.mpi.memory_pool;
+    }
   }
-  if ((osRtxConfig.mpi.message_queue != NULL) &&
-      (osRtxMemoryPoolInit(osRtxConfig.mpi.message_queue,
-                           osRtxConfig.mpi.message_queue->max_blocks,
-                           osRtxConfig.mpi.message_queue->block_size,
-                           osRtxConfig.mpi.message_queue->block_base) != 0U)) {
-    osRtxInfo.mpi.message_queue = osRtxConfig.mpi.message_queue;
+  if (osRtxConfig.mpi.message_queue != NULL) {
+    if (osRtxMemoryPoolInit(osRtxConfig.mpi.message_queue,
+                            osRtxConfig.mpi.message_queue->max_blocks,
+                            osRtxConfig.mpi.message_queue->block_size,
+                            osRtxConfig.mpi.message_queue->block_base) != 0U) {
+      osRtxInfo.mpi.message_queue = osRtxConfig.mpi.message_queue;
+    }
   }
 
 #if (DOMAIN_NS == 1)
@@ -249,7 +257,7 @@ osStatus_t svcRtxKernelStart (void) {
   SVC_Setup();
 
   // Setup RTOS Tick
-  if (OS_Tick_Setup(osRtxConfig.tick_freq, OS_TICK_HANDLER) != 0U) {
+  if (OS_Tick_Setup(osRtxConfig.tick_freq, OS_TICK_HANDLER) != 0) {
     return osError;
   }
   osRtxInfo.tick_irqn = OS_Tick_GetIRQn();
@@ -481,7 +489,7 @@ uint32_t svcRtxKernelGetSysTimerCount (void) {
 
   tick  = (uint32_t)osRtxInfo.kernel.tick;
   count = OS_Tick_GetCount();
-  if (OS_Tick_GetOverflow()) {
+  if (OS_Tick_GetOverflow() != 0U) {
     count = OS_Tick_GetCount();
     tick++;
   }

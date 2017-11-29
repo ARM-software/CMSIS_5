@@ -53,7 +53,7 @@ uint32_t osRtxMemoryPoolInit (os_mp_info_t *mp_info, uint32_t block_count, uint3
   EvrRtxMemoryBlockInit(mp_info, block_count, block_size, block_mem);
 
   // Link all free blocks
-  while (--block_count) {
+  while (--block_count != 0U) {
     block = (uint8_t *)block_mem + block_size;
     *((void **)block_mem) = block;
     block_mem = block;
@@ -167,7 +167,7 @@ void osRtxMemoryPoolPostProcess (os_memory_pool_t *mp) {
     if (block != NULL) {
       // Wakeup waiting Thread with highest Priority
       thread = osRtxThreadListGet((os_object_t*)mp);
-      osRtxThreadWaitExit(thread, (uint32_t)block, false);
+      osRtxThreadWaitExit(thread, (uint32_t)block, FALSE);
       EvrRtxMemoryPoolAllocated(mp, block);
     }
   }
@@ -192,7 +192,7 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
     return NULL;
   }
   block_size = (block_size + 3U) & ~3UL;
-  if ((__CLZ(block_count) + __CLZ(block_size)) < 32) {
+  if ((__CLZ(block_count) + __CLZ(block_size)) < 32U) {
     EvrRtxMemoryPoolError(NULL, (int32_t)osErrorParameter);
     return NULL;
   }
@@ -206,7 +206,7 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
     mp_mem  = attr->mp_mem;
     mp_size = attr->mp_size;
     if (mp != NULL) {
-      if (((uint32_t)mp & 3U) || (attr->cb_size < sizeof(os_memory_pool_t))) {
+      if ((((uint32_t)mp & 3U) != 0U) || (attr->cb_size < sizeof(os_memory_pool_t))) {
         EvrRtxMemoryPoolError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
@@ -217,7 +217,7 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
       }
     }
     if (mp_mem != NULL) {
-      if (((uint32_t)mp_mem & 3U) || (mp_size < size)) {
+      if ((((uint32_t)mp_mem & 3U) != 0U) || (mp_size < size)) {
         EvrRtxMemoryPoolError(NULL, osRtxErrorInvalidDataMemory);
         return NULL;
       }
@@ -249,7 +249,7 @@ osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size,
   if ((mp != NULL) && (mp_mem == NULL)) {
     mp_mem = osRtxMemoryAlloc(osRtxInfo.mem.mp_data, size, 0U);
     if (mp_mem == NULL) {
-      if (flags & osRtxFlagSystemObject) {
+      if ((flags & osRtxFlagSystemObject) != 0U) {
         if (osRtxInfo.mpi.memory_pool != NULL) {
           (void)osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
         } else {
@@ -375,7 +375,7 @@ osStatus_t svcRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
       if (block != NULL) {
         // Wakeup waiting Thread with highest Priority
         thread = osRtxThreadListGet((os_object_t*)mp);
-        osRtxThreadWaitExit(thread, (uint32_t)block, true);
+        osRtxThreadWaitExit(thread, (uint32_t)block, TRUE);
         EvrRtxMemoryPoolAllocated(mp, block);
       }
     }
@@ -499,18 +499,18 @@ osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
   if (mp->thread_list != NULL) {
     do {
       thread = osRtxThreadListGet((os_object_t*)mp);
-      osRtxThreadWaitExit(thread, 0U, false);
+      osRtxThreadWaitExit(thread, 0U, FALSE);
     } while (mp->thread_list != NULL);
     osRtxThreadDispatch(NULL);
   }
 
   // Free data memory
-  if (mp->flags & osRtxFlagSystemMemory) {
+  if ((mp->flags & osRtxFlagSystemMemory) != 0U) {
     (void)osRtxMemoryFree(osRtxInfo.mem.mp_data, mp->mp_info.block_base);
   }
 
   // Free object memory
-  if (mp->flags & osRtxFlagSystemObject) {
+  if ((mp->flags & osRtxFlagSystemObject) != 0U) {
     if (osRtxInfo.mpi.memory_pool != NULL) {
       (void)osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
     } else {

@@ -149,7 +149,7 @@ osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argume
     name  = attr->name;
     timer = attr->cb_mem;
     if (timer != NULL) {
-      if (((uint32_t)timer & 3U) || (attr->cb_size < sizeof(os_timer_t))) {
+      if ((((uint32_t)timer & 3U) != 0U) || (attr->cb_size < sizeof(os_timer_t))) {
         EvrRtxTimerError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
@@ -329,7 +329,7 @@ osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
   timer->state = osRtxTimerInactive;
 
   // Free object memory
-  if (timer->flags & osRtxFlagSystemObject) {
+  if ((timer->flags & osRtxFlagSystemObject) != 0U) {
     if (osRtxInfo.mpi.timer != NULL) {
       (void)osRtxMemoryPoolFree(osRtxInfo.mpi.timer, timer);
     } else {

@@ -459,7 +459,7 @@ void osRtxThreadDispatch (os_thread_t *thread) {
 /// \param[in]  thread          thread object.
 /// \param[in]  ret_val         return value.
 /// \param[in]  dispatch        dispatch flag.
-void osRtxThreadWaitExit (os_thread_t *thread, uint32_t ret_val, bool dispatch) {
+void osRtxThreadWaitExit (os_thread_t *thread, uint32_t ret_val, bool_t dispatch) {
   uint32_t *reg;
 
   EvrRtxThreadUnblocked(thread, ret_val);
@@ -479,23 +479,23 @@ void osRtxThreadWaitExit (os_thread_t *thread, uint32_t ret_val, bool dispatch) 
 /// \param[in]  state           new thread state.
 /// \param[in]  timeout         timeout.
 /// \return true - success, false - failure.
-bool osRtxThreadWaitEnter (uint8_t state, uint32_t timeout) {
+bool_t osRtxThreadWaitEnter (uint8_t state, uint32_t timeout) {
   os_thread_t *thread;
 
   // Check if Kernel is running
   if (osRtxKernelGetState() != osRtxKernelRunning) {
-    return false;
+    return FALSE;
   }
 
   // Check running thread
   thread = osRtxThreadGetRunning();
   if (thread == NULL) {
-    return false;
+    return FALSE;
   }
 
   // Check if any thread is ready
   if (osRtxInfo.thread.ready.thread_list == NULL) {
-    return false;
+    return FALSE;
   }
 
   EvrRtxThreadBlocked(thread, timeout);
@@ -505,7 +505,7 @@ bool osRtxThreadWaitEnter (uint8_t state, uint32_t timeout) {
   thread = osRtxThreadListGet(&osRtxInfo.thread.ready);
   osRtxThreadSwitch(thread);
 
-  return true;
+  return TRUE;
 }
 
 /// Check current running Thread Stack.
@@ -535,7 +535,7 @@ void osRtxThreadPostProcess (os_thread_t *thread) {
   if (thread->state == osRtxThreadWaitingThreadFlags) {
     thread_flags = ThreadFlagsCheck(thread, thread->wait_flags, thread->flags_options);
     if (thread_flags != 0U) {
-      osRtxThreadWaitExit(thread, thread_flags, false);
+      osRtxThreadWaitExit(thread, thread_flags, FALSE);
       EvrRtxThreadFlagsWaitCompleted(thread->wait_flags, thread->flags_options, thread_flags);
     }
   }
@@ -579,7 +579,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
     tz_module  = attr->tz_module;
 #endif
     if (thread != NULL) {
-      if (((uint32_t)thread & 3U) || (attr->cb_size < sizeof(os_thread_t))) {
+      if ((((uint32_t)thread & 3U) != 0U) || (attr->cb_size < sizeof(os_thread_t))) {
         EvrRtxThreadError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
@@ -590,7 +590,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
       }
     }
     if (stack_mem != NULL) {
-      if (((uint32_t)stack_mem & 7U) || (stack_size == 0U)) {
+      if ((((uint32_t)stack_mem & 7U) != 0U) || (stack_size == 0U)) {
         EvrRtxThreadError(NULL, osRtxErrorInvalidThreadStack);
         return NULL;
       }
@@ -616,7 +616,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
   }
 
   // Check stack size
-  if ((stack_size != 0U) && ((stack_size & 7U) || (stack_size < (64U + 8U)))) {
+  if ((stack_size != 0U) && (((stack_size & 7U) != 0U) || (stack_size < (64U + 8U)))) {
     EvrRtxThreadError(NULL, osRtxErrorInvalidThreadStack);
     return NULL;
   }
@@ -649,7 +649,7 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
       stack_mem = osRtxMemoryAlloc(osRtxInfo.mem.stack, stack_size, 0U);
     }
     if (stack_mem == NULL) {
-      if (flags & osRtxFlagSystemObject) {
+      if ((flags & osRtxFlagSystemObject) != 0U) {
         if (osRtxInfo.mpi.thread != NULL) {
           (void)osRtxMemoryPoolFree(osRtxInfo.mpi.thread, thread);
         } else {
@@ -667,14 +667,14 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
     tz_memory = TZ_AllocModuleContext_S(tz_module);
     if (tz_memory == 0U) {
       EvrRtxThreadError(NULL, osRtxErrorTZ_AllocContext_S);
-      if (flags & osRtxFlagSystemMemory) {
-        if (flags & osRtxThreadFlagDefStack) {
+      if ((flags & osRtxFlagSystemMemory) != 0U) {
+        if ((flags & osRtxThreadFlagDefStack) != 0U) {
           (void)osRtxMemoryPoolFree(osRtxInfo.mpi.stack, thread->stack_mem);
         } else {
           (void)osRtxMemoryFree(osRtxInfo.mem.stack, thread->stack_mem);
         }
       }
-      if (flags & osRtxFlagSystemObject) {
+      if ((flags & osRtxFlagSystemObject) != 0U) {
         if (osRtxInfo.mpi.thread != NULL) {
           (void)osRtxMemoryPoolFree(osRtxInfo.mpi.thread, thread);
         } else {
@@ -719,13 +719,13 @@ osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const osThrea
     // Initialize stack
      ptr   = (uint32_t *)stack_mem;
     *ptr++ = osRtxStackMagicWord;
-    if (osRtxConfig.flags & osRtxConfigStackWatermark) {
-      for (n = (stack_size/4U) - (16U + 1U); n; n--) {
+    if ((osRtxConfig.flags & osRtxConfigStackWatermark) != 0U) {
+      for (n = (stack_size/4U) - (16U + 1U); n != 0U; n--) {
         *ptr++ = osRtxStackFillPattern;
       }
     }
     ptr = (uint32_t *)thread->sp;
-    for (n = 13U; n; n--) {
+    for (n = 0U; n != 13U; n++) {
       *ptr++ = 0U;                      // R4..R11, R0..R3, R12
     }
     *ptr++   = (uint32_t)osThreadExit;  // LR
@@ -1034,8 +1034,8 @@ static void osRtxThreadFree (os_thread_t *thread) {
 #endif
 
   // Free stack memory
-  if (thread->flags & osRtxFlagSystemMemory) {
-    if (thread->flags & osRtxThreadFlagDefStack) {
+  if ((thread->flags & osRtxFlagSystemMemory) != 0U) {
+    if ((thread->flags & osRtxThreadFlagDefStack) != 0U) {
       (void)osRtxMemoryPoolFree(osRtxInfo.mpi.stack, thread->stack_mem);
     } else {
       (void)osRtxMemoryFree(osRtxInfo.mem.stack, thread->stack_mem);
@@ -1043,7 +1043,7 @@ static void osRtxThreadFree (os_thread_t *thread) {
   }
 
   // Free object memory
-  if (thread->flags & osRtxFlagSystemObject) {
+  if ((thread->flags & osRtxFlagSystemObject) != 0U) {
     if (osRtxInfo.mpi.thread != NULL) {
       (void)osRtxMemoryPoolFree(osRtxInfo.mpi.thread, thread);
     } else {
@@ -1153,7 +1153,7 @@ void svcRtxThreadExit (void) {
 
   // Wakeup Thread waiting to Join
   if (thread->thread_join != NULL) {
-    osRtxThreadWaitExit(thread->thread_join, (uint32_t)osOK, false);
+    osRtxThreadWaitExit(thread->thread_join, (uint32_t)osOK, FALSE);
     EvrRtxThreadJoined(thread->thread_join);
   }
 
@@ -1224,7 +1224,7 @@ osStatus_t svcRtxThreadTerminate (osThreadId_t thread_id) {
 
     // Wakeup Thread waiting to Join
     if (thread->thread_join != NULL) {
-      osRtxThreadWaitExit(thread->thread_join, (uint32_t)osOK, false);
+      osRtxThreadWaitExit(thread->thread_join, (uint32_t)osOK, FALSE);
       EvrRtxThreadJoined(thread->thread_join);
     }
 
@@ -1330,7 +1330,7 @@ uint32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
 
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread) ||
-      (flags & ~((1U << osRtxThreadFlagsLimit) - 1U))) {
+      ((flags & ~(((uint32_t)1U << osRtxThreadFlagsLimit) - 1U)) != 0U)) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }
@@ -1354,7 +1354,7 @@ uint32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
       } else {
         thread_flags = thread_flags0;
       }
-      osRtxThreadWaitExit(thread, thread_flags0, true);
+      osRtxThreadWaitExit(thread, thread_flags0, TRUE);
       EvrRtxThreadFlagsWaitCompleted(thread->wait_flags, thread->flags_options, thread_flags0);
     }
   }
@@ -1377,7 +1377,7 @@ uint32_t svcRtxThreadFlagsClear (uint32_t flags) {
   }
 
   // Check parameters
-  if (flags & ~((1U << osRtxThreadFlagsLimit) - 1U)) {
+  if ((flags & ~(((uint32_t)1U << osRtxThreadFlagsLimit) - 1U)) != 0U) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }
@@ -1426,6 +1426,7 @@ uint32_t svcRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeo
   os_thread_t *thread;
   uint32_t     thread_flags;
 
+  // Check running thread
   thread = osRtxThreadGetRunning();
   if (thread == NULL) {
     EvrRtxThreadError(NULL, osRtxErrorKernelNotRunning);
@@ -1433,7 +1434,7 @@ uint32_t svcRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeo
   }
 
   // Check parameters
-  if (flags & ~((1U << osRtxThreadFlagsLimit) - 1U)) {
+  if ((flags & ~(((uint32_t)1U << osRtxThreadFlagsLimit) - 1U)) != 0U) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }
@@ -1497,7 +1498,7 @@ uint32_t isrRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
 
   // Check parameters
   if ((thread == NULL) || (thread->id != osRtxIdThread) ||
-      (flags & ~((1U << osRtxThreadFlagsLimit) - 1U))) {
+      ((flags & ~(((uint32_t)1U << osRtxThreadFlagsLimit) - 1U)) != 0U)) {
     EvrRtxThreadError(thread, (int32_t)osErrorParameter);
     return ((uint32_t)osErrorParameter);
   }

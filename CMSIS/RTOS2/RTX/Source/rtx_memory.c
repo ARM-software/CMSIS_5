@@ -52,8 +52,8 @@ __WEAK uint32_t osRtxMemoryInit (void *mem, uint32_t size) {
   mem_head_t  *head;
   mem_block_t *ptr;
 
-  if ((mem == NULL) || ((uint32_t)mem & 7U) || (size & 7U) ||
-      (size < (sizeof(mem_head_t) + 2*sizeof(mem_block_t)))) {
+  if ((mem == NULL) || (((uint32_t)mem & 7U) != 0U) || ((size & 7U) != 0U) ||
+      (size < (sizeof(mem_head_t) + (2U*sizeof(mem_block_t))))) {
     EvrRtxMemoryInit(mem, size, 0U);
     return 0U;
   }
@@ -81,7 +81,7 @@ __WEAK void *osRtxMemoryAlloc (void *mem, uint32_t size, uint32_t type) {
   mem_block_t *p, *p_new, *ptr;
   uint32_t     hole_size;
 
-  if ((mem == NULL) || (size == 0U) || (type & ~MB_INFO_TYPE_MASK)) {
+  if ((mem == NULL) || (size == 0U) || ((type & ~MB_INFO_TYPE_MASK) != 0U)) {
     EvrRtxMemoryAlloc(mem, size, type, NULL);
     return NULL;
   }

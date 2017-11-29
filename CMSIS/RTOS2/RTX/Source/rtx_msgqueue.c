@@ -180,7 +180,7 @@ void osRtxMessageQueuePostProcess (os_message_t *msg) {
       if (msg != NULL) {
         // Wakeup waiting Thread with highest Priority
         thread = osRtxThreadListGet((os_object_t*)mq);
-        osRtxThreadWaitExit(thread, (uint32_t)osOK, false);
+        osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
         // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
         reg = osRtxThreadRegPtr(thread);
         memcpy((uint8_t *)msg + sizeof(os_message_t), (void *)reg[2], mq->msg_size);
@@ -204,7 +204,7 @@ void osRtxMessageQueuePostProcess (os_message_t *msg) {
       EvrRtxMessageQueueInserted(mq, (void *)msg->prev);
       // Wakeup waiting Thread with highest Priority
       thread = osRtxThreadListGet((os_object_t*)mq);
-      osRtxThreadWaitExit(thread, (uint32_t)osOK, false);
+      osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
       // Copy Message (R2: void *msg_ptr, R3: uint8_t *msg_prio)
       reg = osRtxThreadRegPtr(thread);
       memcpy((void *)reg[2], (uint8_t *)msg + sizeof(os_message_t), mq->msg_size);
@@ -242,7 +242,7 @@ osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
     return NULL;
   }
   block_size = ((msg_size + 3U) & ~3UL) + sizeof(os_message_t);
-  if ((__CLZ(msg_count) + __CLZ(block_size)) < 32) {
+  if ((__CLZ(msg_count) + __CLZ(block_size)) < 32U) {
     EvrRtxMessageQueueError(NULL, (int32_t)osErrorParameter);
     return NULL;
   }
@@ -256,7 +256,7 @@ osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
     mq_mem  = attr->mq_mem;
     mq_size = attr->mq_size;
     if (mq != NULL) {
-      if (((uint32_t)mq & 3U) || (attr->cb_size < sizeof(os_message_queue_t))) {
+      if ((((uint32_t)mq & 3U) != 0U) || (attr->cb_size < sizeof(os_message_queue_t))) {
         EvrRtxMessageQueueError(NULL, osRtxErrorInvalidControlBlock);
         return NULL;
       }
@@ -267,7 +267,7 @@ osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
       }
     }
     if (mq_mem != NULL) {
-      if (((uint32_t)mq_mem & 3U) || (mq_size < size)) {
+      if ((((uint32_t)mq_mem & 3U) != 0U) || (mq_size < size)) {
         EvrRtxMessageQueueError(NULL, osRtxErrorInvalidDataMemory);
         return NULL;
       }
@@ -299,7 +299,7 @@ osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t msg_size,
   if ((mq != NULL) && (mq_mem == NULL)) {
     mq_mem = osRtxMemoryAlloc(osRtxInfo.mem.mq_data, size, 0U);
     if (mq_mem == NULL) {
-      if (flags & osRtxFlagSystemObject) {
+      if ((flags & osRtxFlagSystemObject) != 0U) {
         if (osRtxInfo.mpi.message_queue != NULL) {
           (void)osRtxMemoryPoolFree(osRtxInfo.mpi.message_queue, mq);
         } else {
@@ -385,7 +385,7 @@ osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
     EvrRtxMessageQueueInserted(mq, msg_ptr);
     // Wakeup waiting Thread with highest Priority
     thread = osRtxThreadListGet((os_object_t*)mq);
-    osRtxThreadWaitExit(thread, (uint32_t)osOK, true);
+    osRtxThreadWaitExit(thread, (uint32_t)osOK, TRUE);
     // Copy Message (R2: void *msg_ptr, R3: uint8_t *msg_prio)
     reg = osRtxThreadRegPtr(thread);
     memcpy((void *)reg[2], msg_ptr, mq->msg_size);
@@ -474,7 +474,7 @@ osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
       if (msg != NULL) {
         // Wakeup waiting Thread with highest Priority
         thread = osRtxThreadListGet((os_object_t*)mq);
-        osRtxThreadWaitExit(thread, (uint32_t)osOK, true);
+        osRtxThreadWaitExit(thread, (uint32_t)osOK, TRUE);
         // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
         reg = osRtxThreadRegPtr(thread);
         memcpy((uint8_t *)msg + sizeof(os_message_t), (void *)reg[2], mq->msg_size);
@@ -642,7 +642,7 @@ osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
       if (msg != NULL) {
         // Wakeup waiting Thread with highest Priority
         thread = osRtxThreadListGet((os_object_t*)mq);
-        osRtxThreadWaitExit(thread, (uint32_t)osOK, false);
+        osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
         // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
         reg = osRtxThreadRegPtr(thread);
         memcpy((uint8_t *)msg + sizeof(os_message_t), (void *)reg[2], mq->msg_size);
@@ -694,12 +694,12 @@ osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
   }
 
   // Free data memory
-  if (mq->flags & osRtxFlagSystemMemory) {
+  if ((mq->flags & osRtxFlagSystemMemory) != 0U) {
     (void)osRtxMemoryFree(osRtxInfo.mem.mq_data, mq->mp_info.block_base);
   }
 
   // Free object memory
-  if (mq->flags & osRtxFlagSystemObject) {
+  if ((mq->flags & osRtxFlagSystemObject) != 0U) {
     if (osRtxInfo.mpi.message_queue != NULL) {
       (void)osRtxMemoryPoolFree(osRtxInfo.mpi.message_queue, mq);
     } else {
