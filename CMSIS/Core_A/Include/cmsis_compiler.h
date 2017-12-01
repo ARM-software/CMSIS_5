@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.00
- * @date     22. Feb 2017
+ * @version  V1.0.1
+ * @date     01. December 2017
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
@@ -70,6 +70,12 @@
   #ifndef   __STATIC_INLINE
     #define __STATIC_INLINE           static inline
   #endif
+  #ifndef   __STATIC_INLINE
+    #define __STATIC_INLINE           static inline
+  #endif
+  #ifndef   __STATIC_FORCEINLINE
+    #define __STATIC_FORCEINLINE      __STATIC_INLINE
+  #endif
   #ifndef   __NO_RETURN
     #define __NO_RETURN               __attribute__((noreturn))
   #endif
@@ -110,6 +116,9 @@
   #ifndef   __STATIC_INLINE
     #define __STATIC_INLINE           static inline
   #endif
+  #ifndef   __STATIC_FORCEINLINE
+    #define __STATIC_FORCEINLINE      __STATIC_INLINE
+  #endif
   #ifndef   __NO_RETURN
     #define __NO_RETURN               __attribute__((noreturn))
   #endif
@@ -145,6 +154,9 @@
   #endif
   #ifndef   __STATIC_INLINE
     #define __STATIC_INLINE           static inline
+  #endif
+  #ifndef   __STATIC_FORCEINLINE
+    #define __STATIC_FORCEINLINE      __STATIC_INLINE
   #endif
   #ifndef   __NO_RETURN
     // NO RETURN is automatically detected hence no warning here
