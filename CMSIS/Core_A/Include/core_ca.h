@@ -1788,6 +1788,21 @@ typedef struct RegionStruct {
                                    region.sh_t = NON_SHARED; \
                                    MMU_GetSectionDescriptor(&descriptor_l1, region);
 
+//Sect_Normal_NC. Outer & inner non-cacheable, non-shareable, executable, rw, domain 0
+#define section_normal_nc(descriptor_l1, region)     region.rg_t = SECTION; \
+                                   region.domain = 0x0; \
+                                   region.e_t = ECC_DISABLED; \
+                                   region.g_t = GLOBAL; \
+                                   region.inner_norm_t = NON_CACHEABLE; \
+                                   region.outer_norm_t = NON_CACHEABLE; \
+                                   region.mem_t = NORMAL; \
+                                   region.sec_t = SECURE; \
+                                   region.xn_t = EXECUTE; \
+                                   region.priv_t = RW; \
+                                   region.user_t = RW; \
+                                   region.sh_t = NON_SHARED; \
+                                   MMU_GetSectionDescriptor(&descriptor_l1, region);
+
 //Sect_Normal_Cod. Outer & inner wb/wa, non-shareable, executable, ro, domain 0
 #define section_normal_cod(descriptor_l1, region) region.rg_t = SECTION; \
                                    region.domain = 0x0; \
