@@ -25,7 +25,7 @@
 #if   defined ( __ICCARM__ )
   #pragma system_include         /* treat file as system include file for MISRA check */
 #elif defined (__clang__)
-  #pragma clang system_header   /* treat file as system include file */
+  #pragma clang system_header    /* treat file as system include file */
 #endif
  
 #ifndef ARM_MPU_ARMV7_H
@@ -78,7 +78,7 @@
    (MPU_RBAR_VALID_Msk))
 
 /**
-* MPU Region Attribut and Size Register Value
+* MPU Region Attribute and Size Register Value
 * 
 * \param DisableExec       Instruction access disable bit, 1= disable instruction fetches.
 * \param AccessPermission  Data access permissions, allows you to configure read/write access for User and Privileged mode.
@@ -104,7 +104,7 @@
 /**
 * Struct for a single MPU Region
 */
-typedef struct _ARM_MPU_Region_t {
+typedef struct {
   uint32_t RBAR; //!< The region base address register value (RBAR)
   uint32_t RASR; //!< The region attribute and size register value (RASR) \ref MPU_RASR
 } ARM_MPU_Region_t;
