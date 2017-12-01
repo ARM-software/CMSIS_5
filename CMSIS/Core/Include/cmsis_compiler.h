@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler generic header file
- * @version  V5.0.2
- * @date     13. February 2017
+ * @version  V5.0.3
+ * @date     01. December 2017
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
@@ -54,7 +54,7 @@
 #elif defined ( __ICCARM__ )
   #include <cmsis_iccarm.h>
 
-  
+
 /*
  * TI ARM Compiler
  */
@@ -69,6 +69,9 @@
   #endif
   #ifndef   __STATIC_INLINE
     #define __STATIC_INLINE                        static inline
+  #endif
+  #ifndef   __STATIC_FORCEINLINE
+    #define __STATIC_FORCEINLINE                   __STATIC_INLINE
   #endif
   #ifndef   __NO_RETURN
     #define __NO_RETURN                            __attribute__((noreturn))
@@ -136,6 +139,9 @@
   #ifndef   __STATIC_INLINE
     #define __STATIC_INLINE                        static inline
   #endif
+  #ifndef   __STATIC_FORCEINLINE
+    #define __STATIC_FORCEINLINE                   __STATIC_INLINE
+  #endif
   #ifndef   __NO_RETURN
     #define __NO_RETURN                            __attribute__((noreturn))
   #endif
@@ -197,6 +203,9 @@
   #endif
   #ifndef   __STATIC_INLINE
     #define __STATIC_INLINE                        static inline
+  #endif
+  #ifndef   __STATIC_FORCEINLINE
+    #define __STATIC_FORCEINLINE                   __STATIC_INLINE
   #endif
   #ifndef   __NO_RETURN
     // NO RETURN is automatically detected hence no warning here

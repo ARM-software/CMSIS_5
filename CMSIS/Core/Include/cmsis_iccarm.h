@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR compiler) header file
- * @version  V5.0.3
- * @date     29. August 2017
+ * @version  V5.0.4
+ * @date     01. December 2017
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
@@ -150,12 +150,19 @@
 #endif
 
 #ifndef   __RESTRICT
-  #define __RESTRICT restrict
+  #define __RESTRICT            restrict
 #endif
 
-
 #ifndef   __STATIC_INLINE
-  #define __STATIC_INLINE static inline
+  #define __STATIC_INLINE       static inline
+#endif
+
+#ifndef   __FORCEINLINE
+  #define __FORCEINLINE         _Pragma("inline=forced")
+#endif
+
+#ifndef   __STATIC_FORCEINLINE
+  #define __STATIC_FORCEINLINE  __FORCEINLINE __STATIC_INLINE
 #endif
 
 #ifndef __UNALIGNED_UINT16_READ
@@ -285,7 +292,7 @@ __packed struct  __iar_u32 { uint32_t v; };
   #endif
   #define __get_PRIMASK()             (__arm_rsr("PRIMASK"))
   #define __get_PSP()                 (__arm_rsr("PSP"))
-  
+
   #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
        (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
     // without main extensions, the non-secure PSPLIM is RAZ/WI
@@ -293,7 +300,7 @@ __packed struct  __iar_u32 { uint32_t v; };
   #else
     #define __get_PSPLIM()            (__arm_rsr("PSPLIM"))
   #endif
-  
+
   #define __get_xPSR()                (__arm_rsr("xPSR"))
 
   #define __set_BASEPRI(VALUE)        (__arm_wsr("BASEPRI", (VALUE)))
@@ -301,7 +308,7 @@ __packed struct  __iar_u32 { uint32_t v; };
   #define __set_CONTROL(VALUE)        (__arm_wsr("CONTROL", (VALUE)))
   #define __set_FAULTMASK(VALUE)      (__arm_wsr("FAULTMASK", (VALUE)))
   #define __set_MSP(VALUE)            (__arm_wsr("MSP", (VALUE)))
-  
+
   #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
        (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
     // without main extensions, the non-secure MSPLIM is RAZ/WI

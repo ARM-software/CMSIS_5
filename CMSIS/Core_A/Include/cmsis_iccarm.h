@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR compiler) header file
- * @version  V5.0.3
- * @date     29. August 2017
+ * @version  V5.0.4
+ * @date     01. December 2017
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
@@ -109,19 +109,19 @@
 #endif
 
 #ifndef   __RESTRICT
-  #define __RESTRICT 							restrict
+  #define __RESTRICT            restrict
 #endif
 
-
 #ifndef   __STATIC_INLINE
-  #define __STATIC_INLINE 						static inline
+  #define __STATIC_INLINE       static inline
+#endif
+
+#ifndef   __FORCEINLINE
+  #define __FORCEINLINE         _Pragma("inline=forced")
 #endif
 
 #ifndef   __STATIC_FORCEINLINE
-  #define __STATIC_FORCEINLINE                  _Pragma("inline=forced") static inline
-#endif
-#ifndef   __FORCEINLINE
-  #define __FORCEINLINE                         _Pragma("inline=forced")
+  #define __STATIC_FORCEINLINE  __FORCEINLINE __STATIC_INLINE
 #endif
 
 #ifndef __UNALIGNED_UINT16_READ
@@ -220,12 +220,12 @@
 
   #include "iccarm_builtin.h"
 
-  #define __enable_irq    		__iar_builtin_enable_interrupt
-  #define __disable_irq   		__iar_builtin_disable_interrupt
-  #define __enable_fault_irq 		__iar_builtin_enable_fiq
-  #define __disable_fault_irq 	__iar_builtin_disable_fiq
-  #define __arm_rsr 			    __iar_builtin_rsr
-  #define __arm_wsr 			    __iar_builtin_wsr
+  #define __enable_irq        __iar_builtin_enable_interrupt
+  #define __disable_irq       __iar_builtin_disable_interrupt
+  #define __enable_fault_irq    __iar_builtin_enable_fiq
+  #define __disable_fault_irq   __iar_builtin_disable_fiq
+  #define __arm_rsr           __iar_builtin_rsr
+  #define __arm_wsr           __iar_builtin_wsr
 
   #if __FPU_PRESENT
     #define __get_FPSCR()             (__arm_rsr("FPSCR"))
@@ -242,8 +242,8 @@
   #define __set_mode(VALUE)           (__arm_wsr("CPSR_c", (VALUE)))
 
 
-  #define __get_FPEXC() 			(__arm_rsr("FPEXC"))
-  #define __set_FPEXC(VALUE) 		(__arm_wsr("FPEXC", VALUE))
+  #define __get_FPEXC()       (__arm_rsr("FPEXC"))
+  #define __set_FPEXC(VALUE)    (__arm_wsr("FPEXC", VALUE))
 
   #define __get_CP(cp, op1, RT, CRn, CRm, op2) \
     ((RT) = __arm_rsr("p" # cp ":" # op1 ":c" # CRn ":c" # CRm ":" # op2))
@@ -369,7 +369,7 @@
   #ifdef __INTRINSICS_INCLUDED
   #error intrinsics.h is already included previously!
   #endif
-  
+
   #include <intrinsics.h>
 
   #if !__FPU_PRESENT
@@ -379,13 +379,13 @@
   #pragma diag_suppress=Pe940
   #pragma diag_suppress=Pe177
 
-  #define __enable_irq    		__enable_interrupt
-  #define __disable_irq   		__disable_interrupt
-  #define __enable_fault_irq 		__enable_fiq
-  #define __disable_fault_irq 	__disable_fiq
-  #define __NOP           		__no_operation
+  #define __enable_irq        __enable_interrupt
+  #define __disable_irq       __disable_interrupt
+  #define __enable_fault_irq    __enable_fiq
+  #define __disable_fault_irq   __disable_fiq
+  #define __NOP               __no_operation
 
-  #define __get_xPSR      		__get_PSR
+  #define __get_xPSR          __get_PSR
 
   __IAR_FT void __set_mode(uint32_t mode)
   {
