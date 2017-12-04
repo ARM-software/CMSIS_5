@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2014 ARM Germany GmbH. All rights reserved.
+ * Copyright (c) 2004-2017 ARM Germany GmbH. All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBD_User_HID_0.c
  * Purpose: USB Device Human Interface Device class (HID) User module
- * Rev.:    V6.2
+ * Rev.:    V6.2.3
  *----------------------------------------------------------------------------*/
 /**
  * \addtogroup usbd_hidFunctions
@@ -39,12 +39,13 @@
 
 //! [code_USBD_User_HID]
 
+#include <stdint.h>
 #include <string.h>
+#include "cmsis_os2.h"
 #define   osObjectsExternal
-#include "cmsis_os.h"
 #include "osObjects.h"
 #include "rl_usb.h"
-#include "USB\USBD_Config_HID_0.h"
+#include "RTE\USB\USBD_Config_HID_0.h"
 #include "DAP_config.h"
 #include "DAP.h"
 
@@ -56,22 +57,22 @@
 #error "USB HID Input Report Size must match DAP Packet Size"
 #endif
 
-static uint16_t USB_RequestIndexI;      // Request  Index In
-static uint16_t USB_RequestIndexO;      // Request  Index Out
-static uint16_t USB_RequestCountI;      // Request  Count In
-static uint16_t USB_RequestCountO;      // Request  Count Out
+static volatile uint16_t USB_RequestIndexI;     // Request  Index In
+static volatile uint16_t USB_RequestIndexO;     // Request  Index Out
+static volatile uint16_t USB_RequestCountI;     // Request  Count In
+static volatile uint16_t USB_RequestCountO;     // Request  Count Out
 
-static uint16_t USB_ResponseIndexI;     // Response Index In
-static uint16_t USB_ResponseIndexO;     // Response Index Out
-static uint16_t USB_ResponseCountI;     // Response Count In
-static uint16_t USB_ResponseCountO;     // Response Count Out
-static uint8_t  USB_ResponseIdle;       // Response Idle  Flag
+static volatile uint16_t USB_ResponseIndexI;    // Response Index In
+static volatile uint16_t USB_ResponseIndexO;    // Response Index Out
+static volatile uint16_t USB_ResponseCountI;    // Response Count In
+static volatile uint16_t USB_ResponseCountO;    // Response Count Out
+static volatile uint8_t  USB_ResponseIdle;      // Response Idle  Flag
 
 static uint8_t  USB_Request [DAP_PACKET_COUNT][DAP_PACKET_SIZE];  // Request  Buffer
 static uint8_t  USB_Response[DAP_PACKET_COUNT][DAP_PACKET_SIZE];  // Response Buffer
 
 
-// Called during USBD_Initialize to initialize the USB Device class.
+// Called during USBD_Initialize to initialize the USB HID class instance.
 void USBD_HID0_Initialize (void) {
   // Initialize variables
   USB_RequestIndexI  = 0U;
@@ -86,7 +87,7 @@ void USBD_HID0_Initialize (void) {
 }
 
 
-// Called during USBD_Uninitialize to de-initialize the USB Device class.
+// Called during USBD_Uninitialize to de-initialize the USB HID class instance.
 void USBD_HID0_Uninitialize (void) {
 }
 
@@ -105,6 +106,7 @@ void USBD_HID0_Uninitialize (void) {
 //              - value >= 0: number of report data bytes prepared to send
 //              - value = -1: invalid report requested
 int32_t USBD_HID0_GetReport (uint8_t rtype, uint8_t req, uint8_t rid, uint8_t *buf) {
+  (void)rid;
 
   switch (rtype) {
     case HID_REPORT_INPUT:
@@ -148,26 +150,30 @@ int32_t USBD_HID0_GetReport (uint8_t rtype, uint8_t req, uint8_t rid, uint8_t *b
 // \return      true    received report data processed.
 // \return      false   received report data not processed or request not supported.
 bool USBD_HID0_SetReport (uint8_t rtype, uint8_t req, uint8_t rid, const uint8_t *buf, int32_t len) {
+  (void)req;
+  (void)rid;
 
   switch (rtype) {
     case HID_REPORT_OUTPUT:
-      if (len == 0) { break; }
+      if (len == 0) {
+        break;
+      }
       if (buf[0] == ID_DAP_TransferAbort) {
         DAP_TransferAbort = 1U;
         break;
       }
       if ((uint16_t)(USB_RequestCountI - USB_RequestCountO) == DAP_PACKET_COUNT) {
-        osSignalSet(HID0_ThreadId, 0x80);
+        osThreadFlagsSet(DAP_ThreadId, 0x80U);
         break;  // Discard packet when buffer is full
       }
       // Store received data into request buffer
-      memcpy(USB_Request[USB_RequestIndexI], buf, len);
+      memcpy(USB_Request[USB_RequestIndexI], buf, (uint32_t)len);
       USB_RequestIndexI++;
       if (USB_RequestIndexI == DAP_PACKET_COUNT) {
         USB_RequestIndexI = 0U;
       }
       USB_RequestCountI++;
-      osSignalSet(HID0_ThreadId, 0x01);
+      osThreadFlagsSet(DAP_ThreadId, 0x01U);
       break;
     case HID_REPORT_FEATURE:
       break;
@@ -176,13 +182,14 @@ bool USBD_HID0_SetReport (uint8_t rtype, uint8_t req, uint8_t rid, const uint8_t
 }
 
 
-// HID0 Thread.
-void HID0_Thread (void const *arg) {
-  osEvent  evt;
+// DAP Thread.
+__NO_RETURN void DAP_Thread (void *argument) {
+  uint32_t flags;
   uint32_t n;
+  (void)   argument;
 
   for (;;) {
-    osSignalWait(0, osWaitForever);
+    osThreadFlagsWait(0x81U, osFlagsWaitAny, osWaitForever);
 
     // Process pending requests
     while (USB_RequestCountI != USB_RequestCountO) {
@@ -196,8 +203,10 @@ void HID0_Thread (void const *arg) {
           n = 0U;
         }
         if (n == USB_RequestIndexI) {
-          evt = osSignalWait(0, osWaitForever);
-          if (evt.value.signals & 0x80) { break; }
+          flags = osThreadFlagsWait(0x81U, osFlagsWaitAny, osWaitForever);
+          if (flags & 0x80U) {
+            break;
+          }
         }
       }
 
