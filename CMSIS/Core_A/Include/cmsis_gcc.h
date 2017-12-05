@@ -264,7 +264,7 @@ __STATIC_FORCEINLINE  uint32_t __RBIT(uint32_t value)
   \param [in]  value  Value to count the leading zeros
   \return             number of leading zeros in value
  */
-#define __CLZ                             __builtin_clz
+#define __CLZ                             (uint8_t)__builtin_clz
 
 /**
   \brief   LDR Exclusive (8 bit)
