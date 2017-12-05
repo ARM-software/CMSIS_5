@@ -66,7 +66,7 @@ The ARMv8-M Architecture is described in the <a href="http://developer.arm.com/p
 The \ref templates_pg supplied by ARM have been tested and verified with the following toolchains:
  - ARM: ARM Compiler 5.06 update 6 (not for Cortex-M23, Cortex-M33, ARMv8-M)
  - ARM: ARM Compiler 6.9
- - ARM: ARM Compiler 6.6.1 (not for Cortex-M0, Cortex-M23, Cortex-M33, ARMv8-M)
+ - ARM: ARM Compiler 6.6.2 (not for Cortex-M0, Cortex-M23, Cortex-M33, ARMv8-M)
  - GNU: GNU Tools for ARM Embedded 6.3.1 20170620
  - IAR: IAR ANSI C/C++ Compiler for ARM 8.20.1.14183
 
