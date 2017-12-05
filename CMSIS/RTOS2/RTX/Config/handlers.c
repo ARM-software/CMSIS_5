@@ -52,7 +52,9 @@
 
 void CDAbtHandler(uint32_t DFSR, uint32_t DFAR, uint32_t LR) {
     uint32_t FS = (DFSR & (1 << 10)) >> 6 | (DFSR & 0x0f); //Store Fault Status
-
+    (void)DFAR;
+    (void)LR;
+  
     switch(FS) {
         //Synchronous parity errors - retry
         case FSR_SYNC_PARITY_ERROR:
@@ -87,7 +89,9 @@ void CDAbtHandler(uint32_t DFSR, uint32_t DFAR, uint32_t LR) {
 
 void CPAbtHandler(uint32_t IFSR, uint32_t IFAR, uint32_t LR) {
     uint32_t FS = (IFSR & (1 << 10)) >> 6 | (IFSR & 0x0f); //Store Fault Status
-
+    (void)IFAR;
+    (void)LR;
+    
     switch(FS) {
         //Synchronous parity errors - retry
         case FSR_SYNC_PARITY_ERROR:
@@ -122,6 +126,7 @@ void CPAbtHandler(uint32_t IFSR, uint32_t IFAR, uint32_t LR) {
 //this will be 2 when we have performed some maintenance and want to retry the instruction in Thumb (state == 2)
 //this will be 4 when we have performed some maintenance and want to retry the instruction in ARM   (state == 4)
 uint32_t CUndefHandler(uint32_t opcode, uint32_t state, uint32_t LR) {
+    (void)LR;
     const int THUMB = 2;
     const int ARM = 4;
     //Lazy VFP/NEON initialisation and switching
