@@ -27,17 +27,18 @@ requirements:
 CMSIS-DAP Firmware
 ------------------
 The CMSIS-DAP Firmware can be configured for a new Debug Unit using at least the 
-<a href="http://www.keil.com/mdk5" target="_blank">Keil MDK Plus Edition</a>.
+<a href="http://www.keil.com/mdk5" target="_blank">Keil MDK-Plus or MDK-Professional Edition</a>.
 Reference implementations are provided as source code with complete project files
 and may be used as starting point for the firmware deployment to a new Debug Unit.
 
 The folder <b> .\\Firmware\\Config</b> contains a template of the \b DAP_config.h configuration file.
 Various adaptations for different target hardware are provided.
 
-Folders and Files                   | Description
------------------------------------ | ----------------------------------------------------------------------------------------------------------------
-.\\Firmware\\Example\\LPC-Link-II   | CMSIS-DAP Firmware adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform.
-.\\Firmware\\Example\\XMC4200       | CMSIS-DAP Firmware adapted to the Infineon XMC4200-based Debug Unit.
+Folders and Files                       | Description
+--------------------------------------- | ----------------------------------------------------------------------------------------------------------------
+.\\Firmware\\Example\\V1\\LPC-Link-II   | CMSIS-DAP Firmware using USB HID adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform.
+.\\Firmware\\Example\\V2\\LPC-Link-II   | CMSIS-DAP Firmware using WinUSB adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform.
+.\\Firmware\\Example\\XMC4200           | CMSIS-DAP Firmware using USB HID adapted to the Infineon XMC4200-based Debug Unit.
 
 The CMSIS-DAP Firmware is designed to execute on a Debug Unit that is using a Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 
 processor-based microcontroller. To deploy the firmware to a new Debug Unit copy an existing firmware adaptation to a new folder.
@@ -96,11 +97,14 @@ parameters for the hardware of the CMSIS-DAP Debug Unit.
 \defgroup DAP_ConfigUSB_gr Configure USB Peripheral
 \ingroup DAP_Config_gr
 @{
-CMSIS-DAP Firmware uses USB HID as interface to host computer.
+CMSIS-DAP Firmware communicates via an USB interface to host computer.
+The USB communication is implemented via MDK middleware components that access the USB peripheral of the microcontroller.
 
-The CMSIS-DAP Firmware uses MDK Professional middleware components to access the USB peripheral of the microcontroller.
-The CMSIS-DAP Firmware uses the USB Human Interface Device (HID) class that does not require any USB driver development for the host computer.
-However it is important to provide correct configuration information for the USB Peripheral as described in this section.
+The CMSIS-DAP Firmware is able to communicate with the host computer using one of the following USB classes:
+  - \ref USBHID (Human Interface Device) does not require any USB driver.
+  - \ref WinUSB does require a USB driver.
+
+For the USB interface it is important to provide correct configuration information for the USB Peripheral as described in this section.
 
 The following steps describe how to change and configure the USB peripheral in the CMSIS-DAP Firmware project:
 
@@ -114,15 +118,26 @@ The following steps describe how to change and configure the USB peripheral in t
   - Update <b>String Settings - Product String</b> to indicate the Debug Unit. Note that "CMSIS-DAP" must be part of that string to allow identification by debuggers.
   - Optionally each Debug Unit may provide a unique <b>Serial Number String</b>. If the <b>String Settings - Serial Number String</b> is not provided, only one Debug Unit can be connected at the same time to a host computer since it is impossible to identify multiple Debug Units.
 
-
-The CMSIS-DAP Firmware can be also part of a USB composite device. If this case, the <b>HID Interface String</b> must contain the sub-string <b>CMSIS-DAP</b>.
-The <b>HID Interface String</b> is configured in the file USBD_Config_HID_0.h under the category <b>Human Interface Device Class Settings</b>.
   
 \note 
   - The USB Device setting high-speed / full-speed USB must be reflected in the \b DAP_config.h file as described under \ref DAP_Config_gr.
   - The <b>String Settings - Product String</b> must contain "CMSIS-DAP" somewhere in the string. This is used by the debuggers to identify a CMSIS-DAP compliant Debug Unit that is connected to a host computer.
 
 \image html "MDK_USB.png" "Adapt the USB Peripheral to the microcontroller"
+
+\page USBHID Communication via USB HID
+
+The CMSIS-DAP Firmware can be also part of a USB composite device. If this case, the <b>HID Interface String</b> must contain the sub-string <b>CMSIS-DAP</b>.
+The <b>HID Interface String</b> is configured in the file USBD_Config_HID_0.h under the category <b>Human Interface Device Class Settings</b>.
+
+\image html "MDK_USB_HID.png" "Adapt CMSIS-DAP to the USB HID class"
+
+\page WinUSB Communication via WinUSB
+
+text missing
+
+\image html "MDK_USB_Custom.png" "Adapt CMSIS-DAP to the WinUSB class"
+
 @}
 **************************************************************************************************/
 
