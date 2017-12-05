@@ -36,9 +36,9 @@ The CMSIS-DAP Software Stack is composed of the following components:
 
   - CMSIS-DAP Firmware that interfaces to JTAG or SWD Debug pins using standard I/O pins of the Cortex-M device.
   - CMSIS-Driver USART that connects the UART of the Cortex-M device to the SWO output from the target.
-  - USB Communication Stack that interfaces to the USB Port of the Host Computer using the HID class.
+  - USB Communication Stack that interfaces to the USB Port of the Host Computer using the HID or custom class.
   - The USB Device middleware may require CMSIS-RTOS and a CMSIS-Driver USB.
-	 
+  
 \image html "CMSIS_DAP_SWStack.png" "CMSIS-DAP Software Stack"
 
 In the examples provided the MDK Version 5 USB Communication Stack has been used. However it is possible to
@@ -79,14 +79,15 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
     <tr>
       <td>V2.0.0 (beta)</td>
       <td>
-	     Changed: Communication via WinUSB to achieve high-speed transfer rates
+         Changed: Communication via WinUSB to achieve high-speed transfer rates
+         Added: Streaming SWO (separate endpoint)
       </td>
     </tr>
     <tr>
       <td>V1.2.0 (beta)</td>
       <td>
-	     Added: \ref DAP_SWD_Sequence to enable SWD multi-drop target selection \n
-		 Added: Test Domain Timer values in the commands \ref DAP_Info, \ref DAP_Transfer
+         Added: \ref DAP_SWD_Sequence to enable SWD multi-drop target selection \n
+         Added: Test Domain Timer values in the commands \ref DAP_Info, \ref DAP_Transfer
       </td>
     </tr>
     <tr>
