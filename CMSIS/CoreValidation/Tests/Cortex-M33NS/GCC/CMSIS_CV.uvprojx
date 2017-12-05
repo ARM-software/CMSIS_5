@@ -236,7 +236,7 @@
             <bigend>0</bigend>
             <Strict>0</Strict>
             <Optim>1</Optim>
-            <wLevel>3</wLevel>
+            <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -Wall -Wextra -Wstrict-prototypes -Wshadow</MiscControls>
