@@ -17,7 +17,7 @@ goto err
 
 :buildARM
 :buildGCC
-cd ..\DSP_Lib\Source\%1
+cd ..\Projects\%1
 
 echo   Building DSP Library for Cortex-M0 Little Endian
 %UVEXE% -rb -j0 arm_cortexM_math.uvprojx -t "cortexM0l"     -o "DspLib_cortexM0l_build.log"

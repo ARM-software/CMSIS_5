@@ -118,4 +118,30 @@ extern const float32_t sinTable_f32[FAST_MATH_TABLE_SIZE + 1];
 extern const q31_t sinTable_q31[FAST_MATH_TABLE_SIZE + 1];
 extern const q15_t sinTable_q15[FAST_MATH_TABLE_SIZE + 1];
 
+
+/**
+* @brief tables for various activation functions
+*
+*/
+
+extern const q15_t sigmoidTable_q15[256];
+extern const q7_t sigmoidTable_q7[256];
+
+extern const q7_t tanhTable_q7[256];
+extern const q15_t tanhTable_q15[256];
+
+  /**
+   * @brief 2-way tables for various activation functions
+   *
+   * 2-way table, H table for value larger than 1/4
+   * L table for value smaller than 1/4, H table for remaining
+   * We have this only for the q15_t version. It does not make
+   * sense to have it for q7_t type
+   */
+extern const q15_t sigmoidHTable_q15[192];
+extern const q15_t sigmoidLTable_q15[128];
+
+extern const q15_t sigmoidLTable_q15[128];
+extern const q15_t sigmoidHTable_q15[192];
+
 #endif /*  ARM_COMMON_TABLES_H */
