@@ -127,11 +127,19 @@ The following steps describe how to change and configure the USB peripheral in t
 
 \page USBHID Communication via USB HID
 
+CMSIS-DAP with V1 configuration uses USB HID and is therefore compatible with previous versions of CMSIS-DAP.  There is no modification at the debugger required as all the additions are fully upward compatible. To 
+configure CMSIS-DAP for V1 interface, add to the compiler options the \#define DAP_FW_V1 as shown below: 
+
+<br>
+\image html "MDK_DAP_FW_V1.png" "Compiler CMSIS-DAP Firmware for USB HID interface"
+
 The CMSIS-DAP Firmware can be also part of a USB composite device. If this case, the <b>HID Interface String</b> must contain the sub-string <b>CMSIS-DAP</b>.
 The <b>HID Interface String</b> is configured in the file USBD_Config_HID_0.h under the category <b>Human Interface Device Class Settings</b>.
 
 <br>
 \image html "MDK_USB_HID.png" "Adapt CMSIS-DAP to the USB HID class"
+
+
 
 \page WinUSB Communication via WinUSB
 
