@@ -38,7 +38,6 @@ Folders and Files                       | Description
 --------------------------------------- | ----------------------------------------------------------------------------------------------------------------
 .\\Firmware\\Example\\V1\\LPC-Link-II   | CMSIS-DAP Firmware using USB HID adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform.
 .\\Firmware\\Example\\V2\\LPC-Link-II   | CMSIS-DAP Firmware using WinUSB adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform.
-.\\Firmware\\Example\\XMC4200           | CMSIS-DAP Firmware using USB HID adapted to the Infineon XMC4200-based Debug Unit.
 
 The CMSIS-DAP Firmware is designed to execute on a Debug Unit that is using a Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 
 processor-based microcontroller. To deploy the firmware to a new Debug Unit copy an existing firmware adaptation to a new folder.
