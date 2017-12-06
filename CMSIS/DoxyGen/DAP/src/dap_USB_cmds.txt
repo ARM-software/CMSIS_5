@@ -16,7 +16,6 @@ data package fits within the limitations of the configured \ref DAP_PACKET_SIZE.
 
 \note
 Commands that are not implemented reply with 0xFF instead of repeating the command byte.
-The available commands can be evaluated using the command \ref DAP_Info with 0xF0 (Capabilities).
 
 Conventions and Command Structure
 ---------------------------------
@@ -215,7 +214,6 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
   - \b 0x06 = Get the <b>Target Device Name</b> (string).
   - \b 0xF0 = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit (see below for details).
   - \b 0xF1 = Get the <b>Test Domain Timer</b> parameter information (see below for details).
-  - \b 0xF2 = Get the <b>Trace Data Management</b> parameter information (see below for details).
   - \b 0xFD = Get the <b>SWO Trace Buffer Size</b> (WORD).
   - \b 0xFE = Get the maximum <b>Packet Count</b> (BYTE).
   - \b 0xFF = Get the maximum <b>Packet Size</b> (SHORT).
@@ -270,10 +268,9 @@ Serial Wire Trace (SWO) support:
  
 Command extensions for transfer protocol: 
  - Info0 - Bit 4: <b>1 = Atomic Commands</b> - \ref DAP_atomic_gr support is implemented (0 = \ref DAP_atomic_gr not implemented).
- - Info0 - Bit 5: <b>1 = \ref DAP_SWD_Sequence</b> command is implemented (0 = \ref DAP_SWD_Sequence not implemented).
  
 Time synchronisation via Test Domain Timer:
- - Info0 - Bit 6: <b>1 = Test Domain Timer</b> - debug unit support for Test Domain Timer is implemented (0 = not implemented).
+ - Info0 - Bit 5: <b>1 = Test Domain Timer</b> - debug unit support for Test Domain Timer is implemented (0 = not implemented).
  
  
 <hr>
@@ -289,22 +286,6 @@ The ID=0xF1 <b>Test Domain Timer</b> obtains the parameter information about an 
 \endcode
 
 - \b Frequency:  Input frequency of the Test Domain Timer which indicates the resolution of the 32-bit TD_TimeStamp values.
-
-
-<hr>
-
-<b>DAP_Info Response (for ID=0xF2):</b>
-
-The ID=0xF2 <b>Trace Data Management</b> obtains the parameter information about an optional Trace Data Management.
-
-\code
-| BYTE | BYTE | SHORT *****| SHORT ****|
-< 0x00 | 0x04 | BlockCount | BlockSize |
-|******|******|************|***********|
-\endcode
-
-- \b BlockCount:  Number of data blocks in the Trace Data Management.
-- \b BlockSize:  Size (in bytes) of a data block in the Trace Data Management.
 
 
 */
@@ -639,7 +620,7 @@ the SWD protocol refer to the <b>ARM Debug Interface v5 - Interface Specificatio
 \brief Generate SWD sequence and output on SWDIO or capture input from SWDIO data.
 \details
 \note
-The \ref DAP_SWD_Sequence is only available when \ref DAP_Info with ID=0xF0 (Capabilities) returns in \b Info0 - Bit 5: <b>1 = \ref DAP_SWD_Sequence</b> is implemented.
+The \ref DAP_SWD_Sequence is available for CMSIS-DAP version 1.2 and higher.  Refer to \ref DAP_Info for more information on how to query the CMSIS-DAP version.
 
 
 The <b>DAP_SWD_Sequence Command</b> is used to generate special sequences in SWD mode on the pins SWCLK and SWDIO.

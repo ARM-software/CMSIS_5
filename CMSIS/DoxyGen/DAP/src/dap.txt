@@ -12,6 +12,12 @@ which runs the application software.
 
 \image html "CMSIS_DAP_INTERFACE.png" "CMSIS-DAP Overview"
 
+Configuration of CMSIS-DAP Firmware
+-----------------------------------
+The CMSIS-DAP Firmware version 2 can be configured in two different USB interface modes:
+ - Version 1 configuration uses USB HID as interface to the host PC.
+ - Version 2 configuration uses WinUSB as interface to the host PC and provides high-speed SWO trace streaming.
+
 Benefits of CMSIS-DAP
 ---------------------
  - Provides a standardized interface for debuggers. Interfaces to many standard debuggers is available.
@@ -24,7 +30,6 @@ Benefits of CMSIS-DAP
  - USB using HID (Human Interface Device) driver class that avoids driver installation on host PC.
  - Supports time-critical JTAG or SWD command execution (new in CMSIS-DAP Version 1.10). 
  - Supports Test Domain Timer for time measurement using the debug unit (new in CMSIS-DAP Version 1.2.0)
- - Communicates via USB HID (CMSIS-DAP Version 1) for driver-less installation or WinUSB (CMSIS-DAP Version 2) for higher speed.
  
 CMSIS-DAP Firmware
 ==================
