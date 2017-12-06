@@ -11,4 +11,5 @@ cpu0.semihosting-stack_limit=0x0                      # (int   , init-time) defa
 cpu0.semihosting-cwd=""                               # (string, init-time) default = ''       : Base directory for semihosting file access.
 idau.NUM_IDAU_REGION=0x0                              # (int   , init-time) default = '0xA'    : 
 cpu0.SECEXT=1                                         # (bool  , init-time) default = '1'      : Whether the ARMv8-M Security Extensions are included
+fvp_mps2.DISABLE_GATING=1                             # (bool  , init-time) default = '0'      : Disable Memory gating logic
 #----------------------------------------------------------------------------------------------
