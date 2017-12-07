@@ -51,6 +51,9 @@ SVC_Handler     PROC
                 EXPORT   SVC_Handler
                 IMPORT   osRtxUserSVC
                 IMPORT   osRtxInfo
+                IF       :DEF:MPU_LOAD
+                IMPORT   osRtxMpuLoad
+                ENDIF
                 IF       DOMAIN_NS = 1
                 IMPORT   TZ_LoadContext_S
                 IMPORT   TZ_StoreContext_S
@@ -113,6 +116,13 @@ SVC_ContextSave2
 SVC_ContextSwitch
                 SUBS     R3,R3,#8               ; Adjust address
                 STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
+
+                IF       :DEF:MPU_LOAD
+                PUSH     {R2,R3}                ; Save registers
+                MOV      R0,R2                  ; osRtxMpuLoad parameter
+                BL       osRtxMpuLoad           ; Load MPU for next thread
+                POP      {R2,R3}                ; Restore registers
+                ENDIF
 
 SVC_ContextRestore
                 IF       DOMAIN_NS = 1
@@ -215,6 +225,9 @@ SysTick_Handler PROC
 Sys_Context     PROC
                 EXPORT   Sys_Context
                 IMPORT   osRtxInfo
+                IF       :DEF:MPU_LOAD
+                IMPORT   osRtxMpuLoad
+                ENDIF
                 IF       DOMAIN_NS = 1
                 IMPORT   TZ_LoadContext_S
                 IMPORT   TZ_StoreContext_S
@@ -261,6 +274,13 @@ Sys_ContextSave2
 Sys_ContextSwitch
                 SUBS     R3,R3,#8               ; Adjust address
                 STR      R2,[R3]                ; osRtxInfo.run: curr = next
+
+                IF       :DEF:MPU_LOAD
+                PUSH     {R2,R3}                ; Save registers
+                MOV      R0,R2                  ; osRtxMpuLoad parameter
+                BL       osRtxMpuLoad           ; Load MPU for next thread
+                POP      {R2,R3}                ; Restore registers
+                ENDIF
 
 Sys_ContextRestore
                 IF       DOMAIN_NS = 1
