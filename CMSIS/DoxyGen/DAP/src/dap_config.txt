@@ -114,7 +114,7 @@ The following steps describe how to change and configure the USB peripheral in t
   - Update <b>Device Settings - Product ID</b> to provide a unique identification for the Debug Unit.
   - Update <b>Device Settings - Device Release Number</b> to indicate the revision of the adaptation.
   - Update <b>String Settings - Manufacturer String</b> to reflect the vendor of the Debug Unit. This setting should match the <b>Vendor ID</b>.
-  - Update <b>String Settings - Product String</b> to indicate the Debug Unit. Note that "CMSIS-DAP" must be part of that string to allow identification by debuggers.
+  - Update <b>String Settings - Product String</b> to indicate the Debug Unit. Note that "CMSIS-DAP" must be part of that string to allow identification by debuggers (or part of interface string for USB composite device).
   - Optionally each Debug Unit may provide a unique <b>Serial Number String</b>. If the <b>String Settings - Serial Number String</b> is not provided, only one Debug Unit can be connected at the same time to a host computer since it is impossible to identify multiple Debug Units.
 
   
@@ -153,7 +153,7 @@ Depending on the configuration it uses the following USB endpoints which should 
 
 To identify a CMSIS-DAP V2 configuration by debuggers the following WinUSB GUID must be used:
 \code
-{B92A9E65-9903-4907-A92A-109414DB334F}
+{CDB3B5AD-293B-4663-AA36-1AAE46463776}
 \endcode
 The picture below shows the configuration of the USB custom class. 
 
@@ -161,8 +161,8 @@ The picture below shows the configuration of the USB custom class.
 
 <b>USB Driver and *.inf file</b>
 <br><br>
-Windows 8 and Windows 10 does not require a WinUSB driver provided that the USB stack supports Microsoft descriptors. 
-CMSIS-DAP v2 is configured as WCID (Windows Compatible ID) device and provides extra information to a Windows system
+Windows 8 and Windows 10 does not require a WinUSB driver provided that the USB firmware stack supports Microsoft descriptors. 
+CMSIS-DAP v2 device should be configured as WCID (Windows Compatible ID) device which provides extra information to a Windows system
 to facilitate automated driver installation. 
 <br><br>
 For Windows 7, the CMSIS-DAP v2 device will install automatically if PC is connected to the Internet and Device Installation Settings 
@@ -170,15 +170,14 @@ of PC are set to automatically download and install drivers for devices. Automat
 Device Manager under Universal Serial Bus devices as WinUsb Device
 <br><br>
 If no Internet connection is available or you want device to show with different name under Device Manager you should 
-provide an .inf file and sign it to generate .cat files.
+provide an .inf file and sign it to generate .cat files. Steps for signing a device driver are described 
+<a href="https://technet.microsoft.com/en-us/library/dd919238(v=ws.10).aspx" target="_blank"> here</a>.
 <br><br>
-
-\todo link does not work (https://technet.microsoft.com/en-us/library/dd919238(v=ws.10).aspx).
 
 
 The following CMSIS_DAP_v2.inf file should be provided for an Windows 7 host PC.
 
-\verbinclude CMSIS_DAP_v2.inf
+\verbinclude Firmware\Template\CMSIS_DAP_v2.inf
 
 
 @}

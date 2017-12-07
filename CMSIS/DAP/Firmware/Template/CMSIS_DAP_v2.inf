@@ -14,10 +14,10 @@ CatalogFile.ntamd64 = CMSIS_DAP_v2_amd64.cat
 %ManufacturerName% = Devices, NTx86, NTamd64
 
 [Devices.NTx86]
-%DeviceName% = USB_Install, USB\VID_c251&PID_f00a
+%DeviceName% = USB_Install, USB\VID_c251&PID_f000
 
 [Devices.NTamd64]
-%DeviceName% = USB_Install, USB\VID_c251&PID_f00a
+%DeviceName% = USB_Install, USB\VID_c251&PID_f000
 
 ; ========== Class definition ===========
 
@@ -44,7 +44,7 @@ Needs   = WINUSB.NT.Services
 AddReg  = Dev_AddReg
 
 [Dev_AddReg]
-HKR,,DeviceInterfaceGUIDs,0x10000,"{7D9ADCFC-E570-4B38-BF4E-8F81F68964E0}"
+HKR,,DeviceInterfaceGUIDs,0x10000,"{CDB3B5AD-293B-4663-AA36-1AAE46463776}"
 
 ; =================== Strings ===================
 

@@ -84,7 +84,7 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
     <tr>
       <td>V2.0.0 (beta)</td>
       <td>
-         Changed: Communication via WinUSB to achieve high-speed transfer rates
+         Changed: Communication via WinUSB to achieve high-speed transfer rates\n
          Added: Streaming SWO (separate endpoint)
       </td>
     </tr>
