@@ -319,31 +319,31 @@ OBJECTS +=./DSP/Source/StatisticsFunctions/arm_max_q7.o
 OBJECTS +=./DSP/Source/StatisticsFunctions/arm_power_f32.o 
 OBJECTS +=./DSP/Source/StatisticsFunctions/arm_max_f32.o 
 OBJECTS +=./DSP/Source/StatisticsFunctions/arm_min_q7.o 
+OBJECTS +=./DSP/Source/NNFunctions/arm_convolve_HWC_q15_basic.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_convolve_HWC_q15_fast.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_convolve_HWC_q7_basic.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_convolve_HWC_q7_fast.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_convolve_HWC_q7_RGB.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_depthwise_separable_conv_HWC_q7.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_fully_connected_q15.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_fully_connected_q15_opt.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_fully_connected_q7.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_fully_connected_q7_opt.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_fully_connected_q7_q15.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_fully_connected_q7_q15_opt.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_nn_mat_mult_kernel_q7_q15.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_nntables.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_pool_q7_HWC.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_q7_to_q15_no_shift.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_q7_to_q15_reordered_no_shift.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_relu_q15.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_relu_q7.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_sigmoid.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_softmax.o
+OBJECTS +=./DSP/Source/NNFunctions/arm_tanh.o
 
-OBJECTS += ./NNFunctions/arm_convolve_HWC_q15_basic.o
-OBJECTS += ./NNFunctions/arm_convolve_HWC_q15_fast.o
-OBJECTS += ./NNFunctions/arm_convolve_HWC_q7_basic.o
-OBJECTS += ./NNFunctions/arm_convolve_HWC_q7_fast.o
-OBJECTS += ./NNFunctions/arm_convolve_HWC_q7_RGB.o
-OBJECTS += ./NNFunctions/arm_depthwise_separable_conv_HWC_q7.o
-OBJECTS += ./NNFunctions/arm_fully_connected_q15.o
-OBJECTS += ./NNFunctions/arm_fully_connected_q15_opt.o
-OBJECTS += ./NNFunctions/arm_fully_connected_q7.o
-OBJECTS += ./NNFunctions/arm_fully_connected_q7_opt.o
-OBJECTS += ./NNFunctions/arm_fully_connected_q7_q15.o
-OBJECTS += ./NNFunctions/arm_fully_connected_q7_q15_opt.o
-OBJECTS += ./NNFunctions/arm_nn_mat_mult_kernel_q7_q15.o
-OBJECTS += ./NNFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.o
-OBJECTS += ./NNFunctions/arm_pool_q7_HWC.o
-OBJECTS += ./NNFunctions/arm_relu_q15.o
-OBJECTS += ./NNFunctions/arm_relu_q7.o
-OBJECTS += ./NNFunctions/arm_sigmoid.o
-OBJECTS += ./NNFunctions/arm_softmax.o
-OBJECTS += ./NNFunctions/arm_tanh.o
 
-OBJECTS += ./NNSupportFunctions/arm_nntables.o
-OBJECTS += ./NNSupportFunctions/arm_q7_to_q15_no_shift.o
-OBJECTS += ./NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.o
 
 OBJECTS += ./main.o 
 
@@ -465,6 +465,8 @@ OBJECTS += ./main.o
  SYS_OBJECTS += ../mbed/TARGET_NUCLEO_F411RE/TOOLCHAIN_GCC_ARM/us_ticker_16b.o
  SYS_OBJECTS += ../mbed/TARGET_NUCLEO_F411RE/TOOLCHAIN_GCC_ARM/us_ticker_32b.o
 
+INCLUDE_PATHS += -I../DSP/Include
+INCLUDE_PATHS += -I../../../../../../Core/Include/
 
 INCLUDE_PATHS += -I../
 INCLUDE_PATHS += -I../..
@@ -480,8 +482,6 @@ INCLUDE_PATHS += -I../mbed/TARGET_NUCLEO_F411RE/TOOLCHAIN_GCC_ARM
 INCLUDE_PATHS += -I../mbed/drivers
 INCLUDE_PATHS += -I../mbed/hal
 INCLUDE_PATHS += -I../mbed/platform
-INCLUDE_PATHS += -I../DSP/Include
-INCLUDE_PATHS += -I../NNFunctions -I../NNSupportFunctions
 
 
 

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #get CMSIS5
-if [ ! -e "CMSIS_5" ]; then
-  echo "Getting CMSIS_5"
-  git clone https://github.com/ARM-software/CMSIS_5
+if [ ! -e "DSP" ]; then
+  echo "Creating soft link to DSP"
+  ln -s ../../../../../DSP ./
 else
-  echo "CMSIS_5 exists"
+  echo "DSP soft link exists"
 fi
 
 read -p "Enter caffe installation path: " caffe_root
