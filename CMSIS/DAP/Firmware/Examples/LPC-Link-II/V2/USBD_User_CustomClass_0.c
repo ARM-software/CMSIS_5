@@ -347,12 +347,12 @@ __NO_RETURN void DAP_Thread (void *argument) {
 //   buf:    pointer to buffer with data
 //   num:    number of bytes to transfer
 void SWO_QueueTransfer (uint8_t *buf, uint32_t num) {
-  USBD_EndpointWrite(0U, USB_ENDPOINT_IN(5U), buf, num);
+  USBD_EndpointWrite(0U, USB_ENDPOINT_IN(2U), buf, num);
 }
 
 // SWO Data Abort Transfer
 void SWO_AbortTransfer (void) {
-  USBD_EndpointAbort(0U, USB_ENDPOINT_IN(5U));
+  USBD_EndpointAbort(0U, USB_ENDPOINT_IN(2U));
 }
 
 //! [code_USBD_User_CustomClass]

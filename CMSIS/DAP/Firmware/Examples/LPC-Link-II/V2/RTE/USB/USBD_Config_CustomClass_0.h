@@ -860,7 +860,7 @@
 //           <h>Data
 //             <s.1024>Unicode String
 //             <i>Property Data in case Data Type is selected as Unicode String.
-#define USBD_CUSTOM_CLASS0_IF0_OS_EXT_PROP0_DATA_STR               L"{7D9ADCFC-E570-4B38-BF4E-8F81F68964E0}"
+#define USBD_CUSTOM_CLASS0_IF0_OS_EXT_PROP0_DATA_STR               L"{CDB3B5AD-293B-4663-AA36-1AAE46463776}"
 
 //             <o>32-bit Integer
 //             <i>Property Data in case Data Type is selected as Little/Big-endian 32-bit Integer.
