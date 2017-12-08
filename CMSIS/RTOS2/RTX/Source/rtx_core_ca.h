@@ -113,6 +113,9 @@ static __asm    uint32_t __get_PSP (void) {
   bx    lr
 }
 #else
+#ifdef __ICCARM__
+__arm
+#endif
 __STATIC_INLINE uint32_t __get_PSP (void) {
   register uint32_t ret;
 
