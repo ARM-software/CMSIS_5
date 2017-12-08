@@ -684,6 +684,10 @@ void __disable_fault_irq(void);
 
 /**
   \brief   Get Process Stack Pointer Limit
+  Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
+  Stack Pointer Limit register hence zero is returned always in non-secure
+  mode.
+
   \details Returns the current value of the Process Stack Pointer Limit (PSPLIM).
   \return               PSPLIM Register value
   \note    Only availabe for ARMv8-M Architecture. 
@@ -692,6 +696,10 @@ uint32_t __get_PSPLIM(void);
 
 /**
   \brief   Set Process Stack Pointer Limit
+  Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
+  Stack Pointer Limit register hence the write is silently ignored in non-secure
+  mode.
+
   \details Assigns the given value to the Process Stack Pointer Limit (PSPLIM).
   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
   \note    Only availabe for ARMv8-M Architecture. 
@@ -700,6 +708,10 @@ void __set_PSPLIM(uint32_t ProcStackPtrLimit);
 
 /**
   \brief   Get Main Stack Pointer Limit
+  Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
+  Stack Pointer Limit register hence zero is returned always in non-secure
+  mode.
+
   \details Returns the current value of the Main Stack Pointer Limit (MSPLIM).
   \return               MSPLIM Register value
   \note    Only availabe for ARMv8-M Architecture. 
@@ -708,6 +720,10 @@ uint32_t __get_MSPLIM(void);
 
 /**
   \brief   Set Main Stack Pointer Limit
+  Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
+  Stack Pointer Limit register hence the write is silently ignored in non-secure
+  mode.
+
   \details Assigns the given value to the Main Stack Pointer Limit (MSPLIM).
   \param [in]    MainStackPtrLimit  Main Stack Pointer Limit value to set
   \note    Only availabe for ARMv8-M Architecture. 
