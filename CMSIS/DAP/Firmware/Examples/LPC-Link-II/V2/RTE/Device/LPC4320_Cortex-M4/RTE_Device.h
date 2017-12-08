@@ -1368,7 +1368,7 @@
 //       <o1> Channel    <0=>0 <1=>1 <2=>2 <3=>3 <4=>4 <5=>5 <6=>6 <7=>7
 //       <o2> Peripheral <0=>4 (DMAMUXPER4)
 //     </e>
-#define   RTE_UART1_DMA_RX_EN           0
+#define   RTE_UART1_DMA_RX_EN           1
 #define   RTE_UART1_DMA_RX_CH           1
 #define   RTE_UART1_DMA_RX_PERI_ID      0
 #if      (RTE_UART1_DMA_RX_PERI_ID == 0)

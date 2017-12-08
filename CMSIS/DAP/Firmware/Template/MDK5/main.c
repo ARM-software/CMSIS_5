@@ -49,10 +49,10 @@ __NO_RETURN void app_main (void *argument) {
   LED_CONNECTED_OUT(0U);                // Turn off Debugger Connected LED
 
   // Create DAP Thread
-  DAP_ThreadId = osThreadNew(DAP_Thread, NULL, NULL);
+  DAP_ThreadId = osThreadNew(DAP_Thread, NULL, &DAP_ThreadAttr);
 
   // Create SWO Thread
-  SWO_ThreadId = osThreadNew(SWO_Thread, NULL, NULL);
+  SWO_ThreadId = osThreadNew(SWO_Thread, NULL, &SWO_ThreadAttr);
 
   osDelay(osWaitForever);
   for (;;) {};

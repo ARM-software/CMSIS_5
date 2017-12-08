@@ -34,6 +34,12 @@
 extern osThreadId_t DAP_ThreadId;
 extern osThreadId_t SWO_ThreadId;
 #else
+const osThreadAttr_t DAP_ThreadAttr = {
+  .priority = osPriorityNormal
+};
+const osThreadAttr_t SWO_ThreadAttr = {
+  .priority = osPriorityAboveNormal
+};
 extern osThreadId_t DAP_ThreadId;
        osThreadId_t DAP_ThreadId;
 extern osThreadId_t SWO_ThreadId;
