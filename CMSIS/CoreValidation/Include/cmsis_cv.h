@@ -51,7 +51,9 @@ extern void TC_CoreInstr_USAT (void);
          (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
 
     extern void TC_CoreFunc_PSPLIM (void);
+    extern void TC_CoreFunc_PSPLIM_NS (void);
     extern void TC_CoreFunc_MSPLIM (void);
+    extern void TC_CoreFunc_MSPLIM_NS (void);
 
     #endif
     

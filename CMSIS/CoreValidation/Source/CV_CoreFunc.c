@@ -288,6 +288,36 @@ void TC_CoreFunc_PSPLIM (void) {
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
+\brief Test case: TC_CoreFunc_PSPLIM_NS
+\details
+- Check if __TZ_get_PSPLIM_NS and __TZ_set_PSPLIM_NS instrinsic can be used to manipulate process stack pointer limit.
+*/
+void TC_CoreFunc_PSPLIM_NS (void) {
+#if (defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
+  uint32_t orig;
+  uint32_t psplim;
+  uint32_t result;
+
+  orig = __TZ_get_PSPLIM_NS();
+
+  psplim = orig + 0x12345678U;
+  __TZ_set_PSPLIM_NS(psplim);
+
+  result = __TZ_get_PSPLIM_NS();
+
+  __TZ_set_PSPLIM_NS(orig);
+
+#if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)))
+  // without main extensions, the non-secure PSPLIM is RAZ/WI
+  ASSERT_TRUE(result == 0U);
+#else
+  ASSERT_TRUE(result == psplim);
+#endif
+#endif
+}
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
 \brief Test case: TC_CoreFunc_MSPLIM
 \details
 - Check if __get_MSPLIM and __set_MSPLIM instrinsic can be used to manipulate main stack pointer limit.
@@ -323,6 +353,36 @@ void TC_CoreFunc_MSPLIM (void) {
 }
 
 #endif
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\brief Test case: TC_CoreFunc_MSPLIM_NS
+\details
+- Check if __TZ_get_MSPLIM_NS and __TZ_set_MSPLIM_NS instrinsic can be used to manipulate process stack pointer limit.
+*/
+void TC_CoreFunc_MSPLIM_NS (void) {
+#if (defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
+  uint32_t orig;
+  uint32_t msplim;
+  uint32_t result;
+
+  orig = __TZ_get_MSPLIM_NS();
+
+  msplim = orig + 0x12345678U;
+  __TZ_set_MSPLIM_NS(msplim);
+
+  result = __TZ_get_MSPLIM_NS();
+
+  __TZ_set_MSPLIM_NS(orig);
+
+#if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)))
+  // without main extensions, the non-secure PSPLIM is RAZ/WI
+  ASSERT_TRUE(result == 0U);
+#else
+  ASSERT_TRUE(result == msplim);
+#endif
+#endif
+}
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**

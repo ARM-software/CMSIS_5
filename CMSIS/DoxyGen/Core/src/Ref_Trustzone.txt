@@ -142,33 +142,41 @@ void __TZ_set_FAULTMASK_NS(uint32_t faultMask);
 
 /**
   \brief   Get Process Stack Pointer Limit (non-secure)
+  Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
+  Stack Pointer Limit register hence zero is returned always.
+
   \details Returns the current value of the non-secure Process Stack Pointer Limit (PSPLIM) when in secure state.
-  \return               PSPLIM register value
-  \note    Only available for ARMv8-M Mainline. 
+  \return               PSPLIM register value 
  */
 uint32_t __TZ_get_PSPLIM_NS(void);
 
 /**
   \brief   Set Process Stack Pointer (non-secure)
+  Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
+  Stack Pointer Limit register hence zero is returned always.
+
   \details Assigns the given value to the non-secure Process Stack Pointer Limit (PSPLIM) when in secure state.
   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
-  \note    Only available for ARMv8-M Mainline. 
  */
 void __TZ_set_PSPLIM_NS(uint32_t ProcStackPtrLimit);
 
 /**
   \brief   Get Main Stack Pointer Limit (non-secure)
+  Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
+  Stack Pointer Limit register hence zero is returned always.
+  
   \details Returns the current value of the non-secure Main Stack Pointer Limit(MSPLIM) when in secure state.
   \return               MSPLIM register value
-  \note    Only available for ARMv8-M Mainline. 
  */
 uint32_t __TZ_get_MSPLIM_NS(void);
 
 /**
   \brief   Set Main Stack Pointer Limit (non-secure)
+  Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
+  Stack Pointer Limit register hence zero is returned always.
+
   \details Assigns the given value to the non-secure Main Stack Pointer Limit (MSPLIM) when in secure state.
   \param [in]    MainStackPtrLimit  Main Stack Pointer value to set
-  \note    Only available for ARMv8-M Mainline. 
  */
 void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit);
 

@@ -42,14 +42,16 @@
 // <q13> TC_CoreFunc_PSP
 // <q14> TC_CoreFunc_MSP
 // <q13> TC_CoreFunc_PSPLIM
-// <q14> TC_CoreFunc_MSPLIM
-// <q15> TC_CoreFunc_PRIMASK
-// <q16> TC_CoreFunc_FAULTMASK
-// <q17> TC_CoreFunc_BASEPRI
-// <q18> TC_CoreFunc_FPSCR
+// <q14> TC_CoreFunc_PSPLIM_NS
+// <q15> TC_CoreFunc_MSPLIM
+// <q16> TC_CoreFunc_MSPLIM_NS
+// <q17> TC_CoreFunc_PRIMASK
+// <q18> TC_CoreFunc_FAULTMASK
+// <q19> TC_CoreFunc_BASEPRI
+// <q20> TC_CoreFunc_FPSCR
 //
-// <q19> TC_MPU_SetClear
-// <q20> TC_MPU_Load
+// <q21> TC_MPU_SetClear
+// <q22> TC_MPU_Load
 #define TC_COREINSTR_NOP_EN         1
 #define TC_COREINSTR_REV_EN         1
 #define TC_COREINSTR_REV16_EN       1
@@ -67,7 +69,9 @@
 #define TC_COREFUNC_PSP_EN          1
 #define TC_COREFUNC_MSP_EN          1
 #define TC_COREFUNC_PSPLIM_EN       1
+#define TC_COREFUNC_PSPLIM_NS_EN    1
 #define TC_COREFUNC_MSPLIM_EN       1
+#define TC_COREFUNC_MSPLIM_NS_EN    1
 #define TC_COREFUNC_PRIMASK_EN      1
 #define TC_COREFUNC_FAULTMASK_EN    1
 #define TC_COREFUNC_BASEPRI_EN      1
