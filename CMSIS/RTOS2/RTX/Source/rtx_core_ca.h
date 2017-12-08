@@ -112,7 +112,23 @@ static __asm    uint32_t __get_PSP (void) {
   sub   r0, r0, #32
   bx    lr
 }
-#else
+#elif defined(__ICCARM__)
+__STATIC_INLINE __arm uint32_t __get_PSP (void) {
+  register uint32_t ret;
+
+  __asm volatile (
+    "sub  sp,sp,#4\n\t"
+    "stm  sp,{sp}^\n\t"
+    "pop  {%[ret]}\n\t"
+    "sub  %[ret],%[ret],#32\n\t"
+    : [ret] "=&l" (ret)
+    :
+    : "memory"
+  );
+
+  return ret;
+}
+#else   // !(defined(__CC_ARM) || defined(__ICCARM__))
 __STATIC_INLINE uint32_t __get_PSP (void) {
   register uint32_t ret;
 
