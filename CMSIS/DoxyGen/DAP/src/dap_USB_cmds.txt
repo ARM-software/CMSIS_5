@@ -123,6 +123,7 @@ The following new commands are added:
  - \ref DAP_SWO_Baudrate
  - \ref DAP_SWO_Control
  - \ref DAP_SWO_Status
+ - \ref DAP_SWO_ExtendedStatus
  - \ref DAP_SWO_Data
 
 Format of the new commands is specified below using CMSIS-DAP documentation style.
@@ -683,6 +684,7 @@ Sets the SWO transport mode for reading trace data.
   - \b Transport:
     - 0 - None (default)
     - 1 - Read trace data via DAP_SWO_Data command   
+    - 2 - Send trace data via separate \ref WinUSB "WinUSB" endpoint (requires CMSIS-DAP v2 configuration)
     - ... - reserved
 
 <b>DAP_SWO_Transport Response:</b>
@@ -835,6 +837,48 @@ Reads the SWO trace status.
     - Bit 6: Trace Stream Error
     - Bit 7: Trace Buffer Overrun
   - <b>Trace Count</b>: Number of bytes in Trace Buffer (not yet read)
+*/
+
+/**************************************************************************************************/
+/** 
+\defgroup DAP_SWO_ExtendedStatus DAP_SWO_ExtendedStatus
+\ingroup DAP_swo_gr
+\brief Read SWO trace extended status
+\details
+
+DAP_SWO_ExtendedStatus (0x1E):
+-----------------------------
+
+Reads extended information about the SWO trace status.
+
+<b>DAP_SWO_ExtendedStatus Request:</b>
+\code
+ | BYTE | BYTE    |
+ > 0x1E | Control |
+ |******|*********|
+\endcode  
+
+  - <b>Control</b>:
+    - Bit 0: Trace Status (1 - request, 0 - inactive)
+    - Bit 1: Trace Count (1 - request, 0 - inactive)
+    - Bit 2: Index/Trace (1 - request, 0 - inactive)
+
+<b>DAP_SWO_ExtendStatus Response:</b>
+\code
+ | BYTE | BYTE         | WORD        | WORD  |              |
+ < 0x1E | Trace Status | Trace Count | Index | TD_TimeStamp |
+ |******|++++++++++++++|+++++++++++++|+++++++|++++++++++++++|
+\endcode
+
+  - <b>Trace Status</b>:
+    - Bit 0: Trace Capture (1 - active, 0 - inactive)
+    - Bit 6: Trace Stream Error
+    - Bit 7: Trace Buffer Overrun
+
+	- <b>Trace Count</b>: Number of bytes in Trace Buffer (not yet read)
+
+  - <b>Index</b>: Sequence number of next trace information
+  - <b>TD_TimeStamp</b>: Test Domain Timer value for trace sequence.
 */
 
 /**************************************************************************************************/

@@ -85,7 +85,8 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
       <td>V2.0.0 (beta)</td>
       <td>
          Changed: Communication via WinUSB to achieve high-speed transfer rates\n
-         Added: Streaming SWO (separate endpoint)
+         Added: Streaming SWO via separate \ref WinUSB "WinUSB" endpoint\n
+		 Added: \ref DAP_SWO_Transport extended with transport mode 2 - Send trace data via separate \ref WinUSB "WinUSB" endpoint 
       </td>
     </tr>
     <tr>

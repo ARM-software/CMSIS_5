@@ -170,10 +170,9 @@ of PC are set to automatically download and install drivers for devices. Automat
 Device Manager under Universal Serial Bus devices as WinUsb Device
 <br><br>
 If no Internet connection is available or you want device to show with different name under Device Manager you should 
-provide an .inf file and sign it to generate .cat files. Steps for signing a device driver are described 
-<a href="https://technet.microsoft.com/en-us/library/dd919238(v=ws.10).aspx" target="_blank"> here</a>.
+provide an .inf file and sign it to generate .cat files. More information is available from Microsoft under the topic  
+<a href="https://technet.microsoft.com/en-us/library/dd919238(v=ws.10).aspx" target="_blank">Steps for Signing a Device Driver Package</a>.
 <br><br>
-
 
 The following CMSIS_DAP_v2.inf file should be provided for an Windows 7 host PC.
 
