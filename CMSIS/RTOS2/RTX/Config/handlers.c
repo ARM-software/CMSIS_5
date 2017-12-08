@@ -126,9 +126,9 @@ void CPAbtHandler(uint32_t IFSR, uint32_t IFAR, uint32_t LR) {
 //this will be 2 when we have performed some maintenance and want to retry the instruction in Thumb (state == 2)
 //this will be 4 when we have performed some maintenance and want to retry the instruction in ARM   (state == 4)
 uint32_t CUndefHandler(uint32_t opcode, uint32_t state, uint32_t LR) {
-    (void)LR;
     const uint32_t THUMB = 2U;
     const uint32_t ARM = 4U;
+    (void)LR;
     //Lazy VFP/NEON initialisation and switching
 
     // (ARM ARM section A7.5) VFP data processing instruction?
