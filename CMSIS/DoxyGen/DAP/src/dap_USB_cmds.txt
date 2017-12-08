@@ -861,11 +861,11 @@ Reads extended information about the SWO trace status.
   - <b>Control</b>:
     - Bit 0: Trace Status (1 - request, 0 - inactive)
     - Bit 1: Trace Count (1 - request, 0 - inactive)
-    - Bit 2: Index/Trace (1 - request, 0 - inactive)
+    - Bit 2: Index/Timestamp (1 - request, 0 - inactive)
 
 <b>DAP_SWO_ExtendStatus Response:</b>
 \code
- | BYTE | BYTE         | WORD        | WORD  |              |
+ | BYTE | BYTE         | WORD        | WORD  | WORD         |
  < 0x1E | Trace Status | Trace Count | Index | TD_TimeStamp |
  |******|++++++++++++++|+++++++++++++|+++++++|++++++++++++++|
 \endcode
@@ -875,7 +875,7 @@ Reads extended information about the SWO trace status.
     - Bit 6: Trace Stream Error
     - Bit 7: Trace Buffer Overrun
 
-	- <b>Trace Count</b>: Number of bytes in Trace Buffer (not yet read)
+  - <b>Trace Count</b>: Number of bytes in Trace Buffer (not yet read)
 
   - <b>Index</b>: Sequence number of next trace information
   - <b>TD_TimeStamp</b>: Test Domain Timer value for trace sequence.
