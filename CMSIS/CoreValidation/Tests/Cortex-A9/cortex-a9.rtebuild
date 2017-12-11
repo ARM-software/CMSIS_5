@@ -9,7 +9,8 @@ config:
     mfpu  : vfpv3-d16-fp16
     target: ARM:82/ARMCA9/Cortex-A9
 source:
- - ../../Source/CV_CoreAFunc.c
  - ../../Source/CV_CoreInstr.c
+ - ../../Source/CV_CoreAFunc.c
+ - ../../Source/CV_L1Cache.c
 components:
  - Device.IRQ Controller.GIC

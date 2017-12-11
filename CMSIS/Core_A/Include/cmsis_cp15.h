@@ -444,4 +444,28 @@ __STATIC_FORCEINLINE uint32_t __get_CLIDR(void)
   return result;
 }
 
+/** \brief  Set DCISW
+ */
+__STATIC_FORCEINLINE void __set_DCISW(uint32_t value)
+{
+//  __ASM volatile("MCR p15, 0, %0, c7, c6, 2" : : "r"(value) : "memory")
+  __set_CP(15, 0, value, 7, 6, 2);
+}
+
+/** \brief  Set DCCSW
+ */
+__STATIC_FORCEINLINE void __set_DCCSW(uint32_t value)
+{
+//  __ASM volatile("MCR p15, 0, %0, c7, c10, 2" : : "r"(value) : "memory")
+  __set_CP(15, 0, value, 7, 10, 2);
+}
+
+/** \brief  Set DCCISW
+ */
+__STATIC_FORCEINLINE void __set_DCCISW(uint32_t value)
+{
+//  __ASM volatile("MCR p15, 0, %0, c7, c14, 2" : : "r"(value) : "memory")
+  __set_CP(15, 0, value, 7, 14, 2);
+}
+
 #endif

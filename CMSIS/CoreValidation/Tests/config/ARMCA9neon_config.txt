@@ -13,4 +13,6 @@ cluster.cpu0.semihosting-heap_limit=0x0               # (int   , init-time) defa
 cluster.cpu0.semihosting-stack_base=0x0               # (int   , init-time) default = '0xFFFF0000' : Virtual address of base of descending stack : [0x0..0xFFFFFFFF]
 cluster.cpu0.semihosting-stack_limit=0x0              # (int   , init-time) default = '0xFF000000' : Virtual address of stack limit : [0x0..0xFFFFFFFF]
 cluster.cpu0.semihosting-cwd=""                       # (string, init-time) default = ''       : Base directory for semihosting file access.
+cluster.dcache-state_modelled=1                       # (bool  , run-time ) default = '0'      : Set whether D-cache has stateful implementation
+cluster.icache-state_modelled=1                       # (bool  , run-time ) default = '0'      : Set whether I-cache has stateful implementation
 #----------------------------------------------------------------------------------------------
