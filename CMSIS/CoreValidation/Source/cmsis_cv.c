@@ -121,6 +121,14 @@ static TEST_CASE TC_LIST[] = {
   TCD ( TC_GenTimer_CNTPCT,                  TC_GENTIMER_CNTPCT                  ),
   TCD ( TC_GenTimer_CNTP_CVAL,               TC_GENTIMER_CNTP_CVAL               ),
 #endif
+#ifdef RTE_CV_L1CACHE
+  TCD ( TC_L1Cache_EnDisable,                TC_L1CACHE_ENDISABLE                ),
+  TCD ( TC_L1Cache_EnDisableBTAC,            TC_L1CACHE_ENDISABLEBTAC            ),
+  TCD ( TC_L1Cache_log2_up,                  TC_L1CACHE_LOG2_UP                  ),
+  TCD ( TC_L1Cache_InvalidateDCacheAll,      TC_L1CACHE_INVALIDATEDCACHEALL      ),
+  TCD ( TC_L1Cache_CleanDCacheAll,           TC_L1CACHE_CLEANDCACHEALL           ),
+  TCD ( TC_L1Cache_CleanInvalidateDCacheAll, TC_L1CACHE_CLEANINVALIDATEDCACHEALL ),
+#endif
 };
 
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)

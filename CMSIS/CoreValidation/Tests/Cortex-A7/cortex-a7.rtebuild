@@ -12,5 +12,6 @@ source:
  - ../../Source/CV_CoreAFunc.c
  - ../../Source/CV_CoreInstr.c
  - ../../Source/CV_GenTimer.c
+ - ../../Source/CV_L1Cache.c
 components:
  - Device.IRQ Controller.GIC

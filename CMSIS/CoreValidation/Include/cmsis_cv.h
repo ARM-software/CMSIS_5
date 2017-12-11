@@ -112,4 +112,13 @@ extern void TC_GenTimer_CNTPCT(void);
 extern void TC_GenTimer_CNTP_CVAL(void);
 #endif
 
+#ifdef RTE_CV_L1CACHE
+extern void TC_L1Cache_EnDisable(void);
+extern void TC_L1Cache_EnDisableBTAC(void);
+extern void TC_L1Cache_log2_up(void);
+extern void TC_L1Cache_InvalidateDCacheAll(void);
+extern void TC_L1Cache_CleanDCacheAll(void);
+extern void TC_L1Cache_CleanInvalidateDCacheAll(void);
+#endif
+
 #endif /* __CMSIS_CV_H */
