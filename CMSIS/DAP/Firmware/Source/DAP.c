@@ -104,7 +104,8 @@ static uint8_t DAP_Info(uint8_t id, uint8_t *info) {
                 ((SWO_UART != 0)         ? (1U << 2) : 0U) |
                 ((SWO_MANCHESTER != 0)   ? (1U << 3) : 0U) |
                 /* Atomic Commands  */     (1U << 4)       |
-                ((TIMESTAMP_CLOCK != 0U) ? (1U << 5) : 0U);
+                ((TIMESTAMP_CLOCK != 0U) ? (1U << 5) : 0U) |
+                ((SWO_STREAM != 0U)      ? (1U << 6) : 0U);
       length = 1U;
       break;
     case DAP_ID_TIMESTAMP_CLOCK:

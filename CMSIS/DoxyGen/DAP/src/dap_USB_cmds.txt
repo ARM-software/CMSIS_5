@@ -273,6 +273,9 @@ Command extensions for transfer protocol:
 Time synchronisation via Test Domain Timer:
  - Info0 - Bit 5: <b>1 = Test Domain Timer</b> - debug unit support for Test Domain Timer is implemented (0 = not implemented).
  
+SWO Streaming Trace support:
+ - Info0 - Bit 6: <b>1 = SWO Streaming Trace</b> is implemented (0 = not implemented).
+ 
  
 <hr>
  
