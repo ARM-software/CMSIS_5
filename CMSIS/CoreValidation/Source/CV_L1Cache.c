@@ -50,8 +50,13 @@ void TC_L1Cache_EnDisableBTAC(void) {
   L1C_DisableBTAC();
   
   sctlr = __get_SCTLR();
+#if __CORTEX_A == 7
+  // On Cortex-A7 SCTLR_Z is RAO/WI.
+  ASSERT_TRUE((sctlr & SCTLR_Z_Msk) == SCTLR_Z_Msk);
+#else
   ASSERT_TRUE((sctlr & SCTLR_Z_Msk) == 0U);
-  
+#endif
+
   __set_SCTLR(orig);
   __ISB();
 }
