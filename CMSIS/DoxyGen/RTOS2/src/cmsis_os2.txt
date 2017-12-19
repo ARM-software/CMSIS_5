@@ -519,6 +519,19 @@ In contrast to the dynamic memory allocations, the static memory allocation requ
 
 \image html MemAllocStat.png "Statically allocated memory for all objects"
 
+In order to allow RTX5 aware debugging, i.e. Component Viewer, to recognize control blocks these
+needs to be placed in individual memory sections, i.e. using `__attribute__((section(...)))`.
+
+RTX Object    | Linker Section 
+--------------|------------------------
+Thread        | `.bss.os.thread.cb`
+Timer         | `.bss.os.timer.cb`
+Event Flags   | `.bss.os.evflags.cb`
+Mutex         | `.bss.os.mutex.cb`
+Semaphore     | `.bss.os.semaphore.cb`
+Memory Pool   | `.bss.os.mempool.cb`
+Message Queue | `.bss.os.msgqueue.cb`
+
 The following code example shows how to create an OS object using static memory.
 
 <b> Code Example:</b> 
@@ -545,6 +558,7 @@ void worker(void *arg)
 }
  
 // Define objects that are statically allocated for worker thread 1
+__attribute__((section(".bss.os.thread.cb")))
 osRtxThread_t worker_thread_tcb_1;
  
 // Reserve two areas for the stacks of worker thread 1
@@ -1774,6 +1788,71 @@ However, the functions of the <b>C API Version 1</b> may be deprecated in future
 \section rtos_api2 CMSIS-RTOS2
 
 Overview of all CMSIS-RTOS C API v2 functions that are implemented in the \subpage cmsis_os2_h. 
+
+\subsection rtos_api2_basics Common Design Concepts
+
+All RTOS objects share a common design concept. The overall lifecycle of
+an object can be summarized as created -> in use -> destroyed.
+
+<b>Create Objects</b>
+
+An object is created by calling its `osXxxNew` function. The new function returns an identifier
+that can be used to operate with the new object. The actual state of an object is typically stored
+in an object specific control block. The memory layout (and size needed) for the control
+block is implementation specific. One should not make any specific asumptions about the control
+block. The control block layout might change and hence should be seen as an implementation
+internal detail.
+
+In order to expose control about object specific options all `osXxxNew` functions provide an
+optional `attr` argument, which can be left as \token{NULL} by default. It takes a pointer to
+an object specific attribute structure, commonly containing the fields
+ - `name` to attach a human readable name to the object for identification,
+ - `attr_bits` to control object-specific options,
+ - `cb_mem` to provide memory for the control block manually, and
+ - `cb_size` to quantify the memory size provided for the control block.
+
+The `name` attribute is only used for object indentification, e.g. using RTOS-aware debugging. The
+attached string is not used for any other purposes internally.
+
+The `cb_mem` and `cb_size` attributes can be used to provide memory for the control block manually
+instead of relying on the implementation internal memory allocation. One has to assure that the
+amount of memory pointed to by `cb_mem` is sufficient for the objects control block structure. If
+the size given as `cb_size` is not sufficient the `osXxxNew` function returns with an error, i.e.
+returning \token{NULL}. Furthermore providing control block memory manually is less portable. Thus
+one has to take care about implementation specific alignment and placement requirements for instance.
+
+<b>Object Usage</b>
+
+After an object has been created successsfully it can be used until it is destroyed. The actions
+defined for an object depends on its type. Commonly all the `osXxxDoSomething` access function
+require the reference to the object to work with as the first `xxx_id` parameter.
+
+The access function can be assumed to apply some sort of sanity checking on the id parameter. So
+that it is assured one cannot accidentally call an access function with a \token{NULL} object
+reference. Furthermore the concrete object type is verified, i.e. one cannot call access functions
+of one object type with a reference to another object type.
+
+All further parameter checks applied are either object and action specific or may even be implementation
+specific. Thus one should always check action function return values for `osErrorParameter` to asure the
+provided arguments were accepted.
+
+As a rule of thumb only non-blocking access function can be used from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" (ISR).
+This incorporates `osXxxWait` functions (and similar) limited to be called with parameter `timeout`
+set to \token{0}, i.e. usage of try-semantics.
+
+<b>Object Destruction</b>
+
+Objects that are not needed anymore can be destructed on demand to free the control block memory. Objects
+are not destructed implicitely. Thus one can assume an object id to be valid until `osXxxDelete` is called
+explicitely. The delete function finally frees the control block memory. In case of user provided control
+block memory, see above, the memory must be freed manually as well. 
+
+The only exception one has to take care of are Threads which do not have an explicit `osThreadDelete` function.
+Threads can either be `detached` or `joinable`. Detached threads are automatically destroyed on termination,
+i.e. call to \ref osThreadTerminate or \ref osThreadExit or return from thread function. On the other hand joinable
+threads are kept alive until one explicitely calls \ref osThreadJoin.
+
+\subsection rtos_api2_functions Function Reference
 
  - \ref CMSIS_RTOS_KernelCtrl
    - \ref osKernelGetInfo : \copybrief osKernelGetInfo
