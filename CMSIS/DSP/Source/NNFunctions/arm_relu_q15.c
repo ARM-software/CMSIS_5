@@ -49,57 +49,55 @@
    *
    */
 
-
-void arm_relu_q15(
-        q15_t * data,
-        uint16_t size
-) {
+void arm_relu_q15(q15_t * data, uint16_t size)
+{
 
 #if defined (ARM_MATH_DSP)
-  /* Run the following code for Cortex-M4 and Cortex-M7 */
+    /* Run the following code for Cortex-M4 and Cortex-M7 */
 
+    uint16_t  i = size >> 1;
+    q15_t    *pIn = data;
+    q15_t    *pOut = data;
+    q31_t     in;
+    q31_t     buf;
+    q31_t     mask;
 
-  uint16_t i = size >> 1;
-  q15_t* pIn = data;
-  q15_t* pOut = data;
-  q31_t in;
-	q31_t buf;
-	q31_t mask;
-	
-  while (i) {
-    in = *__SIMD32(pIn)++;
+    while (i)
+    {
+        in = *__SIMD32(pIn)++;
 
-    /* extract the first bit */
-    buf = __ROR(in & 0x80008000, 15);
+        /* extract the first bit */
+        buf = __ROR(in & 0x80008000, 15);
 
-    /* if MSB=1, mask will be 0xFF, 0x0 otherwise */
-    mask =__QSUB16(0x00000000, buf);
+        /* if MSB=1, mask will be 0xFF, 0x0 otherwise */
+        mask = __QSUB16(0x00000000, buf);
 
-    *__SIMD32(pOut)++ = in & (~mask);
-    i--;
-  }
+        *__SIMD32(pOut)++ = in & (~mask);
+        i--;
+    }
 
-  if (size&0x1) {
-    if (*pIn<0) { *pIn = 0; }
-    pIn++;
-  }
-
+    if (size & 0x1)
+    {
+        if (*pIn < 0)
+        {
+            *pIn = 0;
+        }
+        pIn++;
+    }
 #else
-  /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
-  uint16_t i;
+    /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
+    uint16_t  i;
 
-  for(i=0;i<size;i++) {
-    if(data[i]<0)
-      data[i] = 0;
-  }
+    for (i = 0; i < size; i++)
+    {
+        if (data[i] < 0)
+            data[i] = 0;
+    }
 
-#endif /* ARM_MATH_DSP */
-
+#endif                          /* ARM_MATH_DSP */
 
 }
 
 /**
  * @} end of Acti group
  */
-
-

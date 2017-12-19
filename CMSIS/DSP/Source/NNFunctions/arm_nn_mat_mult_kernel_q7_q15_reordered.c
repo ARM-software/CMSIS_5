@@ -47,92 +47,90 @@
    * This function assumes that data in pInBuffer are reordered
    */
 
-q7_t* arm_nn_mat_mult_kernel_q7_q15_reordered (
-            const q7_t * pA,           
-            const q15_t * pInBuffer,   
-            const uint16_t ch_im_out,  
-            const uint16_t numCol_A,   
-            const uint16_t bias_shift, 
-            const uint16_t out_shift,  
-            const q7_t * bias,         
-            q7_t * pOut                
-) {
+q7_t     *arm_nn_mat_mult_kernel_q7_q15_reordered(const q7_t * pA,
+                                                  const q15_t * pInBuffer,
+                                                  const uint16_t ch_im_out,
+                                                  const uint16_t numCol_A,
+                                                  const uint16_t bias_shift,
+                                                  const uint16_t out_shift, const q7_t * bias, q7_t * pOut)
+{
 
 #if defined (ARM_MATH_DSP)
-   /* set up the second output pointers */
-   q7_t* pOut2 = pOut + ch_im_out;
-   int i;
-	
-   /* this loop over rows in A */
-   for (i=0;i<ch_im_out; i+=2) {
-     /* setup pointers for B */
-     const q15_t* pB = pInBuffer;
-     const q15_t* pB2 = pB + numCol_A;
+    /* set up the second output pointers */
+    q7_t     *pOut2 = pOut + ch_im_out;
+    int       i;
 
-     /* align the second pointer for A */
-     const q7_t* pA2 = pA + numCol_A;
+    /* this loop over rows in A */
+    for (i = 0; i < ch_im_out; i += 2)
+    {
+        /* setup pointers for B */
+        const q15_t *pB = pInBuffer;
+        const q15_t *pB2 = pB + numCol_A;
 
-     /* init the sum with bias */
-     q31_t sum = bias[i]    << bias_shift;
-     q31_t sum2 = bias[i]   << bias_shift;
-     q31_t sum3 = bias[i+1] << bias_shift;
-     q31_t sum4 = bias[i+1] << bias_shift;
+        /* align the second pointer for A */
+        const q7_t *pA2 = pA + numCol_A;
 
+        /* init the sum with bias */
+        q31_t     sum = bias[i] << bias_shift;
+        q31_t     sum2 = bias[i] << bias_shift;
+        q31_t     sum3 = bias[i + 1] << bias_shift;
+        q31_t     sum4 = bias[i + 1] << bias_shift;
 
-     uint16_t colCnt = numCol_A >> 2;
-     /* accumulate over the vector */
-     while (colCnt) {
-       q31_t inA11, inA12, inA21, inA22;
-       q31_t inB1 = *__SIMD32(pB)++;
-       q31_t inB2 = *__SIMD32(pB2)++;
+        uint16_t  colCnt = numCol_A >> 2;
+        /* accumulate over the vector */
+        while (colCnt)
+        {
+            q31_t     inA11, inA12, inA21, inA22;
+            q31_t     inB1 = *__SIMD32(pB)++;
+            q31_t     inB2 = *__SIMD32(pB2)++;
 
-       pA = (q7_t*)read_and_pad_reordered((void*)pA, &inA11, &inA12);
-       pA2 = (q7_t*)read_and_pad_reordered((void*)pA2, &inA21, &inA22);
+            pA = (q7_t *) read_and_pad_reordered((void *)pA, &inA11, &inA12);
+            pA2 = (q7_t *) read_and_pad_reordered((void *)pA2, &inA21, &inA22);
 
-       sum = __SMLAD(inA11, inB1, sum);
-       sum2 = __SMLAD(inA11, inB2, sum2);
-       sum3 = __SMLAD(inA21, inB1, sum3);
-       sum4 = __SMLAD(inA21, inB2, sum4);
+            sum = __SMLAD(inA11, inB1, sum);
+            sum2 = __SMLAD(inA11, inB2, sum2);
+            sum3 = __SMLAD(inA21, inB1, sum3);
+            sum4 = __SMLAD(inA21, inB2, sum4);
 
-       inB1 = *__SIMD32(pB)++;
-       inB2 = *__SIMD32(pB2)++;
+            inB1 = *__SIMD32(pB)++;
+            inB2 = *__SIMD32(pB2)++;
 
-       sum = __SMLAD(inA12, inB1, sum);
-       sum2 = __SMLAD(inA12, inB2, sum2);
-       sum3 = __SMLAD(inA22, inB1, sum3);
-       sum4 = __SMLAD(inA22, inB2, sum4);
+            sum = __SMLAD(inA12, inB1, sum);
+            sum2 = __SMLAD(inA12, inB2, sum2);
+            sum3 = __SMLAD(inA22, inB1, sum3);
+            sum4 = __SMLAD(inA22, inB2, sum4);
 
-       colCnt --;
-     } /* while over colCnt */
-     colCnt = numCol_A & 0x3;
-     while (colCnt) {
-       q7_t inA1 = *pA++;
-       q15_t inB1 = *pB++;
-       q7_t inA2 = *pA2++;
-       q15_t inB2 = *pB2++;
+            colCnt--;
+        }                       /* while over colCnt */
+        colCnt = numCol_A & 0x3;
+        while (colCnt)
+        {
+            q7_t      inA1 = *pA++;
+            q15_t     inB1 = *pB++;
+            q7_t      inA2 = *pA2++;
+            q15_t     inB2 = *pB2++;
 
-       sum += inA1 * inB1;
-       sum2 += inA1 * inB2;
-       sum3 += inA2 * inB1;
-       sum4 += inA2 * inB2;
-       colCnt --;
-     } /* while over colCnt */
-     *pOut++ = (q7_t) __SSAT((sum>>  out_shift), 8);
-     *pOut++ = (q7_t) __SSAT((sum3>> out_shift), 8);
-     *pOut2++ = (q7_t) __SSAT((sum2>>out_shift), 8);
-     *pOut2++ = (q7_t) __SSAT((sum4>>out_shift), 8);
+            sum += inA1 * inB1;
+            sum2 += inA1 * inB2;
+            sum3 += inA2 * inB1;
+            sum4 += inA2 * inB2;
+            colCnt--;
+        }                       /* while over colCnt */
+        *pOut++ = (q7_t) __SSAT((sum >> out_shift), 8);
+        *pOut++ = (q7_t) __SSAT((sum3 >> out_shift), 8);
+        *pOut2++ = (q7_t) __SSAT((sum2 >> out_shift), 8);
+        *pOut2++ = (q7_t) __SSAT((sum4 >> out_shift), 8);
 
-     /* skip the row computed with A2 */ 
-     pA += numCol_A;
-   } /* for over ch_im_out */
+        /* skip the row computed with A2 */
+        pA += numCol_A;
+    }                           /* for over ch_im_out */
 
-   pOut += ch_im_out;
+    pOut += ch_im_out;
 
-   /* return the new output pointer with offset */
-   return pOut;
- #else
-     /* To be completed */
-     return NULL;
- #endif  /* ARM_MATH_DSP */
+    /* return the new output pointer with offset */
+    return pOut;
+#else
+    /* To be completed */
+    return NULL;
+#endif                          /* ARM_MATH_DSP */
 }
-

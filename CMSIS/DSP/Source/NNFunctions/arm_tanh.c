@@ -54,35 +54,22 @@
    * saturation followed by any of these activation functions. 
    */
 
-void arm_tanh_direct_q7(
-        q7_t * data,         
-        uint16_t size,       
-        uint16_t int_width   
-) {
-  uint16_t i = size >> 2;
-  q7_t* pIn = data;
-  q7_t* pOut = data;
-  union arm_nnword in;
-  union arm_nnword out;
-  uint16_t shift_size = 3 - int_width;
-  while (i) {
-    in.word = *__SIMD32(pIn)++;
+void arm_tanh_direct_q7(q7_t * data, uint16_t size, uint16_t int_width)
+{
+    uint16_t  i = size;
+    q7_t     *pIn = data;
+    q7_t     *pOut = data;
+    q7_t      in;
+    q7_t      out;
+    uint16_t  shift_size = 3 - int_width;
 
-    out.bytes[0] = tanhTable_q7[(uint8_t)(in.bytes[0]>>shift_size)];
-    out.bytes[1] = tanhTable_q7[(uint8_t)(in.bytes[1]>>shift_size)];
-    out.bytes[2] = tanhTable_q7[(uint8_t)(in.bytes[2]>>shift_size)];
-    out.bytes[3] = tanhTable_q7[(uint8_t)(in.bytes[3]>>shift_size)];
-
-    *__SIMD32(pOut)++ = out.word;
-    i--;
-  }
-
-  i = size & 0x3;
-  while (i) {
-    q7_t buf = *pIn ++;
-    *pOut ++ = tanhTable_q7[(uint8_t)buf];
-    i--;
-  }
+    while (i)
+    {
+        in = *pIn++;
+        out = tanhTable_q7[(uint8_t) (in >> shift_size)];
+        *pOut++ = out;
+        i--;
+    }
 
 }
 
@@ -102,36 +89,32 @@ void arm_tanh_direct_q7(
    * saturation followed by any of these activation functions. 
    */
 
-void arm_tanh_direct_q15(
-        q15_t * data,        
-        uint16_t size,       
-        uint16_t int_width   
-) {
-  uint16_t i = size;
-  q15_t* pIn = data;
-  q15_t* pOut = data;
-  uint16_t shift_size = 8 + 3 - int_width;
-  uint32_t bit_mask = 0x7FF >> int_width;
-  uint32_t full_frac = bit_mask + 1;
-  while (i) { 
-    q15_t in = *pIn++;
-    q15_t out;
+void arm_tanh_direct_q15(q15_t * data, uint16_t size, uint16_t int_width)
+{
+    uint16_t  i = size;
+    q15_t    *pIn = data;
+    q15_t    *pOut = data;
+    uint16_t  shift_size = 8 + 3 - int_width;
+    uint32_t  bit_mask = 0x7FF >> int_width;
+    uint32_t  full_frac = bit_mask + 1;
+    while (i)
+    {
+        q15_t     in = *pIn++;
+        q15_t     out;
 
-    q15_t frac = (uint32_t)in & bit_mask; 
+        q15_t     frac = (uint32_t) in & bit_mask;
 
-    q15_t value  = tanhTable_q15[(uint8_t)__SSAT(in>>shift_size, 8)];
-    q15_t value2  = tanhTable_q15[(uint8_t)__SSAT(1+(in>>shift_size), 8)];
+        q15_t     value = tanhTable_q15[__USAT(in >> shift_size, 8)];
+        q15_t     value2 = tanhTable_q15[__USAT(1 + (in >> shift_size), 8)];
 
-    out = ((q31_t)(full_frac - frac)*value + (q31_t)value2 * frac) >> shift_size;
+        out = ((q31_t) (full_frac - frac) * value + (q31_t) value2 * frac) >> shift_size;
 
-    *pOut++ = out;
-    i--;
-  }
+        *pOut++ = out;
+        i--;
+    }
 
 }
-
 
 /**
  * @} end of Acti group
  */
-

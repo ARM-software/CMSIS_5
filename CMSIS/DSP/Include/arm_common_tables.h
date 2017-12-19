@@ -118,7 +118,6 @@ extern const float32_t sinTable_f32[FAST_MATH_TABLE_SIZE + 1];
 extern const q31_t sinTable_q31[FAST_MATH_TABLE_SIZE + 1];
 extern const q15_t sinTable_q15[FAST_MATH_TABLE_SIZE + 1];
 
-
 /**
 * @brief tables for various activation functions
 *
@@ -144,4 +143,4 @@ extern const q15_t sigmoidLTable_q15[128];
 extern const q15_t sigmoidLTable_q15[128];
 extern const q15_t sigmoidHTable_q15[192];
 
-#endif /*  ARM_COMMON_TABLES_H */
+#endif                          /*  ARM_COMMON_TABLES_H */

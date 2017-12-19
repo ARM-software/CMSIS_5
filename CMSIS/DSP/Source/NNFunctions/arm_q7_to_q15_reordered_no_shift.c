@@ -27,7 +27,6 @@
 
 #include "arm_nnsupportfunctions.h"
 
-
 /**    
  * @ingroup groupSupport    
  */
@@ -73,71 +72,68 @@
  *   
  */
 
-void arm_q7_to_q15_reordered_no_shift(
-  const q7_t * pSrc,
-  q15_t * pDst,
-  uint32_t blockSize)
+void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize)
 {
-  const q7_t *pIn = pSrc;                              /* Src pointer */
-  uint32_t blkCnt;                               /* loop counter */
+    const q7_t *pIn = pSrc;     /* Src pointer */
+    uint32_t  blkCnt;           /* loop counter */
 
 #ifndef ARM_MATH_CM0_FAMILY
-  q31_t in;
-  q31_t in1, in2;
+    q31_t     in;
+    q31_t     in1, in2;
 
-  /* Run the below code for Cortex-M4 and Cortex-M3 */
+    /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  /*loop Unrolling */
-  blkCnt = blockSize >> 2u;
+    /*loop Unrolling */
+    blkCnt = blockSize >> 2u;
 
-  /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
-   ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
-  {
-    /* C = (q15_t) A << 8 */
-    /* convert from q7 to q15 and then store the results in the destination buffer */
-    in = *__SIMD32(pIn)++;
+    /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+     ** a second loop below computes the remaining 1 to 3 samples. */
+    while (blkCnt > 0u)
+    {
+        /* C = (q15_t) A << 8 */
+        /* convert from q7 to q15 and then store the results in the destination buffer */
+        in = *__SIMD32(pIn)++;
 
-    /* rotatate in by 8 and extend two q7_t values to q15_t values */
-    in1 = __SXTB16(__ROR(in, 8));
+        /* rotatate in by 8 and extend two q7_t values to q15_t values */
+        in1 = __SXTB16(__ROR(in, 8));
 
-    /* extend remainig two q7_t values to q15_t values */
-    in2 = __SXTB16(in);
+        /* extend remainig two q7_t values to q15_t values */
+        in2 = __SXTB16(in);
 
 #ifndef ARM_MATH_BIG_ENDIAN
-    *__SIMD32(pDst)++ = in2;
-    *__SIMD32(pDst)++ = in1;
+        *__SIMD32(pDst)++ = in2;
+        *__SIMD32(pDst)++ = in1;
 #else
-    *__SIMD32(pDst)++ = in1;
-    *__SIMD32(pDst)++ = in2;
+        *__SIMD32(pDst)++ = in1;
+        *__SIMD32(pDst)++ = in2;
 #endif
 
-    /* Decrement the loop counter */
-    blkCnt--;
-  }
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
 
-  /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
-   ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4u;
+    /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
+     ** No loop unrolling is used. */
+    blkCnt = blockSize % 0x4u;
 
 #else
 
-  /* Run the below code for Cortex-M0 */
+    /* Run the below code for Cortex-M0 */
 
-  /* Loop over blockSize number of values */
-  blkCnt = blockSize;
+    /* Loop over blockSize number of values */
+    blkCnt = blockSize;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif                          /* #ifndef ARM_MATH_CM0_FAMILY */
 
-  while(blkCnt > 0u)
-  {
-    /* C = (q15_t) A << 8 */
-    /* convert from q7 to q15 and then store the results in the destination buffer */
-    *pDst++ = (q15_t) * pIn++;
+    while (blkCnt > 0u)
+    {
+        /* C = (q15_t) A << 8 */
+        /* convert from q7 to q15 and then store the results in the destination buffer */
+        *pDst++ = (q15_t) * pIn++;
 
-    /* Decrement the loop counter */
-    blkCnt--;
-  }
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
 
 }
 

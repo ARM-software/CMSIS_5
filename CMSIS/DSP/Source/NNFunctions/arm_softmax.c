@@ -46,8 +46,8 @@
    *
    * @details
    *
-   *  Here, instead of typical e based softmax, we use
-   *  2-based softmax, i.e.,:
+   *  Here, instead of typical natural logarithm e based softmax, we use
+   *  2-based softmax here, i.e.,:
    * 
    *  y_i = 2^(x_i) / sum(2^x_j)
    *
@@ -57,44 +57,46 @@
    *
    */
 
-void arm_softmax_q7(
-        const q7_t* vec_in,        
-        const uint16_t dim_vec,    
-        q7_t* p_out                
-) {
-  q31_t sum;
-  int16_t i;
-  q15_t min, max;
-  max = -257; min = 257;
-  for (i=0;i<dim_vec;i++) {
-    if (vec_in[i] > max) {
-      max = vec_in[i];
+void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out)
+{
+    q31_t     sum;
+    int16_t   i;
+    q15_t     min, max;
+    max = -257;
+    min = 257;
+    for (i = 0; i < dim_vec; i++)
+    {
+        if (vec_in[i] > max)
+        {
+            max = vec_in[i];
+        }
+        if (vec_in[i] < min)
+        {
+            min = vec_in[i];
+        }
     }
-    if (vec_in[i] < min) {
-      min = vec_in[i];
+
+    /* we ignore really small values  
+     * anyway, they will be 0 after shrinking
+     * to q7_t
+     */
+    if (max - min > 8)
+    {
+        min = max - 8;
     }
-  }
 
+    sum = 0;
 
-  /* we ignore really small values  
-   * anyway, they will be 0 after shrinking
-   * to q7_t
-   */
-  if (max - min > 8) {
-    min = max - 8;
-  }
+    for (i = 0; i < dim_vec; i++)
+    {
+        sum += 0x1 << (vec_in[i] - min);
+    }
 
-  sum = 0;
-
-
-  for (i=0;i<dim_vec;i++) {
-    sum += 0x1<< (vec_in[i] - min);
-  }
-
-  for (i=0;i<dim_vec;i++) {
-    /* we leave 7-bit dynamic range, so that 128 -> 100% confidence */
-    p_out[i] = (q7_t) __SSAT(((0x1<<(vec_in[i]-min+20))/sum) >> 13 ,8);
-  }
+    for (i = 0; i < dim_vec; i++)
+    {
+        /* we leave 7-bit dynamic range, so that 128 -> 100% confidence */
+        p_out[i] = (q7_t) __SSAT(((0x1 << (vec_in[i] - min + 20)) / sum) >> 13, 8);
+    }
 
 }
 
@@ -118,48 +120,49 @@ void arm_softmax_q7(
    *
    */
 
-void arm_softmax_q15(
-        const q15_t* vec_in,        
-        const uint16_t dim_vec,     
-        q15_t* p_out                
-) {
-  q31_t sum;
-  int16_t i;
-  q31_t min, max;
-  max = -1*0x100000; min = 0x100000;
-  for (i=0;i<dim_vec;i++) {
-    if (vec_in[i] > max) {
-      max = vec_in[i];
+void arm_softmax_q15(const q15_t * vec_in, const uint16_t dim_vec, q15_t * p_out)
+{
+    q31_t     sum;
+    int16_t   i;
+    q31_t     min, max;
+    max = -1 * 0x100000;
+    min = 0x100000;
+    for (i = 0; i < dim_vec; i++)
+    {
+        if (vec_in[i] > max)
+        {
+            max = vec_in[i];
+        }
+        if (vec_in[i] < min)
+        {
+            min = vec_in[i];
+        }
     }
-    if (vec_in[i] < min) {
-      min = vec_in[i];
+
+    /* we ignore really small values  
+     * anyway, they will be 0 after shrinking
+     * to q7_t
+     */
+    if (max - min > 16)
+    {
+        min = max - 16;
     }
-  }
 
+    sum = 0;
 
-  /* we ignore really small values  
-   * anyway, they will be 0 after shrinking
-   * to q7_t
-   */
-  if (max - min > 16) {
-    min = max - 16;
-  }
+    for (i = 0; i < dim_vec; i++)
+    {
+        sum += 0x1 << (vec_in[i] - min);
+    }
 
-  sum = 0;
-
-
-  for (i=0;i<dim_vec;i++) {
-    sum += 0x1<< (vec_in[i] - min);
-  }
-
-  for (i=0;i<dim_vec;i++) {
-    /* we leave 7-bit dynamic range, so that 128 -> 100% confidence */
-    p_out[i] = (q15_t) __SSAT(((0x1<<(vec_in[i]-min+14))/sum) ,16);
-  }
+    for (i = 0; i < dim_vec; i++)
+    {
+        /* we leave 7-bit dynamic range, so that 128 -> 100% confidence */
+        p_out[i] = (q15_t) __SSAT(((0x1 << (vec_in[i] - min + 14)) / sum), 16);
+    }
 
 }
 
 /**
  * @} end of Softmax group
  */
-
