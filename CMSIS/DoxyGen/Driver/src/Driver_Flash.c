@@ -32,15 +32,13 @@ The following header files define the Application Programming Interface (API) fo
 The driver functions are published in the access struct as explained in \ref DriverFunctions
   - \ref ARM_DRIVER_FLASH : access struct for Flash driver functions
 @{
-*/
-/*
-\todo provide more text for the driver implementation above
 
 A typical setup sequence for the driver is shown below:
 
 <b>Example Code:</b>
 
-\todo example
+\include Flash_Demo.c
+*/
 *******************************************************************************************************************/
 
 

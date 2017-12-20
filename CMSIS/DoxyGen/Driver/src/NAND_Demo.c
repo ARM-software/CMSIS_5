@@ -16,7 +16,7 @@ int main (void)
 {
   /* Query drivers capabilities */
   const ARM_NAND_CAPABILITIES capabilities = nandDev->GetCapabilities();
-
+ 
   /* Initialize NAND device */
   nandDev->Initialize (NULL);
   
