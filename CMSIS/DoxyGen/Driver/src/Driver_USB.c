@@ -46,17 +46,8 @@ peripherals of the microcontroller family.
 The driver functions are published in the access struct as explained in \ref DriverFunctions
   - \ref ARM_DRIVER_USBD : access struct for USBD driver functions
   - \ref ARM_DRIVER_USBH : access struct for USBH driver functions
-*/
-/*
-A typical setup sequence for the driver is shown below:
 
-<b>Example Code:</b>
-
-\todo example
-*/
-/**
 <hr>
-
 */
 
 
