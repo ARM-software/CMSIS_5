@@ -240,7 +240,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
               <Define>ARM_MATH_CM0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -836,7 +836,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
               <Define>ARM_MATH_CM0, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -1432,7 +1432,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
               <Define>ARM_MATH_CM3</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -2028,7 +2028,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
               <Define>ARM_MATH_CM3, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -2624,7 +2624,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
               <Define>ARM_MATH_CM4</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -3220,7 +3220,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
               <Define>ARM_MATH_CM4, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -3816,7 +3816,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_CM4,__FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -4412,7 +4412,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_CM4,ARM_MATH_BIG_ENDIAN,__FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -5008,7 +5008,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
               <Define>ARM_MATH_CM7</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -5604,7 +5604,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections</MiscControls>
               <Define>ARM_MATH_CM7, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -6200,7 +6200,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_CM7,__FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -6796,7 +6796,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_CM7,ARM_MATH_BIG_ENDIAN,__FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -7392,7 +7392,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_CM7,__FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -7988,7 +7988,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_CM7,ARM_MATH_BIG_ENDIAN,__FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -8584,7 +8584,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.base</MiscControls>
               <Define>ARM_MATH_ARMV8MBL</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -9180,7 +9180,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main</MiscControls>
               <Define>ARM_MATH_ARMV8MML</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -9776,7 +9776,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_ARMV8MML, __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -10372,7 +10372,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_ARMV8MML, __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -10968,7 +10968,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp</MiscControls>
               <Define>ARM_MATH_ARMV8MML, __DSP_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -11564,7 +11564,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -mfpu=fpv5-sp-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_ARMV8MML, __DSP_PRESENT=1U, __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>
@@ -12160,7 +12160,7 @@
               <MiscControls>-fno-strict-aliasing -ffunction-sections -fdata-sections -march=armv8-m.main+dsp -mfpu=fpv5-d16 -mfloat-abi=hard -ffp-contract=off</MiscControls>
               <Define>ARM_MATH_ARMV8MML, __DSP_PRESENT=1U, __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Carm>
           <Aarm>

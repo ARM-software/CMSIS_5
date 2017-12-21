@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1037,7 +1037,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM0, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1739,7 +1739,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM3</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3143,7 +3143,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM4</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4547,7 +4547,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM4,__FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5249,7 +5249,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM4,ARM_MATH_BIG_ENDIAN,__FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5951,7 +5951,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM7</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6653,7 +6653,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM7,__FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7355,7 +7355,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM7,__FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8057,7 +8057,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM7, ARM_MATH_BIG_ENDIAN</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8759,7 +8759,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM7,ARM_MATH_BIG_ENDIAN,__FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -9461,7 +9461,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM7,ARM_MATH_BIG_ENDIAN,__FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10163,7 +10163,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_ARMV8MBL</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10865,7 +10865,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_ARMV8MML</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -11567,7 +11567,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_ARMV8MML, __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -12269,7 +12269,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_ARMV8MML, __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -12971,7 +12971,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_ARMV8MML, __DSP_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -13673,7 +13673,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_ARMV8MML, __DSP_PRESENT=1U, __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -14375,7 +14375,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_ARMV8MML, __DSP_PRESENT=1U, __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\Include</IncludePath>
+              <IncludePath>..\inc;..\..\..\Include;..\..\..\..\Core\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

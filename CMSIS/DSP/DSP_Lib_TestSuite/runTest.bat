@@ -40,22 +40,22 @@ if %1==GCC                goto CheckLibrariesGCC
 
 :CheckLibrariesARM
 if not exist ".\RefLibs\%1\Lib\arm_%2_ref.lib"   (echo ".\RefLibs\%1\Lib\arm_%2_ref.lib" not found.  & goto end)
-if not exist "..\Lib\%1\arm_%2_math.lib"         (echo "..\Lib\%1\arm_%2_ref.lib" not found.         & goto end)
+if not exist "..\..\Lib\%1\arm_%2_math.lib"         (echo "..\..\Lib\%1\arm_%2_ref.lib" not found.         & goto end)
 goto CopyLibrariesARM
 
 :CheckLibrariesGCC
 if not exist ".\RefLibs\%1\Lib\libarm_%2_ref.a"  (echo ".\RefLibs\%1\Lib\libarm_%2_ref.a" not found.  & goto end)
-if not exist "..\Lib\%1\libarm_%2_math.a"        (echo "..\Lib\%1\libarm_%2_math.a" not found.        & goto end)
+if not exist "..\..\Lib\%1\libarm_%2_math.a"        (echo "..\..\Lib\%1\libarm_%2_math.a" not found.        & goto end)
 goto CopyLibrariesGCC
 
 :CopyLibrariesARM
 copy /B ".\RefLibs\%1\Lib\arm_%2_ref.lib"    .\DspLibTest_%3\%1\Lib\arm_ref.lib  /B /Y
-copy /B "..\Lib\%1\arm_%2_math.lib"          .\DspLibTest_%3\%1\Lib\arm_math.lib /B /Y
+copy /B "..\..\Lib\%1\arm_%2_math.lib"          .\DspLibTest_%3\%1\Lib\arm_math.lib /B /Y
 goto buildProject
 
 :CopyLibrariesGCC
 copy /B ".\RefLibs\%1\Lib\libarm_%2_ref.a"   .\DspLibTest_%3\%1\Lib\libarm_ref.a  /B /Y
-copy /B "..\Lib\%1\libarm_%2_math.a"         .\DspLibTest_%3\%1\Lib\libarm_math.a /B /Y
+copy /B "..\..\Lib\%1\libarm_%2_math.a"         .\DspLibTest_%3\%1\Lib\libarm_math.a /B /Y
 goto buildProject
 
 :buildProject
