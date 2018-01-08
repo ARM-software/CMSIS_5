@@ -223,7 +223,7 @@ __STATIC_FORCEINLINE uint32_t __get_MPIDR(void)
   return result;
 }
 
- /** \brief  Get VBAR
+/** \brief  Get VBAR
 
     This function returns the value of the Vector Base Address Register.
 
@@ -244,7 +244,31 @@ __STATIC_FORCEINLINE uint32_t __get_VBAR(void)
  */
 __STATIC_FORCEINLINE void __set_VBAR(uint32_t vbar)
 {
-  __set_CP(15, 0, vbar, 12, 0, 1);
+  __set_CP(15, 0, vbar, 12, 0, 0);
+}
+
+/** \brief  Get MVBAR
+
+    This function returns the value of the Monitor Vector Base Address Register.
+
+    \return               Monitor Vector Base Address Register
+ */
+__STATIC_FORCEINLINE uint32_t __get_MVBAR(void)
+{
+  uint32_t result;
+  __get_CP(15, 0, result, 12, 0, 1);
+  return result;
+}
+
+/** \brief  Set MVBAR
+
+    This function assigns the given value to the Monitor Vector Base Address Register.
+
+    \param [in]    mvbar  Monitor Vector Base Address Register value to set
+ */
+__STATIC_FORCEINLINE void __set_MVBAR(uint32_t mvbar)
+{
+  __set_CP(15, 0, mvbar, 12, 0, 1);
 }
 
 #if (defined(__CORTEX_A) && (__CORTEX_A == 7U) && \

@@ -1136,5 +1136,34 @@ Consider using \ref __get_VBAR and \ref __set_VBAR for accessing this register.
 /** @} */
 /* end group CMSIS_VBAR */
 
+/* CP15 Register MVBAR */
+/**
+\defgroup CMSIS_MVBAR Monitor Vector Base Address Register (MVBAR)
+\ingroup CMSIS_core_register
+\brief The MVBAR holds the exception base address for all exceptions that are taken to Monitor
+mode.
+\details 
+
+| Bits    | Name          | Function                                                      |
+| :------ | :------------ | :------------------------------------------------------------ |
+| [31:5]  | MVBA          | Bits[31:5] of the base address of the exception vectors for exceptions that are taken to Monitor mode. |
+| [4:0]   | -             | Reserved.                                                     |
+
+Consider using \ref __get_MVBAR and \ref __set_MVBAR for accessing this register.
+
+@{
+*/
+/**
+\fn __STATIC_INLINE uint32_t __get_MVBAR(void)
+\details
+  This function returns the value of the \ref CMSIS_MVBAR.
+
+\fn __STATIC_INLINE void __set_MVBAR(uint32_t mvbar)
+\details
+  This function assigns the given value to the \ref CMSIS_MVBAR.
+*/
+/** @} */
+/* end group CMSIS_MVBAR */
+
 /** @} */ 
 /* end of group CMSIS_core_register */
