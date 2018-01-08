@@ -108,6 +108,7 @@ static TEST_CASE TC_LIST[] = {
       TCD ( TC_CoreAFunc_ACTRL,              TC_COREAFUNC_ACTRL                  ),
       TCD ( TC_CoreAFunc_MPIDR,              TC_COREAFUNC_MPIDR                  ),
       TCD ( TC_CoreAFunc_VBAR,               TC_COREAFUNC_VBAR                   ),
+      TCD ( TC_CoreAFunc_MVBAR,              TC_COREAFUNC_MVBAR                  ),
   #endif
 #endif
 #ifdef RTE_CV_MPUFUNC

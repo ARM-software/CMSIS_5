@@ -221,9 +221,27 @@ void TC_CoreAFunc_MPIDR(void) {
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+static uint8_t vectorRAM[32U] __attribute__((aligned(32U)));
+
 void TC_CoreAFunc_VBAR(void) {
   uint32_t vbar = __get_VBAR();
+  
+  memcpy(vectorRAM, (void*)vbar, sizeof(vectorRAM));
+  
+  __set_VBAR((uint32_t)vectorRAM);
+  ASSERT_TRUE(((uint32_t)vectorRAM) == __get_VBAR());
+  
   __set_VBAR(vbar);
+}
 
-  ASSERT_TRUE(vbar == __get_VBAR());
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+void TC_CoreAFunc_MVBAR(void) {
+  uint32_t mvbar = __get_MVBAR();
+  
+  memcpy(vectorRAM, (void*)mvbar, sizeof(vectorRAM));
+  
+  __set_MVBAR((uint32_t)vectorRAM);
+  ASSERT_TRUE(((uint32_t)vectorRAM) == __get_MVBAR());
+  
+  __set_MVBAR(mvbar);
 }
