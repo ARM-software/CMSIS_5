@@ -1,13 +1,3 @@
-/* -----------------------------------------------------------------------------
- * Copyright (c) 2013-2014 ARM Limited. All rights reserved.
- *  
- * $Date:        2. January 2014
- * $Revision:    V2.00
- *  
- * Project:      MCI Driver API
- * -------------------------------------------------------------------------- */
-
-
 /**
 \defgroup mci_interface_gr MCI Interface
 \brief    Driver API for Memory Card Interface using SD/MMC interface (%Driver_MCI.h)

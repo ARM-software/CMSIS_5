@@ -1,13 +1,3 @@
-/* -----------------------------------------------------------------------------
- * Copyright (c) 2013-2014 ARM Limited. All rights reserved.
- *  
- * $Date:        2. January 2014
- * $Revision:    V2.00
- *  
- * Project:      SPI Driver API
- * -------------------------------------------------------------------------- */
-
-
 /**
 \defgroup spi_interface_gr SPI Interface
 \brief Driver API for SPI Bus Peripheral (%Driver_SPI.h)

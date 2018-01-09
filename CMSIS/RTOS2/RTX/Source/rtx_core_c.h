@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -36,7 +36,7 @@
      (!defined(__ARM_ARCH_7EM__))     && \
      (!defined(__ARM_ARCH_8M_BASE__)) && \
      (!defined(__ARM_ARCH_8M_MAIN__)))
-#error "Unknown ARM Architecture!"
+#error "Unknown Arm Architecture!"
 #endif
 
 #if   (defined(__ARM_ARCH_7A__) && (__ARM_ARCH_7A__ != 0))

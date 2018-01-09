@@ -2,13 +2,13 @@
  * @file     ARMCA5.h
  * @brief    CMSIS Cortex-A5 Core Peripheral Access Layer Header File 
  * @version  V1.00
- * @data     16 Mar 2017
+ * @date     10. January 2018
  *
  * @note
  *
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

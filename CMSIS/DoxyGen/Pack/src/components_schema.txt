@@ -66,7 +66,7 @@ not used by multiple components.
     </component>
 
     <component condition="ARM_CM0" Cclass="Device" Cgroup="Startup" Cversion="3.1.1">
-      <description>System Startup for generic ARM Cortex-M0 device</description>
+      <description>System Startup for generic Arm Cortex-M0 device</description>
       <files>
         <file category="header" name="Device/ARM/ARMCM0/Include/ARMCM0.h"/>
         <file category="header" name="Device/ARM/ARMCM0/Include/system_ARMCM0.h"/>

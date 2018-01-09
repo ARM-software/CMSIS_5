@@ -3,10 +3,10 @@
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMCM33 Device Series (configured for ARMCM33 with FPU, with DSP extension, with TrustZone)
  * @version  V5.00
- * @date     02. November 2016
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

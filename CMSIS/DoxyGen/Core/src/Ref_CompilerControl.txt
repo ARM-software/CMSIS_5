@@ -12,41 +12,41 @@ The header file <b>cmsis_compiler.h</b> is also included by each \ref device_h_p
 
 /**
 \def __ARM_ARCH_6M__
-\brief Set to 1 when generating code for ARMv6-M (Cortex-M0, Cortex-M1)
+\brief Set to 1 when generating code for Armv6-M (Cortex-M0, Cortex-M1)
 \details
-The <b>\#define __ARM_ARCH_6M__</b> is set to 1 when generating code for the ARMv6-M architecture. This architecture is for example used by the Cortex-M0, Cortex-M0+, and Cortex-M1 processor.
+The <b>\#define __ARM_ARCH_6M__</b> is set to 1 when generating code for the Armv6-M architecture. This architecture is for example used by the Cortex-M0, Cortex-M0+, and Cortex-M1 processor.
 */
 #define __ARM_ARCH_6M__
 
 /**
 \def __ARM_ARCH_7M__
-\brief Set to 1 when generating code for ARMv7-M (Cortex-M3)
+\brief Set to 1 when generating code for Armv7-M (Cortex-M3)
 \details
-The <b>\#define __ARM_ARCH_7M__</b> is set to 1 when generating code for the ARMv7-M architecture. This architecture is for example used by the Cortex-M3 processor.
+The <b>\#define __ARM_ARCH_7M__</b> is set to 1 when generating code for the Armv7-M architecture. This architecture is for example used by the Cortex-M3 processor.
 */
 #define __ARM_ARCH_7M__
 
 /**
 \def __ARM_ARCH_7EM__
-\brief Set to 1 when generating code for ARMv7-M (Cortex-M4) with FPU
+\brief Set to 1 when generating code for Armv7-M (Cortex-M4) with FPU
 \details
-The <b>\#define __ARM_ARCH_7EM__</b> is set to 1 when generating code for the ARMv7-M architecture with floating point extension. This architecture is for example used by the Cortex-M4 processor with FPU
+The <b>\#define __ARM_ARCH_7EM__</b> is set to 1 when generating code for the Armv7-M architecture with floating point extension. This architecture is for example used by the Cortex-M4 processor with FPU
 */
 #define __ARM_ARCH_7EM__
 
 /**
 \def __ARM_ARCH_8M_BASE__
-\brief Set to 1 when generating code for ARMv8-M Baseline
+\brief Set to 1 when generating code for Armv8-M Baseline
 \details
-The <b>\#define __ARM_ARCH_8M_BASE__</b> is set to 1 when generating code for the ARMv8-M architecture baseline variant.
+The <b>\#define __ARM_ARCH_8M_BASE__</b> is set to 1 when generating code for the Armv8-M architecture baseline variant.
 */
 #define __ARM_ARCH_8M_BASE__
 
 /**
 \def __ARM_ARCH_8M_MAIN__
-\brief Set to 1 when generating code for ARMv8-M Mainline
+\brief Set to 1 when generating code for Armv8-M Mainline
 \details
-The <b>\#define __ARM_ARCH_8M_MAIN__</b> is set to 1 when generating code for the ARMv8-M architecture mainline variant.
+The <b>\#define __ARM_ARCH_8M_MAIN__</b> is set to 1 when generating code for the Armv8-M architecture mainline variant.
 */
 #define __ARM_ARCH_8M_MAIN__
 
@@ -229,7 +229,7 @@ Do not use this macro.
 It has been superseded by \ref __UNALIGNED_UINT32_READ, \ref __UNALIGNED_UINT32_WRITE and will be removed in the future.
 \details
 Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in read/write
-operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying ARM
+operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm
 processor core and compiler settings.
  
 <b> Code Example:</b>
@@ -250,7 +250,7 @@ void test (uint8_t *ptr) {
 \brief Pointer for unaligned read of a uint16_t variable.
 \details
 Defines a pointer to a uint16_t from an address that does not need to be aligned. This can then be used in read
-operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying ARM
+operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm
 processor core and compiler settings.
  
 <b> Code Example:</b>
@@ -271,7 +271,7 @@ void test (uint8_t *ptr) {
 \brief Pointer for unaligned write of a uint16_t variable.
 \details
 Defines a pointer to a uint16_t from an address that does not need to be aligned. This can then be used in write
-operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying ARM
+operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm
 processor core and compiler settings.
  
 <b> Code Example:</b>
@@ -292,7 +292,7 @@ void test (uint8_t *ptr) {
 \brief Pointer for unaligned read of a uint32_t variable.
 \details
 Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in read
-operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying ARM
+operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm
 processor core and compiler settings.
  
 <b> Code Example:</b>
@@ -313,7 +313,7 @@ void test (uint8_t *ptr) {
 \brief Pointer for unaligned write of a uint32_t variable.
 \details
 Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in write
-operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying ARM
+operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm
 processor core and compiler settings.
  
 <b> Code Example:</b>

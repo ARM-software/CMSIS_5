@@ -216,7 +216,7 @@ You may change this define with a compiler option.
 @{
 A CMSIS-DAP conforming Debug Unit must be validated.
 
-A CMSIS-DAP Debug Unit must be validate using the Keil MDK-ARM Debugger. 
+A CMSIS-DAP Debug Unit must be validate using the Keil MDK Debugger. 
 A validation project for MDK is provided in the folder <b>.\\Validation\\MDK</b>.
 The project <b>Blinky.uvproj</b> is a "Blinky" application and needs to be adapted for the target hardware
 that is connected to the Debug Unit. Once the adaptation is complete, you may open a Command Prompt and

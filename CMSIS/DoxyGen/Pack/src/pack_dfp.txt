@@ -237,7 +237,7 @@ Open the file MVCM3xxx.svd in the <b>Files\\SVD</b> directory in an editor and c
   <name>MVCM3xxx</name>                  <!-- name of part-->
   <series>MVCM3xxx</series>              <!-- device series the device belongs to -->
   <version>1.2</version>                 <!-- version of this description, adding CMSIS-SVD 1.1 tags -->
-  <description>ARM 32-bit Cortex-M3 Microcontroller based device, CPU clock up to 100 MHz.</description>
+  <description>Arm 32-bit Cortex-M3 Microcontroller based device, CPU clock up to 100 MHz.</description>
 \endcode
 </li>
 <li>
@@ -250,7 +250,7 @@ C:\temp\working_dfp>SVDConv.exe Files\SVD\MVCM3xxx.svd --generate=header –-fie
 You should see some output of SVDConv similar to this:
 \verbatim
 CMSIS-SVD SVD Consistency Checker / Header File Generator V2.86g
-Copyright (C) 2010 - 2014 ARM Ltd and ARM Germany GmbH. All rights reserved.
+Copyright (C) 2010 - 2014 Arm Ltd and Arm Germany GmbH. All rights reserved.
 Options: "Files\SVD\MVCM3xxx.svd" --generate=header --fields=macro
 Reading file: "Files\SVD\MVCM3xxx.svd"
  

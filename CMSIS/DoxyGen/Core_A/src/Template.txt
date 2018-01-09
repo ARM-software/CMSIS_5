@@ -3,7 +3,7 @@
 
 \details
 
-ARM supplies CMSIS-Core device template files for the all supported Cortex-A processors and various compiler vendors.
+Arm supplies CMSIS-Core device template files for the all supported Cortex-A processors and various compiler vendors.
 Refer to the list of \ref tested_tools_sec for compliance.
 
 These CMSIS-Core device template files include the following:
@@ -17,7 +17,7 @@ The detailed file structure of the CMSIS-Core device templates is shown in the f
 
 \section CMSIS_Processor_files CMSIS-Core Processor Files 
 
-The CMSIS-Core processor files provided by ARM are in the directory .\\CMSIS\\Core_A\\Include. These header files define all processor specific attributes do not need any modifications.
+The CMSIS-Core processor files provided by Arm are in the directory .\\CMSIS\\Core_A\\Include. These header files define all processor specific attributes do not need any modifications.
 The <b>core_&lt;cpu&gt;.h</b> defines the core peripherals and provides helper functions that access the core registers. One file is available for each supported Cortex-A processor:
 
 Header File      | Processor
@@ -52,11 +52,11 @@ Silicon vendors add to these template files the following information:
     </tr>
     <tr>
       <td>.\\Device\\\_Template_Vendor\\Vendor\\Device_A\\Source\\ARM\\startup_Device.c</td>
-      <td>Startup file template for ARM C/C++ Compiler.</td>
+      <td>Startup file template for Arm C/C++ Compiler.</td>
     </tr>   
     <tr>
       <td>.\\Device\\\_Template_Vendor\\Vendor\\Device_A\\Source\\ARM\\Device.sct</td>
-      <td>Linker scatter file template for ARM C/C++ Compiler.</td>
+      <td>Linker scatter file template for Arm C/C++ Compiler.</td>
     </tr>
     <tr>
       <td>.\\Device\\\_Template_Vendor\\Vendor\\Device_A\\Source\\system_Device.c</td>
@@ -137,7 +137,7 @@ The file exists for each supported toolchain and is the only tool-chain specific
 
 \section startup_c_sec startup_Device.c Template File
 
-An ARM Compiler specific startup file for an ARMv7-A processor like Cortex-A9 is shown below.
+An Arm Compiler specific startup file for an Armv7-A processor like Cortex-A9 is shown below.
 The files for other compiler vendors differ slightly in the syntax, but not in the overall structure.
 
 \verbinclude "Source\ARM\startup_Device.c"
@@ -186,10 +186,10 @@ The \ref device_h_pg contains the following sections that are device specific:
 \section interrupt_number_sec Interrupt Number Definition
 
 \ref device_h_pg contains the enumeration \ref IRQn_Type that defines all exceptions and interrupts of the device.
-For devices implementing an ARM GIC these are defined as:
+For devices implementing an Arm GIC these are defined as:
   - IRQn 0-15 represents software generated interrupts (SGI), local to each processor core.
   - IRQn 16-31 represents private peripheral interrupts (PPI), local to each processor core.
-  - IRQn 32-1019 represents shared peripheral interrups (SPI), routeable to all processor cores.
+  - IRQn 32-1019 represents shared peripheral interrupts (SPI), routable to all processor cores.
   - IRQn 1020-1023 represents special interrupts, refer to the GIC Architecture Specification.
   
 \b Example:

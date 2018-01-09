@@ -2,7 +2,7 @@
 /**
 \mainpage
 
-The <b>CMSIS-RTOS API Version 2 (CMSIS-RTOS2)</b> is a generic RTOS interface for ARM&reg; Cortex&reg;-M processor-based
+The <b>CMSIS-RTOS API Version 2 (CMSIS-RTOS2)</b> is a generic RTOS interface for Arm&reg; Cortex&reg;-M processor-based
 devices. It provides a standardized API for software components that require RTOS functionality and gives therefore serious
 benefits to the users and the software industry:
  - CMSIS-RTOS2 provides basic features that are required in many applications.
@@ -26,7 +26,7 @@ memory management, and message exchange between threads with time limits.
 
 The CMSIS-RTOS2 addresses the following new requirements:
  - Dynamic object creation no longer requires static memory, static memory buffers are now optional.
- - Support for ARMv8-M architecture that provides a secure and non-secure state of code execution.
+ - Support for Armv8-M architecture that provides a secure and non-secure state of code execution.
  - Provisions for message passing in multi-core systems.
  - Full support of C++ run-time environments.
  - C interface which is binary compatible across
@@ -266,7 +266,7 @@ different and optimized in various aspects towards the Cortex-M processors. Opti
  - Deterministic context switching.
  - Round-robin context switching.
  - Deadlock avoidance, for example with priority inversion.
- - Zero interrupt latency by using ARMv7-M instructions LDREX and STREX.
+ - Zero interrupt latency by using Armv7-M instructions LDREX and STREX.
  
 \section usingOS2 Using a CMSIS-RTOS2 Implementation
 
@@ -338,7 +338,7 @@ modifications when using on a different CMSIS-RTOS2 implementation.
 /**
 \page rtx5_impl RTX v5 Implementation
 
-Keil RTX version 5 (RTX5) implements the CMSIS-RTOS2 as a native RTOS interface for ARM Cortex-M processor-based devices.
+Keil RTX version 5 (RTX5) implements the CMSIS-RTOS2 as a native RTOS interface for Arm Cortex-M processor-based devices.
 A translation layer to CMSIS-RTOS API v1 is provided. Therefore, RTX5 can be used in applications that where previously based
 on RTX version 4 and CMSIS-RTOS version 1 with minimal effort.
 
@@ -389,9 +389,9 @@ implementations.
 \image html manage_rte_cortex-a.png
 
 The default implementations provided along with CMSIS are 
-- ARM <a href="../../Core_A/html/group__GIC__functions.html">Generic Interrupt Controller (GIC)</a>
-- ARM Cortex-A5, Cortex-A9 <a href="../../Core_A/html/group__PTM__timer__functions.html">Private Timer (PTIM)</a>
-- ARM Cortex-A7 <a href="../../Core_A/html/group__PL1__timer__functions.html">Generic Physical Timer (GTIM)</a>
+- Arm <a href="../../Core_A/html/group__GIC__functions.html">Generic Interrupt Controller (GIC)</a>
+- Arm Cortex-A5, Cortex-A9 <a href="../../Core_A/html/group__PTM__timer__functions.html">Private Timer (PTIM)</a>
+- Arm Cortex-A7 <a href="../../Core_A/html/group__PL1__timer__functions.html">Generic Physical Timer (GTIM)</a>
 
 For devices not implementing GIC, PTIM nor GTIM please refer to the according device family pack and select the
 proper implementations.
@@ -742,7 +742,7 @@ void osRtxIdleThread (void) {
 \endcode
 
 \note
-\c __WFE() is not available in every ARM Cortex-M implementation. Check device manuals for availability. 
+\c __WFE() is not available in every Arm Cortex-M implementation. Check device manuals for availability. 
 The alternative using \c __WFI() has other issues, please take note of http://www.keil.com/support/docs/3591.htm as well.
 
 \section rtx_os_h RTX5 Header File
@@ -1079,7 +1079,7 @@ a reference for building the RTX5 libraries using a tool-chain of your choice.
 -# From the <b>Project</b> window you find the list of source files required for a complete library build.
 -# Build the library of your choice using \b Project - \b Build \b Target (or press F7).
 
-\image html own_lib_projwin.png "Project with files for ARMv8-M Mainline"
+\image html own_lib_projwin.png "Project with files for Armv8-M Mainline"
 */
 
 
@@ -1145,7 +1145,7 @@ The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provi
 \section libFiles RTX v5 Library Files
 
 The CMSIS-RTOS RTX Library is available pre-compiled for ARMCC and GCC compilers and supports all Cortex-M
-processor variants in every configuration, including ARM Cortex-M23 and Cortex-M33.
+processor variants in every configuration, including Arm Cortex-M23 and Cortex-M33.
 
 <table class="cmtable" summary="CMSIS-RTOS RTX Library Files">
     <tr>
@@ -1166,27 +1166,27 @@ processor variants in every configuration, including ARM Cortex-M23 and Cortex-M
     </tr>
     <tr>
       <td>Library/ARM/RTX_V8MB.lib</td>
-      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, ARMv8-M baseline.</td>
+      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Baseline.</td>
     </tr>
     <tr>
       <td>Library/ARM/RTX_V8MBN.lib</td>
-      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, ARMv8-M baseline, non-secure.</td>
+      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Baseline, non-secure.</td>
     </tr>
     <tr>
       <td>Library/ARM/RTX_V8MM.lib</td>
-      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, ARMv8-M mainline.</td>
+      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline.</td>
     </tr>
     <tr>
       <td>Library/ARM/RTX_V8MMF.lib</td>
-      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, ARMv8-M mainline with FPU.</td>
+      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline with FPU.</td>
     </tr>
     <tr>
       <td>Library/ARM/RTX_V8MMFN.lib</td>
-      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, ARMv8-M mainline with FPU, non-secure.</td>
+      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline with FPU, non-secure.</td>
     </tr>
     <tr>
       <td>Library/ARM/RTX_V8MMN.lib</td>
-      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, ARMv8-M mainline, non-secure.</td>
+      <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline, non-secure.</td>
     </tr>
     <tr>
       <td>Library/GCC/libRTX_CM0.a</td>
@@ -1202,27 +1202,27 @@ processor variants in every configuration, including ARM Cortex-M23 and Cortex-M
     </tr>
     <tr>
       <td>Library/GCC/libRTX_V8MB.a</td>
-      <td>CMSIS-RTOS libRTX Library for GCC Compiler, ARMv8-M baseline.</td>
+      <td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Baseline.</td>
     </tr>
     <tr>
       <td>Library/GCC/libRTX_V8MBN.a</td>
-      <td>CMSIS-RTOS libRTX Library for GCC Compiler, ARMv8-M baseline, non-secure.</td>
+      <td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Baseline, non-secure.</td>
     </tr>
     <tr>
       <td>Library/GCC/libRTX_V8MM.a</td>
-      <td>CMSIS-RTOS libRTX Library for GCC Compiler, ARMv8-M mainline.</td>
+      <td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline.</td>
     </tr>
     <tr>
       <td>Library/GCC/libRTX_V8MMF.a</td>
-      <td>CMSIS-RTOS libRTX Library for GCC Compiler, ARMv8-M mainline with FPU.</td>
+      <td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline with FPU.</td>
     </tr>
     <tr>
       <td>Library/GCC/libRTX_V8MMFN.a</td>
-      <td>CMSIS-RTOS libRTX Library for GCC Compiler, ARMv8-M mainline with FPU, non-secure.</td>
+      <td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline with FPU, non-secure.</td>
     </tr>
     <tr>
       <td>Library/GCC/libRTX_V8MMN.a</td>
-      <td>CMSIS-RTOS libRTX Library for GCC Compiler, ARMv8-M mainline, non-secure.</td>
+      <td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline, non-secure.</td>
     </tr>
 </table>
 */
@@ -1235,14 +1235,14 @@ processor variants in every configuration, including ARM Cortex-M23 and Cortex-M
 
 Keil RTX5 is developed and tested using the common toolchains and development environments.
 
-\subsection technicalData_Toolchain_ARM ARM Compiler (ARM/Keil MDK, uVision5)
+\subsection technicalData_Toolchain_ARM Arm Compiler (Arm/Keil MDK, uVision5)
 
-Major parts of RTX5 are developed and optimized using ARM Compiler and ARM/Keil MDK.
+Major parts of RTX5 are developed and optimized using Arm Compiler and Arm/Keil MDK.
 The current release is tested with the following versions:
 <ul>
- <li>ARM Compiler 5.06 Update 6</li>
- <li>ARM Compiler 6.6.2 (Long Term Maintenance)</li>
- <li>ARM Compiler 6.9</li>
+ <li>Arm Compiler 5.06 Update 6</li>
+ <li>Arm Compiler 6.6.2 (Long Term Maintenance)</li>
+ <li>Arm Compiler 6.9</li>
  <li>RTOS-aware debugging with uVision 5.24</li>
 </ul>
 
@@ -1260,7 +1260,7 @@ RTX5 has been ported to fully support IAR Embedded Workbench. The following rele
 RTX5 has also been ported to support GCC, maintenance mainly relays on community contribution.
 Active development is currently tested with:
 <ul>
- <li>GNU Tools for ARM Embedded 6.3.1 20170620</li>
+ <li>GNU Tools for Arm Embedded 6.3.1 20170620</li>
 </ul>
 
 \section technicalData5_ControlBlockSizes Control Block Sizes
@@ -1727,7 +1727,7 @@ The functions that call the Event Recorder are in the module \em rtx_evr.c and t
 /**
 \page rtosValidation RTOS Validation
 
-ARM offers a <a class=el href="http://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-RTOS Validation.
+Arm offers a <a class=el href="http://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-RTOS Validation.
 The <b>ARM::CMSIS-RTOS_Validation</b> Pack contains the following:
 
  - Source code of a CMSIS-RTOS Validation Suite along with configuration file.
@@ -1783,7 +1783,7 @@ Test Result: PASSED
 \page functionOverview Function Overview
 
 CMSIS-RTOS v2 provides multiple API interfaces:
-  - \subpage rtos_api2 is the new C function API that supports dynamic object creation and ARMv8-M (ARM Cortex-M23 and
+  - \subpage rtos_api2 is the new C function API that supports dynamic object creation and Armv8-M (Arm Cortex-M23 and
     Cortex-M33).
   - <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a> is a C function API that is backward
     compatible with CMSIS-RTOS v1.

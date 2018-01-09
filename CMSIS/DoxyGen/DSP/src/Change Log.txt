@@ -58,7 +58,7 @@ Modified arm_math.h, arm_bitreversal2.S
 - corrected arm_sin_f32() for very small negative input values.
 
 Modified arm_sin_f32.c
-- Updated Texas Instruments ARM compiler support.
+- Updated Texas Instruments Arm Compiler support.
 
 Updated documentation
 - function \ref arm_rfft_fast_f32.

@@ -1,13 +1,3 @@
-/* -----------------------------------------------------------------------------
- * Copyright (c) 2013-2014 ARM Limited. All rights reserved.
- *  
- * $Date:        2. January 2014
- * $Revision:    V2.00
- *  
- * Project:      NAND Flash Driver API
- * -------------------------------------------------------------------------- */
-
-
 /**
 \defgroup nand_interface_gr NAND Interface
 \brief    Driver API for NAND Flash Device Interface (%Driver_NAND.h).

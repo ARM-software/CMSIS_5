@@ -27,7 +27,7 @@ The \subpage pack_revisionHistory lists the main changes between versions.
 The figure above shows the following use cases for Software Packs:
   - <b>Device Family Pack (DFP):</b> contains CMSIS system/startup files, drivers, and flash algorithms for a microcontroller
     device family.
-  - <b>CMSIS Software Pack:</b> contains the generic CMSIS components (CORE, DSP Library, and RTOS implementation) supplied by ARM.
+  - <b>CMSIS Software Pack:</b> contains the generic CMSIS components (CORE, DSP Library, and RTOS implementation) supplied by Arm.
   - <b>Middleware Pack:</b> contains software components belonging to a middleware (such as source code or libraries).
   - <b>Board Support Pack (BSP):</b> contains documentation, schematics, and drivers for a certain development board.
   - <b>In-house Software Packs:</b> usually contain software components that can be distributed within a
@@ -101,7 +101,7 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <td>Modifications compared to Version 1.4.6
 - added multiple version types to tighten the schema checking depending on context
 - added new generator sections for exe, web and eclipse based generators in \<generator>
-- added new processor attributes Dtz = Trustzone and Ddsp = DSP instructions for ARMv8-M
+- added new processor attributes Dtz = Trustzone and Ddsp = DSP instructions for Armv8-M
 - added new attributes Dtz, Ddsp, Dsecure to conditions \<require>, \<deny>, \<accept>
 - added new processors Cortex-M23 and Cortex-M33 and other in DcoreEnum
 - added new attribute public to books and images to indicate public use of documents and board images

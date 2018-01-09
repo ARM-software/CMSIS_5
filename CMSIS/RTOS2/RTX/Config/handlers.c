@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -124,17 +124,17 @@ void CPAbtHandler(uint32_t IFSR, uint32_t IFAR, uint32_t LR) {
 //returns amount to decrement lr by
 //this will be 0 when we have emulated the instruction and want to execute the next instruction
 //this will be 2 when we have performed some maintenance and want to retry the instruction in Thumb (state == 2)
-//this will be 4 when we have performed some maintenance and want to retry the instruction in ARM   (state == 4)
+//this will be 4 when we have performed some maintenance and want to retry the instruction in Arm   (state == 4)
 uint32_t CUndefHandler(uint32_t opcode, uint32_t state, uint32_t LR) {
     const uint32_t THUMB = 2U;
     const uint32_t ARM = 4U;
     (void)LR;
     //Lazy VFP/NEON initialisation and switching
 
-    // (ARM ARM section A7.5) VFP data processing instruction?
-    // (ARM ARM section A7.6) VFP/NEON register load/store instruction?
-    // (ARM ARM section A7.8) VFP/NEON register data transfer instruction?
-    // (ARM ARM section A7.9) VFP/NEON 64-bit register data transfer instruction?
+    // (Arm Architecture Reference Manual section A7.5) VFP data processing instruction?
+    // (Arm Architecture Reference Manual section A7.6) VFP/NEON register load/store instruction?
+    // (Arm Architecture Reference Manual section A7.8) VFP/NEON register data transfer instruction?
+    // (Arm Architecture Reference Manual section A7.9) VFP/NEON 64-bit register data transfer instruction?
     if ((state == ARM   && ((opcode & 0x0C000000U) >> 26U == 0x03U)) ||
         (state == THUMB && ((opcode & 0xEC000000U) >> 26U == 0x3BU))) {
         if (((opcode & 0x00000E00U) >> 9U) == 5U) {
@@ -143,10 +143,10 @@ uint32_t CUndefHandler(uint32_t opcode, uint32_t state, uint32_t LR) {
         }
     }
 
-    // (ARM ARM section A7.4) NEON data processing instruction?
+    // (Arm Architecture Reference Manual section A7.4) NEON data processing instruction?
     if ((state == ARM   && ((opcode & 0xFE000000U) >> 24U == 0xF2U)) ||
         (state == THUMB && ((opcode & 0xEF000000U) >> 24U == 0xEFU)) ||
-    // (ARM ARM section A7.7) NEON load/store instruction?
+    // (Arm Architecture Reference Manual section A7.7) NEON load/store instruction?
         (state == ARM   && ((opcode >> 24U) == 0xF4U)) ||
         (state == THUMB && ((opcode >> 24U) == 0xF9U))) {
             __FPU_Enable();

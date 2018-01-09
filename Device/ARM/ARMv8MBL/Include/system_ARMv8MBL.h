@@ -3,10 +3,10 @@
  * @brief    CMSIS Device System Header File for
  *           ARMv8MBL Device Series
  * @version  V5.00
- * @date     02. March 2016
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

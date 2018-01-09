@@ -1,12 +1,12 @@
 /**************************************************************************//**
  * @file     system_ARMv8MBL.c
  * @brief    CMSIS Device System Source File for
- *           ARMv8MBL Device Series
+ *           Armv8-M Baseline Device Series
  * @version  V5.00
- * @date     07. September 2016
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

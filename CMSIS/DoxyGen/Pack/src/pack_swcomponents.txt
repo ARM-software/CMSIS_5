@@ -290,7 +290,7 @@ Add the following code to the already existing <b>component</b>:
           <file category="library" condition="CM4_CM7" name="MySWComp/Lib/mylib_cm4.lib"/>
 \endcode
 Note that library files should always have a condition with regards to a specific C/C++ compiler. To accomplish this, each
-processor condition has the additional requirement for the ARM C/C++ compiler.
+processor condition has the additional requirement for the Arm C/C++ compiler.
 </li>
 <li>
 Add a new version number to the header of the PDSC file so that a Pack with a new version number will be created:

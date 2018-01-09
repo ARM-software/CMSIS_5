@@ -5,7 +5,7 @@
 Some Cortex-M processors include optional floating-point arithmetic functionality, with support
 for single and double-precision arithmetic.
 The Cortex-M processor with FPU is an implementation of the single-precision and
-double-precision variant of the ARMv7-M Architecture with Floating-Point Extension (FPv5).
+double-precision variant of the Armv7-M Architecture with Floating-Point Extension (FPv5).
 
 @{
 */

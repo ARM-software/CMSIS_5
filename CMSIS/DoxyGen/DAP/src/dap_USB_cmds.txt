@@ -592,7 +592,7 @@ SWD/JTAG Reset, SWD<->JTAG switch and Dormant operation.
 \brief Configure SWD Protocol
 \details
 The <b>DAP_SWD_Configure Command</b> sets the SWD protocol configuration. For more information about 
-the SWD protocol refer to the <b>ARM Debug Interface v5 - Interface Specification.</b>
+the SWD protocol refer to the <b>Arm Debug Interface v5 - Interface Specification.</b>
 
 <b>DAP_SWD_Configure Command</b>:
 \code

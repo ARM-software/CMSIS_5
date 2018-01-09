@@ -1,5 +1,5 @@
 /**
-\defgroup mpu_functions  MPU Functions for ARMv7-M
+\defgroup mpu_functions  MPU Functions for Armv7-M
 \brief Functions that relate to the Memory Protection Unit.
 \details
 The following functions support the optional Memory Protection Unit (MPU) that is available on the Cortex-M0+, M3, M4 and M7 processor.
@@ -247,10 +247,10 @@ to determine if the processor implements an MPU.
 | Bits    | Name          | Function                                                      |
 | :------ | :------------ | :------------------------------------------------------------ |
 | [31:24] | -             | Reserved.                                                     |
-| [23:16] | IREGION       | Instruction region. RAZ. ARMv7-M only supports a unified MPU. |
+| [23:16] | IREGION       | Instruction region. RAZ. Armv7-M only supports a unified MPU. |
 | [15:8]  | DREGION       | Number of regions supported by the MPU. If this field reads-as-zero the processor does not implement an MPU. |
 | [7:1]   | -             | Reserved.                                                     |
-| [0]     | SEPARATE      | Indicates support for separate instruction and data address maps. RAZ. ARMv7-M only supports a unified MPU. |
+| [0]     | SEPARATE      | Indicates support for separate instruction and data address maps. RAZ. Armv7-M only supports a unified MPU. |
 
 \var MPU_Type::CTRL
 Enables the MPU, and when the MPU is enabled, controls whether the default memory map

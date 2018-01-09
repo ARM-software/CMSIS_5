@@ -2,10 +2,10 @@
  * @file     <Device>.h
  * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
  * @version  V1.00
- * @date     30 March 2017
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -92,7 +92,7 @@ typedef enum IRQn
 /* ================                           Processor and Core Peripheral Section                           ================ */
 /* =========================================================================================================================== */
 
-/* ===========================  Configuration of the ARM Cortex-A Processor and Core Peripherals  ============================ */
+/* ===========================  Configuration of the Arm Cortex-A Processor and Core Peripherals  ============================ */
 /* ToDo: set the defines according your Device */
 /* ToDo: define the correct core revision              
          5U if your device is a CORTEX-A5 device
@@ -112,7 +112,7 @@ typedef enum IRQn
          core_ca5.h if your device is a CORTEX-A5 device
          core_ca7.h if your device is a CORTEX-A7 device
          core_ca9.h if your device is a CORTEX-A9 device */
-#include <core_ca#.h>                         /*!< ARM Cortex-A# processor and core peripherals */
+#include <core_ca#.h>                         /*!< Arm Cortex-A# processor and core peripherals */
 /* ToDo: include your system_<Device>.h file
          replace '<Device>' with your device name */
 #include "system_<Device>.h"                  /*!< <Device> System */

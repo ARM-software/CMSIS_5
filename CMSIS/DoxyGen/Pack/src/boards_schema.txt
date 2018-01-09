@@ -478,7 +478,7 @@ This element describes the debug interface of a board. At least debug interface 
 
 \b Example
 \code
-<debugInterface adapter="JTAG/SW" connector="20-pin ARM Standard JTAG Connector (0.1 inch connector)"/>
+<debugInterface adapter="JTAG/SW" connector="20-pin Arm Standard JTAG Connector (0.1 inch connector)"/>
 <debugInterface adapter="JTAG/SW" connector="10-pin Cortex Debug Connector (0.05 inch connector)"/>
 <debugInterface adapter="JTAG/SW" connector="20-pin Cortex Debug + ETM Connector (0.05 inch connector)"/>
 <debugInterface adapter="ST-Link" connector="Mini-USB"/>
@@ -509,7 +509,7 @@ This element describes the debug interface of a board. At least debug interface 
   </tr>
   <tr>
     <td>connector</td>
-    <td>String describing the debug connector. Usually one of these: \token{10-pin Cortex Debug Connector}, \token{20-pin ARM Standard JTAG Connector}, 
+    <td>String describing the debug connector. Usually one of these: \token{10-pin Cortex Debug Connector}, \token{20-pin Arm Standard JTAG Connector}, 
 	\token{20-pin Cortex Debug + ETM Connector}, \token{Mini-USB}, \token{Micro-USB}.</td>
     <td>xs:string</td>
     <td>optional</td>

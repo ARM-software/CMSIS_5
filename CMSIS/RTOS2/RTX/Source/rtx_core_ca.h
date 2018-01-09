@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -52,7 +52,7 @@ typedef bool bool_t;
 
 /// xPSR_Initialization Value
 /// \param[in]  privileged      true=privileged, false=unprivileged
-/// \param[in]  thumb           true=Thumb, false=ARM
+/// \param[in]  thumb           true=Thumb, false=Arm
 /// \return                     xPSR Init Value
 __STATIC_INLINE uint32_t xPSR_InitVal (bool_t privileged, bool_t thumb) {
   uint32_t psr;

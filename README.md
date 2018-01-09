@@ -9,14 +9,14 @@ Use [Issues](https://github.com/ARM-software/CMSIS_5#issues-and-labels) to provi
 A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) is updated from time to time, but may be also generated using the instructions under [Generate CMSIS Pack for Release](https://github.com/ARM-software/CMSIS_5#generate-cmsis-pack-for-release).
 
 ## What's Hot
- - CMSIS-RTOS2: RTX 5 is now available for IAR, GCC, ARM Compiler 5, ARM Compiler 6
+ - CMSIS-RTOS2: RTX 5 is now available for IAR, GCC, Arm Compiler 5, Arm Compiler 6
  - CMSIS-RTOS2: FreeRTOS adoption (release) is available https://github.com/ARM-software/CMSIS-FreeRTOS
  - CMSIS-Core: compiler agnostic features extended to simplify transition on LLVM based front-end
  - CMSIS-Core-A: preview of the CMSIS-Core for Cortex-A
  - Coming soon: CMSIS-RTOS2 for Cortex-A
 
 ## Implemented Enhancements
- - Support for ARMv8-M Architecture (Mainline and Baseline) as well as devices Cortex-M23 and Cortex-M33
+ - Support for Armv8-M Architecture (Mainline and Baseline) as well as devices Cortex-M23 and Cortex-M33
 
  - CMSIS-RTOS Version 2 API and RTX reference implementation with several enhancements:
      - Dynamic object creation, Flag events, C API, additional thread and timer functions
@@ -44,7 +44,7 @@ For further details see also the [Slides of the Embedded World CMSIS Partner Mee
 | CMSIS/Driver    | CMSIS-Driver API headers and template files    |
 | CMSIS/DSP       | CMSIS-DSP related files                        |
 | CMSIS/RTOS      | RTOS v1 related files (for Cortex-M)           |
-| CMSIS/RTOS2     | RTOS v2 related files (for Cortex-M & ARMv8-M) |
+| CMSIS/RTOS2     | RTOS v2 related files (for Cortex-M & Armv8-M) |
 | CMSIS/Pack      | CMSIS-Pack examples and tutorials              |
 | CMSIS/DoxyGen   | Source of the documentation                    |
 | CMSIS/Utilities | Utility programs                               |
@@ -68,7 +68,7 @@ The file ./CMSIS/DoxyGen/How2Doc.txt describes the rules for creating API docume
 
 ## License
 
-ARM CMSIS is licensed under Apache-2.0.
+Arm CMSIS is licensed under Apache-2.0.
 
 ## Contributions and Pull Requests
 

@@ -2,13 +2,13 @@
  * @file     mmu_ARMCA5.c
  * @brief    MMU Configuration for ARM Cortex-A5 Device Series
  * @version  V1.00
- * @date     16 Mar 2017
+ * @date     10. January 2018
  *
  * @note
  *
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
