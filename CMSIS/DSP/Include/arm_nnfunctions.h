@@ -88,7 +88,10 @@ extern    "C"
                                          const q7_t * bias,
                                          const uint16_t bias_shift,
                                          const uint16_t out_shift,
-                                         q7_t * Im_out, const uint16_t dim_im_out, q15_t * bufferA, q7_t * bufferB);
+                                         q7_t * Im_out, 
+                                         const uint16_t dim_im_out, 
+                                         q15_t * bufferA, 
+                                         q7_t * bufferB);
 
   /**
    * @brief Basic Q15 convolution function
@@ -122,7 +125,10 @@ extern    "C"
                                           const q15_t * bias,
                                           const uint16_t bias_shift,
                                           const uint16_t out_shift,
-                                          q15_t * Im_out, const uint16_t dim_im_out, q15_t * bufferA, q7_t * bufferB);
+                                          q15_t * Im_out, 
+                                          const uint16_t dim_im_out, 
+                                          q15_t * bufferA, 
+                                          q7_t * bufferB);
 
   /**
    * @brief Fast Q7 convolution function
@@ -161,7 +167,10 @@ extern    "C"
                                         const q7_t * bias,
                                         const uint16_t bias_shift,
                                         const uint16_t out_shift,
-                                        q7_t * Im_out, const uint16_t dim_im_out, q15_t * bufferA, q7_t * bufferB);
+                                        q7_t * Im_out, 
+                                        const uint16_t dim_im_out, 
+                                        q15_t * bufferA, 
+                                        q7_t * bufferB);
 
   /**
    * @brief Q7 version of convolution for RGB image
@@ -199,7 +208,10 @@ extern    "C"
                                        const q7_t * bias,
                                        const uint16_t bias_shift,
                                        const uint16_t out_shift,
-                                       q7_t * Im_out, const uint16_t dim_im_out, q15_t * bufferA, q7_t * bufferB);
+                                       q7_t * Im_out, 
+                                       const uint16_t dim_im_out, 
+                                       q15_t * bufferA, 
+                                       q7_t * bufferB);
 
   /**
    * @brief Fast Q15 convolution function
@@ -238,7 +250,10 @@ extern    "C"
                                          const q15_t * bias,
                                          const uint16_t bias_shift,
                                          const uint16_t out_shift,
-                                         q15_t * Im_out, const uint16_t dim_im_out, q15_t * bufferA, q7_t * bufferB);
+                                         q15_t * Im_out, 
+                                         const uint16_t dim_im_out, 
+                                         q15_t * bufferA, 
+                                         q7_t * bufferB);
 
   /**
    * @brief Q7 depthwise separable convolution function
@@ -278,7 +293,9 @@ extern    "C"
                                                    const uint16_t bias_shift,
                                                    const uint16_t out_shift,
                                                    q7_t * Im_out,
-                                                   const uint16_t dim_im_out, q15_t * bufferA, q7_t * bufferB);
+                                                   const uint16_t dim_im_out, 
+                                                   q15_t * bufferA, 
+                                                   q7_t * bufferB);
 
 /**
  * @defgroup FC Fully-connected Layer Functions
@@ -316,7 +333,10 @@ extern    "C"
                                       const uint16_t dim_vec,
                                       const uint16_t num_of_rows,
                                       const uint16_t bias_shift,
-                                      const uint16_t out_shift, const q7_t * bias, q7_t * pOut, q15_t * vec_buffer);
+                                      const uint16_t out_shift, 
+                                      const q7_t * bias, 
+                                      q7_t * pOut, 
+                                      q15_t * vec_buffer);
 
   /**
    * @brief Q7 opt fully-connected layer function
@@ -338,7 +358,10 @@ extern    "C"
                                           const uint16_t dim_vec,
                                           const uint16_t num_of_rows,
                                           const uint16_t bias_shift,
-                                          const uint16_t out_shift, const q7_t * bias, q7_t * pOut, q15_t * vec_buffer);
+                                          const uint16_t out_shift, 
+                                          const q7_t * bias, 
+                                          q7_t * pOut, 
+                                          q15_t * vec_buffer);
 
   /**
    * @brief Q15 basic fully-connected layer function
@@ -360,7 +383,10 @@ extern    "C"
                                        const uint16_t dim_vec,
                                        const uint16_t num_of_rows,
                                        const uint16_t bias_shift,
-                                       const uint16_t out_shift, const q15_t * bias, q15_t * pOut, q15_t * vec_buffer);
+                                       const uint16_t out_shift, 
+                                       const q15_t * bias, 
+                                       q15_t * pOut, 
+                                       q15_t * vec_buffer);
 
   /**
    * @brief Q15 opt fully-connected layer function
@@ -383,7 +409,9 @@ extern    "C"
                                            const uint16_t num_of_rows,
                                            const uint16_t bias_shift,
                                            const uint16_t out_shift,
-                                           const q15_t * bias, q15_t * pOut, q15_t * vec_buffer);
+                                           const q15_t * bias, 
+                                           q15_t * pOut, 
+                                           q15_t * vec_buffer);
 
   /**
    * @brief Mixed Q15-Q7 fully-connected layer function
@@ -406,7 +434,9 @@ extern    "C"
                                                   const uint16_t num_of_rows,
                                                   const uint16_t bias_shift,
                                                   const uint16_t out_shift,
-                                                  const q7_t * bias, q15_t * pOut, q15_t * vec_buffer);
+                                                  const q7_t * bias, 
+                                                  q15_t * pOut, 
+                                                  q15_t * vec_buffer);
 
   /**
    * @brief Mixed Q15-Q7 opt fully-connected layer function
@@ -429,7 +459,9 @@ extern    "C"
                                                       const uint16_t num_of_rows,
                                                       const uint16_t bias_shift,
                                                       const uint16_t out_shift,
-                                                      const q7_t * bias, q15_t * pOut, q15_t * vec_buffer);
+                                                      const q7_t * bias, 
+                                                      q15_t * pOut, 
+                                                      q15_t * vec_buffer);
 
 /**
  * @brief Matrix-Multiplication Kernels for Convolution
@@ -461,7 +493,9 @@ extern    "C"
                                             const uint16_t ch_im_out,
                                             const uint16_t numCol_A,
                                             const uint16_t bias_shift,
-                                            const uint16_t out_shift, const q7_t * bias, q7_t * pOut);
+                                            const uint16_t out_shift, 
+                                            const q7_t * bias, 
+                                            q7_t * pOut);
 
   /**
    * @brief Matrix-multiplication function for convolution with reordered columns
@@ -481,7 +515,9 @@ extern    "C"
                                                       const uint16_t ch_im_out,
                                                       const uint16_t numCol_A,
                                                       const uint16_t bias_shift,
-                                                      const uint16_t out_shift, const q7_t * bias, q7_t * pOut);
+                                                      const uint16_t out_shift, 
+                                                      const q7_t * bias, 
+                                                      q7_t * pOut);
 
 #ifdef __cplusplus
 }
@@ -533,7 +569,8 @@ extern    "C"
    * @return none.
    */
 
-    void      arm_nn_activations_direct_q7(q7_t * data, uint16_t size, uint16_t int_width, arm_nn_activation_type type);
+    void      arm_nn_activations_direct_q7(q7_t * data, uint16_t size, uint16_t int_width, 
+                                           arm_nn_activation_type type);
 
   /**
    * @brief Q15 neural network activation function using direct table look-up
@@ -544,7 +581,8 @@ extern    "C"
    * @return none.
    */
 
-    void      arm_nn_activations_direct_q15(q15_t * data, uint16_t size, uint16_t int_width, arm_nn_activation_type type);
+    void      arm_nn_activations_direct_q15(q15_t * data, uint16_t size, uint16_t int_width,
+                                            arm_nn_activation_type type);
 
 /**
  * @defgroup Pooling Neural Network Pooling Functions
@@ -573,7 +611,10 @@ extern    "C"
                                  const uint16_t ch_im_in,
                                  const uint16_t dim_kernel,
                                  const uint16_t padding,
-                                 const uint16_t stride, const uint16_t dim_im_out, q7_t * bufferA, q7_t * Im_out);
+                                 const uint16_t stride, 
+                                 const uint16_t dim_im_out, 
+                                 q7_t * bufferA, 
+                                 q7_t * Im_out);
 
   /**
    * @brief Q7 average pooling function
@@ -595,7 +636,10 @@ extern    "C"
                                  const uint16_t ch_im_in,
                                  const uint16_t dim_kernel,
                                  const uint16_t padding,
-                                 const uint16_t stride, const uint16_t dim_im_out, q7_t * bufferA, q7_t * Im_out);
+                                 const uint16_t stride, 
+                                 const uint16_t dim_im_out, 
+                                 q7_t * bufferA, 
+                                 q7_t * Im_out);
 
 /**
  * @defgroup Softmax Softmax Functions

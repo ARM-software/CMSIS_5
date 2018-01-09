@@ -1,3 +1,79 @@
+/*
+ * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* ----------------------------------------------------------------------
+ * Project:      CMSIS-NN
+ * Title:        arm_nnexamples_cifar10.cpp
+ * Description:	 Convolutional Neural Network Example
+ *
+ * Target Processor: Cortex-M4 and Cortex-M7 cores
+ *
+ * -------------------------------------------------------------------- */
+
+
+/**
+ * @ingroup groupExamples
+ */
+
+/**
+ * @defgroup CNNExample Convolutional Neural Network Example
+ *
+ * \par Description:
+ * \par
+ * Demonstrates a convolutional neural network (CNN) example with the use of convolution,
+ * ReLU activation, pooling and fully-connected functions.
+ *
+ * \par Model definition:
+ * \par
+ * The CNN used in this example is based on CIFAR-10 example from Caffe. The neural network consists
+ * of 3 convolution layers interspersed by ReLU activation and max pooling layers, followed by a 
+ * fully-connected layer at the end. The input to the network is a 32x32 pixel color image, which will 
+ * be classified into one of the 10 output classes. 
+ * This example model implementation needs 32.3 KB to store weights, 40 KB for activations and 
+ * 3.1 KB for storing the \c im2col data.
+ *
+ * \image html CIFAR10_CNN.gif "Neural Network model definition"
+ *
+ * \par Variables Description:
+ * \par
+ * \li \c conv1_wt, \c conv2_wt, \c conv3_wt are convolution layer weight matrices
+ * \li \c conv1_bias, \c conv2_bias, \c conv3_bias are convolution layer bias arrays
+ * \li \c ip1_wt, ip1_bias point to fully-connected layer weights and biases
+ * \li \c input_data points to the input image data
+ * \li \c output_data points to the classification output
+ * \li \c col_buffer is a buffer to store the \c im2col output
+ * \li \c scratch_buffer is used to store the activation data (intermediate layer outputs)
+ *
+ * \par CMSIS DSP Software Library Functions Used:
+ * \par
+ * - arm_convolve_HWC_q7_RGB()
+ * - arm_convolve_HWC_q7_fast()
+ * - arm_relu_q7()
+ * - arm_maxpool_q7_HWC()
+ * - arm_avepool_q7_HWC()
+ * - arm_fully_connected_q7_opt()
+ * - arm_fully_connected_q7()
+ *
+ * <b> Refer  </b>
+ * \link arm_nnexamples_cifar10.cpp \endlink
+ *
+ */
+
 #include <stdint.h>
 #include <stdio.h>
 #include "arm_math.h"
@@ -11,54 +87,6 @@
 #endif
 #include "arm_nnfunctions.h"
 #include "inputs.h"
-
-/*  Smaller version of network definition for CIFAR10 from caffe examples
- *  Network statistics (HWC format)
- *
- *    32x32x3 (3kB)
- *       |
- *     Conv1 : Weight 5x5x3x32 2.34kB, Ops 32*32*32 * 2*5*5*3 4.9 MOps
- *       |
- *    32x32x32 (32kB)
- *       |
- *     Pool1 : Ops 3*3 * 16*16*32 73.7 kOps
- *       |
- *    16x16x32 (8kB)
- *       |
- *     Conv2 : 5x5x32x16 (12.8kB), Ops 16*16*32 * 2*5*5*16 6.5 MOps
- *       |
- *    16x16x16 (8kB)
- *       |
- *     Pool2 : Ops 3*3 * 8*8*16, 9.2 kOps
- *       |
- *     8x8x16 (1kB)
- *       |
- *     Conv3 : 5x5x16x32 (12.8kB), Ops 8*8*16 * 2*5*5*32 1.6 MOps
- *       |
- *    8x8x32 (2kB)
- *       |
- *     Pool3 : Ops 3*3 * 4*4*32 4.6k
- *       |
- *    4x4x32 (0.5kB)
- *       |
- *      IP1 : 4x4x32x10 (5kB), Ops 10 * 2*4*4*32 10k
- *       |
- *      10
- *
- *    Total Ops:  13.2 MOps
- *
- */
-
-/*
- *
- *   Memory footprint
- *
- *   Weights: ~33.1kB
- *   I/O: ~3kB
- *   Buffers: ~40kB (activations) + 3.2kB (im2col buffer)
- *   Activation buffer size can be reduced if conv-pool are fused
- *
- */
 
 // include the input and weights
 

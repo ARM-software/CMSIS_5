@@ -481,19 +481,29 @@
               <FilePath>..\..\..\..\Source\NNFunctions\arm_relu_q15.c</FilePath>
             </File>
             <File>
-              <FileName>arm_softmax.c</FileName>
+              <FileName>arm_nn_activations_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax.c</FilePath>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q7.c</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>arm_nn_activations_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nnexamples_gru.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\main.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_activations.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations.c</FilePath>
+              <FilePath>.\arm_nnexamples_gru.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -990,19 +1000,29 @@
               <FilePath>..\..\..\..\Source\NNFunctions\arm_relu_q15.c</FilePath>
             </File>
             <File>
-              <FileName>arm_softmax.c</FileName>
+              <FileName>arm_nn_activations_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax.c</FilePath>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q7.c</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>arm_nn_activations_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nnexamples_gru.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\main.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_activations.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations.c</FilePath>
+              <FilePath>.\arm_nnexamples_gru.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1499,19 +1519,29 @@
               <FilePath>..\..\..\..\Source\NNFunctions\arm_relu_q15.c</FilePath>
             </File>
             <File>
-              <FileName>arm_softmax.c</FileName>
+              <FileName>arm_nn_activations_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax.c</FilePath>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q7.c</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>arm_nn_activations_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nnexamples_gru.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\main.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_activations.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations.c</FilePath>
+              <FilePath>.\arm_nnexamples_gru.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -2008,19 +2038,29 @@
               <FilePath>..\..\..\..\Source\NNFunctions\arm_relu_q15.c</FilePath>
             </File>
             <File>
-              <FileName>arm_softmax.c</FileName>
+              <FileName>arm_nn_activations_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax.c</FilePath>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q7.c</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>arm_nn_activations_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nnexamples_gru.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\main.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_activations.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations.c</FilePath>
+              <FilePath>.\arm_nnexamples_gru.cpp</FilePath>
             </File>
           </Files>
         </Group>

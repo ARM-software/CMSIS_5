@@ -22182,7 +22182,8 @@ const q15_t sinTable_q15[FAST_MATH_TABLE_SIZE + 1] = {
  */
 
 /**
- * @addtogroup Acti (Neural Network Activation Function Tables)
+ * @addtogroup Acti 
+ * (Neural Network Activation Function Tables)
  * @{
  */
 
@@ -22453,3 +22454,6 @@ const q15_t tanhHTable_q15[192] = {
 0x81b7, 0x81f1, 0x8232, 0x827c, 0x82d0, 0x832f, 0x839a, 0x8412, 
 };
 
+/**
+ * @} end of Acti group
+ */

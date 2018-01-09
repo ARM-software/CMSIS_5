@@ -1,4 +1,85 @@
-// A simple GRU example
+/*
+ * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* ----------------------------------------------------------------------
+ * Project:      CMSIS-NN
+ * Title:        arm_nnexamples_gru.cpp
+ * Description:	 Gated Recurrent Unit Example
+ *
+ * Target Processor: Cortex-M4 and Cortex-M7 cores
+ *
+ * -------------------------------------------------------------------- */
+
+/**
+ * @ingroup groupExamples
+ */
+
+/**
+ * @defgroup GRUExample Gated Recurrent Unit Example
+ *
+ * \par Description:
+ * \par
+ * Demonstrates a gated recurrent unit (GRU) example with the use of fully-connected,
+ * Tanh/Sigmoid activation functions.
+ *
+ * \par Model definition:
+ * \par
+ * GRU is a type of recurrent neural network (RNN). It contains two sigmoid gates and one hidden
+ * state. 
+ * \par
+ * The computation can be summarized as:
+ * <pre>z[t] = sigmoid( W_z &middot; {h[t-1],x[t]} )
+ * r[t] = sigmoid( W_r &middot; {h[t-1],x[t]} ) 
+ * n[t] = tanh( W_n &middot; [r[t] &times; h[t-1], x[t] ) 
+ * h[t] = (1 - z[t]) &times; h[t-1] + z[t] &times; n[t] </pre>
+ * \image html GRU.gif "Gate Recurrent Unit Diagram"
+ *
+ * \par Variables Description:
+ * \par
+ * \li \c update_gate_weights, \c reset_gate_weights, \c hidden_state_weights are weights corresponding to update gate (W_z), reset gate (W_r), and hidden state (W_n).
+ * \li \c update_gate_bias, \c reset_gate_bias, \c hidden_state_bias are layer bias arrays
+ * \li \c test_input1, \c test_input2, \c test_history are the inputs and initial history
+ *
+ * \par
+ * The buffer is allocated as:
+ * \par
+ * | reset | input | history | update | hidden_state |
+ * \par
+ * In this way, the concatenation is automatically done since (reset, input) and (input, history)
+ * are physically concatinated in memory.
+ * \par
+ *  The ordering of the weight matrix should be adjusted accordingly.
+ *
+  *
+ * 
+ * \par CMSIS DSP Software Library Functions Used:
+ * \par
+ * - arm_fully_connected_mat_q7_vec_q15_opt()
+ * - arm_nn_activations_direct_q15()
+ * - arm_mult_q15()
+ * - arm_offset_q15()
+ * - arm_sub_q15()
+ * - arm_copy_q15()
+ *
+ * <b> Refer  </b>
+ * \link arm_nnexamples_gru.cpp \endlink
+ *
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,7 +87,7 @@
 #include "test_data.h"
 #include "arm_math.h"
 #include "arm_nnfunctions.h"
-
+ 
 #define DIM_HISTORY 32
 #define DIM_INPUT 32
 #define DIM_VEC 64
@@ -31,16 +112,7 @@ static q15_t test_input1[DIM_INPUT] = INPUT_DATA1;
 static q15_t test_input2[DIM_INPUT] = INPUT_DATA2;
 static q15_t test_history[DIM_HISTORY] = HISTORY_DATA;
 
-/*
- *  The buffer is allocated as:
- *  | reset | input | history | update | hidden_state |
- *
- *  so that concat is automatically done since (reset, input) and (input, history)
- *  are physically concatinated in memory
- *
- *  The ordering of the weight matrix should be adjusted accordingly
- *
- */
+
 q15_t     scratch_buffer[DIM_HISTORY * 4 + DIM_INPUT];
 
 void gru_example(q15_t * scratch_input, uint16_t input_size, uint16_t history_size,

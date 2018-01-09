@@ -181,7 +181,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\main.cpp</Filename>
+          <Filename>C:\Users\lialai01\Work\CMSIS_5_with_NN\CMSIS\DSP\Examples\ARM\arm_nn_examples\gru\main.cpp</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -391,7 +391,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\main.cpp</Filename>
+          <Filename>C:\Users\lialai01\Work\CMSIS_5_with_NN\CMSIS\DSP\Examples\ARM\arm_nn_examples\gru\main.cpp</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -762,7 +762,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\main.cpp</Filename>
+          <Filename>C:\Users\lialai01\Work\CMSIS_5_with_NN\CMSIS\DSP\Examples\ARM\arm_nn_examples\gru\main.cpp</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -1065,20 +1065,20 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_softmax.c</PathWithFileName>
-      <FilenameWithoutPath>arm_softmax.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_nn_activations_q7.c</PathWithFileName>
+      <FilenameWithoutPath>arm_nn_activations_q7.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>22</FileNumber>
-      <FileType>8</FileType>
+      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\main.cpp</PathWithFileName>
-      <FilenameWithoutPath>main.cpp</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_nn_activations_q15.c</PathWithFileName>
+      <FilenameWithoutPath>arm_nn_activations_q15.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1089,8 +1089,32 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_nn_activations.c</PathWithFileName>
-      <FilenameWithoutPath>arm_nn_activations.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_softmax_q7.c</PathWithFileName>
+      <FilenameWithoutPath>arm_softmax_q7.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>24</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</PathWithFileName>
+      <FilenameWithoutPath>arm_softmax_q15.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>25</FileNumber>
+      <FileType>8</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\arm_nnexamples_gru.cpp</PathWithFileName>
+      <FilenameWithoutPath>arm_nnexamples_gru.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1104,7 +1128,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>24</FileNumber>
+      <FileNumber>26</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>

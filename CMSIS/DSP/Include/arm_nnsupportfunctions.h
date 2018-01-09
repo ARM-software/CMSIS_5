@@ -41,77 +41,79 @@ extern    "C"
 /**
  * @brief Union for SIMD access of Q31/Q15/Q7 types
  */
-    union arm_nnword
-    {
-        q31_t     word;/**< Q31 type */
-        q15_t     half_words[2];
-                       /**< Q15 type */
-        q7_t      bytes[4];
-                       /**< Q7 type */
-    };
+union arm_nnword
+{
+    q31_t     word;
+               /**< Q31 type */
+    q15_t     half_words[2];
+               /**< Q15 type */
+    q7_t      bytes[4];
+               /**< Q7 type */
+};
 
 /**
  * @brief Struct for specifying activation function types
  *
  */
-    typedef enum
-    {
-        ARM_SIGMOID = 0,/**< Sigmoid activation function */
-        ARM_TANH = 1,/**< Tanh activation function */
-    } arm_nn_activation_type;
+typedef enum
+{
+    ARM_SIGMOID = 0,
+                /**< Sigmoid activation function */
+    ARM_TANH = 1,
+             /**< Tanh activation function */
+} arm_nn_activation_type;
 
+/**
+ * @brief Converts the elements of the Q7 vector to Q15 vector without left-shift 
+ * @param[in]       *pSrc points to the Q7 input vector    
+ * @param[out]      *pDst points to the Q15 output vector   
+ * @param[in]       blockSize length of the input vector    
+ * @return none.    
+ *
+ */
 
-  /**
-   * @brief Converts the elements of the Q7 vector to Q15 vector without left-shift 
-   * @param[in]       *pSrc points to the Q7 input vector    
-   * @param[out]      *pDst points to the Q15 output vector   
-   * @param[in]       blockSize length of the input vector    
-   * @return none.    
-   *
-   */
+void      arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize);
 
-    void      arm_q7_to_q15_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize);
+/**
+ * @brief  Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
+ * @param[in]       *pSrc points to the Q7 input vector    
+ * @param[out]      *pDst points to the Q15 output vector   
+ * @param[in]       blockSize length of the input vector    
+ * @return none.    
+ *
+ */
 
-  /**
-   * @brief  Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
-   * @param[in]       *pSrc points to the Q7 input vector    
-   * @param[out]      *pDst points to the Q15 output vector   
-   * @param[in]       blockSize length of the input vector    
-   * @return none.    
-   *
-   */
-
-    void      arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize);
+void      arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize);
 
 #if defined (ARM_MATH_DSP)
 
-  /**
-   * @brief read and expand one Q7 word into two Q15 words
-   */
+/**
+ * @brief read and expand one Q7 word into two Q15 words
+ */
 
-    __STATIC_FORCEINLINE void *read_and_pad(void *source, q31_t * out1, q31_t * out2)
-    {
+__STATIC_FORCEINLINE void *read_and_pad(void *source, q31_t * out1, q31_t * out2)
+{
         q31_t     inA = *__SIMD32(source)++;
         q31_t     inAbuf1 = __SXTB16(__ROR(inA, 8));
         q31_t     inAbuf2 = __SXTB16(inA);
 
 #ifndef ARM_MATH_BIG_ENDIAN
-                 *out2 = __PKHTB(inAbuf1, inAbuf2, 16);
-                 *out1 = __PKHBT(inAbuf2, inAbuf1, 16);
+        *out2 = __PKHTB(inAbuf1, inAbuf2, 16);
+        *out1 = __PKHBT(inAbuf2, inAbuf1, 16);
 #else
-                 *out1 = __PKHTB(inAbuf1, inAbuf2, 16);
-                 *out2 = __PKHBT(inAbuf2, inAbuf1, 16);
+        *out1 = __PKHTB(inAbuf1, inAbuf2, 16);
+        *out2 = __PKHBT(inAbuf2, inAbuf1, 16);
 #endif
 
-                  return source;
-    }
+        return source;
+}
 
-  /**
-   * @brief read and expand one Q7 word into two Q15 words with reordering
-   */
+/**
+ * @brief read and expand one Q7 word into two Q15 words with reordering
+ */
 
-    __STATIC_FORCEINLINE void *read_and_pad_reordered(void *source, q31_t * out1, q31_t * out2)
-    {
+__STATIC_FORCEINLINE void *read_and_pad_reordered(void *source, q31_t * out1, q31_t * out2)
+{
         q31_t     inA = *__SIMD32(source)++;
 #ifndef ARM_MATH_BIG_ENDIAN
         *out2 = __SXTB16(__ROR(inA, 8));
@@ -122,7 +124,7 @@ extern    "C"
 #endif
 
         return source;
-    }
+}
 #endif
 
 #ifdef __cplusplus
