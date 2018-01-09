@@ -13,11 +13,15 @@
  *----------------------------------------------------------------------------*/
 
 static volatile uint32_t irqTaken = 0U;
+#if defined(__CORTEX_M) && (__CORTEX_M > 0)
 static volatile uint32_t irqActive = 0U;
+#endif
 
 static void TC_CoreFunc_EnDisIRQIRQHandler(void) {
   ++irqTaken;
+#if defined(__CORTEX_M) && (__CORTEX_M > 0)
   irqActive = NVIC_GetActive(WDT_IRQn);
+#endif
 }
 
 static volatile uint32_t irqIPSR = 0U;
@@ -40,7 +44,7 @@ Check expected behavior of interrupt related control functions:
 - __disable_irq() and __enable_irq()
 - NVIC_EnableIRQ, NVIC_DisableIRQ,  and NVIC_GetEnableIRQ
 - NVIC_SetPendingIRQ, NVIC_ClearPendingIRQ, and NVIC_GetPendingIRQ
-- NVIC_GetActive
+- NVIC_GetActive (not on Cortex-M0/M0+)
 */
 void TC_CoreFunc_EnDisIRQ (void)
 {
@@ -58,7 +62,9 @@ void TC_CoreFunc_EnDisIRQ (void)
   // Register test interrupt handler.
   TST_IRQHandler = TC_CoreFunc_EnDisIRQIRQHandler;
   irqTaken = 0U;
+#if defined(__CORTEX_M) && (__CORTEX_M > 0)
   irqActive = UINT32_MAX;
+#endif
 
   // Set the interrupt pending state
   NVIC_SetPendingIRQ(WDT_IRQn);
@@ -67,7 +73,9 @@ void TC_CoreFunc_EnDisIRQ (void)
   // Interrupt is not taken
   ASSERT_TRUE(irqTaken == 0U);
   ASSERT_TRUE(NVIC_GetPendingIRQ(WDT_IRQn) != 0U);
+#if defined(__CORTEX_M) && (__CORTEX_M > 0)
   ASSERT_TRUE(NVIC_GetActive(WDT_IRQn) == 0U);
+#endif
 
   // Globally enable interrupt servicing
   __enable_irq();
@@ -76,8 +84,10 @@ void TC_CoreFunc_EnDisIRQ (void)
 
   // Interrupt was taken
   ASSERT_TRUE(irqTaken == 1U);
+#if defined(__CORTEX_M) && (__CORTEX_M > 0)
   ASSERT_TRUE(irqActive != 0U);
   ASSERT_TRUE(NVIC_GetActive(WDT_IRQn) == 0U);
+#endif
 
   // Interrupt it not pending anymore.
   ASSERT_TRUE(NVIC_GetPendingIRQ(WDT_IRQn) == 0U);
