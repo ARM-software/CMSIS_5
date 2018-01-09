@@ -26,6 +26,14 @@
 #include "rtx_lib.h"
 
 
+//  OS Runtime Object Memory Usage
+#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+osRtxObjectMemUsage_t osRtxSemaphoreMemUsage \
+__attribute__((section(".data.os.semaphore.obj"))) =
+{ 0U, 0U, 0U };
+#endif
+
+
 //  ==== Helper functions ====
 
 /// Decrement Semaphore tokens.
@@ -169,6 +177,16 @@ static osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       semaphore = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_semaphore_t), 1U);
     }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+    if (semaphore != NULL) {
+      uint32_t used;
+      osRtxSemaphoreMemUsage.cnt_alloc++;
+      used = osRtxSemaphoreMemUsage.cnt_alloc - osRtxSemaphoreMemUsage.cnt_free;
+      if (osRtxSemaphoreMemUsage.max_used < used) {
+        osRtxSemaphoreMemUsage.max_used = used;
+      }
+    }
+#endif
     flags = osRtxFlagSystemObject;
   } else {
     flags = 0U;
@@ -369,6 +387,9 @@ static osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
     } else {
       (void)osRtxMemoryFree(osRtxInfo.mem.common, semaphore);
     }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+    osRtxSemaphoreMemUsage.cnt_free++;
+#endif
   }
 
   EvrRtxSemaphoreDestroyed(semaphore);

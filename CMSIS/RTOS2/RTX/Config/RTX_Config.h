@@ -17,7 +17,7 @@
  *
  * -----------------------------------------------------------------------------
  *
- * $Revision:   V5.2.0
+ * $Revision:   V5.3.0
  *
  * Project:     CMSIS-RTOS RTX
  * Title:       RTX Configuration definitions
@@ -69,7 +69,18 @@
  
 //   </e>
  
+//   <o>ISR FIFO Queue 
+//      <4=>  4 entries    <8=>   8 entries   <12=>  12 entries   <16=>  16 entries
+//     <24=> 24 entries   <32=>  32 entries   <48=>  48 entries   <64=>  64 entries
+//     <96=> 96 entries  <128=> 128 entries  <196=> 196 entries  <256=> 256 entries
+//   <i> RTOS Functions called from ISR store requests to this buffer.
+//   <i> Default: 16 entries
+#ifndef OS_ISR_FIFO_QUEUE
+#define OS_ISR_FIFO_QUEUE           16
+#endif
+ 
 //   <h>Event Recording
+//   <i> Configures events recording.
  
 //     <q>Memory Management
 //     <i> Enables Memory Management events recording.
@@ -127,14 +138,10 @@
  
 //   </h>
  
-//   <o>ISR FIFO Queue 
-//      <4=>  4 entries    <8=>   8 entries   <12=>  12 entries   <16=>  16 entries
-//     <24=> 24 entries   <32=>  32 entries   <48=>  48 entries   <64=>  64 entries
-//     <96=> 96 entries  <128=> 128 entries  <196=> 196 entries  <256=> 256 entries
-//   <i> RTOS Functions called from ISR store requests to this buffer.
-//   <i> Default: 16 entries
-#ifndef OS_ISR_FIFO_QUEUE
-#define OS_ISR_FIFO_QUEUE           16
+//   <q>Object Memory usage counters
+//   <i> Enables object memory usage counters.
+#ifndef OS_OBJ_MEM_USAGE
+#define OS_OBJ_MEM_USAGE            0
 #endif
  
 // </h>

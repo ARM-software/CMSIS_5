@@ -26,6 +26,14 @@
 #include "rtx_lib.h"
 
 
+//  OS Runtime Object Memory Usage
+#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+osRtxObjectMemUsage_t osRtxTimerMemUsage \
+__attribute__((section(".data.os.timer.obj"))) =
+{ 0U, 0U, 0U };
+#endif
+
+
 //  ==== Helper functions ====
 
 /// Insert Timer into the Timer List sorted by Time.
@@ -183,6 +191,16 @@ static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void 
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       timer = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_timer_t), 1U);
     }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+    if (timer != NULL) {
+      uint32_t used;
+      osRtxTimerMemUsage.cnt_alloc++;
+      used = osRtxTimerMemUsage.cnt_alloc - osRtxTimerMemUsage.cnt_free;
+      if (osRtxTimerMemUsage.max_used < used) {
+        osRtxTimerMemUsage.max_used = used;
+      }
+    }
+#endif
     flags = osRtxFlagSystemObject;
   } else {
     flags = 0U;
@@ -357,6 +375,9 @@ static osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
     } else {
       (void)osRtxMemoryFree(osRtxInfo.mem.common, timer);
     }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+    osRtxTimerMemUsage.cnt_free++;
+#endif
   }
 
   EvrRtxTimerDestroyed(timer);

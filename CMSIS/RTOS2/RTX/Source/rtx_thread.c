@@ -26,6 +26,14 @@
 #include "rtx_lib.h"
 
 
+//  OS Runtime Object Memory Usage
+#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+osRtxObjectMemUsage_t osRtxThreadMemUsage \
+__attribute__((section(".data.os.thread.obj"))) =
+{ 0U, 0U, 0U };
+#endif
+
+
 //  ==== Helper functions ====
 
 /// Set Thread Flags.
@@ -657,6 +665,16 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       thread = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_thread_t), 1U);
     }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+    if (thread != NULL) {
+      uint32_t used;
+      osRtxThreadMemUsage.cnt_alloc++;
+      used = osRtxThreadMemUsage.cnt_alloc - osRtxThreadMemUsage.cnt_free;
+      if (osRtxThreadMemUsage.max_used < used) {
+        osRtxThreadMemUsage.max_used = used;
+      }
+    }
+#endif
     flags = osRtxFlagSystemObject;
   } else {
     flags = 0U;
@@ -687,6 +705,9 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
         } else {
           (void)osRtxMemoryFree(osRtxInfo.mem.common, thread);
         }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+        osRtxThreadMemUsage.cnt_free++;
+#endif
       }
       thread = NULL;
     }
@@ -712,6 +733,9 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
         } else {
           (void)osRtxMemoryFree(osRtxInfo.mem.common, thread);
         }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+        osRtxThreadMemUsage.cnt_free++;
+#endif
       }
       thread = NULL;
     }
@@ -1109,6 +1133,9 @@ static void osRtxThreadFree (os_thread_t *thread) {
     } else {
       (void)osRtxMemoryFree(osRtxInfo.mem.common, thread);
     }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+    osRtxThreadMemUsage.cnt_free++;
+#endif
   }
 }
 

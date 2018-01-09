@@ -24,8 +24,8 @@
  */
 
 #include "cmsis_compiler.h"
-#include "rtx_os.h"
 #include "RTX_Config.h"
+#include "rtx_os.h"
 
 
 // System Configuration

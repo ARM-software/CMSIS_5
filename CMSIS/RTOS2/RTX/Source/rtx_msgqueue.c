@@ -26,6 +26,14 @@
 #include "rtx_lib.h"
 
 
+//  OS Runtime Object Memory Usage
+#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+osRtxObjectMemUsage_t osRtxMessageQueueMemUsage \
+__attribute__((section(".data.os.msgqueue.obj"))) =
+{ 0U, 0U, 0U };
+#endif
+
+
 //  ==== Helper functions ====
 
 /// Put a Message into Queue sorted by Priority (Highest at Head).
@@ -316,6 +324,16 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mq = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_message_queue_t), 1U);
     }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+    if (mq != NULL) {
+      uint32_t used;
+      osRtxMessageQueueMemUsage.cnt_alloc++;
+      used = osRtxMessageQueueMemUsage.cnt_alloc - osRtxMessageQueueMemUsage.cnt_free;
+      if (osRtxMessageQueueMemUsage.max_used < used) {
+        osRtxMessageQueueMemUsage.max_used = used;
+      }
+    }
+#endif
     flags = osRtxFlagSystemObject;
   } else {
     flags = 0U;
@@ -332,6 +350,9 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
         } else {
           (void)osRtxMemoryFree(osRtxInfo.mem.common, mq);
         }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+        osRtxMessageQueueMemUsage.cnt_free++;
+#endif
       }
       mq = NULL;
     } else {
@@ -769,6 +790,9 @@ static osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
     } else {
       (void)osRtxMemoryFree(osRtxInfo.mem.common, mq);
     }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+    osRtxMessageQueueMemUsage.cnt_free++;
+#endif
   }
 
   EvrRtxMessageQueueDestroyed(mq);

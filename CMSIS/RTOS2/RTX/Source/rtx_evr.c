@@ -27,9 +27,11 @@
 #include "cmsis_compiler.h"
 #include "rtx_evr.h"                    // RTX Event Recorder definitions
 
+#ifndef RTE_COMPONENTS_H
 #include "RTE_Components.h"
+#endif
 
-#ifdef RTE_Compiler_EventRecorder
+#ifdef  RTE_Compiler_EventRecorder
 
 //lint -e923 -e9074 -e9078 -emacro((835,845),EventID) [MISRA Note 13]
 

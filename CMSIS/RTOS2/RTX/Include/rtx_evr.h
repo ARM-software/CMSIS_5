@@ -27,8 +27,8 @@
 #define RTX_EVR_H_
 
 #include "cmsis_os2.h"                  // CMSIS RTOS API
+#include "RTX_Config.h"                 // RTX Configuration
 #include "rtx_os.h"                     // RTX OS definitions
-#include "RTX_Config.h"
 
 
 /// Extended Status codes

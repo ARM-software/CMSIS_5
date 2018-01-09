@@ -26,6 +26,14 @@
 #include "rtx_lib.h"
 
 
+//  OS Runtime Object Memory Usage
+#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+osRtxObjectMemUsage_t osRtxMemoryPoolMemUsage \
+__attribute__((section(".data.os.mempool.obj"))) =
+{ 0U, 0U, 0U };
+#endif
+
+
 //  ==== Library functions ====
 
 /// Initialize Memory Pool.
@@ -270,6 +278,16 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mp = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_memory_pool_t), 1U);
     }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+    if (mp != NULL) {
+      uint32_t used;
+      osRtxMemoryPoolMemUsage.cnt_alloc++;
+      used = osRtxMemoryPoolMemUsage.cnt_alloc - osRtxMemoryPoolMemUsage.cnt_free;
+      if (osRtxMemoryPoolMemUsage.max_used < used) {
+        osRtxMemoryPoolMemUsage.max_used = used;
+      }
+    }
+#endif
     flags = osRtxFlagSystemObject;
   } else {
     flags = 0U;
@@ -286,6 +304,9 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
         } else {
           (void)osRtxMemoryFree(osRtxInfo.mem.common, mp);
         }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+        osRtxMemoryPoolMemUsage.cnt_free++;
+#endif
       }
       mp = NULL;
     } else {
@@ -565,6 +586,9 @@ static osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
     } else {
       (void)osRtxMemoryFree(osRtxInfo.mem.common, mp);
     }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+    osRtxMemoryPoolMemUsage.cnt_free++;
+#endif
   }
 
   EvrRtxMemoryPoolDestroyed(mp);

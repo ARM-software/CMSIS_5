@@ -26,6 +26,14 @@
 #include "rtx_lib.h"
 
 
+//  OS Runtime Object Memory Usage
+#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+osRtxObjectMemUsage_t osRtxEventFlagsMemUsage \
+__attribute__((section(".data.os.evflags.obj"))) =
+{ 0U, 0U, 0U };
+#endif
+
+
 //  ==== Helper functions ====
 
 /// Set Event Flags.
@@ -197,6 +205,16 @@ static osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       ef = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_event_flags_t), 1U);
     }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+    if (ef != NULL) {
+      uint32_t used;
+      osRtxEventFlagsMemUsage.cnt_alloc++;
+      used = osRtxEventFlagsMemUsage.cnt_alloc - osRtxEventFlagsMemUsage.cnt_free;
+      if (osRtxEventFlagsMemUsage.max_used < used) {
+        osRtxEventFlagsMemUsage.max_used = used;
+      }
+    }
+#endif
     flags = osRtxFlagSystemObject;
   } else {
     flags = 0U;
@@ -446,6 +464,9 @@ static osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
     } else {
       (void)osRtxMemoryFree(osRtxInfo.mem.common, ef);
     }
+#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+    osRtxEventFlagsMemUsage.cnt_free++;
+#endif
   }
 
   EvrRtxEventFlagsDestroyed(ef);
