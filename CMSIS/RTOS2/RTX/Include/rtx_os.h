@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2018 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -38,8 +38,8 @@ extern "C"
  
 /// Kernel Information
 #define osRtxVersionAPI      20010002   ///< API version (2.1.2)
-#define osRtxVersionKernel   50020003   ///< Kernel version (5.2.3)
-#define osRtxKernelId     "RTX V5.2.3"  ///< Kernel identification string
+#define osRtxVersionKernel   50030000   ///< Kernel version (5.3.0)
+#define osRtxKernelId     "RTX V5.3.0"  ///< Kernel identification string
  
  
 //  ==== Common definitions ====
