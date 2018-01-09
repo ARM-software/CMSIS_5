@@ -41,7 +41,7 @@ A complete debug description for a device consists of the following elements:
  - \refelem{debug} with the child element \refelem{dbg_datapatch} contains settings for the debug connection and for
    fixing silicon issues in software.
  - \refelem{debugconfig} provides the default debugger configuration for a target connection.
- - \refelem{debugvars} specifies global debug access variables. They can be used in addition to pre-defined variables in
+ - \refelem{debugvars} specifies global debug access variables. They can be used in addition to predefined variables in
    order to query settings from a debug access sequences.
  - \refelem{debugport} with the child elements \refelem{dp_jtag}, \refelem{dp_swd}, and \refelem{dp_cjtag} describes the
    debug port in detail.
@@ -54,14 +54,14 @@ A complete debug description for a device consists of the following elements:
 \section pdsc_SequenceNameEnum_pg Debug access sequences
 
 Debug access sequences define the activities of development tools to connect to a device using the debug channel for
-debugging, tracing, or flash programming. Several debug access sequences are pre-defined and executed in specific context. 
+debugging, tracing, or flash programming. Several debug access sequences are predefined and executed in specific context. 
 Refer to \refelem{sequences} for details.
 
 Software development tools should implement \ref default_sequences. These default sequences can be overwritten by device
 specific sequences using the \refelem{sequence} element in the \refelem{sequences} section of the PDSC file. Additionally,
 a PDSC file can contain user-defined sequences, for example to reuse access sequence fragments:
  - \ref usage_of_sequences explains how the sequences are used from a development tool point of view.
- - \ref default_sequences lists all debug access sequences that are pre-defined by the CMSIS-Pack standard and shows the
+ - \ref default_sequences lists all debug access sequences that are predefined by the CMSIS-Pack standard and shows the
    details of the default debug access sequences.
  - \ref writing_sequences explains how to write custom debug access sequences. These can be used to either override default
    sequences or to define device specific sequences.
@@ -69,7 +69,7 @@ a PDSC file can contain user-defined sequences, for example to reuse access sequ
 
 \section usage_of_sequences Usage of debug access sequences
 
-Pre-defined Debug Access Sequences are used in the following context:
+Predefined Debug Access Sequences are used in the following context:
  - <b>Connect Debugger to Device</b> is executed when debugging or flash programming with the target starts.
  - <b>Reset Device</b> is executed to reset the target.
  - <b>Verify Code</b> is executed to verify the content after flash programming.
@@ -97,7 +97,7 @@ The following diagrams show how the Debug Access Sequences are executed by a dev
 \section default_sequences Default debug access sequences
 
 Debug access sequences get defined in the \ref element_sequence "sequence" element. The following table lists the available
-pre-defined debug access sequences. \ref default_sequences are executed if they are not overwritten using a
+predefined debug access sequences. \ref default_sequences are executed if they are not overwritten using a
 \refelem{sequence} element. Refer to \ref usage_of_sequences for more information about the execution of these sequences.
 
 For debug access sequences marked in \token{ItalicRed}, no default sequence exists. The usage in a debug description requires
@@ -147,7 +147,7 @@ implemented as defined in the ARMv6-M/ARMv7-M/ARMv8-M architecture reference man
   </tr>
   <tr>
     <td class="XML-Token">\ref debugCoreStop</td>
-    <td>Uninitialize core debug system.<br>
+    <td>Uninitialized core debug system.<br>
     Executed as last step during disconnect before powering down any debug ports no longer required for
     concurrent connections.</td>
   </tr>
@@ -178,7 +178,7 @@ implemented as defined in the ARMv6-M/ARMv7-M/ARMv8-M architecture reference man
   </tr>
   <tr>
     <td class="XML-Token">\ref resetHardwareDeassert</td>
-    <td>Deassert a system-wide reset via the dedicated debugger reset line, e.g. nRST.
+    <td>De-assert a system-wide reset via the dedicated debugger reset line, e.g. nRST.
     </td>
   </tr>
   <tr>
@@ -202,7 +202,7 @@ implemented as defined in the ARMv6-M/ARMv7-M/ARMv8-M architecture reference man
   <tr>
     <td class="XML-Token">FlashProgramDone</td>
     <td>
-    Eexecuted after programming flash memory.
+    Executed after programming flash memory.
     </td>
   </tr>
   <tr>
@@ -237,9 +237,9 @@ implemented as defined in the ARMv6-M/ARMv7-M/ARMv8-M architecture reference man
 </table>
 
 
-Pre-defined default debug access sequences
-------------------------------------------
-The following sections the show the details of the pre-defined default debug access sequences.
+Predefined default debug access sequences
+-----------------------------------------
+The following sections the show the details of the predefined default debug access sequences.
 
 \subsection debugPortSetup DebugPortSetup
 
@@ -521,7 +521,7 @@ Execute a system-wide reset via the dedicated debugger reset line nRST.
       __var nReset      = 0x80;
       __var canReadPins = 0;
     
-      // Deassert nRESET line
+      // De-assert nRESET line
       canReadPins = (DAP_SWJ_Pins(0x00, nReset, 0) != 0xFFFFFFFF);
     </block>
     
@@ -561,7 +561,7 @@ Assert a system-wide reset line nRST.
     <block>
         __var nReset = 0x80;
       
-        // Deassert nRESET line to activate the hardware reset
+        // De-assert nRESET line to activate the hardware reset
         DAP_SWJ_Pins(0, nReset, 0);
     </block>
     
@@ -825,17 +825,17 @@ to a variable.
 \code
 expression;
 \endcode
-- Comments begin with two slashes (\token{//}) and end with a linebreak:
+- Comments begin with two slashes (\token{//}) and end with a line break:
 \code
 // Whole line is a comment
 variable = expression;  // Comment appended to statement
 \endcode
-- Variables must be defined using the keyword \token{__var}. The definition must include an initalization
+- Variables must be defined using the keyword \token{__var}. The definition must include an initialization
   of the variable:
 \code
 __var variable = 0;
 \endcode
-- Variables can be defined only once within a scope. Scopes beging with entering a debug access
+- Variables can be defined only once within a scope. Scopes begin with entering a debug access
   sequence or a <b>control</b> element. They are extended to child <b>control</b> elements.
   Variables of a parent scope can be modified. Leaving a scope destroys all variables defined in it.<br>
   <b>\em block elements do not begin a new scope.</b>
@@ -1195,7 +1195,7 @@ debug access variables which are evaluated for the function call.
   <tr>
     <td style="white-space: nowrap"><pre>DAP_SWJ_Pins(pinout, pinselect, pinwait)</pre></td>
     <td>
-      Debug proble command to monitor and control the I/O Pins including the nRESET
+      Debug probe command to monitor and control the I/O Pins including the nRESET
       device reset line.<br>
       <b>I/O Pin Mapping</b> for <b>pinout</b>, <b>pinselect</b>, and <b>pinwait</b>:
         - Bit 0: SWCLK/TCK
