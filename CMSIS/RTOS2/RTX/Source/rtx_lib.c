@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2018 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -24,8 +24,8 @@
  */
 
 #include "cmsis_compiler.h"
-#include "rtx_os.h"
 #include "RTX_Config.h"
+#include "rtx_os.h"
 
 
 // System Configuration

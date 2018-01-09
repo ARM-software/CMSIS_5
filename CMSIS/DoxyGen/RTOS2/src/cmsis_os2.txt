@@ -161,6 +161,13 @@ File/Folder                  | Content
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.3.0</td>
+      <td>
+       - Added Object Memory usage counters.
+       - Added support for additional external configuration file.
+      </td>
+    </tr>
+    <tr>
       <td>V5.2.3</td>
       <td>
        - Based on CMSIS-RTOS API V2.1.2.

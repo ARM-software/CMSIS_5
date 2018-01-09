@@ -23,7 +23,7 @@ int main (void) {
     i2cDev->Control(ARM_I2C_OWN_ADDRESS, 0x78);
  
     while (1) {
-        /* Receive chuck */
+        /* Receive chunk */
         i2cDev->SlaveReceive(&cnt, 1);
         while ((event & ARM_event_TRANSFER_DONE) == 0);
         event &= ~ARM_event_TRANSFER_DONE;

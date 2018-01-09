@@ -3269,7 +3269,7 @@ variable = expression;  // Comment appended to statement
 \code
 __var variable = 0;
 \endcode
-- Variables can be defined only once within a scope. Scopes beging with entering a debug access
+- Variables can be defined only once within a scope. Scopes begin with entering a debug access
   sequence or a <b>control</b> element. They are extended to child <b>control</b> elements.
   Variables of a parent scope can be modified. Leaving a scope destroys all variables defined in it.<br>
   <b>\em block elements do not begin a new scope.</b>
@@ -3599,7 +3599,7 @@ debug access variables which are evaluated for the function call.
   <tr>
     <td style="white-space: nowrap"><pre>DAP_SWJ_Pins(pinout, pinselect, pinwait)</pre></td>
     <td>
-      Debug proble command to monitor and control the I/O Pins including the nRESET
+      Debug probe command to monitor and control the I/O Pins including the nRESET
       device reset line.<br>
       <b>I/O Pin Mapping</b> for <b>pinout</b>, <b>pinselect</b>, and <b>pinwait</b>:
         - Bit 0: SWCLK/TCK
@@ -4219,7 +4219,7 @@ This element describes possible configuration settings for capturing trace.
 </family>
 \endcode
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 
 <table class="cmtable" summary="Element: traceport">
   <tr>
@@ -4413,7 +4413,7 @@ and reading it from the buffer.
   </tr>
 </table>
 
-<p>&nbsp;</p>		
+<p>&nbsp;</p>
 <hr>
 
 

@@ -67,6 +67,7 @@
 // <q24> TC_CoreAFunc_ACTRL
 // <q25> TC_CoreAFunc_MPIDR
 // <q26> TC_CoreAFunc_VBAR
+// <q27> TC_CoreAFunc_MVBAR
 
 #define TC_COREAFUNC_IRQ                    1
 #define TC_COREAFUNC_FPSCR                  1
@@ -87,12 +88,13 @@
 #define TC_COREAFUNC_ACTRL                  1
 #define TC_COREAFUNC_MPIDR                  1
 #define TC_COREAFUNC_VBAR                   1
+#define TC_COREAFUNC_MVBAR                  1
 
-// <q27> TC_GenTimer_CNTFRQ
-// <q28> TC_GenTimer_CNTP_TVAL
-// <q29> TC_GenTimer_CNTP_CTL
-// <q30> TC_GenTimer_CNTPCT
-// <q31> TC_GenTimer_CNTP_CVAL
+// <q28> TC_GenTimer_CNTFRQ
+// <q29> TC_GenTimer_CNTP_TVAL
+// <q30> TC_GenTimer_CNTP_CTL
+// <q31> TC_GenTimer_CNTPCT
+// <q32> TC_GenTimer_CNTP_CVAL
 
 #define TC_GENTIMER_CNTFRQ                  1
 #define TC_GENTIMER_CNTP_TVAL               1
@@ -100,12 +102,12 @@
 #define TC_GENTIMER_CNTPCT                  1
 #define TC_GENTIMER_CNTP_CVAL               1
 
-// <q32> TC_L1Cache_EnDisable
-// <q33> TC_L1Cache_EnDisableBTAC
-// <q34> TC_L1Cache_log2_up
-// <q35> TC_L1Cache_InvalidateDCacheAll
-// <q36> TC_L1Cache_CleanDCacheAll
-// <q37> TC_L1Cache_CleanInvalidateDCacheAll
+// <q33> TC_L1Cache_EnDisable
+// <q34> TC_L1Cache_EnDisableBTAC
+// <q35> TC_L1Cache_log2_up
+// <q36> TC_L1Cache_InvalidateDCacheAll
+// <q37> TC_L1Cache_CleanDCacheAll
+// <q38> TC_L1Cache_CleanInvalidateDCacheAll
 
 #define TC_L1CACHE_ENDISABLE                1
 #define TC_L1CACHE_ENDISABLEBTAC            1

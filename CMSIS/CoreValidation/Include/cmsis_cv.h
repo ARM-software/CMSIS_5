@@ -94,6 +94,7 @@ extern void TC_CoreInstr_USAT (void);
     extern void TC_CoreAFunc_ACTRL (void);
     extern void TC_CoreAFunc_MPIDR (void);
     extern void TC_CoreAFunc_VBAR (void);
+    extern void TC_CoreAFunc_MVBAR (void);
   #endif
 #endif
 

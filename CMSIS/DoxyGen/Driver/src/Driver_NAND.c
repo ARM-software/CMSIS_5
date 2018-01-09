@@ -39,7 +39,6 @@ Thus one can calculate the `byte_address = row * page_size + col`. The parameter
 are device specific and must be handled by the driver user appropriately.
 
 <b>Driver Functions</b>
-<b>Driver Functions</b>
 
 The driver functions are published in the access struct as explained in \ref DriverFunctions
   - \ref ARM_DRIVER_NAND : access struct for NAND driver functions

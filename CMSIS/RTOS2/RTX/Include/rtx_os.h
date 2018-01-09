@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2018 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -38,8 +38,8 @@ extern "C"
  
 /// Kernel Information
 #define osRtxVersionAPI      20010002   ///< API version (2.1.2)
-#define osRtxVersionKernel   50020003   ///< Kernel version (5.2.3)
-#define osRtxKernelId     "RTX V5.2.3"  ///< Kernel identification string
+#define osRtxVersionKernel   50030000   ///< Kernel version (5.3.0)
+#define osRtxKernelId     "RTX V5.3.0"  ///< Kernel identification string
  
  
 //  ==== Common definitions ====
@@ -342,6 +342,22 @@ typedef struct {
 } osRtxInfo_t;
  
 extern osRtxInfo_t osRtxInfo;           ///< OS Runtime Information
+ 
+/// OS Runtime Object Memory Usage structure
+typedef struct {
+  uint32_t cnt_alloc;                   ///< Counter for alloc
+  uint32_t cnt_free;                    ///< Counter for free
+  uint32_t max_used;                    ///< Maximum used
+} osRtxObjectMemUsage_t;
+ 
+/// OS Runtime Object Memory Usage variables
+extern osRtxObjectMemUsage_t osRtxThreadMemUsage;
+extern osRtxObjectMemUsage_t osRtxTimerMemUsage;
+extern osRtxObjectMemUsage_t osRtxEventFlagsMemUsage;
+extern osRtxObjectMemUsage_t osRtxMutexMemUsage;
+extern osRtxObjectMemUsage_t osRtxSemaphoreMemUsage;
+extern osRtxObjectMemUsage_t osRtxMemoryPoolMemUsage;
+extern osRtxObjectMemUsage_t osRtxMessageQueueMemUsage;
  
  
 //  ==== OS API definitions ====
