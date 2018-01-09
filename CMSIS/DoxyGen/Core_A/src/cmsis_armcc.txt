@@ -20,9 +20,9 @@ Each CMSIS compliant compiler should support the functionality described in this
 
 /**
 \def __ARM_ARCH_7A__    
-\brief Set to 1 when generating code for ARMv7-A (Cortex-A7)
+\brief Set to 1 when generating code for Armv7-A (Cortex-A7)
 \details
-The \b \#define __ARM_ARCH_7A__ is set to 1 when generating code for the ARMv7-A architecture. This architecture is for example used by the Cortex-A7 processor.
+The \b \#define __ARM_ARCH_7A__ is set to 1 when generating code for the Armv7-A architecture. This architecture is for example used by the Cortex-A7 processor.
 */
 
 /**      

@@ -13,7 +13,7 @@
 \ingroup CMSIS_core_register
 \brief The ACTLR provides IMPLEMENTATION DEFINED configuration and control options.
 \details
-The ACTLR characteristics are differs between various ARMv7-A implementations.
+The ACTLR characteristics are differs between various Armv7-A implementations.
 
 <b>Cortex-A5</b>
 
@@ -1044,7 +1044,7 @@ Consider using \ref __get_SCTLR and \ref __set_SCTLR for accessing this register
 /**
 \defgroup CMSIS_TLB TLB maintenance operations
 \ingroup CMSIS_core_register
-\brief This section describes the TLB operations that are implemented on all ARMv7-A implementations.
+\brief This section describes the TLB operations that are implemented on all Armv7-A implementations.
 \details 
 TLB maintenance operations provide a mechanism to invalidate entries from a TLB.
 

@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_armv8mml.h
- * @brief    CMSIS ARMv8MML Core Peripheral Access Layer Header File
- * @version  V5.0.3
- * @date     09. August 2017
+ * @brief    CMSIS Armv8-M Mainline Core Peripheral Access Layer Header File
+ * @version  V5.0.4
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -62,7 +62,7 @@
 
 #include "cmsis_version.h"
  
-/*  CMSIS ARMv8MML definitions */
+/*  CMSIS Armv8MML definitions */
 #define __ARMv8MML_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                   /*!< \deprecated [31:16] CMSIS HAL main version */
 #define __ARMv8MML_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                    /*!< \deprecated [15:0]  CMSIS HAL sub version */
 #define __ARMv8MML_CMSIS_VERSION       ((__ARMv8MML_CMSIS_VERSION_MAIN << 16U) | \

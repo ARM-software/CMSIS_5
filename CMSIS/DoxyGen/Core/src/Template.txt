@@ -3,7 +3,7 @@
 
 \details
 
-ARM supplies CMSIS-Core device template files for the all supported Cortex-M processors and various compiler vendors.
+Arm supplies CMSIS-Core device template files for the all supported Cortex-M processors and various compiler vendors.
 Refer to the list of \ref tested_tools_sec for compliance.
 
 
@@ -18,7 +18,7 @@ The detailed file structure of the CMSIS-Core device templates is shown in the f
 
 \section CMSIS_Processor_files CMSIS-Core Processor Files 
 
-The CMSIS-Core processor files provided by ARM are in the directory .\\CMSIS\\Core\\Include. These header files define all processor specific attributes do not need any modifications.
+The CMSIS-Core processor files provided by Arm are in the directory .\\CMSIS\\Core\\Include. These header files define all processor specific attributes do not need any modifications.
 The <b>core_&lt;cpu&gt;.h</b> defines the core peripherals and provides helper functions that access the core registers. One file is available for each supported Cortex-M processor:
 
 Header File      | Processor
@@ -32,8 +32,8 @@ core_cm23.h      | for the Cortex-M23 processor
 core_cm33.h      | for the Cortex-M33 processor
 core_sc000.h     | for the SecurCore SC000 processor
 core_sc300.h     | for the SecurCore SC300 processor
-core_armv8mbl.h  | for the ARMv8-M Baseline processor
-core_armv8mml.h  | for the ARMv8-M Mainline processor
+core_armv8mbl.h  | for the Armv8-M Baseline processor
+core_armv8mml.h  | for the Armv8-M Mainline processor
 
 \section device_examples Device Examples
 
@@ -59,13 +59,13 @@ ARM Cortex-M33     | ARMCM33_DSP_FP    | Cortex-M23 based device with SIMD, FPU,
 ARM Cortex-M33     | ARMCM33_DSP_FP_TZ | Cortex-M23 based device with TrustZone, SIMD, FPU
 ARM SC000          | ARM SC000         | SC000 based device
 ARM SC300          | ARM SC300         | SC300 based device
-ARMv8-M Baseline   | ARMv8MBL          | ARMv8-M Baseline based device with TrustZone
-ARMv8-M Mainline   | ARMv8MML          | ARMv8-M Mainline based device with TrustZone
-ARMv8-M Mainline   | ARMv8MML_DP       | ARMv8-M Mainline based device with TrustZone and double precision FPU 
-ARMv8-M Mainline   | ARMv8MML_SP       | ARMv8-M Mainline based device with TrustZone and single precision FPU 
-ARMv8-M Mainline   | ARMv8MML_DSP      | ARMv8-M Mainline based device with TrustZone and SIMD
-ARMv8-M Mainline   | ARMv8MML_DSP_DP   | ARMv8-M Mainline based device with TrustZone, SIMD, and double precision FPU 
-ARMv8-M Mainline   | ARMv8MML_DSP_SP   | ARMv8-M Mainline based device with TrustZone, SIMD, and single precision FPU 
+ARMv8-M Baseline   | ARMv8MBL          | Armv8-M Baseline based device with TrustZone
+ARMv8-M Mainline   | ARMv8MML          | Armv8-M Mainline based device with TrustZone
+ARMv8-M Mainline   | ARMv8MML_DP       | Armv8-M Mainline based device with TrustZone and double precision FPU 
+ARMv8-M Mainline   | ARMv8MML_SP       | Armv8-M Mainline based device with TrustZone and single precision FPU 
+ARMv8-M Mainline   | ARMv8MML_DSP      | Armv8-M Mainline based device with TrustZone and SIMD
+ARMv8-M Mainline   | ARMv8MML_DSP_DP   | Armv8-M Mainline based device with TrustZone, SIMD, and double precision FPU 
+ARMv8-M Mainline   | ARMv8MML_DSP_SP   | Armv8-M Mainline based device with TrustZone, SIMD, and single precision FPU 
 
 
 \section template_files_sec Template Files
@@ -83,11 +83,11 @@ Silicon vendors add to these template files the following information:
     </tr>
     <tr>
       <td>.\\Device\\\_Template_Vendor\\Vendor\\Device\\Source\\ARM\\startup_Device.s</td>
-      <td>Startup file template for ARM C/C++ Compiler.</td>
+      <td>Startup file template for Arm C/C++ Compiler.</td>
     </tr>
     <tr>
       <td>.\\Device\\\_Template_Vendor\\Vendor\\Device\\Source\\GCC\\startup_Device.s</td>
-      <td>Startup file template for GNU GCC ARM Embedded Compiler.</td>
+      <td>Startup file template for GNU GCC Arm Embedded Compiler.</td>
     </tr>
     <tr>
       <td>.\\Device\\\_Template_Vendor\\Vendor\\Device\\Source\\IAR\\startup_Device.s</td>
@@ -203,7 +203,7 @@ EINT0_IRQHandler
 
 \section startup_s_sec startup_Device.s Template File
 
-An ARM Compiler \ref startup_s_sec for an ARMv7-M processor like Cortex-M3 is shown below.
+An Arm Compiler \ref startup_s_sec for an Armv7-M processor like Cortex-M3 is shown below.
 The files for other compiler vendors differ slightly in the syntax, but not in the overall structure.
 
 \verbinclude "Source\ARM\startup_Device.s"
@@ -827,7 +827,7 @@ The \ref system_Device_h_sec which is provided as part of the CMSIS specificatio
 /**
 \page partition_h_pg System Partition Header File partition_<device>.h
 
-The \ref partition_h_pg contains the initial setup of the TrustZone hardware in an ARMv8-M system.
+The \ref partition_h_pg contains the initial setup of the TrustZone hardware in an Armv8-M system.
 The function \ref TZ_SAU_Setup is call from \ref SystemInit and uses the settings in this file to 
 initialize the Secure Attribute Unit (SAU) and define non-secure interrupts (register NVIC_INIT_ITNS).
 The following initializations are performed:

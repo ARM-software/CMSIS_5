@@ -330,7 +330,7 @@ includes control of the end of interrupt (EOI) behavior.
 
 The binary point (values 0-7) defines the amount of priority bits used as subpriority. Please
 refer to the section Interrupt prioritization in the
-<a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ihi0048b/index.html">ARM Generic Interrupt Controller Architecture Specificaton</a>
+<a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ihi0048b/index.html">Arm Generic Interrupt Controller Architecture Specificaton</a>
 for details.
 
 \var __IOM uint32_t GICInterface_Type::ABPR

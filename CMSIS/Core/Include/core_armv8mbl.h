@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_armv8mbl.h
- * @brief    CMSIS ARMv8MBL Core Peripheral Access Layer Header File
- * @version  V5.0.3
- * @date     09. August 2017
+ * @brief    CMSIS Armv8-M Baseline Core Peripheral Access Layer Header File
+ * @version  V5.0.4
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -1239,8 +1239,8 @@ typedef struct
   #endif
   #include CMSIS_NVIC_VIRTUAL_HEADER_FILE
 #else
-/*#define NVIC_SetPriorityGrouping    __NVIC_SetPriorityGrouping   not available for ARMv8-M Baseline */
-/*#define NVIC_GetPriorityGrouping    __NVIC_GetPriorityGrouping   not available for ARMv8-M Baseline */
+/*#define NVIC_SetPriorityGrouping    __NVIC_SetPriorityGrouping   not available for Armv8-M Baseline */
+/*#define NVIC_GetPriorityGrouping    __NVIC_GetPriorityGrouping   not available for Armv8-M Baseline */
   #define NVIC_EnableIRQ              __NVIC_EnableIRQ
   #define NVIC_GetEnableIRQ           __NVIC_GetEnableIRQ
   #define NVIC_DisableIRQ             __NVIC_DisableIRQ
@@ -1266,7 +1266,7 @@ typedef struct
 #define NVIC_USER_IRQ_OFFSET          16
 
 
-/* Interrupt Priorities are WORD accessible only under ARMv6M                   */
+/* Interrupt Priorities are WORD accessible only under Armv6-M                  */
 /* The following MACROS handle generation of the register offset and byte masks */
 #define _BIT_SHIFT(IRQn)         (  ((((uint32_t)(int32_t)(IRQn))         )      &  0x03UL) * 8UL)
 #define _SHP_IDX(IRQn)           ( (((((uint32_t)(int32_t)(IRQn)) & 0x0FUL)-8UL) >>    2UL)      )

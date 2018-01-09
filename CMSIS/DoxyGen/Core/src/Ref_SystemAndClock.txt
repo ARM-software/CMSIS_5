@@ -4,7 +4,7 @@
 \defgroup   system_init_gr   System and Clock Configuration
 \brief Functions for system and clock setup available in system_<i>device</i>.c.
 \details
-ARM provides a template file <b>system_<i>device</i>.c</b> that must be adapted by 
+Arm provides a template file <b>system_<i>device</i>.c</b> that must be adapted by 
 the silicon vendor to match their actual device. As a <b>minimum requirement</b>, 
 this file must provide:
  -  A device-specific system configuration function, \ref SystemInit().

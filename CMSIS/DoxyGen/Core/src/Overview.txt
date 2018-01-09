@@ -12,8 +12,8 @@ In detail it defines:
 
 The following sections provide details about the CMSIS-Core (Cortex-M):
  - \ref using_pg describes the project setup and shows a simple program example.
- - \ref using_TrustZone_pg "Using TrustZone&reg; for ARMv8-M" describes how to use the security extensions available in the ARMv8-M architecture.
- - \ref templates_pg describes the files of the CMSIS-Core (Cortex-M) in detail and explains how to adapt template files provided by ARM to silicon vendor devices.
+ - \ref using_TrustZone_pg "Using TrustZone&reg; for Armv8-M" describes how to use the security extensions available in the Armv8-M architecture.
+ - \ref templates_pg describes the files of the CMSIS-Core (Cortex-M) in detail and explains how to adapt template files provided by Arm to silicon vendor devices.
  - \ref coreMISRA_Exceptions_pg describes the violations to the MISRA standard.
  - <a href="Modules.html">\b Reference </a> describe the features and functions of the \ref device_h_pg in detail.
  - <a href="Annotated.html">\b Data \b Structures </a> describe the data structures of the \ref device_h_pg in detail.
@@ -28,7 +28,7 @@ Files relevant to CMSIS-Core (Cortex-M) are present in the following <b>ARM::CMS
 |------------------------------|------------------------------------------------------------------------|
 |\b CMSIS\\Documentation\\Core | This documentation                                                     |
 |\b CMSIS\\Core\\Include       | CMSIS-Core (Cortex-M) header files (for example core_cm3.h, core_cmInstr.h, etc.) |
-|\b Device                     | \ref using_ARM_pg "ARM reference implementations" of Cortex-M devices  |
+|\b Device                     | \ref using_ARM_pg "Arm reference implementations" of Cortex-M devices  |
 |\b Device\\\_Template_Vendor  | \ref templates_pg for extension by silicon vendors                     |
 
 <hr>
@@ -36,39 +36,39 @@ Files relevant to CMSIS-Core (Cortex-M) are present in the following <b>ARM::CMS
 \section ref_v6-v8M Processor Support
 
 CMSIS supports the complete range of <a href="http://www.arm.com/products/processors/cortex-m/index.php" target="_blank"><b>Cortex-M processors</b></a> (with exception of Cortex-M1) and
-the <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>ARMv8-M architecture</b></a> including security extensions.
+the <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>Armv8-M architecture</b></a> including security extensions.
 
 \subsection ref_man_sec Cortex-M Reference Manuals
 
 The Cortex-M Device Generic User Guides contain the programmers model and detailed information about the core peripherals and are available for:
 
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/DUI0497A_cortex_m0_r0p0_generic_ug.pdf" target="_blank"><b>Cortex-M0 Devices Generic User Guide</b></a> (ARMv6-M architecture)
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0662b/DUI0662B_cortex_m0p_r0p1_dgug.pdf" target="_blank"><b>Cortex-M0+ Devices Generic User Guide</b></a> (ARMv6-M architecture)
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0552a/DUI0552A_cortex_m3_dgug.pdf" target="_blank"><b>Cortex-M3 Devices Generic User Guide</b></a> (ARMv7-M architecture)
+- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/DUI0497A_cortex_m0_r0p0_generic_ug.pdf" target="_blank"><b>Cortex-M0 Devices Generic User Guide</b></a> (Armv6-M architecture)
+- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0662b/DUI0662B_cortex_m0p_r0p1_dgug.pdf" target="_blank"><b>Cortex-M0+ Devices Generic User Guide</b></a> (Armv6-M architecture)
+- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0552a/DUI0552A_cortex_m3_dgug.pdf" target="_blank"><b>Cortex-M3 Devices Generic User Guide</b></a> (Armv7-M architecture)
 - <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0553a/DUI0553A_cortex_m4_dgug.pdf" target="_blank"><b>Cortex-M4 Devices Generic User Guide</b></a> (ARMv7-M architecture)
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646a/DUI0646A_cortex_m7_dgug.pdf" target="_blank"><b>Cortex-M7 Devices Generic User Guide</b></a> (ARMv7-M architecture)
+- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646a/DUI0646A_cortex_m7_dgug.pdf" target="_blank"><b>Cortex-M7 Devices Generic User Guide</b></a> (Armv7-M architecture)
 
 The \b Cortex-M23 and \b Cortex-M33 are described with Technical Reference Manuals that are available here:
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0550c/cortex_m23_r1p0_technical_reference_manual_DDI0550C_en.pdf" target="_blank"><b>Cortex-M23 Technical Reference Manual</b></a> (ARMv8-M baseline architecture)
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.100230_0002_00_en/cortex_m33_trm_100230_0002_00_en.pdf" target="_blank"><b>Cortex-M33 Technical Reference Manual</b></a> (ARMv8-M mainline architecture)
+- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0550c/cortex_m23_r1p0_technical_reference_manual_DDI0550C_en.pdf" target="_blank"><b>Cortex-M23 Technical Reference Manual</b></a> (Armv8-M baseline architecture)
+- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.100230_0002_00_en/cortex_m33_trm_100230_0002_00_en.pdf" target="_blank"><b>Cortex-M33 Technical Reference Manual</b></a> (Armv8-M mainline architecture)
 
-\subsection ARMv8M ARMv8-M Architecture
+\subsection ARMv8M Armv8-M Architecture
 
-ARMv8-M introduces two profiles \b baseline (for power and area constrained applications) and \b mainline (full-featured with optional SIMD, floating-point, and co-processor extensions).
-Both ARMv8-M profiles are supported by CMSIS.
+Armv8-M introduces two profiles \b baseline (for power and area constrained applications) and \b mainline (full-featured with optional SIMD, floating-point, and co-processor extensions).
+Both Armv8-M profiles are supported by CMSIS.
 
-The ARMv8-M Architecture is described in the <a href="http://developer.arm.com/products/architecture/m-profile/docs/ddi0553/latest/armv8-m-architecture-reference-manual" target="_blank"><b>ARMv8-M Architecture Reference Manual</b></a>.
+The Armv8-M Architecture is described in the <a href="http://developer.arm.com/products/architecture/m-profile/docs/ddi0553/latest/armv8-m-architecture-reference-manual" target="_blank"><b>Armv8-M Architecture Reference Manual</b></a>.
 
 <hr>
 
 \section tested_tools_sec Tested and Verified Toolchains
 
-The \ref templates_pg supplied by ARM have been tested and verified with the following toolchains:
- - ARM: ARM Compiler 5.06 update 6 (not for Cortex-M23, Cortex-M33, ARMv8-M)
- - ARM: ARM Compiler 6.9
- - ARM: ARM Compiler 6.6.2 (not for Cortex-M0, Cortex-M23, Cortex-M33, ARMv8-M)
- - GNU: GNU Tools for ARM Embedded 6.3.1 20170620
- - IAR: IAR ANSI C/C++ Compiler for ARM 8.20.1.14183
+The \ref templates_pg supplied by Arm have been tested and verified with the following toolchains:
+ - Arm: Arm Compiler 5.06 update 6 (not for Cortex-M23, Cortex-M33, Armv8-M)
+ - Arm: Arm Compiler 6.9
+ - Arm: Arm Compiler 6.6.2 (not for Cortex-M0, Cortex-M23, Cortex-M33, Armv8-M)
+ - GNU: GNU Tools for Arm Embedded 6.3.1 20170620
+ - IAR: IAR ANSI C/C++ Compiler for Arm 8.20.1.14183
 
 <hr>
 */
@@ -173,7 +173,7 @@ The \ref templates_pg supplied by ARM have been tested and verified with the fol
          Corrected: DoxyGen function parameter comments.\n
          Corrected: IAR toolchain: removed for \ref NVIC_SystemReset the attribute(noreturn).\n
          Corrected: GCC toolchain: suppressed irrelevant compiler warnings.\n
-         Added: Support files for ARM Compiler v6 (cmsis_armcc_v6.h).
+         Added: Support files for Arm Compiler v6 (cmsis_armcc_v6.h).
       </td>
     </tr>
     <tr>

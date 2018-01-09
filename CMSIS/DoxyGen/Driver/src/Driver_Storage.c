@@ -1,13 +1,3 @@
-/* -----------------------------------------------------------------------------
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
- *
- * $Date:        7. March 2016
- * $Revision:    V1.00
- *
- * Project:      Storage Driver API
- * -------------------------------------------------------------------------- */
-
-
 /**
 \defgroup storage_interface_gr Storage Interface
 \brief    Driver API for Storage Device Interface (%Driver_Storage.h)
@@ -625,7 +615,7 @@ and then read it back to be verified. It handles both synchronous and
 asynchronous driver implementations.
 
 \code
-// Copyright (c) 2006-2016, ARM Limited, All Rights Reserved
+// Copyright (c) 2006-2016, Arm Limited, All Rights Reserved
 // SPDX-License-Identifier: Apache-2.0
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may

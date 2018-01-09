@@ -1,13 +1,3 @@
-/* -----------------------------------------------------------------------------
- * Copyright (c) 2013-2014 ARM Limited. All rights reserved.
- *  
- * $Date:        2. January 2014
- * $Revision:    V2.00
- *  
- * Project:      USART Driver API
- * -------------------------------------------------------------------------- */
-
-
 /**
 \defgroup usart_interface_gr USART Interface
 \brief   Driver API for Universal Synchronous Asynchronous Receiver/Transmitter (%Driver_USART.h)
