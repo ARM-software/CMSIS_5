@@ -8,6 +8,11 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.2.1-dev2">
+      Active development...
+      CMSIS-RTOS2:
+        - RTX_Config.h 5.2.1: Added RTE_CMSIS_RTOS_RTX_CONFIG_H option.
+    </release>
     <release version="5.2.1-dev1">
       Active development...
       CMSIS-RTOS2:
@@ -2675,7 +2680,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.2.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.2.1"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->
@@ -2745,7 +2750,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.2.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.2.1"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->
@@ -2796,7 +2801,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.2.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.2.1"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->
@@ -2885,7 +2890,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.2.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.2.1"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/handlers.c"    version="5.1.0"/>
@@ -2943,7 +2948,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.2.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.2.1"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->

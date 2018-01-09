@@ -27,7 +27,14 @@
  
 #ifndef RTX_CONFIG_H_
 #define RTX_CONFIG_H_
- 
+
+#ifdef _RTE_
+#include "RTE_Components.h"
+#ifdef RTE_CMSIS_RTOS_RTX_CONFIG_H
+#include RTE_CMSIS_RTOS_RTX_CONFIG_H
+#endif
+#endif
+
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
  
 // <h>System Configuration
