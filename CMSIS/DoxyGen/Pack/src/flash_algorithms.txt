@@ -13,7 +13,7 @@ Flash programming algorithms are defined with functions to erase and program the
 settings are required. Follow these steps to create and configure a new Flash programming algorithm:
 -# Copy the content from the <b>ARM:CMSIS</b> Pack folder (usually
    C:\\Keil\\ARM\\Pack\\ARM\\CMSIS\\<i>version</i>\\Device\\\_Template_Flash) to a new folder.
--# Rename the project file \b NewDevice.uvproj to represent the new Flash ROM device name, for example \b MyDevice.uvproj.
+-# Rename the project file \b NewDevice.uvprojx to represent the new Flash ROM device name, for example \b MyDevice.uvprojx.
 -# Open the project with uVision. From the toolbar, use the drop-down <b>Select Target</b> to define the processor
    architecture. \b Cortex-M fits for all Cortex-M0/M0+, M3, and M4 devices. The configuration assumes a little-endian
    microcontroller. In case of a big-endian microcontroller, select the correct processor core with \b Project -
@@ -48,33 +48,29 @@ FlashDev.c
 The file \b FlashDev.c contains parameter definitions for:
 -# the Flash programming functions.
 -# the \b FlashDevice structure:
-   \code
-   struct FlashDevice const FlashDevice  =  {
-   FLASH_DRV_VERS,                   // Driver Version, do not modify!
-   "STM32Fxxx High-density Flash",   // Device Name (512kB/384kB/256kB)
-   ONCHIP,                           // Device Type
-   0x08000000,                       // Device Start Address
-   0x00080000,                       // Device Size in Bytes (512kB)
-   1024,                             // Programming Page Size
-   0,                                // Reserved, must be 0
-   0xFF,                             // Initial Content of Erased Memory
-   100,                              // Program Page Timeout 100 mSec
-   500,                              // Erase Sector Timeout 500 mSec
-    
-   // Specify Size and Address of Sectors
-   0x0800, 0x000000,                 // Sector Size 2kB (256 Sectors)
+\code
+struct FlashDevice const FlashDevice  =  {
+   FLASH_DRV_VERS,             // Driver Version, do not modify!
+   "New Device 256kB Flash",   // Device Name 
+   ONCHIP,                     // Device Type
+   0x00000000,                 // Device Start Address
+   0x00040000,                 // Device Size in Bytes (256kB)
+   1024,                       // Programming Page Size
+   0,                          // Reserved, must be 0
+   0xFF,                       // Initial Content of Erased Memory
+   100,                        // Program Page Timeout 100 mSec
+   3000,                       // Erase Sector Timeout 3000 mSec
+ 
+// Specify Size and Address of Sectors
+   0x002000, 0x000000,         // Sector Size  8kB (8 Sectors)
+   0x010000, 0x010000,         // Sector Size 64kB (2 Sectors) 
+   0x002000, 0x030000,         // Sector Size  8kB (8 Sectors)
    SECTOR_END
-   };
-   \endcode
+};
+\endcode
 
 \note The <b>Device Name</b> will usually be shown in tools to identify the Flash algorithm. Make sure that this is changed
 to the correct device name from the DFP.
-
-Testing Algorithms
-------------------
-The _Template_Flash\\Test-folder contains a project that shows how to test a new Flash programming algorithm on behalf of a
-STM32F10x device. Adapt the code to your needs.
-
 
 \section AddFPA Adding an Algorithm to a Pack
 The generated <b>*.FLM</b> file needs to be added to the \ref createPack_DFP, so that it is available to the tool user for programming
@@ -88,7 +84,7 @@ The algorithm is specified within the the \ref element_family level:
  
   <subFamily DsubFamily="STM32F405">
     <algorithm name="Flash/STM32F2xx_1024.flm" start=0x08000000 size=0x20000 default="1"/>       <!-- valid for all devices of a subFamily -->
-
+ 
     <device Dname="STM32F405OE">
       <algorithm name="Flash/STM32F2xx_2048.flm" start=0x08000000 size=0x40000 default="1"/>     <!-- finally, this is the default for the device -->
     </device>
