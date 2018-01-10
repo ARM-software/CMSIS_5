@@ -150,4 +150,4 @@ def create():
   return builder
 
 def complete(builder, success):
-  builder.saveJunitResult("result_{now}.xml".format(now = datetime.now().strftime("%Y%m%d%H%M%S")))
+  builder.saveJunitResult("build_{now}.xml".format(now = datetime.now().strftime("%Y%m%d%H%M%S")))
