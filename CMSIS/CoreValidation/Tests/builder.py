@@ -148,3 +148,6 @@ def create():
   builder.addFilter([ filterAC5, filterAC6LTM ])
 
   return builder
+
+def complete(builder, success):
+  builder.saveJunitResult("result_{now}.xml".format(now = datetime.now().strftime("%Y%m%d%H%M%S")))
