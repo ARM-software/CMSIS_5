@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler GCC header file
- * @version  V5.0.2
- * @date     13. February 2017
+ * @version  V5.0.3
+ * @date     16. January 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
@@ -1536,7 +1536,7 @@ __STATIC_FORCEINLINE uint32_t __STLEX(uint32_t value, volatile uint32_t *ptr)
   @{
 */
 
-#if (__ARM_FEATURE_DSP == 1)                             /* ToDo ARMCLANG: This should be ARCH >= ARMv7-M + SIMD */
+#if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
 
 __STATIC_FORCEINLINE uint32_t __SADD8(uint32_t op1, uint32_t op2)
 {
