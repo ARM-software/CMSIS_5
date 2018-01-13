@@ -1536,7 +1536,7 @@ __STATIC_FORCEINLINE uint32_t __STLEX(uint32_t value, volatile uint32_t *ptr)
   @{
 */
 
-#if (__ARM_FEATURE_DSP == 1)                             /* ToDo ARMCLANG: This should be ARCH >= ARMv7-M + SIMD */
+#if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))  /* ToDo ARMCLANG: This should be ARCH >= ARMv7-M + SIMD */
 
 __STATIC_FORCEINLINE uint32_t __SADD8(uint32_t op1, uint32_t op2)
 {
