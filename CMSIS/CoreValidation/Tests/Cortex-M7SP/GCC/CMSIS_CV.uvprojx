@@ -239,7 +239,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-mfloat-abi=hard -mfpu=fpv5-sp-d16 -Wall -Wextra -Wstrict-prototypes -Wshadow</MiscControls>
+              <MiscControls>-mfloat-abi=hard -mfpu=fpv5-sp-d16 -Wall -Wextra -Wstrict-prototypes -Wshadow -Wundef</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>.;..\..\..\Include</IncludePath>

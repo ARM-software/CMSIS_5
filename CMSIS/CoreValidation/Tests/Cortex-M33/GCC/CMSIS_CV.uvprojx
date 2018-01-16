@@ -239,7 +239,7 @@
             <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-march=armv8-m.main -mtune=cortex-m33 -Wall -Wextra -Wstrict-prototypes -Wshadow</MiscControls>
+              <MiscControls>-march=armv8-m.main -mtune=cortex-m33 -Wall -Wextra -Wstrict-prototypes -Wshadow -Wundef</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>.;..\..\..\Include</IncludePath>
