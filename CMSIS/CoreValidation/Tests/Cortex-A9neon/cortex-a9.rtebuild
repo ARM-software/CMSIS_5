@@ -6,7 +6,7 @@ config:
     cpu   : Cortex-A9
     mcpu  : cortex-a9
     fpu   : vfpv3
-    mfpu  : vfpv3
+    mfpu  : neon-vfpv4
     target: ARM:82/ARMCA9/Cortex-A9
 source:
  - ../../Source/CV_CoreAFunc.c

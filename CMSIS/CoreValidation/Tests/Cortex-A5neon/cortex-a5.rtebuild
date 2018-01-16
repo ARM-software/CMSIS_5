@@ -5,8 +5,8 @@ config:
   FVP:
     mcpu  : cortex-a5
     cpu   : Cortex-A5.neon
-    mfpu  : neon-vfpv4
-    fpu   : vfpv4
+    mfpu  : neon-fp16
+    fpu   : vfpv3_fp16
     target: ARM:82/ARMCA5/Cortex-A5
 source:
  - ../../Source/CV_CoreAFunc.c
