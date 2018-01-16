@@ -18,8 +18,8 @@
 
 /* ----------------------------------------------------------------------
  * Project:      CMSIS-NN
- * Title:        arm_depthwise_separable_conv_HWC_q7.c
- * Description:  Q7 depthwise separable convolution function
+ * Title:        arm_depthwise_separable_conv_HWC_q7_nonsquare.c
+ * Description:  Q7 depthwise separable convolution function (non-square shape)
  *
  * Target Processor: Cortex-M4 and Cortex-M7 cores
  *
@@ -38,63 +38,69 @@
  */
 
 /**
- * @brief Q7 depthwise separable convolution function
- * @param[in]       Im_in       pointer to input tensor
- * @param[in]       dim_im_in   input tensor dimention
- * @param[in]       ch_im_in    number of input tensor channels
- * @param[in]       wt          pointer to kernel weights
- * @param[in]       ch_im_out   number of filters, i.e., output tensor channels
- * @param[in]       dim_kernel  filter kernel size
- * @param[in]       padding     padding sizes
- * @param[in]       stride      convolution stride
- * @param[in]       bias        pointer to bias
- * @param[in]       bias_shift  amount of left-shift for bias
- * @param[in]       out_shift   amount of right-shift for output
- * @param[in,out]   Im_out      pointer to output tensor
- * @param[in]       dim_im_out  output tensor dimension
- * @param[in,out]   bufferA     pointer to buffer space for input, 
- * @param[in,out]   bufferB     pointer to buffer space for output
+ * @brief Q7 depthwise separable convolution function (non-square shape)
+ * @param[in]       Im_in         pointer to input tensor
+ * @param[in]       dim_im_in_x   input tensor dimention x
+ * @param[in]       dim_im_in_y   input tensor dimention y
+ * @param[in]       ch_im_in      number of input tensor channels
+ * @param[in]       wt            pointer to kernel weights
+ * @param[in]       ch_im_out     number of filters, i.e., output tensor channels
+ * @param[in]       dim_kernel_x  filter kernel size x
+ * @param[in]       dim_kernel_y  filter kernel size y
+ * @param[in]       padding_x     padding sizes x
+ * @param[in]       padding_y     padding sizes y
+ * @param[in]       stride_x      convolution stride x
+ * @param[in]       stride_y      convolution stride y
+ * @param[in]       bias          pointer to bias
+ * @param[in]       bias_shift    amount of left-shift for bias
+ * @param[in]       out_shift     amount of right-shift for output
+ * @param[in,out]   Im_out        pointer to output tensor
+ * @param[in]       dim_im_out_x  output tensor dimension x
+ * @param[in]       dim_im_out_y  output tensor dimension y
+ * @param[in,out]   bufferA       pointer to buffer space for input, 
+ * @param[in,out]   bufferB       pointer to buffer space for output
  * @return     The function returns either
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
  *
- * @details
- *
- * <b>Buffer size:</b>
- *
- * bufferA size: 2*ch_im_in*dim_kernel*dim_kernel
- *
- * bufferB size: 0
- *
- * <b>Input dimension constraints:</b>
- *
- * ch_im_in equals ch_im_out
- *
+ * This function is the version with full list of optimization tricks, but with
+ * some contraints:
+ *   ch_im_in is multiple of 2
+ *   ch_im_out is multiple of 2
+ */
+
+arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
+                                                         const uint16_t dim_im_in_x,
+                                                         const uint16_t dim_im_in_y,
+                                                         const uint16_t ch_im_in,
+                                                         const q7_t * wt,
+                                                         const uint16_t ch_im_out,
+                                                         const uint16_t dim_kernel_x,
+                                                         const uint16_t dim_kernel_y,
+                                                         const uint16_t padding_x,
+                                                         const uint16_t padding_y,
+                                                         const uint16_t stride_x,
+                                                         const uint16_t stride_y,
+                                                         const q7_t * bias,
+                                                         const uint16_t bias_shift,
+                                                         const uint16_t out_shift,
+                                                         q7_t * Im_out,
+                                                         const uint16_t dim_im_out_x,
+                                                         const uint16_t dim_im_out_y, 
+                                                         q15_t * bufferA, 
+                                                         q7_t * bufferB)
+{
+
+#if defined (ARM_MATH_DSP)
+    /* Run the following code for Cortex-M4 and Cortex-M7 */
+
+/*
  * Implementation:
  * There are 3 nested loop here:
  * Inner loop: calculate each output value with MAC instruction over an accumulator
  * Mid   loop: loop over different output channel
  * Outer loop: loop over different output (x, y)
+ *
  */
-
-arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
-                                               const uint16_t dim_im_in,
-                                               const uint16_t ch_im_in,
-                                               const q7_t * wt,
-                                               const uint16_t ch_im_out,
-                                               const uint16_t dim_kernel,
-                                               const uint16_t padding,
-                                               const uint16_t stride,
-                                               const q7_t * bias,
-                                               const uint16_t bias_shift,
-                                               const uint16_t out_shift,
-                                               q7_t * Im_out, 
-                                               const uint16_t dim_im_out, 
-                                               q15_t * bufferA, 
-                                               q7_t * bufferB)
-{
-
-#if defined (ARM_MATH_DSP)
-    /* Run the following code for Cortex-M4 and Cortex-M7 */
 
     int16_t   i_out_y, i_out_x;
     int16_t   i_ker_y, i_ker_x;
@@ -111,21 +117,23 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
         return ARM_MATH_SIZE_MISMATCH;
     }
 
-    for (i_out_y = 0; i_out_y < dim_im_out; i_out_y++)
+    for (i_out_y = 0; i_out_y < dim_im_out_y; i_out_y++)
     {
-        for (i_out_x = 0; i_out_x < dim_im_out; i_out_x++)
+        for (i_out_x = 0; i_out_x < dim_im_out_x; i_out_x++)
         {
             /* we first do im2col here */
-            for (i_ker_y = i_out_y * stride - padding; i_ker_y < i_out_y * stride - padding + dim_kernel; i_ker_y++)
+            for (i_ker_y = i_out_y * stride_y - padding_y; i_ker_y < i_out_y * stride_y - padding_y + dim_kernel_y;
+                 i_ker_y++)
             {
-                for (i_ker_x = i_out_x * stride - padding; i_ker_x < i_out_x * stride - padding + dim_kernel; i_ker_x++)
+                for (i_ker_x = i_out_x * stride_x - padding_x; i_ker_x < i_out_x * stride_x - padding_x + dim_kernel_x;
+                     i_ker_x++)
                 {
-                    if (i_ker_y < 0 || i_ker_y >= dim_im_in || i_ker_x < 0 || i_ker_x >= dim_im_in)
+                    if (i_ker_y < 0 || i_ker_y >= dim_im_in_y || i_ker_x < 0 || i_ker_x >= dim_im_in_x)
                     {
                         arm_fill_q7(0, pBuffer, ch_im_in);
                     } else
                     {
-                        arm_copy_q7((q7_t *) Im_in + (i_ker_y * dim_im_in + i_ker_x) * ch_im_in, pBuffer, ch_im_in);
+                        arm_copy_q7((q7_t *) Im_in + (i_ker_y * dim_im_in_x + i_ker_x) * ch_im_in, pBuffer, ch_im_in);
                     }
                     pBuffer += ch_im_in;
                 }
@@ -144,12 +152,13 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
                 q31_t     sum3 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
                 q31_t     sum4 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
 #else
-                q31_t     sum =  *pBias++ << bias_shift;
+                q31_t     sum = *pBias++ << bias_shift;
                 q31_t     sum2 = *pBias++ << bias_shift;
                 q31_t     sum3 = *pBias++ << bias_shift;
                 q31_t     sum4 = *pBias++ << bias_shift;
 #endif
-                uint16_t  colCnt = (dim_kernel * dim_kernel) >> 1;
+
+                uint16_t  colCnt = (dim_kernel_x * dim_kernel_y) >> 1;
                 q7_t     *pB = colBuffer + row_shift;
                 const q7_t *pA = wt + row_shift;
                 row_shift += 4;
@@ -226,12 +235,9 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
 #else
 
 #ifndef ARM_MATH_BIG_ENDIAN
-                /*
-                 *   r0    r1    r2    r3    r4   r5
-                 *  inA1, inA2, inB1, inB2, opA, opB
-                 */
-
-                asm volatile ("COL_LOOP_%=:\n"
+                //  r0    r1    r2    r3    r4   r5
+                // inA1, inA2, inB1, inB2, opA, opB
+                asm volatile ("COL_LOOP:\n"
                               "ldr.w r2, [%[pB], #0]\n"
                               "add.w %[pB], %[pB], %[ch_im_in]\n"
                               "ldr.w r5, [%[pB], #0]\n"
@@ -261,18 +267,13 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
                               "sxtb16 r5, r5\n"
                               "smlad %[sum4], r4, r5, %[sum4]\n"
                               "subs %[colCnt], #1\n"
-                              "bne COL_LOOP_%=\n":[sum]
-                              "+r"(sum),[sum2] "+r"(sum2),
-                              [sum3] "+r"(sum3),
-                              [sum4] "+r"(sum4),[pB] "+r"(pB),
-                              [pA] "+r"(pA):[colCnt]
-                              "r"(colCnt),[ch_im_in] "r"(ch_im_in):"r0", "r1", "r2", "r3", "r4", "r5");
+                              "bne COL_LOOP\n":[sum] "+r"(sum),[sum2] "+r"(sum2),[sum3] "+r"(sum3),
+                              [sum4] "+r"(sum4),[pB] "+r"(pB),[pA] "+r"(pA):[colCnt] "r"(colCnt),
+                              [ch_im_in] "r"(ch_im_in):"r0", "r1", "r2", "r3", "r4", "r5");
 #else
-                /*
-                 *  r0    r1    r2    r3    r4   r5
-                 * inA1, inA2, inB1, inB2, opA, opB
-                 */
-                asm volatile ("COL_LOOP_%=:\n"
+                //  r0    r1    r2    r3    r4   r5
+                // inA1, inA2, inB1, inB2, opA, opB
+                asm volatile ("COL_LOOP:\n"
                               "ldr.w r2, [%[pB], #0]\n"
                               "add.w %[pB], %[pB], %[ch_im_in]\n"
                               "ldr.w r5, [%[pB], #0]\n"
@@ -302,18 +303,14 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
                               "sxtb16 r5, r5\n"
                               "smlad %[sum3], r4, r5, %[sum3]\n"
                               "subs %[colCnt], #1\n"
-                              "bne COL_LOOP_%=\n":[sum]
-                              "+r"(sum),[sum2] "+r"(sum2),
-                              [sum3] "+r"(sum3),
-                              [sum4] "+r"(sum4),[pB] "+r"(pB),
-                              [pA] "+r"(pA):[colCnt]
-                              "r"(colCnt),[ch_im_in] "r"(ch_im_in):"r0", "r1", "r2", "r3", "r4", "r5");
-
-#endif                          /* ARM_MATH_BIG_ENDIAN */
+                              "bne COL_LOOP\n":[sum] "+r"(sum),[sum2] "+r"(sum2),[sum3] "+r"(sum3),
+                              [sum4] "+r"(sum4),[pB] "+r"(pB),[pA] "+r"(pA):[colCnt] "r"(colCnt),
+                              [ch_im_in] "r"(ch_im_in):"r0", "r1", "r2", "r3", "r4", "r5");
+#endif                          /*ARM_MATH_BIG_ENDIAN */
 
 #endif                          /* USE_INTRINSIC */
 
-                colCnt = (dim_kernel * dim_kernel) & 0x1;
+                colCnt = (dim_kernel_x * dim_kernel_y) & 0x1;
                 while (colCnt)
                 {
                     union arm_nnword inA, inB;
@@ -346,7 +343,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
 #else
                 q31_t     sum = *pBias++ << bias_shift;
 #endif
-                uint16_t  colCnt = (dim_kernel * dim_kernel);
+                uint16_t  colCnt = (dim_kernel_x * dim_kernel_y);
 
                 row_shift += 1;
 
@@ -364,15 +361,15 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
                 rowCnt--;
             }
 
-            /* clear counter and pointers */
+            // clear counter and pointers
             pBuffer = colBuffer;
         }
     }
 
 #else
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
-    int       i_out_y, i_out_x, i_ch_out, i_ker_x, i_ker_y;
-    int       conv_out;
+    int       i_out_y, i_out_x, i_ch_out;
+    int       i_ker_y, i_ker_x; 
 
     /* do some checking here, basically ch_im_in == ch_im_out */
     if (ch_im_in != ch_im_out)
@@ -380,42 +377,39 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
         return ARM_MATH_SIZE_MISMATCH;
     }
 
-    for (i_out_y = 0; i_out_y < dim_im_out; i_out_y++)
+    for (i_out_y = 0; i_out_y < dim_im_out_y; i_out_y++)
     {
-        for (i_out_x = 0; i_out_x < dim_im_out; i_out_x++)
+        for (i_out_x = 0; i_out_x < dim_im_out_x; i_out_x++)
         {
             for (i_ch_out = 0; i_ch_out < ch_im_out; i_ch_out++)
             {
-                // for each output
+                // for each output 
 #if defined (ARM_NNUSE_ROUND)
-                conv_out = ((q31_t)(bias[i_ch_out]) << bias_shift) + (0x1 << (out_shift-1));
+                int       conv_out = ((q31_t)(bias[i_ch_out]) << bias_shift) + (0x1 << (out_shift-1));
 #else
-                conv_out = bias[i_ch_out] << bias_shift;
+                int       conv_out = bias[i_ch_out] << bias_shift;
 #endif
-                for (i_ker_y = 0; i_ker_y < dim_kernel; i_ker_y++)
+                for (i_ker_y = 0; i_ker_y < dim_kernel_y; i_ker_y++)
                 {
-                    for (i_ker_x = 0; i_ker_x < dim_kernel; i_ker_x++)
+                    for (i_ker_x = 0; i_ker_x < dim_kernel_x; i_ker_x++)
                     {
-                        int       in_row = stride * i_out_y + i_ker_y - padding;
-                        int       in_col = stride * i_out_x + i_ker_x - padding;
-                        if (in_row >= 0 && in_col >= 0 && in_row < dim_im_in && in_col < dim_im_in)
+                        int       in_row = stride_y * i_out_y + i_ker_y - padding_y;
+                        int       in_col = stride_x * i_out_x + i_ker_x - padding_x;
+                        if (in_row >= 0 && in_col >= 0 && in_row < dim_im_in_y && in_col < dim_im_in_x)
                         {
-                            conv_out +=
-                                Im_in[(in_row *
-                                       dim_im_in +
-                                       in_col) *
-                                      ch_im_in +
-                                      i_ch_out] * wt[(i_ker_y * dim_kernel + i_ker_x) * ch_im_out + i_ch_out];
+                            conv_out += Im_in[(in_row * dim_im_in_x + in_col) * ch_im_in + i_ch_out] *                        
+                                wt[(i_ker_y * dim_kernel_x + i_ker_x) * ch_im_out + i_ch_out];
                         }
                     }
                 }
-                Im_out[(i_out_y * dim_im_out +
-                        i_out_x) * ch_im_out + i_ch_out] = (q7_t) __SSAT((conv_out >> out_shift), 8);
+                Im_out[(i_out_y * dim_im_out_x + i_out_x) * ch_im_out + i_ch_out] =
+                    (q7_t) __SSAT((conv_out >> out_shift), 8);
             }
         }
     }
 
 #endif                          /* ARM_MATH_DSP */
+
 
     /* Return to application */
     return ARM_MATH_SUCCESS;

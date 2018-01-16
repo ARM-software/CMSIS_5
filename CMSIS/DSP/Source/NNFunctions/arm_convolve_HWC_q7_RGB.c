@@ -32,7 +32,7 @@
  */
 
 /**
- * @addtogroup Conv
+ * @addtogroup NNConv
  * @{
  */
 
@@ -190,7 +190,11 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
 
         for (i = 0; i < ch_im_out; i++)
         {
+#if defined (ARM_NNUSE_ROUND)
+            q31_t     sum = ((q31_t)bias[i] << bias_shift) + (0x1 << (out_shift-1));
+#else
             q31_t     sum = bias[i] << bias_shift;
+#endif
             q15_t    *pB = bufferA;
             /* basically each time it process 4 entries */
             uint16_t  colCnt = 3 * dim_kernel * dim_kernel >> 2;
@@ -240,12 +244,16 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
         {
             for (k = 0; k < dim_im_out; k++)
             {
+#if defined (ARM_NNUSE_ROUND)
+                conv_out = (bias[i] << bias_shift) + (0x1 << (out_shift-1));
+#else
                 conv_out = bias[i] << bias_shift;
+#endif
                 for (m = 0; m < dim_kernel; m++)
                 {
                     for (n = 0; n < dim_kernel; n++)
                     {
-                        // if-for implementation
+                        /* if-for implementation */
                         in_row = stride * j + m - padding;
                         in_col = stride * k + n - padding;
                         if (in_row >= 0 && in_col >= 0 && in_row < dim_im_in && in_col < dim_im_in)
@@ -272,5 +280,5 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
 }
 
 /**
- * @} end of Conv group
+ * @} end of NNConv group
  */

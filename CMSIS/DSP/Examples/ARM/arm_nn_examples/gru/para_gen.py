@@ -99,7 +99,7 @@ input_data1 = np.zeros((vec_dim-row_dim), dtype=int)
 input_data2 = np.zeros((vec_dim-row_dim), dtype=int)
 history_data = np.zeros((row_dim), dtype=int)
 
-outfile = open("test_data.h", "w")
+outfile = open("arm_nnexamples_gru_test_data.h", "w")
 
 for i in range(row_dim):
   for j in range(vec_dim):

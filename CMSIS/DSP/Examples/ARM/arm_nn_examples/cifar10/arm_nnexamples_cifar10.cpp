@@ -1,30 +1,40 @@
-/*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- * Licensed under the Apache License, Version 2.0 (the License); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 /* ----------------------------------------------------------------------
- * Project:      CMSIS-NN
- * Title:        arm_nnexamples_cifar10.cpp
- * Description:	 Convolutional Neural Network Example
- *
- * Target Processor: Cortex-M4 and Cortex-M7 cores
- *
- * -------------------------------------------------------------------- */
-
+* Copyright (C) 2010-2017 ARM Limited. All rights reserved.
+*
+*
+* Project:       CMSIS-NN
+* Title:         arm_nnexamples_cifar10.cpp
+*
+* Description:   Convolutional Neural Network Example
+*
+* Target Processor: Cortex-M4/Cortex-M7
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions
+* are met:
+*   - Redistributions of source code must retain the above copyright
+*     notice, this list of conditions and the following disclaimer.
+*   - Redistributions in binary form must reproduce the above copyright
+*     notice, this list of conditions and the following disclaimer in
+*     the documentation and/or other materials provided with the
+*     distribution.
+*   - Neither the name of ARM LIMITED nor the names of its contributors
+*     may be used to endorse or promote products derived from this
+*     software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+* ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+* -------------------------------------------------------------------- */
 
 /**
  * @ingroup groupExamples
@@ -40,7 +50,8 @@
  *
  * \par Model definition:
  * \par
- * The CNN used in this example is based on CIFAR-10 example from Caffe. The neural network consists
+ * The CNN used in this example is based on CIFAR-10 example from Caffe [1]. 
+ * The neural network consists
  * of 3 convolution layers interspersed by ReLU activation and max pooling layers, followed by a 
  * fully-connected layer at the end. The input to the network is a 32x32 pixel color image, which will 
  * be classified into one of the 10 output classes. 
@@ -72,21 +83,18 @@
  * <b> Refer  </b>
  * \link arm_nnexamples_cifar10.cpp \endlink
  *
+ * \par [1] https://github.com/BVLC/caffe
  */
 
 #include <stdint.h>
 #include <stdio.h>
 #include "arm_math.h"
-#define IP_X4
-#include "parameter.h"
-#include "shift.h"
-#ifdef IP_X4
-#include "weights.h"
-#else
-#include "weights.h"
-#endif
+#include "arm_nnexamples_cifar10_parameter.h"
+#include "arm_nnexamples_cifar10_shift.h"
+#include "arm_nnexamples_cifar10_weights.h"
+
 #include "arm_nnfunctions.h"
-#include "inputs.h"
+#include "arm_nnexamples_cifar10_inputs.h"
 
 // include the input and weights
 
@@ -159,6 +167,8 @@ int main()
     arm_fully_connected_q7(img_buffer2, ip1_wt, IP1_DIM, IP1_OUT, IP1_BIAS_LSHIFT, IP1_OUT_RSHIFT, ip1_bias,
                            output_data, (q15_t *) img_buffer1);
 #endif
+
+    arm_softmax_q7(output_data, 10, output_data);
 
     for (int i = 0; i < 10; i++)
     {

@@ -1,29 +1,40 @@
-/*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- * Licensed under the Apache License, Version 2.0 (the License); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 /* ----------------------------------------------------------------------
- * Project:      CMSIS-NN
- * Title:        arm_nnexamples_gru.cpp
- * Description:	 Gated Recurrent Unit Example
- *
- * Target Processor: Cortex-M4 and Cortex-M7 cores
- *
- * -------------------------------------------------------------------- */
+* Copyright (C) 2010-2017 ARM Limited. All rights reserved.
+*
+*
+* Project:       CMSIS-NN
+* Title:         arm_nnexamples_gru.cpp
+*
+* Description:   Gated Recurrent Unit Example
+*
+* Target Processor: Cortex-M4/Cortex-M7
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions
+* are met:
+*   - Redistributions of source code must retain the above copyright
+*     notice, this list of conditions and the following disclaimer.
+*   - Redistributions in binary form must reproduce the above copyright
+*     notice, this list of conditions and the following disclaimer in
+*     the documentation and/or other materials provided with the
+*     distribution.
+*   - Neither the name of ARM LIMITED nor the names of its contributors
+*     may be used to endorse or promote products derived from this
+*     software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+* ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+* -------------------------------------------------------------------- */
 
 /**
  * @ingroup groupExamples
@@ -45,7 +56,7 @@
  * The computation can be summarized as:
  * <pre>z[t] = sigmoid( W_z &middot; {h[t-1],x[t]} )
  * r[t] = sigmoid( W_r &middot; {h[t-1],x[t]} ) 
- * n[t] = tanh( W_n &middot; [r[t] &times; h[t-1], x[t] ) 
+ * n[t] = tanh( W_n &middot; [r[t] &times; {h[t-1], x[t]} ) 
  * h[t] = (1 - z[t]) &times; h[t-1] + z[t] &times; n[t] </pre>
  * \image html GRU.gif "Gate Recurrent Unit Diagram"
  *
@@ -84,7 +95,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "test_data.h"
+#include "arm_nnexamples_gru_test_data.h"
 #include "arm_math.h"
 #include "arm_nnfunctions.h"
  
@@ -179,6 +190,7 @@ void gru_example(q15_t * scratch_input, uint16_t input_size, uint16_t history_si
 int main()
 {
 
+    printf("Start GRU execution\n");
     int       input_size = DIM_INPUT;
     int       history_size = DIM_HISTORY;
 

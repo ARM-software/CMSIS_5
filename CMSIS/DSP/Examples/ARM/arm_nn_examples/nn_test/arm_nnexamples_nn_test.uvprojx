@@ -10,7 +10,7 @@
       <TargetName>ARMCM0</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060300::V5.06 update 3 (build 300)::ARMCC</pCCUsed>
+      <pCCUsed>5060528::V5.06 update 5 (build 528)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -559,6 +559,31 @@
               <FileName>arm_softmax_q15.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q7_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_depthwise_separable_conv_HWC_q7_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1205,6 +1230,31 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q7_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_depthwise_separable_conv_HWC_q7_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1271,7 +1321,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\ARMCM4_debug\</OutputDirectory>
-          <OutputName>arm_nnexample_cifar10</OutputName>
+          <OutputName>arm_nnexample_nn_test</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -1781,6 +1831,31 @@
               <FileName>arm_softmax_q15.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q7_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_depthwise_separable_conv_HWC_q7_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2358,6 +2433,31 @@
               <FileName>arm_softmax_q15.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q7_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_depthwise_separable_conv_HWC_q7_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
             </File>
           </Files>
         </Group>

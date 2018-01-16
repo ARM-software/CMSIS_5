@@ -53,7 +53,9 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
                                         const uint16_t ch_im_out,
                                         const uint16_t numCol_A,
                                         const uint16_t bias_shift,
-                                        const uint16_t out_shift, const q7_t * bias, q7_t * pOut)
+                                        const uint16_t out_shift, 
+                                        const q7_t * bias, 
+                                        q7_t * pOut)
 {
 #if defined (ARM_MATH_DSP)
     /* set up the second output pointers */
@@ -72,10 +74,17 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
         const q7_t *pA2 = pA + numCol_A;
 
         /* init the sum with bias */
+#if defined (ARM_NNUSE_ROUND)
+        q31_t     sum =  ((q31_t)(*pBias) << bias_shift) + (0x1 << (out_shift-1));
+        q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+        q31_t     sum3 = ((q31_t)(*pBias) << bias_shift) + (0x1 << (out_shift-1));
+        q31_t     sum4 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+#else
         q31_t     sum = *pBias << bias_shift;
         q31_t     sum2 = *pBias++ << bias_shift;
         q31_t     sum3 = *pBias << bias_shift;
         q31_t     sum4 = *pBias++ << bias_shift;
+#endif
 
         uint16_t  colCnt = numCol_A >> 2;
         /* accumulate over the vector */
@@ -135,8 +144,13 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15(const q7_t * pA,
         const q15_t *pB2 = pB + numCol_A;
 
         /* load the bias */
+#if defined (ARM_NNUSE_ROUND)
+        q31_t     sum = ((q31_t)(*pBias) << bias_shift) + (0x1 << (out_shift-1));
+        q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+#else
         q31_t     sum = *pBias << bias_shift;
         q31_t     sum2 = *pBias++ << bias_shift;
+#endif
 
         uint16_t  colCnt = numCol_A >> 2;
         while (colCnt)

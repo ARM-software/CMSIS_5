@@ -65,38 +65,51 @@ arm_fully_connected_q15(const q15_t * pV,
                         const uint16_t dim_vec,
                         const uint16_t num_of_rows,
                         const uint16_t bias_shift,
-                        const uint16_t out_shift, const q15_t * bias, q15_t * pOut, q15_t * vec_buffer)
+                        const uint16_t out_shift, 
+                        const q15_t * bias, 
+                        q15_t * pOut,
+                        q15_t * vec_buffer)
 {
 
 #if defined (ARM_MATH_DSP)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
-    uint16_t  i_row;
     const q15_t *pB = pM;
+    const q15_t *pB2 = pB + dim_vec;
     q15_t    *pO = pOut;
-    q15_t    *pA;
+    const q15_t    *pA;
+    const q15_t    *pBias = bias;
+    uint16_t rowCnt = num_of_rows >> 1;
 
     /* this loop loops over different output */
-    for (i_row = 0; i_row < num_of_rows; i_row++)
-    {
-
-        q31_t     sum = bias[i_row] << bias_shift;
+    while (rowCnt) {
+#if defined (ARM_NNUSE_ROUND)
+        q31_t     sum =  ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+        q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+#else
+        q31_t     sum = *pBias++ << bias_shift;
+        q31_t     sum2 = *pBias++ << bias_shift;
+#endif
 
         uint16_t  colCnt = dim_vec >> 2;
 
-        pA = vec_buffer;
+        pA = pV;
+        pB2 = pB + dim_vec;
 
         while (colCnt)
         {
-            q31_t     inV1, inV2, inM1, inM2;
+            q31_t     inV1, inM1, inM2;
             inV1 = *__SIMD32(pA)++;
             inM1 = *__SIMD32(pB)++;
             sum = __SMLAD(inV1, inM1, sum);
+            inM2 = *__SIMD32(pB2)++;
+            sum2 = __SMLAD(inV1, inM2, sum2);
 
-            inV2 = *__SIMD32(pA)++;
-            inM2 = *__SIMD32(pB)++;
-
-            sum = __SMLAD(inV2, inM2, sum);
+            inV1 = *__SIMD32(pA)++;
+            inM1 = *__SIMD32(pB)++;
+            sum = __SMLAD(inV1, inM1, sum);
+            inM2 = *__SIMD32(pB2)++;
+            sum2 = __SMLAD(inV1, inM2, sum2);
 
             colCnt--;
         }
@@ -105,11 +118,60 @@ arm_fully_connected_q15(const q15_t * pV,
         {
             q15_t     inV = *pA++;
             q15_t     inM = *pB++;
+            q15_t     inM2 = *pB2++;
 
             sum += inV * inM;
+            sum2 += inV * inM2;
             colCnt--;
         }                       /* while over colCnt */
-        *pO++ = (q15_t) (__SSAT((sum >> out_shift), 16));
+        *pO++ =  (q15_t) (__SSAT((sum >> out_shift), 16));
+        *pO++ = (q15_t) (__SSAT((sum2>> out_shift), 16));
+		
+        /* adjust the pointers and counters */
+        pB = pB + dim_vec;
+        rowCnt --;
+    }
+
+    rowCnt = num_of_rows & 0x1;
+
+    while (rowCnt) {
+#if defined (ARM_NNUSE_ROUND)
+        q31_t     sum = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+#else
+        q31_t     sum = *pBias++ << bias_shift;
+#endif
+
+        uint16_t  colCnt = dim_vec >> 2;
+
+        pA = pV;
+      
+        while (colCnt) {
+            q31_t     inV1, inM1;
+            inV1 = *__SIMD32(pA)++;
+            inM1 = *__SIMD32(pB)++;
+            sum = __SMLAD(inV1, inM1, sum);
+            
+            inV1 = *__SIMD32(pA)++;
+            inM1 = *__SIMD32(pB)++;
+            sum = __SMLAD(inV1, inM1, sum);
+				
+            colCnt--;
+	}
+			
+	/* left-over of the vector */
+	colCnt = dim_vec & 0x3;
+	while(colCnt) {
+            q15_t     inV = *pA++;
+            q15_t     inM = *pB++;
+
+            sum += inV * inM;
+
+            colCnt--;
+	}
+
+        *pO++ =  (q15_t) (__SSAT((sum >> out_shift), 16));
+			
+        rowCnt --;
     }
 
 #else
@@ -117,7 +179,11 @@ arm_fully_connected_q15(const q15_t * pV,
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
     for (i = 0; i < num_of_rows; i++)
     {
+#if defined (ARM_NNUSE_ROUND)
+        int       ip_out = ((q31_t)(bias[i]) << bias_shift) + (0x1 << (out_shift-1));
+#else
         int       ip_out = bias[i] << bias_shift;
+#endif
         for (j = 0; j < dim_vec; j++)
         {
             ip_out += pV[j] * pM[i * dim_vec + j];

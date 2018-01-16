@@ -131,10 +131,17 @@ arm_fully_connected_mat_q7_vec_q15_opt(const q15_t * pV,
 
     while (rowCnt)
     {
+#if defined (ARM_NNUSE_ROUND)
+        q31_t     sum =  ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+        q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+        q31_t     sum3 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+        q31_t     sum4 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+#else
         q31_t     sum = *pBias++ << bias_shift;
         q31_t     sum2 = *pBias++ << bias_shift;
         q31_t     sum3 = *pBias++ << bias_shift;
         q31_t     sum4 = *pBias++ << bias_shift;
+#endif
 
         uint16_t  colCnt = dim_vec >> 1;
 
@@ -268,7 +275,12 @@ arm_fully_connected_mat_q7_vec_q15_opt(const q15_t * pV,
 
     while (rowCnt)
     {
+#if defined (ARM_NNUSE_ROUND)
+        q31_t     sum = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+#else
         q31_t     sum = *pBias++ << bias_shift;
+#endif
+
         uint16_t  colCnt = dim_vec >> 2;
 
         pA = pV;
@@ -313,10 +325,17 @@ arm_fully_connected_mat_q7_vec_q15_opt(const q15_t * pV,
 
     while (rowCnt)
     {
+#if defined (ARM_NNUSE_ROUND)
+        q31_t     sum =  ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+        q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+        q31_t     sum3 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1)); 
+        q31_t     sum4 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1)); 
+#else
         q31_t     sum = *pBias++ << bias_shift;
         q31_t     sum2 = *pBias++ << bias_shift;
         q31_t     sum3 = *pBias++ << bias_shift;
         q31_t     sum4 = *pBias++ << bias_shift;
+#endif
         uint16_t  colCnt = dim_vec >> 1;
 
         pA = pV;
@@ -372,7 +391,11 @@ arm_fully_connected_mat_q7_vec_q15_opt(const q15_t * pV,
 
     while (rowCnt)
     {
+#if defined (ARM_NNUSE_ROUND)
+        int       ip_out = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
+#else
         int       ip_out = *pBias++ << bias_shift;
+#endif
         int       j;
 
         pA = pV;
