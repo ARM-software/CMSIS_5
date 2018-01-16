@@ -4,7 +4,7 @@ config:
   default: FVP
   FVP:
     toolchain: GCC
-    commonflags: [ "-mcpu=${mcpu}", -marm, -mlittle-endian, -mfloat-abi=hard, "-mfpu=${mfpu}", -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -Wall, -Wextra, -Wshadow, -g3 ]
+    commonflags: [ "-mcpu=${mcpu}", -marm, -mlittle-endian, -mfloat-abi=hard, "-mfpu=${mfpu}", -O0, -fmessage-length=0, -fsigned-char, -ffunction-sections, -fdata-sections, -Wall, -Wextra, -Wshadow, -Wundef, -g3 ]
     cflags:      [ "${commonflags}", -std=gnu11, -Wstrict-prototypes, -c ]
     asmflags:    [ "${commonflags}" ]
     linkflags:   [ "${commonflags}", -Xlinker, --gc-sections, --specs=nano.specs, --specs=rdimon.specs ]
