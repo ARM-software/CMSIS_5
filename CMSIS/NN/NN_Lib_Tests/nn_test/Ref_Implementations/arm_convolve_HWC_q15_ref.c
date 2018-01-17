@@ -44,7 +44,7 @@ void arm_convolve_HWC_q15_ref(const q15_t * Im_in,  // input image
             for (k = 0; k < dim_im_out; k++)
             {
 #if defined (ARM_NNUSE_ROUND)
-                conv_out = (bias[i] << bias_shift) + (0x1 << (out_shift-1));
+                conv_out = (bias[i] << bias_shift) + (0x1 << (out_shift - 1));
 #else
                 conv_out = bias[i] << bias_shift;
 #endif

@@ -30,7 +30,7 @@ void arm_fully_connected_mat_q7_vec_q15_ref(const q15_t * pV,   // pointer to ve
     for (int i = 0; i < num_of_rows; i++)
     {
 #if defined (ARM_NNUSE_ROUND)
-        int       ip_out = (bias[i] << bias_shift) + (0x1 << (out_shift-1));
+        int       ip_out = (bias[i] << bias_shift) + (0x1 << (out_shift - 1));
 #else
         int       ip_out = bias[i] << bias_shift;
 #endif

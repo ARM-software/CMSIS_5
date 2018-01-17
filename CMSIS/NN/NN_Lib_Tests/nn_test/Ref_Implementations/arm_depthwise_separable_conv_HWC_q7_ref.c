@@ -45,7 +45,7 @@ void arm_depthwise_separable_conv_HWC_q7_ref(const q7_t * Im_in,    // input ima
             {
                 // for each output
 #if defined (ARM_NNUSE_ROUND)
-                int       conv_out = (bias[i_ch_out] << bias_shift) + (0x1 << (out_shift-1));
+                int       conv_out = (bias[i_ch_out] << bias_shift) + (0x1 << (out_shift - 1));
 #else
                 int       conv_out = bias[i_ch_out] << bias_shift;
 #endif

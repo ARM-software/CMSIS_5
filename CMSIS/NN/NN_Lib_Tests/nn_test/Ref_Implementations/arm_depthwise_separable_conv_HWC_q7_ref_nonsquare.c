@@ -18,26 +18,26 @@
 
 #include "ref_functions.h"
 
-void arm_depthwise_separable_conv_HWC_q7_ref_nonsquare(const q7_t * Im_in,    // input image
-                                             const uint16_t dim_im_in_x,  // input image dimention x
-                                             const uint16_t dim_im_in_y,  // input image dimention y
-                                             const uint16_t ch_im_in,   // number of input image channels
-                                             const q7_t * wt,   // kernel weights 
-                                             const uint16_t ch_im_out,  // number of filters, i.e., output image channels
-                                             const uint16_t dim_kernel_x, // filter kernel size x
-                                             const uint16_t dim_kernel_y, // filter kernel size y
-                                             const uint16_t padding_x,    // padding sizes x
-                                             const uint16_t padding_y,    // padding sizes y
-                                             const uint16_t stride_x, // stride x
-                                             const uint16_t stride_y, // stride y
-                                             const q7_t * bias, // bias
-                                             const uint16_t bias_shift, // amount of left-shift for bias
-                                             const uint16_t out_shift,  // amount of right-shift for output
-                                             q7_t * Im_out, // output image
-                                             const uint16_t dim_im_out_x, // output image dimension x
-                                             const uint16_t dim_im_out_y, // output image dimension y
-                                             q15_t * bufferA,   //buffer space for input
-                                             q7_t * bufferB //buffer space for output
+void arm_depthwise_separable_conv_HWC_q7_ref_nonsquare(const q7_t * Im_in,  // input image
+                                                       const uint16_t dim_im_in_x,  // input image dimention x
+                                                       const uint16_t dim_im_in_y,  // input image dimention y
+                                                       const uint16_t ch_im_in, // number of input image channels
+                                                       const q7_t * wt, // kernel weights 
+                                                       const uint16_t ch_im_out,    // number of filters, i.e., output image channels
+                                                       const uint16_t dim_kernel_x, // filter kernel size x
+                                                       const uint16_t dim_kernel_y, // filter kernel size y
+                                                       const uint16_t padding_x,    // padding sizes x
+                                                       const uint16_t padding_y,    // padding sizes y
+                                                       const uint16_t stride_x, // stride x
+                                                       const uint16_t stride_y, // stride y
+                                                       const q7_t * bias,   // bias
+                                                       const uint16_t bias_shift,   // amount of left-shift for bias
+                                                       const uint16_t out_shift,    // amount of right-shift for output
+                                                       q7_t * Im_out,   // output image
+                                                       const uint16_t dim_im_out_x, // output image dimension x
+                                                       const uint16_t dim_im_out_y, // output image dimension y
+                                                       q15_t * bufferA, //buffer space for input
+                                                       q7_t * bufferB   //buffer space for output
     )
 {
     int       i_out_y, i_out_x, i_ch_out;
@@ -50,7 +50,7 @@ void arm_depthwise_separable_conv_HWC_q7_ref_nonsquare(const q7_t * Im_in,    //
             {
                 // for each output
 #if defined (ARM_NNUSE_ROUND)
-                int       conv_out = (bias[i_ch_out] << bias_shift) + (0x1 << (out_shift-1));
+                int       conv_out = (bias[i_ch_out] << bias_shift) + (0x1 << (out_shift - 1));
 #else
                 int       conv_out = bias[i_ch_out] << bias_shift;
 #endif

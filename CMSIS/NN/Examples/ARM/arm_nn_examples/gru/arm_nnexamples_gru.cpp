@@ -18,7 +18,7 @@
 *     notice, this list of conditions and the following disclaimer in
 *     the documentation and/or other materials provided with the
 *     distribution.
-*   - Neither the name of ARM LIMITED nor the names of its contributors
+*   - Neither the name of Arm LIMITED nor the names of its contributors
 *     may be used to endorse or promote products derived from this
 *     software without specific prior written permission.
 *
@@ -98,7 +98,7 @@
 #include "arm_nnexamples_gru_test_data.h"
 #include "arm_math.h"
 #include "arm_nnfunctions.h"
- 
+
 #define DIM_HISTORY 32
 #define DIM_INPUT 32
 #define DIM_VEC 64
@@ -122,7 +122,6 @@ static q7_t hidden_state_bias[DIM_HISTORY] = HIDDEN_STATE_BIAS;
 static q15_t test_input1[DIM_INPUT] = INPUT_DATA1;
 static q15_t test_input2[DIM_INPUT] = INPUT_DATA2;
 static q15_t test_history[DIM_HISTORY] = HISTORY_DATA;
-
 
 q15_t     scratch_buffer[DIM_HISTORY * 4 + DIM_INPUT];
 

@@ -38,10 +38,10 @@ void arm_fully_connected_mat_q7_vec_q15_opt_ref(const q15_t * pV,   // pointer t
     {
         pA = pV;
 #if defined (ARM_NNUSE_ROUND)
-        q31_t     sum =  (*pBias++ << bias_shift) + (0x1 << (out_shift-1));
-        q31_t     sum2 = (*pBias++ << bias_shift) + (0x1 << (out_shift-1));
-        q31_t     sum3 = (*pBias++ << bias_shift) + (0x1 << (out_shift-1));
-        q31_t     sum4 = (*pBias++ << bias_shift) + (0x1 << (out_shift-1));
+        q31_t     sum = (*pBias++ << bias_shift) + (0x1 << (out_shift - 1));
+        q31_t     sum2 = (*pBias++ << bias_shift) + (0x1 << (out_shift - 1));
+        q31_t     sum3 = (*pBias++ << bias_shift) + (0x1 << (out_shift - 1));
+        q31_t     sum4 = (*pBias++ << bias_shift) + (0x1 << (out_shift - 1));
 #else
         q31_t     sum = *pBias++ << bias_shift;
         q31_t     sum2 = *pBias++ << bias_shift;
@@ -103,7 +103,7 @@ void arm_fully_connected_mat_q7_vec_q15_opt_ref(const q15_t * pV,   // pointer t
     {
         pA = pV;
 #if defined (ARM_NNUSE_ROUND)
-        int       ip_out = (*pBias++ << bias_shift) + (0x1 << (out_shift-1));
+        int       ip_out = (*pBias++ << bias_shift) + (0x1 << (out_shift - 1));
 #else
         int       ip_out = *pBias++ << bias_shift;
 #endif

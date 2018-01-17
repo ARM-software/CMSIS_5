@@ -46,11 +46,9 @@
 #define TEST_CONV
 #define TEST_NONSQUARE
 
-
 int main()
 {
     printf("start tests\n");
-	
 
     srand(1);
 
@@ -97,10 +95,10 @@ int main()
         printf("in: %d  out: %d\n", test2[i], test4[i]);
     }
 
-    delete[] test1;
-    delete[] test2;
-    delete[] test3;
-    delete[] test4;
+    delete[]test1;
+    delete[]test2;
+    delete[]test3;
+    delete[]test4;
 
 #endif
 
@@ -143,10 +141,10 @@ int main()
         printf("in: %d  out: %d\n", test2[i], test4[i]);
     }
 
-    delete[] test1;
-    delete[] test2;
-    delete[] test3;
-    delete[] test4;
+    delete[]test1;
+    delete[]test2;
+    delete[]test3;
+    delete[]test4;
 
 #endif
 
@@ -179,8 +177,8 @@ int main()
         img_in[i] = test1[i];
     }
 
-		initialize_results_q7(pool_out_ref, pool_out_opt, POOL_IM_DIM / 2 * POOL_IM_DIM / 2 * POOL_IM_CH);
-		
+    initialize_results_q7(pool_out_ref, pool_out_opt, POOL_IM_DIM / 2 * POOL_IM_DIM / 2 * POOL_IM_CH);
+
     printf("Start maxpool reference implementation\n");
 
     arm_maxpool_q7_HWC_ref(img_in, POOL_IM_DIM, POOL_IM_CH, 3, 0, 2, POOL_IM_DIM / 2, (q7_t *) test2, pool_out_ref);
@@ -224,7 +222,7 @@ int main()
     arm_avepool_q7_HWC(img_in, POOL_IM_DIM, POOL_IM_CH, 3, 0, 2, POOL_IM_DIM / 2, (q7_t *) test2, pool_out_opt);
 
     // special check here
-    bool if_ave_pool_match = true;
+    bool      if_ave_pool_match = true;
     for (int i = 0; i < POOL_IM_DIM / 2 * POOL_IM_DIM / 2 * POOL_IM_CH; i++)
     {
         // we tolerate at most difference of 1 here because of rounding errors
@@ -239,9 +237,9 @@ int main()
         printf("Outputs match.\n");
     }
 
-    delete[] test1;
-    delete[] test2;
-    delete[] test3;
+    delete[]test1;
+    delete[]test2;
+    delete[]test3;
 
 #endif
 
@@ -266,7 +264,7 @@ int main()
     q7_t     *relu_opt_data_q7 = test3;
     q15_t    *relu_ref_data_q15 = test2;
     q15_t    *relu_opt_data_q15 = test4;
-	
+
     printf("Start ref relu q7 implementation\n");
 
     arm_relu_q7_ref(relu_ref_data_q7, RELU_DIM);
@@ -287,10 +285,10 @@ int main()
 
     verify_results_q15(relu_ref_data_q15, relu_opt_data_q15, RELU_DIM);
 
-    delete[] test1;
-    delete[] test2;
-    delete[] test3;
-    delete[] test4;
+    delete[]test1;
+    delete[]test2;
+    delete[]test3;
+    delete[]test4;
 
 #endif
 
@@ -327,10 +325,10 @@ int main()
     q15_t    *ip_out_q15_ref = test4 + IP_COL_DIM;
     q15_t    *ip_out_q15_opt = test4 + IP_COL_DIM + IP_ROW_DIM;
 
-		initialize_results_q7(ip_out_q7_ref, ip_out_q7_opt, IP_ROW_DIM);
-		initialize_results_q7(ip_out_q7_ref, ip_out_q7_opt_fast, IP_ROW_DIM);
-		initialize_results_q7(ip_out_q7_ref, ip_out_q7_opt_fast, IP_ROW_DIM);
-		
+    initialize_results_q7(ip_out_q7_ref, ip_out_q7_opt, IP_ROW_DIM);
+    initialize_results_q7(ip_out_q7_ref, ip_out_q7_opt_fast, IP_ROW_DIM);
+    initialize_results_q7(ip_out_q7_ref, ip_out_q7_opt_fast, IP_ROW_DIM);
+
     printf("Start ref q7 implementation\n");
 
     arm_fully_connected_q7_ref(test1, ip_weights, IP_COL_DIM, IP_ROW_DIM, 1, 7, ip_bias_q7, ip_out_q7_ref, test2);
@@ -360,8 +358,8 @@ int main()
         test4[i] = (rand() % 65536 - 32768);
     }
 
-		initialize_results_q15(ip_out_q15_ref, ip_out_q15_opt, IP_ROW_DIM);
-		
+    initialize_results_q15(ip_out_q15_ref, ip_out_q15_opt, IP_ROW_DIM);
+
     printf("Start ref q15 implementation\n");
 
     arm_fully_connected_q15_ref(test4, ip_q15_weights, IP_COL_DIM, IP_ROW_DIM, 1, 7, test2, ip_out_q15_ref, NULL);
@@ -413,10 +411,10 @@ int main()
 
     verify_results_q15(ip_out_q15_ref, ip_out_q15_opt, IP_ROW_DIM);
 
-    delete[] test1;
-    delete[] test2;
-    delete[] test3;
-    delete[] test4;
+    delete[]test1;
+    delete[]test2;
+    delete[]test3;
+    delete[]test4;
 
 #endif
 
@@ -438,18 +436,20 @@ int main()
 #define RCONV_OUT_DIM_Y 8
 
     test1 = new q7_t[RCONV_KER_DIM_Y * RCONV_KER_DIM_X * RCONV_IM_CH * RCONV_OUT_CH + RCONV_OUT_CH];
-    test2 = new q15_t[2*RCONV_KER_DIM_Y * RCONV_KER_DIM_X * RCONV_IM_CH];
-    test3 = new q7_t[RCONV_IM_DIM_Y * RCONV_IM_DIM_X * RCONV_IM_CH + 2 * RCONV_OUT_DIM_Y * RCONV_OUT_DIM_X * RCONV_OUT_CH];
+    test2 = new q15_t[2 * RCONV_KER_DIM_Y * RCONV_KER_DIM_X * RCONV_IM_CH];
+    test3 =
+        new q7_t[RCONV_IM_DIM_Y * RCONV_IM_DIM_X * RCONV_IM_CH + 2 * RCONV_OUT_DIM_Y * RCONV_OUT_DIM_X * RCONV_OUT_CH];
 
     for (int i = 0; i < RCONV_KER_DIM_Y * RCONV_KER_DIM_X * RCONV_IM_CH * RCONV_OUT_CH + RCONV_OUT_CH; i++)
     {
         test1[i] = rand() % 256 - 100;
     }
-		
-    for (int i = 0; i < RCONV_IM_DIM_Y * RCONV_IM_DIM_X * RCONV_IM_CH + 2 * RCONV_OUT_DIM_Y * RCONV_OUT_DIM_X * RCONV_OUT_CH; i++)
+
+    for (int i = 0;
+         i < RCONV_IM_DIM_Y * RCONV_IM_DIM_X * RCONV_IM_CH + 2 * RCONV_OUT_DIM_Y * RCONV_OUT_DIM_X * RCONV_OUT_CH; i++)
     {
         test3[i] = rand() % 256 - 100;
-    }    
+    }
 
     q7_t     *rconv_weight_q7 = test1;
     q7_t     *rconv_bias_q7 = test1 + RCONV_KER_DIM_Y * RCONV_KER_DIM_X * RCONV_IM_CH * RCONV_OUT_CH;
@@ -461,50 +461,57 @@ int main()
     q7_t     *rconv_im_out_opt_q7 =
         test3 + RCONV_IM_DIM_Y * RCONV_IM_DIM_X * RCONV_IM_CH + RCONV_OUT_DIM_Y * RCONV_OUT_DIM_X * RCONV_OUT_CH;
 
-		initialize_results_q7(rconv_im_out_ref_q7, rconv_im_out_opt_q7, RCONV_OUT_DIM_Y * RCONV_OUT_DIM_X * RCONV_OUT_CH);
-		
+    initialize_results_q7(rconv_im_out_ref_q7, rconv_im_out_opt_q7, RCONV_OUT_DIM_Y * RCONV_OUT_DIM_X * RCONV_OUT_CH);
+
     printf("start conv q7 nonsquare ref implementation\n");
     arm_convolve_HWC_q7_ref_nonsquare(rconv_im_in_q7, RCONV_IM_DIM_X, RCONV_IM_DIM_Y, RCONV_IM_CH, rconv_weight_q7,
-                              RCONV_OUT_CH, RCONV_KER_DIM_X, RCONV_KER_DIM_Y, RCONV_PADDING_X, RCONV_PADDING_Y, RCONV_STRIDE_X,
-															RCONV_STRIDE_Y, rconv_bias_q7, 1, 7, rconv_im_out_ref_q7, RCONV_OUT_DIM_X, RCONV_OUT_DIM_Y, rconv_buf, NULL);
-															
+                                      RCONV_OUT_CH, RCONV_KER_DIM_X, RCONV_KER_DIM_Y, RCONV_PADDING_X, RCONV_PADDING_Y,
+                                      RCONV_STRIDE_X, RCONV_STRIDE_Y, rconv_bias_q7, 1, 7, rconv_im_out_ref_q7,
+                                      RCONV_OUT_DIM_X, RCONV_OUT_DIM_Y, rconv_buf, NULL);
+
     printf("start conv q7 nonsquare opt implementation\n");
     arm_convolve_HWC_q7_fast_nonsquare(rconv_im_in_q7, RCONV_IM_DIM_X, RCONV_IM_DIM_Y, RCONV_IM_CH, rconv_weight_q7,
-                              RCONV_OUT_CH, RCONV_KER_DIM_X, RCONV_KER_DIM_Y, RCONV_PADDING_X, RCONV_PADDING_Y, RCONV_STRIDE_X,
-															RCONV_STRIDE_Y, rconv_bias_q7, 1, 7, rconv_im_out_opt_q7, RCONV_OUT_DIM_X, RCONV_OUT_DIM_Y, rconv_buf, NULL);
-															
+                                       RCONV_OUT_CH, RCONV_KER_DIM_X, RCONV_KER_DIM_Y, RCONV_PADDING_X, RCONV_PADDING_Y,
+                                       RCONV_STRIDE_X, RCONV_STRIDE_Y, rconv_bias_q7, 1, 7, rconv_im_out_opt_q7,
+                                       RCONV_OUT_DIM_X, RCONV_OUT_DIM_Y, rconv_buf, NULL);
+
     verify_results_q7(rconv_im_out_ref_q7, rconv_im_out_opt_q7, RCONV_OUT_DIM_Y * RCONV_OUT_DIM_X * RCONV_OUT_CH);
 
     initialize_results_q7(rconv_im_out_ref_q7, rconv_im_out_opt_q7, RCONV_OUT_DIM_Y * RCONV_OUT_DIM_X * RCONV_OUT_CH);
 
     printf("start 1x1 conv q7 nonsquare fast implementation\n");
     arm_convolve_HWC_q7_fast_nonsquare(rconv_im_in_q7, RCONV_IM_DIM_X, RCONV_IM_DIM_Y, RCONV_IM_CH, rconv_weight_q7,
-                              RCONV_OUT_CH, 1, 1, 0, 0, RCONV_STRIDE_X,
-															RCONV_STRIDE_Y, rconv_bias_q7, 1, 7, rconv_im_out_ref_q7, RCONV_OUT_DIM_X, RCONV_OUT_DIM_Y, rconv_buf, NULL);
-															
+                                       RCONV_OUT_CH, 1, 1, 0, 0, RCONV_STRIDE_X,
+                                       RCONV_STRIDE_Y, rconv_bias_q7, 1, 7, rconv_im_out_ref_q7, RCONV_OUT_DIM_X,
+                                       RCONV_OUT_DIM_Y, rconv_buf, NULL);
+
     printf("start 1x1 conv q7 nonsquare dedicated function implementation\n");
     arm_convolve_1x1_HWC_q7_fast_nonsquare(rconv_im_in_q7, RCONV_IM_DIM_X, RCONV_IM_DIM_Y, RCONV_IM_CH, rconv_weight_q7,
-                              RCONV_OUT_CH, 1, 1, 0, 0, RCONV_STRIDE_X,
-															RCONV_STRIDE_Y, rconv_bias_q7, 1, 7, rconv_im_out_opt_q7, RCONV_OUT_DIM_X, RCONV_OUT_DIM_Y, rconv_buf, NULL);
-															
+                                           RCONV_OUT_CH, 1, 1, 0, 0, RCONV_STRIDE_X,
+                                           RCONV_STRIDE_Y, rconv_bias_q7, 1, 7, rconv_im_out_opt_q7, RCONV_OUT_DIM_X,
+                                           RCONV_OUT_DIM_Y, rconv_buf, NULL);
+
     verify_results_q7(rconv_im_out_ref_q7, rconv_im_out_opt_q7, RCONV_OUT_DIM_Y * RCONV_OUT_DIM_X * RCONV_OUT_CH);
 
     printf("start depthwise separable conv q7 nonsquare ref implementation\n");
-    arm_depthwise_separable_conv_HWC_q7_ref_nonsquare(rconv_im_in_q7, RCONV_IM_DIM_X, RCONV_IM_DIM_Y, RCONV_IM_CH, rconv_weight_q7,
-                              RCONV_OUT_CH, RCONV_KER_DIM_X, RCONV_KER_DIM_Y, RCONV_PADDING_X, RCONV_PADDING_Y, RCONV_STRIDE_X,
-															RCONV_STRIDE_Y, rconv_bias_q7, 1, 7, rconv_im_out_ref_q7, RCONV_OUT_DIM_X, RCONV_OUT_DIM_Y, rconv_buf, NULL);
-															
+    arm_depthwise_separable_conv_HWC_q7_ref_nonsquare(rconv_im_in_q7, RCONV_IM_DIM_X, RCONV_IM_DIM_Y, RCONV_IM_CH,
+                                                      rconv_weight_q7, RCONV_OUT_CH, RCONV_KER_DIM_X, RCONV_KER_DIM_Y,
+                                                      RCONV_PADDING_X, RCONV_PADDING_Y, RCONV_STRIDE_X, RCONV_STRIDE_Y,
+                                                      rconv_bias_q7, 1, 7, rconv_im_out_ref_q7, RCONV_OUT_DIM_X,
+                                                      RCONV_OUT_DIM_Y, rconv_buf, NULL);
+
     printf("start depthwise separable conv q7 nonsquare opt implementation\n");
-    arm_depthwise_separable_conv_HWC_q7_nonsquare(rconv_im_in_q7, RCONV_IM_DIM_X, RCONV_IM_DIM_Y, RCONV_IM_CH, rconv_weight_q7,
-                              RCONV_OUT_CH, RCONV_KER_DIM_X, RCONV_KER_DIM_Y, RCONV_PADDING_X, RCONV_PADDING_Y, RCONV_STRIDE_X,
-															RCONV_STRIDE_Y, rconv_bias_q7, 1, 7, rconv_im_out_opt_q7, RCONV_OUT_DIM_X, RCONV_OUT_DIM_Y, rconv_buf, NULL);
-															
+    arm_depthwise_separable_conv_HWC_q7_nonsquare(rconv_im_in_q7, RCONV_IM_DIM_X, RCONV_IM_DIM_Y, RCONV_IM_CH,
+                                                  rconv_weight_q7, RCONV_OUT_CH, RCONV_KER_DIM_X, RCONV_KER_DIM_Y,
+                                                  RCONV_PADDING_X, RCONV_PADDING_Y, RCONV_STRIDE_X, RCONV_STRIDE_Y,
+                                                  rconv_bias_q7, 1, 7, rconv_im_out_opt_q7, RCONV_OUT_DIM_X,
+                                                  RCONV_OUT_DIM_Y, rconv_buf, NULL);
+
     verify_results_q7(rconv_im_out_ref_q7, rconv_im_out_opt_q7, RCONV_OUT_DIM_Y * RCONV_OUT_DIM_X * RCONV_OUT_CH);
 
-
-    delete[] test1;
-    delete[] test2;
-    delete[] test3;
+    delete[]test1;
+    delete[]test2;
+    delete[]test3;
 #endif
 
 #ifdef TEST_CONV
@@ -540,12 +547,11 @@ int main()
         test3[i] = rand() % 256 - 100;
     }
 
-    for (int i = 0;
-         i < CONV_IM_DIM * CONV_IM_DIM * CONV_IM_CH + 2 * CONV_OUT_DIM * CONV_OUT_DIM * CONV_OUT_CH; i++)
+    for (int i = 0; i < CONV_IM_DIM * CONV_IM_DIM * CONV_IM_CH + 2 * CONV_OUT_DIM * CONV_OUT_DIM * CONV_OUT_CH; i++)
     {
         test4[i] = (rand() % 65536 - 32768);
     }
-		
+
     q7_t     *conv_weight_q7 = test1;
     q7_t     *conv_bias_q7 = test1 + CONV_KER_DIM * CONV_KER_DIM * CONV_IM_CH * CONV_OUT_CH;
 
@@ -565,8 +571,8 @@ int main()
     q15_t    *conv_im_out_opt_q15 =
         test4 + CONV_IM_DIM * CONV_IM_DIM * CONV_IM_CH + CONV_OUT_DIM * CONV_OUT_DIM * CONV_OUT_CH;
 
-		initialize_results_q7(conv_im_out_ref_q7, conv_im_out_opt_q7, CONV_OUT_DIM * CONV_OUT_DIM * CONV_OUT_CH);
-		
+    initialize_results_q7(conv_im_out_ref_q7, conv_im_out_opt_q7, CONV_OUT_DIM * CONV_OUT_DIM * CONV_OUT_CH);
+
     printf("start q7 ref implementation\n");
 
     arm_convolve_HWC_q7_ref(conv_im_in_q7, CONV_IM_DIM, CONV_IM_CH, conv_weight_q7,
@@ -613,8 +619,7 @@ int main()
     verify_results_q7(conv_im_out_ref_q7, conv_im_out_opt_q7, CONV_OUT_DIM * CONV_OUT_DIM * CONV_OUT_CH);
 
     // testing q15
-		initialize_results_q15(conv_im_out_ref_q15, conv_im_out_opt_q15, CONV_OUT_DIM * CONV_OUT_DIM * CONV_OUT_CH);
-
+    initialize_results_q15(conv_im_out_ref_q15, conv_im_out_opt_q15, CONV_OUT_DIM * CONV_OUT_DIM * CONV_OUT_CH);
 
     printf("start q15 ref implementation\n");
 
@@ -639,8 +644,8 @@ int main()
     verify_results_q15(conv_im_out_ref_q15, conv_im_out_opt_q15, CONV_OUT_DIM * CONV_OUT_DIM * CONV_OUT_CH);
 
     // depthwise separable conv
-		initialize_results_q7(conv_im_out_ref_q7, conv_im_out_opt_q7, CONV_OUT_DIM * CONV_OUT_DIM * CONV_OUT_CH);
-		
+    initialize_results_q7(conv_im_out_ref_q7, conv_im_out_opt_q7, CONV_OUT_DIM * CONV_OUT_DIM * CONV_OUT_CH);
+
     printf("start q7 depthwise_separable_conv ref implementation\n");
 
     arm_depthwise_separable_conv_HWC_q7_ref(conv_im_in_q7, CONV_IM_DIM, CONV_IM_CH, conv_weight_q7,
@@ -661,7 +666,6 @@ int main()
     delete[]test4;
 
 #endif
-
 
     return 0;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -50,28 +50,26 @@ extern    "C"
                                       q7_t * bufferB    //buffer space for output
         );
 
-    void arm_convolve_HWC_q7_ref_nonsquare(const q7_t * Im_in,    // input image
-							               const uint16_t dim_im_in_x,  // input image dimention x
-									       const uint16_t dim_im_in_y,  // input image dimention y
-                                           const uint16_t ch_im_in,   // number of input image channels
-                                           const q7_t * wt,   // kernel weights 
-                                           const uint16_t ch_im_out,  // number of filters, i.e., output image channels
-                                           const uint16_t dim_kernel_x, // filter kernel size x
-				    					   const uint16_t dim_kernel_y, // filter kernel size y
-                                           const uint16_t padding_x,    // padding sizes x
-						    			   const uint16_t padding_y,    // padding sizes y
-                                           const uint16_t stride_x, // stride x
-								    	   const uint16_t stride_y, // stride y
-                                           const q7_t * bias, // bias
-                                           const uint16_t bias_shift, 
-	    								   const uint16_t out_shift, 
-		    							   q7_t * Im_out,    // output image
-                                           const uint16_t dim_im_out_x, // output image dimension x
-				    					   const uint16_t dim_im_out_y, // output image dimension y
-                                           q15_t * bufferA,   //buffer space for input
-                                           q7_t * bufferB //buffer space for output
+    void      arm_convolve_HWC_q7_ref_nonsquare(const q7_t * Im_in, // input image
+                                                const uint16_t dim_im_in_x, // input image dimention x
+                                                const uint16_t dim_im_in_y, // input image dimention y
+                                                const uint16_t ch_im_in,    // number of input image channels
+                                                const q7_t * wt,    // kernel weights 
+                                                const uint16_t ch_im_out,   // number of filters, i.e., output image channels
+                                                const uint16_t dim_kernel_x,    // filter kernel size x
+                                                const uint16_t dim_kernel_y,    // filter kernel size y
+                                                const uint16_t padding_x,   // padding sizes x
+                                                const uint16_t padding_y,   // padding sizes y
+                                                const uint16_t stride_x,    // stride x
+                                                const uint16_t stride_y,    // stride y
+                                                const q7_t * bias,  // bias
+                                                const uint16_t bias_shift, const uint16_t out_shift, q7_t * Im_out, // output image
+                                                const uint16_t dim_im_out_x,    // output image dimension x
+                                                const uint16_t dim_im_out_y,    // output image dimension y
+                                                q15_t * bufferA,    //buffer space for input
+                                                q7_t * bufferB  //buffer space for output
         );
-		
+
     void      arm_convolve_HWC_q15_ref(const q15_t * Im_in, // input image
                                        const uint16_t dim_im_in,    // input image dimention
                                        const uint16_t ch_im_in, // number of input image channels
@@ -103,27 +101,27 @@ extern    "C"
                                                       q15_t * bufferA,  //buffer space for input
                                                       q7_t * bufferB    //buffer space for output
         );
-	void arm_depthwise_separable_conv_HWC_q7_ref_nonsquare(const q7_t * Im_in,    // input image
-                                             const uint16_t dim_im_in_x,  // input image dimention x
-                                             const uint16_t dim_im_in_y,  // input image dimention y
-                                             const uint16_t ch_im_in,   // number of input image channels
-                                             const q7_t * wt,   // kernel weights 
-                                             const uint16_t ch_im_out,  // number of filters, i.e., output image channels
-                                             const uint16_t dim_kernel_x, // filter kernel size x
-                                             const uint16_t dim_kernel_y, // filter kernel size y
-                                             const uint16_t padding_x,    // padding sizes x
-                                             const uint16_t padding_y,    // padding sizes y
-                                             const uint16_t stride_x, // stride x
-                                             const uint16_t stride_y, // stride y
-                                             const q7_t * bias, // bias
-                                             const uint16_t bias_shift, // amount of left-shift for bias
-                                             const uint16_t out_shift,  // amount of right-shift for output
-                                             q7_t * Im_out, // output image
-                                             const uint16_t dim_im_out_x, // output image dimension x
-                                             const uint16_t dim_im_out_y, // output image dimension y
-                                             q15_t * bufferA,   //buffer space for input
-                                             q7_t * bufferB //buffer space for output
-    );
+    void      arm_depthwise_separable_conv_HWC_q7_ref_nonsquare(const q7_t * Im_in, // input image
+                                                                const uint16_t dim_im_in_x, // input image dimention x
+                                                                const uint16_t dim_im_in_y, // input image dimention y
+                                                                const uint16_t ch_im_in,    // number of input image channels
+                                                                const q7_t * wt,    // kernel weights 
+                                                                const uint16_t ch_im_out,   // number of filters, i.e., output image channels
+                                                                const uint16_t dim_kernel_x,    // filter kernel size x
+                                                                const uint16_t dim_kernel_y,    // filter kernel size y
+                                                                const uint16_t padding_x,   // padding sizes x
+                                                                const uint16_t padding_y,   // padding sizes y
+                                                                const uint16_t stride_x,    // stride x
+                                                                const uint16_t stride_y,    // stride y
+                                                                const q7_t * bias,  // bias
+                                                                const uint16_t bias_shift,  // amount of left-shift for bias
+                                                                const uint16_t out_shift,   // amount of right-shift for output
+                                                                q7_t * Im_out,  // output image
+                                                                const uint16_t dim_im_out_x,    // output image dimension x
+                                                                const uint16_t dim_im_out_y,    // output image dimension y
+                                                                q15_t * bufferA,    //buffer space for input
+                                                                q7_t * bufferB  //buffer space for output
+        );
 
 /*
  *
