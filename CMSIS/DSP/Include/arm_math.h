@@ -46,7 +46,6 @@
    * - Statistical functions
    * - Support functions
    * - Interpolation functions
-   * - Neural network functions
    *
    * The library has separate functions for operating on 8-bit integers, 16-bit integers,
    * 32-bit integer and 32-bit floating-point values.
@@ -288,12 +287,6 @@
  * bilinear interpolation is used for 2-dimensional data.
  */
 
-/**
- * @defgroup groupNN Neural Network Functions
- * These functions perform basic operations for neural network layers. 
- */
- 
- 
 /**
  * @defgroup groupExamples Examples
  */
