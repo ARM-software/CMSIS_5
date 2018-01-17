@@ -35,7 +35,7 @@
  */
 
 /**    
- * @addtogroup q7_to_x    
+ * @addtogroup nndata_convert    
  * @{    
  */
 

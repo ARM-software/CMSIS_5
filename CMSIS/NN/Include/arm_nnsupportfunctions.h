@@ -64,6 +64,13 @@ typedef enum
 } arm_nn_activation_type;
 
 /**
+ * @defgroup nndata_convert Neural Network Data Conversion Functions
+ *
+ * Perform data type conversion in-between neural network operations
+ *
+ */
+
+/**
  * @brief Converts the elements of the Q7 vector to Q15 vector without left-shift 
  * @param[in]       *pSrc points to the Q7 input vector    
  * @param[out]      *pDst points to the Q15 output vector   
