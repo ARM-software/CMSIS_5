@@ -14,6 +14,7 @@ A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) i
  - CMSIS-Core: compiler agnostic features extended to simplify transition on LLVM based front-end
  - CMSIS-Core-A: preview of the CMSIS-Core for Cortex-A
  - Coming soon: CMSIS-RTOS2 for Cortex-A
+ - CMSIS-NN: Bare metal Neuronal Network function library.
 
 ## Implemented Enhancements
  - Support for Armv8-M Architecture (Mainline and Baseline) as well as devices Cortex-M23 and Cortex-M33
@@ -43,6 +44,7 @@ For further details see also the [Slides of the Embedded World CMSIS Partner Mee
 | CMSIS/DAP       | CMSIS-DAP related files and examples           |
 | CMSIS/Driver    | CMSIS-Driver API headers and template files    |
 | CMSIS/DSP       | CMSIS-DSP related files                        |
+| CMSIS/NN        | CMSIS-NN related files                         |
 | CMSIS/RTOS      | RTOS v1 related files (for Cortex-M)           |
 | CMSIS/RTOS2     | RTOS v2 related files (for Cortex-M & Armv8-M) |
 | CMSIS/Pack      | CMSIS-Pack examples and tutorials              |
