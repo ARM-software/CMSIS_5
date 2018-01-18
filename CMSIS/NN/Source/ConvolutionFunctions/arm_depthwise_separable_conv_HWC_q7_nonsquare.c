@@ -222,16 +222,16 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
                     inA1 = __PKHTB(inA1, opB, 16);
                     opA = __SXTB16(inA1);
                     opB = __SXTB16(inB1);
-                    sum = __SMLAD(opA, opB, sum);
+                    sum2 = __SMLAD(opA, opB, sum2);
                     opA = __SXTB16(__ROR(inA1, 8));
                     opB = __SXTB16(__ROR(inB1, 8));
-                    sum2 = __SMLAD(opA, opB, sum2);
+                    sum = __SMLAD(opA, opB, sum);
                     opA = __SXTB16(inA2);
                     opB = __SXTB16(inB2);
-                    sum3 = __SMLAD(opA, opB, sum3);
+                    sum4 = __SMLAD(opA, opB, sum4);
                     opA = __SXTB16(__ROR(inA2, 8));
                     opB = __SXTB16(__ROR(inB2, 8));
-                    sum4 = __SMLAD(opA, opB, sum4);
+                    sum3 = __SMLAD(opA, opB, sum3);
                     colCnt--;
                 }
 
