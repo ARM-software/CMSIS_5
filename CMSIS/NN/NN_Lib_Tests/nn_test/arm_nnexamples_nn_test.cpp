@@ -7,7 +7,7 @@
 *
 * Description:   Example code for NN kernel testing.
 *
-* Target Processor: Cortex-M4/Cortex-M7
+* Target Processor: Cortex-M cores
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions
