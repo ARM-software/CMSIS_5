@@ -20,6 +20,15 @@ echo Running NN Test for Cortex-M4 FP Little Endian
 type NN_TEST.log
 del NN_TEST.log
 
+echo Building NN Test for Cortex-M4 FP Little Endian Truncate
+%UVEXE% -rb -j0 arm_nnexamples_nn_test.uvprojx -t "ARMCM4_FP_truncate" -o "NN_Test_ARMCM4_FP_truncate_build.log"
+
+echo Running NN Test for Cortex-M4 FP Little Endian Truncate
+%UVEXE% -d arm_nnexamples_nn_test.uvprojx -t "ARMCM4_FP_truncate" -j0
+
+type NN_TEST.log
+del NN_TEST.log
+
 echo Building NN Test for Cortex-M7 Single Precision Big Endian
 %UVEXE% -rb -j0 arm_nnexamples_nn_test.uvprojx -t "ARMCM7b_SP" -o "NN_Test_ARMCM7b_SP_build.log"
 

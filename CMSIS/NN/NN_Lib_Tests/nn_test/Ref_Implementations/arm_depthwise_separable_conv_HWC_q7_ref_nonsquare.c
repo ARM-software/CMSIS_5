@@ -49,7 +49,7 @@ void arm_depthwise_separable_conv_HWC_q7_ref_nonsquare(const q7_t * Im_in,  // i
             for (i_ch_out = 0; i_ch_out < ch_im_out; i_ch_out++)
             {
                 // for each output
-#ifndef (ARM_NN_TRUNCATE)
+#ifndef ARM_NN_TRUNCATE
                 int       conv_out = (bias[i_ch_out] << bias_shift) + (0x1 << (out_shift - 1));
 #else
                 int       conv_out = bias[i_ch_out] << bias_shift;
