@@ -46,6 +46,10 @@
 #define TEST_CONV
 #define TEST_NONSQUARE
 
+int test_index = 0;
+q7_t test_flags[50];
+bool test_pass;
+
 int main()
 {
     printf("start tests\n");
@@ -57,6 +61,11 @@ int main()
     q15_t    *test2;
     q7_t     *test3;
     q15_t    *test4;
+
+    for (test_index = 0; test_index<50; test_index++) {
+        test_flags[test_index] = -1;
+    }
+    test_index = 0;
 
 #ifdef TEST_SIGMOID
 
@@ -666,6 +675,20 @@ int main()
     delete[]test4;
 
 #endif
+
+    test_pass = true;
+    test_index = 0;
+    while (test_flags[test_index] != -1) {
+        if (test_flags[test_index]) {
+             test_pass = false;
+        }
+        test_index ++;
+    }
+    if (test_pass) {
+        printf("All tests passed\n");
+    } else {
+        printf("Test failed passed\n");
+    }
 
     return 0;
 }

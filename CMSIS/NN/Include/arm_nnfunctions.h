@@ -47,6 +47,10 @@
    * The library has separate functions for operating on different weight and activation data
    * types including 8-bit integers and 16-bit integers,
    *
+   * Block Diagram
+   * --------
+   * \image html CMSIS-NN-OVERVIEW.GIF
+   *
    * Examples
    * --------
    *

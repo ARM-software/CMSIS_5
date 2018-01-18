@@ -10,6 +10,9 @@
 #include "arm_nnfunctions.h"
 #include "ref_functions.h"
 
+extern int test_index;
+extern q7_t test_flags[50];
+
 void initialize_results_q7(q7_t * ref, q7_t * opt, int length)
 {
     arm_fill_q7(0, ref, length);
@@ -40,6 +43,9 @@ void verify_results_q7(q7_t * ref, q7_t * opt, int length)
     if (if_match == true)
     {
         printf("Outputs match.\r\n\r\n");
+        test_flags[test_index++] = 0;
+    } else {
+        test_flags[test_index++] = 1;
     }
 
 }
@@ -62,6 +68,9 @@ void verify_results_q15(q15_t * ref, q15_t * opt, int length)
     if (if_match == true)
     {
         printf("Outputs match.\r\n\r\n");
+        test_flags[test_index++] = 0;
+    } else {
+        test_flags[test_index++] = 1;
     }
 
 }
