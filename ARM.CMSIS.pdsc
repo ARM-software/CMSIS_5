@@ -10,6 +10,8 @@
   <releases>
     <release version="5.2.1-dev3">
        Active development...
+       CMSIS-NN: 1.0.0
+        - Initial contribution of the bare metal Neuronal Network Library.
     </release>
     <release version="5.2.1-dev2">
        Updated company brand.
@@ -1991,7 +1993,13 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="ARMCC GCC"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-
+    
+    <!-- CMSIS NN -->
+    <condition id="CMSIS NN">
+      <description>Components required for NN</description>
+      <require condition="CMSIS DSP"/>
+    </condition>
+    
     <!-- RTOS RTX -->
     <condition id="RTOS RTX">
       <description>Components required for RTOS RTX</description>
@@ -2535,6 +2543,47 @@ and 8-bit Java bytecodes in Jazelle state.
         <!--file category="library" condition="ARMv8MML_DP_NOFPU_LE_GCC"       name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/-->
         <!--file category="library" condition="ARMv8MML_DSP_DP_LE_GCC"         name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfdp_math.a" src="CMSIS/DSP_Lib/Source/GCC"/-->
 
+      </files>
+    </component>
+    
+    <!-- CMSIS-NN component -->
+    <component Cclass="CMSIS" Cgroup="NN" Cversion="1.0.0" condition="CMSIS NN">
+      <description>CMSIS-NN Neuronal Network Library</description>
+      <files>
+        <file category="doc" name="CMSIS/Documentation/NN/html/index.html"/>
+        <file category="header" name="CMSIS/NN/Include/arm_nnfunctions.h"/>
+
+        <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q7.c"/>
+        <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q15.c"/>
+        <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu_q7.c"/>
+        <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu_q15.c"/>
+        
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c"/>
+        
+        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7.c"/>
+        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c"/>
+        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15.c"/>
+        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15_opt.c"/>
+        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c"/>
+        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c"/>
+        
+        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c"/>
+        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c"/>
+        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_pool_q7_HWC.c"/>
+        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c"/>
+        
+        <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q15.c"/>
+        <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q7.c"/>
       </files>
     </component>
 
@@ -3194,6 +3243,36 @@ and 8-bit Java bytecodes in Jazelle state.
       </attributes>
     </example>
 
+    <example name="NN Library CIFAR10" doc="readme.txt" folder="CMSIS/NN/Examples/ARM/arm_nn_examples/cifar10">
+      <description>Neuronal Network CIFAR10 example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_nnexamples_cifar10.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="CMSIS" Cgroup="NN"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+    
+    <example name="NN Library GRU" doc="readme.txt" folder="CMSIS/NN/Examples/ARM/arm_nn_examples/gru">
+      <description>Neuronal Network GRU example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_nnexamples_gru.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="CMSIS" Cgroup="NN"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+    
     <example name="CMSIS-RTOS2 Blinky" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Blinky">
       <description>CMSIS-RTOS2 Blinky example</description>
       <board name="uVision Simulator" vendor="Keil"/>
