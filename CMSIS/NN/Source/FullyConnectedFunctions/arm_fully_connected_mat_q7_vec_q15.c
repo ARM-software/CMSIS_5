@@ -90,13 +90,8 @@ arm_fully_connected_mat_q7_vec_q15(const q15_t * pV,
 
     while (rowCnt)
     {
-#if defined (ARM_NNUSE_ROUND)
-        q31_t     sum =  ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
-        q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
-#else
-        q31_t     sum = *pBias++ << bias_shift;
-        q31_t     sum2 = *pBias++ << bias_shift;
-#endif
+        q31_t     sum =  ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
+        q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
         uint16_t  colCnt = dim_vec >> 2;
 
         pA = pV;
@@ -144,11 +139,7 @@ arm_fully_connected_mat_q7_vec_q15(const q15_t * pV,
 
     while (rowCnt)
     {
-#if defined (ARM_NNUSE_ROUND)
-        q31_t     sum = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
-#else
-        q31_t     sum = *pBias++ << bias_shift;
-#endif
+        q31_t     sum = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
         uint16_t  colCnt = dim_vec >> 2;
 
         pA = pV;
@@ -188,11 +179,7 @@ arm_fully_connected_mat_q7_vec_q15(const q15_t * pV,
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
     for (i = 0; i < num_of_rows; i++)
     {
-#if defined (ARM_NNUSE_ROUND)
-        int       ip_out = ((q31_t)(bias[i]) << bias_shift) + (0x1 << (out_shift-1));
-#else
-        int       ip_out = bias[i] << bias_shift;
-#endif
+        int       ip_out = ((q31_t)(bias[i]) << bias_shift) + NN_ROUND(out_shift);
         for (j = 0; j < dim_vec; j++)
         {
             ip_out += pV[j] * pM[i * dim_vec + j];

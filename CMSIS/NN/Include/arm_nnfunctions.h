@@ -69,9 +69,9 @@
    *
    * Define macro ARM_MATH_BIG_ENDIAN to build the library for big endian targets. By default library builds for little endian targets.
    *
-   * - ARM_NNUSE_ROUND:
+   * - ARM_NN_TRUNCATE:
    *
-   * Define macro ARM_NNUSE_ROUND to use round instead of floor for the computation.
+   * Define macro ARM_NN_TRUNCATE to use floor instead of round-to-the-nearest-int for the computation.
    *
    * Copyright Notice
    * ------------
@@ -92,7 +92,7 @@
 
 #define USE_INTRINSIC
 
-#define ARM_NNUSE_ROUND /* This config the rounding model to floor or round to the nearest int */
+//#define ARM_NN_TRUNCATE /* This config the rounding model to floor or round to the nearest int */
 
 #ifdef __cplusplus
 extern    "C"

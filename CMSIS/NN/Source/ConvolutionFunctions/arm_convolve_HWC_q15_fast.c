@@ -121,11 +121,11 @@ arm_convolve_HWC_q15_fast(const q15_t * Im_in,
                     if (i_ker_y < 0 || i_ker_y >= dim_im_in || i_ker_x < 0 || i_ker_x >= dim_im_in)
                     {
                         /* arm_fill_q15(0, pBuffer, ch_im_in); */
-                        memset(pBuffer, 0, 2*ch_im_in);
+                        memset(pBuffer, 0, sizeof(q15_t)*ch_im_in);
                     } else
                     {
                         /* arm_copy_q15((q15_t *) Im_in + (i_ker_y * dim_im_in + i_ker_x) * ch_im_in, pBuffer, ch_im_in); */
-                        memcpy(pBuffer, (q15_t *) Im_in + (i_ker_y * dim_im_in + i_ker_x) * ch_im_in, 2*ch_im_in);
+                        memcpy(pBuffer, (q15_t *) Im_in + (i_ker_y * dim_im_in + i_ker_x) * ch_im_in, sizeof(q15_t)*ch_im_in);
                     }
                     pBuffer += ch_im_in;
                 }
@@ -151,17 +151,10 @@ arm_convolve_HWC_q15_fast(const q15_t * Im_in,
                     const q15_t *pA2 = pA + ch_im_in * dim_kernel * dim_kernel;
 
                     /* init the sum with bias */
-#if defined (ARM_NNUSE_ROUND)
-                    q31_t     sum =  ((q31_t)bias[i] << bias_shift) + (0x1 << (out_shift-1));
-                    q31_t     sum2 = ((q31_t)bias[i] << bias_shift) + (0x1 << (out_shift-1));
-                    q31_t     sum3 = ((q31_t)bias[i + 1] << bias_shift) + (0x1 << (out_shift-1));
-                    q31_t     sum4 = ((q31_t)bias[i + 1] << bias_shift) + (0x1 << (out_shift-1));
-#else
-                    q31_t     sum = bias[i] << bias_shift;
-                    q31_t     sum2 = bias[i] << bias_shift;
-                    q31_t     sum3 = bias[i + 1] << bias_shift;
-                    q31_t     sum4 = bias[i + 1] << bias_shift;
-#endif
+                    q31_t     sum =  ((q31_t)bias[i] << bias_shift) + NN_ROUND(out_shift);
+                    q31_t     sum2 = ((q31_t)bias[i] << bias_shift) + NN_ROUND(out_shift);
+                    q31_t     sum3 = ((q31_t)bias[i + 1] << bias_shift) + NN_ROUND(out_shift);
+                    q31_t     sum4 = ((q31_t)bias[i + 1] << bias_shift) + NN_ROUND(out_shift);
 
                     uint16_t  colCnt = ch_im_in * dim_kernel * dim_kernel >> 1;
                     /* accumulate over the vector */
@@ -227,11 +220,7 @@ arm_convolve_HWC_q15_fast(const q15_t * Im_in,
         {
             for (k = 0; k < dim_im_out; k++)
             {
-#if defined (ARM_NNUSE_ROUND)
-                conv_out = ((q31_t)bias[i] << bias_shift) + (0x1 << (out_shift-1));
-#else
-                conv_out = bias[i] << bias_shift;
-#endif
+                conv_out = ((q31_t)bias[i] << bias_shift) + NN_ROUND(out_shift);
                 for (m = 0; m < dim_kernel; m++)
                 {
                     for (n = 0; n < dim_kernel; n++)

@@ -113,7 +113,7 @@ arm_convolve_HWC_q7_basic(const q7_t * Im_in,
                     {
                         /* Filling 0 for out-of-bound paddings */
                         /* arm_fill_q15(0, pBuffer, ch_im_in); */
-                        memset(pBuffer, 0, 2*ch_im_in);
+                        memset(pBuffer, 0, sizeof(q15_t)*ch_im_in);
                     } else
                     {
                         /* Copying the pixel data to column */
@@ -148,11 +148,7 @@ arm_convolve_HWC_q7_basic(const q7_t * Im_in,
         for (i = 0; i < ch_im_out; i++)
         {
             /* Load the accumulator with bias first */
-#if defined (ARM_NNUSE_ROUND)
-            q31_t     sum = ((q31_t)bias[i] << bias_shift) + (0x1 << (out_shift-1));
-#else
-            q31_t     sum = bias[i] << bias_shift;
-#endif
+            q31_t     sum = ((q31_t)bias[i] << bias_shift) + NN_ROUND(out_shift);
 
             /* Point to the beging of the im2col buffer */
             q15_t    *pB = bufferA;
@@ -198,11 +194,7 @@ arm_convolve_HWC_q7_basic(const q7_t * Im_in,
         {
             for (k = 0; k < dim_im_out; k++)
             {
-#if defined (ARM_NNUSE_ROUND)
-                conv_out = ((q31_t)bias[i] << bias_shift) + (0x1 << (out_shift-1));
-#else
-                conv_out = bias[i] << bias_shift;
-#endif
+                conv_out = ((q31_t)bias[i] << bias_shift) + NN_ROUND(out_shift);
                 for (m = 0; m < dim_kernel; m++)
                 {
                     for (n = 0; n < dim_kernel; n++)
