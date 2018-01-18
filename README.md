@@ -11,9 +11,9 @@ A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) i
 ## What's Hot
  - CMSIS-RTOS2: RTX 5 is now available for IAR, GCC, Arm Compiler 5, Arm Compiler 6
  - CMSIS-RTOS2: FreeRTOS adoption (release) is available https://github.com/ARM-software/CMSIS-FreeRTOS
+ - CMSIS-RTOS2: RTX5 available for Cortex-A
  - CMSIS-Core: compiler agnostic features extended to simplify transition on LLVM based front-end
- - CMSIS-Core-A: preview of the CMSIS-Core for Cortex-A
- - Coming soon: CMSIS-RTOS2 for Cortex-A
+ - CMSIS-Core-A: CMSIS-Core for Cortex-A
 
 ## Implemented Enhancements
  - Support for Armv8-M Architecture (Mainline and Baseline) as well as devices Cortex-M23 and Cortex-M33
@@ -24,8 +24,6 @@ A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) i
  - CMSIS-RTOS API Secure and Non-Secure support, multi-processor support
 
 ## Further Planned Enhancements
- - CMSIS-Core-A: Cortex-A processor support
- - CMSIS-RTOS: RTX5 for Cortex-A
  - CMSIS-DAP: extended trace support
  - CMSIS-Zone: management of complex system
      - Improvements for Cortex-A / M hybrid devices (focus on Cortex-M interaction)
