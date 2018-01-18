@@ -22,7 +22,7 @@ REM -- Delete previous generated HTML files ---------------------
 
 REM -- Remove generated doxygen files ---------------------
 PUSHD ..\Documentation
-FOR %%A IN (Core, Core_A, DAP, Driver, DSP, General, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
+FOR %%A IN (Core, Core_A, DAP, Driver, DSP, NN, General, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
 POPD
 
 REM -- Generate New HTML Files ---------------------
@@ -47,6 +47,10 @@ popd
 
 pushd DSP
 CALL doxygen_dsp.bat
+popd
+
+pushd NN
+CALL doxygen_nn.bat
 popd
 
 pushd General
@@ -83,6 +87,7 @@ REM copy /Y Doxygen_Templates\search.css ..\Documentation\General\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\Pack\html\search\.
 REM copy /Y Doxygen_Templates\search.css ..\Documentation\SVD\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\DSP\html\search\.
+copy /Y Doxygen_Templates\search.css ..\Documentation\NN\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\DAP\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\RTOS\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\RTOS2\html\search\.
