@@ -151,17 +151,10 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
 
             while (rowCnt)
             {
-#if defined (ARM_NNUSE_ROUND)
-                q31_t     sum =  ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
-                q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
-                q31_t     sum3 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
-                q31_t     sum4 = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
-#else
-                q31_t     sum = *pBias++ << bias_shift;
-                q31_t     sum2 = *pBias++ << bias_shift;
-                q31_t     sum3 = *pBias++ << bias_shift;
-                q31_t     sum4 = *pBias++ << bias_shift;
-#endif
+                q31_t     sum =  ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
+                q31_t     sum2 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
+                q31_t     sum3 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
+                q31_t     sum4 = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
 
                 uint16_t  colCnt = (dim_kernel_x * dim_kernel_y) >> 1;
                 q7_t     *pB = colBuffer + row_shift;
@@ -343,11 +336,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
             {
                 q7_t     *pB = colBuffer + row_shift;
                 const q7_t *pA = wt + row_shift;
-#if defined (ARM_NNUSE_ROUND)
-                q31_t     sum = ((q31_t)(*pBias++) << bias_shift) + (0x1 << (out_shift-1));
-#else
-                q31_t     sum = *pBias++ << bias_shift;
-#endif
+                q31_t     sum = ((q31_t)(*pBias++) << bias_shift) + NN_ROUND(out_shift);
                 uint16_t  colCnt = (dim_kernel_x * dim_kernel_y);
 
                 row_shift += 1;
@@ -389,11 +378,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t * Im_in,
             for (i_ch_out = 0; i_ch_out < ch_im_out; i_ch_out++)
             {
                 // for each output 
-#if defined (ARM_NNUSE_ROUND)
-                int       conv_out = ((q31_t)(bias[i_ch_out]) << bias_shift) + (0x1 << (out_shift-1));
-#else
-                int       conv_out = bias[i_ch_out] << bias_shift;
-#endif
+                int       conv_out = ((q31_t)(bias[i_ch_out]) << bias_shift) + NN_ROUND(out_shift);
                 for (i_ker_y = 0; i_ker_y < dim_kernel_y; i_ker_y++)
                 {
                     for (i_ker_x = 0; i_ker_x < dim_kernel_x; i_ker_x++)

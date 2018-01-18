@@ -73,17 +73,11 @@ q7_t     *arm_nn_mat_mult_kernel_q7_q15_reordered(const q7_t * pA,
         const q7_t *pA2 = pA + numCol_A;
 
         /* init the sum with bias */
-#if defined (ARM_NNUSE_ROUND)
-        q31_t     sum =  ((q31_t)(bias[i]) << bias_shift) + (0x1 << (out_shift-1));
-        q31_t     sum2 = ((q31_t)(bias[i]) << bias_shift) + (0x1 << (out_shift-1));
-        q31_t     sum3 = ((q31_t)(bias[i + 1]) << bias_shift) + (0x1 << (out_shift-1));
-        q31_t     sum4 = ((q31_t)(bias[i + 1]) << bias_shift) + (0x1 << (out_shift-1));
-#else
-        q31_t     sum = bias[i] << bias_shift;
-        q31_t     sum2 = bias[i] << bias_shift;
-        q31_t     sum3 = bias[i + 1] << bias_shift;
-        q31_t     sum4 = bias[i + 1] << bias_shift;
-#endif
+        q31_t     sum =  ((q31_t)(bias[i]) << bias_shift) + NN_ROUND(out_shift);
+        q31_t     sum2 = ((q31_t)(bias[i]) << bias_shift) + NN_ROUND(out_shift);
+        q31_t     sum3 = ((q31_t)(bias[i + 1]) << bias_shift) + NN_ROUND(out_shift);
+        q31_t     sum4 = ((q31_t)(bias[i + 1]) << bias_shift) + NN_ROUND(out_shift);
+
         uint16_t  colCnt = numCol_A >> 2;
         /* accumulate over the vector */
         while (colCnt)

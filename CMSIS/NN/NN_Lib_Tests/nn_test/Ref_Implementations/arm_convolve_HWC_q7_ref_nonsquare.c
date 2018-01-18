@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -48,7 +48,7 @@ void arm_convolve_HWC_q7_ref_nonsquare(const q7_t * Im_in,  // input image
         {
             for (k = 0; k < dim_im_out_x; k++)
             {
-#if defined (ARM_NNUSE_ROUND)
+#ifndef (ARM_NN_TRUNCATE)
                 conv_out = ((q31_t) (bias[i]) << bias_shift) + (0x1 << (out_shift - 1));
 #else
                 conv_out = bias[i] << bias_shift;

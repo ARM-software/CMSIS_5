@@ -193,11 +193,7 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
 
         for (i = 0; i < ch_im_out; i++)
         {
-#if defined (ARM_NNUSE_ROUND)
-            q31_t     sum = ((q31_t)bias[i] << bias_shift) + (0x1 << (out_shift-1));
-#else
-            q31_t     sum = bias[i] << bias_shift;
-#endif
+            q31_t     sum = ((q31_t)bias[i] << bias_shift) + NN_ROUND(out_shift);
             q15_t    *pB = bufferA;
             /* basically each time it process 4 entries */
             uint16_t  colCnt = 3 * dim_kernel * dim_kernel >> 2;
@@ -247,11 +243,7 @@ arm_convolve_HWC_q7_RGB(const q7_t * Im_in,
         {
             for (k = 0; k < dim_im_out; k++)
             {
-#if defined (ARM_NNUSE_ROUND)
-                conv_out = (bias[i] << bias_shift) + (0x1 << (out_shift-1));
-#else
-                conv_out = bias[i] << bias_shift;
-#endif
+                conv_out = (bias[i] << bias_shift) + NN_ROUND(out_shift);
                 for (m = 0; m < dim_kernel; m++)
                 {
                     for (n = 0; n < dim_kernel; n++)
