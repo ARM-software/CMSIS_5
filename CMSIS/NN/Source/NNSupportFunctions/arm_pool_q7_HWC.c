@@ -201,7 +201,8 @@ arm_maxpool_q7_HWC(q7_t * Im_in,
             }
 
             /* first step is to copy over initial data */
-            arm_copy_q7(win_start, target, ch_im_in);
+            /* arm_copy_q7(win_start, target, ch_im_in); */
+            memmove(target, win_start, ch_im_in);
 
             /* start the max operation from the second part */
             win_start += ch_im_in;
@@ -238,7 +239,8 @@ arm_maxpool_q7_HWC(q7_t * Im_in,
         }
 
         /* copy over the first row */
-        arm_copy_q7(row_start, target, dim_im_out * ch_im_in);
+        /* arm_copy_q7(row_start, target, dim_im_out * ch_im_in); */
+        memmove(target, row_start, dim_im_out * ch_im_in);
 
         /* move over to next row */
         row_start += ch_im_in * dim_im_in;

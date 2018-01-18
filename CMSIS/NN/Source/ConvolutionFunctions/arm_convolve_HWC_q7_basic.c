@@ -112,7 +112,8 @@ arm_convolve_HWC_q7_basic(const q7_t * Im_in,
                     if (i_ker_y < 0 || i_ker_y >= dim_im_in || i_ker_x < 0 || i_ker_x >= dim_im_in)
                     {
                         /* Filling 0 for out-of-bound paddings */
-                        arm_fill_q15(0, pBuffer, ch_im_in);
+                        /* arm_fill_q15(0, pBuffer, ch_im_in); */
+                        memset(pBuffer, 0, 2*ch_im_in);
                     } else
                     {
                         /* Copying the pixel data to column */

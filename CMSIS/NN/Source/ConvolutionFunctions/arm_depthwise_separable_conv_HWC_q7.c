@@ -125,10 +125,12 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t * Im_in,
                 {
                     if (i_ker_y < 0 || i_ker_y >= dim_im_in || i_ker_x < 0 || i_ker_x >= dim_im_in)
                     {
-                        arm_fill_q7(0, pBuffer, ch_im_in);
+                        /* arm_fill_q7(0, pBuffer, ch_im_in); */
+                        memset(pBuffer, 0, ch_im_in);
                     } else
                     {
-                        arm_copy_q7((q7_t *) Im_in + (i_ker_y * dim_im_in + i_ker_x) * ch_im_in, pBuffer, ch_im_in);
+                        /* arm_copy_q7((q7_t *) Im_in + (i_ker_y * dim_im_in + i_ker_x) * ch_im_in, pBuffer, ch_im_in); */
+                        memcpy(pBuffer, (q7_t *) Im_in + (i_ker_y * dim_im_in + i_ker_x) * ch_im_in, ch_im_in);
                     }
                     pBuffer += ch_im_in;
                 }
