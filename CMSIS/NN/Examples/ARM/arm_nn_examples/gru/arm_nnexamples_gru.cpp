@@ -200,11 +200,13 @@ int main()
     gru_example(scratch_buffer, input_size, history_size,
                 update_gate_weights, reset_gate_weights, hidden_state_weights,
                 update_gate_bias, reset_gate_bias, hidden_state_bias);
+    printf("Complete first iteration on GRU\n");
 
     arm_copy_q15(test_input2, scratch_buffer + history_size, input_size);
     gru_example(scratch_buffer, input_size, history_size,
                 update_gate_weights, reset_gate_weights, hidden_state_weights,
                 update_gate_bias, reset_gate_bias, hidden_state_bias);
+    printf("Complete second iteration on GRU\n");
 
     return 0;
 }

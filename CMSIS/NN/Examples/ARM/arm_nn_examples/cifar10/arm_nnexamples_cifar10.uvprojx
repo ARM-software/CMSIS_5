@@ -381,144 +381,144 @@
           <GroupName>Source Files</GroupName>
           <Files>
             <File>
-              <FileName>arm_nnexamples_cifar10.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\arm_nnexamples_cifar10.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_basic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_basic.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_fast.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_RGB.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q15_basic.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q15_fast.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q15_fast.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q7_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q7_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_mat_q7_vec_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_mat_q7_vec_q15_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q15_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q15_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nntables.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nntables.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_pool_q7_HWC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_pool_q7_HWC.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_q7_to_q15_no_shift.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_q7_to_q15_no_shift.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_q7_to_q15_reordered_no_shift.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_q7_to_q15_reordered_no_shift.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_relu_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_relu_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_relu_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_relu_q15.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_nn_activations_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q7.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_nn_activations_q7.c</FilePath>
             </File>
             <File>
               <FileName>arm_nn_activations_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q15.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_nn_activations_q15.c</FilePath>
             </File>
             <File>
-              <FileName>arm_softmax_q7.c</FileName>
+              <FileName>arm_relu_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q7.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_relu_q7.c</FilePath>
             </File>
             <File>
-              <FileName>arm_softmax_q15.c</FileName>
+              <FileName>arm_relu_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_relu_q15.c</FilePath>
             </File>
             <File>
               <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_fast.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_RGB.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_depthwise_separable_conv_HWC_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_mat_q7_vec_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_mat_q7_vec_q15_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q7_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q7_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q15_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q15_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nntables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_nntables.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_pool_q7_HWC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_pool_q7_HWC.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_q7_to_q15_no_shift.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_q7_to_q15_no_shift.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_q7_to_q15_reordered_no_shift.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_q7_to_q15_reordered_no_shift.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\SoftmaxFunctions\arm_softmax_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\SoftmaxFunctions\arm_softmax_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nnexamples_cifar10.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\arm_nnexamples_cifar10.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -544,7 +544,7 @@
               <RVCTZI>0</RVCTZI>
               <RVCTOtherData>0</RVCTOtherData>
               <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>0</IncludeInBuild>
+              <IncludeInBuild>1</IncludeInBuild>
               <AlwaysBuild>2</AlwaysBuild>
               <GenerateAssemblyFile>2</GenerateAssemblyFile>
               <AssembleAssemblyFile>2</AssembleAssemblyFile>
@@ -986,144 +986,144 @@
           <GroupName>Source Files</GroupName>
           <Files>
             <File>
-              <FileName>arm_nnexamples_cifar10.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\arm_nnexamples_cifar10.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_basic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_basic.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_fast.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_RGB.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q15_basic.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q15_fast.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q15_fast.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q7_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q7_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_mat_q7_vec_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_mat_q7_vec_q15_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q15_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q15_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nntables.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nntables.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_pool_q7_HWC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_pool_q7_HWC.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_q7_to_q15_no_shift.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_q7_to_q15_no_shift.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_q7_to_q15_reordered_no_shift.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_q7_to_q15_reordered_no_shift.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_relu_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_relu_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_relu_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_relu_q15.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_nn_activations_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q7.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_nn_activations_q7.c</FilePath>
             </File>
             <File>
               <FileName>arm_nn_activations_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q15.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_nn_activations_q15.c</FilePath>
             </File>
             <File>
-              <FileName>arm_softmax_q7.c</FileName>
+              <FileName>arm_relu_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q7.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_relu_q7.c</FilePath>
             </File>
             <File>
-              <FileName>arm_softmax_q15.c</FileName>
+              <FileName>arm_relu_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_relu_q15.c</FilePath>
             </File>
             <File>
               <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_fast.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_RGB.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_depthwise_separable_conv_HWC_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_mat_q7_vec_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_mat_q7_vec_q15_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q7_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q7_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q15_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q15_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nntables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_nntables.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_pool_q7_HWC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_pool_q7_HWC.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_q7_to_q15_no_shift.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_q7_to_q15_no_shift.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_q7_to_q15_reordered_no_shift.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_q7_to_q15_reordered_no_shift.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\SoftmaxFunctions\arm_softmax_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\SoftmaxFunctions\arm_softmax_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nnexamples_cifar10.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\arm_nnexamples_cifar10.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1478,7 +1478,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM4 __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\Include;..\..\..\..\..\Core\Include</IncludePath>
+              <IncludePath>..\..\..\..\Include;..\..\..\..\..\Core\Include;..\..\..\..\..\DSP\Include;..\cifar10</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1523,144 +1523,144 @@
           <GroupName>Source Files</GroupName>
           <Files>
             <File>
-              <FileName>arm_nnexamples_cifar10.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\arm_nnexamples_cifar10.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_basic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_basic.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_fast.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_RGB.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q15_basic.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q15_fast.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q15_fast.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q7_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q7_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_mat_q7_vec_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_mat_q7_vec_q15_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q15_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q15_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nntables.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nntables.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_pool_q7_HWC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_pool_q7_HWC.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_q7_to_q15_no_shift.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_q7_to_q15_no_shift.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_q7_to_q15_reordered_no_shift.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_q7_to_q15_reordered_no_shift.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_relu_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_relu_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_relu_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_relu_q15.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_nn_activations_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q7.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_nn_activations_q7.c</FilePath>
             </File>
             <File>
               <FileName>arm_nn_activations_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q15.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_nn_activations_q15.c</FilePath>
             </File>
             <File>
-              <FileName>arm_softmax_q7.c</FileName>
+              <FileName>arm_relu_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q7.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_relu_q7.c</FilePath>
             </File>
             <File>
-              <FileName>arm_softmax_q15.c</FileName>
+              <FileName>arm_relu_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_relu_q15.c</FilePath>
             </File>
             <File>
               <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_fast.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_RGB.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_depthwise_separable_conv_HWC_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_mat_q7_vec_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_mat_q7_vec_q15_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q7_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q7_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q15_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q15_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nntables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_nntables.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_pool_q7_HWC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_pool_q7_HWC.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_q7_to_q15_no_shift.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_q7_to_q15_no_shift.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_q7_to_q15_reordered_no_shift.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_q7_to_q15_reordered_no_shift.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\SoftmaxFunctions\arm_softmax_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\SoftmaxFunctions\arm_softmax_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nnexamples_cifar10.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\arm_nnexamples_cifar10.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1689,7 +1689,7 @@
       <TargetName>ARMCM7_SP</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060300::V5.06 update 3 (build 300)::ARMCC</pCCUsed>
+      <pCCUsed>5060528::V5.06 update 5 (build 528)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -2002,7 +2002,7 @@
             <wLevel>0</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>0</uC99>
+            <uC99>1</uC99>
             <useXO>0</useXO>
             <v6Lang>1</v6Lang>
             <v6LangP>1</v6LangP>
@@ -2015,7 +2015,7 @@
               <MiscControls></MiscControls>
               <Define>ARM_MATH_CM7 __FPU_PRESENT=1U</Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>..\..\..\..\Include;..\..\..\..\..\Core\Include;..\..\..\..\..\DSP\Include;..\cifar10</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2060,144 +2060,144 @@
           <GroupName>Source Files</GroupName>
           <Files>
             <File>
-              <FileName>arm_nnexamples_cifar10.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\arm_nnexamples_cifar10.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_basic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_basic.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_fast.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_RGB.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q15_basic.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q15_fast.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q15_fast.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q7_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q7_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_mat_q7_vec_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_mat_q7_vec_q15_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q15_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_fully_connected_q15_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nntables.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nntables.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_pool_q7_HWC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_pool_q7_HWC.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_q7_to_q15_no_shift.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_q7_to_q15_no_shift.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_q7_to_q15_reordered_no_shift.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_q7_to_q15_reordered_no_shift.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_relu_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_relu_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_relu_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_relu_q15.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_nn_activations_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q7.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_nn_activations_q7.c</FilePath>
             </File>
             <File>
               <FileName>arm_nn_activations_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_nn_activations_q15.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_nn_activations_q15.c</FilePath>
             </File>
             <File>
-              <FileName>arm_softmax_q7.c</FileName>
+              <FileName>arm_relu_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q7.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_relu_q7.c</FilePath>
             </File>
             <File>
-              <FileName>arm_softmax_q15.c</FileName>
+              <FileName>arm_relu_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
+              <FilePath>..\..\..\..\Source\ActivationFunctions\arm_relu_q15.c</FilePath>
             </File>
             <File>
               <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Source\NNFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_fast.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_RGB.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_depthwise_separable_conv_HWC_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\ConvolutionFunctions\arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_mat_q7_vec_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_mat_q7_vec_q15_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q7_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q7_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q15_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q15_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nntables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_nntables.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_pool_q7_HWC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_pool_q7_HWC.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_q7_to_q15_no_shift.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_q7_to_q15_no_shift.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_q7_to_q15_reordered_no_shift.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\NNSupportFunctions\arm_q7_to_q15_reordered_no_shift.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\SoftmaxFunctions\arm_softmax_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_softmax_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Source\SoftmaxFunctions\arm_softmax_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nnexamples_cifar10.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\arm_nnexamples_cifar10.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -2277,12 +2277,24 @@
           <targetInfo name="ARMCM7_SP"/>
         </targetInfos>
       </component>
+      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDERR" Cvariant="User" Cvendor="Keil" Cversion="1.2.1" condition="ARMCC Cortex-M">
+        <package name="ARM_Compiler" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.3.3"/>
+        <targetInfos>
+          <targetInfo name="ARMCM0"/>
+        </targetInfos>
+      </component>
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDIN" Cvariant="ITM" Cvendor="Keil" Cversion="1.2.1" condition="ARMCC Cortex-M with ITM">
         <package name="ARM_Compiler" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.3.3"/>
         <targetInfos>
           <targetInfo name="ARMCM3"/>
           <targetInfo name="ARMCM4_FP"/>
           <targetInfo name="ARMCM7_SP"/>
+        </targetInfos>
+      </component>
+      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDIN" Cvariant="User" Cvendor="Keil" Cversion="1.2.1" condition="ARMCC Cortex-M">
+        <package name="ARM_Compiler" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.3.3"/>
+        <targetInfos>
+          <targetInfo name="ARMCM0"/>
         </targetInfos>
       </component>
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="ITM" Cvendor="Keil" Cversion="1.2.1" condition="ARMCC Cortex-M with ITM">
@@ -2293,12 +2305,24 @@
           <targetInfo name="ARMCM7_SP"/>
         </targetInfos>
       </component>
+      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="User" Cvendor="Keil" Cversion="1.2.1" condition="ARMCC Cortex-M">
+        <package name="ARM_Compiler" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.3.3"/>
+        <targetInfos>
+          <targetInfo name="ARMCM0"/>
+        </targetInfos>
+      </component>
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="TTY" Cvariant="ITM" Cvendor="Keil" Cversion="1.2.1" condition="ARMCC Cortex-M with ITM">
         <package name="ARM_Compiler" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.3.3"/>
         <targetInfos>
           <targetInfo name="ARMCM3"/>
           <targetInfo name="ARMCM4_FP"/>
           <targetInfo name="ARMCM7_SP"/>
+        </targetInfos>
+      </component>
+      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="TTY" Cvariant="User" Cvendor="Keil" Cversion="1.2.1" condition="ARMCC Cortex-M">
+        <package name="ARM_Compiler" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.3.3"/>
+        <targetInfos>
+          <targetInfo name="ARMCM0"/>
         </targetInfos>
       </component>
     </components>

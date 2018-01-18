@@ -821,12 +821,12 @@
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>1</FileNumber>
-      <FileType>1</FileType>
+      <FileType>8</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_basic.c</PathWithFileName>
-      <FilenameWithoutPath>arm_convolve_HWC_q7_basic.c</FilenameWithoutPath>
+      <PathWithFileName>.\arm_nnexamples_gru.cpp</PathWithFileName>
+      <FilenameWithoutPath>arm_nnexamples_gru.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -837,8 +837,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_fast.c</PathWithFileName>
-      <FilenameWithoutPath>arm_convolve_HWC_q7_fast.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ActivationFunctions\arm_nn_activations_q7.c</PathWithFileName>
+      <FilenameWithoutPath>arm_nn_activations_q7.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -849,8 +849,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q7_RGB.c</PathWithFileName>
-      <FilenameWithoutPath>arm_convolve_HWC_q7_RGB.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ActivationFunctions\arm_nn_activations_q15.c</PathWithFileName>
+      <FilenameWithoutPath>arm_nn_activations_q15.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -861,8 +861,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q15_basic.c</PathWithFileName>
-      <FilenameWithoutPath>arm_convolve_HWC_q15_basic.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ActivationFunctions\arm_relu_q7.c</PathWithFileName>
+      <FilenameWithoutPath>arm_relu_q7.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -873,8 +873,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_convolve_HWC_q15_fast.c</PathWithFileName>
-      <FilenameWithoutPath>arm_convolve_HWC_q15_fast.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ActivationFunctions\arm_relu_q15.c</PathWithFileName>
+      <FilenameWithoutPath>arm_relu_q15.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -885,8 +885,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_depthwise_separable_conv_HWC_q7.c</PathWithFileName>
-      <FilenameWithoutPath>arm_depthwise_separable_conv_HWC_q7.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_1x1_HWC_q7_fast_nonsquare.c</PathWithFileName>
+      <FilenameWithoutPath>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -897,8 +897,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_fully_connected_q7.c</PathWithFileName>
-      <FilenameWithoutPath>arm_fully_connected_q7.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic.c</PathWithFileName>
+      <FilenameWithoutPath>arm_convolve_HWC_q7_basic.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -909,8 +909,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_fully_connected_q7_opt.c</PathWithFileName>
-      <FilenameWithoutPath>arm_fully_connected_q7_opt.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_fast.c</PathWithFileName>
+      <FilenameWithoutPath>arm_convolve_HWC_q7_fast.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -921,8 +921,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_fully_connected_mat_q7_vec_q15.c</PathWithFileName>
-      <FilenameWithoutPath>arm_fully_connected_mat_q7_vec_q15.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_fast_nonsquare.c</PathWithFileName>
+      <FilenameWithoutPath>arm_convolve_HWC_q7_fast_nonsquare.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -933,8 +933,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_fully_connected_mat_q7_vec_q15_opt.c</PathWithFileName>
-      <FilenameWithoutPath>arm_fully_connected_mat_q7_vec_q15_opt.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_RGB.c</PathWithFileName>
+      <FilenameWithoutPath>arm_convolve_HWC_q7_RGB.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -945,8 +945,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_fully_connected_q15.c</PathWithFileName>
-      <FilenameWithoutPath>arm_fully_connected_q15.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_basic.c</PathWithFileName>
+      <FilenameWithoutPath>arm_convolve_HWC_q15_basic.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -957,8 +957,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_fully_connected_q15_opt.c</PathWithFileName>
-      <FilenameWithoutPath>arm_fully_connected_q15_opt.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast.c</PathWithFileName>
+      <FilenameWithoutPath>arm_convolve_HWC_q15_fast.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -969,8 +969,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_nn_mat_mult_kernel_q7_q15.c</PathWithFileName>
-      <FilenameWithoutPath>arm_nn_mat_mult_kernel_q7_q15.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ConvolutionFunctions\arm_depthwise_separable_conv_HWC_q7.c</PathWithFileName>
+      <FilenameWithoutPath>arm_depthwise_separable_conv_HWC_q7.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -981,8 +981,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_nn_mat_mult_kernel_q7_q15_reordered.c</PathWithFileName>
-      <FilenameWithoutPath>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ConvolutionFunctions\arm_depthwise_separable_conv_HWC_q7_nonsquare.c</PathWithFileName>
+      <FilenameWithoutPath>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -993,8 +993,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_nntables.c</PathWithFileName>
-      <FilenameWithoutPath>arm_nntables.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ConvolutionFunctions\arm_nn_mat_mult_kernel_q7_q15.c</PathWithFileName>
+      <FilenameWithoutPath>arm_nn_mat_mult_kernel_q7_q15.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1005,8 +1005,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_pool_q7_HWC.c</PathWithFileName>
-      <FilenameWithoutPath>arm_pool_q7_HWC.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\ConvolutionFunctions\arm_nn_mat_mult_kernel_q7_q15_reordered.c</PathWithFileName>
+      <FilenameWithoutPath>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1017,8 +1017,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_q7_to_q15_no_shift.c</PathWithFileName>
-      <FilenameWithoutPath>arm_q7_to_q15_no_shift.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_mat_q7_vec_q15.c</PathWithFileName>
+      <FilenameWithoutPath>arm_fully_connected_mat_q7_vec_q15.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1029,8 +1029,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_q7_to_q15_reordered_no_shift.c</PathWithFileName>
-      <FilenameWithoutPath>arm_q7_to_q15_reordered_no_shift.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_mat_q7_vec_q15_opt.c</PathWithFileName>
+      <FilenameWithoutPath>arm_fully_connected_mat_q7_vec_q15_opt.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1041,8 +1041,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_relu_q7.c</PathWithFileName>
-      <FilenameWithoutPath>arm_relu_q7.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q7.c</PathWithFileName>
+      <FilenameWithoutPath>arm_fully_connected_q7.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1053,8 +1053,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_relu_q15.c</PathWithFileName>
-      <FilenameWithoutPath>arm_relu_q15.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q7_opt.c</PathWithFileName>
+      <FilenameWithoutPath>arm_fully_connected_q7_opt.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1065,8 +1065,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_nn_activations_q7.c</PathWithFileName>
-      <FilenameWithoutPath>arm_nn_activations_q7.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q15.c</PathWithFileName>
+      <FilenameWithoutPath>arm_fully_connected_q15.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1077,8 +1077,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_nn_activations_q15.c</PathWithFileName>
-      <FilenameWithoutPath>arm_nn_activations_q15.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\FullyConnectedFunctions\arm_fully_connected_q15_opt.c</PathWithFileName>
+      <FilenameWithoutPath>arm_fully_connected_q15_opt.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1089,8 +1089,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_softmax_q7.c</PathWithFileName>
-      <FilenameWithoutPath>arm_softmax_q7.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\NNSupportFunctions\arm_nntables.c</PathWithFileName>
+      <FilenameWithoutPath>arm_nntables.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1101,20 +1101,56 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\Source\NNFunctions\arm_softmax_q15.c</PathWithFileName>
-      <FilenameWithoutPath>arm_softmax_q15.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\NNSupportFunctions\arm_pool_q7_HWC.c</PathWithFileName>
+      <FilenameWithoutPath>arm_pool_q7_HWC.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>25</FileNumber>
-      <FileType>8</FileType>
+      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\arm_nnexamples_gru.cpp</PathWithFileName>
-      <FilenameWithoutPath>arm_nnexamples_gru.cpp</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\Source\NNSupportFunctions\arm_q7_to_q15_no_shift.c</PathWithFileName>
+      <FilenameWithoutPath>arm_q7_to_q15_no_shift.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>26</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\..\..\Source\NNSupportFunctions\arm_q7_to_q15_reordered_no_shift.c</PathWithFileName>
+      <FilenameWithoutPath>arm_q7_to_q15_reordered_no_shift.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>27</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\..\..\Source\SoftmaxFunctions\arm_softmax_q7.c</PathWithFileName>
+      <FilenameWithoutPath>arm_softmax_q7.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>28</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\..\..\Source\SoftmaxFunctions\arm_softmax_q15.c</PathWithFileName>
+      <FilenameWithoutPath>arm_softmax_q15.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1128,7 +1164,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>26</FileNumber>
+      <FileNumber>29</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
