@@ -37,7 +37,7 @@ void arm_fully_connected_q15_opt_ref(const q15_t * pV,  // pointer to vector
     while (rowCnt)
     {
         pA = pV;
-#ifndef (ARM_NN_TRUNCATE)
+#ifndef ARM_NN_TRUNCATE
         q31_t     sum = (*pBias++ << bias_shift) + (0x1 << (out_shift - 1));
         q31_t     sum2 = (*pBias++ << bias_shift) + (0x1 << (out_shift - 1));
         q31_t     sum3 = (*pBias++ << bias_shift) + (0x1 << (out_shift - 1));
@@ -101,7 +101,7 @@ void arm_fully_connected_q15_opt_ref(const q15_t * pV,  // pointer to vector
     while (rowCnt)
     {
         pA = pV;
-#ifndef (ARM_NN_TRUNCATE)
+#ifndef ARM_NN_TRUNCATE
         int       ip_out = (*pBias++ << bias_shift) + (0x1 << (out_shift - 1));
 #else
         int       ip_out = *pBias++ << bias_shift;

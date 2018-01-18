@@ -139,9 +139,9 @@ __STATIC_FORCEINLINE void *read_and_pad_reordered(void *source, q31_t * out1, q3
  * @brief defition to adding rouding offset
  */
 #ifndef ARM_NN_TRUNCATE
-    #define NN_ROUND(out_shift) 0
-#else
     #define NN_ROUND(out_shift) ( 0x1 << (out_shift - 1) )
+#else
+    #define NN_ROUND(out_shift) 0
 #endif
 
 #ifdef __cplusplus

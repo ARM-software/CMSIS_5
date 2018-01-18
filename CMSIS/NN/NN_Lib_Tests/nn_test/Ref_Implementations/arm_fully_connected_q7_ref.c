@@ -29,7 +29,7 @@ void arm_fully_connected_q7_ref(const q7_t * pV,    // pointer to vector
 {
     for (int i = 0; i < num_of_rows; i++)
     {
-#ifndef (ARM_NN_TRUNCATE)
+#ifndef ARM_NN_TRUNCATE
         int       ip_out = (bias[i] << bias_shift) + (0x1 << (out_shift - 1));
 #else
         int       ip_out = bias[i] << bias_shift;
