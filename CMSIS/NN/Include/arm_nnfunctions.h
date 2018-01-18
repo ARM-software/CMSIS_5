@@ -50,7 +50,7 @@
    *
    * Block Diagram
    * --------
-   * \image html CMSIS-NN-OVERVIEW.GIF
+   * \image html CMSIS-NN-OVERVIEW.PNG
    *
    * Examples
    * --------
