@@ -33,8 +33,9 @@
    * Introduction
    * ------------
    *
-   * This user manual describes the CMSIS DSP software library,
-   * a suite of common signal processing functions for use on Cortex-M processor based devices.
+   * This user manual describes the CMSIS NN software library,
+   * a collection of efficient neural network kernels developed to maximize the 
+   * performance and minimize the memory footprint of DNNs on Cortex-M processor cores.
    *
    * The library is divided into a number of functions each covering a specific category:
    * - Neural Network Convolution Functions

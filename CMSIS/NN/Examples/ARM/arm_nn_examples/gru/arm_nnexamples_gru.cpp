@@ -71,7 +71,7 @@
  * \par
  * | reset | input | history | update | hidden_state |
  * \par
- * In this way, the concatenation is automatically done since (reset, input) and (input, history)
+ * In this way, the concatination is automatically done since (reset, input) and (input, history)
  * are physically concatinated in memory.
  * \par
  *  The ordering of the weight matrix should be adjusted accordingly.
