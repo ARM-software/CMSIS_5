@@ -24,7 +24,7 @@
  * $Date:        17. January 2018
  * $Revision:    V.1.0.0
  *
- * Target Processor: Cortex-M4 and Cortex-M7 cores
+ * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
 
 #include "arm_math.h"
