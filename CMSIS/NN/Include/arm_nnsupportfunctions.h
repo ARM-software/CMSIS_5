@@ -32,7 +32,7 @@
 
 #include "arm_math.h"
 #include "arm_common_tables.h"
-#include <cstring>
+//#include <cstring>
 
 #ifdef __cplusplus
 extern    "C"
