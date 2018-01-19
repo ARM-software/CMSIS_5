@@ -14,7 +14,7 @@ A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) i
  - CMSIS-Core: compiler agnostic features extended to simplify transition on LLVM based front-end
  - CMSIS-Core-A: preview of the CMSIS-Core for Cortex-A
  - Coming soon: CMSIS-RTOS2 for Cortex-A
- - CMSIS-NN: Bare metal Neuronal Network function library.
+ - CMSIS-NN: Bare metal Neural Network function library.
 
 ## Implemented Enhancements
  - Support for Armv8-M Architecture (Mainline and Baseline) as well as devices Cortex-M23 and Cortex-M33
