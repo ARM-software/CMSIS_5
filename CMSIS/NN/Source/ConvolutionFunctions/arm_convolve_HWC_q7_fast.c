@@ -55,7 +55,7 @@
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input, 
+   * @param[in,out]   bufferA     pointer to buffer space for input 
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -84,7 +84,7 @@
    *
    * To speed-up the determination of the padding condition, we split the
    * computation into 3x3 parts, i.e., {top, mid, bottom} X {left, mid, right}.
-   * This reduces the total number of boundry condition checks and improves
+   * This reduces the total number of boundary condition checks and improves
    * the data copying performance.
    */
 

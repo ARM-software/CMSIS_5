@@ -55,7 +55,7 @@
    *  y_i = 2^(x_i) / sum(2^x_j)
    *
    *  The relative output will be different here.
-   *  But mathamatically, the gradient will be the same
+   *  But mathematically, the gradient will be the same
    *  with a log(2) scaling factor.
    *
    */

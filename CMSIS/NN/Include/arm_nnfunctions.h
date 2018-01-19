@@ -132,7 +132,7 @@ extern    "C"
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input, 
+   * @param[in,out]   bufferA     pointer to buffer space for input 
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
    *
@@ -169,7 +169,7 @@ extern    "C"
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input, 
+   * @param[in,out]   bufferA     pointer to buffer space for input 
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns <code>ARM_MATH_SUCCESS</code> 
    *
@@ -206,7 +206,7 @@ extern    "C"
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input, 
+   * @param[in,out]   bufferA     pointer to buffer space for input 
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -253,7 +253,7 @@ extern    "C"
    * @param[in,out]   Im_out       pointer to output tensor
    * @param[in]       dim_im_out_x output tensor dimension x
    * @param[in]       dim_im_out_y output tensor dimension y
-   * @param[in,out]   bufferA      pointer to buffer space for input, 
+   * @param[in,out]   bufferA      pointer to buffer space for input 
    * @param[in,out]   bufferB      pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -305,7 +305,7 @@ extern    "C"
    * @param[in,out]   Im_out       pointer to output tensor
    * @param[in]       dim_im_out_x output tensor dimension x
    * @param[in]       dim_im_out_y output tensor dimension y
-   * @param[in,out]   bufferA      pointer to buffer space for input, 
+   * @param[in,out]   bufferA      pointer to buffer space for input 
    * @param[in,out]   bufferB      pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -355,7 +355,7 @@ extern    "C"
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input, 
+   * @param[in,out]   bufferA     pointer to buffer space for input 
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -396,7 +396,7 @@ extern    "C"
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input, 
+   * @param[in,out]   bufferA     pointer to buffer space for input 
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -438,7 +438,7 @@ extern    "C"
    * @param[in]       out_shift   amount of right-shift for output
    * @param[in,out]   Im_out      pointer to output tensor
    * @param[in]       dim_im_out  output tensor dimension
-   * @param[in,out]   bufferA     pointer to buffer space for input, 
+   * @param[in,out]   bufferA     pointer to buffer space for input 
    * @param[in,out]   bufferB     pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
@@ -485,7 +485,7 @@ extern    "C"
    * @param[in,out]   Im_out        pointer to output tensor
    * @param[in]       dim_im_out_x  output tensor dimension x
    * @param[in]       dim_im_out_y  output tensor dimension y
-   * @param[in,out]   bufferA       pointer to buffer space for input, 
+   * @param[in,out]   bufferA       pointer to buffer space for input 
    * @param[in,out]   bufferB       pointer to buffer space for output
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
