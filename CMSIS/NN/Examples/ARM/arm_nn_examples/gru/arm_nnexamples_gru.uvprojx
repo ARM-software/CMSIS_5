@@ -1743,8 +1743,8 @@
         <targetInfos>
           <targetInfo name="ARMCM0"/>
           <targetInfo excluded="1" name="ARMCM3"/>
-          <targetInfo name="ARMCM4_FP"/>
-          <targetInfo name="ARMCM7_SP"/>
+          <targetInfo excluded="1" name="ARMCM4_FP"/>
+          <targetInfo excluded="1" name="ARMCM7_SP"/>
         </targetInfos>
       </component>
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="EVR" Cvendor="Keil" Cversion="1.2.1" condition="ARMCC Cortex-M with EVR" isTargetSpecific="1">
@@ -1770,8 +1770,8 @@
         <targetInfos>
           <targetInfo name="ARMCM0"/>
           <targetInfo excluded="1" name="ARMCM3"/>
-          <targetInfo name="ARMCM4_FP"/>
-          <targetInfo name="ARMCM7_SP"/>
+          <targetInfo excluded="1" name="ARMCM4_FP"/>
+          <targetInfo excluded="1" name="ARMCM7_SP"/>
         </targetInfos>
       </file>
       <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\ARM\ARMCM0\Source\ARM\startup_ARMCM0.s" version="1.0.0">
