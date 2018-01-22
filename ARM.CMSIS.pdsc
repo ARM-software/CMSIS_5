@@ -2579,8 +2579,9 @@ and 8-bit Java bytecodes in Jazelle state.
         
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_pool_q7_HWC.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c"/>
+
+        <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_pool_q7_HWC.c"/>
         
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q7.c"/>
