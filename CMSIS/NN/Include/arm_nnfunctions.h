@@ -35,7 +35,7 @@
    *
    * This user manual describes the CMSIS NN software library,
    * a collection of efficient neural network kernels developed to maximize the 
-   * performance and minimize the memory footprint of DNNs on Cortex-M processor cores.
+   * performance and minimize the memory footprint of neural networks on Cortex-M processor cores.
    *
    * The library is divided into a number of functions each covering a specific category:
    * - Neural Network Convolution Functions
