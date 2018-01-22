@@ -46,7 +46,9 @@
    * - Neural Network Support Functions
    *
    * The library has separate functions for operating on different weight and activation data
-   * types including 8-bit integers and 16-bit integers,
+   * types including 8-bit integers (q7_t) and 16-bit integers (q15_t). The descrition of the
+   * kernels are included in the function description. The implementation details are also 
+   * described in this paper [1]. 
    *
    * Block Diagram
    * --------
@@ -78,6 +80,8 @@
    * ------------
    *
    * Copyright (C) 2010-2018 Arm Limited. All rights reserved.
+   *
+   * [1] --placeholder--
    */
 
 /**
