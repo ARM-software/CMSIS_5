@@ -35,7 +35,7 @@
    *
    * This user manual describes the CMSIS NN software library,
    * a collection of efficient neural network kernels developed to maximize the 
-   * performance and minimize the memory footprint of DNNs on Cortex-M processor cores.
+   * performance and minimize the memory footprint of neural networks on Cortex-M processor cores.
    *
    * The library is divided into a number of functions each covering a specific category:
    * - Neural Network Convolution Functions
@@ -46,7 +46,9 @@
    * - Neural Network Support Functions
    *
    * The library has separate functions for operating on different weight and activation data
-   * types including 8-bit integers and 16-bit integers,
+   * types including 8-bit integers (q7_t) and 16-bit integers (q15_t). The descrition of the
+   * kernels are included in the function description. The implementation details are also 
+   * described in this paper [1]. 
    *
    * Block Diagram
    * --------
@@ -78,6 +80,8 @@
    * ------------
    *
    * Copyright (C) 2010-2018 Arm Limited. All rights reserved.
+   *
+   * [1] CMSIS-NN: Efficient Neural Network Kernels for Arm Cortex-M CPUs https://arxiv.org/abs/1801.06601
    */
 
 /**
