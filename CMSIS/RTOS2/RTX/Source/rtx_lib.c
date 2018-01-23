@@ -121,7 +121,11 @@ __attribute__((section(".bss.os.thread.stack")));
 
 // Idle Thread Attributes
 static const osThreadAttr_t os_idle_thread_attr = {
+#if defined(OS_IDLE_THREAD_NAME)
+  OS_IDLE_THREAD_NAME,
+#else
   NULL,
+#endif
   osThreadDetached,
   &os_idle_thread_cb,
   (uint32_t)sizeof(os_idle_thread_cb),
@@ -174,7 +178,11 @@ __attribute__((section(".bss.os.thread.stack")));
 
 // Timer Thread Attributes
 static const osThreadAttr_t os_timer_thread_attr = {
+#if defined(OS_TIMER_THREAD_NAME)
+  OS_TIMER_THREAD_NAME,
+#else
   NULL,
+#endif
   osThreadDetached,
   &os_timer_thread_cb,
   (uint32_t)sizeof(os_timer_thread_cb),
