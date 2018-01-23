@@ -8,8 +8,7 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.2.1-dev3">
-       Active development...
+    <release version="5.2.1-dev3" date="2018-01-23">
        CMSIS-NN: 1.0.0
         - Initial contribution of the bare metal Neural Network Library.
     </release>
