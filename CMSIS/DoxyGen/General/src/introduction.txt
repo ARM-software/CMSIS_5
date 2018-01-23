@@ -30,8 +30,9 @@ The CMSIS components are:
 
  - <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>: DSP Library Collection with over 60 Functions for various data types: fixed-point (fractional q7, q15, q31) and single precision floating-point (32-bit).
    The library is available for all Cortex-M cores. Implementations that are optimized for the SIMD instruction set are available for Cortex-M4, Cortex-M7, and Cortex-M33.
+   
+ - <a href="../../NN/html/index.html"><b>CMSIS-NN</b></a>: CMSIS-NN is a collection of efficient neural network kernels developed to maximize the performance and minimize the memory footprint of neural networks on Cortex-M processor cores.
  
-  
  - <a href="../../RTOS/html/index.html"><b>CMSIS-RTOS v1</b></a>: Common API for Real-Time Operating Systems along with reference implementation based on RTX.
     It provides a standardized programming interface that is portable to many RTOS and enables software components that can work across multiple RTOS systems.
  
@@ -53,7 +54,7 @@ The CMSIS components are:
 
 \note Refer to \ref CM_Pack_Content for more information on the content of the Software Pack.
 
-\image html CMSISv4_small.png "CMSIS Structure"
+\image html Overview.png "CMSIS Structure"
         
 \section Motivation Motivation
 
@@ -155,6 +156,7 @@ Directory                 |Content
 \b DAP                    |<a href="../../DAP/html/index.html"><b>CMSIS-DAP</b></a> Debug Access Port source code and reference implementations                     
 \b Driver                 |Header files for the <a href="../../Driver/html/index.html"><b>CMSIS-Driver</b></a> peripheral interface API                             
 \b DSP_Lib                |<a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> software library source code                                                    
+\b NN                     |<a href="../../NN/html/index.html"><b>CMSIS-NN</b></a> software library source code                                                    
 \b Include                |Include files for <a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a> and <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>
 \b Lib                    |<a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> generated libraries for ARMCC and GCC                                           
 \b Pack                   |<a href="../../Pack/html/pack_Example.html"><b>CMSIS-Pack</b></a> example                                                              
@@ -178,6 +180,7 @@ In addition, each CMSIS component has its own release history:
 - <a href="../../Core/html/rev_histCoreA.html"><b>CMSIS-Core (Cortex-A) Revision History</b></a>
 - <a href="../../Driver/html/driver_revisionHistory.html"><b>Driver Revision History</b></a>
 - <a href="../../DSP/html/ChangeLog_pg.html"><b>DSP Revision History (Change Log)</b></a>
+- <a href="../../NN/html/ChangeLog_pg.html"><b>NN Revision History (Change Log)</b></a>
 - <a href="../../RTOS/html/rtos_revisionHistory.html"><b>RTOS v1 Revision History</b></a>
 - <a href="../../RTOS2/html/rtos_revisionHistory.html"><b>RTOS v2 Revision History</b></a>
 - <a href="../../Pack/html/pack_revisionHistory.html"><b>Pack Revision History</b></a>
