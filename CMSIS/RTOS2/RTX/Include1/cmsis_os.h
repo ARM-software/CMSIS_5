@@ -133,9 +133,9 @@
  
 #define osCMSIS             0x20001U    ///< API version (main[31:16].sub[15:0])
  
-#define osCMSIS_RTX         0x50001U    ///< RTOS identification and version (main[31:16].sub[15:0])
+#define osCMSIS_RTX         0x50003U    ///< RTOS identification and version (main[31:16].sub[15:0])
  
-#define osKernelSystemId   "RTX V5.1"   ///< RTOS identification string
+#define osKernelSystemId   "RTX V5.3"   ///< RTOS identification string
  
 #define osFeature_MainThread  0         ///< main thread      1=main can be thread, 0=not available
 #define osFeature_Signals     31U       ///< maximum number of Signal Flags available per thread
