@@ -54,7 +54,7 @@ The CMSIS components are:
 
 \note Refer to \ref CM_Pack_Content for more information on the content of the Software Pack.
 
-\image html CMSISv4_small.png "CMSIS Structure"
+\image html Overview.png "CMSIS Structure"
         
 \section Motivation Motivation
 
