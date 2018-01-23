@@ -81,7 +81,7 @@
    *
    * Copyright (C) 2010-2018 Arm Limited. All rights reserved.
    *
-   * [1] --placeholder--
+   * [1] CMSIS-NN: Efficient Neural Network Kernels for Arm Cortex-M CPUs https://arxiv.org/abs/1801.06601
    */
 
 /**
