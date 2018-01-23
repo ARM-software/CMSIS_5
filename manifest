@@ -1,6 +1,6 @@
 pdsc: ARM.CMSIS.pdsc
 preproc:
- - clean: CMSIS/Documentation/(Core,Core_A,DAP,Driver,DSP,General,Pack,RTOS,RTOS2,SVD,Zone)
+ - clean: CMSIS/Documentation/(Core,Core_A,DAP,Driver,DSP,NN,General,Pack,RTOS,RTOS2,SVD,Zone)
  - doxygen: CMSIS/DoxyGen/Core/core.dxy
  - doxygen: CMSIS/DoxyGen/Core_A/core_A.dxy
  - doxygen: CMSIS/DoxyGen/DAP/dap.dxy
