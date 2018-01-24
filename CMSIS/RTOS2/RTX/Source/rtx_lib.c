@@ -474,6 +474,43 @@ __WEAK void * const osRtxUserSVC[1] = { (void *)0 };
 // OS Sections
 // ===========
 
+#if defined(__CC_ARM)
+__asm void os_cb_sections_wrapper (void) {
+                EXTERN  ||.bss.os.thread.cb$$Base||     [WEAK]
+                EXTERN  ||.bss.os.thread.cb$$Limit||    [WEAK]
+                EXTERN  ||.bss.os.timer.cb$$Base||      [WEAK]
+                EXTERN  ||.bss.os.timer.cb$$Limit||     [WEAK]
+                EXTERN  ||.bss.os.evflags.cb$$Base||    [WEAK]
+                EXTERN  ||.bss.os.evflags.cb$$Limit||   [WEAK]
+                EXTERN  ||.bss.os.mutex.cb$$Base||      [WEAK]
+                EXTERN  ||.bss.os.mutex.cb$$Limit||     [WEAK]
+                EXTERN  ||.bss.os.semaphore.cb$$Base||  [WEAK]
+                EXTERN  ||.bss.os.semaphore.cb$$Limit|| [WEAK]
+                EXTERN  ||.bss.os.mempool.cb$$Base||    [WEAK]
+                EXTERN  ||.bss.os.mempool.cb$$Limit||   [WEAK]
+                EXTERN  ||.bss.os.msgqueue.cb$$Base||   [WEAK]
+                EXTERN  ||.bss.os.msgqueue.cb$$Limit||  [WEAK]
+  
+                AREA    ||.rodata||, DATA, READONLY
+                EXPORT  os_cb_sections
+os_cb_sections
+                DCD     ||.bss.os.thread.cb$$Base||
+                DCD     ||.bss.os.thread.cb$$Limit||
+                DCD     ||.bss.os.evflags.cb$$Base||
+                DCD     ||.bss.os.evflags.cb$$Limit||
+                DCD     ||.bss.os.mutex.cb$$Base||
+                DCD     ||.bss.os.mutex.cb$$Limit||
+                DCD     ||.bss.os.semaphore.cb$$Base||
+                DCD     ||.bss.os.semaphore.cb$$Limit||
+                DCD     ||.bss.os.mempool.cb$$Base||
+                DCD     ||.bss.os.mempool.cb$$Limit||
+                DCD     ||.bss.os.msgqueue.cb$$Base||
+                DCD     ||.bss.os.msgqueue.cb$$Limit||
+
+                AREA    ||.emb_text||, CODE
+};
+#endif
+
 #if (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 //lint -e{19} "Linker symbols"
 __asm (
