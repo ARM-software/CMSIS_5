@@ -1655,7 +1655,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.hdsc.com.cn</td>
   </tr>
   <tr>
-    <td class="XML-Token">Hilscher:55</td>
+    <td class="XML-Token">Hilscher:88</td>
     <td>Hilscher Gesellschaft für Systemautomation mbH</td>
     <td>https://www.hilscher.com</td>
   </tr>
