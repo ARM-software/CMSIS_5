@@ -35,7 +35,7 @@ glob:
  - CMSIS/Utilities/PACK.xsd
  - CMSIS/Utilities/Win32/**/*
  - CMSIS/Utilities/Linux-gcc-4.4.4/**/*
- - CMSIS/Utilities/Linux-gcc-4.8.3/**/* 
+ - CMSIS/Utilities/Linux-gcc-4.8.3/**/*
  - CMSIS/Documentation/**/*
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/Core/html/search/search.css
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/Core_A/html/search/search.css
@@ -44,3 +44,4 @@ glob:
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/DSP/html/search/search.css
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/DAP/html/search/search.css
  - CMSIS/DoxyGen/Doxygen_Templates/search.css: CMSIS/Documentation/NN/html/search/search.css
+ - CMSIS/DoxyGen/Zone/genmodel/**/*: CMSIS/Documentation/Zone/genmodel/
