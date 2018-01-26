@@ -795,7 +795,7 @@
 
         <!-- Stack pointer for running thread -->
         <calc cond="TCB[i].state == 2">
-          sp = __GetRegVal ("PSP");
+          sp = ((__GetRegVal("XPSR") &amp; 0x01FF) &lt; 16) ? (TCB[i].sp) : (__GetRegVal("PSP"));
         </calc>
 
         <!-- Stack pointer for waiting thread -->
