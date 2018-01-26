@@ -621,11 +621,11 @@ __WEAK void software_init_hook (void) {
 
 // Memory for libspace
 static uint32_t os_libspace[OS_THREAD_LIBSPACE_NUM+1][LIBSPACE_SIZE/4] \
-__attribute__((section(".bss.os")));
+__attribute__((section(".bss.os.libspace")));
 
 // Thread IDs for libspace
 static osThreadId_t os_libspace_id[OS_THREAD_LIBSPACE_NUM] \
-__attribute__((section(".bss.os")));
+__attribute__((section(".bss.os.libspace")));
 
 // Check if Kernel has been started
 static uint32_t os_kernel_is_active (void) {
