@@ -1695,6 +1695,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.megachips.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Megawin:70</td>
+    <td>Megawin</td>
+    <td>http://www.megawin.com.tw</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Microchip:3</td>
     <td>Microchip (previously Atmel)</td>
     <td>http://www.microchip.com</td>
