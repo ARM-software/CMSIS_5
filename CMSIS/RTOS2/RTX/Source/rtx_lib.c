@@ -496,6 +496,8 @@ __asm void os_cb_sections_wrapper (void) {
 os_cb_sections
                 DCD     ||.bss.os.thread.cb$$Base||
                 DCD     ||.bss.os.thread.cb$$Limit||
+                DCD     ||.bss.os.timer.cb$$Base||
+                DCD     ||.bss.os.timer.cb$$Limit||
                 DCD     ||.bss.os.evflags.cb$$Base||
                 DCD     ||.bss.os.evflags.cb$$Limit||
                 DCD     ||.bss.os.mutex.cb$$Base||
