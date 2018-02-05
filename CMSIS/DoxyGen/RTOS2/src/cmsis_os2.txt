@@ -840,6 +840,16 @@ Kernel Tick Frequency (Hz)             | \c OS_TICK_FREQ          | Defines base
 Round-Robin Thread switching           | \c OS_ROBIN_ENABLE       | Enables Round-Robin Thread switching.
 Round-Robin Timeout                    | \c OS_ROBIN_TIMEOUT      | Defines how long a thread will execute before a thread switch. Default value is \token{5}. Value range is \token{[1-1000]}.
 ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functions called from ISR store requests to this buffer. Default value is \token{16 entries}. Value range is \token{[4-256]} entries in multiples of \token{4}.
+Memory Management                      | \c OS_EVR_MEMORY         | Enables Memory Management events recording.
+Kernel                                 | \c OS_EVR_KERNEL         | Enables Kernel events recording.
+Thread                                 | \c OS_EVR_THREAD         | Enables Thread events recording.
+Timer                                  | \c OS_EVR_TIMER          | Enables Timer events recording.
+Event Flags                            | \c OS_EVR_EVFLAGS        | Enables Event Flags events recording.
+Mutex                                  | \c OS_EVR_MUTEX          | Enables Mutex events recording.
+Semaphore                              | \c OS_EVR_SEMAPHORE      | Enables Semaphore events recording.
+Memory Pool                            | \c OS_EVR_MEMPOOL        | Enables Memory Pool events recording.
+Message Queue                          | \c OS_EVR_MSGQUEUE       | Enables Message Queue events recording.
+Object Memory usage counters           | \c OS_OBJ_MEM_USAGE      | Enables object memory usage counters to evaluate the maximum memory pool requirements individually for each RTOS object type.
 
 \subsection systemConfig_glob_mem Global dynamic memory
 Refer to \ref GlobalMemoryPool.
@@ -875,6 +885,22 @@ parameter to the ISR FIFO queue buffer to be processed later, after the interrup
 The scheduler is activated immediately after the IRQ handler has finished its execution to process the requests stored to the
 FIFO queue buffer. The required size of this buffer depends on the number of functions that are called within the interrupt
 handler. An insufficient queue size will be caught by \b osRtxErrorNotify with error code \b osRtxErrorISRQueueOverflow.
+
+
+\subsection systemConfig_event_recording Event Recording
+
+RTX5 fully supports <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank">Event Recorder</a>
+annotations. In this section, you can enable or disable the recording of events for the different elements of RTX5. This
+leads to reduced data traffic on the debug connection.
+
+
+\subsection systemConfig_usage_counters Object Memory Usage Counters
+
+Object memory usage counters help to evaluate the maximum memory pool requirements for each object type, just like stack
+watermarking does for threads. The initial setup starts with a global memory pool for all object types. Consecutive runs of
+the application with object memory usage counters enabled, help to introduce object specific memory pools for each object
+type. Normally, this is required for applications that require a functional safety certification as global memory pools are
+not allowed in this case.
 
 
 \section threadConfig Thread Configuration
