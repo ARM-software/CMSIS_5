@@ -48,7 +48,7 @@ uint32_t osRtxMemoryPoolInit (os_mp_info_t *mp_info, uint32_t block_count, uint3
   void *block;
 
   // Check parameters
-  if ((mp_info == NULL) || (block_count == 0U) || (block_size  == 0U) || (block_mem   == NULL)) {
+  if ((mp_info == NULL) || (block_count == 0U) || (block_size  == 0U) || (block_mem  == NULL)) {
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
   }
@@ -184,7 +184,6 @@ static void osRtxMemoryPoolPostProcess (os_memory_pool_t *mp) {
   // Check if Thread is waiting to allocate memory
   if (mp->thread_list != NULL) {
     // Allocate memory
-    //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
     block = osRtxMemoryPoolAlloc(&mp->mp_info);
     if (block != NULL) {
       // Wakeup waiting Thread with highest Priority
