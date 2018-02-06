@@ -112,6 +112,11 @@ Returned by:
 /**
 \struct osSemaphoreAttr_t
 \details
+Attributes to configure a semaphore.
+
+Refer to \ref CMSIS_RTOS_MemoryMgmt for details about usage of
+ - osSemaphoreAttr_t::cb_mem
+ - osSemaphoreAttr_t::cb_size
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
