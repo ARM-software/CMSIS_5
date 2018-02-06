@@ -526,6 +526,17 @@ In contrast to the dynamic memory allocations, the static memory allocation requ
 
 \image html MemAllocStat.png "Statically allocated memory for all objects"
 
+Static memory allocation can be achieved by providing user-defined memory using attributes at object creation,
+see \ref CMSIS_RTOS_MemoryMgmt_Manual. Please take special note of the following restrictions:
+
+Memory type                                  | Requirements
+---------------------------------------------|-------------------------------------------------------------------------------
+Control Block (osXxxAttr_t::cb_mem)          | 4-Byte alignment. Size defined by \ref osRtxThreadCbSize, \ref osRtxTimerCbSize, \ref osRtxEventFlagsCbSize, \ref osRtxMutexCbSize, \ref osRtxSemaphoreCbSize, \ref osRtxMemoryPoolCbSize, \ref osRtxMessageQueueCbSize.
+Thread Stack (osThreadAttr_t::stack_mem)     | 8-Byte alignment. Size is application specific, i.e. amount of stack variables and frames.
+Memory Pool (osMemoryPoolAttr_t::mp_mem)     | 4-Byte alignment. Size calculated with \ref osRtxMemoryPoolMemSize.
+Message Queue (osMessageQueueAttr_t::mq_mem) | 4-Byte alignment. Size calculated with \ref osRtxMessageQueueMemSize.
+
+
 In order to allow RTX5 aware debugging, i.e. Component Viewer, to recognize control blocks these
 needs to be placed in individual memory sections, i.e. using `__attribute__((section(...)))`.
 
@@ -1824,7 +1835,7 @@ Overview of all CMSIS-RTOS C API v2 functions that are implemented in the \subpa
 
 \subsection rtos_api2_basics Common Design Concepts
 
-All RTOS objects share a common design concept. The overall lifecycle of
+All RTOS objects share a common design concept. The overall life-cycle of
 an object can be summarized as created -> in use -> destroyed.
 
 <b>Create Objects</b>
@@ -1832,7 +1843,7 @@ an object can be summarized as created -> in use -> destroyed.
 An object is created by calling its `osXxxNew` function. The new function returns an identifier
 that can be used to operate with the new object. The actual state of an object is typically stored
 in an object specific control block. The memory layout (and size needed) for the control
-block is implementation specific. One should not make any specific asumptions about the control
+block is implementation specific. One should not make any specific assumptions about the control
 block. The control block layout might change and hence should be seen as an implementation
 internal detail.
 
@@ -1844,7 +1855,7 @@ an object specific attribute structure, commonly containing the fields
  - `cb_mem` to provide memory for the control block manually, and
  - `cb_size` to quantify the memory size provided for the control block.
 
-The `name` attribute is only used for object indentification, e.g. using RTOS-aware debugging. The
+The `name` attribute is only used for object identification, e.g. using RTOS-aware debugging. The
 attached string is not used for any other purposes internally.
 
 The `cb_mem` and `cb_size` attributes can be used to provide memory for the control block manually
@@ -1853,10 +1864,11 @@ amount of memory pointed to by `cb_mem` is sufficient for the objects control bl
 the size given as `cb_size` is not sufficient the `osXxxNew` function returns with an error, i.e.
 returning \token{NULL}. Furthermore providing control block memory manually is less portable. Thus
 one has to take care about implementation specific alignment and placement requirements for instance.
+Refer to \ref CMSIS_RTOS_MemoryMgmt for further details.
 
 <b>Object Usage</b>
 
-After an object has been created successsfully it can be used until it is destroyed. The actions
+After an object has been created successfully it can be used until it is destroyed. The actions
 defined for an object depends on its type. Commonly all the `osXxxDoSomething` access function
 require the reference to the object to work with as the first `xxx_id` parameter.
 
@@ -1876,14 +1888,14 @@ set to \token{0}, i.e. usage of try-semantics.
 <b>Object Destruction</b>
 
 Objects that are not needed anymore can be destructed on demand to free the control block memory. Objects
-are not destructed implicitely. Thus one can assume an object id to be valid until `osXxxDelete` is called
-explicitely. The delete function finally frees the control block memory. In case of user provided control
+are not destructed implicitly. Thus one can assume an object id to be valid until `osXxxDelete` is called
+explicitly. The delete function finally frees the control block memory. In case of user provided control
 block memory, see above, the memory must be freed manually as well. 
 
 The only exception one has to take care of are Threads which do not have an explicit `osThreadDelete` function.
 Threads can either be `detached` or `joinable`. Detached threads are automatically destroyed on termination,
 i.e. call to \ref osThreadTerminate or \ref osThreadExit or return from thread function. On the other hand joinable
-threads are kept alive until one explicitely calls \ref osThreadJoin.
+threads are kept alive until one explicitly calls \ref osThreadJoin.
 
 \subsection rtos_api2_functions Function Reference
 
@@ -2047,6 +2059,90 @@ The CMSIS-RTOS2 is a generic API layer that interfaces to an RTOS kernel.
 
 The complete API interface is defined in the \ref cmsis_os2_h. When using dynamic memory allocation for objects, source code
 or libraries require no modifications when using on a different CMSIS-RTOS2 implementation.
+
+Refer to \ref rtos_api2_basics for further details.
+*/
+
+/**
+\addtogroup CMSIS_RTOS_MemoryMgmt Memory Management
+\ingroup CMSIS_RTOS
+\brief Information about memory management possibilities
+\details
+The \ref CMSIS_RTOS offers two options for memory management the user can choose. For object storage one can either use
+ - \ref CMSIS_RTOS_MemoryMgmt_Automatic (fully portable), or
+ - \ref CMSIS_RTOS_MemoryMgmt_Manual (implementation specific).
+ 
+In order to affect the memory allocation scheme all RTOS objects that can be created on request, i.e. those having a `osXxxNew`
+function, accept an optional `osXxxAttr_t attr` argument on creation. As a rule of thumb the object attributes at least have
+members to assign custom control block memory, i.e. `cb_mem` and `cb_size` members. By default, i.e. `attr` is `NULL`
+or `cb_mem` is `NULL`, \ref CMSIS_RTOS_MemoryMgmt_Automatic is used. Providing a pointer to user memory in `cb_mem` switches
+to \ref CMSIS_RTOS_MemoryMgmt_Manual.
+
+For detailed informations about memory allocation strategies provided in RTX5 refer to \ref MemoryAllocation.
+
+\section CMSIS_RTOS_MemoryMgmt_Automatic Automatic Dynamic Allocation
+
+The automatic allocation is the default and viable for many use-cases. Moreover it is fully portable across different
+implementations of the \ref CMSIS_RTOS. The common drawback of dynamic memory allocation is the possibility of memory
+fragmentation and exhaustion. Given that all needed objects are created once upon system initialization and never
+deleted at runtime this class of runtime failures can be prevented, though.
+
+The actual allocation strategy used is implementation specific, i.e. whether global heap or preallocated memory pools are used.
+
+<b> Code Example:</b> 
+\code{.c}
+#include "cmsis_os2.h"                          // implementation agnostic
+  
+osMutexId_t mutex_id;
+osMutexId_t mutex2_id;
+  
+const osMutexAttr_t Thread_Mutex_attr = {
+  "myThreadMutex",                              // human readable mutex name
+  osMutexRecursive | osMutexPrioInherit,        // attr_bits
+  NULL,                                         // memory for control block (default)
+  0U                                            // size for control block (default)
+};
+  
+void CreateMutex (void)  {
+  mutex_id = osMutexNew(NULL);                  // use default values for all attributes
+  mutex2_id = osMutexNew(&Thread_Mutex_attr);   // use attributes from defined structure
+  :
+}
+\endcode
+
+The Mutexes in this example are created using automatic memory allocation.
+
+\section CMSIS_RTOS_MemoryMgmt_Manual Manual User-defined Allocation
+
+One can get fine grained control over memory allocation by providing user-defined memory.
+The actual requirements such user-defined memory are implementation specific. Thus one
+needs to carefully refer to the size and alignment rules of the implementation used, e.g.
+\ref rtx5_specific.
+
+<b> Code Example:</b> 
+\code{.c}
+#include "rtx_os.h"                             // implementation specific
+  
+osMutexId_t mutex_id;
+  
+static uint32_t mutex_cb[osRtxMutexCbSize/4U];  // implementation specific
+  
+const osMutexAttr_t Thread_Mutex_attr = {
+  "myThreadMutex",                              // human readable mutex name
+  osMutexRecursive | osMutexPrioInherit,        // attr_bits
+  mutex_cb,                                     // memory for control block (user-defined)
+  sizeof(mutex_cb)                              // size for control block (user-defined)
+};
+  
+void CreateMutex (void)  {
+  mutex_id = osMutexNew(&Thread_Mutex_attr);    // use attributes from defined structure
+  :
+}
+\endcode
+
+The above example uses user-defined memory for the mutex control block. Depending on the actual
+implementation used one needs to include the specific header file, `rtx_os.h` in this case.
+
 */
 
 /** 
