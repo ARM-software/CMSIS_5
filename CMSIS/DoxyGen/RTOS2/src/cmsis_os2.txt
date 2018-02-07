@@ -2078,7 +2078,7 @@ members to assign custom control block memory, i.e. `cb_mem` and `cb_size` membe
 or `cb_mem` is `NULL`, \ref CMSIS_RTOS_MemoryMgmt_Automatic is used. Providing a pointer to user memory in `cb_mem` switches
 to \ref CMSIS_RTOS_MemoryMgmt_Manual.
 
-For detailed informations about memory allocation strategies provided in RTX5 refer to \ref MemoryAllocation.
+\note For detailed information about memory allocation strategies provided in RTX5 refer to \ref MemoryAllocation.
 
 \section CMSIS_RTOS_MemoryMgmt_Automatic Automatic Dynamic Allocation
 
