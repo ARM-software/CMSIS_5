@@ -122,8 +122,8 @@ def images(step, config):
   return images
 
 def storeResult(step, config, cmd):
-  result = format("result_{dev}_{cc}_{target}_{now}.xml", config['device'], config['compiler'], config['target'], now = datetime.now().strftime("%Y%m%d%H%M%S"))
-  step.storeResult(cmd, result)
+  result = format("result_{cc}_{dev}_{target}_{now}.xml", config['device'], config['compiler'], config['target'], now = datetime.now().strftime("%Y%m%d%H%M%S"))
+  step.storeResult(cmd, result, format("{cc}.{dev}.{target}", config['device'], config['compiler'], config['target']))
   
 def create():
   deviceAxis = Axis("device", abbrev="d", values=Device, desc="Device(s) to be considered.")
