@@ -212,7 +212,7 @@ typedef struct
   #pragma pop
 #elif defined (__ICCARM__)
   /* leave anonymous unions enabled */
-#elif (__ARMCC_VERSION >= 6010050)
+#elif (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
   #pragma clang diagnostic pop
 #elif defined (__GNUC__)
   /* anonymous unions are enabled by default */
