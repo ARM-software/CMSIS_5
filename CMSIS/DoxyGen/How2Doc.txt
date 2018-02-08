@@ -19,16 +19,16 @@ Files: Middleware components have the following files that are used to generate 
 
   - *.txt files: documentation files that group functions and explain overall the API. Each *.h file should have a *.txt
     file with the same name, i.e. rl_usb.h => rl_usb.txt; a exception is permitted when a template is used to explain 
-	API functions.
+  API functions.
  
   - *.c templates: show the usage of some middleware functionality and may be included in the Doxygen documentation.
     *.c templates with '%Instance%' are copied to .\MW\Doc\component and '%Instance%' is replaced with 'n', otherwise
-	Doxygen uses the *.c templates in folder .\MW\component\Template. If a template is used in documentation 
-	the related *.txt file has the same name as the template, i.e. USBD_User_HID.c => USBD_User_HID.txt.
-	
+  Doxygen uses the *.c templates in folder .\MW\component\Template. If a template is used in documentation 
+  the related *.txt file has the same name as the template, i.e. USBD_User_HID.c => USBD_User_HID.txt.
+  
   - *.c or *.h config files should be self-explaining using <i> tags. config files will not be replicated
     in Doxygen *.txt files, but the high-level usage will be explained. The impact of parameters to middleware
-	needs therefore be part of the config files.
+  needs therefore be part of the config files.
 
 Source files (*.c and *.h) should NOT use <TAB> character. Instead of <TAB> <space> characters are used.
 
@@ -215,7 +215,7 @@ Example:
 The file documents each function that is exposed in *.h header file (and only those functions).
 In case that functions are described in other files (i.e. USB Class Templates) there is a reference.
 
-Functional Group assignements uses this syntax:
+Functional Group assignments uses this syntax:
 ---------------------------
 /**
 \defgroup           a group definition 
@@ -267,3 +267,15 @@ void ftp_server_notify (uint8_t event) {
 \endcode
 
 
+
+Cross references (between components)
+-------------------------------------
+
+Within a single component (same .dxy configuration) one can easily created cross references.
+Known symbol names are automatically assumed as a reference by Doxygen. Pages, sections and
+subsections can be referenced using "\ref" notation.
+
+Cross references do not work between different components, though. Doxygen offers the possibility
+to import so called tags (symbol and section names) from an another external documentation.
+Unfortunately this creates output that crashes the MDK DoxyIndex importer. Hence cross references
+needs to be placed manually using <a href="[url]">...</a> notation, for the time being.
