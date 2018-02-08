@@ -2117,7 +2117,7 @@ The Mutexes in this example are created using automatic memory allocation.
 One can get fine grained control over memory allocation by providing user-defined memory.
 The actual requirements such user-defined memory are implementation specific. Thus one
 needs to carefully refer to the size and alignment rules of the implementation used, e.g.
-\ref rtx5_specific.
+for RTX see \ref StaticObjectMemory.
 
 <b> Code Example:</b> 
 \code{.c}
@@ -2174,46 +2174,154 @@ information.
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \def osRtxThreadCbSize
+\brief Thread Control Block size
+\details
+This macro exposes the minimum amount of memory needed for an RTX5 Thread Control Block,
+see osThreadAttr_t::cb_mem and \ref osThreadAttr_t::cb_size.
+
+Example:
+\code
+// Used-defined memory for thread control block
+static uint32_t thread_cb[osRtxThreadCbSize/4U];
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\def osRtxTimerCbSize       
+\def osRtxTimerCbSize
+\brief Timer Control Block size
+\details
+This macro exposes the minimum amount of memory needed for an RTX5 Timer Control Block,
+see osTimerAttr_t::cb_mem and \ref osTimerAttr_t::cb_size.
+
+Example:
+\code
+// Used-defined memory for timer control block
+static uint32_t timer_cb[osRtxTimerCbSize/4U];
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\def osRtxEventFlagsCbSize  
+\def osRtxEventFlagsCbSize
+\brief Event Flags Control Block size
+\details
+This macro exposes the minimum amount of memory needed for an RTX5 Event Flags Control Block,
+see osEventFlagsAttr_t::cb_mem and \ref osEventFlagsAttr_t::cb_size.
+
+Example:
+\code
+// Used-defined memory for event flags control block
+static uint32_t evflags_cb[osRtxEventFlagsCbSize/4U];
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\def osRtxMutexCbSize       
+\def osRtxMutexCbSize
+\brief Mutex Control Block size
+\details
+This macro exposes the minimum amount of memory needed for an RTX5 Mutex Control Block,
+see osMutexAttr_t::cb_mem and \ref osMutexAttr_t::cb_size.
+
+Example:
+\code
+// Used-defined memory for mutex control block
+static uint32_t mutex_cb[osRtxMutexCbSize/4U];
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\def osRtxSemaphoreCbSize   
+\def osRtxSemaphoreCbSize
+\brief Semaphore Control Block size
+\details
+This macro exposes the minimum amount of memory needed for an RTX5 Semaphore Control Block,
+see osSemaphoreAttr_t::cb_mem and osSemaphoreAttr_t::cb_size.
+
+Example:
+\code
+// Used-defined memory for semaphore control block
+static uint32_t sema_cb[osRtxSemaphoreCbSize/4U];
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\def osRtxMemoryPoolCbSize  
+\def osRtxMemoryPoolCbSize
+\brief Memory Pool Control Block size
+\details
+This macro exposes the minimum amount of memory needed for an RTX5 Memory Pool Control Block,
+see osMemoryPoolAttr_t::cb_mem and osMemoryPoolAttr_t::cb_size.
+
+Example:
+\code
+// Used-defined memory for memory pool control block
+static uint32_t timer_cb[osRtxMemoryPoolCbSize/4U];
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \def osRtxMessageQueueCbSize
+\brief Message Queue Control Block size
+\details
+This macro exposes the minimum amount of memory needed for an RTX5 Message Queue Control Block,
+see osMessageQueueAttr_t::cb_mem and osMessageQueueAttr_t::cb_size.
+
+Example:
+\code
+// Used-defined memory for message queue control block
+static uint32_t msgqueue_cb[osRtxMessageQueueCbSize/4U];
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \def osRtxMemoryPoolMemSize
+\brief Memory Pool Memory size
+\details
+This macro exposes the minimum amount of memory needed for an RTX5 Memory Pool Memory,
+see osMemoryPoolAttr_t::mp_mem and osMemoryPoolAttr_t::mp_size.
+
+Example:
+\code
+// Maximum number of objects
+#define OBJ_COUNT 8U
+ 
+// Object type
+typedef struct {
+   uint32_t value1;
+   uint8_t  value2;
+} object_t;
+ 
+// Used-defined memory for memory pool memory
+static uint32_t mempool_cb[osRtxMemoryPoolMemSize(OBJ_COUNT, sizeof(object_t))/4U];
+\endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \def osRtxMessageQueueMemSize
+\brief Message Queue Memory size
+\details
+This macro exposes the minimum amount of memory needed for an RTX5 Message Queue Memory,
+see osMessageQueueAttr_t::mq_mem and osMessageQueueAttr_t::mq_size.
+
+Example:
+\code
+// Maximum number of messages
+#define MSG_COUNT 16U
+ 
+// Message data type
+typedef struct {
+   uint32_t value1;
+   uint8_t  value2;
+} msg_item_t;
+ 
+// Used-defined memory for message queue
+static uint32_t mq_mem[osRtxMessageQueueMemSize(MSG_COUNT, sizeof(msg_item_t))/4U];
+\endcode
 */
 
 /**

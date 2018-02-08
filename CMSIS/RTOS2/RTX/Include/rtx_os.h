@@ -362,13 +362,13 @@ extern osRtxObjectMemUsage_t osRtxMessageQueueMemUsage;
  
 //  ==== OS API definitions ====
  
-/// Object Limits definitions
+// Object Limits definitions
 #define osRtxThreadFlagsLimit    31U    ///< number of Thread Flags available per thread
 #define osRtxEventFlagsLimit     31U    ///< number of Event Flags available per object
 #define osRtxMutexLockLimit      255U   ///< maximum number of recursive mutex locks
 #define osRtxSemaphoreTokenLimit 65535U ///< maximum number of tokens per semaphore
  
-/// Control Block sizes
+// Control Block sizes
 #define osRtxThreadCbSize        sizeof(osRtxThread_t)
 #define osRtxTimerCbSize         sizeof(osRtxTimer_t)
 #define osRtxEventFlagsCbSize    sizeof(osRtxEventFlags_t)
@@ -392,7 +392,7 @@ extern osRtxObjectMemUsage_t osRtxMessageQueueMemUsage;
  
 //  ==== OS External Functions ====
  
-/// OS Error Codes
+// OS Error Codes
 #define osRtxErrorStackUnderflow        1U  ///< Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks.
 #define osRtxErrorISRQueueOverflow      2U  ///< ISR Queue overflow detected when inserting object.
 #define osRtxErrorTimerQueueOverflow    3U  ///< User Timer Callback Queue overflow detected for timer.
