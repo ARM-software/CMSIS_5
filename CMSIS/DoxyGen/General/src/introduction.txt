@@ -76,7 +76,7 @@ In detail the benefits of the CMSIS are:
 \section CodingRules Coding Rules
 
 The CMSIS uses the following essential coding rules and conventions:
- - Compliant with ANSI C and C++.
+ - Compliant with ANSI C (C99) and C++ (C++03).
  - Uses ANSI C standard data types defined in \b <stdint.h>.
  - Variables and parameters have a complete data type.
  - Expressions for \em \#define constants are enclosed in parenthesis.
