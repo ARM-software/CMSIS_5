@@ -92,7 +92,7 @@
 
 #elif defined ( __ICCARM__ )
   #if defined __ARMVFP__
-    #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+    #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
   #endif
 
 #elif defined ( __TI_ARM__ )

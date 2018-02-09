@@ -147,7 +147,7 @@
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
-      #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+      #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
       #define __FPU_USED       0U
     #endif
   #else
