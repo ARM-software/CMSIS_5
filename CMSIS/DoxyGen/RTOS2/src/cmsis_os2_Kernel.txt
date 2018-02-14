@@ -217,7 +217,7 @@ Possible \ref osStatus_t return values:
 
 <b>Code Example</b>
 \code
-  uint32_t state = osKernelLock();
+  int32_t state = osKernelLock();
   // ... critical code
   osKernelRestore(state);
 \endcode
@@ -239,10 +239,10 @@ Possible \ref osStatus_t return values:
 
 <b>Code Example</b>
 \code
-  uint32_t sl = osKernelLock();
+  int32_t sl = osKernelLock();
   // ... critical code
   {
-    unint32_t su = osKernelUnlock();
+    int32_t su = osKernelUnlock();
     // ... uncritical code
     osKernelRestoreLock(su);
   }
@@ -270,10 +270,10 @@ Possible \ref osStatus_t return values:
 
 <b>Code Example</b>
 \code
-  uint32_t sl = osKernelLock();
+  int32_t sl = osKernelLock();
   // ... critical code
   {
-    unint32_t su = osKernelUnlock();
+    int32_t su = osKernelUnlock();
     // ... uncritical code
     osKernelRestoreLock(su);
   }
