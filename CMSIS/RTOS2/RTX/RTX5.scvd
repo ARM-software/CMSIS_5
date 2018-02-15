@@ -594,12 +594,15 @@
 
   <objects>
     <object name="RTX RTOS Object">
-      <var name="i"    type="uint32_t" value="0" />
-      <var name="j"    type="uint32_t" value="0" />
-      <var name="k"    type="uint32_t" value="0" />
-      <var name="n"    type="uint32_t" value="0" />
-      <var name="sp"   type="uint32_t" value="0" />
-      <var name="addr" type="uint32_t" value="0" />
+      <var name="i"      type="uint32_t" value="0" />
+      <var name="j"      type="uint32_t" value="0" />
+      <var name="k"      type="uint32_t" value="0" />
+      <var name="n"      type="uint32_t" value="0" />
+      <var name="sp"     type="uint32_t" value="0" />
+      <var name="addr"   type="uint32_t" value="0" />
+      <var name="ipsr"   type="uint32_t" value="0" />
+      <var name="psp"    type="uint32_t" value="0" />
+      <var name="v8m_ns" type="uint32_t" value="0" />
 
       <var name="TCB_Rd" type="uint32_t" value="0" />
       <var name="CCB_Rd" type="uint32_t" value="0" />
@@ -632,6 +635,11 @@
       <var name="V_Major" type="uint32_t" value="0"/>
       <var name="V_Minor" type="uint32_t" value="0"/>
       <var name="V_Patch" type="uint32_t" value="0"/>
+
+      <!-- Check TrustZone symbol existence -->
+      <calc>
+        v8m_ns = __Symbol_exists("TZ_InitContextSystem_S");
+      </calc>
 
       <!-- Read main OS information and configuration structures -->
       <readlist name="os_Info"   type="osRtxInfo_t"   symbol="osRtxInfo"   count="1" init="1"/>
@@ -794,8 +802,16 @@
         </calc>
 
         <!-- Stack pointer for running thread -->
-        <calc cond="TCB[i].state == 2">
-          sp = ((__GetRegVal("XPSR") &amp; 0x01FF) &lt; 16) ? (TCB[i].sp) : (__GetRegVal("PSP"));
+        <calc cond="(TCB[i].state == 2) &amp;&amp; (__Running == 0)">
+          ipsr = __GetRegVal("XPSR") &amp; 0x01FF;
+          psp  = (v8m_ns == 0) ? (__GetRegVal("PSP")) : (__GetRegVal("PSP_NS"));
+          psp  = (psp == 0) ? (TCB[i].sp) : (psp);
+
+          sp = ((ipsr != 0) &amp;&amp; (ipsr &lt; 16)) ? (TCB[i].sp) : (psp);
+        </calc>
+
+        <calc cond="(TCB[i].state == 2) &amp;&amp; (__Running == 1)">
+          sp = TCB[i].sp;
         </calc>
 
         <!-- Stack pointer for waiting thread -->
