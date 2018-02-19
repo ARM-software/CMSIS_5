@@ -2064,7 +2064,20 @@ An \em enumeratedValue defines a map between an unsigned integer and a string.
   </tr>
   <tr class="choice">
     <td align="right">value</td>
-    <td>Defines the constant for the bit-field. The field accepts <em>'do not care'</em> bits represented by <b>\token{x}</b>.</td>
+    <td>Defines the constant for the bit-field as decimal, hexadecimal (0x...) or binary (0b... or #...) number. E.g.:
+<pre>
+      \<value>15\</value>
+      \<value>0xf\</value>
+      \<value>0b1111\</value>
+      \<value>#1111\</value>
+</pre>
+    In addition the binary format supports <em>'do not care'</em> bits represented by <b>\token{x}</b>.
+    E.g. specifying value 14 and 15 as:
+    <pre>
+      \<value>0b111x\</value>
+      \<value>#111x\</value>
+    </pre>  
+    </td>
     <td style="white-space:nowrap">scaledNonNegativeInteger</td>
     <td>0..1</td>
   </tr>
