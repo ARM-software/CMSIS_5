@@ -118,6 +118,14 @@ treated as a single example.
     <td>optional</td>
   </tr>
   <tr>
+    <td>public</td>
+    <td>Set publishing permissions for the documentation. If \tagem{public} is \token{true}, then the vendor gives permission 
+        to extract the documentation from the pack and publish it on a web-page. Links to web pages are assumed to be public.
+        The default value is \token{false}.</td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <th>Child&nbsp;Elements</th>
     <th>Description</th>
     <th>Type</th>
