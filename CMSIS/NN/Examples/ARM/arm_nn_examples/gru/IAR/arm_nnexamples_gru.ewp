@@ -11,20 +11,20 @@
             <name>General</name>
             <archiveVersion>3</archiveVersion>
             <data>
-                <version>30</version>
+                <version>29</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
                     <name>ExePath</name>
-                    <state>ARMCM0\Debug\Exe</state>
+                    <state>ARMCM0\Exe</state>
                 </option>
                 <option>
                     <name>ObjPath</name>
-                    <state>ARMCM0\Debug\Obj</state>
+                    <state>ARMCM0\Obj</state>
                 </option>
                 <option>
                     <name>ListPath</name>
-                    <state>ARMCM0\Debug\List</state>
+                    <state>ARMCM0\List</state>
                 </option>
                 <option>
                     <name>GEndianMode</name>
@@ -62,11 +62,11 @@
                 </option>
                 <option>
                     <name>OGProductVersion</name>
-                    <state>7.60.1.11206</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.20.2.14834</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -199,10 +199,6 @@
                 <option>
                     <name>DSPExtension</name>
                     <state>0</state>
-                </option>
-                <option>
-                    <name>TrustZone</name>
-                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -1037,20 +1033,20 @@
             <name>General</name>
             <archiveVersion>3</archiveVersion>
             <data>
-                <version>30</version>
+                <version>29</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
                     <name>ExePath</name>
-                    <state>ARMCM3\Debug\Exe</state>
+                    <state>ARMCM3\Exe</state>
                 </option>
                 <option>
                     <name>ObjPath</name>
-                    <state>ARMCM3\Debug\Obj</state>
+                    <state>ARMCM3\Obj</state>
                 </option>
                 <option>
                     <name>ListPath</name>
-                    <state>ARMCM3\Debug\List</state>
+                    <state>ARMCM3\List</state>
                 </option>
                 <option>
                     <name>GEndianMode</name>
@@ -1058,11 +1054,11 @@
                 </option>
                 <option>
                     <name>Input description</name>
-                    <state>Automatic choice of formatter, without multibyte support.</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>Output description</name>
-                    <state>Automatic choice of formatter, without multibyte support.</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>GOutputBinary</name>
@@ -1084,15 +1080,15 @@
                 </option>
                 <option>
                     <name>RTDescription</name>
-                    <state>Use the normal configuration of the C/C++ runtime library. No locale interface, C locale, no file descriptor support, no multibytes in printf and scanf, and no hex floats in strtod.</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>OGProductVersion</name>
-                    <state>7.60.1.11206</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.20.2.14834</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -1104,7 +1100,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>Default	None</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -1112,7 +1108,7 @@
                 </option>
                 <option>
                     <name>GEndianModeBE</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>OGBufferedTerminalOutput</name>
@@ -1138,7 +1134,7 @@
                 </option>
                 <option>
                     <name>RTConfigPath2</name>
-                    <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
@@ -1164,7 +1160,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>Default	None</state>
+                    <state>-</state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -1225,10 +1221,6 @@
                 <option>
                     <name>DSPExtension</name>
                     <state>0</state>
-                </option>
-                <option>
-                    <name>TrustZone</name>
-                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -2063,20 +2055,20 @@
             <name>General</name>
             <archiveVersion>3</archiveVersion>
             <data>
-                <version>30</version>
+                <version>29</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
                     <name>ExePath</name>
-                    <state>ARMCM4_FP\Debug\Exe</state>
+                    <state>ARMCM4_FP\Exe</state>
                 </option>
                 <option>
                     <name>ObjPath</name>
-                    <state>ARMCM4_FP\Debug\Obj</state>
+                    <state>ARMCM4_FP\Obj</state>
                 </option>
                 <option>
                     <name>ListPath</name>
-                    <state>ARMCM4_FP\Debug\List</state>
+                    <state>ARMCM4_FP\List</state>
                 </option>
                 <option>
                     <name>GEndianMode</name>
@@ -2114,11 +2106,11 @@
                 </option>
                 <option>
                     <name>OGProductVersion</name>
-                    <state>7.60.1.11206</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.20.2.14834</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -2250,10 +2242,6 @@
                 </option>
                 <option>
                     <name>DSPExtension</name>
-                    <state>1</state>
-                </option>
-                <option>
-                    <name>TrustZone</name>
                     <state>1</state>
                 </option>
             </data>
@@ -3090,20 +3078,20 @@
             <name>General</name>
             <archiveVersion>3</archiveVersion>
             <data>
-                <version>30</version>
+                <version>29</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
                     <name>ExePath</name>
-                    <state>ARMCM7_SP\Debug\Exe</state>
+                    <state>ARMCM7_SP\Exe</state>
                 </option>
                 <option>
                     <name>ObjPath</name>
-                    <state>ARMCM7_SP\Debug\Obj</state>
+                    <state>ARMCM7_SP\Obj</state>
                 </option>
                 <option>
                     <name>ListPath</name>
-                    <state>ARMCM7_SP\Debug\List</state>
+                    <state>ARMCM7_SP\List</state>
                 </option>
                 <option>
                     <name>GEndianMode</name>
@@ -3141,11 +3129,11 @@
                 </option>
                 <option>
                     <name>OGProductVersion</name>
-                    <state>7.60.1.11206</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.20.2.14834</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -3277,10 +3265,6 @@
                 </option>
                 <option>
                     <name>DSPExtension</name>
-                    <state>1</state>
-                </option>
-                <option>
-                    <name>TrustZone</name>
                     <state>1</state>
                 </option>
             </data>
@@ -4108,6 +4092,13 @@
         </settings>
     </configuration>
     <group>
+        <name>CMSIS-Pack</name>
+        <tag>CMSISPack.ComponentGroup</tag>
+        <file>
+            <name>$PROJ_DIR$\RTE\RTE_Components.h</name>
+        </file>
+    </group>
+    <group>
         <name>Documentation</name>
         <file>
             <name>$PROJ_DIR$\readme_iar.txt</name>
@@ -4126,13 +4117,6 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\..\..\Source\NNSupportFunctions\arm_nntables.c</name>
-        </file>
-    </group>
-    <group>
-        <name>CMSIS-Pack</name>
-        <tag>CMSISPack.ComponentGroup</tag>
-        <file>
-            <name>$PROJ_DIR$\RTE\RTE_Components.h</name>
         </file>
     </group>
     <cmsisPackSettings>

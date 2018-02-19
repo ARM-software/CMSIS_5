@@ -11,20 +11,20 @@
             <name>General</name>
             <archiveVersion>3</archiveVersion>
             <data>
-                <version>30</version>
+                <version>29</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
                     <name>ExePath</name>
-                    <state>ARMCM0\Debug\Exe</state>
+                    <state>ARMCM0\Exe</state>
                 </option>
                 <option>
                     <name>ObjPath</name>
-                    <state>ARMCM0\Debug\Obj</state>
+                    <state>ARMCM0\Obj</state>
                 </option>
                 <option>
                     <name>ListPath</name>
-                    <state>ARMCM0\Debug\List</state>
+                    <state>ARMCM0\List</state>
                 </option>
                 <option>
                     <name>GEndianMode</name>
@@ -62,11 +62,11 @@
                 </option>
                 <option>
                     <name>OGProductVersion</name>
-                    <state>7.60.1.11206</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.20.2.14834</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -121,7 +121,7 @@
                 </option>
                 <option>
                     <name>OGUseCmsis</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>OGUseCmsisDspLib</name>
@@ -199,10 +199,6 @@
                 <option>
                     <name>DSPExtension</name>
                     <state>0</state>
-                </option>
-                <option>
-                    <name>TrustZone</name>
-                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -1037,20 +1033,20 @@
             <name>General</name>
             <archiveVersion>3</archiveVersion>
             <data>
-                <version>30</version>
+                <version>29</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
                     <name>ExePath</name>
-                    <state>ARMCM3\Debug\Exe</state>
+                    <state>ARMCM3\Exe</state>
                 </option>
                 <option>
                     <name>ObjPath</name>
-                    <state>ARMCM3\Debug\Obj</state>
+                    <state>ARMCM3\Obj</state>
                 </option>
                 <option>
                     <name>ListPath</name>
-                    <state>ARMCM3\Debug\List</state>
+                    <state>ARMCM3\List</state>
                 </option>
                 <option>
                     <name>GEndianMode</name>
@@ -1088,11 +1084,11 @@
                 </option>
                 <option>
                     <name>OGProductVersion</name>
-                    <state>7.60.1.11206</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.20.2.14834</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -1112,7 +1108,7 @@
                 </option>
                 <option>
                     <name>GEndianModeBE</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>OGBufferedTerminalOutput</name>
@@ -1225,10 +1221,6 @@
                 <option>
                     <name>DSPExtension</name>
                     <state>0</state>
-                </option>
-                <option>
-                    <name>TrustZone</name>
-                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -2063,20 +2055,20 @@
             <name>General</name>
             <archiveVersion>3</archiveVersion>
             <data>
-                <version>30</version>
+                <version>29</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
                     <name>ExePath</name>
-                    <state>ARMCM4_FP\Debug\Exe</state>
+                    <state>ARMCM4_FP\Exe</state>
                 </option>
                 <option>
                     <name>ObjPath</name>
-                    <state>ARMCM4_FP\Debug\Obj</state>
+                    <state>ARMCM4_FP\Obj</state>
                 </option>
                 <option>
                     <name>ListPath</name>
-                    <state>ARMCM4_FP\Debug\List</state>
+                    <state>ARMCM4_FP\List</state>
                 </option>
                 <option>
                     <name>GEndianMode</name>
@@ -2114,11 +2106,11 @@
                 </option>
                 <option>
                     <name>OGProductVersion</name>
-                    <state>7.60.1.11206</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.20.2.14834</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -2250,10 +2242,6 @@
                 </option>
                 <option>
                     <name>DSPExtension</name>
-                    <state>1</state>
-                </option>
-                <option>
-                    <name>TrustZone</name>
                     <state>1</state>
                 </option>
             </data>
@@ -3090,20 +3078,20 @@
             <name>General</name>
             <archiveVersion>3</archiveVersion>
             <data>
-                <version>30</version>
+                <version>29</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
                     <name>ExePath</name>
-                    <state>ARMCM7_SP\Debug\Exe</state>
+                    <state>ARMCM7_SP\Exe</state>
                 </option>
                 <option>
                     <name>ObjPath</name>
-                    <state>ARMCM7_SP\Debug\Obj</state>
+                    <state>ARMCM7_SP\Obj</state>
                 </option>
                 <option>
                     <name>ListPath</name>
-                    <state>ARMCM7_SP\Debug\List</state>
+                    <state>ARMCM7_SP\List</state>
                 </option>
                 <option>
                     <name>GEndianMode</name>
@@ -3141,11 +3129,11 @@
                 </option>
                 <option>
                     <name>OGProductVersion</name>
-                    <state>7.60.1.11206</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.20.2.14834</state>
+                    <state>8.20.1.14181</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -3277,10 +3265,6 @@
                 </option>
                 <option>
                     <name>DSPExtension</name>
-                    <state>1</state>
-                </option>
-                <option>
-                    <name>TrustZone</name>
                     <state>1</state>
                 </option>
             </data>

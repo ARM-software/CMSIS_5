@@ -1,4 +1,4 @@
 CMSIS NN Lib example arm_nnexample_gru0 for
-  Cortex-M4 and Cortex-M7.
+  Cortex-M0, Cortex-M3, Cortex-M4 and Cortex-M7.
 
 The example is configured for IAR Embedded Workbench for ARM Simulator.
