@@ -1914,6 +1914,7 @@ In addition, a description string can be associated with each entry in the map.
   0 <-> disabled -> "The clock source clk0 is turned off."
   1 <-> enabled  -> "The clock source clk1 is running."
   2 <-> reserved -> "Reserved values. Do not use."
+  3 <-> reserved -> "Reserved values. Do not use."
 </pre>
 
 This information generates an <em>enum</em> in the device header file. The debugger may use 
@@ -1938,7 +1939,7 @@ can provide reference manual level details within the debugger.
     <enumeratedValue>
         <name>enabled</name>
         <description>The clock source clk1 is running.</description>
-        <isDefault>true</isDefault>
+        <value>1</value>
     </enumeratedValue>
 
     <enumeratedValue>
