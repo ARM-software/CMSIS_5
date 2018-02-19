@@ -180,7 +180,7 @@
       <xs:pattern value="[0-9]+\-[0-9]+|[A-Z]-[A-Z]|[_0-9a-zA-Z]+(,\s*[_0-9a-zA-Z]+)+"/>
     </xs:restriction>
   </xs:simpleType>
-  <!-- scaledNonNegativeInteger specifies the format in which numbers are represented in hexadecimal or decimar format -->
+  <!-- scaledNonNegativeInteger specifies the format in which numbers are represented in hexadecimal or decimal format -->
   <xs:simpleType name="scaledNonNegativeInteger">
     <xs:restriction base="xs:string">
       <xs:pattern value="[+]?(0x|0X|#)?[0-9a-fA-F]+[kmgtKMGT]?"/>
@@ -189,7 +189,7 @@
   <!-- enumeratedValueDataType specifies the number formats for the values in enumeratedValues -->
   <xs:simpleType name="enumeratedValueDataType">
     <xs:restriction base="xs:string">
-      <xs:pattern value="[+]?(0x|0X|#)?[0-9a-fxA-FX]+"/>
+      <xs:pattern value="[+]?(((0x|0X)[0-9a-fA-F]+)|([0-9]+)|((#|0b)[01xX]+))"/>
     </xs:restriction>
   </xs:simpleType>
   <!-- accessType specfies the pre-defined tokens for the available accesses -->
