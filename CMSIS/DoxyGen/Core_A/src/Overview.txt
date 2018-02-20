@@ -67,6 +67,14 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <th>Description</th>
     </tr>
     <tr>
+      <td>V1.1.1</td>
+      <td>
+        <ul>
+          <li>Refactored L1 cache maintenance to be compiler agnostic.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
       <td>V1.1.0</td>
       <td>
         <ul>

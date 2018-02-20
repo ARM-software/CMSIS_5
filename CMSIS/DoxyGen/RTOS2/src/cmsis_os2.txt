@@ -165,6 +165,12 @@ File/Folder                  | Content
       <td>
        - Added Object Memory usage counters.
        - Added support for additional external configuration file.
+       - Added user configurable names for system threads (Idle and Timer).
+       - Added support for OS sections when using ARMCC5.
+       - Added callback for MPU integration (experimental)
+       - Increased default thread stack sizes to 256 bytes.
+       - Fixed stack context display for running thread in SCVD.
+       - Enhanced MISRA Compliance.
       </td>
     </tr>
     <tr>
