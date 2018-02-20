@@ -594,12 +594,12 @@
 
   <objects>
     <object name="RTX RTOS Object">
-      <var name="i"      type="uint32_t" value="0" />
-      <var name="j"      type="uint32_t" value="0" />
-      <var name="k"      type="uint32_t" value="0" />
-      <var name="n"      type="uint32_t" value="0" />
-      <var name="sp"     type="uint32_t" value="0" />
-      <var name="addr"   type="uint32_t" value="0" />
+      <var name="i"    type="uint32_t" value="0" />
+      <var name="j"    type="uint32_t" value="0" />
+      <var name="k"    type="uint32_t" value="0" />
+      <var name="n"    type="uint32_t" value="0" />
+      <var name="sp"   type="uint32_t" value="0" />
+      <var name="addr" type="uint32_t" value="0" />
       <var name="ipsr"   type="uint32_t" value="0" />
       <var name="psp"    type="uint32_t" value="0" />
       <var name="v8m_ns" type="uint32_t" value="0" />
@@ -1498,7 +1498,7 @@
     <event id="0xF200 + 0x00" level="Error"  property="ThreadError"                 value="thread_id=%x[val1], status=%E[val2, rtx_t:status]" info="Thread error occurred."/>
     <event id="0xF200 + 0x01" level="API"    property="ThreadNew"                   value="func=%S[val1], argument=%x[val2], attr=%x[val3]" info="osThreadNew function was called."/>
     <event id="0xF200 + 0x02" level="Detail" property="ThreadNew"                   value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size], stack_mem=%x[val1.stack_mem], stack_size=%d[val1.stack_size], priority=%E[val7, rtx_th_priority:id]" val1="osThreadAttr_t" info="Attributes structure for thread object."/>
-    <event id="0xF200 + 0x03" level="Op"     property="ThreadCreated"               value="thread_id=%x[val1]" info="Thread object was created."/>
+    <event id="0xF200 + 0x03" level="Op"     property="ThreadCreated"      handle="create(uint32_t)[val1]"  hname="%t[val2]"     value="thread_id=%x[val1]" info="Thread object was created."/>
     <event id="0xF200 + 0x04" level="API"    property="ThreadGetName"               value="thread_id=%x[val1], name=%x[val2]" info="osThreadGetName function was called and object name was retrieved."/>
     <event id="0xF200 + 0x05" level="Detail" property="ThreadGetName"               value="name=%t[val1]" info="Thread object name as ASCII string."/>
     <event id="0xF200 + 0x06" level="API"    property="ThreadGetId"                 value="thread_id=%x[val1]" info="osThreadGetId function was called and current running thread id was retrieved."/>
@@ -1509,20 +1509,20 @@
     <event id="0xF200 + 0x0B" level="API"    property="ThreadGetPriority"           value="thread_id=%x[val1], priority=%E[val2, rtx_th_priority:id]" info="osThreadGetPriority function was called and thread priority was retrieved."/>
     <event id="0xF200 + 0x0C" level="API"    property="ThreadYield"                 value="" info="osThreadYield function was called."/>
     <event id="0xF200 + 0x0D" level="API"    property="ThreadSuspend"               value="thread_id=%x[val1]" info="osThreadSuspend function was called."/>
-    <event id="0xF200 + 0x0E" level="Op"     property="ThreadSuspended"             value="thread_id=%x[val1]" info="Thread execution was suspended."/>
+    <event id="0xF200 + 0x0E" level="Op"     property="ThreadSuspended"     handle="stalled(uint32_t)[val1]"  hname="%S[val1]"        value="thread_id=%x[val1]" info="Thread execution was suspended."/>
     <event id="0xF200 + 0x0F" level="API"    property="ThreadResume"                value="thread_id=%x[val1]" info="osThreadResume function was called."/>
-    <event id="0xF200 + 0x10" level="Op"     property="ThreadResumed"               value="thread_id=%x[val1]" info="Thread execution was resumed."/>
+    <event id="0xF200 + 0x10" level="Op"     property="ThreadResumed"       handle="idle(uint32_t)[val1]"  hname="%S[val1]"        value="thread_id=%x[val1]" info="Thread execution was resumed."/>
     <event id="0xF200 + 0x11" level="API"    property="ThreadDetach"                value="thread_id=%x[val1]" info="osThreadDetach function was called."/>
     <event id="0xF200 + 0x12" level="Op"     property="ThreadDetached"              value="thread_id=%x[val1]" info="Thread was detached."/>
     <event id="0xF200 + 0x13" level="API"    property="ThreadJoin"                  value="thread_id=%x[val1]" info="osThreadJoin function was called."/>
     <event id="0xF200 + 0x14" level="Op"     property="ThreadJoinPending"           value="thread_id=%x[val1]" info="Thread join is pending."/>
     <event id="0xF200 + 0x15" level="Op"     property="ThreadJoined"                value="thread_id=%x[val1]" info="Thread joined."/>
-    <event id="0xF200 + 0x16" level="Op"     property="ThreadBlocked"               value="thread_id=%x[val1], timeout=%d[val2]" info="Current running thread execution was blocked."/>
-    <event id="0xF200 + 0x17" level="Op"     property="ThreadUnblocked"             value="thread_id=%x[val1], ret_val=%E[val2, rtx_t:status]" info="Thread execution was unblocked."/>
-    <event id="0xF200 + 0x18" level="Op"     property="ThreadPreempted"             value="thread_id=%x[val1]" info="Current running thread execution was preempted."/>
-    <event id="0xF200 + 0x19" level="Op"     property="ThreadSwitched"              value="thread_id=%x[val1]" info="Switched execution of the current running thread."/>
+    <event id="0xF200 + 0x16" level="Op"     property="ThreadBlocked"       handle="stalled(uint32_t)[val1]" hname="%S[val1]"        value="thread_id=%x[val1], timeout=%d[val2]" info="Current running thread execution was blocked."/>
+    <event id="0xF200 + 0x17" level="Op"     property="ThreadUnblocked"     handle="idle(uint32_t)[val1]"    hname="%S[val1]"        value="thread_id=%x[val1], ret_val=%E[val2, rtx_t:status]" info="Thread execution was unblocked."/>
+    <event id="0xF200 + 0x18" level="Op"     property="ThreadPreempted"     handle="idle(uint32_t)[val1]"    hname="%S[val1]"        value="thread_id=%x[val1]" info="Current running thread execution was preempted."/>
+    <event id="0xF200 + 0x19" level="Op"     property="ThreadSwitched"      handle="active(uint32_t)[val1]"  hname="%S[val1]"        value="thread_id=%x[val1]" info="Switched execution of the current running thread."/>
     <event id="0xF200 + 0x1A" level="API"    property="ThreadExit"                  value="" info="osThreadExit function was called."/>
-    <event id="0xF200 + 0x1B" level="API"    property="ThreadTerminate"             value="thread_id=%x[val1]" info="osThreadTerminate function was called."/>
+    <event id="0xF200 + 0x1B" level="API"    property="ThreadTerminate"     handle="delete(uint32_t)[val1]"  hname="%S[val1]"        value="thread_id=%x[val1]" info="osThreadTerminate function was called."/>
     <event id="0xF200 + 0x1C" level="Op"     property="ThreadDestroyed"             value="thread_id=%x[val1]" info="Thread execution was terminated."/>
     <event id="0xF200 + 0x1D" level="API"    property="ThreadGetCount"              value="count=%d[val1]" info="osThreadGetCount function was called and number of active threads was retrieved."/>
     <event id="0xF200 + 0x1E" level="API"    property="ThreadEnumerate"             value="thread_array=%x[val1], array_items=%d[val2], count=%d[val3]" info="osThreadEnumerate function was called and active threads were enumerated."/>
