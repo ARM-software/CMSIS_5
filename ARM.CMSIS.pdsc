@@ -2544,7 +2544,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
     
     <!-- CMSIS-NN component -->
-    <component Cclass="CMSIS" Cgroup="NN" Cversion="1.0.0" condition="CMSIS NN">
+    <component Cclass="CMSIS" Cgroup="NN Lib" Cversion="1.0.0" condition="CMSIS NN">
       <description>CMSIS-NN Neural Network Library</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/NN/html/index.html"/>
@@ -3250,7 +3250,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <attributes>
         <component Cclass="CMSIS" Cgroup="CORE"/>
         <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="CMSIS" Cgroup="NN"/>
+        <component Cclass="CMSIS" Cgroup="NN Lib"/>
         <component Cclass="Device" Cgroup="Startup"/>
         <category>Getting Started</category>
       </attributes>
@@ -3265,7 +3265,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <attributes>
         <component Cclass="CMSIS" Cgroup="CORE"/>
         <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="CMSIS" Cgroup="NN"/>
+        <component Cclass="CMSIS" Cgroup="NN Lib"/>
         <component Cclass="Device" Cgroup="Startup"/>
         <category>Getting Started</category>
       </attributes>
