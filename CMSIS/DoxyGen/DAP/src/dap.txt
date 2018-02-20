@@ -82,7 +82,7 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
       <th>Description</th>
     </tr>
     <tr>
-      <td>V2.0.0 (beta)</td>
+      <td>V2.0.0</td>
       <td>
          Changed: Communication via WinUSB to achieve high-speed transfer rates\n
          Added: Streaming SWO via separate \ref WinUSB "WinUSB" endpoint\n
@@ -90,7 +90,7 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
       </td>
     </tr>
     <tr>
-      <td>V1.2.0 (beta)</td>
+      <td>V1.2.0</td>
       <td>
          Added: \ref DAP_SWD_Sequence to enable SWD multi-drop target selection \n
          Added: Test Domain Timer values in the commands \ref DAP_Info, \ref DAP_Transfer
