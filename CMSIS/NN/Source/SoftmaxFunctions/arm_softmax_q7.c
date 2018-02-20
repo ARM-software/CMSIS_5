@@ -87,8 +87,8 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out)
 
     for (i = 0; i < dim_vec; i++)
     {
-        if (vec_in[i] > min) {
-          shift = (uint8_t)__USAT(vec_in[i] - min, 7);
+        if (vec_in[i] > base) {
+          shift = (uint8_t)__USAT(vec_in[i] - base, 7);
           sum += 0x1 << shift;
         }
     }
@@ -101,9 +101,9 @@ void arm_softmax_q7(const q7_t * vec_in, const uint16_t dim_vec, q7_t * p_out)
      */
     for (i = 0; i < dim_vec; i++) 
     {
-        if (vec_in[i] > min) {
+        if (vec_in[i] > base) {
             /* Here minimum value of 13+min-vec_in[i] will be 5 */
-            shift = (uint8_t)__USAT(13+min-vec_in[i], 7);
+            shift = (uint8_t)__USAT(13+base-vec_in[i], 7);
             p_out[i] = (q7_t) __SSAT((output_base >> shift), 8);
         } else {
             p_out[i] = 0;
