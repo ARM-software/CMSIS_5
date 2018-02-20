@@ -83,6 +83,12 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.1.1</td>
+      <td>
+        Aligned MSPLIM and PSPLIM access functions along supported compilers.\n
+      </td>
+    </tr>
+    <tr>
       <td>V5.1.0</td>
       <td>
         Added MPU Functions for ARMv8-M for Cortex-M23/M33.\n
