@@ -12,6 +12,7 @@
       Updated Arm company brand.
       CMSIS-Core(M): 5.1.1 (see revision history for details)
       CMSIS-Core(A): 1.1.1 (see revision history for details)
+      CMSIS-DAP: 2.0.0 (see revision history for details)
       CMSIS-NN: 1.0.0
         - Initial contribution of the bare metal Neural Network Library.
       CMSIS-RTOS2:
