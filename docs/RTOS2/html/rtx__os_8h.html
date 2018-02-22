@@ -155,6 +155,9 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structosRtxInfo__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#structosRtxInfo__t">osRtxInfo_t</a></td></tr>
 <tr class="memdesc:structosRtxInfo__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Runtime Information structure.  <a href="rtx__os_8h.html#structosRtxInfo__t">More...</a><br/></td></tr>
 <tr class="separator:structosRtxInfo__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structosRtxObjectMemUsage__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a></td></tr>
+<tr class="memdesc:structosRtxObjectMemUsage__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Runtime Object Memory Usage structure.  <a href="rtx__os_8h.html#structosRtxObjectMemUsage__t">More...</a><br/></td></tr>
+<tr class="separator:structosRtxObjectMemUsage__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structosRtxConfig__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#structosRtxConfig__t">osRtxConfig_t</a></td></tr>
 <tr class="memdesc:structosRtxConfig__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Configuration structure.  <a href="rtx__os_8h.html#structosRtxConfig__t">More...</a><br/></td></tr>
 <tr class="separator:structosRtxConfig__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -189,10 +192,10 @@ Macros</h2></td></tr>
 <tr class="memitem:aea20a2b373e98ae88a7cf7e4a56b118f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#aea20a2b373e98ae88a7cf7e4a56b118f">osRtxVersionAPI</a>&#160;&#160;&#160;20010002</td></tr>
 <tr class="memdesc:aea20a2b373e98ae88a7cf7e4a56b118f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel Information.  <a href="#aea20a2b373e98ae88a7cf7e4a56b118f">More...</a><br/></td></tr>
 <tr class="separator:aea20a2b373e98ae88a7cf7e4a56b118f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad854168120979e8c60630e0140e104e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#ad854168120979e8c60630e0140e104e8">osRtxVersionKernel</a>&#160;&#160;&#160;50020003</td></tr>
-<tr class="memdesc:ad854168120979e8c60630e0140e104e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel version (5.2.3)  <a href="#ad854168120979e8c60630e0140e104e8">More...</a><br/></td></tr>
+<tr class="memitem:ad854168120979e8c60630e0140e104e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#ad854168120979e8c60630e0140e104e8">osRtxVersionKernel</a>&#160;&#160;&#160;50030000</td></tr>
+<tr class="memdesc:ad854168120979e8c60630e0140e104e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel version (5.3.0)  <a href="#ad854168120979e8c60630e0140e104e8">More...</a><br/></td></tr>
 <tr class="separator:ad854168120979e8c60630e0140e104e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47e0637d30eed2357b238cbb19dbb058"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a47e0637d30eed2357b238cbb19dbb058">osRtxKernelId</a>&#160;&#160;&#160;&quot;RTX V5.2.3&quot;</td></tr>
+<tr class="memitem:a47e0637d30eed2357b238cbb19dbb058"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a47e0637d30eed2357b238cbb19dbb058">osRtxKernelId</a>&#160;&#160;&#160;&quot;RTX V5.3.0&quot;</td></tr>
 <tr class="memdesc:a47e0637d30eed2357b238cbb19dbb058"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel identification string.  <a href="#a47e0637d30eed2357b238cbb19dbb058">More...</a><br/></td></tr>
 <tr class="separator:a47e0637d30eed2357b238cbb19dbb058"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad78a646169b7b4bfa2a278d08fe21fa5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#ad78a646169b7b4bfa2a278d08fe21fa5">osRtxIdInvalid</a>&#160;&#160;&#160;0x00U</td></tr>
@@ -248,23 +251,23 @@ Macros</h2></td></tr>
 <tr class="separator:a30e61895c9ec7941715dd4747b11d5b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3011758dc91d1dd134ec48b816b67d50"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a3011758dc91d1dd134ec48b816b67d50">osRtxThreadTerminated</a>&#160;&#160;&#160;((uint8_t)<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820dad5b2726c2d0228f4f1a76cf6b630963c">osThreadTerminated</a>)</td></tr>
 <tr class="separator:a3011758dc91d1dd134ec48b816b67d50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fcd1ecba034b5fc15e991311736ec4e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a9fcd1ecba034b5fc15e991311736ec4e">osRtxThreadWaitingDelay</a>&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x10U)</td></tr>
+<tr class="memitem:a9fcd1ecba034b5fc15e991311736ec4e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a9fcd1ecba034b5fc15e991311736ec4e">osRtxThreadWaitingDelay</a>&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x10U))</td></tr>
 <tr class="separator:a9fcd1ecba034b5fc15e991311736ec4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88ca40f569d87366a69451ed43759453"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a88ca40f569d87366a69451ed43759453">osRtxThreadWaitingJoin</a>&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x20U)</td></tr>
+<tr class="memitem:a88ca40f569d87366a69451ed43759453"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a88ca40f569d87366a69451ed43759453">osRtxThreadWaitingJoin</a>&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x20U))</td></tr>
 <tr class="separator:a88ca40f569d87366a69451ed43759453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41174e493bdf7e3a1e35306703bcd63c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a41174e493bdf7e3a1e35306703bcd63c">osRtxThreadWaitingThreadFlags</a>&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x30U)</td></tr>
+<tr class="memitem:a41174e493bdf7e3a1e35306703bcd63c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a41174e493bdf7e3a1e35306703bcd63c">osRtxThreadWaitingThreadFlags</a>&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x30U))</td></tr>
 <tr class="separator:a41174e493bdf7e3a1e35306703bcd63c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c4c8b1563e28aa5b947346cb5db3c69"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a6c4c8b1563e28aa5b947346cb5db3c69">osRtxThreadWaitingEventFlags</a>&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x40U)</td></tr>
+<tr class="memitem:a6c4c8b1563e28aa5b947346cb5db3c69"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a6c4c8b1563e28aa5b947346cb5db3c69">osRtxThreadWaitingEventFlags</a>&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x40U))</td></tr>
 <tr class="separator:a6c4c8b1563e28aa5b947346cb5db3c69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae99ccb8b4d1a85c1abb6ab39933690a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#ae99ccb8b4d1a85c1abb6ab39933690a6">osRtxThreadWaitingMutex</a>&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x50U)</td></tr>
+<tr class="memitem:ae99ccb8b4d1a85c1abb6ab39933690a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#ae99ccb8b4d1a85c1abb6ab39933690a6">osRtxThreadWaitingMutex</a>&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x50U))</td></tr>
 <tr class="separator:ae99ccb8b4d1a85c1abb6ab39933690a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbe0a0cd73d487b82501b584caf4a472"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#acbe0a0cd73d487b82501b584caf4a472">osRtxThreadWaitingSemaphore</a>&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x60U)</td></tr>
+<tr class="memitem:acbe0a0cd73d487b82501b584caf4a472"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#acbe0a0cd73d487b82501b584caf4a472">osRtxThreadWaitingSemaphore</a>&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x60U))</td></tr>
 <tr class="separator:acbe0a0cd73d487b82501b584caf4a472"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa87cea70df1acf71f6358de9b65722a4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#aa87cea70df1acf71f6358de9b65722a4">osRtxThreadWaitingMemoryPool</a>&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x70U)</td></tr>
+<tr class="memitem:aa87cea70df1acf71f6358de9b65722a4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#aa87cea70df1acf71f6358de9b65722a4">osRtxThreadWaitingMemoryPool</a>&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x70U))</td></tr>
 <tr class="separator:aa87cea70df1acf71f6358de9b65722a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a881830bb0c1488cd15bd1a412bc16800"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a881830bb0c1488cd15bd1a412bc16800">osRtxThreadWaitingMessageGet</a>&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x80U)</td></tr>
+<tr class="memitem:a881830bb0c1488cd15bd1a412bc16800"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a881830bb0c1488cd15bd1a412bc16800">osRtxThreadWaitingMessageGet</a>&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x80U))</td></tr>
 <tr class="separator:a881830bb0c1488cd15bd1a412bc16800"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7502524f6911edc751111422eaf66a43"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a7502524f6911edc751111422eaf66a43">osRtxThreadWaitingMessagePut</a>&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x90U)</td></tr>
+<tr class="memitem:a7502524f6911edc751111422eaf66a43"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a7502524f6911edc751111422eaf66a43">osRtxThreadWaitingMessagePut</a>&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x90U))</td></tr>
 <tr class="separator:a7502524f6911edc751111422eaf66a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a733199fdb7675dbf99d5e6d17c126a96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a733199fdb7675dbf99d5e6d17c126a96">osRtxThreadFlagDefStack</a>&#160;&#160;&#160;0x10U</td></tr>
 <tr class="memdesc:a733199fdb7675dbf99d5e6d17c126a96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread Flags definitions.  <a href="#a733199fdb7675dbf99d5e6d17c126a96">More...</a><br/></td></tr>
@@ -288,7 +291,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:accc1542de31e0c7367d452e9de035bb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer Type definitions.  <a href="#accc1542de31e0c7367d452e9de035bb4">More...</a><br/></td></tr>
 <tr class="separator:accc1542de31e0c7367d452e9de035bb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73248d08e2db1ef9941cf8fcf24ddba9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a73248d08e2db1ef9941cf8fcf24ddba9">osRtxThreadFlagsLimit</a>&#160;&#160;&#160;31U</td></tr>
-<tr class="memdesc:a73248d08e2db1ef9941cf8fcf24ddba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object Limits definitions.  <a href="#a73248d08e2db1ef9941cf8fcf24ddba9">More...</a><br/></td></tr>
+<tr class="memdesc:a73248d08e2db1ef9941cf8fcf24ddba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of Thread Flags available per thread  <a href="#a73248d08e2db1ef9941cf8fcf24ddba9">More...</a><br/></td></tr>
 <tr class="separator:a73248d08e2db1ef9941cf8fcf24ddba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a271653c08ecb64dbb2d0ce8a51ddb4c2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a271653c08ecb64dbb2d0ce8a51ddb4c2">osRtxEventFlagsLimit</a>&#160;&#160;&#160;31U</td></tr>
 <tr class="memdesc:a271653c08ecb64dbb2d0ce8a51ddb4c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of Event Flags available per object  <a href="#a271653c08ecb64dbb2d0ce8a51ddb4c2">More...</a><br/></td></tr>
@@ -300,28 +303,34 @@ Macros</h2></td></tr>
 <tr class="memdesc:a14c7bcf532389ed285827cf5497d09eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">maximum number of tokens per semaphore  <a href="#a14c7bcf532389ed285827cf5497d09eb">More...</a><br/></td></tr>
 <tr class="separator:a14c7bcf532389ed285827cf5497d09eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga30d19272204231956582ebfff69567f6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#ga30d19272204231956582ebfff69567f6">osRtxThreadCbSize</a>&#160;&#160;&#160;sizeof(<a class="el" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>)</td></tr>
-<tr class="memdesc:ga30d19272204231956582ebfff69567f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control Block sizes.  <a href="group__rtx5__specific__defines.html#ga30d19272204231956582ebfff69567f6">More...</a><br/></td></tr>
+<tr class="memdesc:ga30d19272204231956582ebfff69567f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread Control Block size.  <a href="group__rtx5__specific__defines.html#ga30d19272204231956582ebfff69567f6">More...</a><br/></td></tr>
 <tr class="separator:ga30d19272204231956582ebfff69567f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf8a145fdeb24fd912971f0671b1a3603"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#gaf8a145fdeb24fd912971f0671b1a3603">osRtxTimerCbSize</a>&#160;&#160;&#160;sizeof(<a class="el" href="group__rtx5__specific__structs.html#structosRtxTimer__t">osRtxTimer_t</a>)</td></tr>
+<tr class="memdesc:gaf8a145fdeb24fd912971f0671b1a3603"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer Control Block size.  <a href="group__rtx5__specific__defines.html#gaf8a145fdeb24fd912971f0671b1a3603">More...</a><br/></td></tr>
 <tr class="separator:gaf8a145fdeb24fd912971f0671b1a3603"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga68100c8c44931f03547973294c433075"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#ga68100c8c44931f03547973294c433075">osRtxEventFlagsCbSize</a>&#160;&#160;&#160;sizeof(<a class="el" href="group__rtx5__specific__structs.html#structosRtxEventFlags__t">osRtxEventFlags_t</a>)</td></tr>
+<tr class="memdesc:ga68100c8c44931f03547973294c433075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event Flags Control Block size.  <a href="group__rtx5__specific__defines.html#ga68100c8c44931f03547973294c433075">More...</a><br/></td></tr>
 <tr class="separator:ga68100c8c44931f03547973294c433075"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga188bfaaf7477cf24cbc9f207feaeb53a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#ga188bfaaf7477cf24cbc9f207feaeb53a">osRtxMutexCbSize</a>&#160;&#160;&#160;sizeof(<a class="el" href="group__rtx5__specific__structs.html#structosRtxMutex__t">osRtxMutex_t</a>)</td></tr>
+<tr class="memdesc:ga188bfaaf7477cf24cbc9f207feaeb53a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex Control Block size.  <a href="group__rtx5__specific__defines.html#ga188bfaaf7477cf24cbc9f207feaeb53a">More...</a><br/></td></tr>
 <tr class="separator:ga188bfaaf7477cf24cbc9f207feaeb53a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0949b67063d0bd427fbee9c816b5d45a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#ga0949b67063d0bd427fbee9c816b5d45a">osRtxSemaphoreCbSize</a>&#160;&#160;&#160;sizeof(<a class="el" href="group__rtx5__specific__structs.html#structosRtxSemaphore__t">osRtxSemaphore_t</a>)</td></tr>
+<tr class="memdesc:ga0949b67063d0bd427fbee9c816b5d45a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Semaphore Control Block size.  <a href="group__rtx5__specific__defines.html#ga0949b67063d0bd427fbee9c816b5d45a">More...</a><br/></td></tr>
 <tr class="separator:ga0949b67063d0bd427fbee9c816b5d45a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab8e49e9e1eea5a015f2a3114cabceb48"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#gab8e49e9e1eea5a015f2a3114cabceb48">osRtxMemoryPoolCbSize</a>&#160;&#160;&#160;sizeof(<a class="el" href="group__rtx5__specific__structs.html#structosRtxMemoryPool__t">osRtxMemoryPool_t</a>)</td></tr>
+<tr class="memdesc:gab8e49e9e1eea5a015f2a3114cabceb48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory Pool Control Block size.  <a href="group__rtx5__specific__defines.html#gab8e49e9e1eea5a015f2a3114cabceb48">More...</a><br/></td></tr>
 <tr class="separator:gab8e49e9e1eea5a015f2a3114cabceb48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa8d067c476faa6bfc8e5e21f3b3c844e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#gaa8d067c476faa6bfc8e5e21f3b3c844e">osRtxMessageQueueCbSize</a>&#160;&#160;&#160;sizeof(<a class="el" href="group__rtx5__specific__structs.html#structosRtxMessageQueue__t">osRtxMessageQueue_t</a>)</td></tr>
+<tr class="memdesc:gaa8d067c476faa6bfc8e5e21f3b3c844e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message Queue Control Block size.  <a href="group__rtx5__specific__defines.html#gaa8d067c476faa6bfc8e5e21f3b3c844e">More...</a><br/></td></tr>
 <tr class="separator:gaa8d067c476faa6bfc8e5e21f3b3c844e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac6bea3541b458bbc79eafce42a2d87a2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#gac6bea3541b458bbc79eafce42a2d87a2">osRtxMemoryPoolMemSize</a>(block_count, block_size)&#160;&#160;&#160;(4*(block_count)*(((block_size)+3)/4))</td></tr>
-<tr class="memdesc:gac6bea3541b458bbc79eafce42a2d87a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory size in bytes for Memory Pool storage.  <a href="group__rtx5__specific__defines.html#gac6bea3541b458bbc79eafce42a2d87a2">More...</a><br/></td></tr>
+<tr class="memdesc:gac6bea3541b458bbc79eafce42a2d87a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory Pool Memory size.  <a href="group__rtx5__specific__defines.html#gac6bea3541b458bbc79eafce42a2d87a2">More...</a><br/></td></tr>
 <tr class="separator:gac6bea3541b458bbc79eafce42a2d87a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga47eb1e21f1bf9a42281c6c89c7473e99"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#ga47eb1e21f1bf9a42281c6c89c7473e99">osRtxMessageQueueMemSize</a>(msg_count, msg_size)&#160;&#160;&#160;(4*(msg_count)*(3+(((msg_size)+3)/4)))</td></tr>
-<tr class="memdesc:ga47eb1e21f1bf9a42281c6c89c7473e99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory size in bytes for Message Queue storage.  <a href="group__rtx5__specific__defines.html#ga47eb1e21f1bf9a42281c6c89c7473e99">More...</a><br/></td></tr>
+<tr class="memdesc:ga47eb1e21f1bf9a42281c6c89c7473e99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message Queue Memory size.  <a href="group__rtx5__specific__defines.html#ga47eb1e21f1bf9a42281c6c89c7473e99">More...</a><br/></td></tr>
 <tr class="separator:ga47eb1e21f1bf9a42281c6c89c7473e99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42206aa2524b8fab613d26bea0f73c44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a42206aa2524b8fab613d26bea0f73c44">osRtxErrorStackUnderflow</a>&#160;&#160;&#160;1U</td></tr>
-<tr class="memdesc:a42206aa2524b8fab613d26bea0f73c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Error Codes.  <a href="#a42206aa2524b8fab613d26bea0f73c44">More...</a><br/></td></tr>
+<tr class="memdesc:a42206aa2524b8fab613d26bea0f73c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks.  <a href="#a42206aa2524b8fab613d26bea0f73c44">More...</a><br/></td></tr>
 <tr class="separator:a42206aa2524b8fab613d26bea0f73c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7377235f9fa3cedee06f682cd93f3e88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a7377235f9fa3cedee06f682cd93f3e88">osRtxErrorISRQueueOverflow</a>&#160;&#160;&#160;2U</td></tr>
 <tr class="memdesc:a7377235f9fa3cedee06f682cd93f3e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">ISR Queue overflow detected when inserting object.  <a href="#a7377235f9fa3cedee06f682cd93f3e88">More...</a><br/></td></tr>
@@ -366,6 +375,21 @@ Variables</h2></td></tr>
 <tr class="memitem:ad2270125c4e4991c3231d752b6ee5f3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtx__os_8h.html#structosRtxInfo__t">osRtxInfo_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#ad2270125c4e4991c3231d752b6ee5f3f">osRtxInfo</a></td></tr>
 <tr class="memdesc:ad2270125c4e4991c3231d752b6ee5f3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Runtime Information.  <a href="#ad2270125c4e4991c3231d752b6ee5f3f">More...</a><br/></td></tr>
 <tr class="separator:ad2270125c4e4991c3231d752b6ee5f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90374bf1d999b2e1594763ab6c97cd69"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a90374bf1d999b2e1594763ab6c97cd69">osRtxThreadMemUsage</a></td></tr>
+<tr class="memdesc:a90374bf1d999b2e1594763ab6c97cd69"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Runtime Object Memory Usage variables.  <a href="#a90374bf1d999b2e1594763ab6c97cd69">More...</a><br/></td></tr>
+<tr class="separator:a90374bf1d999b2e1594763ab6c97cd69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3e7cf488411dbdc814420b81f36b935"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#aa3e7cf488411dbdc814420b81f36b935">osRtxTimerMemUsage</a></td></tr>
+<tr class="separator:aa3e7cf488411dbdc814420b81f36b935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c81327f94697890809ce4a594bb9d5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a0c81327f94697890809ce4a594bb9d5c">osRtxEventFlagsMemUsage</a></td></tr>
+<tr class="separator:a0c81327f94697890809ce4a594bb9d5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a683927dcd67dcb912884d16efa81a58d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a683927dcd67dcb912884d16efa81a58d">osRtxMutexMemUsage</a></td></tr>
+<tr class="separator:a683927dcd67dcb912884d16efa81a58d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec50b39ce30d9c87916d077f6f764387"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#aec50b39ce30d9c87916d077f6f764387">osRtxSemaphoreMemUsage</a></td></tr>
+<tr class="separator:aec50b39ce30d9c87916d077f6f764387"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5dea30a13d7a2316699a7f201504bc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#ae5dea30a13d7a2316699a7f201504bc7">osRtxMemoryPoolMemUsage</a></td></tr>
+<tr class="separator:ae5dea30a13d7a2316699a7f201504bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3da38b316a84990128e8d9f34e3e6d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#af3da38b316a84990128e8d9f34e3e6d3">osRtxMessageQueueMemUsage</a></td></tr>
+<tr class="separator:af3da38b316a84990128e8d9f34e3e6d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a489fda965fa634809f401ae6458a6f45"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="rtx__os_8h.html#structosRtxConfig__t">osRtxConfig_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtx__os_8h.html#a489fda965fa634809f401ae6458a6f45">osRtxConfig</a></td></tr>
 <tr class="memdesc:a489fda965fa634809f401ae6458a6f45"><td class="mdescLeft">&#160;</td><td class="mdescRight">OS Configuration.  <a href="#a489fda965fa634809f401ae6458a6f45">More...</a><br/></td></tr>
 <tr class="separator:a489fda965fa634809f401ae6458a6f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -599,6 +623,39 @@ mpi</td>
 
 </div>
 </div>
+<a name="structosRtxObjectMemUsage__t" id="structosRtxObjectMemUsage__t"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct osRtxObjectMemUsage_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a6bc379cb485caaa1bd9b63abbc79a4ec"></a>uint32_t</td>
+<td class="fieldname">
+cnt_alloc</td>
+<td class="fielddoc">
+Counter for alloc. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a5916fa670084fea56a52ba450565da4b"></a>uint32_t</td>
+<td class="fieldname">
+cnt_free</td>
+<td class="fielddoc">
+Counter for free. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a81baadf3fdf0eeff338f997ca3fe5009"></a>uint32_t</td>
+<td class="fieldname">
+max_used</td>
+<td class="fielddoc">
+Maximum used. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structosRtxConfig__t" id="structosRtxConfig__t"></a>
 <div class="memitem">
 <div class="memproto">
@@ -744,7 +801,7 @@ run</td>
 <td class="fielddoc">
 &lt; Thread Info </td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="ab2fdab230a2c39f3595a947861863cb7"></a>volatile <a class="el" href="rtx__os_8h.html#structosRtxObject__t">osRtxObject_t</a></td>
+<a class="anchor" id="ab2fdab230a2c39f3595a947861863cb7"></a><a class="el" href="rtx__os_8h.html#structosRtxObject__t">osRtxObject_t</a></td>
 <td class="fieldname">
 ready</td>
 <td class="fielddoc">
@@ -1176,7 +1233,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxVersionKernel&#160;&#160;&#160;50020003</td>
+          <td class="memname">#define osRtxVersionKernel&#160;&#160;&#160;50030000</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1188,7 +1245,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxKernelId&#160;&#160;&#160;&quot;RTX V5.2.3&quot;</td>
+          <td class="memname">#define osRtxKernelId&#160;&#160;&#160;&quot;RTX V5.3.0&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1488,7 +1545,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxThreadWaitingDelay&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x10U)</td>
+          <td class="memname">#define osRtxThreadWaitingDelay&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x10U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1500,7 +1557,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxThreadWaitingJoin&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x20U)</td>
+          <td class="memname">#define osRtxThreadWaitingJoin&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x20U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1512,7 +1569,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxThreadWaitingThreadFlags&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x30U)</td>
+          <td class="memname">#define osRtxThreadWaitingThreadFlags&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x30U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1524,7 +1581,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxThreadWaitingEventFlags&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x40U)</td>
+          <td class="memname">#define osRtxThreadWaitingEventFlags&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x40U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1536,7 +1593,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxThreadWaitingMutex&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x50U)</td>
+          <td class="memname">#define osRtxThreadWaitingMutex&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x50U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1548,7 +1605,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxThreadWaitingSemaphore&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x60U)</td>
+          <td class="memname">#define osRtxThreadWaitingSemaphore&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x60U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1560,7 +1617,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxThreadWaitingMemoryPool&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x70U)</td>
+          <td class="memname">#define osRtxThreadWaitingMemoryPool&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x70U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1572,7 +1629,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxThreadWaitingMessageGet&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x80U)</td>
+          <td class="memname">#define osRtxThreadWaitingMessageGet&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x80U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1584,7 +1641,7 @@ Message Queue Control Blocks. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define osRtxThreadWaitingMessagePut&#160;&#160;&#160;(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x90U)</td>
+          <td class="memname">#define osRtxThreadWaitingMessagePut&#160;&#160;&#160;((uint8_t)(<a class="el" href="rtx__os_8h.html#a30e61895c9ec7941715dd4747b11d5b3">osRtxThreadBlocked</a> | 0x90U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1687,7 +1744,6 @@ Message Queue Control Blocks. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>number of Thread Flags available per thread </p>
 
 </div>
 </div>
@@ -1736,7 +1792,6 @@ Message Queue Control Blocks. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks. </p>
 
 </div>
 </div>
@@ -1887,6 +1942,90 @@ Message Queue Control Blocks. </td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a90374bf1d999b2e1594763ab6c97cd69"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> osRtxThreadMemUsage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa3e7cf488411dbdc814420b81f36b935"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> osRtxTimerMemUsage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0c81327f94697890809ce4a594bb9d5c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> osRtxEventFlagsMemUsage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a683927dcd67dcb912884d16efa81a58d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> osRtxMutexMemUsage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aec50b39ce30d9c87916d077f6f764387"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> osRtxSemaphoreMemUsage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae5dea30a13d7a2316699a7f201504bc7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> osRtxMemoryPoolMemUsage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af3da38b316a84990128e8d9f34e3e6d3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> osRtxMessageQueueMemUsage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a489fda965fa634809f401ae6458a6f45"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1905,7 +2044,7 @@ Message Queue Control Blocks. </td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_a43355fbfff7212ac2193223a73d577c.html">RTOS2</a></li><li class="navelem"><a class="el" href="dir_002cf2dd0f795cc97a8d08cc3fa6e516.html">RTX</a></li><li class="navelem"><a class="el" href="dir_061ad8d12aa7dc7d03c29112cd6e086d.html">Include</a></li><li class="navelem"><a class="el" href="rtx__os_8h.html">rtx_os.h</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

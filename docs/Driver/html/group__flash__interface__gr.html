@@ -201,9 +201,66 @@ Functions</h2></td></tr>
 <p><b>Driver Functions</b></p>
 <p>The driver functions are published in the access struct as explained in <a class="el" href="theoryOperation.html#DriverFunctions">Common Driver Functions</a></p>
 <ul>
-<li><a class="el" href="group__flash__interface__gr.html#structARM__DRIVER__FLASH">ARM_DRIVER_FLASH</a> : access struct for Flash driver functions </li>
+<li><a class="el" href="group__flash__interface__gr.html#structARM__DRIVER__FLASH">ARM_DRIVER_FLASH</a> : access struct for Flash driver functions</li>
 </ul>
-<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<p>A typical setup sequence for the driver is shown below:</p>
+<p><b>Example Code:</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="Driver__Flash_8h.html">Driver_Flash.h</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;cmsis_os2.h&quot;</span>                  <span class="comment">// ARM::CMSIS:RTOS2:Keil RTX5</span></div>
+<div class="line">   </div>
+<div class="line"><span class="comment">/* Flash driver instance */</span></div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="group__flash__interface__gr.html#structARM__DRIVER__FLASH">ARM_DRIVER_FLASH</a> Driver_Flash0;</div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="group__flash__interface__gr.html#structARM__DRIVER__FLASH">ARM_DRIVER_FLASH</a> * flashDev = &amp;Driver_Flash0;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/* CMSIS-RTOS2 Thread Id */</span></div>
+<div class="line">osThreadId_t Flash_Thread_Id;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/* Flash signal event */</span></div>
+<div class="line"><span class="keywordtype">void</span> Flash_Callback(uint32_t event)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">if</span> (event &amp; <a class="code" href="group__Flash__events.html#gaf7a9c4ad125ee90df35907d861151e23">ARM_FLASH_EVENT_READY</a>) {</div>
+<div class="line">    <span class="comment">/* The read/program/erase operation is completed */</span></div>
+<div class="line">    osThreadFlagsSet(Flash_Thread_Id, 1U);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">if</span> (event &amp; <a class="code" href="group__Flash__events.html#ga0dfea52761c0eed83e5d73e7a7f69962">ARM_FLASH_EVENT_ERROR</a>) {</div>
+<div class="line">    <span class="comment">/* The read/program/erase operation is completed with errors */</span></div>
+<div class="line">    <span class="comment">/* Call debugger or replace with custom error handling */</span></div>
+<div class="line">    __breakpoint(0);  </div>
+<div class="line">  }</div>
+<div class="line">} </div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/* CMSIS-RTOS2 Thread */</span> </div>
+<div class="line"><span class="keywordtype">void</span> Flash_Thread (<span class="keywordtype">void</span> *argument)</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">/* Query drivers capabilities */</span></div>
+<div class="line">  <span class="keyword">const</span> <a class="code" href="group__flash__interface__gr.html#structARM__FLASH__CAPABILITIES">ARM_FLASH_CAPABILITIES</a> capabilities = flashDev-&gt;<a class="code" href="group__flash__interface__gr.html#a25076bd7274af5d3b0af6380ed1f0331">GetCapabilities</a>();</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">/* Initialize Flash device */</span></div>
+<div class="line">  <span class="keywordflow">if</span> (capabilities.<a class="code" href="group__flash__interface__gr.html#add296ba516c8fc17ba51e30f2a00f0a9">event_ready</a>) {</div>
+<div class="line">    flashDev-&gt;<a class="code" href="group__flash__interface__gr.html#a2d1eb2b5c3ee21ba5c92c37e89412567">Initialize</a> (&amp;Flash_Callback);</div>
+<div class="line">  } <span class="keywordflow">else</span> {</div>
+<div class="line">    flashDev-&gt;<a class="code" href="group__flash__interface__gr.html#a2d1eb2b5c3ee21ba5c92c37e89412567">Initialize</a> (NULL);</div>
+<div class="line">  }</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Power-on Flash device */</span></div>
+<div class="line">  flashDev-&gt;<a class="code" href="group__flash__interface__gr.html#aba8f1c8019af95ffe19c32403e3240ef">PowerControl</a> (<a class="code" href="Driver__Common_8h.html#ga47d6d7c31f88f3b8ae4aaf9d8444afa5abed52b77a9ce4775570e44a842b1295e">ARM_POWER_FULL</a>);</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Read data taking data_width into account */</span></div>
+<div class="line">  uint8_t buf[256U];</div>
+<div class="line">  flashDev-&gt;<a class="code" href="group__flash__interface__gr.html#adec45569a2f6f0d915a206f8f19107bd">ReadData</a> (0x1000U, buf, <span class="keyword">sizeof</span>(buf)&gt;&gt;capabilities.<a class="code" href="group__flash__interface__gr.html#a04c173610dd0a545ecae308e342aafb0">data_width</a>);</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Wait operation to be completed */</span></div>
+<div class="line">  <span class="keywordflow">if</span> (capabilities.<a class="code" href="group__flash__interface__gr.html#add296ba516c8fc17ba51e30f2a00f0a9">event_ready</a>) {</div>
+<div class="line">    osThreadFlagsWait (1U, osFlagsWaitAny, 100U);</div>
+<div class="line">  } <span class="keywordflow">else</span> {</div>
+<div class="line">    osDelay(100U);</div>
+<div class="line">  }</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Switch off gracefully */</span></div>
+<div class="line">  flashDev-&gt;<a class="code" href="group__flash__interface__gr.html#aba8f1c8019af95ffe19c32403e3240ef">PowerControl</a> (<a class="code" href="Driver__Common_8h.html#ga47d6d7c31f88f3b8ae4aaf9d8444afa5ab6f5becc85ebd51c3dd2524a95d2ca35">ARM_POWER_OFF</a>);</div>
+<div class="line">  flashDev-&gt;<a class="code" href="group__flash__interface__gr.html#adcf20681a1402869ecb5c6447fada17b">Uninitialize</a> ();</div>
+<div class="line">}</div>
+</div><!-- fragment --> <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structARM__FLASH__SECTOR" id="structARM__FLASH__SECTOR"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1018,7 +1075,7 @@ The parameter <em>cnt</em> specifies the number of data items to program (data s
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:02 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:51 for CMSIS-Driver by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -238,12 +238,87 @@ Simplified NAND Flash Schematic</div></div>
 <li><b>Driver_NAND.h</b> : Driver API for NAND Flash Device Interface</li>
 </ul>
 <p>The driver implementation is a typical part of the Device Family Pack (DFP) that supports the peripherals of the microcontroller family.</p>
+<p>NAND Flash is organized in pages, grouped into blocks as the smallest erasable unit. The addressing of data is archieved by <code>byte_address = block * block_size + page_in_block * page_size + offset_in_page</code>. In terms of this NAND API blocks and pages are referrd to as <code>row</code> and the byte offset within the page as <code>col</code>. Thus one can calculate the <code>byte_address = row * page_size + col</code>. The parameters <code>page_size</code> and <code>block_size</code> are device specific and must be handled by the driver user appropriately.</p>
 <p><b>Driver Functions</b></p>
 <p>The driver functions are published in the access struct as explained in <a class="el" href="theoryOperation.html#DriverFunctions">Common Driver Functions</a></p>
 <ul>
-<li><a class="el" href="group__nand__interface__gr.html#structARM__DRIVER__NAND">ARM_DRIVER_NAND</a> : access struct for NAND driver functions </li>
+<li><a class="el" href="group__nand__interface__gr.html#structARM__DRIVER__NAND">ARM_DRIVER_NAND</a> : access struct for NAND driver functions</li>
 </ul>
-<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<p><a class="anchor" id="example"></a><b>Example Code:</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="Driver__NAND_8h.html">Driver_NAND.h</a>&quot;</span></div>
+<div class="line">  </div>
+<div class="line"><span class="comment">// NAND driver instance</span></div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="group__nand__interface__gr.html#structARM__DRIVER__NAND">ARM_DRIVER_NAND</a> Driver_NAND0;</div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="group__nand__interface__gr.html#structARM__DRIVER__NAND">ARM_DRIVER_NAND</a> * nandDev = &amp;Driver_NAND0;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> SendAddress (<a class="code" href="group__nand__interface__gr.html#structARM__DRIVER__NAND">ARM_DRIVER_NAND</a> *drv, uint32_t dev_num, uint32_t addr, uint32_t cycles)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">while</span> (cycles--) {</div>
+<div class="line">    drv-&gt;<a class="code" href="group__nand__interface__gr.html#a5a43001ef1ca6c6d73f03e366bf41cb5">SendAddress</a> (dev_num, (uint8_t)addr);</div>
+<div class="line">    addr &gt;&gt;= 8U;</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">/* Query drivers capabilities */</span></div>
+<div class="line">  <span class="keyword">const</span> <a class="code" href="group__nand__interface__gr.html#structARM__NAND__CAPABILITIES">ARM_NAND_CAPABILITIES</a> capabilities = nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#adab9d081aee3e5d1f83c6911e45ceaa6">GetCapabilities</a>();</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">/* Initialize NAND device */</span></div>
+<div class="line">  nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#a28b29ab7b6114bb97175bd40d18854ac">Initialize</a> (NULL);</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Power-on NAND device */</span></div>
+<div class="line">  nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#aba8f1c8019af95ffe19c32403e3240ef">PowerControl</a> (<a class="code" href="Driver__Common_8h.html#ga47d6d7c31f88f3b8ae4aaf9d8444afa5abed52b77a9ce4775570e44a842b1295e">ARM_POWER_FULL</a>);</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Turn ON device power */</span></div>
+<div class="line">  uint32_t volt = 0U;</div>
+<div class="line">  <span class="keywordflow">if</span> (capabilities.<a class="code" href="group__nand__interface__gr.html#a35cfa22b2140b109fe24b97c42d5a5ed">vcc</a>)      { volt |= <a class="code" href="Driver__NAND_8h.html#ad15355d67bc239ff49cceac69c2024b3">ARM_NAND_POWER_VCC_3V3</a>;  }</div>
+<div class="line">  <span class="keywordflow">if</span> (capabilities.<a class="code" href="group__nand__interface__gr.html#a0e7d3b9258d468492b22de55d855a06e">vcc_1v8</a>)  { volt |= <a class="code" href="Driver__NAND_8h.html#aa7b9d5a71125b745caba5c1d7aff6385">ARM_NAND_POWER_VCC_1V8</a>;  }</div>
+<div class="line">  <span class="keywordflow">if</span> (capabilities.<a class="code" href="group__nand__interface__gr.html#ab1cdfce6eb051bed7b904e0fd1719afa">vccq</a>)     { volt |= <a class="code" href="Driver__NAND_8h.html#a6d5a8a33a0fdaaff2e57e1ac53c984c2">ARM_NAND_POWER_VCCQ_3V3</a>; }</div>
+<div class="line">  <span class="keywordflow">if</span> (capabilities.<a class="code" href="group__nand__interface__gr.html#a1896a7548bb6fab285f23cc0d0b23d7d">vccq_1v8</a>) { volt |= <a class="code" href="Driver__NAND_8h.html#a653d9b4d7bee173beb49d8fec0469476">ARM_NAND_POWER_VCCQ_1V8</a>; }</div>
+<div class="line">  </div>
+<div class="line">  <span class="keywordflow">if</span> (volt != 0U) {  </div>
+<div class="line">    nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#a9ba6f3066cda5c8d781c309a17315a58">DevicePower</a> (volt);</div>
+<div class="line">  }</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Setting bus mode */</span></div>
+<div class="line">  nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#a706fedbc88921808e210d75b7b5da168">Control</a> (0U, <a class="code" href="group__nand__control__codes.html#ga9b063c3078e86b50d4aa892518b2e2d8">ARM_NAND_BUS_MODE</a>, <a class="code" href="group__nand__bus__mode__codes.html#gac7743aeb6411b97f9fc6a24b556f4963">ARM_NAND_BUS_SDR</a>);</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Setting bus data width */</span></div>
+<div class="line">  nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#a706fedbc88921808e210d75b7b5da168">Control</a> (0U, <a class="code" href="group__nand__control__codes.html#ga2d3356f5b47871c465ae7136a2c533f4">ARM_NAND_BUS_DATA_WIDTH</a>, <a class="code" href="group__nand__data__bus__width__codes.html#ga578051cc193ae0b7125aec8007071d21">ARM_NAND_BUS_DATA_WIDTH_8</a>);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* Enable chip manually if needed */</span></div>
+<div class="line">  <span class="keywordflow">if</span> (capabilities.<a class="code" href="group__nand__interface__gr.html#a2b8044d986995b183b057217643466bf">ce_manual</a>) {</div>
+<div class="line">    nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#ac090c205fe3d1b3dcb7288b06468bbe5">ChipEnable</a> (0U, <span class="keyword">true</span>);</div>
+<div class="line">  }</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Send ONFI Read command */</span></div>
+<div class="line">  nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#a3dbd36d86718980665ce2e3a1ba672ca">SendCommand</a> (0U, 0x00U);</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Send address, LSB first */</span></div>
+<div class="line">  SendAddress (nandDev, 0U, 0x0100U, 2U);</div>
+<div class="line">  SendAddress (nandDev, 0U, 0x0047U, 2U);</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Read some data */</span></div>
+<div class="line">  uint8_t buf[256];</div>
+<div class="line">  nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#aeba263544c0d63ec8c29e919232615cb">ReadData</a> (0U, buf, <span class="keyword">sizeof</span>(buf)/<span class="keyword">sizeof</span>(buf[0]), 0U);</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Disable chip manually if needed */</span></div>
+<div class="line">  <span class="keywordflow">if</span> (capabilities.<a class="code" href="group__nand__interface__gr.html#a2b8044d986995b183b057217643466bf">ce_manual</a>) {</div>
+<div class="line">    nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#ac090c205fe3d1b3dcb7288b06468bbe5">ChipEnable</a> (0U, <span class="keyword">false</span>);</div>
+<div class="line">  }</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Switch off gracefully */</span></div>
+<div class="line">  volt = 0U;</div>
+<div class="line">  <span class="keywordflow">if</span> (capabilities.<a class="code" href="group__nand__interface__gr.html#a35cfa22b2140b109fe24b97c42d5a5ed">vcc</a>)  { volt |= <a class="code" href="Driver__NAND_8h.html#a323c320a6195b78c2c79f5c6e85f02e1">ARM_NAND_POWER_VCC_OFF</a>;  }</div>
+<div class="line">  <span class="keywordflow">if</span> (capabilities.<a class="code" href="group__nand__interface__gr.html#ab1cdfce6eb051bed7b904e0fd1719afa">vccq</a>) { volt |= <a class="code" href="Driver__NAND_8h.html#aca7679e8269ee986559f4218816937c3">ARM_NAND_POWER_VCCQ_OFF</a>; }</div>
+<div class="line">  <span class="keywordflow">if</span> (volt) {</div>
+<div class="line">    nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#a9ba6f3066cda5c8d781c309a17315a58">DevicePower</a> (volt);</div>
+<div class="line">  }</div>
+<div class="line">  nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#aba8f1c8019af95ffe19c32403e3240ef">PowerControl</a> (<a class="code" href="Driver__Common_8h.html#ga47d6d7c31f88f3b8ae4aaf9d8444afa5ab6f5becc85ebd51c3dd2524a95d2ca35">ARM_POWER_OFF</a>);</div>
+<div class="line">  nandDev-&gt;<a class="code" href="group__nand__interface__gr.html#adcf20681a1402869ecb5c6447fada17b">Uninitialize</a> ();</div>
+<div class="line">}</div>
+</div><!-- fragment --> <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structARM__NAND__STATUS" id="structARM__NAND__STATUS"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1962,7 +2037,7 @@ The parameter <em>event</em> indicates one or more events that occurred during d
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:02 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:51 for CMSIS-Driver by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

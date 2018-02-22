@@ -21,5 +21,6 @@ var group__CMSIS__core__register =
     [ "System Control Register (SCTLR)", "group__CMSIS__SCTLR.html", "group__CMSIS__SCTLR" ],
     [ "TLB maintenance operations", "group__CMSIS__TLB.html", "group__CMSIS__TLB" ],
     [ "Translation Table Base Registers (TTBR0/TTBR1)", "group__CMSIS__TTBR.html", "group__CMSIS__TTBR" ],
-    [ "Vector Base Address Register (VBAR)", "group__CMSIS__VBAR.html", "group__CMSIS__VBAR" ]
+    [ "Vector Base Address Register (VBAR)", "group__CMSIS__VBAR.html", "group__CMSIS__VBAR" ],
+    [ "Monitor Vector Base Address Register (MVBAR)", "group__CMSIS__MVBAR.html", "group__CMSIS__MVBAR" ]
 ];

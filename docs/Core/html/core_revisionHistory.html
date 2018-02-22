@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.0</span>
+   &#160;<span id="projectnumber">Version 5.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -115,6 +115,9 @@ $(document).ready(function(){initNavTree('core_revisionHistory.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>V5.1.1 </td><td>Aligned MSPLIM and PSPLIM access functions along supported compilers.<br/>
+   </td></tr>
+<tr>
 <td>V5.1.0 </td><td>Added MPU Functions for ARMv8-M for Cortex-M23/M33.<br/>
  Moved __SSAT and __USAT intrinsics to CMSIS-Core.<br/>
  Aligned __REV, __REV16 and __REVSH intrinsics along supported compilers.<br/>
@@ -124,7 +127,7 @@ $(document).ready(function(){initNavTree('core_revisionHistory.html','');});
  Added macros <a class="el" href="group__compiler__conntrol__gr.html#ga254322c344d954c9f829719a50a88e87">__UNALIGNED_UINT32_READ</a>, <a class="el" href="group__compiler__conntrol__gr.html#gabb2180285c417aa9120a360c51f64b4b">__UNALIGNED_UINT32_WRITE</a>.<br/>
  Deprecated macro <a class="el" href="group__compiler__conntrol__gr.html#ga27fd2ec6767ca1ab66d36b5cc0103268">__UNALIGNED_UINT32</a>.<br/>
  Changed <a class="el" href="group__version__control__gr.html">Version Control</a> macros to be core agnostic. <br/>
- Added <a class="el" href="group__mpu__functions.html">MPU Functions for ARMv7-M</a> for Cortex-M0+/M3/M4/M7.   </td></tr>
+ Added <a class="el" href="group__mpu__functions.html">MPU Functions for Armv7-M</a> for Cortex-M0+/M3/M4/M7.   </td></tr>
 <tr>
 <td>V5.0.1 </td><td>Added: macro <a class="el" href="group__compiler__conntrol__gr.html#ga4dbb70fab85207c27b581ecb6532b314">__PACKED_STRUCT</a>. <br/>
  Added: uVisor support. <br/>
@@ -174,7 +177,7 @@ Beta 1 </td><td>Renamed: cmsis_armcc_V6.h to cmsis_armclang.h.<br/>
 <td>V4.30 </td><td>Corrected: DoxyGen function parameter comments.<br/>
  Corrected: IAR toolchain: removed for <a class="el" href="group__NVIC__gr.html#ga1b47d17e90b6a03e7bd1ec6a0d549b46">NVIC_SystemReset</a> the attribute(noreturn).<br/>
  Corrected: GCC toolchain: suppressed irrelevant compiler warnings.<br/>
- Added: Support files for ARM Compiler v6 (cmsis_armcc_v6.h).   </td></tr>
+ Added: Support files for Arm Compiler v6 (cmsis_armcc_v6.h).   </td></tr>
 <tr>
 <td>V4.20 </td><td>Corrected: MISRA-C:2004 violations. <br/>
  Corrected: predefined macro for TI CCS Compiler. <br/>
@@ -251,7 +254,7 @@ Beta 1 </td><td>Renamed: cmsis_armcc_V6.h to cmsis_armclang.h.<br/>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:57 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:45 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

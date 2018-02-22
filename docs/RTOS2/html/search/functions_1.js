@@ -48,7 +48,7 @@ var searchData=
   ['osmessagequeuegetname',['osMessageQueueGetName',['../group__CMSIS__RTOS__Message.html#gae7cf7bf2b97a5ae481fb60fcce99247a',1,'cmsis_os2.h']]],
   ['osmessagequeuegetspace',['osMessageQueueGetSpace',['../group__CMSIS__RTOS__Message.html#gaddf0904427436dd3880d46263c2dc9fa',1,'cmsis_os2.h']]],
   ['osmessagequeuenew',['osMessageQueueNew',['../group__CMSIS__RTOS__Message.html#ga24e895a00f9d484db33aaf784c57bfed',1,'cmsis_os2.h']]],
-  ['osmessagequeueput',['osMessageQueuePut',['../group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc',1,'cmsis_os2.h']]],
+  ['osmessagequeueput',['osMessageQueuePut',['../group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc',1,'cmsis_os2.h']]],
   ['osmessagequeuereset',['osMessageQueueReset',['../group__CMSIS__RTOS__Message.html#gac6dce7f9ad132d266292c2e979d861b4',1,'cmsis_os2.h']]],
   ['osmutexacquire',['osMutexAcquire',['../group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924',1,'cmsis_os2.h']]],
   ['osmutexdelete',['osMutexDelete',['../group__CMSIS__RTOS__MutexMgmt.html#gabee73ad227ba4587d3db12ef9bd582bc',1,'cmsis_os2.h']]],

@@ -133,7 +133,7 @@ $(document).ready(function(){initNavTree('elem_cpu.html','');});
 <div class="line">  &lt;/cpu&gt;</div>
 <div class="line">  ...</div>
 <div class="line">&lt;device&gt;</div>
-</div><!-- fragment --><p>This example describes a device based on a <span class="XML-Token">Cortex-M7</span> core of HW revision <span class="XML-Token">r0p0</span>, with fixed <span class="XML-Token">little</span> endian memory scheme, including <span class="XML-Token">Memory Protection Unit</span> and <span class="XML-Token">double precision hardware Floating Point Unit</span>. It has a <span class="XML-Token">data cache</span> and no <span class="XML-Token">instruction</span> nor a tightly coupled memory. The Nested Vectored Interrupt Controller uses <span class="XML-Token">4</span> bits to configure the priority of an interrupt. It is equipped with the standard System Tick Timer as defined by ARM.</p>
+</div><!-- fragment --><p>This example describes a device based on a <span class="XML-Token">Cortex-M7</span> core of HW revision <span class="XML-Token">r0p0</span>, with fixed <span class="XML-Token">little</span> endian memory scheme, including <span class="XML-Token">Memory Protection Unit</span> and <span class="XML-Token">double precision hardware Floating Point Unit</span>. It has a <span class="XML-Token">data cache</span> and no <span class="XML-Token">instruction</span> nor a tightly coupled memory. The Nested Vectored Interrupt Controller uses <span class="XML-Token">4</span> bits to configure the priority of an interrupt. It is equipped with the standard System Tick Timer as defined by Arm.</p>
 <p><a class="anchor" id="elem_cpu_sc"></a><b>/device/cpu</b> </p>
 <table  class="cmtable" summary="CPU Section Elements">
 <tr>
@@ -144,37 +144,37 @@ $(document).ready(function(){initNavTree('elem_cpu.html','');});
 <th style="white-space:nowrap">Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
 <tr>
 <td>name </td><td>The predefined tokens are:<ul>
-<li><span class="XML-Token">CM0</span>: ARM Cortex-M0</li>
-<li><span class="XML-Token">CM0PLUS</span>: ARM Cortex-M0+</li>
-<li><span class="XML-Token">CM0+</span>: ARM Cortex-M0+</li>
-<li><span class="XML-Token">CM1</span>: ARM Cortex-M1</li>
-<li><span class="XML-Token">SC000</span>: ARM Secure Core SC000</li>
-<li><span class="XML-Token">CM23</span>: ARM Cortex-M23</li>
-<li><span class="XML-Token">CM3</span>: ARM Cortex-M3</li>
-<li><span class="XML-Token">CM33</span>: ARM Cortex-M33</li>
-<li><span class="XML-Token">SC300</span>: ARM Secure Core SC300</li>
-<li><span class="XML-Token">CM4</span>: ARM Cortex-M4</li>
-<li><span class="XML-Token">CM7</span>: ARM Cortex-M7</li>
-<li><span class="XML-Token">CA5</span>: ARM Cortex-A5</li>
-<li><span class="XML-Token">CA7</span>: ARM Cortex-A7</li>
-<li><span class="XML-Token">CA8</span>: ARM Cortex-A8</li>
-<li><span class="XML-Token">CA9</span>: ARM Cortex-A9</li>
-<li><span class="XML-Token">CA15</span>: ARM Cortex-A15</li>
-<li><span class="XML-Token">CA17</span>: ARM Cortex-A17</li>
-<li><span class="XML-Token">CA53</span>: ARM Cortex-A53</li>
-<li><span class="XML-Token">CA57</span>: ARM Cortex-A57</li>
-<li><span class="XML-Token">CA72</span>: ARM Cortex-A72</li>
+<li><span class="XML-Token">CM0</span>: Arm Cortex-M0</li>
+<li><span class="XML-Token">CM0PLUS</span>: Arm Cortex-M0+</li>
+<li><span class="XML-Token">CM0+</span>: Arm Cortex-M0+</li>
+<li><span class="XML-Token">CM1</span>: Arm Cortex-M1</li>
+<li><span class="XML-Token">SC000</span>: Arm Secure Core SC000</li>
+<li><span class="XML-Token">CM23</span>: Arm Cortex-M23</li>
+<li><span class="XML-Token">CM3</span>: Arm Cortex-M3</li>
+<li><span class="XML-Token">CM33</span>: Arm Cortex-M33</li>
+<li><span class="XML-Token">SC300</span>: Arm Secure Core SC300</li>
+<li><span class="XML-Token">CM4</span>: Arm Cortex-M4</li>
+<li><span class="XML-Token">CM7</span>: Arm Cortex-M7</li>
+<li><span class="XML-Token">CA5</span>: Arm Cortex-A5</li>
+<li><span class="XML-Token">CA7</span>: Arm Cortex-A7</li>
+<li><span class="XML-Token">CA8</span>: Arm Cortex-A8</li>
+<li><span class="XML-Token">CA9</span>: Arm Cortex-A9</li>
+<li><span class="XML-Token">CA15</span>: Arm Cortex-A15</li>
+<li><span class="XML-Token">CA17</span>: Arm Cortex-A17</li>
+<li><span class="XML-Token">CA53</span>: Arm Cortex-A53</li>
+<li><span class="XML-Token">CA57</span>: Arm Cortex-A57</li>
+<li><span class="XML-Token">CA72</span>: Arm Cortex-A72</li>
 <li><span class="XML-Token">other</span>: other processor architectures  </li>
 </ul>
 </td><td>cpuNameType  </td><td>1..1   </td></tr>
 <tr>
 <td>revision </td><td>Define the HW revision of the processor. The version format is <span class="XML-Token">r<em>N</em>p<em>M</em></span> (N,M = [0 - 99]).  </td><td>revisionType </td><td>1..1   </td></tr>
 <tr>
-<td>endian  </td><td>Define the endianess of the processor being one of:<ul>
+<td>endian  </td><td>Define the endianness of the processor being one of:<ul>
 <li><span class="XML-Token">little</span>: little endian memory (least significant byte gets allocated at the lowest address).</li>
 <li><span class="XML-Token">big</span>: byte invariant big endian data organization (most significant byte gets allocated at the lowest address).</li>
 <li><span class="XML-Token">selectable</span>: little and big endian are configurable for the device and become active after the next reset.</li>
-<li><span class="XML-Token">other</span>: the endianess is neither little nor big endian.  </li>
+<li><span class="XML-Token">other</span>: the endianness is neither little nor big endian.  </li>
 </ul>
 </td><td>endianType  </td><td>1..1   </td></tr>
 <tr>
@@ -196,7 +196,7 @@ $(document).ready(function(){initNavTree('elem_cpu.html','');});
 <tr>
 <td>nvicPrioBits  </td><td>Define the number of bits available in the Nested Vectored Interrupt Controller (NVIC) for configuring priority. </td><td>scaledNonNegativeInteger  </td><td>1..1   </td></tr>
 <tr>
-<td>vendorSystickConfig </td><td>Indicate whether the processor implements a vendor-specific System Tick Timer. If <span class="XML-Token">false</span>, then the ARM-defined System Tick Timer is available. If <span class="XML-Token">true</span>, then a vendor-specific System Tick Timer must be implemented. This tag is either set to <span class="XML-Token">true</span> or <span class="XML-Token">false</span>, <span class="XML-Token">1</span> or <span class="XML-Token">0</span>. </td><td>boolean  </td><td>1..1   </td></tr>
+<td>vendorSystickConfig </td><td>Indicate whether the processor implements a vendor-specific System Tick Timer. If <span class="XML-Token">false</span>, then the Arm-defined System Tick Timer is available. If <span class="XML-Token">true</span>, then a vendor-specific System Tick Timer must be implemented. This tag is either set to <span class="XML-Token">true</span> or <span class="XML-Token">false</span>, <span class="XML-Token">1</span> or <span class="XML-Token">0</span>. </td><td>boolean  </td><td>1..1   </td></tr>
 <tr>
 <td>deviceNumInterrupts </td><td>Add <span class="XML-Token">1</span> to the highest interrupt number and specify this number in here. You can start to enumerate interrupts from <span class="XML-Token">0</span>. Gaps might exist between interrupts. For example, you have defined interrupts with the numbers <span class="XML-Token">1</span>, <span class="XML-Token">2</span>, and <span class="XML-Token">8</span>. Add <span class="XML-Token">9 :(8+1)</span> into this field. </td><td>scaledNonNegativeInteger </td><td>0..1   </td></tr>
 <tr>
@@ -289,7 +289,7 @@ $(document).ready(function(){initNavTree('elem_cpu.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="svd_Format_pg.html">SVD Description (*.svd) Format</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:25 for CMSIS-SVD by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:32 for CMSIS-SVD by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

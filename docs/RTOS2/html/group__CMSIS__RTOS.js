@@ -1,5 +1,6 @@
 var group__CMSIS__RTOS =
 [
+    [ "Memory Management", "group__CMSIS__RTOS__MemoryMgmt.html", null ],
     [ "Kernel Information and Control", "group__CMSIS__RTOS__KernelCtrl.html", "group__CMSIS__RTOS__KernelCtrl" ],
     [ "Thread Management", "group__CMSIS__RTOS__ThreadMgmt.html", "group__CMSIS__RTOS__ThreadMgmt" ],
     [ "Thread Flags", "group__CMSIS__RTOS__ThreadFlagsMgmt.html", "group__CMSIS__RTOS__ThreadFlagsMgmt" ],

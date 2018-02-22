@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['revision_20history_20of_20cmsis_2ddap',['Revision History of CMSIS-DAP',['../dap_revisionHistory.html',1,'']]]
+  ['firmware_20for_20coresight_20debug_20access_20port',['Firmware for CoreSight Debug Access Port',['../index.html',1,'']]]
 ];

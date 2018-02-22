@@ -176,7 +176,7 @@ Using IRQ Interrupts</h1>
 </ul>
 <p>Interrupts can be used without limitation. Interrupt priority grouping can be used with some restrictions:</p>
 <ul>
-<li>IRQ interrupts are never disabled by RTX Kernel for ARMv7-M architectures (Cortex-M3/M4/M7).</li>
+<li>IRQ interrupts are never disabled by RTX Kernel for Armv7-M architectures (Cortex-M3/M4/M7).</li>
 <li>Software interrupt 0 is used by RTX and cannot be used in an application.</li>
 <li>RTX uses its own SVC Handler which is automatically linked from the library. <a class="el" href="svcFunctions.html">SVC Functions</a> explains how to use a custom SVC table.</li>
 <li>When interrupt <b>priority</b> <b>grouping</b> is used, the PRIGROUP must be set before the <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga53d078a801022e202e8115c083ece68e">osKernelInitialize()</a> function is called (usually in the SystemInit() function in the system_<em>device</em>.c file). The kernel reads the value of PRIGROUP to correctly set internal interrupt pre-emption priorities.</li>
@@ -191,7 +191,7 @@ Using IRQ Interrupts</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtxImplementation.html">RTX Implementation</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:21 for CMSIS-RTOS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:28 for CMSIS-RTOS by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

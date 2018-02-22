@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['memory_20management',['Memory Management',['../group__CMSIS__RTOS__MemoryMgmt.html',1,'']]],
   ['message_20queue',['Message Queue',['../group__CMSIS__RTOS__Message.html',1,'']]],
   ['mutex_20management',['Mutex Management',['../group__CMSIS__RTOS__MutexMgmt.html',1,'']]],
   ['memory_20pool',['Memory Pool',['../group__CMSIS__RTOS__PoolMgmt.html',1,'']]],

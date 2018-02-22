@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
+   &#160;<span id="projectnumber">Version 2.0.0</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -115,7 +115,7 @@ $(document).ready(function(){initNavTree('group__DAP__SWD__Sequence.html','');})
 <p>Generate SWD sequence and output on SWDIO or capture input from SWDIO data.  
 <a href="#details">More...</a></p>
 <p>Generate SWD sequence and output on SWDIO or capture input from SWDIO data. </p>
-<dl class="section note"><dt>Note</dt><dd>The <a class="el" href="group__DAP__SWD__Sequence.html">DAP_SWD_Sequence</a> is only available when <a class="el" href="group__DAP__Info.html">DAP_Info</a> with ID=0xF0 (Capabilities) returns in <b>Info0</b> - Bit 5: <b>1 = <a class="el" href="group__DAP__SWD__Sequence.html">DAP_SWD_Sequence</a></b> is implemented.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The <a class="el" href="group__DAP__SWD__Sequence.html">DAP_SWD_Sequence</a> is available for CMSIS-DAP version 1.2 and higher. Refer to <a class="el" href="group__DAP__Info.html">DAP_Info</a> for more information on how to query the CMSIS-DAP version.</dd></dl>
 <p>The <b>DAP_SWD_Sequence Command</b> is used to generate special sequences in SWD mode on the pins SWCLK and SWDIO. For example, for SWD multi-drop target selection (see picture) it is required to put the SWDIO pin to input mode (where it is not driven).</p>
 <div class="image">
 <img src="SWD_Sequence.png" alt="SWD_Sequence.png"/>
@@ -127,7 +127,7 @@ SWD sequence for multi-drop target selection</div></div>
 </ul>
 <p><b>DAP_SWD_Sequence Command</b>: </p>
 <div class="fragment"><div class="line">| BYTE | BYTE **********| BYTE *********| BYTE ******|</div>
-<div class="line">&gt; 0x21 | Sequence Count | Sequence Info | SWDIO Data |</div>
+<div class="line">&gt; 0x1D | Sequence Count | Sequence Info | SWDIO Data |</div>
 <div class="line">|******|****************|<span class="comment">///////////////|++++++++++++|</span></div>
 </div><!-- fragment --><ul>
 <li><b>Sequence Count</b>: Number of Sequences</li>
@@ -145,7 +145,7 @@ SWD sequence for multi-drop target selection</div></div>
 </ul>
 <p><b>DAP_SWD_Sequence Response</b>: </p>
 <div class="fragment"><div class="line">| BYTE | BYTE **| BYTE ******|</div>
-<div class="line">&lt; 0x21 | Status | SWDIO Data |</div>
+<div class="line">&lt; 0x1D | Status | SWDIO Data |</div>
 <div class="line">|******|********|++++++++++++|</div>
 </div><!-- fragment --><ul>
 <li><b>SWDIO Data</b> (only for input mode): Data captured from SWDIO<ul>
@@ -160,7 +160,7 @@ SWD sequence for multi-drop target selection</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:00 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:48 for CMSIS-DAP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

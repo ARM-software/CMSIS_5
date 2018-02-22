@@ -218,7 +218,13 @@ Behavior of a Periodic Timer</div></div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="fieldtable">
+<div class="textblock"><p>Attributes to configure a timer.</p>
+<p>Refer to <a class="el" href="group__CMSIS__RTOS__MemoryMgmt.html">Memory Management</a> for details about usage of</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#a1e100dc33d403841ed3c344e3397868e" title="memory for control block ">osTimerAttr_t::cb_mem</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#aa55a4335d12dc2785dc00fdc292d1159" title="size of provided memory for control block ">osTimerAttr_t::cb_size</a> </li>
+</ul>
+</div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="ab74e6bf80237ddc4109968cedc58c151"></a>const char *</td>
@@ -476,7 +482,7 @@ Returned by:</p>
 <div class="line"><span class="keywordtype">void</span> TimerStart_example (<span class="keywordtype">void</span>)  {</div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id;                                           <span class="comment">// timer id</span></div>
 <div class="line">  uint32_t    timerDelay;                                   <span class="comment">// timer value</span></div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>  status;                                       <span class="comment">// function return status</span></div>
+<div class="line">  osStatus_t  status;                                       <span class="comment">// function return status</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Create periodic timer</span></div>
 <div class="line">  exec = 1;</div>
@@ -531,7 +537,7 @@ Returned by:</p>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> TimerStop_example (<span class="keywordtype">void</span>) {</div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id;                                          <span class="comment">// timer id</span></div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>  status;                                      <span class="comment">// function return status</span></div>
+<div class="line">  osStatus_t  status;                                      <span class="comment">// function return status</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Create periodic timer</span></div>
 <div class="line">  exec = 1;</div>
@@ -612,7 +618,7 @@ Returned by:</p>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> TimerDelete_example (<span class="keywordtype">void</span>) {</div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> id;                                          <span class="comment">// timer id</span></div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>  status;                                      <span class="comment">// function return status  </span></div>
+<div class="line">  osStatus_t  status;                                      <span class="comment">// function return status  </span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Create periodic timer</span></div>
 <div class="line">  exec = 1;</div>
@@ -633,7 +639,7 @@ Returned by:</p>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

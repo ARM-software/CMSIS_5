@@ -274,9 +274,9 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <tr>
 <td>Toptions </td><td><p class="starttd">Specifies compiler specific options being active. For <em>Tcompiler="ARMCC"</em> available Toptions are:</p>
 <ul>
-<li><b>AC5</b>: ARM Compiler Version 5 is in used</li>
-<li><b>AC6</b>: ARM Compiler Version 6 (aka: ARM Clang 6) is in use</li>
-<li><b>AC6LTO</b>: ARM Compiler Version 6 with Link Time Optimization (aka: LTO) is in use</li>
+<li><b>AC5</b>: Arm Compiler Version 5 is in used</li>
+<li><b>AC6</b>: Arm Compiler Version 6 (armclang) is in use</li>
+<li><b>AC6LTO</b>: Arm Compiler Version 6 with Link Time Optimization (LTO) is in use</li>
 </ul>
 <p class="endtd">This attribute can be used to select compatible libraries for the selected compiler version or optimization mode.  </p>
 </td><td>CompilerEnumType </td><td>optional  </td></tr>
@@ -301,11 +301,11 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <tr>
 <th>Tcompiler= </th><th>Description  </th></tr>
 <tr>
-<td class="XML-Token">GCC </td><td>GNU Tools for ARM Embedded Processors. Refer to <a href="https://launchpad.net/gcc-arm-embedded/4.7" target="_blank">ARM GCC</a>.  </td></tr>
+<td class="XML-Token">GCC </td><td>GNU Tools for Arm Embedded Processors. Refer to <a href="https://launchpad.net/gcc-arm-embedded/4.7" target="_blank">Arm GCC</a>.  </td></tr>
 <tr>
 <td class="XML-Token">G++ </td><td>Code Sourcery GCC compiler for C and C++ (is now Mentor Graphics CodeBench).  </td></tr>
 <tr>
-<td class="XML-Token">ARMCC </td><td>ARM compiler for C and C++. Refer to <a href="http://infocenter.arm.com/help/topic/com.arm.doc.subset.swdev.coretools/index.html" target="_blank">ARM Compiler from ARM</a>.  </td></tr>
+<td class="XML-Token">ARMCC </td><td>Arm Compiler for C and C++. Refer to <a href="http://infocenter.arm.com/help/topic/com.arm.doc.subset.swdev.coretools/index.html" target="_blank">Arm Compiler</a>.  </td></tr>
 <tr>
 <td class="XML-Token">IAR </td><td>IAR compiler for C and C++.  </td></tr>
 <tr>
@@ -321,7 +321,7 @@ $(document).ready(function(){initNavTree('pdsc_conditions_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:20 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:27 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

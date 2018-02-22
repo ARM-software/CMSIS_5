@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.0</span>
+   &#160;<span id="projectnumber">Version 5.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -186,16 +186,16 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga9d174f979b2f76fdb3228a9b338fd939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables interrupts and all fault handlers [not for Cortex-M0, Cortex-M0+, or SC000].  <a href="#ga9d174f979b2f76fdb3228a9b338fd939">More...</a><br/></td></tr>
 <tr class="separator:ga9d174f979b2f76fdb3228a9b338fd939"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8b226929264e903c7019e326b42bef47"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Core__Register__gr.html#ga8b226929264e903c7019e326b42bef47">__get_PSPLIM</a> (void)</td></tr>
-<tr class="memdesc:ga8b226929264e903c7019e326b42bef47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Process Stack Pointer Limit.  <a href="#ga8b226929264e903c7019e326b42bef47">More...</a><br/></td></tr>
+<tr class="memdesc:ga8b226929264e903c7019e326b42bef47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Process Stack Pointer Limit Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence zero is returned always in non-secure mode.  <a href="#ga8b226929264e903c7019e326b42bef47">More...</a><br/></td></tr>
 <tr class="separator:ga8b226929264e903c7019e326b42bef47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4348d14fc5eefbfd34ab8c51be44a81b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Core__Register__gr.html#ga4348d14fc5eefbfd34ab8c51be44a81b">__set_PSPLIM</a> (uint32_t ProcStackPtrLimit)</td></tr>
-<tr class="memdesc:ga4348d14fc5eefbfd34ab8c51be44a81b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Process Stack Pointer Limit.  <a href="#ga4348d14fc5eefbfd34ab8c51be44a81b">More...</a><br/></td></tr>
+<tr class="memdesc:ga4348d14fc5eefbfd34ab8c51be44a81b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Process Stack Pointer Limit Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence the write is silently ignored in non-secure mode.  <a href="#ga4348d14fc5eefbfd34ab8c51be44a81b">More...</a><br/></td></tr>
 <tr class="separator:ga4348d14fc5eefbfd34ab8c51be44a81b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf39856ca50fc88cf459031b44eb2521c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Core__Register__gr.html#gaf39856ca50fc88cf459031b44eb2521c">__get_MSPLIM</a> (void)</td></tr>
-<tr class="memdesc:gaf39856ca50fc88cf459031b44eb2521c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Main Stack Pointer Limit.  <a href="#gaf39856ca50fc88cf459031b44eb2521c">More...</a><br/></td></tr>
+<tr class="memdesc:gaf39856ca50fc88cf459031b44eb2521c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Main Stack Pointer Limit Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence zero is returned always in non-secure mode.  <a href="#gaf39856ca50fc88cf459031b44eb2521c">More...</a><br/></td></tr>
 <tr class="separator:gaf39856ca50fc88cf459031b44eb2521c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6809a07c5cb7410e361f3fba57f72172"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Core__Register__gr.html#ga6809a07c5cb7410e361f3fba57f72172">__set_MSPLIM</a> (uint32_t MainStackPtrLimit)</td></tr>
-<tr class="memdesc:ga6809a07c5cb7410e361f3fba57f72172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Main Stack Pointer Limit.  <a href="#ga6809a07c5cb7410e361f3fba57f72172">More...</a><br/></td></tr>
+<tr class="memdesc:ga6809a07c5cb7410e361f3fba57f72172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Main Stack Pointer Limit Devices without Armv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure Stack Pointer Limit register hence the write is silently ignored in non-secure mode.  <a href="#ga6809a07c5cb7410e361f3fba57f72172">More...</a><br/></td></tr>
 <tr class="separator:ga6809a07c5cb7410e361f3fba57f72172"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
@@ -629,7 +629,7 @@ Physically two different stack pointers (SP) exist:</p>
 </div><div class="memdoc">
 <p>Returns the current value of the Main Stack Pointer Limit (MSPLIM). </p>
 <dl class="section return"><dt>Returns</dt><dd>MSPLIM Register value </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Only availabe for ARMv8-M Architecture. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Only availabe for Armv8-M Architecture. </dd></dl>
 
 </div>
 </div>
@@ -717,7 +717,7 @@ Physically two different stack pointers (SP) exist:</p>
 </div><div class="memdoc">
 <p>Returns the current value of the Process Stack Pointer Limit (PSPLIM). </p>
 <dl class="section return"><dt>Returns</dt><dd>PSPLIM Register value </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Only availabe for ARMv8-M Architecture. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Only availabe for Armv8-M Architecture. </dd></dl>
 
 </div>
 </div>
@@ -1155,7 +1155,7 @@ Physically two different stack pointers (SP) exist:</p>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Only availabe for ARMv8-M Architecture. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Only availabe for Armv8-M Architecture. </dd></dl>
 
 </div>
 </div>
@@ -1265,7 +1265,7 @@ Physically two different stack pointers (SP) exist:</p>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Only availabe for ARMv8-M Architecture. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Only availabe for Armv8-M Architecture. </dd></dl>
 
 </div>
 </div>
@@ -1274,7 +1274,7 @@ Physically two different stack pointers (SP) exist:</p>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:58 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:45 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

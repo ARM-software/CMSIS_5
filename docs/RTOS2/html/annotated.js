@@ -25,6 +25,7 @@ var annotated =
     [ "osRtxMpInfo_t", "rtx__os_8h.html#structosRtxMpInfo__t", "rtx__os_8h_structosRtxMpInfo__t" ],
     [ "osRtxMutex_t", "group__rtx5__specific__structs.html#structosRtxMutex__t", "group__rtx5__specific__structs_structosRtxMutex__t" ],
     [ "osRtxObject_t", "rtx__os_8h.html#structosRtxObject__t", "rtx__os_8h_structosRtxObject__t" ],
+    [ "osRtxObjectMemUsage_t", "rtx__os_8h.html#structosRtxObjectMemUsage__t", "rtx__os_8h_structosRtxObjectMemUsage__t" ],
     [ "osRtxSemaphore_t", "group__rtx5__specific__structs.html#structosRtxSemaphore__t", "group__rtx5__specific__structs_structosRtxSemaphore__t" ],
     [ "osRtxThread_t", "group__rtx5__specific__structs.html#structosRtxThread__t", "group__rtx5__specific__structs_structosRtxThread__t" ],
     [ "osRtxTimer_t", "group__rtx5__specific__structs.html#structosRtxTimer__t", "group__rtx5__specific__structs_structosRtxTimer__t" ],

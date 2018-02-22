@@ -29,6 +29,7 @@ var searchData=
   ['current_20program_20status_20register_20_28cpsr_29',['Current Program Status Register (CPSR)',['../group__CMSIS__CPSR.html',1,'']]],
   ['cpsr_20bits',['CPSR Bits',['../group__CMSIS__CPSR__BITS.html',1,'']]],
   ['cpsr_20m_20field_20values',['CPSR M field values',['../group__CMSIS__CPSR__M.html',1,'']]],
+  ['cmsis_5fdeprecated',['CMSIS_DEPRECATED',['../cmsis__armcc_8h.html#acdc36c1b3d3e16c17a73889b7d06d0d2',1,'cmsis_armcc.h']]],
   ['cntp_5fctl_5ftype',['CNTP_CTL_Type',['../unionCNTP__CTL__Type.html',1,'']]],
   ['compiler_20control',['Compiler Control',['../group__comp__cntrl__gr.html',1,'']]],
   ['control',['CONTROL',['../structL2C__310__TypeDef.html#a491a4ed1ecdcdf784b180fa13ef46f2f',1,'L2C_310_TypeDef::CONTROL()'],['../structTimer__Type.html#a91845c88231f4f337be2810d73bc79e4',1,'Timer_Type::CONTROL()']]],

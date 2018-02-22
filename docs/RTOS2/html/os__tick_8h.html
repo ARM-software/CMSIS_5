@@ -135,13 +135,13 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5eeffb4d9dc6c6802fee8898096d9a59"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga5eeffb4d9dc6c6802fee8898096d9a59">OS_Tick_Setup</a> (uint32_t freq, <a class="el" href="os__tick_8h.html#afbfa2180a9b6208f34891d539e9e2d52">IRQHandler_t</a> handler)</td></tr>
 <tr class="memdesc:ga5eeffb4d9dc6c6802fee8898096d9a59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup OS Tick.  <a href="group__CMSIS__RTOS__TickAPI.html#ga5eeffb4d9dc6c6802fee8898096d9a59">More...</a><br/></td></tr>
 <tr class="separator:ga5eeffb4d9dc6c6802fee8898096d9a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3e47971bf3a02599d9ecb32208adafec"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga3e47971bf3a02599d9ecb32208adafec">OS_Tick_Enable</a> (void)</td></tr>
+<tr class="memitem:ga3e47971bf3a02599d9ecb32208adafec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga3e47971bf3a02599d9ecb32208adafec">OS_Tick_Enable</a> (void)</td></tr>
 <tr class="memdesc:ga3e47971bf3a02599d9ecb32208adafec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable OS Tick.  <a href="group__CMSIS__RTOS__TickAPI.html#ga3e47971bf3a02599d9ecb32208adafec">More...</a><br/></td></tr>
 <tr class="separator:ga3e47971bf3a02599d9ecb32208adafec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e325c304fef5003b1dc31906f6a3056"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga5e325c304fef5003b1dc31906f6a3056">OS_Tick_Disable</a> (void)</td></tr>
+<tr class="memitem:ga5e325c304fef5003b1dc31906f6a3056"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga5e325c304fef5003b1dc31906f6a3056">OS_Tick_Disable</a> (void)</td></tr>
 <tr class="memdesc:ga5e325c304fef5003b1dc31906f6a3056"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable OS Tick.  <a href="group__CMSIS__RTOS__TickAPI.html#ga5e325c304fef5003b1dc31906f6a3056">More...</a><br/></td></tr>
 <tr class="separator:ga5e325c304fef5003b1dc31906f6a3056"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga57065ec4b281504ad4de13a419870b4f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga57065ec4b281504ad4de13a419870b4f">OS_Tick_AcknowledgeIRQ</a> (void)</td></tr>
+<tr class="memitem:ga57065ec4b281504ad4de13a419870b4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga57065ec4b281504ad4de13a419870b4f">OS_Tick_AcknowledgeIRQ</a> (void)</td></tr>
 <tr class="memdesc:ga57065ec4b281504ad4de13a419870b4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acknowledge OS Tick IRQ.  <a href="group__CMSIS__RTOS__TickAPI.html#ga57065ec4b281504ad4de13a419870b4f">More...</a><br/></td></tr>
 <tr class="separator:ga57065ec4b281504ad4de13a419870b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa8b4eca23e3ffe2df403291958cdc905"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#gaa8b4eca23e3ffe2df403291958cdc905">OS_Tick_GetIRQn</a> (void)</td></tr>
@@ -161,8 +161,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga1f9a593126b7f0b66fc526c2cebd6192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.0 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>05. June 2017 </dd></dl>
+<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.1 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>24. November 2017 </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="aed032df21f11e8715f5c4deeeb56cc36"></a>
 <div class="memitem">
@@ -195,7 +195,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_a43355fbfff7212ac2193223a73d577c.html">RTOS2</a></li><li class="navelem"><a class="el" href="dir_f5870d36a7061bb81e1a64a750696f2d.html">Include</a></li><li class="navelem"><a class="el" href="os__tick_8h.html">os_tick.h</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

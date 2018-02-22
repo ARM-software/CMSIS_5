@@ -11,6 +11,7 @@ var NAVTREE =
     [ "Using CMSIS in Embedded Applications", "using_pg.html", "using_pg" ],
     [ "CMSIS-Core Device Templates", "templates_pg.html", "templates_pg" ],
     [ "MISRA-C Deviations", "coreMISRA_Exceptions_pg.html", null ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Reference", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", "annotated" ],
     [ "Data Fields", "functions.html", [
@@ -23,9 +24,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"group__CMSIS__DFSR__BITS.html#ga8cc8dcb1b3a971a13b0575bf9083acf5",
-"group__PL1__timer__functions.html#gac66bd336d2353f70aa8ebfc73aa3fc43",
-"unionCPACR__Type.html#a68d69635225dd479d3035cc51b4c40ce"
+"group__CMSIS__DFSR__BITS.html#ga7541052737038d737fd9fe00b9815140",
+"group__PL1__timer__functions.html#ga341ae7d1ae29f4dc5dae6310fa453164",
+"unionCPACR__Type.html#a4de69636eb450fcc3f5f3e4a19a869f5"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fiq_5fmode',['FIQ_MODE',['../startup__ARMCA9_8c.html#ad53b2deac028f5b71d1cdddda17c4ea0',1,'startup_ARMCA9.c']]]
+  ['cmsis_5fdeprecated',['CMSIS_DEPRECATED',['../cmsis__armcc_8h.html#acdc36c1b3d3e16c17a73889b7d06d0d2',1,'cmsis_armcc.h']]]
 ];

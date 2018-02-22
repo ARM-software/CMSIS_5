@@ -10,7 +10,7 @@ var group__CMSIS__RTOS__Message =
     ] ],
     [ "osMessageQueueNew", "group__CMSIS__RTOS__Message.html#ga24e895a00f9d484db33aaf784c57bfed", null ],
     [ "osMessageQueueGetName", "group__CMSIS__RTOS__Message.html#gae7cf7bf2b97a5ae481fb60fcce99247a", null ],
-    [ "osMessageQueuePut", "group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc", null ],
+    [ "osMessageQueuePut", "group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc", null ],
     [ "osMessageQueueGet", "group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e", null ],
     [ "osMessageQueueGetCapacity", "group__CMSIS__RTOS__Message.html#gac24f87d4f395e9e9c900c320e45ade8a", null ],
     [ "osMessageQueueGetMsgSize", "group__CMSIS__RTOS__Message.html#ga96d3d84069b20359de48109e28a1a89e", null ],

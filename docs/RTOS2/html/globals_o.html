@@ -355,7 +355,7 @@ $(document).ready(function(){initNavTree('globals_o.html','');});
 : <a class="el" href="group__CMSIS__RTOS__Message.html#ga24e895a00f9d484db33aaf784c57bfed">cmsis_os2.h</a>
 </li>
 <li>osMessageQueuePut()
-: <a class="el" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">cmsis_os2.h</a>
+: <a class="el" href="group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc">cmsis_os2.h</a>
 </li>
 <li>osMessageQueueReset()
 : <a class="el" href="group__CMSIS__RTOS__Message.html#gac6dce7f9ad132d266292c2e979d861b4">cmsis_os2.h</a>
@@ -639,6 +639,9 @@ $(document).ready(function(){initNavTree('globals_o.html','');});
 <li>osRtxEventFlagsLimit
 : <a class="el" href="rtx__os_8h.html#a271653c08ecb64dbb2d0ce8a51ddb4c2">rtx_os.h</a>
 </li>
+<li>osRtxEventFlagsMemUsage
+: <a class="el" href="rtx__os_8h.html#a0c81327f94697890809ce4a594bb9d5c">rtx_os.h</a>
+</li>
 <li>osRtxFlagSystemMemory
 : <a class="el" href="rtx__os_8h.html#ade9b85b84a6199a1cc3653058def19f3">rtx_os.h</a>
 </li>
@@ -702,17 +705,26 @@ $(document).ready(function(){initNavTree('globals_o.html','');});
 <li>osRtxMemoryPoolMemSize
 : <a class="el" href="group__rtx5__specific__defines.html#gac6bea3541b458bbc79eafce42a2d87a2">rtx_os.h</a>
 </li>
+<li>osRtxMemoryPoolMemUsage
+: <a class="el" href="rtx__os_8h.html#ae5dea30a13d7a2316699a7f201504bc7">rtx_os.h</a>
+</li>
 <li>osRtxMessageQueueCbSize
 : <a class="el" href="group__rtx5__specific__defines.html#gaa8d067c476faa6bfc8e5e21f3b3c844e">rtx_os.h</a>
 </li>
 <li>osRtxMessageQueueMemSize
 : <a class="el" href="group__rtx5__specific__defines.html#ga47eb1e21f1bf9a42281c6c89c7473e99">rtx_os.h</a>
 </li>
+<li>osRtxMessageQueueMemUsage
+: <a class="el" href="rtx__os_8h.html#af3da38b316a84990128e8d9f34e3e6d3">rtx_os.h</a>
+</li>
 <li>osRtxMutexCbSize
 : <a class="el" href="group__rtx5__specific__defines.html#ga188bfaaf7477cf24cbc9f207feaeb53a">rtx_os.h</a>
 </li>
 <li>osRtxMutexLockLimit
 : <a class="el" href="rtx__os_8h.html#ade5d158c28233a45ad1fc9a1156373f6">rtx_os.h</a>
+</li>
+<li>osRtxMutexMemUsage
+: <a class="el" href="rtx__os_8h.html#a683927dcd67dcb912884d16efa81a58d">rtx_os.h</a>
 </li>
 <li>osRtxObjectActive
 : <a class="el" href="rtx__os_8h.html#a3037b8bdb3e008aeff8f3db9428d4c7d">rtx_os.h</a>
@@ -722,6 +734,9 @@ $(document).ready(function(){initNavTree('globals_o.html','');});
 </li>
 <li>osRtxSemaphoreCbSize
 : <a class="el" href="group__rtx5__specific__defines.html#ga0949b67063d0bd427fbee9c816b5d45a">rtx_os.h</a>
+</li>
+<li>osRtxSemaphoreMemUsage
+: <a class="el" href="rtx__os_8h.html#aec50b39ce30d9c87916d077f6f764387">rtx_os.h</a>
 </li>
 <li>osRtxSemaphoreTokenLimit
 : <a class="el" href="rtx__os_8h.html#a14c7bcf532389ed285827cf5497d09eb">rtx_os.h</a>
@@ -746,6 +761,9 @@ $(document).ready(function(){initNavTree('globals_o.html','');});
 </li>
 <li>osRtxThreadInactive
 : <a class="el" href="rtx__os_8h.html#a2552be237293212f43fc08bf3ec02e67">rtx_os.h</a>
+</li>
+<li>osRtxThreadMemUsage
+: <a class="el" href="rtx__os_8h.html#a90374bf1d999b2e1594763ab6c97cd69">rtx_os.h</a>
 </li>
 <li>osRtxThreadReady
 : <a class="el" href="rtx__os_8h.html#a7c1e9dfefafc53162f076b0430a0e595">rtx_os.h</a>
@@ -791,6 +809,9 @@ $(document).ready(function(){initNavTree('globals_o.html','');});
 </li>
 <li>osRtxTimerInactive
 : <a class="el" href="rtx__os_8h.html#a66bea72c0cffd25c7cb32419283a7b92">rtx_os.h</a>
+</li>
+<li>osRtxTimerMemUsage
+: <a class="el" href="rtx__os_8h.html#aa3e7cf488411dbdc814420b81f36b935">rtx_os.h</a>
 </li>
 <li>osRtxTimerPeriodic
 : <a class="el" href="rtx__os_8h.html#accc1542de31e0c7367d452e9de035bb4">rtx_os.h</a>
@@ -975,7 +996,7 @@ $(document).ready(function(){initNavTree('globals_o.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:24 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:31 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

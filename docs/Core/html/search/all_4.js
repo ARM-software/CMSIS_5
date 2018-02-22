@@ -6,6 +6,7 @@ var searchData=
   ['debugmonitor_5firqn',['DebugMonitor_IRQn',['../group__NVIC__gr.html#gga7e1129cd8a196f4284d41db3e82ad5c8a8e033fcef7aed98a31c60a7de206722c',1,'Ref_NVIC.txt']]],
   ['demcr',['DEMCR',['../structCoreDebug__Type.html#aeb3126abc4c258a858f21f356c0df6ee',1,'CoreDebug_Type']]],
   ['deprecated_20list',['Deprecated List',['../deprecated.html',1,'']]],
+  ['devarch',['DEVARCH',['../structITM__Type.html#a2372a4ebb63e36d1eb3fcf83a74fd537',1,'ITM_Type']]],
   ['device_20header_20file_20_3cdevice_2eh_3e',['Device Header File &lt;device.h&gt;',['../device_h_pg.html',1,'templates_pg']]],
   ['devid',['DEVID',['../structTPI__Type.html#abc0ecda8a5446bc754080276bad77514',1,'TPI_Type']]],
   ['devtype',['DEVTYPE',['../structTPI__Type.html#ad98855854a719bbea33061e71529a472',1,'TPI_Type']]],

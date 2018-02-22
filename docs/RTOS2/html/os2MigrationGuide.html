@@ -160,7 +160,7 @@ Component Selection for RTX5</div></div>
 <li>Rename function <code>int main (void)</code> to <code>void app_main (void *arg)</code>.</li>
 <li>Create a new function <code>int main (void)</code> which implements at least:<ul>
 <li>System initialization and configuration</li>
-<li>Update SystemCoreClock</li>
+<li>Update <a href="../../Core/html/group__system__init__gr.html">SystemCoreClock</a></li>
 <li>Initialize CMSIS-RTOS kernel</li>
 <li>Creates new thread app_main</li>
 <li>Start RTOS scheduler</li>
@@ -168,7 +168,10 @@ Component Selection for RTX5</div></div>
 </li>
 </ul>
 <p><b>Example - Application Main Thread</b> </p>
-<div class="fragment"><div class="line"><span class="comment">/* Renamed main() function */</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;RTE_Components.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include CMSIS_device_header</span></div>
+<div class="line"><span class="preprocessor"></span> </div>
+<div class="line"><span class="comment">/* Renamed main() function */</span></div>
 <div class="line"><span class="keywordtype">void</span> app_main (<span class="keywordtype">void</span> <span class="keyword">const</span> *argument) {</div>
 <div class="line">  <span class="comment">// contents of old &quot;main&quot;</span></div>
 <div class="line">}</div>
@@ -264,7 +267,7 @@ Level 3 Migration - Full transition to API v2</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="os2Migration.html">Migration from API v1 to API v2</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

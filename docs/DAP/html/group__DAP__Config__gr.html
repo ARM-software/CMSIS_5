@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
+   &#160;<span id="projectnumber">Version 2.0.0</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -126,7 +126,7 @@ Content</h2></td></tr>
 <tr class="memdesc:group__DAP__ConfigIO__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">DAP_config.h configures I/O ports and Debug Unit hardware parameters. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__DAP__ConfigUSB__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__ConfigUSB__gr.html">Configure USB Peripheral</a></td></tr>
-<tr class="memdesc:group__DAP__ConfigUSB__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMSIS-DAP Firmware uses USB HID as interface to host computer. <br/></td></tr>
+<tr class="memdesc:group__DAP__ConfigUSB__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMSIS-DAP Firmware communicates via an USB interface to host computer. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__DAP__ConfigFlash__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__ConfigFlash__gr.html">Flash Program Firmware</a></td></tr>
 <tr class="memdesc:group__DAP__ConfigFlash__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">The CMSIS-DAP Firmware is programmed into Flash ROM of a Debug Unit. <br/></td></tr>
@@ -156,15 +156,15 @@ CMSIS-DAP Debug Unit with Isolation adapter</div></div>
 <li>optional UART to support SWO capturing (Rx pin connected to SWO)</li>
 </ul>
 <h2>CMSIS-DAP Firmware </h2>
-<p>The CMSIS-DAP Firmware can be configured for a new Debug Unit using at least the <a href="http://www.keil.com/mdk5" target="_blank">Keil MDK Plus Edition</a>. Reference implementations are provided as source code with complete project files and may be used as starting point for the firmware deployment to a new Debug Unit.</p>
+<p>The CMSIS-DAP Firmware can be configured for a new Debug Unit using at least the <a href="http://www.keil.com/mdk5" target="_blank">Keil MDK-Plus or MDK-Professional Edition</a>. Reference implementations are provided as source code with complete project files and may be used as starting point for the firmware deployment to a new Debug Unit.</p>
 <p>The folder <b> .\Firmware\Config</b> contains a template of the <b>DAP_config.h</b> configuration file. Various adaptations for different target hardware are provided.</p>
 <table class="doxtable">
 <tr>
 <th>Folders and Files </th><th>Description  </th></tr>
 <tr>
-<td>.\Firmware\Example\LPC-Link-II </td><td>CMSIS-DAP Firmware adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform. </td></tr>
+<td>.\Firmware\Example\V1\LPC-Link-II </td><td>CMSIS-DAP Firmware using USB HID adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform. </td></tr>
 <tr>
-<td>.\Firmware\Example\XMC4200 </td><td>CMSIS-DAP Firmware adapted to the Infineon XMC4200-based Debug Unit. </td></tr>
+<td>.\Firmware\Example\V2\LPC-Link-II </td><td>CMSIS-DAP Firmware using WinUSB adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform. </td></tr>
 </table>
 <p>The CMSIS-DAP Firmware is designed to execute on a Debug Unit that is using a Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 processor-based microcontroller. To deploy the firmware to a new Debug Unit copy an existing firmware adaptation to a new folder. For example, copy the folder .\Firmware\XMC4200 to a folder called .\Firmware\MyDebugUnit.</p>
 <p>To following steps describe the adaptation of the CMSIS-DAP Firmware to a new Debug Unit:</p>
@@ -182,7 +182,7 @@ CMSIS-DAP Debug Unit with Isolation adapter</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:00 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:48 for CMSIS-DAP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

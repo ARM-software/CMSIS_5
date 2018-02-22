@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS
-   &#160;<span id="projectnumber">Version 5.2.0</span>
+   &#160;<span id="projectnumber">Version 5.3.0</span>
    </div>
    <div id="projectbrief">Cortex Microcontroller Software Interface Standard</div>
   </td>
@@ -74,15 +74,16 @@ $(document).ready(function(){initNavTree('index.html','');});
 <div class="contents">
 <div class="textblock"><p>The <b>Cortex Microcontroller Software Interface Standard</b> (CMSIS) is a vendor-independent hardware abstraction layer for the Cortex&reg;-M processor series and defines generic tool interfaces. The CMSIS enables consistent device support and simple software interfaces to the processor and the peripherals, simplifying software re-use, reducing the learning curve for microcontroller developers, and reducing the time to market for new devices.</p>
 <p>The CMSIS is defined in close cooperation with various silicon and software vendors and provides a common approach to interface to peripherals, real-time operating systems, and middleware components. The CMSIS is intended to enable the combination of software components from multiple middleware vendors.</p>
-<p>CMSIS Version 5 supports also the <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" class="el" target="_blank">ARMv8-M architecture</a> including <a href="http://www.arm.com/products/processors/technologies/trustzone/index.php" class="el" target="_blank">TrustZone&reg; for ARMv8-M</a> hardware security extensions and the <a href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" class="el" target="_blank">Cortex-M23</a> and <a href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" class="el" target="_blank">Cortex-M33</a> processors.</p>
+<p>CMSIS Version 5 supports also the <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" class="el" target="_blank">Armv8-M architecture</a> including <a href="http://www.arm.com/products/processors/technologies/trustzone/index.php" class="el" target="_blank">TrustZone&reg; for Armv8-M</a> hardware security extensions and the <a href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" class="el" target="_blank">Cortex-M23</a> and <a href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" class="el" target="_blank">Cortex-M33</a> processors.</p>
 <p><a class="anchor" id="CM_Components"></a>The CMSIS components are:</p>
 <ul>
 <li><a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a>: API for the Cortex-M processor core and peripherals. It provides a standardized interface for Cortex-M0, Cortex-M0+, Cortex-M3, Cortex-M4, Cortex-M7, Cortex-M23, Cortex-M33, SC000, and SC300. Also included are SIMD intrinsic functions for Cortex-M4, Cortex-M7, and Cortex-M33 SIMD instructions.</li>
 <li><a href="../../Core_A/html/index.html"><b>CMSIS-Core (Cortex-A)</b></a>: API and basic run-time system for the Cortex-A5/A7/A9 processor core and peripherals.</li>
 <li><a href="../../Driver/html/index.html"><b>CMSIS-Driver</b></a>: defines generic peripheral driver interfaces for middleware making it reusable across supported devices. The API is RTOS independent and connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces.</li>
 <li><a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>: DSP Library Collection with over 60 Functions for various data types: fixed-point (fractional q7, q15, q31) and single precision floating-point (32-bit). The library is available for all Cortex-M cores. Implementations that are optimized for the SIMD instruction set are available for Cortex-M4, Cortex-M7, and Cortex-M33.</li>
+<li><a href="../../NN/html/index.html"><b>CMSIS-NN</b></a>: CMSIS-NN is a collection of efficient neural network kernels developed to maximize the performance and minimize the memory footprint of neural networks on Cortex-M processor cores.</li>
 <li><a href="../../RTOS/html/index.html"><b>CMSIS-RTOS v1</b></a>: Common API for Real-Time Operating Systems along with reference implementation based on RTX. It provides a standardized programming interface that is portable to many RTOS and enables software components that can work across multiple RTOS systems.</li>
-<li><a href="../../RTOS2/html/index.html"><b>CMSIS-RTOS v2</b></a>: extends CMSIS-RTOS v1 with support for ARMv8-M architecture, dynamic object creation, provisions for multi-core systems, and binary compatible interface across ABI compliant compilers.</li>
+<li><a href="../../RTOS2/html/index.html"><b>CMSIS-RTOS v2</b></a>: extends CMSIS-RTOS v1 with support for Armv8-M architecture, dynamic object creation, provisions for multi-core systems, and binary compatible interface across ABI compliant compilers.</li>
 <li><a href="../../Pack/html/index.html"><b>CMSIS-Pack</b></a>: describes with an XML-based package description (PDSC) file the user and device relevant parts of a file collection (called a software pack) that includes source, header and library files, documentation, Flash programming algorithms, source code templates, and example projects. Development tools and web infrastructures use the PDSC file to extract device parameters, software components, and evaluation board configurations.</li>
 <li><a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a>: System View Description for Peripherals. Describes the peripherals of a device in an XML file and can be used to create peripheral awareness in debuggers or header files with peripheral register and interrupt definitions.</li>
 <li><a href="../../DAP/html/index.html"><b>CMSIS-DAP</b></a>: Debug Access Port. Standardized firmware for a Debug Unit that connects to the CoreSight Debug Access Port. CMSIS-DAP is distributed as a separate package and is well suited for integration on evaluation boards. This component is provided as separate download.</li>
@@ -90,7 +91,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Refer to <a class="el" href="index.html#CM_Pack_Content">ARM::CMSIS Pack</a> for more information on the content of the Software Pack.</dd></dl>
 <div class="image">
-<img src="CMSISv4_small.png" alt="CMSISv4_small.png"/>
+<img src="Overview.png" alt="Overview.png"/>
 <div class="caption">
 CMSIS Structure</div></div>
  <h1><a class="anchor" id="Motivation"></a>
@@ -110,7 +111,7 @@ Motivation</h1>
 Coding Rules</h1>
 <p>The CMSIS uses the following essential coding rules and conventions:</p>
 <ul>
-<li>Compliant with ANSI C and C++.</li>
+<li>Compliant with ANSI C (C99) and C++ (C++03).</li>
 <li>Uses ANSI C standard data types defined in <b>&lt;stdint.h&gt;</b>.</li>
 <li>Variables and parameters have a complete data type.</li>
 <li>Expressions for <em>#define</em> constants are enclosed in parenthesis.</li>
@@ -143,13 +144,13 @@ Coding Rules</h1>
  */
 </pre><h1><a class="anchor" id="Validation"></a>
 Validation</h1>
-<p>The various components of CMSIS Version 5 are validated using mainstream compilers. To get a diverse coverage, ARM uses the ARM Compiler v5 (based on EDG front-end), the ARM Compiler v6 (based on LLVM front-end), and the GCC Compiler in the various tests. For each component, the section <b>"Validation"</b> describes the scope of the various verifications.</p>
-<p>CMSIS components are compatible with a range of C and C++ language standards. The CMSIS components comply with the <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ihi0036b/index.html">Application Binary Interface (ABI) for the ARM Architecture</a> (exception CMSIS-RTOS v1). This ensures C API interfaces that support inter-operation between various toolchains.</p>
+<p>The various components of CMSIS Version 5 are validated using mainstream compilers. To get a diverse coverage, Arm uses the Arm Compiler v5 (based on EDG front-end), the Arm Compiler v6 (based on LLVM front-end), and the GCC Compiler in the various tests. For each component, the section <b>"Validation"</b> describes the scope of the various verifications.</p>
+<p>CMSIS components are compatible with a range of C and C++ language standards. The CMSIS components comply with the <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ihi0036b/index.html">Application Binary Interface (ABI) for the Arm Architecture</a> (exception CMSIS-RTOS v1). This ensures C API interfaces that support inter-operation between various toolchains.</p>
 <p>As CMSIS defines API interfaces and functions that scale to a wide range of processors and devices, the scope of the run-time test coverage is limited. However, several components are validated using dedicated test suites.</p>
-<p>The CMSIS source code is checked for MISRA C:2012 conformance using PC-Lint. MISRA deviations are documented with reasonable effort, however ARM does not claim MISRA compliance as there is today for example no guideline enforcement plan. The CMSIS source code is not checked for MISRA C++:2008 conformance as there is a risk that it is incompatible with C language standards, specifically warnings that may be generated by the various C compilers.</p>
+<p>The CMSIS source code is checked for MISRA C:2012 conformance using PC-Lint. MISRA deviations are documented with reasonable effort, however Arm does not claim MISRA compliance as there is today for example no guideline enforcement plan. The CMSIS source code is not checked for MISRA C++:2008 conformance as there is a risk that it is incompatible with C language standards, specifically warnings that may be generated by the various C compilers.</p>
 <h1><a class="anchor" id="License"></a>
 License</h1>
-<p>The CMSIS is provided free of charge by ARM under Apache 2.0 license. View the <a href="LICENSE.txt">Apache 2.0 License</a>.</p>
+<p>The CMSIS is provided free of charge by Arm under Apache 2.0 license. View the <a href="LICENSE.txt">Apache 2.0 License</a>.</p>
 <h1><a class="anchor" id="CM_Pack_Content"></a>
 ARM::CMSIS Pack</h1>
 <p>The <b>ARM::CMSIS</b> Pack contains the following:</p>
@@ -163,7 +164,7 @@ ARM::CMSIS Pack</h1>
 <tr>
 <td align="left"><b>CMSIS</b> </td><td align="left"><a class="el" href="index.html#CM_Components">CMSIS components</a> (see below) </td></tr>
 <tr>
-<td align="left"><b>Device</b> </td><td align="left">CMSIS reference implementations of ARM Cortex-M processor based devices </td></tr>
+<td align="left"><b>Device</b> </td><td align="left">CMSIS reference implementations of Arm Cortex-M processor based devices </td></tr>
 </table>
 <h2>CMSIS Directory </h2>
 <table class="doxtable">
@@ -181,6 +182,8 @@ ARM::CMSIS Pack</h1>
 <td align="left"><b>Driver</b> </td><td align="left">Header files for the <a href="../../Driver/html/index.html"><b>CMSIS-Driver</b></a> peripheral interface API </td></tr>
 <tr>
 <td align="left"><b>DSP_Lib</b> </td><td align="left"><a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> software library source code </td></tr>
+<tr>
+<td align="left"><b>NN</b> </td><td align="left"><a href="../../NN/html/index.html"><b>CMSIS-NN</b></a> software library source code </td></tr>
 <tr>
 <td align="left"><b>Include</b> </td><td align="left">Include files for <a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a> and <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> </td></tr>
 <tr>
@@ -203,7 +206,7 @@ ARM::CMSIS Pack</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:11 for CMSIS by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:03 for CMSIS by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

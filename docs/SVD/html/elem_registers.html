@@ -568,6 +568,7 @@ Debuggers are not expected to read this field location unless explicitly instruc
   0 &lt;-&gt; disabled -&gt; "The clock source clk0 is turned off."
   1 &lt;-&gt; enabled  -&gt; "The clock source clk1 is running."
   2 &lt;-&gt; reserved -&gt; "Reserved values. Do not use."
+  3 &lt;-&gt; reserved -&gt; "Reserved values. Do not use."
 </pre><p>This information generates an <em>enum</em> in the device header file. The debugger may use this information to display the identifier string as well as the description. Just like symbolic constants making source code more readable, the system view in the debugger becomes more instructive. The detailed description can provide reference manual level details within the debugger.</p>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line">&lt;enumeratedValues&gt;</div>
@@ -584,7 +585,7 @@ Debuggers are not expected to read this field location unless explicitly instruc
 <div class="line">    &lt;enumeratedValue&gt;</div>
 <div class="line">        &lt;name&gt;enabled&lt;/name&gt;</div>
 <div class="line">        &lt;description&gt;The clock source clk1 is running.&lt;/description&gt;</div>
-<div class="line">        &lt;isDefault&gt;<span class="keyword">true</span>&lt;/isDefault&gt;</div>
+<div class="line">        &lt;value&gt;1&lt;/value&gt;</div>
 <div class="line">    &lt;/enumeratedValue&gt;</div>
 <div class="line"></div>
 <div class="line">    &lt;enumeratedValue&gt;</div>
@@ -641,7 +642,15 @@ Debuggers are not expected to read this field location unless explicitly instruc
 <tr class="choice">
 <td colspan="3"><em>choice of</em> </td><td>1..1  </td></tr>
 <tr class="choice">
-<td align="right">value </td><td>Defines the constant for the bit-field. The field accepts <em>'do not care'</em> bits represented by <b><span class="XML-Token">x</span></b>. </td><td style="white-space:nowrap">scaledNonNegativeInteger </td><td>0..1  </td></tr>
+<td align="right">value </td><td>Defines the constant for the bit-field as decimal, hexadecimal (0x...) or binary (0b... or #...) number. E.g.: <pre>
+      &lt;value&gt;15&lt;/value&gt;
+      &lt;value&gt;0xf&lt;/value&gt;
+      &lt;value&gt;0b1111&lt;/value&gt;
+      &lt;value&gt;#1111&lt;/value&gt;
+</pre> In addition the binary format supports <em>'do not care'</em> bits represented by <b><span class="XML-Token">x</span></b>. E.g. specifying value 14 and 15 as: <pre>
+      &lt;value&gt;0b111x&lt;/value&gt;
+      &lt;value&gt;#111x&lt;/value&gt;
+    </pre>  </td><td style="white-space:nowrap">scaledNonNegativeInteger </td><td>0..1  </td></tr>
 <tr class="choice">
 <td align="right">isDefault </td><td>Defines the name and description for all other values that are not listed explicitly. </td><td>xs:boolean </td><td>0..1  </td></tr>
 </table>
@@ -651,7 +660,7 @@ Debuggers are not expected to read this field location unless explicitly instruc
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="svd_Format_pg.html">SVD Description (*.svd) Format</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:25 for CMSIS-SVD by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:32 for CMSIS-SVD by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -419,6 +419,8 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 <td>small </td><td>Specifies the path to a small image. The path is relative to the PACK base directory. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
 <td>large </td><td>Specifies the path to a large image. The path is relative to the PACK base directory. </td><td>xs:string </td><td>optional  </td></tr>
+<tr>
+<td>public </td><td>Set publishing permissions for the documentation. If <em>&lt;public&gt;</em> is <span class="XML-Token">true</span>, then the vendor gives permission to extract the documentation from the pack and publish it on a web-page. Links to web pages are assumed to be public. The default value is <span class="XML-Token">false</span>. </td><td>xs:boolean </td><td>optional  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -426,7 +428,7 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 /package/boards/board/debugInterface</h1>
 <p>This element describes the debug interface of a board. At least debug interface must be specified.</p>
 <p><b>Example</b> </p>
-<div class="fragment"><div class="line">&lt;debugInterface adapter=<span class="stringliteral">&quot;JTAG/SW&quot;</span> connector=<span class="stringliteral">&quot;20-pin ARM Standard JTAG Connector (0.1 inch connector)&quot;</span>/&gt;</div>
+<div class="fragment"><div class="line">&lt;debugInterface adapter=<span class="stringliteral">&quot;JTAG/SW&quot;</span> connector=<span class="stringliteral">&quot;20-pin Arm Standard JTAG Connector (0.1 inch connector)&quot;</span>/&gt;</div>
 <div class="line">&lt;debugInterface adapter=<span class="stringliteral">&quot;JTAG/SW&quot;</span> connector=<span class="stringliteral">&quot;10-pin Cortex Debug Connector (0.05 inch connector)&quot;</span>/&gt;</div>
 <div class="line">&lt;debugInterface adapter=<span class="stringliteral">&quot;JTAG/SW&quot;</span> connector=<span class="stringliteral">&quot;20-pin Cortex Debug + ETM Connector (0.05 inch connector)&quot;</span>/&gt;</div>
 <div class="line">&lt;debugInterface adapter=<span class="stringliteral">&quot;ST-Link&quot;</span> connector=<span class="stringliteral">&quot;Mini-USB&quot;</span>/&gt;</div>
@@ -441,7 +443,7 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 <tr>
 <td>adapter </td><td>String describing the debug adapter. Common adapters are: <span class="XML-Token">JTAG/SW</span> (for all adapters supporting JTAG and Serial-Wire Debug), <span class="XML-Token">CMSIS-DAP</span>, <span class="XML-Token">OpenSDA</span>, <span class="XML-Token">J-Link</span>, <span class="XML-Token">ST-Link</span>, <span class="XML-Token">Nu-Link</span>. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
-<td>connector </td><td>String describing the debug connector. Usually one of these: <span class="XML-Token">10-pin Cortex Debug Connector</span>, <span class="XML-Token">20-pin ARM Standard JTAG Connector</span>, <span class="XML-Token">20-pin Cortex Debug + ETM Connector</span>, <span class="XML-Token">Mini-USB</span>, <span class="XML-Token">Micro-USB</span>. </td><td>xs:string </td><td>optional  </td></tr>
+<td>connector </td><td>String describing the debug connector. Usually one of these: <span class="XML-Token">10-pin Cortex Debug Connector</span>, <span class="XML-Token">20-pin Arm Standard JTAG Connector</span>, <span class="XML-Token">20-pin Cortex Debug + ETM Connector</span>, <span class="XML-Token">Mini-USB</span>, <span class="XML-Token">Micro-USB</span>. </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -464,6 +466,8 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 <td>name </td><td>Is the name of the document (including the path within the Pack). </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
 <td>title </td><td>Is the title of the document to be displayed in the <b>Books</b> window of uVision. </td><td>xs:string </td><td>optional  </td></tr>
+<tr>
+<td>public </td><td>Set publishing permissions for the documentation. If <em>&lt;public&gt;</em> is <span class="XML-Token">true</span>, then the vendor gives permission to extract the documentation from the pack and publish it on a web-page. Links to web pages are assumed to be public. The default value is <span class="XML-Token">false</span>. </td><td>xs:boolean </td><td>optional  </td></tr>
 </table>
 <p>&#160;</p>
 <p><a class="anchor" id="BoardBookCategoryEnum"></a><b>Table: Board Book Categories</b></p>
@@ -491,7 +495,7 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:21 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:27 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

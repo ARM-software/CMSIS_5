@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -861,6 +861,8 @@ Macros</h2></td></tr>
 <tr class="separator:gaba92665a24bc2ba8c49b9a0881c9df8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga220aab449cf3716723979d06666c2ebf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MMU__defs__gr.html#ga220aab449cf3716723979d06666c2ebf">section_normal</a>(descriptor_l1, region)</td></tr>
 <tr class="separator:ga220aab449cf3716723979d06666c2ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a470b88645153aad94b09485f3108c641"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core__ca_8h.html#a470b88645153aad94b09485f3108c641">section_normal_nc</a>(descriptor_l1, region)</td></tr>
+<tr class="separator:a470b88645153aad94b09485f3108c641"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad598239f9bb9b6ae2bec8278305640b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MMU__defs__gr.html#gad598239f9bb9b6ae2bec8278305640b4">section_normal_cod</a>(descriptor_l1, region)</td></tr>
 <tr class="separator:gad598239f9bb9b6ae2bec8278305640b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf95fa76d8f0f7ccfd2ebc00860af4f1d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MMU__defs__gr.html#gaf95fa76d8f0f7ccfd2ebc00860af4f1d">section_normal_ro</a>(descriptor_l1, region)</td></tr>
@@ -960,43 +962,53 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaff8a4966eff1ada5cba80f2b689446db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gaff8a4966eff1ada5cba80f2b689446db">L1C_EnableCaches</a> (void)</td></tr>
+<tr class="memitem:gaff8a4966eff1ada5cba80f2b689446db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gaff8a4966eff1ada5cba80f2b689446db">L1C_EnableCaches</a> (void)</td></tr>
 <tr class="memdesc:gaff8a4966eff1ada5cba80f2b689446db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable Caches by setting I and C bits in SCTLR register.  <a href="group__L1__cache__functions.html#gaff8a4966eff1ada5cba80f2b689446db">More...</a><br/></td></tr>
 <tr class="separator:gaff8a4966eff1ada5cba80f2b689446db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga320ef6fd1dd65f2f82e64c096a4994a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga320ef6fd1dd65f2f82e64c096a4994a6">L1C_DisableCaches</a> (void)</td></tr>
+<tr class="memitem:ga320ef6fd1dd65f2f82e64c096a4994a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga320ef6fd1dd65f2f82e64c096a4994a6">L1C_DisableCaches</a> (void)</td></tr>
 <tr class="memdesc:ga320ef6fd1dd65f2f82e64c096a4994a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable Caches by clearing I and C bits in SCTLR register.  <a href="group__L1__cache__functions.html#ga320ef6fd1dd65f2f82e64c096a4994a6">More...</a><br/></td></tr>
 <tr class="separator:ga320ef6fd1dd65f2f82e64c096a4994a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa5fb36b4496e64472849f7811970c581"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gaa5fb36b4496e64472849f7811970c581">L1C_EnableBTAC</a> (void)</td></tr>
+<tr class="memitem:gaa5fb36b4496e64472849f7811970c581"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gaa5fb36b4496e64472849f7811970c581">L1C_EnableBTAC</a> (void)</td></tr>
 <tr class="memdesc:gaa5fb36b4496e64472849f7811970c581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable Branch Prediction by setting Z bit in SCTLR register.  <a href="group__L1__cache__functions.html#gaa5fb36b4496e64472849f7811970c581">More...</a><br/></td></tr>
 <tr class="separator:gaa5fb36b4496e64472849f7811970c581"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab8695cf1f4a7f3789b93c41dc4eeb51d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gab8695cf1f4a7f3789b93c41dc4eeb51d">L1C_DisableBTAC</a> (void)</td></tr>
+<tr class="memitem:gab8695cf1f4a7f3789b93c41dc4eeb51d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gab8695cf1f4a7f3789b93c41dc4eeb51d">L1C_DisableBTAC</a> (void)</td></tr>
 <tr class="memdesc:gab8695cf1f4a7f3789b93c41dc4eeb51d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable Branch Prediction by clearing Z bit in SCTLR register.  <a href="group__L1__cache__functions.html#gab8695cf1f4a7f3789b93c41dc4eeb51d">More...</a><br/></td></tr>
 <tr class="separator:gab8695cf1f4a7f3789b93c41dc4eeb51d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad0d732293be6a928db184b59aadc1979"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gad0d732293be6a928db184b59aadc1979">L1C_InvalidateBTAC</a> (void)</td></tr>
+<tr class="memitem:gad0d732293be6a928db184b59aadc1979"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gad0d732293be6a928db184b59aadc1979">L1C_InvalidateBTAC</a> (void)</td></tr>
 <tr class="memdesc:gad0d732293be6a928db184b59aadc1979"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate entire branch predictor array.  <a href="group__L1__cache__functions.html#gad0d732293be6a928db184b59aadc1979">More...</a><br/></td></tr>
 <tr class="separator:gad0d732293be6a928db184b59aadc1979"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac932810cfe83f087590859010972645e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gac932810cfe83f087590859010972645e">L1C_InvalidateICacheAll</a> (void)</td></tr>
+<tr class="memitem:gac932810cfe83f087590859010972645e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gac932810cfe83f087590859010972645e">L1C_InvalidateICacheAll</a> (void)</td></tr>
 <tr class="memdesc:gac932810cfe83f087590859010972645e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate the whole instruction cache.  <a href="group__L1__cache__functions.html#gac932810cfe83f087590859010972645e">More...</a><br/></td></tr>
 <tr class="separator:gac932810cfe83f087590859010972645e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9eb6f0a7c9c04cc49efd964eb59ba26f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga9eb6f0a7c9c04cc49efd964eb59ba26f">L1C_CleanDCacheMVA</a> (void *va)</td></tr>
+<tr class="memitem:ga9eb6f0a7c9c04cc49efd964eb59ba26f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga9eb6f0a7c9c04cc49efd964eb59ba26f">L1C_CleanDCacheMVA</a> (void *va)</td></tr>
 <tr class="memdesc:ga9eb6f0a7c9c04cc49efd964eb59ba26f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean data cache line by address.  <a href="group__L1__cache__functions.html#ga9eb6f0a7c9c04cc49efd964eb59ba26f">More...</a><br/></td></tr>
 <tr class="separator:ga9eb6f0a7c9c04cc49efd964eb59ba26f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9209853937940991daf70edd6bc633fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga9209853937940991daf70edd6bc633fe">L1C_InvalidateDCacheMVA</a> (void *va)</td></tr>
+<tr class="memitem:ga9209853937940991daf70edd6bc633fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga9209853937940991daf70edd6bc633fe">L1C_InvalidateDCacheMVA</a> (void *va)</td></tr>
 <tr class="memdesc:ga9209853937940991daf70edd6bc633fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate data cache line by address.  <a href="group__L1__cache__functions.html#ga9209853937940991daf70edd6bc633fe">More...</a><br/></td></tr>
 <tr class="separator:ga9209853937940991daf70edd6bc633fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7646a5e01b529566968f393e485f46a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga7646a5e01b529566968f393e485f46a2">L1C_CleanInvalidateDCacheMVA</a> (void *va)</td></tr>
+<tr class="memitem:ga7646a5e01b529566968f393e485f46a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga7646a5e01b529566968f393e485f46a2">L1C_CleanInvalidateDCacheMVA</a> (void *va)</td></tr>
 <tr class="memdesc:ga7646a5e01b529566968f393e485f46a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean and Invalidate data cache by address.  <a href="group__L1__cache__functions.html#ga7646a5e01b529566968f393e485f46a2">More...</a><br/></td></tr>
 <tr class="separator:ga7646a5e01b529566968f393e485f46a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga30d7632156a30a3b75064f6d15b8f850"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga30d7632156a30a3b75064f6d15b8f850">L1C_CleanInvalidateCache</a> (uint32_t op)</td></tr>
-<tr class="memdesc:ga30d7632156a30a3b75064f6d15b8f850"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean and Invalidate the entire data or unified cache.  <a href="group__L1__cache__functions.html#ga30d7632156a30a3b75064f6d15b8f850">More...</a><br/></td></tr>
+<tr class="memitem:a35988a42567ca868bffd0b6171021ecb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core__ca_8h.html#a35988a42567ca868bffd0b6171021ecb">__log2_up</a> (uint32_t n)</td></tr>
+<tr class="memdesc:a35988a42567ca868bffd0b6171021ecb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate log2 rounded up.  <a href="#a35988a42567ca868bffd0b6171021ecb">More...</a><br/></td></tr>
+<tr class="separator:a35988a42567ca868bffd0b6171021ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ace5c651cf18aaa7659e1fbe6e77988"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core__ca_8h.html#a5ace5c651cf18aaa7659e1fbe6e77988">__L1C_MaintainDCacheSetWay</a> (uint32_t level, uint32_t maint)</td></tr>
+<tr class="memdesc:a5ace5c651cf18aaa7659e1fbe6e77988"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply cache maintenance to given cache level.  <a href="#a5ace5c651cf18aaa7659e1fbe6e77988">More...</a><br/></td></tr>
+<tr class="separator:a5ace5c651cf18aaa7659e1fbe6e77988"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30d7632156a30a3b75064f6d15b8f850"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga30d7632156a30a3b75064f6d15b8f850">L1C_CleanInvalidateCache</a> (uint32_t op)</td></tr>
+<tr class="memdesc:ga30d7632156a30a3b75064f6d15b8f850"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean and Invalidate the entire data or unified cache Generic mechanism for cleaning/invalidating the entire data or unified cache to the point of coherency.  <a href="group__L1__cache__functions.html#ga30d7632156a30a3b75064f6d15b8f850">More...</a><br/></td></tr>
 <tr class="separator:ga30d7632156a30a3b75064f6d15b8f850"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae895f75c4f3539058232f555d79e5df3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gae895f75c4f3539058232f555d79e5df3">L1C_InvalidateDCacheAll</a> (void)</td></tr>
+<tr class="memitem:ga722ceb077e491bb4befcfbb3aee9b20b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#acdc36c1b3d3e16c17a73889b7d06d0d2">CMSIS_DEPRECATED</a> <br class="typebreak"/>
+<a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga722ceb077e491bb4befcfbb3aee9b20b">__L1C_CleanInvalidateCache</a> (uint32_t op)</td></tr>
+<tr class="memdesc:ga722ceb077e491bb4befcfbb3aee9b20b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean and Invalidate the entire data or unified cache Generic mechanism for cleaning/invalidating the entire data or unified cache to the point of coherency.  <a href="group__L1__cache__functions.html#ga722ceb077e491bb4befcfbb3aee9b20b">More...</a><br/></td></tr>
+<tr class="separator:ga722ceb077e491bb4befcfbb3aee9b20b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae895f75c4f3539058232f555d79e5df3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gae895f75c4f3539058232f555d79e5df3">L1C_InvalidateDCacheAll</a> (void)</td></tr>
 <tr class="memdesc:gae895f75c4f3539058232f555d79e5df3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate the whole data cache.  <a href="group__L1__cache__functions.html#gae895f75c4f3539058232f555d79e5df3">More...</a><br/></td></tr>
 <tr class="separator:gae895f75c4f3539058232f555d79e5df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga70359d824bf26f376e3d7cb9c787da27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga70359d824bf26f376e3d7cb9c787da27">L1C_CleanDCacheAll</a> (void)</td></tr>
+<tr class="memitem:ga70359d824bf26f376e3d7cb9c787da27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga70359d824bf26f376e3d7cb9c787da27">L1C_CleanDCacheAll</a> (void)</td></tr>
 <tr class="memdesc:ga70359d824bf26f376e3d7cb9c787da27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean the whole data cache.  <a href="group__L1__cache__functions.html#ga70359d824bf26f376e3d7cb9c787da27">More...</a><br/></td></tr>
 <tr class="separator:ga70359d824bf26f376e3d7cb9c787da27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga92b5babf7317abe3815f61a2731735c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga92b5babf7317abe3815f61a2731735c3">L1C_CleanInvalidateDCacheAll</a> (void)</td></tr>
+<tr class="memitem:ga92b5babf7317abe3815f61a2731735c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga92b5babf7317abe3815f61a2731735c3">L1C_CleanInvalidateDCacheAll</a> (void)</td></tr>
 <tr class="memdesc:ga92b5babf7317abe3815f61a2731735c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean and invalidate the whole data cache.  <a href="group__L1__cache__functions.html#ga92b5babf7317abe3815f61a2731735c3">More...</a><br/></td></tr>
 <tr class="separator:ga92b5babf7317abe3815f61a2731735c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga164c59c55e2d18bf8a94dc91c0f4ce68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L2__cache__functions.html#ga164c59c55e2d18bf8a94dc91c0f4ce68">L2C_Sync</a> (void)</td></tr>
@@ -1728,6 +1740,32 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a470b88645153aad94b09485f3108c641"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define section_normal_nc</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">descriptor_l1, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">region&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a057533871fa1af6db7a27b39d976ac95"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1789,6 +1827,72 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a5ace5c651cf18aaa7659e1fbe6e77988"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void __L1C_MaintainDCacheSetWay </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>level</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>maint</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">level</td><td>cache level to be maintained </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">maint</td><td>0 - invalidate, 1 - clean, otherwise - invalidate and clean </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a35988a42567ca868bffd0b6171021ecb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> uint8_t __log2_up </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>n</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<ul>
+<li>log(0) =&gt; 0</li>
+<li>log(1) =&gt; 0</li>
+<li>log(2) =&gt; 1</li>
+<li>log(3) =&gt; 2</li>
+<li>log(4) =&gt; 2</li>
+<li>log(5) =&gt; 3 : :</li>
+<li>log(16) =&gt; 4</li>
+<li>log(32) =&gt; 5 : : <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>input value parameter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>log2(n) </dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
 <a class="anchor" id="a43cfac7327b49e2a89d63abc99b6b06a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1987,7 +2091,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_f806067e3cfd0faadc71b6fb603a0f72.html">Core_A</a></li><li class="navelem"><a class="el" href="dir_3f4b401a2ed0c5733c677abc947b6aa9.html">Include</a></li><li class="navelem"><a class="el" href="core__ca_8h.html">core_ca.h</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:59 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:47 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -152,6 +152,26 @@ RTX_Config.h: System Configuration</div></div>
 <td>Round-Robin Timeout </td><td><code>OS_ROBIN_TIMEOUT</code> </td><td>Defines how long a thread will execute before a thread switch. Default value is <span class="XML-Token">5</span>. Value range is <span class="XML-Token">[1-1000]</span>. </td></tr>
 <tr>
 <td>ISR FIFO Queue </td><td><code>OS_ISR_FIFO_QUEUE</code> </td><td>RTOS Functions called from ISR store requests to this buffer. Default value is <span class="XML-Token">16 entries</span>. Value range is <span class="XML-Token">[4-256]</span> entries in multiples of <span class="XML-Token">4</span>. </td></tr>
+<tr>
+<td>Memory Management </td><td><code>OS_EVR_MEMORY</code> </td><td>Enables Memory Management events recording. </td></tr>
+<tr>
+<td>Kernel </td><td><code>OS_EVR_KERNEL</code> </td><td>Enables Kernel events recording. </td></tr>
+<tr>
+<td>Thread </td><td><code>OS_EVR_THREAD</code> </td><td>Enables Thread events recording. </td></tr>
+<tr>
+<td>Timer </td><td><code>OS_EVR_TIMER</code> </td><td>Enables Timer events recording. </td></tr>
+<tr>
+<td>Event Flags </td><td><code>OS_EVR_EVFLAGS</code> </td><td>Enables Event Flags events recording. </td></tr>
+<tr>
+<td>Mutex </td><td><code>OS_EVR_MUTEX</code> </td><td>Enables Mutex events recording. </td></tr>
+<tr>
+<td>Semaphore </td><td><code>OS_EVR_SEMAPHORE</code> </td><td>Enables Semaphore events recording. </td></tr>
+<tr>
+<td>Memory Pool </td><td><code>OS_EVR_MEMPOOL</code> </td><td>Enables Memory Pool events recording. </td></tr>
+<tr>
+<td>Message Queue </td><td><code>OS_EVR_MSGQUEUE</code> </td><td>Enables Message Queue events recording. </td></tr>
+<tr>
+<td>Object Memory usage counters </td><td><code>OS_OBJ_MEM_USAGE</code> </td><td>Enables object memory usage counters to evaluate the maximum memory pool requirements individually for each RTOS object type. </td></tr>
 </table>
 <h2><a class="anchor" id="systemConfig_glob_mem"></a>
 Global dynamic memory</h2>
@@ -172,6 +192,35 @@ Round-Robin Thread Switching</h2>
 ISR FIFO Queue</h2>
 <p>The RTX functions (<a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Calls from Interrupt Service Routines</a>), when called from and interrupt handler, store the request type and optional parameter to the ISR FIFO queue buffer to be processed later, after the interrupt handler exits.</p>
 <p>The scheduler is activated immediately after the IRQ handler has finished its execution to process the requests stored to the FIFO queue buffer. The required size of this buffer depends on the number of functions that are called within the interrupt handler. An insufficient queue size will be caught by <b>osRtxErrorNotify</b> with error code <b>osRtxErrorISRQueueOverflow</b>.</p>
+<h2><a class="anchor" id="systemConfig_event_recording"></a>
+Event Recording</h2>
+<p>RTX5 fully supports <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank">Event Recorder</a> annotations. In this section, you can enable or disable the recording of events for the different elements of RTX5. This leads to reduced data traffic on the debug connection.</p>
+<p>This setting should be used to disable the generation of messages for a complete family of events. To disable events only for a certain API call, use the #defines that are available from the rtx_evrt.h header file by adding them manually to the RTX_Config.h file:</p>
+<p><b>Memory</b> <b>events</b> <br/>
+<code>EVR_RTX_MEMORY_INIT_DISABLE</code>, <code>EVR_RTX_MEMORY_ALLOC_DISABLE</code>, <code>EVR_RTX_MEMORY_FREE_DISABLE</code>, <code>EVR_RTX_MEMORY_BLOCK_INIT_DISABLE</code>, <code>EVR_RTX_MEMORY_BLOCK_ALLOC_DISABLE</code>, <code>EVR_RTX_MEMORY_BLOCK_FREE_DISABLE</code> </p>
+<p><b>Kernel</b> <b>events</b> <br/>
+<code>EVR_RTX_KERNEL_ERROR_DISABLE</code>, <code>EVR_RTX_KERNEL_INITIALIZE_DISABLE</code>, <code>EVR_RTX_KERNEL_INITIALIZE_COMPLETED_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_INFO_DISABLE</code>, <code>EVR_RTX_KERNEL_INFO_RETRIEVED_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_STATE_DISABLE</code>, <code>EVR_RTX_KERNEL_START_DISABLE</code>, <code>EVR_RTX_KERNEL_STARTED_DISABLE</code>, <code>EVR_RTX_KERNEL_LOCK_DISABLE</code>, <code>EVR_RTX_KERNEL_LOCKED_DISABLE</code>, <code>EVR_RTX_KERNEL_UNLOCK_DISABLE</code>, <code>EVR_RTX_KERNEL_UNLOCKED_DISABLE</code>, <code>EVR_RTX_KERNEL_RESTORE_LOCK_DISABLE</code>, <code>EVR_RTX_KERNEL_LOCK_RESTORED_DISABLE</code>, <code>EVR_RTX_KERNEL_SUSPEND_DISABLE</code>, <code>EVR_RTX_KERNEL_SUSPENDED_DISABLE</code>, <code>EVR_RTX_KERNEL_RESUME_DISABLE</code>, <code>EVR_RTX_KERNEL_RESUMED_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_TICK_COUNT_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_TICK_FREQ_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE</code> </p>
+<p><b>Thread</b> <b>events</b> <br/>
+<code>EVR_RTX_THREAD_ERROR_DISABLE</code>, <code>EVR_RTX_THREAD_NEW_DISABLE</code>, <code>EVR_RTX_THREAD_CREATED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_NAME_DISABLE</code>, <code>EVR_RTX_THREAD_GET_ID_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STATE_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STACK_SIZE_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STACK_SPACE_DISABLE</code>, <code>EVR_RTX_THREAD_SET_PRIORITY_DISABLE</code>, <code>EVR_RTX_THREAD_GET_PRIORITY_DISABLE</code>, <code>EVR_RTX_THREAD_YIELD_DISABLE</code>, <code>EVR_RTX_THREAD_SUSPEND_DISABLE</code>, <code>EVR_RTX_THREAD_SUSPENDED_DISABLE</code>, <code>EVR_RTX_THREAD_RESUME_DISABLE</code>, <code>EVR_RTX_THREAD_RESUMED_DISABLE</code>, <code>EVR_RTX_THREAD_DETACH_DISABLE</code>, <code>EVR_RTX_THREAD_DETACHED_DISABLE</code>, <code>EVR_RTX_THREAD_JOIN_DISABLE</code>, <code>EVR_RTX_THREAD_JOIN_PENDING_DISABLE</code>, <code>EVR_RTX_THREAD_JOINED_DISABLE</code>, <code>EVR_RTX_THREAD_BLOCKED_DISABLE</code>, <code>EVR_RTX_THREAD_UNBLOCKED_DISABLE</code>, <code>EVR_RTX_THREAD_PREEMPTED_DISABLE</code>, <code>EVR_RTX_THREAD_SWITCHED_DISABLE</code>, <code>EVR_RTX_THREAD_EXIT_DISABLE</code>, <code>EVR_RTX_THREAD_TERMINATE_DISABLE</code>, <code>EVR_RTX_THREAD_DESTROYED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_COUNT_DISABLE</code>, <code>EVR_RTX_THREAD_ENUMERATE_DISABLE</code> </p>
+<p><b>Thread</b> <b>flag</b> <b>events</b> <br/>
+<code>EVR_RTX_THREAD_FLAGS_SET_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_SET_DONE_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_CLEAR_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_CLEAR_DONE_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_GET_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_PENDING_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_TIMEOUT_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_COMPLETED_DISABLE</code>, <code>EVR_RTX_THREAD_FLAGS_WAIT_NOT_COMPLETED_DISABLE</code> </p>
+<p><b>Generic</b> <b>wait</b> <b>events</b> <br/>
+<code>EVR_RTX_THREAD_DELAY_DISABLE</code>, <code>EVR_RTX_THREAD_DELAY_UNTIL_DISABLE</code>, <code>EVR_RTX_THREAD_DELAY_COMPLETED_DISABLE</code> </p>
+<p><b>Timer</b> <b>events</b> <br/>
+<code>EVR_RTX_TIMER_ERROR_DISABLE</code>, <code>EVR_RTX_TIMER_CALLBACK_DISABLE</code>, <code>EVR_RTX_TIMER_NEW_DISABLE</code>, <code>EVR_RTX_TIMER_CREATED_DISABLE</code>, <code>EVR_RTX_TIMER_GET_NAME_DISABLE</code>, <code>EVR_RTX_TIMER_START_DISABLE</code>, <code>EVR_RTX_TIMER_STARTED_DISABLE</code>, <code>EVR_RTX_TIMER_STOP_DISABLE</code>, <code>EVR_RTX_TIMER_STOPPED_DISABLE</code>, <code>EVR_RTX_TIMER_IS_RUNNING_DISABLE</code>, <code>EVR_RTX_TIMER_DELETE_DISABLE</code>, <code>EVR_RTX_TIMER_DESTROYED_DISABLE</code> </p>
+<p><b>Event</b> <b>flag</b> <b>events</b> <br/>
+<code>EVR_RTX_EVENT_FLAGS_ERROR_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_NEW_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_CREATED_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_GET_NAME_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_SET_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_SET_DONE_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_CLEAR_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_CLEAR_DONE_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_GET_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_WAIT_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_WAIT_PENDING_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_WAIT_TIMEOUT_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_WAIT_COMPLETED_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_WAIT_NOT_COMPLETED_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_DELETE_DISABLE</code>, <code>EVR_RTX_EVENT_FLAGS_DESTROYED_DISABLE</code> </p>
+<p><b>Mutex</b> <b>events</b> <br/>
+<code>EVR_RTX_MUTEX_ERROR_DISABLE</code>, <code>EVR_RTX_MUTEX_NEW_DISABLE</code>, <code>EVR_RTX_MUTEX_CREATED_DISABLE</code>, <code>EVR_RTX_MUTEX_GET_NAME_DISABLE</code>, <code>EVR_RTX_MUTEX_ACQUIRE_DISABLE</code>, <code>EVR_RTX_MUTEX_ACQUIRE_PENDING_DISABLE</code>, <code>EVR_RTX_MUTEX_ACQUIRE_TIMEOUT_DISABLE</code>, <code>EVR_RTX_MUTEX_ACQUIRED_DISABLE</code>, <code>EVR_RTX_MUTEX_NOT_ACQUIRED_DISABLE</code>, <code>EVR_RTX_MUTEX_RELEASE_DISABLE</code>, <code>EVR_RTX_MUTEX_RELEASED_DISABLE</code>, <code>EVR_RTX_MUTEX_GET_OWNER_DISABLE</code>, <code>EVR_RTX_MUTEX_DELETE_DISABLE</code>, <code>EVR_RTX_MUTEX_DESTROYED_DISABLE</code> </p>
+<p><b>Semaphore</b> <b>events</b> <br/>
+<code>EVR_RTX_SEMAPHORE_ERROR_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_NEW_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_CREATED_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_GET_NAME_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_ACQUIRE_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_ACQUIRE_PENDING_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_ACQUIRE_TIMEOUT_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_ACQUIRED_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_NOT_ACQUIRED_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_RELEASE_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_RELEASED_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_GET_COUNT_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_DELETE_DISABLE</code>, <code>EVR_RTX_SEMAPHORE_DESTROYED_DISABLE</code> </p>
+<p><b>Memory</b> <b>pool</b> <b>events</b> <br/>
+<code>EVR_RTX_MEMORY_POOL_ERROR_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_NEW_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_CREATED_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_GET_NAME_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_ALLOC_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_ALLOC_PENDING_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_ALLOC_TIMEOUT_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_ALLOCATED_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_ALLOC_FAILED_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_FREE_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_DEALLOCATED_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_FREE_FAILED_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_GET_CAPACITY_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_GET_BLOCK_SZIE_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_GET_COUNT_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_GET_SPACE_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_DELETE_DISABLE</code>, <code>EVR_RTX_MEMORY_POOL_DESTROYED_DISABLE</code> </p>
+<p><b>Message</b> <b>queue</b> <b>events</b> <br/>
+<code>EVR_RTX_MESSAGE_QUEUE_ERROR_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_NEW_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_CREATED_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_GET_NAME_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_PUT_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_PUT_PENDING_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_PUT_TIMEOUT_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_INSERT_PENDING_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_INSERTED_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_NOT_INSERTED_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_GET_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_GET_PENDING_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_GET_TIMEOUT_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_RETRIEVED_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_NOT_RETRIEVED_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_GET_CAPACITY_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_GET_MSG_SIZE_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_GET_COUNT_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_GET_SPACE_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_RESET_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_RESET_DONE_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_DELETE_DISABLE</code>, <code>EVR_RTX_MESSAGE_QUEUE_DESTROYED_DISABLE</code> </p>
+<h2><a class="anchor" id="systemConfig_usage_counters"></a>
+Object Memory Usage Counters</h2>
+<p>Object memory usage counters help to evaluate the maximum memory pool requirements for each object type, just like stack watermarking does for threads. The initial setup starts with a global memory pool for all object types. Consecutive runs of the application with object memory usage counters enabled, help to introduce object specific memory pools for each object type. Normally, this is required for applications that require a functional safety certification as global memory pools are not allowed in this case.</p>
 <h1><a class="anchor" id="threadConfig"></a>
 Thread Configuration</h1>
 <p>The RTX5 provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html">Thread Management</a> functions.</p>
@@ -379,7 +428,7 @@ Object-specific memory allocation</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.0</span>
+   &#160;<span id="projectnumber">Version 5.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -221,13 +221,13 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>This section explains how to use interrupts and exceptions and access functions for the Nested Vector Interrupt Controller (NVIC).</p>
-<p>ARM provides a template file <b>startup_<em>device</em></b> for each supported compiler. The file must be adapted by the silicon vendor to include interrupt vectors for all device-specific interrupt handlers. Each interrupt handler is defined as a <b><em>weak</em></b> function to an dummy handler. These interrupt handlers can be used directly in application software without being adapted by the programmer.</p>
+<p>Arm provides a template file <b>startup_<em>device</em></b> for each supported compiler. The file must be adapted by the silicon vendor to include interrupt vectors for all device-specific interrupt handlers. Each interrupt handler is defined as a <b><em>weak</em></b> function to an dummy handler. These interrupt handlers can be used directly in application software without being adapted by the programmer.</p>
 <p>The table below lists the core exception vectors of the various Cortex-M processors.</p>
 <table  class="cmtable" summary="Core Exception Name">
 <tr>
 <th>Exception Vector </th><th>IRQn<br/>
-Value </th><th>M0 </th><th>M0+ </th><th>M3 </th><th>M4 </th><th>M7 </th><th>SC000 </th><th>SC300 </th><th>ARMv8-M<br/>
-Baseline </th><th>ARMv8-M<br/>
+Value </th><th>M0 </th><th>M0+ </th><th>M3 </th><th>M4 </th><th>M7 </th><th>SC000 </th><th>SC300 </th><th>Armv8-M<br/>
+Baseline </th><th>Armv8-M<br/>
 Mainline </th><th>Description  </th></tr>
 <tr>
 <td><b>NonMaskableInt_IRQn</b> </td><td>-14 </td><td><div class="image">
@@ -453,14 +453,14 @@ Mainline </th><th>Description  </th></tr>
 </table>
 <h1>Vector Table </h1>
 <p>The Vector Table defines the entry addresses of the processor exceptions and the device specific interrupts. It is typically located at the beginning of the program memory, however <a class="el" href="using_VTOR_pg.html">Using Interrupt Vector Remap</a> it can be relocated to RAM. The symbol <b>__Vectors</b> is the address of the vector table in the startup code and the register <b>SCB-&gt;VTOR</b> holds the start address of the vector table.</p>
-<p>An ARMv8-M implementation with TrustZone provides two vector tables:</p>
+<p>An Armv8-M implementation with TrustZone provides two vector tables:</p>
 <ul>
 <li>vector table for Secure handlers</li>
 <li>vector table for Non-Secure handlers</li>
 </ul>
 <p>Refer to <a class="el" href="using_TrustZone_pg.html#Model_TrustZone">Programmers Model with TrustZone</a> for more information.</p>
 <h2>Processor Exceptions </h2>
-<p>At the beginning of the vector table, the initial stack value and the exception vectors of the processor are defined. The vector table below shows the exception vectors of a ARMv8-M Mainline processor. Other processor variants may have fewer vectors.</p>
+<p>At the beginning of the vector table, the initial stack value and the exception vectors of the processor are defined. The vector table below shows the exception vectors of a Armv8-M Mainline processor. Other processor variants may have fewer vectors.</p>
 <div class="fragment"><div class="line">__Vectors       DCD     __initial_sp              ; Top of Stack initialization</div>
 <div class="line">                DCD     Reset_Handler             ; Reset Handler</div>
 <div class="line">                DCD     NMI_Handler               ; NMI Handler</div>
@@ -655,7 +655,7 @@ Mainline </th><th>Description  </th></tr>
 <p>Exception 6: Usage Fault Interrupt [not on Cortex-M0 variants]. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga7e1129cd8a196f4284d41db3e82ad5c8a9cda5594d898247bfa9d16ad966724da"></a>SecureFault_IRQn</em>&#160;</td><td class="fielddoc">
-<p>Exception 7: Secure Fault Interrupt [only on ARMv8-M]. </p>
+<p>Exception 7: Secure Fault Interrupt [only on Armv8-M]. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga7e1129cd8a196f4284d41db3e82ad5c8a4ce820b3cc6cf3a796b41aadc0cf1237"></a>SVCall_IRQn</em>&#160;</td><td class="fielddoc">
 <p>Exception 11: SV Call Interrupt. </p>
@@ -740,7 +740,7 @@ Mainline </th><th>Description  </th></tr>
 </ul>
 </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd><ul>
-<li>Only available for ARMv8-M in secure state.</li>
+<li>Only available for Armv8-M in secure state.</li>
 </ul>
 </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><ul>
@@ -1135,7 +1135,7 @@ Mainline </th><th>Description  </th></tr>
 </ul>
 </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd><ul>
-<li>Only available for ARMv8-M in secure state.</li>
+<li>Only available for Armv8-M in secure state.</li>
 </ul>
 </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><ul>
@@ -1327,7 +1327,7 @@ Mainline </th><th>Description  </th></tr>
 </ul>
 </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd><ul>
-<li>Only available for ARMv8-M in secure state.</li>
+<li>Only available for Armv8-M in secure state.</li>
 </ul>
 </dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><ul>
@@ -1413,7 +1413,7 @@ Mainline </th><th>Description  </th></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:58 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:45 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

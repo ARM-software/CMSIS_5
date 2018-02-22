@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['reset_5ftarget',['RESET_TARGET',['../group__DAP__Config__Initialization__gr.html#gac9d308f719319dd892cc8be7459c83f0',1,'DAP_config.h']]]
+  ['reset_5ftarget',['RESET_TARGET',['../group__DAP__Config__Initialization__gr.html#gaa0feceaeee69d69927d8a9beb0272dd7',1,'DAP_config.h']]]
 ];

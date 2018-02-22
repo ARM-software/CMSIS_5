@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
+   &#160;<span id="projectnumber">Version 2.0.0</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -108,7 +108,8 @@ $(document).ready(function(){initNavTree('group__DAP__Config__Debug__gr.html',''
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">CMSIS-DAP Debug Unit Information<div class="ingroups"><a class="el" href="group__DAP__ConfigIO__gr.html">Configure I/O Ports and Debug Unit</a></div></div>  </div>
 </div><!--header-->
@@ -140,11 +141,11 @@ Macros</h2></td></tr>
 <tr class="memitem:gab52710df89c3e3c19de577c638f954ea"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gab52710df89c3e3c19de577c638f954ea">DAP_DEFAULT_SWJ_CLOCK</a>&#160;&#160;&#160;1000000U</td></tr>
 <tr class="memdesc:gab52710df89c3e3c19de577c638f954ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default communication speed on the Debug Access Port for SWD and JTAG mode. Used to initialize the default SWD/JTAG clock frequency. The command <a class="el" href="group__DAP__SWJ__Clock.html">DAP_SWJ_Clock</a> can be used to overwrite this default setting.  <a href="#gab52710df89c3e3c19de577c638f954ea">More...</a><br/></td></tr>
 <tr class="separator:gab52710df89c3e3c19de577c638f954ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa28bb1da2661291634c4a8fb3e227404"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gaa28bb1da2661291634c4a8fb3e227404">DAP_PACKET_SIZE</a>&#160;&#160;&#160;64U</td></tr>
-<tr class="memdesc:gaa28bb1da2661291634c4a8fb3e227404"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum Package Size for Command and Response data. This configuration settings is used to optimized the communication performance with the debugger and depends on the USB peripheral. Change setting to 1024 for High-Speed USB.  <a href="#gaa28bb1da2661291634c4a8fb3e227404">More...</a><br/></td></tr>
+<tr class="memitem:gaa28bb1da2661291634c4a8fb3e227404"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gaa28bb1da2661291634c4a8fb3e227404">DAP_PACKET_SIZE</a>&#160;&#160;&#160;512U</td></tr>
+<tr class="memdesc:gaa28bb1da2661291634c4a8fb3e227404"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum Package Size for Command and Response data. This configuration settings is used to optimize the communication performance with the debugger and depends on the USB peripheral. Typical vales are 64 for Full-speed USB HID or WinUSB, 1024 for High-speed USB HID and 512 for High-speed USB WinUSB.  <a href="#gaa28bb1da2661291634c4a8fb3e227404">More...</a><br/></td></tr>
 <tr class="separator:gaa28bb1da2661291634c4a8fb3e227404"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga03ed6a5aae34f4379ea97435122f83dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga03ed6a5aae34f4379ea97435122f83dd">DAP_PACKET_COUNT</a>&#160;&#160;&#160;64U</td></tr>
-<tr class="memdesc:ga03ed6a5aae34f4379ea97435122f83dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum Package Buffers for Command and Response data. This configuration settings is used to optimized the communication performance with the debugger and depends on the USB peripheral. For devices with limited RAM or USB buffer the setting can be reduced (valid range is 1 .. 255). Change setting to 4 for High-Speed USB.  <a href="#ga03ed6a5aae34f4379ea97435122f83dd">More...</a><br/></td></tr>
+<tr class="memitem:ga03ed6a5aae34f4379ea97435122f83dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga03ed6a5aae34f4379ea97435122f83dd">DAP_PACKET_COUNT</a>&#160;&#160;&#160;8U</td></tr>
+<tr class="memdesc:ga03ed6a5aae34f4379ea97435122f83dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum Package Buffers for Command and Response data. This configuration settings is used to optimize the communication performance with the debugger and depends on the USB peripheral. For devices with limited RAM or USB buffer the setting can be reduced (valid range is 1 .. 255).  <a href="#ga03ed6a5aae34f4379ea97435122f83dd">More...</a><br/></td></tr>
 <tr class="separator:ga03ed6a5aae34f4379ea97435122f83dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf0d60b30fb0eef2d249bc89a6e454ab6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gaf0d60b30fb0eef2d249bc89a6e454ab6">SWO_UART</a>&#160;&#160;&#160;1</td></tr>
 <tr class="memdesc:gaf0d60b30fb0eef2d249bc89a6e454ab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate that UART Serial Wire Output (SWO) trace is available. This information is returned by the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> as part of <b>Capabilities</b>.  <a href="#gaf0d60b30fb0eef2d249bc89a6e454ab6">More...</a><br/></td></tr>
@@ -158,17 +159,36 @@ Macros</h2></td></tr>
 <tr class="memitem:ga5d89633a43ee3296e1754c7392ad856e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga5d89633a43ee3296e1754c7392ad856e">SWO_BUFFER_SIZE</a>&#160;&#160;&#160;4096U</td></tr>
 <tr class="memdesc:ga5d89633a43ee3296e1754c7392ad856e"><td class="mdescLeft">&#160;</td><td class="mdescRight">SWO Trace Buffer Size.  <a href="#ga5d89633a43ee3296e1754c7392ad856e">More...</a><br/></td></tr>
 <tr class="separator:ga5d89633a43ee3296e1754c7392ad856e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd6f450a10f4e03757388e00ea56906f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gafd6f450a10f4e03757388e00ea56906f">SWO_STREAM</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:gafd6f450a10f4e03757388e00ea56906f"><td class="mdescLeft">&#160;</td><td class="mdescRight">SWO Streaming Trace.  <a href="#gafd6f450a10f4e03757388e00ea56906f">More...</a><br/></td></tr>
+<tr class="separator:gafd6f450a10f4e03757388e00ea56906f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga698a5a4ebd84335134a35e74848d2734"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga698a5a4ebd84335134a35e74848d2734">TIMESTAMP_CLOCK</a>&#160;&#160;&#160;100000000U</td></tr>
+<tr class="memdesc:ga698a5a4ebd84335134a35e74848d2734"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock frequency of the Test Domain Timer. Timer value is returned with <a class="el" href="group__DAP__Config__Timestamp__gr.html#gaf9bdc40d3a256fc2cc4d26b295993d9c">TIMESTAMP_GET</a>.  <a href="#ga698a5a4ebd84335134a35e74848d2734">More...</a><br/></td></tr>
+<tr class="separator:ga698a5a4ebd84335134a35e74848d2734"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga792651aa4035a7ad712c6bb201db8a6a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga792651aa4035a7ad712c6bb201db8a6a">TARGET_DEVICE_FIXED</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memdesc:ga792651aa4035a7ad712c6bb201db8a6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug Unit is connected to fixed Target Device. The Debug Unit may be part of an evaluation board and always connected to a fixed known device. In this case a Device Vendor and Device Name string is stored which may be used by the debugger or IDE to configure device parameters.  <a href="#ga792651aa4035a7ad712c6bb201db8a6a">More...</a><br/></td></tr>
 <tr class="separator:ga792651aa4035a7ad712c6bb201db8a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gad52ec88278b7b3ccbdcc10359dd8d0a8"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#gad52ec88278b7b3ccbdcc10359dd8d0a8">DAP_GetVendorString</a> (char *str)</td></tr>
+<tr class="memdesc:gad52ec88278b7b3ccbdcc10359dd8d0a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Vendor ID string.  <a href="#gad52ec88278b7b3ccbdcc10359dd8d0a8">More...</a><br/></td></tr>
+<tr class="separator:gad52ec88278b7b3ccbdcc10359dd8d0a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga947f60d7e5382cefe3087ad1fb46b13b"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga947f60d7e5382cefe3087ad1fb46b13b">DAP_GetProductString</a> (char *str)</td></tr>
+<tr class="memdesc:ga947f60d7e5382cefe3087ad1fb46b13b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Product ID string.  <a href="#ga947f60d7e5382cefe3087ad1fb46b13b">More...</a><br/></td></tr>
+<tr class="separator:ga947f60d7e5382cefe3087ad1fb46b13b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b875652fd4e380af4d419bc2878ab33"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__Config__Debug__gr.html#ga7b875652fd4e380af4d419bc2878ab33">DAP_GetSerNumString</a> (char *str)</td></tr>
+<tr class="memdesc:ga7b875652fd4e380af4d419bc2878ab33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Serial Number string.  <a href="#ga7b875652fd4e380af4d419bc2878ab33">More...</a><br/></td></tr>
+<tr class="separator:ga7b875652fd4e380af4d419bc2878ab33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Provides definitions about the hardware and configuration of the Debug Unit. </p>
 <p>This information includes:</p>
 <ul>
 <li>Definition of Cortex-M processor parameters used in CMSIS-DAP Debug Unit.</li>
+<li>Debug Unit Identification strings (Vendor, Product, Serial Number).</li>
 <li>Debug Unit communication packet size.</li>
-<li>Debug Access Port communication mode (JTAG or SWD).</li>
+<li>Debug Access Port supported modes and settings (JTAG/SWD and SWO).</li>
 <li>Optional information about a connected Target Device (for Evaluation Boards). </li>
 </ul>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -183,7 +203,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Processor Clock of the Cortex-M MCU used in the Debug Unit. This value is used to calculate the SWD/JTAG clock speed. </p>
-<p>Specifies the CPU Clock in Hz </p>
+<p>Specifies the CPU Clock in Hz. </p>
 
 </div>
 </div>
@@ -243,7 +263,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Configure maximum number of JTAG devices on the scan chain connected to the Debug Access Port. This setting impacts the RAM requirements of the Debug Unit. Valid range is 1 .. 255. </p>
-<p>Maximum number of JTAG devices on scan chain </p>
+<p>Maximum number of JTAG devices on scan chain. </p>
 
 </div>
 </div>
@@ -252,13 +272,13 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DAP_PACKET_COUNT&#160;&#160;&#160;64U</td>
+          <td class="memname">#define DAP_PACKET_COUNT&#160;&#160;&#160;8U</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Maximum Package Buffers for Command and Response data. This configuration settings is used to optimized the communication performance with the debugger and depends on the USB peripheral. For devices with limited RAM or USB buffer the setting can be reduced (valid range is 1 .. 255). Change setting to 4 for High-Speed USB. </p>
-<p>Buffers: 64 = Full-Speed, 4 = High-Speed. </p>
+<p>Maximum Package Buffers for Command and Response data. This configuration settings is used to optimize the communication performance with the debugger and depends on the USB peripheral. For devices with limited RAM or USB buffer the setting can be reduced (valid range is 1 .. 255). </p>
+<p>Specifies number of packets buffered. </p>
 
 </div>
 </div>
@@ -267,13 +287,13 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DAP_PACKET_SIZE&#160;&#160;&#160;64U</td>
+          <td class="memname">#define DAP_PACKET_SIZE&#160;&#160;&#160;512U</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Maximum Package Size for Command and Response data. This configuration settings is used to optimized the communication performance with the debugger and depends on the USB peripheral. Change setting to 1024 for High-Speed USB. </p>
-<p>USB: 64 = Full-Speed, 1024 = High-Speed. </p>
+<p>Maximum Package Size for Command and Response data. This configuration settings is used to optimize the communication performance with the debugger and depends on the USB peripheral. Typical vales are 64 for Full-speed USB HID or WinUSB, 1024 for High-speed USB HID and 512 for High-speed USB WinUSB. </p>
+<p>Specifies Packet Size in bytes. </p>
 
 </div>
 </div>
@@ -288,7 +308,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Indicate that Serial Wire Debug (SWD) communication mode is available at the Debug Access Port. This information is returned by the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> as part of <b>Capabilities</b>. </p>
-<p>SWD Mode: 1 = available, 0 = not available </p>
+<p>SWD Mode: 1 = available, 0 = not available. </p>
 
 </div>
 </div>
@@ -303,7 +323,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Number of processor cycles for I/O Port write operations. This value is used to calculate the SWD/JTAG clock speed that is generated with I/O Port write operations in the Debug Unit by a Cortex-M MCU. Most Cortex-M processors require 2 processor cycles for a I/O Port Write operation. If the Debug Unit uses a Cortex-M0+ processor with high-speed peripheral I/O only 1 processor cycle might be required. </p>
-<p>I/O Cycles: 2=default, 1=Cortex-M0+ fast I/0 </p>
+<p>I/O Cycles: 2=default, 1=Cortex-M0+ fast I/0. </p>
 
 </div>
 </div>
@@ -318,7 +338,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>SWO Trace Buffer Size. </p>
-<p>SWO Trace Buffer Size in bytes (must be 2^n) </p>
+<p>SWO Trace Buffer Size in bytes (must be 2^n). </p>
 
 </div>
 </div>
@@ -333,7 +353,22 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Indicate that Manchester Serial Wire Output (SWO) trace is available. This information is returned by the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> as part of <b>Capabilities</b>. </p>
-<p>SWO Manchester: 1 = available, 0 = not available </p>
+<p>SWO Manchester: 1 = available, 0 = not available. </p>
+
+</div>
+</div>
+<a class="anchor" id="gafd6f450a10f4e03757388e00ea56906f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SWO_STREAM&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>SWO Streaming Trace. </p>
+<p>SWO Streaming Trace: 1 = available, 0 = not available. </p>
 
 </div>
 </div>
@@ -348,7 +383,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Indicate that UART Serial Wire Output (SWO) trace is available. This information is returned by the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> as part of <b>Capabilities</b>. </p>
-<p>SWO UART: 1 = available, 0 = not available </p>
+<p>SWO UART: 1 = available, 0 = not available. </p>
 
 </div>
 </div>
@@ -363,7 +398,7 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Maximum SWO UART Baudrate. </p>
-<p>SWO UART Maximum Baudrate in Hz </p>
+<p>SWO UART Maximum Baudrate in Hz. </p>
 
 </div>
 </div>
@@ -382,12 +417,103 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga698a5a4ebd84335134a35e74848d2734"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TIMESTAMP_CLOCK&#160;&#160;&#160;100000000U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clock frequency of the Test Domain Timer. Timer value is returned with <a class="el" href="group__DAP__Config__Timestamp__gr.html#gaf9bdc40d3a256fc2cc4d26b295993d9c">TIMESTAMP_GET</a>. </p>
+<p>Timestamp clock in Hz (0 = timestamps not supported). </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga947f60d7e5382cefe3087ad1fb46b13b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint8_t DAP_GetProductString </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get Product ID string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>String length. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7b875652fd4e380af4d419bc2878ab33"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint8_t DAP_GetSerNumString </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get Serial Number string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>String length. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad52ec88278b7b3ccbdcc10359dd8d0a8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint8_t DAP_GetVendorString </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get Vendor ID string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Pointer to buffer to store the string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>String length. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:00 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:48 for CMSIS-DAP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

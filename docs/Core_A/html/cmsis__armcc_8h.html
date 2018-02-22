@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('cmsis__armcc_8h.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gaee91bdfb2b6986731af09835bc9c6e74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__comp__cntrl__gr.html#gaee91bdfb2b6986731af09835bc9c6e74">__ARM_ARCH_7A__</a>&#160;&#160;&#160;1</td></tr>
-<tr class="memdesc:gaee91bdfb2b6986731af09835bc9c6e74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set to 1 when generating code for ARMv7-A (Cortex-A7)  <a href="group__comp__cntrl__gr.html#gaee91bdfb2b6986731af09835bc9c6e74">More...</a><br/></td></tr>
+<tr class="memdesc:gaee91bdfb2b6986731af09835bc9c6e74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set to 1 when generating code for Armv7-A (Cortex-A7)  <a href="group__comp__cntrl__gr.html#gaee91bdfb2b6986731af09835bc9c6e74">More...</a><br/></td></tr>
 <tr class="separator:gaee91bdfb2b6986731af09835bc9c6e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1378040bcf22428955c6e3ce9c2053cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a>&#160;&#160;&#160;__asm</td></tr>
 <tr class="memdesc:ga1378040bcf22428955c6e3ce9c2053cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pass information from the compiler to the assembler.  <a href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">More...</a><br/></td></tr>
@@ -139,6 +139,8 @@ Macros</h2></td></tr>
 <tr class="memitem:ga153a4a31b276a9758959580538720a51"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__comp__cntrl__gr.html#ga153a4a31b276a9758959580538720a51">__NO_RETURN</a>&#160;&#160;&#160;__declspec(noreturn)</td></tr>
 <tr class="memdesc:ga153a4a31b276a9758959580538720a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inform the compiler that a function does not return.  <a href="group__comp__cntrl__gr.html#ga153a4a31b276a9758959580538720a51">More...</a><br/></td></tr>
 <tr class="separator:ga153a4a31b276a9758959580538720a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdc36c1b3d3e16c17a73889b7d06d0d2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#acdc36c1b3d3e16c17a73889b7d06d0d2">CMSIS_DEPRECATED</a>&#160;&#160;&#160;__attribute__((deprecated))</td></tr>
+<tr class="separator:acdc36c1b3d3e16c17a73889b7d06d0d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3e40e4c553fc11588f7a4c2a19e789e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__comp__cntrl__gr.html#ga3e40e4c553fc11588f7a4c2a19e789e0">__USED</a>&#160;&#160;&#160;__attribute__((used))</td></tr>
 <tr class="memdesc:ga3e40e4c553fc11588f7a4c2a19e789e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inform that a variable shall be retained in executable image.  <a href="group__comp__cntrl__gr.html#ga3e40e4c553fc11588f7a4c2a19e789e0">More...</a><br/></td></tr>
 <tr class="separator:ga3e40e4c553fc11588f7a4c2a19e789e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -271,16 +273,13 @@ Functions</h2></td></tr>
 <tr class="memitem:ga14ba90beb9b4712454f35ac453c45f5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__FPEXC.html#ga14ba90beb9b4712454f35ac453c45f5d">__set_FPEXC</a> (uint32_t fpexc)</td></tr>
 <tr class="memdesc:ga14ba90beb9b4712454f35ac453c45f5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set FPEXC (Floating Point Exception Control Register)  <a href="group__CMSIS__FPEXC.html#ga14ba90beb9b4712454f35ac453c45f5d">More...</a><br/></td></tr>
 <tr class="separator:ga14ba90beb9b4712454f35ac453c45f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga722ceb077e491bb4befcfbb3aee9b20b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> <a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#ga722ceb077e491bb4befcfbb3aee9b20b">__L1C_CleanInvalidateCache</a> (uint32_t op)</td></tr>
-<tr class="memdesc:ga722ceb077e491bb4befcfbb3aee9b20b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean and Invalidate the entire data or unified cache.  <a href="group__L1__cache__functions.html#ga722ceb077e491bb4befcfbb3aee9b20b">More...</a><br/></td></tr>
-<tr class="separator:ga722ceb077e491bb4befcfbb3aee9b20b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1e4728985ee8b4fa89cc01c032f69565"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__comp__cntrl__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> <a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FPU__functions.html#ga1e4728985ee8b4fa89cc01c032f69565">__FPU_Enable</a> (void)</td></tr>
 <tr class="memdesc:ga1e4728985ee8b4fa89cc01c032f69565"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable Floating Point Unit.  <a href="group__FPU__functions.html#ga1e4728985ee8b4fa89cc01c032f69565">More...</a><br/></td></tr>
 <tr class="separator:ga1e4728985ee8b4fa89cc01c032f69565"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.1 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>07. Sep 2017 </dd></dl>
+<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.2 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>10. January 2018 </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a7f7b66103530fadcce226375af3c2c03"></a>
 <div class="memitem">
@@ -910,6 +909,18 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="acdc36c1b3d3e16c17a73889b7d06d0d2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CMSIS_DEPRECATED&#160;&#160;&#160;__attribute__((deprecated))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a4712ef84455dfc73de4697e1c213b0ed"></a>
 <div class="memitem">
@@ -990,7 +1001,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_f806067e3cfd0faadc71b6fb603a0f72.html">Core_A</a></li><li class="navelem"><a class="el" href="dir_3f4b401a2ed0c5733c677abc947b6aa9.html">Include</a></li><li class="navelem"><a class="el" href="cmsis__armcc_8h.html">cmsis_armcc.h</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:59 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:46 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

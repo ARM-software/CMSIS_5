@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['firmware_20for_20coresight_20debug_20access_20port',['Firmware for CoreSight Debug Access Port',['../index.html',1,'']]]
+  ['communication_20via_20usb_20hid',['Communication via USB HID',['../group__DAP__ConfigUSB__gr.html',1,'']]],
+  ['communication_20via_20winusb',['Communication via WinUSB',['../group__DAP__ConfigUSB__gr.html',1,'']]]
 ];

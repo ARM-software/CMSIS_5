@@ -146,7 +146,7 @@ CMSIS-RTOS API Structure</div></div>
 <li>Deterministic context switching.</li>
 <li>Round-robin context switching.</li>
 <li>Deadlock avoidance, for example with priority inversion.</li>
-<li>Zero interrupt latency by using ARMv7-M instructions LDREX and STREX.</li>
+<li>Zero interrupt latency by using Armv7-M instructions LDREX and STREX.</li>
 </ul>
 <h1><a class="anchor" id="usingOS2"></a>
 Using a CMSIS-RTOS2 Implementation</h1>
@@ -901,7 +901,7 @@ cmsis_os2.h header file</h1>
 <div class="line"><span class="comment">/// \param[in]     msg_prio      message priority.</span></div>
 <div class="line"><span class="comment">/// \param[in]     timeout       \ref CMSIS_RTOS_TimeOutValue or 0 in case of no time-out.</span></div>
 <div class="line"><span class="comment">/// \return status code that indicates the execution status of the function.</span></div>
-<div class="line"><span class="comment"></span><a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> <a class="code" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a> (osMessageQueueId_t mq_id, <span class="keyword">const</span> <span class="keywordtype">void</span> *msg_ptr, uint8_t msg_prio, uint32_t timeout);</div>
+<div class="line"><span class="comment"></span><a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> <a class="code" href="group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc">osMessageQueuePut</a> (osMessageQueueId_t mq_id, <span class="keyword">const</span> <span class="keywordtype">void</span> *msg_ptr, uint8_t msg_prio, uint32_t timeout);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Get a Message from a Queue or timeout if Queue is empty.</span></div>
 <div class="line"><span class="comment">/// \param[in]     mq_id         message queue ID obtained by \ref osMessageQueueNew.</span></div>
@@ -953,7 +953,7 @@ cmsis_os2.h header file</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

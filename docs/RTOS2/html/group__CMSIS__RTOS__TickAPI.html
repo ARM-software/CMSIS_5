@@ -122,13 +122,13 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5eeffb4d9dc6c6802fee8898096d9a59"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga5eeffb4d9dc6c6802fee8898096d9a59">OS_Tick_Setup</a> (uint32_t freq, <a class="el" href="os__tick_8h.html#afbfa2180a9b6208f34891d539e9e2d52">IRQHandler_t</a> handler)</td></tr>
 <tr class="memdesc:ga5eeffb4d9dc6c6802fee8898096d9a59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup OS Tick.  <a href="#ga5eeffb4d9dc6c6802fee8898096d9a59">More...</a><br/></td></tr>
 <tr class="separator:ga5eeffb4d9dc6c6802fee8898096d9a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3e47971bf3a02599d9ecb32208adafec"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga3e47971bf3a02599d9ecb32208adafec">OS_Tick_Enable</a> (void)</td></tr>
+<tr class="memitem:ga3e47971bf3a02599d9ecb32208adafec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga3e47971bf3a02599d9ecb32208adafec">OS_Tick_Enable</a> (void)</td></tr>
 <tr class="memdesc:ga3e47971bf3a02599d9ecb32208adafec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable OS Tick.  <a href="#ga3e47971bf3a02599d9ecb32208adafec">More...</a><br/></td></tr>
 <tr class="separator:ga3e47971bf3a02599d9ecb32208adafec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e325c304fef5003b1dc31906f6a3056"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga5e325c304fef5003b1dc31906f6a3056">OS_Tick_Disable</a> (void)</td></tr>
+<tr class="memitem:ga5e325c304fef5003b1dc31906f6a3056"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga5e325c304fef5003b1dc31906f6a3056">OS_Tick_Disable</a> (void)</td></tr>
 <tr class="memdesc:ga5e325c304fef5003b1dc31906f6a3056"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable OS Tick.  <a href="#ga5e325c304fef5003b1dc31906f6a3056">More...</a><br/></td></tr>
 <tr class="separator:ga5e325c304fef5003b1dc31906f6a3056"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga57065ec4b281504ad4de13a419870b4f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga57065ec4b281504ad4de13a419870b4f">OS_Tick_AcknowledgeIRQ</a> (void)</td></tr>
+<tr class="memitem:ga57065ec4b281504ad4de13a419870b4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#ga57065ec4b281504ad4de13a419870b4f">OS_Tick_AcknowledgeIRQ</a> (void)</td></tr>
 <tr class="memdesc:ga57065ec4b281504ad4de13a419870b4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acknowledge OS Tick IRQ.  <a href="#ga57065ec4b281504ad4de13a419870b4f">More...</a><br/></td></tr>
 <tr class="separator:ga57065ec4b281504ad4de13a419870b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa8b4eca23e3ffe2df403291958cdc905"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__TickAPI.html#gaa8b4eca23e3ffe2df403291958cdc905">OS_Tick_GetIRQn</a> (void)</td></tr>
@@ -155,8 +155,8 @@ Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="comment">/**************************************************************************/</span><span class="comment">/**</span></div>
 <div class="line"><span class="comment"> * @file     os_systick.c</span></div>
 <div class="line"><span class="comment"> * @brief    CMSIS OS Tick SysTick implementation</span></div>
-<div class="line"><span class="comment"> * @version  V1.0.0</span></div>
-<div class="line"><span class="comment"> * @date     05. June 2017</span></div>
+<div class="line"><span class="comment"> * @version  V1.0.1</span></div>
+<div class="line"><span class="comment"> * @date     24. November 2017</span></div>
 <div class="line"><span class="comment"> ******************************************************************************/</span></div>
 <div class="line"><span class="comment">/*</span></div>
 <div class="line"><span class="comment"> * Copyright (c) 2017-2017 ARM Limited. All rights reserved.</span></div>
@@ -178,6 +178,7 @@ Functions</h2></td></tr>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#include &quot;<a class="code" href="os__tick_8h.html">os_tick.h</a>&quot;</span></div>
 <div class="line"></div>
+<div class="line"><span class="comment">//lint -emacro((923,9078),SCB,SysTick) &quot;cast from unsigned long to pointer&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;RTE_Components.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include CMSIS_device_header</span></div>
 <div class="line"><span class="preprocessor"></span></div>
@@ -190,30 +191,32 @@ Functions</h2></td></tr>
 <div class="line"><span class="keyword">static</span> uint8_t PendST;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Setup OS Tick.</span></div>
-<div class="line">__WEAK int32_t  <a class="code" href="group__CMSIS__RTOS__TickAPI.html#ga5eeffb4d9dc6c6802fee8898096d9a59">OS_Tick_Setup</a> (uint32_t freq, <a class="code" href="os__tick_8h.html#afbfa2180a9b6208f34891d539e9e2d52">IRQHandler_t</a> handler) {</div>
+<div class="line">__WEAK int32_t <a class="code" href="group__CMSIS__RTOS__TickAPI.html#ga5eeffb4d9dc6c6802fee8898096d9a59">OS_Tick_Setup</a> (uint32_t freq, <a class="code" href="os__tick_8h.html#afbfa2180a9b6208f34891d539e9e2d52">IRQHandler_t</a> handler) {</div>
 <div class="line">  uint32_t load;</div>
 <div class="line">  (void)handler;</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">if</span> (freq == 0U) {</div>
+<div class="line">    <span class="comment">//lint -e{904} &quot;Return statement before end of function&quot;</span></div>
 <div class="line">    <span class="keywordflow">return</span> (-1);</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  load = (SystemCoreClock / freq) - 1U;</div>
 <div class="line">  <span class="keywordflow">if</span> (load &gt; 0x00FFFFFFU) {</div>
+<div class="line">    <span class="comment">//lint -e{904} &quot;Return statement before end of function&quot;</span></div>
 <div class="line">    <span class="keywordflow">return</span> (-1);</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// Set SysTick Interrupt Priority</span></div>
-<div class="line"><span class="preprocessor">#if   ((defined(__ARM_ARCH_8M_MAIN__) &amp;&amp; (__ARM_ARCH_8M_MAIN__ == 1U)) || \</span></div>
+<div class="line"><span class="preprocessor">#if   ((defined(__ARM_ARCH_8M_MAIN__) &amp;&amp; (__ARM_ARCH_8M_MAIN__ != 0)) || \</span></div>
 <div class="line"><span class="preprocessor">       (defined(__CORTEX_M)           &amp;&amp; (__CORTEX_M           == 7U)))</span></div>
-<div class="line"><span class="preprocessor"></span>  SCB-&gt;SHPR[11] =  SYSTICK_IRQ_PRIORITY;</div>
-<div class="line"><span class="preprocessor">#elif  (defined(__ARM_ARCH_8M_BASE__) &amp;&amp; (__ARM_ARCH_8M_BASE__ == 1U))</span></div>
-<div class="line"><span class="preprocessor"></span>  SCB-&gt;SHPR[1] |= (SYSTICK_IRQ_PRIORITY &lt;&lt; 24);</div>
-<div class="line"><span class="preprocessor">#elif ((defined(__ARM_ARCH_7M__)      &amp;&amp; (__ARM_ARCH_7M__      == 1U)) || \</span></div>
-<div class="line"><span class="preprocessor">       (defined(__ARM_ARCH_7EM__)     &amp;&amp; (__ARM_ARCH_7EM__     == 1U)))</span></div>
-<div class="line"><span class="preprocessor"></span>  SCB-&gt;SHP[11]  =  SYSTICK_IRQ_PRIORITY;</div>
-<div class="line"><span class="preprocessor">#elif  (defined(__ARM_ARCH_6M__)      &amp;&amp; (__ARM_ARCH_6M__      == 1U))</span></div>
-<div class="line"><span class="preprocessor"></span>  SCB-&gt;SHP[1]  |= (SYSTICK_IRQ_PRIORITY &lt;&lt; 24);</div>
+<div class="line"><span class="preprocessor"></span>  SCB-&gt;SHPR[11] = SYSTICK_IRQ_PRIORITY;</div>
+<div class="line"><span class="preprocessor">#elif  (defined(__ARM_ARCH_8M_BASE__) &amp;&amp; (__ARM_ARCH_8M_BASE__ != 0))</span></div>
+<div class="line"><span class="preprocessor"></span>  SCB-&gt;SHPR[1] |= ((uint32_t)SYSTICK_IRQ_PRIORITY &lt;&lt; 24);</div>
+<div class="line"><span class="preprocessor">#elif ((defined(__ARM_ARCH_7M__)      &amp;&amp; (__ARM_ARCH_7M__      != 0)) || \</span></div>
+<div class="line"><span class="preprocessor">       (defined(__ARM_ARCH_7EM__)     &amp;&amp; (__ARM_ARCH_7EM__     != 0)))</span></div>
+<div class="line"><span class="preprocessor"></span>  SCB-&gt;SHP[11]  = SYSTICK_IRQ_PRIORITY;</div>
+<div class="line"><span class="preprocessor">#elif  (defined(__ARM_ARCH_6M__)      &amp;&amp; (__ARM_ARCH_6M__      != 0))</span></div>
+<div class="line"><span class="preprocessor"></span>  SCB-&gt;SHP[1]  |= ((uint32_t)SYSTICK_IRQ_PRIORITY &lt;&lt; 24);</div>
 <div class="line"><span class="preprocessor">#else</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#error &quot;Unknown ARM Core!&quot;</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
@@ -228,7 +231,7 @@ Functions</h2></td></tr>
 <div class="line">}</div>
 <div class="line"><span class="comment"></span></div>
 <div class="line"><span class="comment">/// Enable OS Tick.</span></div>
-<div class="line"><span class="comment"></span>__WEAK int32_t  <a class="code" href="group__CMSIS__RTOS__TickAPI.html#ga3e47971bf3a02599d9ecb32208adafec">OS_Tick_Enable</a> (<span class="keywordtype">void</span>) {</div>
+<div class="line"><span class="comment"></span>__WEAK <span class="keywordtype">void</span> <a class="code" href="group__CMSIS__RTOS__TickAPI.html#ga3e47971bf3a02599d9ecb32208adafec">OS_Tick_Enable</a> (<span class="keywordtype">void</span>) {</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">if</span> (PendST != 0U) {</div>
 <div class="line">    PendST = 0U;</div>
@@ -236,12 +239,10 @@ Functions</h2></td></tr>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  SysTick-&gt;CTRL |=  SysTick_CTRL_ENABLE_Msk;</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordflow">return</span> (0);</div>
 <div class="line">}</div>
 <div class="line"><span class="comment"></span></div>
 <div class="line"><span class="comment">/// Disable OS Tick.</span></div>
-<div class="line"><span class="comment"></span>__WEAK int32_t  <a class="code" href="group__CMSIS__RTOS__TickAPI.html#ga5e325c304fef5003b1dc31906f6a3056">OS_Tick_Disable</a> (<span class="keywordtype">void</span>) {</div>
+<div class="line"><span class="comment"></span>__WEAK <span class="keywordtype">void</span> <a class="code" href="group__CMSIS__RTOS__TickAPI.html#ga5e325c304fef5003b1dc31906f6a3056">OS_Tick_Disable</a> (<span class="keywordtype">void</span>) {</div>
 <div class="line"></div>
 <div class="line">  SysTick-&gt;CTRL &amp;= ~SysTick_CTRL_ENABLE_Msk;</div>
 <div class="line"></div>
@@ -249,19 +250,16 @@ Functions</h2></td></tr>
 <div class="line">    SCB-&gt;ICSR = SCB_ICSR_PENDSTCLR_Msk;</div>
 <div class="line">    PendST = 1U;</div>
 <div class="line">  }</div>
-<div class="line"></div>
-<div class="line">  <span class="keywordflow">return</span> (0);</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Acknowledge OS Tick IRQ.</span></div>
-<div class="line">__WEAK int32_t  <a class="code" href="group__CMSIS__RTOS__TickAPI.html#ga57065ec4b281504ad4de13a419870b4f">OS_Tick_AcknowledgeIRQ</a> (<span class="keywordtype">void</span>) {</div>
+<div class="line">__WEAK <span class="keywordtype">void</span> <a class="code" href="group__CMSIS__RTOS__TickAPI.html#ga57065ec4b281504ad4de13a419870b4f">OS_Tick_AcknowledgeIRQ</a> (<span class="keywordtype">void</span>) {</div>
 <div class="line">  (void)SysTick-&gt;CTRL;</div>
-<div class="line">  return (0);</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Get OS Tick IRQ number.</span></div>
 <div class="line">__WEAK int32_t  <a class="code" href="group__CMSIS__RTOS__TickAPI.html#gaa8b4eca23e3ffe2df403291958cdc905">OS_Tick_GetIRQn</a> (<span class="keywordtype">void</span>) {</div>
-<div class="line">  <span class="keywordflow">return</span> (SysTick_IRQn);</div>
+<div class="line">  <span class="keywordflow">return</span> ((int32_t)SysTick_IRQn);</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Get OS Tick clock.</span></div>
@@ -367,7 +365,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>Start the timer to count and enable generation of periodic interrupts.</p>
 <p>For a simple Cortex-M device using the built in SystemTick timer the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">int32_t  <a class="code" href="group__CMSIS__RTOS__TickAPI.html#ga3e47971bf3a02599d9ecb32208adafec">OS_Tick_Enable</a> (<span class="keywordtype">void</span>) {</div>
@@ -397,7 +394,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>Stop the timer from counting and disable generation of periodic interrupts.</p>
 <p>After a call to this function the timer must not generate any further interrupt.</p>
 <p>For a simple Cortex-M device using the built in SystemTick timer the default implementation looks like the following example:</p>
@@ -428,7 +424,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>Acknowledge the pending tick interrupt, i.e. by clear the pending flag.</p>
 <p>For a simple Cortex-M device using the built in SystemTick timer the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">int32_t  <a class="code" href="group__CMSIS__RTOS__TickAPI.html#ga57065ec4b281504ad4de13a419870b4f">OS_Tick_AcknowledgeIRQ</a> (<span class="keywordtype">void</span>) {</div>
@@ -557,7 +552,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

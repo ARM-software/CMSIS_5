@@ -133,7 +133,7 @@ $(document).ready(function(){initNavTree('svd_SVDConv_pg.html','');});
 <tr>
 <td>--generate=header  </td><td>Generate Device Header File </td><td>Generates the device header file. The name of the generated file is derived from the value of the tag &lt;device&lt;name&gt; in the CMSIS-SVD file. Refer to <a class="el" href="elem_device.html">device</a>.   </td></tr>
 <tr>
-<td>--generate=partition  </td><td>Generate Partition file for Cortex-M Security Extensions (ARMv8M) </td><td>Generates the device partition file. The name of the generated file is composed of <em>partition_</em> and the value of the device <em>&lt;name&gt;</em> (for example, <em>partition_CMSDK_ARMv8MBL.h</em>). Refer to <a class="el" href="elem_device.html">/device element</a>. The content of the file uses Configuration Wizard annotations and is derived from the SAU-specific information of the <a class="el" href="elem_cpu.html#elem_sauRegionsConfig">/device/cpu/sauRegionsConfig element</a> and the interrupts specified in the <a class="el" href="elem_peripherals.html">/device/peripherals element</a>.  </td></tr>
+<td>--generate=partition  </td><td>Generate Partition file for Cortex-M Security Extensions (Armv8-M) </td><td>Generates the device partition file. The name of the generated file is composed of <em>partition_</em> and the value of the device <em>&lt;name&gt;</em> (for example, <em>partition_CMSDK_ARMv8MBL.h</em>). Refer to <a class="el" href="elem_device.html">/device element</a>. The content of the file uses Configuration Wizard annotations and is derived from the SAU-specific information of the <a class="el" href="elem_cpu.html#elem_sauRegionsConfig">/device/cpu/sauRegionsConfig element</a> and the interrupts specified in the <a class="el" href="elem_peripherals.html">/device/peripherals element</a>.  </td></tr>
 <tr>
 <td>--fields=enum  </td><td>Bit-field Enums </td><td>Generates enum lists for each field value description contained in the CMSIS-SVD input file. Must be used in combination with <em>--generate=header</em>.  </td></tr>
 <tr>
@@ -265,7 +265,7 @@ $(document).ready(function(){initNavTree('svd_SVDConv_pg.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:25 for CMSIS-SVD by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:32 for CMSIS-SVD by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

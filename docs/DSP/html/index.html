@@ -144,25 +144,25 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>arm_cortexM3b_math.lib (Cortex-M3, Big endian)</li>
 <li>arm_cortexM0l_math.lib (Cortex-M0 / Cortex-M0+, Little endian)</li>
 <li>arm_cortexM0b_math.lib (Cortex-M0 / Cortex-M0+, Big endian)</li>
-<li>arm_ARMv8MBLl_math.lib (ARMv8M Baseline, Little endian)</li>
-<li>arm_ARMv8MMLl_math.lib (ARMv8M Mainline, Little endian)</li>
-<li>arm_ARMv8MMLlfsp_math.lib (ARMv8M Mainline, Little endian, Single Precision Floating Point Unit)</li>
-<li>arm_ARMv8MMLld_math.lib (ARMv8M Mainline, Little endian, DSP instructions)</li>
-<li>arm_ARMv8MMLldfsp_math.lib (ARMv8M Mainline, Little endian, DSP instructions, Single Precision Floating Point Unit)</li>
+<li>arm_ARMv8MBLl_math.lib (Armv8-M Baseline, Little endian)</li>
+<li>arm_ARMv8MMLl_math.lib (Armv8-M Mainline, Little endian)</li>
+<li>arm_ARMv8MMLlfsp_math.lib (Armv8-M Mainline, Little endian, Single Precision Floating Point Unit)</li>
+<li>arm_ARMv8MMLld_math.lib (Armv8-M Mainline, Little endian, DSP instructions)</li>
+<li>arm_ARMv8MMLldfsp_math.lib (Armv8-M Mainline, Little endian, DSP instructions, Single Precision Floating Point Unit)</li>
 </ul>
-<p>The library functions are declared in the public file <code><a class="el" href="arm__math_8h.html">arm_math.h</a></code> which is placed in the <code>Include</code> folder. Simply include this file and link the appropriate library in the application and begin calling the library functions. The Library supports single public header file <code> <a class="el" href="arm__math_8h.html">arm_math.h</a></code> for Cortex-M cores with little endian and big endian. Same header file will be used for floating point unit(FPU) variants. Define the appropriate pre processor MACRO ARM_MATH_CM7 or ARM_MATH_CM4 or ARM_MATH_CM3 or ARM_MATH_CM0 or ARM_MATH_CM0PLUS depending on the target processor in the application. For ARMv8M cores define pre processor MACRO ARM_MATH_ARMV8MBL or ARM_MATH_ARMV8MML. Set Pre processor MACRO __DSP_PRESENT if ARMv8M Mainline core supports DSP instructions.</p>
+<p>The library functions are declared in the public file <code><a class="el" href="arm__math_8h.html">arm_math.h</a></code> which is placed in the <code>Include</code> folder. Simply include this file and link the appropriate library in the application and begin calling the library functions. The Library supports single public header file <code> <a class="el" href="arm__math_8h.html">arm_math.h</a></code> for Cortex-M cores with little endian and big endian. Same header file will be used for floating point unit(FPU) variants. Define the appropriate preprocessor macro ARM_MATH_CM7 or ARM_MATH_CM4 or ARM_MATH_CM3 or ARM_MATH_CM0 or ARM_MATH_CM0PLUS depending on the target processor in the application. For Armv8-M cores define preprocessor macro ARM_MATH_ARMV8MBL or ARM_MATH_ARMV8MML. Set preprocessor macro __DSP_PRESENT if Armv8-M Mainline core supports DSP instructions.</p>
 <h2>Examples </h2>
 <p>The library ships with a number of examples which demonstrate how to use the library functions.</p>
 <h2>Toolchain Support </h2>
-<p>The library has been developed and tested with MDK-ARM version 5.14.0.0 The library is being tested in GCC and IAR toolchains and updates on this activity will be made available shortly.</p>
+<p>The library has been developed and tested with MDK version 5.14.0.0 The library is being tested in GCC and IAR toolchains and updates on this activity will be made available shortly.</p>
 <h2>Building the Library </h2>
-<p>The library installer contains a project file to re build libraries on MDK-ARM Tool chain in the <code>CMSIS\DSP_Lib\Source\ARM</code> folder.</p>
+<p>The library installer contains a project file to rebuild libraries on MDK toolchain in the <code>CMSIS\DSP_Lib\Source\ARM</code> folder.</p>
 <ul>
 <li>arm_cortexM_math.uvprojx</li>
 </ul>
-<p>The libraries can be built by opening the arm_cortexM_math.uvprojx project in MDK-ARM, selecting a specific target, and defining the optional pre processor MACROs detailed above.</p>
-<h2>Pre-processor Macros </h2>
-<p>Each library project have differant pre-processor macros.</p>
+<p>The libraries can be built by opening the arm_cortexM_math.uvprojx project in MDK-ARM, selecting a specific target, and defining the optional preprocessor macros detailed above.</p>
+<h2>Preprocessor Macros </h2>
+<p>Each library project have different preprocessor macros.</p>
 <ul>
 <li>UNALIGNED_SUPPORT_DISABLE:</li>
 </ul>
@@ -186,7 +186,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <ul>
 <li>ARM_MATH_ARMV8MxL:</li>
 </ul>
-<p>Define macro ARM_MATH_ARMV8MBL for building the library on ARMv8M Baseline target, ARM_MATH_ARMV8MML for building library on ARMv8M Mainline target.</p>
+<p>Define macro ARM_MATH_ARMV8MBL for building the library on Armv8-M Baseline target, ARM_MATH_ARMV8MML for building library on Armv8-M Mainline target.</p>
 <ul>
 <li>__FPU_PRESENT:</li>
 </ul>
@@ -194,7 +194,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <ul>
 <li>__DSP_PRESENT:</li>
 </ul>
-<p>Initialize macro __DSP_PRESENT = 1 when ARMv8M Mainline core supports DSP instructions.</p>
+<p>Initialize macro __DSP_PRESENT = 1 when Armv8-M Mainline core supports DSP instructions.</p>
 <hr/>
  <h2>CMSIS-DSP in ARM::CMSIS Pack </h2>
 <p>The following files relevant to CMSIS-DSP are present in the <b>ARM::CMSIS</b> Pack directories: </p>
@@ -214,13 +214,13 @@ $(document).ready(function(){initNavTree('index.html','');});
  <h2>Revision History of CMSIS-DSP </h2>
 <p>Please refer to <a class="el" href="ChangeLog_pg.html">Change Log</a>.</p>
 <h2>Copyright Notice </h2>
-<p>Copyright (C) 2010-2015 ARM Limited. All rights reserved. </p>
+<p>Copyright (C) 2010-2015 Arm Limited. All rights reserved. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:10 for CMSIS-DSP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:02 for CMSIS-DSP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

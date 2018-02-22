@@ -204,6 +204,23 @@ Annotation Rules</h1>
 <div class="line"><span class="preprocessor">// &lt;/e&gt;</span></div>
 </div><!-- fragment --> The example creates an option with the text <span class="XML-Token">Round-Robin Timeout [ticks]</span> and a field to enter values that can range between {1..1000].   </td></tr>
 <tr>
+<td>&lt;o <em>key-identifier</em>&gt;<sup>* (new!)</sup> </td><td>yes </td><td><p class="starttd">Option with identifier selection replacing the identifier after the specified key-identifier: </p>
+<div class="fragment"><div class="line"><span class="comment">//   &lt;o TIMESTAMP_SRC&gt;Time Stamp Source</span></div>
+<div class="line"><span class="comment">//      &lt;dwt=&gt;     DWT Cycle Counter</span></div>
+<div class="line"><span class="comment">//      &lt;systick=&gt; SysTick</span></div>
+<div class="line"><span class="comment">//      &lt;user=&gt;    User Timer </span></div>
+<div class="line"><span class="comment">//   &lt;i&gt;Selects source for 32-bit time stamp</span></div>
+<div class="line"><span class="preprocessor">#define TIMESTAMP_SRC  dwt</span></div>
+</div><!-- fragment --><p> The example creates an option with the text <span class="XML-Token">Time Stamp Source</span> and a drop down-list showing the text items <span class="XML-Token">DWT Cycle Counter</span>, <span class="XML-Token">SysTick</span> and <span class="XML-Token">User Timer</span>. The corresponding identifier within the tag &lt;...=&gt; will be used for replacement.</p>
+<p class="endtd">Use case for an assignment of an enumeration to a variable: </p>
+<div class="fragment"><div class="line"><span class="comment">//   &lt;o redPortMode&gt; Red port mode </span></div>
+<div class="line"><span class="comment">//     &lt;OutPushPull_GPIO=&gt;  PushPull</span></div>
+<div class="line"><span class="comment">//     &lt;OutOpenDrain_GPIO=&gt; OpenDrain</span></div>
+<div class="line"><span class="comment">//   &lt;i&gt;Selects GPIO output</span></div>
+<div class="line">ledConf.redPortMode = OutOpenDrain_GPIO;</div>
+</div><!-- fragment --><p> The example creates an option with the text <span class="XML-Token">Red port mode</span> and a drop down-list showing the text items <span class="XML-Token">PushPull</span> and <span class="XML-Token">OpenDrain</span>. The corresponding identifier <span class="XML-Token">OutPushPull_GPIO</span> or <span class="XML-Token">OutOpenDrain_GPIO</span> will be used to replace the identifier after the key-identifier <span class="XML-Token">redPortMode</span>.  </p>
+</td></tr>
+<tr>
 <td>&lt;o.<em>i</em>&gt;<sup>*</sup> </td><td>yes </td><td>Modify a single bit (example: &lt;e.4&gt; - modifies bit 4). <div class="fragment"><div class="line"><span class="comment">// &lt;o.4&gt; &lt;o.0&gt;High-speed</span></div>
 <div class="line"><span class="comment">//   &lt;i&gt;Enable High-speed functionality (if device supports it).</span></div>
 <div class="line"><span class="preprocessor">#define USBD0_HS                        0</span></div>
@@ -255,6 +272,14 @@ Annotation Rules</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define OS_TIMERPRIO   5</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --> In this example, the screen would show the option <span class="XML-Token">Timer Thread Priority</span>. The field Value would display the text <span class="XML-Token">High</span>. OS_TIMERPRIO is set to <span class="XML-Token">5</span>. When clicking on the field, a drop-down would show all options. See <a class="el" href="configWizard.html#configWizard_display">Tool-specific display</a>.   </td></tr>
+<tr>
+<td>&lt;<em>identifier</em>=&gt; </td><td>yes </td><td>Creates a drop down-list and displays the <em><b>text</b></em> following the definition of the identifiers <span class="XML-Token">dwt</span>, <span class="XML-Token">systick</span> and <span class="XML-Token">user</span>. Note that this must only be used in the context of &lt;o key-identifier&gt;! The <em><b>identifier</b></em> corresponding to the selected text replaces the identifier following the key-identifier specified by the &lt;o ...&gt; tag. <div class="fragment"><div class="line"><span class="comment">//   &lt;o TIMESTAMP_SRC&gt;Time Stamp Source</span></div>
+<div class="line"><span class="comment">//      &lt;dwt=&gt;     DWT Cycle Counter</span></div>
+<div class="line"><span class="comment">//      &lt;systick=&gt; SysTick</span></div>
+<div class="line"><span class="comment">//      &lt;user=&gt;    User Timer </span></div>
+<div class="line"><span class="comment">//   &lt;i&gt;Selects source for 32-bit time stamp</span></div>
+<div class="line"><span class="preprocessor">#define TIMESTAMP_SRC  dwt</span></div>
+</div><!-- fragment --> In this example, the screen would show the option <span class="XML-Token">Time Stamp Source</span>. The field value would display the text <span class="XML-Token">DWT Cycle Counter</span>. TIMESTAMP_SRC is set to <span class="XML-Token">dwt</span>. When clicking on the field, a drop-down would show all options. See <a class="el" href="configWizard.html#configWizard_display">Tool-specific display</a>.  </td></tr>
 <tr>
 <td>&lt;#+1&gt;&#160;&#160; &lt;#-1&gt;<br/>
  &lt;#*8&gt;&#160;&#160; &lt;#/3&gt; </td><td>no </td><td>Modifies the entered or displayed value according to the operator (add, sub, mul, div). The changed value is set for the code symbol. <br/>
@@ -434,7 +459,7 @@ Configuration Wizard Display</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:20 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:27 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

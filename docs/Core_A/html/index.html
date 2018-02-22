@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -123,7 +123,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <p>The following sections provide details about the CMSIS-Core (Cortex-A):</p>
 <ul>
 <li><a class="el" href="using_pg.html">Using CMSIS in Embedded Applications</a> describes the project setup and shows a simple program example.</li>
-<li><a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> describes the files of the CMSIS-Core (Cortex-A) in detail and explains how to adapt template files provided by ARM to silicon vendor devices.</li>
+<li><a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> describes the files of the CMSIS-Core (Cortex-A) in detail and explains how to adapt template files provided by Arm to silicon vendor devices.</li>
 <li><a class="el" href="coreMISRA_Exceptions_pg.html">MISRA-C Deviations</a> describes the violations to the MISRA standard.</li>
 <li><a href="Modules.html"><b>Reference</b> </a> describe the features and functions of the <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> in detail.</li>
 <li><a href="Annotated.html"><b>Data</b> <b>Structures</b> </a> describe the data structures of the <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> in detail.</li>
@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <tr>
 <td><b>CMSIS\Core_A\Include</b> </td><td>CMSIS-Core (Cortex-A) header files (for example <a class="el" href="core__ca_8h.html" title="CMSIS Cortex-A Core Peripheral Access Layer Header File. ">core_ca.h</a>, etc.) </td></tr>
 <tr>
-<td><b>Device</b> </td><td><a class="el" href="using_ARM_pg.html">ARM reference implementations</a> of Cortex-A devices </td></tr>
+<td><b>Device</b> </td><td><a class="el" href="using_ARM_pg.html">Arm reference implementations</a> of Cortex-A devices </td></tr>
 <tr>
 <td><b>Device\_Template_Vendor</b> </td><td><a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> for extension by silicon vendors </td></tr>
 </table>
@@ -149,22 +149,22 @@ Processor Support</h1>
 <p>CMSIS supports a selected subset of <a href="http://www.arm.com/products/processors/cortex-a/index.php" target="_blank"><b>Cortex-A processors</b></a>.</p>
 <h2><a class="anchor" id="ref_man_ca_sec"></a>
 Cortex-A Technical Reference Manuals</h2>
-<p>The following Technical Reference Manuals describe the various ARM Cortex-A processors:</p>
+<p>The following Technical Reference Manuals describe the various Arm Cortex-A processors:</p>
 <ul>
-<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0433c/DDI0433C_cortex_a5_trm.pdf" target="_blank"><b>Cortex-A5</b></a> (ARMv7-A architecture)</li>
-<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0464f/DDI0464F_cortex_a7_mpcore_r0p5_trm.pdf" target="_blank"><b>Cortex-A7</b></a> (ARMv7-A architecture)</li>
-<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.100511_0401_10_en/arm_cortexa9_trm_100511_0401_10_en.pdf" target="_blank"><b>Cortex-A9</b></a> (ARMv7-A architecture)</li>
+<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0433c/DDI0433C_cortex_a5_trm.pdf" target="_blank"><b>Cortex-A5</b></a> (Armv7-A architecture)</li>
+<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0464f/DDI0464F_cortex_a7_mpcore_r0p5_trm.pdf" target="_blank"><b>Cortex-A7</b></a> (Armv7-A architecture)</li>
+<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.100511_0401_10_en/arm_cortexa9_trm_100511_0401_10_en.pdf" target="_blank"><b>Cortex-A9</b></a> (Armv7-A architecture)</li>
 </ul>
 <hr/>
 <h1><a class="anchor" id="tested_tools_sec"></a>
 Tested and Verified Toolchains</h1>
-<p>The <a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> supplied by ARM have been tested and verified with the following toolchains:</p>
+<p>The <a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> supplied by Arm have been tested and verified with the following toolchains:</p>
 <ul>
-<li>ARM: ARM Compiler 5.06 update 6</li>
-<li>ARM: ARM Compiler 6.9</li>
-<li>ARM: ARM Compiler 6.6.1</li>
-<li>GNU: GNU Tools for ARM Embedded 6.3.1 20170620</li>
-<li>IAR: IAR ANSI C/C++ Compiler for ARM 8.20.1.14183</li>
+<li>Arm: Arm Compiler 5.06 update 6</li>
+<li>Arm: Arm Compiler 6.9</li>
+<li>Arm: Arm Compiler 6.6.2</li>
+<li>GNU: GNU Tools for Arm Embedded 6.3.1 20170620</li>
+<li>IAR: IAR ANSI C/C++ Compiler for Arm 8.20.1.14183</li>
 </ul>
 <hr/>
  </div></div><!-- contents -->
@@ -172,7 +172,7 @@ Tested and Verified Toolchains</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:59 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:47 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

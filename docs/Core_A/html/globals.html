@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -255,6 +255,9 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>__get_CPSR()
 : <a class="el" href="group__CMSIS__CPSR.html#ga0308d7d313bced36c3d1a4c2f9741186">cmsis_armcc.h</a>
 </li>
+<li>__get_CSSELR()
+: <a class="el" href="cmsis__cp15_8h.html#a99c40d6a37940e66339191ce3fe68762">cmsis_cp15.h</a>
+</li>
 <li>__get_DACR()
 : <a class="el" href="group__CMSIS__DACR.html#ga10278deb975c653555ee70178546aaa6">cmsis_cp15.h</a>
 </li>
@@ -278,6 +281,9 @@ $(document).ready(function(){initNavTree('globals.html','');});
 </li>
 <li>__get_MPIDR()
 : <a class="el" href="group__CMSIS__MPIDR.html#ga05394b4cb9fb0ba1329ec6521c76e571">cmsis_cp15.h</a>
+</li>
+<li>__get_MVBAR()
+: <a class="el" href="group__CMSIS__MVBAR.html#ga3839224facf28080e73ac1bd6e356c30">cmsis_cp15.h</a>
 </li>
 <li>__get_SCTLR()
 : <a class="el" href="group__CMSIS__SCTLR.html#ga3070304d6180433c91c4e6daef3f3c73">cmsis_cp15.h</a>
@@ -323,7 +329,10 @@ $(document).ready(function(){initNavTree('globals.html','');});
 : <a class="el" href="group__CMSIS__Core__InstructionInterface.html#gaad233022e850a009fc6f7602be1182f6">cmsis_armcc.h</a>
 </li>
 <li>__L1C_CleanInvalidateCache()
-: <a class="el" href="group__L1__cache__functions.html#ga722ceb077e491bb4befcfbb3aee9b20b">cmsis_armcc.h</a>
+: <a class="el" href="group__L1__cache__functions.html#ga722ceb077e491bb4befcfbb3aee9b20b">core_ca.h</a>
+</li>
+<li>__L1C_MaintainDCacheSetWay()
+: <a class="el" href="core__ca_8h.html#a5ace5c651cf18aaa7659e1fbe6e77988">core_ca.h</a>
 </li>
 <li>__L2C_PRESENT
 : <a class="el" href="ARMCA9_8h.html#a102b9f59f0fe8f9bb492d42803ebf586">ARMCA9.h</a>
@@ -336,6 +345,9 @@ $(document).ready(function(){initNavTree('globals.html','');});
 </li>
 <li>__LDREXW
 : <a class="el" href="cmsis__armcc_8h.html#aa872ae25197f1dddc52835fdfed9a881">cmsis_armcc.h</a>
+</li>
+<li>__log2_up()
+: <a class="el" href="core__ca_8h.html#a35988a42567ca868bffd0b6171021ecb">core_ca.h</a>
 </li>
 <li>__NO_RETURN
 : <a class="el" href="group__comp__cntrl__gr.html#ga153a4a31b276a9758959580538720a51">cmsis_armcc.h</a>
@@ -398,7 +410,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
 : <a class="el" href="group__CMSIS__CBPM.html#gaa5a1bf5487bd00c61764ee2614bea3d4">cmsis_cp15.h</a>
 </li>
 <li>__set_CCSIDR()
-: <a class="el" href="cmsis__cp15_8h.html#a3af0d78ff649e2a1cb397b2a502b2e4c">cmsis_cp15.h</a>
+: <a class="el" href="cmsis__cp15_8h.html#a639d467f42fdad7a173f90568b697fc8">cmsis_cp15.h</a>
 </li>
 <li>__set_CNTFRQ()
 : <a class="el" href="group__CMSIS__CNTFRQ.html#ga66d2d5070c8577f95e1d2e2bcb3ad143">cmsis_cp15.h</a>
@@ -424,17 +436,29 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>__set_CPSR()
 : <a class="el" href="group__CMSIS__CPSR.html#gaf87faa3453333bcac5667fb1ccfc7f61">cmsis_armcc.h</a>
 </li>
+<li>__set_CSSELR()
+: <a class="el" href="cmsis__cp15_8h.html#a14db4d16b3fc39943a94ef9fce2e4f16">cmsis_cp15.h</a>
+</li>
 <li>__set_DACR()
 : <a class="el" href="group__CMSIS__DACR.html#ga72e050de5b19cd6b683f6c234968b78b">cmsis_cp15.h</a>
 </li>
 <li>__set_DCCIMVAC()
 : <a class="el" href="group__CMSIS__CBPM.html#ga5a6dc4a371d0e5c5ea9f9a1dcea999ff">cmsis_cp15.h</a>
 </li>
+<li>__set_DCCISW()
+: <a class="el" href="cmsis__cp15_8h.html#a40f09b50f1a4565adcae6825ad989f10">cmsis_cp15.h</a>
+</li>
 <li>__set_DCCMVAC()
 : <a class="el" href="group__CMSIS__CBPM.html#gaa47448c89b3134f5e9fbb7ba0b69c7d9">cmsis_cp15.h</a>
 </li>
+<li>__set_DCCSW()
+: <a class="el" href="cmsis__cp15_8h.html#a6c4b49c4e9366c823f6ee909cf446483">cmsis_cp15.h</a>
+</li>
 <li>__set_DCIMVAC()
 : <a class="el" href="group__CMSIS__CBPM.html#ga643b62f37449627ca2ec3de80c1b8abb">cmsis_cp15.h</a>
+</li>
+<li>__set_DCISW()
+: <a class="el" href="cmsis__cp15_8h.html#ab1f9c335fd63529d9385f83b8d6cb43e">cmsis_cp15.h</a>
 </li>
 <li>__set_DFSR()
 : <a class="el" href="group__CMSIS__DFSR.html#ga824a3e4ae371ef38641375f9fa4cc29c">cmsis_cp15.h</a>
@@ -453,6 +477,9 @@ $(document).ready(function(){initNavTree('globals.html','');});
 </li>
 <li>__set_mode()
 : <a class="el" href="cmsis__armcc_8h.html#a306b0a932918f2243a40d4e855503be2">cmsis_armcc.h</a>
+</li>
+<li>__set_MVBAR()
+: <a class="el" href="group__CMSIS__MVBAR.html#ga73c9231bcf1669fb34a1ee3f8062ad09">cmsis_cp15.h</a>
 </li>
 <li>__set_SCTLR()
 : <a class="el" href="group__CMSIS__SCTLR.html#gaf9b8e96ddd2e76c4475cf957600fd57a">cmsis_cp15.h</a>
@@ -500,8 +527,8 @@ $(document).ready(function(){initNavTree('globals.html','');});
 : <a class="el" href="mem__ARMCA9_8h.html#a56b98f7c5dac25e019ab4cc1b195ae60">mem_ARMCA9.h</a>
 </li>
 <li>__TIM_PRESENT
-: <a class="el" href="ARMCA9_8h.html#a0e57ca9f1bc10c2de05d383d2c76267a">ARMCA9.h</a>
-, <a class="el" href="core__ca_8h.html#a0e57ca9f1bc10c2de05d383d2c76267a">core_ca.h</a>
+: <a class="el" href="core__ca_8h.html#a0e57ca9f1bc10c2de05d383d2c76267a">core_ca.h</a>
+, <a class="el" href="ARMCA9_8h.html#a0e57ca9f1bc10c2de05d383d2c76267a">ARMCA9.h</a>
 </li>
 <li>__TTB_BASE
 : <a class="el" href="mem__ARMCA9_8h.html#a5636831f81072fadf130e3b462d7b5f6">mem_ARMCA9.h</a>
@@ -547,8 +574,8 @@ $(document).ready(function(){initNavTree('globals.html','');});
 , <a class="el" href="group__peripheral__gr.html#ga139b6e261c981f014f386927ca4a8444">core_ca.txt</a>
 </li>
 <li>_VAL2FLD
-: <a class="el" href="group__peripheral__gr.html#ga286e3b913dbd236c7f48ea70c8821f4e">core_ca.txt</a>
-, <a class="el" href="core__ca_8h.html#a286e3b913dbd236c7f48ea70c8821f4e">core_ca.h</a>
+: <a class="el" href="core__ca_8h.html#a286e3b913dbd236c7f48ea70c8821f4e">core_ca.h</a>
+, <a class="el" href="group__peripheral__gr.html#ga286e3b913dbd236c7f48ea70c8821f4e">core_ca.txt</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -556,7 +583,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:59 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:47 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

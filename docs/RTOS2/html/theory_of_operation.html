@@ -187,7 +187,39 @@ Static Object Memory</h2>
 <img src="MemAllocStat.png" alt="MemAllocStat.png"/>
 <div class="caption">
 Statically allocated memory for all objects</div></div>
-<p> The following code example shows how to create an OS object using static memory.</p>
+<p> Static memory allocation can be achieved by providing user-defined memory using attributes at object creation, see <a class="el" href="group__CMSIS__RTOS__MemoryMgmt.html#CMSIS_RTOS_MemoryMgmt_Manual">Manual User-defined Allocation</a>. Please take special note of the following restrictions:</p>
+<table class="doxtable">
+<tr>
+<th>Memory type </th><th>Requirements  </th></tr>
+<tr>
+<td>Control Block (osXxxAttr_t::cb_mem) </td><td>4-Byte alignment. Size defined by <a class="el" href="group__rtx5__specific__defines.html#ga30d19272204231956582ebfff69567f6">osRtxThreadCbSize</a>, <a class="el" href="group__rtx5__specific__defines.html#gaf8a145fdeb24fd912971f0671b1a3603">osRtxTimerCbSize</a>, <a class="el" href="group__rtx5__specific__defines.html#ga68100c8c44931f03547973294c433075">osRtxEventFlagsCbSize</a>, <a class="el" href="group__rtx5__specific__defines.html#ga188bfaaf7477cf24cbc9f207feaeb53a">osRtxMutexCbSize</a>, <a class="el" href="group__rtx5__specific__defines.html#ga0949b67063d0bd427fbee9c816b5d45a">osRtxSemaphoreCbSize</a>, <a class="el" href="group__rtx5__specific__defines.html#gab8e49e9e1eea5a015f2a3114cabceb48">osRtxMemoryPoolCbSize</a>, <a class="el" href="group__rtx5__specific__defines.html#gaa8d067c476faa6bfc8e5e21f3b3c844e">osRtxMessageQueueCbSize</a>. </td></tr>
+<tr>
+<td>Thread Stack (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43" title="memory for stack ">osThreadAttr_t::stack_mem</a>) </td><td>8-Byte alignment. Size is application specific, i.e. amount of stack variables and frames. </td></tr>
+<tr>
+<td>Memory Pool (<a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#a5799465cca9c71c5587ceb0986f5b06a" title="memory for data storage ">osMemoryPoolAttr_t::mp_mem</a>) </td><td>4-Byte alignment. Size calculated with <a class="el" href="group__rtx5__specific__defines.html#gac6bea3541b458bbc79eafce42a2d87a2">osRtxMemoryPoolMemSize</a>. </td></tr>
+<tr>
+<td>Message Queue (<a class="el" href="group__CMSIS__RTOS__Message.html#a4e208dc0fb049b42c4b90cbd2791c5ad" title="memory for data storage ">osMessageQueueAttr_t::mq_mem</a>) </td><td>4-Byte alignment. Size calculated with <a class="el" href="group__rtx5__specific__defines.html#ga47eb1e21f1bf9a42281c6c89c7473e99">osRtxMessageQueueMemSize</a>. </td></tr>
+</table>
+<p>In order to allow RTX5 aware debugging, i.e. Component Viewer, to recognize control blocks these needs to be placed in individual memory sections, i.e. using <code>__attribute__((section(...)))</code>.</p>
+<table class="doxtable">
+<tr>
+<th>RTX Object </th><th>Linker Section  </th></tr>
+<tr>
+<td>Thread </td><td><code>.bss.os.thread.cb</code> </td></tr>
+<tr>
+<td>Timer </td><td><code>.bss.os.timer.cb</code> </td></tr>
+<tr>
+<td>Event Flags </td><td><code>.bss.os.evflags.cb</code> </td></tr>
+<tr>
+<td>Mutex </td><td><code>.bss.os.mutex.cb</code> </td></tr>
+<tr>
+<td>Semaphore </td><td><code>.bss.os.semaphore.cb</code> </td></tr>
+<tr>
+<td>Memory Pool </td><td><code>.bss.os.mempool.cb</code> </td></tr>
+<tr>
+<td>Message Queue </td><td><code>.bss.os.msgqueue.cb</code> </td></tr>
+</table>
+<p>The following code example shows how to create an OS object using static memory.</p>
 <p><b> Code Example:</b> </p>
 <div class="fragment"><div class="line"><span class="comment">/*----------------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment"> * CMSIS-RTOS &#39;main&#39; function template</span></div>
@@ -211,6 +243,7 @@ Statically allocated memory for all objects</div></div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Define objects that are statically allocated for worker thread 1</span></div>
+<div class="line">__attribute__((section(<span class="stringliteral">&quot;.bss.os.thread.cb&quot;</span>)))</div>
 <div class="line"><a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a> worker_thread_tcb_1;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Reserve two areas for the stacks of worker thread 1</span></div>
@@ -219,7 +252,7 @@ Statically allocated memory for all objects</div></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Define the attributes which are used for thread creation</span></div>
 <div class="line"><span class="comment">// Optional const saves RAM memory and includes the values in periodic ROM tests </span></div>
-<div class="line"><span class="keyword">const</span> <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> worker_attr_1 = {</div>
+<div class="line">const <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> worker_attr_1 = {</div>
 <div class="line">  <span class="stringliteral">&quot;wrk1&quot;</span>,</div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">osThreadJoinable</a>,</div>
 <div class="line">  &amp;worker_thread_tcb_1,</div>
@@ -344,13 +377,13 @@ Tick-less Low-Power Operation</h2>
 <div class="line">    <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced">osKernelResume</a> (tc);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>__WFE()</code> is not available in every ARM Cortex-M implementation. Check device manuals for availability. The alternative using <code>__WFI()</code> has other issues, please take note of <a href="http://www.keil.com/support/docs/3591.htm">http://www.keil.com/support/docs/3591.htm</a> as well.</dd></dl>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>__WFE()</code> is not available in every Arm Cortex-M implementation. Check device manuals for availability. The alternative using <code>__WFI()</code> has other issues, please take note of <a href="http://www.keil.com/support/docs/3591.htm">http://www.keil.com/support/docs/3591.htm</a> as well.</dd></dl>
 <h1><a class="anchor" id="rtx_os_h"></a>
 RTX5 Header File</h1>
 <p>Every implementation of the CMSIS-RTOS2 API can bring its own additional features. RTX5 adds a couple of <a class="el" href="group__rtx5__specific.html">functions</a> for the idle more, for error notifications, and special system timer functions. It also is using macros for control block and memory sizes.</p>
 <p>If you require some of the RTX specific functions in your application code, #include the header file <b>rtx_os.h</b>:</p>
 <div class="fragment"><div class="line"><span class="comment">/*</span></div>
-<div class="line"><span class="comment"> * Copyright (c) 2013-2017 ARM Limited. All rights reserved.</span></div>
+<div class="line"><span class="comment"> * Copyright (c) 2013-2018 Arm Limited. All rights reserved.</span></div>
 <div class="line"><span class="comment"> *</span></div>
 <div class="line"><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
 <div class="line"><span class="comment"> *</span></div>
@@ -389,8 +422,8 @@ RTX5 Header File</h1>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Kernel Information</span></div>
 <div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxVersionAPI      20010002   </span><span class="comment">///&lt; API version (2.1.2)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50020003   <span class="comment">///&lt; Kernel version (5.2.3)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.2.3&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
+<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50030000   <span class="comment">///&lt; Kernel version (5.3.0)</span></div>
+<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.3.0&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Common definitions ====</span></div>
@@ -436,15 +469,15 @@ RTX5 Header File</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadBlocked              ((uint8_t)osThreadBlocked)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadTerminated           ((uint8_t)osThreadTerminated)</span></div>
 <div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="preprocessor">#define osRtxThreadWaitingDelay         (osRtxThreadBlocked | 0x10U)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingJoin          (osRtxThreadBlocked | 0x20U)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingThreadFlags   (osRtxThreadBlocked | 0x30U) </span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingEventFlags    (osRtxThreadBlocked | 0x40U) </span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingMutex         (osRtxThreadBlocked | 0x50U)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingSemaphore     (osRtxThreadBlocked | 0x60U)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingMemoryPool    (osRtxThreadBlocked | 0x70U)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingMessageGet    (osRtxThreadBlocked | 0x80U)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingMessagePut    (osRtxThreadBlocked | 0x90U)</span></div>
+<div class="line"><span class="preprocessor">#define osRtxThreadWaitingDelay         ((uint8_t)(osRtxThreadBlocked | 0x10U))</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingJoin          ((uint8_t)(osRtxThreadBlocked | 0x20U))</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingThreadFlags   ((uint8_t)(osRtxThreadBlocked | 0x30U))</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingEventFlags    ((uint8_t)(osRtxThreadBlocked | 0x40U))</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingMutex         ((uint8_t)(osRtxThreadBlocked | 0x50U))</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingSemaphore     ((uint8_t)(osRtxThreadBlocked | 0x60U))</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingMemoryPool    ((uint8_t)(osRtxThreadBlocked | 0x70U))</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingMessageGet    ((uint8_t)(osRtxThreadBlocked | 0x80U))</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxThreadWaitingMessagePut    ((uint8_t)(osRtxThreadBlocked | 0x90U))</span></div>
 <div class="line"><span class="preprocessor"></span> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Thread Flags definitions</span></div>
 <div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxThreadFlagDefStack 0x10U   </span><span class="comment">///&lt; Default Stack flag</span></div>
@@ -493,7 +526,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="preprocessor"></span> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Timer Function Information</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line">  <span class="keywordtype">void</span>                            *fp;  <span class="comment">///&lt; Function Pointer</span></div>
+<div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaacf768c1ec64b020598afb985d7b30be">osTimerFunc_t</a>                  func;  <span class="comment">///&lt; Function Pointer</span></div>
 <div class="line"><span class="comment"></span>  <span class="keywordtype">void</span>                           *arg;  <span class="comment">///&lt; Function Argument</span></div>
 <div class="line"><span class="comment"></span>} <a class="code" href="group__rtx5__specific__structs.html#structosRtxTimerFinfo__t">osRtxTimerFinfo_t</a>;</div>
 <div class="line"> <span class="comment"></span></div>
@@ -515,7 +548,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment">//  ==== Event Flags definitions ====</span></div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Event Flags Control Block</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>osRtxEventFlags_s {</div>
+<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
@@ -547,7 +580,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment">//  ==== Semaphore definitions ====</span></div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Semaphore Control Block</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>osRtxSemaphore_s {</div>
+<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
@@ -562,7 +595,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment">//  ==== Memory Pool definitions ====</span></div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Memory Pool Information</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>osRtxMpInfo_s {</div>
+<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">  uint32_t                 max_blocks;  <span class="comment">///&lt; Maximum number of Blocks</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                used_blocks;  <span class="comment">///&lt; Number of used Blocks</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                 block_size;  <span class="comment">///&lt; Block Size</span></div>
@@ -572,7 +605,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxMpInfo__t">osRtxMpInfo_t</a>;</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Memory Pool Control Block</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>osRtxMemoryPool_s {</div>
+<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
@@ -596,7 +629,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxMessage__t">osRtxMessage_t</a>;</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Message Queue Control Block</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>osRtxMessageQueue_s {</div>
+<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
@@ -614,7 +647,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment">//  ==== Generic Object definitions ====</span></div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Generic Object Control Block</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>osRtxObject_s {</div>
+<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
@@ -643,7 +676,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>      <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>             *curr;  <span class="comment">///&lt; Current running Thread</span></div>
 <div class="line"><span class="comment"></span>      <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>             *next;  <span class="comment">///&lt; Next Thread to Run</span></div>
 <div class="line"><span class="comment"></span>    } run;</div>
-<div class="line">    <span class="keyword">volatile</span> <a class="code" href="rtx__os_8h.html#structosRtxObject__t">osRtxObject_t</a>      ready;  <span class="comment">///&lt; Ready List Object</span></div>
+<div class="line">    <a class="code" href="rtx__os_8h.html#structosRtxObject__t">osRtxObject_t</a>               ready;  <span class="comment">///&lt; Ready List Object</span></div>
 <div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>               *idle;  <span class="comment">///&lt; Idle Thread</span></div>
 <div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>         *delay_list;  <span class="comment">///&lt; Delay List</span></div>
 <div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>          *wait_list;  <span class="comment">///&lt; Wait List (no Timeout)</span></div>
@@ -672,7 +705,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>    void (*event_flags)(<a class="code" href="group__rtx5__specific__structs.html#structosRtxEventFlags__t">osRtxEventFlags_t</a>*);    <span class="comment">///&lt; Event Flags Post Processing function</span></div>
 <div class="line"><span class="comment"></span>    void    (*semaphore)(<a class="code" href="group__rtx5__specific__structs.html#structosRtxSemaphore__t">osRtxSemaphore_t</a>*);    <span class="comment">///&lt; Semaphore Post Processing function</span></div>
 <div class="line"><span class="comment"></span>    void (*memory_pool)(<a class="code" href="group__rtx5__specific__structs.html#structosRtxMemoryPool__t">osRtxMemoryPool_t</a>*);    <span class="comment">///&lt; Memory Pool Post Processing function</span></div>
-<div class="line"><span class="comment"></span>    void  (*message_queue)(<a class="code" href="rtx__os_8h.html#structosRtxMessage__t">osRtxMessage_t</a>*);    <span class="comment">///&lt; Message Queue Post Processing function</span></div>
+<div class="line"><span class="comment"></span>    void        (*message)(<a class="code" href="rtx__os_8h.html#structosRtxMessage__t">osRtxMessage_t</a>*);    <span class="comment">///&lt; Message Post Processing function</span></div>
 <div class="line"><span class="comment"></span>  } post_process;</div>
 <div class="line">  <span class="keyword">struct </span>{                              <span class="comment">///&lt; Memory Pools (Variable Block Size)</span></div>
 <div class="line"><span class="comment"></span>    <span class="keywordtype">void</span>                       *stack;  <span class="comment">///&lt; Stack Memory</span></div>
@@ -693,18 +726,34 @@ RTX5 Header File</h1>
 <div class="line">} <a class="code" href="rtx__os_8h.html#structosRtxInfo__t">osRtxInfo_t</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">extern</span> <a class="code" href="rtx__os_8h.html#structosRtxInfo__t">osRtxInfo_t</a> <a class="code" href="rtx__os_8h.html#ad2270125c4e4991c3231d752b6ee5f3f">osRtxInfo</a>;           <span class="comment">///&lt; OS Runtime Information</span></div>
-<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment"></span> <span class="comment"></span></div>
+<div class="line"><span class="comment">/// OS Runtime Object Memory Usage structure</span></div>
+<div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line">  uint32_t cnt_alloc;                   <span class="comment">///&lt; Counter for alloc</span></div>
+<div class="line"><span class="comment"></span>  uint32_t cnt_free;                    <span class="comment">///&lt; Counter for free</span></div>
+<div class="line"><span class="comment"></span>  uint32_t max_used;                    <span class="comment">///&lt; Maximum used</span></div>
+<div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a>;</div>
+<div class="line"> <span class="comment"></span></div>
+<div class="line"><span class="comment">/// OS Runtime Object Memory Usage variables</span></div>
+<div class="line"><span class="comment"></span><span class="keyword">extern</span> <a class="code" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> <a class="code" href="rtx__os_8h.html#a90374bf1d999b2e1594763ab6c97cd69">osRtxThreadMemUsage</a>;</div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> <a class="code" href="rtx__os_8h.html#aa3e7cf488411dbdc814420b81f36b935">osRtxTimerMemUsage</a>;</div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> <a class="code" href="rtx__os_8h.html#a0c81327f94697890809ce4a594bb9d5c">osRtxEventFlagsMemUsage</a>;</div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> <a class="code" href="rtx__os_8h.html#a683927dcd67dcb912884d16efa81a58d">osRtxMutexMemUsage</a>;</div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> <a class="code" href="rtx__os_8h.html#aec50b39ce30d9c87916d077f6f764387">osRtxSemaphoreMemUsage</a>;</div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> <a class="code" href="rtx__os_8h.html#ae5dea30a13d7a2316699a7f201504bc7">osRtxMemoryPoolMemUsage</a>;</div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="rtx__os_8h.html#structosRtxObjectMemUsage__t">osRtxObjectMemUsage_t</a> <a class="code" href="rtx__os_8h.html#af3da38b316a84990128e8d9f34e3e6d3">osRtxMessageQueueMemUsage</a>;</div>
+<div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== OS API definitions ====</span></div>
-<div class="line"> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Object Limits definitions</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxThreadFlagsLimit    31U    </span><span class="comment">///&lt; number of Thread Flags available per thread</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Object Limits definitions</span></div>
+<div class="line"><span class="preprocessor">#define osRtxThreadFlagsLimit    31U    </span><span class="comment">///&lt; number of Thread Flags available per thread</span></div>
 <div class="line"><span class="comment"></span>#define osRtxEventFlagsLimit     31U    <span class="comment">///&lt; number of Event Flags available per object</span></div>
 <div class="line"><span class="comment"></span>#define osRtxMutexLockLimit      255U   <span class="comment">///&lt; maximum number of recursive mutex locks</span></div>
 <div class="line"><span class="comment"></span>#define osRtxSemaphoreTokenLimit 65535U <span class="comment">///&lt; maximum number of tokens per semaphore</span></div>
 <div class="line"><span class="comment"></span> </div>
-<div class="line"><span class="comment">/// Control Block sizes</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxThreadCbSize        sizeof(osRtxThread_t)</span></div>
+<div class="line"><span class="comment">// Control Block sizes</span></div>
+<div class="line"><span class="preprocessor">#define osRtxThreadCbSize        sizeof(osRtxThread_t)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxTimerCbSize         sizeof(osRtxTimer_t)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxEventFlagsCbSize    sizeof(osRtxEventFlags_t)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxMutexCbSize         sizeof(osRtxMutex_t)</span></div>
@@ -726,13 +775,13 @@ RTX5 Header File</h1>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== OS External Functions ====</span></div>
-<div class="line"> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// OS Error Codes</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxErrorStackUnderflow        1U </span><span class="comment">///&lt; Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks.</span></div>
-<div class="line"><span class="comment"></span>#define osRtxErrorISRQueueOverflow      2U <span class="comment">///&lt; ISR Queue overflow detected when inserting object.</span></div>
-<div class="line"><span class="comment"></span>#define osRtxErrorTimerQueueOverflow    3U <span class="comment">///&lt; User Timer Callback Queue overflow detected for timer.</span></div>
-<div class="line"><span class="comment"></span>#define osRtxErrorClibSpace             4U <span class="comment">///&lt; Standard C/C++ library libspace not available: increase \c OS_THREAD_LIBSPACE_NUM.</span></div>
-<div class="line"><span class="comment"></span>#define osRtxErrorClibMutex             5U <span class="comment">///&lt; Standard C/C++ library mutex initialization failed.</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// OS Error Codes</span></div>
+<div class="line"><span class="preprocessor">#define osRtxErrorStackUnderflow        1U  </span><span class="comment">///&lt; Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks.</span></div>
+<div class="line"><span class="comment"></span>#define osRtxErrorISRQueueOverflow      2U  <span class="comment">///&lt; ISR Queue overflow detected when inserting object.</span></div>
+<div class="line"><span class="comment"></span>#define osRtxErrorTimerQueueOverflow    3U  <span class="comment">///&lt; User Timer Callback Queue overflow detected for timer.</span></div>
+<div class="line"><span class="comment"></span>#define osRtxErrorClibSpace             4U  <span class="comment">///&lt; Standard C/C++ library libspace not available: increase \c OS_THREAD_LIBSPACE_NUM.</span></div>
+<div class="line"><span class="comment"></span>#define osRtxErrorClibMutex             5U  <span class="comment">///&lt; Standard C/C++ library mutex initialization failed.</span></div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/// OS Error Callback function</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">extern</span> uint32_t <a class="code" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> (uint32_t code, <span class="keywordtype">void</span> *object_id);</div>
@@ -825,7 +874,7 @@ Calls from Interrupt Service Routines</h1>
 <li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga33b71d14cecf90b4e72639dd19f23a5e">osEventFlagsSet</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga93bf258ca0007c6641fbe8e4f2b8a1e5">osEventFlagsClear</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga8bda3185f46bfd278cea8a6cf357677d">osEventFlagsGet</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a></li>
 <li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>, <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a>, <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7559d4dff3cda9992fc5ab5de3e74c70">osSemaphoreGetCount</a></li>
 <li><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16">osMemoryPoolFree</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gad696e94bfbe28f0b6613f9303fdf6a37">osMemoryPoolGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab2bf059b7fa7679c3cccdaeec60b6c0e">osMemoryPoolGetBlockSize</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga958a9449bff8c95ce213de98eef5739d">osMemoryPoolGetCount</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga0394cffa9479a7994e3b03c79c1cb909">osMemoryPoolGetSpace</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gac24f87d4f395e9e9c900c320e45ade8a">osMessageQueueGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga96d3d84069b20359de48109e28a1a89e">osMessageQueueGetMsgSize</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga6a32ac394fcff568b251c160cc3014b2">osMessageQueueGetCount</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gaddf0904427436dd3880d46263c2dc9fa">osMessageQueueGetSpace</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc">osMessageQueuePut</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gac24f87d4f395e9e9c900c320e45ade8a">osMessageQueueGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga96d3d84069b20359de48109e28a1a89e">osMessageQueueGetMsgSize</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga6a32ac394fcff568b251c160cc3014b2">osMessageQueueGetCount</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gaddf0904427436dd3880d46263c2dc9fa">osMessageQueueGetSpace</a></li>
 </ul>
 <p>Functions that cannot be called from an ISR are verifying the interrupt status and return the status code <b>osErrorISR</b>, in case they are called from an ISR context. In some implementations, this condition might be caught using the HARD_FAULT vector. </p>
 </div></div><!-- contents -->
@@ -834,7 +883,7 @@ Calls from Interrupt Service Routines</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

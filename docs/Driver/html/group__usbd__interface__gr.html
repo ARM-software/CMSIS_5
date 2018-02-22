@@ -215,7 +215,6 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Driver API for USB Device Peripheral (Driver_USBD.h) </p>
-<hr/>
 <p><b>USB Device API</b></p>
 <p>The header file <b><a class="el" href="Driver__USBD_8h.html">Driver_USBD.h</a></b> defines the API for the <b>USB Device Driver</b> interface used by middleware components. The driver implementation itself is a typical part of the Device Family Pack, which provides entry points to the interface as function pointers in the struct <a class="el" href="group__usbd__interface__gr.html#structARM__DRIVER__USBD">ARM_DRIVER_USBD</a>. This structure can be available several times in each interface to control multiple USBD interfaces.</p>
 <p>Header file <b><a class="el" href="Driver__USBD_8h.html">Driver_USBD.h</a></b> also defines callback routines that can be categorized as <b>device event callbacks</b> and <b>endpoint event callbacks</b>. Callbacks are called by the driver, in interrupt context when an appropriate event occurs, to signal device related events (<a class="el" href="group__USBD__dev__events.html">USBD Device Events</a>) and endpoint related events (<a class="el" href="group__USBD__ep__events.html">USBD Endpoint Events</a>).</p>
@@ -1381,7 +1380,7 @@ The parameter <em>event</em> indicates one or more events that occurred during d
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:03 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:51 for CMSIS-Driver by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

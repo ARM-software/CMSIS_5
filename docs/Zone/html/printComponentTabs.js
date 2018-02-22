@@ -18,6 +18,7 @@ var arr = [];
  arr.push( new tabElement( "CORE_M",  "/Core/html/",        "CMSIS-Core(M)")    );
  arr.push( new tabElement( "DRV",     "/Driver/html/",      "Driver")    );
  arr.push( new tabElement( "DSP",     "/DSP/html/",         "DSP")       );
+ arr.push( new tabElement( "NN",      "/NN/html/",          "NN")       );
  arr.push( new tabElement( "RTOSv1",  "/RTOS/html/",        "RTOS v1")   );
  arr.push( new tabElement( "RTOSv2",  "/RTOS2/html/",       "RTOS v2")   );
  arr.push( new tabElement( "PACK",    "/Pack/html/",        "Pack")      );

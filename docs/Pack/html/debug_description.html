@@ -131,23 +131,23 @@ Debug description elements</h1>
 <ul>
 <li><a class="el" href="pdsc_family_pg.html#element_debug">debug</a> with the child element <a class="el" href="pdsc_family_pg.html#element_dbg_datapatch">dbg_datapatch</a> contains settings for the debug connection and for fixing silicon issues in software.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugconfig">debugconfig</a> provides the default debugger configuration for a target connection.</li>
-<li><a class="el" href="pdsc_family_pg.html#element_debugvars">debugvars</a> specifies global debug access variables. They can be used in addition to pre-defined variables in order to query settings from a debug access sequences.</li>
+<li><a class="el" href="pdsc_family_pg.html#element_debugvars">debugvars</a> specifies global debug access variables. They can be used in addition to predefined variables in order to query settings from a debug access sequences.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_debugport">debugport</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_dp_jtag">dp_jtag</a>, <a class="el" href="pdsc_family_pg.html#element_dp_swd">dp_swd</a>, and <a class="el" href="pdsc_family_pg.html#element_dp_cjtag">dp_cjtag</a> describes the debug port in detail.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_sequences">sequences</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_sequence">sequence</a>, <a class="el" href="pdsc_family_pg.html#element_seq_control">seq_control</a>, and <a class="el" href="pdsc_family_pg.html#element_seq_block">seq_block</a> creates a configuration for debug access sequences.</li>
 <li><a class="el" href="pdsc_family_pg.html#element_trace">trace</a> with the child elements <a class="el" href="pdsc_family_pg.html#element_trace_serialwire">trace_serialwire</a>, <a class="el" href="pdsc_family_pg.html#element_trace_traceport">trace_traceport</a>, and <a class="el" href="pdsc_family_pg.html#element_trace_tracebuffer">trace_tracebuffer</a> sets up the trace connection.</li>
 </ul>
 <h1><a class="anchor" id="pdsc_SequenceNameEnum_pg"></a>
 Debug access sequences</h1>
-<p>Debug access sequences define the activities of development tools to connect to a device using the debug channel for debugging, tracing, or flash programming. Several debug access sequences are pre-defined and executed in specific context. Refer to <a class="el" href="pdsc_family_pg.html#element_sequences">sequences</a> for details.</p>
+<p>Debug access sequences define the activities of development tools to connect to a device using the debug channel for debugging, tracing, or flash programming. Several debug access sequences are predefined and executed in specific context. Refer to <a class="el" href="pdsc_family_pg.html#element_sequences">sequences</a> for details.</p>
 <p>Software development tools should implement <a class="el" href="debug_description.html#default_sequences">Default debug access sequences</a>. These default sequences can be overwritten by device specific sequences using the <a class="el" href="pdsc_family_pg.html#element_sequence">sequence</a> element in the <a class="el" href="pdsc_family_pg.html#element_sequences">sequences</a> section of the PDSC file. Additionally, a PDSC file can contain user-defined sequences, for example to reuse access sequence fragments:</p>
 <ul>
 <li><a class="el" href="debug_description.html#usage_of_sequences">Usage of debug access sequences</a> explains how the sequences are used from a development tool point of view.</li>
-<li><a class="el" href="debug_description.html#default_sequences">Default debug access sequences</a> lists all debug access sequences that are pre-defined by the CMSIS-Pack standard and shows the details of the default debug access sequences.</li>
+<li><a class="el" href="debug_description.html#default_sequences">Default debug access sequences</a> lists all debug access sequences that are predefined by the CMSIS-Pack standard and shows the details of the default debug access sequences.</li>
 <li><a class="el" href="debug_description.html#writing_sequences">Writing debug access sequences</a> explains how to write custom debug access sequences. These can be used to either override default sequences or to define device specific sequences.</li>
 </ul>
 <h1><a class="anchor" id="usage_of_sequences"></a>
 Usage of debug access sequences</h1>
-<p>Pre-defined Debug Access Sequences are used in the following context:</p>
+<p>Predefined Debug Access Sequences are used in the following context:</p>
 <ul>
 <li><b>Connect Debugger to Device</b> is executed when debugging or flash programming with the target starts.</li>
 <li><b>Reset Device</b> is executed to reset the target.</li>
@@ -173,15 +173,15 @@ Usage of debug access sequences</h1>
 </div>
 <h1><a class="anchor" id="default_sequences"></a>
 Default debug access sequences</h1>
-<p>Debug access sequences get defined in the <a class="el" href="pdsc_family_pg.html#element_sequence">sequence</a> element. The following table lists the available pre-defined debug access sequences. <a class="el" href="debug_description.html#default_sequences">Default debug access sequences</a> are executed if they are not overwritten using a <a class="el" href="pdsc_family_pg.html#element_sequence">sequence</a> element. Refer to <a class="el" href="debug_description.html#usage_of_sequences">Usage of debug access sequences</a> for more information about the execution of these sequences.</p>
+<p>Debug access sequences get defined in the <a class="el" href="pdsc_family_pg.html#element_sequence">sequence</a> element. The following table lists the available predefined debug access sequences. <a class="el" href="debug_description.html#default_sequences">Default debug access sequences</a> are executed if they are not overwritten using a <a class="el" href="pdsc_family_pg.html#element_sequence">sequence</a> element. Refer to <a class="el" href="debug_description.html#usage_of_sequences">Usage of debug access sequences</a> for more information about the execution of these sequences.</p>
 <p>For debug access sequences marked in <span class="XML-Token">ItalicRed</span>, no default sequence exists. The usage in a debug description requires a related <a class="el" href="pdsc_family_pg.html#element_sequence">sequence</a> element to be present. The other sequences should be implemented in a development tool. They are executed when no sequence definition exists in the PDSC file.</p>
-<dl class="section note"><dt>Note</dt><dd>Default debug access sequences read the System Control Space (SCS) of the processor and assume that the SCS offset is implemented as defined in the ARMv6-M/ARMv7-M/ARMv8-M architecture reference manual.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Default debug access sequences read the System Control Space (SCS) of the processor and assume that the SCS offset is implemented as defined in the Armv6-M/Armv7-M/Armv8-M architecture reference manual.</dd></dl>
 <table  class="cmtable" summary="Enumeration: SequenceNameEnum">
 <tr>
 <th>name= </th><th>Description  </th></tr>
 <tr>
 <td class="XML-Token"><a class="el" href="debug_description.html#debugPortSetup">DebugPortSetup</a> </td><td>Prepare the target debug port for connection; is executed before acquiring access to the debug port.<br/>
- May include for example an SWJ-DP switch sequence as defined in the ARM Debug Interface (ADI) Architecture Specification.<br/>
+ May include for example an SWJ-DP switch sequence as defined in the Arm Debug Interface (ADI) Architecture Specification.<br/>
  <b>This sequence must not contain debug port/access port register and target memory accesses other than:</b><ul>
 <li><b>Reading the <em>DPIDR</em> debug port register to release an SWD connection from its line reset.</b></li>
 <li><b>Writing the <em>TARGETSEL</em> debug port register (SWD protocol v2).</b>   </li>
@@ -202,7 +202,7 @@ Default debug access sequences</h1>
 <td class="XML-Token"><a class="el" href="debug_description.html#debugCoreStart">DebugCoreStart</a> </td><td>Initialize core debug system.<br/>
  Executed after having connected and powered up the default debug port for the connection.  </td></tr>
 <tr>
-<td class="XML-Token"><a class="el" href="debug_description.html#debugCoreStop">DebugCoreStop</a> </td><td>Uninitialize core debug system.<br/>
+<td class="XML-Token"><a class="el" href="debug_description.html#debugCoreStop">DebugCoreStop</a> </td><td>Uninitialized core debug system.<br/>
  Executed as last step during disconnect before powering down any debug ports no longer required for concurrent connections.  </td></tr>
 <tr>
 <td class="XML-Token">DebugCodeMemRemap </td><td>Remap memory to execution location.<br/>
@@ -216,7 +216,7 @@ Default debug access sequences</h1>
 <tr>
 <td class="XML-Token"><a class="el" href="debug_description.html#resetHardwareAssert">ResetHardwareAssert</a> </td><td>Assert a system-wide reset via the dedicated debugger reset line, e.g. nRST.   </td></tr>
 <tr>
-<td class="XML-Token"><a class="el" href="debug_description.html#resetHardwareDeassert">ResetHardwareDeassert</a> </td><td>Deassert a system-wide reset via the dedicated debugger reset line, e.g. nRST.   </td></tr>
+<td class="XML-Token"><a class="el" href="debug_description.html#resetHardwareDeassert">ResetHardwareDeassert</a> </td><td>De-assert a system-wide reset via the dedicated debugger reset line, e.g. nRST.   </td></tr>
 <tr>
 <td class="XML-Token"><a class="el" href="debug_description.html#resetCatchSet">ResetCatchSet</a> </td><td>Executed before a target reset to configure the vector catch to stop code execution after the reset.<br/>
  The implementation of <b>ResetCatchSet</b> requires an implementation of <b>ResetCatchClear</b> to free any hardware resources used for stopping the core.   </td></tr>
@@ -225,7 +225,7 @@ Default debug access sequences</h1>
 <tr>
 <td class="XML-Token">FlashEraseDone </td><td>Executed after erasing flash memory.   </td></tr>
 <tr>
-<td class="XML-Token">FlashProgramDone </td><td>Eexecuted after programming flash memory.   </td></tr>
+<td class="XML-Token">FlashProgramDone </td><td>Executed after programming flash memory.   </td></tr>
 <tr>
 <td class="XML-Token">TraceStart </td><td>Enable target trace capture.<br/>
  Executed before the debugger powers up and configures standard CoreSight trace components, e.g. after the initial target connection as well as after a system-wide reset.   </td></tr>
@@ -239,8 +239,8 @@ Default debug access sequences</h1>
 <tr>
 <td class="XML-Token">RecoveryAcknowledge </td><td>Debugger acknowledge after recovering from a lost target connection. Can be executed independently from a <b>RecoverySupportStart</b> sequence.   </td></tr>
 </table>
-<h2>Pre-defined default debug access sequences </h2>
-<p>The following sections the show the details of the pre-defined default debug access sequences.</p>
+<h2>Predefined default debug access sequences </h2>
+<p>The following sections the show the details of the predefined default debug access sequences.</p>
 <h2><a class="anchor" id="debugPortSetup"></a>
 DebugPortSetup</h2>
 <p>Prepare the target debug port for connection.</p>
@@ -401,7 +401,7 @@ DebugCoreStart</h2>
 <div class="fragment"><div class="line">&lt;sequence name=<span class="stringliteral">&quot;DebugCoreStart&quot;</span>&gt;</div>
 <div class="line"></div>
 <div class="line">  &lt;block&gt;</div>
-<div class="line">    <span class="comment">// System Control Space (SCS) offset as defined in ARMv6-M/ARMv7-M.</span></div>
+<div class="line">    <span class="comment">// System Control Space (SCS) offset as defined in Armv6-M/Armv7-M.</span></div>
 <div class="line">  </div>
 <div class="line">    __var SCS_Addr   = 0xE000E000;</div>
 <div class="line">    __var DHCSR_Addr = SCS_Addr + 0xDF0;</div>
@@ -417,7 +417,7 @@ DebugCoreStop</h2>
 <div class="fragment"><div class="line">&lt;sequence name=<span class="stringliteral">&quot;DebugCoreStop&quot;</span>&gt;</div>
 <div class="line"></div>
 <div class="line">  &lt;block&gt;</div>
-<div class="line">    <span class="comment">// System Control Space (SCS) offset as defined in ARMv6-M/ARMv7-M.</span></div>
+<div class="line">    <span class="comment">// System Control Space (SCS) offset as defined in Armv6-M/Armv7-M.</span></div>
 <div class="line">    </div>
 <div class="line">    __var SCS_Addr   = 0xE000E000;</div>
 <div class="line">    __var DHCSR_Addr = SCS_Addr + 0xDF0;</div>
@@ -438,7 +438,7 @@ ResetSystem</h2>
 <div class="fragment"><div class="line">&lt;sequence name=<span class="stringliteral">&quot;ResetSystem&quot;</span>&gt;</div>
 <div class="line"></div>
 <div class="line">  &lt;block&gt;</div>
-<div class="line">    <span class="comment">// System Control Space (SCS) offset as defined in ARMv6-M/ARMv7-M.</span></div>
+<div class="line">    <span class="comment">// System Control Space (SCS) offset as defined in Armv6-M/Armv7-M.</span></div>
 <div class="line"></div>
 <div class="line">    __var SCS_Addr   = 0xE000E000;</div>
 <div class="line">    __var AIRCR_Addr = SCS_Addr + 0xD0C;</div>
@@ -455,11 +455,11 @@ ResetSystem</h2>
 </div><!-- fragment --><h2><a class="anchor" id="resetProcessor"></a>
 ResetProcessor</h2>
 <p>Execute a processor reset via software mechanisms.</p>
-<dl class="section note"><dt>Note</dt><dd>This Default Debug Access Sequence is empty for ARMv6-M and ARMv8-M based processors.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This Default Debug Access Sequence is empty for Armv6-M and Armv8-M based processors.</dd></dl>
 <div class="fragment"><div class="line">&lt;sequence name=<span class="stringliteral">&quot;ResetProcessor&quot;</span>&gt;</div>
 <div class="line"></div>
 <div class="line">  &lt;block&gt;</div>
-<div class="line">    <span class="comment">// System Control Space (SCS) offset as defined in ARMv7-M.</span></div>
+<div class="line">    <span class="comment">// System Control Space (SCS) offset as defined in Armv7-M.</span></div>
 <div class="line"></div>
 <div class="line">    __var SCS_Addr   = 0xE000E000;</div>
 <div class="line">    __var AIRCR_Addr = SCS_Addr + 0xD0C;</div>
@@ -482,7 +482,7 @@ ResetHardware</h2>
 <div class="line">    __var nReset      = 0x80;</div>
 <div class="line">    __var canReadPins = 0;</div>
 <div class="line">  </div>
-<div class="line">    <span class="comment">// Deassert nRESET line</span></div>
+<div class="line">    <span class="comment">// De-assert nRESET line</span></div>
 <div class="line">    canReadPins = (DAP_SWJ_Pins(0x00, nReset, 0) != 0xFFFFFFFF);</div>
 <div class="line">  &lt;/block&gt;</div>
 <div class="line">  </div>
@@ -517,7 +517,7 @@ ResetHardwareAssert</h2>
 <div class="line">  &lt;block&gt;</div>
 <div class="line">      __var nReset = 0x80;</div>
 <div class="line">    </div>
-<div class="line">      <span class="comment">// Deassert nRESET line to activate the hardware reset</span></div>
+<div class="line">      <span class="comment">// De-assert nRESET line to activate the hardware reset</span></div>
 <div class="line">      DAP_SWJ_Pins(0, nReset, 0);</div>
 <div class="line">  &lt;/block&gt;</div>
 <div class="line">  </div>
@@ -549,7 +549,7 @@ ResetCatchSet</h2>
 <div class="line"></div>
 <div class="line">  &lt;block&gt;</div>
 <div class="line">    <span class="comment">// System Control Space (SCS) offset as defined</span></div>
-<div class="line">    <span class="comment">// in ARMv6-M/ARMv7-M. Reimplement this sequence</span></div>
+<div class="line">    <span class="comment">// in Armv6-M/Armv7-M. Reimplement this sequence</span></div>
 <div class="line">    <span class="comment">// if the SCS is located at a different offset.</span></div>
 <div class="line"></div>
 <div class="line">    __var SCS_Addr   = 0xE000E000;</div>
@@ -573,7 +573,7 @@ ResetCatchClear</h2>
 <div class="line"></div>
 <div class="line">  &lt;block&gt;</div>
 <div class="line">    <span class="comment">// System Control Space (SCS) offset as defined</span></div>
-<div class="line">    <span class="comment">// in ARMv6-M/ARMv7-M. Reimplement this sequence</span></div>
+<div class="line">    <span class="comment">// in Armv6-M/Armv7-M. Reimplement this sequence</span></div>
 <div class="line">    <span class="comment">// if the SCS is located at a different offset.</span></div>
 <div class="line">    </div>
 <div class="line">    __var SCS_Addr   = 0xE000E000;</div>
@@ -735,12 +735,12 @@ Debug access syntax rules</h2>
 </div><!-- fragment --></li>
 <li>Alternatively, a statement can be a sole <a class="el" href="debug_description.html#ExpressionType">expression</a> without storing its result to a variable. <div class="fragment"><div class="line">expression;</div>
 </div><!-- fragment --></li>
-<li>Comments begin with two slashes (<span class="XML-Token">//</span>) and end with a linebreak: <div class="fragment"><div class="line"><span class="comment">// Whole line is a comment</span></div>
+<li>Comments begin with two slashes (<span class="XML-Token">//</span>) and end with a line break: <div class="fragment"><div class="line"><span class="comment">// Whole line is a comment</span></div>
 <div class="line">variable = expression;  <span class="comment">// Comment appended to statement</span></div>
 </div><!-- fragment --></li>
-<li>Variables must be defined using the keyword <span class="XML-Token">__var</span>. The definition must include an initalization of the variable: <div class="fragment"><div class="line">__var variable = 0;</div>
+<li>Variables must be defined using the keyword <span class="XML-Token">__var</span>. The definition must include an initialization of the variable: <div class="fragment"><div class="line">__var variable = 0;</div>
 </div><!-- fragment --></li>
-<li>Variables can be defined only once within a scope. Scopes beging with entering a debug access sequence or a <b>control</b> element. They are extended to child <b>control</b> elements. Variables of a parent scope can be modified. Leaving a scope destroys all variables defined in it.<br/>
+<li>Variables can be defined only once within a scope. Scopes begin with entering a debug access sequence or a <b>control</b> element. They are extended to child <b>control</b> elements. Variables of a parent scope can be modified. Leaving a scope destroys all variables defined in it.<br/>
  <b><em>block</em> elements do not begin a new scope.</b> <div class="fragment"><div class="line">&lt;sequence name=<span class="stringliteral">&quot;MySequence&quot;</span>&gt;</div>
 <div class="line">  </div>
 <div class="line">  &lt;block info=<span class="stringliteral">&quot;Block 1&quot;</span>&gt;</div>
@@ -1071,7 +1071,7 @@ Debug access functions</h2>
  Always returns <span class="XML-Token">0</span>.   </p>
 </td></tr>
 <tr>
-<td style="white-space: nowrap"><pre>DAP_SWJ_Pins(pinout, pinselect, pinwait)</pre> </td><td><p class="starttd">Debug proble command to monitor and control the I/O Pins including the nRESET device reset line.<br/>
+<td style="white-space: nowrap"><pre>DAP_SWJ_Pins(pinout, pinselect, pinwait)</pre> </td><td><p class="starttd">Debug probe command to monitor and control the I/O Pins including the nRESET device reset line.<br/>
  <b>I/O Pin Mapping</b> for <b>pinout</b>, <b>pinselect</b>, and <b>pinwait</b>:</p>
 <ul>
 <li>Bit 0: SWCLK/TCK</li>
@@ -1256,7 +1256,7 @@ Debug access functions</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="coresight_setup.html">Debug Setup with CMSIS-Pack</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:21 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:27 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -2,6 +2,7 @@ var searchData=
 [
   ['max_5fblocks',['max_blocks',['../rtx__os_8h.html#addc777bf5285ab03de6787385e6ea053',1,'osRtxMpInfo_t']]],
   ['max_5ftokens',['max_tokens',['../group__rtx5__specific__structs.html#aa793f0e9a46e8b59b6d351535ee18a7d',1,'osRtxSemaphore_t']]],
+  ['max_5fused',['max_used',['../rtx__os_8h.html#a81baadf3fdf0eeff338f997ca3fe5009',1,'osRtxObjectMemUsage_t']]],
   ['mem',['mem',['../rtx__os_8h.html#a42d7108f7184dcb944cdf73f649ad2dd',1,'osRtxInfo_t::mem()'],['../rtx__os_8h.html#aa30bb7d2484db1812c1aaf77a23cd11e',1,'osRtxConfig_t::mem()']]],
   ['mp_5finfo',['mp_info',['../group__rtx5__specific__structs.html#ac1cf67a8631962a42fa2da46f20a1a39',1,'osRtxMemoryPool_t::mp_info()'],['../group__rtx5__specific__structs.html#ac1cf67a8631962a42fa2da46f20a1a39',1,'osRtxMessageQueue_t::mp_info()']]],
   ['mp_5fmem',['mp_mem',['../group__CMSIS__RTOS__PoolMgmt.html#a5799465cca9c71c5587ceb0986f5b06a',1,'osMemoryPoolAttr_t']]],

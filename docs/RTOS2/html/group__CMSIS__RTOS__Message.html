@@ -132,9 +132,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gae7cf7bf2b97a5ae481fb60fcce99247a"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Message.html#gae7cf7bf2b97a5ae481fb60fcce99247a">osMessageQueueGetName</a> (<a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mq_id)</td></tr>
 <tr class="memdesc:gae7cf7bf2b97a5ae481fb60fcce99247a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get name of a Message Queue object.  <a href="#gae7cf7bf2b97a5ae481fb60fcce99247a">More...</a><br/></td></tr>
 <tr class="separator:gae7cf7bf2b97a5ae481fb60fcce99247a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd5c8996850d1213976ba89cda689acc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a> (<a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout)</td></tr>
-<tr class="memdesc:gadd5c8996850d1213976ba89cda689acc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put a Message into a Queue or timeout if Queue is full.  <a href="#gadd5c8996850d1213976ba89cda689acc">More...</a><br/></td></tr>
-<tr class="separator:gadd5c8996850d1213976ba89cda689acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa515fc8b956f721a8f72b2c505813bfc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc">osMessageQueuePut</a> (<a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout)</td></tr>
+<tr class="memdesc:gaa515fc8b956f721a8f72b2c505813bfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put a Message into a Queue or timeout if Queue is full.  <a href="#gaa515fc8b956f721a8f72b2c505813bfc">More...</a><br/></td></tr>
+<tr class="separator:gaa515fc8b956f721a8f72b2c505813bfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad90d4959466a7a65105061da8256ab9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a> (<a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mq_id, void *msg_ptr, uint8_t *msg_prio, uint32_t timeout)</td></tr>
 <tr class="memdesc:gad90d4959466a7a65105061da8256ab9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a Message from a Queue or timeout if Queue is empty.  <a href="#gad90d4959466a7a65105061da8256ab9e">More...</a><br/></td></tr>
 <tr class="separator:gad90d4959466a7a65105061da8256ab9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,7 +164,7 @@ Functions</h2></td></tr>
 <div class="caption">
 CMSIS-RTOS Message Queue</div></div>
 <p> Compared to a <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html">Memory Pool</a>, message queues are less efficient in general, but solve a broader range of problems. Sometimes, threads do not have a common address space or the use of shared memory raises problems, such as mutual exclusion.</p>
-<dl class="section note"><dt>Note</dt><dd>The functions <a class="el" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gac24f87d4f395e9e9c900c320e45ade8a">osMessageQueueGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga96d3d84069b20359de48109e28a1a89e">osMessageQueueGetMsgSize</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga6a32ac394fcff568b251c160cc3014b2">osMessageQueueGetCount</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gaddf0904427436dd3880d46263c2dc9fa">osMessageQueueGetSpace</a> can be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
+<dl class="section note"><dt>Note</dt><dd>The functions <a class="el" href="group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc">osMessageQueuePut</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gac24f87d4f395e9e9c900c320e45ade8a">osMessageQueueGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga96d3d84069b20359de48109e28a1a89e">osMessageQueueGetMsgSize</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#ga6a32ac394fcff568b251c160cc3014b2">osMessageQueueGetCount</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gaddf0904427436dd3880d46263c2dc9fa">osMessageQueueGetSpace</a> can be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
 <dd>
 Refer to <a class="el" href="config_rtx5.html#msgQueueConfig">Message Queue Configuration</a> for RTX5 configuration options. </dd></dl>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
@@ -177,7 +177,14 @@ Refer to <a class="el" href="config_rtx5.html#msgQueueConfig">Message Queue Conf
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Attributes structure for message queue. </p>
+<div class="textblock"><p>Attributes to configure a message queue.</p>
+<p>Refer to <a class="el" href="group__CMSIS__RTOS__MemoryMgmt.html">Memory Management</a> for details about usage of</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__Message.html#a1e100dc33d403841ed3c344e3397868e" title="memory for control block ">osMessageQueueAttr_t::cb_mem</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__Message.html#aa55a4335d12dc2785dc00fdc292d1159" title="size of provided memory for control block ">osMessageQueueAttr_t::cb_size</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__Message.html#a4e208dc0fb049b42c4b90cbd2791c5ad" title="memory for data storage ">osMessageQueueAttr_t::mq_mem</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__Message.html#ac1cc09f875e20c926920b57bb83c70ee" title="size of provided memory for data storage ">osMessageQueueAttr_t::mq_size</a> </li>
+</ul>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -272,7 +279,7 @@ size of provided memory for data storage <p>The size of the memory passed with <
 <p>The function <b>osMessageQueueNew</b> creates and initializes a message queue object and returns the pointer to the message queue object identifier or <span class="XML-Token">NULL</span> in case of an error. It can be safely called before the RTOS is started (call to <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>), but not before it is initialized (call to <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>).</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b></p>
-<p>Refer to <a class="el" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a> </p>
+<p>Refer to <a class="el" href="group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc">osMessageQueuePut</a> </p>
 
 </div>
 </div>
@@ -301,12 +308,12 @@ size of provided memory for data storage <p>The size of the memory passed with <
 
 </div>
 </div>
-<a class="anchor" id="gadd5c8996850d1213976ba89cda689acc"></a>
+<a class="anchor" id="gaa515fc8b956f721a8f72b2c505813bfc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">*<a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> osMessageQueuePut </td>
+          <td class="memname"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> osMessageQueuePut </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a>&#160;</td>
           <td class="paramname"><em>mq_id</em>, </td>
@@ -404,7 +411,7 @@ size of provided memory for data storage <p>The size of the memory passed with <
 <div class="line">    ; <span class="comment">// Insert thread code here...</span></div>
 <div class="line">    msg.Buf[0] = 0x55;                                           <span class="comment">// do some work...</span></div>
 <div class="line">    msg.Idx    = 0;</div>
-<div class="line">    <a class="code" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a> (mid_MsgQueue, &amp;msg, 0, NULL);</div>
+<div class="line">    <a class="code" href="group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc">osMessageQueuePut</a> (mid_MsgQueue, &amp;msg, 0, NULL);</div>
 <div class="line">    <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2">osThreadYield</a> ();                                              <span class="comment">// suspend thread</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
@@ -412,7 +419,7 @@ size of provided memory for data storage <p>The size of the memory passed with <
 <div class="line"><span class="keywordtype">void</span> Thread_MsgQueue2 (<span class="keywordtype">void</span> *argument) {</div>
 <div class="line"></div>
 <div class="line">  MSGQUEUE_OBJ_t msg;</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> status;</div>
+<div class="line">  osStatus_t status;</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
 <div class="line">    ; <span class="comment">// Insert thread code here...</span></div>
@@ -486,7 +493,7 @@ size of provided memory for data storage <p>The size of the memory passed with <
 </ul>
 <dl class="section note"><dt>Note</dt><dd>May be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a> if the parameter <em>timeout</em> is set to <span class="XML-Token">0</span>.</dd></dl>
 <p><b>Code Example</b></p>
-<p>Refer to <a class="el" href="group__CMSIS__RTOS__Message.html#gadd5c8996850d1213976ba89cda689acc">osMessageQueuePut</a> </p>
+<p>Refer to <a class="el" href="group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc">osMessageQueuePut</a> </p>
 
 </div>
 </div>
@@ -659,7 +666,7 @@ size of provided memory for data storage <p>The size of the memory passed with <
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

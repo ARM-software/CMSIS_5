@@ -417,6 +417,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td>name </td><td>File name of the document including the extension. The document path is relative to the package base folder. Directory/file names are case-sensitive. </td><td>xs:string </td><td>required  </td></tr>
 <tr>
 <td>title </td><td>Book title. Can be used for being displayed in various environments. </td><td>xs:string </td><td>required  </td></tr>
+<tr>
+<td>public </td><td>Set publishing permissions for the documentation. If <em>&lt;public&gt;</em> is <span class="XML-Token">true</span>, then the vendor gives permission to extract the documentation from the pack and publish it on a web-page. Links to web pages are assumed to be public. The default value is <span class="XML-Token">false</span>. </td><td>xs:boolean </td><td>optional  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -891,7 +893,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>Dmpu </td><td>Specifies whether a Memory Protection Unit is present in the processor. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DmpuEnum">Device MPU</a>. </td><td>DmpuEnum </td><td>required  </td></tr>
 <tr>
-<td>Dtz </td><td>Specifies whether an ARMv8-M based device implements TrustZone. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DtzEnum">Device TZ</a>. </td><td>DtzEnum </td><td>required for ARMv8-M based devices  </td></tr>
+<td>Dtz </td><td>Specifies whether an Armv8-M based device implements TrustZone. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DtzEnum">Device TZ</a>. </td><td>DtzEnum </td><td>required for ARMv8-M based devices  </td></tr>
 <tr>
 <td>Ddsp </td><td>Specifies whether a device supports the DSP instructions set. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DdspEnum">Device DSP</a>. </td><td>DdspEnum </td><td>required  </td></tr>
 <tr>
@@ -924,6 +926,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Ambiq Micro:120 </td><td>Ambiq Micro </td><td><a href="http://www.ambiqmicro.com">http://www.ambiqmicro.com</a>  </td></tr>
 <tr>
+<td class="XML-Token">Amiccom:147 </td><td>Amiccom </td><td><a href="http://www.amiccom.co.tw">http://www.amiccom.co.tw</a>  </td></tr>
+<tr>
 <td class="XML-Token">Analog Devices:1 </td><td>Analog Devices </td><td><a href="http://www.analog.com">http://www.analog.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">ARM:82 </td><td>ARM Ltd. </td><td><a href="http://www.arm.com">http://www.arm.com</a>  </td></tr>
@@ -946,6 +950,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">HDSC:145 </td><td>HUADA Semiconductor </td><td><a href="http://www.hdsc.com.cn">http://www.hdsc.com.cn</a>  </td></tr>
 <tr>
+<td class="XML-Token">Hilscher:88 </td><td>Hilscher Gesellschaft für Systemautomation mbH </td><td><a href="https://www.hilscher.com">https://www.hilscher.com</a>  </td></tr>
+<tr>
 <td class="XML-Token">Holtek:106 </td><td>Holtek Microelectronics </td><td><a href="http://www.holtek.com.tw">http://www.holtek.com.tw</a>  </td></tr>
 <tr>
 <td class="XML-Token">Infineon:7 </td><td>Infineon Technologies </td><td><a href="http://www.infineon.com">http://www.infineon.com</a>  </td></tr>
@@ -959,6 +965,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td class="XML-Token">MediaTek:129 </td><td>MediaTek </td><td><a href="http://www.mediatek.com">http://www.mediatek.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">MegaChips:128 </td><td>MegaChips </td><td><a href="http://www.megachips.com">http://www.megachips.com</a>  </td></tr>
+<tr>
+<td class="XML-Token">Megawin:70 </td><td>Megawin </td><td><a href="http://www.megawin.com.tw">http://www.megawin.com.tw</a>  </td></tr>
 <tr>
 <td class="XML-Token">Microchip:3 </td><td>Microchip (previously Atmel) </td><td><a href="http://www.microchip.com">http://www.microchip.com</a>  </td></tr>
 <tr>
@@ -1025,7 +1033,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>style= </th><th>Description  </th></tr>
 <tr>
-<td class="XML-Token">Keil </td><td><a class="el" href="flashAlgorithm.html">Flash Programming</a> as defined by ARM/Keil  </td></tr>
+<td class="XML-Token">Keil </td><td><a class="el" href="flashAlgorithm.html">Flash Programming</a> as defined by Arm/Keil  </td></tr>
 <tr>
 <td class="XML-Token">IAR </td><td>Flash Programming Algorithm as defined by IAR  </td></tr>
 <tr>
@@ -1046,61 +1054,61 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Dcore= </th><th>Description  </th></tr>
 <tr>
-<td class="XML-Token">Cortex-M0 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m0.php" target="_blank">ARM Cortex-M0</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M0 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m0.php" target="_blank">Arm Cortex-M0</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M0+ </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m0plus.php" target="_blank">ARM Cortex-M0+</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M0+ </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m0plus.php" target="_blank">Arm Cortex-M0+</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M1 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m1.php" target="_blank">ARM Cortex-M1</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M1 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m1.php" target="_blank">Arm Cortex-M1</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M3 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m3.php" target="_blank">ARM Cortex-M3</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M3 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m3.php" target="_blank">Arm Cortex-M3</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M4 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m4-processor.php" target="_blank">ARM Cortex-M4</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M4 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m4-processor.php" target="_blank">Arm Cortex-M4</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M7 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m7-processor.php" target="_blank">ARM Cortex-M7</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M7 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m7-processor.php" target="_blank">Arm Cortex-M7</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M23 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" target="_blank">ARM Cortex-M23</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M23 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" target="_blank">Arm Cortex-M23</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M33 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" target="_blank">ARM Cortex-M33</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M33 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" target="_blank">Arm Cortex-M33</a> processor based device  </td></tr>
 <tr>
 <td class="XML-Token">SC000 </td><td>SecurCore <a href="http://www.arm.com/products/processors/securcore/sc000.php" target="_blank">SC000</a> based on technology of Cortex-M0.  </td></tr>
 <tr>
 <td class="XML-Token">SC300 </td><td>SecurCore <a href="http://www.arm.com/products/processors/securcore/sc300.php" target="_blank">SC300</a> based on technology of Cortex-M3.  </td></tr>
 <tr>
-<td class="XML-Token">ARMV8MBL </td><td>Processor <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank">ARMV8MBL</a> compliant with the ARMv8-M Baseline Architecture.  </td></tr>
+<td class="XML-Token">ARMV8MBL </td><td>Processor <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank">ArmV8MBL</a> compliant with the Armv8-M Baseline Architecture.  </td></tr>
 <tr>
-<td class="XML-Token">ARMV8MML </td><td>Processor <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank">ARMV8MML</a> compliant with the ARMv8-M Mainline Architecture.  </td></tr>
+<td class="XML-Token">ARMV8MML </td><td>Processor <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank">ArmV8MML</a> compliant with the Armv8-M Mainline Architecture.  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-R4 </td><td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r4.php" target="_blank">ARM Cortex-R4</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-R4 </td><td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r4.php" target="_blank">Arm Cortex-R4</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-R5 </td><td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r5.php" target="_blank">ARM Cortex-R5</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-R5 </td><td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r5.php" target="_blank">Arm Cortex-R5</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-R7 </td><td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r7.php" target="_blank">ARM Cortex-R7</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-R7 </td><td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r7.php" target="_blank">Arm Cortex-R7</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-R8 </td><td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r8.php" target="_blank">ARM Cortex-R8</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-R8 </td><td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r8.php" target="_blank">Arm Cortex-R8</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A5 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a5.php" target="_blank">ARM Cortex-A5</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A5 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a5.php" target="_blank">Arm Cortex-A5</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A7 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a7.php" target="_blank">ARM Cortex-A7</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A7 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a7.php" target="_blank">Arm Cortex-A7</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A8 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a8.php" target="_blank">ARM Cortex-A8</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A8 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a8.php" target="_blank">Arm Cortex-A8</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A9 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a9.php" target="_blank">ARM Cortex-A9</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A9 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a9.php" target="_blank">Arm Cortex-A9</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A15 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a15.php" target="_blank">ARM Cortex-A15</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A15 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a15.php" target="_blank">Arm Cortex-A15</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A17 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a17.php" target="_blank">ARM Cortex-A17</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A17 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a17.php" target="_blank">Arm Cortex-A17</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A32 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a32.php" target="_blank">ARM Cortex-A32</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A32 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a32.php" target="_blank">Arm Cortex-A32</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A35 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a35.php" target="_blank">ARM Cortex-A35</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A35 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a35.php" target="_blank">Arm Cortex-A35</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A53 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a53.php" target="_blank">ARM Cortex-A53</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A53 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a53.php" target="_blank">Arm Cortex-A53</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A57 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a57.php" target="_blank">ARM Cortex-A57</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A57 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a57.php" target="_blank">Arm Cortex-A57</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A72 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a72.php" target="_blank">ARM Cortex-A72</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A72 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a72.php" target="_blank">Arm Cortex-A72</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A73 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a73.php" target="_blank">ARM Cortex-A73</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A73 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a73.php" target="_blank">Arm Cortex-A73</a> processor based device  </td></tr>
 <tr>
 <td class="XML-Token">* </td><td>Device based on any processor  </td></tr>
 </table>
@@ -1261,7 +1269,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">jtag </td><td>JTAG debug protocol.   </td></tr>
 <tr>
-<td class="XML-Token">swd </td><td>ARM Serial Wire Debug (SWD) protocol.   </td></tr>
+<td class="XML-Token">swd </td><td>Arm Serial Wire Debug (SWD) protocol.   </td></tr>
 <tr>
 <td class="XML-Token">cjtag </td><td>CJTAG concurrent jtag debug protocol.   </td></tr>
 </table>
@@ -1509,7 +1517,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <hr/>
 <h1><a class="anchor" id="element_dp_swd"></a>
 /package/devices/family/.../debugport/swd</h1>
-<p>Indicates availability of an ARM Serial Wire Debug (SWD) interface for the <b>debugport</b> parent element. Its attributes allow the manual override of SWD port characteristics as read from the target and provide information for the port selection in a system with multi-drop SWD support.</p>
+<p>Indicates availability of an Arm Serial Wire Debug (SWD) interface for the <b>debugport</b> parent element. Its attributes allow the manual override of SWD port characteristics as read from the target and provide information for the port selection in a system with multi-drop SWD support.</p>
 <p><b>Example</b> </p>
 <div class="fragment"><div class="line">&lt;family Dfamily=<span class="stringliteral">&quot;STM32F4&quot;</span> Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span>&gt;</div>
 <div class="line">  ...</div>
@@ -1821,7 +1829,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 </div><!-- fragment --></li>
 <li>Variables must be defined using the keyword <span class="XML-Token">__var</span>. The definition must include an initalization of the variable: <div class="fragment"><div class="line">__var variable = 0;</div>
 </div><!-- fragment --></li>
-<li>Variables can be defined only once within a scope. Scopes beging with entering a debug access sequence or a <b>control</b> element. They are extended to child <b>control</b> elements. Variables of a parent scope can be modified. Leaving a scope destroys all variables defined in it.<br/>
+<li>Variables can be defined only once within a scope. Scopes begin with entering a debug access sequence or a <b>control</b> element. They are extended to child <b>control</b> elements. Variables of a parent scope can be modified. Leaving a scope destroys all variables defined in it.<br/>
  <b><em>block</em> elements do not begin a new scope.</b> <div class="fragment"><div class="line">&lt;sequence name=<span class="stringliteral">&quot;MySequence&quot;</span>&gt;</div>
 <div class="line">  </div>
 <div class="line">  &lt;block info=<span class="stringliteral">&quot;Block 1&quot;</span>&gt;</div>
@@ -2130,7 +2138,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
  Always returns <span class="XML-Token">0</span>.   </p>
 </td></tr>
 <tr>
-<td style="white-space: nowrap"><pre>DAP_SWJ_Pins(pinout, pinselect, pinwait)</pre> </td><td><p class="starttd">Debug proble command to monitor and control the I/O Pins including the nRESET device reset line.<br/>
+<td style="white-space: nowrap"><pre>DAP_SWJ_Pins(pinout, pinselect, pinwait)</pre> </td><td><p class="starttd">Debug probe command to monitor and control the I/O Pins including the nRESET device reset line.<br/>
  <b>I/O Pin Mapping</b> for <b>pinout</b>, <b>pinselect</b>, and <b>pinwait</b>:</p>
 <ul>
 <li>Bit 0: SWCLK/TCK</li>
@@ -2632,7 +2640,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li><li class="navelem"><a class="el" href="pdsc_devices_pg.html">/package/devices element</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:21 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:27 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

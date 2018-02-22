@@ -1,5 +1,5 @@
 var group__DAP__Config__LEDs__gr =
 [
-    [ "LED_CONNECTED_OUT", "group__DAP__Config__LEDs__gr.html#ga519ba0a5ae485365e01fc2a9df77ce90", null ],
-    [ "LED_RUNNING_OUT", "group__DAP__Config__LEDs__gr.html#ga6231ce4a4d4b83fe5a3b290997b8d550", null ]
+    [ "LED_CONNECTED_OUT", "group__DAP__Config__LEDs__gr.html#ga27408c1c7010aa394abdcf0c85d7b798", null ],
+    [ "LED_RUNNING_OUT", "group__DAP__Config__LEDs__gr.html#gaa27ef99d16e3e68759adf1e6cb016e50", null ]
 ];

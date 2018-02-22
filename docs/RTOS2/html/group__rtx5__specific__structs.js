@@ -26,7 +26,7 @@ var group__rtx5__specific__structs =
       [ "tz_memory", "group__rtx5__specific__structs.html#adaa6c424a231e5f6c788532675f33e16", null ]
     ] ],
     [ "osRtxTimerFinfo_t", "group__rtx5__specific__structs.html#structosRtxTimerFinfo__t", [
-      [ "fp", "group__rtx5__specific__structs.html#a9587c8102d13ec6b8df5dd068e221125", null ],
+      [ "func", "group__rtx5__specific__structs.html#aaf8577e5ddcbff356a1d27310baa8a1f", null ],
       [ "arg", "group__rtx5__specific__structs.html#a9ce2ec4812a92cb6ab39f6e81e9173a9", null ]
     ] ],
     [ "osRtxTimer_t", "group__rtx5__specific__structs.html#structosRtxTimer__t", [

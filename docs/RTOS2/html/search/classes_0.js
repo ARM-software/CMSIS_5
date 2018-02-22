@@ -25,6 +25,7 @@ var searchData=
   ['osrtxmpinfo_5ft',['osRtxMpInfo_t',['../rtx__os_8h.html#structosRtxMpInfo__t',1,'']]],
   ['osrtxmutex_5ft',['osRtxMutex_t',['../group__rtx5__specific__structs.html#structosRtxMutex__t',1,'']]],
   ['osrtxobject_5ft',['osRtxObject_t',['../rtx__os_8h.html#structosRtxObject__t',1,'']]],
+  ['osrtxobjectmemusage_5ft',['osRtxObjectMemUsage_t',['../rtx__os_8h.html#structosRtxObjectMemUsage__t',1,'']]],
   ['osrtxsemaphore_5ft',['osRtxSemaphore_t',['../group__rtx5__specific__structs.html#structosRtxSemaphore__t',1,'']]],
   ['osrtxthread_5ft',['osRtxThread_t',['../group__rtx5__specific__structs.html#structosRtxThread__t',1,'']]],
   ['osrtxtimer_5ft',['osRtxTimer_t',['../group__rtx5__specific__structs.html#structosRtxTimer__t',1,'']]],

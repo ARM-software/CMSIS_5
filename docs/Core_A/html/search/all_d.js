@@ -1,6 +1,7 @@
 var searchData=
 [
   ['multiprocessor_20affinity_20register_20_28mpidr_29',['Multiprocessor Affinity Register (MPIDR)',['../group__CMSIS__MPIDR.html',1,'']]],
+  ['monitor_20vector_20base_20address_20register_20_28mvbar_29',['Monitor Vector Base Address Register (MVBAR)',['../group__CMSIS__MVBAR.html',1,'']]],
   ['misra_2dc_20deviations',['MISRA-C Deviations',['../coreMISRA_Exceptions_pg.html',1,'']]],
   ['m',['M',['../unionCPSR__Type.html#a2bc38ab81bc2e2fd111526a58f94511f',1,'CPSR_Type::M()'],['../unionSCTLR__Type.html#a8cbfde3ba235ebd48e82cb314c9b9cc4',1,'SCTLR_Type::M()']]],
   ['masked_5fint_5fstatus',['MASKED_INT_STATUS',['../structL2C__310__TypeDef.html#a207e1eb35e13440241db1109790d9740',1,'L2C_310_TypeDef']]],

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.0</span>
+   &#160;<span id="projectnumber">Version 5.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -123,8 +123,8 @@ $(document).ready(function(){initNavTree('index.html','');});
 <p>The following sections provide details about the CMSIS-Core (Cortex-M):</p>
 <ul>
 <li><a class="el" href="using_pg.html">Using CMSIS in Embedded Applications</a> describes the project setup and shows a simple program example.</li>
-<li><a class="el" href="using_TrustZone_pg.html">Using TrustZone&reg; for ARMv8-M</a> describes how to use the security extensions available in the ARMv8-M architecture.</li>
-<li><a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> describes the files of the CMSIS-Core (Cortex-M) in detail and explains how to adapt template files provided by ARM to silicon vendor devices.</li>
+<li><a class="el" href="using_TrustZone_pg.html">Using TrustZone&reg; for Armv8-M</a> describes how to use the security extensions available in the Armv8-M architecture.</li>
+<li><a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> describes the files of the CMSIS-Core (Cortex-M) in detail and explains how to adapt template files provided by Arm to silicon vendor devices.</li>
 <li><a class="el" href="coreMISRA_Exceptions_pg.html">MISRA-C Deviations</a> describes the violations to the MISRA standard.</li>
 <li><a href="Modules.html"><b>Reference</b> </a> describe the features and functions of the <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> in detail.</li>
 <li><a href="Annotated.html"><b>Data</b> <b>Structures</b> </a> describe the data structures of the <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> in detail.</li>
@@ -140,43 +140,43 @@ $(document).ready(function(){initNavTree('index.html','');});
 <tr>
 <td><b>CMSIS\Core\Include</b> </td><td>CMSIS-Core (Cortex-M) header files (for example core_cm3.h, core_cmInstr.h, etc.) </td></tr>
 <tr>
-<td><b>Device</b> </td><td><a class="el" href="using_ARM_pg.html">ARM reference implementations</a> of Cortex-M devices </td></tr>
+<td><b>Device</b> </td><td><a class="el" href="using_ARM_pg.html">Arm reference implementations</a> of Cortex-M devices </td></tr>
 <tr>
 <td><b>Device\_Template_Vendor</b> </td><td><a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> for extension by silicon vendors </td></tr>
 </table>
 <hr/>
 <h1><a class="anchor" id="ref_v6-v8M"></a>
 Processor Support</h1>
-<p>CMSIS supports the complete range of <a href="http://www.arm.com/products/processors/cortex-m/index.php" target="_blank"><b>Cortex-M processors</b></a> (with exception of Cortex-M1) and the <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>ARMv8-M architecture</b></a> including security extensions.</p>
+<p>CMSIS supports the complete range of <a href="http://www.arm.com/products/processors/cortex-m/index.php" target="_blank"><b>Cortex-M processors</b></a> (with exception of Cortex-M1) and the <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>Armv8-M architecture</b></a> including security extensions.</p>
 <h2><a class="anchor" id="ref_man_sec"></a>
 Cortex-M Reference Manuals</h2>
 <p>The Cortex-M Device Generic User Guides contain the programmers model and detailed information about the core peripherals and are available for:</p>
 <ul>
-<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/DUI0497A_cortex_m0_r0p0_generic_ug.pdf" target="_blank"><b>Cortex-M0 Devices Generic User Guide</b></a> (ARMv6-M architecture)</li>
-<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0662b/DUI0662B_cortex_m0p_r0p1_dgug.pdf" target="_blank"><b>Cortex-M0+ Devices Generic User Guide</b></a> (ARMv6-M architecture)</li>
-<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0552a/DUI0552A_cortex_m3_dgug.pdf" target="_blank"><b>Cortex-M3 Devices Generic User Guide</b></a> (ARMv7-M architecture)</li>
+<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/DUI0497A_cortex_m0_r0p0_generic_ug.pdf" target="_blank"><b>Cortex-M0 Devices Generic User Guide</b></a> (Armv6-M architecture)</li>
+<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0662b/DUI0662B_cortex_m0p_r0p1_dgug.pdf" target="_blank"><b>Cortex-M0+ Devices Generic User Guide</b></a> (Armv6-M architecture)</li>
+<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0552a/DUI0552A_cortex_m3_dgug.pdf" target="_blank"><b>Cortex-M3 Devices Generic User Guide</b></a> (Armv7-M architecture)</li>
 <li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0553a/DUI0553A_cortex_m4_dgug.pdf" target="_blank"><b>Cortex-M4 Devices Generic User Guide</b></a> (ARMv7-M architecture)</li>
-<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646a/DUI0646A_cortex_m7_dgug.pdf" target="_blank"><b>Cortex-M7 Devices Generic User Guide</b></a> (ARMv7-M architecture)</li>
+<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646a/DUI0646A_cortex_m7_dgug.pdf" target="_blank"><b>Cortex-M7 Devices Generic User Guide</b></a> (Armv7-M architecture)</li>
 </ul>
 <p>The <b>Cortex-M23</b> and <b>Cortex-M33</b> are described with Technical Reference Manuals that are available here:</p>
 <ul>
-<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0550c/cortex_m23_r1p0_technical_reference_manual_DDI0550C_en.pdf" target="_blank"><b>Cortex-M23 Technical Reference Manual</b></a> (ARMv8-M baseline architecture)</li>
-<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.100230_0002_00_en/cortex_m33_trm_100230_0002_00_en.pdf" target="_blank"><b>Cortex-M33 Technical Reference Manual</b></a> (ARMv8-M mainline architecture)</li>
+<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0550c/cortex_m23_r1p0_technical_reference_manual_DDI0550C_en.pdf" target="_blank"><b>Cortex-M23 Technical Reference Manual</b></a> (Armv8-M baseline architecture)</li>
+<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.100230_0002_00_en/cortex_m33_trm_100230_0002_00_en.pdf" target="_blank"><b>Cortex-M33 Technical Reference Manual</b></a> (Armv8-M mainline architecture)</li>
 </ul>
 <h2><a class="anchor" id="ARMv8M"></a>
-ARMv8-M Architecture</h2>
-<p>ARMv8-M introduces two profiles <b>baseline</b> (for power and area constrained applications) and <b>mainline</b> (full-featured with optional SIMD, floating-point, and co-processor extensions). Both ARMv8-M profiles are supported by CMSIS.</p>
-<p>The ARMv8-M Architecture is described in the <a href="http://developer.arm.com/products/architecture/m-profile/docs/ddi0553/latest/armv8-m-architecture-reference-manual" target="_blank"><b>ARMv8-M Architecture Reference Manual</b></a>.</p>
+Armv8-M Architecture</h2>
+<p>Armv8-M introduces two profiles <b>baseline</b> (for power and area constrained applications) and <b>mainline</b> (full-featured with optional SIMD, floating-point, and co-processor extensions). Both Armv8-M profiles are supported by CMSIS.</p>
+<p>The Armv8-M Architecture is described in the <a href="http://developer.arm.com/products/architecture/m-profile/docs/ddi0553/latest/armv8-m-architecture-reference-manual" target="_blank"><b>Armv8-M Architecture Reference Manual</b></a>.</p>
 <hr/>
 <h1><a class="anchor" id="tested_tools_sec"></a>
 Tested and Verified Toolchains</h1>
-<p>The <a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> supplied by ARM have been tested and verified with the following toolchains:</p>
+<p>The <a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a> supplied by Arm have been tested and verified with the following toolchains:</p>
 <ul>
-<li>ARM: ARM Compiler 5.06 update 6 (not for Cortex-M23, Cortex-M33, ARMv8-M)</li>
-<li>ARM: ARM Compiler 6.9</li>
-<li>ARM: ARM Compiler 6.6.1 (not for Cortex-M0, Cortex-M23, Cortex-M33, ARMv8-M)</li>
-<li>GNU: GNU Tools for ARM Embedded 6.3.1 20170620</li>
-<li>IAR: IAR ANSI C/C++ Compiler for ARM 8.20.1.14183</li>
+<li>Arm: Arm Compiler 5.06 update 6 (not for Cortex-M23, Cortex-M33, Armv8-M)</li>
+<li>Arm: Arm Compiler 6.9</li>
+<li>Arm: Arm Compiler 6.6.2 (not for Cortex-M0, Cortex-M23, Cortex-M33, Armv8-M)</li>
+<li>GNU: GNU Tools for Arm Embedded 6.3.1 20170620</li>
+<li>IAR: IAR ANSI C/C++ Compiler for Arm 8.20.1.14183</li>
 </ul>
 <hr/>
  </div></div><!-- contents -->
@@ -184,7 +184,7 @@ Tested and Verified Toolchains</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:58 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:45 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

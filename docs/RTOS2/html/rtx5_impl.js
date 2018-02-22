@@ -26,7 +26,9 @@ var rtx5_impl =
       [ "System Configuration", "config_rtx5.html#systemConfig", [
         [ "Global dynamic memory", "config_rtx5.html#systemConfig_glob_mem", null ],
         [ "Round-Robin Thread Switching", "config_rtx5.html#systemConfig_rr", null ],
-        [ "ISR FIFO Queue", "config_rtx5.html#systemConfig_isr_fifo", null ]
+        [ "ISR FIFO Queue", "config_rtx5.html#systemConfig_isr_fifo", null ],
+        [ "Event Recording", "config_rtx5.html#systemConfig_event_recording", null ],
+        [ "Object Memory Usage Counters", "config_rtx5.html#systemConfig_usage_counters", null ]
       ] ],
       [ "Thread Configuration", "config_rtx5.html#threadConfig", [
         [ "Configuration of Thread Count and Stack Space", "config_rtx5.html#threadConfig_countstack", null ],
@@ -61,11 +63,25 @@ var rtx5_impl =
     ] ],
     [ "Technical Data", "technicalData5.html", [
       [ "Supported Toolchains", "technicalData5.html#technicalData_Toolchains", [
-        [ "ARM Compiler (ARM/Keil MDK, uVision5)", "technicalData5.html#technicalData_Toolchain_ARM", null ],
+        [ "Arm Compiler (Arm/Keil MDK, uVision5)", "technicalData5.html#technicalData_Toolchain_ARM", null ],
         [ "IAR Embedded Workbench", "technicalData5.html#technicalData_Toolchain_IAR", null ],
         [ "GNU Compiler Collection", "technicalData5.html#technicalData_Toolchain_GCC", null ]
       ] ],
       [ "Control Block Sizes", "technicalData5.html#technicalData5_ControlBlockSizes", null ]
     ] ],
-    [ "MISRA-C Compliance Exceptions", "misraCompliance5.html", null ]
+    [ "MISRA C:2012 Compliance", "misraCompliance5.html", [
+      [ "[MISRA Note 1]: Return statements for parameter checking", "misraCompliance5.html#MISRA_1", null ],
+      [ "[MISRA Note 2]: Object identifiers are void pointers", "misraCompliance5.html#MISRA_2", null ],
+      [ "[MISRA Note 3]: Conversion to unified object control blocks", "misraCompliance5.html#MISRA_3", null ],
+      [ "[MISRA Note 4]: Conversion from unified object control blocks", "misraCompliance5.html#MISRA_4", null ],
+      [ "[MISRA Note 5]: Conversion to object types", "misraCompliance5.html#MISRA_5", null ],
+      [ "[MISRA Note 6]: Conversion from user provided storage", "misraCompliance5.html#MISRA_6", null ],
+      [ "[MISRA Note 7]: Check for proper pointer alignment", "misraCompliance5.html#MISRA_7", null ],
+      [ "[MISRA Note 8]: Memory allocation management", "misraCompliance5.html#MISRA_8", null ],
+      [ "[MISRA Note 9]: Pointer conversions for register access", "misraCompliance5.html#MISRA_9", null ],
+      [ "[MISRA Note 10]: SVC calls use function-like macros", "misraCompliance5.html#MISRA_10", null ],
+      [ "[MISRA Note 11]: SVC calls use assembly code", "misraCompliance5.html#MISRA_11", null ],
+      [ "[MISRA Note 12]: Usage of exclusive access instructions", "misraCompliance5.html#MISRA_12", null ],
+      [ "[MISRA Note 13]: Usage of Event Recorder", "misraCompliance5.html#MISRA_13", null ]
+    ] ]
 ];

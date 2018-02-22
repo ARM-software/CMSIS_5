@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
+   &#160;<span id="projectnumber">Version 2.0.0</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -130,7 +130,6 @@ $(document).ready(function(){initNavTree('group__DAP__Info.html','');});
 <li><b>0x06</b> = Get the <b>Target Device Name</b> (string).</li>
 <li><b>0xF0</b> = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit (see below for details).</li>
 <li><b>0xF1</b> = Get the <b>Test Domain Timer</b> parameter information (see below for details).</li>
-<li><b>0xF2</b> = Get the <b>Trace Data Management</b> parameter information (see below for details).</li>
 <li><b>0xFD</b> = Get the <b>SWO Trace Buffer Size</b> (WORD).</li>
 <li><b>0xFE</b> = Get the maximum <b>Packet Count</b> (BYTE).</li>
 <li><b>0xFF</b> = Get the maximum <b>Packet Size</b> (SHORT).</li>
@@ -176,15 +175,14 @@ $(document).ready(function(){initNavTree('group__DAP__Info.html','');});
 <p>Command extensions for transfer protocol:</p>
 <ul>
 <li>Info0 - Bit 4: <b>1 = Atomic Commands</b> - <a class="el" href="group__DAP__atomic__gr.html">Atomic Commands</a> support is implemented (0 = <a class="el" href="group__DAP__atomic__gr.html">Atomic Commands</a> not implemented).</li>
-<li>Info0 - Bit 5: <b>1 = <a class="el" href="group__DAP__SWD__Sequence.html">DAP_SWD_Sequence</a></b> command is implemented (0 = <a class="el" href="group__DAP__SWD__Sequence.html">DAP_SWD_Sequence</a> not implemented).</li>
 </ul>
 <p>Time synchronisation via Test Domain Timer:</p>
 <ul>
-<li>Info0 - Bit 6: <b>1 = Test Domain Timer</b> - debug unit support for Test Domain Timer is implemented (0 = not implemented).</li>
+<li>Info0 - Bit 5: <b>1 = Test Domain Timer</b> - debug unit support for Test Domain Timer is implemented (0 = not implemented).</li>
 </ul>
-<p>Test Input management:</p>
+<p>SWO Streaming Trace support:</p>
 <ul>
-<li>Info1 - Bit 0: <b>1 = Trace Data Management</b> - Trace Data Management is implemented (0 = not implemented).</li>
+<li>Info0 - Bit 6: <b>1 = SWO Streaming Trace</b> is implemented (0 = not implemented).</li>
 </ul>
 <hr/>
 <p><b>DAP_Info Response (for ID=0xF1):</b></p>
@@ -193,24 +191,14 @@ $(document).ready(function(){initNavTree('group__DAP__Info.html','');});
 <div class="line">&lt; 0x00 | 0x08 | Frequency |</div>
 <div class="line">|******|******|***********|</div>
 </div><!-- fragment --><ul>
-<li><b>Frequency:</b> Input frequency of the Test Domain Timer which indicates the resolution of the 32-bit TD_TimeStamp values.</li>
-</ul>
-<hr/>
-<p><b>DAP_Info Response (for ID=0xF2):</b></p>
-<p>The ID=0xF2 <b>Trace Data Management</b> obtains the parameter information about an optional Trace Data Management.</p>
-<div class="fragment"><div class="line">| BYTE | BYTE | SHORT *****| SHORT ****|</div>
-<div class="line">&lt; 0x00 | 0x04 | BlockCount | BlockSize |</div>
-<div class="line">|******|******|************|***********|</div>
-</div><!-- fragment --><ul>
-<li><b>BlockCount:</b> Number of data blocks in the Trace Data Management.</li>
-<li><b>BlockSize:</b> Size (in bytes) of a data block in the Trace Data Management. </li>
+<li><b>Frequency:</b> Input frequency of the Test Domain Timer which indicates the resolution of the 32-bit TD_TimeStamp values. </li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:00 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:48 for CMSIS-DAP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

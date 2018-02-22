@@ -23,6 +23,7 @@ var searchData=
   ['ddvm',['DDVM',['../unionACTLR__Type.html#a4fe04e95b26e089642bee6952f223f82',1,'ACTLR_Type']]],
   ['debug_5fcontrol',['DEBUG_CONTROL',['../structL2C__310__TypeDef.html#a996a2a5c1f311a6f3555844adc28e7f4',1,'L2C_310_TypeDef']]],
   ['default_5fhandler',['Default_Handler',['../startup__ARMCA9_8c.html#a4e0c522c1bb26af24accaf20e6b87d12',1,'startup_ARMCA9.c']]],
+  ['deprecated_20list',['Deprecated List',['../deprecated.html',1,'']]],
   ['descriptor_5ffault',['DESCRIPTOR_FAULT',['../group__MMU__defs__gr.html#gaba92665a24bc2ba8c49b9a0881c9df8a',1,'core_ca.h']]],
   ['device',['DEVICE',['../core__ca_8h.html#ga83ac8de9263f89879079da521e86d5f2a28b8a7b4b6c2a98af7cf438255207174',1,'core_ca.h']]],
   ['device_20header_20file_20_5c_3cdevice_2eh_3e',['Device Header File \&lt;device.h&gt;',['../device_h_pg.html',1,'templates_pg']]],

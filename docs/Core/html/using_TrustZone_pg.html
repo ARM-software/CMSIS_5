@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Using TrustZone for ARMv8-M</title>
-<title>CMSIS-Core (Cortex-M): Using TrustZone for ARMv8-M</title>
+<title>Using TrustZone for Armv8-M</title>
+<title>CMSIS-Core (Cortex-M): Using TrustZone for Armv8-M</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.0</span>
+   &#160;<span id="projectnumber">Version 5.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -108,29 +108,29 @@ $(document).ready(function(){initNavTree('using_TrustZone_pg.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Using TrustZone for ARMv8-M </div>  </div>
+<div class="title">Using TrustZone for Armv8-M </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The optional ARMv8-M security extension is similar to ARM TrustZone technology used in Cortex-A processors, but is optimized for ultra-low power embedded applications. TrustZone for ARMv8-M enables of multiple software security domains that restrict access to secure memory and I/O only for trusted software.</p>
-<p>TrustZone for ARMv8-M:</p>
+<div class="textblock"><p>The optional Armv8-M Security Extension is similar to Arm TrustZone technology used in Cortex-A processors, but is optimized for ultra-low power embedded applications. TrustZone for Armv8-M enables of multiple software security domains that restrict access to secure memory and I/O only for trusted software.</p>
+<p>TrustZone for Armv8-M:</p>
 <ul>
 <li>preserves low interrupt latencies for both Secure and Non-secure domains.</li>
 <li>does not impose code overhead, cycle overhead or the complexity of a virtualization based solution.</li>
 <li>introduces the Secure Gateway (SG) processor instruction for calls to the secure domain.</li>
 </ul>
 <p><b>Notations</b> </p>
-<p>This manual uses the following notations to identify functions and hardware resources that are related to TrustZone for ARMv8-M:</p>
+<p>This manual uses the following notations to identify functions and hardware resources that are related to TrustZone for Armv8-M:</p>
 <ul>
-<li>prefix <b>TZ</b> or <b>__TZ</b> indicates a function that is available only in ARMv8-M TrustZone enabled devices.</li>
+<li>prefix <b>TZ</b> or <b>__TZ</b> indicates a function that is available only in Armv8-M TrustZone enabled devices.</li>
 <li>postfix <b>_NS</b> indicates a hardware resource that belongs to the Non-secure state.</li>
 <li>postfix <b>_S</b> indicates a hardware resource that belongs to the Secure state.</li>
 </ul>
 <h1><a class="anchor" id="useCase_TrustZone"></a>
 Simplified Use Case with TrustZone</h1>
-<p>An ARMv8-M TrustZone enabled device has restricted access for data, code, and I/O access to trusted software that runs in the Secure state. Typical applications are secure IoT nodes, firmware IP protection, or multi-party embedded software deployments.</p>
+<p>An Armv8-M TrustZone enabled device has restricted access for data, code, and I/O access to trusted software that runs in the Secure state. Typical applications are secure IoT nodes, firmware IP protection, or multi-party embedded software deployments.</p>
 <p>The figure <b>Simplified Use Case</b> shows and embedded application that is split into a <b>User Project</b> (executed in Non-secure state) and a <b>Firmware Project</b> (executed in Secure state).</p>
 <ul>
-<li><b>System Start:</b> after power on or reset, an ARMv8-M system starts code execution in the <b>Secure state</b>. The access rights for the <b>Non-secure state</b> is configured.</li>
+<li><b>System Start:</b> after power on or reset, an Armv8-M system starts code execution in the <b>Secure state</b>. The access rights for the <b>Non-secure state</b> is configured.</li>
 <li><b>User Application:</b> control can be transferred to <b>Non-secure state</b> to execute user code. This code can only call functions in the <b>secure state</b> that are marked for execution with the <b>SG</b> (secure gate) instruction and memory attributes. Any attempt to access memory or peripherals that are assigned to the <b>Secure state</b> triggers a security exception.</li>
 <li><b>Firmware callbacks:</b> code running in the <b>Secure state</b> can execute code in the <b>Non-secure state</b> using call-back function pointers. For example, a communication stack (protected firmware) could use an I/O driver that is configured in user space.</li>
 </ul>
@@ -139,21 +139,21 @@ Simplified Use Case with TrustZone</h1>
 <img src="SimpleUseCase.png" alt="SimpleUseCase.png"/>
 <div class="caption">
 Simplified Use Case</div></div>
-<p> Program execution in the <b>Secure state</b> is further protected by TrustZone hardware from software failures. For example, an ARMv8-M system may implement two independent SYSTICK timers which allows to stop code execution in <b>Non-secure state</b> in case of timing violations. Also function pointer callbacks from <b>Secure state</b> to <b>Non-secure state</b> protected by a special CPU instruction and the address bit 0 which prevents anciently executing code in <b>Non-secure state</b>.</p>
+<p> Program execution in the <b>Secure state</b> is further protected by TrustZone hardware from software failures. For example, an Armv8-M system may implement two independent SYSTICK timers which allows to stop code execution in <b>Non-secure state</b> in case of timing violations. Also function pointer callbacks from <b>Secure state</b> to <b>Non-secure state</b> protected by a special CPU instruction and the address bit 0 which prevents anciently executing code in <b>Non-secure state</b>.</p>
 <h2><a class="anchor" id="Example_TrustZone"></a>
 Program Examples</h2>
-<p>This CMSIS software pack contains the following program examples that show the usage of TrustZone for ARMv8-M on Cortex-M33 devices:</p>
+<p>This CMSIS software pack contains the following program examples that show the usage of TrustZone for Armv8-M on Cortex-M33 devices:</p>
 <table class="doxtable">
 <tr>
 <th align="left">Example </th><th align="left">Description  </th></tr>
 <tr>
-<td align="left">TrustZone for ARMv8-M No RTOS </td><td align="left">bare-metal secure/non-secure programming without RTOS (shows the Simplified Use Case). </td></tr>
+<td align="left">TrustZone for Armv8-M No RTOS </td><td align="left">bare-metal secure/non-secure programming without RTOS (shows the Simplified Use Case). </td></tr>
 <tr>
-<td align="left">TrustZone for ARMv8-M RTOS </td><td align="left">secure/non-secure RTOS example with thread context management </td></tr>
+<td align="left">TrustZone for Armv8-M RTOS </td><td align="left">secure/non-secure RTOS example with thread context management </td></tr>
 <tr>
-<td align="left">TrustZone for ARMv8-M RTOS Security Tests </td><td align="left">secure/non-secure RTOS example with security test cases and system recovery </td></tr>
+<td align="left">TrustZone for Armv8-M RTOS Security Tests </td><td align="left">secure/non-secure RTOS example with security test cases and system recovery </td></tr>
 </table>
-<p>Other sample application that reflects this <a href="#SimpleUseCase"><b>Simplified Use Case</b></a> is the <b>ARMv8MBL Secure/Non-Secure example</b> that is available in the Software Pack <b>Keil - ARM V2M-MPS2 Board Support PACK for Cortex-M System Design Kit Devices</b> (Keil:V2M-MPS2_CMx_BSP.1.2.0.pack or higher).</p>
+<p>Other sample application that reflects this <a href="#SimpleUseCase"><b>Simplified Use Case</b></a> is the <b>Armv8MBL Secure/Non-Secure example</b> that is available in the Software Pack <b>Keil - Arm V2M-MPS2 Board Support PACK for Cortex-M System Design Kit Devices</b> (Keil:V2M-MPS2_CMx_BSP.1.2.0.pack or higher).</p>
 <h1><a class="anchor" id="Model_TrustZone"></a>
 Programmers Model with TrustZone</h1>
 <p>The figure <a href="#MemoryMap_S"><b>Secure Memory Map</b></a> shows the memory view for the <b>Secure state</b>. In the Secure state all memory and peripherals can be accessed. The <b>System Control and Debug</b> area provides access to secure peripherals and non-secure peripherals that are mirrored at a memory alias.</p>
@@ -171,11 +171,11 @@ Secure Memory Map</div></div>
 <img src="MemoryMap_NS.png" alt="MemoryMap_NS.png"/>
 <div class="caption">
 Non-Secure Memory Map</div></div>
-<p>The figure <b>Registers</b> shows the register view of the ARMv8-M system with TrustZone. As the general purpose registers are can be accessed from any state (secure or non-secure), function calls between the states use these registers for parameter and return values.</p>
+<p>The figure <b>Registers</b> shows the register view of the Armv8-M system with TrustZone. As the general purpose registers are can be accessed from any state (secure or non-secure), function calls between the states use these registers for parameter and return values.</p>
 <p>The register R13 is the stack pointer alias, and the actual stack pointer (PSP_NS, MSP_NS, PSP_S, MSP_S) accessed depends on state (Secure or Non-secure) and mode (handler=exception/interrupt execution or thread=normal code execution).</p>
-<p>In ARMv8-M Mainline, each stack pointer has a limit register (PSPLIM_NS, MSPLIM_NS, PSPLIM_S, MSPLIM_S) that traps stack overflows with the <b>UsageFault</b> exception (register UFSR bit STKOF=1).</p>
-<p>An ARMv8-M system with TrustZone has an independent <b>CONTROL</b> register for each state (Secure or Non-secure). The interrupt/exception control registers (PRIMASK, FAULTMASK, BASEPRI) are banked between the states (Secure or Non-secure), however the interrupt priority for the Non-Secure state can be lowered (SCB_AIRCR register bit PRIS) so that secure interrupts have always higher priority.</p>
-<p>The core registers of the current state (Secure or Non-secure) are accessed using the standard <a class="el" href="group__Core__Register__gr.html">Core Register Access</a> functions. In Secure state all non-secure registers are accessible using the <a class="el" href="group__coreregister__trustzone__functions.html">Core Register Access Functions</a> related to TrustZone for ARMv8-M.</p>
+<p>In Armv8-M Mainline, each stack pointer has a limit register (PSPLIM_NS, MSPLIM_NS, PSPLIM_S, MSPLIM_S) that traps stack overflows with the <b>UsageFault</b> exception (register UFSR bit STKOF=1).</p>
+<p>An Armv8-M system with TrustZone has an independent <b>CONTROL</b> register for each state (Secure or Non-secure). The interrupt/exception control registers (PRIMASK, FAULTMASK, BASEPRI) are banked between the states (Secure or Non-secure), however the interrupt priority for the Non-Secure state can be lowered (SCB_AIRCR register bit PRIS) so that secure interrupts have always higher priority.</p>
+<p>The core registers of the current state (Secure or Non-secure) are accessed using the standard <a class="el" href="group__Core__Register__gr.html">Core Register Access</a> functions. In Secure state all non-secure registers are accessible using the <a class="el" href="group__coreregister__trustzone__functions.html">Core Register Access Functions</a> related to TrustZone for Armv8-M.</p>
 <div class="image">
 <img src="Registers.png" alt="Registers.png"/>
 <div class="caption">
@@ -190,21 +190,21 @@ CMSIS with extensions for TrustZone</div></div>
  <dl class="section note"><dt>Note</dt><dd>Refer to <a class="el" href="using_pg.html">Using CMSIS in Embedded Applications</a> for a general description of the CMSIS-Core (Cortex-M) files.</dd></dl>
 <h2><a class="anchor" id="RTOS_TrustZone"></a>
 RTOS Thread Context Management</h2>
-<p>To provide a consistent RTOS thread context management for ARMv8-M TrustZone across the various real-time operating systems (RTOS), the CMSIS-Core (Cortex-M) includes header file <b>TZ_context.h</b> with API definitions. An <em>non-secure application</em> which uses an RTOS and calls <em>secure</em> library modules requires the management of the <em>secure</em> stack space. Since <em>secure state</em> registers cannot be accessed by the RTOS that runs in <em>non-secure state</em> secure functions implement the thread context switch.</p>
+<p>To provide a consistent RTOS thread context management for Armv8-M TrustZone across the various real-time operating systems (RTOS), the CMSIS-Core (Cortex-M) includes header file <b>TZ_context.h</b> with API definitions. An <em>non-secure application</em> which uses an RTOS and calls <em>secure</em> library modules requires the management of the <em>secure</em> stack space. Since <em>secure state</em> registers cannot be accessed by the RTOS that runs in <em>non-secure state</em> secure functions implement the thread context switch.</p>
 <p>As the <em>non-secure state</em> and <em>secure state</em> parts of an application are separated, the API for managing the <em>secure</em> stack space should be standardized. Otherwise the <em>secure</em> library modules would force the <em>non-secure state</em> application to use a matching RTOS implementation.</p>
 <div class="image">
 <img src="TZ_context.png" alt="TZ_context.png"/>
 <div class="caption">
-RTOS Thread Context Management for ARMv8-M TrustZone</div></div>
+RTOS Thread Context Management for Armv8-M TrustZone</div></div>
 <p> To allocate the context memory for threads, an RTOS kernel that runs in <em>non-secure state</em> calls the interface functions defined by the header file <b>TZ_context.h</b>. The <b>TZ_context</b> functions itself are part of the <em>secure state</em> application. An minimum implementation is provided as part of RTOS2 and should handle the secure stack for the thread execution. However it is also possible to implement the context memory management system with additional features such as access control to <em>secure state</em> memory regions using an MPU.</p>
-<p>The API functions of <b>TZ_context</b> are described in the chapter <a href="Modules.html"><b>Reference</b> </a> under <a class="el" href="group__trustzone__functions.html">TrustZone for ARMv8-M</a> - <a class="el" href="group__context__trustzone__functions.html">RTOS Context Management</a>.</p>
+<p>The API functions of <b>TZ_context</b> are described in the chapter <a href="Modules.html"><b>Reference</b> </a> under <a class="el" href="group__trustzone__functions.html">TrustZone for Armv8-M</a> - <a class="el" href="group__context__trustzone__functions.html">RTOS Context Management</a>.</p>
 <p>Refer to <a class="el" href="using_TrustZone_pg.html#Example_TrustZone">Program Examples</a> for RTOS examples that provide a template implementation for <b>TZ_context.c</b>. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:57 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:45 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

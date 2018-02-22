@@ -9,7 +9,7 @@ var searchData=
   ['unlock_5fall_5fby_5fway',['UNLOCK_ALL_BY_WAY',['../structL2C__310__TypeDef.html#acb39f337a421d0640f39092dc992ef1a',1,'L2C_310_TypeDef']]],
   ['user_5ft',['user_t',['../structmmu__region__attributes__Type.html#a6b32b61a1ee042a22ae0c8a2bd7de544',1,'mmu_region_attributes_Type']]],
   ['using_2etxt',['Using.txt',['../Using_8txt.html',1,'']]],
-  ['using_20cmsis_20with_20generic_20arm_20processors',['Using CMSIS with generic ARM Processors',['../using_ARM_pg.html',1,'using_pg']]],
+  ['using_20cmsis_20with_20generic_20arm_20processors',['Using CMSIS with generic Arm Processors',['../using_ARM_pg.html',1,'using_pg']]],
   ['using_20cmsis_20in_20embedded_20applications',['Using CMSIS in Embedded Applications',['../using_pg.html',1,'']]],
   ['usr_5fmode',['USR_MODE',['../startup__ARMCA9_8c.html#ac4c70ccf71cc9a2b8bd39c85675760ae',1,'startup_ARMCA9.c']]],
   ['uwxn',['UWXN',['../unionSCTLR__Type.html#a32873e90e6814c3a2fc1b1c79c0bc8c8',1,'SCTLR_Type']]]

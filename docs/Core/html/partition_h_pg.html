@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.0</span>
+   &#160;<span id="projectnumber">Version 5.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -111,7 +111,7 @@ $(document).ready(function(){initNavTree('partition_h_pg.html','');});
 <div class="title">System Partition Header File partition_&lt;device&gt;.h </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The <a class="el" href="partition_h_pg.html">System Partition Header File partition_&lt;device&gt;.h</a> contains the initial setup of the TrustZone hardware in an ARMv8-M system. The function <a class="el" href="group__sau__trustzone__functions.html#ga6093bc5939ea8924fbcfdffb8f0553f1">TZ_SAU_Setup</a> is call from <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a> and uses the settings in this file to initialize the Secure Attribute Unit (SAU) and define non-secure interrupts (register NVIC_INIT_ITNS). The following initializations are performed:</p>
+<div class="textblock"><p>The <a class="el" href="partition_h_pg.html">System Partition Header File partition_&lt;device&gt;.h</a> contains the initial setup of the TrustZone hardware in an Armv8-M system. The function <a class="el" href="group__sau__trustzone__functions.html#ga6093bc5939ea8924fbcfdffb8f0553f1">TZ_SAU_Setup</a> is call from <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a> and uses the settings in this file to initialize the Secure Attribute Unit (SAU) and define non-secure interrupts (register NVIC_INIT_ITNS). The following initializations are performed:</p>
 <ul>
 <li><a class="el" href="partition_h_pg.html#sau_ctrlregister_sec">SAU CTRL register settings</a> provides settings for the SAU CTRL register.</li>
 <li><a class="el" href="partition_h_pg.html#sau_regions_sect">Configuration of the SAU Address Regions</a> provides configuration of the SAU Address Regions.</li>
@@ -265,7 +265,7 @@ Configuration of Interrupt Target settings</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:58 for CMSIS-Core (Cortex-M) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:45 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

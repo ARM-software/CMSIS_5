@@ -400,7 +400,7 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> info (<span class="keywordtype">void</span>) {</div>
 <div class="line">  <span class="keywordtype">char</span> infobuf[100];</div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#structosVersion__t">osVersion_t</a> osv;</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> status;</div>
+<div class="line">  osStatus_t status;</div>
 <div class="line"> </div>
 <div class="line">  status = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga6f7764e7250c5c5364c00c45a5d1d199">osKernelGetInfo</a>(&amp;osv, infobuf, <span class="keyword">sizeof</span>(infobuf));</div>
 <div class="line">  <span class="keywordflow">if</span>(status == <a class="code" href="cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f">osOK</a>) {</div>
@@ -508,7 +508,7 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
-<div class="fragment"><div class="line">uint32_t state = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a>();</div>
+<div class="fragment"><div class="line">int32_t state = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a>();</div>
 <div class="line"><span class="comment">// ... critical code</span></div>
 <div class="line">osKernelRestore(state);</div>
 </div><!-- fragment --> 
@@ -536,10 +536,10 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
-<div class="fragment"><div class="line">uint32_t sl = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a>();</div>
+<div class="fragment"><div class="line">int32_t sl = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a>();</div>
 <div class="line"><span class="comment">// ... critical code</span></div>
 <div class="line">{</div>
-<div class="line">  unint32_t su = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#gaf401728b4657456198c33fe75f8d6720">osKernelUnlock</a>();</div>
+<div class="line">  int32_t su = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#gaf401728b4657456198c33fe75f8d6720">osKernelUnlock</a>();</div>
 <div class="line">  <span class="comment">// ... uncritical code</span></div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#gae7d0a71b9586cbbb49fcbdf6a04f0289">osKernelRestoreLock</a>(su);</div>
 <div class="line">}</div>
@@ -578,10 +578,10 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
-<div class="fragment"><div class="line">uint32_t sl = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a>();</div>
+<div class="fragment"><div class="line">int32_t sl = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a>();</div>
 <div class="line"><span class="comment">// ... critical code</span></div>
 <div class="line">{</div>
-<div class="line">  unint32_t su = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#gaf401728b4657456198c33fe75f8d6720">osKernelUnlock</a>();</div>
+<div class="line">  int32_t su = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#gaf401728b4657456198c33fe75f8d6720">osKernelUnlock</a>();</div>
 <div class="line">  <span class="comment">// ... uncritical code</span></div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#gae7d0a71b9586cbbb49fcbdf6a04f0289">osKernelRestoreLock</a>(su);</div>
 <div class="line">}</div>
@@ -801,7 +801,7 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

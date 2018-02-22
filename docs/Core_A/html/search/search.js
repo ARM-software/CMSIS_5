@@ -15,7 +15,7 @@ var indexSectionsWithContent =
   5: "i",
   6: "im",
   7: "acdegkmnprstuvw",
-  8: "_afgilprstuv",
+  8: "_acfgilprstuv",
   9: "acdfgilmpstv",
   10: "bcdmorsu"
 };

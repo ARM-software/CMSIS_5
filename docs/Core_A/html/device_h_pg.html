@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -134,11 +134,11 @@ Device Peripheral Access Layer</h1>
 <p><a href="Modules.html"><b>Reference</b> </a> describes the standard features and functions of the <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> in detail.</p>
 <h1><a class="anchor" id="interrupt_number_sec"></a>
 Interrupt Number Definition</h1>
-<p><a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> contains the enumeration <a class="el" href="ARMCA9_8h.html#a7e1129cd8a196f4284d41db3e82ad5c8">IRQn_Type</a> that defines all exceptions and interrupts of the device. For devices implementing an ARM GIC these are defined as:</p>
+<p><a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> contains the enumeration <a class="el" href="ARMCA9_8h.html#a7e1129cd8a196f4284d41db3e82ad5c8">IRQn_Type</a> that defines all exceptions and interrupts of the device. For devices implementing an Arm GIC these are defined as:</p>
 <ul>
 <li>IRQn 0-15 represents software generated interrupts (SGI), local to each processor core.</li>
 <li>IRQn 16-31 represents private peripheral interrupts (PPI), local to each processor core.</li>
-<li>IRQn 32-1019 represents shared peripheral interrups (SPI), routeable to all processor cores.</li>
+<li>IRQn 32-1019 represents shared peripheral interrupts (SPI), routable to all processor cores.</li>
 <li>IRQn 1020-1023 represents special interrupts, refer to the GIC Architecture Specification.</li>
 </ul>
 <p><b>Example:</b> </p>
@@ -219,10 +219,10 @@ Device.h Template File</h1>
  * @file     &lt;Device&gt;.h
  * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
  * @version  V1.00
- * @date     30 March 2017
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -309,7 +309,7 @@ typedef enum IRQn
 /* ================                           Processor and Core Peripheral Section                           ================ */
 /* =========================================================================================================================== */
 
-/* ===========================  Configuration of the ARM Cortex-A Processor and Core Peripherals  ============================ */
+/* ===========================  Configuration of the Arm Cortex-A Processor and Core Peripherals  ============================ */
 /* ToDo: set the defines according your Device */
 /* ToDo: define the correct core revision              
          5U if your device is a CORTEX-A5 device
@@ -329,7 +329,7 @@ typedef enum IRQn
          core_ca5.h if your device is a CORTEX-A5 device
          core_ca7.h if your device is a CORTEX-A7 device
          core_ca9.h if your device is a CORTEX-A9 device */
-#include &lt;core_ca#.h&gt;                         /*!&lt; ARM Cortex-A# processor and core peripherals */
+#include &lt;core_ca#.h&gt;                         /*!&lt; Arm Cortex-A# processor and core peripherals */
 /* ToDo: include your system_&lt;Device&gt;.h file
          replace '&lt;Device&gt;' with your device name */
 #include "system_&lt;Device&gt;.h"                  /*!&lt; &lt;Device&gt; System */
@@ -469,7 +469,7 @@ typedef struct
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="templates_pg.html">CMSIS-Core Device Templates</a></li>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:59 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:47 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

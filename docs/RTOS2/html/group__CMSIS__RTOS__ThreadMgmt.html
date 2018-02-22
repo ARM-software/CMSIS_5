@@ -488,7 +488,15 @@ Thread State and State Transitions</div></div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="fieldtable">
+<div class="textblock"><p>Attributes to configure a thread.</p>
+<p>Refer to <a class="el" href="group__CMSIS__RTOS__MemoryMgmt.html">Memory Management</a> for details about usage of</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a1e100dc33d403841ed3c344e3397868e" title="memory for control block ">osThreadAttr_t::cb_mem</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#aa55a4335d12dc2785dc00fdc292d1159" title="size of provided memory for control block ">osThreadAttr_t::cb_size</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43" title="memory for stack ">osThreadAttr_t::stack_mem</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#aacbc9a219f2d6870e9ce89bb93f975c9" title="size of stack ">osThreadAttr_t::stack_size</a> </li>
+</ul>
+</div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="ab74e6bf80237ddc4109968cedc58c151"></a>const char *</td>
@@ -1037,7 +1045,7 @@ Default: <span class="XML-Token">0</span>. </p>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> Thread_1 (<span class="keywordtype">void</span> <span class="keyword">const</span> *arg)  {                          <span class="comment">// Thread function</span></div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> id;                                          <span class="comment">// id for the currently running thread</span></div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>   status;                                      <span class="comment">// status of the executed function</span></div>
+<div class="line">  osStatus_t   status;                                      <span class="comment">// status of the executed function</span></div>
 <div class="line">   </div>
 <div class="line">  :  </div>
 <div class="line">  <span class="keywordtype">id</span> = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a> ();                                    <span class="comment">// Obtain ID of current running thread</span></div>
@@ -1122,7 +1130,7 @@ This function <b>has no impact</b> when called when the kernel is locked, see <a
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> Thread_1 (<span class="keywordtype">void</span> <span class="keyword">const</span> *arg)  {                         <span class="comment">// Thread function</span></div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>   status;                                     <span class="comment">// status of the executed function</span></div>
+<div class="line">  osStatus_t   status;                                     <span class="comment">// status of the executed function</span></div>
 <div class="line">  :</div>
 <div class="line">  <span class="keywordflow">while</span> (1)  {</div>
 <div class="line">    status = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2">osThreadYield</a>();                              <span class="comment">// </span></div>
@@ -1330,7 +1338,7 @@ Avoid calling the function with a <em>thread_id</em> that does not exist or has 
 <div class="line"><span class="keywordtype">void</span> Thread_1 (<span class="keywordtype">void</span> *arg);                             <span class="comment">// function prototype for Thread_1</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> ThreadTerminate_example (<span class="keywordtype">void</span>) {</div>
-<div class="line">  <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> status;</div>
+<div class="line">  osStatus_t status;</div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> id;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">id</span> = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> (Thread_1, NULL, NULL);             <span class="comment">// create the thread</span></div>
@@ -1456,7 +1464,7 @@ Avoid calling the function with a <em>thread_id</em> that does not exist or has 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:23 for CMSIS-RTOS2 by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

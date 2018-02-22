@@ -292,7 +292,7 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
       &lt;xs:pattern value="[0-9]+\-[0-9]+|[A-Z]-[A-Z]|[_0-9a-zA-Z]+(,\s*[_0-9a-zA-Z]+)+"/&gt;
     &lt;/xs:restriction&gt;
   &lt;/xs:simpleType&gt;
-  &lt;!-- scaledNonNegativeInteger specifies the format in which numbers are represented in hexadecimal or decimar format --&gt;
+  &lt;!-- scaledNonNegativeInteger specifies the format in which numbers are represented in hexadecimal or decimal format --&gt;
   &lt;xs:simpleType name="scaledNonNegativeInteger"&gt;
     &lt;xs:restriction base="xs:string"&gt;
       &lt;xs:pattern value="[+]?(0x|0X|#)?[0-9a-fA-F]+[kmgtKMGT]?"/&gt;
@@ -301,7 +301,7 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
   &lt;!-- enumeratedValueDataType specifies the number formats for the values in enumeratedValues --&gt;
   &lt;xs:simpleType name="enumeratedValueDataType"&gt;
     &lt;xs:restriction base="xs:string"&gt;
-      &lt;xs:pattern value="[+]?(0x|0X|#)?[0-9a-fxA-FX]+"/&gt;
+      &lt;xs:pattern value="[+]?(((0x|0X)[0-9a-fA-F]+)|([0-9]+)|((#|0b)[01xX]+))"/&gt;
     &lt;/xs:restriction&gt;
   &lt;/xs:simpleType&gt;
   &lt;!-- accessType specfies the pre-defined tokens for the available accesses --&gt;
@@ -763,7 +763,7 @@ $(document).ready(function(){initNavTree('schema_1_2_gr.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:25 for CMSIS-SVD by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:32 for CMSIS-SVD by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

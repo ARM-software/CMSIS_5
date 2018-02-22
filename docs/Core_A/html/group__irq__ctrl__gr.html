@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -192,8 +192,8 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>This section describes the device agnostic interrupt API viable for a wide range of specific interrupt controllers. The IRQ Controller API allows interrupt dependend applications to be easily portable across a wide range of controllers.</p>
-<dl class="section note"><dt>Note</dt><dd>The default implementation for <a class="el" href="group__GIC__functions.html">ARM GIC (Generic Interrupt Controller)</a> can be found in <a class="el" href="irq__ctrl__gic_8c.html">irq_ctrl_gic.c</a>. It uses <code>weak</code> functions thus it can easily be overwritten by an alternative user implementation if needed.</dd></dl>
-<p>The ARMv7-A architecture defines a common set of first level exceptions, see table below.</p>
+<dl class="section note"><dt>Note</dt><dd>The default implementation for <a class="el" href="group__GIC__functions.html">Arm GIC (Generic Interrupt Controller)</a> can be found in <a class="el" href="irq__ctrl__gic_8c.html">irq_ctrl_gic.c</a>. It uses <code>weak</code> functions thus it can easily be overwritten by an alternative user implementation if needed.</dd></dl>
+<p>The Armv7-A architecture defines a common set of first level exceptions, see table below.</p>
 <table class="doxtable">
 <tr>
 <th>Exception </th><th>CMSIS Handler </th><th>Offset </th><th>Description  </th></tr>
@@ -268,7 +268,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>This function clears the pending status of the interrupt identified by the irqn parameter.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">int32_t <a class="code" href="group__irq__ctrl__gr.html#gaad6b03f73b3d3ea2ccbb122484e8bd36">IRQ_ClearPending</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line"> </div>
@@ -305,7 +305,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>This function disables forwarding of the corresponding interrupt to the CPU.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">int32_t <a class="code" href="group__irq__ctrl__gr.html#ga544cf4ae0159cc17e259d55898528248">IRQ_Disable</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line"> </div>
@@ -342,7 +342,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>This function enables forwarding of the corresponding interrupt to the CPU.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">int32_t <a class="code" href="group__irq__ctrl__gr.html#ga4ad780a3dc23a1b6222de8adcd7c20a7">IRQ_Enable</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line"> </div>
@@ -380,7 +380,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>This function informs the interrupt controller that the interrupt service routine processing of the currently active interrupt request is completed.</p>
 <p>The parameter irqn should specify the value previously returned by the <a class="el" href="group__irq__ctrl__gr.html#ga1664e9fc682c3ace4b721906d6ce2b3d">IRQ_GetActiveIRQ</a> or <a class="el" href="group__irq__ctrl__gr.html#ga1376a5cf6ff38344a9bbbae080af5a0f">IRQ_GetActiveFIQ</a> functions.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">int32_t <a class="code" href="group__irq__ctrl__gr.html#ga55638c35efdc7a197b51165929ef0c10">IRQ_EndOfInterrupt</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line"> </div>
@@ -416,7 +416,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>interrupt ID number.</dd></dl>
 <p>This function retrieves the interrupt ID number of current FIQ source and acknowledges the interrupt.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line"><a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> <a class="code" href="group__irq__ctrl__gr.html#ga1376a5cf6ff38344a9bbbae080af5a0f">IRQ_GetActiveFIQ</a> (<span class="keywordtype">void</span>) {</div>
 <div class="line">  <span class="comment">// FIQ is not supported, return invalid ID</span></div>
 <div class="line">  <span class="keywordflow">return</span> ((<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a>)-1);</div>
@@ -439,7 +439,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>interrupt ID number.</dd></dl>
 <p>This function retrieves the interrupt ID number of current IRQ source and acknowledges the interrupt.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line"><a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> <a class="code" href="group__irq__ctrl__gr.html#ga1664e9fc682c3ace4b721906d6ce2b3d">IRQ_GetActiveIRQ</a> (<span class="keywordtype">void</span>) {</div>
 <div class="line">  <a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn;</div>
 <div class="line"> </div>
@@ -472,7 +472,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>0 - interrupt is disabled, 1 - interrupt is enabled.</dd></dl>
 <p>This function retrieves the interrupt enable status of the interrupt identified by the irqn parameter.</p>
 <p>Interrupt enable status can be either disabled (0) or enabled (1). Disabled status is returned for interrupts which cannot be identified by irqn.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">uint32_t <a class="code" href="group__irq__ctrl__gr.html#ga8913613a9075a35410af0eb7b275d9e2">IRQ_GetEnableState</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn) {</div>
 <div class="line">  uint32_t enable;</div>
 <div class="line"> </div>
@@ -508,7 +508,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>registered interrupt handler function address.</dd></dl>
 <p>This function retrieves address of the interrupt handler callback function corresponding to the specified interrupt ID number.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line"><a class="code" href="irq__ctrl_8h.html#afbfa2180a9b6208f34891d539e9e2d52">IRQHandler_t</a> <a class="code" href="group__irq__ctrl__gr.html#gaa2a2df8fbc7bad465ada49bd690f65d5">IRQ_GetHandler</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn) {</div>
 <div class="line">  IRQHandler h;</div>
 <div class="line"> </div>
@@ -544,7 +544,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>current interrupt mode configuration with optional IRQ_MODE_ERROR bit set.</dd></dl>
 <p>This function retrieves interrupt mode configuration of the interrupt identified by the irqn parameter. <a class="el" href="group__irq__mode__defs.html#gaacb93ae158e548c54698a7230647804a">IRQ_MODE_ERROR</a> is returned for interrupts which cannot be identified by irqn.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">uint32_t <a class="code" href="group__irq__ctrl__gr.html#gadba142ee49ae8f52f76b603c926ad711">IRQ_GetMode</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn) {</div>
 <div class="line">  uint32_t mode;</div>
 <div class="line">  uint32_t val;</div>
@@ -597,7 +597,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>0 - interrupt is not pending, 1 - interrupt is pending.</dd></dl>
 <p>This function retrieves the pending status of the interrupt identified by the irqn parameter.</p>
 <p>Interrupt pending status can be either not pending (0) or pending (1). Not pending status is returned for interrupts which cannot be identified by irqn.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">uint32_t <a class="code" href="group__irq__ctrl__gr.html#gaa399f9169f136b3930f0d50247aa22fc">IRQ_GetPending</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn) {</div>
 <div class="line">  uint32_t pending;</div>
 <div class="line"> </div>
@@ -634,7 +634,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>current interrupt priority value with optional IRQ_PRIORITY_ERROR bit set.</dd></dl>
 <p>This function retrieves the priority of the interrupt identified by the irqn parameter.</p>
 <p>The valid priority value can be from zero (0) to the value of <a class="el" href="group__irq__priority__defs.html#gabaa4e91ab84dbe5f669080af6d0d81fa">IRQ_PRIORITY_Msk</a>. <a class="el" href="group__irq__priority__defs.html#ga47b19866dc05c58c6923c313b371f881">IRQ_PRIORITY_ERROR</a> bit is set in returned value for interrupts which cannot be identified by irqn.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">uint32_t <a class="code" href="group__irq__ctrl__gr.html#ga0a6a18c8fa2bc3183598439b56c507c3">IRQ_GetPriority</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn) {</div>
 <div class="line">  uint32_t priority;</div>
 <div class="line"> </div>
@@ -665,7 +665,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>current number of MSB bits included in the group priority field comparison with optional IRQ_PRIORITY_ERROR bit set.</dd></dl>
 <p>This function retrieves the number of MSB bits used to determine whether a pending interrupt has sufficient priority to preempt a currently active interrupt.</p>
 <p><a class="el" href="group__irq__priority__defs.html#ga47b19866dc05c58c6923c313b371f881">IRQ_PRIORITY_ERROR</a> value is returned when priority grouping is not supported.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">uint32_t <a class="code" href="group__irq__ctrl__gr.html#ga061da812739bdba1e32765ed6501b83c">IRQ_GetPriorityGroupBits</a> (<span class="keywordtype">void</span>) {</div>
 <div class="line">  uint32_t bp;</div>
 <div class="line"> </div>
@@ -692,7 +692,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>current priority masking threshold value with optional IRQ_PRIORITY_ERROR bit set.</dd></dl>
 <p>This function retrieves the priority masking threshold for the current processor.</p>
 <p><a class="el" href="group__irq__priority__defs.html#ga47b19866dc05c58c6923c313b371f881">IRQ_PRIORITY_ERROR</a> value is returned if priority masking is not supported.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">uint32_t <a class="code" href="group__irq__ctrl__gr.html#ga77632ae73f1ba46c4a9a0c12e6bc4869">IRQ_GetPriorityMask</a> (<span class="keywordtype">void</span>) {</div>
 <div class="line">  <span class="keywordflow">return</span> <a class="code" href="group__GIC__functions.html#ga2c5f9e5637560fc9d5c29d772580a728">GIC_GetInterfacePriorityMask</a>();</div>
 <div class="line">}</div>
@@ -715,7 +715,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>This function initializes interrupt controller.</p>
 <p>It disables all interrupt sources, clears all pending interrupts, sets interrupt priorities to highest priority and configures priority mask to lowest priority. IRQ and FIQ signal lines should be enabled and all interrupt handlers should be set to NULL.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#ifndef IRQ_GIC_LINE_COUNT</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define IRQ_GIC_LINE_COUNT      (1020U)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
@@ -766,7 +766,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>This function registers address of the interrupt handler callback function corresponding to the specified interrupt ID number.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">int32_t <a class="code" href="group__irq__ctrl__gr.html#gac1fcc16fb8e488d315cfa496f1d71db3">IRQ_SetHandler</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn, <a class="code" href="irq__ctrl_8h.html#afbfa2180a9b6208f34891d539e9e2d52">IRQHandler_t</a> handler) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line"> </div>
@@ -814,7 +814,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>This function configures the interrupt triggering mode, type, secure access and target CPUs of the interrupt (see <a class="el" href="group__irq__mode__defs.html">IRQ Mode Bit-Masks</a>) identified by the irqn parameter.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">int32_t <a class="code" href="group__irq__ctrl__gr.html#gab35da69354d2e515931580a1308a3a85">IRQ_SetMode</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn, uint32_t mode) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line">  uint32_t val;</div>
@@ -906,7 +906,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>This function sets the pending status of the interrupt identified by the irqn parameter.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">int32_t <a class="code" href="group__irq__ctrl__gr.html#ga88aedf1dee1061783e6c05c535e7b6c4">IRQ_SetPending</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line"> </div>
@@ -956,7 +956,7 @@ Functions</h2></td></tr>
 <p>This function sets the priority of the interrupt identified by the irqn parameter.</p>
 <p>Higher priority numbers have lower priority. The highest interrupt priority has priority value 0, while the lowest value depends on the number of implemented priority levels.</p>
 <p>The number of implemented priority bits can be determined by setting value <a class="el" href="group__irq__priority__defs.html#gabaa4e91ab84dbe5f669080af6d0d81fa">IRQ_PRIORITY_Msk</a> to arbitrary irqn and by retrieving the actual stored value with IRQ_GetPriority function.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">int32_t <a class="code" href="group__irq__ctrl__gr.html#gaa90aed20ac94420fff4bbbf55c12d4c2">IRQ_SetPriority</a> (<a class="code" href="irq__ctrl_8h.html#ac62964c04a7fed2c84aeea9e34f415e2">IRQn_ID_t</a> irqn, uint32_t priority) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line"> </div>
@@ -994,7 +994,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>This function sets the number of MSB priority bits used to determine whether a pending interrupt has sufficient priority to preempt a currently active interrupt.</p>
 <p>The number of implemented group priority bits can be determined by setting value <a class="el" href="group__irq__priority__defs.html#gabaa4e91ab84dbe5f669080af6d0d81fa">IRQ_PRIORITY_Msk</a> and by retrieving the actual stored value with <a class="el" href="group__irq__ctrl__gr.html#ga061da812739bdba1e32765ed6501b83c">IRQ_GetPriorityGroupBits</a> function. Function returns error status -1 if priority grouping is not supported.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line">int32_t <a class="code" href="group__irq__ctrl__gr.html#gabaa4074988ea9e30523f7ed5a86953c2">IRQ_SetPriorityGroupBits</a> (uint32_t bits) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line"> </div>
@@ -1036,7 +1036,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error.</dd></dl>
 <p>This function sets the priority masking threshold for the current processor.</p>
 <p>It ensures that only interrupts with a higher priority than priority threshold value are signaled to the target processor. Function returns error status -1 if priority masking is not supported.</p>
-<p>For ARM GIC the default implementation looks like the following example:</p>
+<p>For Arm GIC the default implementation looks like the following example:</p>
 <div class="fragment"><div class="line"><a class="code" href="group__irq__ctrl__gr.html#ga3a79888f72bd1db45f0b9a59dbaa2337">IRQ_SetPriorityMask</a> (uint32_t priority) {</div>
 <div class="line">  <a class="code" href="group__GIC__functions.html#gaa5eb0e76dbc89596e1ce47ddb9edc4a0">GIC_SetInterfacePriorityMask</a> (priority);</div>
 <div class="line">  <span class="keywordflow">return</span> (0);</div>
@@ -1049,7 +1049,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:59 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:47 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -126,55 +126,60 @@ Definition of CMSIS project</h1>
 <div class="fragment"><div class="line">&lt;?xml version=<span class="stringliteral">&quot;1.0&quot;</span> encoding=<span class="stringliteral">&quot;UTF-8&quot;</span> standalone=<span class="stringliteral">&quot;no&quot;</span> ?&gt;</div>
 <div class="line">&lt;<span class="keyword">package </span>xmlns:xsi=&quot;http:<span class="comment">//www.w3.org/2001/XMLSchema-instance&quot; xsi:noNamespaceSchemaLocation=&quot;PACK.xsd&quot;&gt;</span></div>
 <div class="line">  &lt;vendor&gt;Keil&lt;/vendor&gt;</div>
-<div class="line">  &lt;name&gt;STM32F429_Flash&lt;/name&gt;</div>
-<div class="line">  &lt;description&gt;CMSIS RTOS Blinky for STM32F429&lt;/description&gt;</div>
+<div class="line">  &lt;name&gt;STM32F407_Flash&lt;/name&gt;</div>
+<div class="line">  &lt;description&gt;CMSIS RTOS Blinky for STM32F407 microcontroller using Keil &#39;MCBSTM32F400 Evaluation Board.&lt;/description&gt;</div>
 <div class="line">  &lt;url&gt;www.keil.com/pack/Keil.STM32F4xx_DFP.pdsc&lt;/url&gt;</div>
-<div class="line">  </div>
+<div class="line"></div>
 <div class="line">  &lt;releases&gt;</div>
-<div class="line">    &lt;release version=&quot;5.20.0.2&quot;&gt;Generated 2016-05-10T22:08:37&lt;/release&gt;</div>
+<div class="line">    &lt;release version=&quot;5.25.1&quot;&gt;Generated 2018-02-20T09:10:26&lt;/release&gt;</div>
 <div class="line">  &lt;/releases&gt;</div>
 <div class="line"></div>
 <div class="line">  &lt;requirements&gt;</div>
 <div class="line">    &lt;packages&gt;</div>
-<div class="line">      &lt;package name=&quot;STM32F4xx_DFP&quot; vendor=&quot;Keil&quot; version=&quot;2.8.0:2.8.0&quot;/&gt;</div>
-<div class="line">      &lt;package name=&quot;CMSIS&quot; vendor=&quot;ARM&quot; version=&quot;4.5.0:4.5.0&quot;/&gt;</div>
+<div class="line">      &lt;package name=&quot;CMSIS&quot; vendor=&quot;ARM&quot;/&gt;</div>
+<div class="line">      &lt;package name=&quot;MDK-Middleware&quot; vendor=&quot;Keil&quot;/&gt; </div>
+<div class="line">      &lt;package name=&quot;STM32F4xx_DFP&quot; vendor=&quot;Keil&quot;/&gt;</div>
 <div class="line">    &lt;/packages&gt;</div>
 <div class="line">  &lt;/requirements&gt;</div>
 <div class="line"></div>
 <div class="line">  &lt;create&gt;</div>
-<div class="line">    &lt;project name=&quot;STM32F429_Flash&quot; documentation=&quot;./Abstract.txt&quot;&gt;</div>
-<div class="line">      &lt;target Dendian=&quot;Little-endian&quot; Dfpu=&quot;SP_FPU&quot; Dname=&quot;STM32F429ZITx&quot; Dvendor=&quot;STMicroelectronics:13&quot;&gt;</div>
+<div class="line">    &lt;project&gt;</div>
+<div class="line">      &lt;target Ddsp=&quot;NO_DSP&quot; Dendian=&quot;Little-endian&quot; Dfpu=&quot;SP_FPU&quot; Dname=&quot;STM32F407IGHx&quot; Dtz=&quot;NO_TZ&quot; Dvendor=&quot;STMicroelectronics:13&quot;&gt;</div>
 <div class="line">        &lt;output debug=&quot;1&quot; name=&quot;Blinky&quot; type=&quot;exe&quot;/&gt;</div>
-<div class="line">        &lt;debugProbe coreClock=&quot;10000000&quot; name=&quot;ST-Link&quot; protocol=&quot;swd&quot;/&gt;</div>
-<div class="line">        &lt;memory access=&quot;rx&quot; default=&quot;1&quot; name=&quot;IROM1&quot; size=&quot;0x200000&quot; start=&quot;0x8000000&quot; startup=&quot;1&quot;/&gt;</div>
-<div class="line">        &lt;memory access=&quot;rw&quot; default=&quot;1&quot; init=&quot;1&quot; name=&quot;IRAM1&quot; size=&quot;0x30000&quot; start=&quot;0x20000000&quot;/&gt;</div>
+<div class="line">        &lt;debugProbe coreClock=&quot;10000000&quot; name=&quot;ULINK2&quot; protocol=&quot;swd&quot;/&gt;</div>
+<div class="line">        &lt;memory access=&quot;rx&quot; default=&quot;1&quot; name=&quot;IROM1&quot; size=&quot;0x100000&quot; start=&quot;0x8000000&quot; startup=&quot;1&quot;/&gt;</div>
+<div class="line">        &lt;memory access=&quot;rw&quot; default=&quot;1&quot; init=&quot;1&quot; name=&quot;IRAM1&quot; size=&quot;0x20000&quot; start=&quot;0x20000000&quot;/&gt;</div>
 <div class="line">        &lt;memory access=&quot;rw&quot; default=&quot;0&quot; init=&quot;1&quot; name=&quot;IRAM2&quot; size=&quot;0x10000&quot; start=&quot;0x10000000&quot;/&gt;</div>
 <div class="line">      &lt;/target&gt;</div>
 <div class="line">      &lt;select&gt;</div>
-<div class="line">        &lt;component Cclass=&quot;CMSIS&quot; Cgroup=&quot;Core&quot; Cvendor=&quot;ARM&quot; Cversion=&quot;4.1.0&quot;/&gt;</div>
-<div class="line">        &lt;component Cclass=&quot;CMSIS&quot; Cgroup=&quot;RTOS&quot; Csub=&quot;Keil RTX&quot; Cvendor=&quot;ARM&quot; Cversion=&quot;4.78.0&quot;&gt;</div>
+<div class="line">        &lt;component Cclass=&quot;CMSIS&quot; Cgroup=&quot;CORE&quot; Cvendor=&quot;ARM&quot;/&gt;</div>
+<div class="line">        &lt;component Cclass=&quot;CMSIS&quot; Cgroup=&quot;RTOS&quot; Csub=&quot;Keil RTX&quot; Cvendor=&quot;ARM&quot;&gt;</div>
 <div class="line">          &lt;file attr=&quot;config&quot; category=&quot;source&quot; name=&quot;CMSIS/RTOS/RTX/Templates/RTX_Conf_CM.c&quot; version=&quot;4.70.1&quot;/&gt;</div>
 <div class="line">        &lt;/component&gt;</div>
-<div class="line">        &lt;component Cbundle=&quot;STM32F429I-Discovery&quot; Cclass=&quot;Board Support&quot; Cgroup=&quot;Buttons&quot; Cvendor=&quot;Keil&quot; Cversion=&quot;1.0.0&quot;/&gt;</div>
-<div class="line">        &lt;component Cbundle=&quot;STM32F429I-Discovery&quot; Cclass=&quot;Board Support&quot; Cgroup=&quot;LED&quot; Cvendor=&quot;Keil&quot; Cversion=&quot;1.0.0&quot;/&gt;</div>
-<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube Framework&quot; Csub=&quot;Classic&quot; Cvendor=&quot;Keil&quot; Cversion=&quot;1.4.0&quot;&gt;</div>
-<div class="line">          &lt;file attr=&quot;config&quot; category=&quot;header&quot; name=&quot;CMSIS/Driver/Config/RTE_Device.h&quot; version=&quot;2.3.1&quot;/&gt;</div>
-<div class="line">          &lt;file attr=&quot;config&quot; category=&quot;header&quot; name=&quot;MDK/Templates/Inc/stm32f4xx_hal_conf.h&quot; version=&quot;1.4.2&quot;/&gt;</div>
+<div class="line">        &lt;component Cbundle=&quot;MCBSTM32F400&quot; Cclass=&quot;Board Support&quot; Cgroup=&quot;A/D Converter&quot; Cvendor=&quot;Keil&quot;/&gt;</div>
+<div class="line">        &lt;component Cbundle=&quot;MCBSTM32F400&quot; Cclass=&quot;Board Support&quot; Cgroup=&quot;Buttons&quot; Cvendor=&quot;Keil&quot;/&gt;</div>
+<div class="line">        &lt;component Cbundle=&quot;MCBSTM32F400&quot; Cclass=&quot;Board Support&quot; Cgroup=&quot;LED&quot; Cvendor=&quot;Keil&quot;/&gt;</div>
+<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube Framework&quot; Csub=&quot;Classic&quot; Cvendor=&quot;Keil&quot;&gt;</div>
+<div class="line">          &lt;file attr=&quot;config&quot; category=&quot;header&quot; name=&quot;CMSIS/Driver/Config/RTE_Device.h&quot; version=&quot;2.4.4&quot;/&gt;</div>
+<div class="line">          &lt;file attr=&quot;config&quot; category=&quot;header&quot; name=&quot;MDK/Templates/Inc/stm32f4xx_hal_conf.h&quot; version=&quot;1.6.0&quot;/&gt;</div>
 <div class="line">        &lt;/component&gt;</div>
-<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube HAL&quot; Csub=&quot;Common&quot; Cvendor=&quot;Keil&quot; Cversion=&quot;1.4.0&quot;/&gt;</div>
-<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube HAL&quot; Csub=&quot;Cortex&quot; Cvendor=&quot;Keil&quot; Cversion=&quot;1.4.0&quot;/&gt;</div>
-<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube HAL&quot; Csub=&quot;GPIO&quot; Cvendor=&quot;Keil&quot; Cversion=&quot;1.4.0&quot;/&gt;</div>
-<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube HAL&quot; Csub=&quot;PWR&quot; Cvendor=&quot;Keil&quot; Cversion=&quot;1.4.0&quot;/&gt;</div>
-<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube HAL&quot; Csub=&quot;RCC&quot; Cvendor=&quot;Keil&quot; Cversion=&quot;1.4.0&quot;/&gt;</div>
-<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;Startup&quot; Cvendor=&quot;Keil&quot; Cversion=&quot;2.4.0&quot;&gt;</div>
-<div class="line">          &lt;file attr=&quot;config&quot; category=&quot;source&quot; condition=&quot;STM32F429xx_ARMCC&quot; name=&quot;Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f429xx.s&quot; version=&quot;2.4.2&quot;/&gt;</div>
-<div class="line">          &lt;file attr=&quot;config&quot; category=&quot;source&quot; name=&quot;Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c&quot; version=&quot;2.4.2&quot;/&gt;</div>
+<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube HAL&quot; Csub=&quot;ADC&quot; Cvendor=&quot;Keil&quot;/&gt;</div>
+<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube HAL&quot; Csub=&quot;Common&quot; Cvendor=&quot;Keil&quot;/&gt;</div>
+<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube HAL&quot; Csub=&quot;Cortex&quot; Cvendor=&quot;Keil&quot;/&gt;</div>
+<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube HAL&quot; Csub=&quot;DMA&quot; Cvendor=&quot;Keil&quot;/&gt;</div>
+<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube HAL&quot; Csub=&quot;GPIO&quot; Cvendor=&quot;Keil&quot;/&gt;</div>
+<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube HAL&quot; Csub=&quot;PWR&quot; Cvendor=&quot;Keil&quot;/&gt;</div>
+<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;STM32Cube HAL&quot; Csub=&quot;RCC&quot; Cvendor=&quot;Keil&quot;/&gt;</div>
+<div class="line">        &lt;component Cclass=&quot;Device&quot; Cgroup=&quot;Startup&quot; Cvendor=&quot;Keil&quot;&gt;</div>
+<div class="line">          &lt;file attr=&quot;config&quot; category=&quot;source&quot; condition=&quot;STM32F407xx_ARMCC&quot; name=&quot;Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f407xx.s&quot; version=&quot;2.6.0&quot;/&gt;</div>
+<div class="line">          &lt;file attr=&quot;config&quot; category=&quot;source&quot; name=&quot;Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c&quot; version=&quot;2.6.0&quot;/&gt;</div>
 <div class="line">        &lt;/component&gt;</div>
 <div class="line">      &lt;/select&gt;</div>
 <div class="line">      &lt;files&gt;</div>
 <div class="line">        &lt;group name=&quot;Source Files&quot;&gt;</div>
 <div class="line">          &lt;file category=&quot;sourceC&quot; name=&quot;./Blinky.c&quot;/&gt;</div>
 <div class="line">          &lt;file category=&quot;sourceC&quot; name=&quot;./Thread_LED.c&quot;/&gt;</div>
+<div class="line">          &lt;file category=&quot;sourceC&quot; name=&quot;./Thread_ADC.c&quot;/&gt;</div>
 <div class="line">        &lt;/group&gt;</div>
 <div class="line">        &lt;group name=&quot;Documentation&quot;&gt;</div>
 <div class="line">          &lt;file category=&quot;doc&quot; name=&quot;./Abstract.txt&quot;/&gt;</div>
@@ -182,7 +187,6 @@ Definition of CMSIS project</h1>
 <div class="line">      &lt;/files&gt;</div>
 <div class="line">    &lt;/project&gt;</div>
 <div class="line">  &lt;/create&gt;</div>
-<div class="line"></div>
 <div class="line">&lt;/package&gt;</div>
 </div><!-- fragment --><h1><a class="anchor" id="cpdsc_structure"></a>
 CPDSC top level structure</h1>
@@ -737,7 +741,7 @@ CPDSC top level structure</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:21 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:27 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

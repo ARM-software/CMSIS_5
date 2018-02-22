@@ -64,6 +64,7 @@ var searchData=
   ['section_5fng_5fshift',['SECTION_NG_SHIFT',['../group__MMU__defs__gr.html#ga7af8adbf033d0a5c7b0889dd085041d1',1,'core_ca.h']]],
   ['section_5fnormal',['section_normal',['../group__MMU__defs__gr.html#ga220aab449cf3716723979d06666c2ebf',1,'core_ca.h']]],
   ['section_5fnormal_5fcod',['section_normal_cod',['../group__MMU__defs__gr.html#gad598239f9bb9b6ae2bec8278305640b4',1,'core_ca.h']]],
+  ['section_5fnormal_5fnc',['section_normal_nc',['../core__ca_8h.html#a470b88645153aad94b09485f3108c641',1,'core_ca.h']]],
   ['section_5fnormal_5fro',['section_normal_ro',['../group__MMU__defs__gr.html#gaf95fa76d8f0f7ccfd2ebc00860af4f1d',1,'core_ca.h']]],
   ['section_5fnormal_5frw',['section_normal_rw',['../group__MMU__defs__gr.html#ga1f2ce84e6ec5c150a2ffc05092ea6d0e',1,'core_ca.h']]],
   ['section_5fns_5fmask',['SECTION_NS_MASK',['../core__ca_8h.html#a057533871fa1af6db7a27b39d976ac95',1,'core_ca.h']]],

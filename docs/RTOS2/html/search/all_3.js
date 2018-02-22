@@ -19,6 +19,9 @@ var searchData=
   ['cmsis_5fos2_5ftimer_2etxt',['cmsis_os2_Timer.txt',['../cmsis__os2__Timer_8txt.html',1,'']]],
   ['cmsis_5fos2_5fwait_2etxt',['cmsis_os2_Wait.txt',['../cmsis__os2__Wait_8txt.html',1,'']]],
   ['cmsis_2drtos2_20api',['CMSIS-RTOS2 API',['../group__CMSIS__RTOS.html',1,'']]],
+  ['cnt_5falloc',['cnt_alloc',['../rtx__os_8h.html#a6bc379cb485caaa1bd9b63abbc79a4ec',1,'osRtxObjectMemUsage_t']]],
+  ['cnt_5ffree',['cnt_free',['../rtx__os_8h.html#a5916fa670084fea56a52ba450565da4b',1,'osRtxObjectMemUsage_t']]],
+  ['coding_20rules',['Coding Rules',['../CodingRules.html',1,'']]],
   ['configure_20rtx_20v5',['Configure RTX v5',['../config_rtx5.html',1,'rtx5_impl']]],
   ['create_20an_20rtx5_20project',['Create an RTX5 Project',['../cre_rtx_proj.html',1,'rtx5_impl']]],
   ['cmsis_2drtos_20c_2b_2b_20api',['CMSIS-RTOS C++ API',['../rtos_apicpp.html',1,'functionOverview']]]

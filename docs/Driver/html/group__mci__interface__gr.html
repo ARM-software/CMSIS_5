@@ -244,28 +244,19 @@ SD memory connected via 4-bit SD Bus Mode</div></div>
 <p><b>Driver Functions</b></p>
 <p>The driver functions are published in the access struct as explained in <a class="el" href="theoryOperation.html#DriverFunctions">Common Driver Functions</a></p>
 <ul>
-<li><a class="el" href="group__mci__interface__gr.html#structARM__DRIVER__MCI">ARM_DRIVER_MCI</a> : access struct for MCI driver functions </li>
+<li><a class="el" href="group__mci__interface__gr.html#structARM__DRIVER__MCI">ARM_DRIVER_MCI</a> : access struct for MCI driver functions</li>
 </ul>
-<hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="structARM__DRIVER__MCI" id="structARM__DRIVER__MCI"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct ARM_DRIVER_MCI</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Access structure of the MCI Driver. </p>
-<p>A typical setup sequence for the driver is shown below:</p>
-<p><b>Example Code:</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="Driver__MCI_8h.html">Driver_MCI.h</a>&quot;</span></div>
-<div class="line"> </div>
+<p><b>Example Code</b></p>
+<p>The following example code shows the usage of the MCI interface.</p>
+<div class="fragment"><div class="line"></div>
+<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="Driver__MCI_8h.html">Driver_MCI.h</a>&quot;</span></div>
+<div class="line"></div>
+<div class="line"></div>
 <div class="line"><span class="comment">/* Usage example: ARM_MCI_Initialize ----------------------------------------*/</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="comment">// ARM_MCI_SignalEvent callback function prototype</span></div>
 <div class="line"><span class="keywordtype">void</span> MCI_SignalEvent_Callback (uint32_t event);</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> init_driver (<a class="code" href="group__mci__interface__gr.html#structARM__DRIVER__MCI">ARM_DRIVER_MCI</a> *drv) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line">  </div>
@@ -275,9 +266,9 @@ SD memory connected via 4-bit SD Bus Mode</div></div>
 <div class="line">    <span class="comment">// Initialization and event callback registration failed</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="comment">/* Usage example: ARM_MCI_Uninitialize --------------------------------------*/</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> uninit_driver (<a class="code" href="group__mci__interface__gr.html#structARM__DRIVER__MCI">ARM_DRIVER_MCI</a> *drv) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line">  </div>
@@ -287,9 +278,9 @@ SD memory connected via 4-bit SD Bus Mode</div></div>
 <div class="line">    <span class="comment">// Driver successfully uninitialized</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="comment">/* Usage example: ARM_MCI_PowerControl --------------------------------------*/</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> control_driver_power (<a class="code" href="group__mci__interface__gr.html#structARM__DRIVER__MCI">ARM_DRIVER_MCI</a> *drv, <span class="keywordtype">bool</span> enable) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line">  </div>
@@ -304,15 +295,15 @@ SD memory connected via 4-bit SD Bus Mode</div></div>
 <div class="line">    <span class="comment">// Driver power enabled/disabled</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="comment">/* Usage example: ARM_MCI_CardPower -----------------------------------------*/</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><a class="code" href="group__mci__interface__gr.html#structARM__MCI__CAPABILITIES">ARM_MCI_CAPABILITIES</a> drv_capabilities;</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> set_card_vdd_3v3 (<a class="code" href="group__mci__interface__gr.html#structARM__DRIVER__MCI">ARM_DRIVER_MCI</a> *drv) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line">  </div>
-<div class="line">  <span class="keywordflow">if</span> (drv_capabilities.<a class="code" href="group__mci__interface__gr.html#a414baec222a72be862e262f02b821dce">vdd</a> == 1) {</div>
+<div class="line">  <span class="keywordflow">if</span> (drv_capabilities.<a class="code" href="group__mci__interface__gr.html#a414baec222a72be862e262f02b821dce">vdd</a> == 1U) {</div>
 <div class="line">    <span class="comment">// Power switching to 3.3V supported</span></div>
 <div class="line">    status = drv-&gt;<a class="code" href="group__mci__interface__gr.html#a73334c737658b227ef3097343d5c78bb">CardPower</a> (<a class="code" href="group__mci__card__power__ctrls.html#ga565ecd36c8d0379fb4172da577cc540d">ARM_MCI_POWER_VDD_3V3</a>);</div>
 <div class="line">    </div>
@@ -321,9 +312,9 @@ SD memory connected via 4-bit SD Bus Mode</div></div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="comment">/* Usage example: ARM_MCI_ReadCD --------------------------------------------*/</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> read_card_detect_state (<a class="code" href="group__mci__interface__gr.html#structARM__DRIVER__MCI">ARM_DRIVER_MCI</a> *drv) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line">  </div>
@@ -341,9 +332,9 @@ SD memory connected via 4-bit SD Bus Mode</div></div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="comment">/* Usage example: ARM_MCI_ReadWP --------------------------------------------*/</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> read_write_protect_state (<a class="code" href="group__mci__interface__gr.html#structARM__DRIVER__MCI">ARM_DRIVER_MCI</a> *drv) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line">  </div>
@@ -361,25 +352,25 @@ SD memory connected via 4-bit SD Bus Mode</div></div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="comment">/* Usage example: ARM_MCI_SendCommand ---------------------------------------*/</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keyword">volatile</span> uint32_t MCI_Events;</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> MCI_SignalEvent_Callback (uint32_t event) {</div>
 <div class="line">  <span class="comment">// Save current event</span></div>
 <div class="line">  MCI_Events |= event;</div>
 <div class="line">}</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> send_CMD0 (<a class="code" href="group__mci__interface__gr.html#structARM__DRIVER__MCI">ARM_DRIVER_MCI</a> *drv) {</div>
 <div class="line">  int32_t  status;</div>
 <div class="line">  uint32_t cmd;</div>
-<div class="line"> </div>
-<div class="line">  MCI_Events = 0; <span class="comment">//Clear MCI driver event flags</span></div>
-<div class="line">  cmd = 0;        <span class="comment">// Set GO_IDLE_STATE command code</span></div>
-<div class="line"> </div>
-<div class="line">  status = drv-&gt;<a class="code" href="group__mci__interface__gr.html#affefb5c1d352082933c2fb0620b37212">SendCommand</a> (cmd, 0, <a class="code" href="group__mci__send__command__flags__ctrls.html#ga81606bd94ce782e2c3764b913f929f60">ARM_MCI_CARD_INITIALIZE</a> | <a class="code" href="group__mci__send__command__flags__ctrls.html#ga70934cef80884e8c75fb4eebf8452118">ARM_MCI_RESPONSE_NONE</a>, NULL);</div>
-<div class="line"> </div>
+<div class="line"></div>
+<div class="line">  MCI_Events = 0U; <span class="comment">//Clear MCI driver event flags</span></div>
+<div class="line">  cmd = 0U;        <span class="comment">// Set GO_IDLE_STATE command code</span></div>
+<div class="line"></div>
+<div class="line">  status = drv-&gt;<a class="code" href="group__mci__interface__gr.html#affefb5c1d352082933c2fb0620b37212">SendCommand</a> (cmd, 0U, <a class="code" href="group__mci__send__command__flags__ctrls.html#ga81606bd94ce782e2c3764b913f929f60">ARM_MCI_CARD_INITIALIZE</a> | <a class="code" href="group__mci__send__command__flags__ctrls.html#ga70934cef80884e8c75fb4eebf8452118">ARM_MCI_RESPONSE_NONE</a>, NULL);</div>
+<div class="line"></div>
 <div class="line">  <span class="keywordflow">if</span> (status == <a class="code" href="group__execution__status.html#ga85752c5de59e8adeb001e35ff5be6be7">ARM_DRIVER_OK</a>) {</div>
 <div class="line">    <span class="comment">/* Wait for event */</span></div>
 <div class="line">    <span class="keywordflow">while</span> ((MCI_Events &amp; <a class="code" href="group__mci__event__gr.html#gae69356c75d55103d93ef91ac1bc02b49">ARM_MCI_EVENT_COMMAND_COMPLETE</a>) == 0U);</div>
@@ -390,40 +381,40 @@ SD memory connected via 4-bit SD Bus Mode</div></div>
 <div class="line">    <span class="comment">// Error</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="comment">/* Usage example: ARM_MCI_SetupTransfer -------------------------------------*/</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keyword">volatile</span> uint32_t MCI_Events;</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> MCI_SignalEvent_Callback (uint32_t event) {</div>
 <div class="line">  MCI_Events |= event;  <span class="comment">// Save current event</span></div>
 <div class="line">}</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> read_sector (<a class="code" href="group__mci__interface__gr.html#structARM__DRIVER__MCI">ARM_DRIVER_MCI</a> *drv, uint8_t *buf, uint32_t sz) {</div>
 <div class="line">  int32_t status;</div>
 <div class="line">  uint32_t cmd, arg;</div>
 <div class="line">  uint32_t resp;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">if</span> (sz &lt; 512) {</div>
+<div class="line"></div>
+<div class="line">  <span class="keywordflow">if</span> (sz &lt; 512U) {</div>
 <div class="line">    <span class="comment">// Invalid buffer size, sector consists of 512 bytes</span></div>
 <div class="line">    <span class="comment">//...</span></div>
-<div class="line">  } </div>
-<div class="line"> </div>
-<div class="line">  status = drv-&gt;<a class="code" href="group__mci__interface__gr.html#adc63bab660e8304d78faa1ac429e792b">SetupTransfer</a> (buf, 1, 512, <a class="code" href="group__mci__transfer__ctrls.html#gaa6f3be235a9dce5c66be8fe64f399846">ARM_MCI_TRANSFER_READ</a> | <a class="code" href="group__mci__transfer__ctrls.html#ga4ced782e7c0c70d5f0edbddd1e48323b">ARM_MCI_TRANSFER_BLOCK</a>);</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">if</span> (status == <a class="code" href="group__execution__status.html#ga85752c5de59e8adeb001e35ff5be6be7">ARM_DRIVER_OK</a>) {</div>
-<div class="line">    MCI_Events = 0; <span class="comment">//Clear MCI driver event flags</span></div>
+<div class="line">  }</div>
 <div class="line"></div>
-<div class="line">    cmd = 17;       <span class="comment">// Set READ_SINGLE_BLOCK command</span></div>
-<div class="line">    arg = 0;        <span class="comment">// Set sector number</span></div>
-<div class="line"> </div>
+<div class="line">  status = drv-&gt;<a class="code" href="group__mci__interface__gr.html#adc63bab660e8304d78faa1ac429e792b">SetupTransfer</a> (buf, 1U, 512U, <a class="code" href="group__mci__transfer__ctrls.html#gaa6f3be235a9dce5c66be8fe64f399846">ARM_MCI_TRANSFER_READ</a> | <a class="code" href="group__mci__transfer__ctrls.html#ga4ced782e7c0c70d5f0edbddd1e48323b">ARM_MCI_TRANSFER_BLOCK</a>);</div>
+<div class="line"></div>
+<div class="line">  <span class="keywordflow">if</span> (status == <a class="code" href="group__execution__status.html#ga85752c5de59e8adeb001e35ff5be6be7">ARM_DRIVER_OK</a>) {</div>
+<div class="line">    MCI_Events = 0U; <span class="comment">//Clear MCI driver event flags</span></div>
+<div class="line"></div>
+<div class="line">    cmd = 17U;       <span class="comment">// Set READ_SINGLE_BLOCK command</span></div>
+<div class="line">    arg = 0U;        <span class="comment">// Set sector number</span></div>
+<div class="line"></div>
 <div class="line">    status  = drv-&gt;<a class="code" href="group__mci__interface__gr.html#affefb5c1d352082933c2fb0620b37212">SendCommand</a> (cmd, arg, <a class="code" href="group__mci__send__command__flags__ctrls.html#gaa5ddf1cf772b234e3c247039effd0e7b">ARM_MCI_RESPONSE_SHORT</a> | <a class="code" href="group__mci__send__command__flags__ctrls.html#ga6ab3f4c1a2bf0fdb81fbcf7a5698f2de">ARM_MCI_RESPONSE_CRC</a> | <a class="code" href="group__mci__send__command__flags__ctrls.html#ga8aa566f69aa74ed416213df6ca3267bd">ARM_MCI_TRANSFER_DATA</a>, &amp;resp);</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line">    <span class="keywordflow">if</span> (status == <a class="code" href="group__execution__status.html#ga85752c5de59e8adeb001e35ff5be6be7">ARM_DRIVER_OK</a>) {</div>
 <div class="line">      <span class="comment">/* Wait for event */</span></div>
 <div class="line">      <span class="keywordflow">while</span> ((MCI_Events &amp; <a class="code" href="group__mci__event__gr.html#gae69356c75d55103d93ef91ac1bc02b49">ARM_MCI_EVENT_COMMAND_COMPLETE</a>) == 0U);</div>
 <div class="line">      <span class="comment">// Command was successfully sent to memory card</span></div>
-<div class="line">      <span class="keywordflow">if</span> ((resp &amp; 0x03) == 0) {</div>
+<div class="line">      <span class="keywordflow">if</span> ((resp &amp; 0x03U) == 0U) {</div>
 <div class="line">        <span class="comment">// Sector number is valid, wait until data transfer completes</span></div>
 <div class="line">        <span class="keywordflow">while</span> ((MCI_Events &amp; <a class="code" href="group__mci__event__gr.html#gabc3c468dedaed890683360f2c5c65bea">ARM_MCI_EVENT_TRANSFER_COMPLETE</a>) == 0U);</div>
 <div class="line">        <span class="comment">// Data was successfully read from memory card</span></div>
@@ -432,9 +423,9 @@ SD memory connected via 4-bit SD Bus Mode</div></div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="comment">/* Usage example: ARM_MCI_AbortTransfer -------------------------------------*/</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> abort_data_transfer (<a class="code" href="group__mci__interface__gr.html#structARM__DRIVER__MCI">ARM_DRIVER_MCI</a> *drv) {</div>
 <div class="line">  <a class="code" href="group__mci__interface__gr.html#structARM__MCI__STATUS">ARM_MCI_STATUS</a> drv_status;</div>
 <div class="line"></div>
@@ -448,9 +439,9 @@ SD memory connected via 4-bit SD Bus Mode</div></div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="comment">/* Usage example: ARM_MCI_GetStatus -----------------------------------------*/</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> check_transfer_status (<a class="code" href="group__mci__interface__gr.html#structARM__DRIVER__MCI">ARM_DRIVER_MCI</a> *drv) {</div>
 <div class="line">  <a class="code" href="group__mci__interface__gr.html#structARM__MCI__STATUS">ARM_MCI_STATUS</a> drv_status;</div>
 <div class="line"></div>
@@ -468,9 +459,9 @@ SD memory connected via 4-bit SD Bus Mode</div></div>
 <div class="line">    <span class="comment">// Data transfer ended with error</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="comment">/* Usage example: ARM_MCI_SignalEvent ---------------------------------------*/</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> MCI_SignalEvent_Callback (uint32_t event) {</div>
 <div class="line">  <span class="keywordflow">if</span> ((event &amp; <a class="code" href="group__mci__event__gr.html#gae2cf8ef238c092e94e96a01602f3a23c">ARM_MCI_EVENT_CARD_INSERTED</a>) != 0U) {</div>
 <div class="line">    <span class="comment">// Memory card was inserted into socket</span></div>
@@ -510,7 +501,18 @@ SD memory connected via 4-bit SD Bus Mode</div></div>
 <div class="line">    <span class="comment">// CE-ATA command completion signal wait timeout expired</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>The functions of the MCI are accessed by function pointers exposed by this structure. Refer to <a class="el" href="theoryOperation.html#DriverFunctions">Common Driver Functions</a> for overview information.</p>
+</div><!-- fragment --> <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structARM__DRIVER__MCI" id="structARM__DRIVER__MCI"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ARM_DRIVER_MCI</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Access structure of the MCI Driver. </p>
+<p>The functions of the MCI are accessed by function pointers exposed by this structure. Refer to <a class="el" href="theoryOperation.html#DriverFunctions">Common Driver Functions</a> for overview information.</p>
 <p>Each instance of an MCI provides such an access structure. The instance is identified by a postfix number in the symbol name of the access structure, for example:</p>
 <ul>
 <li><b>Driver_MCI0</b> is the name of the access struct of the first instance (no. 0).</li>
@@ -1762,7 +1764,7 @@ The parameter <em>arg</em> provides, depending on the operation, additional info
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:02 for CMSIS-Driver by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:51 for CMSIS-Driver by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

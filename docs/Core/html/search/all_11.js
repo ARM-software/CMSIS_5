@@ -7,7 +7,7 @@ var searchData=
   ['tpi_5ftype',['TPI_Type',['../structTPI__Type.html',1,'']]],
   ['tpr',['TPR',['../structITM__Type.html#ae907229ba50538bf370fbdfd54c099a2',1,'ITM_Type']]],
   ['trigger',['TRIGGER',['../structTPI__Type.html#a4d4cd2357f72333a82a1313228287bbd',1,'TPI_Type']]],
-  ['trustzone_20for_20armv8_2dm',['TrustZone for ARMv8-M',['../group__trustzone__functions.html',1,'']]],
+  ['trustzone_20for_20armv8_2dm',['TrustZone for Armv8-M',['../group__trustzone__functions.html',1,'']]],
   ['type',['TYPE',['../structMPU__Type.html#aba02af87f77577c725cf73879cabb609',1,'MPU_Type']]],
   ['tz_5fallocmodulecontext_5fs',['TZ_AllocModuleContext_S',['../group__context__trustzone__functions.html#gacd016f166bee549a0d3e970132e64a90',1,'Ref_Trustzone.txt']]],
   ['tz_5ffreemodulecontext_5fs',['TZ_FreeModuleContext_S',['../group__context__trustzone__functions.html#gac84f678fbe974f8b02c683e0b8046524',1,'Ref_Trustzone.txt']]],

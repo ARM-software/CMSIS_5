@@ -116,7 +116,7 @@ Creating a new Algorithm</h1>
 <p>Flash programming algorithms are defined with functions to erase and program the Flash device. Special compiler and linker settings are required. Follow these steps to create and configure a new Flash programming algorithm:</p>
 <ol type="1">
 <li>Copy the content from the <b>ARM:CMSIS</b> Pack folder (usually C:\Keil\ARM\Pack\ARM\CMSIS\<em>version</em>\Device\_Template_Flash) to a new folder.</li>
-<li>Rename the project file <b>NewDevice.uvproj</b> to represent the new Flash ROM device name, for example <b>MyDevice.uvproj</b>.</li>
+<li>Rename the project file <b>NewDevice.uvprojx</b> to represent the new Flash ROM device name, for example <b>MyDevice.uvprojx</b>.</li>
 <li>Open the project with uVision. From the toolbar, use the drop-down <b>Select Target</b> to define the processor architecture. <b>Cortex-M</b> fits for all Cortex-M0/M0+, M3, and M4 devices. The configuration assumes a little-endian microcontroller. In case of a big-endian microcontroller, select the correct processor core with <b>Project</b> - <b>Options for Target</b> - <b>Device</b>.</li>
 <li>Open the dialog <b>Project</b> - <b>Options for Target</b> - <b>Output</b> and change the content of the field <b>Name of Executable</b> to represent the device, for example <b>MyDevice</b>.</li>
 <li>Adapt the programming algorithms in the file <a class="el" href="flashAlgorithm.html#FlashPrg">FlashPrg</a>.</li>
@@ -139,26 +139,26 @@ Creating a new Algorithm</h1>
 <ol type="1">
 <li>the Flash programming functions.</li>
 <li>the <b>FlashDevice</b> structure: <div class="fragment"><div class="line"><span class="keyword">struct </span>FlashDevice const FlashDevice  =  {</div>
-<div class="line">FLASH_DRV_VERS,                   <span class="comment">// Driver Version, do not modify!</span></div>
-<div class="line"><span class="stringliteral">&quot;STM32Fxxx High-density Flash&quot;</span>,   <span class="comment">// Device Name (512kB/384kB/256kB)</span></div>
-<div class="line">ONCHIP,                           <span class="comment">// Device Type</span></div>
-<div class="line">0x08000000,                       <span class="comment">// Device Start Address</span></div>
-<div class="line">0x00080000,                       <span class="comment">// Device Size in Bytes (512kB)</span></div>
-<div class="line">1024,                             <span class="comment">// Programming Page Size</span></div>
-<div class="line">0,                                <span class="comment">// Reserved, must be 0</span></div>
-<div class="line">0xFF,                             <span class="comment">// Initial Content of Erased Memory</span></div>
-<div class="line">100,                              <span class="comment">// Program Page Timeout 100 mSec</span></div>
-<div class="line">500,                              <span class="comment">// Erase Sector Timeout 500 mSec</span></div>
+<div class="line">   FLASH_DRV_VERS,             <span class="comment">// Driver Version, do not modify!</span></div>
+<div class="line">   <span class="stringliteral">&quot;New Device 256kB Flash&quot;</span>,   <span class="comment">// Device Name </span></div>
+<div class="line">   ONCHIP,                     <span class="comment">// Device Type</span></div>
+<div class="line">   0x00000000,                 <span class="comment">// Device Start Address</span></div>
+<div class="line">   0x00040000,                 <span class="comment">// Device Size in Bytes (256kB)</span></div>
+<div class="line">   1024,                       <span class="comment">// Programming Page Size</span></div>
+<div class="line">   0,                          <span class="comment">// Reserved, must be 0</span></div>
+<div class="line">   0xFF,                       <span class="comment">// Initial Content of Erased Memory</span></div>
+<div class="line">   100,                        <span class="comment">// Program Page Timeout 100 mSec</span></div>
+<div class="line">   3000,                       <span class="comment">// Erase Sector Timeout 3000 mSec</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Specify Size and Address of Sectors</span></div>
-<div class="line">0x0800, 0x000000,                 <span class="comment">// Sector Size 2kB (256 Sectors)</span></div>
-<div class="line">SECTOR_END</div>
+<div class="line">   0x002000, 0x000000,         <span class="comment">// Sector Size  8kB (8 Sectors)</span></div>
+<div class="line">   0x010000, 0x010000,         <span class="comment">// Sector Size 64kB (2 Sectors) </span></div>
+<div class="line">   0x002000, 0x030000,         <span class="comment">// Sector Size  8kB (8 Sectors)</span></div>
+<div class="line">   SECTOR_END</div>
 <div class="line">};</div>
 </div><!-- fragment --></li>
 </ol>
 <dl class="section note"><dt>Note</dt><dd>The <b>Device Name</b> will usually be shown in tools to identify the Flash algorithm. Make sure that this is changed to the correct device name from the DFP.</dd></dl>
-<h2>Testing Algorithms </h2>
-<p>The _Template_Flash\Test-folder contains a project that shows how to test a new Flash programming algorithm on behalf of a STM32F10x device. Adapt the code to your needs.</p>
 <h1><a class="anchor" id="AddFPA"></a>
 Adding an Algorithm to a Pack</h1>
 <p>The generated <b>*.FLM</b> file needs to be added to the <a class="el" href="createPack_DFP.html">Pack with Device Support</a>, so that it is available to the tool user for programming his device. Usually, a directory <b>Flash</b> is created and the algorithm is saved in this directory.</p>
@@ -169,7 +169,7 @@ Adding an Algorithm to a Pack</h1>
 <div class="line"> </div>
 <div class="line">  &lt;subFamily DsubFamily=<span class="stringliteral">&quot;STM32F405&quot;</span>&gt;</div>
 <div class="line">    &lt;algorithm name=<span class="stringliteral">&quot;Flash/STM32F2xx_1024.flm&quot;</span> start=0x08000000 size=0x20000 <span class="keywordflow">default</span>=<span class="stringliteral">&quot;1&quot;</span>/&gt;       &lt;!-- valid <span class="keywordflow">for</span> all devices of a subFamily --&gt;</div>
-<div class="line"></div>
+<div class="line"> </div>
 <div class="line">    &lt;device Dname=<span class="stringliteral">&quot;STM32F405OE&quot;</span>&gt;</div>
 <div class="line">      &lt;algorithm name=<span class="stringliteral">&quot;Flash/STM32F2xx_2048.flm&quot;</span> start=0x08000000 size=0x40000 <span class="keywordflow">default</span>=<span class="stringliteral">&quot;1&quot;</span>/&gt;     &lt;!-- <span class="keywordflow">finally</span>, <span class="keyword">this</span> is the <span class="keywordflow">default</span> <span class="keywordflow">for</span> the device --&gt;</div>
 <div class="line">    &lt;/device&gt;</div>
@@ -183,7 +183,7 @@ Adding an Algorithm to a Pack</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:20 for CMSIS-Pack by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:03:27 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DAP
-   &#160;<span id="projectnumber">Version 1.2.0 (Proposal)</span>
+   &#160;<span id="projectnumber">Version 2.0.0</span>
    </div>
    <div id="projectbrief">Interface Firmware for CoreSight Debug Access Port</div>
   </td>
@@ -115,9 +115,12 @@ $(document).ready(function(){initNavTree('dap_revisionHistory.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
-<td>V1.2.0 (Proposal) </td><td>Added: <a class="el" href="group__DAP__SWD__Sequence.html">DAP_SWD_Sequence</a> to enable SWD multi-drop target selection <br/>
- Added: Test Domain Timer values in the commands <a class="el" href="group__DAP__Info.html">DAP_Info</a>, <a class="el" href="group__DAP__Transfer.html">DAP_Transfer</a> to allow time synchronisation with <a class="el" href="group__DAP__TestInput__gr.html">Test Input Commands</a> <br/>
- Added: <a class="el" href="group__DAP__TestInput__gr.html">Test Input Commands</a> to support additional test inputs optional with trace recording (for example power measurement)   </td></tr>
+<td>V2.0.0 </td><td>Changed: Communication via WinUSB to achieve high-speed transfer rates<br/>
+ Added: Streaming SWO via separate <a class="el" href="group__DAP__ConfigUSB__gr.html">WinUSB</a> endpoint<br/>
+ Added: <a class="el" href="group__DAP__SWO__Transport.html">DAP_SWO_Transport</a> extended with transport mode 2 - Send trace data via separate <a class="el" href="group__DAP__ConfigUSB__gr.html">WinUSB</a> endpoint   </td></tr>
+<tr>
+<td>V1.2.0 </td><td>Added: <a class="el" href="group__DAP__SWD__Sequence.html">DAP_SWD_Sequence</a> to enable SWD multi-drop target selection <br/>
+ Added: Test Domain Timer values in the commands <a class="el" href="group__DAP__Info.html">DAP_Info</a>, <a class="el" href="group__DAP__Transfer.html">DAP_Transfer</a>   </td></tr>
 <tr>
 <td>V1.1.0 </td><td>Added: <a class="el" href="group__DAP__swo__gr.html">SWO Commands</a> to support Serial Wire Output (SWO) in UART mode<br/>
  Added: <a class="el" href="group__DAP__atomic__gr.html">Atomic Commands</a> support for executing time critical DAP commands   </td></tr>
@@ -133,7 +136,7 @@ $(document).ready(function(){initNavTree('dap_revisionHistory.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:06:00 for CMSIS-DAP by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:48 for CMSIS-DAP by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

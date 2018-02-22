@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.0</span>
+   &#160;<span id="projectnumber">Version 1.1.1</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -134,16 +134,16 @@ Variables</h2></td></tr>
 <tr class="separator:gaa3cd3e43291e81e795d642b79b6088e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>ARM provides a template file <b>system_<em>device</em>.c</b> that must be adapted by the silicon vendor to match their actual device. As a <b>minimum requirement</b>, this file must provide:</p>
+<p>Arm provides a template file <b>system_<em>device</em>.c</b> that must be adapted by the silicon vendor to match their actual device. As a <b>minimum requirement</b>, this file must provide:</p>
 <ul>
 <li>A device-specific system configuration function, <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit()</a>.</li>
 <li>A global variable that contains the system frequency, <a class="el" href="group__system__init__gr.html#gaa3cd3e43291e81e795d642b79b6088e6">SystemCoreClock</a>.</li>
 </ul>
 <p>The file configures the device and, typically, initializes the oscillator (PLL) that is part of the microcontroller device. This file might export other functions or variables that provide a more flexible configuration of the microcontroller system.</p>
-<dl class="section note"><dt>Note</dt><dd>Please pay special attention to the static variable <code>SystemCoreClock</code>. This variable might be used throughout the whole system initialization and runtime to calculate frequency/time related values. Thus one must assure that the variable always reflects the actual system clock speed. Be aware that a value stored to <code>SystemCoreClock</code> during low level initializaton (i.e. <code><a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2" title="Function to Initialize the system. ">SystemInit()</a></code>) might get overwritten by C libray startup code. Thus its highly recommended to call <a class="el" href="system__ARMCA9_8h.html#ae0c36a9591fe6e9c45ecb21a794f0f0f">SystemCoreClockUpdate</a> at the beginning of the user <code>main()</code> routine.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Please pay special attention to the static variable <code>SystemCoreClock</code>. This variable might be used throughout the whole system initialization and runtime to calculate frequency/time related values. Thus one must assure that the variable always reflects the actual system clock speed. Be aware that a value stored to <code>SystemCoreClock</code> during low level initialization (i.e. <code><a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2" title="Function to Initialize the system. ">SystemInit()</a></code>) might get overwritten by C library startup code. Thus its highly recommended to call <a class="el" href="system__ARMCA9_8h.html#ae0c36a9591fe6e9c45ecb21a794f0f0f">SystemCoreClockUpdate</a> at the beginning of the user <code>main()</code> routine.</dd></dl>
 <h1><a class="anchor" id="system_init_code_ex_sec"></a>
 Code Example</h1>
-<p>The code below shows the usage of the variable <a class="el" href="group__system__init__gr.html#gaa3cd3e43291e81e795d642b79b6088e6">SystemCoreClock</a> and the functions <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2" title="Function to Initialize the system. ">SystemInit()</a> and <a class="el" href="group__system__init__gr.html#gae0c36a9591fe6e9c45ecb21a794f0f0f" title="Function to update the variable SystemCoreClock. ">SystemCoreClockUpdate()</a> with an arbitratry ARM Cortex-A9.</p>
+<p>The code below shows the usage of the variable <a class="el" href="group__system__init__gr.html#gaa3cd3e43291e81e795d642b79b6088e6">SystemCoreClock</a> and the functions <a class="el" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2" title="Function to Initialize the system. ">SystemInit()</a> and <a class="el" href="group__system__init__gr.html#gae0c36a9591fe6e9c45ecb21a794f0f0f" title="Function to update the variable SystemCoreClock. ">SystemCoreClockUpdate()</a> with an arbitrary Arm Cortex-A9.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="ARMCA9_8h.html">ARMCA9.h</a>&quot;</span></div>
 <div class="line"></div>
 <div class="line">uint32_t coreClock_1 = 0;                       <span class="comment">/* Variables to store core clock values */</span></div>
@@ -219,7 +219,7 @@ Code Example</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Nov 16 2017 17:05:59 for CMSIS-Core (Cortex-A) by ARM Ltd. All rights reserved.
+    <li class="footer">Generated on Thu Feb 22 2018 10:02:47 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 
