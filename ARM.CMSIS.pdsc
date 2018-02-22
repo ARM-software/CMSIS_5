@@ -8,7 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.3.0-rc0" date="2018-02-20">
+    <release version="5.3.1-dev0">
+      Patch release scheduled for after EW18.
+    </release>
+    <release version="5.3.0" date="2018-02-22">
       Updated Arm company brand.
       CMSIS-Core(M): 5.1.1 (see revision history for details)
       CMSIS-Core(A): 1.1.1 (see revision history for details)
