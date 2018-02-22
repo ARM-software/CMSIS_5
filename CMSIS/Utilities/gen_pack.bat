@@ -173,7 +173,8 @@ REM copy /Y Doxygen_Templates\search.css ..\Documentation\SVD\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\DSP\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\DAP\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\NN\html\search\.
-  
+xcopy /E /I /Q /Y Zone\genmodel ..\Documentation\Zone\genmodel
+
 ECHO.
 POPD
 
