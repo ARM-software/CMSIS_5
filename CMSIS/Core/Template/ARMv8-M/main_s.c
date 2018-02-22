@@ -1,5 +1,11 @@
+/******************************************************************************
+ * @file     main_s.c
+ * @brief    Code template for secure main function
+ * @version  V1.1.1
+ * @date     10. January 2018
+ ******************************************************************************/
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -14,17 +20,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * ----------------------------------------------------------------------
- *
- * $Date:        15. October 2016
- * $Revision:    1.1.0
- *
- * Project:      TrustZone for ARMv8-M
- * Title:        Code template for secure main function
- *
- *---------------------------------------------------------------------------*/
- 
+ */
+
 /* Use CMSE intrinsics */
 #include <arm_cmse.h>
  

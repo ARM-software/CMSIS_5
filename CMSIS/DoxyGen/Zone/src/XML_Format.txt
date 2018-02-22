@@ -174,7 +174,7 @@ The <b>system</b> element is the root element of a CMSIS-Zone system definition.
 \code
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <system xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
-  <!-- ARM SoC with Cortex-M4 processor -->
+  <!-- Arm SoC with Cortex-M4 processor -->
   <device Dname="ARM32CM4128x">
     <processor Pname="Cortex-M4">
       :
@@ -503,13 +503,13 @@ The <b>processor</b> element is used to define the processing elements integrati
   </tr>
   <tr>
     <td>Dtz</td>
-    <td>Specifies whether an ARMv8M based device implements TrustZone.</td>
+    <td>Specifies whether an Armv8-M based device implements TrustZone.</td>
     <td>DtzEnum</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>Ddsp</td>
-    <td>Specifies whether an ARMv8M based device supports the DSP instructions set.</td>
+    <td>Specifies whether an Armv8-M based device supports the DSP instructions set.</td>
     <td>DdspEnum</td>
     <td>optional</td>
   </tr>

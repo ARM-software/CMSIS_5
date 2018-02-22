@@ -66,7 +66,7 @@ not used by multiple components.
     </component>
 
     <component condition="ARM_CM0" Cclass="Device" Cgroup="Startup" Cversion="3.1.1">
-      <description>System Startup for generic ARM Cortex-M0 device</description>
+      <description>System Startup for generic Arm Cortex-M0 device</description>
       <files>
         <file category="header" name="Device/ARM/ARMCM0/Include/ARMCM0.h"/>
         <file category="header" name="Device/ARM/ARMCM0/Include/system_ARMCM0.h"/>
@@ -646,6 +646,14 @@ The file purpose is defined through the <b>category</b> attribute. The <b>name</
 	Before a file gets copied, a version check avoids unnecessary copy actions. If a file does not have a version, then the component version is used.
 	 The version format is described in \ref VersionType "Version Type".</td>
     <td>VersionType</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>public</td>
+    <td>Set publishing permissions for the documentation. If \tagem{public} is \token{true}, then the vendor gives permission 
+        to extract the documentation from the pack and publish it on a web-page. Links to web pages are assumed to be public.
+        The default value is \token{false}.</td>
+    <td>xs:boolean</td>
     <td>optional</td>
   </tr>
 </table>	  

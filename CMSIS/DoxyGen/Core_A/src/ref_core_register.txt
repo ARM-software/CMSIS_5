@@ -13,7 +13,7 @@
 \ingroup CMSIS_core_register
 \brief The ACTLR provides IMPLEMENTATION DEFINED configuration and control options.
 \details
-The ACTLR characteristics are differs between various ARMv7-A implementations.
+The ACTLR characteristics are differs between various Armv7-A implementations.
 
 <b>Cortex-A5</b>
 
@@ -1044,7 +1044,7 @@ Consider using \ref __get_SCTLR and \ref __set_SCTLR for accessing this register
 /**
 \defgroup CMSIS_TLB TLB maintenance operations
 \ingroup CMSIS_core_register
-\brief This section describes the TLB operations that are implemented on all ARMv7-A implementations.
+\brief This section describes the TLB operations that are implemented on all Armv7-A implementations.
 \details 
 TLB maintenance operations provide a mechanism to invalidate entries from a TLB.
 
@@ -1135,6 +1135,35 @@ Consider using \ref __get_VBAR and \ref __set_VBAR for accessing this register.
 */
 /** @} */
 /* end group CMSIS_VBAR */
+
+/* CP15 Register MVBAR */
+/**
+\defgroup CMSIS_MVBAR Monitor Vector Base Address Register (MVBAR)
+\ingroup CMSIS_core_register
+\brief The MVBAR holds the exception base address for all exceptions that are taken to Monitor
+mode.
+\details 
+
+| Bits    | Name          | Function                                                      |
+| :------ | :------------ | :------------------------------------------------------------ |
+| [31:5]  | MVBA          | Bits[31:5] of the base address of the exception vectors for exceptions that are taken to Monitor mode. |
+| [4:0]   | -             | Reserved.                                                     |
+
+Consider using \ref __get_MVBAR and \ref __set_MVBAR for accessing this register.
+
+@{
+*/
+/**
+\fn __STATIC_INLINE uint32_t __get_MVBAR(void)
+\details
+  This function returns the value of the \ref CMSIS_MVBAR.
+
+\fn __STATIC_INLINE void __set_MVBAR(uint32_t mvbar)
+\details
+  This function assigns the given value to the \ref CMSIS_MVBAR.
+*/
+/** @} */
+/* end group CMSIS_MVBAR */
 
 /** @} */ 
 /* end of group CMSIS_core_register */

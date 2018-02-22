@@ -1,13 +1,13 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
- * @brief    CMSIS compiler ICCARM (IAR compiler) header file
- * @version  V5.0.3
- * @date     29. August 2017
+ * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
+ * @version  V5.0.5
+ * @date     10. January 2018
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
 //
-// Copyright (c) 2017 IAR Systems
+// Copyright (c) 2017-2018 IAR Systems
 //
 // Licensed under the Apache License, Version 2.0 (the "License")
 // you may not use this file except in compliance with the License.
@@ -150,12 +150,19 @@
 #endif
 
 #ifndef   __RESTRICT
-  #define __RESTRICT restrict
+  #define __RESTRICT            restrict
 #endif
 
-
 #ifndef   __STATIC_INLINE
-  #define __STATIC_INLINE static inline
+  #define __STATIC_INLINE       static inline
+#endif
+
+#ifndef   __FORCEINLINE
+  #define __FORCEINLINE         _Pragma("inline=forced")
+#endif
+
+#ifndef   __STATIC_FORCEINLINE
+  #define __STATIC_FORCEINLINE  __FORCEINLINE __STATIC_INLINE
 #endif
 
 #ifndef __UNALIGNED_UINT16_READ
@@ -277,7 +284,7 @@ __packed struct  __iar_u32 { uint32_t v; };
   #define __get_IPSR()                (__arm_rsr("IPSR"))
   #define __get_MSP()                 (__arm_rsr("MSP"))
   #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
-       (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+       (!defined (__ARM_FEATURE_CMSE) || (__ARM_FEATURE_CMSE < 3)))
     // without main extensions, the non-secure MSPLIM is RAZ/WI
     #define __get_MSPLIM()            (0U)
   #else
@@ -285,15 +292,15 @@ __packed struct  __iar_u32 { uint32_t v; };
   #endif
   #define __get_PRIMASK()             (__arm_rsr("PRIMASK"))
   #define __get_PSP()                 (__arm_rsr("PSP"))
-  
+
   #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
-       (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+       (!defined (__ARM_FEATURE_CMSE) || (__ARM_FEATURE_CMSE < 3)))
     // without main extensions, the non-secure PSPLIM is RAZ/WI
     #define __get_PSPLIM()            (0U)
   #else
     #define __get_PSPLIM()            (__arm_rsr("PSPLIM"))
   #endif
-  
+
   #define __get_xPSR()                (__arm_rsr("xPSR"))
 
   #define __set_BASEPRI(VALUE)        (__arm_wsr("BASEPRI", (VALUE)))
@@ -301,9 +308,9 @@ __packed struct  __iar_u32 { uint32_t v; };
   #define __set_CONTROL(VALUE)        (__arm_wsr("CONTROL", (VALUE)))
   #define __set_FAULTMASK(VALUE)      (__arm_wsr("FAULTMASK", (VALUE)))
   #define __set_MSP(VALUE)            (__arm_wsr("MSP", (VALUE)))
-  
+
   #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
-       (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+       (!defined (__ARM_FEATURE_CMSE) || (__ARM_FEATURE_CMSE < 3)))
     // without main extensions, the non-secure MSPLIM is RAZ/WI
     #define __set_MSPLIM(VALUE)       ((void)(VALUE))
   #else
@@ -312,7 +319,7 @@ __packed struct  __iar_u32 { uint32_t v; };
   #define __set_PRIMASK(VALUE)        (__arm_wsr("PRIMASK", (VALUE)))
   #define __set_PSP(VALUE)            (__arm_wsr("PSP", (VALUE)))
   #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
-       (!defined (__ARM_FEATURE_CMSE  ) || (__ARM_FEATURE_CMSE   < 3)))
+       (!defined (__ARM_FEATURE_CMSE) || (__ARM_FEATURE_CMSE < 3)))
     // without main extensions, the non-secure PSPLIM is RAZ/WI
     #define __set_PSPLIM(VALUE)       ((void)(VALUE))
   #else

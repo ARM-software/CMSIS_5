@@ -1,12 +1,12 @@
 /**************************************************************************//**
  * @file     startup_ARMv8MML.s
  * @brief    CMSIS Core Device Startup File for
- *           ARMv8MML Device Series
+ *           Armv8-M Mainline Device Series
  * @version  V5.00
- * @date     26. April 2016
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -86,7 +86,7 @@ static uint8_t heap[__HEAP_SIZE]   __attribute__ ((aligned(8), used, section(".h
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler
  *----------------------------------------------------------------------------*/
-/* ARMv8MML Processor Exceptions */
+/* Armv8-M Mainline Processor Exceptions */
 void NMI_Handler         (void) __attribute__ ((weak, alias("Default_Handler")));
 void HardFault_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
 void MemManage_Handler   (void) __attribute__ ((weak, alias("Default_Handler")));
@@ -98,7 +98,7 @@ void DebugMon_Handler    (void) __attribute__ ((weak, alias("Default_Handler")))
 void PendSV_Handler      (void) __attribute__ ((weak, alias("Default_Handler")));
 void SysTick_Handler     (void) __attribute__ ((weak, alias("Default_Handler")));
 
-/* ARMv8MML Specific Interrupts */
+/* Armv8-M Mainline Specific Interrupts */
 void WDT_IRQHandler      (void) __attribute__ ((weak, alias("Default_Handler")));
 void RTC_IRQHandler      (void) __attribute__ ((weak, alias("Default_Handler")));
 void TIM0_IRQHandler     (void) __attribute__ ((weak, alias("Default_Handler")));
@@ -128,7 +128,7 @@ void SPI_IRQHandler      (void) __attribute__ ((weak, alias("Default_Handler")))
   Exception / Interrupt Vector table
  *----------------------------------------------------------------------------*/
 const pFunc __Vectors[] __attribute__ ((section(".vectors"))) = {
-  /* ARMv8MML Exceptions Handler */
+  /* Armv8-M Mainline Exceptions Handler */
   (pFunc)((uint32_t)&__StackTop),           /*      Initial Stack Pointer     */
   Reset_Handler,                            /*      Reset Handler             */
   NMI_Handler,                              /*      NMI Handler               */

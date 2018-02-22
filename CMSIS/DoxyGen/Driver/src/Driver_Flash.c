@@ -1,13 +1,3 @@
-/* -----------------------------------------------------------------------------
- * Copyright (c) 2013-2014 ARM Limited. All rights reserved.
- *  
- * $Date:        2. January 2014
- * $Revision:    V2.00
- *  
- * Project:      Flash Driver API
- * -------------------------------------------------------------------------- */
-
-
 /**
 \defgroup flash_interface_gr Flash Interface
 \brief    Driver API for Flash Device Interface (%Driver_Flash.h)
@@ -32,15 +22,13 @@ The following header files define the Application Programming Interface (API) fo
 The driver functions are published in the access struct as explained in \ref DriverFunctions
   - \ref ARM_DRIVER_FLASH : access struct for Flash driver functions
 @{
-*/
-/*
-\todo provide more text for the driver implementation above
 
 A typical setup sequence for the driver is shown below:
 
 <b>Example Code:</b>
 
-\todo example
+\include Flash_Demo.c
+*/
 *******************************************************************************************************************/
 
 

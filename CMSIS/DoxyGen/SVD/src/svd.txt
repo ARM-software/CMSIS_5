@@ -4,7 +4,7 @@
 Introduction
 ------------
 The CMSIS System View Description format(CMSIS-SVD) formalizes the description of the system
-contained in ARM Cortex-M processor-based microcontrollers, in particular, the memory mapped
+contained in Arm Cortex-M processor-based microcontrollers, in particular, the memory mapped
 registers of peripherals.
 The detail contained in system view descriptions is comparable to the data in device 
 reference manuals. The information ranges from high level functional 
@@ -233,7 +233,7 @@ SVDConv.exe <SVD_file> <options>
   </tr>
   <tr>
     <td> \-\-generate=partition </td>
-    <td>Generate Partition file for Cortex-M Security Extensions (ARMv8M)</td>
+    <td>Generate Partition file for Cortex-M Security Extensions (Armv8-M)</td>
     <td>Generates the device partition file. The name of the generated file is composed of <em>partition_</em> and the value of the device <em>\<name></em>
     (for example, <em>partition_CMSDK_ARMv8MBL.h</em>).
     Refer to \ref elem_device. The content of the file uses Configuration Wizard annotations and is derived 

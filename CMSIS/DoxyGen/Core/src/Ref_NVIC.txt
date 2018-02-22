@@ -5,7 +5,7 @@
 \details
 This section explains how to use interrupts and exceptions and access functions for the Nested Vector Interrupt Controller (NVIC).
 
-ARM provides a template file <strong>startup_<em>device</em></strong> for each supported
+Arm provides a template file <strong>startup_<em>device</em></strong> for each supported
 compiler. The file must be adapted by the silicon vendor to include interrupt vectors for all device-specific 
 interrupt handlers. Each interrupt handler is defined as a <strong><em>weak</em></strong> function 
 to an dummy handler. These interrupt handlers can be used directly in application software 
@@ -24,8 +24,8 @@ The table below lists the core exception vectors of the various Cortex-M process
       <th>M7</th>
       <th>SC000</th>
       <th>SC300</th>
-      <th>ARMv8-M<br/>Baseline</th>
-      <th>ARMv8-M<br/>Mainline</th>
+      <th>Armv8-M<br/>Baseline</th>
+      <th>Armv8-M<br/>Mainline</th>
       <th>Description</th>
     </tr>
     <tr>
@@ -179,7 +179,7 @@ program memory, however \ref using_VTOR_pg it can be relocated to RAM.  The symb
 <b>__Vectors</b> is the address of the vector table in the startup code and the
 register <b>SCB->VTOR</b> holds the start address of the vector table. 
 
-An ARMv8-M implementation with TrustZone provides two vector tables: 
+An Armv8-M implementation with TrustZone provides two vector tables: 
   - vector table for Secure handlers
   - vector table for Non-Secure handlers
 
@@ -189,7 +189,7 @@ Processor Exceptions
 --------------------
 At the beginning of the vector table, the initial stack value and the 
 exception vectors of the processor are defined. The vector table below 
-shows the exception vectors of a ARMv8-M Mainline processor. Other processor
+shows the exception vectors of a Armv8-M Mainline processor. Other processor
 variants may have fewer vectors.
 
 \code
@@ -390,7 +390,7 @@ typedef enum IRQn
   MemoryManagement_IRQn    = -12,      ///<  Exception 4: Memory Management Interrupt [not on Cortex-M0 variants]
   BusFault_IRQn            = -11,      ///<  Exception 5: Bus Fault Interrupt [not on Cortex-M0 variants]
   UsageFault_IRQn          = -10,      ///<  Exception 6: Usage Fault Interrupt [not on Cortex-M0 variants]
-  SecureFault_IRQn         = -9,       ///<  Exception 7: Secure Fault Interrupt [only on ARMv8-M]
+  SecureFault_IRQn         = -9,       ///<  Exception 7: Secure Fault Interrupt [only on Armv8-M]
   SVCall_IRQn              = -5,       ///<  Exception 11: SV Call Interrupt
   DebugMonitor_IRQn        = -4,       ///<  Exception 12: Debug Monitor Interrupt [not on Cortex-M0 variants]
   PendSV_IRQn              = -2,       ///<  Exception 14: Pend SV Interrupt [not on Cortex-M0 variants]
@@ -787,7 +787,7 @@ void NVIC_SystemReset (void);
         - 0  if interrupt is assigned to Secure
         - 1  if interrupt is assigned to Non Secure
     \remarks
-        - Only available for ARMv8-M in secure state.
+        - Only available for Armv8-M in secure state.
         
     \sa     
         - \ref NVIC_ClearTargetState; NVIC_SetTargetState;
@@ -802,7 +802,7 @@ uint32_t NVIC_GetTargetState(IRQn_Type IRQn);
         - 0  if interrupt is assigned to Secure
         - 1  if interrupt is assigned to Non Secure
     \remarks
-        - Only available for ARMv8-M in secure state.
+        - Only available for Armv8-M in secure state.
         
     \sa     
         - \ref NVIC_ClearTargetState; NVIC_GetTargetState;
@@ -817,7 +817,7 @@ uint32_t NVIC_SetTargetState(IRQn_Type IRQn);
         - 0  if interrupt is assigned to Secure
         - 1  if interrupt is assigned to Non Secure
     \remarks
-        - Only available for ARMv8-M in secure state.
+        - Only available for Armv8-M in secure state.
         
     \sa     
         - \ref NVIC_GetTargetState; NVIC_SetTargetState;

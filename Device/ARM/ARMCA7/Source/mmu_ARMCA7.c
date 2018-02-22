@@ -1,14 +1,14 @@
 /**************************************************************************//**
  * @file     mmu_ARMCA7.c
- * @brief    MMU Configuration for ARM Cortex-A7 Device Series
+ * @brief    MMU Configuration for Arm Cortex-A7 Device Series
  * @version  V1.00
- * @date     22 Feb 2017
+ * @date     10. January 2018
  *
  * @note
  *
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,7 +25,7 @@
  * limitations under the License.
  */
 
-/* Memory map description from: DUI0447G_v2m_p1_trm.pdf 4.2.2 ARM Cortex-A Series memory map
+/* Memory map description from: DUI0447G_v2m_p1_trm.pdf 4.2.2 Arm Cortex-A Series memory map
 
                                                      Memory Type
 0xffffffff |--------------------------|             ------------

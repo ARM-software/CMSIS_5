@@ -3,7 +3,7 @@
 
 <b>CMSIS-DAP</b> is a specification and a implementation of a <b>Firmware</b> that supports access to the CoreSight <b>Debug Access Port</b> (DAP).\n\n
 
-The various ARM Cortex processors provide <a href="http://www.arm.com/products/system-ip/coresight/index.php" target="_blank">
+The various Arm Cortex processors provide <a href="http://www.arm.com/products/system-ip/coresight/index.php" target="_blank">
 <b>CoreSight Debug and Trace</b></a>. CMSIS-DAP supports target Devices that contain one or more Cortex processors. 
 A Device provides a Debug Access Port (DAP) typically either with a 5-pin JTAG or with a 2-pin Serial Wired Debug (SWD)
 interface that connects to a Debug Unit. CMSIS-DAP is the interface firmware for a Debug Unit that connects 
@@ -12,6 +12,12 @@ which runs the application software.
 
 \image html "CMSIS_DAP_INTERFACE.png" "CMSIS-DAP Overview"
 
+Configuration of CMSIS-DAP Firmware
+-----------------------------------
+The CMSIS-DAP Firmware version 2 can be configured in two different USB interface modes:
+ - Version 1 configuration uses USB HID as interface to the host PC.
+ - Version 2 configuration uses WinUSB as interface to the host PC and provides high-speed SWO trace streaming.
+
 Benefits of CMSIS-DAP
 ---------------------
  - Provides a standardized interface for debuggers. Interfaces to many standard debuggers is available.
@@ -19,12 +25,12 @@ Benefits of CMSIS-DAP
  - Connects via 5-pin JTAG or 2-pin Serial Wire Debug (SWD).
  - Supports multi-core debugging.
  - Supports Serial Wire Output of Cortex-M devices (new in CMSIS-DAP Version 1.1.0).
- - Supports trace recording of additional Test Inputs, for example power measurement (new in CMSIS-DAP Version 1.2.0).
  - Easy to deploy to Debug Units based on Cortex-M microcontrollers. 
  - Debug Unit may be integrated on an evaluation board.
  - USB using HID (Human Interface Device) driver class that avoids driver installation on host PC.
  - Supports time-critical JTAG or SWD command execution (new in CMSIS-DAP Version 1.10). 
-
+ - Supports Test Domain Timer for time measurement using the debug unit (new in CMSIS-DAP Version 1.2.0)
+ 
 CMSIS-DAP Firmware
 ==================
 The CMSIS-DAP Firmware is provided as source code and is fully configurable to a new Debug Unit. 
@@ -35,9 +41,9 @@ The CMSIS-DAP Software Stack is composed of the following components:
 
   - CMSIS-DAP Firmware that interfaces to JTAG or SWD Debug pins using standard I/O pins of the Cortex-M device.
   - CMSIS-Driver USART that connects the UART of the Cortex-M device to the SWO output from the target.
-  - USB Communication Stack that interfaces to the USB Port of the Host Computer using the HID class.
-     - The USB Device middleware may require CMSIS-RTOS and a CMSIS-Driver USB.
-	 
+  - USB Communication Stack that interfaces to the USB Port of the Host Computer using the HID or custom class.
+  - The USB Device middleware may require CMSIS-RTOS and a CMSIS-Driver USB.
+  
 \image html "CMSIS_DAP_SWStack.png" "CMSIS-DAP Software Stack"
 
 In the examples provided the MDK Version 5 USB Communication Stack has been used. However it is possible to
@@ -56,7 +62,7 @@ Directory                             | Description
 Debug Access
 ------------
 \note
-ARM plans to provide the <b>RDDI-DAP Access DLL</b> that connects a debugger to the CMSIS-DAP Firmware. 
+Arm plans to provide the <b>RDDI-DAP Access DLL</b> that connects a debugger to the CMSIS-DAP Firmware. 
 However as the DAP registers are standard in all Cortex devices, the debug access is well understood
 by the industry.
 
@@ -76,11 +82,18 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
       <th>Description</th>
     </tr>
     <tr>
-      <td>V1.2.0 (Proposal)</td>
+      <td>V2.0.0</td>
       <td>
-	     Added: \ref DAP_SWD_Sequence to enable SWD multi-drop target selection \n
-		 Added: Test Domain Timer values in the commands \ref DAP_Info, \ref DAP_Transfer to allow time synchronisation with \ref DAP_TestInput_gr \n
-         Added: \ref DAP_TestInput_gr to support additional test inputs optional with trace recording (for example power measurement)
+         Changed: Communication via WinUSB to achieve high-speed transfer rates\n
+         Added: Streaming SWO via separate \ref WinUSB "WinUSB" endpoint\n
+		 Added: \ref DAP_SWO_Transport extended with transport mode 2 - Send trace data via separate \ref WinUSB "WinUSB" endpoint 
+      </td>
+    </tr>
+    <tr>
+      <td>V1.2.0</td>
+      <td>
+         Added: \ref DAP_SWD_Sequence to enable SWD multi-drop target selection \n
+         Added: Test Domain Timer values in the commands \ref DAP_Info, \ref DAP_Transfer
       </td>
     </tr>
     <tr>

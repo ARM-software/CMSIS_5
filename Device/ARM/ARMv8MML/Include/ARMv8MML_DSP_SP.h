@@ -1,12 +1,12 @@
 /**************************************************************************//**
  * @file     ARMv8MML_SP.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
- *           ARMv8MML Device Series (configured for ARMv8MML with single precision FPU, with DSP extension, with TrustZone)
+ *           Armv8-M Mainline Device Series (configured for Armv8-M Mainline with single precision FPU, with DSP extension, with TrustZone)
  * @version  V5.00
- * @date     02. November 2016
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -35,7 +35,7 @@ extern "C" {
 
 typedef enum IRQn
 {
-/* --------------------  ARMv8MML Processor Exceptions Numbers  ------------------- */
+/* --------------------  Armv8-M Mainline Processor Exceptions Numbers  ----------- */
   NonMaskableInt_IRQn           = -14,      /*  2 Non Maskable Interrupt */
   HardFault_IRQn                = -13,      /*  3 HardFault Interrupt */
   MemoryManagement_IRQn         = -12,      /*  4 Memory Management Interrupt */
@@ -47,7 +47,7 @@ typedef enum IRQn
   PendSV_IRQn                   =  -2,      /* 14 Pend SV Interrupt */
   SysTick_IRQn                  =  -1,      /* 15 System Tick Interrupt */
 
-/* --------------------  ARMv8MML Specific Interrupt Numbers  --------------------- */
+/* --------------------  Armv8-M Mainline Specific Interrupt Numbers  ------------- */
   WDT_IRQn                      =   0,      /* Watchdog Timer Interrupt */
   RTC_IRQn                      =   1,      /* Real Time Clock Interrupt */
   TIM0_IRQn                     =   2,      /* Timer0 / Timer1 Interrupt */
@@ -212,7 +212,7 @@ typedef struct
   #pragma pop
 #elif defined (__ICCARM__)
   /* leave anonymous unions enabled */
-#elif (__ARMCC_VERSION >= 6010050)
+#elif (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
   #pragma clang diagnostic pop
 #elif defined (__GNUC__)
   /* anonymous unions are enabled by default */

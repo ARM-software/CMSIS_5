@@ -51,11 +51,11 @@ The element \tagem{device} provides the outermost frame of the description.
   <name>ARM_Cortex_M4</name>
   <series>ARMCM4</series>
   <version>0.1</version>
-  <description>ARM Cortex-M4 based Microcontroller demonstration device</description>
+  <description>Arm Cortex-M4 based Microcontroller demonstration device</description>
   <licenseText>
-    ARM Limited (ARM) is supplying this software for use with Cortex-M \n
+    Arm Limited (Arm) is supplying this software for use with Cortex-M \n
     processor based microcontrollers.  This file can be freely distributed \n
-    within development tools that are supporting such ARM based processors. \n
+    within development tools that are supporting such Arm based processors. \n
     \n
     THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED \n
     OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF \n
@@ -80,7 +80,7 @@ The element \tagem{device} provides the outermost frame of the description.
 
 This example describes a device from the vendor \token{ARM Ltd.} using \token{ARM} as short name. 
 The device belongs to the device family \token{ARMCM4}. The device description is at version \token{0.1} and uniquely identifies the device by the name \token{ARM_Cortex_M4}. The legal disclaimer in the header files generated from
-this description is captured and formatted in accordance to the standard ARM CMSIS disclaimer. The CMSIS system file included by the
+this description is captured and formatted in accordance to the standard Arm CMSIS disclaimer. The CMSIS system file included by the
 generated device header file is named \token{system_ARMCM4.h} and all type definitions will be prepended with \token{ARM_}.
 
 The peripherals are memory mapped in a byte-addressable address space with a bus width of \token{32} bits. 
@@ -305,7 +305,7 @@ This example describes a device based on a \token{Cortex-M7} core of HW revision
 with fixed \token{little} endian memory scheme, including \token{Memory Protection Unit} and 
 \token{double precision hardware Floating Point Unit}. It has a \token{data cache} and no \token{instruction} nor
 a tightly coupled memory. The Nested Vectored Interrupt Controller uses \token{4} bits 
-to configure the priority of an interrupt. It is equipped with the standard System Tick Timer as defined by ARM.
+to configure the priority of an interrupt. It is equipped with the standard System Tick Timer as defined by Arm.
 
 \anchor elem_cpu_sc
 \b  /device/cpu
@@ -327,26 +327,26 @@ to configure the priority of an interrupt. It is equipped with the standard Syst
     <tr>
         <td>name</td>
         <td>The predefined tokens are:
-        - \token{CM0}: ARM Cortex-M0 
-        - \token{CM0PLUS}: ARM Cortex-M0+
-        - \token{CM0+}: ARM Cortex-M0+
-        - \token{CM1}: ARM Cortex-M1 
-        - \token{SC000}: ARM Secure Core SC000
-        - \token{CM23}: ARM Cortex-M23
-        - \token{CM3}: ARM Cortex-M3
-        - \token{CM33}: ARM Cortex-M33
-        - \token{SC300}: ARM Secure Core SC300
-        - \token{CM4}: ARM Cortex-M4
-        - \token{CM7}: ARM Cortex-M7
-        - \token{CA5}: ARM Cortex-A5
-        - \token{CA7}: ARM Cortex-A7
-        - \token{CA8}: ARM Cortex-A8
-        - \token{CA9}: ARM Cortex-A9
-        - \token{CA15}: ARM Cortex-A15
-        - \token{CA17}: ARM Cortex-A17
-        - \token{CA53}: ARM Cortex-A53
-        - \token{CA57}: ARM Cortex-A57
-        - \token{CA72}: ARM Cortex-A72
+        - \token{CM0}: Arm Cortex-M0 
+        - \token{CM0PLUS}: Arm Cortex-M0+
+        - \token{CM0+}: Arm Cortex-M0+
+        - \token{CM1}: Arm Cortex-M1 
+        - \token{SC000}: Arm Secure Core SC000
+        - \token{CM23}: Arm Cortex-M23
+        - \token{CM3}: Arm Cortex-M3
+        - \token{CM33}: Arm Cortex-M33
+        - \token{SC300}: Arm Secure Core SC300
+        - \token{CM4}: Arm Cortex-M4
+        - \token{CM7}: Arm Cortex-M7
+        - \token{CA5}: Arm Cortex-A5
+        - \token{CA7}: Arm Cortex-A7
+        - \token{CA8}: Arm Cortex-A8
+        - \token{CA9}: Arm Cortex-A9
+        - \token{CA15}: Arm Cortex-A15
+        - \token{CA17}: Arm Cortex-A17
+        - \token{CA53}: Arm Cortex-A53
+        - \token{CA57}: Arm Cortex-A57
+        - \token{CA72}: Arm Cortex-A72
         - \token{other}: other processor architectures
         </td>
         <td>cpuNameType </td>
@@ -360,11 +360,11 @@ to configure the priority of an interrupt. It is equipped with the standard Syst
     </tr>
     <tr>
         <td>endian </td>
-        <td>Define the endianess of the processor being one of:
+        <td>Define the endianness of the processor being one of:
          - \token{little}: little endian memory (least significant byte gets allocated at the lowest address).
          - \token{big}: byte invariant big endian data organization (most significant byte gets allocated at the lowest address).
          - \token{selectable}: little and big endian are configurable for the device and become active after the next reset.
-         - \token{other}: the endianess is neither little nor big endian.
+         - \token{other}: the endianness is neither little nor big endian.
         </td>
         <td>endianType </td>
         <td>1..1 </td>
@@ -428,7 +428,7 @@ to configure the priority of an interrupt. It is equipped with the standard Syst
     </tr>
     <tr>
         <td>vendorSystickConfig</td>
-        <td>Indicate whether the processor implements a vendor-specific System Tick Timer. If \token{false}, then the ARM-defined System Tick Timer is available. If \token{true}, then a vendor-specific System Tick Timer must be implemented. This tag is either set to \token{true} or \token{false}, \token{1} or \token{0}.</td>
+        <td>Indicate whether the processor implements a vendor-specific System Tick Timer. If \token{false}, then the Arm-defined System Tick Timer is available. If \token{true}, then a vendor-specific System Tick Timer must be implemented. This tag is either set to \token{true} or \token{false}, \token{1} or \token{0}.</td>
         <td>boolean </td>
         <td>1..1 </td>
     </tr>
@@ -1914,6 +1914,7 @@ In addition, a description string can be associated with each entry in the map.
   0 <-> disabled -> "The clock source clk0 is turned off."
   1 <-> enabled  -> "The clock source clk1 is running."
   2 <-> reserved -> "Reserved values. Do not use."
+  3 <-> reserved -> "Reserved values. Do not use."
 </pre>
 
 This information generates an <em>enum</em> in the device header file. The debugger may use 
@@ -1938,7 +1939,7 @@ can provide reference manual level details within the debugger.
     <enumeratedValue>
         <name>enabled</name>
         <description>The clock source clk1 is running.</description>
-        <isDefault>true</isDefault>
+        <value>1</value>
     </enumeratedValue>
 
     <enumeratedValue>
@@ -2064,7 +2065,20 @@ An \em enumeratedValue defines a map between an unsigned integer and a string.
   </tr>
   <tr class="choice">
     <td align="right">value</td>
-    <td>Defines the constant for the bit-field. The field accepts <em>'do not care'</em> bits represented by <b>\token{x}</b>.</td>
+    <td>Defines the constant for the bit-field as decimal, hexadecimal (0x...) or binary (0b... or #...) number. E.g.:
+<pre>
+      \<value>15\</value>
+      \<value>0xf\</value>
+      \<value>0b1111\</value>
+      \<value>#1111\</value>
+</pre>
+    In addition the binary format supports <em>'do not care'</em> bits represented by <b>\token{x}</b>.
+    E.g. specifying value 14 and 15 as:
+    <pre>
+      \<value>0b111x\</value>
+      \<value>#111x\</value>
+    </pre>  
+    </td>
     <td style="white-space:nowrap">scaledNonNegativeInteger</td>
     <td>0..1</td>
   </tr>
@@ -2295,7 +2309,7 @@ Special requirements are described on the level where the element occurs. Click 
 <device schemaVersion="1.3" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD.xsd">
   <name>ARM_Cortex_M3</name>
   <version>0.1</version>
-  <description>ARM Cortex-M3 based Microcontroller demonstration device</description>
+  <description>Arm Cortex-M3 based Microcontroller demonstration device</description>
   <addressUnitBits>8</addressUnitBits>
   <width>32</width>
   <size>32</size>

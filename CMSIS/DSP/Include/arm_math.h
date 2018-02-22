@@ -1,15 +1,11 @@
-/* ----------------------------------------------------------------------
- * Project:      CMSIS DSP Library
- * Title:        arm_math.h
- * Description:  Public header file for CMSIS DSP Library
- *
- * $Date:        19. September 2017
- * $Revision:    V.1.5.2
- *
- * Target Processor: Cortex-M cores
- * -------------------------------------------------------------------- */
+/******************************************************************************
+ * @file     arm_math.h
+ * @brief    Public header file for CMSIS DSP LibraryU
+ * @version  V1.5.3
+ * @date     10. January 2018
+ ******************************************************************************/
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2010-2018 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -68,19 +64,19 @@
    * - arm_cortexM3b_math.lib (Cortex-M3, Big endian)
    * - arm_cortexM0l_math.lib (Cortex-M0 / Cortex-M0+, Little endian)
    * - arm_cortexM0b_math.lib (Cortex-M0 / Cortex-M0+, Big endian)
-   * - arm_ARMv8MBLl_math.lib (ARMv8M Baseline, Little endian)
-   * - arm_ARMv8MMLl_math.lib (ARMv8M Mainline, Little endian)
-   * - arm_ARMv8MMLlfsp_math.lib (ARMv8M Mainline, Little endian, Single Precision Floating Point Unit)
-   * - arm_ARMv8MMLld_math.lib (ARMv8M Mainline, Little endian, DSP instructions)
-   * - arm_ARMv8MMLldfsp_math.lib (ARMv8M Mainline, Little endian, DSP instructions, Single Precision Floating Point Unit)
+   * - arm_ARMv8MBLl_math.lib (Armv8-M Baseline, Little endian)
+   * - arm_ARMv8MMLl_math.lib (Armv8-M Mainline, Little endian)
+   * - arm_ARMv8MMLlfsp_math.lib (Armv8-M Mainline, Little endian, Single Precision Floating Point Unit)
+   * - arm_ARMv8MMLld_math.lib (Armv8-M Mainline, Little endian, DSP instructions)
+   * - arm_ARMv8MMLldfsp_math.lib (Armv8-M Mainline, Little endian, DSP instructions, Single Precision Floating Point Unit)
    *
    * The library functions are declared in the public file <code>arm_math.h</code> which is placed in the <code>Include</code> folder.
    * Simply include this file and link the appropriate library in the application and begin calling the library functions. The Library supports single
    * public header file <code> arm_math.h</code> for Cortex-M cores with little endian and big endian. Same header file will be used for floating point unit(FPU) variants.
-   * Define the appropriate pre processor MACRO ARM_MATH_CM7 or ARM_MATH_CM4 or  ARM_MATH_CM3 or
+   * Define the appropriate preprocessor macro ARM_MATH_CM7 or ARM_MATH_CM4 or ARM_MATH_CM3 or
    * ARM_MATH_CM0 or ARM_MATH_CM0PLUS depending on the target processor in the application.
-   * For ARMv8M cores define pre processor MACRO ARM_MATH_ARMV8MBL or ARM_MATH_ARMV8MML.
-   * Set Pre processor MACRO __DSP_PRESENT if ARMv8M Mainline core supports DSP instructions.
+   * For Armv8-M cores define preprocessor macro ARM_MATH_ARMV8MBL or ARM_MATH_ARMV8MML.
+   * Set preprocessor macro __DSP_PRESENT if Armv8-M Mainline core supports DSP instructions.
    * 
    *
    * Examples
@@ -91,22 +87,22 @@
    * Toolchain Support
    * ------------
    *
-   * The library has been developed and tested with MDK-ARM version 5.14.0.0
+   * The library has been developed and tested with MDK version 5.14.0.0
    * The library is being tested in GCC and IAR toolchains and updates on this activity will be made available shortly.
    *
    * Building the Library
    * ------------
    *
-   * The library installer contains a project file to re build libraries on MDK-ARM Tool chain in the <code>CMSIS\\DSP_Lib\\Source\\ARM</code> folder.
+   * The library installer contains a project file to rebuild libraries on MDK toolchain in the <code>CMSIS\\DSP_Lib\\Source\\ARM</code> folder.
    * - arm_cortexM_math.uvprojx
    *
    *
-   * The libraries can be built by opening the arm_cortexM_math.uvprojx project in MDK-ARM, selecting a specific target, and defining the optional pre processor MACROs detailed above.
+   * The libraries can be built by opening the arm_cortexM_math.uvprojx project in MDK-ARM, selecting a specific target, and defining the optional preprocessor macros detailed above.
    *
-   * Pre-processor Macros
+   * Preprocessor Macros
    * ------------
    *
-   * Each library project have differant pre-processor macros.
+   * Each library project have different preprocessor macros.
    *
    * - UNALIGNED_SUPPORT_DISABLE:
    *
@@ -132,8 +128,8 @@
    *
    * - ARM_MATH_ARMV8MxL:
    *
-   * Define macro ARM_MATH_ARMV8MBL for building the library on ARMv8M Baseline target, ARM_MATH_ARMV8MML for building library
-   * on ARMv8M Mainline target.
+   * Define macro ARM_MATH_ARMV8MBL for building the library on Armv8-M Baseline target, ARM_MATH_ARMV8MML for building library
+   * on Armv8-M Mainline target.
    *
    * - __FPU_PRESENT:
    *
@@ -141,7 +137,7 @@
    *
    * - __DSP_PRESENT:
    *
-   * Initialize macro __DSP_PRESENT = 1 when ARMv8M Mainline core supports DSP instructions.
+   * Initialize macro __DSP_PRESENT = 1 when Armv8-M Mainline core supports DSP instructions.
    *
    * <hr>
    * CMSIS-DSP in ARM::CMSIS Pack
@@ -163,7 +159,7 @@
    * Copyright Notice
    * ------------
    *
-   * Copyright (C) 2010-2015 ARM Limited. All rights reserved.
+   * Copyright (C) 2010-2015 Arm Limited. All rights reserved.
    */
 
 
@@ -243,9 +239,9 @@
  *
  * \par Size Checking
  * By default all of the matrix functions perform size checking on the input and
- * output matrices.  For example, the matrix addition function verifies that the
+ * output matrices. For example, the matrix addition function verifies that the
  * two input matrices and the output matrix all have the same number of rows and
- * columns.  If the size check fails the functions return:
+ * columns. If the size check fails the functions return:
  * <pre>
  *     ARM_MATH_SIZE_MISMATCH
  * </pre>
@@ -259,9 +255,9 @@
  *     ARM_MATH_MATRIX_CHECK
  * </pre>
  * within the library project settings.  By default this macro is defined
- * and size checking is enabled.  By changing the project settings and
+ * and size checking is enabled. By changing the project settings and
  * undefining this macro size checking is eliminated and the functions
- * run a bit faster.  With size checking disabled the functions always
+ * run a bit faster. With size checking disabled the functions always
  * return <code>ARM_MATH_SUCCESS</code>.
  */
 

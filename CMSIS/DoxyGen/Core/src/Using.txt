@@ -35,7 +35,7 @@ The CMSIS-Core (Cortex-M) are device specific. In addition, the \ref startup_s_p
 The various compiler vendor tool chains may provide folders that contain the CMSIS files for each supported device.
   
 
-For example, the following files are provided in MDK-ARM to support the STM32F10x Connectivity Line device variants:
+For example, the following files are provided in MDK to support the STM32F10x Connectivity Line device variants:
 
 <table class="cmtable">
     <tr>
@@ -61,14 +61,14 @@ For example, the following files are provided in MDK-ARM to support the STM32F10
 </table>
 
 
-\note The silicon vendors create these device-specific CMSIS-Core (Cortex-M) files based on \ref templates_pg provide by ARM.
+\note The silicon vendors create these device-specific CMSIS-Core (Cortex-M) files based on \ref templates_pg provide by Arm.
 
 Thereafter, the functions described under <a href="Modules.html">\b Reference </a> can be used in the application.
 
 \b Examples
  - \subpage using_CMSIS is a simple example that shows the usage of the CMSIS layer.
  - \subpage using_VTOR_pg shows how to remap the interrupt vector table.
- - \subpage using_ARM_pg explains how to use CMSIS-Core (Cortex-M) for ARM processors.
+ - \subpage using_ARM_pg explains how to use CMSIS-Core (Cortex-M) for Arm processors.
 
 
 \page using_CMSIS Basic CMSIS Example
@@ -184,11 +184,11 @@ int main (void) {
 }
 \endcode
     
-\page using_ARM_pg Using CMSIS with generic ARM Processors
+\page using_ARM_pg Using CMSIS with generic Arm Processors
 
-ARM provides CMSIS-Core (Cortex-M) files for the supported ARM Processors and for various compiler vendors. 
-These files can be used when standard ARM processors should be used in a project.
-The table below lists the folder and device names of the ARM processors.
+Arm provides CMSIS-Core (Cortex-M) files for the supported Arm Processors and for various compiler vendors. 
+These files can be used when standard Arm processors should be used in a project.
+The table below lists the folder and device names of the Arm processors.
   
 <table class="cmtable">
     <tr>

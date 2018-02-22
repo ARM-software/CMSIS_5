@@ -56,13 +56,16 @@ Upgrade to RTX Version 5 from any 4.x version using the API v1 compatibility lay
 - Rename function <tt>int main (void)</tt> to <tt>void app_main (void *arg)</tt>.
 - Create a new function <tt>int main (void)</tt> which implements at least:
   - System initialization and configuration
-  - Update SystemCoreClock
+  - Update <a href="../../Core/html/group__system__init__gr.html">SystemCoreClock</a>
   - Initialize CMSIS-RTOS kernel
   - Creates new thread app_main
-  - Start RTOS scheduler                       
+  - Start RTOS scheduler
 
 <b>Example - Application Main Thread</b>
 \code
+#include "RTE_Components.h"
+#include CMSIS_device_header
+ 
 /* Renamed main() function */
 void app_main (void const *argument) {
   // contents of old "main"

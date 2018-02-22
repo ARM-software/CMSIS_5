@@ -1,5 +1,5 @@
 ;/*
-; * Copyright (c) 2016-2017 ARM Limited. All rights reserved.
+; * Copyright (c) 2016-2018 Arm Limited. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *
@@ -24,8 +24,8 @@
 ; */
 
 
-#ifndef __DOMAIN_NS
-#define __DOMAIN_NS      0
+#ifndef DOMAIN_NS
+#define DOMAIN_NS        0
 #endif
 
 #ifdef __ARMVFP__
@@ -57,7 +57,7 @@ SVC_Handler
                 EXPORT   SVC_Handler
                 IMPORT   osRtxUserSVC
                 IMPORT   osRtxInfo
-                #if     (__DOMAIN_NS == 1)
+                #if     (DOMAIN_NS == 1)
                 IMPORT   TZ_LoadContext_S
                 IMPORT   TZ_StoreContext_S
                 #endif
@@ -99,7 +99,7 @@ SVC_Context
                 #endif
 
 SVC_ContextSave
-                #if     (__DOMAIN_NS == 1)
+                #if     (DOMAIN_NS == 1)
                 LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
                 CBZ      R0,SVC_ContextSave1    ; Branch if there is no secure context
                 PUSH     {R1,R2,R3,LR}          ; Save registers and EXC_RETURN
@@ -124,7 +124,7 @@ SVC_ContextSwitch
                 STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
 
 SVC_ContextRestore
-                #if     (__DOMAIN_NS == 1)
+                #if     (DOMAIN_NS == 1)
                 LDR      R0,[R2,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
                 CBZ      R0,SVC_ContextRestore1 ; Branch if there is no secure context
                 PUSH     {R2,R3}                ; Save registers
@@ -139,7 +139,7 @@ SVC_ContextRestore1
                 LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
                 ORR      LR,R1,#0xFFFFFF00      ; Set EXC_RETURN
 
-                #if     (__DOMAIN_NS == 1)
+                #if     (DOMAIN_NS == 1)
                 TST      LR,#0x40               ; Check domain of interrupted thread
                 BNE      SVC_ContextRestore2    ; Branch if secure
                 #endif
@@ -197,7 +197,7 @@ SysTick_Handler
 Sys_Context
                 EXPORT   Sys_Context
                 IMPORT   osRtxInfo
-                #if     (__DOMAIN_NS == 1)
+                #if     (DOMAIN_NS == 1)
                 IMPORT   TZ_LoadContext_S
                 IMPORT   TZ_StoreContext_S
                 #endif
@@ -209,7 +209,7 @@ Sys_Context
                 BXEQ     LR                     ; Exit when threads are the same
 
 Sys_ContextSave
-                #if     (__DOMAIN_NS == 1)
+                #if     (DOMAIN_NS == 1)
                 LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
                 CBZ      R0,Sys_ContextSave1    ; Branch if there is no secure context
                 PUSH     {R1,R2,R3,LR}          ; Save registers and EXC_RETURN
@@ -238,7 +238,7 @@ Sys_ContextSwitch
                 STR      R2,[R3]                ; osRtxInfo.run: curr = next
 
 Sys_ContextRestore
-                #if     (__DOMAIN_NS == 1)
+                #if     (DOMAIN_NS == 1)
                 LDR      R0,[R2,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
                 CBZ      R0,Sys_ContextRestore1 ; Branch if there is no secure context
                 PUSH     {R2,R3}                ; Save registers
@@ -253,7 +253,7 @@ Sys_ContextRestore1
                 LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
                 ORR      LR,R1,#0xFFFFFF00      ; Set EXC_RETURN
 
-                #if     (__DOMAIN_NS == 1)
+                #if     (DOMAIN_NS == 1)
                 TST      LR,#0x40               ; Check domain of interrupted thread
                 BNE      Sys_ContextRestore2    ; Branch if secure
                 #endif

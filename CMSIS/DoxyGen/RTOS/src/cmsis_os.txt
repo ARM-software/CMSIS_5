@@ -1,5 +1,5 @@
 /* ----------------------------------------------------------------------  
-* Copyright (C) 2016 ARM Limited. All rights reserved.  
+* Copyright (C) 2016 Arm Limited. All rights reserved.  
 *  
 * $Date:        14. April 2016
 * $Revision:    1.02
@@ -132,7 +132,7 @@ The following files relevant to CMSIS-RTOS are present in the <b>ARM::CMSIS</b> 
     <tr>
       <td>V4.81</td>
       <td>
-       Added provisions for ARM Compiler 6.\n
+       Added provisions for Arm Compiler 6.\n
        Corrected: Message Queue behavior when osMessagePut timed out due to full queue and osMessageGet was called from ISR.\n
       </td>
     </tr>
@@ -478,7 +478,7 @@ If this is impossible, the CMSIS-RTOS rejects calls by nested ISR functions with
 /**
 \page genRTOSIF Generic RTOS Interface
 
-The CMSIS-RTOS API is a generic RTOS interface for ARM&reg; Cortex&reg;-M processor-based devices. CMSIS-RTOS provides a
+The CMSIS-RTOS API is a generic RTOS interface for Arm&reg; Cortex&reg;-M processor-based devices. CMSIS-RTOS provides a
 standardized API for software components that require RTOS functionality and gives therefore serious benefits to the users
 and the software industry.
  - CMSIS-RTOS provides basic features that are required in many applications or technologies such as UML or Java (JVM).
@@ -541,7 +541,7 @@ towards the Cortex-M processors. Optional features may be for example
 /**
 \page rtosValidation RTOS Validation
 
-ARM offers a <a class=el href="http://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-RTOS Validation.
+Arm offers a <a class=el href="http://www.keil.com/pack" target="_blank">Software Pack</a> for the CMSIS-RTOS Validation.
 The <b>ARM::CMSIS-RTOS_Validation</b> Pack contains the following:
 
  - Source code of a CMSIS-RTOS Validation Suite along with configuration file.
@@ -1110,7 +1110,7 @@ The CMSIS-RTOS RTX kernel uses the following interrupts:
 - PendSV (request for system-level service) when calling certain RTX functions from \b Handler mode
 
 Interrupts can be used without limitation. Interrupt priority grouping can be used with some restrictions:
-- IRQ interrupts are never disabled by RTX Kernel for ARMv7-M architectures (Cortex-M3/M4/M7).
+- IRQ interrupts are never disabled by RTX Kernel for Armv7-M architectures (Cortex-M3/M4/M7).
 - Software interrupt 0 is used by RTX and cannot be used in an application.
 - RTX uses its own SVC Handler which is automatically linked from the library. \ref svcFunctions explains how to use a custom
   SVC table.

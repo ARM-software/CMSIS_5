@@ -1,13 +1,3 @@
-/* -----------------------------------------------------------------------------
- * Copyright (c) 2013-2014 ARM Limited. All rights reserved.
- *  
- * $Date:        2. January 2014
- * $Revision:    V2.00
- *  
- * Project:      NAND Flash Driver API
- * -------------------------------------------------------------------------- */
-
-
 /**
 \defgroup nand_interface_gr NAND Interface
 \brief    Driver API for NAND Flash Device Interface (%Driver_NAND.h).
@@ -32,6 +22,11 @@ The following header files define the Application Programming Interface (API) fo
 The driver implementation is a typical part of the Device Family Pack (DFP) that supports the 
 peripherals of the microcontroller family.
 
+NAND Flash is organized in pages, grouped into blocks as the smallest erasable unit. The addressing
+of data is archieved by `byte_address = block * block_size + page_in_block * page_size + offset_in_page`.
+In terms of this NAND API blocks and pages are referrd to as `row` and the byte offset within the page as `col`.
+Thus one can calculate the `byte_address = row * page_size + col`. The parameters `page_size` and `block_size` 
+are device specific and must be handled by the driver user appropriately.
 
 <b>Driver Functions</b>
 
@@ -39,16 +34,11 @@ The driver functions are published in the access struct as explained in \ref Dri
   - \ref ARM_DRIVER_NAND : access struct for NAND driver functions
 
 @{
+\anchor example <b>Example Code:</b>
+
+\include NAND_Demo.c
 */
-/*
-\todo provide details for the driver implementation text above
-
-A typical setup sequence for the driver is shown below:
-
-<b>Example Code:</b>
-
-\todo example
-*******************************************************************************************************************/
+/*******************************************************************************************************************/
 
 
 /**

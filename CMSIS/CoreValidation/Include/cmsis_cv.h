@@ -51,7 +51,9 @@ extern void TC_CoreInstr_USAT (void);
          (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
 
     extern void TC_CoreFunc_PSPLIM (void);
+    extern void TC_CoreFunc_PSPLIM_NS (void);
     extern void TC_CoreFunc_MSPLIM (void);
+    extern void TC_CoreFunc_MSPLIM_NS (void);
 
     #endif
     
@@ -92,6 +94,7 @@ extern void TC_CoreInstr_USAT (void);
     extern void TC_CoreAFunc_ACTRL (void);
     extern void TC_CoreAFunc_MPIDR (void);
     extern void TC_CoreAFunc_VBAR (void);
+    extern void TC_CoreAFunc_MVBAR (void);
   #endif
 #endif
 
@@ -108,6 +111,15 @@ extern void TC_GenTimer_CNTP_TVAL (void);
 extern void TC_GenTimer_CNTP_CTL (void);
 extern void TC_GenTimer_CNTPCT(void);
 extern void TC_GenTimer_CNTP_CVAL(void);
+#endif
+
+#ifdef RTE_CV_L1CACHE
+extern void TC_L1Cache_EnDisable(void);
+extern void TC_L1Cache_EnDisableBTAC(void);
+extern void TC_L1Cache_log2_up(void);
+extern void TC_L1Cache_InvalidateDCacheAll(void);
+extern void TC_L1Cache_CleanDCacheAll(void);
+extern void TC_L1Cache_CleanInvalidateDCacheAll(void);
 #endif
 
 #endif /* __CMSIS_CV_H */

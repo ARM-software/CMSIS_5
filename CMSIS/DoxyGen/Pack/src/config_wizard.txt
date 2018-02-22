@@ -174,6 +174,33 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
+      <td>\<o <em>key-identifier</em>><sup>*  (new!)</sup></td>
+      <td>yes</td>
+      <td>Option with identifier selection replacing the identifier after the specified key-identifier:
+      \code
+      //   <o TIMESTAMP_SRC>Time Stamp Source
+      //      <dwt=>     DWT Cycle Counter
+      //      <systick=> SysTick
+      //      <user=>    User Timer 
+      //   <i>Selects source for 32-bit time stamp
+      #define TIMESTAMP_SRC  dwt
+      \endcode
+      The example creates an option with the text \token{Time Stamp Source} and a drop down-list showing the text items 
+      \token{DWT Cycle Counter}, \token{SysTick} and \token{User Timer}. The corresponding identifier within the tag \<...=> will be used for replacement.
+      
+      Use case for an assignment of an enumeration to a variable:
+      \code
+      //   <o redPortMode> Red port mode 
+      //     <OutPushPull_GPIO=>  PushPull
+      //     <OutOpenDrain_GPIO=> OpenDrain
+      //   <i>Selects GPIO output
+      ledConf.redPortMode = OutOpenDrain_GPIO;
+      \endcode
+      The example creates an option with the text \token{Red port mode} and a drop down-list showing the text items
+      \token{PushPull} and \token{OpenDrain}. The corresponding identifier \token{OutPushPull_GPIO} or \token{OutOpenDrain_GPIO} will be used to replace the 
+      identifier after the key-identifier \token{redPortMode}.
+    </tr>
+    <tr>
       <td>\<o.<i>i</i>><sup>*</sup></td>
       <td>yes</td>
       <td>Modify a single bit (example: \<e.4> - modifies bit 4).
@@ -286,6 +313,23 @@ The following table lists the Configuration Wizard Annotations:
       See \ref configWizard_display.
       </td>
     </tr>
+    <tr>
+      <td>\<<i>identifier</i>=></td>
+      <td>yes</td>
+      <td>Creates a drop down-list and displays the \em <b>text</b> following the definition of the identifiers \token{dwt}, \token{systick} and \token{user}.
+      Note that this must only be used in the context of \<o key-identifier>!
+      The \em <b>identifier</b> corresponding to the selected text replaces the identifier following the key-identifier specified by the \<o ...> tag.
+      \code
+      //   <o TIMESTAMP_SRC>Time Stamp Source
+      //      <dwt=>     DWT Cycle Counter
+      //      <systick=> SysTick
+      //      <user=>    User Timer 
+      //   <i>Selects source for 32-bit time stamp
+      #define TIMESTAMP_SRC  dwt
+      \endcode
+      In this example, the screen would show the option \token{Time Stamp Source}. The field value would display the text \token{DWT Cycle Counter}. 
+      TIMESTAMP_SRC is set to \token{dwt}. When clicking on the field, a drop-down would show all options. See \ref configWizard_display.
+    </tr>  
     <tr>
       <td>\<#+1>&nbsp;&nbsp; \<#-1><br>
           \<#*8>&nbsp;&nbsp; \<#/3></td>

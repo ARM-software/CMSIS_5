@@ -1,1 +1,0 @@
-CMSIS-DAP USB HID Firmware for NXP LPC-Link-II board.

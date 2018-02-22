@@ -23,55 +23,60 @@ is allowed. A CPDSC file can describe one or more projects.
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PACK.xsd">
   <vendor>Keil</vendor>
-  <name>STM32F429_Flash</name>
-  <description>CMSIS RTOS Blinky for STM32F429</description>
+  <name>STM32F407_Flash</name>
+  <description>CMSIS RTOS Blinky for STM32F407 microcontroller using Keil 'MCBSTM32F400 Evaluation Board.</description>
   <url>www.keil.com/pack/Keil.STM32F4xx_DFP.pdsc</url>
-  
+
   <releases>
-    <release version="5.20.0.2">Generated 2016-05-10T22:08:37</release>
+    <release version="5.25.1">Generated 2018-02-20T09:10:26</release>
   </releases>
 
   <requirements>
     <packages>
-      <package name="STM32F4xx_DFP" vendor="Keil" version="2.8.0:2.8.0"/>
-      <package name="CMSIS" vendor="ARM" version="4.5.0:4.5.0"/>
+      <package name="CMSIS" vendor="ARM"/>
+      <package name="MDK-Middleware" vendor="Keil"/> 
+      <package name="STM32F4xx_DFP" vendor="Keil"/>
     </packages>
   </requirements>
 
   <create>
-    <project name="STM32F429_Flash" documentation="./Abstract.txt">
-      <target Dendian="Little-endian" Dfpu="SP_FPU" Dname="STM32F429ZITx" Dvendor="STMicroelectronics:13">
+    <project>
+      <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="SP_FPU" Dname="STM32F407IGHx" Dtz="NO_TZ" Dvendor="STMicroelectronics:13">
         <output debug="1" name="Blinky" type="exe"/>
-        <debugProbe coreClock="10000000" name="ST-Link" protocol="swd"/>
-        <memory access="rx" default="1" name="IROM1" size="0x200000" start="0x8000000" startup="1"/>
-        <memory access="rw" default="1" init="1" name="IRAM1" size="0x30000" start="0x20000000"/>
+        <debugProbe coreClock="10000000" name="ULINK2" protocol="swd"/>
+        <memory access="rx" default="1" name="IROM1" size="0x100000" start="0x8000000" startup="1"/>
+        <memory access="rw" default="1" init="1" name="IRAM1" size="0x20000" start="0x20000000"/>
         <memory access="rw" default="0" init="1" name="IRAM2" size="0x10000" start="0x10000000"/>
       </target>
       <select>
-        <component Cclass="CMSIS" Cgroup="Core" Cvendor="ARM" Cversion="4.1.0"/>
-        <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cvendor="ARM" Cversion="4.78.0">
+        <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM"/>
+        <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cvendor="ARM">
           <file attr="config" category="source" name="CMSIS/RTOS/RTX/Templates/RTX_Conf_CM.c" version="4.70.1"/>
         </component>
-        <component Cbundle="STM32F429I-Discovery" Cclass="Board Support" Cgroup="Buttons" Cvendor="Keil" Cversion="1.0.0"/>
-        <component Cbundle="STM32F429I-Discovery" Cclass="Board Support" Cgroup="LED" Cvendor="Keil" Cversion="1.0.0"/>
-        <component Cclass="Device" Cgroup="STM32Cube Framework" Csub="Classic" Cvendor="Keil" Cversion="1.4.0">
-          <file attr="config" category="header" name="CMSIS/Driver/Config/RTE_Device.h" version="2.3.1"/>
-          <file attr="config" category="header" name="MDK/Templates/Inc/stm32f4xx_hal_conf.h" version="1.4.2"/>
+        <component Cbundle="MCBSTM32F400" Cclass="Board Support" Cgroup="A/D Converter" Cvendor="Keil"/>
+        <component Cbundle="MCBSTM32F400" Cclass="Board Support" Cgroup="Buttons" Cvendor="Keil"/>
+        <component Cbundle="MCBSTM32F400" Cclass="Board Support" Cgroup="LED" Cvendor="Keil"/>
+        <component Cclass="Device" Cgroup="STM32Cube Framework" Csub="Classic" Cvendor="Keil">
+          <file attr="config" category="header" name="CMSIS/Driver/Config/RTE_Device.h" version="2.4.4"/>
+          <file attr="config" category="header" name="MDK/Templates/Inc/stm32f4xx_hal_conf.h" version="1.6.0"/>
         </component>
-        <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="Common" Cvendor="Keil" Cversion="1.4.0"/>
-        <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="Cortex" Cvendor="Keil" Cversion="1.4.0"/>
-        <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="GPIO" Cvendor="Keil" Cversion="1.4.0"/>
-        <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="PWR" Cvendor="Keil" Cversion="1.4.0"/>
-        <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="RCC" Cvendor="Keil" Cversion="1.4.0"/>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="2.4.0">
-          <file attr="config" category="source" condition="STM32F429xx_ARMCC" name="Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f429xx.s" version="2.4.2"/>
-          <file attr="config" category="source" name="Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c" version="2.4.2"/>
+        <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="ADC" Cvendor="Keil"/>
+        <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="Common" Cvendor="Keil"/>
+        <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="Cortex" Cvendor="Keil"/>
+        <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="DMA" Cvendor="Keil"/>
+        <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="GPIO" Cvendor="Keil"/>
+        <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="PWR" Cvendor="Keil"/>
+        <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="RCC" Cvendor="Keil"/>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil">
+          <file attr="config" category="source" condition="STM32F407xx_ARMCC" name="Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f407xx.s" version="2.6.0"/>
+          <file attr="config" category="source" name="Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c" version="2.6.0"/>
         </component>
       </select>
       <files>
         <group name="Source Files">
           <file category="sourceC" name="./Blinky.c"/>
           <file category="sourceC" name="./Thread_LED.c"/>
+          <file category="sourceC" name="./Thread_ADC.c"/>
         </group>
         <group name="Documentation">
           <file category="doc" name="./Abstract.txt"/>
@@ -79,7 +84,6 @@ is allowed. A CPDSC file can describe one or more projects.
       </files>
     </project>
   </create>
-
 </package>
 \endcode
 

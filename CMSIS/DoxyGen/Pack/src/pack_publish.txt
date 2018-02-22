@@ -53,7 +53,7 @@ maintenance purposes for example).
 
 \section cp_KeilComPack Publishing on www.keil.com/pack
 
-ARM maintains a list of available software packs. If you wish to add your packs to that list, send either your vendor.pidx
+Arm maintains a list of available software packs. If you wish to add your packs to that list, send either your vendor.pidx
 file or your PDSC file to the following email address: <a href="mailto:CMSIS@arm.com">CMSIS@arm.com</a>. The PIDX file will
 be processed and all referenced PDSC files will be validated. The following content will be processed in order to generate
 the web site (<a href="http://www.keil.com/dd2/pack">www.keil.com/dd2/pack</a>) and index file

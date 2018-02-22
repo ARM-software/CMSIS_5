@@ -70,7 +70,7 @@ established classes:
 - Board Support: Generic interfaces for evaluation and development boards
 - CMSIS: <i>Cortex Microcontroller Software Interface Standard</i> components
 - CMSIS Driver: Unified device drivers compliant to the CMSIS-Driver specification
-- Compiler: ARM Compiler software extensions
+- Compiler: Arm Compiler software extensions
 - Data Exchange: Software components for data exchange
 - Device: Startup and system setup components
 - File System*: File drive support and file system

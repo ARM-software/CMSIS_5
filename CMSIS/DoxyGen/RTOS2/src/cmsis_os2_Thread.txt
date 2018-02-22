@@ -278,6 +278,14 @@ or for runtime parameters.
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \struct osThreadAttr_t
+\details
+Attributes to configure a thread.
+
+Refer to \ref CMSIS_RTOS_MemoryMgmt for details about usage of
+ - osThreadAttr_t::cb_mem
+ - osThreadAttr_t::cb_size
+ - osThreadAttr_t::stack_mem
+ - osThreadAttr_t::stack_size
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        20. May 2015
- * $Revision:    V1.10
+ * $Date:        1. December 2017
+ * $Revision:    V2.0.0
  *
  * Project:      CMSIS-DAP Source
  * Title:        DAP_vendor.c CMSIS-DAP Vendor Commands
@@ -49,7 +49,7 @@ uint32_t DAP_ProcessVendorCommand(const uint8_t *request, uint8_t *response) {
   uint32_t num = (1U << 16) | 1U;
 
   *response++ = *request;        // copy Command ID
-  
+
   switch (*request++) {          // first byte in request is Command ID
     case ID_DAP_Vendor0:
 #if 0                            // example user command

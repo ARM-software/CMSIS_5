@@ -53,7 +53,7 @@ const osMutexAttr_t Thread_Mutex_attr = {
   "myThreadMutex",     // human readable mutex name
   osMutexRecursive,    // attr_bits
   NULL,                // memory for control block   
-  NULL                 // size for control block
+  0U                   // size for control block
 };
   
 // must be called from a thread context
@@ -96,7 +96,7 @@ const osMutexAttr_t Thread_Mutex_attr = {
   "myThreadMutex",     // human readable mutex name
   osMutexPrioInherit,  // attr_bits
   NULL,                // memory for control block   
-  NULL                 // size for control block
+  0U                   // size for control block
 };
   
 void HighPrioThread(void *argument) {
@@ -171,7 +171,7 @@ const osMutexAttr_t Thread_Mutex_attr = {
   "myThreadMutex",     // human readable mutex name
   osMutexRobust,       // attr_bits
   NULL,                // memory for control block   
-  NULL                 // size for control block
+  0U                   // size for control block
 };
   
 void Thread(void *argument) {
@@ -195,6 +195,11 @@ Returned by:
 /**
 \struct osMutexAttr_t
 \details
+Attributes to configure a mutex.
+
+Refer to \ref CMSIS_RTOS_MemoryMgmt for details about usage of
+ - osMutexAttr_t::cb_mem
+ - osMutexAttr_t::cb_size
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -220,7 +225,7 @@ const osMutexAttr_t Thread_Mutex_attr = {
   "myThreadMutex",                          // human readable mutex name
   osMutexRecursive | osMutexPrioInherit,    // attr_bits
   NULL,                                     // memory for control block   
-  NULL                                      // size for control block
+  0U                                        // size for control block
   };
   
 void CreateMutex (void)  {

@@ -42,7 +42,7 @@ is version independent and has the format:
 
 Example filenames for software packs:
 
-Software Pack for CMSIS Version 4.0 released by ARM.
+Software Pack for CMSIS Version 4.0 released by Arm.
  - <b>ARM.CMSIS.4.0.0.pack</b>: filename of the \ref cp_SWComponents "Software Pack".
  - <b>ARM.CMSIS.pdsc</b>: filename of the <b>Pack Description</b> (*.PDSC) file.
  
@@ -94,7 +94,7 @@ assists searching for packages.
 <package schemaVersion="1.4" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PACK.xsd">
   <vendor>ExampleVendor</vendor>
   <name>STM32F2xx_DFP</name>                                                       <!-- name of package -->
-  <description>Device Family Package for STMicroelectronics STM32F2 Family of ARM Cortex-M3 based Microcontroller</description>
+  <description>Device Family Package for STMicroelectronics STM32F2 Family of Arm Cortex-M3 based Microcontroller</description>
   <url></url>
   <supportContact>http://www.arm.com/support</supportContact>
   <license>./END_USER_LICENCE_AGREEMENT.rtf</license>
@@ -889,6 +889,14 @@ software components in projects. Reserved characters are:
     <td>generator</td>
     <td>Reference to a generator. Enter the \b id value of the element \ref element_generator.</td>
     <td>xs:string </td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>public</td>
+    <td>Set publishing permissions for the documentation. If \tagem{public} is \token{true}, then the vendor gives permission 
+        to extract the documentation from the pack and publish it on a web-page. Links to web pages are assumed to be public.
+        The default value is \token{false}.</td>
+    <td>xs:boolean</td>
     <td>optional</td>
   </tr>
 </table>

@@ -328,9 +328,9 @@ A \ref element_condition "condition" becomes \token{true} when:
   <tr>
     <td>Toptions</td>
     <td>Specifies compiler specific options being active. For <em>Tcompiler="ARMCC"</em> available Toptions are:
-        - <b>AC5</b>: ARM Compiler Version 5 is in used
-        - <b>AC6</b>: ARM Compiler Version 6 (aka: ARM Clang 6) is in use
-        - <b>AC6LTO</b>: ARM Compiler Version 6 with Link Time Optimization (aka: LTO) is in use
+        - <b>AC5</b>: Arm Compiler Version 5 is in used
+        - <b>AC6</b>: Arm Compiler Version 6 (armclang) is in use
+        - <b>AC6LTO</b>: Arm Compiler Version 6 with Link Time Optimization (LTO) is in use
         
         This attribute can be used to select compatible libraries for the selected compiler version or optimization mode.
     </td>
@@ -370,8 +370,8 @@ The tokens can be used in the elements:
   </tr>
   <tr>
     <td class="XML-Token">GCC</td>
-    <td>GNU Tools for ARM Embedded Processors. 
-    Refer to <a href="https://launchpad.net/gcc-arm-embedded/4.7" target="_blank">ARM GCC</a>.</td>
+    <td>GNU Tools for Arm Embedded Processors. 
+    Refer to <a href="https://launchpad.net/gcc-arm-embedded/4.7" target="_blank">Arm GCC</a>.</td>
   </tr>
   <tr>
     <td class="XML-Token">G++</td>
@@ -379,9 +379,9 @@ The tokens can be used in the elements:
   </tr>
   <tr>
     <td class="XML-Token">ARMCC</td>
-    <td>ARM compiler for C and C++. 
+    <td>Arm Compiler for C and C++. 
     Refer to <a href="http://infocenter.arm.com/help/topic/com.arm.doc.subset.swdev.coretools/index.html" target="_blank">
-    ARM Compiler from ARM</a>.</td>
+    Arm Compiler</a>.</td>
   </tr>
   <tr>
     <td class="XML-Token">IAR</td>

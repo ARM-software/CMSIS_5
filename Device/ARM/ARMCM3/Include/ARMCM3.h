@@ -3,10 +3,10 @@
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMCM3 Device Series
  * @version  V5.00
- * @date     07. September 2016
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -207,7 +207,7 @@ typedef struct
   #pragma pop
 #elif defined (__ICCARM__)
   /* leave anonymous unions enabled */
-#elif (__ARMCC_VERSION >= 6010050)
+#elif (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
   #pragma clang diagnostic pop
 #elif defined (__GNUC__)
   /* anonymous unions are enabled by default */

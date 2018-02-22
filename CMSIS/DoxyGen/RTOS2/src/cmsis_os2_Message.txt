@@ -34,7 +34,13 @@ Returned by:
 /** 
 \struct osMessageQueueAttr_t
 \details
-Attributes structure for message queue.
+Attributes to configure a message queue.
+
+Refer to \ref CMSIS_RTOS_MemoryMgmt for details about usage of
+ - osMessageQueueAttr_t::cb_mem
+ - osMessageQueueAttr_t::cb_size
+ - osMessageQueueAttr_t::mq_mem
+ - osMessageQueueAttr_t::mq_size
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -62,10 +68,9 @@ mq_id or \token{NULL} in case of an error.
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
-*/
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
-\fn osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout);
+\fn osStatus_t osMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout)
 \details
 The blocking function \b osMessageQueuePut puts the message pointed to by \a msg_ptr into the the message queue specified
 by parameter \a mq_id. The parameter \a msg_prio is used to sort message according their priority (higher numbers indicate

@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     partition_ARMv8MML.h
- * @brief    CMSIS-CORE Initial Setup for Secure / Non-Secure Zones for ARMv8M
+ * @brief    CMSIS-CORE Initial Setup for Secure / Non-Secure Zones for Armv8-M Mainline
  * @version  V5.0.1
- * @date     07. December 2016
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

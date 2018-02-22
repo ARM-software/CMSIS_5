@@ -16,7 +16,6 @@ data package fits within the limitations of the configured \ref DAP_PACKET_SIZE.
 
 \note
 Commands that are not implemented reply with 0xFF instead of repeating the command byte.
-The available commands can be evaluated using the command \ref DAP_Info with 0xF0 (Capabilities).
 
 Conventions and Command Structure
 ---------------------------------
@@ -124,6 +123,7 @@ The following new commands are added:
  - \ref DAP_SWO_Baudrate
  - \ref DAP_SWO_Control
  - \ref DAP_SWO_Status
+ - \ref DAP_SWO_ExtendedStatus
  - \ref DAP_SWO_Data
 
 Format of the new commands is specified below using CMSIS-DAP documentation style.
@@ -155,33 +155,6 @@ The Transfer Commands allow to:
  - Configure the parameters for information exchange with CoreSight registers.
  - Transfer (read or write) a single data word or a data block with CoreSight registers.
  - Terminate an active data transfer.
-*/
-
-/**************************************************************************************************/
-/** 
-\defgroup DAP_TestInput_gr Test Input Commands
-\ingroup DAP_Commands_gr
-\brief Management commands for optional Test Inputs.
-
-CMSIS-DAP provides a command set that allows to implement an optional Test Input (TI) management in the <b>Debug Unit</b>.
-Recording of up to 16 different Test Inputs is possible. Test Input values can be recorded as BYTE, SHORT, or WORD. 
-The <b>Debug Unit</b> may include scaling parameters and dynamic ranges for a channel (for example a 14-bit value with a 2-bit range selection).
-
-Test Inputs could be used for various scenarios, for example:
-  - capture power measurement from A/D converters.
-  - capture wait states or cache misses from a memory system.  
-  - capture data transfer parameters of an RF interface.
-  - test input pins of a Debug Unit.
-
-These Test Inputs can be recorded continuously with a specified trace recording frequency. The recording allows you to correlate 
-the Test Input information with program execution.  For recording of the CMSIS-DAP Firmware includes an optional Trace Data Management based on configurable memory blocks. 
-This Trace Data Management also captures SWO trace information.
-
-\note
-The \ref DAP_TestInput_gr are only available when \ref DAP_Info with ID=0xF0 (Capabilities) returns in \b Info - Bit 6: <b>1 = Trace Data Management</b>.
-  
-\image html "TraceManagement.png" "Trace Data Management"
-  
 */
 
 
@@ -242,7 +215,6 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
   - \b 0x06 = Get the <b>Target Device Name</b> (string).
   - \b 0xF0 = Get information about the <b>Capabilities</b> (BYTE) of the Debug Unit (see below for details).
   - \b 0xF1 = Get the <b>Test Domain Timer</b> parameter information (see below for details).
-  - \b 0xF2 = Get the <b>Trace Data Management</b> parameter information (see below for details).
   - \b 0xFD = Get the <b>SWO Trace Buffer Size</b> (WORD).
   - \b 0xFE = Get the maximum <b>Packet Count</b> (BYTE).
   - \b 0xFF = Get the maximum <b>Packet Size</b> (SHORT).
@@ -297,13 +269,13 @@ Serial Wire Trace (SWO) support:
  
 Command extensions for transfer protocol: 
  - Info0 - Bit 4: <b>1 = Atomic Commands</b> - \ref DAP_atomic_gr support is implemented (0 = \ref DAP_atomic_gr not implemented).
- - Info0 - Bit 5: <b>1 = \ref DAP_SWD_Sequence</b> command is implemented (0 = \ref DAP_SWD_Sequence not implemented).
  
 Time synchronisation via Test Domain Timer:
- - Info0 - Bit 6: <b>1 = Test Domain Timer</b> - debug unit support for Test Domain Timer is implemented (0 = not implemented).
+ - Info0 - Bit 5: <b>1 = Test Domain Timer</b> - debug unit support for Test Domain Timer is implemented (0 = not implemented).
  
-Test Input management: 
- - Info1 - Bit 0: <b>1 = Trace Data Management</b> - Trace Data Management is implemented (0 = not implemented).
+SWO Streaming Trace support:
+ - Info0 - Bit 6: <b>1 = SWO Streaming Trace</b> is implemented (0 = not implemented).
+ 
  
 <hr>
  
@@ -318,22 +290,6 @@ The ID=0xF1 <b>Test Domain Timer</b> obtains the parameter information about an 
 \endcode
 
 - \b Frequency:  Input frequency of the Test Domain Timer which indicates the resolution of the 32-bit TD_TimeStamp values.
-
-
-<hr>
-
-<b>DAP_Info Response (for ID=0xF2):</b>
-
-The ID=0xF2 <b>Trace Data Management</b> obtains the parameter information about an optional Trace Data Management.
-
-\code
-| BYTE | BYTE | SHORT *****| SHORT ****|
-< 0x00 | 0x04 | BlockCount | BlockSize |
-|******|******|************|***********|
-\endcode
-
-- \b BlockCount:  Number of data blocks in the Trace Data Management.
-- \b BlockSize:  Size (in bytes) of a data block in the Trace Data Management.
 
 
 */
@@ -636,7 +592,7 @@ SWD/JTAG Reset, SWD<->JTAG switch and Dormant operation.
 \brief Configure SWD Protocol
 \details
 The <b>DAP_SWD_Configure Command</b> sets the SWD protocol configuration. For more information about 
-the SWD protocol refer to the <b>ARM Debug Interface v5 - Interface Specification.</b>
+the SWD protocol refer to the <b>Arm Debug Interface v5 - Interface Specification.</b>
 
 <b>DAP_SWD_Configure Command</b>:
 \code
@@ -668,7 +624,7 @@ the SWD protocol refer to the <b>ARM Debug Interface v5 - Interface Specificatio
 \brief Generate SWD sequence and output on SWDIO or capture input from SWDIO data.
 \details
 \note
-The \ref DAP_SWD_Sequence is only available when \ref DAP_Info with ID=0xF0 (Capabilities) returns in \b Info0 - Bit 5: <b>1 = \ref DAP_SWD_Sequence</b> is implemented.
+The \ref DAP_SWD_Sequence is available for CMSIS-DAP version 1.2 and higher.  Refer to \ref DAP_Info for more information on how to query the CMSIS-DAP version.
 
 
 The <b>DAP_SWD_Sequence Command</b> is used to generate special sequences in SWD mode on the pins SWCLK and SWDIO.
@@ -682,7 +638,7 @@ For example, for SWD multi-drop target selection (see picture) it is required to
 <b>DAP_SWD_Sequence Command</b>:
 \code
 | BYTE | BYTE **********| BYTE *********| BYTE ******|
-> 0x21 | Sequence Count | Sequence Info | SWDIO Data |
+> 0x1D | Sequence Count | Sequence Info | SWDIO Data |
 |******|****************|///////////////|++++++++++++|
 \endcode
 
@@ -698,7 +654,7 @@ For example, for SWD multi-drop target selection (see picture) it is required to
 <b>DAP_SWD_Sequence Response</b>:
 \code
 | BYTE | BYTE **| BYTE ******|
-< 0x21 | Status | SWDIO Data |
+< 0x1D | Status | SWDIO Data |
 |******|********|++++++++++++|
 \endcode
 
@@ -731,6 +687,7 @@ Sets the SWO transport mode for reading trace data.
   - \b Transport:
     - 0 - None (default)
     - 1 - Read trace data via DAP_SWO_Data command   
+    - 2 - Send trace data via separate \ref WinUSB "WinUSB" endpoint (requires CMSIS-DAP v2 configuration)
     - ... - reserved
 
 <b>DAP_SWO_Transport Response:</b>
@@ -883,6 +840,48 @@ Reads the SWO trace status.
     - Bit 6: Trace Stream Error
     - Bit 7: Trace Buffer Overrun
   - <b>Trace Count</b>: Number of bytes in Trace Buffer (not yet read)
+*/
+
+/**************************************************************************************************/
+/** 
+\defgroup DAP_SWO_ExtendedStatus DAP_SWO_ExtendedStatus
+\ingroup DAP_swo_gr
+\brief Read SWO trace extended status
+\details
+
+DAP_SWO_ExtendedStatus (0x1E):
+-----------------------------
+
+Reads extended information about the SWO trace status.
+
+<b>DAP_SWO_ExtendedStatus Request:</b>
+\code
+ | BYTE | BYTE    |
+ > 0x1E | Control |
+ |******|*********|
+\endcode  
+
+  - <b>Control</b>:
+    - Bit 0: Trace Status (1 - request, 0 - inactive)
+    - Bit 1: Trace Count (1 - request, 0 - inactive)
+    - Bit 2: Index/Timestamp (1 - request, 0 - inactive)
+
+<b>DAP_SWO_ExtendStatus Response:</b>
+\code
+ | BYTE | BYTE         | WORD        | WORD  | WORD         |
+ < 0x1E | Trace Status | Trace Count | Index | TD_TimeStamp |
+ |******|++++++++++++++|+++++++++++++|+++++++|++++++++++++++|
+\endcode
+
+  - <b>Trace Status</b>:
+    - Bit 0: Trace Capture (1 - active, 0 - inactive)
+    - Bit 6: Trace Stream Error
+    - Bit 7: Trace Buffer Overrun
+
+  - <b>Trace Count</b>: Number of bytes in Trace Buffer (not yet read)
+
+  - <b>Index</b>: Sequence number of next trace information
+  - <b>TD_TimeStamp</b>: Test Domain Timer value for trace sequence.
 */
 
 /**************************************************************************************************/
@@ -1210,272 +1209,6 @@ aborted \ref DAP_Transfer or \ref DAP_TransferBlock command will respond with in
 > 0x07 |
 |******|
 \endcode
-*/
-
-
-/**************************************************************************************************/
-/** 
-\defgroup DAP_TI_Info DAP_TI_Info
-\ingroup DAP_TestInput_gr
-\brief Get information about Test Input channel parameters of the CMSIS-DAP Debug Unit.
-
-The <b>DAP_TI_Info Command</b> provides information about additional Test Inputs that are possible to capture with the CMSIS-DAP Debug Unit.
-
-<b>DAP_TI_Info Request:</b>
-\code
- | BYTE | BYTE | BYTE ***|
- > 0x1D | ID   | Channel |
- |******|******|*********|
-\endcode
-
-- \b ID: Request Identifier to obtain information in the Response:
-  - \b 0x00 = Get general Test Input channel parameters (\b Channel value not used).
-  - \b 0x01 = Get parameters of a specific Test Input \b Channel.
-  - \b 0x02 = Get possible data capturing frequencies.
-
-- \b Channel: channel number.
- 
-<b>DAP_TI_Info Response for \b ID=0x00: Get general Test Input channel parameters</b> 
-\code
- | BYTE | BYTE ****|
- < 0x1D | Channels |
- |******|**********|
-\endcode
-- \b Channels: number of channels available in the Debug Unit.
-  
-<b>DAP_TI_Info Response for \b ID=0x01: Get parameters of a specific Channel</b> 
-\code
- | BYTE | BYTE ***| BYTE ******| BYTE ***| LWORD ***| LWORD *****| BYTE ****| FLOAT *| FLOAT *|
- < 0x1D | Channel | Attributes | NumBits | IdString | UnitString | Compress | MinVal | MaxVal |
- |******|*********|************|*********|**********|************|**********|++++++++|++++++++|
-\endcode
-- \b Channel: channel number that information belongs to.
-
-- \b Attributes: attributes of the data channel
-  - Bit 0..1: DataSize: number of bytes recorded (0=BYTE, 1=SHORT, 2=WORD)
-  - Bit 2..3: NumRanges: channel data provides additional range bits (see below)
-  - Bit 4: DT_TimeStamp: 1= channel provides time stamp based on Test Domain Timer
-- \b NumBits: resolution of the channel in bits
-- \b IdString: is a up to 8 character 8-bit US ASCII string that identifies the channel
-- \b UnitString: is a up to 8 character 8-bit US ASCII string that identifies the measurement unit of the channel (V, mA, kHz)
-- \b Compress: describes the difference communication that is optionally available (see below)
-- \b MinVal: minimum data value (= 0) represents the \b MinVal. Repeated for each range.
-- \b MaxVal: maximum data value result represents the \b MaxVal. Repeated for each range.
-
-\note
-\b NoRanges: specifies if the channel data has data ranges; possible values are:
-  - 0 = 1 range (1 MinVal/MaxVal value pair in the response).
-  - 1 = 2 ranges (2 MinVal/MaxVal value pairs are provided in the response)
-  - 2 = 4 ranges (4 MinVal/MaxVal value pairs are provided in the response)
-
-\note
-\b Compress specifies a method for data differences by this channel.
-  - 0 = no data differences can be communicated. Only <b>Contiguous Value Format</b> is transmitted in \ref DAP_TI_TransferBlock Response.
-  - 1 = data differences are transmitted when a single bit is different.
-  - 2 = new data are transmitted when a value has a significant difference. The least significant 3-bits are ignored.  This is useful for A/D values.
-  - 3 = new data are transmitted when a value has a significant dynamic difference. Only the uppermost 8-bits are considered.  This is useful for dynamic A/D values such as the currency consumption of a device.
-  
-\note
-<b>Data Value Scaling</b>: the information \b NoBits, \b MinVal, \b MaxVal is used to convert the binary data value
-into a floating data value for displaying purposes. If both \b MinVal and \b MinMax are 0 no scaling formula is provided and raw data may be displayed instead.
-Scaling considers the \b NoBits value, for example at 12-bit resolution the maximum data value is 0x3FF.
-
-\note
-<b>Data Ranges</b>: the information \b NoRanges, \b NoBits allows scaled data value based on range information.
-The range information is provided in the upper data bits.  For example a data channel with NoBits=12 and NRanges=2 provides in bit 0..11 the data value and in bit 12..13 the range value.
-
-<b>Example 1</b>:  parameters for a channel that supports voltage measurement
-\code
-   IdString = 'U0'            // Voltage symbol for U0 input
-   UnitString = 'V';          // ASCII character to denote voltage
-   NoBits = 10;               // 10 bit A/D resolution
-   NoRanges = 0;              // no ranges are supported
-   Compress = 2;              // data differences may be communicated
-   MinVal = 2.5;              // A/D result = 0x000 represents 2.5V
-   MaxVal = 6.0;              // A/D result = 0x3FF represents 6.0V
-\endcode
-
-<b>Example 2</b>:  parameters for a channel that supports current measurement with two ranges
-\code
-   IdString = 'I';            // Current symbol for I input
-   UnitString = 'mA';         // ASCII character to denote milli Ampere
-   NoBits = 12;               // 12 bit A/D resolution (bit 0 .. 11 of data values contain A/D result)
-   NoRanges = 1;              // 2 ranges are supported (bit 12 of data values contains range)
-   Compress = 3;              // dynamic data differences may be communicated
-   MinVal[0] = 0;             // A/D result = 0x000 in range 0 represents 0.0mA
-   MaxVal[0] = 1.0;           // A/D result = 0xFFF in range 0 represents 1.0mA
-   MinVal[1] = 4.0;           // A/D result = 0x000 in range 0 represents 4.0mA
-   MaxVal[1] = 20.0;          // A/D result = 0xFFF in range 0 represents 20.0mA
-\endcode
-
-For a channel that reports <b>MinVal = MaxVal = 0</b> the formula needs to be provided by the debugger as the debug unit is using perhaps an external shunt resistor.
-
-<b>DAP_TI_Info Response for \b ID=0x02: Get possible data capturing frequencies for recording of a specific channel</b> 
-\code
- | BYTE | BYTE ***| BYTE ********|DWORD ++++|
- < 0x1D | Channel | NoSelections |Frequency |
- |******|*********|**************|++++++++++| 
-\endcode
-- \b Channel: channel number that information belongs to.
-  - Channel = 0..0xF:  information of the selected channel
-  - Channel = 0xFF: information for common channel data capturing
-
-- \b NoSelections: number of possible capture frequencies
-  - NoSelections = 0: channel does not support data recording
-  - NoSelections = 1..15: channel allows selection of individual data capture frequencies.
-  - NoSelections = 0xFF: channel allows selection of a common data capture frequency.
-
-- \b Frequency: capture frequencies (repeated as indicated by NoSelection = 1..15)
-  - Frequency[0]  capture frequency for CapSelect=0 (see DAP_TI_Capture)
-  - Frequency[1]  capture frequency for CapSelect=1 (see DAP_TI_Capture)
-  - Frequency[n]  capture frequency for CapSelect=n (see DAP_TI_Capture)
-*/
-
-
-/**************************************************************************************************/
-/** 
-\defgroup DAP_TI_Value DAP_TI_Value
-\ingroup DAP_TestInput_gr
-\brief Get live data values from Test Input channels.
-
-The <b>DAP_TI_Value Command</b> returns the live (current) values of the Test Inputs in the  
-CMSIS-DAP Debug Unit. Returned are live data that are currently available in the Test Inputs channels.  
-
-<b>DAP_TI_Value Request:</b>
-\code
- | BYTE | SHORT ******| BYTE ***********|
- > 0x1E | ChannelMask | DT_Time_Request |
- |******|*************|*****************|
-\endcode
-
-- \b ChannelMask: Bit mask that encodes the channels that should be scanned. 
-- \b Time_Request: 
-   - 0: No Time Stamp in response.
-   - 1: Include Time Stamp in response. 
-
-<b>DAP_TI_Value Response:</b> 
-\code
- | BYTE | SHORT ******| WORD ++++++++|++++++++++++|
- < 0x1E | ChannelMask | TD_TimeStamp | DataValues |
- |******|*************|++++++++++++++|++++++++++++|
-\endcode
-- \b ChannelMask: Bit mask of channels that are actually scanned. Depending on the capabilities of the Debug Unit, this might be less than the request channels.
-
-- <b>TD_TimeStamp</b>: Test Domain Timer value at the beginning the the request (only present if \b DT_Time_Request is set to 1).
-
-- \b DataValues: data values of the various Test Inputs (starting with channel=0).  The size of \b DataValues depends on the data size (see \ref DAP_TI_Info Response, Attributes bit 0..2)  In case of SHORT or WORD data format, the LSB is send first.
-*/
-
-
-/**************************************************************************************************/
-/** 
-\defgroup DAP_TI_Capture DAP_TI_Capture
-\ingroup DAP_TestInput_gr
-\brief Control continuous data recording of Test Input channels.
-
-The <b>DAP_TI_Capture Command</b> controls the data recording of the various Test Input channels.
-
-<b>DAP_TI_Capture Request:</b>
-\code
- | BYTE | SHORT ******| SHORT ******| BYTE **| BYTE *****|
- > 0x1F | ChannelMask | ChannelDiff | Action | CapSelect |
- |******|*************|*************|********|***********|
-\endcode
-
-- \b ChannelMask: Bit mask that encodes the channels that should be recorded. 
-
-- \b ChannelDiff: Bit mask that enables the channel to communicate data differences. 
-  - \b 0x1 = Debug Unit may decide to send data differences.
-  - \b 0x0 = Debug Unit will always send data values.
-
-- \b Action: start or stop recording.
-  - \b 0x1 = start recording.
-  - \b 0x0 = stop recording.
-
-- \b CapSelect: select recording frequency for the data capturing (frequency is obtained via \ref DAP_TI_Info ID=0x02)
-  
-  
-<b>DAP_TI_Capture Response:</b> 
-\code
- | BYTE | SHORT ******|
- < 0x1F | ChannelMask |
- |******|*************|
-\endcode
-- \b ChannelMask: Bit mask of channels that are currently recorded. Depending on the capabilities of the Debug Unit, this might be less than the request channels.
-*/
-
-/**************************************************************************************************/
-/** 
-\defgroup DAP_TI_TransferBlock DAP_TI_TransferBlock
-\ingroup DAP_TestInput_gr
-\brief Transfer the data that are recorded for various Test Input channels.
-
-The <b>DAP_TI_TransferBlock Command</b> initiates the data transfer of a single trace data block of the recorded trace data.
-The command delivers the content of one trace data block in the Trace Data Management system.
-
-<b>DAP_TI_TransferBlock Request:</b>
-\code
- | BYTE | BYTE *******|
- > 0x20 | DataRequest |
- |******|*************|
-\endcode
-
-- \b DataRequest: specifies the requested data from the Trace Data Management system.
-   - <b>bit 0</b>: 1 = deliver one trace data block from any full trace data block (this includes SWO).
-   - <b>bit 1</b>: 1 = deliver one trace data block from SWO channel (even when partially filled).
-   - <b>bit 2</b>: 1 = deliver one trace data block from any partially filled trace data block (this includes SWO).
-   
-<b>DAP_TI_TransferBlock Response:</b> 
-\code
- | BYTE | BYTE ***| SHORT ****| WORD ********|+++++++++++++|
- < 0x20 | Channel | DataParms | TD_TimeStamp | ChannelData |
- |******|*********|///////////|//////////////|+++++++++++++|
-\endcode
-- \b Channel: 
-    - <b>bit 0..3</b>: number of the channel that the data belong to.
-    - <b>bit 4</b>: SWO record indicator: 1 = data belong to SWO data recording.
-    - <b>bit 6</b>: First record indicator: 1 = DataParms and TimeStamp is transferred. 0 = Only ChannelData.
-    - <b>bit 7</b>: No data indicator: 1 = No ChannelData available for this request. 0 = ChannelData are available.
-- \b DataParms: parameters for ChannelData.
-    - <b>bit 0..12</b>: number of data values in \b ChannelData. \ref DAP_TI_TransferBlock Response is repeated until all values are transmitted.
-    - <b>bit 14</b>: 1 = difference value format. 0 = contiguous value format.
-    - <b>bit 15</b>: 1 = Trace Data Management overflow since last \ref DAP_TI_TransferBlock Request. 0 = no overflow.
-- \b TD_TimeStamp: Test Domain Timer value at the read time of data values for ChannelData.
-- \b ChannelData: data values from the recorded Test Input channel.
-
-The <b>ChannelData</b> reply has depending on <b>DataParms bit 14</b> two different formats.  If \b ChannelDiff in <b>DAP_TI_Capture Request</b> is set
-for the specific channel, the Debug Unit may decide the data format depending on the trace data values.
-
-<b>Contiguous Value Format</b> transmits sequentially all data values stored in the trace data buffer. When <b>DataParms bit 14 = 0 </b> the \b ChannelData has the following format:
-\code
-  |************|************|************|......
-  | TraceValue | TraceValue | TraceValue |
-  |************|************|************|......
-\endcode
-
-The size of \b TraceValue depends on the data size for the channel (see \ref DAP_TI_Info Response, Attributes bit 0..2).  
-\ref DAP_TI_TransferBlock Response is repeated until the number of \b TraceValues specified by <b>DataParms bit 0 .. 12</b> is transmitted.
-
-<b>Difference Value Format</b> transmits data values only when there is a significant difference. When <b>DataParms bit 14 = 1 </b> the \b ChannelData has the following format:
-\code
-  |*************| SHORT *****|*************|......
-  | TraceValue0 | ValueIndex | TraceValueI |
-  |*************|////////////|/////////////|......
-\endcode
-- \b TraceValue0: is the first data value on the trace data buffer
-- \b ValueIndex: information about the next data value in TraceValueI.
-    - <b>bit 0..12</b>: \b index in trace data buffer of next data value with significant difference.
-    - <b>bit 15</b>: 1 = last trace value of trace data buffer send by \ref DAP_TI_TransferBlock Response.
-- \b TraceValueI: is the trace data value in in trace data buffer referenced by \b index.
-
-The size of \b TraceValue0 and \b TraceValueI depends on the data size for the channel (see \ref DAP_TI_Info Response, Attributes bit 0..2).  
-\ref DAP_TI_TransferBlock Response is repeated until \b ValueIndex with <b>bit 15 = 1</b> is transmitted.
-
-\note 
-When all data values in the trace buffer are identical, \b ValueIndex is set to number of data values with bit 15 set to 1.
-
-
-
 */
 
 

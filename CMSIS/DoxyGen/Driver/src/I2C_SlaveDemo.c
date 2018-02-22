@@ -16,19 +16,19 @@ int main (void) {
     /* Initialize I2C peripheral */
     i2cDev->Initialize(I2C_DrvEvent);
  
-    /* Power-on SPI peripheral */
+    /* Power-on I2C peripheral */
     i2cDev->PowerControl(ARM_POWER_FULL);
  
-    /* Configure USART bus*/
+    /* Configure I2C bus*/
     i2cDev->Control(ARM_I2C_OWN_ADDRESS, 0x78);
  
     while (1) {
-		/* Receive chuck */
+        /* Receive chunk */
         i2cDev->SlaveReceive(&cnt, 1);
         while ((event & ARM_event_TRANSFER_DONE) == 0);
         event &= ~ARM_event_TRANSFER_DONE;
  
-		/* Transmit chunk back */
+        /* Transmit chunk back */
         i2cDev->SlaveTransmit(&cnt, 1);
         while ((event & ARM_event_TRANSFER_DONE) == 0);
         event &= ~ARM_event_TRANSFER_DONE;

@@ -5,6 +5,7 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "RTE_Components.h"
 #include  CMSIS_device_header
@@ -38,5 +39,9 @@ int main (void)
   
   cmsis_cv();
   
+  #ifdef __MICROLIB
   for(;;) {}
+  #else
+  exit(0);
+  #endif
 }

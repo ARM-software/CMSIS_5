@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
-  <component name="CMSIS:RTOS2:Keil RTX5" brief="RTX5" version="5.2.3"/>    <!-- name and version of the component  -->
+  <component name="CMSIS:RTOS2:Keil RTX5" brief="RTX5" version="5.3.0"/>    <!-- name and version of the component  -->
 
   <typedefs>
     <!-- Attributes structure for thread -->
@@ -411,6 +411,13 @@
       <member name="mpi_message_queue"          type="*osRtxMpInfo_t"       offset="160" info="Message queue control blocks"/>
     </typedef>
 
+    <!-- OS Runtime Object Memory Usage structure -->
+    <typedef name="osRtxObjectMemUsage_t" info="OS Runtime Object Memory Usage" size="12">
+      <member name="cnt_alloc" type="uint32_t" offset="0" info="Counter for alloc"/>
+      <member name="cnt_free"  type="uint32_t" offset="4" info="Counter for free"/>
+      <member name="max_used"  type="uint32_t" offset="8" info="Maximum used"/>
+    </typedef>
+
     <!-- OS Configuration structure -->
     <typedef name="osRtxConfig_t" const="1" info="OS Configuration Structure" size="104">
       <member name="flags"                 type="uint32_t" offset="0" info="OS configuration flags"/>
@@ -450,6 +457,8 @@
     <typedef name="mem_head_t" info="Memory Pool Header Structure" size="8">
       <member name="size" type="uint32_t" offset="0" info="Memory pool size"/>
       <member name="used" type="uint32_t" offset="4" info="Size of used memory"/>
+
+      <var name="max_used" type="uint32_t" info="Maximum size of used memory" />
     </typedef>
 
     <!-- Memory Block Header + Object Header -->
@@ -585,12 +594,15 @@
 
   <objects>
     <object name="RTX RTOS Object">
-      <var name="i"    type="uint32_t" value="0" />
-      <var name="j"    type="uint32_t" value="0" />
-      <var name="k"    type="uint32_t" value="0" />
-      <var name="n"    type="uint32_t" value="0" />
-      <var name="sp"   type="uint32_t" value="0" />
-      <var name="addr" type="uint32_t" value="0" />
+      <var name="i"      type="uint32_t" value="0" />
+      <var name="j"      type="uint32_t" value="0" />
+      <var name="k"      type="uint32_t" value="0" />
+      <var name="n"      type="uint32_t" value="0" />
+      <var name="sp"     type="uint32_t" value="0" />
+      <var name="addr"   type="uint32_t" value="0" />
+      <var name="ipsr"   type="uint32_t" value="0" />
+      <var name="psp"    type="uint32_t" value="0" />
+      <var name="v8m_ns" type="uint32_t" value="0" />
 
       <var name="TCB_Rd" type="uint32_t" value="0" />
       <var name="CCB_Rd" type="uint32_t" value="0" />
@@ -608,12 +620,26 @@
       <var name="ECB_En" type="uint8_t" value="0" />
       <var name="PCB_En" type="uint8_t" value="0" />
       <var name="QCB_En" type="uint8_t" value="0" />
+      <var name="MUC_En" type="uint8_t" value="0" />
 
       <var name="StaticMp_En" type="uint8_t" value="0" />
+
+      <var name="MUC_Thread_En"     type="uint8_t" value="0" />
+      <var name="MUC_Timer_En"      type="uint8_t" value="0" />
+      <var name="MUC_EventFlags_En" type="uint8_t" value="0" />
+      <var name="MUC_Mutex_En"      type="uint8_t" value="0" />
+      <var name="MUC_Semaphore_En"  type="uint8_t" value="0" />
+      <var name="MUC_MemPool_En"    type="uint8_t" value="0" />
+      <var name="MUC_MsgQueue_En"   type="uint8_t" value="0" />
 
       <var name="V_Major" type="uint32_t" value="0"/>
       <var name="V_Minor" type="uint32_t" value="0"/>
       <var name="V_Patch" type="uint32_t" value="0"/>
+
+      <!-- Check TrustZone symbol existence -->
+      <calc>
+        v8m_ns = __Symbol_exists("TZ_InitContextSystem_S");
+      </calc>
 
       <!-- Read main OS information and configuration structures -->
       <readlist name="os_Info"   type="osRtxInfo_t"   symbol="osRtxInfo"   count="1" init="1"/>
@@ -622,7 +648,7 @@
       <calc cond="((os_Info.version / 10000000) == 5) &amp;&amp; (os_Info.kernel_state &gt; 0) &amp;&amp; (os_Info.kernel_state &lt; 5)">
         RTX_En = 1;
       </calc>
-      
+
       <calc cond="RTX_En">
         V_Major =  os_Info.version / 10000000;
         V_Minor = (os_Info.version / 10000) % 1000;
@@ -713,36 +739,57 @@
       <readlist name="mp_mqueue" cond="RTX_En &amp;&amp; (QCB_Rd == 0) &amp;&amp; os_Info.mpi_message_queue" type="osRtxMpInfo_t"       offset="os_Info.mpi_message_queue" count="1" init="1"/>
       <readlist name="QCB"       cond="RTX_En &amp;&amp; (QCB_Rd == 0) &amp;&amp; os_Info.mpi_message_queue" type="osRtxMessageQueue_t" offset="mp_mqueue.block_base"      count="mp_mqueue.max_blocks" />
 
-      <!-- Read common memory pool block info (MEM) -->
-      <readlist name="mem_head" cond="RTX_En &amp;&amp; os_Info.mem_common" type="mem_head_t"  offset="os_Info.mem_common" count="1"/>
-      <readlist name="mem_bl"   cond="RTX_En &amp;&amp; os_Info.mem_common" type="mem_block_t" offset="os_Info.mem_common + 8" next="next"/>
+      <!-- Read stack memory header and block list (MEM) -->
+      <readlist name="mem_head_stack" cond="RTX_En &amp;&amp; os_Config.mem_stack_addr" type="mem_head_t"  offset="os_Config.mem_stack_addr" count="1"/>
+      <readlist name="mem_list_stack" cond="RTX_En &amp;&amp; os_Config.mem_stack_addr" type="mem_block_t" offset="os_Config.mem_stack_addr + 8" next="next"/>
 
-      <list cond="mem_bl._count > 1" name="i" start="0" limit="mem_bl._count-1">
+      <calc cond="RTX_En &amp;&amp; os_Config.mem_stack_addr"> mem_head_stack.max_used = mem_list_stack[mem_list_stack._count-1].len; </calc>
+
+      <!-- Read memory pool data memory header and block list (MEM) -->
+      <readlist name="mem_head_mp_data" cond="RTX_En &amp;&amp; os_Config.mem_mp_data_addr" type="mem_head_t"  offset="os_Config.mem_mp_data_addr" count="1"/>
+      <readlist name="mem_list_mp_data" cond="RTX_En &amp;&amp; os_Config.mem_mp_data_addr" type="mem_block_t" offset="os_Config.mem_mp_data_addr + 8" next="next"/>
+
+      <calc cond="RTX_En &amp;&amp; os_Config.mem_mp_data_addr"> mem_head_mp_data.max_used = mem_list_mp_data[mem_list_mp_data._count-1].len; </calc>
+
+      <!-- Read message queue data memory header and block list (MEM) -->
+      <readlist name="mem_head_mq_data" cond="RTX_En &amp;&amp; os_Config.mem_mq_data_addr" type="mem_head_t"  offset="os_Config.mem_mq_data_addr" count="1"/>
+      <readlist name="mem_list_mq_data" cond="RTX_En &amp;&amp; os_Config.mem_mq_data_addr" type="mem_block_t" offset="os_Config.mem_mq_data_addr + 8" next="next"/>
+
+      <calc cond="RTX_En &amp;&amp; os_Config.mem_mq_data_addr"> mem_head_mq_data.max_used = mem_list_mq_data[mem_list_mq_data._count-1].len; </calc>
+
+      <!-- Read common memory header and block list (MEM) -->
+      <readlist name="mem_head_com" cond="RTX_En &amp;&amp; os_Config.mem_common_addr" type="mem_head_t"  offset="os_Config.mem_common_addr" count="1"/>
+      <readlist name="mem_list_com" cond="RTX_En &amp;&amp; os_Config.mem_common_addr" type="mem_block_t" offset="os_Config.mem_common_addr + 8" next="next"/>
+
+      <calc cond="RTX_En &amp;&amp; os_Config.mem_common_addr"> mem_head_com.max_used = mem_list_com[mem_list_com._count-1].len; </calc>
+
+      <!-- Extract control blocks located in the common memory -->
+      <list cond="mem_list_com._count > 1" name="i" start="0" limit="mem_list_com._count-1">
         <calc>
-          addr  = mem_bl[i]._addr;
+          addr  = mem_list_com[i]._addr;
           addr += 8;
         </calc>
 
         <!-- Read Thread Control Block -->
-        <readlist cond="(mem_bl[i].len &amp; 1) &amp;&amp; (mem_bl[i].id == 1)" name="TCB" type="osRtxThread_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 1)" name="TCB" type="osRtxThread_t" offset="addr" count="1" />
 
         <!-- Read Timer Control Block -->
-        <readlist cond="(mem_bl[i].len &amp; 1) &amp;&amp; (mem_bl[i].id == 2)" name="CCB" type="osRtxTimer_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 2)" name="CCB" type="osRtxTimer_t" offset="addr" count="1" />
 
         <!-- Read EventFlags Control Block -->
-        <readlist cond="(mem_bl[i].len &amp; 1) &amp;&amp; (mem_bl[i].id == 3)" name="ECB" type="osRtxEventFlags_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 3)" name="ECB" type="osRtxEventFlags_t" offset="addr" count="1" />
 
         <!-- Read Mutex Control Block -->
-        <readlist cond="(mem_bl[i].len &amp; 1) &amp;&amp; (mem_bl[i].id == 4)" name="MCB" type="osRtxMutex_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 4)" name="MCB" type="osRtxMutex_t" offset="addr" count="1" />
 
         <!-- Read Semaphore Control Block -->
-        <readlist cond="(mem_bl[i].len &amp; 1) &amp;&amp; (mem_bl[i].id == 5)" name="SCB" type="osRtxSemaphore_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 5)" name="SCB" type="osRtxSemaphore_t" offset="addr" count="1" />
 
         <!-- Read MemoryPool Control Block -->
-        <readlist cond="(mem_bl[i].len &amp; 1) &amp;&amp; (mem_bl[i].id == 6)" name="PCB" type="osRtxMemoryPool_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 6)" name="PCB" type="osRtxMemoryPool_t" offset="addr" count="1" />
 
         <!-- Read MessageQueue Control Block -->
-        <readlist cond="(mem_bl[i].len &amp; 1) &amp;&amp; (mem_bl[i].id == 8)" name="QCB" type="osRtxMessageQueue_t" offset="addr" count="1" />
+        <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 8)" name="QCB" type="osRtxMessageQueue_t" offset="addr" count="1" />
       </list>
 
       <!-- Read thread wait list -->
@@ -755,15 +802,23 @@
         </calc>
 
         <!-- Stack pointer for running thread -->
-        <calc cond="TCB[i].state == 2">
-          sp = __GetRegVal ("PSP");
+        <calc cond="(TCB[i].state == 2) &amp;&amp; (__Running == 0)">
+          ipsr = __GetRegVal("XPSR") &amp; 0x01FF;
+          psp  = (v8m_ns == 0) ? (__GetRegVal("PSP")) : (__GetRegVal("PSP_NS"));
+          psp  = (psp == 0) ? (TCB[i].sp) : (psp);
+
+          sp = ((ipsr != 0) &amp;&amp; (ipsr &lt; 16)) ? (TCB[i].sp) : (psp);
+        </calc>
+
+        <calc cond="(TCB[i].state == 2) &amp;&amp; (__Running == 1)">
+          sp = TCB[i].sp;
         </calc>
 
         <!-- Stack pointer for waiting thread -->
         <calc cond="TCB[i].state != 2">
           sp = TCB[i].sp;
         </calc>
-        
+
         <!-- Save current stack pointer -->
         <calc>
           TCB[i].stack_cur = sp;
@@ -1067,6 +1122,28 @@
         </calc>
       </list>
 
+      <!-- Read Object Memory Usage Counters (MUC) -->
+      <calc cond="__Symbol_exists (&quot;osRtxThreadMemUsage&quot;)">       MUC_Thread_En     = 1; </calc>
+      <calc cond="__Symbol_exists (&quot;osRtxTimerMemUsage&quot;)">        MUC_Timer_En      = 1; </calc>
+      <calc cond="__Symbol_exists (&quot;osRtxEventFlagsMemUsage&quot;)">   MUC_EventFlags_En = 1; </calc>
+      <calc cond="__Symbol_exists (&quot;osRtxMutexMemUsage&quot;)">        MUC_Mutex_En      = 1; </calc>
+      <calc cond="__Symbol_exists (&quot;osRtxSemaphoreMemUsage&quot;)">    MUC_Semaphore_En  = 1; </calc>
+      <calc cond="__Symbol_exists (&quot;osRtxMemoryPoolMemUsage&quot;)">   MUC_MemPool_En    = 1; </calc>
+      <calc cond="__Symbol_exists (&quot;osRtxMessageQueueMemUsage&quot;)"> MUC_MsgQueue_En   = 1; </calc>
+
+      <calc>
+        MUC_En = MUC_Thread_En | MUC_Timer_En | MUC_EventFlags_En | MUC_Mutex_En | MUC_Semaphore_En | MUC_MemPool_En | MUC_MsgQueue_En;
+      </calc>
+
+      <readlist name="MUC_Thread"     type="osRtxObjectMemUsage_t" symbol="osRtxThreadMemUsage"       count="1" init="1" cond="MUC_Thread_En"/>
+      <readlist name="MUC_Timer"      type="osRtxObjectMemUsage_t" symbol="osRtxTimerMemUsage"        count="1" init="1" cond="MUC_Timer_En"/>
+      <readlist name="MUC_EventFlags" type="osRtxObjectMemUsage_t" symbol="osRtxEventFlagsMemUsage"   count="1" init="1" cond="MUC_EventFlags_En"/>
+      <readlist name="MUC_Mutex"      type="osRtxObjectMemUsage_t" symbol="osRtxMutexMemUsage"        count="1" init="1" cond="MUC_Mutex_En"/>
+      <readlist name="MUC_Semaphore"  type="osRtxObjectMemUsage_t" symbol="osRtxSemaphoreMemUsage"    count="1" init="1" cond="MUC_Semaphore_En"/>
+      <readlist name="MUC_MemPool"    type="osRtxObjectMemUsage_t" symbol="osRtxMemoryPoolMemUsage"   count="1" init="1" cond="MUC_MemPool_En"/>
+      <readlist name="MUC_MsgQueue"   type="osRtxObjectMemUsage_t" symbol="osRtxMessageQueueMemUsage" count="1" init="1" cond="MUC_MsgQueue_En"/>
+
+
       <!-- Determine what to display -->
       <list cond="TCB._count" name="i" start="0" limit="TCB._count">
         <calc>TCB_En += TCB[i].cb_valid; </calc>
@@ -1103,12 +1180,12 @@
           <item property="Kernel State" value="osKernelInactive"         cond="RTX_En == 0"/>
           <item property="Kernel State" value="%E[os_Info.kernel_state]" cond="RTX_En != 0"/>
           <item property="Kernel Tick Count"      value="%d[os_Info.kernel_tick]"     cond="RTX_En != 0"/>
-          <item property="Kernel Tick Frequency"  value="%d[os_Config.tick_freq]"     cond="RTX_En != 0" />          
+          <item property="Kernel Tick Frequency"  value="%d[os_Config.tick_freq]"     cond="RTX_En != 0" />
           <item property="Round Robin"            value="Disabled"                      cond="(os_Config.robin_timeout == 0) &amp;&amp; (RTX_En != 0)" />
           <item property="Round Robin Tick Count" value="%d[os_Info.thread_robin_tick]" cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
           <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]"   cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
-          <item property="Global Dynamic Memory" value="Not used"                                                                                          cond="(os_Config.mem_common_size == 0) &amp;&amp; (RTX_En != 0)"/>
-          <item property="Global Dynamic Memory" value="Base: %x[os_Config.mem_common_addr], Size: %d[os_Config.mem_common_size], Used: %d[mem_head.used]" cond="(os_Config.mem_common_size != 0) &amp;&amp; (RTX_En != 0)"/>
+          <item property="Global Dynamic Memory" value="Not used"                                                                                                               cond="(os_Config.mem_common_size == 0) &amp;&amp; (RTX_En != 0)"/>
+          <item property="Global Dynamic Memory" value="Base: %x[mem_head_com._addr], Size: %d[mem_head_com.size], Used: %d[mem_head_com.used], Max used: %d[mem_head_com.max_used]" cond="(os_Config.mem_common_size != 0) &amp;&amp; (RTX_En != 0)"/>
           <item property="Stack Overrun Check"   value="%t[stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
           <item property="Stack Usage Watermark" value="%t[stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
           <item property="Default Thread Stack Size" value="%d[os_Config.thread_stack_size]" cond="RTX_En != 0"/>
@@ -1119,32 +1196,42 @@
             </list>
           </item>
 
-          <item property="Object specific Memory allocation" cond="StaticMp_En">
+          <item property="Object specific Memory allocation" value="" cond="StaticMp_En">
               <item property="Thread objects" value="Used: %d[cfg_mp_thread.used_blocks], Max: %d[cfg_mp_thread.max_blocks]" cond="os_Config.mpi_thread">
-                <item property="Control blocks" value="Base: %x[cfg_mp_thread.block_base], Size: %d[cfg_mp_thread.block_lim - cfg_mp_thread.block_base]"/>
-                <item property="Default stack"  value="Base: %x[cfg_mp_stack.block_base], Size: %d[cfg_mp_stack.block_lim - cfg_mp_stack.block_base]" cond="os_Config.mpi_stack"/>
-                <item property="User stack"     value="Base: %x[os_Config.mem_stack_addr], Size: %d[os_Config.mem_stack_size]" cond="os_Config.mem_stack_size"/>
+                <item property="Control blocks" value="Base: %x[cfg_mp_thread.block_base], Size: %d[cfg_mp_thread.block_lim - cfg_mp_thread.block_base], Used: %d[cfg_mp_thread.used_blocks * cfg_mp_thread.block_size]"/>
+                <item property="Default stack"  value="Base: %x[cfg_mp_stack.block_base], Size: %d[cfg_mp_stack.block_lim - cfg_mp_stack.block_base], Used: %d[cfg_mp_stack.used_blocks * cfg_mp_stack.block_size]" cond="os_Config.mpi_stack"/>
+                <item property="User stack"     value="Base: %x[mem_head_stack._addr], Size: %d[mem_head_stack.size], Used: %d[mem_head_stack.used], Max used: %d[mem_head_stack.max_used]" cond="os_Config.mem_stack_size"/>
               </item>
               <item property="Timer objects" value="Used: %d[cfg_mp_timer.used_blocks], Max: %d[cfg_mp_timer.max_blocks]" cond="os_Config.mpi_timer">
-                <item property="Control blocks" value="Base: %x[cfg_mp_timer.block_base], Size: %d[cfg_mp_timer.block_lim - cfg_mp_timer.block_base]"/>
+                <item property="Control blocks" value="Base: %x[cfg_mp_timer.block_base], Size: %d[cfg_mp_timer.block_lim - cfg_mp_timer.block_base], Used: %d[cfg_mp_timer.used_blocks * cfg_mp_timer.block_size]"/>
               </item>
               <item property="Event Flags objects" value="Used: %d[cfg_mp_events.used_blocks], Max: %d[cfg_mp_events.max_blocks]" cond="os_Config.mpi_event_flags">
-                <item property="Control blocks" value="Base: %x[cfg_mp_events.block_base], Size: %d[cfg_mp_events.block_lim - cfg_mp_events.block_base]"/>
+                <item property="Control blocks" value="Base: %x[cfg_mp_events.block_base], Size: %d[cfg_mp_events.block_lim - cfg_mp_events.block_base], Used: %d[cfg_mp_events.used_blocks * cfg_mp_events.block_size]"/>
               </item>
               <item property="Mutex objects" value="Used: %d[cfg_mp_mutex.used_blocks], Max: %d[cfg_mp_mutex.max_blocks]" cond="os_Config.mpi_mutex">
-                <item property="Control blocks" value="Base: %x[cfg_mp_mutex.block_base], Size: %d[cfg_mp_mutex.block_lim - cfg_mp_mutex.block_base]"/>
+                <item property="Control blocks" value="Base: %x[cfg_mp_mutex.block_base], Size: %d[cfg_mp_mutex.block_lim - cfg_mp_mutex.block_base], Used: %d[cfg_mp_mutex.used_blocks * cfg_mp_mutex.block_size]"/>
               </item>
               <item property="Semaphore objects" value="Used: %d[cfg_mp_semaphore.used_blocks], Max: %d[cfg_mp_semaphore.max_blocks]" cond="os_Config.mpi_semaphore">
-                <item property="Control blocks" value="Base: %x[cfg_mp_semaphore.block_base], Size: %d[cfg_mp_semaphore.block_lim - cfg_mp_semaphore.block_base]"/>
+                <item property="Control blocks" value="Base: %x[cfg_mp_semaphore.block_base], Size: %d[cfg_mp_semaphore.block_lim - cfg_mp_semaphore.block_base], Used: %d[cfg_mp_semaphore.used_blocks * cfg_mp_semaphore.block_size]"/>
               </item>
               <item property="Memory Pool objects" value="Used: %d[cfg_mp_mpool.used_blocks], Max: %d[cfg_mp_mpool.max_blocks]" cond="os_Config.mpi_memory_pool">
-                <item property="Control blocks" value="Base: %x[cfg_mp_mpool.block_base], Size: %d[cfg_mp_mpool.block_lim - cfg_mp_mpool.block_base]"/>
-                <item property="Data storage" value="Base: %x[os_Config.mem_mp_data_addr], Size: %d[os_Config.mem_mp_data_size]" cond="os_Config.mem_mp_data_size"/>
+                <item property="Control blocks" value="Base: %x[cfg_mp_mpool.block_base], Size: %d[cfg_mp_mpool.block_lim - cfg_mp_mpool.block_base], Used: %d[cfg_mp_mpool.used_blocks * cfg_mp_mpool.block_size]"/>
+                <item property="Data storage" value="Base: %x[mem_head_mp_data._addr], Size: %d[mem_head_mp_data.size], Used: %d[mem_head_mp_data.used], Max used: %d[mem_head_mp_data.max_used]" cond="os_Config.mem_mp_data_size"/>
               </item>
               <item property="Message Queue objects" value="Used: %d[cfg_mp_mqueue.used_blocks], Max: %d[cfg_mp_mqueue.max_blocks]" cond="os_Config.mpi_message_queue">
-                <item property="Control blocks" value="Base: %x[cfg_mp_mqueue.block_base], Size: %d[cfg_mp_mqueue.block_lim - cfg_mp_mqueue.block_base]"/>
-                <item property="Data storage" value="Base: %x[os_Config.mem_mq_data_addr], Size: %d[os_Config.mem_mq_data_size]" cond="os_Config.mem_mq_data_size"/>
+                <item property="Control blocks" value="Base: %x[cfg_mp_mqueue.block_base], Size: %d[cfg_mp_mqueue.block_lim - cfg_mp_mqueue.block_base], Used: %d[cfg_mp_mqueue.used_blocks * cfg_mp_mqueue.block_size]"/>
+                <item property="Data storage" value="Base: %x[mem_head_mq_data._addr], Size: %d[mem_head_mq_data.size], Used: %d[mem_head_mq_data.used], Max used: %d[mem_head_mq_data.max_used]" cond="os_Config.mem_mq_data_size"/>
               </item>
+          </item>
+
+          <item property="Object Memory usage counters" value="" cond="(MUC_En != 0) &amp;&amp; (RTX_En != 0)">
+            <item property="Thread objects"        value="Alloc: %d[MUC_Thread.cnt_alloc], Free: %d[MUC_Thread.cnt_free], Max used: %d[MUC_Thread.max_used]"             cond="MUC_Thread_En"/>
+            <item property="Timer objects"         value="Alloc: %d[MUC_Timer.cnt_alloc], Free: %d[MUC_Timer.cnt_free], Max used: %d[MUC_Timer.max_used]"                cond="MUC_Timer_En"/>
+            <item property="Event Flags objects"   value="Alloc: %d[MUC_EventFlags.cnt_alloc], Free: %d[MUC_EventFlags.cnt_free], Max used: %d[MUC_EventFlags.max_used]" cond="MUC_EventFlags_En"/>
+            <item property="Mutex objects"         value="Alloc: %d[MUC_Mutex.cnt_alloc], Free: %d[MUC_Mutex.cnt_free], Max used: %d[MUC_Mutex.max_used]"                cond="MUC_Mutex_En"/>
+            <item property="Semaphore objects"     value="Alloc: %d[MUC_Semaphore.cnt_alloc], Free: %d[MUC_Semaphore.cnt_free], Max used: %d[MUC_Semaphore.max_used]"    cond="MUC_Semaphore_En"/>
+            <item property="Memory Pool objects"   value="Alloc: %d[MUC_MemPool.cnt_alloc], Free: %d[MUC_MemPool.cnt_free], Max used: %d[MUC_MemPool.max_used]"          cond="MUC_MemPool_En"/>
+            <item property="Message Queue objects" value="Alloc: %d[MUC_MsgQueue.cnt_alloc], Free: %d[MUC_MsgQueue.cnt_free], Max used: %d[MUC_MsgQueue.max_used]"       cond="MUC_MsgQueue_En"/>
           </item>
         </item>
 

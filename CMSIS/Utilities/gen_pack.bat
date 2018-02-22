@@ -68,6 +68,9 @@ XCOPY /Q /S /Y ..\..\CMSIS\DSP\Examples\*.*  %RELEASE_PATH%\CMSIS\DSP_Lib\Exampl
 XCOPY /Q /S /Y ..\..\CMSIS\Lib\ARM\*.lib %RELEASE_PATH%\CMSIS\Lib\ARM\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Lib\GCC\*.a   %RELEASE_PATH%\CMSIS\Lib\GCC\*.*
 
+:: -- NN files 
+XCOPY /Q /S /Y ..\..\CMSIS\NN\*.* %RELEASE_PATH%\CMSIS\NN\*.*
+
 :: -- Pack files 
 XCOPY /Q /S /Y ..\..\CMSIS\Pack\Example\*.*   %RELEASE_PATH%\CMSIS\Pack\Example\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Pack\Tutorials\*.* %RELEASE_PATH%\CMSIS\Pack\Tutorials\*.*
@@ -135,6 +138,10 @@ pushd General
 doxygen general.dxy
 popd
 
+pushd NN
+doxygen nn.dxy
+popd
+
 pushd Pack
 doxygen Pack.dxy
 popd
@@ -165,6 +172,7 @@ copy /Y Doxygen_Templates\search.css ..\Documentation\Pack\html\search\.
 REM copy /Y Doxygen_Templates\search.css ..\Documentation\SVD\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\DSP\html\search\.
 copy /Y Doxygen_Templates\search.css ..\Documentation\DAP\html\search\.
+copy /Y Doxygen_Templates\search.css ..\Documentation\NN\html\search\.
   
 ECHO.
 POPD
@@ -174,7 +182,7 @@ XCOPY /Q /S /Y ..\Documentation\*.* %RELEASE_PATH%\CMSIS\Documentation\*.*
 
 :: -- Remove generated doxygen files
 PUSHD ..\Documentation
-FOR %%A IN (Core, Core_A, DAP, Driver, DSP, General, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
+FOR %%A IN (Core, Core_A, DAP, Driver, DSP, General, NN, Pack, RTOS, RTOS2, SVD, Zone) DO IF EXIST %%A (RMDIR /S /Q %%A)
 POPD
 
 

@@ -2,10 +2,10 @@
  * @file     partition_ARMCM33.h
  * @brief    CMSIS-CORE Initial Setup for Secure / Non-Secure Zones for ARMCM33
  * @version  V5.0.1
- * @date     07. December 2016
+ * @date     10. January 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
