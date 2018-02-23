@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
-  <component name="CMSIS:RTOS2:Keil RTX5" brief="RTX5" version="5.3.0"/>    <!-- name and version of the component  -->
+  <component name="CMSIS:RTOS2:Keil RTX5" brief="shortname" version="5.3.0"/>    <!-- name and version of the component  -->
 
   <typedefs>
     <!-- Attributes structure for thread -->
