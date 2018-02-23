@@ -1605,7 +1605,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">Amiccom:147</td>
     <td>Amiccom</td>
-    <td>http://www.amiccom.co.tw</td>
+    <td>http://www.amiccom.com.tw</td>
   </tr>
   <tr>
     <td class="XML-Token">Analog Devices:1</td>
@@ -1625,7 +1625,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">Atmel:3</td>
     <td>Atmel Corporation (now Microchip)</td>
-    <td>http://www.atmel.com</td>
+    <td>http://www.microchip.com</td>
   </tr>
   <tr>
     <td class="XML-Token">CSR:118</td>
@@ -1665,7 +1665,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">Hilscher:88</td>
     <td>Hilscher Gesellschaft für Systemautomation mbH</td>
-    <td>https://www.hilscher.com</td>
+    <td>http://www.hilscher.com</td>
   </tr>
   <tr>
     <td class="XML-Token">Holtek:106</td>
@@ -1815,7 +1815,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">Toshiba:92</td>
     <td>Toshiba Semiconductor</td>
-    <td>http://www.toshiba-components.com</td>
+    <td>http://toshiba.semicon-storage.com</td>
   </tr>
   <tr>
     <td class="XML-Token">Triad Semiconductor:104</td>
@@ -1840,7 +1840,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">Zilog:89</td>
     <td>Zilog</td>
-    <td>https://zilog.com/</td>
+    <td>http://zilog.com/</td>
   </tr>
 </table>
 
@@ -1891,11 +1891,11 @@ These values can be used in the elements:
   </tr>
   <tr>
     <td class="XML-Token">Cortex-M0</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m0.php" target="_blank">Arm Cortex-M0</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m0" target="_blank">Arm Cortex-M0</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-M0+</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m0plus.php" target="_blank">Arm Cortex-M0+</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m0-plus" target="_blank">Arm Cortex-M0+</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-M1</td>
@@ -1903,103 +1903,103 @@ These values can be used in the elements:
   </tr>
   <tr>
     <td class="XML-Token">Cortex-M3</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m3.php" target="_blank">Arm Cortex-M3</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m3" target="_blank">Arm Cortex-M3</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-M4</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m4-processor.php" target="_blank">Arm Cortex-M4</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m4" target="_blank">Arm Cortex-M4</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-M7</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m7-processor.php" target="_blank">Arm Cortex-M7</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m7" target="_blank">Arm Cortex-M7</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-M23</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" target="_blank">Arm Cortex-M23</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m23" target="_blank">Arm Cortex-M23</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-M33</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" target="_blank">Arm Cortex-M33</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m33" target="_blank">Arm Cortex-M33</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">SC000</td>
-    <td>SecurCore <a href="http://www.arm.com/products/processors/securcore/sc000.php" target="_blank">SC000</a> based on technology of Cortex-M0.</td>
+    <td>SecurCore <a href="http://developer.arm.com/products/processors/cortex-m/sc000-processor" target="_blank">SC000</a> based on technology of Cortex-M0.</td>
   </tr>
   <tr>
     <td class="XML-Token">SC300</td>
-    <td>SecurCore <a href="http://www.arm.com/products/processors/securcore/sc300.php" target="_blank">SC300</a> based on technology of Cortex-M3.</td>
+    <td>SecurCore <a href="http://developer.arm.com/products/processors/cortex-m/sc300-processor" target="_blank">SC300</a> based on technology of Cortex-M3.</td>
   </tr>
   <tr>
     <td class="XML-Token">ARMV8MBL</td>
-    <td>Processor <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank">ArmV8MBL</a> compliant with the Armv8-M Baseline Architecture.</td>
+    <td>Processor <a href="http://developer.arm.com/products/architecture/m-profile" target="_blank">ArmV8MBL</a> compliant with the Armv8-M Baseline Architecture.</td>
   </tr>
   <tr>
     <td class="XML-Token">ARMV8MML</td>
-    <td>Processor <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank">ArmV8MML</a> compliant with the Armv8-M Mainline Architecture.</td>
+    <td>Processor <a href="http://developer.arm.com/products/architecture/m-profile" target="_blank">ArmV8MML</a> compliant with the Armv8-M Mainline Architecture.</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-R4</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r4.php" target="_blank">Arm Cortex-R4</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-r/cortex-r4" target="_blank">Arm Cortex-R4</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-R5</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r5.php" target="_blank">Arm Cortex-R5</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-r/cortex-r5" target="_blank">Arm Cortex-R5</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-R7</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r7.php" target="_blank">Arm Cortex-R7</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-r/cortex-r7" target="_blank">Arm Cortex-R7</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-R8</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r8.php" target="_blank">Arm Cortex-R8</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-r/cortex-r8" target="_blank">Arm Cortex-R8</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A5</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a5.php" target="_blank">Arm Cortex-A5</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a5" target="_blank">Arm Cortex-A5</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A7</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a7.php" target="_blank">Arm Cortex-A7</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a7" target="_blank">Arm Cortex-A7</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A8</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a8.php" target="_blank">Arm Cortex-A8</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a8" target="_blank">Arm Cortex-A8</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A9</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a9.php" target="_blank">Arm Cortex-A9</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a9" target="_blank">Arm Cortex-A9</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A15</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a15.php" target="_blank">Arm Cortex-A15</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a15" target="_blank">Arm Cortex-A15</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A17</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a17.php" target="_blank">Arm Cortex-A17</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a17" target="_blank">Arm Cortex-A17</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A32</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a32.php" target="_blank">Arm Cortex-A32</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a32" target="_blank">Arm Cortex-A32</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A35</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a35.php" target="_blank">Arm Cortex-A35</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a35" target="_blank">Arm Cortex-A35</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A53</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a53.php" target="_blank">Arm Cortex-A53</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a53" target="_blank">Arm Cortex-A53</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A57</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a57.php" target="_blank">Arm Cortex-A57</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a57" target="_blank">Arm Cortex-A57</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A72</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a72.php" target="_blank">Arm Cortex-A72</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a72" target="_blank">Arm Cortex-A72</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">Cortex-A73</td>
-    <td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a73.php" target="_blank">Arm Cortex-A73</a> processor based device</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a73" target="_blank">Arm Cortex-A73</a> processor based device</td>
   </tr>
   <tr>
     <td class="XML-Token">*</td>
