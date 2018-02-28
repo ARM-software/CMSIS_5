@@ -8,31 +8,25 @@ Use [Issues](https://github.com/ARM-software/CMSIS_5#issues-and-labels) to provi
 
 A [pre-built documentation](http://www.keil.com/pack/doc/CMSIS_Dev/index.html) is updated from time to time, but may be also generated using the instructions under [Generate CMSIS Pack for Release](https://github.com/ARM-software/CMSIS_5#generate-cmsis-pack-for-release).
 
-## What's Hot
+## Implemented Enhancements
+ - CMSIS-Core-A, RTX5: implementation for Cortex-A5/A7/A9
+ - Support for Armv8-M Architecture (Mainline and Baseline) as well as devices Cortex-M23 and Cortex-M33
  - CMSIS-RTOS2: RTX 5 is now available for IAR, GCC, Arm Compiler 5, Arm Compiler 6
  - CMSIS-RTOS2: FreeRTOS adoption (release) is available https://github.com/ARM-software/CMSIS-FreeRTOS
- - CMSIS-RTOS2: RTX5 available for Cortex-A
- - CMSIS-Core: compiler agnostic features extended to simplify transition on LLVM based front-end
- - CMSIS-Core-A: CMSIS-Core for Cortex-A
  - CMSIS-NN: Bare metal Neural Network function library.
-
-## Implemented Enhancements
- - Support for Armv8-M Architecture (Mainline and Baseline) as well as devices Cortex-M23 and Cortex-M33
-
- - CMSIS-RTOS Version 2 API and RTX reference implementation with several enhancements:
-     - Dynamic object creation, Flag events, C API, additional thread and timer functions
-
- - CMSIS-RTOS API Secure and Non-Secure support, multi-processor support
+ - CMSIS-DAP v2: with WinUSB for faster communication and separate pipe for SWO support
+ - Config Wizard extension: access enum’s for configuration information 
 
 ## Further Planned Enhancements
- - CMSIS-DAP: extended trace support
  - CMSIS-Zone: management of complex system
-     - Improvements for Cortex-A / M hybrid devices (focus on Cortex-M interaction)
- - CMSIS-Pack 
-     - Additions for generic example and project templates
-     - Adoption of IAR Flash Loader technology
+ - CMSIS-Pack:
+   - System Description SDF Format: describe more complex debug topologies than with a Debug Description in a tool agnostic way
+   - Github based workflow: allows to develop software packs using github infra-structure
+   - Flash algorithm via debugger: Some TurstZone enable devices cannot execute RAM. Commands that allow flash programming will be added to Debug Description.
+   - CPDSC project file format: allows project templates that are agnostic of an IDE
+   - Minimize need for IDE specific settings: CMSIS-Pack supports IDE specific parameters. Analyze and minimize 
 
-For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/develop/CMSIS_EW2017.pdf).
+For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/develop/CMSIS_EW2018.pdf).
 
 ## Directory Structure
 
