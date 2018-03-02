@@ -8,6 +8,9 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.3.1-dev1">
+      Active development...
+    </release>
     <release version="5.3.1-dev0">
       Patch release scheduled for after EW18.
     </release>
@@ -2470,7 +2473,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- OS Tick -->
-    <component Cclass="Device" Cgroup="OS Tick" Csub="Private Timer" Capiversion="1.0.1" Cversion="1.0.1" condition="OS Tick PTIM">
+    <component Cclass="Device" Cgroup="OS Tick" Csub="Private Timer" Capiversion="1.0.1" Cversion="1.0.2" condition="OS Tick PTIM">
       <description>OS Tick implementation using Private Timer</description>
       <files>
         <file category="sourceC" name="CMSIS/RTOS2/Source/os_tick_ptim.c"/>
