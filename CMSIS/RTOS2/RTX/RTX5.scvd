@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
-  <component name="CMSIS:RTOS2:Keil RTX5" shortname="RTX5" version="5.3.0"/>    <!-- name and version of the component  -->
+  <component name="CMSIS:RTOS2:Keil RTX5" shortname="RTX5" version="5.3.0"/>    <!-- name and version of the component -->
 
   <typedefs>
     <!-- Attributes structure for thread -->
@@ -1612,7 +1612,7 @@
     <event id="0xF700 + 0x01" level="API"    property="MemoryPoolNew"          value="block_count=%d[val1], block_size=%d[val2], attr=%x[val3]" info="osMemoryPoolNew function was called."/>
     <event id="0xF700 + 0x02" level="Detail" property="MemoryPoolNew"          value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size], mp_mem=%x[val1.mp_mem], mp_size=%d[val1.mp_size]" val1="osMemoryPoolAttr_t" info="Attributes structure for memory pool object."/>
     <event id="0xF700 + 0x03" level="Op"     property="MemoryPoolCreated"      value="mp_id=%x[val1]" info="Memory Pool object was created"/>
-    <event id="0xF700 + 0x04" level="API"    property="MemoryPoolGetName"      value="mp_id=%x[val1], name=%x[val2]" info="osMemoryPoolGetName function was called and object name was retrieved."/>"/>
+    <event id="0xF700 + 0x04" level="API"    property="MemoryPoolGetName"      value="mp_id=%x[val1], name=%x[val2]" info="osMemoryPoolGetName function was called and object name was retrieved."/>
     <event id="0xF700 + 0x05" level="Detail" property="MemoryPoolGetName"      value="name=%t[val1]" info="Memory pool object name as ASCII string."/>
     <event id="0xF700 + 0x06" level="API"    property="MemoryPoolAlloc"        value="mp_id=%x[val1], timeout=%d[val2]" info="osMemoryPoolAlloc function was called."/>
     <event id="0xF700 + 0x07" level="Op"     property="MemoryPoolAllocPending" value="mp_id=%x[val1], timeout=%d[val2]" info="Memory pool allocation is pending."/>
