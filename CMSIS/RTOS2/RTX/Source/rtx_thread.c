@@ -549,13 +549,6 @@ __WEAK void osRtxThreadStackCheck (void) {
 static void osRtxThreadPostProcess (os_thread_t *thread) {
   uint32_t thread_flags;
 
-  // Check thread state
-  if ((thread->state == osRtxThreadInactive) ||
-      (thread->state == osRtxThreadTerminated)) {
-    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
-    return;
-  }
-
   // Check if Thread is waiting for Thread Flags
   if (thread->state == osRtxThreadWaitingThreadFlags) {
     thread_flags = ThreadFlagsCheck(thread, thread->wait_flags, thread->flags_options);

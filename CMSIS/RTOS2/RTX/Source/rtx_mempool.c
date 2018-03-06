@@ -176,11 +176,6 @@ static void osRtxMemoryPoolPostProcess (os_memory_pool_t *mp) {
   void        *block;
   os_thread_t *thread;
 
-  if (mp->state == osRtxObjectInactive) {
-    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
-    return;
-  }
-
   // Check if Thread is waiting to allocate memory
   if (mp->thread_list != NULL) {
     // Allocate memory

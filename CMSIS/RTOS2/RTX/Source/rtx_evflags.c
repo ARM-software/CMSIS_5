@@ -143,11 +143,6 @@ static void osRtxEventFlagsPostProcess (os_event_flags_t *ef) {
   os_thread_t *thread_next;
   uint32_t     event_flags;
 
-  if (ef->state == osRtxObjectInactive) {
-    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
-    return;
-  }
-
   // Check if Threads are waiting for Event Flags
   thread = ef->thread_list;
   while (thread != NULL) {

@@ -110,11 +110,6 @@ static uint32_t SemaphoreTokenIncrement (os_semaphore_t *semaphore) {
 static void osRtxSemaphorePostProcess (os_semaphore_t *semaphore) {
   os_thread_t *thread;
 
-  if (semaphore->state == osRtxObjectInactive) {
-    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
-    return;
-  }
-
   // Check if Thread is waiting for a token
   if (semaphore->thread_list != NULL) {
     // Try to acquire token
