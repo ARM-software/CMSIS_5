@@ -67,6 +67,7 @@ XCOPY /Q /S /Y ..\..\CMSIS\DSP\Examples\*.*  %RELEASE_PATH%\CMSIS\DSP_Lib\Exampl
 :: -- DSP libraries
 XCOPY /Q /S /Y ..\..\CMSIS\Lib\ARM\*.lib %RELEASE_PATH%\CMSIS\Lib\ARM\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Lib\GCC\*.a   %RELEASE_PATH%\CMSIS\Lib\GCC\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Lib\IAR\*.a   %RELEASE_PATH%\CMSIS\Lib\IAR\*.*
 
 :: -- NN files 
 XCOPY /Q /S /Y ..\..\CMSIS\NN\*.* %RELEASE_PATH%\CMSIS\NN\*.*
