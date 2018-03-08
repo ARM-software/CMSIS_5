@@ -1996,7 +1996,7 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="CMSIS DSP">
       <description>Components required for DSP</description>
       <require condition="ARMv6_7_8-M Device"/>
-      <require condition="ARMCC GCC"/>
+      <require condition="ARMCC GCC IAR"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
     
@@ -2548,6 +2548,37 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="ARMv8MML_DSP_SP_LE_GCC"         name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP_Lib/Source/GCC"/>
         <!--file category="library" condition="ARMv8MML_DP_NOFPU_LE_GCC"       name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP_Lib/Source/GCC"/-->
         <!--file category="library" condition="ARMv8MML_DSP_DP_LE_GCC"         name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfdp_math.a" src="CMSIS/DSP_Lib/Source/GCC"/-->
+
+	<!-- IAR -->
+        <file category="library" condition="CM0_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM0l_math.a"     src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM0_BE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM0b_math.a"     src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM3_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM3l_math.a"     src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM3_BE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM3b_math.a"     src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM4_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM4l_math.a"     src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM4_BE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM4b_math.a"     src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM4_FP_LE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM4lf_math.a"    src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM4_FP_BE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM4bf_math.a"    src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM7_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM7l_math.a"     src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM7_BE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM7b_math.a"     src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM7_DP_LE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM7lf_math.a"    src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM7_DP_BE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM7bf_math.a"    src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM7_SP_LE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM7ls_math.a"    src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM7_SP_BE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM7bs_math.a"    src="CMSIS/DSP_Lib/Source/IAR"/>
+
+        <file category="library" condition="CM23_LE_IAR"              name="CMSIS/Lib/IAR/iar_ARMv8MBLl_math.a"     src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM33_LE_IAR"              name="CMSIS/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM33_DSP_SP_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM33_FP_LE_IAR"           name="CMSIS/Lib/IAR/iar_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM33_DSP_NOFPU_LE_IAR"    name="CMSIS/Lib/IAR/iar_ARMv8MMLld_math.a"    src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="CM33_DSP_SP_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLldfsp_math.a" src="CMSIS/DSP_Lib/Source/IAR"/>
+        <!--file category="library" condition="CM33_DSP_DP_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLldfdp_math.a" src="CMSIS/DSP_Lib/Source/IAR"/-->
+        <file category="library" condition="ARMv8MBL_LE_IAR"          name="CMSIS/Lib/IAR/iar_ARMv8MBLl_math.a"     src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="ARMv8MML_LE_IAR"          name="CMSIS/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="ARMv8MML_DSP_SP_LE_IAR"   name="CMSIS/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="ARMv8MML_FP_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="ARMv8MML_DSP_NOFPU_LE_IAR" name="CMSIS/Lib/IAR/iar_ARMv8MMLld_math.a"    src="CMSIS/DSP_Lib/Source/IAR"/>
+        <file category="library" condition="ARMv8MML_DSP_SP_LE_IAR"   name="CMSIS/Lib/IAR/iar_ARMv8MMLldfsp_math.a" src="CMSIS/DSP_Lib/Source/IAR"/>
+        <!--file category="library" condition="ARMv8MML_DSP_DP_LE_IAR"   name="CMSIS/Lib/IAR/iar_ARMv8MMLldfdp_math.a" src="CMSIS/DSP_Lib/Source/IAR"/-->
 
       </files>
     </component>
