@@ -1451,11 +1451,19 @@ stated above.
 
 /* ========================================================================================================================== */
 /** 
-\page CodingRules Coding Rules 
-\todo explain:
-  - prefix  osXxxx, os_xxx, osRtx
+\page CodingRules Coding Rules
 
+CMSIS components use <a href="../../General/html/index.html#CodingRules"><b>general coding rules</b></a> across the various components.
 
+The CMSIS-RTOS2 API is using the following <b>Namespace</b> prefixes:
+  - <b>os</b> for all definitions and function names.
+  - <b>os</b> with postfix <b>_t</b> for all typedefs.
+  
+The CMSIS-RTOS2 RTX v5 implementation is using the following <b>Namespace</b> prefixes for public symbol definitions:
+  - <b>osRtx</b> for all general definitions and function names that relate to the RTX kernel.
+  - <b>osRtx</b> with postfix <b>_t</b> for all typedefs.
+  - <b>OS_Tick_</b> for interface functions to the hardware system tick timer.
+  - <b>EvrRtx</b> for event function annotations that interface to the Event Recorder.
 */
 
 /* ========================================================================================================================== */
