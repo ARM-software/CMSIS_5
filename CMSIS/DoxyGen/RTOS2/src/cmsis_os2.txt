@@ -165,6 +165,7 @@ File/Folder                  | Content
       <td>
        - Fixed optimization issue when using GCC optimization level 3.
        - Minor code optimizations (removed unnecessary checks).
+       - Disabled OS Tick interrupt during post processing in IRQ handler for Cortex-A devices.
       </td>
     </tr>
     <tr>
