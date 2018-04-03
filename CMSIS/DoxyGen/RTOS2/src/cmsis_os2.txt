@@ -2,7 +2,7 @@
 /**
 \mainpage
 
-The <b>CMSIS-RTOS API Version 2 (CMSIS-RTOS2)</b> is a generic RTOS interface for Arm&reg; Cortex&reg;-M processor-based
+The <b>CMSIS-RTOS v2 (CMSIS-RTOS2)</b> provides generic RTOS interfaces for Arm&reg; Cortex&reg; processor-based
 devices. It provides a standardized API for software components that require RTOS functionality and gives therefore serious
 benefits to the users and the software industry:
  - CMSIS-RTOS2 provides basic features that are required in many applications.
@@ -37,16 +37,16 @@ As a consequence of these requirements the CMSIS-RTOS2 has the following fundame
  - The C function \c main is no longer started as a thread (this was an optional feature in CMSIS-RTOS v1).
  - Functions that return osEvent have been replaced.
 
-CMSIS-RTOS2 provides an translation layer for the <a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API v1</a>. It
-is possible to intermix CMSIS-RTOS API Version 2 and CMSIS-RTOS API Version 1 within the same application. Over time, you may
-migrate to the new API as explained in \ref os2Migration.
+CMSIS-RTOS2 provides an translation layer to <a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS v1</a>. It
+is possible to intermix \ref rtos_api2 and <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a>
+within the same application. Over time, you may migrate to the new API as explained in \ref os2Migration.
 
 CMSIS-RTOS2 is not POSIX compliant, but has provisions to enable a C++11/C++14 interface.
 
 The following sections provide further details about CMSIS-RTOS2 and the RTX reference implementation.
- - \subpage rtos_revisionHistory documents changes made in each version for CMSIS-RTOS API v2 and RTX v5.
- - \subpage genRTOS2IF provides an overview about the CMSIS-RTOS API v2.
- - \subpage functionOverview lists the CMSIS-RTOS2 API functions and the header file cmsis_os2.h.
+ - \subpage rtos_revisionHistory documents changes made in each version for CMSIS-RTOS v2 and RTX v5.
+ - \subpage genRTOS2IF provides an overview about the APIs available with CMSIS-RTOS v2.
+ - \subpage functionOverview lists the CMSIS-RTOS2 API functions and the header file %cmsis_os2.h.
  - \subpage rtosValidation describes the validation suite that is publicly available.
  - \subpage os2Migration shows how to use CMSIS-RTOS2 in existing projects and lists function differences to CMSIS-RTOS v1.
  - \subpage rtx5_impl provides general information about the operation and usage of RTX v5.
@@ -54,15 +54,17 @@ The following sections provide further details about CMSIS-RTOS2 and the RTX ref
 <hr>
 
 CMSIS-RTOS2 in ARM::CMSIS Pack
------------------------------
+------------------------------
+\anchor directory
 
 The following files relevant to CMSIS-RTOS2 are present in the <b>ARM::CMSIS</b> Pack directories:
-File/Folder                  | Content                                                                
------------------------------|------------------------------------------------------------------------
+Directory                    | Content                                                                
+:----------------------------|:-----------------------------------------------------------------------
 \b CMSIS/Documentation/RTOS2 | This documentation                                                     
 \b CMSIS/RTOS2/Include       | \ref cmsis_os2_h                                                 
-\b CMSIS/RTOS2/RTX           | CMSIS-RTOS v2 reference implementation based on RTX version 5
-\b CMSIS/RTOS2/Template      | Compatibility layer to CMSIS-RTOS v1
+\b CMSIS/RTOS2/RTX           | CMSIS-RTOS2 reference implementation based on RTX version 5
+\b CMSIS/RTOS2/Source        | Generic <b>OS tick</b> implementations for various processors based on \ref rtos_os_tick_api
+\b CMSIS/RTOS2/Template      | Compatibility layer to <a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS v1</a>
 */
 
 
@@ -282,16 +284,26 @@ different and optimized in various aspects towards the Cortex-M processors. Opti
  - Round-robin context switching.
  - Deadlock avoidance, for example with priority inversion.
  - Zero interrupt latency by using Armv7-M instructions LDREX and STREX.
- 
+
+\section cmsis_os2_h cmsis_os2.h header file
+
+The file \b %cmsis_os2.h is a standard header file that interfaces to every CMSIS-RTOS2 compliant real-time operating
+systems (RTOS). Each implementation is provided the same \b cmsis_os2.h which defines the interface to the \ref rtos_api2.
+
+Using the \b cmsis_os2.h along with dynamic object allocation allows to create source code or libraries that require no
+modifications when using on a different CMSIS-RTOS2 implementation.
+
 \section usingOS2 Using a CMSIS-RTOS2 Implementation
 
-A CMSIS-RTOS2 implementation is typically provided as a library. To add the RTOS functionality to an existing CMSIS-based
-application, the RTOS library (and typically one or more configuration files) needs to be added. There is a single new header
-file %cmsis_os2.h available. This is the only header file required for a completely portable application. In such a case,
-user provided memory for control blocks, objects data and thread stack cannot be used. Alternatively, you can include an
-implementation specific header file (for example rtx_os.h) which provides definitions also for resource allocation (such as
-size of control blocks, required memory for object data and thread stack). This is optional and implies that the application
-code is not completely portable.
+A CMSIS-RTOS2 component may be provided as library or source code (the picture below shows a library). 
+A CMSIS-based application is extended with RTOS functionality by adding a CMSIS-RTOS2 component (and typically some configuration files).
+The \ref cmsis_os2_h gives access to RTOS API functions and is the only interface header required when dynamic object allocation is used.
+This enables portable application that works with every RTOS kernel event without re-compilation of the source code when the kernel is 
+changed.
+
+Static object allocation requires access to RTOS object control block definitions. An implementation specific header file (<i>rtos</i>.h in 
+the picture below) provides access to such definitions. The section For RTX v5 these definitions are provided in the header file %rtx_os.h that contains this definitions for RTX v5.
+
 
 \image html "CMSIS_RTOS_Files.png" "CMSIS-RTOS File Structure"
 
@@ -335,17 +347,6 @@ int main (void) {
 \endcode
 
 
-\section cmsis_os2_h cmsis_os2.h header file
-
-The file \b cmsis_os2.h is a standard header file that interfaces to every CMSIS-RTOS2 compliant real-time operating
-systems (RTOS). Each implementation is provided the same \b cmsis_os2.h which defines the interface to the \ref rtos_api2.
-
-Using the \b cmsis_os2.h along with dynamic object allocation allows to create source code or libraries that require no
-modifications when using on a different CMSIS-RTOS2 implementation.
-
-<b>Header file %cmsis_os2.h</b>
-
-\include cmsis_os2.h
 */
 
 
@@ -1225,8 +1226,69 @@ a reference for building the RTX5 libraries using a tool-chain of your choice.
 */
 
 
+
 /* ========================================================================================================================== */
 /** 
+\page technicalData5 Technical Data
+
+The following section contains technical information about RTX5.
+
+ - \ref technicalData_Requirements: lists the resource requirements of the RTX5 kernel along with hardware dependencies
+ - \ref dirstructfiles5: 
+ - \ref technicalData_Toolchains: details about the compiler support which includes ArmCC (MDK, DS-5), IAR EW-ARM, and GCC.
+ 
+
+
+ 
+
+\page technicalData Hardware and Software requirements
+
+\section technicalData_ControlBlockSizes Control Block Sizes
+
+Keil RTX5 specific control block definitions (including sizes) as well as memory pool and message queue memory requirements
+are defined in the RTX5 header file:
+
+\code
+/// Control Block sizes
+#define osRtxThreadCbSize        sizeof(osRtxThread_t)
+#define osRtxTimerCbSize         sizeof(osRtxTimer_t)
+#define osRtxEventFlagsCbSize    sizeof(osRtxEventFlags_t)
+#define osRtxMutexCbSize         sizeof(osRtxMutex_t)
+#define osRtxSemaphoreCbSize     sizeof(osRtxSemaphore_t)
+#define osRtxMemoryPoolCbSize    sizeof(osRtxMemoryPool_t)
+#define osRtxMessageQueueCbSize  sizeof(osRtxMessageQueue_t)
+ 
+/// Memory size in bytes for Memory Pool storage.
+/// \param         block_count   maximum number of memory blocks in memory pool.
+/// \param         block_size    memory block size in bytes.
+#define osRtxMemoryPoolMemSize(block_count, block_size) \
+  (4*(block_count)*(((block_size)+3)/4))
+ 
+/// Memory size in bytes for Message Queue storage.
+/// \param         msg_count     maximum number of messages in queue.
+/// \param         msg_size      maximum message size in bytes.
+#define osRtxMessageQueueMemSize(msg_count, msg_size) \
+  (4*(msg_count)*(3+(((msg_size)+3)/4)))
+\endcode
+
+If you are using a \ref GlobalMemoryPool to allocate memory for the RTOS objects, you need to know the size that is required
+for each object in case of errors. Currently, the control block sizes are as follows (subject to change without
+notification):
+
+Type          | Control block size in bytes |
+--------------|:---------------------------:|
+Thread        | 68                          |
+Timer         | 32                          |
+Event Flags   | 16                          |
+Mutex         | 28                          |
+Semaphore     | 16                          |
+Memory Pool   | 36                          |
+Message Queue | 52                          |
+
+The size of the memory that is required for memory pool and message queue data storage can be determined from the macros
+stated above.
+
+
 \page dirstructfiles5 Directory Structure and File Overview
 
 The following section provides an overview of the directory structure and the files that are relevant for the user's for
@@ -1244,11 +1306,15 @@ The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provi
     </tr>
     <tr>
       <td>Include</td>
-      <td>The include file for CMSIS-RTOS API v2. cmsis_os2.h is the central include file for user applications.</td>
+      <td>Header files: \b %cmsis_os2.h for \ref rtos_api2 and \b %os_tick.h for \ref rtos_os_tick_api.</td>
+    </tr>
+    <tr>
+      <td>Source</td>
+      <td>Generic <b>OS tick</b> implementations for various processors based on \ref rtos_os_tick_api.</td>
     </tr>
     <tr>
       <td>Template</td>
-      <td>CMSIS-RTOS API template source and header file.</td>
+      <td><a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API v1</a> template source and header file.</td>
     </tr>
     <tr>
       <td>RTX</td>
@@ -1367,19 +1433,15 @@ processor variants in every configuration, including Arm Cortex-M23 and Cortex-M
       <td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline, non-secure.</td>
     </tr>
 </table>
-*/
 
-/* ========================================================================================================================== */
-/** 
-\page technicalData5 Technical Data
-
-\section technicalData_Toolchains Supported Toolchains
+ 
+\page technicalData_Toolchains Supported Toolchains
 
 Keil RTX5 is developed and tested using the common toolchains and development environments.
 
 \subsection technicalData_Toolchain_ARM Arm Compiler (Arm/Keil MDK, uVision5)
 
-Major parts of RTX5 are developed and optimized using Arm Compiler and Arm/Keil MDK.
+RTX5 is initially developed and optimized using Arm Compiler and Arm/Keil MDK.
 The current release is tested with the following versions:
 <ul>
  <li>Arm Compiler 5.06 Update 6</li>
@@ -1390,7 +1452,7 @@ The current release is tested with the following versions:
 
 \subsection technicalData_Toolchain_IAR IAR Embedded Workbench
 
-RTX5 has been ported to fully support IAR Embedded Workbench. The following releases are known to work:
+RTX5 has been ported to the IAR Embedded Workbench. The following releases are known to work:
 <ul>
  <li>IAR Embedded Workbench 7.7 (<a href="https://github.com/ARM-software/CMSIS_5/issues/201">community report</a>)</li>
  <li>IAR Embedded Workbench 7.80.4</li>
@@ -1405,50 +1467,6 @@ Active development is currently tested with:
  <li>GNU Tools for Arm Embedded 6.3.1 20170620</li>
 </ul>
 
-\section technicalData5_ControlBlockSizes Control Block Sizes
-
-Keil RTX5 specific control block definitions (including sizes) as well as memory pool and message queue memory requirements
-are defined in the RTX5 header file:
-
-\code
-/// Control Block sizes
-#define osRtxThreadCbSize        sizeof(osRtxThread_t)
-#define osRtxTimerCbSize         sizeof(osRtxTimer_t)
-#define osRtxEventFlagsCbSize    sizeof(osRtxEventFlags_t)
-#define osRtxMutexCbSize         sizeof(osRtxMutex_t)
-#define osRtxSemaphoreCbSize     sizeof(osRtxSemaphore_t)
-#define osRtxMemoryPoolCbSize    sizeof(osRtxMemoryPool_t)
-#define osRtxMessageQueueCbSize  sizeof(osRtxMessageQueue_t)
- 
-/// Memory size in bytes for Memory Pool storage.
-/// \param         block_count   maximum number of memory blocks in memory pool.
-/// \param         block_size    memory block size in bytes.
-#define osRtxMemoryPoolMemSize(block_count, block_size) \
-  (4*(block_count)*(((block_size)+3)/4))
- 
-/// Memory size in bytes for Message Queue storage.
-/// \param         msg_count     maximum number of messages in queue.
-/// \param         msg_size      maximum message size in bytes.
-#define osRtxMessageQueueMemSize(msg_count, msg_size) \
-  (4*(msg_count)*(3+(((msg_size)+3)/4)))
-\endcode
-
-If you are using a \ref GlobalMemoryPool to allocate memory for the RTOS objects, you need to know the size that is required
-for each object in case of errors. Currently, the control block sizes are as follows (subject to change without
-notification):
-
-Type          | Control block size in bytes |
---------------|:---------------------------:|
-Thread        | 68                          |
-Timer         | 32                          |
-Event Flags   | 16                          |
-Mutex         | 28                          |
-Semaphore     | 16                          |
-Memory Pool   | 36                          |
-Message Queue | 52                          |
-
-The size of the memory that is required for memory pool and message queue data storage can be determined from the macros
-stated above.
 */
 
 /* ========================================================================================================================== */
@@ -1932,21 +1950,27 @@ Test Result: PASSED
 /**
 \page functionOverview Function Overview
 
-CMSIS-RTOS v2 provides multiple API interfaces:
-  - \subpage rtos_api2 is the new C function API that supports dynamic object creation and Armv8-M (Arm Cortex-M23 and
+CMSIS-RTOS2 provides multiple API interfaces:
+  - \subpage rtos_api2 is the new C function interface that supports dynamic object creation and Armv8-M (Arm Cortex-M23 and
     Cortex-M33).
   - <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a> is a C function API that is backward
     compatible with CMSIS-RTOS v1.
-  - \subpage rtos_apicpp is a C++ class function API.
+  - \subpage rtos_apicpp is a C++ class function API (future extension).
 
 It is possible to intermix the different API variants in the same application and even in the same C/C++ source module.
-However, the functions of the <b>C API Version 1</b> may be deprecated in future versions of CMSIS-RTOS.
+However, the functions of the <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a> may be deprecated in future versions of CMSIS-RTOS.
 
-\section rtos_api2 CMSIS-RTOS2
+CMSIS-RTOS2 defines also a generic system timer interface that works across the supported Arm Cortex processors:
+  - \subpage rtos_os_tick_api is the interface to a kernel system timer.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page rtos_api2 CMSIS-RTOS C API v2
 
 Overview of all CMSIS-RTOS C API v2 functions that are implemented in the \subpage cmsis_os2_h. 
 
-\subsection rtos_api2_basics Common Design Concepts
+\section rtos_api2_basics Common Design Concepts
 
 All RTOS objects share a common design concept. The overall life-cycle of
 an object can be summarized as created -> in use -> destroyed.
@@ -2010,7 +2034,7 @@ Threads can either be `detached` or `joinable`. Detached threads are automatical
 i.e. call to \ref osThreadTerminate or \ref osThreadExit or return from thread function. On the other hand joinable
 threads are kept alive until one explicitly calls \ref osThreadJoin.
 
-\subsection rtos_api2_functions Function Reference
+\section rtos_api2_functions Function Reference
 
  - \ref CMSIS_RTOS_KernelCtrl
    - \ref osKernelGetInfo : \copybrief osKernelGetInfo
@@ -2112,22 +2136,12 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osMessageQueuePut : \copybrief osMessageQueuePut
    - \ref osMessageQueueReset : \copybrief osMessageQueueReset
  
- - \ref CMSIS_RTOS_TickAPI
-   - \ref OS_Tick_Setup : \copybrief OS_Tick_Setup
-   - \ref OS_Tick_Enable : \copybrief OS_Tick_Enable
-   - \ref OS_Tick_Disable : \copybrief OS_Tick_Disable
-   - \ref OS_Tick_AcknowledgeIRQ : \copybrief OS_Tick_AcknowledgeIRQ
-   - \ref OS_Tick_GetIRQn : \copybrief OS_Tick_GetIRQn
-   - \ref OS_Tick_GetClock : \copybrief OS_Tick_GetClock
-   - \ref OS_Tick_GetInterval : \copybrief OS_Tick_GetInterval
-   - \ref OS_Tick_GetCount : \copybrief OS_Tick_GetCount
-   - \ref OS_Tick_GetOverflow : \copybrief OS_Tick_GetOverflow
-
+\todo restructure
  - \ref rtx5_specific
    - \ref osRtxErrorNotify : \copybrief osRtxErrorNotify
    - \ref osRtxIdleThread : \copybrief osRtxIdleThread
 
-The following CMSIS-RTOS2 functions can be called from threads and \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines"
+The following CMSIS-RTOS C API v2 functions can be called from threads and \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines"
 (ISR):
    - \ref osKernelGetInfo, \ref osKernelGetState,
      \ref osKernelGetTickCount, \ref osKernelGetTickFreq, \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
@@ -2148,6 +2162,26 @@ The following CMSIS-RTOS2 functions can be called from threads and \ref CMSIS_RT
 A C++11/C++14 interface is planned for the future.
 */
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page rtos_os_tick_api OS Tick API
+
+The CMSIS OS Tick API may be used by an RTOS implementation to be easily potable across the different Cortex-M and Cortex-A processors.
+It provides a generic interface to a kernel system tick timer and defines the following functions:
+
+ - The Reference for \ref CMSIS_RTOS_TickAPI provides details about these functions:
+   - \ref OS_Tick_Setup : \copybrief OS_Tick_Setup
+   - \ref OS_Tick_Enable : \copybrief OS_Tick_Enable
+   - \ref OS_Tick_Disable : \copybrief OS_Tick_Disable
+   - \ref OS_Tick_AcknowledgeIRQ : \copybrief OS_Tick_AcknowledgeIRQ
+   - \ref OS_Tick_GetIRQn : \copybrief OS_Tick_GetIRQn
+   - \ref OS_Tick_GetClock : \copybrief OS_Tick_GetClock
+   - \ref OS_Tick_GetInterval : \copybrief OS_Tick_GetInterval
+   - \ref OS_Tick_GetCount : \copybrief OS_Tick_GetCount
+   - \ref OS_Tick_GetOverflow : \copybrief OS_Tick_GetOverflow
+
+*/
+
 
 /* ======================================================================================================================== */
 // Group creation for Reference 
@@ -2157,7 +2191,7 @@ A C++11/C++14 interface is planned for the future.
 \details 
 The CMSIS-RTOS is a generic API layer that interfaces to an existing RTOS kernel.
 
-CMSIS-RTOS API v2 provides an translation layer for the
+CMSIS-RTOS2 provides an translation layer for the
 <a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API v1</a> that simplifies migration.
 
 Refer to the <a class="el" href="../../RTOS/html/modules.html">Reference</a> guide of the CMSIS-RTOS API v1 for details.
@@ -2165,8 +2199,8 @@ Refer to the <a class="el" href="../../RTOS/html/modules.html">Reference</a> gui
 
 // Group creation for Reference 
 /** 
-\addtogroup CMSIS_RTOS CMSIS-RTOS2 API
-\brief Describes the C function interface of CMSIS-RTOS API v2. 
+\addtogroup CMSIS_RTOS CMSIS-RTOS API v2
+\brief C interface of \ref rtos_api2 defined in cmsis_os2.h
 \details 
 The CMSIS-RTOS2 is a generic API layer that interfaces to an RTOS kernel.
 
@@ -2258,327 +2292,16 @@ implementation used one needs to include the specific header file, `rtx_os.h` in
 
 */
 
+// Group creation for Reference 
 /** 
-\addtogroup rtx5_specific RTX5 Specific API
-\brief This section describes CMSIS-RTOS RTX5 specifics.
-\details
-The RTX5 kernel can be customized for different application requirements:
-- If you are depending on the \ref lowPower "lowest power consumption" possible, you need to adapt the function
-  \ref osRtxIdleThread to send the system to sleep mode as often as possible. In addition, use the
-  \ref TickLess "tick-less low power" functions \ref osKernelSuspend and \ref osKernelResume to suspend the scheduler and to
-  stop the SysTick timer.
-- If you try to find a \b runtime \b error, use the function \ref osRtxErrorNotify to debug the error.
+\addtogroup CMSIS_RTOS CMSIS-RTOS API v2
+\brief C interface of \ref rtos_api2 defined in cmsis_os2.h
+\details 
+The CMSIS-RTOS2 is a generic API layer that interfaces to an RTOS kernel.
 
-RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
-to provide event information which helps you to understand and analyze the operation. Refer to \ref rtx_evr for more
-information.
+The complete API interface is defined in the \ref cmsis_os2_h. When using dynamic memory allocation for objects, source code
+or libraries require no modifications when using on a different CMSIS-RTOS2 implementation.
 
-
-@{
+Refer to \ref rtos_api2_basics for further details.
 */
 
-/**
-\defgroup rtx5_specific_defines Macros
-\brief RTX5 macros
-\details
-@{
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\def osRtxThreadCbSize
-\brief Thread Control Block size
-\details
-This macro exposes the minimum amount of memory needed for an RTX5 Thread Control Block,
-see osThreadAttr_t::cb_mem and \ref osThreadAttr_t::cb_size.
-
-Example:
-\code
-// Used-defined memory for thread control block
-static uint32_t thread_cb[osRtxThreadCbSize/4U];
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\def osRtxTimerCbSize
-\brief Timer Control Block size
-\details
-This macro exposes the minimum amount of memory needed for an RTX5 Timer Control Block,
-see osTimerAttr_t::cb_mem and \ref osTimerAttr_t::cb_size.
-
-Example:
-\code
-// Used-defined memory for timer control block
-static uint32_t timer_cb[osRtxTimerCbSize/4U];
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\def osRtxEventFlagsCbSize
-\brief Event Flags Control Block size
-\details
-This macro exposes the minimum amount of memory needed for an RTX5 Event Flags Control Block,
-see osEventFlagsAttr_t::cb_mem and \ref osEventFlagsAttr_t::cb_size.
-
-Example:
-\code
-// Used-defined memory for event flags control block
-static uint32_t evflags_cb[osRtxEventFlagsCbSize/4U];
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\def osRtxMutexCbSize
-\brief Mutex Control Block size
-\details
-This macro exposes the minimum amount of memory needed for an RTX5 Mutex Control Block,
-see osMutexAttr_t::cb_mem and \ref osMutexAttr_t::cb_size.
-
-Example:
-\code
-// Used-defined memory for mutex control block
-static uint32_t mutex_cb[osRtxMutexCbSize/4U];
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\def osRtxSemaphoreCbSize
-\brief Semaphore Control Block size
-\details
-This macro exposes the minimum amount of memory needed for an RTX5 Semaphore Control Block,
-see osSemaphoreAttr_t::cb_mem and osSemaphoreAttr_t::cb_size.
-
-Example:
-\code
-// Used-defined memory for semaphore control block
-static uint32_t sema_cb[osRtxSemaphoreCbSize/4U];
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\def osRtxMemoryPoolCbSize
-\brief Memory Pool Control Block size
-\details
-This macro exposes the minimum amount of memory needed for an RTX5 Memory Pool Control Block,
-see osMemoryPoolAttr_t::cb_mem and osMemoryPoolAttr_t::cb_size.
-
-Example:
-\code
-// Used-defined memory for memory pool control block
-static uint32_t timer_cb[osRtxMemoryPoolCbSize/4U];
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\def osRtxMessageQueueCbSize
-\brief Message Queue Control Block size
-\details
-This macro exposes the minimum amount of memory needed for an RTX5 Message Queue Control Block,
-see osMessageQueueAttr_t::cb_mem and osMessageQueueAttr_t::cb_size.
-
-Example:
-\code
-// Used-defined memory for message queue control block
-static uint32_t msgqueue_cb[osRtxMessageQueueCbSize/4U];
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\def osRtxMemoryPoolMemSize
-\brief Memory Pool Memory size
-\details
-This macro exposes the minimum amount of memory needed for an RTX5 Memory Pool Memory,
-see osMemoryPoolAttr_t::mp_mem and osMemoryPoolAttr_t::mp_size.
-
-Example:
-\code
-// Maximum number of objects
-#define OBJ_COUNT 8U
- 
-// Object type
-typedef struct {
-   uint32_t value1;
-   uint8_t  value2;
-} object_t;
- 
-// Used-defined memory for memory pool memory
-static uint32_t mempool_cb[osRtxMemoryPoolMemSize(OBJ_COUNT, sizeof(object_t))/4U];
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\def osRtxMessageQueueMemSize
-\brief Message Queue Memory size
-\details
-This macro exposes the minimum amount of memory needed for an RTX5 Message Queue Memory,
-see osMessageQueueAttr_t::mq_mem and osMessageQueueAttr_t::mq_size.
-
-Example:
-\code
-// Maximum number of messages
-#define MSG_COUNT 16U
- 
-// Message data type
-typedef struct {
-   uint32_t value1;
-   uint8_t  value2;
-} msg_item_t;
- 
-// Used-defined memory for message queue
-static uint32_t mq_mem[osRtxMessageQueueMemSize(MSG_COUNT, sizeof(msg_item_t))/4U];
-\endcode
-*/
-
-/**
-@}
-*/
-
-/**
-\defgroup rtx5_specific_structs Structs
-\brief RTX5 structs 
-\details
-@{
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\struct osRtxThread_t
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\struct osRtxTimerFinfo_t
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\struct osRtxTimer_t
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\struct osRtxEventFlags_t
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\struct osRtxMutex_t
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\struct osRtxSemaphore_t
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\struct osRtxMemoryPool_t
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\struct osRtxMessageQueue_t
-*/
-
-/**
-@}
-*/
-
-/**
-\defgroup rtx5_specific_functions Functions
-\brief RTX5 functions 
-\details
-@{
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/** 
-\fn uint32_t osRtxErrorNotify (uint32_t code, void *object_id);
-\details
-Some system error conditions can be detected during runtime. If the RTX kernel detects a runtime error, it calls the runtime
-error function \b osRtxErrorNotify for an object specified by parameter \a object_id.
-
-The parameter \a code passes the actual error code to this function:
-| Error Code                   | Description                                                                       |
-|------------------------------|-----------------------------------------------------------------------------------|
-| osRtxErrorStackUnderflow     | Stack overflow detected for thread (thread_id=object_id)                          |
-| osRtxErrorISRQueueOverflow   | ISR Queue overflow detected when inserting object (object_id)                     |
-| osRtxErrorTimerQueueOverflow | User Timer Callback Queue overflow detected for timer (timer_id=object_id)        |
-| osRtxErrorClibSpace          | Standard C/C++ library libspace not available: increase \c OS_THREAD_LIBSPACE_NUM |
-| osRtxErrorClibMutex          | Standard C/C++ library mutex initialization failed                                |
-
-The function \b osRtxErrorNotify must contain an infinite loop to prevent further program execution. You can use an emulator
-to step over the infinite loop and trace into the code introducing a runtime error. For the overflow errors this means you
-need to increase the size of the object causing an overflow.
-
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-<b>Code Example</b>
-\code
-#include "rtx_os.h"
- 
-uint32_t osRtxErrorNotify (uint32_t code, void *object_id) {
-  (void)object_id;
- 
-  switch (code) {
-    case osRtxErrorStackUnderflow:
-      // Stack overflow detected for thread (thread_id=object_id)
-      break;
-    case osRtxErrorISRQueueOverflow:
-      // ISR Queue overflow detected when inserting object (object_id)
-      break;
-    case osRtxErrorTimerQueueOverflow:
-      // User Timer Callback Queue overflow detected for timer (timer_id=object_id)
-      break;
-    case osRtxErrorClibSpace:
-      // Standard C/C++ library libspace not available: increase OS_THREAD_LIBSPACE_NUM
-      break;
-    case osRtxErrorClibMutex:
-      // Standard C/C++ library mutex initialization failed
-      break;
-    default:
-      break;
-  }
-  for (;;) {}
-//return 0U;
-}
-\endcode
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-osRtxErrorClibMutex         /** 
-\fn void osRtxIdleThread (void *argument);
-\details
-The function \b osRtxIdleThread is executed by the RTX kernel, when no other threads are ready to run. By default, this
-thread is an empty end-less loop that does nothing. It only waits until another task becomes ready to run. You may change the
-code of the \b osRtxIdleThread function to put the CPU into a power-saving or idle mode, see \ref TickLess.
-
-The default stack size for this thread is defined in the file RTX_Config.h. Refer to \ref threadConfig.
-
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-
-<b>Code Example</b>
-\code
-#include "rtx_os.h"
- 
-__NO_RETURN void osRtxIdleThread (void *argument) {
-  (void)argument;
-
-  for (;;) {}
-}
-\endcode
-*/ 
-
-/**
-@}
-*/
-
-/// @}
