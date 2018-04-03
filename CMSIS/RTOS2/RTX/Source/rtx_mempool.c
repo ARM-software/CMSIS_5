@@ -93,25 +93,20 @@ void *osRtxMemoryPoolAlloc (os_mp_info_t *mp_info) {
 #if (EXCLUSIVE_ACCESS == 0)
   __disable_irq();
 
-  if (mp_info->used_blocks < mp_info->max_blocks) {
-    mp_info->used_blocks++;
     block = mp_info->block_free;
     if (block != NULL) {
       //lint --e{9079} --e{9087} "conversion from pointer to void to pointer to other type"
       mp_info->block_free = *((void **)block);
+      mp_info->used_blocks++;
     }
-  } else {
-    block = NULL;
-  }
 
   if (primask == 0U) {
     __enable_irq();
   }
 #else
-  if (atomic_inc32_lt(&mp_info->used_blocks, mp_info->max_blocks) < mp_info->max_blocks) {
-    block = atomic_link_get(&mp_info->block_free);
-  } else {
-    block = NULL;
+  block = atomic_link_get(&mp_info->block_free);
+  if (block != NULL) {
+    (void)atomic_inc32(&mp_info->used_blocks);
   }
 #endif
 
