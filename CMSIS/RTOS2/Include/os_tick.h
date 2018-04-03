@@ -45,10 +45,10 @@ void     OS_Tick_Enable (void);
 /// Disable OS Tick timer interrupt
 void     OS_Tick_Disable (void);
 
-/// Acknowledge execution of OS Tick interrupt
+/// Acknowledge execution of OS Tick timer interrupt
 void     OS_Tick_AcknowledgeIRQ (void);
 
-/// Get OS Tick IRQ number
+/// Get OS Tick timer IRQ number
 /// \return OS Tick IRQ number
 int32_t  OS_Tick_GetIRQn (void);
 
@@ -64,7 +64,7 @@ uint32_t OS_Tick_GetInterval (void);
 /// \return OS Tick timer counter value
 uint32_t OS_Tick_GetCount (void);
 
-/// Get OS Tick overflow status
+/// Get OS Tick timer overflow status
 /// \return OS Tick overflow status (1 - overflow, 0 - no overflow).
 uint32_t OS_Tick_GetOverflow (void);
 
