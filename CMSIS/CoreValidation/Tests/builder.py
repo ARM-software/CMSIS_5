@@ -140,7 +140,7 @@ def create():
   runStep.post = storeResult
   
   filterAC5 = Filter().addAxis(compilerAxis, Compiler.AC5).addAxis(deviceAxis, "CM[23]3*")
-  filterAC6LTM = Filter().addAxis(compilerAxis, Compiler.AC6LTM).addAxis(deviceAxis, "CM[23]3*").addAxis(deviceAxis, "CM0*")
+  filterAC6LTM = Filter().addAxis(compilerAxis, Compiler.AC6LTM).addAxis(deviceAxis, "CM[23]3*")
 
   builder = Builder()
   builder.addAxis([ compilerAxis, deviceAxis, targetAxis ])
