@@ -9,7 +9,8 @@
 
   <releases>
     <release version="5.3.1-dev1">
-      Active development...
+      CMSIS-Core(M): 5.1.2 (see revision history for details)
+      CMSIS-Core(A): 1.1.2 (see revision history for details)
       CMSIS-RTOS2:
         - RTX 5.3.1 (see revision history for details)
     </release>
