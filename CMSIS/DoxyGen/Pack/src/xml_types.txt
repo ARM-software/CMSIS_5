@@ -350,14 +350,6 @@ Connect to the target debug port and power it up.
       <!-- Wait for Power-Up Request to be acknowledged -->
       <control while="(ReadDP(DP_CTRL_STAT) &amp; 0xA0000000) != 0xA0000000" timeout="1000000"/>
       
-      <block>
-        // Request Debug Reset
-        WriteDP(DP_CTRL_STAT, 0x54000000);
-      </block>
-      
-      <!-- Wait for Debug Reset to be acknowledged, don't issue error on timeout to deal with improperly connected Debug Reset -->
-      <control while="(ReadDP(DP_CTRL_STAT) &amp; 0xA8000000) != 0xA8000000" timeout="300000"/>
-      
       <!-- JTAG Specific Part of sequence -->
       <control if="(__protocol &amp; 0xFFFF) == 1">
       
@@ -386,7 +378,6 @@ Connect to the target debug port and power it up.
     
   </sequence>
 \endcode
-
 
 \subsection debugPortStop DebugPortStop
 

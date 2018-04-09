@@ -75,6 +75,12 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <th>Description</th>
   </tr>
   <tr>
+    <td>1.5.1</td>
+    <td>Modifications compared to Version 1.5.0
+- removed usage of DP CTRL/STAT CDBGRSTREQ from \ref debugPortStart default sequence
+    </td>
+  </tr>
+  <tr>
     <td>1.5.0</td>
     <td>Modifications compared to Version 1.4.9
 - added \ref sdf_pg
