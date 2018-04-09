@@ -6,8 +6,8 @@ There are multiple ways to distribute a software pack:
 \section cp_LocalInstallation Local Installation
 The easiest way to distribute a software pack is attaching it to an email or using other means of electronic distribution
 (for example using a company internal file server). The installation of a software pack is usually triggered by
-double-clicking the PACK file. The pack management tool is invoked and the Pack is installed on the local machine. After
-installation, the pack will be shown in the list of installed packs (tool dependent). If the PDSC file does not contain a
+double-clicking the Pack file. The pack management tool is invoked and the Pack is installed on the local machine. After
+installation, the Pack will be shown in the list of installed packs (tool dependent). If the PDSC file does not contain a
 valid \c \<url\> element, a manual installation is required to update a software pack. Otherwise, pack management tools can
 check for updates on the server or the local machine that is specified by \c \<url\>.
 
@@ -42,11 +42,11 @@ maintenance purposes for example).
   <a href="http://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">www.keil.com/pack/ARM.CMSIS.pdsc</a> and \n
   <a href="http://www.keil.com/pack/ARM.CMSIS.5.0.1.pack" target="_blank">www.keil.com/pack/ARM.CMSIS.5.0.1.pack</a> and \n
   <a href="http://www.keil.com/pack/ARM.CMSIS.5.0.0.pack" target="_blank">www.keil.com/pack/ARM.CMSIS.5.0.0.pack</a> and ... \n
-  At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned PACK files,
+  At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned Pack files,
   but at least the latest one.
-- If the URL or the PDSC/PACK files become unavailable (temporarily or permanently), users will not be able to retrieve
+- If the URL or the PDSC/Pack files become unavailable (temporarily or permanently), users will not be able to retrieve
   updates.
-- Do not replace PDSC/PACK files without updating the version number because the Pack management tools will not recognize
+- Do not replace PDSC/Pack files without updating the version number because the Pack management tools will not recognize
   the update unless the version has been changed.
 - Older packs should remain available.
 

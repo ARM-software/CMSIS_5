@@ -37,9 +37,9 @@ It provides a management process and supports a tool independent distribution fo
 
 \section PackFilenames Pack Conventions
 
-All files that belong to a \ref cp_SWComponents "Software Pack" are compressed into a *.PACK file using a standard
+All files that belong to a \ref cp_SWComponents "Software Pack" are compressed into a *.pack file using a standard
 <a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29" target="_blank">ZIP file format</a>.
-The content of each \ref cp_SWComponents "Software Pack" is described in the Pack Description (*.PDSC) file that is part of
+The content of each \ref cp_SWComponents "Software Pack" is described in the Pack Description (*.pdsc) file that is part of
 each \b Pack. Refer to \ref packFormat for more information. 
 
 \subsection pack_filename Pack File Name
@@ -99,7 +99,7 @@ The following image shows the basic steps that are required to create a Software
 -# <b>Organize files:</b> Use directories to separate the content of the Pack.
 -# <b>Create PDSC file:</b> The XML based PDSC file can be created using any text editor. Editors that can
    validate XML code against a schema file help to find bugs early in the Pack development stage.
--# <b>Generate PACK:</b> Any compression tool supporting the ZIP format can be used to create a PACK file. \ref packChk is
+-# <b>Generate Pack:</b> Any compression tool supporting the ZIP format can be used to create a Pack file. \ref packChk is
    helpful for the validation of the contents of a Pack.
 
 The following pages will show how to create a Software Pack from scratch. The page \ref cp_SWComponents will start with a simple

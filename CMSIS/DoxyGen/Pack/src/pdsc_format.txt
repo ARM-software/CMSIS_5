@@ -1,17 +1,17 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page packFormat Pack Description (*.PDSC) Format 
+\page packFormat Pack Description (*.pdsc) Format 
 
 [TOC]
 
-The <b>Pack Description (*.PDSC) Format</b>  uses standard XML annotations and is defined in the schema file <b>PACK.xsd</b>.
+The <b>Pack Description (*.pdsc) Format</b>  uses standard XML annotations and is defined in the schema file <b>PACK.xsd</b>.
 Software components are distributed through <b>Software Packs</b>.
 A \ref cp_SWComponents "Software Pack" is a zip file containing a single <b>Pack Description</b> file that describes dependencies 
 to devices, processors, tool chains, or other software components.
 
 A descriptive text of the \ref cp_SWComponents "Software Pack"along the text information for devices, components, and examples is part of each
-a <b>Pack Description</b> (*.PDSC) file. In addition, information is provided which facilitates downloading, updating, and versioning of
-of a \ref cp_SWComponents "Software Pack". The *.PDSC file contains also the complete version history of the \ref cp_SWComponents "Software Pack"
+a <b>Pack Description</b> (*.pdsc) file. In addition, information is provided which facilitates downloading, updating, and versioning of
+of a \ref cp_SWComponents "Software Pack". The *.pdsc file contains also the complete version history of the \ref cp_SWComponents "Software Pack"
 with a brief list of the most significant changes.
 
 \section Filenames Filename Conventions
@@ -29,13 +29,13 @@ A \ref cp_SWComponents "Software Pack" must have a unique filename which uses th
 \note \<vendor\> and \<name\> \em must \em not contain spaces.
 
 \n
-The <b>Pack Description</b> (*.PDSC) file belonging to such a \ref cp_SWComponents "Software Pack" file (\<vendor\>.\<name\>.\<version\>.pack)
+The <b>Pack Description</b> (*.pdsc) file belonging to such a \ref cp_SWComponents "Software Pack" file (\<vendor\>.\<name\>.\<version\>.pack)
 is version independent and has the format:
 <b>\<vendor\>.\<name\>.pdsc</b>. 
 
 \b Where:
  - <b>\<vendor\></b>: name of the supplier or vendor of the \ref cp_SWComponents "Software Pack".
- - <b>\<name\></b>: name of the \ref cp_SWComponents "Software Pack" that is described by this *.PDSC file.
+ - <b>\<name\></b>: name of the \ref cp_SWComponents "Software Pack" that is described by this *.pdsc file.
  - <b>.pack</b>: file extension identifying a \ref cp_SWComponents "Software Pack".
 
 \note \<vendor\> and \<name\> \em must \em not contain spaces.
@@ -44,15 +44,18 @@ Example filenames for software packs:
 
 Software Pack for CMSIS Version 4.0 released by Arm.
  - <b>ARM.CMSIS.4.0.0.pack</b>: filename of the \ref cp_SWComponents "Software Pack".
- - <b>ARM.CMSIS.pdsc</b>: filename of the <b>Pack Description</b> (*.PDSC) file.
+ - <b>ARM.CMSIS.pdsc</b>: filename of the <b>Pack Description</b> (*.pdsc) file.
  
 Device Family Pack for STM32F4 Version 1.0.0 released by ST Microelectronics.
  - <b>ST.STM32F4xx_DFP.1.0.0.pack</b>: filename of the \ref cp_SWComponents "Software Pack".
- - <b>ST.STM32F4xx.pdsc</b>: filename of the <b>Pack Description</b> (*.PDSC) file.
+ - <b>ST.STM32F4xx.pdsc</b>: filename of the <b>Pack Description</b> (*.pdsc) file.
+
+\note All elements are case sensitive and must be consistently spelled in all places, i.e. the definition in the PDSC
+file must match the filenames of the *.pdsc and *.pack files. The file extensions (*.pdsc and *.pack) must be lower case.
 
 \section PackSchema Pack Schema 
 
-The XML schema file <b>PACK.xsd</b> defines the sections used in a <b>*.PDSC</b> file. The current <b>PACK.xsd</b> can be
+The XML schema file <b>PACK.xsd</b> defines the sections used in a <b>*.pdsc</b> file. The current <b>PACK.xsd</b> can be
 found under the ARM.CMSIS.*.Pack in the .\\CMSIS\\Utilities-directory.
 
 The \ref packFormat is structured using grouping elements and contains the following top level elements:
@@ -71,12 +74,12 @@ The \ref packFormat is structured using grouping elements and contains the follo
  - \subpage pdsc_components_pg "<components>": lists the software components contained in the \ref cp_SWComponents "Software Pack".
  - \subpage pdsc_examples_pg "<examples>": specifies example projects contained in the PACK.
 
-\section PDSC_Example Example of a *.PDSC File
+\section PDSC_Example Example of a *.pdsc File
 
-This example of a *.PDSC File explains the sections, particularly how dependencies are used to identify individual files of \ref cp_Components.
+This example of a *.pdsc File explains the sections, particularly how dependencies are used to identify individual files of \ref cp_Components.
 
 \image html PDSC_Example_top.png
-\image html PDSC_Example_bottom.png  "Example of a *.PDSC File"
+\image html PDSC_Example_bottom.png  "Example of a *.pdsc File"
 
 */
 
@@ -195,7 +198,7 @@ assists searching for packages.
   </tr>
   <tr>
     <td>supportContact</td>
-    <td>HTTP URL or e-mail address for users to get support for the content of the PACK</td>
+    <td>HTTP URL or e-mail address for users to get support for the content of the Pack</td>
     <td>xs:string</td>
     <td>0..1 </td>
   </tr>
@@ -264,7 +267,7 @@ assists searching for packages.
   </tr>
   <tr>
     <td>\ref element_conditions "conditions"</td>
-    <td>Is a group that contains dependency definitions used within the PACK.
+    <td>Is a group that contains dependency definitions used within the Pack.
     These rules can describe dependencies on various levels: device attributes, components, or tools. 
     Conditions are referenced by components and files.</td>
     <td>ConditionsType</td>
@@ -272,13 +275,13 @@ assists searching for packages.
   </tr>
   <tr>
     <td>\ref element_examples "examples"</td>
-    <td>Lists the examples that are included in the PACK.</td>
+    <td>Lists the examples that are included in the Pack.</td>
     <td>group</td>
     <td>0..1 </td>
   </tr>
   <tr>
     <td>\ref element_components "components"</td>
-    <td>Lists the software components that are included in the PACK.</td>
+    <td>Lists the software components that are included in the Pack.</td>
     <td>group</td>
     <td>0..1 </td>
   </tr>
@@ -288,7 +291,7 @@ assists searching for packages.
 
 \anchor VersionType <b>Version Type</b>
 
-CMSIS-PACK version specification is inspired by the <a href="http://semver.org" target="_blank">Semantic Versioning 2.0.0</a>.
+CMSIS-Pack version specification is inspired by the <a href="http://semver.org" target="_blank">Semantic Versioning 2.0.0</a>.
 Under this scheme, version numbers and the way they are incremented convey a meaning about the underlying content quality and the significance
 of changes from one version to the next. A version consists of 3 mandatory and 2 optional sections: 
 
@@ -355,7 +358,7 @@ this example applies to \ref element_release.
 /**
 \page element_keywords /package/keywords element
 
-Is the group element for wrapping keywords, which can be used to find a PACK.
+Is the group element for wrapping keywords, which can be used to find a Pack.
 Keywords can be exported to web pages to provide information for search engines, such as Google.
 
 \b Example:
@@ -404,8 +407,8 @@ Keywords can be exported to web pages to provide information for search engines,
 /**
 \page element_releases /package/releases element
 
-Contains the release history of the PACK. This element is mandatory. No more than one such group can exist in a PACK. 
-It contains the full release history of the PACK. 
+Contains the release history of the Pack. This element is mandatory. No more than one such group can exist in a Pack. 
+It contains the full release history of the Pack. 
 
 \b Example:
 \code
@@ -448,7 +451,7 @@ It contains the full release history of the PACK.
 
 \section element_release /package/releases/release
 
-Contains brief information of the main changes in each release version of a PACK. The content is a string written between the opening and closing \em release tags.
+Contains brief information of the main changes in each release version of a Pack. The content is a string written between the opening and closing \em release tags.
 The latest release version is always listed on top.
 
 \b Example:
@@ -506,7 +509,7 @@ The latest release version is always listed on top.
     <td>replacement</td>
     <td>Specifies the vendor and name of the Pack that shall be used instead.
         Use in conjunction with the deprecated attribute.
-        E.g. the maintainer of the PACK A.X_DFP changes from vendor \em A to vendor \em B. In this case the attribute deprecated
+        E.g. the maintainer of the Pack A.X_DFP changes from vendor \em A to vendor \em B. In this case the attribute deprecated
         gets set in the A.X_DFP.pdsc and the replacement attribute set to B.X_DFP. Tools use this information to
         redirect users to a supported pack.
     </td>
@@ -977,7 +980,7 @@ The table lists predefined Component Classes.
 \anchor CgroupType <b>Table: Component Groups</b>
 
 Component Group names are specified by the element <b>Cgroup</b> and create categories within a Component Class specified by the element <b>Cclass</b>. 
-The creator of the PACK can define the names in the element \ref element_taxonomyDescription. 
+The creator of the Pack can define the names in the element \ref element_taxonomyDescription. 
 A Component Group name is string with a length between 3 and 32 characters. 
 
 \b Example:

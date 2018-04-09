@@ -92,7 +92,7 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <td>1.4.8</td>
     <td>Modifications compared to Version 1.4.7
 - added support for semantic versioning quality information in ConditionVersionType
-- updated PACK schema file making some elements optional
+- updated Pack schema file making some elements optional
 - added Pack Index File Specification and schema file
     </td>
   </tr>
@@ -189,12 +189,12 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <tr>
       <td>1.3</td>
       <td>Modifications compared to Version 1.2:
- - <em>Added</em> attributes to release tag for managing deprecation and changing pack IDs
+ - <em>Added</em> attributes to release tag for managing deprecation and changing Pack IDs
  - <em>Removed</em> external RAMn and ROMn memory IDs in memory tag
  - <em>Added</em> FileCategoryTypes in \<file> element for C, C++, Assembler, Linker
  - <em>Extended</em> specification of \<require>, \<accept> and \<deny> with Cversion and Capiversion ranges
- - <em>Added</em> \ref createPackUtil and \ref packChk for pack validation
- - <em>Added</em> documentation for the Example PACK based on LPC1800 Device Family
+ - <em>Added</em> \ref createPackUtil and \ref packChk for Pack validation
+ - <em>Added</em> documentation for the Example Pack based on LPC1800 Device Family
  - <em>Refined</em> \<debug> element description
  - Many clarifications in the documentation along with examples
       </td>

@@ -678,7 +678,7 @@ the format <em>myPeripheral[%%s]</em>. The tag \tagem{dimIncrement} specifies th
 peripherals. To create copies of a peripheral using different names, you must use the \em derivedFrom attribute.
 
 \remarks  The memory map does not contain any information about physical memory. The memory of a
-device is described as part of the CMSIS-PACK device description.
+device is described as part of the CMSIS-Pack device description.
 
 \b Example:
 \code
