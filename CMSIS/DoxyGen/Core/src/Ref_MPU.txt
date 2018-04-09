@@ -80,8 +80,8 @@ The function \ref ARM_MPU_Enable writes to the register \ref MPU_Type::CTRL "MPU
 The following table contains possible values for the parameter \em MPU_CTRL that set specific bits in register MPU->CTRL.
 | Bit | MPU_CTRL value           | When applied                                                            | When not applied
 |:----|:-------------------------|:------------------------------------------------------------------------|:---------------------------------------
-| 1   | MPU_CTRL_HFNMIENA_Pos    | Enable MPU during hard fault, NMI, and FAULTMASK handlers execution     | Disable MPU during hard fault, NMI, and FAULTMASK handler execution
-| 2   | MPU_CTRL_PRIVDEFENA_Pos  | Enable default memory map as a background region for privileged access  | Use only MPU region settings
+| 1   | MPU_CTRL_HFNMIENA_Msk    | Enable MPU during hard fault, NMI, and FAULTMASK handlers execution     | Disable MPU during hard fault, NMI, and FAULTMASK handler execution
+| 2   | MPU_CTRL_PRIVDEFENA_Msk  | Enable default memory map as a background region for privileged access  | Use only MPU region settings
 
 <b>Example:</b>
 
@@ -90,7 +90,7 @@ The following table contains possible values for the parameter \em MPU_CTRL that
   MPU_Enable (0);
   
 // enable MPU with all region definitions and background regions for privileged access. Exceptions are protected by MPU.
-  MPU_Enable (MPU_CTRL_PRIVDEFENA_Pos | MPU_CTRL_HFNMIENA_Pos);
+  MPU_Enable (MPU_CTRL_PRIVDEFENA_Msk | MPU_CTRL_HFNMIENA_Msk);
 \endcode  
 
 
