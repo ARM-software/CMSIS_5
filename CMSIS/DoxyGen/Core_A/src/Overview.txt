@@ -67,6 +67,14 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <th>Description</th>
     </tr>
     <tr>
+      <td>V1.1.2</td>
+      <td>
+        <ul>
+          <li>Removed using get/set built-ins FPSCR in GCC >= 7.2 due to shortcomings.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
       <td>V1.1.1</td>
       <td>
         <ul>

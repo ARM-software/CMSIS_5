@@ -83,6 +83,13 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.1.2</td>
+      <td>
+        <li>Removed using get/set built-ins FPSCR in GCC >= 7.2 due to shortcomings.</li>
+        <li>Added __NO_RETURN to __NVIC_SystemReset() to silence compiler warnings.</li>
+      </td>
+    </tr>
+    <tr>
       <td>V5.1.1</td>
       <td>
         Aligned MSPLIM and PSPLIM access functions along supported compilers.\n
