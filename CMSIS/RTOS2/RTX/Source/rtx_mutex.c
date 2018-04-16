@@ -409,9 +409,6 @@ static osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
     return osErrorResource;
   }
 
-  // Mark object as inactive
-  mutex->state = osRtxObjectInactive;
-
   // Check if Mutex is locked
   if (mutex->lock != 0U) {
 
@@ -455,6 +452,10 @@ static osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
 
     osRtxThreadDispatch(NULL);
   }
+
+  // Mark object as inactive and invalid
+  mutex->state = osRtxObjectInactive;
+  mutex->id    = osRtxIdInvalid;
 
   // Free object memory
   if ((mutex->flags & osRtxFlagSystemObject) != 0U) {

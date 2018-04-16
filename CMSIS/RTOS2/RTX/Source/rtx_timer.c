@@ -365,8 +365,9 @@ static osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
     TimerRemove(timer);
   }
 
-  // Mark object as inactive
+  // Mark object as inactive and invalid
   timer->state = osRtxTimerInactive;
+  timer->id    = osRtxIdInvalid;
 
   // Free object memory
   if ((timer->flags & osRtxFlagSystemObject) != 0U) {

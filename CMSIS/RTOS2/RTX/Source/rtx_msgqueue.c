@@ -753,9 +753,6 @@ static osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
     return osErrorResource;
   }
 
-  // Mark object as inactive
-  mq->state = osRtxObjectInactive;
-
   // Unblock waiting threads
   if (mq->thread_list != NULL) {
     do {
@@ -764,6 +761,10 @@ static osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
     } while (mq->thread_list != NULL);
     osRtxThreadDispatch(NULL);
   }
+
+  // Mark object as inactive and invalid
+  mq->state = osRtxObjectInactive;
+  mq->id    = osRtxIdInvalid;
 
   // Free data memory
   if ((mq->flags & osRtxFlagSystemMemory) != 0U) {

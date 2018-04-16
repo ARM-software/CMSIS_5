@@ -1100,8 +1100,9 @@ static osStatus_t svcRtxThreadResume (osThreadId_t thread_id) {
 /// \param[in]  thread          thread object.
 static void osRtxThreadFree (os_thread_t *thread) {
 
-  // Mark object as inactive
+  // Mark object as inactive and invalid
   thread->state = osRtxThreadInactive;
+  thread->id    = osRtxIdInvalid;
 
 #if (DOMAIN_NS == 1)
   // Free secure process stack

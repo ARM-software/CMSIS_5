@@ -363,9 +363,6 @@ static osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
     return osErrorResource;
   }
 
-  // Mark object as inactive
-  semaphore->state = osRtxObjectInactive;
-
   // Unblock waiting threads
   if (semaphore->thread_list != NULL) {
     do {
@@ -374,6 +371,10 @@ static osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
     } while (semaphore->thread_list != NULL);
     osRtxThreadDispatch(NULL);
   }
+
+  // Mark object as inactive and invalid
+  semaphore->state = osRtxObjectInactive;
+  semaphore->id    = osRtxIdInvalid;
 
   // Free object memory
   if ((semaphore->flags & osRtxFlagSystemObject) != 0U) {

@@ -551,9 +551,6 @@ static osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
     return osErrorResource;
   }
 
-  // Mark object as inactive
-  mp->state = osRtxObjectInactive;
-
   // Unblock waiting threads
   if (mp->thread_list != NULL) {
     do {
@@ -562,6 +559,10 @@ static osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
     } while (mp->thread_list != NULL);
     osRtxThreadDispatch(NULL);
   }
+
+  // Mark object as inactive and invalid
+  mp->state = osRtxObjectInactive;
+  mp->id    = osRtxIdInvalid;
 
   // Free data memory
   if ((mp->flags & osRtxFlagSystemMemory) != 0U) {
