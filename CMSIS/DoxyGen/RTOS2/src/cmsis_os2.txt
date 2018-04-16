@@ -363,8 +363,7 @@ The following sections provide further details:
  - \subpage theory_of_operation provides general information about the operation of CMSIS-RTOS RTX v5.
  - \subpage config_rtx5 describes configuration parameters of CMSIS-RTOS RTX v5.
  - \subpage creating_RTX5_LIB explains how to build your own CMSIS-RTOS RTX v5 library.
- - \subpage dirstructfiles5 explains the directories and files that are supplied as part of CMSIS-RTOS RTX v5.
- - \subpage technicalData5 lists microcontroller hardware requirements and limitations such as number of concurrent threads.
+ - \subpage technicalData5 lists hardware, software, and resource requirements, supplied files, and supported tool chains.
  - \subpage misraCompliance5 describes the violations to the MISRA standard.
 */
 
@@ -1231,65 +1230,101 @@ a reference for building the RTX5 libraries using a tool-chain of your choice.
 /** 
 \page technicalData5 Technical Data
 
-The following section contains technical information about RTX5.
+The following section contains technical information about RTX v5.
 
- - \ref technicalData_Requirements: lists the resource requirements of the RTX5 kernel along with hardware dependencies
- - \ref dirstructfiles5: 
- - \ref technicalData_Toolchains: details about the compiler support which includes ArmCC (MDK, DS-5), IAR EW-ARM, and GCC.
+ - \subpage pHardwareRequirements lists the resource requirements of the RTX v5 kernel along with hardware dependencies.
+ - \subpage pControlBlockSizes provides memory size information for \ref StaticObjectMemory "object-specific control block memory allocation".
+ - \subpage pDirectory_Files is an overview of the supplied files that belong to RTX v5
+ - \subpage pToolchains details about the compiler support which includes ArmCC (MDK, DS-5), IAR EW-ARM, and GCC.
  
 
 
- 
+\page pHardwareRequirements Hardware Requirements
 
-\page technicalData Hardware and Software requirements
+The following section lists the hardware requirements for RTX v5 on the various supported target processors:
 
-\section technicalData_ControlBlockSizes Control Block Sizes
+\section tpProcessor Processor Requirements
 
-Keil RTX5 specific control block definitions (including sizes) as well as memory pool and message queue memory requirements
-are defined in the RTX5 header file:
-
-\code
-/// Control Block sizes
-#define osRtxThreadCbSize        sizeof(osRtxThread_t)
-#define osRtxTimerCbSize         sizeof(osRtxTimer_t)
-#define osRtxEventFlagsCbSize    sizeof(osRtxEventFlags_t)
-#define osRtxMutexCbSize         sizeof(osRtxMutex_t)
-#define osRtxSemaphoreCbSize     sizeof(osRtxSemaphore_t)
-#define osRtxMemoryPoolCbSize    sizeof(osRtxMemoryPool_t)
-#define osRtxMessageQueueCbSize  sizeof(osRtxMessageQueue_t)
- 
-/// Memory size in bytes for Memory Pool storage.
-/// \param         block_count   maximum number of memory blocks in memory pool.
-/// \param         block_size    memory block size in bytes.
-#define osRtxMemoryPoolMemSize(block_count, block_size) \
-  (4*(block_count)*(((block_size)+3)/4))
- 
-/// Memory size in bytes for Message Queue storage.
-/// \param         msg_count     maximum number of messages in queue.
-/// \param         msg_size      maximum message size in bytes.
-#define osRtxMessageQueueMemSize(msg_count, msg_size) \
-  (4*(msg_count)*(3+(((msg_size)+3)/4)))
-\endcode
-
-If you are using a \ref GlobalMemoryPool to allocate memory for the RTOS objects, you need to know the size that is required
-for each object in case of errors. Currently, the control block sizes are as follows (subject to change without
-notification):
-
-Type          | Control block size in bytes |
---------------|:---------------------------:|
-Thread        | 68                          |
-Timer         | 32                          |
-Event Flags   | 16                          |
-Mutex         | 28                          |
-Semaphore     | 16                          |
-Memory Pool   | 36                          |
-Message Queue | 52                          |
-
-The size of the memory that is required for memory pool and message queue data storage can be determined from the macros
-stated above.
+RTX assumes a fully function-able processor and uses the following hardware features. It does not implement any confidence test for processor validation which should be provided by an user-supplied software test library.
 
 
-\page dirstructfiles5 Directory Structure and File Overview
+\subsection tpCortexM0_M0P_M23 Cortex-M0/M0+/M23 target processor
+
+
+Hardware Requirement       | Description
+:--------------------------|:------------------------------------------------------
+SysTick timer              | The SysTick timer generates the kernel tick interrupts and the interface is implemented in %os_systick.c using the \ref CMSIS_RTOS_TickAPI
+Exception Handler          | RTX implements exception handlers for SVC, PendSV, and SysTick interrupt
+Core Registers             | The processor status is read using the following core registers: CONTROL, IPSR, PRIMASK
+System Control Block (SBC) | To control and setup the processor exceptions including PendSV and SVC
+Interrupt Control          | The CMSIS-Core functions __disable_irq and __enable_irq to control the interrupt system via the CPSR core register.
+
+The interface files to the processor hardware are: 
+ - <b>%irq_cm0.s</b> defines exception handlers for Cortex-M0/M0+
+ - <b>%irq_armv8mbl_common.s</b> defines exception handlers for Cortex-M23
+ - <b>%rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
+ - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
+
+
+\subsection tpCortexM3_M4_M7_M33 Cortex-M3/M4/M7/M33 target processor
+
+RTX assumes a fully function-able processor and uses the following hardware features:
+
+Hardware Requirement       | Description
+:--------------------------|:------------------------------------------------------
+SysTick timer              | The SysTick timer generates the kernel tick interrupts and the interface is implemented in %os_systick.c using the \ref CMSIS_RTOS_TickAPI
+Exception Handler          | RTX implements exception handlers for SVC, PendSV, and SysTick interrupt
+Core Registers             | The processor status is read using the following core registers: CONTROL, IPSR, PRIMASK, BASEPRI
+System Control Block (SBC) | To control and setup the processor exceptions including PendSV and SVC
+NVIC Interface             | The CMSIS-Core function NVIC_GetPriorityGrouping to setup interrupt priorities.
+LDREX, STREX instruction   | Atomic execution avoids the requirement to disable interrupts and is implemented via exclusive access instructions.
+
+The interface files to the processor hardware are: 
+ - <b>%irq_cm3.s</b> defines exception handlers for Cortex-M3 and Cortex-M4/M7 without floating point unit.
+ - <b>%irq_cm4f.s</b> defines exception handlers for Cortex-M4/M7 with floating point unit.
+ - <b>%irq_armv8mml_common.s</b> defines exception handlers for Cortex-M33
+ - <b>%rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
+ - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
+
+\subsection tpCortexA5_A7_A9 Cortex-A5/A7/A9 target processor
+
+
+
+
+\section rMemory Memory Requirements
+RTX requires RAM memory that is accessible with contiguous linear addressing.  When memory is split across multiple memory banks, some systems 
+do not accept multiple load or store operations on this memory blocks. 
+
+RTX does not implement any confidence test for memory validation. This should be implemented by an user-supplied software test library.
+
+
+
+\page pControlBlockSizes Control Block Sizes
+
+Keil RTX v5 specific control block definitions (including sizes) as well as memory pool and message queue memory requirements
+are defined in the header file <b>rtx_os.h</b>:
+
+If you provide memory for the RTOS objects, you need to know the size that is required for each object control block.
+The memory of the control block is provided by the parameter \em attr of the related \em osXxxxNew function.
+The element \em cb_mem is the memory address, \em cb_size is the size of the control block memory.
+
+Refer to \ref StaticObjectMemory for more information.
+
+The following table lists the control block sizes:
+
+Category                      | Control Block Size Attribute      | Size       | \#define symbol
+:-----------------------------|:----------------------------------|:-----------|:--------------------
+\ref CMSIS_RTOS_ThreadMgmt    | \ref osThreadAttr_t::cb_mem       | 68 bytes   | \ref osRtxThreadCbSize
+\ref CMSIS_RTOS_TimerMgmt     | \ref osTimerAttr_t::cb_mem        | 32 bytes   | \ref osRtxTimerCbSize
+\ref CMSIS_RTOS_EventFlags    | \ref osEventFlagsAttr_t::cb_mem   | 16 bytes   | \ref osRtxEventFlagsCbSize
+\ref CMSIS_RTOS_MutexMgmt     | \ref osMutexAttr_t::cb_mem        | 28 bytes   | \ref osRtxMutexCbSize
+\ref CMSIS_RTOS_SemaphoreMgmt | \ref osSemaphoreAttr_t::cb_mem    | 16 bytes   | \ref osRtxSemaphoreCbSize
+\ref CMSIS_RTOS_PoolMgmt      | \ref osMemoryPoolAttr_t::cb_mem   | 36 bytes   | \ref osRtxMemoryPoolCbSize
+\ref CMSIS_RTOS_Message       | \ref osMessageQueueAttr_t::cb_mem | 52 bytes   | \ref osRtxMessageQueueCbSize
+
+
+
+\page pDirectory_Files Directory Structure and File Overview
 
 The following section provides an overview of the directory structure and the files that are relevant for the user's for
 CMSIS-RTOS RTX v5. The following directory references start below the CMSIS pack installation path, for example
@@ -1435,11 +1470,11 @@ processor variants in every configuration, including Arm Cortex-M23 and Cortex-M
 </table>
 
  
-\page technicalData_Toolchains Supported Toolchains
+\page pToolchains Supported Toolchains
 
 Keil RTX5 is developed and tested using the common toolchains and development environments.
 
-\subsection technicalData_Toolchain_ARM Arm Compiler (Arm/Keil MDK, uVision5)
+\section technicalData_Toolchain_ARM Arm Compiler (Arm/Keil MDK, uVision5)
 
 RTX5 is initially developed and optimized using Arm Compiler and Arm/Keil MDK.
 The current release is tested with the following versions:
@@ -1450,7 +1485,7 @@ The current release is tested with the following versions:
  <li>RTOS-aware debugging with uVision 5.24</li>
 </ul>
 
-\subsection technicalData_Toolchain_IAR IAR Embedded Workbench
+\section technicalData_Toolchain_IAR IAR Embedded Workbench
 
 RTX5 has been ported to the IAR Embedded Workbench. The following releases are known to work:
 <ul>
@@ -1459,7 +1494,7 @@ RTX5 has been ported to the IAR Embedded Workbench. The following releases are k
  <li><b>IAR Embedded Workbench 8.20.1</b></li>
 </ul>
 
-\subsection technicalData_Toolchain_GCC GNU Compiler Collection
+\section technicalData_Toolchain_GCC GNU Compiler Collection
 
 RTX5 has also been ported to support GCC, maintenance mainly relays on community contribution.
 Active development is currently tested with:
@@ -2295,7 +2330,7 @@ implementation used one needs to include the specific header file, `rtx_os.h` in
 // Group creation for Reference 
 /** 
 \addtogroup CMSIS_RTOS CMSIS-RTOS API v2
-\brief C interface of \ref rtos_api2 defined in cmsis_os2.h
+\brief C interface of \ref rtos_api2 defined in <b>%cmsis_os2.h</b>
 \details 
 The CMSIS-RTOS2 is a generic API layer that interfaces to an RTOS kernel.
 

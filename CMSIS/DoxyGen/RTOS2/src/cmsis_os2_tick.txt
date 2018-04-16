@@ -2,7 +2,7 @@
 //  ==== OS Tick API ====
 /** 
 \addtogroup CMSIS_RTOS_TickAPI OS Tick API
-\brief System tick timer interface for periodic RTOS Kernel Ticks defined in %os_tick.h
+\brief System tick timer interface for periodic RTOS Kernel Ticks defined in <b>%os_tick.h</b>
 \details 
 
 The <b>OS Tick API</b> is an interface to a system timer that generates the Kernel Ticks.

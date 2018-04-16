@@ -1,7 +1,7 @@
 
 /** 
 \addtogroup rtx5_specific RTX v5 Specific API
-\brief RTX v5 implementation specific definitions and functions.
+\brief RTX v5 implementation specific definitions and functions defined in <b>%rtx_os.h</b>.
 \details
 
 The RTX5 kernel can be customized for different application requirements:
