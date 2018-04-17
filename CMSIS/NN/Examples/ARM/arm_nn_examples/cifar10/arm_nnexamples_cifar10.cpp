@@ -170,13 +170,8 @@ int main()
   arm_avepool_q7_HWC(img_buffer1, CONV3_OUT_DIM, CONV3_OUT_CH, POOL3_KER_DIM,
                      POOL3_PADDING, POOL3_STRIDE, POOL3_OUT_DIM, col_buffer, img_buffer2);
 
-#ifdef IP_X4
   arm_fully_connected_q7_opt(img_buffer2, ip1_wt, IP1_DIM, IP1_OUT, IP1_BIAS_LSHIFT, IP1_OUT_RSHIFT, ip1_bias,
                              output_data, (q15_t *) img_buffer1);
-#else
-  arm_fully_connected_q7(img_buffer2, ip1_wt, IP1_DIM, IP1_OUT, IP1_BIAS_LSHIFT, IP1_OUT_RSHIFT, ip1_bias,
-                         output_data, (q15_t *) img_buffer1);
-#endif
 
   arm_softmax_q7(output_data, 10, output_data);
 
