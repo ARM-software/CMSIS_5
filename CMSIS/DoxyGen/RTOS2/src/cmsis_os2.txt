@@ -411,6 +411,27 @@ The default implementations provided along with CMSIS are
 For devices not implementing GIC, PTIM nor GTIM please refer to the according device family pack and select the
 proper implementations.
 
+\section cre_UsingIRQs Using IRQ Interrupts
+
+The Keil RTX5 kernel uses the following interrupts:
+- Timer interrupt (SysTick or alternative peripheral timer) to generate periodic timer ticks
+- SVC (Supervisor Call) when calling the majority of RTX functions from \b Thread mode
+- PendSV (request for system-level service) when calling certain RTX functions from \b Handler mode
+
+Interrupts can be used without limitation. Interrupt priority grouping can be used with some restrictions:
+- IRQ interrupts are never disabled by RTX Kernel for Arm Cortex-M3/M4/M7/M23/M33 cores.
+- Software interrupt 0 is used by RTX and cannot be used in an application.
+- RTX uses its own SVC Handler which is automatically linked from the library.
+- When interrupt \b priority \b grouping is used, the PRIGROUP must be set before the \ref osKernelStart() function is
+  called. The kernel reads the value of PRIGROUP to correctly set internal interrupt pre-emption priorities.
+- Allowed values for \b PRIGROUP are from 0 to 6. The PRIGROUP value 7 will cause RTX to fail.
+- The lowest two pre-emption priorities are reserved for RTX kernel, all remaining pre-emption priorities are available to
+  be used in an application.
+- Do not change the priority used by the RTX kernel. If this cannot be avoided, ensure that the preempt priority of
+  SysTick/PendSV is lower than SVC.
+- Check the <b>main stack size</b> configured from the device startup file if you see sporadic crashes of your application.
+  Supervisor Calls (SVCs) are used when calling RTX functions from Thread mode. All SVC calls use the main stack.
+
 \section cre_rtx_proj_specifics Add support for RTX specific functions
 If you require some of the \ref rtx5_specific "RTX specific functions" in your application code, \#include the
 \ref rtx_os_h "header file rtx_os.h". This enables \ref lowPower "low-power" and \ref TickLess "tick-less" operation modes.
