@@ -185,7 +185,7 @@ int main()
   arm_fully_connected_q7_opt(img_buffer2, ip1_wt, IP1_DIM, IP1_OUT, IP1_BIAS_LSHIFT, IP1_OUT_RSHIFT, ip1_bias,
                              output_data, (q15_t *) img_buffer1);
 
-  //arm_softmax_q7(output_data, 10, output_data);
+  arm_softmax_q7(output_data, 10, output_data);
 
   for (int i = 0; i < 10; i++)
   {
