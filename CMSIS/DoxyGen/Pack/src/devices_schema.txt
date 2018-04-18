@@ -1628,6 +1628,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.microchip.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Autochips:150</td>
+    <td>Autochips Inc.</td>
+    <td>http://www.autochips.com/en/index.php</td>
+  </tr>
+  <tr>
     <td class="XML-Token">CSR:118</td>
     <td>CSR</td>
     <td>http://www.csr.com</td>
