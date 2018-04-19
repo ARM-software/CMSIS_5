@@ -13,6 +13,8 @@
       CMSIS-Core(A): 1.1.2 (see revision history for details)
       CMSIS-RTOS2:
         - RTX 5.3.1 (see revision history for details)
+      CMSIS-Driver:
+        - Flash Driver API V2.2.0
     </release>
     <release version="5.3.1-dev0">
       Patch release scheduled for after EW18.
@@ -666,7 +668,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/Driver/Include/Driver_CAN.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="Flash" Capiversion="2.1.0" exclusive="0">
+    <api Cclass="CMSIS Driver" Cgroup="Flash" Capiversion="2.2.0" exclusive="0">
       <description>Flash Driver API for Cortex-M</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/Driver/html/group__flash__interface__gr.html" />
