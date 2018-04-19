@@ -85,8 +85,8 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
     <tr>
       <td>V5.1.2</td>
       <td>
-        <li>Removed using get/set built-ins FPSCR in GCC >= 7.2 due to shortcomings.</li>
-        <li>Added __NO_RETURN to __NVIC_SystemReset() to silence compiler warnings.</li>
+        Removed using get/set built-ins FPSCR in GCC >= 7.2 due to shortcomings.\n
+        Added __NO_RETURN to __NVIC_SystemReset() to silence compiler warnings.\n
       </td>
     </tr>
     <tr>
