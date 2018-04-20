@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
-  <component name="CMSIS:RTOS2:Keil RTX5" shortname="RTX5" version="5.3.0"/>    <!-- name and version of the component -->
+  <component name="CMSIS:RTOS2:Keil RTX5" shortname="RTX5" version="5.3.1"/>    <!-- name and version of the component -->
 
   <typedefs>
     <!-- Attributes structure for thread -->
@@ -172,7 +172,8 @@
       <member name="tz_memory"     type="uint32_t"       offset="64" info="TrustZone Memory Identifier"/>
 
       <var name="obj_name"   type="uint8_t"  info="Object name string" size="66" />
-      <var name="cb_valid"   type="uint32_t" info="Control Block validation status (valid=1, invalid=0)"/>
+      <var name="cb_valid"   type="uint32_t" info="Control block validation status (valid=1, invalid=0)"/>
+      <var name="sp_valid"   type="uint32_t" info="Stack pointer validation status (valid=1, invalid=0)"/>
       <var name="out_type"   type="uint8_t"  info="Output display type ID"/>
 
       <var name="ex_delay"   type="uint32_t" info="Calculated execution delay"/>
@@ -799,6 +800,7 @@
       <list name="i" start="0" limit="TCB._count">
         <calc>
           TCB[i].cb_valid = (TCB[i].id == 1) &amp;&amp; (TCB[i].state != 0) &amp;&amp; (TCB[i].sp != 0);
+          TCB[i].sp_valid = 1;
         </calc>
 
         <!-- Stack pointer for running thread -->
@@ -808,9 +810,12 @@
           psp  = (psp == 0) ? (TCB[i].sp) : (psp);
 
           sp = ((ipsr != 0) &amp;&amp; (ipsr &lt; 16)) ? (TCB[i].sp) : (psp);
+
+          TCB[i].sp_valid = ((ipsr != 0) &amp;&amp; (ipsr &lt; 16)) ? (0) : (1);
         </calc>
 
         <calc cond="(TCB[i].state == 2) &amp;&amp; (__Running == 1)">
+          TCB[i].sp_valid = 0;
           sp = TCB[i].sp;
         </calc>
 
@@ -1153,6 +1158,8 @@
         <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (stack_wmark != 0)"> TCB[i].out_type = 2; </calc>
         <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (stack_wmark == 0)"> TCB[i].out_type = 3; </calc>
         <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (stack_wmark != 0)"> TCB[i].out_type = 4; </calc>
+
+        <calc cond="TCB[i].sp_valid == 0"> TCB[i].out_type += 4; </calc>
       </list>
       <list cond="CCB._count" name="i" start="0" limit="CCB._count">
         <calc>CCB_En += CCB[i].cb_valid; </calc>
@@ -1244,6 +1251,11 @@
               <print cond="TCB[i].out_type == 3" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]"      value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%"                               alert="TCB[i].stack_over != 0"/>
               <print cond="TCB[i].out_type == 4" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]"      value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: %d[TCB[i].stack_curp]%%, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
 
+              <print cond="TCB[i].out_type == 5" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: unknown"                               alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 6" property="id: %x[TCB[i]._addr], %S[TCB[i].thread_addr]" value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: unknown, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 7" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]"      value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: unknown"                               alert="TCB[i].stack_over != 0"/>
+              <print cond="TCB[i].out_type == 8" property="id: %x[TCB[i]._addr]%t[TCB[i].obj_name]"      value="%E[TCB[i].state &amp; 0x07], %E[TCB[i].priority], Stack Used: unknown, Max: %d[TCB[i].stack_maxp]%%" alert="TCB[i].stack_over != 0"/>
+
               <item property="State"        value="%E[TCB[i].state &amp; 0x07]"/>
               <item property="Priority"     value="%E[TCB[i].priority]"/>
               <item property="Attributes"   value="%E[TCB[i].attr &amp; 0x01]"/>
@@ -1281,10 +1293,15 @@
               </item>
 
               <item>
-                <print cond="stack_wmark == 0" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]"/>
-                <print cond="stack_wmark != 0" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
+                <print cond="(TCB[i].sp_valid == 0) &amp;&amp; (stack_wmark == 0)" property="Stack" value="Used: unknown"/>
+                <print cond="(TCB[i].sp_valid == 0) &amp;&amp; (stack_wmark != 0)" property="Stack" value="Used: unknown, Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
+                <print cond="(TCB[i].sp_valid == 1) &amp;&amp; (stack_wmark == 0)" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]"/>
+                <print cond="(TCB[i].sp_valid == 1) &amp;&amp; (stack_wmark != 0)" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
 
-                <item property="Used"  value="%d[TCB[i].stack_curb]"/>
+                <item>
+                  <print cond="TCB[i].sp_valid == 0" property="Used" value="unknown"/>
+                  <print cond="TCB[i].sp_valid == 1" property="Used" value="%d[TCB[i].stack_curb]"/>
+                </item>
                 <item property="Max"   value="%d[TCB[i].stack_maxb]" cond="stack_wmark != 0"/>
                 <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
                 <item property="Current" value="%x[TCB[i].stack_cur]"/>
