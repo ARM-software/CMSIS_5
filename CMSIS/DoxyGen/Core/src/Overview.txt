@@ -77,7 +77,7 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
 
 \page core_revisionHistory Revision History of CMSIS-Core (Cortex-M)
 
-<table class="cmtable" summary="Core Exception Name">
+<table class="cmtable" summary="Revision History">
     <tr>
       <th>Version</th>
       <th>Description</th>
