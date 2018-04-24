@@ -1,4 +1,4 @@
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+﻿/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 //  ==== Thread Flags Management ====
 /** 
 \addtogroup CMSIS_RTOS_ThreadFlagsMgmt Thread Flags
@@ -67,10 +67,13 @@ The function \b osThreadFlagsSet sets the thread flags for a thread specified by
 flags set, or an error code if highest bit is set (refer to \ref flags_error_codes). This function may
 be used also within interrupt service routines. Threads waiting for a flag to be set will resume from \ref ThreadStates "BLOCKED" state.
 
-Possible \ref flags_error_codes return values:
-    - \em osFlagsErrorUnknown: Unspecified error.
-    - \em osFlagsErrorResource: Thread specified by parameter \em thread_id is not active to receive flags.
-    - \em osFlagsErrorParameter: Parameter \em thread_id is not a valid thread or \em flags has highest bit set.
+Possible return values:
+- the flags set, in case of success
+- \em 'osErrorParameter', if the thread specified by \a thread_id thread_id is \em NULL
+- \em 'osErrorParameter', if a thread specified by \a thread_id does not exist
+- \em 'osErrorParameter', if \em flags is not in the legal range (highest bit of \em flags is set)
+- \em 'osErrorResource', if the thread with \em thread_id is in state \em 'osRtxThreadInactive' or \em 'osRtxThreadTerminated'.
+
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -96,10 +99,15 @@ void signal_func (osThreadId_t tid)  {
 The function \b osThreadFlagsClear clears the specified flags for the currently running thread. It returns the
 flags before clearing, or an error code if highest bit is set (refer to \ref flags_error_codes).
 
-Possible \ref flags_error_codes return values:
-    - \em osFlagsErrorUnknown: Unspecified error, i.e. not called from a running threads context.
-    - \em osFlagsErrorResource: Running thread is not active to receive flags.
-    - \em osFlagsErrorParameter: Parameter \em flags has highest bit set. 
+Possible return values:
+- the flags before clearing
+- \em 'osError', if an unspecified error occured
+- \em 'osErrorParameter', if flags are not in the legal range (highest bit of \em flags set)
+- \em 'osErrorResource', if the thread specified by \a thread_id is in state \em 'osRtxThreadInactive' or \em 'osRtxThreadTerminated'
+
+- \em 'osErrorISR', if IRQ is masked
+
+- \em 'osErrorISR', if in IRQ mode.  
 	
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -109,7 +117,13 @@ Possible \ref flags_error_codes return values:
 \details
 The function \b osThreadFlagsGet returns the flags currently set for the currently running thread. 
 If called without a active and currently running thread \b osThreadFlagsGet return zero.
-	
+
+Possible return values:
+- the flags currently set
+- \em 'osErrorISR', if IRQ is masked
+
+- \em 'osErrorISR', if in IRQ mode 
+
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
@@ -134,12 +148,16 @@ exact time delay depends on the actual time elapsed since the last timer tick.
 
 The function returns the flags before clearing, or an error code if highest bit is set (refer to \ref flags_error_codes).
 
-Possible \ref flags_error_codes return values:
-    - \em osFlagsErrorUnknown: Unspecified error, i.e. not called from a running threads context.
-    - \em osFlagsErrorTimeout: The awaited flags has not been set during given timeout.
-    - \em osFlagsErrorResource: Running thread is not active to receive flags.
-    - \em osFlagsErrorParameter: Parameter \em flags has highest bit set.
-	
+Possible return values:
+- the flags before clearing
+- \em 'osErrorParameter', if \em flags are not in the legal range
+- \em 'osErrorTimeout', if \em timeout > 0 and the thread is waiting for flags to be set (with options osFlagsWaitAny and osFlagsWaitAll)
+- \em 'osErrorResource, if \em timeout == 0 and the thread is waiting for flags to be set (with options osFlagsWaitAny and osFlagsWaitAll)
+- \em 'osErrorISR', if IRQ is masked
+- \em 'osErrorISR', if in IRQ mode.  
+
+
+
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
