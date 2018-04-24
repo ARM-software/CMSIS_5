@@ -60,6 +60,19 @@ started (call to \ref osKernelStart), but not before it is initialized (call to 
 The total amount of memory needed is at least <code>block_count * block_size</code>. Memory from the pool can only be
 allocated/freed in fixed portions of \c block_size.
 
+Possible return values:
+- pointer to the name string, in case of success
+- \em NULL, if \em block_count is zero
+- \em NULL, if \em block_size is zero
+- \em NULL, if \em block_count and \em block_size are invalid
+- \em NULL, if the control block memory (\em attr->cb_mem) is not NULL and the memory is not 4 byte aligned 
+- \em NULL, if the control block memory (\em attr->cb_mem) is not NULL but the size (\em attr->cb_size) is not big enough to store a \em mutex object
+- \em NULL, if the control block memory (\em attr->cb_mem) is NULL but the size (\em attr->cb_size) is not 0
+- \em NULL, if \em mp_mem is \em NULL and \em mp_size is not equal to zero
+- \em NULL, if IRQ is masked
+
+- \em NULL, if in IRQ mode.
+
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 \b Code \b Example
@@ -135,7 +148,18 @@ void Thread_MemPool (void *argument)
 \fn const char *osMemoryPoolGetName (osMemoryPoolId_t mp_id)
 \details
 The function \b osMemoryPoolGetName returns the pointer to the name string of the memory pool identified by parameter \a
-mp_id or \token{NULL} in case of an error.
+mp_id.
+
+Possible return values:
+- pointer to the name string, in case of success
+- \em NULL, if a memory pool object specified by \a mp_id does not exist.
+- \em NULL, if the memory pool object specified by \a mp_id refers to \em NULL
+
+- \em NULL, if the memory pool object is \em 'osRtxObjectInactive'
+
+- \em NULL, if IRQ is masked
+
+- \em NULL, if in IRQ mode.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -158,6 +182,14 @@ The parameter \ref CMSIS_RTOS_TimeOutValue "timeout" can have the following valu
 
 The result is the pointer to the memory block allocated, or NULL if no memory is available.
 
+Possible return values:
+- pointer to memory block, in case of success
+- \em NULL, if \a mp_id refers to an object with \em NULL pointer
+- \em NULL, if a memory pool object specified by \a mp_id does not exist
+- \em NULL, if the state of of the memory pool specified by \a mp_id is \em 'osRtxObjectInactive'
+- \em NULL, if a memory block could not be allocated within the time period \em 'timeout'.
+
+
 \note It is in the responsibility of the user to respect the block size, i.e. not access memory beyond the blocks limit.
  
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
@@ -178,9 +210,15 @@ specified by the parameter \a mp_id. The memory block is put back to the list of
 If another thread is waiting for memory to become available the thread is put to \ref ThreadStates "READY" state.
 
 Possible \ref osStatus_t return values:
- - \em osOK: the memory has been freed.
- - \em osErrorParameter: parameter \a mp_id is \token{NULL} or invalid, \a block points to invalid memory.
- - \em osErrorResource: the memory pool specified by parameter \a mp_id is in an invalid memory pool state.
+- \em 'osOK', if the memory has been freed
+- \em 'osErrorParameter', if a memory pool object specified by \a mp_id does not exist
+- \em 'osErrorParameter, if the memory pool object specified by \a mp_id refers to \em NULL
+- \em 'osErrorResource', if the memory pool object is in state \em 'osRtxObjectInactive'
+- \em 'osErrorParameter', if \em mp->info == \em NULL
+- \em 'osErrorParameter', if \em block < \em mp_info->block_base
+- \em 'osErrorParameter', if \em block >= \em mp_info->block_lim
+- \em 'osErrorResource', if \em mp_info->used_blocks == 0.
+
 
 \note \b osMemoryPoolFree may perform certain checks on the \a block pointer given. But using \b osMemoryPoolFree 
 with a pointer other than one received from \ref osMemoryPoolAlloc has \b UNPREDICTED behaviour.
@@ -199,6 +237,15 @@ Refer to \ref osMemoryPoolNew.
 The function \b osMemoryPoolGetCapacity returns the maximum number of memory blocks in the memory pool object specified by
 parameter \a mp_id or \token{0} in case of an error.
 
+New definition
+Possible return values:
+- maximum number of memory blocks, in case of success
+- \em 0, if a memory pool object specified by \a mp_id does not exist
+- \em 0, if the memory pool object specified by \a mp_id refers to \em NULL
+- \em 0, if the memory pool object that belongs to the identifier \a mp_id is \em NULL
+
+- \em 0, if the memory pool object is \em 'osRtxThreadInactive'.
+
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
@@ -208,6 +255,12 @@ parameter \a mp_id or \token{0} in case of an error.
 \details
 The function \b osMemoryPoolGetBlockSize returns the memory block size in bytes in the memory pool object specified by
 parameter \a mp_id or \token{0} in case of an error.
+
+Possible return values:
+- memory block size, in case of success
+- \em 0, if a memory pool object specified by \a mp_id does not exist
+- \em 0, if the memory pool object specified by \a mp_id refers to \em NULL
+- \em 0, if the memory pool object is \em 'osRtxObjectInactive'.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -219,6 +272,15 @@ parameter \a mp_id or \token{0} in case of an error.
 The function \b osMemoryPoolGetCount returns the number of memory blocks used in the memory pool object specified by
 parameter \a mp_id or \token{0} in case of an error.
 
+New definition
+Possible \ref return values:
+- number of memory blocks used in the memory pool, in case of success
+- \em 0, if a memory pool object specified by \a mp_id does not exist.
+- \em 0, if the memory pool object specified by \a mp_id refers to \em NULL
+
+- \em 0, if the memory pool object specified by \a mp_id is \em 'osRtxThreadInactive'.
+
+
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
@@ -229,6 +291,13 @@ parameter \a mp_id or \token{0} in case of an error.
 The function \b osMemoryPoolGetSpace returns the number of memory blocks available in the memory pool object specified by
 parameter \a mp_id or \token{0} in case of an error.
 
+Possible return values:
+- number of memory blocks available, in case of success
+- \em 0, if a memory pool object specified by \a mp_id does not exist.
+
+- \em 0, if the memory pool object is \em NULL
+
+- \em 0, if the memory pool object is 'osRtxObjectInactive'.
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
@@ -241,10 +310,13 @@ memory obtained for memory pool handling. After this call, the \a mp_id is no lo
 memory pool may be created again using the function \ref osMemoryPoolNew.
 
 Possible \ref osStatus_t return values:
- - \em osOK: the memory pool object has been deleted.
- - \em osErrorParameter: parameter \a mp_id is \token{NULL} or invalid.
- - \em osErrorResource: the memory pool specified by parameter \a mp_id is in an invalid memory pool state.
- - \em osErrorISR: \b osMemoryPoolDelete cannot be called from interrupt service routines.
+- \em 'osErrorParameter', if a memory pool object specified by \a mp_id does not exist
+- \em 'osErrorParameter', if the memory pool object is \em NULL
+- \em 'osErrorResource', if the memory pool object was \em 'osRtxObjectInactive'
+- \em 'osErrorISR', if IRQ is masked
+- \em 'osErrorISR', if in IRQ mode.
+
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
