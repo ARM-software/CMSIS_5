@@ -751,7 +751,8 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = . \
-						 ./src/mainpage.txt \
+                         ./src/mainpage.txt \
+                         ./src/history.txt \
                          ./src/cmsis_os2.txt \
                          ./src/cmsis_os2_Kernel.txt \
                          ./src/cmsis_os2_Thread.txt \
@@ -767,7 +768,8 @@ INPUT                  = . \
                          ./src/cmsis_os2_Migration.txt \
                          ./src/cmsis_os2_MigrationGuide.txt \
                          ./src/cmsis_os2_tick.txt \
-						 ./src/rtx_os.txt \
+                         ./src/validation.txt \
+                         ./src/rtx_os.txt \
                          ./src/rtx_evr.txt \
                          ../../RTOS2/Include/cmsis_os2.h \
                          ../../RTOS2/Include/os_tick.h \
