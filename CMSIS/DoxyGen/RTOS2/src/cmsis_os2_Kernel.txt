@@ -69,12 +69,19 @@ it will return \c osKernelError, otherwise it returns the kernel state.
 \details
 The function \b osKernelInitialize initializes the RTOS Kernel. Before it is successfully executed, only the functions
 \ref osKernelGetInfo and \ref osKernelGetState may be called.
- 
+
 Possible \ref osStatus_t return values:
-- \em osOK in case of success.
-- \em osError if an unspecific error occurred.
-- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
-- \em osErrorNoMemory if no memory could be reserved for the operation.
+  - \em 'osOK', in case of success
+  - \em 'osError', if the kernel is not in state \em 'osRtxKernelInactive'
+
+  - \em 'osError', if the thread stack size is lower than 64U+8U
+
+  - \em 'osError', if (osRtxConfig.isr_queue.data == NULL) || (osRtxConfig.isr_queue.max == 0U)
+
+  - \em 'osErrorISR', if IRQ is masked
+
+  - \em 'osErrorISR', if in IRQ mode.
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -114,10 +121,13 @@ int main (void) {
 The function \b  osKernelGetInfo retrieves the API and kernel version of the underlying RTOS kernel and a human readable
 identifier string for the kernel. It can be safely called before the RTOS is initialized or started (call to
 \ref osKernelInitialize or \ref osKernelStart).
+The function shall return the first 'size' characters of of the kernel id in the output parameter id_buf.
 
 Possible \ref osStatus_t return values:
-- \em osOK in case of success.
-- \em osError if an unspecific error occurred.
+- \em 'osOK', in case of success
+- \em 'osErrorISR', if IRQ is masked
+- \em 
+'osErrorISR', if in IRQ mode.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -143,12 +153,11 @@ void info (void) {
 \fn osKernelState_t osKernelGetState (void)
 \details
 The function \b osKernelGetState returns the current state of the kernel and can be safely called before the RTOS is
-initialized or started (call to \ref osKernelInitialize or \ref osKernelStart). In case it fails it will return \c osKernelError,
-otherwise it returns the kernel state (refer to \ref osKernelState_t for the list of kernel states).
+initialized or started (call to \ref osKernelInitialize or \ref osKernelStart). 
 
 Possible \ref osKernelState_t return values:
-- \ref osKernelError if an unspecific error occurred.
-- the actual kernel state otherwise.
+- \ref \em 'osKernelError', if an unspecific error occurred
+- the kernel state otherwise.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -177,8 +186,14 @@ object creation functions (\b osXxxNew) may be called.
 At least one initial thread should be created prior osKernelStart, see \ref osThreadNew.
 
 Possible \ref osStatus_t return values:
-- \em osError if an unspecific error occurred.
-- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+- \em 'osOk', in case of success
+- \em 'osError', if the kernel is not in state \em 'osRtxKernelReady'
+- \em 'osError', if no threads are in state \em 'osRtxThreadReady'
+- \em 'osError', if timer thread or idle thread could not be started
+- \em 'osError', if the RTOS tick could not be set up
+- \em 'osErrorISR', if IRQ is masked
+- \em 'osErrorISR', if in IRQ mode. 
+
  
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -209,9 +224,17 @@ The function \b osKernelLock allows to lock all task switches. It returns the pr
 it was locked, \token{0} if it was unlocked), or a negative number representing an error code otherwise (refer to
 \ref osStatus_t).
 
-Possible \ref osStatus_t return values:
-- \em osError if an unspecific error occurred.
-- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+Possible return values:
+- \em 
+1, if the kernel is locked
+
+- \em 0, if the kernel is running
+- \em 
+'osErrorISR', if IRQ is masked
+
+- \em 'osErrorISR', if in IRQ mode
+- \em 
+'osError', if an unspecified error occured.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -231,9 +254,13 @@ The function \b osKernelUnlock resumes from \ref osKernelLock. It returns the pr
 it was locked, \token{0} if it was unlocked), or a negative number representing an error code otherwise (refer to
 \ref osStatus_t).
 
-Possible \ref osStatus_t return values:
-- \em osError if an unspecific error occurred.
-- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+Possible return values:
+- \em 1, if the state of the kernel is \em 'osRtxKernelLocked'
+- \em 0, if the state of the kernel is \em 'osRtxKernelRunning'
+- \em 'osError', if the kernel is not in state \em 'osRtxKernelLocked' and not in state \em 'osRtxKernelRunning'
+- \em 'osErrorISR', if IRQ is masked
+- \em 'osErrorISR', if in IRQ mode.  
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -262,9 +289,13 @@ The argument \a lock specifies the lock state as obtained by \ref osKernelLock o
 The function returns the new value of the lock state (\token{1} if it was locked, \token{0} if it was unlocked), or a
 negative number representing an error code otherwise (refer to \ref osStatus_t).
 
-Possible \ref osStatus_t return values:
-- \em osError if an unspecific error occurred.
-- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+Possible return values:
+- \em '1', if kernel was locked
+- \em '0', if kernel was not locked
+- \em 'osError', unspecified error occured
+- \em 'osErrorISR', if IRQ is masked
+- \em 'osErrorISR', if in IRQ mode.
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -293,6 +324,11 @@ timer intervals. The function \b osKernelSuspend suspends the RTX kernel schedul
 The return value can be used to determine the amount of system ticks until the next tick-based kernel event will occure, i.e.
 a delayed thread becomed ready again. It is recommended to set up the low power timer to generate a wake-up interrupt based
 on this return value.
+
+Possible return values:
+- amount of system ticks, in case of success
+- \em 'osErrorISR', if IRQ is masked
+- \em 'osErrorISR', if in IRQ mode.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
