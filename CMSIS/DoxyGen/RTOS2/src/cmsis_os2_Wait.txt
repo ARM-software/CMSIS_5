@@ -25,8 +25,10 @@ is automatically put back to the \ref ThreadStates "READY" state after the given
 will have the highest priority in \ref ThreadStates "READY" state it will being scheduled immediately.
 
 Possible \ref osStatus_t return values:
- - \em osOK: the time delay is executed.
- - \em osErrorISR: \ref osDelay cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+ - \em 'osOK', if the time delay is executed
+ - \em 'osErrorISR', if IRQ is masked
+ - \em 'osErrorISR', if in IRQ mode.
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -53,16 +55,18 @@ The function \b osDelayUntil waits until an absolute time (specified in kernel \
 The corner case when the kernel tick counter overflows is handled by \b osDelayUntil. Thus it is absolutely legal
 to provide a value which is lower than the current tick value, i.e. returned by \ref osKernelGetTickCount. Typically
 as a user you do not have to take care about the overflow. The only limitation you have to have in mind is that the
-maximum delay is limited to (2<sup>32</sup>)-1 ticks.
+maximum delay is limited to (2<sup>32</sup>)-2 ticks.
 
 The delayed thread is put into the \ref ThreadStates "BLOCKED" state and a context switch occurs immediately. The thread
 is automatically put back to the \ref ThreadStates "READY" state when the given time is reached. If the thread will
 have the highest priority in \ref ThreadStates "READY" state it will being scheduled immediately.
 
 Possible \ref osStatus_t return values:
- - \em osOK: the time delay is executed.
- - \em osParameter: the time cannot be handled (out of bounds).
- - \em osErrorISR: \ref osDelayUntil cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+ - \em 'osOK', if the time delay is executed
+ - \em 'osErrorParameter', if the time cannot be handled (\em ticks-\em osRtxInfo.kernel.tick == 2^32-1)
+ - \em 'osErrorISR', if IRQ is masked
+ - \em 'osErrorISR', if in IRQ mode.
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
