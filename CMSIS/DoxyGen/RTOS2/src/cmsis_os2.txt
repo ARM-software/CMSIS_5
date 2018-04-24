@@ -856,7 +856,7 @@ RTX5 implements a software stack overflow checking that traps stack overruns. St
 automatic variables. Extensive usage or incorrect stack configuration may cause a stack overflow. Software stack overflow
 checking is controlled with the define \c OS_STACK_CHECK.
  
-If a stack overflow is detected, the function \b osRtxErrorNotify with error code \b osRtxErrorStackUnderflow is called. By
+If a stack overflow is detected, the function \ref osRtxErrorNotify with error code \ref osRtxErrorStackUnderflow is called. By
 default, this function is implemented as an endless loop and will practically stop code execution.
 
 \subsection threadConfig_watermark Stack Usage Watermark
