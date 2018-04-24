@@ -316,6 +316,21 @@ started (call to \ref osKernelStart), but not before it is initialized (call to 
 
 The function \b osThreadNew returns the pointer to the thread object identifier or \token{NULL} in case of an error.
 
+Possible \ref osThreadId_t return values:
+- pointer to the thread object, in case of success
+- \em NULL, if the priority level is outside the permitted range: \em osPriorityIdle ... \em osPriorityISR.
+- \em NULL, if the \em stack_mem is not \em NULL but:
+  - \em stack_mem is not a multiple of 8 bytes
+  - \em stack_size equals 0
+- \em NULL, if \em stack_size is lower smaller than 72 bytes
+- \em NULL, if \em stack_size is not zero and not a multiple of 8
+- \em NULL, if the control block (attr->cb_mem) is not large enough to hold a thread control block
+- \em NULL, if the control block (attr->cb_mem) is not 4 byte aligned  
+- \em NULL, if the maximum number of threads have been created already
+- \em NULL, if the thread function \em func is \em NULL
+- \em 'osErrorISR', if IRQ is masked
+- \em 'osErrorISR', in IRQ mode. 
+
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 \b Code \b Example
@@ -329,6 +344,13 @@ Refer to the \ref thread_examples "Thread Examples" section.
 \details
 The function \b osThreadGetName returns the pointer to the name string of the thread identified by parameter \a thread_id or
 \token{NULL} in case of an error.
+
+Possible return values:
+- pointer to the name string, in case of success
+- \em NULL, if no name has been defined
+- \em NULL, if a thread specified by \a thread_id does not exist
+- \em NULL, if thread_id is \em NULL.
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -371,7 +393,16 @@ void ThreadGetId_example (void)  {
 The function \b osThreadGetState returns the state of the thread identified by parameter \a thread_id. In case it fails or
 if it is called from an ISR, it will return \c osThreadError, otherwise it returns the thread state (refer to
 \ref osThreadState_t for the list of thread states).
- 
+
+Possible \ref osThreadState_t return values:
+- the state of the thread specified by \a thread_id, in case of success
+- \em 'osThreadError', if the thread specified by \a thread_id is \em NULL
+
+- \em 'osThreadError', if if a thread specified by \a thread_id does not exist
+- \em 'osThreadError', if IRQ is masked
+
+- \em 'osThreadError', if in IRQ mode.
+
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
@@ -383,10 +414,13 @@ The function \b osThreadSetPriority changes the priority of an active thread spe
 priority specified by the parameter \a priority. 
 
 Possible \ref osStatus_t return values:
-    - \em osOK: the priority of the specified thread has been changed successfully.
-    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid or \a priority is incorrect.
-    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
-    - \em osErrorISR: the function \b osThreadSetPriority cannot be called from interrupt service routines.
+- \em 'osOK', if the priority of thread specified by \a thread_id  has been changed successfully
+- \em 'osErrorParameter', if the thread specified by \a thread_id is \em NULL
+- \em 'osErrorParameter', if a thread specified by \a thread_id does not exist
+- \em 'osErrorParameter', if \em osPriorityIdle < \em priority or \em priority > \em osPriorityISR 
+- \em 'osErrorResource', if the thread is in state \em 'osThreadInactive' or \em 'osThreadTerminated'
+- \em 'osErrorISR', if IRQ is masked
+- \em 'osErrorISR', if in IRQ mode.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -419,9 +453,10 @@ void Thread_1 (void const *arg)  {                          // Thread function
 The function \b osThreadGetPriority returns the priority of an active thread specified by the parameter \a thread_id.
 
 Possible \ref osPriority_t return values:
-    - \em priority: the priority of the specified thread.
-    - \em osPriorityError: priority cannot be determined or is illegal. It is also returned when the function is called from
-      \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+- the priority of the thread specified by \em thread_id, in case of success
+- \em 'osPriorityError', if the threads specified by \em thread_id is in state \em 'osRtxObjectInactive' or \em 'osRtxObjectTerminated'
+- \em 'osPriorityError', if a thread specified by \em thread_id does not exist
+- \em 'osPriorityError', if the thread is \em NULL.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -448,9 +483,10 @@ no thread switch occurs. \b osThreadYield does not set the thread to state \ref 
 priority will be scheduled even if threads in state \ref ThreadStates "READY" are available.
 
 Possible \ref osStatus_t return values:
-    - \em osOK: control has been passed to the next thread successfully.
-    - \em osError: an unspecified error has occurred.
-    - \em osErrorISR: the function \b osThreadYield cannot be called from interrupt service routines.
+- \em 'osOK', if control has been passed to the next thread successfully
+- \em 'osErrorISR', if IRQ is masked
+- \em 'osErrorISR', if in IRQ mode.
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 \note This function <b>has no impact</b> when called when the kernel is locked, see \ref osKernelLock.
@@ -483,10 +519,20 @@ Threads that are already \ref ThreadStates "BLOCKED" are removed from any wait l
 Thus it is not recommended to suspend an already blocked thread.
 
 Possible \ref osStatus_t return values:
-    - \em osOK: the thread has been suspended successfully.
-    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
-    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
-    - \em osErrorISR: the function \b osThreadSuspend cannot be called from interrupt service routines.
+ - \em 'osOK', if the thread has been suspended successfully
+ - \em 'osErrorParameter', if a thread specified by \a thread_id does not exist
+ - \em 'osErrorParameter', if the thread specified by \a thread_id is NULL
+
+ - \em 'osErrorResource', if no thread is in state \em 'osRtxThreadReady' or the kernel is not running
+
+ - \em 'osErrorResource', the the thread specified by \a thread_id is in state \em 'osRtxThreadInactive'
+
+ - \em 'osErrorResource', the the thread specified by \a thread_id is in state \em 'osRtxThreadTerminated'
+
+ - \em 'osErrorISR', if IRQ is masked
+
+ - \em 'osErrorISR', if in IRQ mode.
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 \note This function <b>must not</b> be called to suspend the running thread when the kernel is locked, i.e. \ref osKernelLock.
@@ -513,10 +559,12 @@ Functions that will put a thread into \ref ThreadStates "BLOCKED" state are:
 \ref osThreadSuspend.
 
 Possible \ref osStatus_t return values:
-    - \em osOK: the thread has been resumed successfully.
-    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
-    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
-    - \em osErrorISR: the function \b osThreadResume cannot be called from interrupt service routines.
+ - \em 'osOK', if the thread specified by \a thread_id has been resumed successfully
+ - \em 'osErrorParameter', if a thread specified by \a thread_id does not exist
+ - \em 'osErrorParameter', if the thread specified by \a thread_id is \em NULL
+ - \em 'osErrorResource', if the state of the thread specified by \a thread_id is not 'Blocked'.
+ - \em 'osErrorISR', if IRQ is masked
+ - \em 'osErrorISR', in IRQ mode.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 \note This function <b>may be</b> called when kernel is locked (\ref osKernelLock). Under this circumstances
@@ -533,10 +581,14 @@ Detached threads are not joinable with \ref osThreadJoin. When a detached thread
 the system. The behavior of \ref osThreadDetach on an already detached thread is undefined.
 
 Possible \ref osStatus_t return values:
-    - \em osOK: the attribute of the specified thread has been changed to detached successfully.
-    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
-    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state.
-    - \em osErrorISR: the function \b osThreadDetach cannot be called from interrupt service routines.
+ - \em 'osOK', if the attribute of the thread specified by \a thread_id has been changed to detached successfully.
+ - \em 'osErrorParameter', if \em thread_id is \em NULL
+ - \em 'osErrorParameter', if a thread specified by \a thread_id does not exist
+ - \em 'osErrorResource', if the thread is in state \em 'osRtxThreadInactive'
+ - \em 'osErrorResource', if the thread is marked as \em 'osThreadDetached'
+ - \em 'osErrorISR', if IRQ is masked
+ - \em 'osErrorISR', if in IRQ mode.  
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -550,12 +602,16 @@ terminated, then \ref osThreadJoin returns immediately. The thread must be joina
 attribute \ref osThreadDetached.
 
 Possible \ref osStatus_t return values:
-    - \em osOK: if the thread has already been terminated and joined or once the thread has been terminated and the join
-      operations succeeds.
-    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
-    - \em osErrorResource: parameter \em thread_id is \token{NULL} or refers to a thread that is not an active thread or the
-      thread is not joinable.
-    - \em osErrorISR: the function \b osThreadJoin cannot be called from interrupt service routines.
+   - \em 'osOK', in case of success
+   - \em 'osErrorParameter', if the thread is \em NULL
+   - \em 'osErrorParameter', if a thread specified by \a thread_id does not exist
+   - \em 'osErrorResource', if the thread specified by \a thread_id is marked as not joinable
+
+   - \em 'osErrorResource', if the state of the thread is \em 'osRtxThreadInactive' or \em 'osRtxThreadRunning'
+   - \em 'osErrorResource', if the kernel is not running
+   - \em 'osErrorISR', if IRQ is masked
+
+   - \em 'osErrorISR', if in IRQ mode.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -588,11 +644,16 @@ the thread is currently \ref ThreadStates "RUNNING", the thread terminates and t
 such thread exists, the function will not terminate the running thread, but return \em osErrorResource.
 
 Possible \ref osStatus_t return values:
-    - \em osOK: the specified thread has been removed from the active thread list successfully.
-    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
-    - \em osErrorResource: thread specified by parameter \em thread_id is in an invalid thread state or no
-      other \ref ThreadStates "READY" thread exists.
-    - \em osErrorISR: the function \b osThreadTerminate cannot be called from interrupt service routines.
+- \em 'osOK', if the thread specified by \a thread_id has been removed from the active thread list successfully
+- \em 'osErrorParameter', if the thread specified by \a thread_id does not exist
+- \em 'osErrorParameter', if a thread with \em thread_id is \em NULL
+- \em 'osErrorResource', if the thread is in state \em 'osRtxThreadInactive' or \em 'osRtxThreadTerminated'
+- \em 'osErrorResource', if no thread is in state \em 'osRtxThreadReady' that can run next
+- \em 'osErrorResource', if the kernel is not running
+- \em 'osErrorISR', if IRQ is masked
+
+- \em 'osErrorISR', if in IRQ mode.
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 \note Avoid calling the function with a \em thread_id that does not exist or has been terminated already.
@@ -626,6 +687,17 @@ void ThreadTerminate_example (void) {
 \details
 The function \b osThreadGetStackSize returns the stack size of the thread specified by parameter \a thread_id. In case of an
 error, it returns \token{0}.
+/*
+New definition
+*/
+Possible return values:
+- the stack size of the thread
+- \em 0, if a thread specified by \a thread_id does not exist
+- \em 0, if the thread specified by \em thread_id is \em NULL
+- \em 0, if the thread is in state \em 'osRtxObjectInactive'
+- \em 0, if IRQ is masked
+- \em 0, if in IRQ mode.
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -637,6 +709,16 @@ error, it returns \token{0}.
 The function \b osThreadGetStackSpace returns the size of unused stack space for the thread specified by parameter
 \a thread_id. Stack watermark recording during execution needs to be enabled (refer to \ref threadConfig). In case of an
 error, it returns \token{0}.
+
+Possible return values:
+- the size of unused stack space, in case of success
+- \em 0, if a thread specified by \a thread_id does not exist
+- \em 0, if the thread with \em thread_id is \em NULL
+- \em 0, if the thread is in state \em 'osRtxObjectInactive'
+- \em 0, if stack watermark is not enabled
+- \em 0, if IRQ is masked
+- \em 0, if in IRQ mode
+
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -655,6 +737,13 @@ The function \b osThreadGetCount returns the number of active threads or \token{
 \fn uint32_t osThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items)
 \details
 The function \b osThreadEnumerate returns the number of enumerated threads or \token{0} in case of an error.
+
+Possible return values:
+- number of enumerated threads, in case of success
+- \em 0, if \em thread_array is \em NULL
+- \em 0, if \em array_items = 0
+- \em 0, if IRQ is masked
+- \em 0, if in IRQ mode.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
