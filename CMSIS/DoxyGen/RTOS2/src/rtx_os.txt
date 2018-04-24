@@ -178,10 +178,64 @@ static uint32_t mq_mem[osRtxMessageQueueMemSize(MSG_COUNT, sizeof(msg_item_t))/4
 \endcode
 */
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osRtxErrorStackUnderflow
+\brief Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks.
+\details
+This error identifier is used with \ref osRtxErrorNotify when RTX5 detects a thread stack overflow.
+The object_id announced along this error can be used to identify the affected thread.
+
+\ref threadConfig_watermark used together with larger stack sizes can help to figure out actual
+memory requirements for threads.
+
+\attention Whenever this error identifier is signaled memory corruption has already happened. 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osRtxErrorISRQueueOverflow
+\brief ISR Queue overflow detected when inserting object.
+\details
+This error identifier is used with \ref osRtxErrorNotify when RTX5 detects an overflow of the
+interrupt post processing message queue. The object_id can be used to identify the affected
+object.
+
+\attention Whenever this error identifier is signaled the system state is already inconsistent.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osRtxErrorTimerQueueOverflow
+\brief User Timer Callback Queue overflow detected for timer.
+\details
+This error identifier is used with \ref osRtxErrorNotify when RTX5 detects an overflow of the
+timer callback queue. The object_id can be used to identify the affected timer.
+
+\attention Whenever this error identifier is signaled a timer callback is already lost.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osRtxErrorClibSpace
+\brief Standard C/C++ library libspace not available.
+\details
+This error identifier is used with \ref osRtxErrorNotify when RTX5 detects usage of libspace
+but not enough memory was reserved using \c OS_THREAD_LIBSPACE_NUM.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osRtxErrorClibMutex
+\brief Standard C/C++ library mutex initialization failed.
+\details
+This error identifier is used with \ref osRtxErrorNotify when RTX5 fails to create mutexes needed
+to lock global C/C++ library resources.
+*/
+
 /**
 @}
 */
-
 
 /**
 \defgroup rtx5_specific_functions Functions
@@ -193,24 +247,24 @@ static uint32_t mq_mem[osRtxMessageQueueMemSize(MSG_COUNT, sizeof(msg_item_t))/4
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \fn uint32_t osRtxErrorNotify (uint32_t code, void *object_id);
+\param[in] code The code to identify the error condition.
+\param[in] object_id A reference to any RTX object to identify the object that caused the issue, can be \token{NULL}.
 \details
 Some system error conditions can be detected during runtime. If the RTX kernel detects a runtime error, it calls the runtime
 error function \b osRtxErrorNotify for an object specified by parameter \a object_id.
 
 The parameter \a code passes the actual error code to this function:
-| Error Code                   | Description                                                                       |
-|------------------------------|-----------------------------------------------------------------------------------|
-| osRtxErrorStackUnderflow     | Stack overflow detected for thread (thread_id=object_id)                          |
-| osRtxErrorISRQueueOverflow   | ISR Queue overflow detected when inserting object (object_id)                     |
-| osRtxErrorTimerQueueOverflow | User Timer Callback Queue overflow detected for timer (timer_id=object_id)        |
-| osRtxErrorClibSpace          | Standard C/C++ library libspace not available: increase \c OS_THREAD_LIBSPACE_NUM |
-| osRtxErrorClibMutex          | Standard C/C++ library mutex initialization failed                                |
+| Error Code                        | Description                                                                       |
+|-----------------------------------|-----------------------------------------------------------------------------------|
+| \ref osRtxErrorStackUnderflow     | Stack overflow detected for thread (thread_id=object_id)                          |
+| \ref osRtxErrorISRQueueOverflow   | ISR Queue overflow detected when inserting object (object_id)                     |
+| \ref osRtxErrorTimerQueueOverflow | User Timer Callback Queue overflow detected for timer (timer_id=object_id)        |
+| \ref osRtxErrorClibSpace          | Standard C/C++ library libspace not available: increase \c OS_THREAD_LIBSPACE_NUM |
+| \ref osRtxErrorClibMutex          | Standard C/C++ library mutex initialization failed                                |
 
 The function \b osRtxErrorNotify must contain an infinite loop to prevent further program execution. You can use an emulator
 to step over the infinite loop and trace into the code introducing a runtime error. For the overflow errors this means you
 need to increase the size of the object causing an overflow.
-
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
@@ -245,16 +299,27 @@ uint32_t osRtxErrorNotify (uint32_t code, void *object_id) {
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-osRtxErrorClibMutex         /** 
+/** 
 \fn void osRtxIdleThread (void *argument);
+\param[in] argument Unused parameter, always set to \token{NULL}.
 \details
-The function \b osRtxIdleThread is executed by the RTX kernel, when no other threads are ready to run. By default, this
-thread is an empty end-less loop that does nothing. It only waits until another task becomes ready to run. You may change the
-code of the \b osRtxIdleThread function to put the CPU into a power-saving or idle mode, see \ref TickLess.
+The function \b osRtxIdleThread is executed by the RTX kernel when no other threads are ready to run.
+
+By default, this thread is an empty end-less loop that does nothing. It only waits until another task
+becomes ready to run. You may change the code of the \b osRtxIdleThread function to put the CPU into
+a power-saving or idle mode, see \ref TickLess.
 
 The default stack size for this thread is defined in the file RTX_Config.h. Refer to \ref threadConfig.
 
-\note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\attention
+The idle thread should never be blocked nor terminated!
+<b>Do not</b> call
+<ul>
+  <li>blocking functions,</li>
+  <li>\ref osThreadTerminate, or </li>
+  <li>\ref osThreadExit</li>
+</ul>
+and <b>do not</b> return from this function when providing a user defined implementation.
 
 <b>Code Example</b>
 \code
