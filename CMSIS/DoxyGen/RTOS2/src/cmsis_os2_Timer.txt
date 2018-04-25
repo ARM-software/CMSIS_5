@@ -90,7 +90,7 @@ Returned by:
 /**
 \typedef void (*osTimerFunc_t) (void *argument)
 \details
-The timer callback function is called everytime the timer elapses.
+The timer callback function is called every time the timer elapses.
 
 The callback might be executed either in a dedicated timer thread or in interrupt context. Thus it is recommended to only
 use ISR callable functions from the timer callback.
@@ -102,11 +102,7 @@ use ISR callable functions from the timer callback.
 /**
 \struct osTimerAttr_t 
 \details
-Attributes to configure a timer.
-
-Refer to \ref CMSIS_RTOS_MemoryMgmt for details about usage of
- - osTimerAttr_t::cb_mem
- - osTimerAttr_t::cb_size
+Specifies the following attributes for the \ref osTimerNew function.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -339,21 +335,23 @@ void TimerDelete_example (void) {
 /**
 \var osTimerAttr_t::attr_bits
 \details
-Reserved for future use (set to '0').\n
-Default: \token{0}.
+Reserved for future use (must be set to '0' for future compatibility).
 
 \var osTimerAttr_t::cb_mem
 \details
-Pointer to a memory location for the timer control block object. This can optionally be used for custom memory management systems.\n
-Default: \token{NULL} (uses kernel memory management).
+Pointer to a memory for the timer control block object. Refer to \ref StaticObjectMemory for more information.
 
+Default: \token{NULL} to use \ref CMSIS_RTOS_MemoryMgmt_Automatic for the timer control block.
 
 \var osTimerAttr_t::cb_size
 \details
-The size of the memory block passed with \ref cb_mem. Must be the size of a timer control block object or larger.
+The size (in bytes) of memory block passed with \ref cb_mem. For RTX, the minimum value is defined with \ref osRtxTimerCbSize (higher values are permitted).
+
+Default: \token{0} as the default is no memory provided with \ref cb_mem.
 
 \var osTimerAttr_t::name
 \details
-Pointer to a string with a human readable name of the timer object.\n
-Default: \token{NULL}.
+Pointer to a constant string with a human readable name (displayed during debugging) of the timer object.
+
+Default: \token{NULL} no name specified.
 */

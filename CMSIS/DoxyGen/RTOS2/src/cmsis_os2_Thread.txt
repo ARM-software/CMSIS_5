@@ -30,7 +30,7 @@ A CMSIS-RTOS assumes that threads are scheduled as shown in the figure <b>Thread
 states change as follows:
  - A thread is created using the function \ref osThreadNew. This puts the thread into the \ref ThreadStates "READY" or \ref ThreadStates "RUNNING" state
    (depending on the thread priority).
- - CMSIS-RTOS is pre-emptive. The active thread with the highest priority becomes the \ref ThreadStates "RUNNING" thread provided it does not
+ - CMSIS-RTOS is preemptive. The active thread with the highest priority becomes the \ref ThreadStates "RUNNING" thread provided it does not
    wait for any event. The initial priority of a thread is defined with the \ref osThreadAttr_t but may be changed during
    execution using the function \ref osThreadSetPriority.
  - The \ref ThreadStates "RUNNING" thread transfers into the \ref ThreadStates "BLOCKED" state when it is delayed, waiting for an event or suspended.
@@ -168,6 +168,7 @@ int main (void) {
 }
 \endcode
 
+\anchor joinable_threads
 <b>Example 6 - Joinable threads</b>
  
 In this example a master thread creates four threads with the \ref osThreadJoinable attribute. These will do some work and
@@ -279,13 +280,7 @@ or for runtime parameters.
 /**
 \struct osThreadAttr_t
 \details
-Attributes to configure a thread.
-
-Refer to \ref CMSIS_RTOS_MemoryMgmt for details about usage of
- - osThreadAttr_t::cb_mem
- - osThreadAttr_t::cb_size
- - osThreadAttr_t::stack_mem
- - osThreadAttr_t::stack_size
+Specifies the following attributes for the \ref osThreadNew function.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -755,43 +750,49 @@ Possible return values:
 /**
 \var osThreadAttr_t::attr_bits
 \details
-The following predefined bit masks can be assigned to set options for a thread object.
-
-| Bit Mask                | Description                                             |
-| :---------------------- | :------------------------------------------------------ |
-| \ref osThreadDetached   | Create thread in a detached mode (default).             |
-| \ref osThreadJoinable   | Create thread in joinable mode, see \ref osThreadJoin.  |
-
+The following bit masks can be used to set options:
+ - \ref osThreadDetached : create thread in a detached mode (default).
+ - \ref osThreadJoinable : create thread in \ref joinable_threads "joinable mode".  
 
 \var osThreadAttr_t::cb_mem
 \details
-Pointer to a memory location for the thread control block object. This can optionally be used for custom memory management systems.\n
-Default: \token{NULL} (uses kernel memory management).
+Pointer to a memory for the thread control block object. Refer to \ref StaticObjectMemory for more information.
+
+Default: \token{NULL} to use \ref CMSIS_RTOS_MemoryMgmt_Automatic for the thread control block.
 
 \var osThreadAttr_t::cb_size
 \details
-The size of the memory block passed with \ref cb_mem. Must be the size of a thread control block object or larger.
+The size (in bytes) of memory block passed with \ref cb_mem. For RTX, the minimum value is defined with \ref osRtxThreadCbSize (higher values are permitted).
+
+Default: \token{0} as the default is no memory provided with \ref cb_mem.
 
 \var osThreadAttr_t::name
 \details
-Pointer to a string with a human readable name of the thread object.\n
-Default: \token{NULL}.
+Pointer to a constant string with a human readable name (displayed during debugging) of the thread object.
+
+Default: \token{NULL} no name specified (debugger may display function name instead).
 
 \var osThreadAttr_t::priority
 \details
-Specifies the initial thread priority with a value from #osPriority_t.\n
-Default: \token{osPriorityNormal}
+Specifies the initial thread priority with a value from #osPriority_t.
+
+Default: \token{osPriorityNormal}.
 
 \var osThreadAttr_t::reserved
 \details
-Reserved for future use (set to '0').\n
-Default: \token{0}.
+Reserved for future use.
 
 \var osThreadAttr_t::stack_mem
 \details
-Pointer to a memory location for the thread stack, \b must be 64-bit aligned. This can optionally be used for custom memory
-management systems.\n
-Default: \token{NULL} (uses kernel memory management).
+Pointer to a memory location for the thread stack (64-bit aligned). 
+
+Default: \token{NULL} to allocate stack from a fixed-size memory pool using \ref ThreadStack.
+
+\var osThreadAttr_t::stack_size
+\details
+The size (in bytes) of the stack specified by \ref stack_mem.
+
+Default: \token{0} as the default is no memory provided with \ref stack_mem.
 
 \var osThreadAttr_t::tz_module
 \details
@@ -800,7 +801,6 @@ non-secure state calls the interface functions defined by the header file TZ_con
 for threads not using secure calls at all. 
 See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZone RTOS Context Management</a>.
 
-\var osThreadAttr_t::stack_size
-\details
-The size of the stack specified by \ref stack_mem in Bytes.
+Default: token{0} not thread context specified.
+
 */

@@ -34,22 +34,23 @@ Returned by:
 /** 
 \struct osMessageQueueAttr_t
 \details
-Attributes to configure a message queue.
-
-Refer to \ref CMSIS_RTOS_MemoryMgmt for details about usage of
- - osMessageQueueAttr_t::cb_mem
- - osMessageQueueAttr_t::cb_size
- - osMessageQueueAttr_t::mq_mem
- - osMessageQueueAttr_t::mq_size
+Specifies the following attributes for the \ref osMessageQueueNew function.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \fn osMessageQueueId_t osMessageQueueNew (uint32_t msg_count, uint32_t msg_size, const osMessageQueueAttr_t *attr)
 \details
-The function \b osMessageQueueNew creates and initializes a message queue object and returns the pointer to the message queue
-object identifier or \token{NULL} in case of an error. It can be safely called before the RTOS is
-started (call to \ref osKernelStart), but not before it is initialized (call to \ref osKernelInitialize).
+The function \ref osMessageQueueNew creates and initializes a  message queue object.
+The function returns a message queue object identifier or \token{NULL} in case of an error. 
+
+The function can be called after kernel initialization with \ref osKernelInitialize. It is possible to 
+create message queue objects before the RTOS kernel is started with \ref osKernelStart.
+
+The total amount of memory required for the message queue data is at least <code>msg_count * msg_size</code>.
+The \em msg_size is rounded up to a double even number to ensure 32-bit alignment of the memory blocks.
+
+The memory blocks allocated from the message queue have a fixed size defined with the parameter \c msg_size.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 /*
@@ -333,29 +334,35 @@ Possible \ref osStatus_t return values:
 /**
 \var osMessageQueueAttr_t::attr_bits
 \details
-Reserved for future use (set to '0').\n
-Default: \token{0}.
+Reserved for future use (must be set to '0' for future compatibility).
 
 \var osMessageQueueAttr_t::cb_mem
 \details
-Pointer to a memory location for the message queue control block object. This can optionally be used for custom memory management systems.\n
-Default: \token{NULL} (uses kernel memory management).
+Pointer to a memory for the message queue control block object. Refer to \ref StaticObjectMemory for more information.
+
+Default: \token{NULL} to use \ref CMSIS_RTOS_MemoryMgmt_Automatic for the message queue control block.
 
 \var osMessageQueueAttr_t::cb_size
 \details
-The size of the memory block passed with \ref cb_mem. Must be the size of a message queue control block object or larger.
+The size (in bytes) of memory block passed with \ref cb_mem. For RTX, the minimum value is defined with \ref osRtxMessageQueueCbSize (higher values are permitted).
+
+Default: \token{0} as the default is no memory provided with \ref cb_mem.
 
 \var osMessageQueueAttr_t::name
 \details
-Pointer to a string with a human readable name of the message queue object.\n
-Default: \token{NULL}.
+Pointer to a constant string with a human readable name (displayed during debugging) of the message queue object.
+
+Default: \token{NULL} no name specified.
 
 \var osMessageQueueAttr_t::mq_mem
 \details
-Pointer to a memory location for the data of the message queue object.\n
-Default: \token{NULL}.
+Pointer to a memory for the message queue data. Refer to \ref StaticObjectMemory for more information.
+
+Default: \token{NULL} to use \ref CMSIS_RTOS_MemoryMgmt_Automatic for the memory pool data.
 
 \var osMessageQueueAttr_t::mq_size
 \details
-The size of the memory passed with \ref mq_mem.
+The size (in bytes) of memory block passed with \ref mp_mem. The minimum memory block size is <code>msg_count * msg_size</code> (parameters of the \ref osMessageQueueNew function). The \em msg_size is rounded up to a double even number to ensure 32-bit alignment of the memory blocks.
+
+Default: 0 as the default is no memory provided with \ref mp_mem.
 */

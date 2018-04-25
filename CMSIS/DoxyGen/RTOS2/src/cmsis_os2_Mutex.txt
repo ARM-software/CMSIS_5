@@ -85,7 +85,7 @@ for the mutex would be blocked by the mid priority thread, called priority inver
 
 <b>Code Example</b>
 
-This example reveals a blocked high priority thread if osMutexPrioInherit is removed.
+This example reveals a blocked high priority thread if \ref osMutexPrioInherit is removed.
 
 \code
 #include "cmsis_os2.h"
@@ -135,13 +135,13 @@ the low priority thread the high priority thread gets blocked.
 Finally the mid priority thread gets executed and start doing a lot of non-blocking stuff,
 i.e. it does not call any blocking RTOS functionality.
 
-Without osMutexPrioInherit we would stuck here forever. Even if the low priority thread
+Without \ref osMutexPrioInherit we would stuck here forever. Even if the low priority thread
 gets ready after 5s. Due to its low priority the mid priority thread always gets precedence.
 The effect called priority inversion leads to the mid priority thread blocking the high
 priority thread indirectly.
 
-Using osMutexPrioInherit as shown in the example code we get rid of this situation. Due
-to the priority inheritance protocol the low priority thread inherites the high priority
+Using \ref osMutexPrioInherit as shown in the example code we get rid of this situation. Due
+to the priority inheritance protocol the low priority thread inherits the high priority
 while holding the mutex. Thus the low priority thread gets precedence over the mid priority
 thread until it release the mutex. On osMutexRelease the high priority thread get ready and
 is scheduled immediately.
@@ -155,7 +155,7 @@ is scheduled immediately.
 Robust flag in osMutexAttr_t.
 
 Robust mutexes are automatically released if the owning thread is terminated (either by
-osThreadExit or osThreadTerminate). Non-robust mutexes are not released and the user must
+\ref osThreadExit or \ref osThreadTerminate). Non-robust mutexes are not released and the user must
 assure mutex release manually.
 
 <b>Code Example</b>
@@ -180,7 +180,7 @@ void Thread(void *argument) {
 }
 \endcode
 
-Due to osMutexRobust the mutex gets released automatically. A non-robust mutex would stay locked and cannot be released anymore.
+Due to \ref osMutexRobust the mutex gets released automatically. A non-robust mutex would stay locked and cannot be released anymore.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -195,11 +195,7 @@ Returned by:
 /**
 \struct osMutexAttr_t
 \details
-Attributes to configure a mutex.
-
-Refer to \ref CMSIS_RTOS_MemoryMgmt for details about usage of
- - osMutexAttr_t::cb_mem
- - osMutexAttr_t::cb_size
+Specifies the following attributes for the \ref osMutexNew function.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -415,29 +411,40 @@ void DeleteMutex (osMutexId_t mutex_id)  {
 /**
 \var osMutexAttr_t::attr_bits
 \details
-The following predefined bit masks can be assigned to set options for a mutex object.  
+The following bit masks can be used to set options:
+ - \ref osMutexRecursive : a thread can consume the mutex multiple times without locking itself.
+ - \ref osMutexPrioInherit : priority of a waiting thread is raised (when lower) to priority of mutex owner thread.
+ - \ref osMutexRobust : the mutex is automatically released when owner thread is terminated.
 
-| Bit Mask                    |  Description        |
-| :-------------------------- | :------------------ |
-| \ref osMutexRecursive       | Mutex is recursive. |
-| \ref osMutexPrioInherit     | Priority inheritance protocol. |
-| \ref osMutexRobust          | Robust mutex.       |
+Use logical \em 'OR' operation to select multiple options, for example:
+\code
+osMutexRecursive | osMutexPrioInherit;
+\endcode
+
+Default: \token{0} which specifies:
+ - <i>non recursive mutex</i> : a thread cannot consume the mutex multiple times.
+ - <i>non priority raising</i> : the priority of a waiting thread is not changed.
+ - <i>mutex is not automatically release</i> : the mutex object must be always is automatically released when owner thread is terminated.
 
 */
 /**
 \var osMutexAttr_t::cb_mem
 \details
-Pointer to a memory location for the mutex control block object. This can optionally be used for custom memory management systems.\n
-Default: \token{NULL} (uses kernel memory management).
+Pointer to a memory for the mutex control block object. Refer to \ref StaticObjectMemory for more information.
+
+Default: \token{NULL} to use \ref CMSIS_RTOS_MemoryMgmt_Automatic for the mutex control block.
 */
 /**
 \var osMutexAttr_t::cb_size
 \details
-The size of the memory block passed with \ref cb_mem. Must be the size of a mutex control block object or larger.
+The size (in bytes) of memory block passed with \ref cb_mem. For RTX, the minimum value is defined with \ref osRtxMutexCbSize (higher values are permitted).
+
+Default: \token{0} as the default is no memory provided with \ref cb_mem.
 */
 /**
 \var osMutexAttr_t::name
 \details
-Pointer to a string with a human readable name of the event object.\n
-Default: \token{NULL}.
+Pointer to a constant string with a human readable name (displayed during debugging) of the mutex object.
+
+Default: \token{NULL} no name specified.
 */

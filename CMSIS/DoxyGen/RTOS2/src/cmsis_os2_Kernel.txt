@@ -126,8 +126,7 @@ The function shall return the first 'size' characters of of the kernel id in the
 Possible \ref osStatus_t return values:
 - \em 'osOK', in case of success
 - \em 'osErrorISR', if IRQ is masked
-- \em 
-'osErrorISR', if in IRQ mode.
+- \em 'osErrorISR', if in IRQ mode.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -156,7 +155,7 @@ The function \b osKernelGetState returns the current state of the kernel and can
 initialized or started (call to \ref osKernelInitialize or \ref osKernelStart). 
 
 Possible \ref osKernelState_t return values:
-- \ref \em 'osKernelError', if an unspecific error occurred
+- \ref osKernelError, if an unspecific error occurred
 - the kernel state otherwise.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -229,12 +228,10 @@ Possible return values:
 1, if the kernel is locked
 
 - \em 0, if the kernel is running
-- \em 
-'osErrorISR', if IRQ is masked
+- \em 'osErrorISR', if IRQ is masked
 
 - \em 'osErrorISR', if in IRQ mode
-- \em 
-'osError', if an unspecified error occured.
+- \em 'osError', if an unspecified error occured.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -292,7 +289,7 @@ negative number representing an error code otherwise (refer to \ref osStatus_t).
 Possible return values:
 - \em '1', if kernel was locked
 - \em '0', if kernel was not locked
-- \em 'osError', unspecified error occured
+- \em 'osError', unspecified error occurred
 - \em 'osErrorISR', if IRQ is masked
 - \em 'osErrorISR', if in IRQ mode.
 
