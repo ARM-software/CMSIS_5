@@ -101,11 +101,7 @@ Returned by:
 /**
 \struct osEventFlagsAttr_t 
 \details
-Attributes to configure an event flag set.
-
-Refer to \ref CMSIS_RTOS_MemoryMgmt for details about usage of
- - osEventFlagsAttr_t::cb_mem
- - osEventFlagsAttr_t::cb_size
+Specifies the following attributes for the \ref osEventFlagsNew function.
 */ 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -168,7 +164,7 @@ Possible \ref flags_error_codes return values:
     - \em 'osErrorParameter', if event flags object specified by parameter \em ef_id refers to \em NULL
     - \em 'osErrorParameter', if event flags object \em ef_id does not refer to an event flags object
     - \em 'osErrorParameter', if \em flags is not in the legal range (if the highest bit is set)
-    - \em 'osErrorResource', if event flags object specifief by \em ef_id is in state \em 'osRtxObjectInactive'.
+    - \em 'osErrorResource', if event flags object specified by \em ef_id is in state \em 'osRtxObjectInactive'.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -350,21 +346,23 @@ void EvtFlagsGetName_example (void)  {
 /**
 \var osEventFlagsAttr_t::attr_bits
 \details
-Reserved for future use (set to '0').\n
-Default: \token{0}.
+Reserved for future use (must be set to '0' for future compatibility).
 
 \var osEventFlagsAttr_t::cb_mem
 \details
-Pointer to a memory location for the event control block object. This can optionally be used for custom memory management systems.\n
-Default: \token{NULL} (uses kernel memory management).
+Pointer to a memory for the event flag control block object. Refer to \ref StaticObjectMemory for more information.
 
+Default: \token{NULL} to use \ref CMSIS_RTOS_MemoryMgmt_Automatic for the event flag control block.
 
 \var osEventFlagsAttr_t::cb_size
 \details
-The size of the memory block passed with \ref cb_mem. Must be the size of an event control block object or larger.
+The size (in bytes) of memory block passed with \ref cb_mem. For RTX, the minimum value is defined with \ref osRtxEventFlagsCbSize (higher values are permitted).
+
+Default: \token{0} as the default is no memory provided with \ref cb_mem.
 
 \var osEventFlagsAttr_t::name
 \details
-Pointer to a string with a human readable name of the event object.\n
-Default: \token{NULL}.
+Pointer to a constant string with a human readable name (displayed during debugging) of the event flag object.
+
+Default: \token{NULL} no name specified.
 */

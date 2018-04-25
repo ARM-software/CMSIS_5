@@ -40,25 +40,23 @@ Returned by:
 /** 
 \struct osMemoryPoolAttr_t
 \details
-Attributes to configure a memory pool.
-
-Refer to \ref CMSIS_RTOS_MemoryMgmt for details about usage of
- - osMemoryPoolAttr_t::cb_mem
- - osMemoryPoolAttr_t::cb_size
- - osMemoryPoolAttr_t::mp_mem
- - osMemoryPoolAttr_t::mp_size
+Specifies the following attributes for the \ref osMemoryPoolNew function.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \fn osMemoryPoolId_t osMemoryPoolNew (uint32_t block_count, uint32_t block_size, const osMemoryPoolAttr_t *attr)
 \details
-The function \b osMemoryPoolNew creates and initializes a memory pool object and returns the pointer to the memory pool
-object identifier or \token{NULL} in case of an error. It can be safely called before the RTOS is
-started (call to \ref osKernelStart), but not before it is initialized (call to \ref osKernelInitialize).
+The function \ref osMemoryPoolNew creates and initializes a memory pool object.
+The function returns a memory pool object identifier or \token{NULL} in case of an error. 
 
-The total amount of memory needed is at least <code>block_count * block_size</code>. Memory from the pool can only be
-allocated/freed in fixed portions of \c block_size.
+The function can be called after kernel initialization with \ref osKernelInitialize. It is possible to 
+create memory pool objects before the RTOS kernel is started with \ref osKernelStart.
+
+The total amount of memory required for the memory pool is at least <code>block_count * block_size</code>.
+The \em block_size is rounded up to a double even number to ensure 32-bit alignment of the memory blocks.
+
+The memory blocks allocated from the pool have a fixed size defined with the parameter \c block_size.
 
 Possible return values:
 - pointer to the name string, in case of success
@@ -98,7 +96,7 @@ osMemoryPoolId_t mpid_MemPool;                                // memory pool id
 int Init_MemPool (void)
 {
  
-  mpid_MemPool = osMemoryPoolNew(MEMPOOL_OBJECTS,sizeof(MEM_BLOCK_t), NULL);
+  mpid_MemPool = osMemoryPoolNew (MEMPOOL_OBJECTS, sizeof(MEM_BLOCK_t), NULL);
   if (mpid_MemPool == NULL) {
     ; // MemPool object not created, handle failure
   }
@@ -119,7 +117,7 @@ void Thread_MemPool (void *argument)
   while (1) {
     ; // Insert thread code here...
  
-    pMem = (MEM_BLOCK_t *)osMemoryPoolAlloc (mpid_MemPool, NULL);    // get Mem Block
+    pMem = (MEM_BLOCK_t *) osMemoryPoolAlloc (mpid_MemPool, NULL);   // get Mem Block
     if (pMem) {                                                      // Mem Block was available
       pMem->Buf[0] = 0x55;                                           // do some work...
       pMem->Idx    = 0;
@@ -273,7 +271,7 @@ The function \b osMemoryPoolGetCount returns the number of memory blocks used in
 parameter \a mp_id or \token{0} in case of an error.
 
 New definition
-Possible \ref return values:
+Possible return values:
 - number of memory blocks used in the memory pool, in case of success
 - \em 0, if a memory pool object specified by \a mp_id does not exist.
 - \em 0, if the memory pool object specified by \a mp_id refers to \em NULL
@@ -326,29 +324,35 @@ Possible \ref osStatus_t return values:
 /**
 \var osMemoryPoolAttr_t::attr_bits
 \details
-Reserved for future use (set to '0').\n
-Default: \token{0}.
+Reserved for future use (must be set to '0' for future compatibility).
 
 \var osMemoryPoolAttr_t::cb_mem
 \details
-Pointer to a memory location for the memory pool control block object. This can optionally be used for custom memory management systems.\n
-Default: \token{NULL} (uses kernel memory management).
+Pointer to a memory for the memory pool control block object. Refer to \ref StaticObjectMemory for more information.
+
+Default: \token{NULL} to use \ref CMSIS_RTOS_MemoryMgmt_Automatic for the memory pool control block.
 
 \var osMemoryPoolAttr_t::cb_size
 \details
-The size of the memory block passed with \ref cb_mem. Must be the size of a memory pool control block object or larger.
+The size (in bytes) of memory block passed with \ref cb_mem. For RTX, the minimum value is defined with \ref osRtxMemoryPoolCbSize (higher values are permitted).
+
+Default: \token{0} as the default is no memory provided with \ref cb_mem.
 
 \var osMemoryPoolAttr_t::name
 \details
-Pointer to a string with a human readable name of the memory pool object.\n
-Default: \token{NULL}.
+Pointer to a constant string with a human readable name (displayed during debugging) of the memory pool object.
+
+Default: \token{NULL} no name specified.
 
 \var osMemoryPoolAttr_t::mp_mem
 \details
-Pointer to a memory location for the data of the memory pool object.\n
-Default: \token{NULL}.
+Pointer to a memory for the memory pool data. Refer to \ref StaticObjectMemory for more information.
+
+Default: \token{NULL} to use \ref CMSIS_RTOS_MemoryMgmt_Automatic for the memory pool data.
 
 \var osMemoryPoolAttr_t::mp_size
 \details
-The size of the memory passed with \ref mp_mem.
+The size (in bytes) of memory block passed with \ref mp_mem. The minimum memory block size is <code>block_count * block_size</code> (parameters of the \ref osMemoryPoolNew function). The \em block_size is rounded up to a double even number to ensure 32-bit alignment of the memory blocks.
+
+Default: 0 as the default is no memory provided with \ref mp_mem.
 */

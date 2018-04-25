@@ -112,11 +112,7 @@ Returned by:
 /**
 \struct osSemaphoreAttr_t
 \details
-Attributes to configure a semaphore.
-
-Refer to \ref CMSIS_RTOS_MemoryMgmt for details about usage of
- - osSemaphoreAttr_t::cb_mem
- - osSemaphoreAttr_t::cb_size
+Specifies the following attributes for the \ref osSemaphoreNew function.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -320,21 +316,23 @@ Possible \ref osStatus_t return values:
 /**
 \var osSemaphoreAttr_t::attr_bits
 \details
-Reserved for future use (set to '0').\n
-Default: \token{0}.
+Reserved for future use (must be set to '0' for future compatibility).
 
 \var osSemaphoreAttr_t::cb_mem
 \details
-Pointer to a memory location for the semaphore control block object. This can optionally be used for custom memory management systems.\n
-Default: \token{NULL} (uses kernel memory management).
+Pointer to a memory for the semaphore control block object. Refer to \ref StaticObjectMemory for more information.
 
+Default: \token{NULL} to use \ref CMSIS_RTOS_MemoryMgmt_Automatic for the semaphore control block.
 
 \var osSemaphoreAttr_t::cb_size
 \details
-The size of the memory block passed with \ref cb_mem. Must be the size of a semaphore control block object or larger.
+The size (in bytes) of memory block passed with \ref cb_mem. For RTX, the minimum value is defined with \ref osRtxSemaphoreCbSize (higher values are permitted).
+
+Default: \token{0} as the default is no memory provided with \ref cb_mem.
 
 \var osSemaphoreAttr_t::name
 \details
-Pointer to a string with a human readable name of the semaphore object.\n
-Default: \token{NULL}.
+Pointer to a constant string with a human readable name (displayed during debugging) of the semaphore object.
+
+Default: \token{NULL} no name specified.
 */
