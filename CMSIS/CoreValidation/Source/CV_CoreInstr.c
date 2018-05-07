@@ -8,6 +8,13 @@
 #include "CV_Framework.h"
 #include "cmsis_cv.h"
 
+#if defined(__CORTEX_M)
+#elif defined(__CORTEX_A)
+#include "irq_ctrl.h"
+#else
+#error __CORTEX_M or __CORTEX_A must be defined!
+#endif
+
 /*-----------------------------------------------------------------------------
  *      Test implementation
  *----------------------------------------------------------------------------*/
@@ -125,7 +132,6 @@ void TC_CoreInstr_RBIT (void) {
 \details
 - Check if __CLZ instrinsic counts leading zeros.
 */
-
 void TC_CoreInstr_CLZ (void) {
   uint32_t result = __CLZ(0x00U);
   ASSERT_TRUE(result == 32);
@@ -145,6 +151,204 @@ void TC_CoreInstr_CLZ (void) {
   result = __CLZ(0x80000001U);
   ASSERT_TRUE(result == 0);
 }
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+#if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
+     (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+     (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1)) || \
+     (defined(__CORTEX_A)                                           )    )
+  
+/// Exclusive byte value
+static volatile uint8_t TC_CoreInstr_Exclusives_byte = 0x47U;
+
+/// Exclusive halfword value
+static volatile uint16_t TC_CoreInstr_Exclusives_hword = 0x0815U;
+
+/// Exclusive word value
+static volatile uint32_t TC_CoreInstr_Exclusives_word = 0x08154711U;
+
+/** 
+\brief Interrupt function for TC_CoreInstr_Exclusives
+\details
+The interrupt manipulates all the global data
+which disrupts the exclusive sequences in the test
+*/
+static void TC_CoreInstr_ExclusivesIRQHandler(void) {
+  const uint8_t b = __LDREXB(&TC_CoreInstr_Exclusives_byte);
+  __STREXB((uint8_t)~b, &TC_CoreInstr_Exclusives_byte);
+  const uint16_t hw = __LDREXH(&TC_CoreInstr_Exclusives_hword);
+  __STREXH((uint16_t)~hw, &TC_CoreInstr_Exclusives_hword);
+  const uint32_t w = __LDREXW(&TC_CoreInstr_Exclusives_word);
+  __STREXW((uint32_t)~w, &TC_CoreInstr_Exclusives_word);
+}
+
+/** 
+\brief Helper function for TC_CoreInstr_Exclusives to enable test interrupt.
+\details
+This helper function implements interrupt enabling according to target
+architecture, i.e. Cortex-A or Cortex-M.
+*/
+static void TC_CoreInstr_ExclusivesIRQEnable(void) {
+#if defined(__CORTEX_M)
+  TST_IRQHandler = TC_CoreInstr_ExclusivesIRQHandler;
+  NVIC_EnableIRQ(WDT_IRQn);
+#elif defined(__CORTEX_A)
+  IRQ_SetHandler(SGI0_IRQn, TC_CoreInstr_ExclusivesIRQHandler);
+  IRQ_Enable(SGI0_IRQn);
+#else
+  #error __CORTEX_M or __CORTEX_A must be defined!
+#endif
+  __enable_irq();
+}
+
+/** 
+\brief Helper function for TC_CoreInstr_Exclusives to set test interrupt pending.
+\details
+This helper function implements set pending the test interrupt according to target
+architecture, i.e. Cortex-A or Cortex-M.
+*/
+static void TC_CoreInstr_ExclusivesIRQPend(void) {
+#if defined(__CORTEX_M)
+  NVIC_SetPendingIRQ(WDT_IRQn);
+#elif defined(__CORTEX_A)
+  IRQ_SetPending(SGI0_IRQn);
+#else
+  #error __CORTEX_M or __CORTEX_A must be defined!
+#endif
+  for(uint32_t i = 10U; i > 0U; --i) {}
+}
+
+/** 
+\brief Helper function for TC_CoreInstr_Exclusives to disable test interrupt.
+\details
+This helper function implements interrupt disabling according to target
+architecture, i.e. Cortex-A or Cortex-M.
+*/
+static void TC_CoreInstr_ExclusivesIRQDisable(void) {
+  __disable_irq();
+#if defined(__CORTEX_M)
+  NVIC_DisableIRQ(WDT_IRQn);
+  TST_IRQHandler = NULL;
+#elif defined(__CORTEX_A)
+  IRQ_Disable(SGI0_IRQn);
+  IRQ_SetHandler(SGI0_IRQn, NULL);
+#else
+  #error __CORTEX_M or __CORTEX_A must be defined!
+#endif
+}
+
+/**
+\brief Test case: TC_CoreInstr_Exclusives
+\details
+Checks exclusive load and store instructions:
+- LDREXB, LDREXH, LDREXW
+- STREXB, STREXH, STREXW
+- CLREX
+*/
+void TC_CoreInstr_Exclusives (void) {
+  /* 1. Test exclusives without interruption */
+    do {
+      const uint8_t v = __LDREXB(&TC_CoreInstr_Exclusives_byte);
+      ASSERT_TRUE(v == TC_CoreInstr_Exclusives_byte);
+      
+      const uint32_t result = __STREXB(v+1U, &TC_CoreInstr_Exclusives_byte);
+      ASSERT_TRUE(result == 0U);
+      ASSERT_TRUE(TC_CoreInstr_Exclusives_byte == v+1U);
+    } while(0);
+    
+    do {
+     const uint16_t v = __LDREXH(&TC_CoreInstr_Exclusives_hword);
+      ASSERT_TRUE(v == TC_CoreInstr_Exclusives_hword);
+      
+      const uint32_t result = __STREXH(v+1U, &TC_CoreInstr_Exclusives_hword);
+      ASSERT_TRUE(result == 0U);
+      ASSERT_TRUE(TC_CoreInstr_Exclusives_hword == v+1U);
+    } while(0);
+      
+    do {
+      const uint32_t v = __LDREXW(&TC_CoreInstr_Exclusives_word);
+      ASSERT_TRUE(v == TC_CoreInstr_Exclusives_word);
+      
+      const uint32_t result = __STREXW(v+1U, &TC_CoreInstr_Exclusives_word);
+      ASSERT_TRUE(result == 0U);
+      ASSERT_TRUE(TC_CoreInstr_Exclusives_word == v+1U);
+    } while(0);
+  
+  /* 2. Test exclusives with clear */
+    do {
+      const uint8_t v = __LDREXB(&TC_CoreInstr_Exclusives_byte);
+      ASSERT_TRUE(v == TC_CoreInstr_Exclusives_byte);
+      
+      __CLREX();
+      
+      const uint32_t result = __STREXB(v+1U, &TC_CoreInstr_Exclusives_byte);
+      ASSERT_TRUE(result == 1U);
+      ASSERT_TRUE(TC_CoreInstr_Exclusives_byte == v);
+    } while(0);
+    
+    do {
+      const uint16_t v = __LDREXH(&TC_CoreInstr_Exclusives_hword);
+      ASSERT_TRUE(v == TC_CoreInstr_Exclusives_hword);
+      
+      __CLREX();
+      
+      const uint32_t result = __STREXH(v+1U, &TC_CoreInstr_Exclusives_hword);
+      ASSERT_TRUE(result == 1U);
+      ASSERT_TRUE(TC_CoreInstr_Exclusives_hword == v);
+    } while(0);
+      
+    do {
+      const uint32_t v = __LDREXW(&TC_CoreInstr_Exclusives_word);
+      ASSERT_TRUE(v == TC_CoreInstr_Exclusives_word);
+      
+      __CLREX();
+      
+      const uint32_t result = __STREXW(v+1U, &TC_CoreInstr_Exclusives_word);
+      ASSERT_TRUE(result == 1U);
+      ASSERT_TRUE(TC_CoreInstr_Exclusives_word == v);
+    } while(0);
+    
+  /* 3. Test exclusives with interruption */
+    
+    TC_CoreInstr_ExclusivesIRQEnable();
+    
+    do {
+      const uint8_t v = __LDREXB(&TC_CoreInstr_Exclusives_byte);
+      ASSERT_TRUE(v == TC_CoreInstr_Exclusives_byte);
+      
+      TC_CoreInstr_ExclusivesIRQPend();
+        
+      const uint32_t result = __STREXB(v+1U, &TC_CoreInstr_Exclusives_byte);
+      ASSERT_TRUE(result == 1U);
+      ASSERT_TRUE(TC_CoreInstr_Exclusives_byte == (uint8_t)~v);
+    } while(0);
+    
+    do {
+      const uint16_t v = __LDREXH(&TC_CoreInstr_Exclusives_hword);
+      ASSERT_TRUE(v == TC_CoreInstr_Exclusives_hword);
+      
+      TC_CoreInstr_ExclusivesIRQPend();
+      
+      const uint32_t result = __STREXH(v+1U, &TC_CoreInstr_Exclusives_hword);
+      ASSERT_TRUE(result == 1U);
+      ASSERT_TRUE(TC_CoreInstr_Exclusives_hword == (uint16_t)~v);
+    } while(0);
+      
+    do {
+      const uint32_t v = __LDREXW(&TC_CoreInstr_Exclusives_word);
+      ASSERT_TRUE(v == TC_CoreInstr_Exclusives_word);
+      
+      TC_CoreInstr_ExclusivesIRQPend();
+        
+      const uint32_t result = __STREXW(v+1U, &TC_CoreInstr_Exclusives_word);
+      ASSERT_TRUE(result == 1U);
+      ASSERT_TRUE(TC_CoreInstr_Exclusives_word == ~v);
+    } while(0);
+    
+    TC_CoreInstr_ExclusivesIRQDisable();
+}
+#endif
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**

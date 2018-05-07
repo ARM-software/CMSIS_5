@@ -45,3 +45,27 @@ int main (void)
   exit(0);
   #endif
 }
+
+#if defined(__CORTEX_A)
+#include "irq_ctrl.h"
+#if (defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)) || \
+	(defined ( __GNUC__ ))
+__attribute__((interrupt("IRQ")))
+#elif defined ( __CC_ARM )
+__irq
+#elif defined ( __ICCARM__ )
+__irq __arm
+#else
+#error "Unsupported compiler!"
+#endif
+void IRQ_Handler(void) {
+  const IRQn_ID_t irqn = IRQ_GetActiveIRQ();
+  IRQHandler_t const handler = IRQ_GetHandler(irqn);
+  if (handler != NULL) {
+    __enable_irq();
+    handler();
+    __disable_irq();
+  }
+  IRQ_EndOfInterrupt(irqn);
+}
+#endif

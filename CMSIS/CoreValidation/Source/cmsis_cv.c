@@ -40,7 +40,7 @@ static void TS_Init (void) {
  *      Test cases list
  *----------------------------------------------------------------------------*/
 static TEST_CASE TC_LIST[] = {
-#ifdef RTE_CV_COREINSTR
+#if defined(RTE_CV_COREINSTR) && RTE_CV_COREINSTR
   TCD ( TC_CoreInstr_NOP,                     TC_COREINSTR_NOP_EN                ),
   TCD ( TC_CoreInstr_REV,                     TC_COREINSTR_REV_EN                ),
   TCD ( TC_CoreInstr_REV16,                   TC_COREINSTR_REV16_EN              ),
@@ -48,12 +48,25 @@ static TEST_CASE TC_LIST[] = {
   TCD ( TC_CoreInstr_ROR,                     TC_COREINSTR_ROR_EN                ),
   TCD ( TC_CoreInstr_RBIT,                    TC_COREINSTR_RBIT_EN               ),
   TCD ( TC_CoreInstr_CLZ,                     TC_COREINSTR_CLZ_EN                ),
+
+#if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
+     (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+     (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1)) || \
+     (defined(__CORTEX_A))                                               )
+  
+  TCD ( TC_CoreInstr_Exclusives,              TC_COREINSTR_EXCLUSIVES_EN         ),
+#endif
+  
   TCD ( TC_CoreInstr_SSAT,                    TC_COREINSTR_SSAT_EN               ),
   TCD ( TC_CoreInstr_USAT,                    TC_COREINSTR_USAT_EN               ),
 #endif
-#ifdef RTE_CV_COREFUNC
+#if defined(RTE_CV_COREFUNC) && RTE_CV_COREFUNC
   #if defined(__CORTEX_M)
     TCD ( TC_CoreFunc_EnDisIRQ,               TC_COREFUNC_ENDISIRQ_EN            ),
+    TCD ( TC_CoreFunc_IRQPrio,                TC_COREFUNC_IRQPRIO_EN             ),
+    TCD ( TC_CoreFunc_EncDecIRQPrio,          TC_COREFUNC_ENCDECIRQPRIO_EN       ),
+    TCD ( TC_CoreFunc_IRQVect,                TC_COREFUNC_IRQVECT_EN             ),
     TCD ( TC_CoreFunc_Control,                TC_COREFUNC_CONTROL_EN             ),
     TCD ( TC_CoreFunc_IPSR,                   TC_COREFUNC_IPSR_EN                ),
     TCD ( TC_CoreFunc_APSR,                   TC_COREFUNC_APSR_EN                ),
@@ -81,6 +94,8 @@ static TEST_CASE TC_LIST[] = {
       TCD ( TC_CoreFunc_BASEPRI,             TC_COREFUNC_BASEPRI_EN              ),
 
     #endif
+
+    TCD ( TC_CoreFunc_FPUType,             TC_COREFUNC_FPUTYPE_EN                ),
 
     #if ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
        (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
@@ -111,18 +126,18 @@ static TEST_CASE TC_LIST[] = {
       TCD ( TC_CoreAFunc_MVBAR,              TC_COREAFUNC_MVBAR                  ),
   #endif
 #endif
-#ifdef RTE_CV_MPUFUNC
+#if defined(RTE_CV_MPUFUNC) && RTE_CV_MPUFUNC
   TCD ( TC_MPU_SetClear,                     TC_MPU_SETCLEAR_EN                  ),
   TCD ( TC_MPU_Load,                         TC_MPU_LOAD_EN                      ),
 #endif
-#ifdef RTE_CV_GENTIMER
+#if defined(RTE_CV_GENTIMER) && RTE_CV_GENTIMER
   TCD ( TC_GenTimer_CNTFRQ,                  TC_GENTIMER_CNTFRQ                  ),
   TCD ( TC_GenTimer_CNTP_TVAL,               TC_GENTIMER_CNTP_TVAL               ),
   TCD ( TC_GenTimer_CNTP_CTL,                TC_GENTIMER_CNTP_CTL                ),
   TCD ( TC_GenTimer_CNTPCT,                  TC_GENTIMER_CNTPCT                  ),
   TCD ( TC_GenTimer_CNTP_CVAL,               TC_GENTIMER_CNTP_CVAL               ),
 #endif
-#ifdef RTE_CV_L1CACHE
+#if defined(RTE_CV_L1CACHE) && RTE_CV_L1CACHE
   TCD ( TC_L1Cache_EnDisable,                TC_L1CACHE_ENDISABLE                ),
   TCD ( TC_L1Cache_EnDisableBTAC,            TC_L1CACHE_ENDISABLEBTAC            ),
   TCD ( TC_L1Cache_log2_up,                  TC_L1CACHE_LOG2_UP                  ),
