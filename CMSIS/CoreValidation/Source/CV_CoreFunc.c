@@ -117,6 +117,120 @@ void TC_CoreFunc_EnDisIRQ (void)
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
+\brief Test case: TC_CoreFunc_IRQPrio
+\details
+Check expected behavior of interrupt priority control functions:
+- NVIC_SetPriority, NVIC_GetPriority
+*/
+void TC_CoreFunc_IRQPrio (void)
+{
+  /* Test Exception Priority */
+  uint32_t orig = NVIC_GetPriority(SVCall_IRQn);
+  
+  NVIC_SetPriority(SVCall_IRQn, orig+1U);
+  uint32_t prio = NVIC_GetPriority(SVCall_IRQn);
+
+  ASSERT_TRUE(prio == orig+1U);
+  
+  NVIC_SetPriority(SVCall_IRQn, orig);
+
+  /* Test Interrupt Priority */
+  orig = NVIC_GetPriority(WDT_IRQn);
+  
+  NVIC_SetPriority(WDT_IRQn, orig+1U);
+  prio = NVIC_GetPriority(WDT_IRQn);
+
+  ASSERT_TRUE(prio == orig+1U);
+  
+  NVIC_SetPriority(WDT_IRQn, orig);
+}
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** Helper function for TC_CoreFunc_EncDecIRQPrio
+\details
+The helper encodes and decodes the given priority configuration.
+\param[in] prigroup The PRIGROUP setting to be considered for encoding/decoding.
+\param[in] pre The preempt priority value.
+\param[in] sub The subpriority value.
+*/
+static void TC_CoreFunc_EncDecIRQPrio_Step(uint32_t prigroup, uint32_t pre, uint32_t sub) {
+  uint32_t prio = NVIC_EncodePriority(prigroup, pre, sub);
+  
+  uint32_t ret_pre = UINT32_MAX;
+  uint32_t ret_sub = UINT32_MAX;
+  
+  NVIC_DecodePriority(prio, prigroup, &ret_pre, &ret_sub);
+  
+  ASSERT_TRUE(ret_pre == pre);
+  ASSERT_TRUE(ret_sub == sub);
+}
+
+/**
+\brief Test case: TC_CoreFunc_EncDecIRQPrio
+\details
+Check expected behavior of interrupt priority encoding/decoding functions:
+- NVIC_EncodePriority, NVIC_DecodePriority
+*/
+void TC_CoreFunc_EncDecIRQPrio (void)
+{
+  /* Check only the valid range of PRIGROUP and preempt-/sub-priority values. */
+  static const uint32_t priobits = (__NVIC_PRIO_BITS > 7U) ? 7U : __NVIC_PRIO_BITS;
+  for(uint32_t prigroup = 7U-priobits; prigroup<7U; prigroup++) {
+    for(uint32_t pre = 0U; pre<(128U>>prigroup); pre++) {
+      for(uint32_t sub = 0U; sub<(256U>>(8U-__NVIC_PRIO_BITS+7U-prigroup)); sub++) {
+        TC_CoreFunc_EncDecIRQPrio_Step(prigroup, pre, sub);
+      }
+    }
+  }
+}
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\brief Test case: TC_CoreFunc_IRQVect
+\details
+Check expected behavior of interrupt vector relocation functions:
+- NVIC_SetVector, NVIC_GetVector
+*/
+void TC_CoreFunc_IRQVect(void) {
+#if defined(__VTOR_PRESENT) && __VTOR_PRESENT
+  /* relocate vector table */
+  extern uint32_t __Vectors[];
+  static uint32_t vectors[32] __attribute__((aligned(128)));
+  for(uint32_t i=0U; i<32U; i++) {
+    vectors[i] = __Vectors[i];
+  }
+  
+  uint32_t orig_vtor = SCB->VTOR;
+  SCB->VTOR = ((uint32_t)vectors) & SCB_VTOR_TBLOFF_Msk;
+  
+  /* check exception vectors */
+  extern void HardFault_Handler(void);
+  extern void SVC_Handler(void);
+  extern void PendSV_Handler(void);
+  extern void SysTick_Handler(void);
+  
+  ASSERT_TRUE(NVIC_GetVector(HardFault_IRQn) == (uint32_t)HardFault_Handler);
+  ASSERT_TRUE(NVIC_GetVector(SVCall_IRQn) == (uint32_t)SVC_Handler);
+  ASSERT_TRUE(NVIC_GetVector(PendSV_IRQn) == (uint32_t)PendSV_Handler);
+  ASSERT_TRUE(NVIC_GetVector(SysTick_IRQn) == (uint32_t)SysTick_Handler);
+  
+  /* reconfigure WDT IRQ vector */
+  extern void WDT_IRQHandler(void);
+  
+  uint32_t wdtvec = NVIC_GetVector(WDT_IRQn);
+  ASSERT_TRUE(wdtvec == (uint32_t)WDT_IRQHandler);
+  
+  NVIC_SetVector(WDT_IRQn, wdtvec + 32U);
+  
+  ASSERT_TRUE(NVIC_GetVector(WDT_IRQn) == (wdtvec + 32U));
+  
+  /* restore vector table */
+  SCB->VTOR = orig_vtor;
+#endif
+}
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
 \brief Test case: TC_CoreFunc_GetCtrl
 \details
 - Check if __set_CONTROL and __get_CONTROL() sets/gets control register
@@ -289,9 +403,10 @@ void TC_CoreFunc_MSP (void) {
   static uint32_t ctrl;
 
   ctrl = __get_CONTROL();
-  __set_CONTROL(ctrl | CONTROL_SPSEL_Msk); // switch to PSP
-
   orig = __get_MSP();
+  
+  __set_PSP(orig);
+  __set_CONTROL(ctrl | CONTROL_SPSEL_Msk); // switch to PSP
 
   msp = orig + 0x12345678U;
   __set_MSP(msp);
@@ -530,6 +645,21 @@ void TC_CoreFunc_BASEPRI(void) {
   ASSERT_TRUE(result == basepri);
 }
 #endif
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\brief Test case: TC_CoreFunc_FPUType
+\details
+Check SCB_GetFPUType returns information.
+*/
+void TC_CoreFunc_FPUType(void) {
+  uint32_t fpuType = SCB_GetFPUType();
+#if defined(__FPU_PRESENT)
+  ASSERT_TRUE(fpuType > 0U);
+#else
+  ASSERT_TRUE(fpuType  == 0U);
+#endif
+}
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 #if ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \

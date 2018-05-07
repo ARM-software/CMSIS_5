@@ -26,7 +26,7 @@ extern void (*TST_IRQHandler)(void);
 extern void cmsis_cv (void);
 
 // Test cases
-#ifdef RTE_CV_COREINSTR
+#if defined(RTE_CV_COREINSTR) && RTE_CV_COREINSTR
 extern void TC_CoreInstr_NOP (void);
 extern void TC_CoreInstr_REV (void);
 extern void TC_CoreInstr_REV16 (void);
@@ -34,13 +34,17 @@ extern void TC_CoreInstr_REVSH (void);
 extern void TC_CoreInstr_ROR (void);
 extern void TC_CoreInstr_RBIT (void);
 extern void TC_CoreInstr_CLZ (void);
+extern void TC_CoreInstr_Exclusives (void);
 extern void TC_CoreInstr_SSAT (void);
 extern void TC_CoreInstr_USAT (void);
 #endif
 
-#ifdef RTE_CV_COREFUNC
+#if defined(RTE_CV_COREFUNC) && RTE_CV_COREFUNC
   #if defined(__CORTEX_M)
     extern void TC_CoreFunc_EnDisIRQ (void);
+    extern void TC_CoreFunc_IRQPrio (void);
+    extern void TC_CoreFunc_EncDecIRQPrio (void);
+    extern void TC_CoreFunc_IRQVect (void);
     extern void TC_CoreFunc_Control (void);
     extern void TC_CoreFunc_IPSR (void);
     extern void TC_CoreFunc_APSR (void);
@@ -67,6 +71,8 @@ extern void TC_CoreInstr_USAT (void);
     extern void TC_CoreFunc_BASEPRI (void);
 
     #endif
+
+    extern void TC_CoreFunc_FPUType (void);
 
     #if ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
        (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
@@ -98,14 +104,14 @@ extern void TC_CoreInstr_USAT (void);
   #endif
 #endif
 
-#ifdef RTE_CV_MPUFUNC
+#if defined(RTE_CV_MPUFUNC) && RTE_CV_MPUFUNC
 #if defined(__MPU_PRESENT) && __MPU_PRESENT
 extern void TC_MPU_SetClear (void);
 extern void TC_MPU_Load (void);
 #endif
 #endif
 
-#ifdef RTE_CV_GENTIMER
+#if defined(RTE_CV_GENTIMER) && RTE_CV_GENTIMER
 extern void TC_GenTimer_CNTFRQ (void);
 extern void TC_GenTimer_CNTP_TVAL (void);
 extern void TC_GenTimer_CNTP_CTL (void);
@@ -113,7 +119,7 @@ extern void TC_GenTimer_CNTPCT(void);
 extern void TC_GenTimer_CNTP_CVAL(void);
 #endif
 
-#ifdef RTE_CV_L1CACHE
+#if defined(RTE_CV_L1CACHE) && RTE_CV_L1CACHE
 extern void TC_L1Cache_EnDisable(void);
 extern void TC_L1Cache_EnDisableBTAC(void);
 extern void TC_L1Cache_log2_up(void);

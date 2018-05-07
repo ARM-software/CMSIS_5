@@ -36,8 +36,9 @@
 // <q04> TC_CoreInstr_ROR
 // <q05> TC_CoreInstr_RBIT
 // <q06> TC_CoreInstr_CLZ
-// <q07> TC_CoreInstr_SSAT
-// <q08> TC_CoreInstr_USAT
+// <q07> TC_CoreInstr_Exclusives
+// <q08> TC_CoreInstr_SSAT
+// <q09> TC_CoreInstr_USAT
 
 #define TC_COREINSTR_NOP_EN                 1
 #define TC_COREINSTR_REV_EN                 1
@@ -46,6 +47,7 @@
 #define TC_COREINSTR_ROR_EN                 1
 #define TC_COREINSTR_RBIT_EN                1
 #define TC_COREINSTR_CLZ_EN                 1
+#define TC_COREINSTR_EXCLUSIVES_EN          1
 #define TC_COREINSTR_SSAT_EN                1
 #define TC_COREINSTR_USAT_EN                1
 
