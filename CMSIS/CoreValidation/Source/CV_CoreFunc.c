@@ -195,13 +195,17 @@ void TC_CoreFunc_IRQVect(void) {
 #if defined(__VTOR_PRESENT) && __VTOR_PRESENT
   /* relocate vector table */
   extern uint32_t __Vectors[];
-  static uint32_t vectors[32] __attribute__((aligned(128)));
+  static uint32_t vectors[32] __ALIGNED(512);
+  
   for(uint32_t i=0U; i<32U; i++) {
     vectors[i] = __Vectors[i];
   }
   
-  uint32_t orig_vtor = SCB->VTOR;
-  SCB->VTOR = ((uint32_t)vectors) & SCB_VTOR_TBLOFF_Msk;
+  const uint32_t orig_vtor = SCB->VTOR;
+  const uint32_t vtor = ((uint32_t)vectors) & SCB_VTOR_TBLOFF_Msk;
+  SCB->VTOR = vtor;
+  
+  ASSERT_TRUE(vtor == SCB->VTOR);
   
   /* check exception vectors */
   extern void HardFault_Handler(void);
@@ -217,7 +221,7 @@ void TC_CoreFunc_IRQVect(void) {
   /* reconfigure WDT IRQ vector */
   extern void WDT_IRQHandler(void);
   
-  uint32_t wdtvec = NVIC_GetVector(WDT_IRQn);
+  const uint32_t wdtvec = NVIC_GetVector(WDT_IRQn);
   ASSERT_TRUE(wdtvec == (uint32_t)WDT_IRQHandler);
   
   NVIC_SetVector(WDT_IRQn, wdtvec + 32U);
@@ -654,7 +658,7 @@ Check SCB_GetFPUType returns information.
 */
 void TC_CoreFunc_FPUType(void) {
   uint32_t fpuType = SCB_GetFPUType();
-#if defined(__FPU_PRESENT)
+#if defined(__FPU_PRESENT) && (__FPU_PRESENT != 0)
   ASSERT_TRUE(fpuType > 0U);
 #else
   ASSERT_TRUE(fpuType  == 0U);
@@ -662,11 +666,8 @@ void TC_CoreFunc_FPUType(void) {
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-#if ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
-     (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
-
 /**
-\brief Test case: TC_CoreFunc_BASEPRI
+\brief Test case: TC_CoreFunc_FPSCR
 \details
 - Check if __get_FPSCR and __set_FPSCR intrinsics can be used
 */
@@ -686,7 +687,6 @@ void TC_CoreFunc_FPSCR(void) {
 #if (defined (__FPU_USED   ) && (__FPU_USED    == 1U))
   ASSERT_TRUE(result != fpscr);
 #else
-  (void)result;
+  ASSERT_TRUE(result == 0U);
 #endif
 }
-#endif

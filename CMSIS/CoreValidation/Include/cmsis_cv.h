@@ -73,13 +73,8 @@ extern void TC_CoreInstr_USAT (void);
     #endif
 
     extern void TC_CoreFunc_FPUType (void);
-
-    #if ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
-       (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
-
     extern void TC_CoreFunc_FPSCR (void);
 
-    #endif
   #elif defined(__CORTEX_A)
     extern void TC_CoreAFunc_IRQ (void);
     extern void TC_CoreAFunc_FPSCR (void);
