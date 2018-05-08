@@ -321,7 +321,9 @@ void TC_CoreInstr_Exclusives (void) {
         
       const uint32_t result = __STREXB(v+1U, &TC_CoreInstr_Exclusives_byte);
       ASSERT_TRUE(result == 1U);
-      ASSERT_TRUE(TC_CoreInstr_Exclusives_byte == (uint8_t)~v);
+      
+      const uint8_t iv = ~v;
+      ASSERT_TRUE(iv == TC_CoreInstr_Exclusives_byte);
     } while(0);
     
     do {
@@ -332,7 +334,9 @@ void TC_CoreInstr_Exclusives (void) {
       
       const uint32_t result = __STREXH(v+1U, &TC_CoreInstr_Exclusives_hword);
       ASSERT_TRUE(result == 1U);
-      ASSERT_TRUE(TC_CoreInstr_Exclusives_hword == (uint16_t)~v);
+      
+      const uint16_t iv = ~v;
+      ASSERT_TRUE(iv == TC_CoreInstr_Exclusives_hword);
     } while(0);
       
     do {
@@ -343,7 +347,9 @@ void TC_CoreInstr_Exclusives (void) {
         
       const uint32_t result = __STREXW(v+1U, &TC_CoreInstr_Exclusives_word);
       ASSERT_TRUE(result == 1U);
-      ASSERT_TRUE(TC_CoreInstr_Exclusives_word == ~v);
+      
+      const uint32_t iv = ~v;
+      ASSERT_TRUE(iv == TC_CoreInstr_Exclusives_word);
     } while(0);
     
     TC_CoreInstr_ExclusivesIRQDisable();
