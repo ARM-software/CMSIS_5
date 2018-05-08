@@ -96,13 +96,8 @@ static TEST_CASE TC_LIST[] = {
     #endif
 
     TCD ( TC_CoreFunc_FPUType,             TC_COREFUNC_FPUTYPE_EN                ),
+    TCD ( TC_CoreFunc_FPSCR,               TC_COREFUNC_FPSCR_EN                ),
 
-    #if ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
-       (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
-
-      TCD ( TC_CoreFunc_FPSCR,               TC_COREFUNC_FPSCR_EN                ),
-
-    #endif
   #elif defined(__CORTEX_A)
       TCD ( TC_CoreAFunc_IRQ,                TC_COREAFUNC_IRQ                    ),
       TCD ( TC_CoreAFunc_FPSCR,              TC_COREAFUNC_FPSCR                  ),
