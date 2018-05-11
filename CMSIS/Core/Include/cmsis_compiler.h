@@ -261,6 +261,12 @@
   #error Unknown compiler.
 #endif
 
+/* Support the register storage class specifier in mixed-language
+ * headers that might be referenced when using a C++17 or later
+ * compiler. */
+#ifndef __REGISTER
+#define __REGISTER register
+#endif
+
 
 #endif /* __CMSIS_COMPILER_H */
-
