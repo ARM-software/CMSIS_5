@@ -27,6 +27,11 @@
 #include "RTX_Config.h"
 #include "rtx_os.h"
 
+#ifdef    RTE_Compiler_EventRecorder
+#include "EventRecorder.h"
+#include "EventRecorderConf.h"
+#endif
+
 
 // System Configuration
 // ====================
@@ -106,8 +111,8 @@ __attribute__((section(".bss.os.thread.stack")));
 // Stack overrun checking
 #if (OS_STACK_CHECK == 0)
 // Override library function
-void osRtxThreadStackCheck (void);
-void osRtxThreadStackCheck (void) {}
+extern void osRtxThreadStackCheck (void);
+       void osRtxThreadStackCheck (void) {}
 #endif
 
 
@@ -345,6 +350,55 @@ __attribute__((section(".bss.os.msgqueue.mem")));
 #endif
 
 #endif  // (OS_MSGQUEUE_OBJ_MEM != 0)
+
+
+// Event Recorder Configuration
+// ============================
+
+#if (defined(OS_EVR_INIT) && (OS_EVR_INIT != 0))
+
+#if  defined(RTE_Compiler_EventRecorder)
+
+// Event Recorder Initialize
+__STATIC_INLINE void evr_initialize (void) {
+
+  (void)EventRecorderInitialize(OS_EVR_LEVEL, (uint32_t)OS_EVR_START);
+
+#if ((OS_EVR_MEMORY_FILTER    & 0x80U) != 0U)
+  (void)EventRecorderEnable(OS_EVR_MEMORY_FILTER    & 0x0FU, 0xF0U, 0xF0U);
+#endif
+#if ((OS_EVR_KERNEL_FILTER    & 0x80U) != 0U)
+  (void)EventRecorderEnable(OS_EVR_KERNEL_FILTER    & 0x0FU, 0xF1U, 0xF1U);
+#endif
+#if ((OS_EVR_THREAD_FILTER    & 0x80U) != 0U)
+  (void)EventRecorderEnable(OS_EVR_THREAD_FILTER    & 0x0FU, 0xF2U, 0xF2U);
+#endif
+#if ((OS_EVR_TIMER_FILTER     & 0x80U) != 0U)
+  (void)EventRecorderEnable(OS_EVR_TIMER_FILTER     & 0x0FU, 0xF3U, 0xF3U);
+#endif
+#if ((OS_EVR_EVFLAGS_FILTER   & 0x80U) != 0U)
+  (void)EventRecorderEnable(OS_EVR_EVFLAGS_FILTER   & 0x0FU, 0xF4U, 0xF4U);
+#endif
+#if ((OS_EVR_MUTEX_FILTER     & 0x80U) != 0U)
+  (void)EventRecorderEnable(OS_EVR_MUTEX_FILTER     & 0x0FU, 0xF5U, 0xF5U);
+#endif
+#if ((OS_EVR_SEMAPHORE_FILTER & 0x80U) != 0U)
+  (void)EventRecorderEnable(OS_EVR_SEMAPHORE_FILTER & 0x0FU, 0xF6U, 0xF6U);
+#endif
+#if ((OS_EVR_MEMPOOL_FILTER   & 0x80U) != 0U)
+  (void)EventRecorderEnable(OS_EVR_MEMPOOL_FILTER   & 0x0FU, 0xF7U, 0xF7U);
+#endif
+#if ((OS_EVR_MSGQUEUE_FILTER  & 0x80U) != 0U)
+  (void)EventRecorderEnable(OS_EVR_MSGQUEUE_FILTER  & 0x0FU, 0xF8U, 0xF8U);
+#endif
+}
+
+#else
+#warning "Event Recorder cannot be initialized (Event Recorder component is not selected)!"
+#define evr_initialize()
+#endif
+
+#endif  // (OS_EVR_INIT != 0)
 
 
 // OS Configuration
@@ -605,6 +659,20 @@ __WEAK void software_init_hook (void) {
 }
 
 #endif
+
+
+// OS Hooks
+// ========
+
+// RTOS Kernel Pre-Initialization Hook
+void osRtxKernelPreInit (void);
+void osRtxKernelPreInit (void) {
+#if (defined(OS_EVR_INIT) && (OS_EVR_INIT != 0))
+  if (osKernelGetState() == osKernelInactive) {
+    evr_initialize();
+  }
+#endif
+}
 
 
 // C/C++ Standard Library Multithreading Interface

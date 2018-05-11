@@ -182,9 +182,16 @@ os_thread_t *osRtxThreadListGet (os_object_t *object) {
   return thread;
 }
 
+#if (!defined(EVR_RTX_DISABLE) && \
+    (((OS_EVR_EVFLAGS   != 0) && !defined(EVR_RTX_EVENT_FLAGS_WAIT_TIMEOUT_DISABLE))  || \
+     ((OS_EVR_MUTEX     != 0) && !defined(EVR_RTX_MUTEX_ACQUIRE_TIMEOUT_DISABLE))     || \
+     ((OS_EVR_SEMAPHORE != 0) && !defined(EVR_RTX_SEMAPHORE_ACQUIRE_TIMEOUT_DISABLE)) || \
+     ((OS_EVR_MEMPOOL   != 0) && !defined(EVR_RTX_MEMORY_POOL_ALLOC_TIMEOUT_DISABLE)) || \
+     ((OS_EVR_MSGQUEUE  != 0) && !defined(EVR_RTX_MESSAGE_QUEUE_GET_TIMEOUT_DISABLE)) || \
+     ((OS_EVR_MSGQUEUE  != 0) && !defined(EVR_RTX_MESSAGE_QUEUE_PUT_TIMEOUT_DISABLE))))
+
 /// Retrieve Thread list root.
 /// \param[in]  thread          thread object.
-#ifndef EVR_RTX_DISABLE
 static void *osRtxThreadListRoot (os_thread_t *thread) {
   os_thread_t *thread0;
 
@@ -194,6 +201,7 @@ static void *osRtxThreadListRoot (os_thread_t *thread) {
   }
   return thread0;
 }
+
 #endif
 
 /// Re-sort a Thread in linked Object list by Priority (Highest at Head).

@@ -8,6 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.3.1-dev2">
+      CMSIS-RTOS2:
+        - RTX 5.4.0 (see revision history for details)
+    </release>
     <release version="5.3.1-dev1">
       CMSIS-Core(M): 5.1.2 (see revision history for details)
       CMSIS-Core(A): 1.1.2 (see revision history for details)
@@ -2740,7 +2744,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-RTOS Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX5" Cversion="5.3.1" Capiversion="1.0.0" condition="RTOS RTX5">
+    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX5" Cversion="5.4.0" Capiversion="1.0.0" condition="RTOS RTX5">
       <description>CMSIS-RTOS RTX5 implementation for Cortex-M, SC000, and SC300</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2756,7 +2760,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-RTOS2 Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.3.1" Capiversion="2.1.2" condition="RTOS2 RTX5 Lib">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.4.0" Capiversion="2.1.2" condition="RTOS2 RTX5 Lib">
       <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and Armv8-M (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2771,7 +2775,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.3.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.4.0"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->
@@ -2825,7 +2829,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="CM7_FP_LE_IAR"        name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM4F.a"     src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library_NS" Cversion="5.3.1" Capiversion="2.1.2" condition="RTOS2 RTX5 NS">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library_NS" Cversion="5.4.0" Capiversion="2.1.2" condition="RTOS2 RTX5 NS">
       <description>CMSIS-RTOS2 RTX5 for Armv8-M Non-Secure Domain (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2841,7 +2845,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.3.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.4.0"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->
@@ -2876,7 +2880,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.3.1" Capiversion="2.1.2" condition="RTOS2 RTX5">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.4.0" Capiversion="2.1.2" condition="RTOS2 RTX5">
       <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and Armv8-M (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2892,7 +2896,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.3.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.4.0"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->
@@ -2965,7 +2969,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.3.1" Capiversion="2.1.2" condition="RTOS2 RTX5 v7-A">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.4.0" Capiversion="2.1.2" condition="RTOS2 RTX5 v7-A">
       <description>CMSIS-RTOS2 RTX5 for Armv7-A (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2981,7 +2985,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.3.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.4.0"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/handlers.c"    version="5.1.0"/>
@@ -3022,7 +3026,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_ca.s"          condition="CA_IAR"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.3.1" Capiversion="2.1.2" condition="RTOS2 RTX5 NS">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.4.0" Capiversion="2.1.2" condition="RTOS2 RTX5 NS">
       <description>CMSIS-RTOS2 RTX5 for Armv8-M Non-Secure Domain (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -3039,7 +3043,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.3.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.4.0"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->

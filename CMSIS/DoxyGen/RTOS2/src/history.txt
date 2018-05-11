@@ -92,8 +92,10 @@
       <th>Description</th>
     </tr>
     <tr>
-      <td>V5.3.1</td>
+      <td>V5.4.0</td>
       <td>
+       - Added support for Event Recorder initialization and filter setup.
+       - Added support to use RTOS as Event Recorder Time Stamp source.
        - Fixed optimization issue when using GCC optimization level 3.
        - Fixed osMemoryPoolAlloc to avoid potential race condition.
        - Minor code optimizations (removed unnecessary checks).

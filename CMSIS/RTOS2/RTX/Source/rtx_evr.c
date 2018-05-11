@@ -27,15 +27,9 @@
 #include "cmsis_compiler.h"
 #include "rtx_evr.h"                    // RTX Event Recorder definitions
 
-#ifndef RTE_COMPONENTS_H
-#include "RTE_Components.h"
-#endif
-
 #ifdef  RTE_Compiler_EventRecorder
 
 //lint -e923 -e9074 -e9078 -emacro((835,845),EventID) [MISRA Note 13]
-
-#include "EventRecorder.h"              // Keil::Compiler:Event Recorder
 
 /// RTOS component number
 #define EvtRtxMemoryNo                  (0xF0U)
@@ -171,8 +165,8 @@
 #define EvtRtxMutexGetName                  EventID(EventLevelAPI,    EvtRtxMutexNo, 0x04U)
 #define EvtRtxMutexGetName_Detail           EventID(EventLevelDetail, EvtRtxMutexNo, 0x05U)
 #define EvtRtxMutexAcquire                  EventID(EventLevelAPI,    EvtRtxMutexNo, 0x06U)
-#define EvtRtxMutexAcquirePending           EventID(EventLevelError,  EvtRtxMutexNo, 0x07U)
-#define EvtRtxMutexAcquireTimeout           EventID(EventLevelError,  EvtRtxMutexNo, 0x08U)
+#define EvtRtxMutexAcquirePending           EventID(EventLevelOp,     EvtRtxMutexNo, 0x07U)
+#define EvtRtxMutexAcquireTimeout           EventID(EventLevelOp,     EvtRtxMutexNo, 0x08U)
 #define EvtRtxMutexAcquired                 EventID(EventLevelOp,     EvtRtxMutexNo, 0x09U)
 #define EvtRtxMutexNotAcquired              EventID(EventLevelOp,     EvtRtxMutexNo, 0x0AU)
 #define EvtRtxMutexRelease                  EventID(EventLevelAPI,    EvtRtxMutexNo, 0x0BU)

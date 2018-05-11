@@ -30,6 +30,25 @@
 #include "RTX_Config.h"                 // RTX Configuration
 #include "rtx_os.h"                     // RTX OS definitions
 
+#include "RTE_Components.h"
+#ifdef    RTE_Compiler_EventRecorder
+#include "EventRecorder.h"
+#include "EventRecorderConf.h"
+#if ((defined(OS_EVR_INIT) && (OS_EVR_INIT != 0)) || (EVENT_TIMESTAMP_SOURCE == 2))
+#ifndef EVR_RTX_KERNEL_GET_STATE_DISABLE
+#define EVR_RTX_KERNEL_GET_STATE_DISABLE
+#endif
+#endif
+#if (EVENT_TIMESTAMP_SOURCE == 2)
+#ifndef EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE
+#define EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE
+#endif
+#ifndef EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE
+#define EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE
+#endif
+#endif
+#endif
+
 
 /// Extended Status codes
 #define osRtxErrorKernelNotReady        (-7)

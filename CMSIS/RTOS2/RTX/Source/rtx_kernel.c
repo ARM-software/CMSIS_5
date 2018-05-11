@@ -528,12 +528,23 @@ SVC0_0 (KernelGetSysTimerFreq,  uint32_t)
 //lint --flb "Library End"
 
 
+//  ==== Library functions ====
+
+/// RTOS Kernel Pre-Initialization Hook
+//lint -esym(759,osRtxKernelPreInit) "Prototype in header"
+//lint -esym(765,osRtxKernelPreInit) "Global scope (can be overridden)"
+//lint -esym(522,osRtxKernelPreInit) "Can be overridden (do not lack side-effects)"
+__WEAK void osRtxKernelPreInit (void) {
+}
+
+
 //  ==== Public API ====
 
 /// Initialize the RTOS Kernel.
 osStatus_t osKernelInitialize (void) {
   osStatus_t status;
 
+  osRtxKernelPreInit();
   EvrRtxKernelInitialize();
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxKernelError((int32_t)osErrorISR);
