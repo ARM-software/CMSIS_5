@@ -246,7 +246,7 @@ __STATIC_FORCEINLINE uint32_t __get_xPSR(void)
  */
 __STATIC_FORCEINLINE uint32_t __get_PSP(void)
 {
-  register uint32_t result;
+  uint32_t result;
 
   __ASM volatile ("MRS %0, psp"  : "=r" (result) );
   return(result);
@@ -261,7 +261,7 @@ __STATIC_FORCEINLINE uint32_t __get_PSP(void)
  */
 __STATIC_FORCEINLINE uint32_t __TZ_get_PSP_NS(void)
 {
-  register uint32_t result;
+  uint32_t result;
 
   __ASM volatile ("MRS %0, psp_ns"  : "=r" (result) );
   return(result);
@@ -300,7 +300,7 @@ __STATIC_FORCEINLINE void __TZ_set_PSP_NS(uint32_t topOfProcStack)
  */
 __STATIC_FORCEINLINE uint32_t __get_MSP(void)
 {
-  register uint32_t result;
+  uint32_t result;
 
   __ASM volatile ("MRS %0, msp" : "=r" (result) );
   return(result);
@@ -315,7 +315,7 @@ __STATIC_FORCEINLINE uint32_t __get_MSP(void)
  */
 __STATIC_FORCEINLINE uint32_t __TZ_get_MSP_NS(void)
 {
-  register uint32_t result;
+  uint32_t result;
 
   __ASM volatile ("MRS %0, msp_ns" : "=r" (result) );
   return(result);
@@ -355,7 +355,7 @@ __STATIC_FORCEINLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
  */
 __STATIC_FORCEINLINE uint32_t __TZ_get_SP_NS(void)
 {
-  register uint32_t result;
+  uint32_t result;
 
   __ASM volatile ("MRS %0, sp_ns" : "=r" (result) );
   return(result);
@@ -596,7 +596,7 @@ __STATIC_FORCEINLINE uint32_t __get_PSPLIM(void)
     // without main extensions, the non-secure PSPLIM is RAZ/WI
   return 0U;
 #else
-  register uint32_t result;
+  uint32_t result;
   __ASM volatile ("MRS %0, psplim"  : "=r" (result) );
   return result;
 #endif
@@ -617,7 +617,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PSPLIM_NS(void)
   // without main extensions, the non-secure PSPLIM is RAZ/WI
   return 0U;
 #else
-  register uint32_t result;
+  uint32_t result;
   __ASM volatile ("MRS %0, psplim_ns"  : "=r" (result) );
   return result;
 #endif
@@ -683,7 +683,7 @@ __STATIC_FORCEINLINE uint32_t __get_MSPLIM(void)
   // without main extensions, the non-secure MSPLIM is RAZ/WI
   return 0U;
 #else
-  register uint32_t result;
+  uint32_t result;
   __ASM volatile ("MRS %0, msplim" : "=r" (result) );
   return result;
 #endif
@@ -705,7 +705,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_MSPLIM_NS(void)
   // without main extensions, the non-secure MSPLIM is RAZ/WI
   return 0U;
 #else
-  register uint32_t result;
+  uint32_t result;
   __ASM volatile ("MRS %0, msplim_ns" : "=r" (result) );
   return result;
 #endif
