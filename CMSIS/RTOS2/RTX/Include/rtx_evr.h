@@ -31,14 +31,18 @@
 #include "rtx_os.h"                     // RTX OS definitions
 
 #include "RTE_Components.h"
+
 #ifdef    RTE_Compiler_EventRecorder
+
 #include "EventRecorder.h"
 #include "EventRecorderConf.h"
+
 #if ((defined(OS_EVR_INIT) && (OS_EVR_INIT != 0)) || (EVENT_TIMESTAMP_SOURCE == 2))
 #ifndef EVR_RTX_KERNEL_GET_STATE_DISABLE
 #define EVR_RTX_KERNEL_GET_STATE_DISABLE
 #endif
 #endif
+
 #if (EVENT_TIMESTAMP_SOURCE == 2)
 #ifndef EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE
 #define EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE
@@ -47,7 +51,19 @@
 #define EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE
 #endif
 #endif
-#endif
+
+/// RTOS component number
+#define EvtRtxMemoryNo                  (0xF0U)
+#define EvtRtxKernelNo                  (0xF1U)
+#define EvtRtxThreadNo                  (0xF2U)
+#define EvtRtxTimerNo                   (0xF3U)
+#define EvtRtxEventFlagsNo              (0xF4U)
+#define EvtRtxMutexNo                   (0xF5U)
+#define EvtRtxSemaphoreNo               (0xF6U)
+#define EvtRtxMemoryPoolNo              (0xF7U)
+#define EvtRtxMessageQueueNo            (0xF8U)
+
+#endif  // RTE_Compiler_EventRecorder
 
 
 /// Extended Status codes

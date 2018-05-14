@@ -31,17 +31,6 @@
 
 //lint -e923 -e9074 -e9078 -emacro((835,845),EventID) [MISRA Note 13]
 
-/// RTOS component number
-#define EvtRtxMemoryNo                  (0xF0U)
-#define EvtRtxKernelNo                  (0xF1U)
-#define EvtRtxThreadNo                  (0xF2U)
-#define EvtRtxTimerNo                   (0xF3U)
-#define EvtRtxEventFlagsNo              (0xF4U)
-#define EvtRtxMutexNo                   (0xF5U)
-#define EvtRtxSemaphoreNo               (0xF6U)
-#define EvtRtxMemoryPoolNo              (0xF7U)
-#define EvtRtxMessageQueueNo            (0xF8U)
-
 /// Event IDs for "RTX Memory Management"
 #define EvtRtxMemoryInit                    EventID(EventLevelOp,     EvtRtxMemoryNo, 0x00U)
 #define EvtRtxMemoryAlloc                   EventID(EventLevelOp,     EvtRtxMemoryNo, 0x01U)
