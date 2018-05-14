@@ -49,7 +49,7 @@ int main (void)
 #if defined(__CORTEX_A)
 #include "irq_ctrl.h"
 #if (defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)) || \
-	(defined ( __GNUC__ ))
+  (defined ( __GNUC__ ))
 __attribute__((interrupt("IRQ")))
 #elif defined ( __CC_ARM )
 __irq
@@ -67,5 +67,17 @@ void IRQ_Handler(void) {
     __disable_irq();
   }
   IRQ_EndOfInterrupt(irqn);
+}
+#endif
+
+#if defined(__CORTEX_M)
+__NO_RETURN
+extern void HardFault_Handler(void);
+void HardFault_Handler(void) {
+  #ifdef __MICROLIB
+  for(;;) {}
+  #else
+  exit(0);
+  #endif
 }
 #endif
