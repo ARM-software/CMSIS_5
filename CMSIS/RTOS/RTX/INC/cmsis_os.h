@@ -67,6 +67,7 @@
 #define os_InRegs
 #endif
 
+#ifndef __NO_RETURN
 #if   defined(__CC_ARM)
 #define __NO_RETURN __declspec(noreturn)
 #elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
@@ -78,6 +79,7 @@
 #else
 #define __NO_RETURN
 #endif
+#endif // __NO_RETURN
 
 #include <stdint.h>
 #include <stddef.h>
