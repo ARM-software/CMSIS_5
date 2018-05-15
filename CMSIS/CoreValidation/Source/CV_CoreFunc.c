@@ -250,8 +250,14 @@ void TC_CoreFunc_Control (void) {
   result = UINT32_MAX;
 
 #ifdef CONTROL_SPSEL_Msk
-  // toggle SPSEL
-  ctrl = (ctrl & ~CONTROL_SPSEL_Msk) | (~ctrl & CONTROL_SPSEL_Msk);
+  // SPSEL set to 0 (MSP)
+  ASSERT_TRUE((ctrl & CONTROL_SPSEL_Msk) == 0U);
+  
+  // SPSEL set to 1 (PSP)
+  ctrl |= CONTROL_SPSEL_Msk;
+  
+  // Move MSP to PSP
+  __set_PSP(__get_MSP());
 #endif
 
   __set_CONTROL(ctrl);
