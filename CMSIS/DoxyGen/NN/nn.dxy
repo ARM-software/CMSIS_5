@@ -749,10 +749,9 @@ WARN_LOGFILE           =
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = "src/Change Log.txt" \
-                         . \
-                         ../../NN/Examples/ARM \
-                         ../../NN/Include/ \
+INPUT                  = ./src/history.txt      \
+                         ../../NN/Examples/ARM  \
+                         ../../NN/Include/      \
                          ../../NN/Source/
 
 # This tag can be used to specify the character encoding of the source files

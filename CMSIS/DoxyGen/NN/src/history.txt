@@ -1,0 +1,17 @@
+/**
+\page ChangeLog_pg  Revision History of CMSIS-NN
+
+<table class="cmtable" summary="Revision History">
+  <tr>
+    <th>Version</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>V1.0.0</td>
+    <td>
+      Initial version
+    </td>
+  </tr>
+</table>
+
+*/
