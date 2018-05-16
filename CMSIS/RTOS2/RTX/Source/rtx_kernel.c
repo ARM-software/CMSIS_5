@@ -560,7 +560,7 @@ osStatus_t osKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size
   osStatus_t status;
 
   EvrRtxKernelGetInfo(version, id_buf, id_size);
-  if (IsPrivileged() || IsIrqMode() || IsIrqMasked()) {
+  if (IsIrqMode() || IsIrqMasked() || IsPrivileged()) {
     status = svcRtxKernelGetInfo(version, id_buf, id_size);
   } else {
     status =  __svcKernelGetInfo(version, id_buf, id_size);
@@ -572,7 +572,7 @@ osStatus_t osKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size
 osKernelState_t osKernelGetState (void) {
   osKernelState_t state;
 
-  if (IsPrivileged() || IsIrqMode() || IsIrqMasked()) {
+  if (IsIrqMode() || IsIrqMasked() || IsPrivileged()) {
     state = svcRtxKernelGetState();
   } else {
     state =  __svcKernelGetState();

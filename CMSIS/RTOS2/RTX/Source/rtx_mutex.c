@@ -290,16 +290,16 @@ static osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
     return osErrorResource;
   }
 
-  // Check if running Thread is not the owner
-  if (mutex->owner_thread != runnig_thread) {
-    EvrRtxMutexError(mutex, osRtxErrorMutexNotOwned);
+  // Check if Mutex is not locked
+  if (mutex->lock == 0U) {
+    EvrRtxMutexError(mutex, osRtxErrorMutexNotLocked);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
-  // Check if Mutex is not locked
-  if (mutex->lock == 0U) {
-    EvrRtxMutexError(mutex, osRtxErrorMutexNotLocked);
+  // Check if running Thread is not the owner
+  if (mutex->owner_thread != runnig_thread) {
+    EvrRtxMutexError(mutex, osRtxErrorMutexNotOwned);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }

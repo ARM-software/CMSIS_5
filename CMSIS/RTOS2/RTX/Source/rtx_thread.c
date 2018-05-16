@@ -1153,16 +1153,16 @@ static osStatus_t svcRtxThreadDetach (osThreadId_t thread_id) {
     return osErrorParameter;
   }
 
-  // Check object attributes
-  if ((thread->attr & osThreadJoinable) == 0U) {
-    EvrRtxThreadError(thread, osRtxErrorThreadNotJoinable);
+  // Check object state
+  if (thread->state == osRtxThreadInactive) {
+    EvrRtxThreadError(thread, (int32_t)osErrorResource);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
 
-  // Check object state
-  if (thread->state == osRtxThreadInactive) {
-    EvrRtxThreadError(thread, (int32_t)osErrorResource);
+  // Check object attributes
+  if ((thread->attr & osThreadJoinable) == 0U) {
+    EvrRtxThreadError(thread, osRtxErrorThreadNotJoinable);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
@@ -1192,17 +1192,17 @@ static osStatus_t svcRtxThreadJoin (osThreadId_t thread_id) {
     return osErrorParameter;
   }
 
-  // Check object attributes
-  if ((thread->attr & osThreadJoinable) == 0U) {
-    EvrRtxThreadError(thread, osRtxErrorThreadNotJoinable);
-    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
-    return osErrorResource;
-  }
-
   // Check object state
   if ((thread->state == osRtxThreadInactive) ||
       (thread->state == osRtxThreadRunning)) {
     EvrRtxThreadError(thread, (int32_t)osErrorResource);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorResource;
+  }
+
+  // Check object attributes
+  if ((thread->attr & osThreadJoinable) == 0U) {
+    EvrRtxThreadError(thread, osRtxErrorThreadNotJoinable);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorResource;
   }
@@ -1499,14 +1499,6 @@ static uint32_t svcRtxThreadFlagsClear (uint32_t flags) {
     return ((uint32_t)osErrorParameter);
   }
 
-  // Check object state
-  if ((thread->state == osRtxThreadInactive) ||
-      (thread->state == osRtxThreadTerminated)) {
-    EvrRtxThreadError(thread, (int32_t)osErrorResource);
-    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
-    return ((uint32_t)osErrorResource);
-  }
-
   // Clear Thread Flags
   thread_flags = ThreadFlagsClear(thread, flags);
 
@@ -1523,14 +1515,6 @@ static uint32_t svcRtxThreadFlagsGet (void) {
   // Check running thread
   thread = osRtxThreadGetRunning();
   if (thread == NULL) {
-    EvrRtxThreadFlagsGet(0U);
-    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
-    return 0U;
-  }
-
-  // Check object state
-  if ((thread->state == osRtxThreadInactive) ||
-      (thread->state == osRtxThreadTerminated)) {
     EvrRtxThreadFlagsGet(0U);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
