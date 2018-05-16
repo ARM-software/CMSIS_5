@@ -362,7 +362,7 @@ Default: \token{NULL} to use \ref CMSIS_RTOS_MemoryMgmt_Automatic for the memory
 
 \var osMessageQueueAttr_t::mq_size
 \details
-The size (in bytes) of memory block passed with \ref mp_mem. The minimum memory block size is <code>msg_count * msg_size</code> (parameters of the \ref osMessageQueueNew function). The \em msg_size is rounded up to a double even number to ensure 32-bit alignment of the memory blocks.
+The size (in bytes) of memory block passed with \ref mq_mem. The minimum memory block size is <code>msg_count * msg_size</code> (parameters of the \ref osMessageQueueNew function). The \em msg_size is rounded up to a double even number to ensure 32-bit alignment of the memory blocks.
 
-Default: 0 as the default is no memory provided with \ref mp_mem.
+Default: 0 as the default is no memory provided with \ref mq_mem.
 */
