@@ -17,13 +17,20 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        25. Januar 2017
-  $Revision:    1.4.9
+  $Date:        17. May 2018
+  $Revision:    1.5.0-Dev0
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
   SchemaVersion=1.4
+
+  17. May 2018: 1.5.0-Dev0
+  - added Toptions attribute for usee in conditions
+  - Under construction (!): <flashinfo> with children <block> and <gap> to describe flash devices for
+    sequence-based flash download
+  - Under construction (!): new debug access functions and global debug variables for sequence-based
+    flash download
 
   25. January 2017: 1.4.9
   - added Toptions attribute for usee in conditions
@@ -496,6 +503,53 @@
     <xs:attribute name="endian"    type="DendianEnum"       use="optional" default="Little-endian"/>
   </xs:complexType>
 
+  <!-- Flash Info Block Type -->
+  <xs:complexType name="FlashInfoBlockType">
+    <!-- count specifies the number of subsequent blocks with identical properties -->
+    <xs:attribute name="count" type="NonNegativeInteger" use="required"/>
+    <!-- size specifies the block size in bytes -->
+    <xs:attribute name="size"  type="NonNegativeInteger" use="required"/>
+    <!-- arg specifies an optional argument to pass to a sequence that is part of a flash operation -->
+    <xs:attribute name="arg"   type="NonNegativeInteger" use="optional"/>
+  </xs:complexType>
+
+  <!-- Flash Info Gap Type -->
+  <xs:complexType name="FlashInfoGapType">
+    <!-- size specifies the gap size in bytes -->
+    <xs:attribute name="size" type="NonNegativeInteger" use="required"/>
+  </xs:complexType>
+  
+  <!-- Flash Info Element Group -->
+  <xs:group name="FlashInfoElementGroup">
+    <xs:choice>
+      <xs:element name="block" type="FlashInfoBlockType"/>
+      <xs:element name="gap"   type="FlashInfoGapType"/>
+    </xs:choice>
+  </xs:group>
+  
+  <!-- Flash Info Type -->
+  <xs:complexType name="FlashInfoType">
+    <xs:sequence>
+      <xs:group   ref="FlashInfoElementGroup" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <!-- name specifies the name of the flash device -->
+    <xs:attribute name="name"     type="xs:string"          use="required"/>
+    <!-- start specifies the base address of the flash device as mapped into target memory system -->
+    <xs:attribute name="start"    type="NonNegativeInteger" use="required"/>
+    <!-- pagesize specifies the programming page size -->
+    <xs:attribute name="pagesize" type="NonNegativeInteger" use="required"/>
+    <!-- blankval specifies the expected memory value for unprogrammed address ranges -->
+    <xs:attribute name="blankval" type="NonNegativeInteger" use="optional"/>
+    <!-- filler specifies the value that a debugger uses to fill the remainder of a programming page -->
+    <xs:attribute name="filler"   type="NonNegativeInteger" use="optional"/>
+    <!-- ptime specifies the timeout in milliseconds for programming a page -->
+    <xs:attribute name="ptime"    type="xs:unsignedInt"     use="optional"/>
+    <!-- etime specifies the timeout in milliseconds for erasing a sector -->
+    <xs:attribute name="etime"    type="xs:unsignedInt"     use="optional"/>
+    <!-- Pname identifies the processor this setting belongs to -->
+    <xs:attribute name="Pname"    type="RestrictedString"   use="optional"/>
+  </xs:complexType>
+
   <!-- Book Type -->
   <xs:complexType name="BookType">
     <!-- Pname identifies the processor this setting belongs to -->
@@ -568,6 +622,7 @@
       <xs:element name="trace"       type="TraceType"       />
       <xs:element name="debugvars"   type="DebugVarsType"   />
       <xs:element name="sequences"   type="SequencesType"   />
+      <xs:element name="flashinfo"   type="FlashInfoType"   />
     </xs:choice>
   </xs:group>
 

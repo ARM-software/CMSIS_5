@@ -194,15 +194,45 @@ implemented as defined in the Armv6-M/Armv7-M/Armv8-M architecture reference man
     </td>
   </tr>
   <tr>
+    <td class="XML-Token">FlashInit</td>
+    <td>
+    Executed before starting a flash operation.
+    </td>
+  </tr>
+  <tr>
+    <td class="XML-Token">FlashUninit</td>
+    <td>
+    Executed after a flash operation finished.
+    </td>
+  </tr>
+  <tr>
+    <td class="XML-Token">FlashEraseSector</td>
+    <td>
+    Executed to erase a flash memory sector.
+    </td>
+  </tr>
+  <tr>
+    <td class="XML-Token">FlashEraseChip</td>
+    <td>
+    Executed to erase all on-chip flash memory with target device specific erase technology. If this sequence is not implemented then a debugger can use <b>FlashEraseSector</b> to erase all flash memory.
+    </td>
+  </tr>
+  <tr>
     <td class="XML-Token">FlashEraseDone</td>
     <td>
-    Executed after erasing flash memory.
+    Executed after all flash memory erase operations are finished.
+    </td>
+  </tr>
+  <tr>
+    <td class="XML-Token">FlashProgramPage</td>
+    <td>
+    Executed to program a single flash page.
     </td>
   </tr>
   <tr>
     <td class="XML-Token">FlashProgramDone</td>
     <td>
-    Executed after programming flash memory.
+    Executed after all flash programming operations are finished.
     </td>
   </tr>
   <tr>
@@ -858,6 +888,10 @@ __var variable = 0;
   within a debug access sequence. An assigned value is held until leaving the sequence. Calling
   another sequence by the <b>Sequence</b> debug access function will push their values on a
   sequence execution stack. The values are restored when returning from such a call.
+- The debug access variable <b>__Result</b> can be modified within a debug access sequence.
+  Its value is held until the debug access sequence returns to the debugger. Hence its value is
+  <b>not</b> pushed on a sequence execution stack when calling into another sequence by the <b>Sequence</b>
+  debug access function.
 
 
 \subsection ExpressionType Expression rules
@@ -1150,6 +1184,30 @@ debug access variables which are evaluated for the function call.
 
       <b>Code Example:</b><br>
       Refer to \ref debugPortStart
+    </td>
+  </tr>
+  <tr>
+    <td style="white-space: nowrap"><pre>FlashBufferWrite(addr, offs, len, mode)</pre></td>
+    <td>
+      Write flash buffer contents into target memory.
+      A debugger fills the flash buffer before it executes a flash programming sequence.<br>
+      <br>
+      <b>Parameters:</b><br>
+      - addr: Target memory buffer or register interface address to write the flash buffer contents.
+      - offs: Offset into the flash buffer to start writing from.
+      - len : Number of bytes to write to the target. If <b>offs</b> + <b>len</b> exceeds the flash buffer length <b>__FlashLen</b>
+              then the remaining bytes are filled with the pattern as specified by attribute <b>filler</b> of the \ref element_flashblock "block" element.
+      - mode: Target access mode. The following bit map applies:<br>
+        - Bit 0..8: Debug access size. One of \token{8}, \token{16}, \token{32} and \token{64}. The specified debug access size must be supported by the target debug access port.<br>
+        - Bit 0: Additionally set this Bit to \token{1} to increment the target address after each debug write access of the specified size.
+        - Bit 9..63: Reserved
+
+      <b>Debug Access Variables:</b><br>
+      - __dp: The debug port to use for this memory access.
+      - __ap: The access port to use for this memory access.
+
+      <b>Return Value:</b><br>
+      Always returns \token{0}.
     </td>
   </tr>
   <tr>
