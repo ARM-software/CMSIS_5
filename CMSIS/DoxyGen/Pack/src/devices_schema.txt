@@ -1978,7 +1978,7 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
   <tr>
     <td class="XML-Token">ONSemiconductor:141</td>
     <td>ON Semiconductor</td>
-    <td>http://www.onsemi.com</td>
+    <td>https://www.onsemi.com</td>
   </tr>
   <tr>
     <td class="XML-Token">Panasonic:131</td>
