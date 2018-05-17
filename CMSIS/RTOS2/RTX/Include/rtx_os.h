@@ -55,10 +55,6 @@ extern "C"
 #define osRtxIdMessage          0x07U
 #define osRtxIdMessageQueue     0x08U
  
-/// Object State definitions (except for Threads and Timers)
-#define osRtxObjectInactive     0x00U
-#define osRtxObjectActive       0x01U
- 
 /// Object Flags definitions
 #define osRtxFlagSystemObject   0x01U
 #define osRtxFlagSystemMemory   0x02U
@@ -166,7 +162,7 @@ typedef struct osRtxTimer_s {
 /// Event Flags Control Block
 typedef struct {
   uint8_t                          id;  ///< Object Identifier
-  uint8_t                       state;  ///< Object State
+  uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
   uint8_t                    reserved;
   const char                    *name;  ///< Object Name
@@ -180,7 +176,7 @@ typedef struct {
 /// Mutex Control Block
 typedef struct osRtxMutex_s {
   uint8_t                          id;  ///< Object Identifier
-  uint8_t                       state;  ///< Object State
+  uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
   uint8_t                        attr;  ///< Object Attributes
   const char                    *name;  ///< Object Name
@@ -198,7 +194,7 @@ typedef struct osRtxMutex_s {
 /// Semaphore Control Block
 typedef struct {
   uint8_t                          id;  ///< Object Identifier
-  uint8_t                       state;  ///< Object State
+  uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
   uint8_t                    reserved;
   const char                    *name;  ///< Object Name
@@ -223,7 +219,7 @@ typedef struct {
 /// Memory Pool Control Block
 typedef struct {
   uint8_t                          id;  ///< Object Identifier
-  uint8_t                       state;  ///< Object State
+  uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
   uint8_t                    reserved;
   const char                    *name;  ///< Object Name
@@ -237,7 +233,7 @@ typedef struct {
 /// Message Control Block
 typedef struct osRtxMessage_s {
   uint8_t                          id;  ///< Object Identifier
-  uint8_t                       state;  ///< Object State
+  uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
   uint8_t                    priority;  ///< Message Priority
   struct osRtxMessage_s         *prev;  ///< Pointer to previous Message
@@ -247,7 +243,7 @@ typedef struct osRtxMessage_s {
 /// Message Queue Control Block
 typedef struct {
   uint8_t                          id;  ///< Object Identifier
-  uint8_t                       state;  ///< Object State
+  uint8_t              reserved_state;  ///< Object State (not used)
   uint8_t                       flags;  ///< Object Flags
   uint8_t                    reserved;
   const char                    *name;  ///< Object Name
