@@ -27,8 +27,8 @@ class CmsisPackVersionParser(VersionParser):
     if not v:
       v = self._regex_(file, ".*\$Revision:\s+([vV])?([0-9]+[.][0-9]+([.][0-9]+)?).*", 2)
     return v
-    
-  def _revhistory_(self, file, skip = 0):
+  
+  def _cmtable_(self, file, skip = 0):
     table = ""
     dump = False
     with open(file, 'r') as f:
@@ -39,11 +39,17 @@ class CmsisPackVersionParser(VersionParser):
           else:
             dump = True
         if dump:
-          table += l.replace("<br>", "\\n")
+          table += l.replace("<br>", "\\n").replace("\\<", "&lt;").replace("\\>", "&gt;")
           if l.strip() == "</table>":
             break
     if table:
       table = lxml.etree.fromstring(table)
+      return table
+    return None
+    
+  def _revhistory_(self, file, skip = 0):
+    table = self._cmtable_(file, skip)
+    if table is not None:
       m = re.match("[Vv]?(\d+.\d+(.\d+)?)", table[1][0].text)
       if m:
         return SemanticVersion(m.group(1))
@@ -91,21 +97,11 @@ class CmsisPackVersionParser(VersionParser):
     if not component:
       return None
       
-    table = ""
-    dump = False
-    with open(file, 'r') as f:
-      for l in f:
-        if not dump and l.strip() == "<table class=\"cmtable\" summary=\"Revision History\">":
-          dump = True
-        if dump:
-          table += l.replace("<br>", "\\n")
-          if l.strip() == "</table>":
-            dump = False
-    table = lxml.etree.fromstring(table)
-    m = re.search(re.escape(component)+"\s+[Vv]?(\d+.\d+(.\d+)?)", table[1][1].text, re.MULTILINE)
-    if m:
-      return SemanticVersion(m.group(1))
-      
+    table = self._cmtable_(file)
+    if table is not None:
+      m = re.search(re.escape(component)+"\s+[Vv]?(\d+.\d+(.\d+)?)", table[1][1].text, re.MULTILINE)
+      if m:
+        return SemanticVersion(m.group(1))
     return None
     
   def dap_txt(self, file, skip = 0):
