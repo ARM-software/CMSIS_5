@@ -922,6 +922,54 @@ __STATIC_INLINE uint16_t atomic_inc16_lim (uint16_t *mem, uint16_t lim) {
 }
 #endif
 
+/// Atomic Access Operation: Decrement (32-bit)
+/// \param[in]  mem             Memory address
+/// \return                     Previous value
+#if defined(__CC_ARM)
+static __asm    uint32_t atomic_dec32 (uint32_t *mem) {
+  mov   r2,r0
+1
+  ldrex r0,[r2]
+  subs  r1,r0,#1
+  strex r3,r1,[r2]
+  cbz   r3,%F2
+  b     %B1
+2
+  bx     lr
+}
+#else
+__STATIC_INLINE uint32_t atomic_dec32 (uint32_t *mem) {
+#ifdef  __ICCARM__
+#pragma diag_suppress=Pe550
+#endif
+  register uint32_t val, res;
+#ifdef  __ICCARM__
+#pragma diag_default=Pe550
+#endif
+  register uint32_t ret;
+
+  __ASM volatile (
+#ifndef __ICCARM__
+  ".syntax unified\n\t"
+#endif
+  "1:\n\t"
+    "ldrex %[ret],[%[mem]]\n\t"
+    "subs  %[val],%[ret],#1\n\t"
+    "strex %[res],%[val],[%[mem]]\n\t"
+    "cbz   %[res],2f\n\t"
+    "b     1b\n"
+  "2:"
+  : [ret] "=&l" (ret),
+    [val] "=&l" (val),
+    [res] "=&l" (res)
+  : [mem] "l"   (mem)
+  : "cc", "memory"
+  );
+
+  return ret;
+}
+#endif
+
 /// Atomic Access Operation: Decrement (32-bit) if Not Zero
 /// \param[in]  mem             Memory address
 /// \return                     Previous value

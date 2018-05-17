@@ -93,12 +93,12 @@ void *osRtxMemoryPoolAlloc (os_mp_info_t *mp_info) {
 #if (EXCLUSIVE_ACCESS == 0)
   __disable_irq();
 
-    block = mp_info->block_free;
-    if (block != NULL) {
-      //lint --e{9079} --e{9087} "conversion from pointer to void to pointer to other type"
-      mp_info->block_free = *((void **)block);
-      mp_info->used_blocks++;
-    }
+  block = mp_info->block_free;
+  if (block != NULL) {
+    //lint --e{9079} --e{9087} "conversion from pointer to void to pointer to other type"
+    mp_info->block_free = *((void **)block);
+    mp_info->used_blocks++;
+  }
 
   if (primask == 0U) {
     __enable_irq();
@@ -123,7 +123,6 @@ osStatus_t osRtxMemoryPoolFree (os_mp_info_t *mp_info, void *block) {
 #if (EXCLUSIVE_ACCESS == 0)
   uint32_t primask = __get_PRIMASK();
 #endif
-  osStatus_t status;
 
   //lint -e{946} "Relational operator applied to pointers"
   if ((mp_info == NULL) || (block < mp_info->block_base) || (block >= mp_info->block_lim)) {
@@ -135,31 +134,22 @@ osStatus_t osRtxMemoryPoolFree (os_mp_info_t *mp_info, void *block) {
 #if (EXCLUSIVE_ACCESS == 0)
   __disable_irq();
 
-  if (mp_info->used_blocks != 0U) {
-    mp_info->used_blocks--;
-    //lint --e{9079} --e{9087} "conversion from pointer to void to pointer to other type"
-    *((void **)block) = mp_info->block_free;
-    mp_info->block_free = block;
-    status = osOK;
-  } else {
-    status = osErrorResource;
-  }
+  //lint --e{9079} --e{9087} "conversion from pointer to void to pointer to other type"
+  *((void **)block) = mp_info->block_free;
+  mp_info->block_free = block;
+  mp_info->used_blocks--;
 
   if (primask == 0U) {
     __enable_irq();
   }
 #else
-  if (atomic_dec32_nz(&mp_info->used_blocks) != 0U) {
-    atomic_link_put(&mp_info->block_free, block);
-    status = osOK;
-  } else {
-    status = osErrorResource;
-  }
+  atomic_link_put(&mp_info->block_free, block);
+  (void)atomic_dec32(&mp_info->used_blocks);
 #endif
 
-  EvrRtxMemoryBlockFree(mp_info, block, (int32_t)status);
+  EvrRtxMemoryBlockFree(mp_info, block, (int32_t)osOK);
 
-  return status;
+  return osOK;
 }
 
 
