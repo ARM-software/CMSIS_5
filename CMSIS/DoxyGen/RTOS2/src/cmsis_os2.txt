@@ -621,6 +621,7 @@ using the CMSIS-RTOS RTX kernel. The configuration options are explained in deta
 - \ref semaphoreConfig provides several parameters to configure the \ref CMSIS_RTOS_SemaphoreMgmt functions.
 - \ref memPoolConfig provides several parameters to configure the \ref CMSIS_RTOS_PoolMgmt functions.
 - \ref msgQueueConfig provides several parameters to configure the \ref CMSIS_RTOS_Message functions.
+- \ref evtrecConfig provides several parameters to configure RTX for usage with <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a>.
 
 The file "RTX_Config.c" contains default implementations of the functions \ref osRtxIdleThread and \ref osRtxErrorNotify. Both functions
 can simply be overwritten with a customized behavior by redefining them as part of the user code.
@@ -653,15 +654,6 @@ Kernel Tick Frequency (Hz)             | \c OS_TICK_FREQ          | Defines base
 Round-Robin Thread switching           | \c OS_ROBIN_ENABLE       | Enables Round-Robin Thread switching.
 Round-Robin Timeout                    | \c OS_ROBIN_TIMEOUT      | Defines how long a thread will execute before a thread switch. Default value is \token{5}. Value range is \token{[1-1000]}.
 ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functions called from ISR store requests to this buffer. Default value is \token{16 entries}. Value range is \token{[4-256]} entries in multiples of \token{4}.
-Memory Management                      | \c OS_EVR_MEMORY         | Enables Memory Management events recording.
-Kernel                                 | \c OS_EVR_KERNEL         | Enables Kernel events recording.
-Thread                                 | \c OS_EVR_THREAD         | Enables Thread events recording.
-Timer                                  | \c OS_EVR_TIMER          | Enables Timer events recording.
-Event Flags                            | \c OS_EVR_EVFLAGS        | Enables Event Flags events recording.
-Mutex                                  | \c OS_EVR_MUTEX          | Enables Mutex events recording.
-Semaphore                              | \c OS_EVR_SEMAPHORE      | Enables Semaphore events recording.
-Memory Pool                            | \c OS_EVR_MEMPOOL        | Enables Memory Pool events recording.
-Message Queue                          | \c OS_EVR_MSGQUEUE       | Enables Message Queue events recording.
 Object Memory usage counters           | \c OS_OBJ_MEM_USAGE      | Enables object memory usage counters to evaluate the maximum memory pool requirements individually for each RTOS object type.
 
 \subsection systemConfig_glob_mem Global dynamic memory
@@ -698,103 +690,6 @@ parameter to the ISR FIFO queue buffer to be processed later, after the interrup
 The scheduler is activated immediately after the IRQ handler has finished its execution to process the requests stored to the
 FIFO queue buffer. The required size of this buffer depends on the number of functions that are called within the interrupt
 handler. An insufficient queue size will be caught by \b osRtxErrorNotify with error code \b osRtxErrorISRQueueOverflow.
-
-
-\subsection systemConfig_event_recording Event Recording
-
-RTX5 fully supports <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank">Event Recorder</a>
-annotations. In this section, you can enable or disable the recording of events for the different elements of RTX5. This
-leads to reduced data traffic on the debug connection.
-
-This setting should be used to disable the generation of messages for a complete family of events. To disable events only for
-a certain API call, use the \#defines that are available from the rtx_evrt.h header file by adding them manually to the
-RTX_Config.h file:
-
-\b Memory \b events \n
-\c EVR_RTX_MEMORY_INIT_DISABLE, \c EVR_RTX_MEMORY_ALLOC_DISABLE, \c EVR_RTX_MEMORY_FREE_DISABLE,
-\c EVR_RTX_MEMORY_BLOCK_INIT_DISABLE, \c EVR_RTX_MEMORY_BLOCK_ALLOC_DISABLE, \c EVR_RTX_MEMORY_BLOCK_FREE_DISABLE
-
-\b Kernel \b events \n
-\c EVR_RTX_KERNEL_ERROR_DISABLE, \c EVR_RTX_KERNEL_INITIALIZE_DISABLE, \c EVR_RTX_KERNEL_INITIALIZE_COMPLETED_DISABLE,
-\c EVR_RTX_KERNEL_GET_INFO_DISABLE, \c EVR_RTX_KERNEL_INFO_RETRIEVED_DISABLE, \c EVR_RTX_KERNEL_GET_STATE_DISABLE,
-\c EVR_RTX_KERNEL_START_DISABLE, \c EVR_RTX_KERNEL_STARTED_DISABLE, \c EVR_RTX_KERNEL_LOCK_DISABLE,
-\c EVR_RTX_KERNEL_LOCKED_DISABLE, \c EVR_RTX_KERNEL_UNLOCK_DISABLE, \c EVR_RTX_KERNEL_UNLOCKED_DISABLE,
-\c EVR_RTX_KERNEL_RESTORE_LOCK_DISABLE, \c EVR_RTX_KERNEL_LOCK_RESTORED_DISABLE, \c EVR_RTX_KERNEL_SUSPEND_DISABLE,
-\c EVR_RTX_KERNEL_SUSPENDED_DISABLE, \c EVR_RTX_KERNEL_RESUME_DISABLE, \c EVR_RTX_KERNEL_RESUMED_DISABLE,
-\c EVR_RTX_KERNEL_GET_TICK_COUNT_DISABLE, \c EVR_RTX_KERNEL_GET_TICK_FREQ_DISABLE,
-\c EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE, \c EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE
-
-\b Thread \b events \n
-\c EVR_RTX_THREAD_ERROR_DISABLE, \c EVR_RTX_THREAD_NEW_DISABLE, \c EVR_RTX_THREAD_CREATED_DISABLE,
-\c EVR_RTX_THREAD_GET_NAME_DISABLE, \c EVR_RTX_THREAD_GET_ID_DISABLE, \c EVR_RTX_THREAD_GET_STATE_DISABLE,
-\c EVR_RTX_THREAD_GET_STACK_SIZE_DISABLE, \c EVR_RTX_THREAD_GET_STACK_SPACE_DISABLE, \c EVR_RTX_THREAD_SET_PRIORITY_DISABLE,
-\c EVR_RTX_THREAD_GET_PRIORITY_DISABLE, \c EVR_RTX_THREAD_YIELD_DISABLE, \c EVR_RTX_THREAD_SUSPEND_DISABLE,
-\c EVR_RTX_THREAD_SUSPENDED_DISABLE, \c EVR_RTX_THREAD_RESUME_DISABLE, \c EVR_RTX_THREAD_RESUMED_DISABLE,
-\c EVR_RTX_THREAD_DETACH_DISABLE, \c EVR_RTX_THREAD_DETACHED_DISABLE, \c EVR_RTX_THREAD_JOIN_DISABLE,
-\c EVR_RTX_THREAD_JOIN_PENDING_DISABLE, \c EVR_RTX_THREAD_JOINED_DISABLE, \c EVR_RTX_THREAD_BLOCKED_DISABLE,
-\c EVR_RTX_THREAD_UNBLOCKED_DISABLE, \c EVR_RTX_THREAD_PREEMPTED_DISABLE, \c EVR_RTX_THREAD_SWITCHED_DISABLE,
-\c EVR_RTX_THREAD_EXIT_DISABLE, \c EVR_RTX_THREAD_TERMINATE_DISABLE, \c EVR_RTX_THREAD_DESTROYED_DISABLE,
-\c EVR_RTX_THREAD_GET_COUNT_DISABLE, \c EVR_RTX_THREAD_ENUMERATE_DISABLE
-
-\b Thread \b flag \b events \n
-\c EVR_RTX_THREAD_FLAGS_SET_DISABLE, \c EVR_RTX_THREAD_FLAGS_SET_DONE_DISABLE, \c EVR_RTX_THREAD_FLAGS_CLEAR_DISABLE,
-\c EVR_RTX_THREAD_FLAGS_CLEAR_DONE_DISABLE, \c EVR_RTX_THREAD_FLAGS_GET_DISABLE, \c EVR_RTX_THREAD_FLAGS_WAIT_DISABLE,
-\c EVR_RTX_THREAD_FLAGS_WAIT_PENDING_DISABLE, \c EVR_RTX_THREAD_FLAGS_WAIT_TIMEOUT_DISABLE,
-\c EVR_RTX_THREAD_FLAGS_WAIT_COMPLETED_DISABLE, \c EVR_RTX_THREAD_FLAGS_WAIT_NOT_COMPLETED_DISABLE
-
-\b Generic \b wait \b events \n
-\c EVR_RTX_THREAD_DELAY_DISABLE, \c EVR_RTX_THREAD_DELAY_UNTIL_DISABLE, \c EVR_RTX_THREAD_DELAY_COMPLETED_DISABLE
-
-\b Timer \b events \n
-\c EVR_RTX_TIMER_ERROR_DISABLE, \c EVR_RTX_TIMER_CALLBACK_DISABLE, \c EVR_RTX_TIMER_NEW_DISABLE,
-\c EVR_RTX_TIMER_CREATED_DISABLE, \c EVR_RTX_TIMER_GET_NAME_DISABLE, \c EVR_RTX_TIMER_START_DISABLE,
-\c EVR_RTX_TIMER_STARTED_DISABLE, \c EVR_RTX_TIMER_STOP_DISABLE, \c EVR_RTX_TIMER_STOPPED_DISABLE,
-\c EVR_RTX_TIMER_IS_RUNNING_DISABLE, \c EVR_RTX_TIMER_DELETE_DISABLE, \c EVR_RTX_TIMER_DESTROYED_DISABLE
-
-\b Event \b flag \b events \n
-\c EVR_RTX_EVENT_FLAGS_ERROR_DISABLE, \c EVR_RTX_EVENT_FLAGS_NEW_DISABLE, \c EVR_RTX_EVENT_FLAGS_CREATED_DISABLE,
-\c EVR_RTX_EVENT_FLAGS_GET_NAME_DISABLE, \c EVR_RTX_EVENT_FLAGS_SET_DISABLE, \c EVR_RTX_EVENT_FLAGS_SET_DONE_DISABLE,
-\c EVR_RTX_EVENT_FLAGS_CLEAR_DISABLE, \c EVR_RTX_EVENT_FLAGS_CLEAR_DONE_DISABLE, \c EVR_RTX_EVENT_FLAGS_GET_DISABLE,
-\c EVR_RTX_EVENT_FLAGS_WAIT_DISABLE, \c EVR_RTX_EVENT_FLAGS_WAIT_PENDING_DISABLE,
-\c EVR_RTX_EVENT_FLAGS_WAIT_TIMEOUT_DISABLE, \c EVR_RTX_EVENT_FLAGS_WAIT_COMPLETED_DISABLE,
-\c EVR_RTX_EVENT_FLAGS_WAIT_NOT_COMPLETED_DISABLE, \c EVR_RTX_EVENT_FLAGS_DELETE_DISABLE,
-\c EVR_RTX_EVENT_FLAGS_DESTROYED_DISABLE
-
-\b Mutex \b events \n
-\c EVR_RTX_MUTEX_ERROR_DISABLE, \c EVR_RTX_MUTEX_NEW_DISABLE, \c EVR_RTX_MUTEX_CREATED_DISABLE,
-\c EVR_RTX_MUTEX_GET_NAME_DISABLE, \c EVR_RTX_MUTEX_ACQUIRE_DISABLE, \c EVR_RTX_MUTEX_ACQUIRE_PENDING_DISABLE,
-\c EVR_RTX_MUTEX_ACQUIRE_TIMEOUT_DISABLE, \c EVR_RTX_MUTEX_ACQUIRED_DISABLE, \c EVR_RTX_MUTEX_NOT_ACQUIRED_DISABLE,
-\c EVR_RTX_MUTEX_RELEASE_DISABLE, \c EVR_RTX_MUTEX_RELEASED_DISABLE, \c EVR_RTX_MUTEX_GET_OWNER_DISABLE,
-\c EVR_RTX_MUTEX_DELETE_DISABLE, \c EVR_RTX_MUTEX_DESTROYED_DISABLE
-
-\b Semaphore \b events \n
-\c EVR_RTX_SEMAPHORE_ERROR_DISABLE, \c EVR_RTX_SEMAPHORE_NEW_DISABLE, \c EVR_RTX_SEMAPHORE_CREATED_DISABLE,
-\c EVR_RTX_SEMAPHORE_GET_NAME_DISABLE, \c EVR_RTX_SEMAPHORE_ACQUIRE_DISABLE, \c EVR_RTX_SEMAPHORE_ACQUIRE_PENDING_DISABLE,
-\c EVR_RTX_SEMAPHORE_ACQUIRE_TIMEOUT_DISABLE, \c EVR_RTX_SEMAPHORE_ACQUIRED_DISABLE,
-\c EVR_RTX_SEMAPHORE_NOT_ACQUIRED_DISABLE, \c EVR_RTX_SEMAPHORE_RELEASE_DISABLE, \c EVR_RTX_SEMAPHORE_RELEASED_DISABLE,
-\c EVR_RTX_SEMAPHORE_GET_COUNT_DISABLE, \c EVR_RTX_SEMAPHORE_DELETE_DISABLE, \c EVR_RTX_SEMAPHORE_DESTROYED_DISABLE
-
-\b Memory \b pool \b events \n
-\c EVR_RTX_MEMORY_POOL_ERROR_DISABLE, \c EVR_RTX_MEMORY_POOL_NEW_DISABLE, \c EVR_RTX_MEMORY_POOL_CREATED_DISABLE,
-\c EVR_RTX_MEMORY_POOL_GET_NAME_DISABLE, \c EVR_RTX_MEMORY_POOL_ALLOC_DISABLE, \c EVR_RTX_MEMORY_POOL_ALLOC_PENDING_DISABLE,
-\c EVR_RTX_MEMORY_POOL_ALLOC_TIMEOUT_DISABLE, \c EVR_RTX_MEMORY_POOL_ALLOCATED_DISABLE,
-\c EVR_RTX_MEMORY_POOL_ALLOC_FAILED_DISABLE, \c EVR_RTX_MEMORY_POOL_FREE_DISABLE, \c EVR_RTX_MEMORY_POOL_DEALLOCATED_DISABLE,
-\c EVR_RTX_MEMORY_POOL_FREE_FAILED_DISABLE, \c EVR_RTX_MEMORY_POOL_GET_CAPACITY_DISABLE,
-\c EVR_RTX_MEMORY_POOL_GET_BLOCK_SZIE_DISABLE, \c EVR_RTX_MEMORY_POOL_GET_COUNT_DISABLE,
-\c EVR_RTX_MEMORY_POOL_GET_SPACE_DISABLE, \c EVR_RTX_MEMORY_POOL_DELETE_DISABLE, \c EVR_RTX_MEMORY_POOL_DESTROYED_DISABLE
-
-\b Message \b queue \b events \n
-\c EVR_RTX_MESSAGE_QUEUE_ERROR_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_NEW_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_CREATED_DISABLE,
-\c EVR_RTX_MESSAGE_QUEUE_GET_NAME_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_PUT_DISABLE,
-\c EVR_RTX_MESSAGE_QUEUE_PUT_PENDING_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_PUT_TIMEOUT_DISABLE,
-\c EVR_RTX_MESSAGE_QUEUE_INSERT_PENDING_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_INSERTED_DISABLE,
-\c EVR_RTX_MESSAGE_QUEUE_NOT_INSERTED_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_GET_DISABLE,
-\c EVR_RTX_MESSAGE_QUEUE_GET_PENDING_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_GET_TIMEOUT_DISABLE,
-\c EVR_RTX_MESSAGE_QUEUE_RETRIEVED_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_NOT_RETRIEVED_DISABLE,
-\c EVR_RTX_MESSAGE_QUEUE_GET_CAPACITY_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_GET_MSG_SIZE_DISABLE,
-\c EVR_RTX_MESSAGE_QUEUE_GET_COUNT_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_GET_SPACE_DISABLE,
-\c EVR_RTX_MESSAGE_QUEUE_RESET_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_RESET_DONE_DISABLE,
-\c EVR_RTX_MESSAGE_QUEUE_DELETE_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_DESTROYED_DISABLE
 
 
 \subsection systemConfig_usage_counters Object Memory Usage Counters
@@ -990,6 +885,234 @@ Data Storage Memory size [bytes]       | \c OS_MSGQUEUE_DATA_SIZE | Defines the 
 \subsection msgQueueConfig_obj Object-specific memory allocation
 When Object-specific Memory is used, the number of queues for all Message Queue objects is specified by \c OS_MSGQUEUE_NUM.
 The total storage size reserved for all queues is configured in \c OS_MSGQUEUE_DATA_SIZE. Refer to \ref ObjectMemoryPool.
+
+
+\section evtrecConfig Event Recorder Configuration
+
+RTX5 fully supports <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank">Event Recorder</a>
+annotations. In this section, you can initialize the event recording, enable the events to be recorded and filter for events
+to be displayed in the debugger. This leads to reduced data traffic on the debug connection.
+
+\image html config_wizard_evtrec.png "RTX_Config.h: Event Recorder Configuration"
+
+\subsection evtrecConfigGlobIni Global Configuration
+In this section, you can select to initialize Event Recorder during the initialization phase of the Kernel and you can
+already start the event generation.
+
+\image html config_wizard_evtrecGlobIni.png "RTX_Config.h: Initialization and filter setup configuration"
+
+<br/>
+
+Name                  | \#define        | Description
+----------------------|-----------------|----------------------------------------------------------------
+Global Initialization | \c OS_EVR_INIT  | Initialize Event Recorder during 'osKernelInitialize'.
+Start recording       | \c OS_EVR_START | Start event recording after initialization.
+
+\note
+- If you are enable \c OS_EVR_INIT, make sure that your source code does not contain any call to \c EventRecorderInitialize.
+- If you are enable \c OS_EVR_START, make sure that your source code does not contain any call to \c EventRecorderStart.
+
+
+
+<b>Global Event Filter Setup</b>
+
+These initial event filter settings are applied to all software components that are used in the project, including MDK
+middleware and user components.
+
+\image html config_wizard_evtrecGlobEvtFiltSetup.png "RTX_Config.h: Global Event Filter Setup"
+
+<br/>
+
+Name                      | \#define         | Description
+--------------------------|------------------|----------------------------------------------------------------
+Error events              | \c OS_EVR_LEVEL  | Enable error events.
+API function call events  | \c OS_EVR_LEVEL  | Enable API function call events.
+Operation events          | \c OS_EVR_LEVEL  | Enable operation events.
+Detailed operation events | \c OS_EVR_LEVEL  | Enable detailed operation events.
+
+\note
+You can still enable events for specific software components by calling the \c EventRecorderEnable function.
+
+<b>Code example</b>
+
+The following code example assumes that the global initialization is used, the recording is started automatically, but no
+events are enabled globally. This is done by calling EventRecorderEnable for selected network components:
+
+\code
+/*----------------------------------------------------------------------------
+  Main Thread 'main': Run Network
+ *---------------------------------------------------------------------------*/
+__NO_RETURN void app_main (void *arg) {
+  (void)arg;
+ 
+#ifdef RTE_Compiler_EventRecorder
+  EventRecorderEnable (EventRecordError, 0xC0U, 0xDCU);    /* Net Events     */
+  EventRecorderEnable (EventRecordAll,   0xCAU, 0xCAU);    /* DHCP Events    */
+  EventRecorderEnable (EventRecordAll,   0xD2U, 0xD2U);    /* BSD Events     */
+#endif
+ 
+  LED_Initialize ();
+  init_display   ();
+   
+  netInitialize ();
+  print_address ();
+ 
+  // Create networking task
+  osThreadNew (Client, NULL, NULL);
+  while(1) {
+    osThreadFlagsWait (0, osFlagsWaitAny, osWaitForever);
+  }
+}
+\endcode
+
+<b>RTOS Event Filter Setup</b>
+
+Event filter settings for RTX components. Only applicable if events for the respective component are generated (requires RTX
+source variant). All of the following configuration options have four different sub-options that can be enabled independently:
+- Error events
+- API function call events
+- Operation events
+- Detailed operation events
+
+\image html config_wizard_evtrecRTOSEvtFilterSetup.png "RTX_Config.h: RTOS Event Filter Setup"
+
+<br/>
+
+Name              | \#define                   | Description
+------------------|----------------------------|----------------------------------------------------------------
+Memory Management | \c OS_EVR_MEMORY_FILTER    | Filter enable settings for Memory Management events.
+Kernel            | \c OS_EVR_KERNEL_FILTER    | Filter enable settings for Kernel events.
+Thread            | \c OS_EVR_THREAD_FILTER    | Filter enable settings for Thread events.
+Timer             | \c OS_EVR_TIMER_FILTER     | Filter enable settings for Timer events.
+Event Flags       | \c OS_EVR_EVFLAGS_FILTER   | Filter enable settings for Event Flags events.
+Mutex             | \c OS_EVR_MUTEX_FILTER     | Filter enable settings for Mutex events.
+Semaphore         | \c OS_EVR_SEMAPHORE_FILTER | Filter enable settings for Semaphore events.
+Memory Pool       | \c OS_EVR_MEMPOOL_FILTER   | Filter enable settings for Memory Pool events.
+Message Queue     | \c OS_EVR_MSGQUEUE_FILTER  | Filter enable settings for Message Queue events.
+ 
+\note
+Filters for a group will not show any effect, in case the generation of events is not enabled (refer to
+\ref evtrecConfigEvtGen).
+
+
+\subsection evtrecConfigEvtGen RTOS Event Generation
+
+The following settings enable the event generation for RTX components only. This requires the RTX source variant to be
+present in the project.
+
+\image html config_wizard_evtrecGeneration.png "RTX_Config.h: Event generation configuration"
+
+<br/>
+
+Name              | \#define                 | Description
+------------------|--------------------------|----------------------------------------------------------------
+Memory Management | \c OS_EVR_MEMORY         | Enables Memory Management events recording.
+Kernel            | \c OS_EVR_KERNEL         | Enables Kernel events recording.
+Thread            | \c OS_EVR_THREAD         | Enables Thread events recording.
+Timer             | \c OS_EVR_TIMER          | Enables Timer events recording.
+Event Flags       | \c OS_EVR_EVFLAGS        | Enables Event Flags events recording.
+Mutex             | \c OS_EVR_MUTEX          | Enables Mutex events recording.
+Semaphore         | \c OS_EVR_SEMAPHORE      | Enables Semaphore events recording.
+Memory Pool       | \c OS_EVR_MEMPOOL        | Enables Memory Pool events recording.
+Message Queue     | \c OS_EVR_MSGQUEUE       | Enables Message Queue events recording.
+
+\note
+If you deselect a component here, no events will be generated for it. Thus, \ref evtrecConfigGlobIni "filters" for this
+component will not show an effect. The debugger will not be able to display any events for the component.
+
+
+\subsection systemConfig_event_recording Manual event configuration
+
+To disable events only for a certain API call, use the \#defines that are available from the rtx_evrt.h header file by adding
+them manually to the RTX_Config.h file:
+
+\b Memory \b events \n
+\c EVR_RTX_MEMORY_INIT_DISABLE, \c EVR_RTX_MEMORY_ALLOC_DISABLE, \c EVR_RTX_MEMORY_FREE_DISABLE,
+\c EVR_RTX_MEMORY_BLOCK_INIT_DISABLE, \c EVR_RTX_MEMORY_BLOCK_ALLOC_DISABLE, \c EVR_RTX_MEMORY_BLOCK_FREE_DISABLE
+
+\b Kernel \b events \n
+\c EVR_RTX_KERNEL_ERROR_DISABLE, \c EVR_RTX_KERNEL_INITIALIZE_DISABLE, \c EVR_RTX_KERNEL_INITIALIZE_COMPLETED_DISABLE,
+\c EVR_RTX_KERNEL_GET_INFO_DISABLE, \c EVR_RTX_KERNEL_INFO_RETRIEVED_DISABLE, \c EVR_RTX_KERNEL_GET_STATE_DISABLE,
+\c EVR_RTX_KERNEL_START_DISABLE, \c EVR_RTX_KERNEL_STARTED_DISABLE, \c EVR_RTX_KERNEL_LOCK_DISABLE,
+\c EVR_RTX_KERNEL_LOCKED_DISABLE, \c EVR_RTX_KERNEL_UNLOCK_DISABLE, \c EVR_RTX_KERNEL_UNLOCKED_DISABLE,
+\c EVR_RTX_KERNEL_RESTORE_LOCK_DISABLE, \c EVR_RTX_KERNEL_LOCK_RESTORED_DISABLE, \c EVR_RTX_KERNEL_SUSPEND_DISABLE,
+\c EVR_RTX_KERNEL_SUSPENDED_DISABLE, \c EVR_RTX_KERNEL_RESUME_DISABLE, \c EVR_RTX_KERNEL_RESUMED_DISABLE,
+\c EVR_RTX_KERNEL_GET_TICK_COUNT_DISABLE, \c EVR_RTX_KERNEL_GET_TICK_FREQ_DISABLE,
+\c EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE, \c EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE
+
+\b Thread \b events \n
+\c EVR_RTX_THREAD_ERROR_DISABLE, \c EVR_RTX_THREAD_NEW_DISABLE, \c EVR_RTX_THREAD_CREATED_DISABLE,
+\c EVR_RTX_THREAD_GET_NAME_DISABLE, \c EVR_RTX_THREAD_GET_ID_DISABLE, \c EVR_RTX_THREAD_GET_STATE_DISABLE,
+\c EVR_RTX_THREAD_GET_STACK_SIZE_DISABLE, \c EVR_RTX_THREAD_GET_STACK_SPACE_DISABLE, \c EVR_RTX_THREAD_SET_PRIORITY_DISABLE,
+\c EVR_RTX_THREAD_GET_PRIORITY_DISABLE, \c EVR_RTX_THREAD_YIELD_DISABLE, \c EVR_RTX_THREAD_SUSPEND_DISABLE,
+\c EVR_RTX_THREAD_SUSPENDED_DISABLE, \c EVR_RTX_THREAD_RESUME_DISABLE, \c EVR_RTX_THREAD_RESUMED_DISABLE,
+\c EVR_RTX_THREAD_DETACH_DISABLE, \c EVR_RTX_THREAD_DETACHED_DISABLE, \c EVR_RTX_THREAD_JOIN_DISABLE,
+\c EVR_RTX_THREAD_JOIN_PENDING_DISABLE, \c EVR_RTX_THREAD_JOINED_DISABLE, \c EVR_RTX_THREAD_BLOCKED_DISABLE,
+\c EVR_RTX_THREAD_UNBLOCKED_DISABLE, \c EVR_RTX_THREAD_PREEMPTED_DISABLE, \c EVR_RTX_THREAD_SWITCHED_DISABLE,
+\c EVR_RTX_THREAD_EXIT_DISABLE, \c EVR_RTX_THREAD_TERMINATE_DISABLE, \c EVR_RTX_THREAD_DESTROYED_DISABLE,
+\c EVR_RTX_THREAD_GET_COUNT_DISABLE, \c EVR_RTX_THREAD_ENUMERATE_DISABLE
+
+\b Thread \b flag \b events \n
+\c EVR_RTX_THREAD_FLAGS_SET_DISABLE, \c EVR_RTX_THREAD_FLAGS_SET_DONE_DISABLE, \c EVR_RTX_THREAD_FLAGS_CLEAR_DISABLE,
+\c EVR_RTX_THREAD_FLAGS_CLEAR_DONE_DISABLE, \c EVR_RTX_THREAD_FLAGS_GET_DISABLE, \c EVR_RTX_THREAD_FLAGS_WAIT_DISABLE,
+\c EVR_RTX_THREAD_FLAGS_WAIT_PENDING_DISABLE, \c EVR_RTX_THREAD_FLAGS_WAIT_TIMEOUT_DISABLE,
+\c EVR_RTX_THREAD_FLAGS_WAIT_COMPLETED_DISABLE, \c EVR_RTX_THREAD_FLAGS_WAIT_NOT_COMPLETED_DISABLE
+
+\b Generic \b wait \b events \n
+\c EVR_RTX_THREAD_DELAY_DISABLE, \c EVR_RTX_THREAD_DELAY_UNTIL_DISABLE, \c EVR_RTX_THREAD_DELAY_COMPLETED_DISABLE
+
+\b Timer \b events \n
+\c EVR_RTX_TIMER_ERROR_DISABLE, \c EVR_RTX_TIMER_CALLBACK_DISABLE, \c EVR_RTX_TIMER_NEW_DISABLE,
+\c EVR_RTX_TIMER_CREATED_DISABLE, \c EVR_RTX_TIMER_GET_NAME_DISABLE, \c EVR_RTX_TIMER_START_DISABLE,
+\c EVR_RTX_TIMER_STARTED_DISABLE, \c EVR_RTX_TIMER_STOP_DISABLE, \c EVR_RTX_TIMER_STOPPED_DISABLE,
+\c EVR_RTX_TIMER_IS_RUNNING_DISABLE, \c EVR_RTX_TIMER_DELETE_DISABLE, \c EVR_RTX_TIMER_DESTROYED_DISABLE
+
+\b Event \b flag \b events \n
+\c EVR_RTX_EVENT_FLAGS_ERROR_DISABLE, \c EVR_RTX_EVENT_FLAGS_NEW_DISABLE, \c EVR_RTX_EVENT_FLAGS_CREATED_DISABLE,
+\c EVR_RTX_EVENT_FLAGS_GET_NAME_DISABLE, \c EVR_RTX_EVENT_FLAGS_SET_DISABLE, \c EVR_RTX_EVENT_FLAGS_SET_DONE_DISABLE,
+\c EVR_RTX_EVENT_FLAGS_CLEAR_DISABLE, \c EVR_RTX_EVENT_FLAGS_CLEAR_DONE_DISABLE, \c EVR_RTX_EVENT_FLAGS_GET_DISABLE,
+\c EVR_RTX_EVENT_FLAGS_WAIT_DISABLE, \c EVR_RTX_EVENT_FLAGS_WAIT_PENDING_DISABLE,
+\c EVR_RTX_EVENT_FLAGS_WAIT_TIMEOUT_DISABLE, \c EVR_RTX_EVENT_FLAGS_WAIT_COMPLETED_DISABLE,
+\c EVR_RTX_EVENT_FLAGS_WAIT_NOT_COMPLETED_DISABLE, \c EVR_RTX_EVENT_FLAGS_DELETE_DISABLE,
+\c EVR_RTX_EVENT_FLAGS_DESTROYED_DISABLE
+
+\b Mutex \b events \n
+\c EVR_RTX_MUTEX_ERROR_DISABLE, \c EVR_RTX_MUTEX_NEW_DISABLE, \c EVR_RTX_MUTEX_CREATED_DISABLE,
+\c EVR_RTX_MUTEX_GET_NAME_DISABLE, \c EVR_RTX_MUTEX_ACQUIRE_DISABLE, \c EVR_RTX_MUTEX_ACQUIRE_PENDING_DISABLE,
+\c EVR_RTX_MUTEX_ACQUIRE_TIMEOUT_DISABLE, \c EVR_RTX_MUTEX_ACQUIRED_DISABLE, \c EVR_RTX_MUTEX_NOT_ACQUIRED_DISABLE,
+\c EVR_RTX_MUTEX_RELEASE_DISABLE, \c EVR_RTX_MUTEX_RELEASED_DISABLE, \c EVR_RTX_MUTEX_GET_OWNER_DISABLE,
+\c EVR_RTX_MUTEX_DELETE_DISABLE, \c EVR_RTX_MUTEX_DESTROYED_DISABLE
+
+\b Semaphore \b events \n
+\c EVR_RTX_SEMAPHORE_ERROR_DISABLE, \c EVR_RTX_SEMAPHORE_NEW_DISABLE, \c EVR_RTX_SEMAPHORE_CREATED_DISABLE,
+\c EVR_RTX_SEMAPHORE_GET_NAME_DISABLE, \c EVR_RTX_SEMAPHORE_ACQUIRE_DISABLE, \c EVR_RTX_SEMAPHORE_ACQUIRE_PENDING_DISABLE,
+\c EVR_RTX_SEMAPHORE_ACQUIRE_TIMEOUT_DISABLE, \c EVR_RTX_SEMAPHORE_ACQUIRED_DISABLE,
+\c EVR_RTX_SEMAPHORE_NOT_ACQUIRED_DISABLE, \c EVR_RTX_SEMAPHORE_RELEASE_DISABLE, \c EVR_RTX_SEMAPHORE_RELEASED_DISABLE,
+\c EVR_RTX_SEMAPHORE_GET_COUNT_DISABLE, \c EVR_RTX_SEMAPHORE_DELETE_DISABLE, \c EVR_RTX_SEMAPHORE_DESTROYED_DISABLE
+
+\b Memory \b pool \b events \n
+\c EVR_RTX_MEMORY_POOL_ERROR_DISABLE, \c EVR_RTX_MEMORY_POOL_NEW_DISABLE, \c EVR_RTX_MEMORY_POOL_CREATED_DISABLE,
+\c EVR_RTX_MEMORY_POOL_GET_NAME_DISABLE, \c EVR_RTX_MEMORY_POOL_ALLOC_DISABLE, \c EVR_RTX_MEMORY_POOL_ALLOC_PENDING_DISABLE,
+\c EVR_RTX_MEMORY_POOL_ALLOC_TIMEOUT_DISABLE, \c EVR_RTX_MEMORY_POOL_ALLOCATED_DISABLE,
+\c EVR_RTX_MEMORY_POOL_ALLOC_FAILED_DISABLE, \c EVR_RTX_MEMORY_POOL_FREE_DISABLE, \c EVR_RTX_MEMORY_POOL_DEALLOCATED_DISABLE,
+\c EVR_RTX_MEMORY_POOL_FREE_FAILED_DISABLE, \c EVR_RTX_MEMORY_POOL_GET_CAPACITY_DISABLE,
+\c EVR_RTX_MEMORY_POOL_GET_BLOCK_SZIE_DISABLE, \c EVR_RTX_MEMORY_POOL_GET_COUNT_DISABLE,
+\c EVR_RTX_MEMORY_POOL_GET_SPACE_DISABLE, \c EVR_RTX_MEMORY_POOL_DELETE_DISABLE, \c EVR_RTX_MEMORY_POOL_DESTROYED_DISABLE
+
+\b Message \b queue \b events \n
+\c EVR_RTX_MESSAGE_QUEUE_ERROR_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_NEW_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_CREATED_DISABLE,
+\c EVR_RTX_MESSAGE_QUEUE_GET_NAME_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_PUT_DISABLE,
+\c EVR_RTX_MESSAGE_QUEUE_PUT_PENDING_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_PUT_TIMEOUT_DISABLE,
+\c EVR_RTX_MESSAGE_QUEUE_INSERT_PENDING_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_INSERTED_DISABLE,
+\c EVR_RTX_MESSAGE_QUEUE_NOT_INSERTED_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_GET_DISABLE,
+\c EVR_RTX_MESSAGE_QUEUE_GET_PENDING_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_GET_TIMEOUT_DISABLE,
+\c EVR_RTX_MESSAGE_QUEUE_RETRIEVED_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_NOT_RETRIEVED_DISABLE,
+\c EVR_RTX_MESSAGE_QUEUE_GET_CAPACITY_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_GET_MSG_SIZE_DISABLE,
+\c EVR_RTX_MESSAGE_QUEUE_GET_COUNT_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_GET_SPACE_DISABLE,
+\c EVR_RTX_MESSAGE_QUEUE_RESET_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_RESET_DONE_DISABLE,
+\c EVR_RTX_MESSAGE_QUEUE_DELETE_DISABLE, \c EVR_RTX_MESSAGE_QUEUE_DESTROYED_DISABLE
+
+
 */
 
 
