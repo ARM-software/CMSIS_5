@@ -365,6 +365,7 @@
  
 //     <h>RTOS Event Filter Setup
 //     <i> Event filter settings for RTX components.
+//     <i> Only applicable if events for the respective component are generated.
  
 //       <e.7>Memory Management
 //       <i> Filter enable settings for Memory Management events.
