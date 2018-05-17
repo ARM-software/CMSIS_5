@@ -80,7 +80,7 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
 - added \ref sdf_pg
 - updates to \ref DeviceVendorEnum "Device Vendor"
 - removed usage of DP CTRL/STAT CDBGRSTREQ from \ref debugPortStart default sequence
-- Under construction (!): <flashinfo> with children <block> and <gap> to describe flash devices for
+- Under construction (!): \<flashinfo\> with children \<block\> and \<gap\> to describe flash devices for
   sequence-based flash download
 - Under construction (!): new debug access functions and global debug variables for sequence-based
   flash download

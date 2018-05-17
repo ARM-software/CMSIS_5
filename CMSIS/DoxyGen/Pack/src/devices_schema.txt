@@ -292,7 +292,7 @@ Multiple \<family> groups can be defined.
   </tr>
   <tr>
     <td>\ref element_flashinfo "flashinfo"</td>
-    <td>Specify additional information required to download application code into a flash device that is available for all devices of the family.</td>
+    <td>Specify additional information required to download application code into Flash that is available for all devices of the family.</td>
     <td>FlashInfoType</td>
     <td>0..*</td>
   </tr>
@@ -463,7 +463,7 @@ These properties are inherited by subgroups or elements. Multiple \<subFamily> g
   </tr>
   <tr>
     <td>\ref element_flashinfo "flashinfo"</td>
-    <td>Specify additional information required to download application code into a flash device that is available for all devices of the sub-family.</td>
+    <td>Specify additional information required to download application code into Flash that is available for all devices of the sub-family.</td>
     <td>FlashInfoType</td>
     <td>0..*</td>
   </tr>
@@ -585,7 +585,7 @@ Multiple \<device> elements can be defined.
   </tr>
   <tr>
     <td>\ref element_flashinfo "flashinfo"</td>
-    <td>Specify additional information required to download application code into a flash device that is specific to this device.</td>
+    <td>Specify additional information required to download application code into Flash that is specific to this device.</td>
     <td>FlashInfoType</td>
     <td>0..*</td>
   </tr>
@@ -772,14 +772,15 @@ memory range and style are identical, the one on the lower level takes precedenc
 
 \section element_flashinfo /package/devices/family/.../flashinfo
 
-Specify Flash information that the debugger can use to erase and program flash memories without the use
-of target RAM based flash download algorithms.<br>
-The child elements \<block> and \<gap> describe the memory and programming layout of a flash device. The
-first child element has the base address \token{start}. The base address of the second child element
-is \token{start} incremented by the size of the first child element. The base address of all following
-child elements calculates respectively. Flash information can be defined on various levels. Multiple
-\<flashinfo> elements are possible. If the memory range is identical, the one on the lower level takes
-precedence. Overlap of flash information ranges is not allowed.
+Specify Flash information that the debugger can use to erase and program Flash memories without the use
+of target RAM based Flash download algorithms.<br>
+The child elements \<block> and \<gap> describe the memory and programming layout of a flash device:
+- The first child element has the base address \token{start}.
+- The base address of the second child element is \token{start} incremented by the size of the first child element.
+- The base address of all following child elements calculates respectively.
+
+Flash information can be defined on various levels. Multiple \<flashinfo> elements are possible. If the memory range is
+identical, the one on the lower level takes precedence. Overlap of Flash information ranges is not allowed.
 
 \b Example
 \code
@@ -841,7 +842,7 @@ precedence. Overlap of flash information ranges is not allowed.
   </tr>
   <tr>
     <td>blankval</td>
-    <td>Expected memory value for unprogrammed address ranges. 64-bit value. 
+    <td>Expected memory value for unprogrammed address ranges (64-bit value). 
     The access size used to read back programmed memory defines the number of least significant bytes of this value that are compared.
     Defaults to \token{0xFFFFFFFFFFFFFFFF} if not specified.</td>
     <td>NonNegativeInteger</td>
@@ -849,8 +850,8 @@ precedence. Overlap of flash information ranges is not allowed.
   </tr>
   <tr>
     <td>filler</td>
-    <td>Value that a debugger uses to fill the remainder of a programming page. 64-bit value.
-    The access size used in FlashBufferWrite defines the number of least significant bytes of this value to write.
+    <td>Value that a debugger uses to fill the remainder of a programming page (64-bit value).
+    The access size used in \ref DebugFunctions "FlashBufferWrite" defines the number of least significant bytes of this value to write.
     Defaults to \token{0xFFFFFFFFFFFFFFFF} if not specified.</td>
     <td>NonNegativeInteger</td>
     <td>optional</td>
@@ -2818,8 +2819,8 @@ described in the following table.
     <td style="white-space: nowrap"><pre>__FlashOp</pre></td>
     <td>Read-Only</td>
     <td>
-      Type of the currently executed flash operation. A debugger sets this value to \token{0}
-      if the executed sequence is not part of a flash operation.
+      Type of the currently executed Flash operation. A debugger sets this value to \token{0}
+      if the executed sequence is not part of a Flash operation.
     </td>
     <td>
       The following values apply:<br>
@@ -2834,8 +2835,8 @@ described in the following table.
     <td style="white-space: nowrap"><pre>__FlashAddr</pre></td>
     <td>Read-Only</td>
     <td>
-      Start address for the current flash operation. A debugger sets this value to \token{0}
-      if the executed sequence is not part of a flash operation.
+      Start address for the current Flash operation. A debugger sets this value to \token{0}
+      if the executed sequence is not part of a Flash operation.
     </td>
     <td>
       Memory-mapped target address the currently programmed \ref element_flashblock "block" is visible at.
