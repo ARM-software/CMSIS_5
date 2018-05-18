@@ -101,7 +101,11 @@ Returned by:
 /**
 \struct osEventFlagsAttr_t 
 \details
-Specifies the following attributes for the \ref osEventFlagsNew function.
+Attributes to configure an event flag set.
+
+Refer to \ref CMSIS_RTOS_MemoryMgmt for details about usage of
+ - osEventFlagsAttr_t::cb_mem
+ - osEventFlagsAttr_t::cb_size
 */ 
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -114,14 +118,6 @@ started (call to \ref osKernelStart), but not before it is initialized (call to 
 
 The parameter \a attr sets the event flags attributes (refer to \ref osEventFlagsAttr_t).  Default attributes will be used if
 set to \token{NULL}, i.e. kernel memory allocation is used for the event control block.
-
-Possible return values:
-    - pointer to the event flags object, if operation is successful
-    - \em NULL, if control block \em attr->cb_size is not large enough to hold an event flags object control block
-    - \em NULL, if control block \em attr->cb_mem is not 4 byte aligned 
-    - \em NULL, if the size of the control block \em attr->cb_size is not zero and control block memorz (\em attr->cb_mem) is \em NULL
-    - \em NULL, if IRQ is masked
-    - \em NULL, if in IRQ mode.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -161,11 +157,10 @@ by parameter \a ef_id. All threads waiting for the flag set will be notified to 
 The function returns the event flags after setting or an error code (highest bit is set, refer to \ref flags_error_codes).
 
 Possible \ref flags_error_codes return values:
-    - \em 'osErrorParameter', if event flags object specified by parameter \em ef_id refers to \em NULL
-    - \em 'osErrorParameter', if event flags object \em ef_id does not refer to an event flags object
-    - \em 'osErrorParameter', if \em flags is not in the legal range (if the highest bit is set)
-    - \em 'osErrorResource', if event flags object specified by \em ef_id is in state \em 'osRtxObjectInactive'.
-
+    - \em osFlagsErrorUnknown: Unspecified error.
+    - \em osFlagsErrorResource: Event flags object specified by parameter \a ef_id is not ready to be used.
+    - \em osFlagsErrorParameter: Parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
+	
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
@@ -204,11 +199,9 @@ specified by parameter \a ef_id. The function returns the event flags before cle
 refer to \ref flags_error_codes).
 
 Possible \ref flags_error_codes return values:
-    - \em 'osErrorParameter', if an event flags object specified by parameter \a ef_id does not exist
-    - \em 'osErrorParameter', if the event flags object specified by \em ef_id is \em NULL
-    - \em 'osErrorParameter', if more than 31 bits are cleared (if the highest bit is cleared)
-    - \em 'osErrorResource',  if \em ef_id is in state \em 'osRtxObjectInactive'. 
-
+    - \em osFlagsErrorUnknown: Unspecified error.
+    - \em osFlagsErrorResource: Event flags object specified by parameter \a ef_id is not ready to be used.
+    - \em osFlagsErrorParameter: Parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -248,15 +241,13 @@ that is calling this function is put into the \ref ThreadStates "BLOCKED" state.
    available (i.e. wait semantics).
  - all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).
 
-The function returns the event flags before clearing or an error code.
+The function returns the event flags before clearing or an error code (highest bit is set, refer to \ref flags_error_codes).
 
 Possible \ref flags_error_codes return values:
-    - \em 'osError', unspecified error 
-    - \em 'osErrorParameter', if event flags object specified by parameter \a ef_id does not exist
-    - \em 'osErrorParameter', if flags is not in the legal range (highest bit set)
-    - \em 'osErrorResource', if event flags object \a ef_id is in state \em 'osRtxObjectInactive'
-    - \em 'osErrorResource', if timeout = 0 and \em flags are not set within the time period
-    - \em 'osErrorTimeout', if timeout > 0 and \em flags are not set within the timeout period.
+    - \em osFlagsErrorUnknown: Unspecified error.
+    - \em osFlagsErrorTimeout: The awaited flags has not been set during given timeout.
+    - \em osFlagsErrorResource: Event flags object specified by parameter \a ef_id is not ready to be used.
+    - \em osFlagsErrorParameter: Parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
 
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
@@ -298,12 +289,10 @@ cause starvation of threads that are waiting for flags of this event object. The
 function \ref osEventFlagsNew.
 
 Possible \ref osStatus_t return values:
- - \em 'osOK', if the specified event flags object has been deleted
- - \em 'osErrorParameter', if an event flags object specified by \a ef_id does not exist
- - \em 'osErrorParameter', if the event flag object with \em ef_id is \em NULL
- - \em 'osErrorResource', if the event flag object ef_id is in state \em 'osRtxObjectInactive'
- - \em osErrorISR, if IRQ is masked
- - \em osErrorISR, if in IRQ mode.
+ - \em osOK: the specified event flags object has been deleted.
+ - \em osErrorISR: \b osEventFlagsDelete cannot be called from interrupt service routines.
+ - \em osErrorParameter: the value of the parameter \a ef_id is incorrect.
+ - \em osErrorResource: parameter \em ef_id is \token{NULL} or wrong.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -314,16 +303,6 @@ Possible \ref osStatus_t return values:
 \details
 The function \b osEventFlagsGetName returns the pointer to the name string of the event flags object identified by parameter
 \a ef_id or \token{NULL} in case of an error.
-
-The function \b osEventFlagsGetName returns the pointer to the name string of the event flags object identified by parameter
-\a ef_id or
- - \em NULL, if no name has been defined for the event flags object specified by \em ef_id
- - \em NULL, if the state of the event flags object is \em 'osRtxObjectInactive'
- - \em NULL, if the event flags object \em ef_id is \em NULL
- - \em NULL, if an event flags object specified by \a ef_id does not exist
- - \em NULL, if IRQ is masked
- - \em NULL, if in IRQ mode.
-
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -346,23 +325,21 @@ void EvtFlagsGetName_example (void)  {
 /**
 \var osEventFlagsAttr_t::attr_bits
 \details
-Reserved for future use (must be set to '0' for future compatibility).
+Reserved for future use (set to '0').\n
+Default: \token{0}.
 
 \var osEventFlagsAttr_t::cb_mem
 \details
-Pointer to a memory for the event flag control block object. Refer to \ref StaticObjectMemory for more information.
+Pointer to a memory location for the event control block object. This can optionally be used for custom memory management systems.\n
+Default: \token{NULL} (uses kernel memory management).
 
-Default: \token{NULL} to use \ref CMSIS_RTOS_MemoryMgmt_Automatic for the event flag control block.
 
 \var osEventFlagsAttr_t::cb_size
 \details
-The size (in bytes) of memory block passed with \ref cb_mem. For RTX, the minimum value is defined with \ref osRtxEventFlagsCbSize (higher values are permitted).
-
-Default: \token{0} as the default is no memory provided with \ref cb_mem.
+The size of the memory block passed with \ref cb_mem. Must be the size of an event control block object or larger.
 
 \var osEventFlagsAttr_t::name
 \details
-Pointer to a constant string with a human readable name (displayed during debugging) of the event flag object.
-
-Default: \token{NULL} no name specified.
+Pointer to a string with a human readable name of the event object.\n
+Default: \token{NULL}.
 */
