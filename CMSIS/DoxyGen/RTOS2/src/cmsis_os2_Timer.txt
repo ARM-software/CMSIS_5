@@ -115,17 +115,6 @@ is started (call to \ref osKernelStart), but not before it is initialized (call 
 
 The function \b osTimerNew returns the pointer to the timer object identifier or \token{NULL} in case of an error.
 
-Possible \ref osTimerId_t return values:
-- pointer to the timer object identifier, in case of success
-- \em NULL, if the callback function \em func is \em NULL
-- \em NULL, if the control block memory (\em attr->cb_mem) is not NULL the memory is not 4 byte aligned 
-- \em NULL, if the control block memory (\em attr->cb_mem) is not NULL but the size (\em attr->cb_size) is not big enough to store a \em timer object
-- \em NULL, if the control block memory (\em attr->cb_mem) is NULL but the size (\em attr->cb_size) is not 0
-- \em NULL, if the timer type is not \em 'osTimerOnce' and the timer type is not \em 'osTimerPeriodic'
-- \em NULL, if IRQ is masked
-- \em NULL, if in IRQ mode. 
-
-
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
@@ -168,19 +157,6 @@ void TimerCreate_example (void)  {
 The function \b osTimerGetName returns the pointer to the name string of the timer identified by parameter \a timer_id or
 \token{NULL} in case of an error.
 
-Possible return values:
-- pointer to the name string of the timer
-- \em NULL, if a timer specified by \a timer_id does not exist
-- \em NULL, if the timer specified by \a timer_id  has not been initialized with a name
-- \em NULL, if 
-the timer with \em timer_id is \em NULL 
-
-- \em NULL, if the state of the timer is \em 'osRtxObjectInactive'
-- \em NULL, if 
-IRQ is masked
-
-- \em NULL, if in IRQ mode.
-
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
@@ -192,13 +168,10 @@ The function \b osTimerStart starts or restarts a timer specified by the paramet
 specifies the value of the timer in \ref CMSIS_RTOS_TimeOutValue "time ticks".
 
 Possible \ref osStatus_t return values:
-- \em 'osOK', if the tmer specified by \a timer_id  has been started or restarted
-- \em 'osErrorResource', if the timer is in state \em 'TimerInactive'
-- \em 'osErrorResource', if the timer tick function (osRtxInfo.timer.tick) is \em NULL
-- \em 'osErrorParameter', if a timer specified by \a timer_id does not exist
-- \em 'osErrorParameter', if \em ticks is equal to 0
-- \em 'osErrorISR', if IRQ is masked
-- \em 'osErrorISR', if in IRQ mode.  
+ - \em osOK: the specified timer has been started or restarted.
+ - \em osErrorISR: \b osTimerStart cannot be called from interrupt service routines.
+ - \em osErrorParameter: parameter \a timer_id is either \token{NULL} or invalid or \a ticks is incorrect.
+ - \em osErrorResource: the timer specified by parameter \a timer_id is in an invalid timer state.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -240,13 +213,10 @@ void TimerStart_example (void)  {
 The function \b osTimerStop stops a timer specified by the parameter \a timer_id.
 
 Possible \ref osStatus_t return values:
-- \em 'osOK', if the specified timer has been stopped
-- \em 'osErrorParameter', if a timer specified by \a timer_id does not exist
-- \em 'osErrorParameter', if the timer associated with \em timer_id is \em NULL
-- \em 'osErrorResource', if the timer was not in state \em 'osRtxTimerRunning'
-- \em 'osErrorISR', if IRQ is masked
-- \em 'osErrorISR', if in IRQ mode. 
-
+ - \em osOK: the specified timer has been stopped.
+ - \em osErrorISR: \b osTimerStop cannot be called from interrupt service routines.
+ - \em osErrorParameter: parameter \a timer_id is either \token{NULL} or invalid.
+ - \em osErrorResource: the timer specified by parameter \a timer_id is not running (you can only stop a running timer).
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -295,12 +265,10 @@ if the timer is running and \token{0} if the timer is stopped or an error occurr
 The function \b osTimerDelete deletes the timer specified by parameter \a timer_id.
 
 Possible \ref osStatus_t return values:
-- \em 'osErrorParameter', if \em timer_id is \em NULL
-- \em 'osErrorParameter', if a timer specified by \a timer_id does not exist
-- \em 'osErrorResoure', if \em timer->state = \em 'osRtxTimerInactive'
-- \em 'osErrorISR', if IRQ is masked
-- \em 'osErrorISR', if in IRQ mode.  
-
+ - \em osOK: the specified timer has been deleted.
+ - \em osErrorISR: \b osTimerDelete cannot be called from interrupt service routines.
+ - \em osErrorParameter: parameter \a timer_id is either \token{NULL} or invalid.
+ - \em osErrorResource: the timer specified by parameter \a timer_id is in an invalid timer state.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 

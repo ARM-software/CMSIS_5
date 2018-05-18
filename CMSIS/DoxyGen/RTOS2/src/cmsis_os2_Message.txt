@@ -53,24 +53,6 @@ The \em msg_size is rounded up to a double even number to ensure 32-bit alignmen
 The memory blocks allocated from the message queue have a fixed size defined with the parameter \c msg_size.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
-/*
-New definition
-*/
-Possible \ref osMessageQueueId_t return values:
-- pointer to the message queue object identifier , in case of success
-
-- \em NULL, if \em msg_count is zero
-- \em NULL, if \em msg_size is zero
-- \em NULL, if \em msg_size is invalid
-- \em NULL, if the control block memory (\em attr->cb_mem) is not \em NULL and the memory is not 4 byte aligned 
-- \em NULL, if the control block memory (\em attr->cb_mem) is not \em NULL but the size (\em attr->cb_size) is not big enough to store a \em message queue object
-- \em NULL, if the control block memory (\em attr->cb_mem) is \em NULL but the size (\em attr->cb_size) is not 0
-- \em NULL, if the message queue memory (\em attr->mq_mem) is not \em NULL and the memory is not 4 byte aligned 
-- \em NULL, if the message queue memory (\em attr->mq_mem) is not \em NULL but the size (\em attr->mq_size) is not big enough to store a \em message queue object
-- \em NULL, if the message queue memory (\em attr->mq_mem) is \em NULL but the size (\em attr->mq_size) is not 0
-- \em NULL, if IRQ is masked
-
-- \em NULL, if in IRQ mode.
 
 <b>Code Example</b>
 
@@ -83,13 +65,6 @@ Refer to \ref osMessageQueuePut
 \details
 The function \b osMessageQueueGetName returns the pointer to the name string of the message queue identified by parameter \a
 mq_id or \token{NULL} in case of an error.
-
-Possible return values:
-- pointer to the name string of the message queue, in case of success
-- \em NULL, if the message queue specified by \a mq_id does not exist
-- \em NULL, if the state of the message queue specified by \a mq_id is \em 'osRtxObjectInactive'
-- \em NULL, if IRQ is masked
-- \em NULL, if in IRQ mode.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -110,12 +85,10 @@ can have the following values:
  - all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).
 
 Possible \ref osStatus_t return values:
-- \em 'osOK', if the message has been put into the queue
-- \em 'osErrorParameter', if the message queue specified by \a mq_id does not exist
-- \em 'osErrrorResource', if the message queue specified by \a mq_id is in state \em 'osRtxObjectInactive'
-- \em 'osErrorTimeout', if \em timeout > 0 and the message queue is full
-- \em 'osErrorResource', if \em timeout == 0 and the message queue is full.
-
+ - \em osOK: the message has been put into the queue.
+ - \em osErrorTimeout: the message could not be put into the queue in the given time (wait-timed semantics).
+ - \em osErrorResource: not enough space in the queue (try semantics).
+ - \em osErrorParameter: the parameter \a mq_id is incorrect, non-zero timeout specified in an ISR.
 
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
@@ -200,17 +173,10 @@ the thread that is calling this function is put into the \ref ThreadStates "BLOC
  - all other values specify a time in kernel ticks for a timeout (i.e. timed-wait semantics).
 
 Possible \ref osStatus_t return values:
- - \em 'osOK', if the message has been retrieved from the queue
- - \em 'osErrorParameter', if message queue object specified by \a mq_id does not exist 
- - \em 'osErrorParameter', if message queue is \em NULL pointer
- - \em 'osErrorParameter', if \em msg_ptr is \em NULL pointer
- - \em 'osErrrorResource', if the message queue is in state \em 'osRtxObjectInactive'
- - \em 'osErrorResource', if no message is available and \em timeout == 0  
- - \em 'osErrorTimeout', if the \em timeout > 0 and no message is available
- - \em 'osErrorISR', if IRQ is masked
- - \em 'osErrorISR', if in IRQ mode.
- 
-
+ - \em osOK: the message has been retrieved from the queue.
+ - \em osErrorTimeout: the message could not be retrieved from the queue in the given time (timed-wait semantics).
+ - \em osErrorResource: nothing to get from the queue (try semantics).
+ - \em osErrorParameter: the parameter \a mq_id is incorrect, non-zero timeout specified in an ISR.
 
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
@@ -227,13 +193,6 @@ Refer to \ref osMessageQueuePut
 The function \b osMessageQueueGetCapacity returns the maximum number of messages in the message queue object specified by
 parameter \a mq_id or \token{0} in case of an error.
 
-Possible return values:
-- the number of slots (capacity) in the message queue specified by \a mq_id, in case of success
-- \em 0, if the message queue specified by \a mq_id does not exist
-- \em 0, if the message queue specified by \a mq_id is \em NULL
-- \em 0, if the message queue pecified by \a mq_id is in state \em 'osRtxIdMessageQueueInactive'.
-
-
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
@@ -243,12 +202,6 @@ Possible return values:
 \details
 The function \b osMessageQueueGetMsgSize returns the maximum message size in bytes for the message queue object specified by
 parameter \a mq_id or \token{0} in case of an error.
-
-Possible return values:
-- the maximum message size (slot size in the queue) in bytes for the message queue specified by \a mq_id, in case of success
-- \em 0, if a message queue specified by \a mq_id does not exist
-- \em 0, if the message queue specified by \a mq_id is \em NULL
-- \em 0, if the message queue specified by \a mq_id is in state \em 'osRtxObjectInactive'.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -260,12 +213,6 @@ Possible return values:
 The function \b osMessageQueueGetCount returns the number of queued messages in the message queue object specified by
 parameter \a mq_id or \token{0} in case of an error.
 
-Possible return values:
-- the number of queued messages in the message queue object, in case of success
-- \em 0, if a message queue specified by \a mq_id does not exist
-- \em 0, if the message queue specified by \a mq_id is \em NULL
-- \em 0, if the message queue specified by \a mq_id is in state \em 'osRtxObjectInactive'.
-
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
@@ -275,12 +222,6 @@ Possible return values:
 \details
 The function \b osMessageQueueGetSpace returns the number available slots for messages in the message queue object specified
 by parameter \a mq_id or \token{0} in case of an error.
-
-Possible return values:
-- the number available slots for messages in the message queue specified by \a mq_id, in case of success
-- \em 0, if the message queue specified by \a mq_id is \em NULL
-- \em 0, if a  message queue specified by \a mq_id does not exist
-- \em 0, if the state of the message queue is \em 'osRtxObjectInactive'.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -292,16 +233,10 @@ Possible return values:
 The function \b osMessageQueueReset resets the message queue specified by the parameter \a mq_id.
 
 Possible \ref osStatus_t return values:
- - \em 'osOK', if the message queue specified by \a mq_id has been reset
- - \em 'osErrorParameter', if a message queue specifified by \a mq_id does not exist
-
- - \em 'osErrorParameter', if the message queue specified by \a mq_id is \em NULL
-
- - \em 'osErrorResource', if the state of the message is \em 'osRtxObjectInactive'
-
- - \em 'osErrorISR', if IRQ is masked
-
- - \em 'osErrorISR', if in IRQ mode.
+ - \em osOK: the message queue has been rest.
+ - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid.
+ - \em osErrorResource: the message queue specified by parameter \a mq_id is in an invalid message queue state.
+ - \em osErrorISR: \b osMessageQueueReset cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -315,16 +250,10 @@ memory obtained for message queue handling. After this call, the \a mq_id is no 
 message queue may be created again using the function \ref osMessageQueueNew.
 
 Possible \ref osStatus_t return values:
- - \em 'osOK', if the message queue specified by \a mq_id has been deleted
- - \em 'osErrorParameter', if a message queue specified by identifier \a mq_id does not exist
-
- - \em 'osErrorParameter', if the message queue with identifier \a mq_id is \em NULL
-
- - \em 'osErrorResource', if the message queue was in state \em 'osRtxObjectInactive'
-
- - \em 'osErrorISR', if IRQ is masked
- - \em 
-'osErrorISR', if in IRQ mode.
+ - \em osOK: the message queue object has been deleted.
+ - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid.
+ - \em osErrorResource: the message queue specified by parameter \a mq_id is in an invalid message queue state.
+ - \em osErrorISR: \b osMessageQueueDelete cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
