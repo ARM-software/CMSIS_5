@@ -1490,7 +1490,7 @@
 
     <event id="0xF100 + 0x00" level="Error"  property="KernelError"               value="status=%E[val1, rtx_t:status]" info="Kernel error occurred."/>
     <event id="0xF100 + 0x01" level="API"    property="KernelInitialize"          value="" info="osKernelInitialize function was called."/>
-    <event id="0xF100 + 0x02" level="Op"     property="KernelInitializeCompleted" value="" info="Kernel was initialized."/>
+    <event id="0xF100 + 0x02" level="Op"     property="KernelInitialized"         value="" info="Kernel was initialized."/>
     <event id="0xF100 + 0x03" level="API"    property="KernelGetInfo"             value="version=%x[val1], id_buf=%x[val2], id_size=%d[val3]" info="osKernelGetInfo function was called."/>
     <event id="0xF100 + 0x04" level="Op"     property="KernelInfoRetrieved"       value="version=%x[val1], id_buf=%x[val2]" info="Kernel information was retrieved."/>
     <event id="0xF100 + 0x05" level="Detail" property="KernelInfoRetrieved"       value="id_buf=%t[val1]" info="Kernel ID as ASCII string."/>
@@ -1539,8 +1539,8 @@
     <event id="0xF200 + 0x18" level="Op"     property="ThreadPreempted"     handle="idle(uint32_t)[val1]"    hname="%S[val1]"        value="thread_id=%x[val1]" info="Current running thread execution was preempted."/>
     <event id="0xF200 + 0x19" level="Op"     property="ThreadSwitched"      handle="active(uint32_t)[val1]"  hname="%S[val1]"        value="thread_id=%x[val1]" info="Switched execution of the current running thread."/>
     <event id="0xF200 + 0x1A" level="API"    property="ThreadExit"                  value="" info="osThreadExit function was called."/>
-    <event id="0xF200 + 0x1B" level="API"    property="ThreadTerminate"     handle="delete(uint32_t)[val1]"  hname="%S[val1]"        value="thread_id=%x[val1]" info="osThreadTerminate function was called."/>
-    <event id="0xF200 + 0x1C" level="Op"     property="ThreadDestroyed"             value="thread_id=%x[val1]" info="Thread execution was terminated."/>
+    <event id="0xF200 + 0x1B" level="API"    property="ThreadTerminate"             value="thread_id=%x[val1]" info="osThreadTerminate function was called."/>
+    <event id="0xF200 + 0x1C" level="Op"     property="ThreadDestroyed"     handle="delete(uint32_t)[val1]"  hname="%S[val1]"        value="thread_id=%x[val1]" info="Thread execution was terminated."/>
     <event id="0xF200 + 0x1D" level="API"    property="ThreadGetCount"              value="count=%d[val1]" info="osThreadGetCount function was called and number of active threads was retrieved."/>
     <event id="0xF200 + 0x1E" level="API"    property="ThreadEnumerate"             value="thread_array=%x[val1], array_items=%d[val2], count=%d[val3]" info="osThreadEnumerate function was called and active threads were enumerated."/>
     <event id="0xF200 + 0x1F" level="API"    property="ThreadFlagsSet"              value="thread_id=%x[val1], flags=%x[val2]" info="osThreadFlagsSet function was called."/>

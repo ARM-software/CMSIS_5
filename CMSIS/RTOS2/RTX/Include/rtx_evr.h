@@ -185,10 +185,10 @@ extern void EvrRtxKernelInitialize (void);
 /**
   \brief  Event on successful RTOS kernel initialize (Op)
 */
-#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_INITIALIZE_COMPLETED_DISABLE))
-extern void EvrRtxKernelInitializeCompleted (void);
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_INITIALIZED_DISABLE))
+extern void EvrRtxKernelInitialized (void);
 #else
-#define EvrRtxKernelInitializeCompleted()
+#define EvrRtxKernelInitialized()
 #endif
 
 /**

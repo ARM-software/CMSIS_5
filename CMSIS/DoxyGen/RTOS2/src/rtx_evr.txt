@@ -141,9 +141,9 @@ The event \b KernelInitialize is generated when the function \ref osKernelInitia
 */
 
 /**
-\fn void EvrRtxKernelInitializeCompleted (void)
+\fn void EvrRtxKernelInitialized (void)
 \details
-The event \b KernelInitializeCompleted is generated when the function \ref osKernelInitialize successfully initializes the RTOS kernel.
+The event \b KernelInitialized is generated when the function \ref osKernelInitialize successfully initializes the RTOS kernel.
 */
 
 /**
