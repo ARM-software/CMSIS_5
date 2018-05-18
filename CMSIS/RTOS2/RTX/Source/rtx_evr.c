@@ -42,7 +42,7 @@
 /// Event IDs for "RTX Kernel"
 #define EvtRtxKernelError                   EventID(EventLevelError,  EvtRtxKernelNo, 0x00U)
 #define EvtRtxKernelInitialize              EventID(EventLevelAPI,    EvtRtxKernelNo, 0x01U)
-#define EvtRtxKernelInitializeCompleted     EventID(EventLevelOp,     EvtRtxKernelNo, 0x02U)
+#define EvtRtxKernelInitialized             EventID(EventLevelOp,     EvtRtxKernelNo, 0x02U)
 #define EvtRtxKernelGetInfo                 EventID(EventLevelAPI,    EvtRtxKernelNo, 0x03U)
 #define EvtRtxKernelInfoRetrieved           EventID(EventLevelOp,     EvtRtxKernelNo, 0x04U)
 #define EvtRtxKernelInfoRetrieved_Detail    EventID(EventLevelDetail, EvtRtxKernelNo, 0x05U)
@@ -334,9 +334,9 @@ __WEAK void EvrRtxKernelInitialize (void) {
 #endif
 
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_INITIALIZE_COMPLETED_DISABLE))
-__WEAK void EvrRtxKernelInitializeCompleted (void) {
+__WEAK void EvrRtxKernelInitialized (void) {
 #if defined(RTE_Compiler_EventRecorder)
-  (void)EventRecord2(EvtRtxKernelInitializeCompleted, 0U, 0U);
+  (void)EventRecord2(EvtRtxKernelInitialized, 0U, 0U);
 #else
 #endif
 }

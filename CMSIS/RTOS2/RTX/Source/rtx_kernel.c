@@ -70,7 +70,7 @@ static void KernelUnblock (void) {
 static osStatus_t svcRtxKernelInitialize (void) {
 
   if (osRtxInfo.kernel.state == osRtxKernelReady) {
-    EvrRtxKernelInitializeCompleted();
+    EvrRtxKernelInitialized();
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osOK;
   }
@@ -197,7 +197,7 @@ static osStatus_t svcRtxKernelInitialize (void) {
 
   osRtxInfo.kernel.state = osRtxKernelReady;
 
-  EvrRtxKernelInitializeCompleted();
+  EvrRtxKernelInitialized();
 
   return osOK;
 }
