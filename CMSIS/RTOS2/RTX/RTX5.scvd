@@ -1492,8 +1492,7 @@
     <event id="0xF100 + 0x01" level="API"    property="KernelInitialize"          value="" info="osKernelInitialize function was called."/>
     <event id="0xF100 + 0x02" level="Op"     property="KernelInitialized"         value="" info="Kernel was initialized."/>
     <event id="0xF100 + 0x03" level="API"    property="KernelGetInfo"             value="version=%x[val1], id_buf=%x[val2], id_size=%d[val3]" info="osKernelGetInfo function was called."/>
-    <event id="0xF100 + 0x04" level="Op"     property="KernelInfoRetrieved"       value="version=%x[val1], id_buf=%x[val2]" info="Kernel information was retrieved."/>
-    <event id="0xF100 + 0x05" level="Detail" property="KernelInfoRetrieved"       value="id_buf=%t[val1]" info="Kernel ID as ASCII string."/>
+    <event id="0xF100 + 0x04" level="Op"     property="KernelInfoRetrieved"       value="version_api=%d[val1/10000000].%d[(val1/10000)%1000].%d[val1%10000], version_kernel=%d[val2/10000000].%d[(val2/10000)%1000].%d[val2%10000], id_buf=%N[val3]" info="Kernel information was retrieved."/>
     <event id="0xF100 + 0x06" level="API"    property="KernelGetState"            value="state=%E[val1, osRtxInfo_t:kernel_state]" info="osKernelGetState function was called and state was retrieved."/>
     <event id="0xF100 + 0x07" level="API"    property="KernelStart"               value="" info="osKernelStart function was called."/>
     <event id="0xF100 + 0x08" level="Op"     property="KernelStarted"             value="" info="Kernel execution was started."/>
@@ -1516,8 +1515,7 @@
     <event id="0xF200 + 0x01" level="API"    property="ThreadNew"                   value="func=%S[val1], argument=%x[val2], attr=%x[val3]" info="osThreadNew function was called."/>
     <event id="0xF200 + 0x02" level="Detail" property="ThreadNew"                   value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size], stack_mem=%x[val1.stack_mem], stack_size=%d[val1.stack_size], priority=%E[val7, rtx_th_priority:id]" val1="osThreadAttr_t" info="Attributes structure for thread object."/>
     <event id="0xF200 + 0x03" level="Op"     property="ThreadCreated"      handle="create(uint32_t)[val1]"  hname="%t[val2]"     value="thread_id=%x[val1]" info="Thread object was created."/>
-    <event id="0xF200 + 0x04" level="API"    property="ThreadGetName"               value="thread_id=%x[val1], name=%x[val2]" info="osThreadGetName function was called and object name was retrieved."/>
-    <event id="0xF200 + 0x05" level="Detail" property="ThreadGetName"               value="name=%t[val1]" info="Thread object name as ASCII string."/>
+    <event id="0xF200 + 0x04" level="API"    property="ThreadGetName"               value="thread_id=%x[val1], name=%N[val2]" info="osThreadGetName function was called and object name was retrieved."/>
     <event id="0xF200 + 0x06" level="API"    property="ThreadGetId"                 value="thread_id=%x[val1]" info="osThreadGetId function was called and current running thread id was retrieved."/>
     <event id="0xF200 + 0x07" level="API"    property="ThreadGetState"              value="thread_id=%x[val1], state=%E[val2, rtx_th_state:id]" info="osThreadGetState function was called and thread state was retrieved."/>
     <event id="0xF200 + 0x08" level="API"    property="ThreadGetStackSize"          value="thread_id=%x[val1], stack_size=%d[val2]" info="osThreadGetStackSize function was called and thread stack size was retrieved."/>
@@ -1562,8 +1560,7 @@
     <event id="0xF300 + 0x02" level="API"    property="TimerNew"       value="func=%S[val1], type=%E[val2, osRtxTimer_t:type], argument=%x[val3], attr=%x[val4]" info="osTimerNew function was called."/>
     <event id="0xF300 + 0x03" level="Detail" property="TimerNew"       value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size]" val1="osTimerAttr_t" info="Attributes structure for timer object."/>
     <event id="0xF300 + 0x04" level="Op"     property="TimerCreated"   value="timer_id=%x[val1]" info="Timer object was created."/>
-    <event id="0xF300 + 0x05" level="API"    property="TimerGetName"   value="timer_id=%x[val1], name=%x[val2]" info="osTimerGetName function was called and object name was retrieved."/>
-    <event id="0xF300 + 0x06" level="Detail" property="TimerGetName"   value="name=%t[val1]" info="Timer object name as ASCII string."/>
+    <event id="0xF300 + 0x05" level="API"    property="TimerGetName"   value="timer_id=%x[val1], name=%N[val2]" info="osTimerGetName function was called and object name was retrieved."/>
     <event id="0xF300 + 0x07" level="API"    property="TimerStart"     value="timer_id=%x[val1], ticks=%d[val2]" info="osTimerStart function was called."/>
     <event id="0xF300 + 0x08" level="Op"     property="TimerStarted"   value="timer_id=%x[val1]" info="Timer execution was started."/>
     <event id="0xF300 + 0x09" level="API"    property="TimerStop"      value="timer_id=%x[val1]" info="osTimerStop function was called."/>
@@ -1576,8 +1573,7 @@
     <event id="0xF400 + 0x01" level="API"    property="EventFlagsNew"              value="attr=%x[val1]" info="osEventFlagsNew function was called."/>
     <event id="0xF400 + 0x02" level="Detail" property="EventFlagsNew"              value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size]" val1="osEventFlagsAttr_t" info="Attributes structure for event flags object."/>
     <event id="0xF400 + 0x03" level="Op"     property="EventFlagsCreated"          value="ef_id=%x[val1]" info="Event flags object was created."/>
-    <event id="0xF400 + 0x04" level="API"    property="EventFlagsGetName"          value="ef_id=%x[val1], name=%x[val2]" info="osEventFlagsGetName function was called and object name was retrieved."/>
-    <event id="0xF400 + 0x05" level="Detail" property="EventFlagsGetName"          value="name=%t[val1]" info="Event flags object name as ASCII string."/>
+    <event id="0xF400 + 0x04" level="API"    property="EventFlagsGetName"          value="ef_id=%x[val1], name=%N[val2]" info="osEventFlagsGetName function was called and object name was retrieved."/>
     <event id="0xF400 + 0x06" level="API"    property="EventFlagsSet"              value="ef_id=%x[val1], flags=%x[val2]" info="osEventFlagsSet function was called."/>
     <event id="0xF400 + 0x07" level="Op"     property="EventFlagsSetDone"          value="ef_id=%x[val1], event_flags=%x[val2]" info="Event flags were set."/>
     <event id="0xF400 + 0x08" level="API"    property="EventFlagsClear"            value="ef_id=%x[val1], flags=%x[val2]" info="osEventFlagsClear function was called."/>
@@ -1595,8 +1591,7 @@
     <event id="0xF500 + 0x01" level="API"    property="MutexNew"            value="attr=%x[val1]" info="osMutexNew function was called"/>
     <event id="0xF500 + 0x02" level="Detail" property="MutexNew"            value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size]" val1="osMutexAttr_t" info="Attributes structure for mutex object."/>
     <event id="0xF500 + 0x03" level="Op"     property="MutexCreated"        value="mutex_id=%x[val1]" info="Mutex object was created"/>
-    <event id="0xF500 + 0x04" level="API"    property="MutexGetName"        value="mutex_id=%x[val1], name=%x[val2]" info="osMutexGetName function was called and object name was retrieved."/>
-    <event id="0xF500 + 0x05" level="Detail" property="MutexGetName"        value="name=%t[val1]" info="Mutex object name as ASCII string."/>
+    <event id="0xF500 + 0x04" level="API"    property="MutexGetName"        value="mutex_id=%x[val1], name=%N[val2]" info="osMutexGetName function was called and object name was retrieved."/>
     <event id="0xF500 + 0x06" level="API"    property="MutexAcquire"        value="mutex_id=%x[val1], timeout=%d[val2]" info="osMutexAcquire function was called."/>
     <event id="0xF500 + 0x07" level="Op"     property="MutexAcquirePending" value="mutex_id=%x[val1], timeout=%d[val2]" info="Mutex object acquire is pending."/>
     <event id="0xF500 + 0x08" level="Op"     property="MutexAcquireTimeout" value="mutex_id=%x[val1]" info="Mutex object acquire timed out."/>
@@ -1612,8 +1607,7 @@
     <event id="0xF600 + 0x01" level="API"    property="SemaphoreNew"            value="max_count=%d[val1], initial_count=%d[val2], attr=%x[val3]" info="osSemaphoreNew function was called."/>
     <event id="0xF600 + 0x02" level="Detail" property="SemaphoreNew"            value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size]" val1="osSemaphoreAttr_t" info="Attributes structure for semaphore object."/>
     <event id="0xF600 + 0x03" level="Op"     property="SemaphoreCreated"        value="semaphore_id=%x[val1]" info="Semaphore object was created."/>
-    <event id="0xF600 + 0x04" level="API"    property="SemaphoreGetName"        value="semaphore_id=%x[val1], name=%x[val2]" info="osSemaphoreGetName function was called and object name was retrieved."/>
-    <event id="0xF600 + 0x05" level="Detail" property="SemaphoreGetName"        value="name=%t[val1]" info="Semaphore object name as ASCII string."/>
+    <event id="0xF600 + 0x04" level="API"    property="SemaphoreGetName"        value="semaphore_id=%x[val1], name=%N[val2]" info="osSemaphoreGetName function was called and object name was retrieved."/>
     <event id="0xF600 + 0x06" level="API"    property="SemaphoreAcquire"        value="semaphore_id=%x[val1], timeout=%d[val2]" info="osSemaphoreAcquire function was called."/>
     <event id="0xF600 + 0x07" level="Op"     property="SemaphoreAcquirePending" value="semaphore_id=%x[val1], timeout=%d[val2]" info="Semaphore object acquire is pending."/>
     <event id="0xF600 + 0x08" level="Op"     property="SemaphoreAcquireTimeout" value="semaphore_id=%x[val1]" info="Semaphore object acquire timed out."/>
@@ -1629,8 +1623,7 @@
     <event id="0xF700 + 0x01" level="API"    property="MemoryPoolNew"          value="block_count=%d[val1], block_size=%d[val2], attr=%x[val3]" info="osMemoryPoolNew function was called."/>
     <event id="0xF700 + 0x02" level="Detail" property="MemoryPoolNew"          value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size], mp_mem=%x[val1.mp_mem], mp_size=%d[val1.mp_size]" val1="osMemoryPoolAttr_t" info="Attributes structure for memory pool object."/>
     <event id="0xF700 + 0x03" level="Op"     property="MemoryPoolCreated"      value="mp_id=%x[val1]" info="Memory Pool object was created"/>
-    <event id="0xF700 + 0x04" level="API"    property="MemoryPoolGetName"      value="mp_id=%x[val1], name=%x[val2]" info="osMemoryPoolGetName function was called and object name was retrieved."/>
-    <event id="0xF700 + 0x05" level="Detail" property="MemoryPoolGetName"      value="name=%t[val1]" info="Memory pool object name as ASCII string."/>
+    <event id="0xF700 + 0x04" level="API"    property="MemoryPoolGetName"      value="mp_id=%x[val1], name=%N[val2]" info="osMemoryPoolGetName function was called and object name was retrieved."/>
     <event id="0xF700 + 0x06" level="API"    property="MemoryPoolAlloc"        value="mp_id=%x[val1], timeout=%d[val2]" info="osMemoryPoolAlloc function was called."/>
     <event id="0xF700 + 0x07" level="Op"     property="MemoryPoolAllocPending" value="mp_id=%x[val1], timeout=%d[val2]" info="Memory pool allocation is pending."/>
     <event id="0xF700 + 0x08" level="Op"     property="MemoryPoolAllocTimeout" value="mp_id=%x[val1]" info="Memory pool allocation timed out."/>
@@ -1650,8 +1643,7 @@
     <event id="0xF800 + 0x01" level="API"    property="MessageQueueNew"           value="msg_count=%d[val1], msg_size=%d[val2], attr=%x[val3]" info="osMessageQueueNew function was called."/>
     <event id="0xF800 + 0x02" level="Detail" property="MessageQueueNew"           value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size], mq_mem=%x[val1.mq_mem], mq_size=%d[val1.mq_size]" val1="osMessageQueueAttr_t" info="Attributes structure for message queue object."/>
     <event id="0xF800 + 0x03" level="Op"     property="MessageQueueCreated"       value="mq_id=%x[val1]" info="Message Queue object was created"/>
-    <event id="0xF800 + 0x04" level="API"    property="MessageQueueGetName"       value="mq_id=%x[val1], name=%x[val2]" info="osMessageQueueGetName function was called and object name was retrieved."/>
-    <event id="0xF800 + 0x05" level="Detail" property="MessageQueueGetName"       value="name=%t[val1]" info="Message queue object name as ASCII string."/>
+    <event id="0xF800 + 0x04" level="API"    property="MessageQueueGetName"       value="mq_id=%x[val1], name=%N[val2]" info="osMessageQueueGetName function was called and object name was retrieved."/>
     <event id="0xF800 + 0x06" level="API"    property="MessageQueuePut"           value="mq_id=%x[val1], msg_ptr=%x[val2], msg_prio=%d[val3], timeout=%d[val4]" info="osMessageQueuePut function was called."/>
     <event id="0xF800 + 0x07" level="Op"     property="MessageQueuePutPending"    value="mq_id=%x[val1], msg_ptr=%x[val2], timeout=%d[val3]" info="Message put is pending."/>
     <event id="0xF800 + 0x08" level="Op"     property="MessageQueuePutTimeout"    value="mq_id=%x[val1]" info="Message put timed out."/>
