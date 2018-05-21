@@ -46,7 +46,7 @@ static osStatus_t svcRtxDelay (uint32_t ticks) {
 static osStatus_t svcRtxDelayUntil (uint32_t ticks) {
 
   ticks -= osRtxInfo.kernel.tick;
-  if (ticks == 0xFFFFFFFFU) {
+  if (ticks > 0x7FFFFFFFU) {
     EvrRtxThreadError(NULL, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
