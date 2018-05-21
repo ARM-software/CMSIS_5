@@ -549,6 +549,24 @@ __WEAK void osRtxThreadStackCheck (void) {
   }
 }
 
+#ifdef RTX_TF_M_EXTENSION
+/// Get TrustZone Module Identifier of running Thread.
+/// \return TrustZone Module Identifier.
+uint32_t osRtxTzGetModuleId (void) {
+  os_thread_t *thread;
+  uint32_t     tz_module;
+
+  thread = osRtxThreadGetRunning();
+  if (thread != NULL) {
+    tz_module = thread->tz_module;
+  } else {
+    tz_module = 0U;
+  }
+
+  return tz_module;
+}
+#endif
+
 
 //  ==== Post ISR processing ====
 
@@ -774,6 +792,9 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
     thread->thread_addr   = (uint32_t)func;
   #if (DOMAIN_NS == 1)
     thread->tz_memory     = tz_memory;
+  #ifdef RTX_TF_M_EXTENSION
+    thread->tz_module     = tz_module;
+  #endif
   #endif
 
     // Initialize stack

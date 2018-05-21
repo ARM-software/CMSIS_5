@@ -123,6 +123,9 @@ typedef struct osRtxThread_s {
   uint32_t                         sp;  ///< Current Stack Pointer
   uint32_t                thread_addr;  ///< Thread entry address
   uint32_t                  tz_memory;  ///< TrustZone Memory Identifier
+#ifdef RTX_TF_M_EXTENSION
+  uint32_t                  tz_module;  ///< TrustZone Module Identifier
+#endif
 } osRtxThread_t;
  
  
@@ -405,6 +408,11 @@ extern void osRtxIdleThread (void *argument);
 extern void SVC_Handler     (void);
 extern void PendSV_Handler  (void);
 extern void SysTick_Handler (void);
+ 
+/// OS Trusted Firmware M Extension
+#ifdef RTX_TF_M_EXTENSION
+extern uint32_t osRtxTzGetModuleId (void);
+#endif
  
  
 //  ==== OS External Configuration ====
