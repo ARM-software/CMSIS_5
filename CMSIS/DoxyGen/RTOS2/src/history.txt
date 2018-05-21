@@ -96,6 +96,7 @@
       <td>
        - Added support for Event Recorder initialization and filter setup.
        - Added support to use RTOS as Event Recorder Time Stamp source.
+       - Fixed osDelayUntil longest delay (limited to 2^31-1).
        - Fixed optimization issue when using GCC optimization level 3.
        - Fixed osMemoryPoolAlloc to avoid potential race condition.
        - Minor code optimizations (removed unnecessary checks).
