@@ -225,7 +225,7 @@ static const osMessageQueueAttr_t os_timer_mq_attr = {
 #else
 
 extern void osRtxTimerThread (void *argument);
-       void osRtxTimerThread (void *argument) {}
+       void osRtxTimerThread (void *argument) { (void)argument; }
 
 #endif  // ((OS_TIMER_THREAD_STACK_SIZE != 0) && (OS_TIMER_CB_QUEUE != 0))
 
