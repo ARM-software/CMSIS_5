@@ -585,6 +585,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\PoolingFunctions\arm_pool_q7_HWC.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q15_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1186,6 +1196,16 @@
               <FileName>arm_pool_q7_HWC.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\PoolingFunctions\arm_pool_q7_HWC.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q15_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1789,6 +1809,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\PoolingFunctions\arm_pool_q7_HWC.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q15_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2390,6 +2420,16 @@
               <FileName>arm_pool_q7_HWC.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\PoolingFunctions\arm_pool_q7_HWC.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q15_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2993,6 +3033,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\PoolingFunctions\arm_pool_q7_HWC.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q15_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3594,6 +3644,16 @@
               <FileName>arm_pool_q7_HWC.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\PoolingFunctions\arm_pool_q7_HWC.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q15_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
             </File>
           </Files>
         </Group>
