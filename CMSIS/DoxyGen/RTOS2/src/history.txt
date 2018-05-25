@@ -99,8 +99,8 @@
        - Fixed osDelayUntil longest delay (limited to 2^31-1).
        - Fixed optimization issue when using GCC optimization level 3.
        - Fixed osMemoryPoolAlloc to avoid potential race condition.
+       - Restructured exception handling for Cortex-A devices.
        - Minor code optimizations (removed unnecessary checks).
-       - Disabled OS Tick interrupt during post processing in IRQ handler for Cortex-A devices.
       </td>
     </tr>
     <tr>

@@ -8,6 +8,9 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.3.1-dev3">
+      RTX5 (Cortex-A): updated exception handling
+    </release>
     <release version="5.3.1-dev2">
       CMSIS-RTOS2:
         - RTX 5.4.0 (see revision history for details)
