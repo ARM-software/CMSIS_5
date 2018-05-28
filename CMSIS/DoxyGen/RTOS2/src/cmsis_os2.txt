@@ -204,10 +204,14 @@ If you require some of the \ref rtx5_specific "RTX specific functions" in your a
 \ref rtx_os_h "header file rtx_os.h". This enables \ref lowPower "low-power" and \ref TickLess "tick-less" operation modes.
 
 \section cre_rtx_proj_er Add Event Recorder Visibility
+
+RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
+to provide event information which helps you to understand and analyze the operation.
+
 - To use the Event Recorder together with RTX5, select the software component <b>Compiler:Event Recorder</b>.
 - Select the \b Source variant of the software component <b>CMSIS:RTOS2 (API):Keil RTX5</b>.
   \image html event_recorder_rte.png "Component selection for Event Recorder"
-- Call the function <b>EventRecorderInitialize()</b> in your application code (ideally in \c main()).
+- Enable the related settings under \ref evtrecConfig.
 - Build the application code and download it to the debug hardware.
   
 Once the target application generates event information, it can be viewed in the µVision debugger using the \b Event
@@ -889,15 +893,11 @@ The total storage size reserved for all queues is configured in \c OS_MSGQUEUE_D
 
 \section evtrecConfig Event Recorder Configuration
 
-RTX5 fully supports <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank">Event Recorder</a>
-annotations. In this section, you can initialize the event recording, enable the events to be recorded and filter for events
-to be displayed in the debugger. This leads to reduced data traffic on the debug connection.
-
-\image html config_wizard_evtrec.png "RTX_Config.h: Event Recorder Configuration"
+This section describes the configuration settings for the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank">Event Recorder</a>
+annotations. The usage requires the source variant of RTX5; refer to \ref cre_rtx_proj_er for more information.
 
 \subsection evtrecConfigGlobIni Global Configuration
-In this section, you can select to initialize Event Recorder during the initialization phase of the Kernel and you can
-already start the event generation.
+Initialize Event Recorder during the \ref osKernelInitalize and optionally start event recording.
 
 \image html config_wizard_evtrecGlobIni.png "RTX_Config.h: Initialization and filter setup configuration"
 
@@ -905,19 +905,17 @@ already start the event generation.
 
 Name                  | \#define        | Description
 ----------------------|-----------------|----------------------------------------------------------------
-Global Initialization | \c OS_EVR_INIT  | Initialize Event Recorder during 'osKernelInitialize'.
-Start recording       | \c OS_EVR_START | Start event recording after initialization.
+Global Initialization | \c OS_EVR_INIT  | Initialize Event Recorder during \ref osKernelInitialize.
+Start Recording       | \c OS_EVR_START | Start event recording after initialization.
 
 \note
-- If you are enable \c OS_EVR_INIT, make sure that your source code does not contain any call to \c EventRecorderInitialize.
-- If you are enable \c OS_EVR_START, make sure that your source code does not contain any call to \c EventRecorderStart.
-
+- If <b>Global Initialization (\c OS_EVR_INIT)</b> is set, an explicit call to \c EventRecorderInitialize is not required.
+- If <b>Start Recording (\c OS_EVR_START)</b> is set, an explicit call to \c EventRecorderStart is not required. You may call the function \c EventRecorderStop to stop recording.
 
 
 <b>Global Event Filter Setup</b>
 
-These initial event filter settings are applied to all software components that are used in the project, including MDK
-middleware and user components.
+These event filter settings are applied to all software component numbers, including MDK middleware and user components.
 
 \image html config_wizard_evtrecGlobEvtFiltSetup.png "RTX_Config.h: Global Event Filter Setup"
 
@@ -931,48 +929,18 @@ Operation events          | \c OS_EVR_LEVEL  | Enable operation events.
 Detailed operation events | \c OS_EVR_LEVEL  | Enable detailed operation events.
 
 \note
-You can still enable events for specific software components by calling the \c EventRecorderEnable function.
-
-<b>Code example</b>
-
-The following code example assumes that the global initialization is used, the recording is started automatically, but no
-events are enabled globally. This is done by calling EventRecorderEnable for selected network components:
-
-\code
-/*----------------------------------------------------------------------------
-  Main Thread 'main': Run Network
- *---------------------------------------------------------------------------*/
-__NO_RETURN void app_main (void *arg) {
-  (void)arg;
- 
-#ifdef RTE_Compiler_EventRecorder
-  EventRecorderEnable (EventRecordError, 0xC0U, 0xDCU);    /* Net Events     */
-  EventRecorderEnable (EventRecordAll,   0xCAU, 0xCAU);    /* DHCP Events    */
-  EventRecorderEnable (EventRecordAll,   0xD2U, 0xD2U);    /* BSD Events     */
-#endif
- 
-  LED_Initialize ();
-  init_display   ();
-   
-  netInitialize ();
-  print_address ();
- 
-  // Create networking task
-  osThreadNew (Client, NULL, NULL);
-  while(1) {
-    osThreadFlagsWait (0, osFlagsWaitAny, osWaitForever);
-  }
-}
-\endcode
+You may disable event recording for specific software components by calling the function \c EventRecorderDisable.
 
 <b>RTOS Event Filter Setup</b>
 
-Event filter settings for RTX components. Only applicable if events for the respective component are generated (requires RTX
-source variant). All of the following configuration options have four different sub-options that can be enabled independently:
+These event filter settings are applied to specific RTX component groups with sub-options for:
 - Error events
 - API function call events
 - Operation events
 - Detailed operation events
+
+The generation of events must be enabled as explained under \ref evtrecConfigEvtGen.
+
 
 \image html config_wizard_evtrecRTOSEvtFilterSetup.png "RTX_Config.h: RTOS Event Filter Setup"
 
@@ -980,25 +948,20 @@ source variant). All of the following configuration options have four different 
 
 Name              | \#define                   | Description
 ------------------|----------------------------|----------------------------------------------------------------
-Memory Management | \c OS_EVR_MEMORY_FILTER    | Filter enable settings for Memory Management events.
-Kernel            | \c OS_EVR_KERNEL_FILTER    | Filter enable settings for Kernel events.
-Thread            | \c OS_EVR_THREAD_FILTER    | Filter enable settings for Thread events.
-Timer             | \c OS_EVR_TIMER_FILTER     | Filter enable settings for Timer events.
-Event Flags       | \c OS_EVR_EVFLAGS_FILTER   | Filter enable settings for Event Flags events.
-Mutex             | \c OS_EVR_MUTEX_FILTER     | Filter enable settings for Mutex events.
-Semaphore         | \c OS_EVR_SEMAPHORE_FILTER | Filter enable settings for Semaphore events.
-Memory Pool       | \c OS_EVR_MEMPOOL_FILTER   | Filter enable settings for Memory Pool events.
-Message Queue     | \c OS_EVR_MSGQUEUE_FILTER  | Filter enable settings for Message Queue events.
+Memory Management | \c OS_EVR_MEMORY_FILTER    | Filter enable for Memory Management events.
+Kernel            | \c OS_EVR_KERNEL_FILTER    | Filter enable for Kernel events.
+Thread            | \c OS_EVR_THREAD_FILTER    | Filter enable for Thread events.
+Timer             | \c OS_EVR_TIMER_FILTER     | Filter enable for Timer events.
+Event Flags       | \c OS_EVR_EVFLAGS_FILTER   | Filter enable for Event Flags events.
+Mutex             | \c OS_EVR_MUTEX_FILTER     | Filter enable for Mutex events.
+Semaphore         | \c OS_EVR_SEMAPHORE_FILTER | Filter enable for Semaphore events.
+Memory Pool       | \c OS_EVR_MEMPOOL_FILTER   | Filter enable for Memory Pool events.
+Message Queue     | \c OS_EVR_MSGQUEUE_FILTER  | Filter enable for Message Queue events.
  
-\note
-Filters for a group will not show any effect, in case the generation of events is not enabled (refer to
-\ref evtrecConfigEvtGen).
-
 
 \subsection evtrecConfigEvtGen RTOS Event Generation
 
-The following settings enable the event generation for RTX components only. This requires the RTX source variant to be
-present in the project.
+Enable the event generation for specific RTX component groups. This requires the RTX source variant (refer to \ref cre_rtx_proj_er for more information).
 
 \image html config_wizard_evtrecGeneration.png "RTX_Config.h: Event generation configuration"
 
@@ -1017,14 +980,14 @@ Memory Pool       | \c OS_EVR_MEMPOOL        | Enables Memory Pool events record
 Message Queue     | \c OS_EVR_MSGQUEUE       | Enables Message Queue events recording.
 
 \note
-If you deselect a component here, no events will be generated for it. Thus, \ref evtrecConfigGlobIni "filters" for this
-component will not show an effect. The debugger will not be able to display any events for the component.
+If event generation for a component is disabled, the code that generates the related events is not included. Thus, \ref evtrecConfigGlobIni "filters" for this
+component will have no effect and the debugger is unable to display any events for the related component group.
 
 
 \subsection systemConfig_event_recording Manual event configuration
 
-To disable events only for a certain API call, use the \#defines that are available from the rtx_evrt.h header file by adding
-them manually to the RTX_Config.h file:
+To disable the generation of events for a specific RTX API call, use the following \#define settings (from <b>rtx_evrt.h</b>) and add these manually 
+to the <b>RTX_Config.h</b> file:
 
 \b Memory \b events \n
 \c EVR_RTX_MEMORY_INIT_DISABLE, \c EVR_RTX_MEMORY_ALLOC_DISABLE, \c EVR_RTX_MEMORY_FREE_DISABLE,
