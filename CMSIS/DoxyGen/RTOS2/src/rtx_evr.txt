@@ -6,14 +6,8 @@
 RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
 to provide event information which helps you to understand and analyze the operation.
 
-To use the Event Recorder together with RTX5, it is required to create an image that generates event information. The steps are:
-  - <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/er_use.html#Add_Event_Recorder" target="_blank"><b>Add Event Recorder</b></a>: Select in the RTE management dialog the software component <b>Compiler:Event Recorder</b>.
-  - <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/er_use.html#Debug_Variants" target="_blank"><b>Select Debug Variant</b></a>: Select in the RTE management dialog the \b Source variant for the software component <b>CMSIS:RTOS2 (API):Keil RTX5</b>.
-  - <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/er_use.html#Add_Event_Recorder" target="_blank"><b>Add Initialization Code</b></a>: Call the function <b>EventRecorderInitialize</b> in your application code.
-  - Build the application code and download it to the debug hardware.
-  
-Once the target application generates event information, it can be viewed in the µVision debugger using the \b Event
- \b Recorder.
+To use the Event Recorder together with RTX5, it is required to create an image that generates event information. 
+The steps are described under \ref cre_rtx_proj_er.
 
 @{
 */
