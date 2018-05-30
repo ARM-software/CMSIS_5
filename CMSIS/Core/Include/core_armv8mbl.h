@@ -2,7 +2,7 @@
  * @file     core_armv8mbl.h
  * @brief    CMSIS Armv8-M Baseline Core Peripheral Access Layer Header File
  * @version  V5.0.6
- * @date     28. May 2018
+ * @date     30. May 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -1269,6 +1269,11 @@ typedef struct
 #define NVIC_USER_IRQ_OFFSET          16
 
 
+/* Special LR values for Secure/Non-Secure call handling and exception handling                                               */
+
+/* Function Return Payload (from ARMv8-M Architecture Reference Manual) LR value on entry from Secure BLXNS                   */ 
+#define FNC_RETURN                 (0xFEFFFFFFUL)     /* bit [0] ignored when processing a branch                             */
+
 /* The following EXC_RETURN mask values are used to evaluate the LR on exception entry */
 #define EXC_RETURN_PREFIX          (0xFF000000UL)     /* bits [31:24] set to indicate an EXC_RETURN value                     */
 #define EXC_RETURN_S               (0x00000040UL)     /* bit [6] stack used to push registers: 0=Non-secure 1=Secure          */
@@ -1277,6 +1282,13 @@ typedef struct
 #define EXC_RETURN_MODE            (0x00000008UL)     /* bit [3] processor mode for return: 0=Handler mode 1=Thread mode      */
 #define EXC_RETURN_SPSEL           (0x00000002UL)     /* bit [1] stack pointer used to restore context: 0=MSP 1=PSP           */
 #define EXC_RETURN_ES              (0x00000001UL)     /* bit [0] security state exception was taken to: 0=Non-secure 1=Secure */
+
+/* Integrity Signature (from ARMv8-M Architecture Reference Manual) for exception context stacking                            */
+#if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)  /* Value for processors with floating-point extension:                  */
+#define EXC_INTEGRITY_SIGNATUR     (0xFEFA125AUL)     /* bit [0] SFTC must match LR bit[4] EXC_RETURN_FTYPE                   */
+#else 
+#define EXC_INTEGRITY_SIGNATUR     (0xFEFA125BUL)     /* Value for processors without floating-point extension                */
+#endif
 
 
 /* Interrupt Priorities are WORD accessible only under Armv6-M                  */
