@@ -245,7 +245,7 @@ A \ref element_condition "condition" becomes \token{true} when:
   </tr>
   <tr>
     <td>Dsecure</td>
-    <td>Specifies whether Digital Signal Processing (DSP) instruction set must be supported by the device or not. Predefined values can be uses as listed in the table \ref DdspEnum "Device DSP".</td>
+    <td>Specifies whether the application is configured to run in secure or non-secure mode. Predefined values can be used as listed in the table \ref DsecureEnum "Software Model Secure".</td>
     <td>DsecureEnum</td>
     <td>optional</td>
   </tr> 
