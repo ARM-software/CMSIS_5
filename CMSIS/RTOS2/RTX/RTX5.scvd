@@ -342,6 +342,7 @@
       <var name="wl_idx"   type="uint32_t" info="Waiting list index (QWL)" />
       <var name="wl_cnt"   type="uint32_t" info="Number of threads waiting" />
       <var name="ml_idx"   type="uint32_t" info="Queue message list index (QML)" />
+      <var name="ml_cnt"   type="uint32_t" info="Number of enqueued messages" />
     </typedef>
 
     <!-- OS Runtime Information structure -->
@@ -595,12 +596,12 @@
 
   <objects>
     <object name="RTX RTOS Object">
-      <var name="i"    type="uint32_t" value="0" />
-      <var name="j"    type="uint32_t" value="0" />
-      <var name="k"    type="uint32_t" value="0" />
-      <var name="n"    type="uint32_t" value="0" />
-      <var name="sp"   type="uint32_t" value="0" />
-      <var name="addr" type="uint32_t" value="0" />
+      <var name="i"      type="uint32_t" value="0" />
+      <var name="j"      type="uint32_t" value="0" />
+      <var name="k"      type="uint32_t" value="0" />
+      <var name="n"      type="uint32_t" value="0" />
+      <var name="sp"     type="uint32_t" value="0" />
+      <var name="addr"   type="uint32_t" value="0" />
       <var name="ipsr"   type="uint32_t" value="0" />
       <var name="psp"    type="uint32_t" value="0" />
       <var name="v8m_ns" type="uint32_t" value="0" />
@@ -1115,6 +1116,7 @@
 
         <calc>
           QCB[i].ml_idx = j;
+          QCB[i].ml_cnt = (QML._count - j)
           j = QML._count;
         </calc>
       </list>
@@ -1434,7 +1436,7 @@
           <list name="i" start="0" limit="QCB._count">
             <item cond="QCB[i].cb_valid" property="id: %x[QCB[i]._addr]%t[QCB[i].obj_name]" value="Messages: %d[QCB[i].msg_count], Max: %d[QCB[i].max_blocks]">
 
-              <item property="Messages"     value="%d[QCB[i].msg_count]"/>
+              <item property="Messages"     value="%d[QCB[i].ml_cnt]"/>
               <item property="Max Messages" value="%d[QCB[i].max_blocks]"/>
               <item property="Message size" value="%d[QCB[i].msg_size]"/>
 
@@ -1451,9 +1453,9 @@
               </item>
 
               <!-- Queued messages list-->
-              <item cond="QCB[i].msg_count" property="Queue (%d[QCB[i].msg_count])" value="">
+              <item cond="QCB[i].ml_cnt" property="Queue (%d[QCB[i].ml_cnt])" value="">
 
-                <list name="j" start="0" limit="QCB[i].msg_count">
+                <list name="j" start="0" limit="QCB[i].ml_cnt">
                   <item property="Queue[%d[j]]" value="Address: %x[QML[j + QCB[i].ml_idx].addr], Priority: %d[QML[j + QCB[i].ml_idx].priority]" />
                 </list>
 
