@@ -1143,7 +1143,6 @@ The interface files to the processor hardware are:
 
 \subsection tpCortexM3_M4_M7_M33 Cortex-M3/M4/M7/M33 target processor
 
-RTX assumes a fully function-able processor and uses the following hardware features:
 
 Hardware Requirement       | Description
 :--------------------------|:------------------------------------------------------
@@ -1167,6 +1166,22 @@ The interface files to the processor hardware are:
 \subsection tpCortexA5_A7_A9 Cortex-A5/A7/A9 target processor
 
 
+Hardware Requirement       | Description
+:--------------------------|:------------------------------------------------------
+Timer Peripheral           | An arbitrary timer peripheral generates the kernel tick interrupts. The interfaces for Cortex-A Generic Timer and Private Timer are implemented in %os_tick_gtim.c and %os_tick_ptim.c using the \ref CMSIS_RTOS_TickAPI
+Exception Handler          | RTX implements exception handlers for SVC, IRQ, Data Abort, Prefetch Abort and Undefined Instruction interrupt.
+Core Registers             | The processor status is read using the following core registers: CPSR, CPACR and FPSCR.
+LDREX, STREX instruction   | Atomic execution avoids the requirement to disable interrupts and is implemented via exclusive access instructions.
+Interrupt Controller       | An interrupt controller interface is required to setup and control Timer Peripheral interrupt. The interface for Arm GIC (Generic Interrupt Controller) is implemented in %irq_ctrl_gic.c using the IRQ Controller API
+
+The interface files to the processor hardware are: 
+ - <b>%irq_ca.s</b> defines SVC, IRQ, Data Abort, Prefetch Abort and Undefined Instruction exception handlers.
+ - <b>%rtx_core_ca.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
+ - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the timer peripheral.
+ - <b>%irq_ctrl.h</b> is the IRQ Controller API that defines the interface functions to the interrupt controller.
+
+\note
+ - The CMSIS-Core variable \c SystemCoreClock is used to configure the timer peripheral.
 
 \section rMemory Memory Requirements
 RTX requires RAM memory that is accessible with contiguous linear addressing.  When memory is split across multiple memory banks, some systems 
