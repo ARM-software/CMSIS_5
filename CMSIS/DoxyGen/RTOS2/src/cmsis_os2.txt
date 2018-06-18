@@ -598,7 +598,7 @@ Examples:
 The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
   - \ref osKernelGetInfo, \ref osKernelGetState,
     \ref osKernelGetTickCount, \ref osKernelGetTickFreq, \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
-  - \ref osThreadFlagsSet
+  - \ref osThreadGetId, \ref osThreadFlagsSet
   - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
   - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
   - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize,
@@ -897,7 +897,7 @@ This section describes the configuration settings for the <a href="http://www.ke
 annotations. The usage requires the source variant of RTX5; refer to \ref cre_rtx_proj_er for more information.
 
 \subsection evtrecConfigGlobIni Global Configuration
-Initialize Event Recorder during the \ref osKernelInitalize and optionally start event recording.
+Initialize Event Recorder during the \ref osKernelInitialize and optionally start event recording.
 
 \image html config_wizard_evtrecGlobIni.png "RTX_Config.h: Initialization and filter setup configuration"
 
@@ -2017,7 +2017,7 @@ The following CMSIS-RTOS C API v2 functions can be called from threads and \ref 
 (ISR):
    - \ref osKernelGetInfo, \ref osKernelGetState,
      \ref osKernelGetTickCount, \ref osKernelGetTickFreq, \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
-   - \ref osThreadFlagsSet
+   - \ref osThreadGetId, \ref osThreadFlagsSet
    - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
    - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
    - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize,
