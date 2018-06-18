@@ -1682,10 +1682,9 @@ osThreadId_t osThreadGetId (void) {
   osThreadId_t thread_id;
 
   if (IsIrqMode() || IsIrqMasked()) {
-    EvrRtxThreadGetId(NULL);
-    thread_id = NULL;
+    thread_id = svcRtxThreadGetId();
   } else {
-    thread_id = __svcThreadGetId();
+    thread_id =  __svcThreadGetId();
   }
   return thread_id;
 }

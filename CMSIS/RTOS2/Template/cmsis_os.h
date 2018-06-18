@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        30. October 2017
- * $Revision:    V2.1.2
+ * $Date:        18. June 2018
+ * $Revision:    V2.1.3
  *
  * Project:      CMSIS-RTOS API
  * Title:        cmsis_os.h template header file
@@ -126,6 +126,9 @@
  * Version 2.1.2
  *    Additional functions allowed to be called from Interrupt Service Routines:
  *    - osKernelGetInfo, osKernelGetState
+ * Version 2.1.3
+ *    Additional functions allowed to be called from Interrupt Service Routines:
+ *    - osThreadGetId
  *---------------------------------------------------------------------------*/
  
 #ifndef CMSIS_OS_H_
