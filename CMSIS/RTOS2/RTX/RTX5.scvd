@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
+<component_viewer schemaVersion="1.2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
   <component name="CMSIS:RTOS2:Keil RTX5" shortname="RTX5" version="5.4.0"/>    <!-- name and version of the component -->
 
   <typedefs>
@@ -1474,7 +1474,12 @@
     <group name="RTX5 RTOS">
       <component name="Memory Events"       brief="RTX Memory"    no="0xF0" prefix="EvrRtx" info="RTX5 RTOS Memory Management Events" />
       <component name="Kernel Events"       brief="RTX Kernel"    no="0xF1" prefix="EvrRtx" info="RTX5 RTOS Kernel Events" />
-      <component name="Thread Events"       brief="RTX Thread"    no="0xF2" prefix="EvrRtx" info="RTX5 RTOS Thread Events" />
+      <component name="Thread Events"       brief="RTX Thread"    no="0xF2" prefix="EvrRtx" info="RTX5 RTOS Thread Events" >
+        <state name="Ready"     plot="box"            />
+        <state name="Running"   plot="box"   bold="1" />
+        <state name="Blocked"   plot="line"           />
+        <state name="Inactive"  plot="off"            />
+      </component>
       <component name="Timer Events"        brief="RTX Timer"     no="0xF3" prefix="EvrRtx" info="RTX5 RTOS Timer Events" />
       <component name="EventFlags Events"   brief="RTX EvFlags"   no="0xF4" prefix="EvrRtx" info="RTX5 RTOS EventFlags Events" />
       <component name="Mutex Events"        brief="RTX Mutex"     no="0xF5" prefix="EvrRtx" info="RTX5 RTOS Mutex Events" />
@@ -1490,72 +1495,72 @@
     <event id="0xF000 + 0x04" level="Op" property="MemoryBlockAlloc" value="mp_info=%x[val1], block=%x[val2]" info=""/>
     <event id="0xF000 + 0x05" level="Op" property="MemoryBlockFree"  value="mp_info=%x[val1], block=%x[val2], status=%E[val3, rtx_t:status]" info=""/>
 
-    <event id="0xF100 + 0x00" level="Error"  property="KernelError"               value="status=%E[val1, rtx_t:status]" info="Kernel error occurred."/>
-    <event id="0xF100 + 0x01" level="API"    property="KernelInitialize"          value="" info="osKernelInitialize function was called."/>
-    <event id="0xF100 + 0x02" level="Op"     property="KernelInitialized"         value="" info="Kernel was initialized."/>
-    <event id="0xF100 + 0x03" level="API"    property="KernelGetInfo"             value="version=%x[val1], id_buf=%x[val2], id_size=%d[val3]" info="osKernelGetInfo function was called."/>
-    <event id="0xF100 + 0x04" level="Op"     property="KernelInfoRetrieved"       value="version_api=%d[val1/10000000].%d[(val1/10000)%1000].%d[val1%10000], version_kernel=%d[val2/10000000].%d[(val2/10000)%1000].%d[val2%10000], id_buf=%N[val3]" info="Kernel information was retrieved."/>
-    <event id="0xF100 + 0x06" level="API"    property="KernelGetState"            value="state=%E[val1, osRtxInfo_t:kernel_state]" info="osKernelGetState function was called and state was retrieved."/>
-    <event id="0xF100 + 0x07" level="API"    property="KernelStart"               value="" info="osKernelStart function was called."/>
-    <event id="0xF100 + 0x08" level="Op"     property="KernelStarted"             value="" info="Kernel execution was started."/>
-    <event id="0xF100 + 0x09" level="API"    property="KernelLock"                value="" info="osKernelLock function was called."/>
-    <event id="0xF100 + 0x0A" level="Op"     property="KernelLocked"              value="lock=%d[val1]" info="Kernel was locked."/>
-    <event id="0xF100 + 0x0B" level="API"    property="KernelUnlock"              value="" info="osKernelUnlock function was called."/>
-    <event id="0xF100 + 0x0C" level="Op"     property="KernelUnlocked"            value="lock=%d[val1]" info="Kernel was unlocked."/>
-    <event id="0xF100 + 0x0D" level="API"    property="KernelRestoreLock"         value="lock=%d[val1]" info="osKernelRestoreLock function was called."/>
-    <event id="0xF100 + 0x0E" level="Op"     property="KernelLockRestored"        value="lock=%d[val1]" info="Kernel lock was restored."/>
-    <event id="0xF100 + 0x0F" level="API"    property="KernelSuspend"             value="" info="osKernelSuspend function was called."/>
-    <event id="0xF100 + 0x10" level="Op"     property="KernelSuspended"           value="sleep_ticks=%d[val1]" info="Kernel execution was suspended."/>
-    <event id="0xF100 + 0x11" level="API"    property="KernelResume"              value="sleep_ticks=%d[val1]" info="osKernelResume function was called."/>
-    <event id="0xF100 + 0x12" level="Op"     property="KernelResumed"             value="" info="Kernel execution was resumed."/>
-    <event id="0xF100 + 0x13" level="API"    property="KernelGetTickCount"        value="count=%d[val1]" info="osKernelGetTickCount function was called."/>
-    <event id="0xF100 + 0x14" level="API"    property="KernelGetTickFreq"         value="freq=%d[val1]" info="osKernelGetTickFreq function was called."/>
-    <event id="0xF100 + 0x15" level="API"    property="KernelGetSysTimerCount"    value="count=%d[val1]" info="osKernelGetSysTimerCount function was called."/>
-    <event id="0xF100 + 0x16" level="API"    property="KernelGetSysTimerFreq"     value="freq=%d[val1]" info="osKernelGetSysTimerFreq function was called."/>
+    <event id="0xF100 + 0x00" level="Error"  property="KernelError"                         value="status=%E[val1, rtx_t:status]" info="Kernel error occurred."/>
+    <event id="0xF100 + 0x01" level="API"    property="KernelInitialize"                    value="" info="osKernelInitialize function was called."/>
+    <event id="0xF100 + 0x02" level="Op"     property="KernelInitialized"  tracking="Reset" value="" info="Kernel was initialized."/>
+    <event id="0xF100 + 0x03" level="API"    property="KernelGetInfo"                       value="version=%x[val1], id_buf=%x[val2], id_size=%d[val3]" info="osKernelGetInfo function was called."/>
+    <event id="0xF100 + 0x04" level="Op"     property="KernelInfoRetrieved"                 value="version_api=%d[val1/10000000].%d[(val1/10000)%1000].%d[val1%10000], version_kernel=%d[val2/10000000].%d[(val2/10000)%1000].%d[val2%10000], id_buf=%N[val3]" info="Kernel information was retrieved."/>
+    <event id="0xF100 + 0x06" level="API"    property="KernelGetState"                      value="state=%E[val1, osRtxInfo_t:kernel_state]" info="osKernelGetState function was called and state was retrieved."/>
+    <event id="0xF100 + 0x07" level="API"    property="KernelStart"                         value="" info="osKernelStart function was called."/>
+    <event id="0xF100 + 0x08" level="Op"     property="KernelStarted"                       value="" info="Kernel execution was started."/>
+    <event id="0xF100 + 0x09" level="API"    property="KernelLock"                          value="" info="osKernelLock function was called."/>
+    <event id="0xF100 + 0x0A" level="Op"     property="KernelLocked"                        value="lock=%d[val1]" info="Kernel was locked."/>
+    <event id="0xF100 + 0x0B" level="API"    property="KernelUnlock"                        value="" info="osKernelUnlock function was called."/>
+    <event id="0xF100 + 0x0C" level="Op"     property="KernelUnlocked"                      value="lock=%d[val1]" info="Kernel was unlocked."/>
+    <event id="0xF100 + 0x0D" level="API"    property="KernelRestoreLock"                   value="lock=%d[val1]" info="osKernelRestoreLock function was called."/>
+    <event id="0xF100 + 0x0E" level="Op"     property="KernelLockRestored"                  value="lock=%d[val1]" info="Kernel lock was restored."/>
+    <event id="0xF100 + 0x0F" level="API"    property="KernelSuspend"                       value="" info="osKernelSuspend function was called."/>
+    <event id="0xF100 + 0x10" level="Op"     property="KernelSuspended"                     value="sleep_ticks=%d[val1]" info="Kernel execution was suspended."/>
+    <event id="0xF100 + 0x11" level="API"    property="KernelResume"                        value="sleep_ticks=%d[val1]" info="osKernelResume function was called."/>
+    <event id="0xF100 + 0x12" level="Op"     property="KernelResumed"                       value="" info="Kernel execution was resumed."/>
+    <event id="0xF100 + 0x13" level="API"    property="KernelGetTickCount"                  value="count=%d[val1]" info="osKernelGetTickCount function was called."/>
+    <event id="0xF100 + 0x14" level="API"    property="KernelGetTickFreq"                   value="freq=%d[val1]" info="osKernelGetTickFreq function was called."/>
+    <event id="0xF100 + 0x15" level="API"    property="KernelGetSysTimerCount"              value="count=%d[val1]" info="osKernelGetSysTimerCount function was called."/>
+    <event id="0xF100 + 0x16" level="API"    property="KernelGetSysTimerFreq"               value="freq=%d[val1]" info="osKernelGetSysTimerFreq function was called."/>
 
-    <event id="0xF200 + 0x00" level="Error"  property="ThreadError"                 value="thread_id=%x[val1], status=%E[val2, rtx_t:status]" info="Thread error occurred."/>
-    <event id="0xF200 + 0x01" level="API"    property="ThreadNew"                   value="func=%S[val1], argument=%x[val2], attr=%x[val3]" info="osThreadNew function was called."/>
-    <event id="0xF200 + 0x02" level="Detail" property="ThreadNew"                   value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size], stack_mem=%x[val1.stack_mem], stack_size=%d[val1.stack_size], priority=%E[val7, rtx_th_priority:id]" val1="osThreadAttr_t" info="Attributes structure for thread object."/>
-    <event id="0xF200 + 0x03" level="Op"     property="ThreadCreated"      handle="create(uint32_t)[val1]"  hname="%t[val2]"     value="thread_id=%x[val1]" info="Thread object was created."/>
-    <event id="0xF200 + 0x04" level="API"    property="ThreadGetName"               value="thread_id=%x[val1], name=%N[val2]" info="osThreadGetName function was called and object name was retrieved."/>
-    <event id="0xF200 + 0x06" level="API"    property="ThreadGetId"                 value="thread_id=%x[val1]" info="osThreadGetId function was called and current running thread id was retrieved."/>
-    <event id="0xF200 + 0x07" level="API"    property="ThreadGetState"              value="thread_id=%x[val1], state=%E[val2, rtx_th_state:id]" info="osThreadGetState function was called and thread state was retrieved."/>
-    <event id="0xF200 + 0x08" level="API"    property="ThreadGetStackSize"          value="thread_id=%x[val1], stack_size=%d[val2]" info="osThreadGetStackSize function was called and thread stack size was retrieved."/>
-    <event id="0xF200 + 0x09" level="API"    property="ThreadGetStackSpace"         value="thread_id=%x[val1], stack_space=%d[val2]" info="osThreadGetStackSpace function was called and thread stack space was retrieved."/>
-    <event id="0xF200 + 0x0A" level="API"    property="ThreadSetPriority"           value="thread_id=%x[val1], priority=%E[val2, rtx_th_priority:id]" info="osThreadSetPriority function was called."/>
-    <event id="0xF200 + 0x0B" level="API"    property="ThreadGetPriority"           value="thread_id=%x[val1], priority=%E[val2, rtx_th_priority:id]" info="osThreadGetPriority function was called and thread priority was retrieved."/>
-    <event id="0xF200 + 0x0C" level="API"    property="ThreadYield"                 value="" info="osThreadYield function was called."/>
-    <event id="0xF200 + 0x0D" level="API"    property="ThreadSuspend"               value="thread_id=%x[val1]" info="osThreadSuspend function was called."/>
-    <event id="0xF200 + 0x0E" level="Op"     property="ThreadSuspended"     handle="stalled(uint32_t)[val1]"  hname="%S[val1]"        value="thread_id=%x[val1]" info="Thread execution was suspended."/>
-    <event id="0xF200 + 0x0F" level="API"    property="ThreadResume"                value="thread_id=%x[val1]" info="osThreadResume function was called."/>
-    <event id="0xF200 + 0x10" level="Op"     property="ThreadResumed"       handle="idle(uint32_t)[val1]"  hname="%S[val1]"        value="thread_id=%x[val1]" info="Thread execution was resumed."/>
-    <event id="0xF200 + 0x11" level="API"    property="ThreadDetach"                value="thread_id=%x[val1]" info="osThreadDetach function was called."/>
-    <event id="0xF200 + 0x12" level="Op"     property="ThreadDetached"              value="thread_id=%x[val1]" info="Thread was detached."/>
-    <event id="0xF200 + 0x13" level="API"    property="ThreadJoin"                  value="thread_id=%x[val1]" info="osThreadJoin function was called."/>
-    <event id="0xF200 + 0x14" level="Op"     property="ThreadJoinPending"           value="thread_id=%x[val1]" info="Thread join is pending."/>
-    <event id="0xF200 + 0x15" level="Op"     property="ThreadJoined"                value="thread_id=%x[val1]" info="Thread joined."/>
-    <event id="0xF200 + 0x16" level="Op"     property="ThreadBlocked"       handle="stalled(uint32_t)[val1]" hname="%S[val1]"        value="thread_id=%x[val1], timeout=%d[val2]" info="Current running thread execution was blocked."/>
-    <event id="0xF200 + 0x17" level="Op"     property="ThreadUnblocked"     handle="idle(uint32_t)[val1]"    hname="%S[val1]"        value="thread_id=%x[val1], ret_val=%E[val2, rtx_t:status]" info="Thread execution was unblocked."/>
-    <event id="0xF200 + 0x18" level="Op"     property="ThreadPreempted"     handle="idle(uint32_t)[val1]"    hname="%S[val1]"        value="thread_id=%x[val1]" info="Current running thread execution was preempted."/>
-    <event id="0xF200 + 0x19" level="Op"     property="ThreadSwitched"      handle="active(uint32_t)[val1]"  hname="%S[val1]"        value="thread_id=%x[val1]" info="Switched execution of the current running thread."/>
-    <event id="0xF200 + 0x1A" level="API"    property="ThreadExit"                  value="" info="osThreadExit function was called."/>
-    <event id="0xF200 + 0x1B" level="API"    property="ThreadTerminate"             value="thread_id=%x[val1]" info="osThreadTerminate function was called."/>
-    <event id="0xF200 + 0x1C" level="Op"     property="ThreadDestroyed"     handle="delete(uint32_t)[val1]"  hname="%S[val1]"        value="thread_id=%x[val1]" info="Thread execution was terminated."/>
-    <event id="0xF200 + 0x1D" level="API"    property="ThreadGetCount"              value="count=%d[val1]" info="osThreadGetCount function was called and number of active threads was retrieved."/>
-    <event id="0xF200 + 0x1E" level="API"    property="ThreadEnumerate"             value="thread_array=%x[val1], array_items=%d[val2], count=%d[val3]" info="osThreadEnumerate function was called and active threads were enumerated."/>
-    <event id="0xF200 + 0x1F" level="API"    property="ThreadFlagsSet"              value="thread_id=%x[val1], flags=%x[val2]" info="osThreadFlagsSet function was called."/>
-    <event id="0xF200 + 0x20" level="Op"     property="ThreadFlagsSetDone"          value="thread_id=%x[val1], thread_flags=%x[val2]" info="Thread flags were set."/>
-    <event id="0xF200 + 0x21" level="API"    property="ThreadFlagsClear"            value="flags=%x[val1]" info="osThreadFlagsClear function was called."/>
-    <event id="0xF200 + 0x22" level="Op"     property="ThreadFlagsClearDone"        value="thread_flags=%x[val1]" info="Thread flags were cleared."/>
-    <event id="0xF200 + 0x23" level="API"    property="ThreadFlagsGet"              value="thread_flags=%x[val1]" info="osThreadFlagsGet function was called and thread flags were retrieved."/>
-    <event id="0xF200 + 0x24" level="API"    property="ThreadFlagsWait"             value="flags=%x[val1], options=%x[val2], timeout=%d[val3]" info="osThreadFlagsWait function was called."/>
-    <event id="0xF200 + 0x25" level="Op"     property="ThreadFlagsWaitPending"      value="flags=%x[val1], options=%x[val2], timeout=%d[val3]" info="Waiting for thread flags to become signaled."/>
-    <event id="0xF200 + 0x26" level="Op"     property="ThreadFlagsWaitTimeout"      value="" info="Waiting for thread flags timed out."/>
-    <event id="0xF200 + 0x27" level="Op"     property="ThreadFlagsWaitCompleted"    value="flags=%x[val1], options=%x[val2], thread_flags=%x[val3]" info="Wait for thread flags completed."/>
-    <event id="0xF200 + 0x28" level="Op"     property="ThreadFlagsWaitNotCompleted" value="flags=%x[val1], options=%x[val2]" info="Wait for thread flags not completed."/>
-    <event id="0xF200 + 0x29" level="API"    property="ThreadDelay"                 value="ticks=%d[val1]" info="osDelay function was called."/>
-    <event id="0xF200 + 0x2A" level="API"    property="ThreadDelayUntil"            value="ticks=%d[val1]" info="osDelayUntil function was called."/>
-    <event id="0xF200 + 0x2B" level="Op"     property="ThreadDelayCompleted"        value="" info="osDelay/osDelayUntil completed."/>
+    <event id="0xF200 + 0x00" level="Error"  property="ThreadError"                                                                       value="thread_id=%x[val1], status=%E[val2, rtx_t:status]" info="Thread error occurred."/>
+    <event id="0xF200 + 0x01" level="API"    property="ThreadNew"                                                                         value="func=%S[val1], argument=%x[val2], attr=%x[val3]" info="osThreadNew function was called."/>
+    <event id="0xF200 + 0x02" level="Detail" property="ThreadNew"                                                                         value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size], stack_mem=%x[val1.stack_mem], stack_size=%d[val1.stack_size], priority=%E[val7, rtx_th_priority:id]" val1="osThreadAttr_t" info="Attributes structure for thread object."/>
+    <event id="0xF200 + 0x03" level="Op"     property="ThreadCreated"    tracking="Start" state="Ready"    handle="val1" hname="%S[val2]" value="thread_id=%x[val1]" info="Thread object was created."/>
+    <event id="0xF200 + 0x04" level="API"    property="ThreadGetName"                                                                     value="thread_id=%x[val1], name=%N[val2]" info="osThreadGetName function was called and object name was retrieved."/>
+    <event id="0xF200 + 0x06" level="API"    property="ThreadGetId"                                                                       value="thread_id=%x[val1]" info="osThreadGetId function was called and current running thread id was retrieved."/>
+    <event id="0xF200 + 0x07" level="API"    property="ThreadGetState"                                                                    value="thread_id=%x[val1], state=%E[val2, rtx_th_state:id]" info="osThreadGetState function was called and thread state was retrieved."/>
+    <event id="0xF200 + 0x08" level="API"    property="ThreadGetStackSize"                                                                value="thread_id=%x[val1], stack_size=%d[val2]" info="osThreadGetStackSize function was called and thread stack size was retrieved."/>
+    <event id="0xF200 + 0x09" level="API"    property="ThreadGetStackSpace"                                                               value="thread_id=%x[val1], stack_space=%d[val2]" info="osThreadGetStackSpace function was called and thread stack space was retrieved."/>
+    <event id="0xF200 + 0x0A" level="API"    property="ThreadSetPriority"                                                                 value="thread_id=%x[val1], priority=%E[val2, rtx_th_priority:id]" info="osThreadSetPriority function was called."/>
+    <event id="0xF200 + 0x0B" level="API"    property="ThreadGetPriority"                                                                 value="thread_id=%x[val1], priority=%E[val2, rtx_th_priority:id]" info="osThreadGetPriority function was called and thread priority was retrieved."/>
+    <event id="0xF200 + 0x0C" level="API"    property="ThreadYield"                                                                       value="" info="osThreadYield function was called."/>
+    <event id="0xF200 + 0x0D" level="API"    property="ThreadSuspend"                                                                     value="thread_id=%x[val1]" info="osThreadSuspend function was called."/>
+    <event id="0xF200 + 0x0E" level="Op"     property="ThreadSuspended"                   state="Blocked"  handle="val1"                  value="thread_id=%x[val1]" info="Thread execution was suspended."/>
+    <event id="0xF200 + 0x0F" level="API"    property="ThreadResume"                                                                      value="thread_id=%x[val1]" info="osThreadResume function was called."/>
+    <event id="0xF200 + 0x10" level="Op"     property="ThreadResumed"                     state="Ready"    handle="val1"                  value="thread_id=%x[val1]" info="Thread execution was resumed."/>
+    <event id="0xF200 + 0x11" level="API"    property="ThreadDetach"                                                                      value="thread_id=%x[val1]" info="osThreadDetach function was called."/>
+    <event id="0xF200 + 0x12" level="Op"     property="ThreadDetached"                                                                    value="thread_id=%x[val1]" info="Thread was detached."/>
+    <event id="0xF200 + 0x13" level="API"    property="ThreadJoin"                                                                        value="thread_id=%x[val1]" info="osThreadJoin function was called."/>
+    <event id="0xF200 + 0x14" level="Op"     property="ThreadJoinPending"                                                                 value="thread_id=%x[val1]" info="Thread join is pending."/>
+    <event id="0xF200 + 0x15" level="Op"     property="ThreadJoined"                                                                      value="thread_id=%x[val1]" info="Thread joined."/>
+    <event id="0xF200 + 0x16" level="Op"     property="ThreadBlocked"                     state="Blocked"  handle="val1"                  value="thread_id=%x[val1], timeout=%d[val2]" info="Current running thread execution was blocked."/>
+    <event id="0xF200 + 0x17" level="Op"     property="ThreadUnblocked"                   state="Ready"    handle="val1"                  value="thread_id=%x[val1], ret_val=%E[val2, rtx_t:status]" info="Thread execution was unblocked."/>
+    <event id="0xF200 + 0x18" level="Op"     property="ThreadPreempted"                   state="Ready"    handle="val1"                  value="thread_id=%x[val1]" info="Current running thread execution was preempted."/>
+    <event id="0xF200 + 0x19" level="Op"     property="ThreadSwitched"                    state="Running"  handle="val1"                  value="thread_id=%x[val1]" info="Switched execution of the current running thread."/>
+    <event id="0xF200 + 0x1A" level="API"    property="ThreadExit"                                                                        value="" info="osThreadExit function was called."/>
+    <event id="0xF200 + 0x1B" level="API"    property="ThreadTerminate"                                                                   value="thread_id=%x[val1]" info="osThreadTerminate function was called."/>
+    <event id="0xF200 + 0x1C" level="Op"     property="ThreadDestroyed"  tracking="Stop"  state="Inactive" handle="val1"                  value="thread_id=%x[val1]" info="Thread execution was terminated."/>
+    <event id="0xF200 + 0x1D" level="API"    property="ThreadGetCount"                                                                    value="count=%d[val1]" info="osThreadGetCount function was called and number of active threads was retrieved."/>
+    <event id="0xF200 + 0x1E" level="API"    property="ThreadEnumerate"                                                                   value="thread_array=%x[val1], array_items=%d[val2], count=%d[val3]" info="osThreadEnumerate function was called and active threads were enumerated."/>
+    <event id="0xF200 + 0x1F" level="API"    property="ThreadFlagsSet"                                                                    value="thread_id=%x[val1], flags=%x[val2]" info="osThreadFlagsSet function was called."/>
+    <event id="0xF200 + 0x20" level="Op"     property="ThreadFlagsSetDone"                                                                value="thread_id=%x[val1], thread_flags=%x[val2]" info="Thread flags were set."/>
+    <event id="0xF200 + 0x21" level="API"    property="ThreadFlagsClear"                                                                  value="flags=%x[val1]" info="osThreadFlagsClear function was called."/>
+    <event id="0xF200 + 0x22" level="Op"     property="ThreadFlagsClearDone"                                                              value="thread_flags=%x[val1]" info="Thread flags were cleared."/>
+    <event id="0xF200 + 0x23" level="API"    property="ThreadFlagsGet"                                                                    value="thread_flags=%x[val1]" info="osThreadFlagsGet function was called and thread flags were retrieved."/>
+    <event id="0xF200 + 0x24" level="API"    property="ThreadFlagsWait"                                                                   value="flags=%x[val1], options=%x[val2], timeout=%d[val3]" info="osThreadFlagsWait function was called."/>
+    <event id="0xF200 + 0x25" level="Op"     property="ThreadFlagsWaitPending"                                                            value="flags=%x[val1], options=%x[val2], timeout=%d[val3]" info="Waiting for thread flags to become signaled."/>
+    <event id="0xF200 + 0x26" level="Op"     property="ThreadFlagsWaitTimeout"                                                            value="" info="Waiting for thread flags timed out."/>
+    <event id="0xF200 + 0x27" level="Op"     property="ThreadFlagsWaitCompleted"                                                          value="flags=%x[val1], options=%x[val2], thread_flags=%x[val3]" info="Wait for thread flags completed."/>
+    <event id="0xF200 + 0x28" level="Op"     property="ThreadFlagsWaitNotCompleted"                                                       value="flags=%x[val1], options=%x[val2]" info="Wait for thread flags not completed."/>
+    <event id="0xF200 + 0x29" level="API"    property="ThreadDelay"                                                                       value="ticks=%d[val1]" info="osDelay function was called."/>
+    <event id="0xF200 + 0x2A" level="API"    property="ThreadDelayUntil"                                                                  value="ticks=%d[val1]" info="osDelayUntil function was called."/>
+    <event id="0xF200 + 0x2B" level="Op"     property="ThreadDelayCompleted"                                                              value="" info="osDelay/osDelayUntil completed."/>
 
     <event id="0xF300 + 0x00" level="Error"  property="TimerError"     value="timer_id=%x[val1], status=%E[val2, rtx_t:status]" info="Timer error occurred."/>
     <event id="0xF300 + 0x01" level="Op"     property="TimerCallback"  value="func=%S[val1], argument=%x[val2]" info="Timer callback function was called."/>
