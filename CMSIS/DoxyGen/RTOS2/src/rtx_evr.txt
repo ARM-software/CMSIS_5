@@ -1340,12 +1340,13 @@ The event \b SemaphoreAcquireTimeout is generated when wait for semaphore to bec
 */
 
 /**
-\fn void EvrRtxSemaphoreAcquired (osSemaphoreId_t semaphore_id)
+\fn void EvrRtxSemaphoreAcquired (osSemaphoreId_t semaphore_id, uint32_t tokens)
 \details
 The event \b SemaphoreAcquired is generated when the function \ref osSemaphoreAcquire successfully acquires the semaphore token.
 
 \b Value in the Event Recorder shows:
   - \b semaphore_id : semaphore ID.
+  - \b tokens : available tokens.
 */
 
 /**
@@ -1367,12 +1368,13 @@ The event \b SemaphoreRelease is generated when the function \ref osSemaphoreRel
 */
 
 /**
-\fn void EvrRtxSemaphoreReleased (osSemaphoreId_t semaphore_id)
+\fn void EvrRtxSemaphoreReleased (osSemaphoreId_t semaphore_id, uint32_t tokens)
 \details
 The event \b SemaphoreReleased is generated when the function \ref osSemaphoreRelease successfully releases the semaphore token.
 
 \b Value in the Event Recorder shows:
   - \b semaphore_id : semaphore ID.
+  - \b tokens : available tokens.
 */
 
 /**
