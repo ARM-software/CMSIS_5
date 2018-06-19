@@ -2,7 +2,7 @@
  *      Name:         CV_CoreFunc.c
  *      Purpose:      CMSIS CORE validation tests implementation
  *-----------------------------------------------------------------------------
- *      Copyright (c) 2017 ARM Limited. All rights reserved.
+ *      Copyright (c) 2017 - 2018 Arm Limited. All rights reserved.
  *----------------------------------------------------------------------------*/
 
 #include "CV_Framework.h"
@@ -54,7 +54,7 @@ void TC_CoreFunc_EnDisIRQ (void)
   // Enable the interrupt
   NVIC_EnableIRQ(WDT_IRQn);
   ASSERT_TRUE(NVIC_GetEnableIRQ(WDT_IRQn) != 0U);
-  
+
   // Clear its pending state
   NVIC_ClearPendingIRQ(WDT_IRQn);
   ASSERT_TRUE(NVIC_GetPendingIRQ(WDT_IRQn) == 0U);
@@ -103,7 +103,7 @@ void TC_CoreFunc_EnDisIRQ (void)
   // Interrupt is not taken again
   ASSERT_TRUE(irqTaken == 1U);
   ASSERT_TRUE(NVIC_GetPendingIRQ(WDT_IRQn) != 0U);
-  
+
   // Clear interrupt pending
   NVIC_ClearPendingIRQ(WDT_IRQn);
   for(uint32_t i = 10U; i > 0U; --i) {}
@@ -126,22 +126,22 @@ void TC_CoreFunc_IRQPrio (void)
 {
   /* Test Exception Priority */
   uint32_t orig = NVIC_GetPriority(SVCall_IRQn);
-  
+
   NVIC_SetPriority(SVCall_IRQn, orig+1U);
   uint32_t prio = NVIC_GetPriority(SVCall_IRQn);
 
   ASSERT_TRUE(prio == orig+1U);
-  
+
   NVIC_SetPriority(SVCall_IRQn, orig);
 
   /* Test Interrupt Priority */
   orig = NVIC_GetPriority(WDT_IRQn);
-  
+
   NVIC_SetPriority(WDT_IRQn, orig+1U);
   prio = NVIC_GetPriority(WDT_IRQn);
 
   ASSERT_TRUE(prio == orig+1U);
-  
+
   NVIC_SetPriority(WDT_IRQn, orig);
 }
 
@@ -155,12 +155,12 @@ The helper encodes and decodes the given priority configuration.
 */
 static void TC_CoreFunc_EncDecIRQPrio_Step(uint32_t prigroup, uint32_t pre, uint32_t sub) {
   uint32_t prio = NVIC_EncodePriority(prigroup, pre, sub);
-  
+
   uint32_t ret_pre = UINT32_MAX;
   uint32_t ret_sub = UINT32_MAX;
-  
+
   NVIC_DecodePriority(prio, prigroup, &ret_pre, &ret_sub);
-  
+
   ASSERT_TRUE(ret_pre == pre);
   ASSERT_TRUE(ret_sub == sub);
 }
@@ -196,38 +196,38 @@ void TC_CoreFunc_IRQVect(void) {
   /* relocate vector table */
   extern uint32_t __Vectors[];
   static uint32_t vectors[32] __ALIGNED(512);
-  
+
   for(uint32_t i=0U; i<32U; i++) {
     vectors[i] = __Vectors[i];
   }
-  
+
   const uint32_t orig_vtor = SCB->VTOR;
   const uint32_t vtor = ((uint32_t)vectors) & SCB_VTOR_TBLOFF_Msk;
   SCB->VTOR = vtor;
-  
+
   ASSERT_TRUE(vtor == SCB->VTOR);
-  
+
   /* check exception vectors */
   extern void HardFault_Handler(void);
   extern void SVC_Handler(void);
   extern void PendSV_Handler(void);
   extern void SysTick_Handler(void);
-  
+
   ASSERT_TRUE(NVIC_GetVector(HardFault_IRQn) == (uint32_t)HardFault_Handler);
   ASSERT_TRUE(NVIC_GetVector(SVCall_IRQn) == (uint32_t)SVC_Handler);
   ASSERT_TRUE(NVIC_GetVector(PendSV_IRQn) == (uint32_t)PendSV_Handler);
   ASSERT_TRUE(NVIC_GetVector(SysTick_IRQn) == (uint32_t)SysTick_Handler);
-  
+
   /* reconfigure WDT IRQ vector */
   extern void WDT_IRQHandler(void);
-  
+
   const uint32_t wdtvec = NVIC_GetVector(WDT_IRQn);
   ASSERT_TRUE(wdtvec == (uint32_t)WDT_IRQHandler);
-  
+
   NVIC_SetVector(WDT_IRQn, wdtvec + 32U);
-  
+
   ASSERT_TRUE(NVIC_GetVector(WDT_IRQn) == (wdtvec + 32U));
-  
+
   /* restore vector table */
   SCB->VTOR = orig_vtor;
 #endif
@@ -252,10 +252,10 @@ void TC_CoreFunc_Control (void) {
 #ifdef CONTROL_SPSEL_Msk
   // SPSEL set to 0 (MSP)
   ASSERT_TRUE((ctrl & CONTROL_SPSEL_Msk) == 0U);
-  
+
   // SPSEL set to 1 (PSP)
   ctrl |= CONTROL_SPSEL_Msk;
-  
+
   // Move MSP to PSP
   __set_PSP(__get_MSP());
 #endif
@@ -310,7 +310,7 @@ void TC_CoreFunc_IPSR (void) {
 #if defined(__CC_ARM)
 #define SUBS(Rd, Rm, Rn) __ASM("SUBS " # Rd ", " # Rm ", " # Rn)
 #define ADDS(Rd, Rm, Rn) __ASM("ADDS " # Rd ", " # Rm ", " # Rn)
-#elif defined( __GNUC__ )  && (defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_8M_BASE__))
+#elif defined( __GNUC__ )  && (!defined(__ARMCC_VERSION))  && (defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_8M_BASE__))
 #define SUBS(Rd, Rm, Rn) __ASM("SUB %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
 #define ADDS(Rd, Rm, Rn) __ASM("ADD %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
 #elif defined(_lint)
@@ -414,7 +414,7 @@ void TC_CoreFunc_MSP (void) {
 
   ctrl = __get_CONTROL();
   orig = __get_MSP();
-  
+
   __set_PSP(orig);
   __set_CONTROL(ctrl | CONTROL_SPSEL_Msk); // switch to PSP
 
@@ -431,15 +431,14 @@ void TC_CoreFunc_MSP (void) {
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-#if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
-     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
-
 /**
 \brief Test case: TC_CoreFunc_PSPLIM
 \details
 - Check if __get_PSPLIM and __set_PSPLIM intrinsic can be used to manipulate process stack pointer limit.
 */
 void TC_CoreFunc_PSPLIM (void) {
+#if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
   // don't use stack for this variables
   static uint32_t orig;
   static uint32_t psplim;
@@ -461,6 +460,8 @@ void TC_CoreFunc_PSPLIM (void) {
 #else
   ASSERT_TRUE(result == psplim);
 #endif
+
+#endif
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -470,6 +471,9 @@ void TC_CoreFunc_PSPLIM (void) {
 - Check if __TZ_get_PSPLIM_NS and __TZ_set_PSPLIM_NS intrinsic can be used to manipulate process stack pointer limit.
 */
 void TC_CoreFunc_PSPLIM_NS (void) {
+#if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
+
 #if (defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
   uint32_t orig;
   uint32_t psplim;
@@ -491,6 +495,8 @@ void TC_CoreFunc_PSPLIM_NS (void) {
   ASSERT_TRUE(result == psplim);
 #endif
 #endif
+
+#endif
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -500,6 +506,8 @@ void TC_CoreFunc_PSPLIM_NS (void) {
 - Check if __get_MSPLIM and __set_MSPLIM intrinsic can be used to manipulate main stack pointer limit.
 */
 void TC_CoreFunc_MSPLIM (void) {
+#if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
   // don't use stack for this variables
   static uint32_t orig;
   static uint32_t msplim;
@@ -517,7 +525,7 @@ void TC_CoreFunc_MSPLIM (void) {
   result = __get_MSPLIM();
 
   __set_MSPLIM(orig);
-  
+
   __set_CONTROL(ctrl);
 
 #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) && \
@@ -526,6 +534,8 @@ void TC_CoreFunc_MSPLIM (void) {
   ASSERT_TRUE(result == 0U);
 #else
   ASSERT_TRUE(result == msplim);
+#endif
+
 #endif
 }
 
@@ -536,6 +546,9 @@ void TC_CoreFunc_MSPLIM (void) {
 - Check if __TZ_get_MSPLIM_NS and __TZ_set_MSPLIM_NS intrinsic can be used to manipulate process stack pointer limit.
 */
 void TC_CoreFunc_MSPLIM_NS (void) {
+#if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+     (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
+
 #if (defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
   uint32_t orig;
   uint32_t msplim;
@@ -557,9 +570,9 @@ void TC_CoreFunc_MSPLIM_NS (void) {
   ASSERT_TRUE(result == msplim);
 #endif
 #endif
-}
 
 #endif
+}
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -595,10 +608,6 @@ void TC_CoreFunc_PRIMASK (void) {
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-#if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
-     (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
-     (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
-
 /**
 \brief Test case: TC_CoreFunc_FAULTMASK
 \details
@@ -606,6 +615,10 @@ void TC_CoreFunc_PRIMASK (void) {
 - Check if __enable_fault_irq and __disable_fault_irq are reflected in FAULTMASK.
 */
 void TC_CoreFunc_FAULTMASK (void) {
+#if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
+     (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+     (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+
   uint32_t orig = __get_FAULTMASK();
 
   // toggle faultmask
@@ -629,6 +642,8 @@ void TC_CoreFunc_FAULTMASK (void) {
   ASSERT_TRUE((result & 0x01U) == 1U);
 
   __set_FAULTMASK(orig);
+
+#endif
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -639,6 +654,10 @@ void TC_CoreFunc_FAULTMASK (void) {
 - Check if __set_BASEPRI_MAX intrinsic can be used to manipulate BASEPRI.
 */
 void TC_CoreFunc_BASEPRI(void) {
+#if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
+     (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+     (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+
   uint32_t orig = __get_BASEPRI();
 
   uint32_t basepri = ~orig & 0x80U;
@@ -653,8 +672,9 @@ void TC_CoreFunc_BASEPRI(void) {
   result = __get_BASEPRI();
 
   ASSERT_TRUE(result == basepri);
-}
+
 #endif
+}
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**

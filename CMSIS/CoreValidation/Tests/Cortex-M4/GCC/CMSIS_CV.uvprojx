@@ -12,11 +12,12 @@
       <ToolsetName>ARM-GNU</ToolsetName>
       <pArmCC>6070000::V6.7::.\ARMCLANG</pArmCC>
       <pCCUsed>6070000::V6.7::.\ARMCLANG</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM4</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.1.2-dev1</PackID>
+          <PackID>ARM.CMSIS.5.3.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IROM(0x00000000,0x00040000) CPUTYPE("Cortex-M4") CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -291,14 +292,19 @@
               <FilePath>..\..\..\Source\CV_CoreInstr.c</FilePath>
             </File>
             <File>
-              <FileName>CV_Framework.c</FileName>
+              <FileName>CV_CoreSimd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Source\CV_Framework.c</FilePath>
+              <FilePath>..\..\..\Source\CV_CoreSimd.c</FilePath>
             </File>
             <File>
               <FileName>CV_MPU_ARMv7.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Source\CV_MPU_ARMv7.c</FilePath>
+            </File>
+            <File>
+              <FileName>CV_Framework.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Source\CV_Framework.c</FilePath>
             </File>
             <File>
               <FileName>CV_Report.c</FileName>
@@ -383,7 +389,7 @@
       <file attr="config" category="linkerScript" condition="GCC" name="Device\ARM\ARMCM4\Source\GCC\gcc_arm.ld" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM4\gcc_arm.ld</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM4 CMSIS GCC"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.2-dev1"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.3.0"/>
         <targetInfos>
           <targetInfo name="FVP"/>
         </targetInfos>
@@ -391,7 +397,7 @@
       <file attr="config" category="sourceC" condition="GCC" name="Device\ARM\ARMCM4\Source\GCC\startup_ARMCM4.c" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM4\startup_ARMCM4.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM4 CMSIS GCC"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.2-dev1"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.3.0"/>
         <targetInfos>
           <targetInfo name="FVP"/>
         </targetInfos>
@@ -405,7 +411,7 @@
       <file attr="config" category="sourceC" name="Device\ARM\ARMCM4\Source\system_ARMCM4.c" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM4\system_ARMCM4.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM4 CMSIS GCC"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.1.2-dev1"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.3.0"/>
         <targetInfos>
           <targetInfo name="FVP"/>
         </targetInfos>

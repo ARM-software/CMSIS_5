@@ -1,19 +1,19 @@
 /*-----------------------------------------------------------------------------
- *      Name:         cmsis_cv.h 
+ *      Name:         cmsis_cv.h
  *      Purpose:      cmsis_cv header
  *----------------------------------------------------------------------------
- *      Copyright (c) 2017 ARM Limited. All rights reserved.
+ *      Copyright (c) 2017 - 2018 Arm Limited. All rights reserved.
  *----------------------------------------------------------------------------*/
 #ifndef __CMSIS_CV_H
 #define __CMSIS_CV_H
 
 #include <stdint.h>
 #include "CV_Config.h"
-    
+
 /* Expansion macro used to create CMSIS Driver references */
 #define EXPAND_SYMBOL(name, port) name##port
 #define CREATE_SYMBOL(name, port) EXPAND_SYMBOL(name, port)
-  
+
 // Simulator counter
 #ifndef HW_PRESENT
 extern uint32_t SIM_CYCCNT;
@@ -27,16 +27,40 @@ extern void cmsis_cv (void);
 
 // Test cases
 #if defined(RTE_CV_COREINSTR) && RTE_CV_COREINSTR
-extern void TC_CoreInstr_NOP (void);
-extern void TC_CoreInstr_REV (void);
-extern void TC_CoreInstr_REV16 (void);
-extern void TC_CoreInstr_REVSH (void);
-extern void TC_CoreInstr_ROR (void);
-extern void TC_CoreInstr_RBIT (void);
-extern void TC_CoreInstr_CLZ (void);
-extern void TC_CoreInstr_Exclusives (void);
-extern void TC_CoreInstr_SSAT (void);
-extern void TC_CoreInstr_USAT (void);
+  extern void TC_CoreInstr_NOP (void);
+  extern void TC_CoreInstr_SEV (void);
+  extern void TC_CoreInstr_BKPT (void);
+  extern void TC_CoreInstr_ISB (void);
+  extern void TC_CoreInstr_DSB (void);
+  extern void TC_CoreInstr_DMB (void);
+  extern void TC_CoreInstr_WFI (void);
+  extern void TC_CoreInstr_WFE (void);
+  extern void TC_CoreInstr_REV (void);
+  extern void TC_CoreInstr_REV16 (void);
+  extern void TC_CoreInstr_REVSH (void);
+  extern void TC_CoreInstr_ROR (void);
+  extern void TC_CoreInstr_RBIT (void);
+  extern void TC_CoreInstr_CLZ (void);
+  extern void TC_CoreInstr_SSAT (void);
+  extern void TC_CoreInstr_USAT (void);
+  extern void TC_CoreInstr_RRX (void);
+  extern void TC_CoreInstr_LoadStoreExclusive (void);
+  extern void TC_CoreInstr_LoadStoreUnpriv (void);
+  extern void TC_CoreInstr_LoadStoreAcquire (void);
+  extern void TC_CoreInstr_LoadStoreAcquireExclusive (void);
+#endif
+
+#if defined(RTE_CV_CORESIMD) && RTE_CV_CORESIMD
+  extern void TC_CoreSimd_SatAddSub (void);
+  extern void TC_CoreSimd_ParSat16 (void);
+  extern void TC_CoreSimd_PackUnpack (void);
+  extern void TC_CoreSimd_ParSel (void);
+  extern void TC_CoreSimd_ParAddSub8 (void);
+  extern void TC_CoreSimd_AbsDif8 (void);
+  extern void TC_CoreSimd_ParAddSub16 (void);
+  extern void TC_CoreSimd_ParMul16 (void);
+  extern void TC_CoreSimd_Pack16 (void);
+  extern void TC_CoreSimd_MulAcc32 (void);
 #endif
 
 #if defined(RTE_CV_COREFUNC) && RTE_CV_COREFUNC
@@ -50,28 +74,13 @@ extern void TC_CoreInstr_USAT (void);
     extern void TC_CoreFunc_APSR (void);
     extern void TC_CoreFunc_PSP (void);
     extern void TC_CoreFunc_MSP (void);
-    
-    #if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
-         (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
-
     extern void TC_CoreFunc_PSPLIM (void);
     extern void TC_CoreFunc_PSPLIM_NS (void);
     extern void TC_CoreFunc_MSPLIM (void);
     extern void TC_CoreFunc_MSPLIM_NS (void);
-
-    #endif
-    
     extern void TC_CoreFunc_PRIMASK (void);
-
-    #if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
-       (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
-       (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
-
     extern void TC_CoreFunc_FAULTMASK (void);
     extern void TC_CoreFunc_BASEPRI (void);
-
-    #endif
-
     extern void TC_CoreFunc_FPUType (void);
     extern void TC_CoreFunc_FPSCR (void);
 
@@ -100,27 +109,27 @@ extern void TC_CoreInstr_USAT (void);
 #endif
 
 #if defined(RTE_CV_MPUFUNC) && RTE_CV_MPUFUNC
-#if defined(__MPU_PRESENT) && __MPU_PRESENT
-extern void TC_MPU_SetClear (void);
-extern void TC_MPU_Load (void);
-#endif
+  #if defined(__MPU_PRESENT) && __MPU_PRESENT
+    extern void TC_MPU_SetClear (void);
+    extern void TC_MPU_Load (void);
+  #endif
 #endif
 
 #if defined(RTE_CV_GENTIMER) && RTE_CV_GENTIMER
-extern void TC_GenTimer_CNTFRQ (void);
-extern void TC_GenTimer_CNTP_TVAL (void);
-extern void TC_GenTimer_CNTP_CTL (void);
-extern void TC_GenTimer_CNTPCT(void);
-extern void TC_GenTimer_CNTP_CVAL(void);
+  extern void TC_GenTimer_CNTFRQ (void);
+  extern void TC_GenTimer_CNTP_TVAL (void);
+  extern void TC_GenTimer_CNTP_CTL (void);
+  extern void TC_GenTimer_CNTPCT(void);
+  extern void TC_GenTimer_CNTP_CVAL(void);
 #endif
 
 #if defined(RTE_CV_L1CACHE) && RTE_CV_L1CACHE
-extern void TC_L1Cache_EnDisable(void);
-extern void TC_L1Cache_EnDisableBTAC(void);
-extern void TC_L1Cache_log2_up(void);
-extern void TC_L1Cache_InvalidateDCacheAll(void);
-extern void TC_L1Cache_CleanDCacheAll(void);
-extern void TC_L1Cache_CleanInvalidateDCacheAll(void);
+  extern void TC_L1Cache_EnDisable(void);
+  extern void TC_L1Cache_EnDisableBTAC(void);
+  extern void TC_L1Cache_log2_up(void);
+  extern void TC_L1Cache_InvalidateDCacheAll(void);
+  extern void TC_L1Cache_CleanDCacheAll(void);
+  extern void TC_L1Cache_CleanInvalidateDCacheAll(void);
 #endif
 
 #endif /* __CMSIS_CV_H */

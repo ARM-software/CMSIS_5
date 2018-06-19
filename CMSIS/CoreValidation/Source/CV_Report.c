@@ -1,8 +1,8 @@
 /*-----------------------------------------------------------------------------
- *      Name:         cv_report.c 
+ *      Name:         cv_report.c
  *      Purpose:      Report statistics and layout implementation
  *-----------------------------------------------------------------------------
- *      Copyright (c) 2017 ARM Limited. All rights reserved.
+ *      Copyright (c) 2017 - 2018 Arm Limited. All rights reserved.
  *----------------------------------------------------------------------------*/
 #include "CV_Report.h"
 #include <stdio.h>
@@ -90,11 +90,11 @@ BOOL tr_File_Init (void) {
 /*-----------------------------------------------------------------------------
  * Open test report
  *----------------------------------------------------------------------------*/
-#if (PRINT_XML_REPORT==1)  
+#if (PRINT_XML_REPORT==1)
 BOOL tr_File_Open (const char *title, const char *date, const char *time, const char *fn) {
   PRINT(("<?xml version=\"1.0\"?>\n"));
   PRINT(("<?xml-stylesheet href=\"TR_Style.xsl\" type=\"text/xsl\" ?>\n"));
-  PRINT(("<report>\n"));  
+  PRINT(("<report>\n"));
   PRINT(("<test>\n"));
   PRINT(("<title>%s</title>\n", title));
   PRINT(("<date>%s</date>\n",   date));
@@ -104,7 +104,7 @@ BOOL tr_File_Open (const char *title, const char *date, const char *time, const 
 #else
 BOOL tr_File_Open (const char *title, const char *date, const char *time, const char __attribute__((unused)) *fn) {
   PRINT(("%s   %s   %s \n\n", title, date, time));
-#endif  
+#endif
   return (__TRUE);
 }
 
@@ -114,7 +114,7 @@ BOOL tr_File_Open (const char *title, const char *date, const char *time, const 
  *----------------------------------------------------------------------------*/
 BOOL tc_File_Open (uint32_t num, const char *fn) {
   (void)tc_Init ();
-#if (PRINT_XML_REPORT==1)   
+#if (PRINT_XML_REPORT==1)
   PRINT(("<tc>\n"));
   PRINT(("<no>%d</no>\n",     num));
   PRINT(("<func>%s</func>\n", fn));
@@ -122,8 +122,8 @@ BOOL tc_File_Open (uint32_t num, const char *fn) {
   PRINT(("<meth></meth>"));
   PRINT(("<dbgi>\n"));
 #else
-  PRINT(("TEST %02d: %-32s ", num, fn));
-#endif 
+  PRINT(("TEST %02d: %-42s ", num, fn));
+#endif
   return (__TRUE);
 }
 
@@ -133,17 +133,17 @@ BOOL tc_File_Open (uint32_t num, const char *fn) {
  *----------------------------------------------------------------------------*/
 BOOL tc_File_Close (void) {
   uint8_t *res = tc_Eval();
-#if (PRINT_XML_REPORT==1) 
+#if (PRINT_XML_REPORT==1)
   PRINT(("</dbgi>\n"));
   PRINT(("<res>%s</res>\n", res));
   PRINT(("</tc>\n"));
 #else
-  if ((res==Passed)||(res==NotExe)) { 
+  if ((res==Passed)||(res==NotExe)) {
     PRINT(("%s\n", res));
   } else {
     PRINT(("\n"));
   }
-#endif 
+#endif
   FLUSH();
   return (__TRUE);
 }
@@ -153,7 +153,7 @@ BOOL tc_File_Close (void) {
  * Close test report
  *----------------------------------------------------------------------------*/
 BOOL tr_File_Close (void) {
-#if (PRINT_XML_REPORT==1) 
+#if (PRINT_XML_REPORT==1)
   PRINT(("</test_cases>\n"));
   PRINT(("<summary>\n"));
   PRINT(("<tcnt>%d</tcnt>\n", test_report.tests));
@@ -166,21 +166,21 @@ BOOL tr_File_Close (void) {
   PRINT(("</test>\n"));
   PRINT(("</report>\n"));
 #else
-  PRINT(("\nTest Summary: %d Tests, %d Executed, %d Passed, %d Failed, %d Warnings.\n", 
-         test_report.tests, 
-         test_report.executed, 
-         test_report.passed, 
-         test_report.failed, 
-         test_report.warnings)); 
+  PRINT(("\nTest Summary: %d Tests, %d Executed, %d Passed, %d Failed, %d Warnings.\n",
+         test_report.tests,
+         test_report.executed,
+         test_report.passed,
+         test_report.failed,
+         test_report.warnings));
   PRINT(("Test Result: %s\n", tr_Eval()));
-#endif 
+#endif
   FLUSH();
   return (__TRUE);
 }
 
 
 /*-----------------------------------------------------------------------------
- * Assertion result counter 
+ * Assertion result counter
  *----------------------------------------------------------------------------*/
 static BOOL As_File_Result (TC_RES res) {
   return (StatCount (res));
@@ -188,10 +188,10 @@ static BOOL As_File_Result (TC_RES res) {
 
 
 /*-----------------------------------------------------------------------------
- * Set debug information state 
+ * Set debug information state
  *----------------------------------------------------------------------------*/
-#if (PRINT_XML_REPORT==1) 
-static BOOL As_File_Dbgi (TC_RES __attribute__((unused)) res, const char *fn, uint32_t ln, char *desc) {  
+#if (PRINT_XML_REPORT==1)
+static BOOL As_File_Dbgi (TC_RES __attribute__((unused)) res, const char *fn, uint32_t ln, char *desc) {
   PRINT(("<detail>\n"));
   if (desc!=NULL) PRINT(("<desc>%s</desc>\n", desc));
   PRINT(("<module>%s</module>\n", fn));
@@ -203,7 +203,7 @@ static BOOL As_File_Dbgi (TC_RES res, const char *fn, uint32_t ln, char *desc) {
   if (res==WARNING){ PRINT((" [WARNING]")); }
   if (res==FAILED) { PRINT((" [FAILED]"));  }
   if (desc!=NULL)  { PRINT((" %s", desc));  }
-#endif 
+#endif
   return (__TRUE);
 }
 
@@ -302,10 +302,10 @@ static BOOL StatCount (TC_RES res) {
       CAS->failed++;
       TAS->failed++;
       break;
-    
+
     case NOT_EXECUTED:
       return (__FALSE);
-    
+
     default:
       break;
   }
@@ -317,10 +317,10 @@ static BOOL StatCount (TC_RES res) {
  * Set result
  *----------------------------------------------------------------------------*/
 TC_RES __set_result (const char *fn, uint32_t ln, TC_RES res, char* desc) {
-  
+
   // save assertion result
   switch (res) {
-    case PASSED:     
+    case PASSED:
       if (TAS->passed < BUFFER_ASSERTIONS) {
         test_report.assertions.info.passed[TAS->passed].module = fn;
         test_report.assertions.info.passed[TAS->passed].line = ln;
@@ -340,11 +340,11 @@ TC_RES __set_result (const char *fn, uint32_t ln, TC_RES res, char* desc) {
       break;
     case NOT_EXECUTED:
       break;
-    
+
     default:
       break;
-  }  
-  
+  }
+
   // set debug info (if the test case didn't pass)
   if (res != PASSED) { (void)tcitf.Dbgi (res, fn, ln, desc); }
   // set result
@@ -353,7 +353,7 @@ TC_RES __set_result (const char *fn, uint32_t ln, TC_RES res, char* desc) {
 }
 
 /*-----------------------------------------------------------------------------
- * Assert true 
+ * Assert true
  *----------------------------------------------------------------------------*/
 TC_RES __assert_true (const char *fn, uint32_t ln, uint32_t cond) {
   TC_RES res = FAILED;
