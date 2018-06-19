@@ -67,7 +67,8 @@
 #define EvtRtxThreadError                   EventID(EventLevelError,  EvtRtxThreadNo, 0x00U)
 #define EvtRtxThreadNew                     EventID(EventLevelAPI,    EvtRtxThreadNo, 0x01U)
 #define EvtRtxThreadNew_Detail              EventID(EventLevelDetail, EvtRtxThreadNo, 0x02U)
-#define EvtRtxThreadCreated                 EventID(EventLevelOp,     EvtRtxThreadNo, 0x03U)
+#define EvtRtxThreadCreated_Addr            EventID(EventLevelOp,     EvtRtxThreadNo, 0x03U)
+#define EvtRtxThreadCreated_Name            EventID(EventLevelOp,     EvtRtxThreadNo, 0x2CU)
 #define EvtRtxThreadGetName                 EventID(EventLevelAPI,    EvtRtxThreadNo, 0x04U)
 #define EvtRtxThreadGetId                   EventID(EventLevelAPI,    EvtRtxThreadNo, 0x06U)
 #define EvtRtxThreadGetState                EventID(EventLevelAPI,    EvtRtxThreadNo, 0x07U)
@@ -551,12 +552,17 @@ __WEAK void EvrRtxThreadNew (osThreadFunc_t func, void *argument, const osThread
 #endif
 
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_CREATED_DISABLE))
-__WEAK void EvrRtxThreadCreated (osThreadId_t thread_id, uint32_t thread_addr) {
+__WEAK void EvrRtxThreadCreated (osThreadId_t thread_id, uint32_t thread_addr, const char *name) {
 #if defined(RTE_Compiler_EventRecorder)
-  (void)EventRecord2(EvtRtxThreadCreated, (uint32_t)thread_id, thread_addr);
+  if (name != NULL) {
+    (void)EventRecord2(EvtRtxThreadCreated_Name, (uint32_t)thread_id, (uint32_t)name);
+  } else {
+    (void)EventRecord2(EvtRtxThreadCreated_Addr, (uint32_t)thread_id, thread_addr);
+  }
 #else
   (void)thread_id;
   (void)thread_addr;
+  (void)name;
 #endif
 }
 #endif

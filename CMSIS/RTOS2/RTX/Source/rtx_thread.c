@@ -816,7 +816,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
     // Register post ISR processing function
     osRtxInfo.post_process.thread = osRtxThreadPostProcess;
 
-    EvrRtxThreadCreated(thread, thread->thread_addr);
+    EvrRtxThreadCreated(thread, thread->thread_addr, thread->name);
   } else {
     EvrRtxThreadError(NULL, (int32_t)osErrorNoMemory);
   }

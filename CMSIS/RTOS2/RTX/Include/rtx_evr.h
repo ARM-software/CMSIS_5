@@ -408,11 +408,12 @@ extern void EvrRtxThreadNew (osThreadFunc_t func, void *argument, const osThread
   \brief  Event on successful thread create (Op)
   \param[in]  thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
   \param[in]  thread_addr   thread entry address.
+  \param[in]  name          pointer to thread object name.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_CREATED_DISABLE))
-extern void EvrRtxThreadCreated (osThreadId_t thread_id, uint32_t thread_addr);
+extern void EvrRtxThreadCreated (osThreadId_t thread_id, uint32_t thread_addr, const char *name);
 #else
-#define EvrRtxThreadCreated(thread_id, thread_addr)
+#define EvrRtxThreadCreated(thread_id, thread_addr, name)
 #endif
 
 /**

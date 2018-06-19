@@ -353,7 +353,7 @@ In case when \ref osThreadAttr_t "thread attributes" are provided in the API cal
 */
 
 /**
-\fn void EvrRtxThreadCreated (osThreadId_t thread_id, uint32_t thread_addr)
+\fn void EvrRtxThreadCreated (osThreadId_t thread_id, uint32_t thread_addr, const char *name)
 \details
 The event \b ThreadCreated is generated when the function \ref osThreadNew successfully creates a thread object.
 
