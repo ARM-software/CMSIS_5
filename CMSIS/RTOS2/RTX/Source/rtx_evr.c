@@ -1528,11 +1528,12 @@ __WEAK void EvrRtxSemaphoreAcquireTimeout (osSemaphoreId_t semaphore_id) {
 #endif
 
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_SEMAPHORE != 0) && !defined(EVR_RTX_SEMAPHORE_ACQUIRED_DISABLE))
-__WEAK void EvrRtxSemaphoreAcquired (osSemaphoreId_t semaphore_id) {
+__WEAK void EvrRtxSemaphoreAcquired (osSemaphoreId_t semaphore_id, uint32_t tokens) {
 #if defined(RTE_Compiler_EventRecorder)
-  (void)EventRecord2(EvtRtxSemaphoreAcquired, (uint32_t)semaphore_id, 0U);
+  (void)EventRecord2(EvtRtxSemaphoreAcquired, (uint32_t)semaphore_id, tokens);
 #else
   (void)semaphore_id;
+  (void)tokens;
 #endif
 }
 #endif
@@ -1558,11 +1559,12 @@ __WEAK void EvrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 #endif
 
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_SEMAPHORE != 0) && !defined(EVR_RTX_SEMAPHORE_RELEASED_DISABLE))
-__WEAK void EvrRtxSemaphoreReleased (osSemaphoreId_t semaphore_id) {
+__WEAK void EvrRtxSemaphoreReleased (osSemaphoreId_t semaphore_id, uint32_t tokens) {
 #if defined(RTE_Compiler_EventRecorder)
-  (void)EventRecord2(EvtRtxSemaphoreReleased, (uint32_t)semaphore_id, 0U);
+  (void)EventRecord2(EvtRtxSemaphoreReleased, (uint32_t)semaphore_id, tokens);
 #else
   (void)semaphore_id;
+  (void)tokens;
 #endif
 }
 #endif

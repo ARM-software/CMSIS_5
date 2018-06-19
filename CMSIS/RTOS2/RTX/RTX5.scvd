@@ -1619,10 +1619,10 @@
     <event id="0xF600 + 0x06" level="API"    property="SemaphoreAcquire"        value="semaphore_id=%x[val1], timeout=%d[val2]" info="osSemaphoreAcquire function was called."/>
     <event id="0xF600 + 0x07" level="Op"     property="SemaphoreAcquirePending" value="semaphore_id=%x[val1], timeout=%d[val2]" info="Semaphore object acquire is pending."/>
     <event id="0xF600 + 0x08" level="Op"     property="SemaphoreAcquireTimeout" value="semaphore_id=%x[val1]" info="Semaphore object acquire timed out."/>
-    <event id="0xF600 + 0x09" level="Op"     property="SemaphoreAcquired"       value="semaphore_id=%x[val1]" info="Semaphore object was acquired."/>
+    <event id="0xF600 + 0x09" level="Op"     property="SemaphoreAcquired"       value="semaphore_id=%x[val1], tokens=%d[val2]" info="Semaphore object was acquired."/>
     <event id="0xF600 + 0x0A" level="Op"     property="SemaphoreNotAcquired"    value="semaphore_id=%x[val1]" info="Semaphore object was not acquired."/>
     <event id="0xF600 + 0x0B" level="API"    property="SemaphoreRelease"        value="semaphore_id=%x[val1]" info="osSemaphoreRelease function was called."/>
-    <event id="0xF600 + 0x0C" level="Op"     property="SemaphoreReleased"       value="semaphore_id=%x[val1]" info="Semaphore object was released."/>
+    <event id="0xF600 + 0x0C" level="Op"     property="SemaphoreReleased"       value="semaphore_id=%x[val1], tokens=%d[val2]" info="Semaphore object was released."/>
     <event id="0xF600 + 0x0D" level="API"    property="SemaphoreGetCount"       value="semaphore_id=%x[val1], count=%d[val2]" info="osSemaphoreGetCount function was called and current number of available tokens was retrieved."/>
     <event id="0xF600 + 0x0E" level="API"    property="SemaphoreDelete"         value="semaphore_id=%x[val1]" info="osSemaphoreDelete function was called."/>
     <event id="0xF600 + 0x0F" level="Op"     property="SemaphoreDestroyed"      value="semaphore_id=%x[val1]" info="Semaphore object was deleted."/>

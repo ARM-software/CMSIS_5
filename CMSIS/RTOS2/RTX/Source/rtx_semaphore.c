@@ -117,7 +117,7 @@ static void osRtxSemaphorePostProcess (os_semaphore_t *semaphore) {
       // Wakeup waiting Thread with highest Priority
       thread = osRtxThreadListGet(osRtxObject(semaphore));
       osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
-      EvrRtxSemaphoreAcquired(semaphore);
+      EvrRtxSemaphoreAcquired(semaphore, semaphore->tokens);
     }
   }
 }
@@ -239,7 +239,7 @@ static osStatus_t svcRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t
 
   // Try to acquire token
   if (SemaphoreTokenDecrement(semaphore) != 0U) {
-    EvrRtxSemaphoreAcquired(semaphore);
+    EvrRtxSemaphoreAcquired(semaphore, semaphore->tokens);
     status = osOK;
   } else {
     // No token available
@@ -277,16 +277,16 @@ static osStatus_t svcRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
 
   // Check if Thread is waiting for a token
   if (semaphore->thread_list != NULL) {
-    EvrRtxSemaphoreReleased(semaphore);
+    EvrRtxSemaphoreReleased(semaphore, semaphore->tokens);
     // Wakeup waiting Thread with highest Priority
     thread = osRtxThreadListGet(osRtxObject(semaphore));
     osRtxThreadWaitExit(thread, (uint32_t)osOK, TRUE);
-    EvrRtxSemaphoreAcquired(semaphore);
+    EvrRtxSemaphoreAcquired(semaphore, semaphore->tokens);
     status = osOK;
   } else {
     // Try to release token
     if (SemaphoreTokenIncrement(semaphore) != 0U) {
-      EvrRtxSemaphoreReleased(semaphore);
+      EvrRtxSemaphoreReleased(semaphore, semaphore->tokens);
       status = osOK;
     } else {
       EvrRtxSemaphoreError(semaphore, osRtxErrorSemaphoreCountLimit);
@@ -385,7 +385,7 @@ osStatus_t isrRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeou
 
   // Try to acquire token
   if (SemaphoreTokenDecrement(semaphore) != 0U) {
-    EvrRtxSemaphoreAcquired(semaphore);
+    EvrRtxSemaphoreAcquired(semaphore, semaphore->tokens);
     status = osOK;
   } else {
     // No token available
@@ -414,7 +414,7 @@ osStatus_t isrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
   if (SemaphoreTokenIncrement(semaphore) != 0U) {
     // Register post ISR processing
     osRtxPostProcess(osRtxObject(semaphore));
-    EvrRtxSemaphoreReleased(semaphore);
+    EvrRtxSemaphoreReleased(semaphore, semaphore->tokens);
     status = osOK;
   } else {
     EvrRtxSemaphoreError(semaphore, osRtxErrorSemaphoreCountLimit);

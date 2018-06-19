@@ -1370,11 +1370,12 @@ extern void EvrRtxSemaphoreAcquireTimeout (osSemaphoreId_t semaphore_id);
 /**
   \brief  Event on successful semaphore acquire (Op)
   \param[in]  semaphore_id  semaphore ID obtained by \ref osSemaphoreNew.
+  \param[in]  tokens        number of available tokens.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_SEMAPHORE != 0) && !defined(EVR_RTX_SEMAPHORE_ACQUIRED_DISABLE))
-extern void EvrRtxSemaphoreAcquired (osSemaphoreId_t semaphore_id);
+extern void EvrRtxSemaphoreAcquired (osSemaphoreId_t semaphore_id, uint32_t tokens);
 #else
-#define EvrRtxSemaphoreAcquired(semaphore_id)
+#define EvrRtxSemaphoreAcquired(semaphore_id, tokens)
 #endif
 
 /**
@@ -1400,11 +1401,12 @@ extern void EvrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id);
 /**
   \brief  Event on successful semaphore release (Op)
   \param[in]  semaphore_id  semaphore ID obtained by \ref osSemaphoreNew.
+  \param[in]  tokens        number of available tokens.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_SEMAPHORE != 0) && !defined(EVR_RTX_SEMAPHORE_RELEASED_DISABLE))
-extern void EvrRtxSemaphoreReleased (osSemaphoreId_t semaphore_id);
+extern void EvrRtxSemaphoreReleased (osSemaphoreId_t semaphore_id, uint32_t tokens);
 #else
-#define EvrRtxSemaphoreReleased(semaphore_id)
+#define EvrRtxSemaphoreReleased(semaphore_id, tokens)
 #endif
 
 /**
