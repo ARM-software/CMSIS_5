@@ -16,7 +16,7 @@
                 <debug>1</debug>
                 <option>
                     <name>ExePath</name>
-                    <state>C:\Users\jonant01\git\CMSIS_5\CMSIS\CoreValidation\Tests\Cortex-M33\IAR\build\FVP</state>
+                    <state>{{rte.builddir()}}</state>
                 </option>
                 <option>
                     <name>ObjPath</name>

@@ -11,3 +11,4 @@ config:
 source:
  - ../../Source/CV_CoreFunc.c
  - ../../Source/CV_CoreInstr.c
+ - ../../Source/CV_CoreSimd.c

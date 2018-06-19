@@ -397,6 +397,11 @@
               <FilePath>..\..\..\Source\CV_CoreInstr.c</FilePath>
             </File>
             <File>
+              <FileName>CV_MPU_ARMv8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Source\CV_MPU_ARMv8.c</FilePath>
+            </File>
+            <File>
               <FileName>CV_Framework.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Source\CV_Framework.c</FilePath>
@@ -417,9 +422,9 @@
               <FilePath>.\CV_Config.h</FilePath>
             </File>
             <File>
-              <FileName>CV_MPU_ARMv8.c</FileName>
+              <FileName>CV_CoreSimd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Source\CV_MPU_ARMv8.c</FilePath>
+              <FilePath>..\..\..\Source\CV_CoreSimd.c</FilePath>
             </File>
           </Files>
         </Group>
