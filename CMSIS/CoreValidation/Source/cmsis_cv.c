@@ -41,6 +41,7 @@ static void TS_Init (void) {
  *----------------------------------------------------------------------------*/
 static TEST_CASE TC_LIST[] = {
 #if defined(RTE_CV_COREINSTR) && RTE_CV_COREINSTR
+  #if defined(__CORTEX_M)
     TCD ( TC_CoreInstr_NOP,                        TC_COREINSTR_NOP_EN                       ),
     TCD ( TC_CoreInstr_WFI,                        TC_COREINSTR_WFI_EN                       ),
     TCD ( TC_CoreInstr_WFE,                        TC_COREINSTR_WFE_EN                       ),
@@ -62,6 +63,19 @@ static TEST_CASE TC_LIST[] = {
     TCD ( TC_CoreInstr_LoadStoreUnpriv,            TC_COREINSTR_LOADSTOREUNPRIV_EN           ),
     TCD ( TC_CoreInstr_LoadStoreAcquire,           TC_COREINSTR_LOADSTOREACQUIRE_EN          ),
     TCD ( TC_CoreInstr_LoadStoreAcquireExclusive,  TC_COREINSTR_LOADSTOREACQUIREEXCLUSIVE_EN ),
+
+  #elif defined(__CORTEX_A)
+    TCD (TC_CoreInstr_NOP,                         TC_COREINSTR_NOP_EN                 ),
+    TCD (TC_CoreInstr_REV,                         TC_COREINSTR_REV_EN                 ),
+    TCD (TC_CoreInstr_REV16,                       TC_COREINSTR_REV16_EN               ),
+    TCD (TC_CoreInstr_REVSH,                       TC_COREINSTR_REVSH_EN               ),
+    TCD (TC_CoreInstr_ROR,                         TC_COREINSTR_ROR_EN                 ),
+    TCD (TC_CoreInstr_RBIT,                        TC_COREINSTR_RBIT_EN                ),
+    TCD (TC_CoreInstr_CLZ,                         TC_COREINSTR_CLZ_EN                 ),
+    TCD (TC_CoreInstr_SSAT,                        TC_COREINSTR_SSAT_EN                ),
+    TCD (TC_CoreInstr_USAT,                        TC_COREINSTR_USAT_EN                ),
+    TCD (TC_CoreInstr_LoadStoreExclusive,          TC_COREINSTR_EXCLUSIVES_EN          ),
+  #endif
 #endif /* RTE_CV_COREINSTR */
 
 #if defined (RTE_CV_CORESIMD) && RTE_CV_CORESIMD
