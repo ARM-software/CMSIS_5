@@ -438,7 +438,7 @@ static void TC_CoreInstr_LoadStoreExclusive_IRQEnable(void) {
   TST_IRQHandler = TC_CoreInstr_LoadStoreExclusive_IRQHandler;
   NVIC_EnableIRQ(WDT_IRQn);
 #elif defined(__CORTEX_A)
-  IRQ_SetHandler(SGI0_IRQn, TC_CoreInstr_ExclusivesIRQHandler);
+  IRQ_SetHandler(SGI0_IRQn, TC_CoreInstr_LoadStoreExclusive_IRQHandler);
   IRQ_Enable(SGI0_IRQn);
 #else
   #error __CORTEX_M or __CORTEX_A must be defined!
