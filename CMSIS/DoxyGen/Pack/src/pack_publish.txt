@@ -67,4 +67,21 @@ the web site (<a href="http://www.keil.com/dd2/pack">www.keil.com/dd2/pack</a>) 
 
 Please allow up to seven working days for the process. If the files contain any errors, you will be notified. Otherwise, the
 information is added to the index server.
+
+\section cp_PackRehosting Moving a pack from one URL to another
+
+Sometimes, it is necessary to rehost a pack. This implies that you need to change the \<url\> element in the PDSC file. To
+ensure that the pack is found by the indexer of the keil.com server, follow this procedure:
+- Create a new version of the pack: update the PDSC file with the new URL ("url_B") and make sure to increment the version
+- Place a copy of this latest PDSC at url_B and url_A (the original URL).
+- Place a copy of the new pack in url_B (only)
+- Copy all packs from url_A to url_B
+- Inform Arm about the new URL by either
+  - updating the <vendor>.pidx with url_B for this pack \em or
+  - sending a link to the PDSC file via email if your company does not maintain a <vendor>.pidx
+
+\note
+- PDSC and pack versions need to be accessible from the same new URL
+- You must keep url_A alive as is. But there is no need to maintain/update url_A going forward otherwise users with an old
+  PDSC file will no longer find the pack versions.
 */
