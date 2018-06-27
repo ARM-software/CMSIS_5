@@ -592,6 +592,24 @@
       </member>
     </typedef>
 
+    <typedef name="rtx_kernel_state" info="RTX5 kernel state" size="1">
+      <member name="id" type="uint8_t" offset="0" info="Kernel state">
+        <enum name="osKernelInactive"  value="0"  info="Inactive"/>
+        <enum name="osKernelReady"     value="1"  info="Ready"/>
+        <enum name="osKernelRunning"   value="2"  info="Running"/>
+        <enum name="osKernelLocked"    value="3"  info="Locked"/>
+        <enum name="osKernelSuspended" value="4"  info="Suspended"/>
+        <enum name="osKernelError"     value="5"  info="Error"/>
+      </member>
+    </typedef>
+
+    <typedef name="rtx_timer_type" info="RTX5 timer type" size="1">
+      <member name="id" type="uint8_t" offset="0" info="Timer Type">
+        <enum name="osTimerOnce"     value="0" info="One-shot timer"/>
+        <enum name="osTimerPeriodic" value="1" info="Periodic timer"/>
+      </member>
+    </typedef>
+
   </typedefs>
 
   <objects>
@@ -1500,7 +1518,7 @@
     <event id="0xF100 + 0x02" level="Op"     property="KernelInitialized"  tracking="Reset" value="" info="Kernel was initialized."/>
     <event id="0xF100 + 0x03" level="API"    property="KernelGetInfo"                       value="version=%x[val1], id_buf=%x[val2], id_size=%d[val3]" info="osKernelGetInfo function was called."/>
     <event id="0xF100 + 0x04" level="Op"     property="KernelInfoRetrieved"                 value="version_api=%d[val1/10000000].%d[(val1/10000)%1000].%d[val1%10000], version_kernel=%d[val2/10000000].%d[(val2/10000)%1000].%d[val2%10000], id_buf=%N[val3]" info="Kernel information was retrieved."/>
-    <event id="0xF100 + 0x06" level="API"    property="KernelGetState"                      value="state=%E[val1, osRtxInfo_t:kernel_state]" info="osKernelGetState function was called and state was retrieved."/>
+    <event id="0xF100 + 0x06" level="API"    property="KernelGetState"                      value="state=%E[val1, rtx_kernel_state:id]" info="osKernelGetState function was called and state was retrieved."/>
     <event id="0xF100 + 0x07" level="API"    property="KernelStart"                         value="" info="osKernelStart function was called."/>
     <event id="0xF100 + 0x08" level="Op"     property="KernelStarted"                       value="" info="Kernel execution was started."/>
     <event id="0xF100 + 0x09" level="API"    property="KernelLock"                          value="" info="osKernelLock function was called."/>
@@ -1565,7 +1583,7 @@
 
     <event id="0xF300 + 0x00" level="Error"  property="TimerError"     value="timer_id=%x[val1], status=%E[val2, rtx_t:status]" info="Timer error occurred."/>
     <event id="0xF300 + 0x01" level="Op"     property="TimerCallback"  value="func=%S[val1], argument=%x[val2]" info="Timer callback function was called."/>
-    <event id="0xF300 + 0x02" level="API"    property="TimerNew"       value="func=%S[val1], type=%E[val2, osRtxTimer_t:type], argument=%x[val3], attr=%x[val4]" info="osTimerNew function was called."/>
+    <event id="0xF300 + 0x02" level="API"    property="TimerNew"       value="func=%S[val1], type=%E[val2, rtx_timer_type:id], argument=%x[val3], attr=%x[val4]" info="osTimerNew function was called."/>
     <event id="0xF300 + 0x03" level="Detail" property="TimerNew"       value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size]" val1="osTimerAttr_t" info="Attributes structure for timer object."/>
     <event id="0xF300 + 0x04" level="Op"     property="TimerCreated"   value="timer_id=%x[val1]" info="Timer object was created."/>
     <event id="0xF300 + 0x05" level="API"    property="TimerGetName"   value="timer_id=%x[val1], name=%N[val2]" info="osTimerGetName function was called and object name was retrieved."/>
