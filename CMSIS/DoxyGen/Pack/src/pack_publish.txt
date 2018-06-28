@@ -77,8 +77,8 @@ ensure that the pack is found by the indexer of the keil.com server, follow this
 - Place a copy of the new pack in url_B (only)
 - Copy all packs from url_A to url_B
 - Inform Arm about the new URL by either
-  - updating the <vendor>.pidx with url_B for this pack \em or
-  - sending a link to the PDSC file via email if your company does not maintain a <vendor>.pidx
+  - updating the \<vendor\>.pidx with url_B for this pack \em or
+  - sending a link to the PDSC file via email if your company does not maintain a \<vendor\>.pidx
 
 \note
 - PDSC and pack versions need to be accessible from the same new URL
