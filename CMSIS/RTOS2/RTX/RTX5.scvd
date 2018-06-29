@@ -1500,7 +1500,11 @@
       </component>
       <component name="Timer Events"        brief="RTX Timer"     no="0xF3" prefix="EvrRtx" info="RTX5 RTOS Timer Events" />
       <component name="EventFlags Events"   brief="RTX EvFlags"   no="0xF4" prefix="EvrRtx" info="RTX5 RTOS EventFlags Events" />
-      <component name="Mutex Events"        brief="RTX Mutex"     no="0xF5" prefix="EvrRtx" info="RTX5 RTOS Mutex Events" />
+      <component name="Mutex Events"        brief="RTX Mutex"     no="0xF5" prefix="EvrRtx" info="RTX5 RTOS Mutex Events" >
+        <state name="Free"   plot="line" color="blue" bold="1" />
+        <state name="Used"   plot="box"  color="blue"           />
+        <state name="Error"  plot="box"  color="red"            />
+      </component>
       <component name="Semaphore Events"    brief="RTX Semaphore" no="0xF6" prefix="EvrRtx" info="RTX5 RTOS Semaphore Events" />
       <component name="MemoryPool Events"   brief="RTX MemPool"   no="0xF7" prefix="EvrRtx" info="RTX5 RTOS MemoryPool Events" />
       <component name="MessageQueue Events" brief="RTX MsgQueue"  no="0xF8" prefix="EvrRtx" info="RTX5 RTOS MessageQueue Events" />
@@ -1613,21 +1617,21 @@
     <event id="0xF400 + 0x10" level="API"    property="EventFlagsDelete"           value="ef_id=%x[val1]" info="osEventFlagsDelete function was called."/>
     <event id="0xF400 + 0x11" level="Op"     property="EventFlagsDestroyed"        value="ef_id=%x[val1]" info="Event flags object was deleted."/>
 
-    <event id="0xF500 + 0x00" level="Error"  property="MutexError"          value="mutex_id=%x[val1], status=%E[val2, rtx_t:status]" info="Mutex error occurred."/>
+    <event id="0xF500 + 0x00" level="Error"  property="MutexError"          state="Error" handle="val1" value="mutex_id=%x[val1], status=%E[val2, rtx_t:status]" info="Mutex error occurred."/>
     <event id="0xF500 + 0x01" level="API"    property="MutexNew"            value="attr=%x[val1]" info="osMutexNew function was called"/>
     <event id="0xF500 + 0x02" level="Detail" property="MutexNew"            value="name=%x[val1.name], attr_bits=%x[val1.attr_bits], cb_mem=%x[val1.cb_mem], cb_size=%d[val1.cb_size]" val1="osMutexAttr_t" info="Attributes structure for mutex object."/>
-    <event id="0xF500 + 0x03" level="Op"     property="MutexCreated"        value="mutex_id=%x[val1]" info="Mutex object was created"/>
+    <event id="0xF500 + 0x03" level="Op"     property="MutexCreated"        tracking="Start" state="Free" handle="val1" value="mutex_id=%x[val1]" info="Mutex object was created"/>
     <event id="0xF500 + 0x04" level="API"    property="MutexGetName"        value="mutex_id=%x[val1], name=%N[val2]" info="osMutexGetName function was called and object name was retrieved."/>
-    <event id="0xF500 + 0x06" level="API"    property="MutexAcquire"        value="mutex_id=%x[val1], timeout=%d[val2]" info="osMutexAcquire function was called."/>
+    <event id="0xF500 + 0x06" level="API"    property="MutexAcquire"        state="Used" handle="val1" value="mutex_id=%x[val1], timeout=%d[val2]" info="osMutexAcquire function was called."/>
     <event id="0xF500 + 0x07" level="Op"     property="MutexAcquirePending" value="mutex_id=%x[val1], timeout=%d[val2]" info="Mutex object acquire is pending."/>
     <event id="0xF500 + 0x08" level="Op"     property="MutexAcquireTimeout" value="mutex_id=%x[val1]" info="Mutex object acquire timed out."/>
     <event id="0xF500 + 0x09" level="Op"     property="MutexAcquired"       value="mutex_id=%x[val1], lock=%d[val2]" info="Mutex object was acquired."/>
     <event id="0xF500 + 0x0A" level="Op"     property="MutexNotAcquired"    value="mutex_id=%x[val1]" info="Mutex object was not acquired."/>
-    <event id="0xF500 + 0x0B" level="API"    property="MutexRelease"        value="mutex_id=%x[val1]" info="osMutexRelease function was called."/>
+    <event id="0xF500 + 0x0B" level="API"    property="MutexRelease"        state="Free" handle="val1" value="mutex_id=%x[val1]" info="osMutexRelease function was called."/>
     <event id="0xF500 + 0x0C" level="Op"     property="MutexReleased"       value="mutex_id=%x[val1], lock=%d[val2]" info="Mutex object was released."/>
     <event id="0xF500 + 0x0D" level="API"    property="MutexGetOwner"       value="mutex_id=%x[val1], thread_id=%x[val2]" info="osMutexGetOwner function was called and mutex owner thread was retrieved."/>
     <event id="0xF500 + 0x0E" level="API"    property="MutexDelete"         value="mutex_id=%x[val1]" info="osMutexDelete function was called."/>
-    <event id="0xF500 + 0x0F" level="Op"     property="MutexDestroyed"      value="mutex_id=%x[val1]" info="Mutex object was deleted."/>
+    <event id="0xF500 + 0x0F" level="Op"     property="MutexDestroyed"      tracking="Stop" state="Free" handle="val1" value="mutex_id=%x[val1]" info="Mutex object was deleted."/>
 
     <event id="0xF600 + 0x00" level="Error"  property="SemaphoreError"          value="semaphore_id=%x[val1], status=%E[val2, rtx_t:status]" info="Semaphore error occurred."/>
     <event id="0xF600 + 0x01" level="API"    property="SemaphoreNew"            value="max_count=%d[val1], initial_count=%d[val2], attr=%x[val3]" info="osSemaphoreNew function was called."/>
