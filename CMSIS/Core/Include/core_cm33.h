@@ -2,7 +2,7 @@
  * @file     core_cm33.h
  * @brief    CMSIS Cortex-M33 Core Peripheral Access Layer Header File
  * @version  V5.0.9
- * @date     22. June 2018
+ * @date     06. July 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -1608,8 +1608,8 @@ typedef struct
 #define MPU_RNR_REGION_Msk                 (0xFFUL /*<< MPU_RNR_REGION_Pos*/)             /*!< MPU RNR: REGION Mask */
 
 /* MPU Region Base Address Register Definitions */
-#define MPU_RBAR_BASE_Pos                   5U                                            /*!< MPU RBAR: ADDR Position */
-#define MPU_RBAR_BASE_Msk                  (0x7FFFFFFUL << MPU_RBAR_BASE_Pos)             /*!< MPU RBAR: ADDR Mask */
+#define MPU_RBAR_BASE_Pos                   5U                                            /*!< MPU RBAR: BASE Position */
+#define MPU_RBAR_BASE_Msk                  (0x7FFFFFFUL << MPU_RBAR_BASE_Pos)             /*!< MPU RBAR: BASE Mask */
 
 #define MPU_RBAR_SH_Pos                     3U                                            /*!< MPU RBAR: SH Position */
 #define MPU_RBAR_SH_Msk                    (0x3UL << MPU_RBAR_SH_Pos)                     /*!< MPU RBAR: SH Mask */
