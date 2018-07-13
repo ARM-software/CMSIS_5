@@ -111,7 +111,7 @@ see osMemoryPoolAttr_t::cb_mem and osMemoryPoolAttr_t::cb_size.
 Example:
 \code
 // Used-defined memory for memory pool control block
-static uint32_t timer_cb[osRtxMemoryPoolCbSize/4U];
+static uint32_t mempool_cb[osRtxMemoryPoolCbSize/4U];
 \endcode
 */
 
@@ -150,7 +150,7 @@ typedef struct {
 } object_t;
  
 // Used-defined memory for memory pool memory
-static uint32_t mempool_cb[osRtxMemoryPoolMemSize(OBJ_COUNT, sizeof(object_t))/4U];
+static uint32_t mempool_mem[osRtxMemoryPoolMemSize(OBJ_COUNT, sizeof(object_t))/4U];
 \endcode
 */
 
