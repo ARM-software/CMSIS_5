@@ -595,6 +595,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1206,6 +1211,11 @@
               <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1819,6 +1829,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2430,6 +2445,11 @@
               <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3043,6 +3063,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3654,6 +3679,11 @@
               <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
             </File>
           </Files>
         </Group>
