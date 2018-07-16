@@ -239,6 +239,10 @@ extern    "C"
 
     void      arm_relu_q15_ref(q15_t * data, uint16_t size);
 
+    void      arm_nn_mult_q7_ref(q7_t * pSrcA, q7_t * pSrcB, q7_t * pDst, const uint16_t out_shift, uint32_t blockSize);
+
+    void      arm_nn_mult_q15_ref(q15_t * pSrcA, q15_t * pSrcB, q15_t * pDst, const uint16_t out_shift, uint32_t blockSize);
+
 #ifdef __cplusplus
 }
 #endif
