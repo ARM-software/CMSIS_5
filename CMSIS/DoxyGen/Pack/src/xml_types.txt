@@ -1193,13 +1193,19 @@ debug access variables which are evaluated for the function call.
       A debugger fills the flash buffer before it executes a flash programming sequence.<br>
       <br>
       <b>Parameters:</b><br>
-      - addr: Target memory buffer or register interface address to write the flash buffer contents. Must be a multiple of the number of bytes as specified by access size in parameter \c mode.
-      - offs: Offset into the flash buffer to start writing from. Must be a multiple of the number of bytes as specified by access size in parameter \a mode.
-      - len : Number of bytes to write to the target. If <b>offs</b> + <b>len</b> exceeds the flash buffer length <b>__FlashLen</b>
-              then the remaining bytes are filled with the pattern as specified by attribute <b>filler</b> of the \ref element_flashblock "block" element. Must be a multiple of the number of bytes as specified by access size in parameter \a mode.
-      - mode: Target access mode. The following bit map applies:<br>
-        - Bit 0..8: Debug access size. One of \token{8}, \token{16}, \token{32} and \token{64}. The specified debug access size must be supported by the target debug access port.<br>
-        - Bit 0: Additionally, set this Bit to \token{1} to increment the target address after each debug write access of the specified size.
+      - addr: Target memory buffer or register interface address to write the flash buffer contents. Must be a multiple of
+	    the number of bytes as specified by access size in parameter \b mode.
+      - offs: Offset into the flash buffer to start writing from. Must be a multiple of the number of bytes as specified by
+	    access size in parameter \b mode.
+      - len : Number of bytes to write to the target. If <b>offs</b> + <b>len</b> exceeds the flash buffer length set in
+	    variable <b>__FlashLen</b>, then the remaining bytes are filled with the pattern as specified by attribute
+		<b>filler</b> of the \ref element_flashblock "block" element. Must be a multiple of the number of bytes as specified
+		by access size in parameter \b mode.
+      - mode: Target access mode. The following bit map applies:
+        - Bit 0..8: Debug access size. One of \token{8}, \token{16}, \token{32} and \token{64}. The specified debug access
+		  size must be supported by the target debug access port.
+        - Bit 0: Additionally, set this Bit to \token{1} to increment the target address after each debug write access of the
+		  specified size.
         - Bit 9..63: Reserved
 
       <b>Debug Access Variables:</b><br>
@@ -1264,7 +1270,7 @@ debug access variables which are evaluated for the function call.
       - pinout: Value for selected output pins.
       - pinselect: Selects which output pins will be modified.
       - pinwait: Wait timeout for the selected output to stabilize. A debugger must extend this timeout
-                 to the closest possible time granularity.
+        to the closest possible time granularity.
         - 0 = no wait
         - 1 .. 3000000 = time in microseconds (max 3s)
 
@@ -1330,15 +1336,15 @@ debug access variables which are evaluated for the function call.
       <b>Parameters:</b><br>
       - type: Query type. Can be one of:
         - \token{0} : <b>Query_Ok</b>, displays an informative message which has to be confirmed by the user. This
-              type allows the result <b>OK</b>.
+          type allows the result <b>OK</b>.
         - \token{1} : <b>Query_YesNo</b>, displays a query with the allowed results <b>Yes</b> and <b>No</b>.
         - \token{2} : <b>Query_YesNoCancel</b>, displays a query with the allowed results <b>Yes</b>, <b>No</b>,
-              and <b>Cancel</b>.
+          and <b>Cancel</b>.
         - \token{3} : <b>Query_OkCancel</b>, displays a query with the allowed results <b>OK</b> and <b>Cancel</b>.
       - message: A constant string with the query message to display. It must not be an expression and it must be
-                 enclosed by quotes.
+        enclosed by quotes.
       - default: The default value to return if the debugger runs in batch mode. See <b>Return Values</b>
-                 for a list of allowed values.
+        for a list of allowed values.
       
       <b>Return Value:</b><br>
       The result of the query. The user input maps to the following numbers:
@@ -1360,7 +1366,7 @@ debug access variables which are evaluated for the function call.
       <br>
       <b>Parameters:</b><br>
       - message: A constant string with the query message to display. It must not be an expression and it must be
-                 enclosed by quotes.
+        enclosed by quotes.
       - default: The default value to return if the user cancels the query or if the debugger runs in batch mode.
 
       <b>Return Value:</b><br>
@@ -1427,9 +1433,8 @@ debug access variables which are evaluated for the function call.
       Loads DWARF debug information from an application executable.<br>
       <br>
       <b>Parameters:</b><br>
-      - file: A constant string with the path to the executable. The path must be relative to the
-              root folder of the pack and use the format <b>path/name.extension</b>. It must not be 
-              an expression and it must be enclosed by quotes.
+      - file: A constant string with the path to the executable. The path must be relative to the root folder of the pack and
+	    use the format <b>path/name.extension</b>. It must not be an expression and it must be enclosed by quotes.
               
       <b>Return Value:</b><br>
       Returns \token{0} after successful debug information load.<br>
@@ -1443,14 +1448,16 @@ debug access variables which are evaluated for the function call.
   <tr>
     <td style="white-space: nowrap"><pre>BufferSet (buffID, buffOffset, count, size, value)</pre></td>
     <td>
-        Fill a buffer with a specific value pattern. A new buffer of required size is created if it does not exist. An existing buffer is extended to required size, if it is smaller than required size.<br>
+        Fill a buffer with a specific value pattern. A new buffer of required size is created if it does not exist. An
+		existing buffer is extended if it is too small.<br>
         <br>
         <b>Parameters:</b><br>
         - buffID: Numeric buffer ID. Must be a constant number.
-        - buffOffset: First byte in the buffer to start writing the specified value pattern. Must be a multiple of "size".
-        - count: Number of 'size' items to write with the specified value pattern.
+        - buffOffset: First byte in the buffer to start writing the specified \b value pattern. Must be a multiple of \b size.
+        - count: Number of \b size items to write with the specified \b value pattern.
         - size: Size of a single item to set. Must be in the range of 1 - 8.
-        - value: Value pattern to set. The "size" least significant bytes of "value" are used as value pattern for writing the buffer.
+        - value: Value pattern to set. The \b size least significant bytes of \b value are used as value pattern for writing
+		  the buffer.
         
         <b>Return Value:</b><br>
         Number of written bytes (written bytes * access size).
@@ -1464,7 +1471,7 @@ debug access variables which are evaluated for the function call.
         <br>
         <b>Parameters:</b><br>
         - buffID: Numeric buffer ID. Must be a constant number. Function fails if buffer does not exist.
-        - buffOffset: Buffer offset in bytes to get the data item from. Must be a multiple of "size".
+        - buffOffset: Buffer offset in bytes to get the data item from. Must be a multiple of \b size.
         - size: Size of a single item to get. Must be in the range of 1 - 8.
 
         <b>Return Value:</b><br>
@@ -1486,21 +1493,26 @@ debug access variables which are evaluated for the function call.
   <tr>
     <td style="white-space: nowrap"><pre>BufferRead (buffID, buffOffset, addr, length, mode)</pre></td>
     <td>
-        Read data from target and store in buffer. A new buffer of required size is created if it does not exist. An existing buffer is extended if it is too small.<br>
+        Read data from target and store in buffer. A new buffer of required size is created if it does not exist. An existing
+		buffer is extended if it is too small.<br>
         <br>
         <b>Parameters:</b><br>
         - buffID: Numeric buffer ID. Must be a constant number.
-        - buffOffset: First byte in the buffer to store the read data. Must be a multiple of the number of bytes as specified by access size in "mode".
-        - addr: Target address to start reading from. Must be a multiple of the number of bytes as specified by access size in "mode".
-        - length: Number of bytes to read from target. Must be a multiple of the number of bytes as specified by access size in "mode".
-        - mode: The target access mode.<br>
-                Bit 0..8: Debug access size. One of 8, 16, 32 and 64.<br>
-                Specified debug access size must be supported by the target hardware. For example a DP register access must always be 32-Bit.<br>
-                Bit 0: Additionally set this Bit to 1 to increment the target address after each debug read access of the specified size.<br>
-                Bit 9..63: Reserved
+        - buffOffset: First byte in the buffer to store the read data. Must be a multiple of the number of bytes as specified
+		  by access size in \b mode.
+        - addr: Target address to start reading from. Must be a multiple of the number of bytes as specified by access size
+		  in \b mode.
+        - length: Number of bytes to read from target. Must be a multiple of the number of bytes as specified by access size
+		  in \b mode.
+        - mode: The target access mode.
+          - Bit 0..8: Debug access size. One of 8, 16, 32 and 64. Specified debug access size must be supported by the target
+		    hardware. For example a DP register access must always be 32-Bit.
+          - Bit 0: Additionally set this Bit to 1 to increment the target address after each debug read access of the
+		    specified size.
+          - Bit 9..63: Reserved
                 
         <b>Return Value:</b><br>
-        Always \token{0}. Function causes fatal error if not successful (aligned with FlashWriteBuffer).
+        Always \token{0}. Function causes fatal error if not successful.
 
         <b>Code Example:</b><br>
         Refer to \ref exttoolexample "Calculating a hash sum"
@@ -1513,17 +1525,22 @@ debug access variables which are evaluated for the function call.
         <br>
         <b>Parameters:</b><br>
         - buffID: Numeric buffer ID. Must be a constant number. Function fails if buffer does not exist.
-        - buffOffset: First byte in the buffer to transfer into target. Must be a multiple of the number of bytes as specified by access size in "mode".
-        - addr: Target address to start writing to. Must be a multiple of the number of bytes as specified by access size in "mode".
-        - length: Number of bytes to write to the target. Must be a multiple of the number of bytes as specified by access size in "mode". If size of valid buffer data is less than (buffOffset + length) then the function ends early and returns the number of actually written bytes.
-        - mode: The target access mode.<br>
-                Bit 0..8: Debug access size. One of 8, 16, 32 and 64.<br>
-                Specified debug access size must be supported by the target hardware. For example a DP register access must always be 32-Bit.<br>
-                Bit 0: Additionally set this Bit to 1 to increment the target address after each debug write access of the specified size.<br>
-                Bit 9..63: Reserved
+        - buffOffset: First byte in the buffer to transfer into target. Must be a multiple of the number of bytes as
+		  specified by access size in \b mode.
+        - addr: Target address to start writing to. Must be a multiple of the number of bytes as specified by access size in
+		  \b mode.
+        - length: Number of bytes to write to the target. Must be a multiple of the number of bytes as specified by access
+		  size in \b mode. If size of valid buffer data is less than (\b buffOffset + \b length) then the function ends early
+		  and returns the number of actually written bytes.
+        - mode: The target access mode.
+          - Bit 0..8: Debug access size. One of 8, 16, 32 and 64. Specified debug access size must be supported by the target
+		    hardware. For example a DP register access must always be 32-Bit.
+          - Bit 0: Additionally set this Bit to \token{1} to increment the target address after each debug write access of
+		    the specified size.
+          - Bit 9..63: Reserved
                 
         <b>Return Value:</b><br>
-        Always \token{0}. Function causes fatal error if not successful (aligned with FlashWriteBuffer).
+        Always \token{0}. Function causes fatal error if not successful.
 
         <b>Code Example:</b><br>
         Refer to \ref exttoolexample "Calculating a hash sum"
@@ -1532,20 +1549,26 @@ debug access variables which are evaluated for the function call.
   <tr>
     <td style="white-space: nowrap"><pre>BufferStreamIn (buffID, buffOffset, length, path, mode, timeout)</pre></td>
     <td>
-        Stream data from an external source, e.g. a file, into a buffer. A new buffer of required size is created if it does not exist. An existing buffer is extended if it is too small.<br>
+        Stream data from an external source, e.g. a file, into a buffer. A new buffer of required size is created if it does
+		not exist. An existing buffer is extended if it is too small.<br>
         <br>
         <b>Parameters:</b><br>
         - buffID: Numeric buffer ID. Must be a constant number.
         - buffOffset: First byte in the buffer to store the received data.
-        - length: Maximum number of bytes to stream in. Use value 0xFFFFFFFFFFFFFFFF to for example read a complete file of unknown size.
-        - path: Constant string value representing the source from which to stream data in. Refer to \ref charactersequence "character sequences" for path/file name place holders.
-        - mode: Specifies how to in which mode to treat the data source.<br>
-            Bit 0..3: Format of the data source: 0 - Binary File, Others - Reserved<br>
-            Bit 4..7: Options for communication with data source: Reserved<br>
-        - timeout: Timeout in microseconds. If 0 then wait for the operation to finish (synchronous).
+        - length: Maximum number of bytes to stream in. Use value 0xFFFFFFFFFFFFFFFF to for example read a complete file of
+		  unknown size.
+        - path: Constant string value representing the source from which to stream data in. Refer to
+		  \ref charactersequence "character sequences" for path/file name place holders.
+        - mode: Specifies how to treat the data source in the specified mode.
+          - Bit 0..3: Format of the data source:<br>
+		    \token{0} - Binary File<br>
+			Others - Reserved<br>
+          - Bit 4..7: Communication options for data source:<br>
+		    Reserved
+        - timeout: Timeout in microseconds. If \token{0}, then synchronously wait for the operation to finish.
         
         <b>Return Value:</b><br>
-        Bytes streamed into buffer. Can be less than "length" if the data source signals its end.
+        Number of bytes streamed into buffer. Can be less than \b length if the data source signals its end.
 
         <b>Code Example:</b><br>
         Refer to \ref exttoolexample "Calculating a hash sum"
@@ -1560,14 +1583,20 @@ debug access variables which are evaluated for the function call.
         - buffID: Numeric buffer ID. Must be a constant number. Function fails if buffer does not exist.
         - buffOffset: First byte in the buffer to transfer to the external data sink.
         - length: Maximum number of bytes to stream out.
-        - path: Constant string value representing the destination to which to stream data to. Refer to \ref charactersequence "character sequences" for path/file name place holders.
-        - mode: Specifies how to in which mode to treat the data source.<br>
-            Bit 0..3: Format of the data source: 0 - Binary File, Others - Reserved<br>
-            Bit 4..7: Options for communication with data source: 0 - Overwrite, 1 - Append, Others - Reserved<br>
-        - timeout: Timeout in microseconds. If 0 then wait for the operation to finish (synchronous).
+        - path: Constant string value representing the destination to which to stream data to. Refer to
+		  \ref charactersequence "character sequences" for path/file name place holders.
+        - mode: Specifies how to treat the data source in the specified mode.
+          - Bit 0..3: Format of the data source:<br>
+		    \token{0} - Binary File<br>
+			Others - Reserved<br>
+          - Bit 4..7: Communication options for data sink:<br>
+		    \token{0} - Overwrite<br>
+			\token{1} - Append<br>
+			Others - Reserved<br>
+        - timeout: Timeout in microseconds. If \token{0}, then synchronously wait for the operation to finish.
         
         <b>Return Value:</b><br>
-        Bytes streamed to data sink.
+        Number of bytes streamed to data sink.
 
         <b>Code Example:</b><br>
         Refer to \ref exttoolexample "Calculating a hash sum"
@@ -1579,9 +1608,13 @@ debug access variables which are evaluated for the function call.
         Run an external application.<br>
         <br>
         <b>Parameters:</b><br>
-        - appPath: Constant string representing the application path. Refer to \ref charactersequence "character sequences" for path/file name place holders.
-        - arguments: A constant string with arguments to pass to the command line. Same placeholder character sequences apply as for "appPath".
-        - workDirectory: A constant string with the work directory for the command line tool. An empty string means that the work directory is the current project folder. Same placeholder character sequences apply as for "appPath".
+        - appPath: Constant string representing the application path. Refer to \ref charactersequence "character sequences"
+		  for path/file name place holders.
+        - arguments: Constant string with arguments to pass to the command line. Same placeholder
+		  \ref charactersequence "character sequences" apply as for \b appPath.
+        - workDirectory: A constant string with the work directory for the command line tool. An empty string means that the
+		  work directory is the current project folder. Same placeholder \ref charactersequence "character sequences" apply
+		  as for \b appPath.
         - timeout: Timeout in microseconds
         
         <b>Return Value:</b><br>
@@ -1594,17 +1627,21 @@ debug access variables which are evaluated for the function call.
   <tr>
     <td style="white-space: nowrap"><pre>FilePathExists(path, timeout)</pre></td>
     <td>
-        Check if a path exists. If timeout is other than 0 then check the path until it becomes valid or until the timeout has elapsed.<br>
+        Check if a path exists. If timeout is other than \token{0} then check the path until it becomes valid or until the
+		timeout has elapsed.<br>
         <br>
         <b>Parameters:</b><br>
-        - path: Constant string with the path to check. Refer to \ref charactersequence "character sequences" for path/file name place holders.
-        - timeout: Timeout in microseconds.<br>
-        If \token{0}, then the path is checked and the function immediately returns.<br>
-        If other than \token{0}, then unsuccessful path checks repeat until timeout is exceeded.<br>
-        If timeout is hit while executing a check and that check ends successfully, then the function returns success.
+        - path: Constant string with the path to check. Refer to \ref charactersequence "character sequences" for path/file
+		  name place holders.
+        - timeout: Timeout in microseconds:<br>
+          If \token{0}, then the path is checked and the function immediately returns.<br>
+		  If other than \token{0}, check the path until it is valid or until the function times out. If \b timeout is hit
+		  while executing a check and that check ends successfully, then the function returns success.<br>
         
         <b>Return Value:</b><br>
-        \token{0} - Path exists, \token{1} - Path not found, other - reserved for future error codes.
+        \token{0} - Path exists<br>
+		\token{1} - Path not found<br>
+		Others - Reserved<br>
 
         <b>Code Example:</b><br>
         Refer to \ref exttoolexample "Calculating a hash sum"
@@ -1613,25 +1650,23 @@ debug access variables which are evaluated for the function call.
 </table>
 
 \note
-- Target memory access functions must perform a debug access of the size indicated by their name.
-  The target system must support debug accesses of this size.
+- Target memory access functions must perform a debug access of the size indicated by their name. The target system must
+  support debug accesses of this size.
 - Results of all functions are casted to 64-bit unsigned integer values.
-- Some target access functions determine the used debug and access port by the current values of
-  the <b>__dp</b> and <b>__ap</b> debug access variables. If a target access requires a different
-  debug or access port than the default ones, it must change these values. This change is held
-  until finishing the sequence the change has occurred in.
+- Some target access functions determine the used debug and access port by the current values of the <b>__dp</b> and
+  <b>__ap</b> debug access variables. If a target access requires a different debug or access port than the default ones, it
+  must change these values. This change is held until finishing the sequence the change has occurred in.
   
 \subsection DebugVars Debug access variables
 
-Debug access variables hold 64-bit unsigned integer values and are used in debug access
-sequences to query debugger settings and states. They are <b>read-only</b> within a
-sequence except from a limited set of the \ref PredefinedDebugVars "pre-defined debug access variables".
-Use the <b>debugvars</b> element to specify additional user-defined debug access variables.
+Debug access variables hold 64-bit unsigned integer values and are used in debug access sequences to query debugger settings
+and states. They are <b>read-only</b> within a sequence except from a limited set of the
+\ref PredefinedDebugVars "pre-defined debug access variables". Use the <b>debugvars</b> element to specify additional
+user-defined debug access variables.
 
 
 \anchor PredefinedDebugVars <b>Table: Pre-defined Debug Access Variables</b><br>
-A debugger needs to support a set of pre-defined debug access variables. These are
-described in the following table.
+A debugger needs to support a set of pre-defined debug access variables. These are described in the following table.
 
 <table class="cmtable" summary="ExpressionType: Pre-defined Debug Access Variables">
   <tr>
@@ -1749,7 +1784,7 @@ described in the following table.
       The following values apply:<br>
       - 0: Success
       - (-1): Error
-      All other values are reserved.
+	  - Other - reserved.
     </td>
   </tr>
   <tr>
@@ -1765,7 +1800,7 @@ described in the following table.
       - 1: Erase full chip
       - 2: Erase flash sector
       - 3: Program flash
-      All other values are reserved.
+      - Other - reserved.
     </td>
   </tr>
   <tr>
@@ -1807,26 +1842,23 @@ described in the following table.
 Some functionality cannot be implemented by debug sequences, for example checksum/hash calculations or debug authentication.
 It is supposed to be provided or implemented by external tools or applications. To communicate with external tools, debug
 sequences currently provide input/output files. To create these files, buffers are used (see below). To run an external
-application, use the \c RunApplication function. To check the availability of an external resource (for example file or web
-site), use the \c FilePathExists function.
+application, use the \c RunApplication function. To check the availability of an external resource (for example a file), use
+the \c FilePathExists function.
 
 \b Buffer \b handling
 
-Buffers are hidden inside the sequence engine. They can only be accessed only via the following functions:
+Buffers are hidden inside the sequence engine. They can be accessed only via the following functions:
 - For direct buffer access (for example for initialization or "memset" operations): \c BufferSet, \c BufferGet, and
   \c BufferSize.
 - For interaction with the target's memory: \c BufferRead and \c BufferWrite.
 - For external interaction via file stream: \c BufferStreamIn and \c BufferStreamOut.
-
 - Buffer sizes are adjusted as per operations. They cannot get smaller during a sequence execution, only larger.
 - Buffers can internally have a size of '0', causing an error if calling BufferWrite/BufferStreamOut without having
   previously filled the buffer.
 - Newly allocated buffer space is filled with 0's, e.g. for an initial call to BufferRead with a buffer offset.
-- Buffers are only valid within a single sequence. When calling another sequence ("ChildSequence") from a sequence:
-  - the "ChildSequence" does not see buffers from the caller level.
-  - a buffer in the "ChildSequence" using the same ID as a buffer in the caller sequence is a new and empty buffer.
-  - a buffer in the caller sequence with the same ID as a buffer in "ChildSequence" is untouched by buffer operations in the
-    "ChildSequence".
+- Buffers are only valid within the sequence creating them. When calling for example a "ChildSequence", it does not see
+  buffers from the caller (even when using the same buffer ID). All buffer operations are only valid for buffers of the
+  "ChildSequence".  
 	
 \anchor charactersequence \b Character \b sequences
 
@@ -1835,10 +1867,10 @@ to be exchanged. The following character sequences can be used as placeholders:
 
 - \c $P: Software project path including trailing slash
 - \c \#P: Software project path + project name, e.g. /project_path/project_name
-- \c $L: Path to the location of the main output file of a software project including trailing slash
+- \c $L: Folder path of the main output file of a software project including trailing slash
 - \c \%L: Full path to the main output file of a software project including file ending
 - \c $S: Path to the device support pack including trailing slash
-- \c $D: Selected device name
+- \c $D: Name of the selected device
 
 \note
 Characters '$', '#', and '\%' must be duplicated to escape them, i.e. if a path contains the '$' character it must be written
@@ -1854,27 +1886,28 @@ The following code example shows how to call an external tool to calculate a has
   __var exitCode   = 0;
   __var fileExists = 0;
   
-  length     = BufferRead     (0, 0, 0x0080C000, 0xDC, (32|1));   // Implicit allocation of buffer 0
-  length     = BufferStreamOut(0, 0, length, "SAML11_SHA256_BOCOR_input.bin", 0, 0);
-  exitCode   = RunApplication ("./Tools/CalcSHA256.exe", "SAML11_SHA256_BOCOR_input.bin --some-SHA256-parameters --out SAML11_SHA256_BOCOR_output.bin", "", 10000000);  // Timeout is 10 seconds
+  BufferRead     (0, 0, 0x0080C000, 0xE0, (32|1));   // Implicit allocation of buffer 0
+  BufferStreamOut(0, 0, 0xE0, "$P/SAML11_SHA256_BOCOR_input.bin", 0, 0);
+  exitCode   = RunApplication ("$S/Tools/CalcSHA256.exe", "$P/SAML11_SHA256_BOCOR_input.bin --some-SHA256-parameters --out $P/SAML11_SHA256_BOCOR_output.bin", "$P", 10000000);  // Timeout is 10 seconds
 </block>
- 
+
 <control if="exitCode == 0" info="0 means OK">
   <block>
-    fileExists = (FilePathExists("SAML11_SHA256_BOCOR_output.bin", 5000000) == 0);
+    fileExists = (FilePathExists("$P/SAML11_SHA256_BOCOR_output.bin", 5000000) == 0);
   </block>
   <control if="fileExists">
     <block>
-      length = BufferStreamIn(0, 0, -1, "SAML11_SHA256_BOCOR_output.bin", 0, 10000000);  // Timeout 10s
-      length = BufferWrite   (0, 0, 0x0080C0E0, 32, (32|1));
+      BufferStreamIn(0, 0xE0, 0x20, "$P/SAML11_SHA256_BOCOR_output.bin", 0, 10000000);  // Append to buffer, timeout 10s
+      BufferWrite   (0, 0, 0x0080C000, 0x100, (32|1));
     </block>
   </control>
 </control>
- 
+
 <control if="(exitCode != 0) || (fileExists == 0)">
   <block>
     Message(2, "Error while creating hashsum. Aborting sequence.");
   </block>
 </control>
+
 \endcode
 */
