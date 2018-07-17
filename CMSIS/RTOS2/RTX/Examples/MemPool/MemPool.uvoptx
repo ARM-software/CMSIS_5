@@ -125,7 +125,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>EVENTREC_CNF</Key>
-          <Name>-l0 -a1 -s0 </Name>
+          <Name>-l0 -a1 -s0 -f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -165,13 +165,13 @@
       </TargetDriverDllRegistry>
       <Breakpoint/>
       <ScvdPack>
-        <Filename>C:\ARM\PACK\ARM\CMSIS\5.3.1-dev4\CMSIS\RTOS2\RTX\RTX5.scvd</Filename>
-        <Type>ARM.CMSIS.5.3.1-dev4</Type>
+        <Filename>C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.1-dev7\CMSIS\RTOS2\RTX\RTX5.scvd</Filename>
+        <Type>ARM.CMSIS.5.3.1-dev7</Type>
         <SubType>1</SubType>
       </ScvdPack>
       <ScvdPack>
-        <Filename>C:\ARM\PACK\Keil\ARM_Compiler\1.5.0-dev0\EventRecorder.scvd</Filename>
-        <Type>Keil.ARM_Compiler.1.5.0-dev0</Type>
+        <Filename>C:\Keil_v5\ARM\PACK\Keil\ARM_Compiler\1.4.0\EventRecorder.scvd</Filename>
+        <Type>Keil.ARM_Compiler.1.4.0</Type>
         <SubType>1</SubType>
       </ScvdPack>
       <Tracepoint>
