@@ -1,12 +1,12 @@
 ;/**************************************************************************//**
 ; * @file     startup_ARMSC300.s
 ; * @brief    CMSIS Core Device Startup File for
-; *           for ARMSC300 Device Series
-; * @version  V5.00
-; * @date     08. March 2016
+; *           ARMSC300 Device
+; * @version  V5.3.1
+; * @date     09. July 2018
 ; ******************************************************************************/
 ;/*
-; * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+; * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *
@@ -39,254 +39,117 @@
 ; Cortex-M version
 ;
 
-        MODULE  ?cstartup
+                MODULE   ?cstartup
 
-        ;; Forward declaration of sections.
-        SECTION CSTACK:DATA:NOROOT(3)
+                ;; Forward declaration of sections.
+                SECTION  CSTACK:DATA:NOROOT(3)
 
-        SECTION .intvec:CODE:NOROOT(2)
+                SECTION  .intvec:CODE:NOROOT(2)
 
-        EXTERN  __iar_program_start
-        EXTERN  SystemInit
-        PUBLIC  __vector_table
-        PUBLIC  __vector_table_0x1c
-        PUBLIC  __Vectors
-        PUBLIC  __Vectors_End
-        PUBLIC  __Vectors_Size
+                EXTERN   __iar_program_start
+                EXTERN   SystemInit
+                PUBLIC   __vector_table
+                PUBLIC   __vector_table_0x1c
+                PUBLIC   __Vectors
+                PUBLIC   __Vectors_End
+                PUBLIC   __Vectors_Size
 
-        DATA
+                DATA
 
 __vector_table
-        DCD     sfe(CSTACK)
-        DCD     Reset_Handler
-
-        DCD     NMI_Handler
-        DCD     HardFault_Handler
-        DCD     MemManage_Handler
-        DCD     BusFault_Handler
-        DCD     UsageFault_Handler
+                DCD      sfe(CSTACK)                         ;     Top of Stack
+                DCD      Reset_Handler                       ;     Reset Handler
+                DCD      NMI_Handler                         ; -14 NMI Handler
+                DCD      HardFault_Handler                   ; -13 Hard Fault Handler
+                DCD      MemManage_Handler                   ; -12 MPU Fault Handler
+                DCD      BusFault_Handler                    ; -11 Bus Fault Handler
+                DCD      UsageFault_Handler                  ; -10 Usage Fault Handler
 __vector_table_0x1c
-        DCD     0
-        DCD     0
-        DCD     0
-        DCD     0
-        DCD     SVC_Handler
-        DCD     DebugMon_Handler
-        DCD     0
-        DCD     PendSV_Handler
-        DCD     SysTick_Handler
+                DCD      0                                   ;     Reserved
+                DCD      0                                   ;     Reserved
+                DCD      0                                   ;     Reserved
+                DCD      0                                   ;     Reserved
+                DCD      SVC_Handler                         ;  -5 SVCall Handler
+                DCD      DebugMon_Handler                    ;  -4 Debug Monitor Handler
+                DCD      0                                   ;     Reserved
+                DCD      PendSV_Handler                      ;  -2 PendSV Handler
+                DCD      SysTick_Handler                     ;  -1 SysTick Handler
 
-        ; External Interrupts
-        DCD     WDT_IRQHandler            ;  0:  Watchdog Timer
-        DCD     RTC_IRQHandler            ;  1:  Real Time Clock
-        DCD     TIM0_IRQHandler           ;  2:  Timer0 / Timer1
-        DCD     TIM2_IRQHandler           ;  3:  Timer2 / Timer3
-        DCD     MCIA_IRQHandler           ;  4:  MCIa
-        DCD     MCIB_IRQHandler           ;  5:  MCIb
-        DCD     UART0_IRQHandler          ;  6:  UART0 - DUT FPGA
-        DCD     UART1_IRQHandler          ;  7:  UART1 - DUT FPGA
-        DCD     UART2_IRQHandler          ;  8:  UART2 - DUT FPGA
-        DCD     UART4_IRQHandler          ;  9:  UART4 - not connected
-        DCD     AACI_IRQHandler           ; 10: AACI / AC97
-        DCD     CLCD_IRQHandler           ; 11: CLCD Combined Interrupt
-        DCD     ENET_IRQHandler           ; 12: Ethernet
-        DCD     USBDC_IRQHandler          ; 13: USB Device
-        DCD     USBHC_IRQHandler          ; 14: USB Host Controller
-        DCD     CHLCD_IRQHandler          ; 15: Character LCD
-        DCD     FLEXRAY_IRQHandler        ; 16: Flexray
-        DCD     CAN_IRQHandler            ; 17: CAN
-        DCD     LIN_IRQHandler            ; 18: LIN
-        DCD     I2C_IRQHandler            ; 19: I2C ADC/DAC
-        DCD     0                         ; 20: Reserved
-        DCD     0                         ; 21: Reserved
-        DCD     0                         ; 22: Reserved
-        DCD     0                         ; 23: Reserved
-        DCD     0                         ; 24: Reserved
-        DCD     0                         ; 25: Reserved
-        DCD     0                         ; 26: Reserved
-        DCD     0                         ; 27: Reserved
-        DCD     CPU_CLCD_IRQHandler       ; 28: Reserved - CPU FPGA CLCD
-        DCD     0                         ; 29: Reserved - CPU FPGA
-        DCD     UART3_IRQHandler          ; 30: UART3    - CPU FPGA
-        DCD     SPI_IRQHandler            ; 31: SPI Touchscreen - CPU FPGA
+                ; Interrupts
+                DCD      Interrupt0_Handler                  ;   0 Interrupt 0
+                DCD      Interrupt1_Handler                  ;   1 Interrupt 1
+                DCD      Interrupt2_Handler                  ;   2 Interrupt 2
+                DCD      Interrupt3_Handler                  ;   3 Interrupt 3
+                DCD      Interrupt4_Handler                  ;   4 Interrupt 4
+                DCD      Interrupt5_Handler                  ;   5 Interrupt 5
+                DCD      Interrupt6_Handler                  ;   6 Interrupt 6
+                DCD      Interrupt7_Handler                  ;   7 Interrupt 7
+                DCD      Interrupt8_Handler                  ;   8 Interrupt 8
+                DCD      Interrupt9_Handler                  ;   9 Interrupt 9
+
+                DS32    (214)                                ; Interrupts 10 .. 224 are left out
 __Vectors_End
 
-__Vectors       EQU   __vector_table
-__Vectors_Size  EQU   __Vectors_End - __Vectors
+__Vectors       EQU      __vector_table
+__Vectors_Size  EQU      __Vectors_End - __Vectors
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Default interrupt handlers.
-;;
-        THUMB
+                THUMB
 
-        PUBWEAK Reset_Handler
-        SECTION .text:CODE:REORDER:NOROOT(2)
+; Reset Handler
+
+                PUBWEAK  Reset_Handler
+                SECTION  .text:CODE:REORDER:NOROOT(2)
 Reset_Handler
-        LDR     R0, =SystemInit
-        BLX     R0
-        LDR     R0, =__iar_program_start
-        BX      R0
+                LDR      R0, =SystemInit
+                BLX      R0
+                LDR      R0, =__iar_program_start
+                BX       R0
 
-        PUBWEAK NMI_Handler
-        SECTION .text:CODE:REORDER:NOROOT(1)
+
+                PUBWEAK NMI_Handler
+                PUBWEAK HardFault_Handler
+                PUBWEAK MemManage_Handler
+                PUBWEAK BusFault_Handler
+                PUBWEAK UsageFault_Handler
+                PUBWEAK SVC_Handler
+                PUBWEAK DebugMon_Handler
+                PUBWEAK PendSV_Handler
+                PUBWEAK SysTick_Handler
+
+                PUBWEAK Interrupt0_Handler
+                PUBWEAK Interrupt1_Handler
+                PUBWEAK Interrupt2_Handler
+                PUBWEAK Interrupt3_Handler
+                PUBWEAK Interrupt4_Handler
+                PUBWEAK Interrupt5_Handler
+                PUBWEAK Interrupt6_Handler
+                PUBWEAK Interrupt7_Handler
+                PUBWEAK Interrupt8_Handler
+                PUBWEAK Interrupt9_Handler
+                SECTION .text:CODE:REORDER:NOROOT(1)
 NMI_Handler
-        B NMI_Handler
-
-        PUBWEAK HardFault_Handler
-        SECTION .text:CODE:REORDER:NOROOT(1)
 HardFault_Handler
-        B HardFault_Handler
-
-        PUBWEAK MemManage_Handler
-        SECTION .text:CODE:REORDER:NOROOT(1)
 MemManage_Handler
-        B MemManage_Handler
-
-        PUBWEAK BusFault_Handler
-        SECTION .text:CODE:REORDER:NOROOT(1)
 BusFault_Handler
-        B BusFault_Handler
-
-        PUBWEAK UsageFault_Handler
-        SECTION .text:CODE:REORDER:NOROOT(1)
 UsageFault_Handler
-        B UsageFault_Handler
-
-        PUBWEAK SVC_Handler
-        SECTION .text:CODE:REORDER:NOROOT(1)
 SVC_Handler
-        B SVC_Handler
-
-        PUBWEAK DebugMon_Handler
-        SECTION .text:CODE:REORDER:NOROOT(1)
 DebugMon_Handler
-        B DebugMon_Handler
-
-        PUBWEAK PendSV_Handler
-        SECTION .text:CODE:REORDER:NOROOT(1)
 PendSV_Handler
-        B PendSV_Handler
-
-        PUBWEAK SysTick_Handler
-        SECTION .text:CODE:REORDER:NOROOT(1)
 SysTick_Handler
-        B SysTick_Handler
 
-        PUBWEAK WDT_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-WDT_IRQHandler
-        B WDT_IRQHandler
+Interrupt0_Handler
+Interrupt1_Handler
+Interrupt2_Handler
+Interrupt3_Handler
+Interrupt4_Handler
+Interrupt5_Handler
+Interrupt6_Handler
+Interrupt7_Handler
+Interrupt8_Handler
+Interrupt9_Handler
+Default_Handler
+                B        .
 
-        PUBWEAK RTC_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-RTC_IRQHandler
-        B RTC_IRQHandler
 
-        PUBWEAK TIM0_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-TIM0_IRQHandler
-        B TIM0_IRQHandler
-
-        PUBWEAK TIM2_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-TIM2_IRQHandler
-        B TIM2_IRQHandler
-
-        PUBWEAK MCIA_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-MCIA_IRQHandler
-        B MCIA_IRQHandler
-
-        PUBWEAK MCIB_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-MCIB_IRQHandler
-        B MCIB_IRQHandler
-
-        PUBWEAK UART0_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-UART0_IRQHandler
-        B UART0_IRQHandler
-
-        PUBWEAK UART1_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-UART1_IRQHandler
-        B UART1_IRQHandler
-
-        PUBWEAK UART2_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-UART2_IRQHandler
-        B UART2_IRQHandler
-
-        PUBWEAK UART4_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-UART4_IRQHandler
-        B UART4_IRQHandler
-
-        PUBWEAK AACI_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-AACI_IRQHandler
-        B AACI_IRQHandler
-
-        PUBWEAK CLCD_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-CLCD_IRQHandler
-        B CLCD_IRQHandler
-
-        PUBWEAK ENET_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-ENET_IRQHandler
-        B ENET_IRQHandler
-
-        PUBWEAK USBDC_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-USBDC_IRQHandler
-        B USBDC_IRQHandler
-
-        PUBWEAK USBHC_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-USBHC_IRQHandler
-        B USBHC_IRQHandler
-
-        PUBWEAK CHLCD_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-CHLCD_IRQHandler
-        B CHLCD_IRQHandler
-
-        PUBWEAK FLEXRAY_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-FLEXRAY_IRQHandler
-        B FLEXRAY_IRQHandler
-
-        PUBWEAK CAN_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-CAN_IRQHandler
-        B CAN_IRQHandler
-
-        PUBWEAK LIN_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-LIN_IRQHandler
-        B LIN_IRQHandler
-
-        PUBWEAK I2C_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-I2C_IRQHandler
-        B I2C_IRQHandler
-
-        PUBWEAK CPU_CLCD_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-CPU_CLCD_IRQHandler
-        B CPU_CLCD_IRQHandler
-
-        PUBWEAK UART3_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-UART3_IRQHandler
-        B UART3_IRQHandler
-
-        PUBWEAK SPI_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-SPI_IRQHandler
-        B SPI_IRQHandler
-
-        END
+                END
