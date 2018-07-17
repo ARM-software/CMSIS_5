@@ -595,6 +595,26 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_nn_mult_ref.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1206,6 +1226,26 @@
               <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_nn_mult_ref.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1819,6 +1859,26 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_nn_mult_ref.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2430,6 +2490,26 @@
               <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_nn_mult_ref.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3043,6 +3123,26 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_nn_mult_ref.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3654,6 +3754,26 @@
               <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_nn_mult_ref.c</FilePath>
             </File>
           </Files>
         </Group>
