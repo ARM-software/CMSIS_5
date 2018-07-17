@@ -2251,6 +2251,7 @@ void ThreadCreate_example (void) {
 Get the thread ID of the current running thread.
 
 \note Cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note Must not be used inside the idle daemon. This would lead to undefined behavior.
 
 <b>Code Example</b>
 \code{.c}
