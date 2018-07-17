@@ -8,6 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.3.1-dev6">
+      Utilities:
+      - updated SVDConv and PackChk for Win32 and Linux
+    </release>
     <release version="5.3.1-dev5">
       Aligned pack structure with repository.
       The following folders are deprecated:
