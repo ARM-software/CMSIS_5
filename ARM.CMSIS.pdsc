@@ -2624,6 +2624,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c"/>
         
@@ -2637,6 +2638,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c"/>
+        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q15.c"/>
+        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q7.c"/>
 
         <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_pool_q7_HWC.c"/>
         
