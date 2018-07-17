@@ -8,6 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.3.1-dev7">
+      Generic Arm Device:
+       - Reworked ARM device support files.
+    </release>
     <release version="5.3.1-dev6">
       Utilities:
       - updated SVDConv and PackChk for Win32 and Linux
@@ -256,7 +260,7 @@ The Cortex-M0 processor is an entry-level 32-bit Arm Cortex processor designed f
 - deterministic, high-performance interrupt handling
 - upward compatibility with the rest of the Cortex-M processor family.
       </description>
-      <debug svd="Device/ARM/SVD/ARMCM0.svd"/>
+      <!-- debug svd="Device/ARM/SVD/ARMCM0.svd"/ SVD files do not contain any peripheral -->
       <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
@@ -278,7 +282,7 @@ The Cortex-M0+ processor is an entry-level 32-bit Arm Cortex processor designed 
 - deterministic, high-performance interrupt handling
 - upward compatibility with the rest of the Cortex-M processor family.
       </description>
-      <debug svd="Device/ARM/SVD/ARMCM0P.svd"/>
+      <!-- debug svd="Device/ARM/SVD/ARMCM0P.svd"/ SVD files do not contain any peripheral -->
       <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
@@ -305,7 +309,7 @@ The Cortex-M3 processor is an entry-level 32-bit Arm Cortex processor designed f
 - deterministic, high-performance interrupt handling
 - upward compatibility with the rest of the Cortex-M processor family.
       </description>
-      <debug svd="Device/ARM/SVD/ARMCM3.svd"/>
+      <!-- debug svd="Device/ARM/SVD/ARMCM3.svd"/ SVD files do not contain any peripheral -->
       <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
@@ -327,7 +331,7 @@ The Cortex-M4 processor is an entry-level 32-bit Arm Cortex processor designed f
 - deterministic, high-performance interrupt handling
 - upward compatibility with the rest of the Cortex-M processor family.
       </description>
-      <debug svd="Device/ARM/SVD/ARMCM4.svd"/>
+      <!-- debug svd="Device/ARM/SVD/ARMCM4.svd"/ SVD files do not contain any peripheral -->
       <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
@@ -354,7 +358,7 @@ The Cortex-M7 processor is an entry-level 32-bit Arm Cortex processor designed f
 - deterministic, high-performance interrupt handling
 - upward compatibility with the rest of the Cortex-M processor family.
       </description>
-      <debug svd="Device/ARM/SVD/ARMCM7.svd"/>
+      <!-- debug svd="Device/ARM/SVD/ARMCM7.svd"/ SVD files do not contain any peripheral -->
       <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
@@ -383,7 +387,7 @@ The Arm Cortex-M23 is based on the Armv8-M baseline architecture.
 It is the smallest and most energy efficient Arm processor with Arm TrustZone technology.
 Cortex-M23 is the ideal processor for constrained embedded applications requiring efficient security.
       </description>
-      <debug svd="Device/ARM/SVD/ARMCM23.svd"/>
+      <!-- debug svd="Device/ARM/SVD/ARMCM23.svd"/ SVD files do not contain any peripheral -->
       <memory id="IROM1"                                start="0x00000000" size="0x00200000" startup="1" default="1"/>
       <memory id="IROM2"                                start="0x00200000" size="0x00200000" startup="0" default="0"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
@@ -408,7 +412,7 @@ Cortex-M23 is the ideal processor for constrained embedded applications requirin
 The Arm Cortex-M33 is the most configurable of all Cortex-M processors. It is a full featured microcontroller
 class processor based on the Armv8-M mainline architecture with Arm TrustZone security.
       </description>
-      <debug svd="Device/ARM/SVD/ARMCM33.svd"/>
+      <!-- debug svd="Device/ARM/SVD/ARMCM33.svd"/ SVD files do not contain any peripheral -->
       <memory id="IROM1"                                start="0x00000000" size="0x00200000" startup="1" default="1"/>
       <memory id="IROM2"                                start="0x00200000" size="0x00200000" startup="0" default="0"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
@@ -457,7 +461,7 @@ The Arm SC000 processor is an entry-level 32-bit Arm Cortex processor designed f
 - excellent code density
 - deterministic, high-performance interrupt handling
       </description>
-      <debug svd="Device/ARM/SVD/ARMSC000.svd"/>
+      <!-- debug svd="Device/ARM/SVD/ARMSC000.svd"/ SVD files do not contain any peripheral -->
       <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
@@ -477,7 +481,7 @@ The ARM SC300 processor is an entry-level 32-bit ARM Cortex processor designed f
 - excellent code density
 - deterministic, high-performance interrupt handling
       </description>
-      <debug svd="Device/ARM/SVD/ARMSC300.svd"/>
+      <!-- debug svd="Device/ARM/SVD/ARMSC300.svd"/ SVD files do not contain any peripheral -->
       <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
       <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
@@ -494,7 +498,7 @@ The ARM SC300 processor is an entry-level 32-bit ARM Cortex processor designed f
       <description>
 Armv8-M Baseline based device with TrustZone
       </description>
-      <debug svd="Device/ARM/SVD/ARMv8MBL.svd"/>
+      <!-- debug svd="Device/ARM/SVD/ARMv8MBL.svd"/ SVD files do not contain any peripheral -->
       <memory id="IROM1"                                start="0x00000000" size="0x00200000" startup="1" default="1"/>
       <memory id="IROM2"                                start="0x00200000" size="0x00200000" startup="0" default="0"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
@@ -513,7 +517,7 @@ Armv8-M Baseline based device with TrustZone
       <description>
 Armv8-M Mainline based device with TrustZone
       </description>
-      <debug svd="Device/ARM/SVD/ARMv8MML.svd"/>
+      <!-- debug svd="Device/ARM/SVD/ARMv8MML.svd"/ SVD files do not contain any peripheral -->
       <memory id="IROM1"                                start="0x00000000" size="0x00200000" startup="1" default="1"/>
       <memory id="IROM2"                                start="0x00200000" size="0x00200000" startup="0" default="0"/>
       <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
