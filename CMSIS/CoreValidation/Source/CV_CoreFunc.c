@@ -20,7 +20,7 @@ static volatile uint32_t irqActive = 0U;
 static void TC_CoreFunc_EnDisIRQIRQHandler(void) {
   ++irqTaken;
 #if defined(__CORTEX_M) && (__CORTEX_M > 0)
-  irqActive = NVIC_GetActive(WDT_IRQn);
+  irqActive = NVIC_GetActive(Interrupt0_IRQn);
 #endif
 }
 
@@ -52,12 +52,12 @@ void TC_CoreFunc_EnDisIRQ (void)
   __disable_irq();
 
   // Enable the interrupt
-  NVIC_EnableIRQ(WDT_IRQn);
-  ASSERT_TRUE(NVIC_GetEnableIRQ(WDT_IRQn) != 0U);
+  NVIC_EnableIRQ(Interrupt0_IRQn);
+  ASSERT_TRUE(NVIC_GetEnableIRQ(Interrupt0_IRQn) != 0U);
 
   // Clear its pending state
-  NVIC_ClearPendingIRQ(WDT_IRQn);
-  ASSERT_TRUE(NVIC_GetPendingIRQ(WDT_IRQn) == 0U);
+  NVIC_ClearPendingIRQ(Interrupt0_IRQn);
+  ASSERT_TRUE(NVIC_GetPendingIRQ(Interrupt0_IRQn) == 0U);
 
   // Register test interrupt handler.
   TST_IRQHandler = TC_CoreFunc_EnDisIRQIRQHandler;
@@ -67,14 +67,14 @@ void TC_CoreFunc_EnDisIRQ (void)
 #endif
 
   // Set the interrupt pending state
-  NVIC_SetPendingIRQ(WDT_IRQn);
+  NVIC_SetPendingIRQ(Interrupt0_IRQn);
   for(uint32_t i = 10U; i > 0U; --i) {}
 
   // Interrupt is not taken
   ASSERT_TRUE(irqTaken == 0U);
-  ASSERT_TRUE(NVIC_GetPendingIRQ(WDT_IRQn) != 0U);
+  ASSERT_TRUE(NVIC_GetPendingIRQ(Interrupt0_IRQn) != 0U);
 #if defined(__CORTEX_M) && (__CORTEX_M > 0)
-  ASSERT_TRUE(NVIC_GetActive(WDT_IRQn) == 0U);
+  ASSERT_TRUE(NVIC_GetActive(Interrupt0_IRQn) == 0U);
 #endif
 
   // Globally enable interrupt servicing
@@ -86,30 +86,30 @@ void TC_CoreFunc_EnDisIRQ (void)
   ASSERT_TRUE(irqTaken == 1U);
 #if defined(__CORTEX_M) && (__CORTEX_M > 0)
   ASSERT_TRUE(irqActive != 0U);
-  ASSERT_TRUE(NVIC_GetActive(WDT_IRQn) == 0U);
+  ASSERT_TRUE(NVIC_GetActive(Interrupt0_IRQn) == 0U);
 #endif
 
   // Interrupt it not pending anymore.
-  ASSERT_TRUE(NVIC_GetPendingIRQ(WDT_IRQn) == 0U);
+  ASSERT_TRUE(NVIC_GetPendingIRQ(Interrupt0_IRQn) == 0U);
 
   // Disable interrupt
-  NVIC_DisableIRQ(WDT_IRQn);
-  ASSERT_TRUE(NVIC_GetEnableIRQ(WDT_IRQn) == 0U);
+  NVIC_DisableIRQ(Interrupt0_IRQn);
+  ASSERT_TRUE(NVIC_GetEnableIRQ(Interrupt0_IRQn) == 0U);
 
   // Set interrupt pending
-  NVIC_SetPendingIRQ(WDT_IRQn);
+  NVIC_SetPendingIRQ(Interrupt0_IRQn);
   for(uint32_t i = 10U; i > 0U; --i) {}
 
   // Interrupt is not taken again
   ASSERT_TRUE(irqTaken == 1U);
-  ASSERT_TRUE(NVIC_GetPendingIRQ(WDT_IRQn) != 0U);
+  ASSERT_TRUE(NVIC_GetPendingIRQ(Interrupt0_IRQn) != 0U);
 
   // Clear interrupt pending
-  NVIC_ClearPendingIRQ(WDT_IRQn);
+  NVIC_ClearPendingIRQ(Interrupt0_IRQn);
   for(uint32_t i = 10U; i > 0U; --i) {}
 
   // Interrupt it not pending anymore.
-  ASSERT_TRUE(NVIC_GetPendingIRQ(WDT_IRQn) == 0U);
+  ASSERT_TRUE(NVIC_GetPendingIRQ(Interrupt0_IRQn) == 0U);
 
   // Globally disable interrupt servicing
   __disable_irq();
@@ -135,14 +135,14 @@ void TC_CoreFunc_IRQPrio (void)
   NVIC_SetPriority(SVCall_IRQn, orig);
 
   /* Test Interrupt Priority */
-  orig = NVIC_GetPriority(WDT_IRQn);
+  orig = NVIC_GetPriority(Interrupt0_IRQn);
 
-  NVIC_SetPriority(WDT_IRQn, orig+1U);
-  prio = NVIC_GetPriority(WDT_IRQn);
+  NVIC_SetPriority(Interrupt0_IRQn, orig+1U);
+  prio = NVIC_GetPriority(Interrupt0_IRQn);
 
   ASSERT_TRUE(prio == orig+1U);
 
-  NVIC_SetPriority(WDT_IRQn, orig);
+  NVIC_SetPriority(Interrupt0_IRQn, orig);
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -219,14 +219,14 @@ void TC_CoreFunc_IRQVect(void) {
   ASSERT_TRUE(NVIC_GetVector(SysTick_IRQn) == (uint32_t)SysTick_Handler);
 
   /* reconfigure WDT IRQ vector */
-  extern void WDT_IRQHandler(void);
+  extern void Interrupt0_Handler(void);
 
-  const uint32_t wdtvec = NVIC_GetVector(WDT_IRQn);
-  ASSERT_TRUE(wdtvec == (uint32_t)WDT_IRQHandler);
+  const uint32_t wdtvec = NVIC_GetVector(Interrupt0_IRQn);
+  ASSERT_TRUE(wdtvec == (uint32_t)Interrupt0_Handler);
 
-  NVIC_SetVector(WDT_IRQn, wdtvec + 32U);
+  NVIC_SetVector(Interrupt0_IRQn, wdtvec + 32U);
 
-  ASSERT_TRUE(NVIC_GetVector(WDT_IRQn) == (wdtvec + 32U));
+  ASSERT_TRUE(NVIC_GetVector(Interrupt0_IRQn) == (wdtvec + 32U));
 
   /* restore vector table */
   SCB->VTOR = orig_vtor;
@@ -291,15 +291,15 @@ void TC_CoreFunc_IPSR (void) {
   irqIPSR = 0U;
   irqXPSR = 0U;
 
-  NVIC_ClearPendingIRQ(WDT_IRQn);
-  NVIC_EnableIRQ(WDT_IRQn);
+  NVIC_ClearPendingIRQ(Interrupt0_IRQn);
+  NVIC_EnableIRQ(Interrupt0_IRQn);
   __enable_irq();
 
-  NVIC_SetPendingIRQ(WDT_IRQn);
+  NVIC_SetPendingIRQ(Interrupt0_IRQn);
   for(uint32_t i = 10U; i > 0U; --i) {}
 
   __disable_irq();
-  NVIC_DisableIRQ(WDT_IRQn);
+  NVIC_DisableIRQ(Interrupt0_IRQn);
 
   ASSERT_TRUE(irqIPSR != 0U); // Exception Mode
   ASSERT_TRUE((irqXPSR & xPSR_ISR_Msk) != 0U); // Exception Mode

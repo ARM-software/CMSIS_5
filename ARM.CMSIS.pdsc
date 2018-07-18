@@ -13,6 +13,7 @@
        - Reworked ARM device support files.
        - Updated RTOS2 examples.
        - Updated DSP examples.
+       - Updated CoreValidation examples.
     </release>
     <release version="5.3.1-dev6">
       Utilities:

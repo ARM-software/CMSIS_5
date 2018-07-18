@@ -436,7 +436,7 @@ architecture, i.e. Cortex-A or Cortex-M.
 static void TC_CoreInstr_LoadStoreExclusive_IRQEnable(void) {
 #if defined(__CORTEX_M)
   TST_IRQHandler = TC_CoreInstr_LoadStoreExclusive_IRQHandler;
-  NVIC_EnableIRQ(WDT_IRQn);
+  NVIC_EnableIRQ(Interrupt0_IRQn);
 #elif defined(__CORTEX_A)
   IRQ_SetHandler(SGI0_IRQn, TC_CoreInstr_LoadStoreExclusive_IRQHandler);
   IRQ_Enable(SGI0_IRQn);
@@ -454,7 +454,7 @@ architecture, i.e. Cortex-A or Cortex-M.
 */
 static void TC_CoreInstr_LoadStoreExclusive_IRQPend(void) {
 #if defined(__CORTEX_M)
-  NVIC_SetPendingIRQ(WDT_IRQn);
+  NVIC_SetPendingIRQ(Interrupt0_IRQn);
 #elif defined(__CORTEX_A)
   IRQ_SetPending(SGI0_IRQn);
 #else
@@ -472,7 +472,7 @@ architecture, i.e. Cortex-A or Cortex-M.
 static void TC_CoreInstr_LoadStoreExclusive_IRQDisable(void) {
   __disable_irq();
 #if defined(__CORTEX_M)
-  NVIC_DisableIRQ(WDT_IRQn);
+  NVIC_DisableIRQ(Interrupt0_IRQn);
   TST_IRQHandler = NULL;
 #elif defined(__CORTEX_A)
   IRQ_Disable(SGI0_IRQn);
