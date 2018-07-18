@@ -13,7 +13,7 @@
  *      Prototypes
  *----------------------------------------------------------------------------*/
 
-void WDT_IRQHandler(void);
+void Interrupt0_Handler(void);
 
 /*-----------------------------------------------------------------------------
  *      Variables declarations
@@ -21,7 +21,7 @@ void WDT_IRQHandler(void);
 
 void (*TST_IRQHandler)(void);
 
-void WDT_IRQHandler(void) {
+void Interrupt0_Handler(void) {
   if (TST_IRQHandler != NULL) TST_IRQHandler();
 }
 

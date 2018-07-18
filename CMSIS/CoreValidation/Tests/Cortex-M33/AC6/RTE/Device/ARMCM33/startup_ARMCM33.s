@@ -1,12 +1,12 @@
 ;/**************************************************************************//**
 ; * @file     startup_ARMCM33.s
 ; * @brief    CMSIS Core Device Startup File for
-; *           ARMCM33 Device Series
-; * @version  V5.00
-; * @date     21. October 2016
+; *           ARMCM33 Device
+; * @version  V5.3.1
+; * @date     09. July 2018
 ; ******************************************************************************/
 ;/*
-; * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+; * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *
@@ -23,32 +23,33 @@
 ; * limitations under the License.
 ; */
 
-;/*
 ;//-------- <<< Use Configuration Wizard in Context Menu >>> ------------------
-;*/
 
 
-; <h> Stack Configuration
-;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
-; </h>
+;<h> Stack Configuration
+;  <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;</h>
 
-Stack_Size      EQU     0x00000400
+Stack_Size      EQU      0x00000400
 
-                AREA    STACK, NOINIT, READWRITE, ALIGN=3
-Stack_Mem       SPACE   Stack_Size
+                AREA     STACK, NOINIT, READWRITE, ALIGN=3
+__stack_limit
+Stack_Mem       SPACE    Stack_Size
 __initial_sp
 
 
-; <h> Heap Configuration
-;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-; </h>
+;<h> Heap Configuration
+;  <o> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;</h>
 
-Heap_Size       EQU     0x00000C00
+Heap_Size       EQU      0x00000C00
 
-                AREA    HEAP, NOINIT, READWRITE, ALIGN=3
+                IF       Heap_Size != 0                      ; Heap is provided
+                AREA     HEAP, NOINIT, READWRITE, ALIGN=3
 __heap_base
-Heap_Mem        SPACE   Heap_Size
+Heap_Mem        SPACE    Heap_Size
 __heap_limit
+                ENDIF
 
 
                 PRESERVE8
@@ -57,211 +58,110 @@ __heap_limit
 
 ; Vector Table Mapped to Address 0 at Reset
 
-                AREA    RESET, DATA, READONLY
-                EXPORT  __Vectors
-                EXPORT  __Vectors_End
-                EXPORT  __Vectors_Size
+                AREA     RESET, DATA, READONLY
+                EXPORT   __Vectors
+                EXPORT   __Vectors_End
+                EXPORT   __Vectors_Size
 
-__Vectors       DCD     __initial_sp              ; Top of Stack
-                DCD     Reset_Handler             ; Reset Handler
-                DCD     NMI_Handler               ; NMI Handler
-                DCD     HardFault_Handler         ; Hard Fault Handler
-                DCD     MemManage_Handler         ; MPU Fault Handler
-                DCD     BusFault_Handler          ; Bus Fault Handler
-                DCD     UsageFault_Handler        ; Usage Fault Handler
-                DCD     SecureFault_Handler       ; Secure Fault Handler
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     0                         ; Reserved
-                DCD     SVC_Handler               ; SVCall Handler
-                DCD     DebugMon_Handler          ; Debug Monitor Handler
-                DCD     0                         ; Reserved
-                DCD     PendSV_Handler            ; PendSV Handler
-                DCD     SysTick_Handler           ; SysTick Handler
+__Vectors       DCD      __initial_sp                        ;     Top of Stack
+                DCD      Reset_Handler                       ;     Reset Handler
+                DCD      NMI_Handler                         ; -14 NMI Handler
+                DCD      HardFault_Handler                   ; -13 Hard Fault Handler
+                DCD      MemManage_Handler                   ; -12 MPU Fault Handler
+                DCD      BusFault_Handler                    ; -11 Bus Fault Handler
+                DCD      UsageFault_Handler                  ; -10 Usage Fault Handler
+                DCD      SecureFault_Handler                 ;  -9 Secure Fault Handler
+                DCD      0                                   ;     Reserved
+                DCD      0                                   ;     Reserved
+                DCD      0                                   ;     Reserved
+                DCD      SVC_Handler                         ;  -5 SVCall Handler
+                DCD      DebugMon_Handler                    ;  -4 Debug Monitor Handler
+                DCD      0                                   ;     Reserved
+                DCD      PendSV_Handler                      ;  -2 PendSV Handler
+                DCD      SysTick_Handler                     ;  -1 SysTick Handler
 
-                ; External Interrupts
-                DCD     WDT_IRQHandler            ;  0:  Watchdog Timer
-                DCD     RTC_IRQHandler            ;  1:  Real Time Clock
-                DCD     TIM0_IRQHandler           ;  2:  Timer0 / Timer1
-                DCD     TIM2_IRQHandler           ;  3:  Timer2 / Timer3
-                DCD     MCIA_IRQHandler           ;  4:  MCIa
-                DCD     MCIB_IRQHandler           ;  5:  MCIb
-                DCD     UART0_IRQHandler          ;  6:  UART0 - DUT FPGA
-                DCD     UART1_IRQHandler          ;  7:  UART1 - DUT FPGA
-                DCD     UART2_IRQHandler          ;  8:  UART2 - DUT FPGA
-                DCD     UART4_IRQHandler          ;  9:  UART4 - not connected
-                DCD     AACI_IRQHandler           ; 10: AACI / AC97
-                DCD     CLCD_IRQHandler           ; 11: CLCD Combined Interrupt
-                DCD     ENET_IRQHandler           ; 12: Ethernet
-                DCD     USBDC_IRQHandler          ; 13: USB Device
-                DCD     USBHC_IRQHandler          ; 14: USB Host Controller
-                DCD     CHLCD_IRQHandler          ; 15: Character LCD
-                DCD     FLEXRAY_IRQHandler        ; 16: Flexray
-                DCD     CAN_IRQHandler            ; 17: CAN
-                DCD     LIN_IRQHandler            ; 18: LIN
-                DCD     I2C_IRQHandler            ; 19: I2C ADC/DAC
-                DCD     0                         ; 20: Reserved
-                DCD     0                         ; 21: Reserved
-                DCD     0                         ; 22: Reserved
-                DCD     0                         ; 23: Reserved
-                DCD     0                         ; 24: Reserved
-                DCD     0                         ; 25: Reserved
-                DCD     0                         ; 26: Reserved
-                DCD     0                         ; 27: Reserved
-                DCD     CPU_CLCD_IRQHandler       ; 28: Reserved - CPU FPGA CLCD
-                DCD     0                         ; 29: Reserved - CPU FPGA
-                DCD     UART3_IRQHandler          ; 30: UART3    - CPU FPGA
-                DCD     SPI_IRQHandler            ; 31: SPI Touchscreen - CPU FPGA
+                ; Interrupts
+                DCD      Interrupt0_Handler                  ;   0 Interrupt 0
+                DCD      Interrupt1_Handler                  ;   1 Interrupt 1
+                DCD      Interrupt2_Handler                  ;   2 Interrupt 2
+                DCD      Interrupt3_Handler                  ;   3 Interrupt 3
+                DCD      Interrupt4_Handler                  ;   4 Interrupt 4
+                DCD      Interrupt5_Handler                  ;   5 Interrupt 5
+                DCD      Interrupt6_Handler                  ;   6 Interrupt 6
+                DCD      Interrupt7_Handler                  ;   7 Interrupt 7
+                DCD      Interrupt8_Handler                  ;   8 Interrupt 8
+                DCD      Interrupt9_Handler                  ;   9 Interrupt 9
+
+                SPACE    (470 * 4)                           ; Interrupts 10 .. 480 are left out
 __Vectors_End
+__Vectors_Size  EQU      __Vectors_End - __Vectors
 
-__Vectors_Size  EQU     __Vectors_End - __Vectors
 
-                AREA    |.text|, CODE, READONLY
-
+                AREA     |.text|, CODE, READONLY
 
 ; Reset Handler
 
 Reset_Handler   PROC
-                EXPORT  Reset_Handler             [WEAK]
-                IMPORT  SystemInit
-                IMPORT  __main
-                LDR     R0, =SystemInit
-                BLX     R0
-                LDR     R0, =__main
-                BX      R0
+                EXPORT   Reset_Handler             [WEAK]
+                IMPORT   SystemInit
+                IMPORT   __main
+
+                LDR      R0, =__stack_limit
+                MSR      MSPLIM, R0                          ; Non-secure version of MSPLIM is RAZ/WI
+
+                LDR      R0, =SystemInit
+                BLX      R0
+                LDR      R0, =__main
+                BX       R0
                 ENDP
 
 
-; Dummy Exception Handlers (infinite loops which can be modified)
+; Macro to define default exception/interrupt handlers.
+; Default handler are weak symbols with an endless loop.
+; They can be overwritten by real handlers.
+                MACRO
+                Set_Default_Handler  $Handler_Name
+$Handler_Name   PROC
+                EXPORT   $Handler_Name             [WEAK]
+                B        .
+                ENDP
+                MEND
 
-NMI_Handler     PROC
-                EXPORT  NMI_Handler               [WEAK]
-                B       .
-                ENDP
-HardFault_Handler\
-                PROC
-                EXPORT  HardFault_Handler         [WEAK]
-                B       .
-                ENDP
-MemManage_Handler\
-                PROC
-                EXPORT  MemManage_Handler         [WEAK]
-                B       .
-                ENDP
-BusFault_Handler\
-                PROC
-                EXPORT  BusFault_Handler          [WEAK]
-                B       .
-                ENDP
-UsageFault_Handler\
-                PROC
-                EXPORT  UsageFault_Handler        [WEAK]
-                B       .
-                ENDP
-SecureFault_Handler\
-                PROC
-                EXPORT  SecureFault_Handler       [WEAK]
-                B       .
-                ENDP
-SVC_Handler     PROC
-                EXPORT  SVC_Handler               [WEAK]
-                B       .
-                ENDP
-DebugMon_Handler\
-                PROC
-                EXPORT  DebugMon_Handler          [WEAK]
-                B       .
-                ENDP
-PendSV_Handler  PROC
-                EXPORT  PendSV_Handler            [WEAK]
-                B       .
-                ENDP
-SysTick_Handler PROC
-                EXPORT  SysTick_Handler           [WEAK]
-                B       .
-                ENDP
 
-Default_Handler PROC
+; Default exception/interrupt handler
 
-                EXPORT  WDT_IRQHandler            [WEAK]
-                EXPORT  RTC_IRQHandler            [WEAK]
-                EXPORT  TIM0_IRQHandler           [WEAK]
-                EXPORT  TIM2_IRQHandler           [WEAK]
-                EXPORT  MCIA_IRQHandler           [WEAK]
-                EXPORT  MCIB_IRQHandler           [WEAK]
-                EXPORT  UART0_IRQHandler          [WEAK]
-                EXPORT  UART1_IRQHandler          [WEAK]
-                EXPORT  UART2_IRQHandler          [WEAK]
-                EXPORT  UART3_IRQHandler          [WEAK]
-                EXPORT  UART4_IRQHandler          [WEAK]
-                EXPORT  AACI_IRQHandler           [WEAK]
-                EXPORT  CLCD_IRQHandler           [WEAK]
-                EXPORT  ENET_IRQHandler           [WEAK]
-                EXPORT  USBDC_IRQHandler          [WEAK]
-                EXPORT  USBHC_IRQHandler          [WEAK]
-                EXPORT  CHLCD_IRQHandler          [WEAK]
-                EXPORT  FLEXRAY_IRQHandler        [WEAK]
-                EXPORT  CAN_IRQHandler            [WEAK]
-                EXPORT  LIN_IRQHandler            [WEAK]
-                EXPORT  I2C_IRQHandler            [WEAK]
-                EXPORT  CPU_CLCD_IRQHandler       [WEAK]
-                EXPORT  SPI_IRQHandler            [WEAK]
+                Set_Default_Handler  NMI_Handler
+                Set_Default_Handler  HardFault_Handler
+                Set_Default_Handler  MemManage_Handler
+                Set_Default_Handler  BusFault_Handler
+                Set_Default_Handler  UsageFault_Handler
+                Set_Default_Handler  SecureFault_Handler
+                Set_Default_Handler  SVC_Handler
+                Set_Default_Handler  DebugMon_Handler
+                Set_Default_Handler  PendSV_Handler
+                Set_Default_Handler  SysTick_Handler
 
-WDT_IRQHandler
-RTC_IRQHandler
-TIM0_IRQHandler
-TIM2_IRQHandler
-MCIA_IRQHandler
-MCIB_IRQHandler
-UART0_IRQHandler
-UART1_IRQHandler
-UART2_IRQHandler
-UART3_IRQHandler
-UART4_IRQHandler
-AACI_IRQHandler
-CLCD_IRQHandler
-ENET_IRQHandler
-USBDC_IRQHandler
-USBHC_IRQHandler
-CHLCD_IRQHandler
-FLEXRAY_IRQHandler
-CAN_IRQHandler
-LIN_IRQHandler
-I2C_IRQHandler
-CPU_CLCD_IRQHandler
-SPI_IRQHandler
-                B       .
-
-                ENDP
-
+                Set_Default_Handler  Interrupt0_Handler
+                Set_Default_Handler  Interrupt1_Handler
+                Set_Default_Handler  Interrupt2_Handler
+                Set_Default_Handler  Interrupt3_Handler
+                Set_Default_Handler  Interrupt4_Handler
+                Set_Default_Handler  Interrupt5_Handler
+                Set_Default_Handler  Interrupt6_Handler
+                Set_Default_Handler  Interrupt7_Handler
+                Set_Default_Handler  Interrupt8_Handler
+                Set_Default_Handler  Interrupt9_Handler
 
                 ALIGN
 
 
-; User Initial Stack & Heap
+; User setup Stack & Heap
 
-                IF      :DEF:__MICROLIB
-
-                EXPORT  __initial_sp
-                EXPORT  __heap_base
-                EXPORT  __heap_limit
-
-                ELSE
-
-                IMPORT  __use_two_region_memory
-                EXPORT  __user_initial_stackheap
-
-__user_initial_stackheap PROC
-                LDR     R0, =  Heap_Mem
-                LDR     R1, =(Stack_Mem + Stack_Size)
-                LDR     R2, = (Heap_Mem +  Heap_Size)
-                LDR     R3, = Stack_Mem
-                BX      LR
-                ENDP
-
-                ALIGN
-
+                EXPORT   __stack_limit
+                EXPORT   __initial_sp
+                IF       Heap_Size != 0                      ; Heap is provided
+                EXPORT   __heap_base
+                EXPORT   __heap_limit
                 ENDIF
-
 
                 END

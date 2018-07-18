@@ -379,7 +379,7 @@
 //   <o.30> Interrupt 30  <0=> Secure state <1=> Non-Secure state
 //   <o.31> Interrupt 31  <0=> Secure state <1=> Non-Secure state
 */
-#define NVIC_INIT_ITNS0_VAL      0x0000122B
+#define NVIC_INIT_ITNS0_VAL      0x00000000
 
 /*
 //   </e>
