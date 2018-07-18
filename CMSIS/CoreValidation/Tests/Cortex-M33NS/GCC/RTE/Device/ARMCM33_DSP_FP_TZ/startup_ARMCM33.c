@@ -27,7 +27,17 @@
  //-------- <<< Use Configuration Wizard in Context Menu >>> ------------------
 */
 
-#include <stdint.h>
+#if defined (ARMCM33)
+  #include "ARMCM33.h"
+#elif defined (ARMCM33_TZ)
+  #include "ARMCM33_TZ.h"
+#elif defined (ARMCM33_DSP_FP)
+  #include "ARMCM33_DSP_FP.h"
+#elif defined (ARMCM33_DSP_FP_TZ)
+  #include "ARMCM33_DSP_FP_TZ.h"
+#else
+  #error device not specified!
+#endif
 
 
 /*----------------------------------------------------------------------------
@@ -55,7 +65,6 @@ typedef void( *pFunc )( void );
   External References
  *----------------------------------------------------------------------------*/
 extern void _start     (void) __attribute__((noreturn)); /* PreeMain (C library entry point) */
-extern void SystemInit (void);                           /* CMSIS System Initialization */
 
 
 /*----------------------------------------------------------------------------

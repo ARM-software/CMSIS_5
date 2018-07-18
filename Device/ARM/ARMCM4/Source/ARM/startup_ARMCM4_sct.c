@@ -23,7 +23,13 @@
  * limitations under the License.
  */
 
-#include <stdint.h>
+#if defined (ARMCM4)
+  #include "ARMCM4.h"
+#elif defined (ARMCM4_FP)
+  #include "ARMCM4_FP.h"
+#else
+  #error device not specified!
+#endif
 
 
 /*----------------------------------------------------------------------------
@@ -42,7 +48,6 @@ typedef void( *pFunc )( void );
   External References
  *----------------------------------------------------------------------------*/
 extern void __main     (void) __attribute__((noreturn)); /* PreeMain (C library entry point) */
-extern void SystemInit (void);                           /* CMSIS System Initialization */
 
 
 /*----------------------------------------------------------------------------

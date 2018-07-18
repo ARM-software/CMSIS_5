@@ -23,7 +23,7 @@
  * limitations under the License.
  */
 
-#include <stdint.h>
+#include "ARMSC000.h"
 
 
 /*----------------------------------------------------------------------------
@@ -42,7 +42,6 @@ typedef void( *pFunc )( void );
   External References
  *----------------------------------------------------------------------------*/
 extern void __main     (void) __attribute__((noreturn)); /* PreeMain (C library entry point) */
-extern void SystemInit (void);                           /* CMSIS System Initialization */
 
 
 /*----------------------------------------------------------------------------
