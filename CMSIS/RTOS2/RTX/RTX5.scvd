@@ -1324,7 +1324,10 @@
                 </item>
                 <item property="Max"   value="%d[TCB[i].stack_maxb]" cond="stack_wmark != 0"/>
                 <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
-                <item property="Current" value="%x[TCB[i].stack_cur]"/>
+                <item>
+                  <print cond="TCB[i].sp_valid == 0" property="Current" value="unknown"/>
+                  <print cond="TCB[i].sp_valid == 1" property="Current" value="%x[TCB[i].stack_cur]"/>
+                </item>
                 <item property="Limit" value="%x[TCB[i].stack_mem]"/>
                 <item property="Size"  value="%d[TCB[i].stack_size]"/>
               </item>
