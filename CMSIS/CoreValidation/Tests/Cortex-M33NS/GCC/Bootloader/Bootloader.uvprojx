@@ -239,7 +239,7 @@
             <wLevel>3</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-mcpu=cortex-m33 -mcmse</MiscControls>
+              <MiscControls>-mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -Wall -Wextra -Wstrict-prototypes -Wshadow -Wundef</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
@@ -249,7 +249,7 @@
             <bBE>0</bBE>
             <interw>0</interw>
             <VariousControls>
-              <MiscControls>-mcpu=cortex-m33 -mcmse</MiscControls>
+              <MiscControls>-mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -Wall</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
@@ -266,7 +266,7 @@
             <BSSAddressRange></BSSAddressRange>
             <IncludeLibs></IncludeLibs>
             <IncludeDir></IncludeDir>
-            <Misc>-mcpu=cortex-m33 -mcmse -Wl,--cmse-implib -Wl,--out-implib=./Objects/cmse.lib --specs=nosys.specs</Misc>
+            <Misc>-mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -Wl,--cmse-implib -Wl,--out-implib=./Objects/cmse.lib --specs=nosys.specs</Misc>
             <ScatterFile>.\RTE\Device\ARMCM33_DSP_FP_TZ\gcc_arm.ld</ScatterFile>
           </LDarm>
         </TargetArm>
