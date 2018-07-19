@@ -266,7 +266,7 @@
             <BSSAddressRange></BSSAddressRange>
             <IncludeLibs></IncludeLibs>
             <IncludeDir></IncludeDir>
-            <Misc>-mcpu=cortex-m33 -mcmse -Wl,--cmse-implib -Wl,--out-implib=./Objects/cmse.lib</Misc>
+            <Misc>-mcpu=cortex-m33 -mcmse -Wl,--cmse-implib -Wl,--out-implib=./Objects/cmse.lib --specs=nosys.specs</Misc>
             <ScatterFile>.\RTE\Device\ARMCM33_DSP_FP_TZ\gcc_arm.ld</ScatterFile>
           </LDarm>
         </TargetArm>
