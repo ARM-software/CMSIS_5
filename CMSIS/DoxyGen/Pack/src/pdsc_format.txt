@@ -61,6 +61,7 @@ found under the ARM.CMSIS.*.Pack in the .\\CMSIS\\Utilities-directory.
 The \ref packFormat is structured using grouping elements and contains the following top level elements:
  - \subpage pdsc_package_pg "<package>": describes package related information like vendor, package name, description, version. Is the root element. 
  - \subpage element_keywords "<keywords>": lists keywords to search for packages. Can be used for search engines. 
+ - \subpage element_repository "<repository>": specifies url and repository type of public repository where the pack originates from.
  - \subpage element_releases "<releases>": lists release versions with descriptions.
  - \subpage element_requirements_pg "<requirements>": lists required packs, compiler, programming language standards and their version or version range.
  - \subpage element_taxonomy "<taxonomy>": lists description elements that define component classes and component group names. 
@@ -222,6 +223,13 @@ assists searching for packages.
     <td>CreateType</td>
     <td>0..1 </td>
   </tr>
+  <tr>
+    <td>\ref element_repository "repository"</td>
+    <td>URL of public repository the pack originates from.</td>
+    <td>xs:anyURI</td>
+    <td>0..1 </td>
+  </tr>
+
   <tr>
     <td>\ref element_releases "releases"</td>
     <td>Version release history with brief information about a \ref cp_SWComponents "Software Pack".</td>
@@ -405,6 +413,63 @@ Keywords can be exported to web pages to provide information for search engines,
 
 /**************************************************************************************************/
 /**
+\page element_repository /package/repository element
+The element specifies the url of the public repository the pack originates from. The attribute 'type' specifies the repository technology
+and therefore the tools required to be used with this repository.
+
+
+\b Example:
+\code
+<package>
+  ...
+  <repository type="git">https://github.com/ARM-software/CMSIS-Driver.git</repository>
+    ...
+  </releases>
+  ...
+</package>
+\endcode
+
+<p>&nbsp;</p>
+
+<table class="cmtable" summary="Element: repository">
+  <tr>
+    <th>Parent Element</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_package "package"</td>
+    <td colspan=3>\ref element_package</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>Repository management technology used by the specified public repository (e.g. git, svn).</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<hr>
+
+Contributing to Software Packs from fopen source repositories (e.g. github):
+
+- open the url specified by the \c \<repository> tag in a browser
+- create a fork of the repository
+- clone the fork on your machine (you may want to checkout the tag specified in the \c \<release tag="..."> element).
+- create a branch for you modifications.
+- develop and test the modifications of your branch and push the branch to github.
+- open the webpage of your forked repository and from the browser create a pull request of your branch into the upstream repository.
+
+*/
+
+/**************************************************************************************************/
+/**
 \page element_releases /package/releases element
 
 Contains the release history of the Pack. This element is mandatory. No more than one such group can exist in a Pack. 
@@ -466,6 +531,23 @@ The latest release version is always listed on top.
 </releases>
 \endcode
 
+\b Example for a public repository:
+\code
+<package>
+  ...
+  <repository type="git">https://github.com/ARM-software/CMSIS-Driver.git</repository
+  <releases>
+    <release version="2.1.0" tag="2.1.0" url="https://github.com/ARM-software/CMSIS-Driver/archive/2.1.0.zip">
+      Added LAN9220 Ethernet MAC+PHY driver.
+    </release>     
+    <release version="2.0.0" tag="2.0.0" url="https://github.com/ARM-software/CMSIS-Driver/archive/2.0.0.zip">
+      First published version.
+    </release>     
+  </releases>
+  ...
+</package> 
+\endcode
+
 <p>&nbsp;</p>
 
 <table class="cmtable" summary="Element: Release">
@@ -494,6 +576,18 @@ The latest release version is always listed on top.
     <td>Release date (specified as YYYY-MM-DD, for example 2014-12-14 (14th December 2014).</td>
     <td>xs:date</td>
     <td>optional</td>
+  </tr>
+  <tr>
+    <td>tag</td>
+    <td>In case the repository element is specified, the tag attribute is used to specify the repository tag that corresponds to this release of the pack.</td>
+    <td>xs:string</td>
+    <td>optional</td>    
+  </tr>
+  <tr>
+    <td>url</td>
+    <td>URL specifying the location of the pack of the specified version. This can be used to override the default location being \c \<url>/\<vendor>.\<name>.\<version>.pack</td>
+    <td>xs:anyURI</td>
+    <td>optional</td>    
   </tr>
   <tr>
     <td>deprecated</td>

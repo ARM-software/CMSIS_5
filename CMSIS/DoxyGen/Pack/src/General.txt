@@ -75,15 +75,15 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
     <th>Description</th>
   </tr>
   <tr>
-    <td>1.5.0-Dev0</td>
+    <td>1.5.0</td>
     <td>Modifications compared to Version 1.4.9
 - added \ref sdf_pg
 - updates to \ref DeviceVendorEnum "Device Vendor"
 - removed usage of DP CTRL/STAT CDBGRSTREQ from \ref debugPortStart default sequence
-- Under construction (!): \<flashinfo\> with children \<block\> and \<gap\> to describe flash devices for
-  sequence-based flash download
-- Under construction (!): new debug access functions and global debug variables for sequence-based
-  flash download
+- added \ref element_flashinfo "flashinfo" with children \<block\> and \<gap\> to describe flash devices for sequence-based flash download
+- new \ref DebugFunctions "debug access functions" and \ref DebugVars "global debug variables" for sequence-based flash download
+- added \ref element_repository "repository" element for specifying origin of public repositories
+- added attributes to \ref element_release "release" element specifying repository tag and url for downloading repository content
     </td>
   </tr>
   <tr>
