@@ -112,12 +112,10 @@ def images(step, config):
   cc = config['compiler']
   target = config['target']
   
-  images = []
+  images = [ testProject(dev, cc, target)[1] ]
   blPrj = bootloaderProject(dev, cc, target)
   if os.path.exists(blPrj[1]):
     images += [ blPrj[1] ]
-  
-  images += [ testProject(dev, cc, target)[1] ]
   
   return images
 
@@ -141,13 +139,18 @@ def create():
   runStep.images = images
   runStep.model = lambda step, config: FVP_MODELS[config['device']]
   runStep.post = storeResult
+
+  debugStep = RunModelStep("debug", abbrev="d", desc="Debug the selected configurations.")
+  debugStep.images = images
+  debugStep.args = lambda step, config: { 'cadi' : True }
+  debugStep.model = lambda step, config: FVP_MODELS[config['device']]
   
   filterAC5 = Filter().addAxis(compilerAxis, Compiler.AC5).addAxis(deviceAxis, "CM[23]3*")
   filterAC6LTM = Filter().addAxis(compilerAxis, Compiler.AC6LTM).addAxis(deviceAxis, "CM[23]3*")
 
   builder = Builder()
   builder.addAxis([ compilerAxis, deviceAxis, targetAxis ])
-  builder.addStep([ buildStep, runStep ])
+  builder.addStep([ buildStep, runStep, debugStep ])
   builder.addFilter([ filterAC5, filterAC6LTM ])
 
   return builder
