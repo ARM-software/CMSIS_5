@@ -6,8 +6,8 @@
 
 The <b>Pack Description (*.pdsc) Format</b>  uses standard XML annotations and is defined in the schema file <b>PACK.xsd</b>.
 Software components are distributed through <b>Software Packs</b>.
-A \ref cp_SWComponents "Software Pack" is a zip file containing a single <b>Pack Description</b> file that describes dependencies 
-to devices, processors, tool chains, or other software components.
+A \ref cp_SWComponents "Software Pack" is a zip file containing a single <b>Pack Description</b> file that describes
+dependencies to devices, processors, tool chains, or other software components.
 
 A descriptive text of the \ref cp_SWComponents "Software Pack"along the text information for devices, components, and examples is part of each
 a <b>Pack Description</b> (*.pdsc) file. In addition, information is provided which facilitates downloading, updating, and versioning of
@@ -23,7 +23,7 @@ A \ref cp_SWComponents "Software Pack" must have a unique filename which uses th
  - <b>\<vendor\></b>: name of the supplier or vendor of the \ref cp_SWComponents "Software Pack".
  - <b>\<name\></b>: name of the \ref cp_SWComponents "Software Pack". It is the vendor's responsibility to ensure unique
    package names.
- - <b>\<version\></b>: version number of the \ref cp_SWComponents "Software Pack".
+ - <b>\<release version="X.Y.Z"\></b>: \ref VersionType "version number" of the \ref cp_SWComponents "Software Pack".
  - <b>.pack</b>: file extension identifying a \ref cp_SWComponents "Software Pack".
  
 \note \<vendor\> and \<name\> \em must \em not contain spaces.
@@ -56,7 +56,7 @@ file must match the filenames of the *.pdsc and *.pack files. The file extension
 \section PackSchema Pack Schema 
 
 The XML schema file <b>PACK.xsd</b> defines the sections used in a <b>*.pdsc</b> file. The current <b>PACK.xsd</b> can be
-found under the ARM.CMSIS.*.Pack in the .\\CMSIS\\Utilities-directory.
+found in the ARM.CMSIS pack in the directory .\\CMSIS\\Utilities.
 
 The \ref packFormat is structured using grouping elements and contains the following top level elements:
  - \subpage pdsc_package_pg "<package>": describes package related information like vendor, package name, description, version. Is the root element. 
