@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_cm1.h
- * @brief    CMSIS Cortex-M0 Core Peripheral Access Layer Header File
+ * @brief    CMSIS Cortex-M1 Core Peripheral Access Layer Header File
  * @version  V1.0.0
- * @date     20. July 2018
+ * @date     23. July 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -56,7 +56,7 @@
  *                 CMSIS definitions
  ******************************************************************************/
 /**
-  \ingroup Cortex_M0
+  \ingroup Cortex_M1
   @{
  */
 
@@ -169,7 +169,7 @@
 #define     __OM     volatile            /*! Defines 'write only' structure member permissions */
 #define     __IOM    volatile            /*! Defines 'read / write' structure member permissions */
 
-/*@} end of group Cortex_M0 */
+/*@} end of group Cortex_M1 */
 
 
 
@@ -490,8 +490,8 @@ typedef struct
 /**
   \ingroup  CMSIS_core_register
   \defgroup CMSIS_CoreDebug       Core Debug Registers (CoreDebug)
-  \brief    Cortex-M0 Core Debug Registers (DCB registers, SHCSR, and DFSR) are only accessible over DAP and not via processor.
-            Therefore they are not covered by the Cortex-M0 header file.
+  \brief    Cortex-M1 Core Debug Registers (DCB registers, SHCSR, and DFSR) are only accessible over DAP and not via processor.
+            Therefore they are not covered by the Cortex-M1 header file.
   @{
  */
 /*@} end of group CMSIS_CoreDebug */
@@ -580,7 +580,7 @@ typedef struct
   #define NVIC_GetPendingIRQ          __NVIC_GetPendingIRQ
   #define NVIC_SetPendingIRQ          __NVIC_SetPendingIRQ
   #define NVIC_ClearPendingIRQ        __NVIC_ClearPendingIRQ
-/*#define NVIC_GetActive              __NVIC_GetActive             not available for Cortex-M0 */
+/*#define NVIC_GetActive              __NVIC_GetActive             not available for Cortex-M1 */
   #define NVIC_SetPriority            __NVIC_SetPriority
   #define NVIC_GetPriority            __NVIC_GetPriority
   #define NVIC_SystemReset            __NVIC_SystemReset
