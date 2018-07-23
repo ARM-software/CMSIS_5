@@ -189,10 +189,6 @@ Function                           | Description
 Each CAN message object may have different capabilities. Before using a CAN message object, call the 
 function \ref ARM_CAN_ObjectGetCapabilities to verify the available features.
 
-\if TODO_later
-ARM_CAN_ObjectGetCapabilities may depend on the mode (CAN_FD does not support RTR).  Let's clarify that once we have several implementations
-\endif
-
 
 \section can_filtering CAN Message Filtering
 
@@ -256,20 +252,6 @@ Example: accept any message in object #4 regardless of the ID.
   status = ptrCAN->ObjectSetFilter (4, ARM_CAN_FILTER_ID_MASKABLE_ADD, ARM_CAN_EXTENDED_ID(0), 0);
   if (status != ARM_DRIVER_OK) ... // error handling
 \endcode
-
-\if TODO_later
-  - it seems that this needs to be broken up into 4 different cases.
-
-If object does not support \ref ARM_CAN_OBJ_RX_RTR_TX_DATA setting, which can be checked in 
-message object's capabilities by using \ref ARM_CAN_ObjectGetCapabilities function, then RTR can be received on receive object but no automatism for 
-data message response is available in that case.
-
-If object does not support \ref ARM_CAN_OBJ_TX_RTR_RX_DATA
-setting, which can be checked in message object's capabilities by using \ref ARM_CAN_ObjectGetCapabilities function, then RTR can be sent on transmit object but no 
-automatism for data message reception is available in that case.
-
-ARM_CAN_ObjectGetCapabilities may depend on the mode (CAN_FD does not support RTR).  Let's clarify that once we have several implementations
-\endif
 
 \section Remote_Frame Remote Frame
 
@@ -982,50 +964,6 @@ When the \b object is deactivated, it is not used for data communication.
 
 \sa ARM_CAN_ObjectSetFilter
 **************************************************************************************************************************/
-/*
-TODO_later:
-we add this info later (once we have a CAN FD implementation)
-Hi Reinhard, 
-
-here is the explanation regarding message object structure fields:
-
-Send:
-
-  Send Data Message using MessageSend function (parameters usage):
-  id = id
-  rtr = 0
-  edl = for CAN FD it specifies if extended data length encoding of DLC is used
-  brs = for CAN FD it specifies if baud rate switching is used during data phase
-  esi - not used
- dlc - not used
-  data = pointer to data to be sent
-  size = number of data bytes to send (up to 8 for CAN, up to 64 for CAN FD)
-  function returns number data bytes accepted to be sent or -error
-
-  Send RTR Message using MessageSend function (parameters usage):
-  id = id
-  rtr = 1
-  edl - not used (CAN FD does not support RTR)
-  brs - not used (CAN FD does not support RTR)
-  esi - not used
- dlc = number of requested data bytes (up to 8 for CAN)
-  data - not used
-  size - not used
-  function returns 0 or -error
-
-Receive:
-
-  Read received message using MessageRead function (updated information):
-  id = updated with received id
-  rtr = updated with RTR information (if data message received = 0, if RTR message received = 1)
-  edl = for CAN FD it specifies if received message has extended data length used for DLC encoding
-  brs = for CAN FD it specifies if baud rate switching was used during data reception
-  esi = for CAN FD it specifies Error State Indicator (if message was received with error)
- dlc = DLC of received message, for RTR it specifies number of requested data bytes, for data message it specifies number of data bytes received
-  function returns number of data bytes read or -error (if RTR was read it returns 0)
-
-
-*/
 
 int32_t ARM_CAN_MessageSend (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, const uint8_t *data, uint8_t size)  {
   return ARM_DRIVER_OK;
