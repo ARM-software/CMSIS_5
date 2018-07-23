@@ -58,6 +58,22 @@ typedef struct {} MPU_Type;
 */                         
 #define ARM_MPU_RASR(DisableExec, AccessPermission, TypeExtField, IsShareable, IsCacheable, IsBufferable, SubRegionDisable, Size)
 
+
+/**
+* \def ARM_MPU_RASR_EX
+* \brief MPU Region Attribute and Size Register Value
+*
+* This macro is used to construct a valid \ref MPU_Type::RASR "RASR" value.
+* The ENABLE bit of the RASR value is implicitly set to 1.
+*
+* \param DisableExec       Instruction access disable bit, 1= disable instruction fetches.
+* \param AccessPermission  Data access permission configures read/write access for User and Privileged mode. Possible values see \ref ARM_MPU_AP_xxx.
+* \param AccessAttributes  Memory access attribution, see \ref ARM_MPU_ACCESS_xxx.
+* \param SubRegionDisable  Sub-region disable field (8 bits).
+* \param Size              Region size with values defined under \ref ARM_MPU_REGION_SIZE_xxx.
+*/
+#define ARM_MPU_RASR_EX(DisableExec, AccessPermission, AccessAttributes, SubRegionDisable, Size)
+
 /**
 * \brief Setup information of a single MPU Region
 * \details The typedef \ref ARM_MPU_Region_t allows to define a MPU table (array of MPU regions) with pre-compiled register values.
@@ -227,6 +243,32 @@ The following define values are used to compose the access permission for an MPU
 |ARM_MPU_AP_RO             | 0x6U             | Privileged and Unprivileged Read-only: any write generates a permission fault.
 */
 #define ARM_MPU_AP_xxx
+
+/** \def ARM_MPU_ACCESS_xxx
+\brief Values for MPU region access attributes (in RASR field)
+\details
+The following define values are used to compose the access attributes for an MPU region:
+|\#define                      | TEX  | Shareable | Cacheable | Bufferable | Description             |
+|:-----------------------------|:-----|:----------|:----------|:-----------|:------------------------|
+| ARM_MPU_ACCESS_ORDERED       | 000b | 1         | 0         | 0          | Strongly ordered memory |
+| ARM_MPU_ACCESS_DEVICE(S)     | 0s0b | S         | 0         | S          | Memory mapped peripheral device, shared (S=1) or non-shared (S=0) |
+| ARM_MPU_ACCESS_NORMAL(O,I,S) | 1BBb | S         | A         | A          | Normal memory, with outer/inner cache policy (O/I=\ref ARM_MPU_CACHEP_xxx, shared (S=1) or non-share (S=0) |
+*/
+#define ARM_MPU_ACCESS_xxx
+ 
+/** \def ARM_MPU_CACHEP_xxx
+\brief Cache policy values for MPU region access attributes (in RASR field)
+\details
+The following define values are used to compose the cacheability flags within the
+access attributes for an MPU region:
+|\#define                      | Value | Cacheability policy     |
+|:-----------------------------|:------|:------------------------|
+| ARM_MPU_CACHEP_NOCACHE       | 00b   | Non-cacheable           |
+| ARM_MPU_CACHEP_WB_WRA        | 01b   | Write-back, write and read allocate |
+| ARM_MPU_CACHEP_WT_NWA        | 10b   | Write-through, no write allocate    |
+| ARM_MPU_CACHEP_WB_NWA        | 11b   | Write-back, no write allocate       |
+*/
+#define ARM_MPU_CACHEP_xxx
  
 /** @} */
 
