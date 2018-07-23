@@ -754,7 +754,7 @@ INPUT                  = src/Overview.txt \
                          src/UsingTrustZone.txt \
                          src/Template.txt \
                          src/MISRA.txt \
-						 src/Ref_VersionControl.txt \
+                         src/Ref_VersionControl.txt \
                          src/Ref_CompilerControl.txt \
                          src/Ref_Peripheral.txt \
                          src/Ref_SystemAndClock.txt \
@@ -763,7 +763,7 @@ INPUT                  = src/Overview.txt \
                          src/Ref_cmInstr.txt \
                          src/Ref_cm4_simd.txt \
                          src/Ref_FPU.txt \
-						 src/Ref_MPU.txt \
+                         src/Ref_MPU.txt \
                          src/Ref_Systick.txt \
                          src/Ref_Debug.txt \
                          src/Ref_Trustzone.txt \
