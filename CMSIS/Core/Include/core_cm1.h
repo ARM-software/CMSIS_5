@@ -437,6 +437,32 @@ typedef struct
 
 /**
   \ingroup  CMSIS_core_register
+  \defgroup CMSIS_SCnSCB System Controls not in SCB (SCnSCB)
+  \brief    Type definitions for the System Control and ID Register not in the SCB
+  @{
+ */
+
+/**
+  \brief  Structure type to access the System Control and ID Register not in the SCB.
+ */
+typedef struct
+{
+        uint32_t RESERVED0[2U];
+  __IOM uint32_t ACTLR;                  /*!< Offset: 0x008 (R/W)  Auxiliary Control Register */
+} SCnSCB_Type;
+
+/* Auxiliary Control Register Definitions */
+#define SCnSCB_ACTLR_ITCMUAEN_Pos            4U                                        /*!< ACTLR: Instruction TCM Upper Alias Enable Position */
+#define SCnSCB_ACTLR_ITCMUAEN_Msk           (1UL << SCnSCB_ACTLR_ITCMUAEN_Pos)         /*!< ACTLR: Instruction TCM Upper Alias Enable Mask */
+
+#define SCnSCB_ACTLR_ITCMLAEN_Pos            3U                                        /*!< ACTLR: Instruction TCM Lower Alias Enable Position */
+#define SCnSCB_ACTLR_ITCMLAEN_Msk           (1UL << SCnSCB_ACTLR_ITCMLAEN_Pos)         /*!< ACTLR: Instruction TCM Lower Alias Enable Mask */
+
+/*@} end of group CMSIS_SCnotSCB */
+
+
+/**
+  \ingroup  CMSIS_core_register
   \defgroup CMSIS_SysTick     System Tick Timer (SysTick)
   \brief    Type definitions for the System Timer Registers.
   @{
@@ -536,6 +562,7 @@ typedef struct
 #define NVIC_BASE           (SCS_BASE +  0x0100UL)                    /*!< NVIC Base Address */
 #define SCB_BASE            (SCS_BASE +  0x0D00UL)                    /*!< System Control Block Base Address */
 
+#define SCnSCB              ((SCnSCB_Type    *)     SCS_BASE      )   /*!< System control Register not in SCB */
 #define SCB                 ((SCB_Type       *)     SCB_BASE      )   /*!< SCB configuration struct */
 #define SysTick             ((SysTick_Type   *)     SysTick_BASE  )   /*!< SysTick configuration struct */
 #define NVIC                ((NVIC_Type      *)     NVIC_BASE     )   /*!< NVIC configuration struct */
