@@ -8,6 +8,10 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.3.1-dev8">
+      Cortex-M1:
+       - Added beta ARMCM1 support.
+    </release>
     <release version="5.3.1-dev7">
       Generic Arm Device:
        - Reworked ARM device support files.
@@ -298,6 +302,24 @@ The Cortex-M0+ processor is an entry-level 32-bit Arm Cortex processor designed 
       <device Dname="ARMCM0P_MPU">
         <processor Dcore="Cortex-M0+" DcoreVersion="r0p1" Dfpu="NO_FPU" Dmpu="MPU" Dendian="Configurable" Dclock="10000000"/>
         <compile header="Device/ARM/ARMCM0plus/Include/ARMCM0plus_MPU.h" define="ARMCM0P_MPU"/>
+      </device>
+    </family>
+
+    <!-- ******************************  Cortex-M1  ****************************** -->
+    <family Dfamily="ARM Cortex M1" Dvendor="ARM:82">
+      <!--book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/index.html" title="Cortex-M1 Device Generic Users Guide"/-->
+      <description>
+The ARM Cortex-M1 FPGA processor is intended for deeply embedded applications that require a small processor integrated into an FPGA.
+The ARM Cortex-M1 processor implements the ARMv6-M architecture profile.
+      </description>
+      <!-- debug svd="Device/ARM/SVD/ARMCM0.svd"/ SVD files do not contain any peripheral -->
+      <memory id="IROM1"                                start="0x00000000" size="0x00040000" startup="1" default="1"/>
+      <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
+      <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
+
+      <device Dname="ARMCM1">
+        <processor Dcore="Cortex-M1" DcoreVersion="r1p0" Dfpu="NO_FPU" Dmpu="NO_MPU" Dendian="Configurable" Dclock="10000000"/>
+        <compile header="Device/ARM/ARMCM1/Include/ARMCM1.h" define="ARMCM1"/>
       </device>
     </family>
 
@@ -788,6 +810,7 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="ARMv6-M Device">
       <description>Armv6-M architecture based device</description>
       <accept Dcore="Cortex-M0"/>
+      <accept Dcore="Cortex-M1"/>
       <accept Dcore="Cortex-M0+"/>
       <accept Dcore="SC000"/>
     </condition>
@@ -834,6 +857,10 @@ and 8-bit Java bytecodes in Jazelle state.
       <accept Dcore="Cortex-M0"/>
       <accept Dcore="Cortex-M0+"/>
       <accept Dcore="SC000"/>
+    </condition>
+    <condition id="CM1">
+      <description>Cortex-M1</description>
+      <require Dcore="Cortex-M1"/>
     </condition>
     <condition id="CM3">
       <description>Cortex-M3 or SC300 processor based device</description>
@@ -963,6 +990,22 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="CM0_BE_ARMCC">
       <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device in big endian mode for the Arm Compiler</description>
       <require condition="CM0_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM1_ARMCC">
+      <description>Cortex-M1 based device for the Arm Compiler</description>
+      <require condition="CM1"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM1_LE_ARMCC">
+      <description>Cortex-M1 based device in little endian mode for the Arm Compiler</description>
+      <require condition="CM1_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM1_BE_ARMCC">
+      <description>Cortex-M1 based device in big endian mode for the Arm Compiler</description>
+      <require condition="CM1_ARMCC"/>
       <require Dendian="Big-endian"/>
     </condition>
 
@@ -1279,6 +1322,22 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dendian="Big-endian"/>
     </condition>
 
+    <condition id="CM1_GCC">
+      <description>Cortex-M1 based device for the GCC Compiler</description>
+      <require condition="CM1"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM1_LE_GCC">
+      <description>Cortex-M1 based device in little endian mode for the GCC Compiler</description>
+      <require condition="CM1_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM1_BE_GCC">
+      <description>Cortex-M1 based device in big endian mode for the GCC Compiler</description>
+      <require condition="CM1_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
     <condition id="CM3_GCC">
       <description>Cortex-M3 or SC300 processor based device for the GCC Compiler</description>
       <require condition="CM3"/>
@@ -1589,6 +1648,22 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="CM0_BE_IAR">
       <description>Cortex-M0 or Cortex-M0+ or SC000 processor based device in big endian mode for the IAR Compiler</description>
       <require condition="CM0_IAR"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM1_IAR">
+      <description>Cortex-M1 based device for the IAR Compiler</description>
+      <require condition="CM1"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM1_LE_IAR">
+      <description>Cortex-M1 based device in little endian mode for the IAR Compiler</description>
+      <require condition="CM1_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM1_BE_IAR">
+      <description>Cortex-M1 based device in big endian mode for the IAR Compiler</description>
+      <require condition="CM1_IAR"/>
       <require Dendian="Big-endian"/>
     </condition>
 
@@ -1906,6 +1981,17 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="GCC"/>
     </condition>
 
+    <condition id="ARMCM1 CMSIS">
+      <description>Generic Arm Cortex-M1 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCM1"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMCM1 CMSIS GCC">
+      <description>Generic ARM Cortex-M1 device startup and depends on CMSIS Core requiring GCC</description>
+      <require condition="ARMCM1 CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
     <condition id="ARMCM3 CMSIS">
       <description>Generic Arm Cortex-M3 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMCM3"/>
@@ -2030,13 +2116,13 @@ and 8-bit Java bytecodes in Jazelle state.
       <require condition="ARMCC GCC IAR"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
-    
+
     <!-- CMSIS NN -->
     <condition id="CMSIS NN">
       <description>Components required for NN</description>
       <require condition="CMSIS DSP"/>
     </condition>
-    
+
     <!-- RTOS RTX -->
     <condition id="RTOS RTX">
       <description>Components required for RTOS RTX</description>
@@ -2179,6 +2265,32 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCM0plus/Source/GCC/startup_ARMCM0plus.c" version="1.0.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMCM0plus/Source/GCC/gcc_arm.ld"           version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceC"      name="Device/ARM/ARMCM0plus/Source/system_ARMCM0plus.c"      version="1.0.0" attr="config"/>
+      </files>
+    </component>
+
+    <!-- Cortex-M1 -->
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.1" condition="ARMCM1 CMSIS">
+      <description>System and Startup for Generic Arm Cortex-M1 device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="header"  name="Device/ARM/ARMCM1/Include/ARMCM1.h"/>
+        <!-- startup / system file -->
+        <file category="sourceAsm"    name="Device/ARM/ARMCM1/Source/ARM/startup_ARMCM1.s" version="1.0.0" attr="config" condition="ARMCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM1/Source/GCC/startup_ARMCM1.S" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM1/Source/GCC/gcc_arm.ld"       version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM1/Source/IAR/startup_ARMCM1.s" version="1.0.0" attr="config" condition="IAR"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM1/Source/system_ARMCM1.c"      version="1.0.0" attr="config"/>
+      </files>
+    </component>
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.1" condition="ARMCM1 CMSIS GCC">
+      <description>System and Startup for Generic Arm Cortex-M1 device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="header"  name="Device/ARM/ARMCM1/Include/ARMCM1.h"/>
+        <!-- startup / system file -->
+        <file category="sourceC"      name="Device/ARM/ARMCM1/Source/GCC/startup_ARMCM1.c" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM1/Source/GCC/gcc_arm.ld"       version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM1/Source/system_ARMCM1.c"      version="1.0.0" attr="config"/>
       </files>
     </component>
 
@@ -2532,6 +2644,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- ARMCC -->
         <file category="library" condition="CM0_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM0l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
         <file category="library" condition="CM0_BE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM0b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM1_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM0l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM1_BE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM0b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
         <file category="library" condition="CM3_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM3l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
         <file category="library" condition="CM3_BE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM3b_math.lib"      src="CMSIS/DSP/Source/ARM"/>
         <file category="library" condition="CM4_LE_ARMCC"             name="CMSIS/Lib/ARM/arm_cortexM4l_math.lib"      src="CMSIS/DSP/Source/ARM"/>
@@ -2560,6 +2674,7 @@ and 8-bit Java bytecodes in Jazelle state.
 
         <!-- GCC -->
         <file category="library" condition="CM0_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM0l_math.a"     src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM1_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM0l_math.a"     src="CMSIS/DSP/Source/GCC"/>
         <file category="library" condition="CM3_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM3l_math.a"     src="CMSIS/DSP/Source/GCC"/>
         <file category="library" condition="CM4_LE_GCC"               name="CMSIS/Lib/GCC/libarm_cortexM4l_math.a"     src="CMSIS/DSP/Source/GCC"/>
         <file category="library" condition="CM4_FP_LE_GCC"            name="CMSIS/Lib/GCC/libarm_cortexM4lf_math.a"    src="CMSIS/DSP/Source/GCC"/>
@@ -2583,6 +2698,8 @@ and 8-bit Java bytecodes in Jazelle state.
 	<!-- IAR -->
         <file category="library" condition="CM0_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM0l_math.a"     src="CMSIS/DSP/Source/IAR"/>
         <file category="library" condition="CM0_BE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM0b_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM1_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM0l_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM1_BE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM0b_math.a"     src="CMSIS/DSP/Source/IAR"/>
         <file category="library" condition="CM3_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM3l_math.a"     src="CMSIS/DSP/Source/IAR"/>
         <file category="library" condition="CM3_BE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM3b_math.a"     src="CMSIS/DSP/Source/IAR"/>
         <file category="library" condition="CM4_LE_IAR"               name="CMSIS/Lib/IAR/iar_cortexM4l_math.a"     src="CMSIS/DSP/Source/IAR"/>
@@ -2613,7 +2730,7 @@ and 8-bit Java bytecodes in Jazelle state.
 
       </files>
     </component>
-    
+
     <!-- CMSIS-NN component -->
     <component Cclass="CMSIS" Cgroup="NN Lib" Cversion="1.0.0" condition="CMSIS NN">
       <description>CMSIS-NN Neural Network Library</description>
@@ -2625,7 +2742,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu_q7.c"/>
         <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu_q15.c"/>
-        
+
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c"/>
@@ -2638,14 +2755,14 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c"/>
-        
+
         <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7.c"/>
         <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c"/>
         <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15_opt.c"/>
         <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c"/>
-        
+
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c"/>
@@ -2653,7 +2770,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q7.c"/>
 
         <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_pool_q7_HWC.c"/>
-        
+
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q7.c"/>
       </files>
@@ -2692,6 +2809,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- ARMCC -->
         <file category="library" condition="CM0_LE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
         <file category="library" condition="CM0_BE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM1_LE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="CM1_BE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
         <file category="library" condition="CM3_LE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
         <file category="library" condition="CM3_BE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
         <file category="library" condition="CM4_LE_ARMCC"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
@@ -2705,6 +2824,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- GCC -->
         <file category="library" condition="CM0_LE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
         <file category="library" condition="CM0_BE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM1_LE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="CM1_BE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
         <file category="library" condition="CM3_LE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
         <file category="library" condition="CM3_BE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
         <file category="library" condition="CM4_LE_GCC"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
@@ -2718,6 +2839,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- IAR -->
         <file category="library" condition="CM0_LE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
         <file category="library" condition="CM0_BE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM1_LE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="CM1_BE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
         <file category="library" condition="CM3_LE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
         <file category="library" condition="CM3_BE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
         <file category="library" condition="CM4_LE_IAR"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
@@ -2823,6 +2946,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- RTX libraries (CPU and Compiler dependent) -->
         <!-- ARMCC -->
         <file category="library" condition="CM0_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM1_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"    src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM3_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM4_LE_ARMCC"         name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM4_FP_LE_ARMCC"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
@@ -2836,6 +2960,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
         <!-- GCC -->
         <file category="library" condition="CM0_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM0.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM1_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM0.a"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM3_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM4_LE_GCC"           name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM4_FP_LE_GCC"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
@@ -2849,6 +2974,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
         <!-- IAR -->
         <file category="library" condition="CM0_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM0.a"      src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM1_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM0.a"      src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM3_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM4_LE_IAR"           name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM4_FP_LE_IAR"        name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM4F.a"     src="CMSIS/RTOS2/RTX/Source"/>
@@ -2955,6 +3081,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_lib.c"/>
         <!-- RTX sources (handlers ARMCC) -->
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm0.s"         condition="CM0_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm0.s"         condition="CM1_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM3_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm3.s"         condition="CM4_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_cm4f.s"        condition="CM4_FP_ARMCC"/>
@@ -2968,6 +3095,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_FP_ARMCC"/>
         <!-- RTX sources (handlers GCC) -->
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm0.S"         condition="CM0_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm0.S"         condition="CM1_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"         condition="CM3_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm3.S"         condition="CM4_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_cm4f.S"        condition="CM4_FP_GCC"/>
@@ -2981,6 +3109,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="ARMv8MML_FP_GCC"/>
         <!-- RTX sources (handlers IAR) -->
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm0.s"         condition="CM0_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm0.s"         condition="CM1_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"         condition="CM3_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm3.s"         condition="CM4_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_cm4f.s"        condition="CM4_FP_IAR"/>
@@ -3134,6 +3263,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <mountedDevice    deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM0"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM0P"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM0P_MPU"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM1"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM3"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM4"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM4_FP"/>
@@ -3329,7 +3459,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <category>Getting Started</category>
       </attributes>
     </example>
-    
+
     <example name="NN Library GRU" doc="readme.txt" folder="CMSIS/NN/Examples/ARM/arm_nn_examples/gru">
       <description>Neural Network GRU example</description>
       <board name="uVision Simulator" vendor="Keil"/>
@@ -3344,7 +3474,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <category>Getting Started</category>
       </attributes>
     </example>
-    
+
     <example name="CMSIS-RTOS2 Blinky" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Blinky">
       <description>CMSIS-RTOS2 Blinky example</description>
       <board name="uVision Simulator" vendor="Keil"/>
