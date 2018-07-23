@@ -45,9 +45,12 @@ The Pack Description file (PDSC) with the file extension *.pdsc contains the \re
 - located in the base folder of the archive
 - compliant with the \ref cp_SWComponents "Software Pack" file \ref pack_filename "naming convention"
 
-\note The <em>base folder</em> is defined to be the root folder './' of a zip archive and it is imperative that the whole \ref cp_SWComponents "Software Pack" only contains a single pdsc file.
-(Future tools shall support this case: if the pdsc file is located in an immediate subdirectory, then the subdirectory becomes the base folder. The
-\ref cp_SWComponents "Software Pack" is installed as if the subdirectory does not exist. All files and directories located in the root folder are ignored and do not get installed.)
+\note
+- The <em>base folder</em> is defined to be the root folder './' of a zip archive and it is imperative that the whole
+  \ref cp_SWComponents "Software Pack" only contains a single PDSC file.
+- Future tools shall support this case: if the PDSC file is located in an immediate subdirectory, then the subdirectory
+  becomes the base folder. The \ref cp_SWComponents "Software Pack" is installed as if the subdirectory does not exist. All
+  files and directories located in the root folder are ignored and do not get installed.
 
 \subsection pack_filename Pack File Name
 

@@ -61,7 +61,7 @@ found in the ARM.CMSIS pack in the directory .\\CMSIS\\Utilities.
 The \ref packFormat is structured using grouping elements and contains the following top level elements:
  - \subpage pdsc_package_pg "<package>": describes package related information like vendor, package name, description, version. Is the root element. 
  - \subpage element_keywords "<keywords>": lists keywords to search for packages. Can be used for search engines. 
- - \subpage element_repository "<repository>": specifies url and repository type of public repository where the pack originates from.
+ - \subpage element_repository "<repository>": specifies the URL and repository type of a public repository where the pack originates from.
  - \subpage element_releases "<releases>": lists release versions with descriptions.
  - \subpage element_requirements_pg "<requirements>": lists required packs, compiler, programming language standards and their version or version range.
  - \subpage element_taxonomy "<taxonomy>": lists description elements that define component classes and component group names. 
@@ -225,7 +225,7 @@ assists searching for packages.
   </tr>
   <tr>
     <td>\ref element_repository "repository"</td>
-    <td>URL of public repository the pack originates from.</td>
+    <td>URL of a public repository the pack originates from.</td>
     <td>xs:anyURI</td>
     <td>0..1 </td>
   </tr>
@@ -414,7 +414,7 @@ Keywords can be exported to web pages to provide information for search engines,
 /**************************************************************************************************/
 /**
 \page element_repository /package/repository element
-The element specifies the url of the public repository the pack originates from. The attribute 'type' specifies the repository technology
+The element specifies the URL of the public repository the pack originates from. The attribute 'type' specifies the repository technology
 and therefore the tools required to be used with this repository.
 
 
@@ -454,18 +454,18 @@ and therefore the tools required to be used with this repository.
   </tr>
 </table>
 
-<p>&nbsp;</p>
+\b Example:
+
+Contributing to a software pack hosted on GitHub:
+
+- Open the URL specified by the \c \<repository> element in a browser.
+- Create a fork of the repository.
+- Clone the fork on your machine (you may want to checkout the \c tag specified in the \ref element_releases "\<release>" element).
+- Create a branch for you modifications.
+- Develop and test the modifications of your branch and push the branch to GitHub.
+- Create a pull request of your branch into the upstream repository.
+
 <hr>
-
-Contributing to Software Packs from fopen source repositories (e.g. github):
-
-- open the url specified by the \c \<repository> tag in a browser
-- create a fork of the repository
-- clone the fork on your machine (you may want to checkout the tag specified in the \c \<release tag="..."> element).
-- create a branch for you modifications.
-- develop and test the modifications of your branch and push the branch to github.
-- open the webpage of your forked repository and from the browser create a pull request of your branch into the upstream repository.
-
 */
 
 /**************************************************************************************************/
