@@ -48,6 +48,8 @@ extern void cmsis_cv (void);
   extern void TC_CoreInstr_LoadStoreUnpriv (void);
   extern void TC_CoreInstr_LoadStoreAcquire (void);
   extern void TC_CoreInstr_LoadStoreAcquireExclusive (void);
+  extern void TC_CoreInstr_UnalignedUint16 (void);
+  extern void TC_CoreInstr_UnalignedUint32 (void);
 #endif
 
 #if defined(RTE_CV_CORESIMD) && RTE_CV_CORESIMD
