@@ -63,6 +63,8 @@ static TEST_CASE TC_LIST[] = {
     TCD ( TC_CoreInstr_LoadStoreUnpriv,            TC_COREINSTR_LOADSTOREUNPRIV_EN           ),
     TCD ( TC_CoreInstr_LoadStoreAcquire,           TC_COREINSTR_LOADSTOREACQUIRE_EN          ),
     TCD ( TC_CoreInstr_LoadStoreAcquireExclusive,  TC_COREINSTR_LOADSTOREACQUIREEXCLUSIVE_EN ),
+    TCD ( TC_CoreInstr_UnalignedUint16,            TC_COREINSTR_UNALIGNEDUINT16_EN           ),
+    TCD ( TC_CoreInstr_UnalignedUint32,            TC_COREINSTR_UNALIGNEDUINT32_EN           ),
 
   #elif defined(__CORTEX_A)
     TCD (TC_CoreInstr_NOP,                         TC_COREINSTR_NOP_EN                 ),
