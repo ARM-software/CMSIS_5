@@ -94,15 +94,16 @@ class CmsisPackVersionParser(VersionParser):
     return self._revhistory_(file, skip)
     
   def introduction_txt(self, file, component = None):
-    if not component:
-      return None
-      
     table = self._cmtable_(file)
-    if table is not None:
+    if table is None:
+      return None
+
+    if component:
       m = re.search(re.escape(component)+"\s+[Vv]?(\d+.\d+(.\d+)?)", table[1][1].text, re.MULTILINE)
       if m:
         return SemanticVersion(m.group(1))
-    return None
+    else:
+      return SemanticVersion(table[1][0].text)
     
   def dap_txt(self, file, skip = 0):
     return self._revhistory_(file, skip)
@@ -158,6 +159,7 @@ class CmsisPackLinter(PackLinter):
     v = self.pack_version()
     self.verify_version("README.md", v)
     self.verify_version("CMSIS/DoxyGen/General/general.dxy", v)
+    self.verify_version("CMSIS/DoxyGen/General/src/introduction.txt", v)
 
   def check_corem(self):
     """CMSIS-Core(M) version"""
@@ -245,9 +247,9 @@ class CmsisPackLinter(PackLinter):
             if not hv:
               self.verify_version(f.location(), cv)
         if hv:
-          self.verify_version(f.location(), hv)
+          self.verify_version(f.location(), SemanticVersion(hv))
   
-  def check_doc(self, pattern="./gen_pack/CMSIS/Documentation/**/*.html"):
+  def check_doc(self, pattern="./CMSIS/Documentation/**/*.html"):
     """Documentation"""
     self.debug("Using pattern '%s'", pattern)
     for html in iglob(pattern, recursive=True):

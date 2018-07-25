@@ -71,6 +71,7 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <td>
         <ul>
           <li>Removed using get/set built-ins FPSCR in GCC >= 7.2 due to shortcomings.</li>
+          <li>Fixed co-processor register access macros for Arm Compiler 5.</li>
         </ul>
       </td>
     </tr>
