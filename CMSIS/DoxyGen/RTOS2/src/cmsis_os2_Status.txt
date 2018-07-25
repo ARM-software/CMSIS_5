@@ -18,6 +18,7 @@ The \b osStatus_t enumeration defines the event status and error codes that are 
 \def osWaitForever
 \details A special \ref CMSIS_RTOS_TimeOutValue that informs the RTOS to wait infinite until a resource becomes available.
 It applies to the following functions: 
+ - \ref osDelay : \copybrief osDelay
  - \ref osThreadFlagsWait : \copybrief osThreadFlagsWait 
  - \ref osEventFlagsWait : \copybrief osEventFlagsWait
  - \ref osMutexAcquire : \copybrief osMutexAcquire
