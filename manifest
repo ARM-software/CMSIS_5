@@ -35,9 +35,10 @@ glob:
  - CMSIS/Pack/**/*
  - CMSIS/RTOS/**/*
  - CMSIS/RTOS2/**/*
- - CMSIS/Utilities/ARM_Example.*: CMSIS/SVD/
+ - CMSIS/Utilities/ARM_Example.*: CMSIS/SVD/ARM_Example.
  - CMSIS/Utilities/CMSIS-SVD.xsd
  - CMSIS/Utilities/PACK.xsd
+ - CMSIS/Utilities/PackIndex.xsd
  - CMSIS/Utilities/Win32/**/*
  - CMSIS/Utilities/Linux-gcc-4.4.4/**/*
  - CMSIS/Utilities/Linux-gcc-4.8.3/**/*
