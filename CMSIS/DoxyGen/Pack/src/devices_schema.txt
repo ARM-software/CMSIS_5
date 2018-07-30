@@ -1886,6 +1886,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td></td>
   </tr>
   <tr>
+    <td class="XML-Token">Generalplus:151</td>
+    <td>Generalplus Technology Inc.</td>
+    <td>http://www.generalplus.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">GigaDevice:123</td>
     <td>GigaDevice</td>
     <td>http://www.gigadevice.com</td>
