@@ -9,7 +9,7 @@ Refer to the \ref ref_man_sec for detailed information about these Cortex-M inst
 \note
 When using the <b>Arm Compiler Version 5 Toolchain</b> the following \ref intrinsic_CPU_gr are implemented using the Embedded Assembler. 
 As the Embedded Assembler may cause side effects (Refer to <b>Arm Compiler v5.xx User Guide - Using the Inline and Embedded Assemblers of the Arm Compiler</b> for more information)
-it is possible to disable the following intrinsic function and therefore the usage of the Embedded Assembler with the <b><i>define __NO_EMBEDDED_ASM</i></b>: 
+it is possible to disable the following intrinsic functions and therefore the usage of the Embedded Assembler with the <b><i>define __NO_EMBEDDED_ASM</i></b>: 
  - \ref __REV16
  - \ref __REVSH
  - \ref __RRX
