@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('group__CMSIS__RTOS__Wait.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Generic Wait Functions<div class="ingroups"><a class="el" href="group__CMSIS__RTOS.html">CMSIS-RTOS2 API</a></div></div>  </div>
+<div class="title">Generic Wait Functions<div class="ingroups"><a class="el" href="group__CMSIS__RTOS.html">CMSIS-RTOS API v2</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -192,7 +192,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
 <p>The function <b>osDelayUntil</b> waits until an absolute time (specified in kernel <em>ticks</em>) is reached.</p>
-<p>The corner case when the kernel tick counter overflows is handled by <b>osDelayUntil</b>. Thus it is absolutely legal to provide a value which is lower than the current tick value, i.e. returned by <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a>. Typically as a user you do not have to take care about the overflow. The only limitation you have to have in mind is that the maximum delay is limited to (2<sup>32</sup>)-1 ticks.</p>
+<p>The corner case when the kernel tick counter overflows is handled by <b>osDelayUntil</b>. Thus it is absolutely legal to provide a value which is lower than the current tick value, i.e. returned by <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a>. Typically as a user you do not have to take care about the overflow. The only limitation you have to have in mind is that the maximum delay is limited to (2<sup>31</sup>)-1 ticks.</p>
 <p>The delayed thread is put into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state and a context switch occurs immediately. The thread is automatically put back to the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> state when the given time is reached. If the thread will have the highest priority in <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> state it will being scheduled immediately.</p>
 <p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
 <ul>
@@ -222,7 +222,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

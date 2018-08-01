@@ -217,7 +217,7 @@ Display of microcontroller devices in development tools</div></div>
 </pre> We will address this problem in the next section.</dd></dl>
 <h1><a class="anchor" id="cp_System_Startp"></a>
 System and Startup Files</h1>
-<p><a href="http://www.keil.com/cmsis/core" class="el" target="_blank">CMSIS-Core (Cortex-M)</a> defines the following files to be used by an embedded application:</p>
+<p><a href="../../Core/html/index.html">CMSIS-Core (Cortex-M)</a> defines the following files to be used by an embedded application:</p>
 <ul>
 <li><code>startup_&lt;device&gt;.s</code> with reset handler and exception vectors. It is executed after reset and calls <code>SystemInit</code> and may contain stack and heap configurations for the user application.</li>
 <li><code>system_&lt;device&gt;.c</code> and <code>system_&lt;device&gt;.h</code> with general system configuration information (i.e. for clock and BUS setup).</li>
@@ -227,7 +227,7 @@ System and Startup Files</h1>
 <img src="SystemStartupFiles.png" alt="SystemStartupFiles.png"/>
 <div class="caption">
 System and startup files in relation to user code</div></div>
- <dl class="section note"><dt>Note</dt><dd><a href="http://www.keil.com/pack/doc/CMSIS/Core/html/_templates_pg.html" class="el" target="_blank">CMSIS-Core (Cortex-M)</a> explains the structure of the system and startup files and how to create them.</dd></dl>
+ <dl class="section note"><dt>Note</dt><dd><a href="../../Core/html/templates_pg.html">CMSIS-Core (Cortex-M)</a> explains the structure of the system and startup files and how to create them.</dd></dl>
 <p>Copy the <em>content</em> of the <b>02_System_and_Startup</b> directory of the <b>Pack_with_Device_Support.zip</b> file to the <b>Files</b> directory in your working environment: </p>
 <ol>
 <li>
@@ -524,7 +524,7 @@ Finally, save the PDSC file and regenerate the Pack file using the <a class="el"
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:26 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

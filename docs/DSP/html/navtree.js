@@ -2,7 +2,7 @@ var NAVTREE =
 [
   [ "CMSIS-DSP", "index.html", [
     [ "CMSIS DSP Software Library", "index.html", null ],
-    [ "Change Log", "ChangeLog_pg.html", null ],
+    [ "Revision History of CMSIS-DSP", "ChangeLog_pg.html", null ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Reference", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", "annotated" ],

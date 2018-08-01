@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.1</span>
+   &#160;<span id="projectnumber">Version 5.1.2</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -111,9 +111,17 @@ $(document).ready(function(){initNavTree('core_revisionHistory.html','');});
 <div class="title">Revision History of CMSIS-Core (Cortex-M) </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><table  class="cmtable" summary="Core Exception Name">
+<div class="textblock"><table  class="cmtable" summary="Revision History">
 <tr>
 <th>Version </th><th>Description  </th></tr>
+<tr>
+<td>V5.1.2 </td><td>Removed using get/set built-ins FPSCR in GCC &gt;= 7.2 due to shortcomings.<br/>
+ Added __NO_RETURN to __NVIC_SystemReset() to silence compiler warnings.<br/>
+ Added support for Cortex-M1 (beta). <br/>
+ Removed usage of register keyword. <br/>
+ Added defines for EXC_RETURN, FNC_RETURN and integrity signature values. <br/>
+ Enhanced MPUv7 API with defines for memory access attributes.<br/>
+   </td></tr>
 <tr>
 <td>V5.1.1 </td><td>Aligned MSPLIM and PSPLIM access functions along supported compilers.<br/>
    </td></tr>
@@ -254,7 +262,7 @@ Beta 1 </td><td>Renamed: cmsis_armcc_V6.h to cmsis_armclang.h.<br/>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:02:45 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:08 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -121,14 +121,14 @@ System Startup</h1>
 <li>Update the system core clock using the respective <a href="../../Core/html/group__system__init__gr.html">CMSIS-Core (Cortex-M)</a> or <a href="../../Core_A/html/group__system__init__gr.html">CMSIS-Core (Cortex-A)</a> function.</li>
 <li>Initialize the CMSIS-RTOS kernel using <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>.</li>
 <li>Optionally, create a new thread <code>app_main</code>, which is used as a main thread using <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>. Alternatively, threads can be created in <code>main()</code> directly.</li>
-<li>Start the RTOS scheduler using <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>. This function does not return in case of successful execution. Any application code after <b>osKernelStart</b> will not be executed unless <b>osKernelStart</b> fails.</li>
+<li>Start the RTOS scheduler using <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a> which also configure system tick timer and RTOS specific interrupts. This function does not return in case of successful execution. Any application code after <b>osKernelStart</b> will therefore not be executed.</li>
 </ol>
-<dl class="section note"><dt>Note</dt><dd>Interrupts (like SVC for example) used by the kernel are initialized in <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>. In case priorities and groupings in the NVIC are altered by the application after the above sequence it might be necessary to call <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a> again. You might observe weird misbehaviour possibly catched by <a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> or causing a hard fault.</dd>
+<dl class="section note"><dt>Note</dt><dd>Interrupts are initialized in <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>. Modifying basic In case priorities and groupings in the NVIC are altered by the application after the above sequence it might be necessary to call <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a> again. Incorrect ossibly catched by <a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> or causing a hard fault.</dd>
 <dd>
-The tick timer is configured during <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>. The tick interval is calculated based on the <code>SystemCoreClock</code> variable.</dd></dl>
+The tick timer is configured during <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>. </dd></dl>
 <h1><a class="anchor" id="Scheduler"></a>
 Scheduler</h1>
-<p>RTX5 implements a low-latency preemtive scheduler. Major parts of RTX5 are executed in handler mode such as</p>
+<p>RTX5 implements a low-latency preemptive scheduler. Major parts of RTX5 are executed in handler mode such as</p>
 <ul>
 <li><a class="el" href="rtx__os_8h.html#ab5e09814056d617c521549e542639b7e">SysTick_Handler</a> used for time-based scheduling.</li>
 <li><a class="el" href="rtx__os_8h.html#a3e5ddb3df0d62f2dc357e64a3f04a6ce">SVC_Handler</a> used for lock-based scheduling.</li>
@@ -140,8 +140,8 @@ Scheduler</h1>
 <div class="caption">
 Thread scheduling and interrupt execution</div></div>
 <p> The scheduler combines priority and round-robin based context switches. The example depicted in the image above contains four threads (1, 2, 3, and 4). Threads 1 and 2 share the same priority, thread 3 has a higher one and thread 4 the highest (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a6a5183df4c54c3e28dc8dc704f2487d5">osThreadAttr_t::priority</a>). As long as threads 3 and 4 are blocked the scheduler switches between thread 1 and 2 on a time-slice basis (round-robin). The time-slice for round-robin scheduling can be configured, see Round-Robin Timeout in <a class="el" href="config_rtx5.html#systemConfig">System Configuration</a>.</p>
-<p>Thread 2 unblocks thread 3 by an arbitrary RTOS-call (executed in SVC handler mode) at time index 2. The scheduler switches to thread 3 immidiately because thread 3 has the highest priority. Thread 4 is still blocked.</p>
-<p>At time index 4 an interrupt (ISR) occurs and preempts the SysTick_Handler. RTX does not add any latency to the interrupt service execution. The ISR routine uses an RTOS-call that unblocks thread 4. Instead of switching to thread 4 immediately the PendSV flag is set to defer the context switching. The PendSV_Handler is executed right after the SysTick_Handler returns and the defered context switch to thread 4 is carried out. As soon as highest priority thread 4 blocks again by using a blocking RTOS-call execution is switched back to thread 3 immidiately during time index 5.</p>
+<p>Thread 2 unblocks thread 3 by an arbitrary RTOS-call (executed in SVC handler mode) at time index 2. The scheduler switches to thread 3 immediately because thread 3 has the highest priority. Thread 4 is still blocked.</p>
+<p>At time index 4 an interrupt (ISR) occurs and preempts the SysTick_Handler. RTX does not add any latency to the interrupt service execution. The ISR routine uses an RTOS-call that unblocks thread 4. Instead of switching to thread 4 immediately the PendSV flag is set to defer the context switching. The PendSV_Handler is executed right after the SysTick_Handler returns and the deferred context switch to thread 4 is carried out. As soon as highest priority thread 4 blocks again by using a blocking RTOS-call execution is switched back to thread 3 immediately during time index 5.</p>
 <p>At time index 5 thread 3 uses a blocking RTOS-call as well. Thus the scheduler switches back to thread 2 for time index 6. At time index 7 the scheduler uses the round-robin mechanism to switch to thread 1 and so on.</p>
 <h1><a class="anchor" id="MemoryAllocation"></a>
 Memory Allocation</h1>
@@ -244,7 +244,7 @@ Statically allocated memory for all objects</div></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Define objects that are statically allocated for worker thread 1</span></div>
 <div class="line">__attribute__((section(<span class="stringliteral">&quot;.bss.os.thread.cb&quot;</span>)))</div>
-<div class="line"><a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a> worker_thread_tcb_1;</div>
+<div class="line"><a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a> worker_thread_tcb_1;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Reserve two areas for the stacks of worker thread 1</span></div>
 <div class="line"><span class="comment">// uint64_t makes sure the memory alignment is 8</span></div>
@@ -300,7 +300,7 @@ Low-Power Operation</h1>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;RTE_Components.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include CMSIS_device_header            </span><span class="comment">/* Device definitions                 */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#gacc47720b9a10fcb7d3412640c8276465">osRtxIdleThread</a> (<span class="keywordtype">void</span>) {</div>
+<div class="line"><span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#ga074068b8efa7074cee68a71481d0b072">osRtxIdleThread</a> (<span class="keywordtype">void</span>) {</div>
 <div class="line">  <span class="comment">/* The idle demon is a system thread, running when no other thread is       */</span></div>
 <div class="line">  <span class="comment">/* ready to run.                                                            */</span></div>
 <div class="line"> </div>
@@ -362,7 +362,7 @@ Tick-less Low-Power Operation</h2>
 <div class="line"> </div>
 <div class="line">uint32_t g_enable_sleep = 0;</div>
 <div class="line">  </div>
-<div class="line"><span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#gacc47720b9a10fcb7d3412640c8276465">osRtxIdleThread</a> (<span class="keywordtype">void</span>) {</div>
+<div class="line"><span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#ga074068b8efa7074cee68a71481d0b072">osRtxIdleThread</a> (<span class="keywordtype">void</span>) {</div>
 <div class="line">  </div>
 <div class="line">  <span class="keywordflow">for</span> (;;) {</div>
 <div class="line">    tc_wakeup = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#gae26683e1606ec633354a2876c68f0c1f">osKernelSuspend</a>();</div>
@@ -421,9 +421,9 @@ RTX5 Header File</h1>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Kernel Information</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxVersionAPI      20010002   </span><span class="comment">///&lt; API version (2.1.2)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50030000   <span class="comment">///&lt; Kernel version (5.3.0)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.3.0&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
+<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxVersionAPI      20010003   </span><span class="comment">///&lt; API version (2.1.3)</span></div>
+<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50040000   <span class="comment">///&lt; Kernel version (5.4.0)</span></div>
+<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.4.0&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Common definitions ====</span></div>
@@ -438,10 +438,6 @@ RTX5 Header File</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdMemoryPool       0x06U</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdMessage          0x07U</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxIdMessageQueue     0x08U</span></div>
-<div class="line"><span class="preprocessor"></span> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Object State definitions (except for Threads and Timers)</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxObjectInactive     0x00U</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxObjectActive       0x01U</span></div>
 <div class="line"><span class="preprocessor"></span> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Object Flags definitions</span></div>
 <div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxFlagSystemObject   0x01U</span></div>
@@ -511,7 +507,10 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>  uint32_t                         sp;  <span class="comment">///&lt; Current Stack Pointer</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                thread_addr;  <span class="comment">///&lt; Thread entry address</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                  tz_memory;  <span class="comment">///&lt; TrustZone Memory Identifier</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>;</div>
+<div class="line"><span class="comment"></span><span class="preprocessor">#ifdef RTX_TF_M_EXTENSION</span></div>
+<div class="line"><span class="preprocessor"></span>  uint32_t                  tz_module;  <span class="comment">///&lt; TrustZone Module Identifier</span></div>
+<div class="line"><span class="comment"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>} <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Timer definitions ====</span></div>
@@ -528,7 +527,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaacf768c1ec64b020598afb985d7b30be">osTimerFunc_t</a>                  func;  <span class="comment">///&lt; Function Pointer</span></div>
 <div class="line"><span class="comment"></span>  <span class="keywordtype">void</span>                           *arg;  <span class="comment">///&lt; Function Argument</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="group__rtx5__specific__structs.html#structosRtxTimerFinfo__t">osRtxTimerFinfo_t</a>;</div>
+<div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxTimerFinfo__t">osRtxTimerFinfo_t</a>;</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Timer Control Block</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>osRtxTimer_s {</div>
@@ -541,8 +540,8 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>  <span class="keyword">struct </span>osRtxTimer_s           *next;  <span class="comment">///&lt; Pointer to next active Timer</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                       tick;  <span class="comment">///&lt; Timer current Tick</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                       load;  <span class="comment">///&lt; Timer Load value</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="group__rtx5__specific__structs.html#structosRtxTimerFinfo__t">osRtxTimerFinfo_t</a>             finfo;  <span class="comment">///&lt; Timer Function Info</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="group__rtx5__specific__structs.html#structosRtxTimer__t">osRtxTimer_t</a>;</div>
+<div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxTimerFinfo__t">osRtxTimerFinfo_t</a>             finfo;  <span class="comment">///&lt; Timer Function Info</span></div>
+<div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxTimer__t">osRtxTimer_t</a>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Event Flags definitions ====</span></div>
@@ -550,13 +549,13 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment">/// Event Flags Control Block</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
-<div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
+<div class="line"><span class="comment"></span>  uint8_t              reserved_state;  <span class="comment">///&lt; Object State (not used)</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                    reserved;</div>
 <div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                event_flags;  <span class="comment">///&lt; Event Flags</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="group__rtx5__specific__structs.html#structosRtxEventFlags__t">osRtxEventFlags_t</a>;</div>
+<div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxEventFlags__t">osRtxEventFlags_t</a>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Mutex definitions ====</span></div>
@@ -564,17 +563,17 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment">/// Mutex Control Block</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>osRtxMutex_s {</div>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
-<div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
+<div class="line"><span class="comment"></span>  uint8_t              reserved_state;  <span class="comment">///&lt; Object State (not used)</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                        attr;  <span class="comment">///&lt; Object Attributes</span></div>
 <div class="line"><span class="comment"></span>  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>         *owner_thread;  <span class="comment">///&lt; Owner Thread</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>         *owner_thread;  <span class="comment">///&lt; Owner Thread</span></div>
 <div class="line"><span class="comment"></span>  <span class="keyword">struct </span>osRtxMutex_s     *owner_prev;  <span class="comment">///&lt; Pointer to previous owned Mutex</span></div>
 <div class="line"><span class="comment"></span>  <span class="keyword">struct </span>osRtxMutex_s     *owner_next;  <span class="comment">///&lt; Pointer to next owned Mutex</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                        lock;  <span class="comment">///&lt; Lock counter</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                  padding[3];</div>
-<div class="line">} <a class="code" href="group__rtx5__specific__structs.html#structosRtxMutex__t">osRtxMutex_t</a>;</div>
+<div class="line">} <a class="code" href="rtx__os_8h.html#structosRtxMutex__t">osRtxMutex_t</a>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Semaphore definitions ====</span></div>
@@ -582,14 +581,14 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment">/// Semaphore Control Block</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
-<div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
+<div class="line"><span class="comment"></span>  uint8_t              reserved_state;  <span class="comment">///&lt; Object State (not used)</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                    reserved;</div>
 <div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
 <div class="line"><span class="comment"></span>  uint16_t                     tokens;  <span class="comment">///&lt; Current number of tokens</span></div>
 <div class="line"><span class="comment"></span>  uint16_t                 max_tokens;  <span class="comment">///&lt; Maximum number of tokens</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="group__rtx5__specific__structs.html#structosRtxSemaphore__t">osRtxSemaphore_t</a>;</div>
+<div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxSemaphore__t">osRtxSemaphore_t</a>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Memory Pool definitions ====</span></div>
@@ -607,13 +606,13 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment">/// Memory Pool Control Block</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
-<div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
+<div class="line"><span class="comment"></span>  uint8_t              reserved_state;  <span class="comment">///&lt; Object State (not used)</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                    reserved;</div>
 <div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxMpInfo__t">osRtxMpInfo_t</a>               mp_info;  <span class="comment">///&lt; Memory Pool Info</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="group__rtx5__specific__structs.html#structosRtxMemoryPool__t">osRtxMemoryPool_t</a>;</div>
+<div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxMemoryPool__t">osRtxMemoryPool_t</a>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Message Queue definitions ====</span></div>
@@ -621,7 +620,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment">/// Message Control Block</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>osRtxMessage_s {</div>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
-<div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
+<div class="line"><span class="comment"></span>  uint8_t              reserved_state;  <span class="comment">///&lt; Object State (not used)</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                    priority;  <span class="comment">///&lt; Message Priority</span></div>
 <div class="line"><span class="comment"></span>  <span class="keyword">struct </span>osRtxMessage_s         *prev;  <span class="comment">///&lt; Pointer to previous Message</span></div>
@@ -631,17 +630,17 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment">/// Message Queue Control Block</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
-<div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
+<div class="line"><span class="comment"></span>  uint8_t              reserved_state;  <span class="comment">///&lt; Object State (not used)</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                    reserved;</div>
 <div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxMpInfo__t">osRtxMpInfo_t</a>               mp_info;  <span class="comment">///&lt; Memory Pool Info</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                   msg_size;  <span class="comment">///&lt; Message Size</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                  msg_count;  <span class="comment">///&lt; Number of queued Messages</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxMessage__t">osRtxMessage_t</a>           *msg_first;  <span class="comment">///&lt; Pointer to first Message</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxMessage__t">osRtxMessage_t</a>            *msg_last;  <span class="comment">///&lt; Pointer to last Message</span></div>
-<div class="line"><span class="comment"></span>} <a class="code" href="group__rtx5__specific__structs.html#structosRtxMessageQueue__t">osRtxMessageQueue_t</a>;</div>
+<div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxMessageQueue__t">osRtxMessageQueue_t</a>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Generic Object definitions ====</span></div>
@@ -653,7 +652,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                    reserved;</div>
 <div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
-<div class="line"><span class="comment"></span>  <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Threads List</span></div>
+<div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Threads List</span></div>
 <div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxObject__t">osRtxObject_t</a>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
@@ -673,24 +672,24 @@ RTX5 Header File</h1>
 <div class="line">  int32_t                   tick_irqn;  <span class="comment">///&lt; Tick Timer IRQ Number</span></div>
 <div class="line"><span class="comment"></span>  <span class="keyword">struct </span>{                              <span class="comment">///&lt; Thread Info</span></div>
 <div class="line"><span class="comment"></span>    <span class="keyword">struct </span>{                            <span class="comment">///&lt; Thread Run Info</span></div>
-<div class="line"><span class="comment"></span>      <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>             *curr;  <span class="comment">///&lt; Current running Thread</span></div>
-<div class="line"><span class="comment"></span>      <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>             *next;  <span class="comment">///&lt; Next Thread to Run</span></div>
+<div class="line"><span class="comment"></span>      <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>             *curr;  <span class="comment">///&lt; Current running Thread</span></div>
+<div class="line"><span class="comment"></span>      <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>             *next;  <span class="comment">///&lt; Next Thread to Run</span></div>
 <div class="line"><span class="comment"></span>    } run;</div>
 <div class="line">    <a class="code" href="rtx__os_8h.html#structosRtxObject__t">osRtxObject_t</a>               ready;  <span class="comment">///&lt; Ready List Object</span></div>
-<div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>               *idle;  <span class="comment">///&lt; Idle Thread</span></div>
-<div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>         *delay_list;  <span class="comment">///&lt; Delay List</span></div>
-<div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>          *wait_list;  <span class="comment">///&lt; Wait List (no Timeout)</span></div>
-<div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>     *terminate_list;  <span class="comment">///&lt; Terminate Thread List</span></div>
+<div class="line"><span class="comment"></span>    <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>               *idle;  <span class="comment">///&lt; Idle Thread</span></div>
+<div class="line"><span class="comment"></span>    <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>         *delay_list;  <span class="comment">///&lt; Delay List</span></div>
+<div class="line"><span class="comment"></span>    <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *wait_list;  <span class="comment">///&lt; Wait List (no Timeout)</span></div>
+<div class="line"><span class="comment"></span>    <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>     *terminate_list;  <span class="comment">///&lt; Terminate Thread List</span></div>
 <div class="line"><span class="comment"></span>    <span class="keyword">struct </span>{                            <span class="comment">///&lt; Thread Round Robin Info</span></div>
-<div class="line"><span class="comment"></span>      <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>           *thread;  <span class="comment">///&lt; Round Robin Thread</span></div>
+<div class="line"><span class="comment"></span>      <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>           *thread;  <span class="comment">///&lt; Round Robin Thread</span></div>
 <div class="line"><span class="comment"></span>      uint32_t                   tick;  <span class="comment">///&lt; Round Robin Time Tick</span></div>
 <div class="line"><span class="comment"></span>      uint32_t                timeout;  <span class="comment">///&lt; Round Robin Timeout</span></div>
 <div class="line"><span class="comment"></span>    } robin;</div>
 <div class="line">  } thread;</div>
 <div class="line">  <span class="keyword">struct </span>{                              <span class="comment">///&lt; Timer Info</span></div>
-<div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxTimer__t">osRtxTimer_t</a>                *list;  <span class="comment">///&lt; Active Timer List</span></div>
-<div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>             *thread;  <span class="comment">///&lt; Timer Thread</span></div>
-<div class="line"><span class="comment"></span>    <a class="code" href="group__rtx5__specific__structs.html#structosRtxMessageQueue__t">osRtxMessageQueue_t</a>           *mq;  <span class="comment">///&lt; Timer Message Queue</span></div>
+<div class="line"><span class="comment"></span>    <a class="code" href="rtx__os_8h.html#structosRtxTimer__t">osRtxTimer_t</a>                *list;  <span class="comment">///&lt; Active Timer List</span></div>
+<div class="line"><span class="comment"></span>    <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>             *thread;  <span class="comment">///&lt; Timer Thread</span></div>
+<div class="line"><span class="comment"></span>    <a class="code" href="rtx__os_8h.html#structosRtxMessageQueue__t">osRtxMessageQueue_t</a>           *mq;  <span class="comment">///&lt; Timer Message Queue</span></div>
 <div class="line"><span class="comment"></span>    void                (*tick)(void);  <span class="comment">///&lt; Timer Tick Function</span></div>
 <div class="line"><span class="comment"></span>  } timer;</div>
 <div class="line">  <span class="keyword">struct </span>{                              <span class="comment">///&lt; ISR Post Processing Queue</span></div>
@@ -701,10 +700,10 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>    <span class="keywordtype">void</span>                       **data;  <span class="comment">///&lt; Queue Data</span></div>
 <div class="line"><span class="comment"></span>  } isr_queue;</div>
 <div class="line">  <span class="keyword">struct </span>{                                      <span class="comment">///&lt; ISR Post Processing functions</span></div>
-<div class="line"><span class="comment"></span>    void          (*thread)(<a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a>*);    <span class="comment">///&lt; Thread Post Processing function</span></div>
-<div class="line"><span class="comment"></span>    void (*event_flags)(<a class="code" href="group__rtx5__specific__structs.html#structosRtxEventFlags__t">osRtxEventFlags_t</a>*);    <span class="comment">///&lt; Event Flags Post Processing function</span></div>
-<div class="line"><span class="comment"></span>    void    (*semaphore)(<a class="code" href="group__rtx5__specific__structs.html#structosRtxSemaphore__t">osRtxSemaphore_t</a>*);    <span class="comment">///&lt; Semaphore Post Processing function</span></div>
-<div class="line"><span class="comment"></span>    void (*memory_pool)(<a class="code" href="group__rtx5__specific__structs.html#structosRtxMemoryPool__t">osRtxMemoryPool_t</a>*);    <span class="comment">///&lt; Memory Pool Post Processing function</span></div>
+<div class="line"><span class="comment"></span>    void          (*thread)(<a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>*);    <span class="comment">///&lt; Thread Post Processing function</span></div>
+<div class="line"><span class="comment"></span>    void (*event_flags)(<a class="code" href="rtx__os_8h.html#structosRtxEventFlags__t">osRtxEventFlags_t</a>*);    <span class="comment">///&lt; Event Flags Post Processing function</span></div>
+<div class="line"><span class="comment"></span>    void    (*semaphore)(<a class="code" href="rtx__os_8h.html#structosRtxSemaphore__t">osRtxSemaphore_t</a>*);    <span class="comment">///&lt; Semaphore Post Processing function</span></div>
+<div class="line"><span class="comment"></span>    void (*memory_pool)(<a class="code" href="rtx__os_8h.html#structosRtxMemoryPool__t">osRtxMemoryPool_t</a>*);    <span class="comment">///&lt; Memory Pool Post Processing function</span></div>
 <div class="line"><span class="comment"></span>    void        (*message)(<a class="code" href="rtx__os_8h.html#structosRtxMessage__t">osRtxMessage_t</a>*);    <span class="comment">///&lt; Message Post Processing function</span></div>
 <div class="line"><span class="comment"></span>  } post_process;</div>
 <div class="line">  <span class="keyword">struct </span>{                              <span class="comment">///&lt; Memory Pools (Variable Block Size)</span></div>
@@ -787,13 +786,18 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span><span class="keyword">extern</span> uint32_t <a class="code" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> (uint32_t code, <span class="keywordtype">void</span> *object_id);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// OS Idle Thread</span></div>
-<div class="line"><span class="comment"></span><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#gacc47720b9a10fcb7d3412640c8276465">osRtxIdleThread</a> (<span class="keywordtype">void</span> *argument);</div>
+<div class="line"><span class="comment"></span><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#ga074068b8efa7074cee68a71481d0b072">osRtxIdleThread</a> (<span class="keywordtype">void</span> *argument);</div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// OS Exception handlers</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="rtx__os_8h.html#a3e5ddb3df0d62f2dc357e64a3f04a6ce">SVC_Handler</a>     (<span class="keywordtype">void</span>);</div>
 <div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="rtx__os_8h.html#a6303e1f258cbdc1f970ce579cc015623">PendSV_Handler</a>  (<span class="keywordtype">void</span>);</div>
 <div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="rtx__os_8h.html#ab5e09814056d617c521549e542639b7e">SysTick_Handler</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"> </div>
+<div class="line"> <span class="comment"></span></div>
+<div class="line"><span class="comment">/// OS Trusted Firmware M Extension</span></div>
+<div class="line"><span class="comment"></span><span class="preprocessor">#ifdef RTX_TF_M_EXTENSION</span></div>
+<div class="line"><span class="preprocessor"></span><span class="keyword">extern</span> uint32_t osRtxTzGetModuleId (<span class="keywordtype">void</span>);</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== OS External Configuration ====</span></div>
 <div class="line"> <span class="comment"></span></div>
@@ -870,7 +874,7 @@ Calls from Interrupt Service Routines</h1>
 <p>The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):</p>
 <ul>
 <li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga6f7764e7250c5c5364c00c45a5d1d199">osKernelGetInfo</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga48b69b81012fce051f639be288b243ba">osKernelGetState</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee">osKernelGetTickFreq</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae0fcaff6cecfb4013bb556c87afcd7d2">osKernelGetSysTimerCount</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a">osKernelGetSysTimerFreq</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>, <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a></li>
 <li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga33b71d14cecf90b4e72639dd19f23a5e">osEventFlagsSet</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga93bf258ca0007c6641fbe8e4f2b8a1e5">osEventFlagsClear</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga8bda3185f46bfd278cea8a6cf357677d">osEventFlagsGet</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a></li>
 <li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a>, <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a>, <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7559d4dff3cda9992fc5ab5de3e74c70">osSemaphoreGetCount</a></li>
 <li><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16">osMemoryPoolFree</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gad696e94bfbe28f0b6613f9303fdf6a37">osMemoryPoolGetCapacity</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab2bf059b7fa7679c3cccdaeec60b6c0e">osMemoryPoolGetBlockSize</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga958a9449bff8c95ce213de98eef5739d">osMemoryPoolGetCount</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga0394cffa9479a7994e3b03c79c1cb909">osMemoryPoolGetSpace</a></li>
@@ -883,7 +887,7 @@ Calls from Interrupt Service Routines</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

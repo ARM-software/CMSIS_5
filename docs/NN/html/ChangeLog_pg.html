@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Change Log</title>
-<title>CMSIS-NN: Change Log</title>
+<title>Revision History of CMSIS-NN</title>
+<title>CMSIS-NN: Revision History of CMSIS-NN</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-NN
-   &#160;<span id="projectnumber">Version 1.0.0</span>
+   &#160;<span id="projectnumber">Version 1.1.0</span>
    </div>
    <div id="projectbrief">CMSIS NN Software Library</div>
   </td>
@@ -108,18 +108,34 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Change Log </div>  </div>
+<div class="title">Revision History of CMSIS-NN </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><hr/>
-<p> <b>Version 1.0.0</b></p>
-<p>Initial version </p>
+<div class="textblock"><table  class="cmtable" summary="Revision History">
+<tr>
+<th>Version </th><th>Description  </th></tr>
+<tr>
+<td>V1.1.0 </td><td>Added new math functions:<br/>
+ <ul>
+<li>
+arm_convolve_HWC_q7_basic_nonsquare </li>
+<li>
+arm_convolve_HWC_q15_fast_nonsquare </li>
+<li>
+arm_nn_mult_q7 </li>
+<li>
+arm_nn_mult_q15 </li>
+</ul>
+Fixed minor issues.   </td></tr>
+<tr>
+<td>V1.0.0 </td><td>Initial version   </td></tr>
+</table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:15 for CMSIS-NN by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:32 for CMSIS-NN by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

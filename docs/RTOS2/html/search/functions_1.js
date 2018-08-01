@@ -57,7 +57,7 @@ var searchData=
   ['osmutexnew',['osMutexNew',['../group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8',1,'cmsis_os2.h']]],
   ['osmutexrelease',['osMutexRelease',['../group__CMSIS__RTOS__MutexMgmt.html#gaea629705703580ff58776bf73c8db915',1,'cmsis_os2.h']]],
   ['osrtxerrornotify',['osRtxErrorNotify',['../group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d',1,'rtx_os.h']]],
-  ['osrtxidlethread',['osRtxIdleThread',['../group__rtx5__specific__functions.html#gacc47720b9a10fcb7d3412640c8276465',1,'rtx_os.h']]],
+  ['osrtxidlethread',['osRtxIdleThread',['../group__rtx5__specific__functions.html#ga074068b8efa7074cee68a71481d0b072',1,'rtx_os.h']]],
   ['ossemaphoreacquire',['osSemaphoreAcquire',['../group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b',1,'cmsis_os2.h']]],
   ['ossemaphoredelete',['osSemaphoreDelete',['../group__CMSIS__RTOS__SemaphoreMgmt.html#ga81258ce9c67fa89f07cc49d2e136cd88',1,'cmsis_os2.h']]],
   ['ossemaphoregetcount',['osSemaphoreGetCount',['../group__CMSIS__RTOS__SemaphoreMgmt.html#ga7559d4dff3cda9992fc5ab5de3e74c70',1,'cmsis_os2.h']]],

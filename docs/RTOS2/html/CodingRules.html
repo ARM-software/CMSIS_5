@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -111,12 +111,25 @@ $(document).ready(function(){initNavTree('CodingRules.html','');});
 <div class="title">Coding Rules </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"></div></div><!-- contents -->
+<div class="textblock"><p>CMSIS components use <a href="../../General/html/index.html#CodingRules"><b>general coding rules</b></a> across the various components.</p>
+<p>The CMSIS-RTOS2 API is using the following <b>Namespace</b> prefixes:</p>
+<ul>
+<li><b>os</b> for all definitions and function names.</li>
+<li><b>os</b> with postfix <b>_t</b> for all typedefs.</li>
+</ul>
+<p>The CMSIS-RTOS2 RTX v5 implementation is using the following <b>Namespace</b> prefixes for public symbol definitions:</p>
+<ul>
+<li><b>osRtx</b> for all general definitions and function names that relate to the RTX kernel.</li>
+<li><b>osRtx</b> with postfix <b>_t</b> for all typedefs.</li>
+<li><b>OS_Tick_</b> for interface functions to the hardware system tick timer.</li>
+<li><b>EvrRtx</b> for event function annotations that interface to the Event Recorder. </li>
+</ul>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

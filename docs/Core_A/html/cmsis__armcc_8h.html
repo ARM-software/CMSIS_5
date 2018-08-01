@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.1</span>
+   &#160;<span id="projectnumber">Version 1.1.2</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -226,9 +226,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ad0e4fa951d563740462d837bb6ddd7bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#ad0e4fa951d563740462d837bb6ddd7bb">__USAT</a>&#160;&#160;&#160;__usat</td></tr>
 <tr class="memdesc:ad0e4fa951d563740462d837bb6ddd7bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unsigned Saturate.  <a href="#ad0e4fa951d563740462d837bb6ddd7bb">More...</a><br/></td></tr>
 <tr class="separator:ad0e4fa951d563740462d837bb6ddd7bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2a4e5d85d92189d574854b2fbfff057"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#ad2a4e5d85d92189d574854b2fbfff057">__get_CP</a>(cp, op1, Rt, CRn, CRm, op2)&#160;&#160;&#160;do { register uint32_t tmp <a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a>(&quot;cp&quot; # cp &quot;:&quot; # op1 &quot;:c&quot; # CRn &quot;:c&quot; # CRm &quot;:&quot; # op2); (Rt) = tmp; } while(0)</td></tr>
+<tr class="memitem:ad2a4e5d85d92189d574854b2fbfff057"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#ad2a4e5d85d92189d574854b2fbfff057">__get_CP</a>(cp, op1, Rt, CRn, CRm, op2)&#160;&#160;&#160;do { register volatile uint32_t tmp <a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a>(&quot;cp&quot; # cp &quot;:&quot; # op1 &quot;:c&quot; # CRn &quot;:c&quot; # CRm &quot;:&quot; # op2); (Rt) = tmp; } while(0)</td></tr>
 <tr class="separator:ad2a4e5d85d92189d574854b2fbfff057"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e4710ddc910c7feee1de7f118b84ad1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#a5e4710ddc910c7feee1de7f118b84ad1">__set_CP</a>(cp, op1, Rt, CRn, CRm, op2)&#160;&#160;&#160;do { register uint32_t tmp <a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a>(&quot;cp&quot; # cp &quot;:&quot; # op1 &quot;:c&quot; # CRn &quot;:c&quot; # CRm &quot;:&quot; # op2); tmp = (Rt); } while(0)</td></tr>
+<tr class="memitem:a5e4710ddc910c7feee1de7f118b84ad1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#a5e4710ddc910c7feee1de7f118b84ad1">__set_CP</a>(cp, op1, Rt, CRn, CRm, op2)&#160;&#160;&#160;do { register volatile uint32_t tmp <a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a>(&quot;cp&quot; # cp &quot;:&quot; # op1 &quot;:c&quot; # CRn &quot;:c&quot; # CRm &quot;:&quot; # op2); tmp = (Rt); } while(0)</td></tr>
 <tr class="separator:a5e4710ddc910c7feee1de7f118b84ad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96a3cccabb5bcaf41115a5dfb3fc6723"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#a96a3cccabb5bcaf41115a5dfb3fc6723">__get_CP64</a>(cp, op1, Rt, CRm)</td></tr>
 <tr class="separator:a96a3cccabb5bcaf41115a5dfb3fc6723"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -368,7 +368,7 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;do { register uint32_t tmp <a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a>(&quot;cp&quot; # cp &quot;:&quot; # op1 &quot;:c&quot; # CRn &quot;:c&quot; # CRm &quot;:&quot; # op2); (Rt) = tmp; } while(0)</td>
+          <td></td><td>&#160;&#160;&#160;do { register volatile uint32_t tmp <a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a>(&quot;cp&quot; # cp &quot;:&quot; # op1 &quot;:c&quot; # CRn &quot;:c&quot; # CRm &quot;:&quot; # op2); (Rt) = tmp; } while(0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -615,7 +615,7 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;do { register uint32_t tmp <a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a>(&quot;cp&quot; # cp &quot;:&quot; # op1 &quot;:c&quot; # CRn &quot;:c&quot; # CRm &quot;:&quot; # op2); tmp = (Rt); } while(0)</td>
+          <td></td><td>&#160;&#160;&#160;do { register volatile uint32_t tmp <a class="el" href="group__comp__cntrl__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a>(&quot;cp&quot; # cp &quot;:&quot; # op1 &quot;:c&quot; # CRn &quot;:c&quot; # CRm &quot;:&quot; # op2); tmp = (Rt); } while(0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1001,7 +1001,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_f806067e3cfd0faadc71b6fb603a0f72.html">Core_A</a></li><li class="navelem"><a class="el" href="dir_3f4b401a2ed0c5733c677abc947b6aa9.html">Include</a></li><li class="navelem"><a class="el" href="cmsis__armcc_8h.html">cmsis_armcc.h</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:02:46 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:10 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

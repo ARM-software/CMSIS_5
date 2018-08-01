@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -115,7 +115,7 @@ $(document).ready(function(){initNavTree('group__CMSIS__RTOS__ThreadMgmt.html','
 <a href="#enumval-members">Enumerator</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Thread Management<div class="ingroups"><a class="el" href="group__CMSIS__RTOS.html">CMSIS-RTOS2 API</a></div></div>  </div>
+<div class="title">Thread Management<div class="ingroups"><a class="el" href="group__CMSIS__RTOS.html">CMSIS-RTOS API v2</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -350,7 +350,7 @@ Thread State and State Transitions</div></div>
 <p>A CMSIS-RTOS assumes that threads are scheduled as shown in the figure <b>Thread State and State Transitions</b>. The thread states change as follows:</p>
 <ul>
 <li>A thread is created using the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>. This puts the thread into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a> state (depending on the thread priority).</li>
-<li>CMSIS-RTOS is pre-emptive. The active thread with the highest priority becomes the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a> thread provided it does not wait for any event. The initial priority of a thread is defined with the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> but may be changed during execution using the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga861a420fb2d643115b06622903fb3bfb">osThreadSetPriority</a>.</li>
+<li>CMSIS-RTOS is preemptive. The active thread with the highest priority becomes the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a> thread provided it does not wait for any event. The initial priority of a thread is defined with the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> but may be changed during execution using the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga861a420fb2d643115b06622903fb3bfb">osThreadSetPriority</a>.</li>
 <li>The <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">RUNNING</a> thread transfers into the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">BLOCKED</a> state when it is delayed, waiting for an event or suspended.</li>
 <li>Active threads can be terminated any time using the function <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a">osThreadTerminate</a>. Threads can terminate also by just returning from the thread function. Threads that are terminated are in the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">INACTIVE</a> state and typically do not consume any dynamic memory resources.</li>
 </ul>
@@ -422,7 +422,7 @@ Thread State and State Transitions</div></div>
 <div class="line">  <span class="keywordflow">for</span> (;;) {}</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">static</span> <a class="code" href="group__rtx5__specific__structs.html#structosRtxThread__t">osRtxThread_t</a> thread1_tcb;</div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a> thread1_tcb;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">const</span> <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> thread1_attr = {</div>
 <div class="line">  .<a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>  = &amp;thread1_tcb,</div>
@@ -450,7 +450,7 @@ Thread State and State Transitions</div></div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>(thread1, NULL, &amp;thread1_attr);   </div>
 <div class="line">  ;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p><b>Example 6 - Joinable threads</b></p>
+</div><!-- fragment --><p><a class="anchor" id="joinable_threads"></a><b>Example 6 - Joinable threads</b></p>
 <p>In this example a master thread creates four threads with the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">osThreadJoinable</a> attribute. These will do some work and return using the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaddaa452dd7610e4096647a566d3556fc">osThreadExit</a> call after finished. <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a> is used to synchronize the thread termination.</p>
 <div class="fragment"><div class="line"><a class="code" href="cmsis__os2_8h.html#a153a4a31b276a9758959580538720a51">__NO_RETURN</a> <span class="keywordtype">void</span> worker (<span class="keywordtype">void</span> *argument) {     </div>
 <div class="line">    ; <span class="comment">// work a lot on data[] </span></div>
@@ -488,14 +488,7 @@ Thread State and State Transitions</div></div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Attributes to configure a thread.</p>
-<p>Refer to <a class="el" href="group__CMSIS__RTOS__MemoryMgmt.html">Memory Management</a> for details about usage of</p>
-<ul>
-<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a1e100dc33d403841ed3c344e3397868e" title="memory for control block ">osThreadAttr_t::cb_mem</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#aa55a4335d12dc2785dc00fdc292d1159" title="size of provided memory for control block ">osThreadAttr_t::cb_size</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43" title="memory for stack ">osThreadAttr_t::stack_mem</a></li>
-<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#aacbc9a219f2d6870e9ce89bb93f975c9" title="size of stack ">osThreadAttr_t::stack_size</a> </li>
-</ul>
+<div class="textblock"><p>Specifies the following attributes for the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> function. </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -503,76 +496,74 @@ Thread State and State Transitions</div></div>
 <td class="fieldname">
 name</td>
 <td class="fielddoc">
-name of the thread <p>Pointer to a string with a human readable name of the thread object.<br/>
-Default: <span class="XML-Token">NULL</span>. </p>
+name of the thread <p>Pointer to a constant string with a human readable name (displayed during debugging) of the thread object.</p>
+<p>Default: <span class="XML-Token">NULL</span> no name specified (debugger may display function name instead). </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a6e93b49cb79c12f768d72580c7731f30"></a>uint32_t</td>
 <td class="fieldname">
 attr_bits</td>
 <td class="fielddoc">
-attribute bits <p>The following predefined bit masks can be assigned to set options for a thread object.</p>
-<table class="doxtable">
-<tr>
-<th align="left">Bit Mask </th><th align="left">Description  </th></tr>
-<tr>
-<td align="left"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f">osThreadDetached</a> </td><td align="left">Create thread in a detached mode (default). </td></tr>
-<tr>
-<td align="left"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">osThreadJoinable</a> </td><td align="left">Create thread in joinable mode, see <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a>. </td></tr>
-</table>
+attribute bits <p>The following bit masks can be used to set options:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f">osThreadDetached</a> : create thread in a detached mode (default).</li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">osThreadJoinable</a> : create thread in <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#joinable_threads">joinable mode</a>. </li>
+</ul>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a1e100dc33d403841ed3c344e3397868e"></a>void *</td>
 <td class="fieldname">
 cb_mem</td>
 <td class="fielddoc">
-memory for control block <p>Pointer to a memory location for the thread control block object. This can optionally be used for custom memory management systems.<br/>
-Default: <span class="XML-Token">NULL</span> (uses kernel memory management). </p>
+memory for control block <p>Pointer to a memory for the thread control block object. Refer to <a class="el" href="theory_of_operation.html#StaticObjectMemory">Static Object Memory</a> for more information.</p>
+<p>Default: <span class="XML-Token">NULL</span> to use <a class="el" href="group__CMSIS__RTOS__MemoryMgmt.html#CMSIS_RTOS_MemoryMgmt_Automatic">Automatic Dynamic Allocation</a> for the thread control block. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="aa55a4335d12dc2785dc00fdc292d1159"></a>uint32_t</td>
 <td class="fieldname">
 cb_size</td>
 <td class="fielddoc">
-size of provided memory for control block <p>The size of the memory block passed with <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>. Must be the size of a thread control block object or larger. </p>
+size of provided memory for control block <p>The size (in bytes) of memory block passed with <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>. For RTX, the minimum value is defined with <a class="el" href="group__rtx5__specific__defines.html#ga30d19272204231956582ebfff69567f6">osRtxThreadCbSize</a> (higher values are permitted).</p>
+<p>Default: <span class="XML-Token">0</span> as the default is no memory provided with <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="ad7c9b42355a4c8b9467130ab3fb19e43"></a>void *</td>
 <td class="fieldname">
 stack_mem</td>
 <td class="fielddoc">
-memory for stack <p>Pointer to a memory location for the thread stack, <b>must</b> be 64-bit aligned. This can optionally be used for custom memory management systems.<br/>
-Default: <span class="XML-Token">NULL</span> (uses kernel memory management). </p>
+memory for stack <p>Pointer to a memory location for the thread stack (64-bit aligned).</p>
+<p>Default: <span class="XML-Token">NULL</span> to allocate stack from a fixed-size memory pool using <a class="el" href="theory_of_operation.html#ThreadStack">Thread Stack Management</a>. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="aacbc9a219f2d6870e9ce89bb93f975c9"></a>uint32_t</td>
 <td class="fieldname">
 stack_size</td>
 <td class="fielddoc">
-size of stack <p>The size of the stack specified by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">stack_mem</a> in Bytes. </p>
+size of stack <p>The size (in bytes) of the stack specified by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">stack_mem</a>.</p>
+<p>Default: <span class="XML-Token">0</span> as the default is no memory provided with <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">stack_mem</a>. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a6a5183df4c54c3e28dc8dc704f2487d5"></a><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec">osPriority_t</a></td>
 <td class="fieldname">
 priority</td>
 <td class="fielddoc">
-initial thread priority (default: osPriorityNormal) <p>Specifies the initial thread priority with a value from <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec" title="Priority values. ">osPriority_t</a>.<br/>
-Default: <span class="XML-Token">osPriorityNormal</span> </p>
+initial thread priority (default: osPriorityNormal) <p>Specifies the initial thread priority with a value from <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec" title="Priority values. ">osPriority_t</a>.</p>
+<p>Default: <span class="XML-Token">osPriorityNormal</span>. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a697f2aad6119d655d212ea10245ae394"></a><a class="el" href="cmsis__os2_8h.html#ad5ef21485fe5f60263bc0b48006202cb">TZ_ModuleId_t</a></td>
 <td class="fieldname">
 tz_module</td>
 <td class="fielddoc">
-TrustZone module identifier. <p>TrustZone Thread Context Management Identifier to allocate context memory for threads. The RTOS kernel that runs in non-secure state calls the interface functions defined by the header file TZ_context.h. Can safely be set to zero for threads not using secure calls at all. See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZone RTOS Context Management</a>. </p>
+TrustZone module identifier. <p>TrustZone Thread Context Management Identifier to allocate context memory for threads. The RTOS kernel that runs in non-secure state calls the interface functions defined by the header file TZ_context.h. Can safely be set to zero for threads not using secure calls at all. See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZone RTOS Context Management</a>.</p>
+<p>Default: token{0} not thread context specified. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a66f538babc389986738ec70104e0562b"></a>uint32_t</td>
 <td class="fieldname">
 reserved</td>
 <td class="fielddoc">
-reserved (must be 0) <p>Reserved for future use (set to '0').<br/>
-Default: <span class="XML-Token">0</span>. </p>
+reserved (must be 0) <p>Reserved for future use. </p>
 </td></tr>
 </table>
 
@@ -933,7 +924,7 @@ Default: <span class="XML-Token">0</span>. </p>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>name as NULL terminated string.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>name as null-terminated string.</dd></dl>
 <p>The function <b>osThreadGetName</b> returns the pointer to the name string of the thread identified by parameter <em>thread_id</em> or <span class="XML-Token">NULL</span> in case of an error.</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
@@ -962,14 +953,14 @@ Default: <span class="XML-Token">0</span>. </p>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>thread ID for reference by other functions or NULL in case of error.</dd></dl>
 <p>The function <b>osThreadGetId</b> returns the thread object ID of the currently running thread or NULL in case of an error.</p>
-<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> ThreadGetId_example (<span class="keywordtype">void</span>)  {</div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> id;                                           <span class="comment">// id for the currently running thread</span></div>
 <div class="line">   </div>
 <div class="line">  <span class="keywordtype">id</span> = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a> ();</div>
 <div class="line">  <span class="keywordflow">if</span> (<span class="keywordtype">id</span> == NULL) {</div>
-<div class="line">    <span class="comment">// Failed to get the id; not in a thread</span></div>
+<div class="line">    <span class="comment">// Failed to get the id</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
@@ -1464,7 +1455,7 @@ Avoid calling the function with a <em>thread_id</em> that does not exist or has 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

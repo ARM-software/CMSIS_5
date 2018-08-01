@@ -170,13 +170,17 @@ $(document).ready(function(){initNavTree('pdsc_package_pg.html','');});
 <tr>
 <td>url </td><td><a href="https://en.wikipedia.org/wiki/Uniform_resource_locator" target="_blank">HTTP URL</a> or <a href="https://en.wikipedia.org/wiki/File_URI_scheme" target="_blank">file URI</a> location of the <a class="el" href="cp_SWComponents.html">Software Pack</a>. The URL can be used by installers for downloading, updating, or checking versions. If left empty, the Pack cannot be updated automatically from a server location. </td><td>xs:anyURI  </td><td>1..1   </td></tr>
 <tr>
-<td>supportContact </td><td>HTTP URL or e-mail address for users to get support for the content of the PACK </td><td>xs:string </td><td>0..1   </td></tr>
+<td>supportContact </td><td>HTTP URL or e-mail address for users to get support for the content of the Pack </td><td>xs:string </td><td>0..1   </td></tr>
 <tr>
 <td>license </td><td>Path to a license document. </td><td>xs:string  </td><td>0..1   </td></tr>
 <tr>
 <td><a class="el" href="element_requirements_pg.html#element_requirements">requirements</a> </td><td>Specifies other CMSIS-Packs, programming languages and compiler as well as their respective version or version range required by the components in this pack.  </td><td>RequirementsType </td><td>0..1   </td></tr>
 <tr>
-<td>create </td><td>Use only when creating CMSIS software projects. Refer to <a class="el" href="cpdsc_pg.html">Project Description (*.CPDSC) Format</a> for details. </td><td>CreateType </td><td>0..1   </td></tr>
+<td>create </td><td>Use only when creating CMSIS software projects. Refer to <a class="el" href="cpdsc_pg.html">Project Description (*.cpdsc) Format</a> for details. </td><td>CreateType </td><td>0..1   </td></tr>
+<tr>
+<td><a class="el" href="element_repository.html">repository</a> </td><td>URL of a public repository the pack originates from. </td><td>xs:anyURI </td><td><p class="starttd">0..1  </p>
+<p class="endtd"></p>
+</td></tr>
 <tr>
 <td><a class="el" href="element_releases.html">releases</a> </td><td>Version release history with brief information about a <a class="el" href="cp_SWComponents.html">Software Pack</a>. </td><td>ReleasesGroup </td><td>1..1   </td></tr>
 <tr>
@@ -192,15 +196,15 @@ $(document).ready(function(){initNavTree('pdsc_package_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_apis_pg.html#element_apis">apis</a> </td><td>Defines the API (Application Programming Interfaces) specifications contained in the <a class="el" href="cp_SWComponents.html">Software Pack</a>. </td><td>ApisType </td><td>0..1   </td></tr>
 <tr>
-<td><a class="el" href="pdsc_conditions_pg.html#element_conditions">conditions</a> </td><td>Is a group that contains dependency definitions used within the PACK. These rules can describe dependencies on various levels: device attributes, components, or tools. Conditions are referenced by components and files. </td><td>ConditionsType </td><td>0..1   </td></tr>
+<td><a class="el" href="pdsc_conditions_pg.html#element_conditions">conditions</a> </td><td>Is a group that contains dependency definitions used within the Pack. These rules can describe dependencies on various levels: device attributes, components, or tools. Conditions are referenced by components and files. </td><td>ConditionsType </td><td>0..1   </td></tr>
 <tr>
-<td><a class="el" href="pdsc_examples_pg.html#element_examples">examples</a> </td><td>Lists the examples that are included in the PACK. </td><td>group </td><td>0..1   </td></tr>
+<td><a class="el" href="pdsc_examples_pg.html#element_examples">examples</a> </td><td>Lists the examples that are included in the Pack. </td><td>group </td><td>0..1   </td></tr>
 <tr>
-<td><a class="el" href="pdsc_components_pg.html#element_components">components</a> </td><td>Lists the software components that are included in the PACK. </td><td>group </td><td>0..1   </td></tr>
+<td><a class="el" href="pdsc_components_pg.html#element_components">components</a> </td><td>Lists the software components that are included in the Pack. </td><td>group </td><td>0..1   </td></tr>
 </table>
 <p>&#160;</p>
 <p><a class="anchor" id="VersionType"></a><b>Version Type</b></p>
-<p>CMSIS-PACK version specification is inspired by the <a href="http://semver.org" target="_blank">Semantic Versioning 2.0.0</a>. Under this scheme, version numbers and the way they are incremented convey a meaning about the underlying content quality and the significance of changes from one version to the next. A version consists of 3 mandatory and 2 optional sections:</p>
+<p>CMSIS-Pack version specification is inspired by the <a href="http://semver.org" target="_blank">Semantic Versioning 2.0.0</a>. Under this scheme, version numbers and the way they are incremented convey a meaning about the underlying content quality and the significance of changes from one version to the next. A version consists of 3 mandatory and 2 optional sections:</p>
 <div class="fragment"><div class="line">MAJOR.MINOR.PATCH[-Pre Release][+Build Metadata]</div>
 </div><!-- fragment --><ol type="1">
 <li><b>MAJOR:</b> increment MAJOR for backwards incompatible changes<ul>
@@ -254,8 +258,8 @@ $(document).ready(function(){initNavTree('pdsc_package_pg.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:27 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -145,11 +145,11 @@ Create PDSC File</h1>
 <li><a class="el" href="pdsc_package_pg.html#element_package">&lt;vendor&gt;</a> states the name of the Pack's vendor and <em>must</em> <em>not</em> contain spaces. <b>Example:</b> <code>ACMECorp</code> and <code>ACME_Corp</code> are OK, <code>ACME</code> <code>Corporation</code> is not OK.</li>
 <li><a class="el" href="pdsc_package_pg.html#element_package">&lt;url&gt;</a> defines the download URL of the Pack (may be left empty) <dl class="section note"><dt>Note</dt><dd><ul>
 <li>In this tutorial, the URL is not specified. This means that the Pack will be marked in Pack Installer as <b>Offline</b> and needs to be updated manually. To resolve this issue, it is possible to specify the file "download" location using a <a href="https://en.wikipedia.org/wiki/File_URI_scheme" target="_blank">file URI</a>. For Windows users, this would look like the following: <pre class="fragment">      &lt;url&gt;file:///c:/temp/working&lt;/url&gt;</pre></li>
-<li>It is important to understand how the &lt;url&gt; element works. If you specify a URL, for example <a href="http://www.keil.com/pack/" target="_blank">http://www.keil.com/pack</a>, then you have to make the PDSC file and the corresponding PACK file(s) available for download at that exact location. The naming of the files follow the standard naming rules. For example, the ARM::CMSIS PDSC and Pack files are available here:<br/>
+<li>It is important to understand how the &lt;url&gt; element works. If you specify a URL, for example <a href="http://www.keil.com/pack/" target="_blank">http://www.keil.com/pack</a>, then you have to make the PDSC file and the corresponding Pack file(s) available for download at that exact location. The naming of the files follow the standard naming rules. For example, the ARM::CMSIS PDSC and Pack files are available here:<br/>
  <a href="http://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">http://www.keil.com/pack/ARM.CMSIS.pdsc</a> and <br/>
  <a href="http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack</a> and <br/>
  <a href="http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack</a> and ... <br/>
- At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned PACK files, but at least the latest one.</li>
+ At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned Pack files, but at least the latest one.</li>
 </ul>
 </dd></dl>
 </li>
@@ -232,7 +232,7 @@ Software Components</h1>
 <li>Component Variant (<code>Cvariant</code>): a variant of the software component.</li>
 <li>Component Vendor (<code>Cvendor</code>): the supplier of the software component.</li>
 </ul>
-<p>The <code>Cclass</code>, <code>Cgroup</code>, <code>Csub</code>, <code>Cvariant</code> and <code>Cversion</code> attributes are used together with the vendor specified by the PACK to identify a component. A component vendor must ensure that the combination <code>Cclass</code>, <code>Cgroup</code>, <code>Csub</code> and <code>Cversion</code> is unique and not used by multiple components within the same Pack.</p>
+<p>The <code>Cclass</code>, <code>Cgroup</code>, <code>Csub</code>, <code>Cvariant</code> and <code>Cversion</code> attributes are used together with the vendor specified by the Pack to identify a component. A component vendor must ensure that the combination <code>Cclass</code>, <code>Cgroup</code>, <code>Csub</code> and <code>Cversion</code> is unique and not used by multiple components within the same Pack.</p>
 <p>For a list of established Cclasses, refer to <a class="el" href="cp_Packs.html#pack_Cclass">Software Component Cclasses</a>.</p>
 <p>In case multiple interdependent components (belonging to the same <code>Cclass</code>) form part of a solution, these can be grouped in a so called <a class="el" href="cp_SWComponents.html#cp_Bundles">bundle</a>.</p>
 <p>Use the following syntax to reference to software components and APIs:<br/>
@@ -251,7 +251,7 @@ Display of a software component in development tools</div></div>
  <h2>Software Component Files </h2>
 <p>Each software component consists of a certain number of files. Each file has at least the following attributes:</p>
 <ul>
-<li><code>name:</code> File path, file name, and file extension in the format path/name.extension. The file path is relative to the root directory of the PACK.</li>
+<li><code>name:</code> File path, file name, and file extension in the format path/name.extension. The file path is relative to the root directory of the Pack.</li>
 <li><code>category:</code> Defines the purpose of the file. Select the predefined value as listed in the table <a class="el" href="pdsc_components_pg.html#FileCategoryEnum">File Categories</a>.</li>
 </ul>
 <p>Optionally, every file may have the following attributes:</p>
@@ -526,7 +526,7 @@ Display of example projects in development tools</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:26 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

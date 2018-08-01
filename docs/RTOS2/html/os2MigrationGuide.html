@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -115,8 +115,11 @@ $(document).ready(function(){initNavTree('os2MigrationGuide.html','');});
 <p>Only a few incompatibilities and limitations exist:</p>
 <ul>
 <li>Kernel startup<br/>
- The function <code>osKernelRunning</code> has been deprecated. "main" was usually a running thread in v1 implementations, which is not the case in v2 anymore. It was also possible to not even initialize and start the Kernel, but just to assume that "main" was a running thread. Portable code would typically initialize the Kernel (<a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>) and then start the Kernel (<a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>) or skip that part if <code>osKernelRunning</code> indicated that it is already running.<br/>
- The example code below shows how to overcome this situation.</li>
+<ul>
+<li>The function <code>osKernelRunning</code> has been removed in CMSIS-RTOS v2, use <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga48b69b81012fce051f639be288b243ba" title="Get the current RTOS Kernel state. ">osKernelGetState()</a> instead.</li>
+<li>Function <code>main</code> was usually a running thread in CMSIS-RTOS v1 implementations, which is not the case in CMSIS-RTOS v2 anymore. The Kernel was running even without calling corresponding APIs to initialize and start the Kernel explicitly. In CMSIS-RTOS v2 the Kernel needs be initialized by calling <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659" title="Initialize the RTOS Kernel. ">osKernelInitialize()</a> and must be started by calling <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221" title="Start the RTOS Kernel scheduler. ">osKernelStart()</a>.</li>
+</ul>
+</li>
 <li>OS tick<br/>
  RTX5 uses the <a class="el" href="group__CMSIS__RTOS__TickAPI.html">OS Tick API</a> to configure the tick interrupts. The interval calculation is typically based on <code>SystemCoreClock</code> variable. Thus one has to assure this variable is set correctly before calling <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a>.</li>
 <li>The function <code>osWait</code> is deprecated.</li>
@@ -267,7 +270,7 @@ Level 3 Migration - Full transition to API v2</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="os2Migration.html">Migration from API v1 to API v2</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

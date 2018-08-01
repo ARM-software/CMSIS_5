@@ -140,7 +140,7 @@ $(document).ready(function(){initNavTree('elem_peripherals.html','');});
 <li>An address block and register addresses are specified relative to the base address of a peripheral. The address block information can be used for constructing a memory map for the device peripherals.</li>
 </ul>
 <p>Starting version 1.3 of the SVD specification, arrays of peripherals can be specified. The single peripheral description gets duplicated automatically into an array. The number of array elements is specified by the <em>&lt;dim&gt;</em> element. To define arrays, the <em>&lt;name&gt;</em> needs the format <em>myPeripheral[%s]</em>. The tag <em>&lt;dimIncrement&gt;</em> specifies the address offset between two peripherals. To create copies of a peripheral using different names, you must use the <em>derivedFrom</em> attribute.</p>
-<dl class="section remark"><dt>Remarks</dt><dd>The memory map does not contain any information about physical memory. The memory of a device is described as part of the CMSIS-PACK device description.</dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>The memory map does not contain any information about physical memory. The memory of a device is described as part of the CMSIS-Pack device description.</dd></dl>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line">&lt;peripherals&gt;</div>
 <div class="line">  &lt;peripheral&gt;</div>
@@ -289,7 +289,7 @@ $(document).ready(function(){initNavTree('elem_peripherals.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="svd_Format_pg.html">SVD Description (*.svd) Format</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:32 for CMSIS-SVD by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:47 for CMSIS-SVD by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

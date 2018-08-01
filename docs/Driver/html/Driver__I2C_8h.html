@@ -169,16 +169,16 @@ Macros</h2></td></tr>
 <tr class="memdesc:gafac3989c7b57727e1bed4ee9f2496ac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master/Slave Transmit/Receive incomplete transfer.  <a href="group__I2C__events.html#gafac3989c7b57727e1bed4ee9f2496ac9">More...</a><br/></td></tr>
 <tr class="separator:gafac3989c7b57727e1bed4ee9f2496ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacfbbec9af083d35e8ea87ad16e9c6ec2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__I2C__events.html#gacfbbec9af083d35e8ea87ad16e9c6ec2">ARM_I2C_EVENT_SLAVE_TRANSMIT</a>&#160;&#160;&#160;(1UL &lt;&lt; 2)</td></tr>
-<tr class="memdesc:gacfbbec9af083d35e8ea87ad16e9c6ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave Transmit operation requested.  <a href="group__I2C__events.html#gacfbbec9af083d35e8ea87ad16e9c6ec2">More...</a><br/></td></tr>
+<tr class="memdesc:gacfbbec9af083d35e8ea87ad16e9c6ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addressed as Slave Transmitter but transmit operation is not set.  <a href="group__I2C__events.html#gacfbbec9af083d35e8ea87ad16e9c6ec2">More...</a><br/></td></tr>
 <tr class="separator:gacfbbec9af083d35e8ea87ad16e9c6ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabd875b57ce39dadd849c53b885ad6661"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__I2C__events.html#gabd875b57ce39dadd849c53b885ad6661">ARM_I2C_EVENT_SLAVE_RECEIVE</a>&#160;&#160;&#160;(1UL &lt;&lt; 3)</td></tr>
-<tr class="memdesc:gabd875b57ce39dadd849c53b885ad6661"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave Receive operation requested.  <a href="group__I2C__events.html#gabd875b57ce39dadd849c53b885ad6661">More...</a><br/></td></tr>
+<tr class="memdesc:gabd875b57ce39dadd849c53b885ad6661"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addressed as Slave Receiver but receive operation is not set.  <a href="group__I2C__events.html#gabd875b57ce39dadd849c53b885ad6661">More...</a><br/></td></tr>
 <tr class="separator:gabd875b57ce39dadd849c53b885ad6661"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga98b815769634d9578526b43589caa017"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__I2C__events.html#ga98b815769634d9578526b43589caa017">ARM_I2C_EVENT_ADDRESS_NACK</a>&#160;&#160;&#160;(1UL &lt;&lt; 4)</td></tr>
 <tr class="memdesc:ga98b815769634d9578526b43589caa017"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address not acknowledged from Slave.  <a href="group__I2C__events.html#ga98b815769634d9578526b43589caa017">More...</a><br/></td></tr>
 <tr class="separator:ga98b815769634d9578526b43589caa017"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3ab54410b6410ed3a58762ff0c0d68b9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__I2C__events.html#ga3ab54410b6410ed3a58762ff0c0d68b9">ARM_I2C_EVENT_GENERAL_CALL</a>&#160;&#160;&#160;(1UL &lt;&lt; 5)</td></tr>
-<tr class="memdesc:ga3ab54410b6410ed3a58762ff0c0d68b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">General Call indication.  <a href="group__I2C__events.html#ga3ab54410b6410ed3a58762ff0c0d68b9">More...</a><br/></td></tr>
+<tr class="memdesc:ga3ab54410b6410ed3a58762ff0c0d68b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave addressed with general call address.  <a href="group__I2C__events.html#ga3ab54410b6410ed3a58762ff0c0d68b9">More...</a><br/></td></tr>
 <tr class="separator:ga3ab54410b6410ed3a58762ff0c0d68b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac9000f44a578e2117d64dbc2093cec6d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__I2C__events.html#gac9000f44a578e2117d64dbc2093cec6d">ARM_I2C_EVENT_ARBITRATION_LOST</a>&#160;&#160;&#160;(1UL &lt;&lt; 6)</td></tr>
 <tr class="memdesc:gac9000f44a578e2117d64dbc2093cec6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master lost arbitration.  <a href="group__I2C__events.html#gac9000f44a578e2117d64dbc2093cec6d">More...</a><br/></td></tr>
@@ -215,7 +215,7 @@ Typedefs</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_7151b3cc910409bb744bd274374c738d.html">Driver</a></li><li class="navelem"><a class="el" href="dir_9c39448ea46a8e15f1aabc7dec307fcf.html">Include</a></li><li class="navelem"><a class="el" href="Driver__I2C_8h.html">Driver_I2C.h</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:02:50 for CMSIS-Driver by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:13 for CMSIS-Driver by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

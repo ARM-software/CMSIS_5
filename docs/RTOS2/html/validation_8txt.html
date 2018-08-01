@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Directory Structure and File Overview</title>
-<title>CMSIS-RTOS2: Directory Structure and File Overview</title>
+<title>validation.txt File Reference</title>
+<title>CMSIS-RTOS2: validation.txt File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -57,7 +57,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Usage&#160;and&#160;Description</span></a></li>
+      <li><a href="pages.html"><span>Usage&#160;and&#160;Description</span></a></li>
       <li><a href="modules.html"><span>Reference</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -89,7 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('dirstructfiles5.html','');});
+$(document).ready(function(){initNavTree('validation_8txt.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -108,87 +108,16 @@ $(document).ready(function(){initNavTree('dirstructfiles5.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Directory Structure and File Overview </div>  </div>
+<div class="title">validation.txt File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The following section provides an overview of the directory structure and the files that are relevant for the user's for CMSIS-RTOS RTX v5. The following directory references start below the CMSIS pack installation path, for example ARM/CMSIS/<em>version</em>/CMSIS/RTOS2.</p>
-<h1><a class="anchor" id="Folders"></a>
-RTX v5 Directory Structure</h1>
-<p>The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provided.</p>
-<table  class="cmtable" summary="CMSIS-RTOS RTX Library Files">
-<tr>
-<th>Directory </th><th>Content  </th></tr>
-<tr>
-<td>Include </td><td>The include file for CMSIS-RTOS API v2. <a class="el" href="cmsis__os2_8h.html">cmsis_os2.h</a> is the central include file for user applications.  </td></tr>
-<tr>
-<td>Template </td><td>CMSIS-RTOS API template source and header file.  </td></tr>
-<tr>
-<td>RTX </td><td>Directory with RTX specific files and folders. Also contains the component viewer description file.  </td></tr>
-<tr>
-<td>RTX/Config </td><td>CMSIS-RTOS RTX configuration files RTX_Config.h and RTX_Config.c.  </td></tr>
-<tr>
-<td>RTX/Examples </td><td>Example projects that can be directly used in development tools.  </td></tr>
-<tr>
-<td>RTX/Include </td><td>RTX v5 specific include files.  </td></tr>
-<tr>
-<td>RTX/Include1 </td><td>CMSIS-RTOS v1 API header file.  </td></tr>
-<tr>
-<td>RTX/Library </td><td>Pre-built libraries (see next table for details).  </td></tr>
-<tr>
-<td>RTX/Source </td><td>Source code that can be used with ARMCC and GCC.  </td></tr>
-<tr>
-<td>RTX/Template </td><td>User code templates for creating application projects with CMSIS-RTOS RTX v5.  </td></tr>
-</table>
-<h1><a class="anchor" id="libFiles"></a>
-RTX v5 Library Files</h1>
-<p>The CMSIS-RTOS RTX Library is available pre-compiled for ARMCC and GCC compilers and supports all Cortex-M processor variants in every configuration, including Arm Cortex-M23 and Cortex-M33.</p>
-<table  class="cmtable" summary="CMSIS-RTOS RTX Library Files">
-<tr>
-<th>Library File </th><th>Processor Configuration  </th></tr>
-<tr>
-<td>Library/ARM/RTX_CM0.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M0 and M1, little-endian.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_CM3.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M3, M4, and M7 without FPU, little-endian.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_CM4F.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M4 and M7 with FPU, little-endian.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_V8MB.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Baseline.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_V8MBN.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Baseline, non-secure.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_V8MM.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_V8MMF.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline with FPU.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_V8MMFN.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline with FPU, non-secure.  </td></tr>
-<tr>
-<td>Library/ARM/RTX_V8MMN.lib </td><td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline, non-secure.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_CM0.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Cortex-M0 and M1, little-endian.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_CM3.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Cortex-M3, M4, and M7 without FPU, little-endian.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_CM4F.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Cortex-M4 and M7 with FPU, little-endian.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_V8MB.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Baseline.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_V8MBN.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Baseline, non-secure.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_V8MM.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_V8MMF.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline with FPU.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_V8MMFN.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline with FPU, non-secure.  </td></tr>
-<tr>
-<td>Library/GCC/libRTX_V8MMN.a </td><td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline, non-secure.  </td></tr>
-</table>
-</div></div><!-- contents -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="navelem"><a class="el" href="validation_8txt.html">validation.txt</a></li>
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

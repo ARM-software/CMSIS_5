@@ -116,7 +116,12 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 <tr>
 <td>1.5.0 </td><td>Modifications compared to Version 1.4.9<ul>
 <li>added <a class="el" href="sdf_pg.html">System Description File (*.SDF) Format</a></li>
-<li>updates to <a class="el" href="pdsc_family_pg.html#DeviceVendorEnum">Device Vendor</a>   </li>
+<li>updates to <a class="el" href="pdsc_family_pg.html#DeviceVendorEnum">Device Vendor</a></li>
+<li>removed usage of DP CTRL/STAT CDBGRSTREQ from <a class="el" href="debug_description.html#debugPortStart">DebugPortStart</a> default sequence</li>
+<li>added <a class="el" href="pdsc_family_pg.html#element_flashinfo">flashinfo</a> with children &lt;block&gt; and &lt;gap&gt; to describe flash devices for sequence-based flash download</li>
+<li>new <a class="el" href="debug_description.html#DebugFunctions">debug access functions</a> and <a class="el" href="debug_description.html#DebugVars">global debug variables</a> for sequence-based flash download</li>
+<li>added <a class="el" href="element_repository.html">repository</a> element for specifying origin of public repositories</li>
+<li>added attributes to <a class="el" href="element_releases.html#element_release">release</a> element specifying repository tag and url for downloading repository content   </li>
 </ul>
 </td></tr>
 <tr>
@@ -128,7 +133,7 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 <tr>
 <td>1.4.8 </td><td>Modifications compared to Version 1.4.7<ul>
 <li>added support for semantic versioning quality information in ConditionVersionType</li>
-<li>updated PACK schema file making some elements optional</li>
+<li>updated Pack schema file making some elements optional</li>
 <li>added Pack Index File Specification and schema file   </li>
 </ul>
 </td></tr>
@@ -182,7 +187,7 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 </td></tr>
 <tr>
 <td>1.4.3 </td><td>Modifications compared to Version 1.4.1<ul>
-<li>Adding attribute "sdf" to debugconfig element within section &lt;devices&gt;  </li>
+<li>Adding attribute "sdf" to debugconfig element within section &lt;devices&gt;   </li>
 </ul>
 </td></tr>
 <tr>
@@ -194,7 +199,7 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 <td>1.4.0 </td><td>Modifications compared to Version 1.3.3:<ul>
 <li>device section <em>memory</em> specification redefined, deprecating <em>id</em> attribute</li>
 <li>device section <em>algorithm</em> support multiple flash programming algorithm styles</li>
-<li>device section <em>debug</em> adding CJTAG debug port type </li>
+<li>device section <em>debug</em> adding CJTAG debug port type   </li>
 </ul>
 </td></tr>
 <tr>
@@ -227,12 +232,12 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 </td></tr>
 <tr>
 <td>1.3 </td><td>Modifications compared to Version 1.2:<ul>
-<li><em>Added</em> attributes to release tag for managing deprecation and changing pack IDs</li>
+<li><em>Added</em> attributes to release tag for managing deprecation and changing Pack IDs</li>
 <li><em>Removed</em> external RAMn and ROMn memory IDs in memory tag</li>
 <li><em>Added</em> FileCategoryTypes in &lt;file&gt; element for C, C++, Assembler, Linker</li>
 <li><em>Extended</em> specification of &lt;require&gt;, &lt;accept&gt; and &lt;deny&gt; with Cversion and Capiversion ranges</li>
-<li><em>Added</em> <a class="el" href="createPackUtil.html">Utilities for Creating Packs</a> and <a class="el" href="packChk.html">packChk.exe</a> for pack validation</li>
-<li><em>Added</em> documentation for the Example PACK based on LPC1800 Device Family</li>
+<li><em>Added</em> <a class="el" href="createPackUtil.html">Utilities for Creating Packs</a> and <a class="el" href="packChk.html">packChk.exe</a> for Pack validation</li>
+<li><em>Added</em> documentation for the Example Pack based on LPC1800 Device Family</li>
 <li><em>Refined</em> &lt;debug&gt; element description</li>
 <li>Many clarifications in the documentation along with examples   </li>
 </ul>
@@ -260,7 +265,7 @@ $(document).ready(function(){initNavTree('pack_revisionHistory.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:26 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-NN
-   &#160;<span id="projectnumber">Version 1.0.0</span>
+   &#160;<span id="projectnumber">Version 1.1.0</span>
    </div>
    <div id="projectbrief">CMSIS NN Software Library</div>
   </td>
@@ -125,9 +125,15 @@ Functions</h2></td></tr>
 <tr class="memitem:ga4efb1ccbbaa7dd936961989dcb443f50"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga4efb1ccbbaa7dd936961989dcb443f50">arm_convolve_HWC_q15_fast</a> (const q15_t *Im_in, const uint16_t dim_im_in, const uint16_t ch_im_in, const q15_t *wt, const uint16_t ch_im_out, const uint16_t dim_kernel, const uint16_t padding, const uint16_t stride, const q15_t *bias, const uint16_t bias_shift, const uint16_t out_shift, q15_t *Im_out, const uint16_t dim_im_out, q15_t *bufferA, q7_t *bufferB)</td></tr>
 <tr class="memdesc:ga4efb1ccbbaa7dd936961989dcb443f50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast Q15 convolution function.  <a href="#ga4efb1ccbbaa7dd936961989dcb443f50">More...</a><br/></td></tr>
 <tr class="separator:ga4efb1ccbbaa7dd936961989dcb443f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga614ec3b71eb96e29952ec3f09e7b9c3c"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga614ec3b71eb96e29952ec3f09e7b9c3c">arm_convolve_HWC_q15_fast_nonsquare</a> (const q15_t *Im_in, const uint16_t dim_im_in_x, const uint16_t dim_im_in_y, const uint16_t ch_im_in, const q15_t *wt, const uint16_t ch_im_out, const uint16_t dim_kernel_x, const uint16_t dim_kernel_y, const uint16_t padding_x, const uint16_t padding_y, const uint16_t stride_x, const uint16_t stride_y, const q15_t *bias, const uint16_t bias_shift, const uint16_t out_shift, q15_t *Im_out, const uint16_t dim_im_out_x, const uint16_t dim_im_out_y, q15_t *bufferA, q7_t *bufferB)</td></tr>
+<tr class="memdesc:ga614ec3b71eb96e29952ec3f09e7b9c3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast Q15 convolution function (non-sqaure shape)  <a href="#ga614ec3b71eb96e29952ec3f09e7b9c3c">More...</a><br/></td></tr>
+<tr class="separator:ga614ec3b71eb96e29952ec3f09e7b9c3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga210ae8d8fc1d12ee15b41f1fa6947681"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga210ae8d8fc1d12ee15b41f1fa6947681">arm_convolve_HWC_q7_basic</a> (const q7_t *Im_in, const uint16_t dim_im_in, const uint16_t ch_im_in, const q7_t *wt, const uint16_t ch_im_out, const uint16_t dim_kernel, const uint16_t padding, const uint16_t stride, const q7_t *bias, const uint16_t bias_shift, const uint16_t out_shift, q7_t *Im_out, const uint16_t dim_im_out, q15_t *bufferA, q7_t *bufferB)</td></tr>
 <tr class="memdesc:ga210ae8d8fc1d12ee15b41f1fa6947681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic Q7 convolution function.  <a href="#ga210ae8d8fc1d12ee15b41f1fa6947681">More...</a><br/></td></tr>
 <tr class="separator:ga210ae8d8fc1d12ee15b41f1fa6947681"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4501fa22c0836002aa47ccc313dce252"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga4501fa22c0836002aa47ccc313dce252">arm_convolve_HWC_q7_basic_nonsquare</a> (const q7_t *Im_in, const uint16_t dim_im_in_x, const uint16_t dim_im_in_y, const uint16_t ch_im_in, const q7_t *wt, const uint16_t ch_im_out, const uint16_t dim_kernel_x, const uint16_t dim_kernel_y, const uint16_t padding_x, const uint16_t padding_y, const uint16_t stride_x, const uint16_t stride_y, const q7_t *bias, const uint16_t bias_shift, const uint16_t out_shift, q7_t *Im_out, const uint16_t dim_im_out_x, const uint16_t dim_im_out_y, q15_t *bufferA, q7_t *bufferB)</td></tr>
+<tr class="memdesc:ga4501fa22c0836002aa47ccc313dce252"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic Q7 convolution function (non-sqaure shape)  <a href="#ga4501fa22c0836002aa47ccc313dce252">More...</a><br/></td></tr>
+<tr class="separator:ga4501fa22c0836002aa47ccc313dce252"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae00d3c1285907d59657369fc98bcc83f"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#gae00d3c1285907d59657369fc98bcc83f">arm_convolve_HWC_q7_fast</a> (const q7_t *Im_in, const uint16_t dim_im_in, const uint16_t ch_im_in, const q7_t *wt, const uint16_t ch_im_out, const uint16_t dim_kernel, const uint16_t padding, const uint16_t stride, const q7_t *bias, const uint16_t bias_shift, const uint16_t out_shift, q7_t *Im_out, const uint16_t dim_im_out, q15_t *bufferA, q7_t *bufferB)</td></tr>
 <tr class="memdesc:gae00d3c1285907d59657369fc98bcc83f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fast Q7 convolution function.  <a href="#gae00d3c1285907d59657369fc98bcc83f">More...</a><br/></td></tr>
 <tr class="separator:gae00d3c1285907d59657369fc98bcc83f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -579,6 +585,174 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga614ec3b71eb96e29952ec3f09e7b9c3c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_status arm_convolve_HWC_q15_fast_nonsquare </td>
+          <td>(</td>
+          <td class="paramtype">const q15_t *&#160;</td>
+          <td class="paramname"><em>Im_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dim_im_in_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dim_im_in_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>ch_im_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q15_t *&#160;</td>
+          <td class="paramname"><em>wt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>ch_im_out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dim_kernel_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dim_kernel_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>padding_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>padding_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q15_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>bias_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>out_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q15_t *&#160;</td>
+          <td class="paramname"><em>Im_out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dim_im_out_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dim_im_out_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q15_t *&#160;</td>
+          <td class="paramname"><em>bufferA</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q7_t *&#160;</td>
+          <td class="paramname"><em>bufferB</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">Im_in</td><td>pointer to input tensor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_im_in_x</td><td>input tensor dimention x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_im_in_y</td><td>input tensor dimention y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ch_im_in</td><td>number of input tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">wt</td><td>pointer to kernel weights </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ch_im_out</td><td>number of filters, i.e., output tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_kernel_x</td><td>filter kernel size x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_kernel_y</td><td>filter kernel size y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">padding_x</td><td>padding size x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">padding_y</td><td>padding size y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_x</td><td>convolution stride x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_y</td><td>convolution stride y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias</td><td>pointer to bias </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias_shift</td><td>amount of left-shift for bias </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_shift</td><td>amount of right-shift for output </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">Im_out</td><td>pointer to output tensor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_im_out_x</td><td>output tensor dimension x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_im_out_y</td><td>output tensor dimension y </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">bufferA</td><td>pointer to buffer space for input </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">bufferB</td><td>pointer to buffer space for output </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns either <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.</dd></dl>
+<p><b>Buffer size:</b></p>
+<p>bufferA size: 2*ch_im_in*dim_kernel*dim_kernel</p>
+<p>bufferB size: 0</p>
+<p><b>Input dimension constraints:</b></p>
+<p>ch_im_in is multiple of 2</p>
+<p>ch_im_out is multipe of 2 </p>
+
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ga210ae8d8fc1d12ee15b41f1fa6947681"></a>
 <div class="memitem">
 <div class="memproto">
@@ -705,6 +879,168 @@ Functions</h2></td></tr>
 <p>bufferA size: 2*ch_im_in*dim_kernel*dim_kernel</p>
 <p>bufferB size: 0</p>
 <p>This basic version is designed to work for any input tensor and weight dimension. </p>
+
+<p>References <a class="el" href="arm__nnfunctions_8h.html#abc4fb258cfe8500ee68e812a293a80a3">arm_nn_mat_mult_kernel_q7_q15()</a>, <a class="el" href="group__nndata__convert.html#gae349de4dba8d253c89d45794ccf05680">arm_q7_to_q15_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga4501fa22c0836002aa47ccc313dce252"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_status arm_convolve_HWC_q7_basic_nonsquare </td>
+          <td>(</td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>Im_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dim_im_in_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dim_im_in_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>ch_im_in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>wt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>ch_im_out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dim_kernel_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dim_kernel_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>padding_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>padding_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>stride_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>bias_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>out_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q7_t *&#160;</td>
+          <td class="paramname"><em>Im_out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dim_im_out_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>dim_im_out_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q15_t *&#160;</td>
+          <td class="paramname"><em>bufferA</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q7_t *&#160;</td>
+          <td class="paramname"><em>bufferB</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">Im_in</td><td>pointer to input tensor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_im_in_x</td><td>input tensor dimention x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_im_in_y</td><td>input tensor dimention y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ch_im_in</td><td>number of input tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">wt</td><td>pointer to kernel weights </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ch_im_out</td><td>number of filters, i.e., output tensor channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_kernel_x</td><td>filter kernel size x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_kernel_y</td><td>filter kernel size y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">padding_x</td><td>padding size x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">padding_y</td><td>padding size y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_x</td><td>convolution stride x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stride_y</td><td>convolution stride y </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias</td><td>pointer to bias </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias_shift</td><td>amount of left-shift for bias </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_shift</td><td>amount of right-shift for output </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">Im_out</td><td>pointer to output tensor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_im_out_x</td><td>output tensor dimension x </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_im_out_y</td><td>output tensor dimension y </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">bufferA</td><td>pointer to buffer space for input </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">bufferB</td><td>pointer to buffer space for output </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_MATH_SUCCESS</code> </dd></dl>
 
 <p>References <a class="el" href="arm__nnfunctions_8h.html#abc4fb258cfe8500ee68e812a293a80a3">arm_nn_mat_mult_kernel_q7_q15()</a>, <a class="el" href="group__nndata__convert.html#gae349de4dba8d253c89d45794ccf05680">arm_q7_to_q15_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
@@ -1448,7 +1784,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:15 for CMSIS-NN by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:32 for CMSIS-NN by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

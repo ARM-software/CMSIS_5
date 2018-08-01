@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.1</span>
+   &#160;<span id="projectnumber">Version 5.1.2</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -248,7 +248,12 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>The following functions generate specific Cortex-M instructions that cannot be directly accessed by the C/C++ Compiler. Refer to the <a class="el" href="index.html#ref_man_sec">Cortex-M Reference Manuals</a> for detailed information about these Cortex-M instructions.</p>
-<dl class="section note"><dt>Note</dt><dd>When using the Arm Compiler Toolchain the following <a class="el" href="group__intrinsic__CPU__gr.html">Intrinsic Functions for CPU Instructions</a> are implemented using the Embedded Assembler: <a class="el" href="group__intrinsic__CPU__gr.html#gac09134f1bf9c49db07282001afcc9380">__RRX</a>, &lt;Bruno: add more...&gt;. The usage of the Embedded Assembler can be disabled by with <b><em>define __NO_EMBEDDED_ASM</em></b>. This avoids potential side effects of the Embedded Assembler. Refer to <b>Compiler User Guide - Using the Inline and Embedded Assemblers of the Arm Compiler</b> for more information. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When using the <b>Arm Compiler Version 5 Toolchain</b> the following <a class="el" href="group__intrinsic__CPU__gr.html">Intrinsic Functions for CPU Instructions</a> are implemented using the Embedded Assembler. As the Embedded Assembler may cause side effects (Refer to <b>Arm Compiler v5.xx User Guide - Using the Inline and Embedded Assemblers of the Arm Compiler</b> for more information) it is possible to disable the following intrinsic functions and therefore the usage of the Embedded Assembler with the <b><em>define __NO_EMBEDDED_ASM</em></b>:<ul>
+<li><a class="el" href="group__intrinsic__CPU__gr.html#gaeef6f853b6df3a365c838ee5b49a7a26">__REV16</a></li>
+<li><a class="el" href="group__intrinsic__CPU__gr.html#ga1ec006e6d79063363cb0c2a2e0b3adbe">__REVSH</a></li>
+<li><a class="el" href="group__intrinsic__CPU__gr.html#gac09134f1bf9c49db07282001afcc9380">__RRX</a> </li>
+</ul>
+</dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga92f5621626711931da71eaa8bf301af7"></a>
 <div class="memitem">
@@ -1406,7 +1411,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:02:45 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:08 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

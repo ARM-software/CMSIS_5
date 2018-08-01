@@ -19,6 +19,7 @@ var group__mpu__functions =
       [ "RBAR", "structARM__MPU__Region__t.html#aa5e3c6aeaddbc0c283085dc971dd1a22", null ]
     ] ],
     [ "ARM_MPU_RASR", "group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc", null ],
+    [ "ARM_MPU_RASR_EX", "group__mpu__functions.html#ga332ed5f8969dd4df6b61c6ae32ec36dc", null ],
     [ "ARM_MPU_RBAR", "group__mpu__functions.html#ga3fead12dc24a6d00ad53f55a042486ca", null ],
     [ "ARM_MPU_ClrRegion", "group__mpu__functions.html#ga9dcb0afddf4ac351f33f3c7a5169c62c", null ],
     [ "ARM_MPU_Disable", "group__mpu__functions.html#ga7cbc0a4a066ed90e85c8176228235d57", null ],

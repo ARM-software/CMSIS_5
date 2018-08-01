@@ -28,7 +28,9 @@ var coresight_setup =
       [ "Writing debug access sequences", "debug_description.html#writing_sequences", [
         [ "Debug access syntax rules", "debug_description.html#DebugSyntaxRules", null ],
         [ "Expression rules", "debug_description.html#ExpressionType", null ],
-        [ "Debug access functions", "debug_description.html#DebugFunctions", null ]
+        [ "Debug access functions", "debug_description.html#DebugFunctions", null ],
+        [ "Debug access variables", "debug_description.html#DebugVars", null ],
+        [ "Using external tools", "debug_description.html#externalTools", null ]
       ] ]
     ] ]
 ];

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.1</span>
+   &#160;<span id="projectnumber">Version 5.1.2</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -125,11 +125,40 @@ Macros</h2></td></tr>
 <tr class="memitem:gabc4788126d7798469cb862a08d3050cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mpu__defines.html#gabc4788126d7798469cb862a08d3050cc">ARM_MPU_AP_xxx</a></td></tr>
 <tr class="memdesc:gabc4788126d7798469cb862a08d3050cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Values for MPU region access permissions (in RASR field)  <a href="#gabc4788126d7798469cb862a08d3050cc">More...</a><br/></td></tr>
 <tr class="separator:gabc4788126d7798469cb862a08d3050cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71d41084e984be70a23cb640fd89d1e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mpu__defines.html#ga71d41084e984be70a23cb640fd89d1e2">ARM_MPU_ACCESS_xxx</a></td></tr>
+<tr class="memdesc:ga71d41084e984be70a23cb640fd89d1e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Values for MPU region access attributes (in RASR field)  <a href="#ga71d41084e984be70a23cb640fd89d1e2">More...</a><br/></td></tr>
+<tr class="separator:ga71d41084e984be70a23cb640fd89d1e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab23596306119e7831847bd9683de3934"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mpu__defines.html#gab23596306119e7831847bd9683de3934">ARM_MPU_CACHEP_xxx</a></td></tr>
+<tr class="memdesc:gab23596306119e7831847bd9683de3934"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cache policy values for MPU region access attributes (in RASR field)  <a href="#gab23596306119e7831847bd9683de3934">More...</a><br/></td></tr>
+<tr class="separator:gab23596306119e7831847bd9683de3934"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>The following define values are used with <a class="el" href="group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc">ARM_MPU_RASR</a> to setup the <a class="el" href="structMPU__Type.html#a8f00c4a5e31b0a8d103ed3b0732c17a3">RASR</a> value field in the MPU region.</p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="structARM__MPU__Region__t.html" title="Setup information of a single MPU Region. ">ARM_MPU_Region_t</a>, <a class="el" href="group__mpu__functions.html#ga16931f9ad84d7289e8218e169ae6db5d">ARM_MPU_SetRegion</a>, <a class="el" href="group__mpu__functions.html#ga042ba1a6a1a58795231459ac0410b809">ARM_MPU_SetRegionEx</a>. </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga71d41084e984be70a23cb640fd89d1e2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_MPU_ACCESS_xxx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The following define values are used to compose the access attributes for an MPU region: </p>
+<table class="doxtable">
+<tr>
+<th align="left">#define </th><th align="left">TEX </th><th align="left">Shareable </th><th align="left">Cacheable </th><th align="left">Bufferable </th><th align="left">Description  </th></tr>
+<tr>
+<td align="left">ARM_MPU_ACCESS_ORDERED </td><td align="left">000b </td><td align="left">1 </td><td align="left">0 </td><td align="left">0 </td><td align="left">Strongly ordered memory </td></tr>
+<tr>
+<td align="left">ARM_MPU_ACCESS_DEVICE(S) </td><td align="left">0s0b </td><td align="left">S </td><td align="left">0 </td><td align="left">S </td><td align="left">Memory mapped peripheral device, shared (S=1) or non-shared (S=0) </td></tr>
+<tr>
+<td align="left">ARM_MPU_ACCESS_NORMAL(O,I,S) </td><td align="left">1BBb </td><td align="left">S </td><td align="left">A </td><td align="left">A </td><td align="left">Normal memory, with outer/inner cache policy (O/I=<a class="el" href="group__mpu__defines.html#gab23596306119e7831847bd9683de3934">ARM_MPU_CACHEP_xxx</a>, shared (S=1) or non-share (S=0) </td></tr>
+</table>
+
+</div>
+</div>
 <a class="anchor" id="gabc4788126d7798469cb862a08d3050cc"></a>
 <div class="memitem">
 <div class="memproto">
@@ -155,6 +184,31 @@ Macros</h2></td></tr>
 <td align="left">ARM_MPU_AP_PRO </td><td align="left">0x5U </td><td align="left">Privileged Read-only: any unprivileged access or privileged write generates a permission fault. </td></tr>
 <tr>
 <td align="left">ARM_MPU_AP_RO </td><td align="left">0x6U </td><td align="left">Privileged and Unprivileged Read-only: any write generates a permission fault. </td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gab23596306119e7831847bd9683de3934"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_MPU_CACHEP_xxx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The following define values are used to compose the cacheability flags within the access attributes for an MPU region: </p>
+<table class="doxtable">
+<tr>
+<th align="left">#define </th><th align="left">Value </th><th align="left">Cacheability policy  </th></tr>
+<tr>
+<td align="left">ARM_MPU_CACHEP_NOCACHE </td><td align="left">00b </td><td align="left">Non-cacheable </td></tr>
+<tr>
+<td align="left">ARM_MPU_CACHEP_WB_WRA </td><td align="left">01b </td><td align="left">Write-back, write and read allocate </td></tr>
+<tr>
+<td align="left">ARM_MPU_CACHEP_WT_NWA </td><td align="left">10b </td><td align="left">Write-through, no write allocate </td></tr>
+<tr>
+<td align="left">ARM_MPU_CACHEP_WB_NWA </td><td align="left">11b </td><td align="left">Write-back, no write allocate </td></tr>
 </table>
 
 </div>
@@ -237,7 +291,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:02:45 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:08 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

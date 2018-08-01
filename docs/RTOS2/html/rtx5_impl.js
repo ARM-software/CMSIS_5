@@ -2,6 +2,7 @@ var rtx5_impl =
 [
     [ "Create an RTX5 Project", "cre_rtx_proj.html", [
       [ "Additional requirements for RTX on Cortex-A", "cre_rtx_proj.html#cre_rtx_cortexa", null ],
+      [ "Using Interrupts on Cortex-M", "cre_rtx_proj.html#cre_UsingIRQs", null ],
       [ "Add support for RTX specific functions", "cre_rtx_proj.html#cre_rtx_proj_specifics", null ],
       [ "Add Event Recorder Visibility", "cre_rtx_proj.html#cre_rtx_proj_er", null ]
     ] ],
@@ -27,7 +28,6 @@ var rtx5_impl =
         [ "Global dynamic memory", "config_rtx5.html#systemConfig_glob_mem", null ],
         [ "Round-Robin Thread Switching", "config_rtx5.html#systemConfig_rr", null ],
         [ "ISR FIFO Queue", "config_rtx5.html#systemConfig_isr_fifo", null ],
-        [ "Event Recording", "config_rtx5.html#systemConfig_event_recording", null ],
         [ "Object Memory Usage Counters", "config_rtx5.html#systemConfig_usage_counters", null ]
       ] ],
       [ "Thread Configuration", "config_rtx5.html#threadConfig", [
@@ -54,21 +54,15 @@ var rtx5_impl =
       ] ],
       [ "Message Queue Configuration", "config_rtx5.html#msgQueueConfig", [
         [ "Object-specific memory allocation", "config_rtx5.html#msgQueueConfig_obj", null ]
+      ] ],
+      [ "Event Recorder Configuration", "config_rtx5.html#evtrecConfig", [
+        [ "Global Configuration", "config_rtx5.html#evtrecConfigGlobIni", null ],
+        [ "RTOS Event Generation", "config_rtx5.html#evtrecConfigEvtGen", null ],
+        [ "Manual event configuration", "config_rtx5.html#systemConfig_event_recording", null ]
       ] ]
     ] ],
     [ "Building the RTX5 Library", "creating_RTX5_LIB.html", null ],
-    [ "Directory Structure and File Overview", "dirstructfiles5.html", [
-      [ "RTX v5 Directory Structure", "dirstructfiles5.html#Folders", null ],
-      [ "RTX v5 Library Files", "dirstructfiles5.html#libFiles", null ]
-    ] ],
-    [ "Technical Data", "technicalData5.html", [
-      [ "Supported Toolchains", "technicalData5.html#technicalData_Toolchains", [
-        [ "Arm Compiler (Arm/Keil MDK, uVision5)", "technicalData5.html#technicalData_Toolchain_ARM", null ],
-        [ "IAR Embedded Workbench", "technicalData5.html#technicalData_Toolchain_IAR", null ],
-        [ "GNU Compiler Collection", "technicalData5.html#technicalData_Toolchain_GCC", null ]
-      ] ],
-      [ "Control Block Sizes", "technicalData5.html#technicalData5_ControlBlockSizes", null ]
-    ] ],
+    [ "Technical Data", "technicalData5.html", "technicalData5" ],
     [ "MISRA C:2012 Compliance", "misraCompliance5.html", [
       [ "[MISRA Note 1]: Return statements for parameter checking", "misraCompliance5.html#MISRA_1", null ],
       [ "[MISRA Note 2]: Object identifiers are void pointers", "misraCompliance5.html#MISRA_2", null ],

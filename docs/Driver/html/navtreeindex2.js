@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__flash__interface__gr.html#gaa8baa4618ea33568f8b3752afb2ab5a2":[5,6,11],
 "group__flash__interface__gr.html#gabeb4ad43b1e6fa4ed956cd5c9371d327":[5,6,6],
 "group__flash__interface__gr.html#gac047b7509356e888502e0424a9d189ae":[5,6,17],
 "group__flash__interface__gr.html#gae23af293e9f8a67cdb19c7d0d562d415":[5,6,10],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "group__nand__data__bus__width__codes.html#ga578051cc193ae0b7125aec8007071d21":[5,5,3,2,0],
 "group__nand__driver__ecc__codes.html":[5,5,4],
 "group__nand__driver__ecc__codes.html#ga15c79a12200c16f953936635f930df1d":[5,5,4,1],
-"group__nand__driver__ecc__codes.html#gac2eb4475f12a443209165d29fe200030":[5,5,4,0],
-"group__nand__driver__ecc__codes.html#gaee653288a88318ee33d1db81baa69bbc":[5,5,4,2]
+"group__nand__driver__ecc__codes.html#gac2eb4475f12a443209165d29fe200030":[5,5,4,0]
 };

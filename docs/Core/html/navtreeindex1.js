@@ -1,15 +1,18 @@
 var NAVTREEINDEX1 =
 {
-"group__mpu__defines.html#gadb0a92c0928c113120567e85ff1ba05c":[8,9,0,1],
+"group__mpu__defines.html#gab23596306119e7831847bd9683de3934":[8,9,0,2],
+"group__mpu__defines.html#gabc4788126d7798469cb862a08d3050cc":[8,9,0,1],
+"group__mpu__defines.html#gadb0a92c0928c113120567e85ff1ba05c":[8,9,0,3],
 "group__mpu__functions.html":[8,9],
-"group__mpu__functions.html#ga042ba1a6a1a58795231459ac0410b809":[8,9,10],
-"group__mpu__functions.html#ga16931f9ad84d7289e8218e169ae6db5d":[8,9,9],
-"group__mpu__functions.html#ga31406efd492ec9a091a70ffa2d8a42fb":[8,9,7],
-"group__mpu__functions.html#ga3fead12dc24a6d00ad53f55a042486ca":[8,9,4],
-"group__mpu__functions.html#ga7cbc0a4a066ed90e85c8176228235d57":[8,9,6],
+"group__mpu__functions.html#ga042ba1a6a1a58795231459ac0410b809":[8,9,11],
+"group__mpu__functions.html#ga16931f9ad84d7289e8218e169ae6db5d":[8,9,10],
+"group__mpu__functions.html#ga31406efd492ec9a091a70ffa2d8a42fb":[8,9,8],
+"group__mpu__functions.html#ga332ed5f8969dd4df6b61c6ae32ec36dc":[8,9,4],
+"group__mpu__functions.html#ga3fead12dc24a6d00ad53f55a042486ca":[8,9,5],
+"group__mpu__functions.html#ga7cbc0a4a066ed90e85c8176228235d57":[8,9,7],
 "group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc":[8,9,3],
-"group__mpu__functions.html#ga9dcb0afddf4ac351f33f3c7a5169c62c":[8,9,5],
-"group__mpu__functions.html#gafa27b26d5847fa8e465584e376b6078a":[8,9,8],
+"group__mpu__functions.html#ga9dcb0afddf4ac351f33f3c7a5169c62c":[8,9,6],
+"group__mpu__functions.html#gafa27b26d5847fa8e465584e376b6078a":[8,9,9],
 "group__nvic__trustzone__functions.html":[8,12,1],
 "group__nvic__trustzone__functions.html#ga0d3b5db0685bd95cc8bd2f7ad0891d39":[8,12,1,10],
 "group__nvic__trustzone__functions.html#ga1bffd79bd6365d83281883b6c4b0f218":[8,12,1,3],
@@ -246,8 +249,5 @@ var NAVTREEINDEX1 =
 "unionxPSR__Type.html#a3e9120dcf1a829fc8d2302b4d0673970":[9,14,3],
 "unionxPSR__Type.html#a40213a6b5620410cac83b0d89564609d":[9,14,2],
 "unionxPSR__Type.html#a7eed9fe24ae8d354cd76ae1c1110a658":[9,14,7],
-"unionxPSR__Type.html#add7cbd2b0abd8954d62cd7831796ac7c":[9,14,6],
-"unionxPSR__Type.html#af14df16ea0690070c45b95f2116b7a0a":[9,14,8],
-"unionxPSR__Type.html#af438e0f407357e914a70b5bd4d6a97c5":[9,14,0],
-"using_ARM_pg.html":[2,2]
+"unionxPSR__Type.html#add7cbd2b0abd8954d62cd7831796ac7c":[9,14,6]
 };

@@ -1,13 +1,9 @@
 var searchData=
 [
-  ['rtx_20migration_20guide',['RTX Migration Guide',['../os2MigrationGuide.html',1,'os2Migration']]],
-  ['reserved',['reserved',['../group__CMSIS__RTOS__ThreadMgmt.html#a66f538babc389986738ec70104e0562b',1,'osThreadAttr_t::reserved()'],['../group__rtx5__specific__structs.html#acb7bc06bed6f6408d719334fc41698c7',1,'osRtxEventFlags_t::reserved()'],['../group__rtx5__specific__structs.html#acb7bc06bed6f6408d719334fc41698c7',1,'osRtxSemaphore_t::reserved()'],['../group__rtx5__specific__structs.html#acb7bc06bed6f6408d719334fc41698c7',1,'osRtxMemoryPool_t::reserved()'],['../group__rtx5__specific__structs.html#acb7bc06bed6f6408d719334fc41698c7',1,'osRtxMessageQueue_t::reserved()'],['../rtx__os_8h.html#acb7bc06bed6f6408d719334fc41698c7',1,'osRtxObject_t::reserved()']]],
-  ['robin_5ftimeout',['robin_timeout',['../rtx__os_8h.html#a6b4c66676a5bc985c28b71ac4ac79159',1,'osRtxConfig_t']]],
-  ['revision_20history',['Revision History',['../rtos_revisionHistory.html',1,'index']]],
-  ['rtos_20validation',['RTOS Validation',['../rtosValidation.html',1,'index']]],
-  ['rtx_20v5_20implementation',['RTX v5 Implementation',['../rtx5_impl.html',1,'index']]],
-  ['rtx5_20specific_20api',['RTX5 Specific API',['../group__rtx5__specific.html',1,'']]],
-  ['rtx_5fevr_2eh',['rtx_evr.h',['../rtx__evr_8h.html',1,'']]],
-  ['rtx_5fevr_2etxt',['rtx_evr.txt',['../rtx__evr_8txt.html',1,'']]],
-  ['rtx_5fos_2eh',['rtx_os.h',['../rtx__os_8h.html',1,'']]]
+  ['padding',['padding',['../rtx__os_8h.html#a735ef00341a84c02ba561c66de3d20af',1,'osRtxMutex_t']]],
+  ['pendsv_5fhandler',['PendSV_Handler',['../rtx__os_8h.html#a6303e1f258cbdc1f970ce579cc015623',1,'rtx_os.h']]],
+  ['post_5fprocess',['post_process',['../rtx__os_8h.html#ae64a3e930a8e3d1fb28038db9bc514d9',1,'osRtxInfo_t']]],
+  ['prev',['prev',['../rtx__os_8h.html#ac8953ebf7df8aaf724cb12876ac8fb1a',1,'osRtxTimer_t::prev()'],['../rtx__os_8h.html#ad2b4e6d37acc8020701610f54c0c8910',1,'osRtxMessage_t::prev()']]],
+  ['priority',['priority',['../group__CMSIS__RTOS__ThreadMgmt.html#a6a5183df4c54c3e28dc8dc704f2487d5',1,'osThreadAttr_t::priority()'],['../rtx__os_8h.html#a81659cc4c01e54e2424022728d9effc7',1,'osRtxThread_t::priority()'],['../rtx__os_8h.html#a0ad043071ccc7a261d79a759dc9c6f0c',1,'osRtxMessage_t::priority()']]],
+  ['priority_5fbase',['priority_base',['../rtx__os_8h.html#ac67f8858081fb7a6e5a4ee8d2de3b348',1,'osRtxThread_t']]]
 ];

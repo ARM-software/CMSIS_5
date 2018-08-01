@@ -236,121 +236,178 @@ Master/Slave connected via I2C interface</div></div>
 <p><a class="anchor" id="example"></a><b>Example Code</b></p>
 <p>The following example code shows the usage of the I<sup>2</sup>C interface in Master mode.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="Driver__I2C_8h.html">Driver_I2C.h</a>&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;cmsis_os.h&quot;</span>                   <span class="comment">// ARM::CMSIS:RTOS:Keil RTX</span></div>
-<div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="comment">/* I2C Driver */</span></div>
-<div class="line"><span class="keyword">extern</span> <a class="code" href="group__i2c__interface__gr.html#structARM__DRIVER__I2C">ARM_DRIVER_I2C</a> Driver_I2C0;</div>
-<div class="line"><span class="keyword">static</span> <a class="code" href="group__i2c__interface__gr.html#structARM__DRIVER__I2C">ARM_DRIVER_I2C</a> * I2Cdrv = &amp;Driver_I2C0;</div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line"><span class="preprocessor">#ifndef EEPROM_I2C_PORT</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define EEPROM_I2C_PORT       0         </span><span class="comment">/* I2C Port number                    */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor">#define EEPROM_I2C_ADDR       0x51      </span><span class="comment">/* EEPROM I2C address */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="preprocessor">#define EEPROM_I2C_ADDR       0x51      </span><span class="comment">/* 24LC128 EEPROM I2C address         */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="preprocessor">#define EEPROM_MAX_ADDR       16384     </span><span class="comment">/* Max memory locations available     */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define EEPROM_MAX_WRITE      16        </span><span class="comment">/* Max bytes to write in one step     */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="preprocessor">#define A_WR                  0         </span><span class="comment">/* Master will write to the I2C       */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define A_RD                  1         </span><span class="comment">/* Master will read from the I2C      */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span> </div>
-<div class="line"><span class="keyword">static</span> uint8_t DeviceAddr;</div>
-<div class="line"><span class="keyword">static</span> uint8_t wr_buf[EEPROM_MAX_WRITE + 2];</div>
+<div class="line"><span class="comment">/* I2C driver instance */</span></div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="group__i2c__interface__gr.html#structARM__DRIVER__I2C">ARM_DRIVER_I2C</a>            Driver_I2C0;</div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="group__i2c__interface__gr.html#structARM__DRIVER__I2C">ARM_DRIVER_I2C</a> *I2Cdrv = &amp;Driver_I2C0;</div>
 <div class="line"> </div>
-<div class="line">int32_t EEPROM_WriteBuf (uint16_t addr, <span class="keyword">const</span> uint8_t *buf, uint32_t len) {</div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t I2C_Event;</div>
 <div class="line"> </div>
-<div class="line">  wr_buf[0] = (uint8_t)(addr &gt;&gt; 8);</div>
-<div class="line">  wr_buf[1] = (uint8_t)(addr &amp; 0xFF);</div>
+<div class="line"><span class="comment">/* I2C Signal Event function callback */</span></div>
+<div class="line"><span class="keywordtype">void</span> I2C_SignalEvent (uint32_t event) {</div>
 <div class="line"> </div>
-<div class="line">  memcpy (&amp;wr_buf[2], &amp;buf[0], len);</div>
+<div class="line">  <span class="comment">/* Save received events */</span></div>
+<div class="line">  I2C_Event |= event;</div>
 <div class="line"> </div>
-<div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#a9e58f7ea5fd9476e06b45c70b6696b95">MasterTransmit</a> (DeviceAddr, wr_buf, len + 2, <span class="keyword">false</span>);</div>
-<div class="line">  <span class="keywordflow">while</span> (I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ad4b47653bc47cdb02965dd311e88b96a">GetStatus</a>().<a class="code" href="group__i2c__interface__gr.html#a50c88f3c1d787773e2ac1b59533f034a">busy</a>);</div>
-<div class="line">  <span class="keywordflow">if</span> (I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ad421a9b9b07fd6d3e6537396c2b98788">GetDataCount</a> () != (len + 2)) <span class="keywordflow">return</span> -1;</div>
-<div class="line">  <span class="comment">/* Acknowledge polling */</span></div>
+<div class="line">  <span class="comment">/* Optionally, user can define specific actions for an event */</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordflow">do</span> {</div>
-<div class="line">    I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#aa135ff2f4832d35ceb5d7e248159b981">MasterReceive</a> (DeviceAddr, &amp;wr_buf[0], 1, <span class="keyword">false</span>);</div>
-<div class="line">    <span class="keywordflow">while</span> (I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ad4b47653bc47cdb02965dd311e88b96a">GetStatus</a>().<a class="code" href="group__i2c__interface__gr.html#a50c88f3c1d787773e2ac1b59533f034a">busy</a>);</div>
-<div class="line">  } <span class="keywordflow">while</span> (I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ad421a9b9b07fd6d3e6537396c2b98788">GetDataCount</a> () &lt; 0);</div>
+<div class="line">  <span class="keywordflow">if</span> (event &amp; <a class="code" href="group__I2C__events.html#gafac3989c7b57727e1bed4ee9f2496ac9">ARM_I2C_EVENT_TRANSFER_INCOMPLETE</a>) {</div>
+<div class="line">    <span class="comment">/* Less data was transferred than requested */</span></div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (event &amp; <a class="code" href="group__I2C__events.html#ga5992dc0f6e839c4d066cfa83d535f30d">ARM_I2C_EVENT_TRANSFER_DONE</a>) {</div>
+<div class="line">    <span class="comment">/* Transfer or receive is finished */</span></div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (event &amp; <a class="code" href="group__I2C__events.html#ga98b815769634d9578526b43589caa017">ARM_I2C_EVENT_ADDRESS_NACK</a>) {</div>
+<div class="line">    <span class="comment">/* Slave address was not acknowledged */</span></div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (event &amp; <a class="code" href="group__I2C__events.html#gac9000f44a578e2117d64dbc2093cec6d">ARM_I2C_EVENT_ARBITRATION_LOST</a>) {</div>
+<div class="line">    <span class="comment">/* Master lost bus arbitration */</span></div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (event &amp; <a class="code" href="group__I2C__events.html#gaeef542840355131c18b53fd9ed1904a8">ARM_I2C_EVENT_BUS_ERROR</a>) {</div>
+<div class="line">    <span class="comment">/* Invalid start/stop position detected */</span></div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (event &amp; <a class="code" href="group__I2C__events.html#ga81ca21fad73dac1ffaff58921f848ea9">ARM_I2C_EVENT_BUS_CLEAR</a>) {</div>
+<div class="line">    <span class="comment">/* Bus clear operation completed */</span></div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (event &amp; <a class="code" href="group__I2C__events.html#ga3ab54410b6410ed3a58762ff0c0d68b9">ARM_I2C_EVENT_GENERAL_CALL</a>) {</div>
+<div class="line">    <span class="comment">/* Slave was addressed with a general call address */</span></div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (event &amp; <a class="code" href="group__I2C__events.html#gabd875b57ce39dadd849c53b885ad6661">ARM_I2C_EVENT_SLAVE_RECEIVE</a>) {</div>
+<div class="line">    <span class="comment">/* Slave addressed as receiver but SlaveReceive operation is not started */</span></div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (event &amp; <a class="code" href="group__I2C__events.html#gacfbbec9af083d35e8ea87ad16e9c6ec2">ARM_I2C_EVENT_SLAVE_TRANSMIT</a>) {</div>
+<div class="line">    <span class="comment">/* Slave addressed as transmitter but SlaveTransmit operation is not started */</span></div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Read I2C connected EEPROM (event driven example) */</span></div>
+<div class="line">int32_t EEPROM_Read_Event (uint16_t addr, uint8_t *buf, uint32_t len) {</div>
+<div class="line">  uint8_t a[2];</div>
+<div class="line"> </div>
+<div class="line">  a[0] = (uint8_t)(addr &gt;&gt; 8);</div>
+<div class="line">  a[1] = (uint8_t)(addr &amp; 0xFF);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* Clear event flags before new transfer */</span></div>
+<div class="line">  I2C_Event = 0U;</div>
+<div class="line"> </div>
+<div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#a9e58f7ea5fd9476e06b45c70b6696b95">MasterTransmit</a> (EEPROM_I2C_ADDR, a, 2, <span class="keyword">true</span>);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">/* Wait until transfer completed */</span></div>
+<div class="line">  <span class="keywordflow">while</span> ((I2C_Event &amp; ARM_I2C_EVENT_TRANSFER_DONE) == 0U);</div>
+<div class="line">  <span class="comment">/* Check if all data transferred */</span></div>
+<div class="line">  <span class="keywordflow">if</span> ((I2C_Event &amp; ARM_I2C_EVENT_TRANSFER_INCOMPLETE) != 0U) <span class="keywordflow">return</span> -1;</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">/* Clear event flags before new transfer */</span></div>
+<div class="line">  I2C_Event = 0U;</div>
+<div class="line"> </div>
+<div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#aa135ff2f4832d35ceb5d7e248159b981">MasterReceive</a> (EEPROM_I2C_ADDR, buf, len, <span class="keyword">false</span>);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">/* Wait until transfer completed */</span></div>
+<div class="line">  <span class="keywordflow">while</span> ((I2C_Event &amp; ARM_I2C_EVENT_TRANSFER_DONE) == 0U);</div>
+<div class="line">  <span class="comment">/* Check if all data transferred */</span></div>
+<div class="line">  <span class="keywordflow">if</span> ((I2C_Event &amp; ARM_I2C_EVENT_TRANSFER_INCOMPLETE) != 0U) <span class="keywordflow">return</span> -1;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="line"> </div>
-<div class="line">int32_t EEPROM_ReadBuf (uint16_t addr, uint8_t *buf, uint32_t len) {</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Read I2C connected EEPROM (pooling example) */</span></div>
+<div class="line">int32_t EEPROM_Read_Pool (uint16_t addr, uint8_t *buf, uint32_t len) {</div>
 <div class="line">  uint8_t a[2];</div>
 <div class="line"> </div>
 <div class="line">  a[0] = (uint8_t)(addr &gt;&gt; 8);</div>
 <div class="line">  a[1] = (uint8_t)(addr &amp; 0xFF);</div>
 <div class="line"> </div>
-<div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#a9e58f7ea5fd9476e06b45c70b6696b95">MasterTransmit</a> (DeviceAddr, a, 2, <span class="keyword">true</span>);</div>
+<div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#a9e58f7ea5fd9476e06b45c70b6696b95">MasterTransmit</a> (EEPROM_I2C_ADDR, a, 2, <span class="keyword">true</span>);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">/* Wait until transfer completed */</span></div>
 <div class="line">  <span class="keywordflow">while</span> (I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ad4b47653bc47cdb02965dd311e88b96a">GetStatus</a>().<a class="code" href="group__i2c__interface__gr.html#a50c88f3c1d787773e2ac1b59533f034a">busy</a>);</div>
-<div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#aa135ff2f4832d35ceb5d7e248159b981">MasterReceive</a> (DeviceAddr, buf, len, <span class="keyword">false</span>);</div>
+<div class="line">  <span class="comment">/* Check if all data transferred */</span></div>
+<div class="line">  <span class="keywordflow">if</span> (I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ad421a9b9b07fd6d3e6537396c2b98788">GetDataCount</a> () != len) <span class="keywordflow">return</span> -1;</div>
+<div class="line"> </div>
+<div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#aa135ff2f4832d35ceb5d7e248159b981">MasterReceive</a> (EEPROM_I2C_ADDR, buf, len, <span class="keyword">false</span>);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">/* Wait until transfer completed */</span></div>
 <div class="line">  <span class="keywordflow">while</span> (I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ad4b47653bc47cdb02965dd311e88b96a">GetStatus</a>().<a class="code" href="group__i2c__interface__gr.html#a50c88f3c1d787773e2ac1b59533f034a">busy</a>);</div>
+<div class="line">  <span class="comment">/* Check if all data transferred */</span></div>
 <div class="line">  <span class="keywordflow">if</span> (I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ad421a9b9b07fd6d3e6537396c2b98788">GetDataCount</a> () != len) <span class="keywordflow">return</span> -1;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line">int32_t EEPROM_Initialize (<span class="keywordtype">void</span>) {</div>
+<div class="line"><span class="comment">/* Initialize I2C connected EEPROM */</span></div>
+<div class="line">int32_t EEPROM_Initialize (<span class="keywordtype">bool</span> pooling) {</div>
+<div class="line">  int32_t status;</div>
 <div class="line">  uint8_t val;</div>
 <div class="line"> </div>
-<div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ab0480980f67e0ebe0461ccea7873a65b">Initialize</a>   (NULL);</div>
+<div class="line">  <span class="keywordflow">if</span> (pooling == <span class="keyword">true</span>) {</div>
+<div class="line">    I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ab0480980f67e0ebe0461ccea7873a65b">Initialize</a> (NULL);</div>
+<div class="line">  } <span class="keywordflow">else</span> {</div>
+<div class="line">    I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ab0480980f67e0ebe0461ccea7873a65b">Initialize</a> (I2C_SignalEvent);</div>
+<div class="line">  }</div>
 <div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#aba8f1c8019af95ffe19c32403e3240ef">PowerControl</a> (<a class="code" href="Driver__Common_8h.html#ga47d6d7c31f88f3b8ae4aaf9d8444afa5abed52b77a9ce4775570e44a842b1295e">ARM_POWER_FULL</a>);</div>
 <div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#a6e0f47a92f626a971c5197fca6545505">Control</a>      (<a class="code" href="group__i2c__control__codes.html#ga35733133237d65146abd9449f5353a7f">ARM_I2C_BUS_SPEED</a>, <a class="code" href="group__i2c__bus__speed__ctrls.html#ga39f49ef4cd1100a8d9dc9003329e5ecd">ARM_I2C_BUS_SPEED_FAST</a>);</div>
 <div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#a6e0f47a92f626a971c5197fca6545505">Control</a>      (<a class="code" href="group__i2c__control__codes.html#gadacf04578770faca4b3eaae34b2c5f03">ARM_I2C_BUS_CLEAR</a>, 0);</div>
 <div class="line"> </div>
-<div class="line">  <span class="comment">/* Init 24LC128 EEPROM device */</span></div>
-<div class="line">  DeviceAddr = EEPROM_I2C_ADDR;</div>
-<div class="line"> </div>
-<div class="line">  <span class="comment">/* Read min and max address */</span></div>
-<div class="line">  <span class="keywordflow">if</span> (EEPROM_ReadBuf (0x00, &amp;val, 1) == 0) {</div>
-<div class="line">    <span class="keywordflow">return</span> (EEPROM_ReadBuf (EEPROM_MAX_ADDR-1, &amp;val, 1));</div>
+<div class="line">  <span class="comment">/* Check if EEPROM can be accessed */</span></div>
+<div class="line">  <span class="keywordflow">if</span> (pooling == <span class="keyword">true</span>) {</div>
+<div class="line">    status = EEPROM_Read_Pool (0x00, &amp;val, 1);</div>
+<div class="line">  } <span class="keywordflow">else</span> {</div>
+<div class="line">    status = EEPROM_Read_Event (0x00, &amp;val, 1);</div>
 <div class="line">  }</div>
-<div class="line">  <span class="keywordflow">return</span> -1;</div>
-<div class="line">}</div>
-<div class="line">  </div>
-<div class="line">uint32_t EEPROM_GetSize (<span class="keywordtype">void</span>) {</div>
-<div class="line">  <span class="keywordflow">return</span> EEPROM_MAX_ADDR;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> (status);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>The following example code shows the usage of the I<sup>2</sup>C interface in Slave mode.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="Driver__I2C_8h.html">Driver_I2C.h</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// I2C driver instance</span></div>
-<div class="line"><span class="keyword">extern</span> <a class="code" href="group__i2c__interface__gr.html#structARM__DRIVER__I2C">ARM_DRIVER_I2C</a> Driver_I2C0; </div>
-<div class="line"><span class="keyword">static</span> <a class="code" href="group__i2c__interface__gr.html#structARM__DRIVER__I2C">ARM_DRIVER_I2C</a> *i2cDev = &amp;Driver_I2C0;</div>
+<div class="line"><span class="comment">/* I2C driver instance */</span></div>
+<div class="line"><span class="keyword">extern</span> <a class="code" href="group__i2c__interface__gr.html#structARM__DRIVER__I2C">ARM_DRIVER_I2C</a>            Driver_I2C0; </div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="group__i2c__interface__gr.html#structARM__DRIVER__I2C">ARM_DRIVER_I2C</a> *I2Cdrv = &amp;Driver_I2C0;</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t <span class="keyword">event</span> = 0;</div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t I2C_Event;</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> I2C_DrvEvent (uint32_t e) {</div>
-<div class="line">    <span class="keyword">event</span> |= e;</div>
+<div class="line"><span class="comment">/* I2C Signal Event function callback */</span></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> I2C_SignalEvent (uint32_t event) {</div>
+<div class="line">  I2C_Event |= event;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>) {</div>
-<div class="line">    uint8_t cnt = 0;</div>
+<div class="line">  uint8_t cnt = 0;</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">/* Initialize I2C peripheral */</span></div>
-<div class="line">    i2cDev-&gt;<a class="code" href="group__i2c__interface__gr.html#ab0480980f67e0ebe0461ccea7873a65b">Initialize</a>(I2C_DrvEvent);</div>
+<div class="line">  <span class="comment">/* Initialize I2C peripheral */</span></div>
+<div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ab0480980f67e0ebe0461ccea7873a65b">Initialize</a>(I2C_SignalEvent);</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">/* Power-on I2C peripheral */</span></div>
-<div class="line">    i2cDev-&gt;<a class="code" href="group__i2c__interface__gr.html#aba8f1c8019af95ffe19c32403e3240ef">PowerControl</a>(<a class="code" href="Driver__Common_8h.html#ga47d6d7c31f88f3b8ae4aaf9d8444afa5abed52b77a9ce4775570e44a842b1295e">ARM_POWER_FULL</a>);</div>
+<div class="line">  <span class="comment">/* Power-on I2C peripheral */</span></div>
+<div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#aba8f1c8019af95ffe19c32403e3240ef">PowerControl</a>(<a class="code" href="Driver__Common_8h.html#ga47d6d7c31f88f3b8ae4aaf9d8444afa5abed52b77a9ce4775570e44a842b1295e">ARM_POWER_FULL</a>);</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">/* Configure I2C bus*/</span></div>
-<div class="line">    i2cDev-&gt;<a class="code" href="group__i2c__interface__gr.html#a6e0f47a92f626a971c5197fca6545505">Control</a>(<a class="code" href="group__i2c__control__codes.html#ga69d130b9f8aa34d6df5334ab67c74307">ARM_I2C_OWN_ADDRESS</a>, 0x78);</div>
+<div class="line">  <span class="comment">/* Configure I2C bus */</span></div>
+<div class="line">  I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#a6e0f47a92f626a971c5197fca6545505">Control</a>(<a class="code" href="group__i2c__control__codes.html#ga69d130b9f8aa34d6df5334ab67c74307">ARM_I2C_OWN_ADDRESS</a>, 0x78);</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordflow">while</span> (1) {</div>
-<div class="line">        <span class="comment">/* Receive chunk */</span></div>
-<div class="line">        i2cDev-&gt;<a class="code" href="group__i2c__interface__gr.html#a12d2689d6e93985e64b9561a8e4e917b">SlaveReceive</a>(&amp;cnt, 1);</div>
-<div class="line">        <span class="keywordflow">while</span> ((event &amp; ARM_event_TRANSFER_DONE) == 0);</div>
-<div class="line">        <span class="keyword">event</span> &amp;= ~ARM_event_TRANSFER_DONE;</div>
+<div class="line">  I2C_Event = 0;</div>
+<div class="line"></div>
+<div class="line">  <span class="keywordflow">while</span> (1) {</div>
+<div class="line">    <span class="comment">/* Receive chunk */</span></div>
+<div class="line">    I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#a12d2689d6e93985e64b9561a8e4e917b">SlaveReceive</a>(&amp;cnt, 1);</div>
+<div class="line">    <span class="keywordflow">while</span> ((I2C_Event &amp; ARM_I2C_EVENT_TRANSFER_DONE) == 0);</div>
+<div class="line">    <span class="comment">/* Clear transfer done flag */</span></div>
+<div class="line">    I2C_Event &amp;= ~ARM_I2C_EVENT_TRANSFER_DONE;</div>
 <div class="line"> </div>
-<div class="line">        <span class="comment">/* Transmit chunk back */</span></div>
-<div class="line">        i2cDev-&gt;<a class="code" href="group__i2c__interface__gr.html#ae9e3b81b352d4564fd2337fdf0e5488c">SlaveTransmit</a>(&amp;cnt, 1);</div>
-<div class="line">        <span class="keywordflow">while</span> ((event &amp; ARM_event_TRANSFER_DONE) == 0);</div>
-<div class="line">        <span class="keyword">event</span> &amp;= ~ARM_event_TRANSFER_DONE;</div>
-<div class="line">    }</div>
+<div class="line">    <span class="comment">/* Transmit chunk back */</span></div>
+<div class="line">    I2Cdrv-&gt;<a class="code" href="group__i2c__interface__gr.html#ae9e3b81b352d4564fd2337fdf0e5488c">SlaveTransmit</a>(&amp;cnt, 1);</div>
+<div class="line">    <span class="keywordflow">while</span> ((I2C_Event &amp; ARM_I2C_EVENT_TRANSFER_DONE) == 0);</div>
+<div class="line">    <span class="comment">/* Clear transfer done flag */</span></div>
+<div class="line">    I2C_Event &amp;= ~ARM_I2C_EVENT_TRANSFER_DONE;</div>
+<div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structARM__DRIVER__I2C" id="structARM__DRIVER__I2C"></a>
@@ -1297,7 +1354,7 @@ The parameter <em>arg</em> provides, depending on the operation, additional info
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:02:51 for CMSIS-Driver by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:13 for CMSIS-Driver by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

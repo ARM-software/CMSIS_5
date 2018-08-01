@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>RTX5 Specific API</title>
-<title>CMSIS-RTOS2: RTX5 Specific API</title>
+<title>RTX v5 Specific API</title>
+<title>CMSIS-RTOS2: RTX v5 Specific API</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -110,20 +110,17 @@ $(document).ready(function(){initNavTree('group__rtx5__specific.html','');});
   <div class="summary">
 <a href="#groups">Content</a>  </div>
   <div class="headertitle">
-<div class="title">RTX5 Specific API</div>  </div>
+<div class="title">RTX v5 Specific API</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This section describes CMSIS-RTOS RTX5 specifics.  
+<p>RTX v5 implementation specific definitions and functions defined in <b>rtx_os.h</b>.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Content</h2></td></tr>
 <tr class="memitem:group__rtx5__specific__defines"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html">Macros</a></td></tr>
 <tr class="memdesc:group__rtx5__specific__defines"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTX5 macros. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__rtx5__specific__structs"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__structs.html">Structs</a></td></tr>
-<tr class="memdesc:group__rtx5__specific__structs"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTX5 structs. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__rtx5__specific__functions"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__functions.html">Functions</a></td></tr>
 <tr class="memdesc:group__rtx5__specific__functions"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTX5 functions. <br/></td></tr>
@@ -135,16 +132,16 @@ Content</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>The RTX5 kernel can be customized for different application requirements:</p>
 <ul>
-<li>If you are depending on the <a class="el" href="theory_of_operation.html#lowPower">lowest power consumption</a> possible, you need to adapt the function <a class="el" href="group__rtx5__specific__functions.html#gacc47720b9a10fcb7d3412640c8276465">osRtxIdleThread</a> to send the system to sleep mode as often as possible. In addition, use the <a class="el" href="theory_of_operation.html#TickLess">tick-less low power</a> functions <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae26683e1606ec633354a2876c68f0c1f">osKernelSuspend</a> and <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced">osKernelResume</a> to suspend the scheduler and to stop the SysTick timer.</li>
-<li>If you try to find a <b>runtime</b> <b>error</b>, use the function <a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> to debug the error.</li>
+<li>The function <a class="el" href="group__rtx5__specific__functions.html#ga074068b8efa7074cee68a71481d0b072">osRtxIdleThread</a> implements the idle thread and allows set the system into sleep modes for <a class="el" href="theory_of_operation.html#lowPower">Low-Power Operation</a> or <a class="el" href="theory_of_operation.html#TickLess">Tick-less Low-Power Operation</a> for ultra-low power operation.</li>
+<li>The function <a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> may be extended to handle system runtime errors.</li>
 </ul>
-<p>RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> to provide event information which helps you to understand and analyze the operation. Refer to <a class="el" href="group__rtx__evr.html">Event functions</a> for more information. </p>
+<p>RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> and provides event information that helps to analyze the operation. Refer to <a class="el" href="group__rtx__evr.html">Event functions</a> for more information. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

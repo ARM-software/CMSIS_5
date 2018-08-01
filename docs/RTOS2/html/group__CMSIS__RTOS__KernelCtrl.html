@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -112,7 +112,7 @@ $(document).ready(function(){initNavTree('group__CMSIS__RTOS__KernelCtrl.html','
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Kernel Information and Control<div class="ingroups"><a class="el" href="group__CMSIS__RTOS.html">CMSIS-RTOS2 API</a></div></div>  </div>
+<div class="title">Kernel Information and Control<div class="ingroups"><a class="el" href="group__CMSIS__RTOS.html">CMSIS-RTOS API v2</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -608,7 +608,7 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 <p>The return value can be used to determine the amount of system ticks until the next tick-based kernel event will occure, i.e. a delayed thread becomed ready again. It is recommended to set up the low power timer to generate a wake-up interrupt based on this return value.</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#gacc47720b9a10fcb7d3412640c8276465">osRtxIdleThread</a> (<span class="keywordtype">void</span>) {</div>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#ga074068b8efa7074cee68a71481d0b072">osRtxIdleThread</a> (<span class="keywordtype">void</span>) {</div>
 <div class="line">                                               <span class="comment">/* The idle thread is running</span></div>
 <div class="line"><span class="comment">                                                  when no other thread is ready</span></div>
 <div class="line"><span class="comment">                                                  to run.                      */</span></div>
@@ -661,7 +661,7 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 <p>CMSIS-RTOS provides extension for tick-less operation which is useful for applications that use extensively low-power modes where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to derive timer intervals. The function <b>osKernelResume</b> enables the RTX kernel scheduler and thus wakes up the system from sleep mode.</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#gacc47720b9a10fcb7d3412640c8276465">osRtxIdleThread</a> (<span class="keywordtype">void</span>) {</div>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="group__rtx5__specific__functions.html#ga074068b8efa7074cee68a71481d0b072">osRtxIdleThread</a> (<span class="keywordtype">void</span>) {</div>
 <div class="line">                                               <span class="comment">/* The idle thread is running</span></div>
 <div class="line"><span class="comment">                                                  when no other thread is ready</span></div>
 <div class="line"><span class="comment">                                                  to run.                      */</span></div>
@@ -801,7 +801,7 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

@@ -10,7 +10,7 @@ var searchData=
   ['osrtxsemaphorememusage',['osRtxSemaphoreMemUsage',['../rtx__os_8h.html#aec50b39ce30d9c87916d077f6f764387',1,'rtx_os.h']]],
   ['osrtxthreadmemusage',['osRtxThreadMemUsage',['../rtx__os_8h.html#a90374bf1d999b2e1594763ab6c97cd69',1,'rtx_os.h']]],
   ['osrtxtimermemusage',['osRtxTimerMemUsage',['../rtx__os_8h.html#aa3e7cf488411dbdc814420b81f36b935',1,'rtx_os.h']]],
-  ['owner_5fnext',['owner_next',['../group__rtx5__specific__structs.html#a54be7ae32f627ee70e1af8c54203ee5a',1,'osRtxMutex_t']]],
-  ['owner_5fprev',['owner_prev',['../group__rtx5__specific__structs.html#a50b315b9b80bafdba54a7a731be1cc30',1,'osRtxMutex_t']]],
-  ['owner_5fthread',['owner_thread',['../group__rtx5__specific__structs.html#a987889d464cb2925029e135b76aa0dc9',1,'osRtxMutex_t']]]
+  ['owner_5fnext',['owner_next',['../rtx__os_8h.html#a54be7ae32f627ee70e1af8c54203ee5a',1,'osRtxMutex_t']]],
+  ['owner_5fprev',['owner_prev',['../rtx__os_8h.html#a50b315b9b80bafdba54a7a731be1cc30',1,'osRtxMutex_t']]],
+  ['owner_5fthread',['owner_thread',['../rtx__os_8h.html#a987889d464cb2925029e135b76aa0dc9',1,'osRtxMutex_t']]]
 ];

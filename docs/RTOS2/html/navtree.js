@@ -6,8 +6,8 @@ var NAVTREE =
       [ "CMSIS-RTOS RTX Version 5", "rtos_revisionHistory.html#RTX5RevisionHistory", null ]
     ] ],
     [ "Generic RTOS Interface", "genRTOS2IF.html", [
-      [ "Using a CMSIS-RTOS2 Implementation", "genRTOS2IF.html#usingOS2", null ],
-      [ "cmsis_os2.h header file", "genRTOS2IF.html#cmsis_os2_h", null ]
+      [ "cmsis_os2.h header file", "genRTOS2IF.html#cmsis_os2_h", null ],
+      [ "Using a CMSIS-RTOS2 Implementation", "genRTOS2IF.html#usingOS2", null ]
     ] ],
     [ "Function Overview", "functionOverview.html", "functionOverview" ],
     [ "RTOS Validation", "rtosValidation.html", [
@@ -29,9 +29,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CodingRules.html",
-"group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2",
-"group__rtx__evr__mutex.html#ga561c8898b912ea8eace4e6ba606210e5",
-"theory_of_operation.html#ThreadStack"
+"group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec",
+"misraCompliance5.html#MISRA_9",
+"structosRtxInfo__t_8timer.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

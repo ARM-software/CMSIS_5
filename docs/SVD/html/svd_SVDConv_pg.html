@@ -117,6 +117,7 @@ $(document).ready(function(){initNavTree('svd_SVDConv_pg.html','');});
 <li>Checks the consistency, correctness, and completeness of the CMSIS-SVD file against the CMSIS-SVD schema file.</li>
 <li>Generates CMSIS-compliant device header files, which can be used for software development.</li>
 </ul>
+<dl class="section note"><dt>Note</dt><dd>Consider using --strict option to receive all pedantic warnings. Some rules are skipped by default due to backward compatibility reasons. All newly developed/updated SVD files should rather respect all rules.</dd></dl>
 <h2>Operation </h2>
 <p><b>SVDConv.exe</b> is invoked form the command line. The general command format is: </p>
 <div class="fragment"><div class="line">SVDConv.exe &lt;SVD_file&gt; &lt;options&gt;</div>
@@ -142,6 +143,8 @@ $(document).ready(function(){initNavTree('svd_SVDConv_pg.html','');});
 <td>--fields=struct  </td><td>Bit-field Structs </td><td>Generates bit fields for each field description contained in the CMSIS-SVD input file. Must be used in combination with <em>--generate=header</em>.  </td></tr>
 <tr>
 <td>--fields=struct-ansic  </td><td>ANSI Bit-field Structs </td><td>Generates MISRA-compliant structures for each bitfield. The generated code <b>is not CMSIS-compliant</b>! Must be used in combination with <em>--generate=header</em>.  </td></tr>
+<tr>
+<td>--strict </td><td>Strict error checking </td><td><b>RECOMMENDED!</b> Applies strict error checking and generates a lot more messages.  </td></tr>
 </table>
 <h2>Return Codes </h2>
 <p><b>SVDConv.exe</b> returns the following codes: <br/>
@@ -265,7 +268,7 @@ $(document).ready(function(){initNavTree('svd_SVDConv_pg.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:32 for CMSIS-SVD by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:47 for CMSIS-SVD by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

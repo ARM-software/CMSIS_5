@@ -113,11 +113,11 @@ $(document).ready(function(){initNavTree('packChk.html','');});
 <div class="textblock"><p><b>packChk.exe</b> is a utility for validation of a Software Pack. It operates on the unzipped content of the Software Pack and is located in the directory <b>.\CMSIS\Utilities</b> of the <b>ARM::CMSIS</b> Pack.</p>
 <p><b>packChk.exe</b> performs the following operations:</p>
 <ul>
-<li>Reads the content of the specified *.PDSC file. The path to this *.PDSC file is considered as root directory of the Software Pack.</li>
-<li>Verifies the existence of all files in the Software Pack that are referenced in the *.PDSC file.</li>
+<li>Reads the content of the specified *.pdsc file. The path to this *.pdsc file is considered as root directory of the Software Pack.</li>
+<li>Verifies the existence of all files in the Software Pack that are referenced in the *.pdsc file.</li>
 <li>Checks for presence and correctness of mandatory elements such as &lt;vendor&gt;, &lt;version&gt;, etc.</li>
 <li>Optionally, reads other PDSC files to resolve dependencies on &lt;apis&gt;, &lt;boards&gt;, and &lt;conditions&gt;.</li>
-<li>Optionally, checks all System View Description files (*.SVD) referenced in the *.PDSC file using SVDConv.exe. Refer to <a href="../../SVD/html/svd_validate_file_pg.html">SVD File Validation</a> for details.</li>
+<li>Optionally, checks all System View Description files (*.SVD) referenced in the *.pdsc file using SVDConv.exe. Refer to <a href="../../SVD/html/svd_validate_file_pg.html">SVD File Validation</a> for details.</li>
 <li>Optionally, verifies the element &lt;url&gt;.</li>
 <li>Optionally, creates the standardized name of the Software Pack file for further processing in scripts.</li>
 <li>Sets the exit status reflecting the validation result to: <br/>
@@ -138,9 +138,9 @@ $(document).ready(function(){initNavTree('packChk.html','');});
 <tr>
 <td>-n &lt;file&gt; </td><td>Write Pack file name </td><td>Write a standardized name for the Software Pack to the specified ASCII file.  </td></tr>
 <tr>
-<td>-s </td><td>Verify SVD files </td><td>Each SVD file referenced in the *.PDSC file is <a href="../../SVD/html/svd_validate_file_pg.html"><b>validated</b></a> with <b>SVDConv.exe</b>. With this option set, <b>SVDConv.exe</b> is invoked from the same directory as <b>packChk.exe</b>.   </td></tr>
+<td>-s </td><td>Verify SVD files </td><td>Each SVD file referenced in the *.pdsc file is <a href="../../SVD/html/svd_validate_file_pg.html"><b>validated</b></a> with <b>SVDConv.exe</b>. With this option set, <b>SVDConv.exe</b> is invoked from the same directory as <b>packChk.exe</b>.   </td></tr>
 <tr>
-<td>-u &lt;url&gt; </td><td>Pack Server URL </td><td>Verifies that the specified URL matches the &lt;url&gt; element in the *.PDSC file.  </td></tr>
+<td>-u &lt;url&gt; </td><td>Pack Server URL </td><td>Verifies that the specified URL matches the &lt;url&gt; element in the *.pdsc file.  </td></tr>
 <tr>
 <td>-v </td><td>Verbose </td><td>Prints extra process information.  </td></tr>
 <tr>
@@ -192,7 +192,7 @@ Error and Warning Messages</h1>
 <tr>
 <td>M201 </td><td>ERROR </td><td>Too many arguments! </td><td>The list of arguments is too long. Verify if you have used one argument twice.  </td></tr>
 <tr>
-<td>M202 </td><td>ERROR </td><td>No PDSC input file specified </td><td>Correct the command line. <b>packChk.exe</b> expects a *.PDSC file name as input.  </td></tr>
+<td>M202 </td><td>ERROR </td><td>No PDSC input file specified </td><td>Correct the command line. <b>packChk.exe</b> expects a *.pdsc file name as input.  </td></tr>
 <tr>
 <td>M203 </td><td>ERROR </td><td>Error reading PDSC file <em>'PATH/FILENAME'!</em>  </td><td>Verify the PDSC file for consistency.   </td></tr>
 <tr>
@@ -200,7 +200,7 @@ Error and Warning Messages</h1>
 <tr>
 <td>M205 </td><td>ERROR </td><td>Cannot create Pack Name file <em>'PATH'</em>  </td><td>Check the disk space or your permissions. Correct the path name.  </td></tr>
 <tr>
-<td>M206 </td><td>ERROR </td><td>Multiple PDSC files found in package: <em>'FILES'</em>  </td><td>Only one PDSC file is allowed in a package. Remove unnecessary PDSC files. The message lists all *.PDSC files found.  </td></tr>
+<td>M206 </td><td>ERROR </td><td>Multiple PDSC files found in package: <em>'FILES'</em>  </td><td>Only one PDSC file is allowed in a package. Remove unnecessary PDSC files. The message lists all *.pdsc files found.  </td></tr>
 <tr>
 <td>M207 </td><td>ERROR </td><td>PDSC file name mismatch! <br/>
  Expected: <em>'PDSC1.pdsc'</em> <br/>
@@ -238,7 +238,7 @@ Error and Warning Messages</h1>
 <tr>
 <td>M307 </td><td>ERROR </td><td>Checking SVD file <em>'PATH'</em> failed! </td><td>Verify the consistency of the *.SVD file. Refer to <a href="../../SVD/html/svd_validate_file_pg.html">SVD File Validation</a>.  </td></tr>
 <tr>
-<td>M308 </td><td>ERROR </td><td>SVD file <em>'PATH'</em> not found. Add the SVD file or correct the PDSC entry. </td><td>The *.SVD file was not found in the path specified in the message. Add the SVD file or correct the entry in the *.PDSC file.  </td></tr>
+<td>M308 </td><td>ERROR </td><td>SVD file <em>'PATH'</em> not found. Add the SVD file or correct the PDSC entry. </td><td>The *.SVD file was not found in the path specified in the message. Add the SVD file or correct the entry in the *.pdsc file.  </td></tr>
 <tr>
 <td>M309 </td><td>ERROR </td><td>Cannot read file information: <em>'PATH'</em>. </td><td>Access to the file specified failed. Verify permissions and spelling.  </td></tr>
 <tr>
@@ -404,7 +404,7 @@ Error and Warning Messages</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="createPackUtil.html">Utilities for Creating Packs</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:27 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

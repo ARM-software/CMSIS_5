@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('group__rtx__evr.html','');});
   <div class="summary">
 <a href="#groups">Content</a>  </div>
   <div class="headertitle">
-<div class="title">Event functions<div class="ingroups"><a class="el" href="group__rtx5__specific.html">RTX5 Specific API</a></div></div>  </div>
+<div class="title">Event functions<div class="ingroups"><a class="el" href="group__rtx5__specific.html">RTX v5 Specific API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -149,20 +149,13 @@ Content</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> to provide event information which helps you to understand and analyze the operation.</p>
-<p>To use the Event Recorder together with RTX5, it is required to create an image that generates event information. The steps are:</p>
-<ul>
-<li><a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/UseDebugViews.html#Add_Event_Recorder" target="_blank"><b>Add Event Recorder</b></a>: Select in the RTE management dialog the software component <b>Compiler:Event Recorder</b>.</li>
-<li><a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/UseDebugViews.html#Debug_Variants" target="_blank"><b>Select Debug Variant</b></a>: Select in the RTE management dialog the <b>Source</b> variant for the software component <b>CMSIS:RTOS2 (API):Keil RTX5</b>.</li>
-<li><a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/group__EventRecorder__Setup.htm" target="_blank"><b>Add Initialization Code</b></a>: Call the function <b>EventRecorderInitialize</b> in your application code.</li>
-<li>Build the application code and download it to the debug hardware.</li>
-</ul>
-<p>Once the target application generates event information, it can be viewed in the µVision debugger using the <b>Event</b> <b>Recorder</b>. </p>
+<p>To use the Event Recorder together with RTX5, it is required to create an image that generates event information. The steps are described under <a class="el" href="cre_rtx_proj.html#cre_rtx_proj_er">Add Event Recorder Visibility</a>. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

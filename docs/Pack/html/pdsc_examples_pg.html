@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('pdsc_examples_pg.html','');});
 <div class="title">/package/examples element </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The element <a class="el" href="pdsc_examples_pg.html#element_example">/package/examples/example</a> describes fully defined examples contained in the PACK. An example lists the files that belong to an example. The example itself and each individual file may refer to a <a class="el" href="pdsc_conditions_pg.html#element_condition">condition</a> that must resolve to true; if it is false the example or file will be ignored. The board element is used to reference to one or more board descriptions using the board vendor and name an example is targeted for. Each example can specify attributes listing related components using Class (Cclass=), Group (Cgroup=), Subgroup (Csub) and a Version (Cversion=)</p>
+<div class="textblock"><p>The element <a class="el" href="pdsc_examples_pg.html#element_example">/package/examples/example</a> describes fully defined examples contained in the Pack. An example lists the files that belong to an example. The example itself and each individual file may refer to a <a class="el" href="pdsc_conditions_pg.html#element_condition">condition</a> that must resolve to true; if it is false the example or file will be ignored. The board element is used to reference to one or more board descriptions using the board vendor and name an example is targeted for. Each example can specify attributes listing related components using Class (Cclass=), Group (Cgroup=), Subgroup (Csub) and a Version (Cversion=)</p>
 <p><b>Example</b> </p>
 <div class="fragment"><div class="line">&lt;examples&gt;</div>
 <div class="line">  &lt;example name=<span class="stringliteral">&quot;Blinky&quot;</span> folder=<span class="stringliteral">&quot;Boards/MCBSTM32F200/Blinky&quot;</span> doc=<span class="stringliteral">&quot;Abstract.txt&quot;</span> version=<span class="stringliteral">&quot;1.0&quot;</span>&gt;</div>
@@ -132,7 +132,7 @@ $(document).ready(function(){initNavTree('pdsc_examples_pg.html','');});
 <hr/>
 <h1><a class="anchor" id="element_examples"></a>
 /package/examples</h1>
-<p>Grouping element for examples. No more than one such group can exist in a PACK.</p>
+<p>Grouping element for examples. No more than one such group can exist in a Pack.</p>
 <table  class="cmtable" summary="Element: Example">
 <tr>
 <th>Parent </th><th colspan="3">Chain  </th></tr>
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('pdsc_examples_pg.html','');});
 <hr/>
 <h1><a class="anchor" id="element_example"></a>
 /package/examples/example</h1>
-<p>An example section is used to provide the required information for accessing an example project contained in a PACK. All examples contained in the installed packs can be listed including a brief description. A selected example will get copied into a user selected destination folder. Based on the user selected environment the respective project file will be loaded. The ID of an example is the combination of the PACK vendor, the board information and the example name and version. Examples with the same ID are treated as a single example.</p>
+<p>An example section is used to provide the required information for accessing an example project contained in a Pack. All examples contained in the installed packs can be listed including a brief description. A selected example will get copied into a user selected destination folder. Based on the user selected environment the respective project file will be loaded. The ID of an example is the combination of the Pack vendor, the board information and the example name and version. Examples with the same ID are treated as a single example.</p>
 <table  class="cmtable" summary="Element: Example">
 <tr>
 <th>Parent </th><th colspan="3">Chain  </th></tr>
@@ -323,8 +323,8 @@ $(document).ready(function(){initNavTree('pdsc_examples_pg.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:27 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

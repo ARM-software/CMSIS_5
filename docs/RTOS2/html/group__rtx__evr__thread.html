@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -125,9 +125,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga396ce41f68401a885f0ae46a54e8dd1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga396ce41f68401a885f0ae46a54e8dd1f">EvrRtxThreadNew</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd51f99a6eb50b94eee75f27cae815eb">osThreadFunc_t</a> func, void *argument, const <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> *attr)</td></tr>
 <tr class="memdesc:ga396ce41f68401a885f0ae46a54e8dd1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on thread create and intialize (API)  <a href="#ga396ce41f68401a885f0ae46a54e8dd1f">More...</a><br/></td></tr>
 <tr class="separator:ga396ce41f68401a885f0ae46a54e8dd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae2215445440bcb53b65a9b7181ecffa9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#gae2215445440bcb53b65a9b7181ecffa9">EvrRtxThreadCreated</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id, uint32_t thread_addr)</td></tr>
-<tr class="memdesc:gae2215445440bcb53b65a9b7181ecffa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful thread create (Op)  <a href="#gae2215445440bcb53b65a9b7181ecffa9">More...</a><br/></td></tr>
-<tr class="separator:gae2215445440bcb53b65a9b7181ecffa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5bfa3bc241aea59ebe9bc1edcf6b78d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga5bfa3bc241aea59ebe9bc1edcf6b78d8">EvrRtxThreadCreated</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id, uint32_t thread_addr, const char *name)</td></tr>
+<tr class="memdesc:ga5bfa3bc241aea59ebe9bc1edcf6b78d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful thread create (Op)  <a href="#ga5bfa3bc241aea59ebe9bc1edcf6b78d8">More...</a><br/></td></tr>
+<tr class="separator:ga5bfa3bc241aea59ebe9bc1edcf6b78d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4f849a33d2c95754b11a499d77503b5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__thread.html#ga4f849a33d2c95754b11a499d77503b5c">EvrRtxThreadGetName</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id, const char *name)</td></tr>
 <tr class="memdesc:ga4f849a33d2c95754b11a499d77503b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on thread name retrieve (API)  <a href="#ga4f849a33d2c95754b11a499d77503b5c">More...</a><br/></td></tr>
 <tr class="separator:ga4f849a33d2c95754b11a499d77503b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -345,7 +345,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gae2215445440bcb53b65a9b7181ecffa9"></a>
+<a class="anchor" id="ga5bfa3bc241aea59ebe9bc1edcf6b78d8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -359,7 +359,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>thread_addr</em>&#160;</td>
+          <td class="paramname"><em>thread_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -371,7 +377,8 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">thread_id</td><td>thread ID obtained by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">thread_addr</td><td>thread entry address.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">thread_addr</td><td>thread entry address. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>pointer to thread object name.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1274,7 +1281,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

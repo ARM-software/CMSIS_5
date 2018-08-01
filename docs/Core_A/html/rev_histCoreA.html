@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-A)
-   &#160;<span id="projectnumber">Version 1.1.1</span>
+   &#160;<span id="projectnumber">Version 1.1.2</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-A processor-based devices</div>
   </td>
@@ -111,9 +111,17 @@ $(document).ready(function(){initNavTree('rev_histCoreA.html','');});
 <div class="title">Revision History of CMSIS-Core (Cortex-A) </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><table  class="cmtable" summary="Core Exception Name">
+<div class="textblock"><table  class="cmtable" summary="Revision History">
 <tr>
 <th>Version </th><th>Description  </th></tr>
+<tr>
+<td>V1.1.2 </td><td><ul>
+<li>
+Removed using get/set built-ins FPSCR in GCC &gt;= 7.2 due to shortcomings. </li>
+<li>
+Fixed co-processor register access macros for Arm Compiler 5. </li>
+</ul>
+</td></tr>
 <tr>
 <td>V1.1.1 </td><td><ul>
 <li>
@@ -142,7 +150,7 @@ Bug fixes and minor enhancements. </li>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:02:47 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:10 for CMSIS-Core (Cortex-A) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

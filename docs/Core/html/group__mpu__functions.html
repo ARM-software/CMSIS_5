@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.1.1</span>
+   &#160;<span id="projectnumber">Version 5.1.2</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -143,6 +143,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga96b93785c92e2dbcb3a2356c25bf2adc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mpu__functions.html#ga96b93785c92e2dbcb3a2356c25bf2adc">ARM_MPU_RASR</a>(DisableExec, AccessPermission, TypeExtField, IsShareable, IsCacheable, IsBufferable, SubRegionDisable, Size)</td></tr>
 <tr class="memdesc:ga96b93785c92e2dbcb3a2356c25bf2adc"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPU Region Attribute and Size Register Value.  <a href="#ga96b93785c92e2dbcb3a2356c25bf2adc">More...</a><br/></td></tr>
 <tr class="separator:ga96b93785c92e2dbcb3a2356c25bf2adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga332ed5f8969dd4df6b61c6ae32ec36dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mpu__functions.html#ga332ed5f8969dd4df6b61c6ae32ec36dc">ARM_MPU_RASR_EX</a>(DisableExec, AccessPermission, AccessAttributes, SubRegionDisable, Size)</td></tr>
+<tr class="memdesc:ga332ed5f8969dd4df6b61c6ae32ec36dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPU Region Attribute and Size Register Value.  <a href="#ga332ed5f8969dd4df6b61c6ae32ec36dc">More...</a><br/></td></tr>
+<tr class="separator:ga332ed5f8969dd4df6b61c6ae32ec36dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -252,6 +255,61 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga332ed5f8969dd4df6b61c6ae32ec36dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_MPU_RASR_EX</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">DisableExec, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">AccessPermission, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">AccessAttributes, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">SubRegionDisable, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">Size&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This macro is used to construct a valid <a class="el" href="structMPU__Type.html#a8f00c4a5e31b0a8d103ed3b0732c17a3">RASR</a> value. The ENABLE bit of the RASR value is implicitly set to 1.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">DisableExec</td><td>Instruction access disable bit, 1= disable instruction fetches. </td></tr>
+    <tr><td class="paramname">AccessPermission</td><td>Data access permission configures read/write access for User and Privileged mode. Possible values see <a class="el" href="group__mpu__defines.html#gabc4788126d7798469cb862a08d3050cc">ARM_MPU_AP_xxx</a>. </td></tr>
+    <tr><td class="paramname">AccessAttributes</td><td>Memory access attribution, see <a class="el" href="group__mpu__defines.html#ga71d41084e984be70a23cb640fd89d1e2">ARM_MPU_ACCESS_xxx</a>. </td></tr>
+    <tr><td class="paramname">SubRegionDisable</td><td>Sub-region disable field (8 bits). </td></tr>
+    <tr><td class="paramname">Size</td><td>Region size with values defined under <a class="el" href="group__mpu__defines.html#gadb0a92c0928c113120567e85ff1ba05c">ARM_MPU_REGION_SIZE_xxx</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ga3fead12dc24a6d00ad53f55a042486ca"></a>
 <div class="memitem">
 <div class="memproto">
@@ -351,16 +409,16 @@ Functions</h2></td></tr>
 <tr>
 <th align="left">Bit </th><th align="left">MPU_CTRL value </th><th align="left">When applied </th><th align="left">When not applied  </th></tr>
 <tr>
-<td align="left">1 </td><td align="left">MPU_CTRL_HFNMIENA_Pos </td><td align="left">Enable MPU during hard fault, NMI, and FAULTMASK handlers execution </td><td align="left">Disable MPU during hard fault, NMI, and FAULTMASK handler execution </td></tr>
+<td align="left">1 </td><td align="left">MPU_CTRL_HFNMIENA_Msk </td><td align="left">Enable MPU during hard fault, NMI, and FAULTMASK handlers execution </td><td align="left">Disable MPU during hard fault, NMI, and FAULTMASK handler execution </td></tr>
 <tr>
-<td align="left">2 </td><td align="left">MPU_CTRL_PRIVDEFENA_Pos </td><td align="left">Enable default memory map as a background region for privileged access </td><td align="left">Use only MPU region settings </td></tr>
+<td align="left">2 </td><td align="left">MPU_CTRL_PRIVDEFENA_Msk </td><td align="left">Enable default memory map as a background region for privileged access </td><td align="left">Use only MPU region settings </td></tr>
 </table>
 <p><b>Example:</b></p>
 <div class="fragment"><div class="line"><span class="comment">// enable MPU with all region definitions. Exceptions are not protected by MPU.</span></div>
 <div class="line">  MPU_Enable (0);</div>
 <div class="line">  </div>
 <div class="line"><span class="comment">// enable MPU with all region definitions and background regions for privileged access. Exceptions are protected by MPU.</span></div>
-<div class="line">  MPU_Enable (MPU_CTRL_PRIVDEFENA_Pos | MPU_CTRL_HFNMIENA_Pos);</div>
+<div class="line">  MPU_Enable (MPU_CTRL_PRIVDEFENA_Msk | MPU_CTRL_HFNMIENA_Msk);</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -506,7 +564,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:02:45 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:08 for CMSIS-Core (Cortex-M) by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

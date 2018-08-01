@@ -143,23 +143,34 @@ $(document).ready(function(){initNavTree('cp_Packs.html','');});
 </ul>
 <h1><a class="anchor" id="PackFilenames"></a>
 Pack Conventions</h1>
-<p>All files that belong to a <a class="el" href="cp_SWComponents.html">Software Pack</a> are compressed into a *.PACK file using a standard <a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29" target="_blank">ZIP file format</a>. The content of each <a class="el" href="cp_SWComponents.html">Software Pack</a> is described in the Pack Description (*.PDSC) file that is part of each <b>Pack</b>. Refer to <a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a> for more information.</p>
+<p>A <a class="el" href="cp_SWComponents.html">Software Pack</a> is a collection of files located in directories that are archived in a file with the extension *.pack using the standard <a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29" target="_blank">ZIP file format</a>. The Pack Description file (PDSC) with the file extension *.pdsc contains the <a class="el" href="packFormat.html">meta information</a>, describing the content of a pack based on <a href="https://en.wikipedia.org/wiki/XML" target="_blank">XML</a>. The PDSC file must be:</p>
+<ul>
+<li>included in the <a class="el" href="cp_SWComponents.html">Software Pack</a></li>
+<li>located in the base folder of the archive</li>
+<li>compliant with the <a class="el" href="cp_SWComponents.html">Software Pack</a> file <a class="el" href="cp_Packs.html#pack_filename">naming convention</a></li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>The <em>base folder</em> is defined to be the root folder './' of a zip archive and it is imperative that the whole <a class="el" href="cp_SWComponents.html">Software Pack</a> only contains a single PDSC file.</li>
+<li>Future tools shall support this case: if the PDSC file is located in an immediate subdirectory, then the subdirectory becomes the base folder. The <a class="el" href="cp_SWComponents.html">Software Pack</a> is installed as if the subdirectory does not exist. All files and directories located in the root folder are ignored and do not get installed.</li>
+</ul>
+</dd></dl>
 <h2><a class="anchor" id="pack_filename"></a>
 Pack File Name</h2>
-<p>A <a class="el" href="cp_SWComponents.html">Software Pack</a> must have a unique filename following this naming convention: <b>&lt;vendor&gt;.&lt;name&gt;.&lt;version&gt;.pack</b>.</p>
-<p><b>Where:</b> </p>
+<p>A <a class="el" href="cp_SWComponents.html">Software Pack</a> must have a unique filename. Therefore it is constructed from vendor, packname and version and the file extension *.pack.</p>
+<p><b>&lt;vendor&gt;.&lt;name&gt;.&lt;version&gt;.pack</b>.</p>
+<p>Where:</p>
 <ul>
-<li><b>&lt;vendor&gt;</b> is name of the supplier or vendor of the <a class="el" href="cp_SWComponents.html">Software Pack</a>.</li>
-<li><b>&lt;name&gt;</b> is name of the <a class="el" href="cp_SWComponents.html">Software Pack</a>. It is the vendor's responsibility to ensure unique package names.</li>
-<li><b>&lt;version&gt;</b>specifies the version number of the <a class="el" href="cp_SWComponents.html">Software Pack</a>.</li>
+<li><b>&lt;vendor&gt;</b> is the name of the supplier or vendor of the <a class="el" href="cp_SWComponents.html">Software Pack</a>.</li>
+<li><b>&lt;name&gt;</b> is the name of the <a class="el" href="cp_SWComponents.html">Software Pack</a>. All packs that are published by a vendor must have a unique packname.</li>
+<li><b>&lt;release version="X.Y.Z"&gt;</b>specifies the <a class="el" href="pdsc_package_pg.html#VersionType">version number</a> of the release for the <a class="el" href="cp_SWComponents.html">Software Pack</a>.</li>
 <li><b>.pack</b> is the file extension identifying a <a class="el" href="cp_SWComponents.html">Software Pack</a>.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd><ul>
-<li>The XML elements <b>&lt;vendor&gt;</b>, <b>&lt;name&gt;</b>, and <b>&lt;version&gt;</b> are declared in the <a class="el" href="packFormat.html#Filenames">PDSC</a> file.</li>
+<li>The XML elements <b>&lt;vendor&gt;</b>, <b>&lt;name&gt;</b>, and the version attribute of the <b>&lt;release&gt;</b> are specified in the <a class="el" href="packFormat.html#Filenames">PDSC</a> file. PDSC, Pack filenames are case sensitive and need to match exactly.</li>
 <li><b>&lt;vendor&gt;</b> and <b>&lt;name&gt;</b> <em>must</em> <em>not</em> contain spaces.</li>
+<li>The PDSC file needs to reside in the base folder of the Pack. All file references are relative to the location of the PDSC file.</li>
 </ul>
 </dd></dl>
-<p>The PDSC file needs to reside at the top-level of the Pack file, using it as the root directory for all file references.</p>
 <h2><a class="anchor" id="pack_Cclass"></a>
 Software Component Cclasses</h2>
 <p>If you add a software component in the PDSC file, you have to specify a component class (CClass), component group (Cgroup), and the component's version number (Cversion). For more information refer to <a class="el" href="cp_SWComponents.html#cp_Components">Software Components</a>.</p>
@@ -192,7 +203,7 @@ Steps to Create a Pack</h1>
 <li><b>Produce input:</b> Create the files that will be delivered with the Pack.</li>
 <li><b>Organize files:</b> Use directories to separate the content of the Pack.</li>
 <li><b>Create PDSC file:</b> The XML based PDSC file can be created using any text editor. Editors that can validate XML code against a schema file help to find bugs early in the Pack development stage.</li>
-<li><b>Generate PACK:</b> Any compression tool supporting the ZIP format can be used to create a PACK file. <a class="el" href="packChk.html">packChk.exe</a> is helpful for the validation of the contents of a Pack.</li>
+<li><b>Generate Pack:</b> Any compression tool supporting the ZIP format can be used to create a Pack file. <a class="el" href="packChk.html">packChk.exe</a> is helpful for the validation of the contents of a Pack.</li>
 </ol>
 <p>The following pages will show how to create a Software Pack from scratch. The page <a class="el" href="cp_SWComponents.html">Pack with Software Components</a> will start with a simple Pack containing only the PDSC file and a single software component and will then explain further elements of a Pack in more detail. The page <a class="el" href="createPack_DFP.html">Pack with Device Support</a> adds information on the additional requirements that a DFP has, while <a class="el" href="createPackBoard.html">Pack with Board Support</a> will elaborate on the content specific to a BSP.</p>
 <h1><a class="anchor" id="PackTutorials"></a>
@@ -213,7 +224,7 @@ Pack Tutorial</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:26 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

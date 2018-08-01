@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['revision_20history_20of_20cmsis_2ddsp',['Revision History of CMSIS-DSP',['../ChangeLog_pg.html',1,'']]],
   ['realcoefa',['realCoefA',['../group__RealFFT__Table.html#ga8b1ad947c470596674fa3364e16045c6',1,'arm_rfft_init_f32.c']]],
   ['realcoefaq15',['realCoefAQ15',['../group__RealFFT__Table.html#ga11e84d0ee257a547f749b37dd0078d36',1,'realCoefAQ15():&#160;arm_rfft_init_q15.c'],['../group__RealFFT__Table.html#ga11e84d0ee257a547f749b37dd0078d36',1,'realCoefAQ15():&#160;arm_rfft_init_q15.c']]],
   ['realcoefaq31',['realCoefAQ31',['../group__RealFFT__Table.html#gaf1592a6cf0504675205074a43c3728a2',1,'realCoefAQ31():&#160;arm_rfft_init_q31.c'],['../group__RealFFT__Table.html#gaf1592a6cf0504675205074a43c3728a2',1,'realCoefAQ31():&#160;arm_rfft_init_q31.c']]],

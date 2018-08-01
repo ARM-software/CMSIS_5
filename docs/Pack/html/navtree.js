@@ -43,9 +43,10 @@ var NAVTREE =
     [ "Publish a Pack", "createPackPublish.html", [
       [ "Local Installation", "createPackPublish.html#cp_LocalInstallation", null ],
       [ "Web Download", "createPackPublish.html#cp_WebDownload", null ],
-      [ "Publishing on www.keil.com/pack", "createPackPublish.html#cp_KeilComPack", null ]
+      [ "Publishing on www.keil.com/pack", "createPackPublish.html#cp_KeilComPack", null ],
+      [ "Moving a pack from one URL to another", "createPackPublish.html#cp_PackRehosting", null ]
     ] ],
-    [ "Pack Description (*.PDSC) Format", "packFormat.html", "packFormat" ],
+    [ "Pack Description (*.pdsc) Format", "packFormat.html", "packFormat" ],
     [ "Configuration Wizard Annotations", "configWizard.html", [
       [ "Annotation Rules", "configWizard.html#configWizard_annotations", null ],
       [ "Code Example", "configWizard.html#configWizard_codeExample", null ],
@@ -53,7 +54,7 @@ var NAVTREE =
     ] ],
     [ "Flash Programming", "flashAlgorithm.html", "flashAlgorithm" ],
     [ "Debug Setup with CMSIS-Pack", "coresight_setup.html", "coresight_setup" ],
-    [ "Project Description (*.CPDSC) Format", "cpdsc_pg.html", [
+    [ "Project Description (*.cpdsc) Format", "cpdsc_pg.html", [
       [ "Definition of CMSIS project", "cpdsc_pg.html#cpdsc_definition", null ],
       [ "CPDSC top level structure", "cpdsc_pg.html#cpdsc_structure", null ],
       [ "/package (for CPDSC)", "cpdsc_pg.html#element_package_cpdsc", null ],

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['technical_20data',['Technical Data',['../technicalData5.html',1,'rtx5_impl']]],
-  ['theory_20of_20operation',['Theory of Operation',['../theory_of_operation.html',1,'rtx5_impl']]]
+  ['os_20tick_20api',['OS Tick API',['../rtos_os_tick_api.html',1,'functionOverview']]]
 ];

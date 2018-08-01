@@ -5,5 +5,6 @@ var group__flash__interface__gr_structARM__FLASH__INFO =
     [ "sector_size", "group__flash__interface__gr.html#a7d37def484362c6e97a2d75144080b1d", null ],
     [ "page_size", "group__flash__interface__gr.html#a9dd3e47e968a8f6beb5d88c6d1b7ebe9", null ],
     [ "program_unit", "group__flash__interface__gr.html#a483c41066757e2865bf3a27a2a627a54", null ],
-    [ "erased_value", "group__flash__interface__gr.html#a85c3826bf20669d38e466dfd376994db", null ]
+    [ "erased_value", "group__flash__interface__gr.html#a85c3826bf20669d38e466dfd376994db", null ],
+    [ "reserved", "group__flash__interface__gr.html#a72aca6ea6d8153b28ea8f139b932ec3e", null ]
 ];

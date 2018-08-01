@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fully_2dconnected_20layer_20functions',['Fully-connected Layer Functions',['../group__FC.html',1,'']]]
+  ['convolutional_20neural_20network_20example',['Convolutional Neural Network Example',['../group__CNNExample.html',1,'']]]
 ];

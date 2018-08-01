@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('element_releases.html','');});
 <div class="title">/package/releases element </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Contains the release history of the PACK. This element is mandatory. No more than one such group can exist in a PACK. It contains the full release history of the PACK.</p>
+<div class="textblock"><p>Contains the release history of the Pack. This element is mandatory. No more than one such group can exist in a Pack. It contains the full release history of the Pack.</p>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line">&lt;package&gt;</div>
 <div class="line">  ...</div>
@@ -134,7 +134,7 @@ $(document).ready(function(){initNavTree('element_releases.html','');});
 <hr/>
 <h1><a class="anchor" id="element_release"></a>
 /package/releases/release</h1>
-<p>Contains brief information of the main changes in each release version of a PACK. The content is a string written between the opening and closing <em>release</em> tags. The latest release version is always listed on top.</p>
+<p>Contains brief information of the main changes in each release version of a Pack. The content is a string written between the opening and closing <em>release</em> tags. The latest release version is always listed on top.</p>
 <p><b>Example:</b> </p>
 <div class="fragment"><div class="line">&lt;releases&gt;</div>
 <div class="line">  &lt;release version=<span class="stringliteral">&quot;1.1.1&quot;</span>&gt;Fixed a problem with the feature xyz.</div>
@@ -144,6 +144,20 @@ $(document).ready(function(){initNavTree('element_releases.html','');});
 <div class="line">  &lt;release version=<span class="stringliteral">&quot;1.0.0&quot;</span>&gt;First published version.</div>
 <div class="line">  &lt;/release&gt;     </div>
 <div class="line">&lt;/releases&gt;</div>
+</div><!-- fragment --><p><b>Example</b> for a public repository: </p>
+<div class="fragment"><div class="line">&lt;package&gt;</div>
+<div class="line">  ...</div>
+<div class="line">  &lt;repository type=<span class="stringliteral">&quot;git&quot;</span>&gt;https:<span class="comment">//github.com/ARM-software/CMSIS-Driver.git&lt;/repository</span></div>
+<div class="line">  &lt;releases&gt;</div>
+<div class="line">    &lt;release version=<span class="stringliteral">&quot;2.1.0&quot;</span> tag=<span class="stringliteral">&quot;2.1.0&quot;</span> url=<span class="stringliteral">&quot;https://github.com/ARM-software/CMSIS-Driver/archive/2.1.0.zip&quot;</span>&gt;</div>
+<div class="line">      Added LAN9220 Ethernet MAC+PHY driver.</div>
+<div class="line">    &lt;/release&gt;     </div>
+<div class="line">    &lt;release version=<span class="stringliteral">&quot;2.0.0&quot;</span> tag=<span class="stringliteral">&quot;2.0.0&quot;</span> url=<span class="stringliteral">&quot;https://github.com/ARM-software/CMSIS-Driver/archive/2.0.0.zip&quot;</span>&gt;</div>
+<div class="line">      First published version.</div>
+<div class="line">    &lt;/release&gt;     </div>
+<div class="line">  &lt;/releases&gt;</div>
+<div class="line">  ...</div>
+<div class="line">&lt;/package&gt; </div>
 </div><!-- fragment --><p>&#160;</p>
 <table  class="cmtable" summary="Element: Release">
 <tr>
@@ -157,9 +171,13 @@ $(document).ready(function(){initNavTree('element_releases.html','');});
 <tr>
 <td>date </td><td>Release date (specified as YYYY-MM-DD, for example 2014-12-14 (14th December 2014). </td><td>xs:date </td><td>optional  </td></tr>
 <tr>
+<td>tag </td><td>In case the repository element is specified, the tag attribute is used to specify the repository tag that corresponds to this release of the pack. </td><td>xs:string </td><td>optional  </td></tr>
+<tr>
+<td>url </td><td>URL specifying the location of the pack of the specified version. This can be used to override the default location being <code>&lt;url&gt;/&lt;vendor&gt;</code>.&lt;name&gt;.&lt;version&gt;.pack </td><td>xs:anyURI </td><td>optional  </td></tr>
+<tr>
 <td>deprecated </td><td>Pack is no longer officially supported after the set date. It will be excluded from checks for update. Deprecated packs may remain available for download from the server. Tools will continue to work but may provide indicators highlighting end of support for the pack and its content. Not recommended for use with new projects. Note this attribute is only relevant when set for the latest release located on top of the releases section.  </td><td>xs:date </td><td>optional  </td></tr>
 <tr>
-<td>replacement </td><td>Specifies the vendor and name of the Pack that shall be used instead. Use in conjunction with the deprecated attribute. E.g. the maintainer of the PACK A.X_DFP changes from vendor <em>A</em> to vendor <em>B</em>. In this case the attribute deprecated gets set in the A.X_DFP.pdsc and the replacement attribute set to B.X_DFP. Tools use this information to redirect users to a supported pack.  </td><td>xs:string </td><td>optional  </td></tr>
+<td>replacement </td><td>Specifies the vendor and name of the Pack that shall be used instead. Use in conjunction with the deprecated attribute. E.g. the maintainer of the Pack A.X_DFP changes from vendor <em>A</em> to vendor <em>B</em>. In this case the attribute deprecated gets set in the A.X_DFP.pdsc and the replacement attribute set to B.X_DFP. Tools use this information to redirect users to a supported pack.  </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -168,8 +186,8 @@ $(document).ready(function(){initNavTree('element_releases.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:27 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li>
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

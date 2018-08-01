@@ -178,6 +178,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_algorithm">algorithm</a> </td><td>Specify Flash programming algorithms that are suitable for all devices. </td><td>AlgorithmType </td><td>0..*  </td></tr>
 <tr>
+<td><a class="el" href="pdsc_family_pg.html#element_flashinfo">flashinfo</a> </td><td>Specify additional information required to download application code into Flash that is available for all devices of the family. </td><td>FlashInfoType </td><td>0..*  </td></tr>
+<tr>
 <td><a class="el" href="pdsc_family_pg.html#element_book">book</a> </td><td>Specify documents that are relevant for all devices of a family. </td><td>BookType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_description">description</a> </td><td>Describe the device family. </td><td>DescriptionType </td><td>0..*  </td></tr>
@@ -255,6 +257,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_algorithm">algorithm</a> </td><td>Specify Flash programming algorithms that can be used by all device of the sub-family. </td><td>AlgorithmType </td><td>0..*  </td></tr>
 <tr>
+<td><a class="el" href="pdsc_family_pg.html#element_flashinfo">flashinfo</a> </td><td>Specify additional information required to download application code into Flash that is available for all devices of the sub-family. </td><td>FlashInfoType </td><td>0..*  </td></tr>
+<tr>
 <td><a class="el" href="pdsc_family_pg.html#element_book">book</a> </td><td>Specify documents relevant for all device of the sub-family. </td><td>BookType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_description">description</a> </td><td>Description of the device family. </td><td>DescriptionType </td><td>0..*  </td></tr>
@@ -308,6 +312,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td><a class="el" href="pdsc_family_pg.html#element_memory">memory</a> </td><td>Specify memory areas that specific to this device. </td><td>MemoryType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_algorithm">algorithm</a> </td><td>Specify Flash programming algorithms that can be used by this device. </td><td>AlgorithmType </td><td>0..*  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_flashinfo">flashinfo</a> </td><td>Specify additional information required to download application code into Flash that is specific to this device. </td><td>FlashInfoType </td><td>0..*  </td></tr>
 <tr>
 <td><a class="el" href="pdsc_family_pg.html#element_book">book</a> </td><td>Specify documents specific to this device. </td><td>BookType </td><td>0..*  </td></tr>
 <tr>
@@ -378,6 +384,106 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <td>default </td><td>If <span class="XML-Token">true</span>, then this is the default Flash programming algorithm that gets configured in a project. If not specified or set to <span class="XML-Token">false</span>, then the Flash programming algorithm can be configured on a lower level. However, the Flash programming algorithm of a project can be changed manually at any time during development.  </td><td>xs:boolean </td><td>optional  </td></tr>
 <tr>
 <td>style </td><td>[Version 1.4.0] Today, different toolchains support different styles of incompatible flash programming algorithms. The attribute specifies the style of the specified flash programming algorithm. For backward compatibility the default value is <span class="XML-Token">Keil</span>. The aim is to converge to the <em>CMSIS</em> style.  </td><td><a class="el" href="pdsc_family_pg.html#AlgorithmStyleEnum">AlgorithmStyleEnum</a> </td><td><p class="starttd">optional </p>
+<p class="endtd"></p>
+</td></tr>
+</table>
+<p>&#160;</p>
+<hr/>
+<h1><a class="anchor" id="element_flashinfo"></a>
+/package/devices/family/.../flashinfo</h1>
+<p>Specify Flash information that the debugger can use to erase and program Flash memories without the use of target RAM based Flash download algorithms.<br/>
+ The child elements &lt;block&gt; and &lt;gap&gt; describe the memory and programming layout of a flash device:</p>
+<ul>
+<li>The first child element has the base address <span class="XML-Token">start</span>.</li>
+<li>The base address of the second child element is <span class="XML-Token">start</span> incremented by the size of the first child element.</li>
+<li>The base address of all following child elements calculates respectively.</li>
+</ul>
+<p>Flash information can be defined on various levels. Multiple &lt;flashinfo&gt; elements are possible. If the memory range is identical, the one on the lower level takes precedence. Overlap of Flash information ranges is not allowed.</p>
+<p><b>Example</b> </p>
+<div class="fragment"><div class="line">&lt;device ... &gt;</div>
+<div class="line">  ...</div>
+<div class="line">    &lt;!-- Flash Device Info <span class="keywordflow">for</span> <span class="keyword">this</span> device --&gt;</div>
+<div class="line">    &lt;flashinfo name=<span class="stringliteral">&quot;Internal Flash 1&quot;</span> start=<span class="stringliteral">&quot;0&quot;</span> pagesize=<span class="stringliteral">&quot;64&quot;</span> emptyval=<span class="stringliteral">&quot;0xFFFFFFFF&quot;</span> filler=<span class="stringliteral">&quot;0xFFFFFFFF&quot;</span> ptime=<span class="stringliteral">&quot;3000&quot;</span> etime=<span class="stringliteral">&quot;3000&quot;</span> Pname=<span class="stringliteral">&quot;Cortex-M23&quot;</span>&gt;</div>
+<div class="line">      &lt;block count=<span class="stringliteral">&quot;1&quot;</span>  size=<span class="stringliteral">&quot;0x100&quot;</span> arg=<span class="stringliteral">&quot;0&quot;</span>/&gt;</div>
+<div class="line">      &lt;block count=<span class="stringliteral">&quot;10&quot;</span> size=<span class="stringliteral">&quot;0x100&quot;</span> arg=<span class="stringliteral">&quot;0&quot;</span>/&gt;</div>
+<div class="line">      &lt;gap size=<span class="stringliteral">&quot;0x10000&quot;</span> /&gt;</div>
+<div class="line">      &lt;block count=<span class="stringliteral">&quot;2&quot;</span>  size=<span class="stringliteral">&quot;0x100&quot;</span> arg=<span class="stringliteral">&quot;1&quot;</span> /&gt;</div>
+<div class="line">    &lt;/flashinfo&gt;</div>
+<div class="line">  ...</div>
+<div class="line">&lt;/device&gt;</div>
+</div><!-- fragment --><p>&#160;</p>
+<table  class="cmtable" summary="Type: FlashInfoType">
+<tr>
+<th>Parents </th><th colspan="3">Element Chain  </th></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_family">family</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_family">/package/devices/family</a>  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_subFamily">subFamily</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_subFamily">/package/devices/family/subFamily</a>  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_device">device</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_device">/package/devices/family/../device</a>  </td></tr>
+<tr>
+<th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
+<tr>
+<td>name </td><td>Name of the specified flash device. </td><td>xs:string </td><td>required  </td></tr>
+<tr>
+<td>start </td><td>Base address of the specified flash device as mapped into target memory system. </td><td>NonNegativeInteger </td><td>required  </td></tr>
+<tr>
+<td>pagesize </td><td>Programming page size. </td><td>NonNegativeInteger </td><td>required  </td></tr>
+<tr>
+<td>blankval </td><td>Expected memory value for unprogrammed address ranges (64-bit value). The access size used to read back programmed memory defines the number of least significant bytes of this value that are compared. Defaults to <span class="XML-Token">0xFFFFFFFFFFFFFFFF</span> if not specified. </td><td>NonNegativeInteger </td><td>optional  </td></tr>
+<tr>
+<td>filler </td><td>Value that a debugger uses to fill the remainder of a programming page (64-bit value). The access size used in <a class="el" href="debug_description.html#DebugFunctions">FlashBufferWrite</a> defines the number of least significant bytes of this value to write. Defaults to <span class="XML-Token">0xFFFFFFFFFFFFFFFF</span> if not specified. </td><td>NonNegativeInteger </td><td>optional  </td></tr>
+<tr>
+<td>ptime </td><td>Timeout in milliseconds for programming a page. Defaults to <span class="XML-Token">100</span> if not specified. </td><td>xs:unsignedInt </td><td>optional  </td></tr>
+<tr>
+<td>etime </td><td>Timeout in milliseconds for erasing a sector. Defaults to <span class="XML-Token">300</span> if not specified. </td><td>xs:unsignedInt </td><td>optional  </td></tr>
+<tr>
+<td>Pname </td><td>Processor identifier. This attribute <b>is mandatory for devices that embed multiple processors that require different algorithms</b>. Only alphabetical characters, decimal digits, '-' and '_' are allowed.  </td><td>RestrictedString </td><td>optional  </td></tr>
+<tr>
+<th>Child Elements </th><th>Description </th><th>Type </th><th>Occurrence  </th></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_flashblock">block</a> </td><td><a class="el" href="pdsc_family_pg.html#element_flashblock">/package/devices/family/.../flashinfo/block</a> </td><td>FlashInfoBlockType </td><td>0..*  </td></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_flashgap">gap</a> </td><td><a class="el" href="pdsc_family_pg.html#element_flashgap">/package/devices/family/.../flashinfo/gap</a> </td><td>FlashInfoGapType </td><td><p class="starttd">0..* </p>
+<p class="endtd"></p>
+</td></tr>
+</table>
+<p>&#160;</p>
+<hr/>
+<h1><a class="anchor" id="element_flashblock"></a>
+/package/devices/family/.../flashinfo/block</h1>
+<p>Specify properties of one or multiple subsequent blocks of flash device that have the attributes. Its base address calculates from the parent &lt;flashinfo&gt; <span class="XML-Token">start</span> address incremented by the size of all previous &lt;block&gt; and &lt;gap&gt; elements of this flash device.</p>
+<table  class="cmtable" summary="Type: FlashInfoBlockType">
+<tr>
+<th>Parents </th><th colspan="3">Element Chain  </th></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_flashinfo">flashinfo</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_flashinfo">/package/devices/family/.../flashinfo</a>  </td></tr>
+<tr>
+<th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
+<tr>
+<td>count </td><td>Number of subsequent blocks of this flash device with identical properties. </td><td>NonNegativeInteger </td><td>required  </td></tr>
+<tr>
+<td>size </td><td>Block size in bytes. The overall memory size that is covered by this &lt;block&gt; element is <span class="XML-Token">count</span> times <span class="XML-Token">size</span>. </td><td>NonNegativeInteger </td><td>required  </td></tr>
+<tr>
+<td>arg </td><td>An optional argument to pass to flash operation sequence.<br/>
+ A debugger writes this value to the pre-defined debug access variable <b>__FlashArg</b> at start of a flash operation. It is a non-negative number specific to this device. Defaults to <span class="XML-Token">0</span> if not specified. </td><td>NonNegativeInteger </td><td><p class="starttd">optional </p>
+<p class="endtd"></p>
+</td></tr>
+</table>
+<p>&#160;</p>
+<hr/>
+<h1><a class="anchor" id="element_flashgap"></a>
+/package/devices/family/.../flashinfo/gap</h1>
+<p>Specify a gap between &lt;block&gt; elements of the parent. Its base address calculates from the parent &lt;flashinfo&gt; <span class="XML-Token">start</span> address incremented by the size of all previous &lt;block&gt; and &lt;gap&gt; elements of this flash device.</p>
+<table  class="cmtable" summary="Type: FlashInfoGapType">
+<tr>
+<th>Parents </th><th colspan="3">Element Chain  </th></tr>
+<tr>
+<td><a class="el" href="pdsc_family_pg.html#element_flashinfo">flashinfo</a> </td><td colspan="3"><a class="el" href="pdsc_family_pg.html#element_flashinfo">/package/devices/family/.../flashinfo</a>  </td></tr>
+<tr>
+<th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
+<tr>
+<td>size </td><td>Gap size in bytes. </td><td>NonNegativeInteger </td><td><p class="starttd">required </p>
 <p class="endtd"></p>
 </td></tr>
 </table>
@@ -926,7 +1032,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Ambiq Micro:120 </td><td>Ambiq Micro </td><td><a href="http://www.ambiqmicro.com">http://www.ambiqmicro.com</a>  </td></tr>
 <tr>
-<td class="XML-Token">Amiccom:147 </td><td>Amiccom </td><td><a href="http://www.amiccom.co.tw">http://www.amiccom.co.tw</a>  </td></tr>
+<td class="XML-Token">Amiccom:147 </td><td>Amiccom </td><td><a href="http://www.amiccom.com.tw">http://www.amiccom.com.tw</a>  </td></tr>
 <tr>
 <td class="XML-Token">Analog Devices:1 </td><td>Analog Devices </td><td><a href="http://www.analog.com">http://www.analog.com</a>  </td></tr>
 <tr>
@@ -934,7 +1040,9 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">ArteryTek:143 </td><td>ArteryTek </td><td><a href="http://www.arterytek.com">http://www.arterytek.com</a>  </td></tr>
 <tr>
-<td class="XML-Token">Atmel:3 </td><td>Atmel Corporation (now Microchip) </td><td><a href="http://www.atmel.com">http://www.atmel.com</a>  </td></tr>
+<td class="XML-Token">Atmel:3 </td><td>Atmel Corporation (now Microchip) </td><td><a href="http://www.microchip.com">http://www.microchip.com</a>  </td></tr>
+<tr>
+<td class="XML-Token">Autochips:150 </td><td>Autochips Inc. </td><td><a href="http://www.autochips.com/en/index.php">http://www.autochips.com/en/index.php</a>  </td></tr>
 <tr>
 <td class="XML-Token">CSR:118 </td><td>CSR </td><td><a href="http://www.csr.com">http://www.csr.com</a>  </td></tr>
 <tr>
@@ -946,11 +1054,13 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Generic:5 </td><td>Generic: Not a vendor specific device </td><td></td></tr>
 <tr>
+<td class="XML-Token">Generalplus:151 </td><td>Generalplus Technology Inc. </td><td><a href="http://www.generalplus.com">http://www.generalplus.com</a>  </td></tr>
+<tr>
 <td class="XML-Token">GigaDevice:123 </td><td>GigaDevice </td><td><a href="http://www.gigadevice.com">http://www.gigadevice.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">HDSC:145 </td><td>HUADA Semiconductor </td><td><a href="http://www.hdsc.com.cn">http://www.hdsc.com.cn</a>  </td></tr>
 <tr>
-<td class="XML-Token">Hilscher:88 </td><td>Hilscher Gesellschaft für Systemautomation mbH </td><td><a href="https://www.hilscher.com">https://www.hilscher.com</a>  </td></tr>
+<td class="XML-Token">Hilscher:88 </td><td>Hilscher Gesellschaft für Systemautomation mbH </td><td><a href="http://www.hilscher.com">http://www.hilscher.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Holtek:106 </td><td>Holtek Microelectronics </td><td><a href="http://www.holtek.com.tw">http://www.holtek.com.tw</a>  </td></tr>
 <tr>
@@ -982,7 +1092,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">NXP:11 </td><td>NXP </td><td><a href="http://www.nxp.com">http://www.nxp.com</a>  </td></tr>
 <tr>
-<td class="XML-Token">ONSemiconductor:141 </td><td>ON Semiconductor </td><td><a href="http://www.onsemi.com">http://www.onsemi.com</a>  </td></tr>
+<td class="XML-Token">ONSemiconductor:141 </td><td>ON Semiconductor </td><td><a href="https://www.onsemi.com">https://www.onsemi.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Panasonic:131 </td><td>Panasonic </td><td><a href="http://www.panasonic.com/industrial">http://www.panasonic.com/industrial</a>  </td></tr>
 <tr>
@@ -1002,6 +1112,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Silicon Labs:21 </td><td>Silicon Labs </td><td><a href="http://www.silabs.com">http://www.silabs.com</a>  </td></tr>
 <tr>
+<td class="XML-Token">Sinowealth:149 </td><td>Sino Wealth Electronic Ltd. </td><td><a href="http://www.sinowealth.com">http://www.sinowealth.com</a>  </td></tr>
+<tr>
 <td class="XML-Token">Spansion:100 </td><td>Spansion (previously Fujitsu) </td><td><a href="http://www.spansion.com">http://www.spansion.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">STMicroelectronics:13 </td><td>STMicroelectronics </td><td><a href="http://www.st.com">http://www.st.com</a>  </td></tr>
@@ -1010,7 +1122,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Texas Instruments:16 </td><td>Texas Instruments </td><td><a href="http://www.ti.com">http://www.ti.com</a>  </td></tr>
 <tr>
-<td class="XML-Token">Toshiba:92 </td><td>Toshiba Semiconductor </td><td><a href="http://www.toshiba-components.com">http://www.toshiba-components.com</a>  </td></tr>
+<td class="XML-Token">Toshiba:92 </td><td>Toshiba Semiconductor </td><td><a href="http://toshiba.semicon-storage.com">http://toshiba.semicon-storage.com</a>  </td></tr>
 <tr>
 <td class="XML-Token">Triad Semiconductor:104 </td><td>Triad Semiconductor </td><td><a href="http://www.triadsemi.com">http://www.triadsemi.com</a>  </td></tr>
 <tr>
@@ -1020,7 +1132,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td class="XML-Token">Xinnova:135 </td><td>Xinnova Technology </td><td><a href="http://www.xinnovatech.com/en">http://www.xinnovatech.com/en</a>  </td></tr>
 <tr>
-<td class="XML-Token">Zilog:89 </td><td>Zilog </td><td><a href="https://zilog.com/">https://zilog.com/</a>  </td></tr>
+<td class="XML-Token">Zilog:89 </td><td>Zilog </td><td><a href="http://zilog.com/">http://zilog.com/</a>  </td></tr>
 </table>
 <p>&#160;</p>
 <p><a class="anchor" id="AlgorithmStyleEnum"></a><b>Table: Algorithm Styles</b></p>
@@ -1054,61 +1166,61 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <th>Dcore= </th><th>Description  </th></tr>
 <tr>
-<td class="XML-Token">Cortex-M0 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m0.php" target="_blank">Arm Cortex-M0</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M0 </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m0" target="_blank">Arm Cortex-M0</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M0+ </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m0plus.php" target="_blank">Arm Cortex-M0+</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M0+ </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m0-plus" target="_blank">Arm Cortex-M0+</a> processor based device  </td></tr>
 <tr>
 <td class="XML-Token">Cortex-M1 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m1.php" target="_blank">Arm Cortex-M1</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M3 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m3.php" target="_blank">Arm Cortex-M3</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M3 </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m3" target="_blank">Arm Cortex-M3</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M4 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m4-processor.php" target="_blank">Arm Cortex-M4</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M4 </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m4" target="_blank">Arm Cortex-M4</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M7 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m7-processor.php" target="_blank">Arm Cortex-M7</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M7 </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m7" target="_blank">Arm Cortex-M7</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M23 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m23-processor.php" target="_blank">Arm Cortex-M23</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M23 </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m23" target="_blank">Arm Cortex-M23</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-M33 </td><td><a href="http://www.arm.com/products/processors/cortex-m/cortex-m33-processor.php" target="_blank">Arm Cortex-M33</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-M33 </td><td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m33" target="_blank">Arm Cortex-M33</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">SC000 </td><td>SecurCore <a href="http://www.arm.com/products/processors/securcore/sc000.php" target="_blank">SC000</a> based on technology of Cortex-M0.  </td></tr>
+<td class="XML-Token">SC000 </td><td>SecurCore <a href="http://developer.arm.com/products/processors/cortex-m/sc000-processor" target="_blank">SC000</a> based on technology of Cortex-M0.  </td></tr>
 <tr>
-<td class="XML-Token">SC300 </td><td>SecurCore <a href="http://www.arm.com/products/processors/securcore/sc300.php" target="_blank">SC300</a> based on technology of Cortex-M3.  </td></tr>
+<td class="XML-Token">SC300 </td><td>SecurCore <a href="http://developer.arm.com/products/processors/cortex-m/sc300-processor" target="_blank">SC300</a> based on technology of Cortex-M3.  </td></tr>
 <tr>
-<td class="XML-Token">ARMV8MBL </td><td>Processor <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank">ArmV8MBL</a> compliant with the Armv8-M Baseline Architecture.  </td></tr>
+<td class="XML-Token">ARMV8MBL </td><td>Processor <a href="http://developer.arm.com/products/architecture/m-profile" target="_blank">ArmV8MBL</a> compliant with the Armv8-M Baseline Architecture.  </td></tr>
 <tr>
-<td class="XML-Token">ARMV8MML </td><td>Processor <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank">ArmV8MML</a> compliant with the Armv8-M Mainline Architecture.  </td></tr>
+<td class="XML-Token">ARMV8MML </td><td>Processor <a href="http://developer.arm.com/products/architecture/m-profile" target="_blank">ArmV8MML</a> compliant with the Armv8-M Mainline Architecture.  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-R4 </td><td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r4.php" target="_blank">Arm Cortex-R4</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-R4 </td><td><a href="http://developer.arm.com/products/processors/cortex-r/cortex-r4" target="_blank">Arm Cortex-R4</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-R5 </td><td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r5.php" target="_blank">Arm Cortex-R5</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-R5 </td><td><a href="http://developer.arm.com/products/processors/cortex-r/cortex-r5" target="_blank">Arm Cortex-R5</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-R7 </td><td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r7.php" target="_blank">Arm Cortex-R7</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-R7 </td><td><a href="http://developer.arm.com/products/processors/cortex-r/cortex-r7" target="_blank">Arm Cortex-R7</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-R8 </td><td><a href="http://www.arm.com/products/processors/cortex-r/cortex-r8.php" target="_blank">Arm Cortex-R8</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-R8 </td><td><a href="http://developer.arm.com/products/processors/cortex-r/cortex-r8" target="_blank">Arm Cortex-R8</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A5 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a5.php" target="_blank">Arm Cortex-A5</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A5 </td><td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a5" target="_blank">Arm Cortex-A5</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A7 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a7.php" target="_blank">Arm Cortex-A7</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A7 </td><td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a7" target="_blank">Arm Cortex-A7</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A8 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a8.php" target="_blank">Arm Cortex-A8</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A8 </td><td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a8" target="_blank">Arm Cortex-A8</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A9 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a9.php" target="_blank">Arm Cortex-A9</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A9 </td><td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a9" target="_blank">Arm Cortex-A9</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A15 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a15.php" target="_blank">Arm Cortex-A15</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A15 </td><td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a15" target="_blank">Arm Cortex-A15</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A17 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a17.php" target="_blank">Arm Cortex-A17</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A17 </td><td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a17" target="_blank">Arm Cortex-A17</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A32 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a32.php" target="_blank">Arm Cortex-A32</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A32 </td><td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a32" target="_blank">Arm Cortex-A32</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A35 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a35.php" target="_blank">Arm Cortex-A35</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A35 </td><td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a35" target="_blank">Arm Cortex-A35</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A53 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a53.php" target="_blank">Arm Cortex-A53</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A53 </td><td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a53" target="_blank">Arm Cortex-A53</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A57 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a57.php" target="_blank">Arm Cortex-A57</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A57 </td><td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a57" target="_blank">Arm Cortex-A57</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A72 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a72.php" target="_blank">Arm Cortex-A72</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A72 </td><td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a72" target="_blank">Arm Cortex-A72</a> processor based device  </td></tr>
 <tr>
-<td class="XML-Token">Cortex-A73 </td><td><a href="http://www.arm.com/products/processors/cortex-a/cortex-a73.php" target="_blank">Arm Cortex-A73</a> processor based device  </td></tr>
+<td class="XML-Token">Cortex-A73 </td><td><a href="http://developer.arm.com/products/processors/cortex-a/cortex-a73" target="_blank">Arm Cortex-A73</a> processor based device  </td></tr>
 <tr>
 <td class="XML-Token">* </td><td>Device based on any processor  </td></tr>
 </table>
@@ -1277,7 +1389,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <hr/>
 <h1><a class="anchor" id="element_debugvars"></a>
 /package/devices/family/.../debugvars</h1>
-<p>Specify <a class="el" href="pdsc_family_pg.html#DebugVars">global debug access variables</a>. Use these in addition to the <a class="el" href="pdsc_family_pg.html#PredefinedDebugVars">pre-defined variables</a> in order to query settings from a debug access sequences.<br/>
+<p>Specify <a class="el" href="debug_description.html#DebugVars">global debug access variables</a>. Use these in addition to the <a class="el" href="debug_description.html#PredefinedDebugVars">pre-defined variables</a> in order to query settings from a debug access sequences.<br/>
  <br/>
  Define debug access variables with statements of the following form. </p>
 <div class="fragment"><div class="line">__var uservar = value;  <span class="comment">// Comment: Define &quot;uservar&quot; and initialize to &quot;value&quot;</span></div>
@@ -1367,76 +1479,6 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div class="line"><span class="comment">// &lt;/h&gt;</span></div>
 <div class="line"><span class="comment">// &lt;&lt;&lt; end of configuration section &gt;&gt;&gt;</span></div>
 </div><!-- fragment --><p>&#160;</p>
-<p><a class="anchor" id="DebugVars"></a><b>Debug Access Variables</b></p>
-<p>Debug access variables hold 64-bit unsigned integer values and are used in debug access sequences to query debugger settings and states. They are <b>read-only</b> within a sequence except from a limited set of the <a class="el" href="pdsc_family_pg.html#PredefinedDebugVars">pre-defined debug access variables</a>. Use the <b>debugvars</b> element to specify additional user-defined debug access variables.</p>
-<p><a class="anchor" id="PredefinedDebugVars"></a><b>Table: Pre-defined Debug Access Variables</b><br/>
- A debugger needs to support a set of pre-defined debug access variables. These are described in the following table.</p>
-<table  class="cmtable" summary="ExpressionType: Pre-defined Debug Access Variables">
-<tr>
-<th>Variable </th><th>Access </th><th>Description </th><th>Value=  </th></tr>
-<tr>
-<td style="white-space: nowrap"><pre>__protocol</pre> </td><td>Read-Only </td><td>Debug protocol selection and parameters for target connection.  </td><td>The following bit map applies:<br/>
-<ul>
-<li>Bit 0..15: Type<ul>
-<li><span class="XML-Token">0</span>: Error<br/>
-</li>
-<li><span class="XML-Token">1</span>: JTAG<br/>
-</li>
-<li><span class="XML-Token">2</span>: Serial Wire Debug (SWD)<br/>
-</li>
-<li><span class="XML-Token">3</span>: CJTAG<br/>
-</li>
-</ul>
-</li>
-<li>Bit 16: SWJ-DP</li>
-<li>Bit 17..63: Reserved   </li>
-</ul>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>__connection</pre> </td><td>Read-Only </td><td>Target connection configuration.  </td><td>The following bit map applies:<br/>
-<ul>
-<li>Bit 0..7: Connection type<ul>
-<li><span class="XML-Token">0</span>: Error or target is disconnected.</li>
-<li><span class="XML-Token">1</span>: Connection for target debug.</li>
-<li><span class="XML-Token">2</span>: Connection for downloading application to flash.</li>
-</ul>
-</li>
-<li>Bit 8..15: Reset type.<ul>
-<li><span class="XML-Token">0</span>: Error.</li>
-<li><span class="XML-Token">1</span>: Hardware Reset (debugger reset line).</li>
-<li><span class="XML-Token">2</span>: System Reset Request.</li>
-<li><span class="XML-Token">3</span>: Processor Reset Request ("Vector Reset").</li>
-</ul>
-</li>
-<li>Bit 16..63: Reserved   </li>
-</ul>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>__dp</pre> </td><td>Read/Write </td><td>Debug Port selected for target accesses.<br/>
- This variable is initialized when entering a pre-defined debug access sequence on a debug event. The initialization value is the <b>__dp</b> as defined for the used <b>debug</b> element.  </td><td>Debug port ID as specified in a <b>debugport</b> element or <span class="XML-Token">0</span> if no <b>debugport</b> element exists.   </td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>__ap</pre> </td><td>Read/Write </td><td>Access Port selected for target accesses.<br/>
- This variable is initialized when entering a pre-defined debug access sequence on a debug event. The initialization value is the <b>__ap</b> as defined for the used <b>debug</b> element.  </td><td>Access Port index.   </td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>__traceout</pre> </td><td>Read-Only </td><td>Activated trace outputs (sinks). Additionally holds information on the selected port width if a parallel trace port is enabled.  </td><td style="white-space: nowrap">The following bit map applies:<br/>
-<ul>
-<li>Bit 0: Serial Wire Output (SWO) Trace enabled.</li>
-<li>Bit 1: Parallel Trace Port enabled.</li>
-<li>Bit 2: Trace Buffer enabled.</li>
-<li>Bit 3..15: Reserved.</li>
-<li>Bit 16..21: Selected Parallel Trace Port size.</li>
-<li>Bit 22..63: Reserved.   </li>
-</ul>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>__errorcontrol</pre> </td><td>Read/Write </td><td>Control variable for debug access error handling. All of its bit fields are intialized to <span class="XML-Token">0</span> when entering a pre-defined debug access sequence because of a debug event.  </td><td>The following bit map applies:<br/>
-<ul>
-<li>Bit 0: Skip errors if set to <span class="XML-Token">1</span>. A debugger must continue the sequence execution.</li>
-<li>Bit 1..63: Reserved   </li>
-</ul>
-</td></tr>
-</table>
-<p>&#160;</p>
 <hr/>
 <h1><a class="anchor" id="element_debugport"></a>
 /package/devices/family/.../debugport</h1>
@@ -1854,6 +1896,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <div class="line">&lt;/sequence&gt;</div>
 </div><!-- fragment --></li>
 <li>The debug access variables <b>__dp</b>, <b>__ap</b>, and <b>__errorcontrol</b> can be modified within a debug access sequence. An assigned value is held until leaving the sequence. Calling another sequence by the <b>Sequence</b> debug access function will push their values on a sequence execution stack. The values are restored when returning from such a call.</li>
+<li>The debug access variable <b>__Result</b> can be modified within a debug access sequence. Its value is held until the debug access sequence returns to the debugger. Hence its value is <b>not</b> pushed on a sequence execution stack when calling into another sequence by the <b>Sequence</b> debug access function.</li>
 </ul>
 <p><a class="anchor" id="ExpressionType"></a><b>Expression Rules</b></p>
 <p>Expressions are used in various places to describe one of the following:</p>
@@ -1873,7 +1916,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <li>Conditional expression operations like:<div class="fragment"><div class="line">(x &lt; y) ? a : b </div>
 </div><!-- fragment --></li>
 <li>Precedence of sub-expressions is indicated by brackets (<span class="XML-Token">(</span>, <span class="XML-Token">)</span>). C-like precedence applies if brackets are omitted.</li>
-<li>References to <a class="el" href="pdsc_family_pg.html#DebugVars">debug access variables</a> for evaluating debug settings.</li>
+<li>References to <a class="el" href="debug_description.html#DebugVars">debug access variables</a> for evaluating debug settings.</li>
 <li>Calls to <a class="el" href="debug_description.html#DebugFunctions">debug access functions</a>.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd><ul>
@@ -1882,438 +1925,6 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <li>XML prohibits the use of the characters <span class="XML-Token">&amp;</span>, <span class="XML-Token">&lt;</span>, and <span class="XML-Token">&gt;</span>. Use the corresponding XML entity names instead: <span class="XML-Token">&amp;amp;</span>, <span class="XML-Token">&amp;lt;</span>, and <span class="XML-Token">&amp;gt;</span>.</li>
 </ul>
 </dd></dl>
-<p>&#160;</p>
-<p><a class="anchor" id="DebugFunctions"></a><b>Table: Debug Access Functions</b></p>
-<p>Debug access functions can be called in expressions in order to interact with the target device and the user. Parameters to functions can again be expressions.<br/>
- By default, a debugger must abort the execution of a debug access sequence if a function call fails. However, this behavior can be controlled from a sequence by the <b>__errorcontrol</b> <a class="el" href="pdsc_family_pg.html#DebugVars">debug access variable</a>.<br/>
- <br/>
- The following table describes the existing debug access functions, their parameters and the debug access variables which are evaluated for the function call.</p>
-<table  class="cmtable" summary="ExpressionType: debug access functions">
-<tr>
-<th>Function </th><th>Description  </th></tr>
-<tr>
-<td style="white-space: nowrap"><pre>Sequence("name")</pre> </td><td><p class="starttd">Execute a debug access sequence. Calling a sequence by this function causes the modifiable debug access variables <b>__dp</b>, <b>__ap</b>, and <b>__errorcontrol</b> to be pushed on a sequence execution stack. Returning from such a call will restore the state of these variables.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>name: Name of the sequence to execute. It must be enclosed by quotes.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- Always returns <span class="XML-Token">0</span>.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>Read8(addr)</pre> </td><td><p class="starttd">Read an 8-bit value from target memory. <b>A device must support native 8-bit memory accesses for this function to succeed.</b><br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>addr: Memory address to read from.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-<li>__ap: The access port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- The 8-bit value as read from target memory.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>Read16(addr)</pre> </td><td><p class="starttd">Read an 16-bit value from target memory. <b>A device must support native 16-bit memory accesses for this function to succeed.</b><br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>addr: Memory address to read from.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-<li>__ap: The access port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- The 16-bit value as read from target memory.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>Read32(addr)</pre> </td><td><p class="starttd">Read an 32-bit value from target memory. <b>A device must support native 32-bit memory accesses for this function to succeed.</b><br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>addr: Memory address to read from.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-<li>__ap: The access port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- The 32-bit value as read from target memory.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>Read64(addr)</pre> </td><td><p class="starttd">Read an 64-bit value from target memory. <b>A device must support native 64-bit memory accesses for this function to succeed.</b><br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>addr: Memory address to read from.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-<li>__ap: The access port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- The 64-bit value as read from target memory.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>ReadAP(addr)</pre> </td><td><p class="starttd">Read a 32-bit value from an access port register.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>addr: AP register address to read from. Addresses larger than <span class="XML-Token">0xF</span> automatically cause an AP register bank switch.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-<li>__ap: The access port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- The 32-bit value as read from the AP register.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>ReadDP(addr)</pre> </td><td><p class="starttd">Read a 32-bit value from a debug port register.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>addr: DP register address to read from.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- The 32-bit value as read from the DP register.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>Write8(addr, val)</pre> </td><td><p class="starttd">Write an 8-bit value to target memory. <b>A device must support native 8-bit memory accesses for this function to succeed.</b><br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>addr: Memory address to write to.</li>
-<li>val: Value to write.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-<li>__ap: The access port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- Always returns <span class="XML-Token">0</span>.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>Write16(addr, val)</pre> </td><td><p class="starttd">Write a 16-bit value to target memory. <b>A device must support native 16-bit memory accesses for this function to succeed.</b><br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>addr: Memory address to write to.</li>
-<li>val: Value to write.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-<li>__ap: The access port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- Always returns <span class="XML-Token">0</span>.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>Write32(addr, val)</pre> </td><td><p class="starttd">Write a 32-bit value to target memory. <b>A device must support native 32-bit memory accesses for this function to succeed.</b><br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>addr: Memory address to write to.</li>
-<li>val: Value to write.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-<li>__ap: The access port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- Always returns <span class="XML-Token">0</span>.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>Write64(addr, val)</pre> </td><td><p class="starttd">Write a 64-bit value to target memory. <b>A device must support native 64-bit memory accesses for this function to succeed.</b><br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>addr: Memory address to write to.</li>
-<li>val: Value to write.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-<li>__ap: The access port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- Always returns <span class="XML-Token">0</span>.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>WriteAP(addr, val)</pre> </td><td><p class="starttd">Write a 32-bit value to an access port register. Addresses larger than 0xF automatically cause an AP register bank switch.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>addr: Memory address to write to.</li>
-<li>val: Value to write.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-<li>__ap: The access port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- Always returns <span class="XML-Token">0</span>.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>WriteDP(addr, val)</pre> </td><td><p class="starttd">Write a 32-bit value to a debug port register.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>addr: Memory address to write to.</li>
-<li>val: Value to write.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- Always returns <span class="XML-Token">0</span>.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>DAP_Delay(delay)</pre> </td><td><p class="starttd">Debug probe command to wait for a specific delay.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>delay: Wait time in microseconds.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- Always returns <span class="XML-Token">0</span>.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>DAP_WriteABORT(value)</pre> </td><td><p class="starttd">Debug probe command to write an abort request to the CoreSight ABORT register of the target debug port.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>value: 32-bit value to write into the CoreSight ABORT register.</li>
-</ul>
-<p><b>Debug Access Variables:</b><br/>
-</p>
-<ul>
-<li>__dp: The debug port to use for this memory access.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- Always returns <span class="XML-Token">0</span>.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>DAP_SWJ_Pins(pinout, pinselect, pinwait)</pre> </td><td><p class="starttd">Debug probe command to monitor and control the I/O Pins including the nRESET device reset line.<br/>
- <b>I/O Pin Mapping</b> for <b>pinout</b>, <b>pinselect</b>, and <b>pinwait</b>:</p>
-<ul>
-<li>Bit 0: SWCLK/TCK</li>
-<li>Bit 1: SWDIO/TMS</li>
-<li>Bit 2: TDI</li>
-<li>Bit 3: TDO</li>
-<li>Bit 5: nTRST</li>
-<li>Bit 7: nRESET</li>
-</ul>
-<p><br/>
- The <b>pinwait</b> time is useful in systems where the nRESET pin is implemented as open-drain output. After nRESET is de-asserted by the debugger, external circuit may still hold the target Device under reset for a time. Using the <b>pinwait</b> time, the debugger may monitor selected I/O Pins and wait until they the expected value appears or a timeout expires.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>pinout: Value for selected output pins.</li>
-<li>pinselect: Selects which output pins will be modified.</li>
-<li>pinwait: Wait timeout for the selected output to stabilize. A debugger must extend this timeout to the closest possible time granularity.<ul>
-<li>0 = no wait</li>
-<li>1 .. 3000000 = time in microseconds (max 3s)</li>
-</ul>
-</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- The state of the I/O Pins at the end of this operation. If a debugger is not capable of monitoring the I/O Pins, it must return a value of <span class="XML-Token">0xFFFFFFFF</span>.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>DAP_SWJ_Clock(val)</pre> </td><td><p class="starttd">Debug probe command to set the clock frequency for JTAG and SWD communication mode.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>val: Maximum SWD/JTAG Clock (SWCLK/TCK) value in Hz.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- Always returns <span class="XML-Token">0</span>.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>DAP_SWJ_Sequence(cnt, val)</pre> </td><td><p class="starttd">Debug probe command to generate required SWJ sequences, for example, for SWD/JTAG Reset, SWD&lt;-&gt;JTAG switch and Dormant operation.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>cnt: Number of bits in sequence: 1..64. Larger sequences need to be implemented by multiple subsequent <b>DAP_SWJ_Sequence</b> calls. Such a sequence of <b>DAP_SWJ_Sequence</b> commands must be encapsulated in an atomic <b>block</b> to ensure correct execution.</li>
-<li>val: Sequence generated on SWDIO/TMS (with clock @SWCLK/TCK), LSB transmitted first.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- Always returns <span class="XML-Token">0</span>.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>DAP_JTAG_Sequence(cnt, tms, tdi)</pre> </td><td><p class="starttd">Debug probe command to generate a JTAG sequence with fixed TMS value and capture TDO.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>cnt: Length of the JTAG sequence (number of TCK cycles and TDI bits): 1..64</li>
-<li>tms: Fixed TMS value: 0..1</li>
-<li>tdi: Data generated on TDI with one bit per TCK cycle, LSB transmitted first.</li>
-</ul>
-<p class="endtd"><b>Return Value:</b><br/>
- Data captured from TDO with one bit per TCK cycle, LSB captured first and padded with <span class="XML-Token">0</span>s.   </p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>Query(type, "message", default)</pre> </td><td><p class="starttd">Query user input. The sequence execution stalls depending on the used <b>type</b>. If the debugger runs in a batch mode, this function returns the value <b>default</b>.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>type: Query type. Can be one of:<ul>
-<li><span class="XML-Token">0</span> : <b>Query_Ok</b>, displays an informative message which has to be confirmed by the user. This type allows the result <b>OK</b>.</li>
-<li><span class="XML-Token">1</span> : <b>Query_YesNo</b>, displays a query with the allowed results <b>Yes</b> and <b>No</b>.</li>
-<li><span class="XML-Token">2</span> : <b>Query_YesNoCancel</b>, displays a query with the allowed results <b>Yes</b>, <b>No</b>, and <b>Cancel</b>.</li>
-<li><span class="XML-Token">3</span> : <b>Query_OkCancel</b>, displays a query with the allowed results <b>OK</b> and <b>Cancel</b>.</li>
-</ul>
-</li>
-<li>message: A constant string with the query message to display. It must not be an expression and it must be enclosed by quotes.</li>
-<li>default: The default value to return if the debugger runs in batch mode. See <b>Return Values</b> for a list of allowed values.</li>
-</ul>
-<p><b>Return Value:</b><br/>
- The result of the query. The user input maps to the following numbers:</p>
-<ul>
-<li>Error : <span class="XML-Token">0</span></li>
-<li>OK : <span class="XML-Token">1</span></li>
-<li>Cancel : <span class="XML-Token">2</span></li>
-<li>Yes : <span class="XML-Token">3</span></li>
-<li>No : <span class="XML-Token">4</span></li>
-</ul>
-<p class="endtd"></p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>QueryValue("message", default)</pre> </td><td><p class="starttd">Query input value from user. The sequence execution stalls until the user has entered a value or canceled the query. This function returns the <b>default</b> value if the user canceled the query or if the debugger runs in a batch mode.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>message: A constant string with the query message to display. It must not be an expression and it must be enclosed by quotes.</li>
-<li>default: The default value to return if the user cancels the query or if the debugger runs in batch mode.</li>
-</ul>
-<p><b>Return Value:</b><br/>
- The queried value.</p>
-<p class="endtd"></p>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>Message(type, "format", ...)</pre> </td><td><p class="starttd">Outputs a message to a log window.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>type: Message type. Can be one of:<ul>
-<li><span class="XML-Token">0</span> : <b>Info</b>, outputs an informative message.</li>
-<li><span class="XML-Token">1</span> : <b>Warning</b>, outputs a warning.</li>
-<li><span class="XML-Token">2</span> : <b>Error</b>, outputs an error. Sequence execution aborts.</li>
-</ul>
-</li>
-<li>format: A constant string with the message format. It must not be an expression and it must be enclosed by quotes. The string has the following format:<br/>
- <div class="fragment"><div class="line">%[flags][width][.precision]specifier</div>
-</div><!-- fragment --><ul>
-<li>Specifiers:<ul>
-<li><span class="XML-Token">%u</span>: 32-bit unsigned decimal integer.</li>
-<li><span class="XML-Token">%llu</span>: 64-bit unsigned decimal integer.</li>
-<li><span class="XML-Token">%x</span>: 32-bit unsigned hexadecimal integer, lower case letters.</li>
-<li><span class="XML-Token">%llx</span>: 64-bit unsigned hexadecimal integer, lower case letters.</li>
-<li><span class="XML-Token">%X</span>: 32-bit unsigned hexadecimal integer, upper case letters.</li>
-<li><span class="XML-Token">%llX</span>: 64-bit unsigned hexadecimal integer, upper case letters.</li>
-<li><span class="XML-Token">%o</span>: 32-bit unsigned octal integer.</li>
-<li><span class="XML-Token">%llo</span>: 64-bit unsigned octal integer.</li>
-<li><span class="XML-Token">%b</span>: 32-bit unsigned binary integer.</li>
-<li><span class="XML-Token">%llb</span>: 64-bit unsigned binary integer.</li>
-<li><span class="XML-Token">%f</span>: Single-precision (32-bit) floating point value.</li>
-<li><span class="XML-Token">%Lf</span>: Double-precision (64-bit) floating point value.</li>
-<li><span class="XML-Token">%s</span>: Constant character string. Must not be an expression.</li>
-<li><span class="XML-Token">%%</span>: Print <span class="XML-Token">%</span> character.</li>
-</ul>
-</li>
-<li>Flags:<ul>
-<li><span class="XML-Token">0</span>: Pad the displayed value with zeros instead of spaces if padding is required by the <span class="XML-Token">width</span> option.</li>
-</ul>
-</li>
-<li>Width: Minimum number of displayed characters. If <span class="XML-Token">width</span> is less than the number of characters of the value, then the value is padded with spaces to the left.</li>
-<li>.Precision:<ul>
-<li><b>Integer</b>: Minimum number of displayed digits. Padded with zeros to the left if the value has less digits than specified with <span class="XML-Token">.precision</span>.</li>
-<li><b>Floating Point</b>: Number of displayed digits after decimal point. Defaults to <span class="XML-Token">6</span> if not specified.</li>
-<li><b>Constant String</b>: Maximum number of displayed characters.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>... : Additional function parameters to replace format string specifiers. Each parameter can be a constant string, or an expression that resolves to an unsigned 64-bit integer. A parameter type must match the corresponding specifier type.</li>
-</ul>
-<p><b>Return Value:</b><br/>
- Always returns <span class="XML-Token">0</span>.</p>
-<dl class="section note"><dt>Note</dt><dd>For 32-bit specifiers the <b>Message</b> command must print the lower 32 Bit of a 64 Bit debug access variable.</dd></dl>
-</td></tr>
-<tr>
-<td style="white-space: nowrap"><pre>LoadDebugInfo("file")</pre> </td><td><p class="starttd">Loads DWARF debug information from an application executable.<br/>
- <br/>
- <b>Parameters:</b><br/>
-</p>
-<ul>
-<li>file: A constant string with the path to the executable. The path must be relative to the root folder of the pack and use the format <b>path/name.extension</b>. It must not be an expression and it must be enclosed by quotes.</li>
-</ul>
-<p><b>Return Value:</b><br/>
- Returns <span class="XML-Token">0</span> after successful debug information load.<br/>
- Returns <span class="XML-Token">1</span> if debug information load failed.</p>
-<p class="endtd"></p>
-</td></tr>
-</table>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>Target memory access functions must perform a debug access of the size indicated by their name. The target system must support debug accesses of this size.</li>
-<li>Results of all functions are casted to 64-bit unsigned integer values.</li>
-<li>Some target access functions determine the used debug and access port by the current values of the <b>__dp</b> and <b>__ap</b> debug access variables. If a target access requires a different debug or access port than the default ones, it must change these values. This change is held until finishing the sequence the change has occurred in.</li>
-</ul>
-</dd></dl>
-<p>&#160;</p>
-<hr/>
 <h1><a class="anchor" id="element_debug"></a>
 /package/devices/family/.../debug</h1>
 <p>Describes configuration settings, default values, and patches for data accesses for a debug connection. Multiple <b>debug</b> elements can be defined which are either specific to a processor identified by attribute <b>Pname</b>, or which apply to all connections.</p>
@@ -2639,8 +2250,8 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.PDSC) Format</a></li><li class="navelem"><a class="el" href="pdsc_devices_pg.html">/package/devices element</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:27 for CMSIS-Pack by Arm Ltd. All rights reserved.
+    <li class="navelem"><a class="el" href="packFormat.html">Pack Description (*.pdsc) Format</a></li><li class="navelem"><a class="el" href="pdsc_devices_pg.html">/package/devices element</a></li>
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:42 for CMSIS-Pack by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

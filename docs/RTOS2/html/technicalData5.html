@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -111,90 +111,20 @@ $(document).ready(function(){initNavTree('technicalData5.html','');});
 <div class="title">Technical Data </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="technicalData_Toolchains"></a>
-Supported Toolchains</h1>
-<p>Keil RTX5 is developed and tested using the common toolchains and development environments.</p>
-<h2><a class="anchor" id="technicalData_Toolchain_ARM"></a>
-Arm Compiler (Arm/Keil MDK, uVision5)</h2>
-<p>Major parts of RTX5 are developed and optimized using Arm Compiler and Arm/Keil MDK. The current release is tested with the following versions: </p>
+<div class="textblock"><p>The following section contains technical information about RTX v5.</p>
 <ul>
-<li>
-Arm Compiler 5.06 Update 6 </li>
-<li>
-Arm Compiler 6.6.2 (Long Term Maintenance) </li>
-<li>
-Arm Compiler 6.9 </li>
-<li>
-RTOS-aware debugging with uVision 5.24 </li>
+<li><a class="el" href="pHardwareRequirements.html">Hardware Requirements</a> lists the resource requirements of the RTX v5 kernel along with hardware dependencies.</li>
+<li><a class="el" href="pControlBlockSizes.html">Control Block Sizes</a> provides memory size information for <a class="el" href="theory_of_operation.html#StaticObjectMemory">object-specific control block memory allocation</a>.</li>
+<li><a class="el" href="pDirectory_Files.html">Directory Structure and File Overview</a> is an overview of the supplied files that belong to RTX v5</li>
+<li><a class="el" href="pToolchains.html">Supported Toolchains</a> details about the compiler support which includes ArmCC (MDK, DS-5), IAR EW-ARM, and GCC. </li>
 </ul>
-<h2><a class="anchor" id="technicalData_Toolchain_IAR"></a>
-IAR Embedded Workbench</h2>
-<p>RTX5 has been ported to fully support IAR Embedded Workbench. The following releases are known to work: </p>
-<ul>
-<li>
-IAR Embedded Workbench 7.7 (<a href="https://github.com/ARM-software/CMSIS_5/issues/201">community report</a>) </li>
-<li>
-IAR Embedded Workbench 7.80.4 </li>
-<li>
-<b>IAR Embedded Workbench 8.20.1</b> </li>
-</ul>
-<h2><a class="anchor" id="technicalData_Toolchain_GCC"></a>
-GNU Compiler Collection</h2>
-<p>RTX5 has also been ported to support GCC, maintenance mainly relays on community contribution. Active development is currently tested with: </p>
-<ul>
-<li>
-GNU Tools for Arm Embedded 6.3.1 20170620 </li>
-</ul>
-<h1><a class="anchor" id="technicalData5_ControlBlockSizes"></a>
-Control Block Sizes</h1>
-<p>Keil RTX5 specific control block definitions (including sizes) as well as memory pool and message queue memory requirements are defined in the RTX5 header file:</p>
-<div class="fragment"><div class="line"><span class="comment">/// Control Block sizes</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxThreadCbSize        sizeof(osRtxThread_t)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxTimerCbSize         sizeof(osRtxTimer_t)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxEventFlagsCbSize    sizeof(osRtxEventFlags_t)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxMutexCbSize         sizeof(osRtxMutex_t)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxSemaphoreCbSize     sizeof(osRtxSemaphore_t)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxMemoryPoolCbSize    sizeof(osRtxMemoryPool_t)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxMessageQueueCbSize  sizeof(osRtxMessageQueue_t)</span></div>
-<div class="line"><span class="preprocessor"></span> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Memory size in bytes for Memory Pool storage.</span></div>
-<div class="line"><span class="comment">/// \param         block_count   maximum number of memory blocks in memory pool.</span></div>
-<div class="line"><span class="comment">/// \param         block_size    memory block size in bytes.</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxMemoryPoolMemSize(block_count, block_size) \</span></div>
-<div class="line"><span class="preprocessor">  (4*(block_count)*(((block_size)+3)/4))</span></div>
-<div class="line"><span class="preprocessor"></span> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// Memory size in bytes for Message Queue storage.</span></div>
-<div class="line"><span class="comment">/// \param         msg_count     maximum number of messages in queue.</span></div>
-<div class="line"><span class="comment">/// \param         msg_size      maximum message size in bytes.</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxMessageQueueMemSize(msg_count, msg_size) \</span></div>
-<div class="line"><span class="preprocessor">  (4*(msg_count)*(3+(((msg_size)+3)/4)))</span></div>
-</div><!-- fragment --><p>If you are using a <a class="el" href="theory_of_operation.html#GlobalMemoryPool">Global Memory Pool</a> to allocate memory for the RTOS objects, you need to know the size that is required for each object in case of errors. Currently, the control block sizes are as follows (subject to change without notification):</p>
-<table class="doxtable">
-<tr>
-<th>Type </th><th align="center">Control block size in bytes  </th></tr>
-<tr>
-<td>Thread </td><td align="center">68 </td></tr>
-<tr>
-<td>Timer </td><td align="center">32 </td></tr>
-<tr>
-<td>Event Flags </td><td align="center">16 </td></tr>
-<tr>
-<td>Mutex </td><td align="center">28 </td></tr>
-<tr>
-<td>Semaphore </td><td align="center">16 </td></tr>
-<tr>
-<td>Memory Pool </td><td align="center">36 </td></tr>
-<tr>
-<td>Message Queue </td><td align="center">52 </td></tr>
-</table>
-<p>The size of the memory that is required for memory pool and message queue data storage can be determined from the macros stated above. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

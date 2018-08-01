@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['version',['version',['../rtx__os_8h.html#acd99bb05ca015e7d74448acb1deba7ca',1,'osRtxInfo_t']]]
+  ['used_5fblocks',['used_blocks',['../rtx__os_8h.html#a444139ba664bc8c262139a9addddb48c',1,'osRtxMpInfo_t']]]
 ];

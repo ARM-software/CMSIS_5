@@ -2,7 +2,7 @@ var group__rtx__evr__thread =
 [
     [ "EvrRtxThreadError", "group__rtx__evr__thread.html#ga4a2879b06201a29d8c223253d41cca43", null ],
     [ "EvrRtxThreadNew", "group__rtx__evr__thread.html#ga396ce41f68401a885f0ae46a54e8dd1f", null ],
-    [ "EvrRtxThreadCreated", "group__rtx__evr__thread.html#gae2215445440bcb53b65a9b7181ecffa9", null ],
+    [ "EvrRtxThreadCreated", "group__rtx__evr__thread.html#ga5bfa3bc241aea59ebe9bc1edcf6b78d8", null ],
     [ "EvrRtxThreadGetName", "group__rtx__evr__thread.html#ga4f849a33d2c95754b11a499d77503b5c", null ],
     [ "EvrRtxThreadGetId", "group__rtx__evr__thread.html#ga40c0d21a5c0d128f09966aeeca37ecba", null ],
     [ "EvrRtxThreadGetState", "group__rtx__evr__thread.html#ga1c3120fb155ca19ea5c9089a446ef19d", null ],

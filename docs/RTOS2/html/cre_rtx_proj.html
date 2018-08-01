@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -146,11 +146,39 @@ Additional requirements for RTX on Cortex-A</h1>
 <li>Arm Cortex-A7 <a href="../../Core_A/html/group__PL1__timer__functions.html">Generic Physical Timer (GTIM)</a></li>
 </ul>
 <p>For devices not implementing GIC, PTIM nor GTIM please refer to the according device family pack and select the proper implementations.</p>
-<h1><a class="anchor" id="cre_rtx_proj_specifics"></a>
+<h1><a class="anchor" id="cre_UsingIRQs"></a>
+Using Interrupts on Cortex-M</h1>
+<p>On Cortex-M processors, the RTX5 kernel uses the following interrupt exceptions. The table below also lists the priorities that must be assigned to these interrupts.</p>
+<table class="doxtable">
+<tr>
+<th align="left">Handler </th><th align="left">Priority </th><th align="left">Interrupt/Exception  </th></tr>
+<tr>
+<td align="left">SysTick </td><td align="left">lowest </td><td align="left">Kernel system timer interrupt to generate periodic timer ticks </td></tr>
+<tr>
+<td align="left">PendSV </td><td align="left">lowest </td><td align="left">PendSV (request for system-level service) when calling certain RTX functions from <b>Handler</b> mode </td></tr>
+<tr>
+<td align="left">SCV </td><td align="left">lowest+1 </td><td align="left">Supervisor Call used to enter the RTOS kernel from <b>Thread</b> mode </td></tr>
+</table>
+<p>Other device interrupts can be used without limitation. For Arm Cortex-M3/M4/M7/M23/M33 processors, interrupts are never disabled by RTX Kernel.</p>
+<p><b>Usage of interrupt priority grouping</b></p>
+<ul>
+<li>The interrupt priority grouping should be configured using the CMSIS-Core function NVIC_SetPriorityGrouping before calling the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart()</a>. The RTX kernel uses the priority group value to setup the priority for SysTick and PendSV interrupts.</li>
+<li>The RTX kernel sets the priority for the interrupts/exceptions listed in above table and uses the lowest two priority levels.</li>
+<li>Do not change the priority used by the RTX kernel. If this cannot be avoided, ensure that the preempt priority of SysTick/PendSV is lower than SVC.</li>
+<li>Permitted priority group values are 0 to 6. The priority group value 7 will cause RTX to fail as there is only one priority level available.</li>
+<li>The <b>main stack</b> is used to run the RTX functionality. It is therefore required to configure sufficient stack for the RTX kernel execution.</li>
+</ul>
+<p><b>Code Example</b> </p>
+<div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>();                            <span class="comment">// initialize RTX</span></div>
+<div class="line">NVIC_SetPriorityGrouping (3);                    <span class="comment">// setup priority grouping</span></div>
+<div class="line">tread_id = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>(tread_func, NULL, NULL);  <span class="comment">// create some threads</span></div>
+<div class="line"><a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga9ae2cc00f0d89d7b6a307bba942b5221">osKernelStart</a> ();                                <span class="comment">// start RTX kernel</span></div>
+</div><!-- fragment --><h1><a class="anchor" id="cre_rtx_proj_specifics"></a>
 Add support for RTX specific functions</h1>
 <p>If you require some of the <a class="el" href="group__rtx5__specific.html">RTX specific functions</a> in your application code, #include the <a class="el" href="theory_of_operation.html#rtx_os_h">header file rtx_os.h</a>. This enables <a class="el" href="theory_of_operation.html#lowPower">low-power</a> and <a class="el" href="theory_of_operation.html#TickLess">tick-less</a> operation modes.</p>
 <h1><a class="anchor" id="cre_rtx_proj_er"></a>
 Add Event Recorder Visibility</h1>
+<p>RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> to provide event information which helps you to understand and analyze the operation.</p>
 <ul>
 <li>To use the Event Recorder together with RTX5, select the software component <b>Compiler:Event Recorder</b>.</li>
 <li>Select the <b>Source</b> variant of the software component <b>CMSIS:RTOS2 (API):Keil RTX5</b>. <div class="image">
@@ -158,7 +186,7 @@ Add Event Recorder Visibility</h1>
 <div class="caption">
 Component selection for Event Recorder</div></div>
 </li>
-<li>Call the function <b>EventRecorderInitialize()</b> in your application code (ideally in <code>main()</code>).</li>
+<li>Enable the related settings under <a class="el" href="config_rtx5.html#evtrecConfig">Event Recorder Configuration</a>.</li>
 <li>Build the application code and download it to the debug hardware.</li>
 </ul>
 <p>Once the target application generates event information, it can be viewed in the µVision debugger using the <b>Event</b> <b>Recorder</b>. </p>
@@ -168,7 +196,7 @@ Component selection for Event Recorder</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li><li class="navelem"><a class="el" href="rtx5_impl.html">RTX v5 Implementation</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

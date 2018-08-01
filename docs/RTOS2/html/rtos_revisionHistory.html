@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.2</span>
+   &#160;<span id="projectnumber">Version 2.1.3</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -117,6 +117,11 @@ CMSIS-RTOS API Version 2</h1>
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>V2.1.3 </td><td>Additional functions allowed to be called from Interrupt Service Routines:<ul>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>   </li>
+</ul>
+</td></tr>
+<tr>
 <td>V2.1.2 </td><td>Additional functions allowed to be called from Interrupt Service Routines:<ul>
 <li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga6f7764e7250c5c5364c00c45a5d1d199">osKernelGetInfo</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga48b69b81012fce051f639be288b243ba">osKernelGetState</a>   </li>
 </ul>
@@ -144,7 +149,7 @@ CMSIS-RTOS API Version 2</h1>
 </td></tr>
 <tr>
 <td>V2.0.0 </td><td>New API Version 2.0 available.<ul>
-<li>See <a class="el" href="functionOverview.html#rtos_api2">CMSIS-RTOS2</a> for a detailed function reference.</li>
+<li>See <a class="el" href="rtos_api2.html">CMSIS-RTOS C API v2</a> for a detailed function reference.</li>
 <li>See <a class="el" href="os2Migration.html">Migration from API v1 to API v2</a> for details on the migration process from API Version 1.   </li>
 </ul>
 </td></tr>
@@ -174,6 +179,18 @@ CMSIS-RTOS RTX Version 5</h1>
 <table  class="cmtable" summary="Revision History">
 <tr>
 <th>Version </th><th>Description  </th></tr>
+<tr>
+<td>V5.4.0 </td><td><ul>
+<li>Based on CMSIS-RTOS API V2.1.3.</li>
+<li>Added support for Event Recorder initialization and filter setup.</li>
+<li>Added support to use RTOS as Event Recorder Time Stamp source.</li>
+<li>Fixed osDelayUntil longest delay (limited to 2^31-1).</li>
+<li>Fixed optimization issue when using GCC optimization level 3.</li>
+<li>Fixed osMemoryPoolAlloc to avoid potential race condition.</li>
+<li>Restructured exception handling for Cortex-A devices.</li>
+<li>Minor code optimizations (removed unnecessary checks).   </li>
+</ul>
+</td></tr>
 <tr>
 <td>V5.3.0 </td><td><ul>
 <li>Added Object Memory usage counters.</li>
@@ -222,7 +239,7 @@ CMSIS-RTOS RTX Version 5</h1>
 <li>Based on CMSIS-RTOS API V2.1.0.</li>
 <li>Added support for Event recording.</li>
 <li>Added support for IAR compiler.</li>
-<li>Updated configuration files: RTX_Config.h for the configuration settings and RTX_config.c for implementing the <a class="el" href="group__rtx5__specific.html">RTX5 Specific API</a>.</li>
+<li>Updated configuration files: RTX_Config.h for the configuration settings and RTX_config.c for implementing the <a class="el" href="group__rtx5__specific.html">RTX v5 Specific API</a>.</li>
 <li>osRtx name-space for RTX specific symbols.   </li>
 </ul>
 </td></tr>
@@ -236,7 +253,7 @@ CMSIS-RTOS RTX Version 5</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="index.html">index</a></li>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:30 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:45 for CMSIS-RTOS2 by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

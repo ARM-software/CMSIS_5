@@ -406,7 +406,9 @@ Cannot be called from <a class="el" href="functionOverview.html#CMSIS_RTOS_ISR_C
 <dl class="section return"><dt>Returns</dt><dd>thread ID for reference by other functions or NULL in case of error. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>MUST REMAIN UNCHANGED: <b>osThreadGetId</b> shall be consistent in every CMSIS-RTOS.</dd></dl>
 <p>Get the thread ID of the current running thread.</p>
-<dl class="section note"><dt>Note</dt><dd>Cannot be called from <a class="el" href="functionOverview.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Cannot be called from <a class="el" href="functionOverview.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
+<dd>
+Must not be used inside the idle daemon. This would lead to undefined behavior.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> ThreadGetId_example (<span class="keywordtype">void</span>)  {</div>
 <div class="line">  <a class="code" href="cmsis__os_8h.html#adfeb153a84a81309e2d958268197617f">osThreadId</a> id;                                           <span class="comment">// id for the currently running thread</span></div>
@@ -633,7 +635,7 @@ Avoid calling the function with a <em>thread_id</em> that does not exist or has 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Feb 22 2018 10:03:28 for CMSIS-RTOS by Arm Ltd. All rights reserved.
+    <li class="footer">Generated on Wed Aug 1 2018 17:12:43 for CMSIS-RTOS by Arm Ltd. All rights reserved.
 	<!--
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 

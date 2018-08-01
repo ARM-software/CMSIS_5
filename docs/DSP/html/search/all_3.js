@@ -1,8 +1,6 @@
 var searchData=
 [
   ['complex_20fft_20tables',['Complex FFT Tables',['../group__CFFT__CIFFT.html',1,'']]],
-  ['change_20log_2etxt',['Change Log.txt',['../Change_01Log_8txt.html',1,'']]],
-  ['change_20log',['Change Log',['../ChangeLog_pg.html',1,'']]],
   ['class_20marks_20example',['Class Marks Example',['../group__ClassMarks.html',1,'']]],
   ['clip_5fq31_5fto_5fq15',['clip_q31_to_q15',['../arm__math_8h.html#a4604d1ebfef21e380c42fbe16b9724d1',1,'arm_math.h']]],
   ['clip_5fq31_5fto_5fq7',['clip_q31_to_q7',['../arm__math_8h.html#af815ae1a72c9ef88b8ba0a4cb3b23eaa',1,'arm_math.h']]],

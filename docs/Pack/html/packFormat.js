@@ -2,11 +2,12 @@ var packFormat =
 [
     [ "Filename Conventions", "packFormat.html#Filenames", null ],
     [ "Pack Schema", "packFormat.html#PackSchema", null ],
-    [ "Example of a *.PDSC File", "packFormat.html#PDSC_Example", null ],
+    [ "Example of a *.pdsc File", "packFormat.html#PDSC_Example", null ],
     [ "/package element", "pdsc_package_pg.html", [
       [ "/package", "pdsc_package_pg.html#element_package", null ]
     ] ],
     [ "/package/keywords element", "element_keywords.html", null ],
+    [ "/package/repository element", "element_repository.html", null ],
     [ "/package/releases element", "element_releases.html", [
       [ "/package/releases/release", "element_releases.html#element_release", null ]
     ] ],
