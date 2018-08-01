@@ -6,8 +6,8 @@ There are multiple ways to distribute a software pack:
 \section cp_LocalInstallation Local Installation
 The easiest way to distribute a software pack is attaching it to an email or using other means of electronic distribution
 (for example using a company internal file server). The installation of a software pack is usually triggered by
-double-clicking the PACK file. The pack management tool is invoked and the Pack is installed on the local machine. After
-installation, the pack will be shown in the list of installed packs (tool dependent). If the PDSC file does not contain a
+double-clicking the Pack file. The pack management tool is invoked and the Pack is installed on the local machine. After
+installation, the Pack will be shown in the list of installed packs (tool dependent). If the PDSC file does not contain a
 valid \c \<url\> element, a manual installation is required to update a software pack. Otherwise, pack management tools can
 check for updates on the server or the local machine that is specified by \c \<url\>.
 
@@ -42,11 +42,11 @@ maintenance purposes for example).
   <a href="http://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">www.keil.com/pack/ARM.CMSIS.pdsc</a> and \n
   <a href="http://www.keil.com/pack/ARM.CMSIS.5.0.1.pack" target="_blank">www.keil.com/pack/ARM.CMSIS.5.0.1.pack</a> and \n
   <a href="http://www.keil.com/pack/ARM.CMSIS.5.0.0.pack" target="_blank">www.keil.com/pack/ARM.CMSIS.5.0.0.pack</a> and ... \n
-  At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned PACK files,
+  At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned Pack files,
   but at least the latest one.
-- If the URL or the PDSC/PACK files become unavailable (temporarily or permanently), users will not be able to retrieve
+- If the URL or the PDSC/Pack files become unavailable (temporarily or permanently), users will not be able to retrieve
   updates.
-- Do not replace PDSC/PACK files without updating the version number because the Pack management tools will not recognize
+- Do not replace PDSC/Pack files without updating the version number because the Pack management tools will not recognize
   the update unless the version has been changed.
 - Older packs should remain available.
 
@@ -67,4 +67,21 @@ the web site (<a href="http://www.keil.com/dd2/pack">www.keil.com/dd2/pack</a>) 
 
 Please allow up to seven working days for the process. If the files contain any errors, you will be notified. Otherwise, the
 information is added to the index server.
+
+\section cp_PackRehosting Moving a pack from one URL to another
+
+Sometimes, it is necessary to rehost a pack. This implies that you need to change the \<url\> element in the PDSC file. To
+ensure that the pack is found by the indexer of the keil.com server, follow this procedure:
+- Create a new version of the pack: update the PDSC file with the new URL ("url_B") and make sure to increment the version
+- Place a copy of this latest PDSC at url_B and url_A (the original URL).
+- Place a copy of the new pack in url_B (only)
+- Copy all packs from url_A to url_B
+- Inform Arm about the new URL by either
+  - updating the \<vendor\>.pidx with url_B for this pack \em or
+  - sending a link to the PDSC file via email if your company does not maintain a \<vendor\>.pidx
+
+\note
+- PDSC and pack versions need to be accessible from the same new URL
+- You must keep url_A alive as is. But there is no need to maintain/update url_A going forward otherwise users with an old
+  PDSC file will no longer find the pack versions.
 */

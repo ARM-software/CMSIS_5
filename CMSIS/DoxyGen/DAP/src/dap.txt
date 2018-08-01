@@ -76,7 +76,7 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
 /** 
 \page dap_revisionHistory Revision History of CMSIS-DAP
 
-<table>
+<table class="cmtable" summary="Revision History">
     <tr>
       <th>Version</th>
       <th>Description</th>
@@ -86,7 +86,7 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
       <td>
          Changed: Communication via WinUSB to achieve high-speed transfer rates\n
          Added: Streaming SWO via separate \ref WinUSB "WinUSB" endpoint\n
-		 Added: \ref DAP_SWO_Transport extended with transport mode 2 - Send trace data via separate \ref WinUSB "WinUSB" endpoint 
+     Added: \ref DAP_SWO_Transport extended with transport mode 2 - Send trace data via separate \ref WinUSB "WinUSB" endpoint 
       </td>
     </tr>
     <tr>

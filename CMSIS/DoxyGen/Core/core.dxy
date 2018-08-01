@@ -38,7 +38,7 @@ PROJECT_NAME           = "CMSIS-Core (Cortex-M)"
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "Version 5.1.1"
+PROJECT_NUMBER         = "Version 5.1.2"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -754,7 +754,7 @@ INPUT                  = src/Overview.txt \
                          src/UsingTrustZone.txt \
                          src/Template.txt \
                          src/MISRA.txt \
-						 src/Ref_VersionControl.txt \
+                         src/Ref_VersionControl.txt \
                          src/Ref_CompilerControl.txt \
                          src/Ref_Peripheral.txt \
                          src/Ref_SystemAndClock.txt \
@@ -763,7 +763,7 @@ INPUT                  = src/Overview.txt \
                          src/Ref_cmInstr.txt \
                          src/Ref_cm4_simd.txt \
                          src/Ref_FPU.txt \
-						 src/Ref_MPU.txt \
+                         src/Ref_MPU.txt \
                          src/Ref_Systick.txt \
                          src/Ref_Debug.txt \
                          src/Ref_Trustzone.txt \

@@ -6,14 +6,8 @@
 RTX5 interfaces to the <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/index.html" target="_blank"><b>Event Recorder</b></a> 
 to provide event information which helps you to understand and analyze the operation.
 
-To use the Event Recorder together with RTX5, it is required to create an image that generates event information. The steps are:
-  - <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/UseDebugViews.html#Add_Event_Recorder" target="_blank"><b>Add Event Recorder</b></a>: Select in the RTE management dialog the software component <b>Compiler:Event Recorder</b>.
-  - <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/UseDebugViews.html#Debug_Variants" target="_blank"><b>Select Debug Variant</b></a>: Select in the RTE management dialog the \b Source variant for the software component <b>CMSIS:RTOS2 (API):Keil RTX5</b>.
-  - <a href="http://www.keil.com/pack/doc/compiler/EventRecorder/html/group__EventRecorder__Setup.htm" target="_blank"><b>Add Initialization Code</b></a>: Call the function <b>EventRecorderInitialize</b> in your application code.
-  - Build the application code and download it to the debug hardware.
-  
-Once the target application generates event information, it can be viewed in the µVision debugger using the \b Event
- \b Recorder.
+To use the Event Recorder together with RTX5, it is required to create an image that generates event information. 
+The steps are described under \ref cre_rtx_proj_er.
 
 @{
 */
@@ -141,9 +135,9 @@ The event \b KernelInitialize is generated when the function \ref osKernelInitia
 */
 
 /**
-\fn void EvrRtxKernelInitializeCompleted (void)
+\fn void EvrRtxKernelInitialized (void)
 \details
-The event \b KernelInitializeCompleted is generated when the function \ref osKernelInitialize successfully initializes the RTOS kernel.
+The event \b KernelInitialized is generated when the function \ref osKernelInitialize successfully initializes the RTOS kernel.
 */
 
 /**
@@ -359,7 +353,7 @@ In case when \ref osThreadAttr_t "thread attributes" are provided in the API cal
 */
 
 /**
-\fn void EvrRtxThreadCreated (osThreadId_t thread_id, uint32_t thread_addr)
+\fn void EvrRtxThreadCreated (osThreadId_t thread_id, uint32_t thread_addr, const char *name)
 \details
 The event \b ThreadCreated is generated when the function \ref osThreadNew successfully creates a thread object.
 
@@ -1346,12 +1340,13 @@ The event \b SemaphoreAcquireTimeout is generated when wait for semaphore to bec
 */
 
 /**
-\fn void EvrRtxSemaphoreAcquired (osSemaphoreId_t semaphore_id)
+\fn void EvrRtxSemaphoreAcquired (osSemaphoreId_t semaphore_id, uint32_t tokens)
 \details
 The event \b SemaphoreAcquired is generated when the function \ref osSemaphoreAcquire successfully acquires the semaphore token.
 
 \b Value in the Event Recorder shows:
   - \b semaphore_id : semaphore ID.
+  - \b tokens : available tokens.
 */
 
 /**
@@ -1373,12 +1368,13 @@ The event \b SemaphoreRelease is generated when the function \ref osSemaphoreRel
 */
 
 /**
-\fn void EvrRtxSemaphoreReleased (osSemaphoreId_t semaphore_id)
+\fn void EvrRtxSemaphoreReleased (osSemaphoreId_t semaphore_id, uint32_t tokens)
 \details
 The event \b SemaphoreReleased is generated when the function \ref osSemaphoreRelease successfully releases the semaphore token.
 
 \b Value in the Event Recorder shows:
   - \b semaphore_id : semaphore ID.
+  - \b tokens : available tokens.
 */
 
 /**

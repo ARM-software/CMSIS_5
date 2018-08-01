@@ -1,80 +1,132 @@
 #include "Driver_I2C.h"
-#include "cmsis_os.h"                   // ARM::CMSIS:RTOS:Keil RTX
-#include <string.h>
  
-/* I2C Driver */
-extern ARM_DRIVER_I2C Driver_I2C0;
-static ARM_DRIVER_I2C * I2Cdrv = &Driver_I2C0;
+#define EEPROM_I2C_ADDR       0x51      /* EEPROM I2C address */
  
+/* I2C driver instance */
+extern ARM_DRIVER_I2C            Driver_I2C0;
+static ARM_DRIVER_I2C *I2Cdrv = &Driver_I2C0;
  
-#ifndef EEPROM_I2C_PORT
-#define EEPROM_I2C_PORT       0         /* I2C Port number                    */
-#endif
+static volatile uint32_t I2C_Event;
  
-#define EEPROM_I2C_ADDR       0x51      /* 24LC128 EEPROM I2C address         */
+/* I2C Signal Event function callback */
+void I2C_SignalEvent (uint32_t event) {
  
-#define EEPROM_MAX_ADDR       16384     /* Max memory locations available     */
-#define EEPROM_MAX_WRITE      16        /* Max bytes to write in one step     */
+  /* Save received events */
+  I2C_Event |= event;
  
-#define A_WR                  0         /* Master will write to the I2C       */
-#define A_RD                  1         /* Master will read from the I2C      */
+  /* Optionally, user can define specific actions for an event */
  
-static uint8_t DeviceAddr;
-static uint8_t wr_buf[EEPROM_MAX_WRITE + 2];
+  if (event & ARM_I2C_EVENT_TRANSFER_INCOMPLETE) {
+    /* Less data was transferred than requested */
+  }
  
-int32_t EEPROM_WriteBuf (uint16_t addr, const uint8_t *buf, uint32_t len) {
+  if (event & ARM_I2C_EVENT_TRANSFER_DONE) {
+    /* Transfer or receive is finished */
+  }
  
-  wr_buf[0] = (uint8_t)(addr >> 8);
-  wr_buf[1] = (uint8_t)(addr & 0xFF);
+  if (event & ARM_I2C_EVENT_ADDRESS_NACK) {
+    /* Slave address was not acknowledged */
+  }
  
-  memcpy (&wr_buf[2], &buf[0], len);
+  if (event & ARM_I2C_EVENT_ARBITRATION_LOST) {
+    /* Master lost bus arbitration */
+  }
  
-  I2Cdrv->MasterTransmit (DeviceAddr, wr_buf, len + 2, false);
-  while (I2Cdrv->GetStatus().busy);
-  if (I2Cdrv->GetDataCount () != (len + 2)) return -1;
-  /* Acknowledge polling */
+  if (event & ARM_I2C_EVENT_BUS_ERROR) {
+    /* Invalid start/stop position detected */
+  }
  
-  do {
-    I2Cdrv->MasterReceive (DeviceAddr, &wr_buf[0], 1, false);
-    while (I2Cdrv->GetStatus().busy);
-  } while (I2Cdrv->GetDataCount () < 0);
+  if (event & ARM_I2C_EVENT_BUS_CLEAR) {
+    /* Bus clear operation completed */
+  }
+ 
+  if (event & ARM_I2C_EVENT_GENERAL_CALL) {
+    /* Slave was addressed with a general call address */
+  }
+ 
+  if (event & ARM_I2C_EVENT_SLAVE_RECEIVE) {
+    /* Slave addressed as receiver but SlaveReceive operation is not started */
+  }
+ 
+  if (event & ARM_I2C_EVENT_SLAVE_TRANSMIT) {
+    /* Slave addressed as transmitter but SlaveTransmit operation is not started */
+  }
+}
+
+/* Read I2C connected EEPROM (event driven example) */
+int32_t EEPROM_Read_Event (uint16_t addr, uint8_t *buf, uint32_t len) {
+  uint8_t a[2];
+ 
+  a[0] = (uint8_t)(addr >> 8);
+  a[1] = (uint8_t)(addr & 0xFF);
+
+  /* Clear event flags before new transfer */
+  I2C_Event = 0U;
+ 
+  I2Cdrv->MasterTransmit (EEPROM_I2C_ADDR, a, 2, true);
+ 
+  /* Wait until transfer completed */
+  while ((I2C_Event & ARM_I2C_EVENT_TRANSFER_DONE) == 0U);
+  /* Check if all data transferred */
+  if ((I2C_Event & ARM_I2C_EVENT_TRANSFER_INCOMPLETE) != 0U) return -1;
+ 
+  /* Clear event flags before new transfer */
+  I2C_Event = 0U;
+ 
+  I2Cdrv->MasterReceive (EEPROM_I2C_ADDR, buf, len, false);
+ 
+  /* Wait until transfer completed */
+  while ((I2C_Event & ARM_I2C_EVENT_TRANSFER_DONE) == 0U);
+  /* Check if all data transferred */
+  if ((I2C_Event & ARM_I2C_EVENT_TRANSFER_INCOMPLETE) != 0U) return -1;
  
   return 0;
 }
- 
-int32_t EEPROM_ReadBuf (uint16_t addr, uint8_t *buf, uint32_t len) {
+
+/* Read I2C connected EEPROM (pooling example) */
+int32_t EEPROM_Read_Pool (uint16_t addr, uint8_t *buf, uint32_t len) {
   uint8_t a[2];
  
   a[0] = (uint8_t)(addr >> 8);
   a[1] = (uint8_t)(addr & 0xFF);
  
-  I2Cdrv->MasterTransmit (DeviceAddr, a, 2, true);
+  I2Cdrv->MasterTransmit (EEPROM_I2C_ADDR, a, 2, true);
+ 
+  /* Wait until transfer completed */
   while (I2Cdrv->GetStatus().busy);
-  I2Cdrv->MasterReceive (DeviceAddr, buf, len, false);
+  /* Check if all data transferred */
+  if (I2Cdrv->GetDataCount () != len) return -1;
+ 
+  I2Cdrv->MasterReceive (EEPROM_I2C_ADDR, buf, len, false);
+ 
+  /* Wait until transfer completed */
   while (I2Cdrv->GetStatus().busy);
+  /* Check if all data transferred */
   if (I2Cdrv->GetDataCount () != len) return -1;
  
   return 0;
 }
  
-int32_t EEPROM_Initialize (void) {
+/* Initialize I2C connected EEPROM */
+int32_t EEPROM_Initialize (bool pooling) {
+  int32_t status;
   uint8_t val;
  
-  I2Cdrv->Initialize   (NULL);
+  if (pooling == true) {
+    I2Cdrv->Initialize (NULL);
+  } else {
+    I2Cdrv->Initialize (I2C_SignalEvent);
+  }
   I2Cdrv->PowerControl (ARM_POWER_FULL);
   I2Cdrv->Control      (ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_FAST);
   I2Cdrv->Control      (ARM_I2C_BUS_CLEAR, 0);
  
-  /* Init 24LC128 EEPROM device */
-  DeviceAddr = EEPROM_I2C_ADDR;
- 
-  /* Read min and max address */
-  if (EEPROM_ReadBuf (0x00, &val, 1) == 0) {
-    return (EEPROM_ReadBuf (EEPROM_MAX_ADDR-1, &val, 1));
+  /* Check if EEPROM can be accessed */
+  if (pooling == true) {
+    status = EEPROM_Read_Pool (0x00, &val, 1);
+  } else {
+    status = EEPROM_Read_Event (0x00, &val, 1);
   }
-  return -1;
-}
-  
-uint32_t EEPROM_GetSize (void) {
-  return EEPROM_MAX_ADDR;
+ 
+  return (status);
 }

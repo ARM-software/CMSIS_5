@@ -84,7 +84,27 @@ extern    "C"
                                        q15_t * bufferA, //buffer space for input
                                        q7_t * bufferB   //buffer space for output
         );
-
+    void      arm_convolve_HWC_q15_nonsquare_ref(const q15_t * Im_in,
+                                                      const uint16_t dim_im_in_x,
+                                                      const uint16_t dim_im_in_y,
+                                                      const uint16_t ch_im_in,
+                                                      const q15_t * wt,
+                                                      const uint16_t ch_im_out,
+                                                      const uint16_t dim_kernel_x,
+                                                      const uint16_t dim_kernel_y,
+                                                      const uint16_t padding_x,
+                                                      const uint16_t padding_y,
+                                                      const uint16_t stride_x,
+                                                      const uint16_t stride_y,
+                                                      const q15_t * bias,
+                                                      const uint16_t bias_shift,
+                                                      const uint16_t out_shift,
+                                                      q15_t * Im_out,
+                                                      const uint16_t dim_im_out_x,
+                                                      const uint16_t dim_im_out_y, 
+                                                      q15_t * bufferA, 
+                                                      q7_t * bufferB);
+													  
     void      arm_depthwise_separable_conv_HWC_q7_ref(const q7_t * Im_in,   // input image
                                                       const uint16_t dim_im_in, // input image dimention
                                                       const uint16_t ch_im_in,  // number of input image channels
@@ -218,6 +238,10 @@ extern    "C"
     void      arm_relu_q7_ref(q7_t * data, uint16_t size);
 
     void      arm_relu_q15_ref(q15_t * data, uint16_t size);
+
+    void      arm_nn_mult_q7_ref(q7_t * pSrcA, q7_t * pSrcB, q7_t * pDst, const uint16_t out_shift, uint32_t blockSize);
+
+    void      arm_nn_mult_q15_ref(q15_t * pSrcA, q15_t * pSrcB, q15_t * pDst, const uint16_t out_shift, uint32_t blockSize);
 
 #ifdef __cplusplus
 }

@@ -89,6 +89,7 @@
 
       <interrupt>
         <name>TIMER0</name>
+        <description>Timer 0 interrupt</description>
         <value>0</value>
       </interrupt>
 
@@ -751,7 +752,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>4</dimIncrement>
-          <dimIndex>0,1,2,3</dimIndex>
           <name>RELOAD[%s]</name>
           <description>The Reload Register stores the Value the COUNT Register gets reloaded on a when a condition was met.</description>
           <addressOffset>0x50</addressOffset>
@@ -769,6 +769,7 @@
       <baseAddress>0x40010100</baseAddress>
       <interrupt>
         <name>TIMER1</name>
+        <description>Timer 2 interrupt</description>
         <value>4</value>
       </interrupt>
     </peripheral>
@@ -779,6 +780,7 @@
       <baseAddress>0x40010200</baseAddress>
       <interrupt>
         <name>TIMER2</name>
+        <description>Timer 2 interrupt</description>
         <value>6</value>
       </interrupt>
     </peripheral>

@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>ARMCM3</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.2.1-dev3</PackID>
+          <PackID>ARM.CMSIS.5.3.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(10000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -585,6 +585,36 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\PoolingFunctions\arm_pool_q7_HWC.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q15_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_nn_mult_ref.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -618,7 +648,7 @@
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.2.1-dev3</PackID>
+          <PackID>ARM.CMSIS.5.3.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1187,6 +1217,36 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\PoolingFunctions\arm_pool_q7_HWC.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q15_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_nn_mult_ref.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1220,7 +1280,7 @@
         <TargetCommonOption>
           <Device>ARMCM7_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.2.1-dev3</PackID>
+          <PackID>ARM.CMSIS.5.3.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1789,6 +1849,36 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\PoolingFunctions\arm_pool_q7_HWC.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q15_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_nn_mult_ref.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1822,7 +1912,7 @@
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.2.1-dev3</PackID>
+          <PackID>ARM.CMSIS.5.3.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -2391,6 +2481,36 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\PoolingFunctions\arm_pool_q7_HWC.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q15_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_nn_mult_ref.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2424,7 +2544,7 @@
         <TargetCommonOption>
           <Device>ARMCM7_SP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.2.1-dev3</PackID>
+          <PackID>ARM.CMSIS.5.3.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M7") FPU3(SFPU) CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -2993,6 +3113,36 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\PoolingFunctions\arm_pool_q7_HWC.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q15_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_nn_mult_ref.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3026,7 +3176,7 @@
         <TargetCommonOption>
           <Device>ARMCM4_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.2.1-dev3</PackID>
+          <PackID>ARM.CMSIS.5.3.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -3595,6 +3745,36 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\PoolingFunctions\arm_pool_q7_HWC.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_ref_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_convolve_HWC_q15_ref_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\ConvolutionFunctions\arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\NNSupportFunctions\arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mult_ref.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ref_Implementations\arm_nn_mult_ref.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3716,7 +3896,7 @@
       <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\ARM\ARMCM3\Source\ARM\startup_ARMCM3.s" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM3\startup_ARMCM3.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM3 CMSIS"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.2.1-dev3"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.3.0"/>
         <targetInfos>
           <targetInfo name="ARMCM3"/>
         </targetInfos>
@@ -3724,7 +3904,7 @@
       <file attr="config" category="sourceC" name="Device\ARM\ARMCM3\Source\system_ARMCM3.c" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM3\system_ARMCM3.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM3 CMSIS"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.2.1-dev3"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.3.0"/>
         <targetInfos>
           <targetInfo name="ARMCM3"/>
         </targetInfos>
@@ -3744,7 +3924,7 @@
       <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\ARM\ARMCM4\Source\ARM\startup_ARMCM4.s" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM4_FP\startup_ARMCM4.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM4 CMSIS"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.2.1-dev3"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.3.0"/>
         <targetInfos>
           <targetInfo name="ARMCM4_FP"/>
           <targetInfo name="ARMCM4_FP_truncate"/>
@@ -3754,7 +3934,7 @@
       <file attr="config" category="sourceC" name="Device\ARM\ARMCM4\Source\system_ARMCM4.c" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM4_FP\system_ARMCM4.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM4 CMSIS"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.2.1-dev3"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.3.0"/>
         <targetInfos>
           <targetInfo name="ARMCM4_FP"/>
           <targetInfo name="ARMCM4_FP_truncate"/>
@@ -3764,7 +3944,7 @@
       <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\ARM\ARMCM7\Source\ARM\startup_ARMCM7.s" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM7_SP\startup_ARMCM7.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM7 CMSIS"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.2.1-dev3"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.3.0"/>
         <targetInfos>
           <targetInfo name="ARMCM7_SP"/>
           <targetInfo name="ARMCM7b_SP"/>
@@ -3773,7 +3953,7 @@
       <file attr="config" category="sourceC" name="Device\ARM\ARMCM7\Source\system_ARMCM7.c" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM7_SP\system_ARMCM7.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1" condition="ARMCM7 CMSIS"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.2.1-dev3"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.3.0"/>
         <targetInfos>
           <targetInfo name="ARMCM7_SP"/>
           <targetInfo name="ARMCM7b_SP"/>

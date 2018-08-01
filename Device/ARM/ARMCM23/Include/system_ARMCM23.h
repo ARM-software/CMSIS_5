@@ -1,9 +1,9 @@
 /**************************************************************************//**
  * @file     system_ARMCM23.h
  * @brief    CMSIS Device System Header File for
- *           ARMCM23 Device Series
- * @version  V5.00
- * @date     10. January 2018
+ *           ARMCM23 Device
+ * @version  V5.3.1
+ * @date     09. July 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.

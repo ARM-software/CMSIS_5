@@ -1,9 +1,9 @@
 /**************************************************************************//**
  * @file     system_ARMCM0plus.c
  * @brief    CMSIS Device System Source File for
- *           ARMCM0plus Device Series
- * @version  V5.00
- * @date     10. January 2018
+ *           ARMCM0plus Device
+ * @version  V5.3.1
+ * @date     09. July 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -28,9 +28,9 @@
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
-#define  XTAL            ( 5000000UL)      /* Oscillator frequency */
+#define  XTAL            (50000000UL)     /* Oscillator frequency */
 
-#define  SYSTEM_CLOCK    (5U * XTAL)
+#define  SYSTEM_CLOCK    (XTAL / 2U)
 
 
 /*----------------------------------------------------------------------------
@@ -43,7 +43,7 @@
 /*----------------------------------------------------------------------------
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
-uint32_t SystemCoreClock = SYSTEM_CLOCK;
+uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
 
 
 /*----------------------------------------------------------------------------

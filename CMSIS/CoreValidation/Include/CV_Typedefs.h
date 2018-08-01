@@ -1,8 +1,8 @@
 /*-----------------------------------------------------------------------------
- *      Name:         CV_Typedefs.h 
+ *      Name:         CV_Typedefs.h
  *      Purpose:      Test framework filetypes and structures description
  *----------------------------------------------------------------------------
- *      Copyright (c) 2017 ARM Limited. All rights reserved.
+ *      Copyright (c) 2017 - 2018 Arm Limited. All rights reserved.
  *----------------------------------------------------------------------------*/
 #ifndef __TYPEDEFS_H__
 #define __TYPEDEFS_H__
@@ -45,14 +45,14 @@ static const int PATH_DELIMITER = '\\';
 #endif
 
 //lint -emacro(9016,__FILENAME__) allow pointer arithmetic for truncating filename
-//lint -emacro(613,__FILENAME__) null pointer is checked 
+//lint -emacro(613,__FILENAME__) null pointer is checked
 #define __FILENAME__ ((strrchr(__FILE__, PATH_DELIMITER) != NULL) ? (strrchr(__FILE__, PATH_DELIMITER) + 1) : __FILE__)
-  
+
 /* Assertions and test results */
 #define SET_RESULT(res, desc) (void)__set_result(__FILENAME__, __LINE__, (res), (desc));
 
 //lint -emacro(9031,ASSERT_TRUE) allow boolean condition as parameter
-//lint -emacro(613,ASSERT_TRUE) null pointer is checked 
-#define ASSERT_TRUE(cond) (void)__assert_true (__FILENAME__, __LINE__, (cond) ? 1U : 0U);
+//lint -emacro(613,ASSERT_TRUE) null pointer is checked
+#define ASSERT_TRUE(cond) (void)__assert_true (__FILENAME__, __LINE__, (cond) ? 1U : 0U)
 
 #endif /* __TYPEDEFS_H__ */

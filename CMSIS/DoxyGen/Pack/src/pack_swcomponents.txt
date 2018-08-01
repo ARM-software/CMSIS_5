@@ -57,13 +57,13 @@ PACK.xsd file into the working directory):
       \endverbatim
     - It is important to understand how the \<url\> element works. If you specify a URL, for example
       <a href="http://www.keil.com/pack/" target="_blank">http://www.keil.com/pack</a>,
-      then you have to make the PDSC file and the corresponding PACK file(s) available for download at that exact location.
+      then you have to make the PDSC file and the corresponding Pack file(s) available for download at that exact location.
       The naming of the files follow the standard naming rules. For example, the ARM::CMSIS PDSC and Pack files are available
       here:\n
       <a href="http://www.keil.com/pack/ARM.CMSIS.pdsc" target="_blank">http://www.keil.com/pack/ARM.CMSIS.pdsc</a> and \n
       <a href="http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.3.0.pack</a> and \n
       <a href="http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack" target="_blank">http://www.keil.com/pack/ARM.CMSIS.4.2.0.pack</a> and ... \n
-      At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned PACK files,
+      At the specified location, you need to have one (unversioned) PDSC file and can have multiple versioned Pack files,
       but at least the latest one.
 - \ref element_package "<supportContact>" may provide an email address or web page URL for Pack specific questions/problems
 - \ref element_package "<license>" links to an optional license file that will be shown during the installation of the Pack.
@@ -166,7 +166,7 @@ Optionally, a software component may have additional attributes:
   - Component Vendor (\c Cvendor): the supplier of the software component.
 
 The \c Cclass, \c Cgroup, \c Csub, \c Cvariant and \c Cversion attributes are used together with the vendor specified by the
-PACK to identify a component. A component vendor must ensure that the combination \c Cclass, \c Cgroup, \c Csub and
+Pack to identify a component. A component vendor must ensure that the combination \c Cclass, \c Cgroup, \c Csub and
 \c Cversion is unique and not used by multiple components within the same Pack.
 
 For a list of established Cclasses, refer to \ref pack_Cclass.
@@ -190,7 +190,7 @@ Software Component Files
 ------------------------
 Each software component consists of a certain number of files. Each file has at least the following attributes:
 - \c name: File path, file name, and file extension in the format path/name.extension. The file path is relative to the root
-  directory of the PACK. 
+  directory of the Pack. 
 - \c category: Defines the purpose of the file. Select the predefined value as listed in the table
   \ref FileCategoryEnum "File Categories".
 

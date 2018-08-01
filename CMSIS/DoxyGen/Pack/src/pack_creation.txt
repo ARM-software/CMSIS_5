@@ -37,28 +37,38 @@ It provides a management process and supports a tool independent distribution fo
 
 \section PackFilenames Pack Conventions
 
-All files that belong to a \ref cp_SWComponents "Software Pack" are compressed into a *.PACK file using a standard
+A \ref cp_SWComponents "Software Pack" is a collection of files located in directories that are archived in a file with the extension *.pack using the standard
 <a href="http://en.wikipedia.org/wiki/Zip_%28file_format%29" target="_blank">ZIP file format</a>.
-The content of each \ref cp_SWComponents "Software Pack" is described in the Pack Description (*.PDSC) file that is part of
-each \b Pack. Refer to \ref packFormat for more information. 
+The Pack Description file (PDSC) with the file extension *.pdsc contains the \ref packFormat "meta information", describing the content of a pack based on 
+<a href="https://en.wikipedia.org/wiki/XML" target="_blank">XML</a>. The PDSC file must be:
+- included in the \ref cp_SWComponents "Software Pack"
+- located in the base folder of the archive
+- compliant with the \ref cp_SWComponents "Software Pack" file \ref pack_filename "naming convention"
+
+\note
+- The <em>base folder</em> is defined to be the root folder './' of a zip archive and it is imperative that the whole
+  \ref cp_SWComponents "Software Pack" only contains a single PDSC file.
+- Future tools shall support this case: if the PDSC file is located in an immediate subdirectory, then the subdirectory
+  becomes the base folder. The \ref cp_SWComponents "Software Pack" is installed as if the subdirectory does not exist. All
+  files and directories located in the root folder are ignored and do not get installed.
 
 \subsection pack_filename Pack File Name
 
-A \ref cp_SWComponents "Software Pack" must have a unique filename following this naming convention:
+A \ref cp_SWComponents "Software Pack" must have a unique filename. Therefore it is constructed from vendor, packname and version and the file extension *.pack.
+
 <b>\<vendor\>.\<name\>.\<version\>.pack</b>.
 
-\b Where:
- - <b>\<vendor\></b> is name of the supplier or vendor of the \ref cp_SWComponents "Software Pack".
- - <b>\<name\></b> is name of the \ref cp_SWComponents "Software Pack". It is the vendor's responsibility to ensure unique package names.
- - <b>\<version\></b>specifies the version number of the \ref cp_SWComponents "Software Pack".
+Where:
+ - <b>\<vendor\></b> is the name of the supplier or vendor of the \ref cp_SWComponents "Software Pack".
+ - <b>\<name\></b> is the name of the \ref cp_SWComponents "Software Pack". All packs that are published by a vendor must have a unique packname.
+ - <b>\<release version="X.Y.Z"\></b>specifies the \ref VersionType "version number" of the release for the \ref cp_SWComponents "Software Pack".
  - <b>.pack</b> is the file extension identifying a \ref cp_SWComponents "Software Pack".
 
 \note
-- The XML elements \elem{vendor}, \elem{name}, and \elem{version} are declared in the \ref Filenames "PDSC" file.
+- The XML elements \elem{vendor}, \elem{name}, and the version attribute of the \elem{release} are specified in the \ref Filenames "PDSC" file. 
+  PDSC, Pack filenames are case sensitive and need to match exactly.
 - \elem{vendor} and \elem{name} \em must \em not contain spaces.
-
-The PDSC file needs to reside at the top-level of the Pack file, using it as the root directory for all file references.
-
+- The PDSC file needs to reside in the base folder of the Pack. All file references are relative to the location of the PDSC file.
 
 \subsection pack_Cclass Software Component Cclasses
 
@@ -99,7 +109,7 @@ The following image shows the basic steps that are required to create a Software
 -# <b>Organize files:</b> Use directories to separate the content of the Pack.
 -# <b>Create PDSC file:</b> The XML based PDSC file can be created using any text editor. Editors that can
    validate XML code against a schema file help to find bugs early in the Pack development stage.
--# <b>Generate PACK:</b> Any compression tool supporting the ZIP format can be used to create a PACK file. \ref packChk is
+-# <b>Generate Pack:</b> Any compression tool supporting the ZIP format can be used to create a Pack file. \ref packChk is
    helpful for the validation of the contents of a Pack.
 
 The following pages will show how to create a Software Pack from scratch. The page \ref cp_SWComponents will start with a simple

@@ -749,10 +749,9 @@ WARN_LOGFILE           =
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = "src/Change Log.txt" \
-                         . \
-                         ../../DSP/Examples/ARM \
-                         ../../DSP/Include/ \
+INPUT                  = ./src/history.txt       \
+                         ../../DSP/Examples/ARM  \
+                         ../../DSP/Include/      \
                          ../../DSP/Source/
 
 # This tag can be used to specify the character encoding of the source files

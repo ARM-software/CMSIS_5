@@ -1,36 +1,41 @@
 #include "Driver_I2C.h"
  
-// I2C driver instance
-extern ARM_DRIVER_I2C Driver_I2C0; 
-static ARM_DRIVER_I2C *i2cDev = &Driver_I2C0;
+/* I2C driver instance */
+extern ARM_DRIVER_I2C            Driver_I2C0; 
+static ARM_DRIVER_I2C *I2Cdrv = &Driver_I2C0;
  
-static volatile uint32_t event = 0;
+static volatile uint32_t I2C_Event;
  
-static void I2C_DrvEvent (uint32_t e) {
-    event |= e;
+/* I2C Signal Event function callback */
+static void I2C_SignalEvent (uint32_t event) {
+  I2C_Event |= event;
 }
  
 int main (void) {
-    uint8_t cnt = 0;
+  uint8_t cnt = 0;
  
-    /* Initialize I2C peripheral */
-    i2cDev->Initialize(I2C_DrvEvent);
+  /* Initialize I2C peripheral */
+  I2Cdrv->Initialize(I2C_SignalEvent);
  
-    /* Power-on I2C peripheral */
-    i2cDev->PowerControl(ARM_POWER_FULL);
+  /* Power-on I2C peripheral */
+  I2Cdrv->PowerControl(ARM_POWER_FULL);
  
-    /* Configure I2C bus*/
-    i2cDev->Control(ARM_I2C_OWN_ADDRESS, 0x78);
+  /* Configure I2C bus */
+  I2Cdrv->Control(ARM_I2C_OWN_ADDRESS, 0x78);
  
-    while (1) {
-        /* Receive chunk */
-        i2cDev->SlaveReceive(&cnt, 1);
-        while ((event & ARM_event_TRANSFER_DONE) == 0);
-        event &= ~ARM_event_TRANSFER_DONE;
+  I2C_Event = 0;
+
+  while (1) {
+    /* Receive chunk */
+    I2Cdrv->SlaveReceive(&cnt, 1);
+    while ((I2C_Event & ARM_I2C_EVENT_TRANSFER_DONE) == 0);
+    /* Clear transfer done flag */
+    I2C_Event &= ~ARM_I2C_EVENT_TRANSFER_DONE;
  
-        /* Transmit chunk back */
-        i2cDev->SlaveTransmit(&cnt, 1);
-        while ((event & ARM_event_TRANSFER_DONE) == 0);
-        event &= ~ARM_event_TRANSFER_DONE;
-    }
+    /* Transmit chunk back */
+    I2Cdrv->SlaveTransmit(&cnt, 1);
+    while ((I2C_Event & ARM_I2C_EVENT_TRANSFER_DONE) == 0);
+    /* Clear transfer done flag */
+    I2C_Event &= ~ARM_I2C_EVENT_TRANSFER_DONE;
+  }
 }

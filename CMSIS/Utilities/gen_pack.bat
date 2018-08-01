@@ -47,6 +47,7 @@ XCOPY /Q /S /Y ..\..\Device\*.* %RELEASE_PATH%\Device\*.*
 
 :: Copy CMSIS folder 
 :: -- Core files 
+XCOPY /Q /S /Y ..\..\CMSIS\Core\Include\*.* %RELEASE_PATH%\CMSIS\Core\Include\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Core\Include\*.* %RELEASE_PATH%\CMSIS\Include\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Core\Template\ARMv8-M\*.* %RELEASE_PATH%\CMSIS\Core\Template\ARMv8-M\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Core_A\Include\*.* %RELEASE_PATH%\CMSIS\Core_A\Include\*.*
@@ -59,6 +60,10 @@ XCOPY /Q /S /Y ..\..\CMSIS\DAP\*.* %RELEASE_PATH%\CMSIS\DAP\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Driver\*.* %RELEASE_PATH%\CMSIS\Driver\*.*
 
 :: -- DSP files 
+XCOPY /Q /S /Y ..\..\CMSIS\DSP\Include\*.* %RELEASE_PATH%\CMSIS\DSP\Include\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\DSP\Source\*.*  %RELEASE_PATH%\CMSIS\DSP\Source\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\DSP\Projects\*.*  %RELEASE_PATH%\CMSIS\DSP\Projects\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\DSP\Examples\*.*  %RELEASE_PATH%\CMSIS\DSP\Examples\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Include\*.* %RELEASE_PATH%\CMSIS\Include\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Source\*.*  %RELEASE_PATH%\CMSIS\DSP_Lib\Source\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Projects\*.*  %RELEASE_PATH%\CMSIS\DSP_Lib\Source\*.*
@@ -67,6 +72,7 @@ XCOPY /Q /S /Y ..\..\CMSIS\DSP\Examples\*.*  %RELEASE_PATH%\CMSIS\DSP_Lib\Exampl
 :: -- DSP libraries
 XCOPY /Q /S /Y ..\..\CMSIS\Lib\ARM\*.lib %RELEASE_PATH%\CMSIS\Lib\ARM\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Lib\GCC\*.a   %RELEASE_PATH%\CMSIS\Lib\GCC\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Lib\IAR\*.a   %RELEASE_PATH%\CMSIS\Lib\IAR\*.*
 
 :: -- NN files 
 XCOPY /Q /S /Y ..\..\CMSIS\NN\*.* %RELEASE_PATH%\CMSIS\NN\*.*
@@ -91,6 +97,8 @@ XCOPY /Q /S /Y ..\..\CMSIS\Utilities\ARM_Example.* %RELEASE_PATH%\CMSIS\SVD\*.*
 :: -- Utilities files 
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\CMSIS-SVD.xsd       %RELEASE_PATH%\CMSIS\Utilities\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PACK.xsd            %RELEASE_PATH%\CMSIS\Utilities\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\Utilities\PackIndex.xsd       %RELEASE_PATH%\CMSIS\Utilities\*.*
+
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Win32\*.*           %RELEASE_PATH%\CMSIS\Utilities\Win32\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Linux-gcc-4.4.4\*.* %RELEASE_PATH%\CMSIS\Utilities\Linux-gcc-4.4.4\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\Utilities\Linux-gcc-4.8.3\*.* %RELEASE_PATH%\CMSIS\Utilities\Linux-gcc-4.8.3\*.*

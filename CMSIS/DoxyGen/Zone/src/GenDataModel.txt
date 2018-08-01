@@ -35,7 +35,7 @@ For detailed descriptions of the data model elements please refere to the
 - <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmZone.html" target="_blank">FmZone</a>
 - <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmProcess.html" target="_blank">FmProcess</a>
 - <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmDevice.html" target="_blank">FmDevice</a>
-- <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmProcesor.html" target="_blank">FmProcesor</a>
+- <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmProcessor.html" target="_blank">FmProcesor</a>
 - <a href="../genmodel/com/arm/cmsis/zone/gen/data/FmBlock.html" target="_blank">FmBlock</a>
 
 \section GenDataModel_Examples Template Examples

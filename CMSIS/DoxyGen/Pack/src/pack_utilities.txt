@@ -31,8 +31,8 @@ CMSIS-Pack schema file \b Pack.xsd and the CMSIS-SVD schema file \b CMSIS-SVD.xs
 \page cp_ZIPTool ZIP Compression Tools
 
 Any ZIP software utility supporting the compression method
-<a href="http://en.wikipedia.org/wiki/DEFLATE" target="_blank">DEFLATE</a> can be used to create a PACK file. Simply, create
-the ZIP file and rename it to *.PACK.
+<a href="http://en.wikipedia.org/wiki/DEFLATE" target="_blank">DEFLATE</a> can be used to create a Pack file. Simply, create
+the ZIP file and rename it to *.pack.
 
 The compression tool <a href="http://www.7-zip.org/" target="_blank">7-Zip</a> supports command line calls and can be
 used in batch scripts like \ref cp_GeneratePack "gen_pack.bat" for automated Pack file creation (and verification

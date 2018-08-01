@@ -59,7 +59,7 @@ A development board is described by the following properties:
 
 \section element_boards /package/boards
 
-Grouping element for boards. No more than one such group can exist in a PACK. None is required.
+Grouping element for boards. No more than one such group can exist in a Pack. None is required.
 
 <table class="cmtable" summary="Element: Boards">
   <tr>
@@ -458,20 +458,20 @@ Two different picture types (\token{small} and \token{large}) can be specified f
   </tr>
   <tr>
     <td>small</td>
-    <td>Specifies the path to a small image. The path is relative to the PACK base directory.</td>
+    <td>Specifies the path to a small image. The path is relative to the Pack base directory.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>large</td>
-    <td>Specifies the path to a large image. The path is relative to the PACK base directory.</td>
+    <td>Specifies the path to a large image. The path is relative to the Pack base directory.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>public</td>
     <td>Set publishing permissions for the documentation. If \tagem{public} is \token{true}, then the vendor gives permission 
-        to extract the documentation from the pack and publish it on a web-page. Links to web pages are assumed to be public.
+        to extract the documentation from the Pack and publish it on a web-page. Links to web pages are assumed to be public.
         The default value is \token{false}.</td>
     <td>xs:boolean</td>
     <td>optional</td>

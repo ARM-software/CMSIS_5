@@ -1,0 +1,30 @@
+/**
+\page ChangeLog_pg  Revision History of CMSIS-NN
+
+<table class="cmtable" summary="Revision History">
+  <tr>
+    <th>Version</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>V1.1.0</td>
+    <td>
+      Added new math functions:<br>
+      <ul>
+        <li>arm_convolve_HWC_q7_basic_nonsquare</li>
+        <li>arm_convolve_HWC_q15_fast_nonsquare</li>
+        <li>arm_nn_mult_q7</li>
+        <li>arm_nn_mult_q15</li>
+      </ul>
+      Fixed minor issues.
+    </td>
+  </tr>
+  <tr>
+    <td>V1.0.0</td>
+    <td>
+      Initial version
+    </td>
+  </tr>
+</table>
+
+*/

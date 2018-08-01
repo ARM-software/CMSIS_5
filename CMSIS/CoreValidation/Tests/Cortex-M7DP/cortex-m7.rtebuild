@@ -11,5 +11,6 @@ config:
 source:
  - ../../Source/CV_CoreFunc.c
  - ../../Source/CV_CoreInstr.c
+ - ../../Source/CV_CoreSimd.c
  - ../../Source/CV_MPU_ARMv7.c
  

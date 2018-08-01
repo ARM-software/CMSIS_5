@@ -6,11 +6,11 @@
 is located in the directory <b>.\\CMSIS\\Utilities</b> of the <b>ARM::CMSIS</b> Pack.
 
 \b packChk.exe performs the following operations:
- - Reads the content of the specified *.PDSC file. The path to this *.PDSC file is considered as root directory of the Software Pack.
- - Verifies the existence of all files in the Software Pack that are referenced in the *.PDSC file.
+ - Reads the content of the specified *.pdsc file. The path to this *.pdsc file is considered as root directory of the Software Pack.
+ - Verifies the existence of all files in the Software Pack that are referenced in the *.pdsc file.
  - Checks for presence and correctness of mandatory elements such as \<vendor>, \<version>, etc.
  - Optionally, reads other PDSC files to resolve dependencies on \<apis>, \<boards>, and \<conditions>.
- - Optionally, checks all System View Description files (*.SVD) referenced in the *.PDSC file using SVDConv.exe. Refer to <a href="../../SVD/html/svd_validate_file_pg.html">SVD File Validation</a> for details.
+ - Optionally, checks all System View Description files (*.SVD) referenced in the *.pdsc file using SVDConv.exe. Refer to <a href="../../SVD/html/svd_validate_file_pg.html">SVD File Validation</a> for details.
  - Optionally, verifies the element \<url>.
  - Optionally, creates the standardized name of the Software Pack file for further processing in scripts.
  - Sets the exit status reflecting the validation result to: \n
@@ -46,14 +46,14 @@ Operation
   <tr>
     <td>-s</td>
     <td nowrap>Verify SVD files</td>	
-    <td>Each SVD file referenced in the *.PDSC file is <a href="../../SVD/html/svd_validate_file_pg.html"><b>validated</b></a> with \b SVDConv.exe.
+    <td>Each SVD file referenced in the *.pdsc file is <a href="../../SVD/html/svd_validate_file_pg.html"><b>validated</b></a> with \b SVDConv.exe.
 	With this option set, \b SVDConv.exe is invoked from the same directory as \b packChk.exe.
 	</td>
   </tr>
   <tr>
     <td>-u \<url></td>
     <td >Pack Server URL</td>	
-    <td>Verifies that the specified URL matches the \<url> element in the *.PDSC file.</td>
+    <td>Verifies that the specified URL matches the \<url> element in the *.pdsc file.</td>
   </tr>
   <tr>
     <td>-v</td>
@@ -170,7 +170,7 @@ Invocation Errors
   <td>The list of arguments is too long. Verify if you have used one argument twice.</td>
 </tr>
 <tr><td>M202</td> <td>ERROR</td> <td>No PDSC input file specified</td>
-  <td>Correct the command line. \b packChk.exe expects a *.PDSC file name as input.</td>
+  <td>Correct the command line. \b packChk.exe expects a *.pdsc file name as input.</td>
 </tr>
 <tr><td>M203</td> <td>ERROR</td> <td>Error reading PDSC file  \em 'PATH/FILENAME'!</td>
   <td>Verify the PDSC file for consistency. 
@@ -183,7 +183,7 @@ Invocation Errors
   <td>Check the disk space or your permissions. Correct the path name.</td>
 </tr>
 <tr><td>M206</td> <td>ERROR</td> <td>Multiple PDSC files found in package:  \em 'FILES'</td>
-  <td>Only one PDSC file is allowed in a package. Remove unnecessary PDSC files. The message lists all *.PDSC files found.</td>
+  <td>Only one PDSC file is allowed in a package. Remove unnecessary PDSC files. The message lists all *.pdsc files found.</td>
 </tr>
 <tr><td>M207</td> <td>ERROR</td> <td>PDSC file name mismatch! \n
                                                   Expected:  \em 'PDSC1.pdsc' \n
@@ -241,7 +241,7 @@ Validation Messages
   <td>Verify the consistency of the *.SVD file. Refer to <a href="../../SVD/html/svd_validate_file_pg.html">SVD File Validation</a>.</td>
 </tr>
 <tr><td>M308</td> <td>ERROR</td> <td>SVD file \em 'PATH' not found. Add the SVD file or correct the PDSC entry.</td>
-  <td>The *.SVD file was not found in the path specified in the message. Add the SVD file or correct the entry in the *.PDSC file.</td>
+  <td>The *.SVD file was not found in the path specified in the message. Add the SVD file or correct the entry in the *.pdsc file.</td>
 </tr>
 <tr><td>M309</td> <td>ERROR</td> <td>Cannot read file information: \em 'PATH'.</td>
   <td>Access to the file specified failed. Verify permissions and spelling.</td>

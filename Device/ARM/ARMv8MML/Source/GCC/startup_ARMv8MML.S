@@ -1,12 +1,12 @@
 /**************************************************************************//**
  * @file     startup_ARMv8MML.s
  * @brief    CMSIS Core Device Startup File for
- *           ARMv8MML Device Series
- * @version  V5.00
- * @date     02. March 2016
+ *           ARMv8MML Device
+ * @version  V5.3.1
+ * @date     09. July 2018
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -23,283 +23,272 @@
  * limitations under the License.
  */
 
-	.syntax	unified
-	.arch	armv7-m
+/*
+;//-------- <<< Use Configuration Wizard in Context Menu >>> ------------------
+*/
 
-	.section .stack
-	.align	3
-#ifdef __STACK_SIZE
-	.equ	Stack_Size, __STACK_SIZE
-#else
-	.equ	Stack_Size, 0x00000400
-#endif
-	.globl	__StackTop
-	.globl	__StackLimit
+                .syntax  unified
+                .arch    armv8-m.main
+
+
+/*
+;<h> Stack Configuration
+;  <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;</h>
+*/
+                .equ     Stack_Size, 0x00000400
+
+                .section .stack
+                .align   3
+	            .globl   __StackTop
+	            .globl   __StackLimit
 __StackLimit:
-	.space	Stack_Size
-	.size	__StackLimit, . - __StackLimit
+                .space   Stack_Size
+                .size    __StackLimit, . - __StackLimit
 __StackTop:
-	.size	__StackTop, . - __StackTop
+                .size    __StackTop, . - __StackTop
 
-	.section .heap
-	.align	3
-#ifdef __HEAP_SIZE
-	.equ	Heap_Size, __HEAP_SIZE
-#else
-	.equ	Heap_Size, 0x00000C00
-#endif
-	.globl	__HeapBase
-	.globl	__HeapLimit
+
+/*
+;<h> Heap Configuration
+;  <o> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;</h>
+*/
+                .equ     Heap_Size, 0x00000C00
+
+                .if      Heap_Size != 0                     /* Heap is provided */
+                .section .heap
+                .align   3
+	            .globl   __HeapBase
+	            .globl   __HeapLimit
 __HeapBase:
-	.if	Heap_Size
-	.space	Heap_Size
-	.endif
-	.size	__HeapBase, . - __HeapBase
+                .space   Heap_Size
+                .size    __HeapBase, . - __HeapBase
 __HeapLimit:
-	.size	__HeapLimit, . - __HeapLimit
+                .size    __HeapLimit, . - __HeapLimit
+                .endif
 
-	.section .vectors
-	.align 2
-	.globl	__Vectors
+
+                .section .vectors
+                .align   2
+                .globl   __Vectors
+                .globl   __Vectors_End
+                .globl   __Vectors_Size
 __Vectors:
-	.long	__StackTop            /* Top of Stack */
-	.long	Reset_Handler         /* Reset Handler */
-	.long	NMI_Handler           /* NMI Handler */
-	.long	HardFault_Handler     /* Hard Fault Handler */
-	.long	MemManage_Handler     /* MPU Fault Handler */
-	.long	BusFault_Handler      /* Bus Fault Handler */
-	.long	UsageFault_Handler    /* Usage Fault Handler */
-    .long   SecureFault_Handler   /* Secure Fault Handler */
-	.long	0                     /* Reserved */
-	.long	0                     /* Reserved */
-	.long	0                     /* Reserved */
-	.long	SVC_Handler           /* SVCall Handler */
-	.long	DebugMon_Handler      /* Debug Monitor Handler */
-	.long	0                     /* Reserved */
-	.long	PendSV_Handler        /* PendSV Handler */
-	.long	SysTick_Handler       /* SysTick Handler */
+                .long    __StackTop                         /*     Top of Stack */
+                .long    Reset_Handler                      /*     Reset Handler */
+                .long    NMI_Handler                        /* -14 NMI Handler */
+                .long    HardFault_Handler                  /* -13 Hard Fault Handler */
+                .long    MemManage_Handler                  /* -12 MPU Fault Handler */
+                .long    BusFault_Handler                   /* -11 Bus Fault Handler */
+                .long    UsageFault_Handler                 /* -10 Usage Fault Handler */
+                .long    SecureFault_Handler                /*  -9 Secure Fault Handler */
+                .long    0                                  /*     Reserved */
+                .long    0                                  /*     Reserved */
+                .long    0                                  /*     Reserved */
+                .long    SVC_Handler                        /*  -5 SVCall Handler */
+                .long    DebugMon_Handler                   /*  -4 Debug Monitor Handler */
+                .long    0                                  /*     Reserved */
+                .long    PendSV_Handler                     /*  -2 PendSV Handler */
+                .long    SysTick_Handler                    /*  -1 SysTick Handler */
 
-	/* External interrupts */
-	.long	WDT_IRQHandler        /*  0:  Watchdog Timer            */
-	.long	RTC_IRQHandler        /*  1:  Real Time Clock           */
-	.long	TIM0_IRQHandler       /*  2:  Timer0 / Timer1           */
-	.long	TIM2_IRQHandler       /*  3:  Timer2 / Timer3           */
-	.long	MCIA_IRQHandler       /*  4:  MCIa                      */
-	.long	MCIB_IRQHandler       /*  5:  MCIb                      */
-	.long	UART0_IRQHandler      /*  6:  UART0 - DUT FPGA          */
-	.long	UART1_IRQHandler      /*  7:  UART1 - DUT FPGA          */
-	.long	UART2_IRQHandler      /*  8:  UART2 - DUT FPGA          */
-	.long	UART4_IRQHandler      /*  9:  UART4 - not connected     */
-	.long	AACI_IRQHandler       /* 10: AACI / AC97                */
-	.long	CLCD_IRQHandler       /* 11: CLCD Combined Interrupt    */
-	.long	ENET_IRQHandler       /* 12: Ethernet                   */
-	.long	USBDC_IRQHandler      /* 13: USB Device                 */
-	.long	USBHC_IRQHandler      /* 14: USB Host Controller        */
-	.long	CHLCD_IRQHandler      /* 15: Character LCD              */
-	.long	FLEXRAY_IRQHandler    /* 16: Flexray                    */
-	.long	CAN_IRQHandler        /* 17: CAN                        */
-	.long	LIN_IRQHandler        /* 18: LIN                        */
-	.long	I2C_IRQHandler        /* 19: I2C ADC/DAC                */
-	.long	0                     /* 20: Reserved                   */
-	.long	0                     /* 21: Reserved                   */
-	.long	0                     /* 22: Reserved                   */
-	.long	0                     /* 23: Reserved                   */
-	.long	0                     /* 24: Reserved                   */
-	.long	0                     /* 25: Reserved                   */
-	.long	0                     /* 26: Reserved                   */
-	.long	0                     /* 27: Reserved                   */
-	.long	CPU_CLCD_IRQHandler   /* 28: Reserved - CPU FPGA CLCD   */
-	.long	0                     /* 29: Reserved - CPU FPGA        */
-	.long	UART3_IRQHandler      /* 30: UART3    - CPU FPGA        */
-	.long	SPI_IRQHandler        /* 31: SPI Touchscreen - CPU FPGA */
+                /* Interrupts */
+                .long    Interrupt0_Handler                 /*   0 Interrupt 0 */
+                .long    Interrupt1_Handler                 /*   1 Interrupt 1 */
+                .long    Interrupt2_Handler                 /*   2 Interrupt 2 */
+                .long    Interrupt3_Handler                 /*   3 Interrupt 3 */
+                .long    Interrupt4_Handler                 /*   4 Interrupt 4 */
+                .long    Interrupt5_Handler                 /*   5 Interrupt 5 */
+                .long    Interrupt6_Handler                 /*   6 Interrupt 6 */
+                .long    Interrupt7_Handler                 /*   7 Interrupt 7 */
+                .long    Interrupt8_Handler                 /*   8 Interrupt 8 */
+                .long    Interrupt9_Handler                 /*   9 Interrupt 9 */
 
-	.size	__Vectors, . - __Vectors
+                .space   (470 * 4)                          /* Interrupts 10 .. 480 are left out */
+__Vectors_End:
+                .equ     __Vectors_Size, __Vectors_End - __Vectors
+                .size    __Vectors, . - __Vectors
 
-	.text
-	.thumb
-	.thumb_func
-	.align	2
-	.globl	Reset_Handler
-	.type	Reset_Handler, %function
+
+                .thumb
+                .section .text
+                .align   2
+
+                .thumb_func
+                .type    Reset_Handler, %function
+                .globl   Reset_Handler
+                .fnstart
 Reset_Handler:
-/*  Firstly it copies data from read only memory to RAM. There are two schemes
- *  to copy. One can copy more than one sections. Another can only copy
- *  one section.  The former scheme needs more instructions and read-only
- *  data to implement than the latter.
- *  Macro __STARTUP_COPY_MULTIPLE is used to choose between two schemes.  */
+/* Firstly it copies data from read only memory to RAM.
+ * There are two schemes to copy. One can copy more than one sections.
+ * Another can copy only one section. The former scheme needs more
+ * instructions and read-only data to implement than the latter.
+ * Macro __STARTUP_COPY_MULTIPLE is used to choose between two schemes.
+ */
 
 #ifdef __STARTUP_COPY_MULTIPLE
-/*  Multiple sections scheme.
+/* Multiple sections scheme.
  *
- *  Between symbol address __copy_table_start__ and __copy_table_end__,
- *  there are array of triplets, each of which specify:
- *    offset 0: LMA of start of a section to copy from
- *    offset 4: VMA of start of a section to copy to
- *    offset 8: size of the section to copy. Must be multiply of 4
+ * Between symbol address __copy_table_start__ and __copy_table_end__,
+ * there are array of triplets, each of which specify:
+ *   offset 0: LMA of start of a section to copy from
+ *   offset 4: VMA of start of a section to copy to
+ *   offset 8: size of the section to copy. Must be multiply of 4
  *
- *  All addresses must be aligned to 4 bytes boundary.
+ * All addresses must be aligned to 4 bytes boundary.
  */
-	ldr	r4, =__copy_table_start__
-	ldr	r5, =__copy_table_end__
+                ldr      r4, =__copy_table_start__
+                ldr      r5, =__copy_table_end__
 
 .L_loop0:
-	cmp	r4, r5
-	bge	.L_loop0_done
-	ldr	r1, [r4]
-	ldr	r2, [r4, #4]
-	ldr	r3, [r4, #8]
+                cmp      r4, r5
+                bge      .L_loop0_done
+                ldr      r1, [r4]
+                ldr      r2, [r4, #4]
+                ldr      r3, [r4, #8]
 
 .L_loop0_0:
-	subs	r3, #4
-	ittt	ge
-	ldrge	r0, [r1, r3]
-	strge	r0, [r2, r3]
-	bge	.L_loop0_0
+                subs     r3, #4
+                ittt     ge
+                ldrge    r0, [r1, r3]
+                strge    r0, [r2, r3]
+                bge      .L_loop0_0
 
-	adds	r4, #12
-	b	.L_loop0
+                adds     r4, #12
+                b        .L_loop0
 
 .L_loop0_done:
 #else
-/*  Single section scheme.
+/* Single section scheme.
  *
- *  The ranges of copy from/to are specified by following symbols
- *    __etext: LMA of start of the section to copy from. Usually end of text
- *    __data_start__: VMA of start of the section to copy to
- *    __data_end__: VMA of end of the section to copy to
+ * The ranges of copy from/to are specified by following symbols
+ *   __etext: LMA of start of the section to copy from. Usually end of text
+ *   __data_start__: VMA of start of the section to copy to
+ *   __data_end__: VMA of end of the section to copy to
  *
- *  All addresses must be aligned to 4 bytes boundary.
+ * All addresses must be aligned to 4 bytes boundary.
  */
-	ldr	r1, =__etext
-	ldr	r2, =__data_start__
-	ldr	r3, =__data_end__
+                ldr      r1, =__etext
+                ldr      r2, =__data_start__
+                ldr      r3, =__data_end__
 
 .L_loop1:
-	cmp	r2, r3
-	ittt	lt
-	ldrlt	r0, [r1], #4
-	strlt	r0, [r2], #4
-	blt	.L_loop1
+                cmp      r2, r3
+                ittt     lt
+                ldrlt    r0, [r1], #4
+                strlt    r0, [r2], #4
+                blt      .L_loop1
 #endif /*__STARTUP_COPY_MULTIPLE */
 
-/*  This part of work usually is done in C library startup code. Otherwise,
- *  define this macro to enable it in this startup.
+/* This part of work usually is done in C library startup code.
+ * Otherwise, define this macro to enable it in this startup.
  *
- *  There are two schemes too. One can clear multiple BSS sections. Another
- *  can only clear one section. The former is more size expensive than the
- *  latter.
+ * There are two schemes too.
+ * One can clear multiple BSS sections. Another can only clear one section.
+ * The former is more size expensive than the latter.
  *
- *  Define macro __STARTUP_CLEAR_BSS_MULTIPLE to choose the former.
- *  Otherwise efine macro __STARTUP_CLEAR_BSS to choose the later.
+ * Define macro __STARTUP_CLEAR_BSS_MULTIPLE to choose the former.
+ * Otherwise define macro __STARTUP_CLEAR_BSS to choose the later.
  */
 #ifdef __STARTUP_CLEAR_BSS_MULTIPLE
-/*  Multiple sections scheme.
+/* Multiple sections scheme.
  *
- *  Between symbol address __copy_table_start__ and __copy_table_end__,
- *  there are array of tuples specifying:
- *    offset 0: Start of a BSS section
- *    offset 4: Size of this BSS section. Must be multiply of 4
+ * Between symbol address __copy_table_start__ and __copy_table_end__,
+ * there are array of tuples specifying:
+ *   offset 0: Start of a BSS section
+ *   offset 4: Size of this BSS section. Must be multiply of 4
  */
-	ldr	r3, =__zero_table_start__
-	ldr	r4, =__zero_table_end__
+                ldr      r3, =__zero_table_start__
+                ldr      r4, =__zero_table_end__
 
 .L_loop2:
-	cmp	r3, r4
-	bge	.L_loop2_done
-	ldr	r1, [r3]
-	ldr	r2, [r3, #4]
-	movs	r0, 0
+                cmp      r3, r4
+                bge      .L_loop2_done
+                ldr      r1, [r3]
+                ldr      r2, [r3, #4]
+                movs     r0, 0
 
 .L_loop2_0:
-	subs	r2, #4
-	itt	ge
-	strge	r0, [r1, r2]
-	bge	.L_loop2_0
+                subs     r2, #4
+                itt      ge
+                strge    r0, [r1, r2]
+                bge      .L_loop2_0
 
-	adds	r3, #8
-	b	.L_loop2
+                adds     r3, #8
+                b        .L_loop2
 .L_loop2_done:
 #elif defined (__STARTUP_CLEAR_BSS)
-/*  Single BSS section scheme.
+/* Single BSS section scheme.
  *
- *  The BSS section is specified by following symbols
- *    __bss_start__: start of the BSS section.
- *    __bss_end__: end of the BSS section.
+ * The BSS section is specified by following symbols
+ *   __bss_start__: start of the BSS section.
+ *   __bss_end__: end of the BSS section.
  *
- *  Both addresses must be aligned to 4 bytes boundary.
+ * Both addresses must be aligned to 4 bytes boundary.
  */
-	ldr	r1, =__bss_start__
-	ldr	r2, =__bss_end__
+                ldr      r1, =__bss_start__
+                ldr      r2, =__bss_end__
 
-	movs	r0, 0
+                movs     r0, 0
 .L_loop3:
-	cmp	r1, r2
-	itt	lt
-	strlt	r0, [r1], #4
-	blt	.L_loop3
+                cmp      r1, r2
+                itt      lt
+                strlt    r0, [r1], #4
+                blt      .L_loop3
 #endif /* __STARTUP_CLEAR_BSS_MULTIPLE || __STARTUP_CLEAR_BSS */
 
-#ifndef __NO_SYSTEM_INIT
-	bl	SystemInit
-#endif
+                ldr      r0, =__StackLimit
+                msr      msplim, r0
 
-#ifndef __START
-#define __START _start
-#endif
-	bl	__START
+                bl       SystemInit
+                bl       _start
 
-	.pool
-	.size	Reset_Handler, . - Reset_Handler
+                .fnend
+                .size    Reset_Handler, . - Reset_Handler
 
-	.align	1
-	.thumb_func
-	.weak	Default_Handler
-	.type	Default_Handler, %function
+
+                .thumb_func
+                .type    Default_Handler, %function
+                .weak    Default_Handler
+                .fnstart
 Default_Handler:
-	b	.
-	.size	Default_Handler, . - Default_Handler
+                b        .
+                .fnend
+                .size    Default_Handler, . - Default_Handler
 
-/*    Macro to define default handlers. Default handler
- *    will be weak symbol and just dead loops. They can be
- *    overwritten by other handlers */
-	.macro	def_irq_handler	handler_name
-	.weak	\handler_name
-	.set	\handler_name, Default_Handler
-	.endm
+/* Macro to define default exception/interrupt handlers.
+ * Default handler are weak symbols with an endless loop.
+ * They can be overwritten by real handlers.
+ */
+                .macro   Set_Default_Handler  Handler_Name
+                .weak    \Handler_Name
+                .set     \Handler_Name, Default_Handler
+                .endm
 
-	def_irq_handler	NMI_Handler
-	def_irq_handler	HardFault_Handler
-	def_irq_handler	MemManage_Handler
-	def_irq_handler	BusFault_Handler
-	def_irq_handler	UsageFault_Handler
-	def_irq_handler	SecureFault_Handler
-	def_irq_handler	SVC_Handler
-	def_irq_handler	DebugMon_Handler
-	def_irq_handler	PendSV_Handler
-	def_irq_handler	SysTick_Handler
 
-	def_irq_handler	WDT_IRQHandler
-	def_irq_handler	RTC_IRQHandler
-	def_irq_handler	TIM0_IRQHandler
-	def_irq_handler	TIM2_IRQHandler
-	def_irq_handler	MCIA_IRQHandler
-	def_irq_handler	MCIB_IRQHandler
-	def_irq_handler	UART0_IRQHandler
-	def_irq_handler	UART1_IRQHandler
-	def_irq_handler	UART2_IRQHandler
-	def_irq_handler	UART3_IRQHandler
-	def_irq_handler	UART4_IRQHandler
-	def_irq_handler	AACI_IRQHandler
-	def_irq_handler	CLCD_IRQHandler
-	def_irq_handler	ENET_IRQHandler
-	def_irq_handler	USBDC_IRQHandler
-	def_irq_handler	USBHC_IRQHandler
-	def_irq_handler	CHLCD_IRQHandler
-	def_irq_handler	FLEXRAY_IRQHandler
-	def_irq_handler	CAN_IRQHandler
-	def_irq_handler	LIN_IRQHandler
-	def_irq_handler	I2C_IRQHandler
-	def_irq_handler	CPU_CLCD_IRQHandler
-	def_irq_handler	SPI_IRQHandler
+/* Default exception/interrupt handler */
 
-	.end
+                Set_Default_Handler  NMI_Handler
+                Set_Default_Handler  HardFault_Handler
+                Set_Default_Handler  MemManage_Handler
+                Set_Default_Handler  BusFault_Handler
+                Set_Default_Handler  UsageFault_Handler
+                Set_Default_Handler  SecureFault_Handler
+                Set_Default_Handler  SVC_Handler
+                Set_Default_Handler  DebugMon_Handler
+                Set_Default_Handler  PendSV_Handler
+                Set_Default_Handler  SysTick_Handler
+
+                Set_Default_Handler  Interrupt0_Handler
+                Set_Default_Handler  Interrupt1_Handler
+                Set_Default_Handler  Interrupt2_Handler
+                Set_Default_Handler  Interrupt3_Handler
+                Set_Default_Handler  Interrupt4_Handler
+                Set_Default_Handler  Interrupt5_Handler
+                Set_Default_Handler  Interrupt6_Handler
+                Set_Default_Handler  Interrupt7_Handler
+                Set_Default_Handler  Interrupt8_Handler
+                Set_Default_Handler  Interrupt9_Handler
+
+
+                .end

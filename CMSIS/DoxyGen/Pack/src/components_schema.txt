@@ -2,13 +2,13 @@
 /** 
 \page pdsc_components_pg  /package/components element
 
-The element \ref element_components describes software components contained in the PACK.
+The element \ref element_components describes software components contained in the Pack.
 A component lists the files that belong to a component and that are relevant for a project. The component itself or each individual file may
 refer to a \ref element_condition "condition" that must resolve to true; if it is false the component or file is not applicable in the given context.
 
 Each component must have a Class (Cclass=), a Group (Cgroup=), and a Version (Cversion=) which is used to identify the component. Optionally a component
 may have a Sub-Group (Csub=) and Variant (Cvariant=) to add further categories.  The Class, Group, Sub-Group, Variant and Version is used together with the
-vendor specified by the PACK, to identify a component. A component vendor must ensure that the combination Class, Group, Sub-Group and Version is unique and
+vendor specified by the Pack, to identify a component. A component vendor must ensure that the combination Class, Group, Sub-Group and Version is unique and
 not used by multiple components.
 
 \b Example
@@ -189,7 +189,7 @@ that are related to other components for the same Software Pack.
 
 \section element_components /package/components
 
-Grouping element containing a choice of at least one bundle or component. No more than one element <em>components</em> can exist in a PACK.
+Grouping element containing a choice of at least one bundle or component. No more than one element <em>components</em> can exist in a Pack.
 
 <table class="cmtable" summary="Element: Components">
   <tr>
@@ -300,7 +300,7 @@ Components enclosed in a bundle must not specify any of the following attributes
   <tr>
     <td>doc</td>
 	<td>Documentation for the bundle: File path, file name, and file extension in the format \b path/name.extension. 
-	    The file path is relative to the root directory of the PACK.
+	    The file path is relative to the root directory of the Pack.
 	<td>xs:string</td>
 	<td>1..1</td>
   </tr>
@@ -475,7 +475,7 @@ Subgroups exists in the elements:
 
 \section element_files /package/.../files
 
-The group <b>files</b> can appear in various PACK elements. This group is the frame for defining individual file properties.
+The group <b>files</b> can appear in various Pack elements. This group is the frame for defining individual file properties.
 
 \b Example:
 \code
@@ -599,7 +599,7 @@ The file purpose is defined through the <b>category</b> attribute. The <b>name</
   </tr>
   <tr>
     <td>name</td>
-    <td>File path, file name, and file extension in the format <b>path/name.extension</b>. The file path is relative to the root directory of the PACK.</td>
+    <td>File path, file name, and file extension in the format <b>path/name.extension</b>. The file path is relative to the root directory of the Pack.</td>
     <td>xs:string</td>
     <td>required</td>
   </tr>
@@ -634,7 +634,7 @@ The file purpose is defined through the <b>category</b> attribute. The <b>name</
   </tr>
   <tr>
     <td>src</td>
-    <td>Path information. The path is specified relative to the PACK Description File. If \em \b category is set to \token{library}, 
+    <td>Path information. The path is specified relative to the Pack Description File. If \em \b category is set to \token{library}, 
 	then the \em \b src string can contain a list of directory paths separated by semicolons. A debugger will search those paths 
 	for locating the source files of the modules archived in the library supporting the debugging of library code.</td>
     <td>xs:string</td>

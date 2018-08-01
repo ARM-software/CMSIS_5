@@ -1,5 +1,5 @@
 /**
-\page cpdsc_pg Project Description (*.CPDSC) Format
+\page cpdsc_pg Project Description (*.cpdsc) Format
 
 The CPDSC format provides the XML elements for defining CMSIS software projects. 
 The CPDSC file content is considered static, so you do not have to keep the projects synchronized.
@@ -18,7 +18,7 @@ A CMSIS software project is a collection of files in a directory structure.
 The CPDSC file is located in the base folder of the directory structure. Only one CPDSC file 
 is allowed. A CPDSC file can describe one or more projects.
 
-\b Example CMSIS Project Description File (*.CPDSC):
+\b Example CMSIS Project Description File (*.cpdsc):
 \code
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PACK.xsd">
@@ -140,8 +140,8 @@ However, a CPDSC file can only contain the top level elements listed in this tab
   </tr>
   <tr>
     <td>url</td>
-    <td>File location if generated, link to the PACK this file belongs to. 
-        If left empty, the pack cannot be updated automatically from a server location.</td>
+    <td>File location if generated, link to the Pack this file belongs to. 
+        If left empty, the Pack cannot be updated automatically from a server location.</td>
     <td>xs:anyURI</td>
     <td>1..1</td>
   </tr>

@@ -15,11 +15,6 @@ The access structure of each CMSIS-Driver provides the function \b PowerControl,
 profile for a peripheral using the parameter \ref ARM_POWER_STATE. Depending on this parameter, 
 the peripheral will operate at full speed, detect just events, or is completely un-powered.
 
-\if TODO_later
-The return value of the driver control functions typical returns no just 'status codes'. However this is not reflected yet in the header files - hence the documentation can be confusing.
-\endif
-
-
 Refer to \ref CallSequence for more information.
 */
 

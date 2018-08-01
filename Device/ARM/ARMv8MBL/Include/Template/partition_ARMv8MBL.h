@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     partition_ARMv8MBL.h
- * @brief    CMSIS-CORE Initial Setup for Secure / Non-Secure Zones for ARMv8M
- * @version  V5.00
- * @date     10. January 2018
+ * @brief    CMSIS-CORE Initial Setup for Secure / Non-Secure Zones for ARMv8MBL
+ * @version  V5.3.1
+ * @date     09. July 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -379,7 +379,7 @@
 //   <o.30> Interrupt 30  <0=> Secure state <1=> Non-Secure state
 //   <o.31> Interrupt 31  <0=> Secure state <1=> Non-Secure state
 */
-#define NVIC_INIT_ITNS0_VAL      0x0000122B
+#define NVIC_INIT_ITNS0_VAL      0x00000000
 
 /*
 //   </e>
@@ -713,7 +713,7 @@
 #define NVIC_INIT_ITNS8    0
 
 /*
-// Interrupts 0..31
+// Interrupts 256..287
 //   <o.0>  Interrupt 256 <0=> Secure state <1=> Non-Secure state
 //   <o.1>  Interrupt 257 <0=> Secure state <1=> Non-Secure state
 //   <o.2>  Interrupt 258 <0=> Secure state <1=> Non-Secure state
@@ -759,7 +759,7 @@
 #define NVIC_INIT_ITNS9    0
 
 /*
-// Interrupts 32..63
+// Interrupts 288..319
 //   <o.0>  Interrupt 288 <0=> Secure state <1=> Non-Secure state
 //   <o.1>  Interrupt 289 <0=> Secure state <1=> Non-Secure state
 //   <o.2>  Interrupt 290 <0=> Secure state <1=> Non-Secure state
@@ -805,7 +805,7 @@
 #define NVIC_INIT_ITNS10   0
 
 /*
-// Interrupts 64..95
+// Interrupts 320..351
 //   <o.0>  Interrupt 320 <0=> Secure state <1=> Non-Secure state
 //   <o.1>  Interrupt 321 <0=> Secure state <1=> Non-Secure state
 //   <o.2>  Interrupt 322 <0=> Secure state <1=> Non-Secure state
@@ -851,7 +851,7 @@
 #define NVIC_INIT_ITNS11   0
 
 /*
-// Interrupts 96..127
+// Interrupts 352..383
 //   <o.0>  Interrupt 352 <0=> Secure state <1=> Non-Secure state
 //   <o.1>  Interrupt 353 <0=> Secure state <1=> Non-Secure state
 //   <o.2>  Interrupt 354 <0=> Secure state <1=> Non-Secure state
@@ -897,7 +897,7 @@
 #define NVIC_INIT_ITNS12   0
 
 /*
-// Interrupts 128..159
+// Interrupts 384..415
 //   <o.0>  Interrupt 384 <0=> Secure state <1=> Non-Secure state
 //   <o.1>  Interrupt 385 <0=> Secure state <1=> Non-Secure state
 //   <o.2>  Interrupt 386 <0=> Secure state <1=> Non-Secure state
@@ -943,7 +943,7 @@
 #define NVIC_INIT_ITNS13   0
 
 /*
-// Interrupts 160..191
+// Interrupts 416..447
 //   <o.0>  Interrupt 416 <0=> Secure state <1=> Non-Secure state
 //   <o.1>  Interrupt 417 <0=> Secure state <1=> Non-Secure state
 //   <o.2>  Interrupt 418 <0=> Secure state <1=> Non-Secure state
@@ -989,7 +989,7 @@
 #define NVIC_INIT_ITNS14   0
 
 /*
-// Interrupts 192..223
+// Interrupts 448..479
 //   <o.0>  Interrupt 448 <0=> Secure state <1=> Non-Secure state
 //   <o.1>  Interrupt 449 <0=> Secure state <1=> Non-Secure state
 //   <o.2>  Interrupt 450 <0=> Secure state <1=> Non-Secure state
@@ -1035,7 +1035,7 @@
 #define NVIC_INIT_ITNS15   0
 
 /*
-// Interrupts 224..255
+// Interrupts 480..511
 //   <o.0>  Interrupt 480 <0=> Secure state <1=> Non-Secure state
 //   <o.1>  Interrupt 481 <0=> Secure state <1=> Non-Secure state
 //   <o.2>  Interrupt 482 <0=> Secure state <1=> Non-Secure state

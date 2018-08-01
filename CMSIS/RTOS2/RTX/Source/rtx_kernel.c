@@ -70,7 +70,7 @@ static void KernelUnblock (void) {
 static osStatus_t svcRtxKernelInitialize (void) {
 
   if (osRtxInfo.kernel.state == osRtxKernelReady) {
-    EvrRtxKernelInitializeCompleted();
+    EvrRtxKernelInitialized();
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osOK;
   }
@@ -197,7 +197,7 @@ static osStatus_t svcRtxKernelInitialize (void) {
 
   osRtxInfo.kernel.state = osRtxKernelReady;
 
-  EvrRtxKernelInitializeCompleted();
+  EvrRtxKernelInitialized();
 
   return osOK;
 }
@@ -528,12 +528,23 @@ SVC0_0 (KernelGetSysTimerFreq,  uint32_t)
 //lint --flb "Library End"
 
 
+//  ==== Library functions ====
+
+/// RTOS Kernel Pre-Initialization Hook
+//lint -esym(759,osRtxKernelPreInit) "Prototype in header"
+//lint -esym(765,osRtxKernelPreInit) "Global scope (can be overridden)"
+//lint -esym(522,osRtxKernelPreInit) "Can be overridden (do not lack side-effects)"
+__WEAK void osRtxKernelPreInit (void) {
+}
+
+
 //  ==== Public API ====
 
 /// Initialize the RTOS Kernel.
 osStatus_t osKernelInitialize (void) {
   osStatus_t status;
 
+  osRtxKernelPreInit();
   EvrRtxKernelInitialize();
   if (IsIrqMode() || IsIrqMasked()) {
     EvrRtxKernelError((int32_t)osErrorISR);
@@ -549,7 +560,7 @@ osStatus_t osKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size
   osStatus_t status;
 
   EvrRtxKernelGetInfo(version, id_buf, id_size);
-  if (IsPrivileged() || IsIrqMode() || IsIrqMasked()) {
+  if (IsIrqMode() || IsIrqMasked() || IsPrivileged()) {
     status = svcRtxKernelGetInfo(version, id_buf, id_size);
   } else {
     status =  __svcKernelGetInfo(version, id_buf, id_size);
@@ -561,7 +572,7 @@ osStatus_t osKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id_size
 osKernelState_t osKernelGetState (void) {
   osKernelState_t state;
 
-  if (IsPrivileged() || IsIrqMode() || IsIrqMasked()) {
+  if (IsIrqMode() || IsIrqMasked() || IsPrivileged()) {
     state = svcRtxKernelGetState();
   } else {
     state =  __svcKernelGetState();

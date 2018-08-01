@@ -1,6 +1,6 @@
 /**************************************************************************//**
  * @file     os_tick_gtim.c
- * @brief    CMSIS OS Tick implementation for Private Timer
+ * @brief    CMSIS OS Tick implementation for Generic Timer
  * @version  V1.0.1
  * @date     24. November 2017
  ******************************************************************************/

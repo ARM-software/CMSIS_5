@@ -189,6 +189,9 @@ CMSIS-SVD files can be used to generate:
   - Checks the syntactical and structural compliance with the specified CMSIS-SVD format.
   - Checks the consistency, correctness, and completeness of the CMSIS-SVD file against the CMSIS-SVD schema file.
   - Generates CMSIS-compliant device header files, which can be used for software development.
+  
+\note Consider using \-\-strict option to receive all pedantic warnings. Some rules are skipped by default due to
+  backward compatibility reasons. All newly developed/updated SVD files should rather respect all rules.
 
 
 Operation
@@ -262,6 +265,11 @@ SVDConv.exe <SVD_file> <options>
     <td>ANSI Bit-field Structs</td>
     <td>Generates MISRA-compliant structures for each bitfield. The generated code <b>is not CMSIS-compliant</b>!
     Must be used in combination with <i>\-\-generate=header</i>.</td>
+  </tr>
+  <tr>
+    <td> \-\-strict</td>
+    <td>Strict error checking</td>
+    <td>\b RECOMMENDED! Applies strict error checking and generates a lot more messages.</td>
   </tr>
 </table>
 

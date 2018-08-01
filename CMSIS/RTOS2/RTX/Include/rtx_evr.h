@@ -30,6 +30,41 @@
 #include "RTX_Config.h"                 // RTX Configuration
 #include "rtx_os.h"                     // RTX OS definitions
 
+#include "RTE_Components.h"
+
+#ifdef    RTE_Compiler_EventRecorder
+
+#include "EventRecorder.h"
+#include "EventRecorderConf.h"
+
+#if ((defined(OS_EVR_INIT) && (OS_EVR_INIT != 0)) || (EVENT_TIMESTAMP_SOURCE == 2))
+#ifndef EVR_RTX_KERNEL_GET_STATE_DISABLE
+#define EVR_RTX_KERNEL_GET_STATE_DISABLE
+#endif
+#endif
+
+#if (EVENT_TIMESTAMP_SOURCE == 2)
+#ifndef EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE
+#define EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE
+#endif
+#ifndef EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE
+#define EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE
+#endif
+#endif
+
+/// RTOS component number
+#define EvtRtxMemoryNo                  (0xF0U)
+#define EvtRtxKernelNo                  (0xF1U)
+#define EvtRtxThreadNo                  (0xF2U)
+#define EvtRtxTimerNo                   (0xF3U)
+#define EvtRtxEventFlagsNo              (0xF4U)
+#define EvtRtxMutexNo                   (0xF5U)
+#define EvtRtxSemaphoreNo               (0xF6U)
+#define EvtRtxMemoryPoolNo              (0xF7U)
+#define EvtRtxMessageQueueNo            (0xF8U)
+
+#endif  // RTE_Compiler_EventRecorder
+
 
 /// Extended Status codes
 #define osRtxErrorKernelNotReady        (-7)
@@ -150,10 +185,10 @@ extern void EvrRtxKernelInitialize (void);
 /**
   \brief  Event on successful RTOS kernel initialize (Op)
 */
-#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_INITIALIZE_COMPLETED_DISABLE))
-extern void EvrRtxKernelInitializeCompleted (void);
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_INITIALIZED_DISABLE))
+extern void EvrRtxKernelInitialized (void);
 #else
-#define EvrRtxKernelInitializeCompleted()
+#define EvrRtxKernelInitialized()
 #endif
 
 /**
@@ -373,11 +408,12 @@ extern void EvrRtxThreadNew (osThreadFunc_t func, void *argument, const osThread
   \brief  Event on successful thread create (Op)
   \param[in]  thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
   \param[in]  thread_addr   thread entry address.
+  \param[in]  name          pointer to thread object name.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_CREATED_DISABLE))
-extern void EvrRtxThreadCreated (osThreadId_t thread_id, uint32_t thread_addr);
+extern void EvrRtxThreadCreated (osThreadId_t thread_id, uint32_t thread_addr, const char *name);
 #else
-#define EvrRtxThreadCreated(thread_id, thread_addr)
+#define EvrRtxThreadCreated(thread_id, thread_addr, name)
 #endif
 
 /**
@@ -797,7 +833,7 @@ extern void EvrRtxThreadDelayCompleted (void);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_TIMER != 0) && !defined(EVR_RTX_TIMER_ERROR_DISABLE))
 extern void EvrRtxTimerError (osTimerId_t timer_id, int32_t status);
 #else
-#define EvrRtxTimerError(timer_id, status);
+#define EvrRtxTimerError(timer_id, status)
 #endif
 
 /**
@@ -808,7 +844,7 @@ extern void EvrRtxTimerError (osTimerId_t timer_id, int32_t status);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_TIMER != 0) && !defined(EVR_RTX_TIMER_CALLBACK_DISABLE))
 extern void EvrRtxTimerCallback (osTimerFunc_t func, void *argument);
 #else
-#define EvrRtxTimerCallback(func, argument);
+#define EvrRtxTimerCallback(func, argument)
 #endif
 
 /**
@@ -821,7 +857,7 @@ extern void EvrRtxTimerCallback (osTimerFunc_t func, void *argument);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_TIMER != 0) && !defined(EVR_RTX_TIMER_NEW_DISABLE))
 extern void EvrRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr);
 #else
-#define EvrRtxTimerNew(func, type, argument, attr);
+#define EvrRtxTimerNew(func, type, argument, attr)
 #endif
 
 /**
@@ -832,7 +868,7 @@ extern void EvrRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argume
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_TIMER != 0) && !defined(EVR_RTX_TIMER_CREATED_DISABLE))
 extern void EvrRtxTimerCreated (osTimerId_t timer_id, const char *name);
 #else
-#define EvrRtxTimerCreated(timer_id, name);
+#define EvrRtxTimerCreated(timer_id, name)
 #endif
 
 /**
@@ -843,7 +879,7 @@ extern void EvrRtxTimerCreated (osTimerId_t timer_id, const char *name);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_TIMER != 0) && !defined(EVR_RTX_TIMER_GET_NAME_DISABLE))
 extern void EvrRtxTimerGetName (osTimerId_t timer_id, const char *name);
 #else
-#define EvrRtxTimerGetName(timer_id, name);
+#define EvrRtxTimerGetName(timer_id, name)
 #endif
 
 /**
@@ -854,7 +890,7 @@ extern void EvrRtxTimerGetName (osTimerId_t timer_id, const char *name);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_TIMER != 0) && !defined(EVR_RTX_TIMER_START_DISABLE))
 extern void EvrRtxTimerStart (osTimerId_t timer_id, uint32_t ticks);
 #else
-#define EvrRtxTimerStart(timer_id, ticks);
+#define EvrRtxTimerStart(timer_id, ticks)
 #endif
 
 /**
@@ -864,7 +900,7 @@ extern void EvrRtxTimerStart (osTimerId_t timer_id, uint32_t ticks);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_TIMER != 0) && !defined(EVR_RTX_TIMER_STARTED_DISABLE))
 extern void EvrRtxTimerStarted (osTimerId_t timer_id);
 #else
-#define EvrRtxTimerStarted(timer_id);
+#define EvrRtxTimerStarted(timer_id)
 #endif
 
 /**
@@ -874,7 +910,7 @@ extern void EvrRtxTimerStarted (osTimerId_t timer_id);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_TIMER != 0) && !defined(EVR_RTX_TIMER_STOP_DISABLE))
 extern void EvrRtxTimerStop (osTimerId_t timer_id);
 #else
-#define EvrRtxTimerStop(timer_id);
+#define EvrRtxTimerStop(timer_id)
 #endif
 
 /**
@@ -884,7 +920,7 @@ extern void EvrRtxTimerStop (osTimerId_t timer_id);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_TIMER != 0) && !defined(EVR_RTX_TIMER_STOPPED_DISABLE))
 extern void EvrRtxTimerStopped (osTimerId_t timer_id);
 #else
-#define EvrRtxTimerStopped(timer_id);
+#define EvrRtxTimerStopped(timer_id)
 #endif
 
 /**
@@ -895,7 +931,7 @@ extern void EvrRtxTimerStopped (osTimerId_t timer_id);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_TIMER != 0) && !defined(EVR_RTX_TIMER_IS_RUNNING_DISABLE))
 extern void EvrRtxTimerIsRunning (osTimerId_t timer_id, uint32_t running);
 #else
-#define EvrRtxTimerIsRunning(timer_id, running);
+#define EvrRtxTimerIsRunning(timer_id, running)
 #endif
 
 /**
@@ -905,7 +941,7 @@ extern void EvrRtxTimerIsRunning (osTimerId_t timer_id, uint32_t running);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_TIMER != 0) && !defined(EVR_RTX_TIMER_DELETE_DISABLE))
 extern void EvrRtxTimerDelete (osTimerId_t timer_id);
 #else
-#define EvrRtxTimerDelete(timer_id);
+#define EvrRtxTimerDelete(timer_id)
 #endif
 
 /**
@@ -915,7 +951,7 @@ extern void EvrRtxTimerDelete (osTimerId_t timer_id);
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_TIMER != 0) && !defined(EVR_RTX_TIMER_DESTROYED_DISABLE))
 extern void EvrRtxTimerDestroyed (osTimerId_t timer_id);
 #else
-#define EvrRtxTimerDestroyed(timer_id);
+#define EvrRtxTimerDestroyed(timer_id)
 #endif
 
 
@@ -1334,11 +1370,12 @@ extern void EvrRtxSemaphoreAcquireTimeout (osSemaphoreId_t semaphore_id);
 /**
   \brief  Event on successful semaphore acquire (Op)
   \param[in]  semaphore_id  semaphore ID obtained by \ref osSemaphoreNew.
+  \param[in]  tokens        number of available tokens.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_SEMAPHORE != 0) && !defined(EVR_RTX_SEMAPHORE_ACQUIRED_DISABLE))
-extern void EvrRtxSemaphoreAcquired (osSemaphoreId_t semaphore_id);
+extern void EvrRtxSemaphoreAcquired (osSemaphoreId_t semaphore_id, uint32_t tokens);
 #else
-#define EvrRtxSemaphoreAcquired(semaphore_id)
+#define EvrRtxSemaphoreAcquired(semaphore_id, tokens)
 #endif
 
 /**
@@ -1364,11 +1401,12 @@ extern void EvrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id);
 /**
   \brief  Event on successful semaphore release (Op)
   \param[in]  semaphore_id  semaphore ID obtained by \ref osSemaphoreNew.
+  \param[in]  tokens        number of available tokens.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_SEMAPHORE != 0) && !defined(EVR_RTX_SEMAPHORE_RELEASED_DISABLE))
-extern void EvrRtxSemaphoreReleased (osSemaphoreId_t semaphore_id);
+extern void EvrRtxSemaphoreReleased (osSemaphoreId_t semaphore_id, uint32_t tokens);
 #else
-#define EvrRtxSemaphoreReleased(semaphore_id)
+#define EvrRtxSemaphoreReleased(semaphore_id, tokens)
 #endif
 
 /**
