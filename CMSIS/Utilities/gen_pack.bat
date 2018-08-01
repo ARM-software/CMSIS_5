@@ -62,7 +62,7 @@ XCOPY /Q /S /Y ..\..\CMSIS\Driver\*.* %RELEASE_PATH%\CMSIS\Driver\*.*
 :: -- DSP files 
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Include\*.* %RELEASE_PATH%\CMSIS\DSP\Include\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Source\*.*  %RELEASE_PATH%\CMSIS\DSP\Source\*.*
-XCOPY /Q /S /Y ..\..\CMSIS\DSP\Projects\*.*  %RELEASE_PATH%\CMSIS\DSP\Source\*.*
+XCOPY /Q /S /Y ..\..\CMSIS\DSP\Projects\*.*  %RELEASE_PATH%\CMSIS\DSP\Projects\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Examples\*.*  %RELEASE_PATH%\CMSIS\DSP\Examples\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Include\*.* %RELEASE_PATH%\CMSIS\Include\*.*
 XCOPY /Q /S /Y ..\..\CMSIS\DSP\Source\*.*  %RELEASE_PATH%\CMSIS\DSP_Lib\Source\*.*
