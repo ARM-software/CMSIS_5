@@ -234,6 +234,9 @@ __packed struct  __iar_u32 { uint32_t v; };
   #endif
 #endif
 
+#ifndef   __SECTION_ZERO_INIT
+  #define __SECTION_ZERO_INIT(name) __attribute__((section(name)))
+#endif
 
 #ifndef __ICCARM_INTRINSICS_VERSION__
   #define __ICCARM_INTRINSICS_VERSION__  0
