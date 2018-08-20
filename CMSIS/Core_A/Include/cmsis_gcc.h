@@ -104,6 +104,9 @@
 #ifndef   __ALIGNED
   #define __ALIGNED(x)                           __attribute__((aligned(x)))
 #endif
+#ifndef   __SECTION_ZERO_INIT
+  #define __SECTION_ZERO_INIT(name)              __attribute__((section(name)))
+#endif
 
 /* ##########################  Core Instruction Access  ######################### */
 /**

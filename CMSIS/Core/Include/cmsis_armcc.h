@@ -100,6 +100,9 @@
 #ifndef   __RESTRICT
   #define __RESTRICT                             __restrict
 #endif
+#ifndef   __SECTION_ZERO_INIT
+  #define __SECTION_ZERO_INIT(name)              __attribute__((section(name), zero_init))
+#endif
 
 /* ###########################  Core Function Access  ########################### */
 /** \ingroup  CMSIS_Core_FunctionInterface

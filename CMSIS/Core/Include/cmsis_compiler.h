@@ -118,6 +118,9 @@
     #warning No compiler specific solution for __RESTRICT. __RESTRICT is ignored.
     #define __RESTRICT
   #endif
+  #ifndef   __SECTION_ZERO_INIT
+    #define __SECTION_ZERO_INIT(name)              __attribute__((section(name)))
+  #endif
 
 
 /*
@@ -187,6 +190,9 @@
     #warning No compiler specific solution for __RESTRICT. __RESTRICT is ignored.
     #define __RESTRICT
   #endif
+  #ifndef   __SECTION_ZERO_INIT
+    #define __SECTION_ZERO_INIT(name)              __attribute__((section(name)))
+  #endif
 
 
 /*
@@ -254,6 +260,9 @@
   #ifndef   __RESTRICT
     #warning No compiler specific solution for __RESTRICT. __RESTRICT is ignored.
     #define __RESTRICT
+  #endif
+  #ifndef   __SECTION_ZERO_INIT
+    #define __SECTION_ZERO_INIT(name)              __attribute__((section(name)))
   #endif
 
 
