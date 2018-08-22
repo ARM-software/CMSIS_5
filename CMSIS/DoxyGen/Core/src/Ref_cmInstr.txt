@@ -129,7 +129,7 @@ uint32_t __REV16(uint32_t value);
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-int32_t __REVSH(int32_t value);
+int16_t __REVSH(int16_t value);
 
 
 /**************************************************************************************************/
