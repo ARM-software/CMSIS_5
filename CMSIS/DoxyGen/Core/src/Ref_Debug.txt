@@ -7,7 +7,7 @@ CMSIS provides additional debug functions to enlarge the Debug Access.
 Data can be transmitted via a certain global buffer variable towards the target system.    
 
 The Cortex-M3 / Cortex-M4 / Cortex-M7 incorporates the <b>Instrumented Trace Macrocell (ITM)</b> that 
-provides together with the <b>Serial Viewer Output (SVO)</b> trace capabilities for the 
+provides together with the <b>Serial Wire Output (SWO)</b> trace capabilities for the 
 microcontroller system. The ITM has 32 communication channels; two ITM 
 communication channels are used by CMSIS to output the following information:
 
