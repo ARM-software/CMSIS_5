@@ -388,6 +388,14 @@ to configure the priority of an interrupt. It is equipped with the standard Syst
         <td>0..1 </td>
     </tr>
     <tr>
+        <td>dspPresent </td>
+        <td>Indicates whether the processor implements the optional SIMD DSP extensions (DSP). Cortex-M33 is the only available Cortex-M processor with an optional DSP extension. For ARMv7M SIMD DSP extensions are
+        a mandatory part of Cortex-M4 and Cortex-M7. This tag is either set to \token{true} or \token{false}, \token{1} or \token{0}.</td>. This element is mandatory for Cortex-M33 and future processors with optional
+        SIMD DSP instruction set.
+        <td>boolean </td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
         <td>icachePresent</td>
         <td>Indicate whether the processor has an instruction cache. Note: only for Cortex-M7-based devices. </td>
         <td>boolean </td>
