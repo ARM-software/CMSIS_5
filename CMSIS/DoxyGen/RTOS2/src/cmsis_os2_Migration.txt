@@ -90,7 +90,7 @@ New function.
 \enddiv
 
 \div{new}
-\func{uint32_t #osKernelLock (void)}
+\func{int32_t #osKernelLock (void)}
 \none
 \copybrief{osKernelLock}
 New function.
@@ -330,7 +330,7 @@ New function.
 \enddiv
 
 \div{new}
-\func{const char *#osEventFlagsGetName ((osEventFlagsId_t ef_id)}
+\func{const char *#osEventFlagsGetName (osEventFlagsId_t ef_id)}
 \none
 \copybrief{osEventFlagsGetName}
 New function.
@@ -494,7 +494,7 @@ Refer to \ref CMSIS_RTOS_MutexMgmt for details.
 \enddiv
 
 \div{new}
-\func{const char *#osMutexGetName ((osMutexId_t mutex_id)}
+\func{const char *#osMutexGetName (osMutexId_t mutex_id)}
 \none
 \copybrief{osMutexGetName}
 New function.
@@ -559,7 +559,7 @@ New function.
 \enddiv
 
 \div{new}
-\func{const char *#osSemaphoreGetName ((osSemaphoreId_t semaphore_id)}
+\func{const char *#osSemaphoreGetName (osSemaphoreId_t semaphore_id)}
 \none
 \copybrief{osSemaphoreGetName}
 New function.
@@ -646,7 +646,7 @@ New function.
 \enddiv
 
 \div{new}
-\func{const char *#osMemoryPoolGetName ((osMemoryPoolId_t mp_id)}
+\func{const char *#osMemoryPoolGetName (osMemoryPoolId_t mp_id)}
 \none
 \copybrief{osMemoryPoolGetName}
 New function.
@@ -718,7 +718,7 @@ New function.
 \enddiv
 
 \div{new}
-\func{const char *#osMessageQueueGetName ((osMessageQueueId_t mq_id)}
+\func{const char *#osMessageQueueGetName (osMessageQueueId_t mq_id)}
 \none
 \copybrief{osMessageQueueGetName}
 New function.

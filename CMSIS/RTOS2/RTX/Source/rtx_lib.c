@@ -374,11 +374,17 @@ __STATIC_INLINE void evr_initialize (void) {
 #if ((OS_EVR_THREAD_FILTER    & 0x80U) != 0U)
   (void)EventRecorderEnable(OS_EVR_THREAD_FILTER    & 0x0FU, EvtRtxThreadNo,       EvtRtxThreadNo);
 #endif
-#if ((OS_EVR_TIMER_FILTER     & 0x80U) != 0U)
-  (void)EventRecorderEnable(OS_EVR_TIMER_FILTER     & 0x0FU, EvtRtxTimerNo,        EvtRtxTimerNo);
+#if ((OS_EVR_WAIT_FILTER      & 0x80U) != 0U)
+  (void)EventRecorderEnable(OS_EVR_WAIT_FILTER      & 0x0FU, EvtRtxWaitNo,         EvtRtxWaitNo);
+#endif
+#if ((OS_EVR_THFLAGS_FILTER   & 0x80U) != 0U)
+  (void)EventRecorderEnable(OS_EVR_THFLAGS_FILTER   & 0x0FU, EvtRtxThreadFlagsNo,  EvtRtxThreadFlagsNo);
 #endif
 #if ((OS_EVR_EVFLAGS_FILTER   & 0x80U) != 0U)
   (void)EventRecorderEnable(OS_EVR_EVFLAGS_FILTER   & 0x0FU, EvtRtxEventFlagsNo,   EvtRtxEventFlagsNo);
+#endif
+#if ((OS_EVR_TIMER_FILTER     & 0x80U) != 0U)
+  (void)EventRecorderEnable(OS_EVR_TIMER_FILTER     & 0x0FU, EvtRtxTimerNo,        EvtRtxTimerNo);
 #endif
 #if ((OS_EVR_MUTEX_FILTER     & 0x80U) != 0U)
   (void)EventRecorderEnable(OS_EVR_MUTEX_FILTER     & 0x0FU, EvtRtxMutexNo,        EvtRtxMutexNo);

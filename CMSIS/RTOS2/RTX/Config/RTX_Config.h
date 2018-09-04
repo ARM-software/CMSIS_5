@@ -17,7 +17,7 @@
  *
  * -----------------------------------------------------------------------------
  *
- * $Revision:   V5.4.0
+ * $Revision:   V5.5.0
  *
  * Project:     CMSIS-RTOS RTX
  * Title:       RTX Configuration definitions
@@ -400,15 +400,26 @@
 #define OS_EVR_THREAD_FILTER        0x85U
 #endif
  
-//       <e.7>Timer
-//       <i> Filter enable settings for Timer events.
+//       <e.7>Generic Wait
+//       <i> Filter enable settings for Generic Wait events.
 //         <o.0>Error events
 //         <o.1>API function call events
 //         <o.2>Operation events
 //         <o.3>Detailed operation events
 //       </e>
-#ifndef OS_EVR_TIMER_FILTER
-#define OS_EVR_TIMER_FILTER         0x81U
+#ifndef OS_EVR_WAIT_FILTER
+#define OS_EVR_WAIT_FILTER          0x81U
+#endif
+ 
+//       <e.7>Thread Flags
+//       <i> Filter enable settings for Thread Flags events.
+//         <o.0>Error events
+//         <o.1>API function call events
+//         <o.2>Operation events
+//         <o.3>Detailed operation events
+//       </e>
+#ifndef OS_EVR_THFLAGS_FILTER
+#define OS_EVR_THFLAGS_FILTER       0x81U
 #endif
  
 //       <e.7>Event Flags
@@ -420,6 +431,17 @@
 //       </e>
 #ifndef OS_EVR_EVFLAGS_FILTER
 #define OS_EVR_EVFLAGS_FILTER       0x81U
+#endif
+ 
+//       <e.7>Timer
+//       <i> Filter enable settings for Timer events.
+//         <o.0>Error events
+//         <o.1>API function call events
+//         <o.2>Operation events
+//         <o.3>Detailed operation events
+//       </e>
+#ifndef OS_EVR_TIMER_FILTER
+#define OS_EVR_TIMER_FILTER         0x81U
 #endif
  
 //       <e.7>Mutex
@@ -491,10 +513,16 @@
 #define OS_EVR_THREAD               1
 #endif
  
-//     <q>Timer
-//     <i> Enables Timer event generation.
-#ifndef OS_EVR_TIMER
-#define OS_EVR_TIMER                1
+//     <q>Generic Wait
+//     <i> Enables Generic Wait event generation.
+#ifndef OS_EVR_WAIT
+#define OS_EVR_WAIT                 1
+#endif
+ 
+//     <q>Thread Flags
+//     <i> Enables Thread Flags event generation.
+#ifndef OS_EVR_THFLAGS
+#define OS_EVR_THFLAGS              1
 #endif
  
 //     <q>Event Flags
@@ -502,7 +530,13 @@
 #ifndef OS_EVR_EVFLAGS
 #define OS_EVR_EVFLAGS              1
 #endif
-  
+ 
+//     <q>Timer
+//     <i> Enables Timer event generation.
+#ifndef OS_EVR_TIMER
+#define OS_EVR_TIMER                1
+#endif
+ 
 //     <q>Mutex
 //     <i> Enables Mutex event generation.
 #ifndef OS_EVR_MUTEX

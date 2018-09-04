@@ -221,7 +221,7 @@ static osStatus_t svcRtxKernelGetInfo (osVersion_t *version, char *id_buf, uint3
     memcpy(id_buf, osRtxKernelId, size);
   }
 
-  EvrRtxKernelInfoRetrieved(version, id_buf);
+  EvrRtxKernelInfoRetrieved(osRtxVersionAPI, osRtxVersionKernel, id_buf);
 
   return osOK;
 }

@@ -607,10 +607,10 @@ void ThreadTerminate_example (void) {
   status = osThreadTerminate (id);                     // stop the thread
   if (status == osOK) {
                                                        // Thread was terminated successfully
-    }
+  }
   else {
                                                        // Failed to terminate a thread
-    }
+  }
 }
 \endcode
 */
