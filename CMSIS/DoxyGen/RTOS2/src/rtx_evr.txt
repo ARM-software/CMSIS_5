@@ -651,7 +651,7 @@ of the extended execution status codes which are summarized in the table below.
 */
 
 /**
-\fn void EvrRtxdDelay (uint32_t ticks)
+\fn void EvrRtxDelay (uint32_t ticks)
 \details
 The event \b Delay is generated when the function \ref osDelay is called.
 
