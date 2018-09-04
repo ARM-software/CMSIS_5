@@ -8,7 +8,7 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.4.1-dev0">
+    <release version="5.5.0-dev0">
       Active development ...
       Added Cortex-M35P device support.
       CMSIS-RTOS2:
