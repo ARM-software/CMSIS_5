@@ -724,7 +724,7 @@ of the extended execution status codes which are summarized in the table below.
 */
 
 /**
-\fn void EvrRtxThreadFlagsSet (osThreadId_t thread_id, int32_t flags)
+\fn void EvrRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags)
 \details
 The event \b ThreadFlagsSet is generated when the function \ref osThreadFlagsSet is called.
 
@@ -734,7 +734,7 @@ The event \b ThreadFlagsSet is generated when the function \ref osThreadFlagsSet
 */
 
 /**
-\fn void EvrRtxThreadFlagsSetDone (osThreadId_t thread_id, int32_t thread_flags)
+\fn void EvrRtxThreadFlagsSetDone (osThreadId_t thread_id, uint32_t thread_flags)
 \details
 The event \b ThreadFlagsSetDone is generated when thread flags are successfully set.
 
@@ -744,7 +744,7 @@ The event \b ThreadFlagsSetDone is generated when thread flags are successfully 
 */
 
 /**
-\fn void EvrRtxThreadFlagsClear (int32_t flags)
+\fn void EvrRtxThreadFlagsClear (uint32_t flags)
 \details
 The event \b ThreadFlagsClear is generated when the function \ref osThreadFlagsClear is called.
 
@@ -753,7 +753,7 @@ The event \b ThreadFlagsClear is generated when the function \ref osThreadFlagsC
 */
 
 /**
-\fn void EvrRtxThreadFlagsClearDone (int32_t thread_flags)
+\fn void EvrRtxThreadFlagsClearDone (uint32_t thread_flags)
 \details
 The event \b ThreadFlagsClearDone is generated when the function \ref osThreadFlagsClear successfully clears thread flags.
 
@@ -762,7 +762,7 @@ The event \b ThreadFlagsClearDone is generated when the function \ref osThreadFl
 */
 
 /**
-\fn void EvrRtxThreadFlagsGet (int32_t thread_flags)
+\fn void EvrRtxThreadFlagsGet (uint32_t thread_flags)
 \details
 The event \b ThreadFlagsGet is generated when the function \ref osThreadFlagsGet is called and its execution result is known.
 
@@ -771,7 +771,7 @@ The event \b ThreadFlagsGet is generated when the function \ref osThreadFlagsGet
 */
 
 /**
-\fn void EvrRtxThreadFlagsWait (int32_t flags, uint32_t options, uint32_t timeout)
+\fn void EvrRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_t timeout)
 \details
 The event \b ThreadFlagsWait is generated when the function \ref osThreadFlagsWait is called.
 
@@ -782,7 +782,7 @@ The event \b ThreadFlagsWait is generated when the function \ref osThreadFlagsWa
 */
 
 /**
-\fn void EvrRtxThreadFlagsWaitPending (int32_t flags, uint32_t options, uint32_t timeout)
+\fn void EvrRtxThreadFlagsWaitPending (uint32_t flags, uint32_t options, uint32_t timeout)
 \details
 The event \b ThreadFlagsWaitPending is generated when the function \ref osThreadFlagsWait starts waiting for thread flags to become signaled.
 
@@ -799,7 +799,7 @@ The event \b ThreadFlagsWaitTimeout is generated when wait for thread flags to b
 */
 
 /**
-\fn void EvrRtxThreadFlagsWaitCompleted (int32_t flags, uint32_t options, int32_t thread_flags)
+\fn void EvrRtxThreadFlagsWaitCompleted (uint32_t flags, uint32_t options, uint32_t thread_flags)
 \details
 The event \b ThreadFlagsWaitCompleted is generated when waiting for thread flags ends because requested flags were signaled.
 
@@ -810,7 +810,7 @@ The event \b ThreadFlagsWaitCompleted is generated when waiting for thread flags
 */
 
 /**
-\fn void EvrRtxThreadFlagsWaitNotCompleted (int32_t flags, uint32_t options)
+\fn void EvrRtxThreadFlagsWaitNotCompleted (uint32_t flags, uint32_t options)
 \details
 The event \b ThreadFlagsWaitNotCompleted is generated when the function \ref osThreadFlagsWait returns without timeout and specified thread flags were not signaled.
 
@@ -891,7 +891,7 @@ The event \b EventFlagsGetName is generated when the function \ref osEventFlagsG
 */
 
 /**
-\fn void EvrRtxEventFlagsSet (osEventFlagsId_t ef_id, int32_t flags)
+\fn void EvrRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags)
 \details
 The event \b EventFlagsSet is generated when the function \ref osEventFlagsSet is called.
 
@@ -901,7 +901,7 @@ The event \b EventFlagsSet is generated when the function \ref osEventFlagsSet i
 */
 
 /**
-\fn void EvrRtxEventFlagsSetDone (osEventFlagsId_t ef_id, int32_t event_flags)
+\fn void EvrRtxEventFlagsSetDone (osEventFlagsId_t ef_id, uint32_t event_flags)
 \details
 The event \b EventFlagsSetDone is generated when event flags are successfully set.
 
@@ -911,7 +911,7 @@ The event \b EventFlagsSetDone is generated when event flags are successfully se
 */
 
 /**
-\fn void EvrRtxEventFlagsClear (osEventFlagsId_t ef_id, int32_t flags)
+\fn void EvrRtxEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags)
 \details
 The event \b EventFlagsClear is generated when the function \ref osEventFlagsClear is called.
 
@@ -921,7 +921,7 @@ The event \b EventFlagsClear is generated when the function \ref osEventFlagsCle
 */
 
 /**
-\fn void EvrRtxEventFlagsClearDone (osEventFlagsId_t ef_id, int32_t event_flags)
+\fn void EvrRtxEventFlagsClearDone (osEventFlagsId_t ef_id, uint32_t event_flags)
 \details
 The event \b EventFlagsClearDone is generated when the function \ref osEventFlagsClear successfully clears the event flags.
 
@@ -931,7 +931,7 @@ The event \b EventFlagsClearDone is generated when the function \ref osEventFlag
 */
 
 /**
-\fn void EvrRtxEventFlagsGet (osEventFlagsId_t ef_id, int32_t event_flags)
+\fn void EvrRtxEventFlagsGet (osEventFlagsId_t ef_id, uint32_t event_flags)
 \details
 The event \b EventFlagsGet is generated when the function \ref osEventFlagsGet is called and its execution result is known.
 
@@ -941,7 +941,7 @@ The event \b EventFlagsGet is generated when the function \ref osEventFlagsGet i
 */
 
 /**
-\fn void EvrRtxEventFlagsWait (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout)
+\fn void EvrRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout)
 \details
 The event \b EventFlagsWait is generated when the function \ref osEventFlagsWait is called.
 
@@ -953,7 +953,7 @@ The event \b EventFlagsWait is generated when the function \ref osEventFlagsWait
 */
 
 /**
-\fn void EvrRtxEventFlagsWaitPending (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, uint32_t timeout)
+\fn void EvrRtxEventFlagsWaitPending (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t timeout)
 \details
 The event \b EventFlagsWaitPending is generated when the function \ref osEventFlagsWait starts waiting for event flags to become signaled.
 
@@ -965,7 +965,7 @@ The event \b EventFlagsWaitPending is generated when the function \ref osEventFl
 */
 
 /**
-\fn void EvrRtxEventFlagsWaitTimeout (osEventFlagsId_t ef_id);
+\fn void EvrRtxEventFlagsWaitTimeout (osEventFlagsId_t ef_id)
 \details
 The event \b EventFlagsWaitTimeout is generated when wait for event flags to become signaled is aborted due to expired wait timeout.
 
@@ -974,7 +974,7 @@ The event \b EventFlagsWaitTimeout is generated when wait for event flags to bec
 */
 
 /**
-\fn void EvrRtxEventFlagsWaitCompleted (osEventFlagsId_t ef_id, int32_t flags, uint32_t options, int32_t event_flags)
+\fn void EvrRtxEventFlagsWaitCompleted (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options, uint32_t event_flags)
 \details
 The event \b EventFlagsWaitCompleted is generated when waiting for event flags ends because requested flags were signaled.
 
@@ -986,7 +986,7 @@ The event \b EventFlagsWaitCompleted is generated when waiting for event flags e
 */
 
 /**
-\fn void EvrRtxEventFlagsWaitNotCompleted (osEventFlagsId_t ef_id, int32_t flags, uint32_t options)
+\fn void EvrRtxEventFlagsWaitNotCompleted (osEventFlagsId_t ef_id, uint32_t flags, uint32_t options)
 \details
 The event \b EventFlagsWaitNotCompleted is generated when the function \ref osEventFlagsWait returns without timeout and specified event flags were not signaled.
 
