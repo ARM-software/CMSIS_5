@@ -176,7 +176,7 @@ SysTick | lowest   | Kernel system timer interrupt to generate periodic timer ti
 PendSV  | lowest   | PendSV (request for system-level service) when calling certain RTX functions from \b Handler mode
 SCV     | lowest+1 | Supervisor Call used to enter the RTOS kernel from \b Thread mode
 
-Other device interrupts can be used without limitation. For Arm Cortex-M3/M4/M7/M23/M33 processors, interrupts are never disabled by RTX Kernel.
+Other device interrupts can be used without limitation. For Arm Cortex-M3/M4/M7/M23/M33/M35P processors, interrupts are never disabled by RTX Kernel.
 
 <b>Usage of interrupt priority grouping</b>
 - The interrupt priority grouping should be configured using the CMSIS-Core function NVIC_SetPriorityGrouping before calling the function 
@@ -1142,7 +1142,7 @@ The interface files to the processor hardware are:
 \note
  - The CMSIS-Core variable \c SystemCoreClock is used to configure the SysTick timer. 
 
-\subsection tpCortexM3_M4_M7_M33 Cortex-M3/M4/M7/M33 target processor
+\subsection tpCortexM3_M4_M7_M33_M35P Cortex-M3/M4/M7/M33/M35P target processor
 
 
 Hardware Requirement       | Description
@@ -1157,7 +1157,7 @@ LDREX, STREX instruction   | Atomic execution avoids the requirement to disable 
 The interface files to the processor hardware are: 
  - <b>%irq_cm3.s</b> defines exception handlers for Cortex-M3 and Cortex-M4/M7 without floating point unit.
  - <b>%irq_cm4f.s</b> defines exception handlers for Cortex-M4/M7 with floating point unit.
- - <b>%irq_armv8mml_common.s</b> defines exception handlers for Cortex-M33
+ - <b>%irq_armv8mml_common.s</b> defines exception handlers for Cortex-M33/M35P
  - <b>%rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
 
@@ -1281,7 +1281,7 @@ The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provi
 \section libFiles RTX v5 Library Files
 
 The CMSIS-RTOS RTX Library is available pre-compiled for ARMCC and GCC compilers and supports all Cortex-M
-processor variants in every configuration, including Arm Cortex-M23 and Cortex-M33.
+processor variants in every configuration, including Arm Cortex-M23, Cortex-M33 and Cortex-M35P.
 
 <table class="cmtable" summary="CMSIS-RTOS RTX Library Files">
     <tr>
@@ -1824,8 +1824,8 @@ The functions that call the Event Recorder are in the module \em rtx_evr.c and t
 \page functionOverview Function Overview
 
 CMSIS-RTOS2 provides multiple API interfaces:
-  - \subpage rtos_api2 is the new C function interface that supports dynamic object creation and Armv8-M (Arm Cortex-M23 and
-    Cortex-M33).
+  - \subpage rtos_api2 is the new C function interface that supports dynamic object creation and Armv8-M (Arm Cortex-M23,
+    Cortex-M33 and Cortex-M35P).
   - <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a> is a C function API that is backward
     compatible with CMSIS-RTOS v1.
   - \subpage rtos_apicpp is a C++ class function API (future extension).

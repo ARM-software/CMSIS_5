@@ -83,6 +83,12 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.4.1</td>
+      <td>
+        Added: Cortex-M35P support.\n
+      </td>
+    </tr>
+    <tr>
       <td>V5.1.2</td>
       <td>
         Removed using get/set built-ins FPSCR in GCC >= 7.2 due to shortcomings.\n
