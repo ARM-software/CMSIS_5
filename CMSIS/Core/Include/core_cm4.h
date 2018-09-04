@@ -1123,6 +1123,9 @@ typedef struct
 #define TPI_FFCR_TrigIN_Pos                 8U                                         /*!< TPI FFCR: TrigIN Position */
 #define TPI_FFCR_TrigIN_Msk                (0x1UL << TPI_FFCR_TrigIN_Pos)              /*!< TPI FFCR: TrigIN Mask */
 
+#define TPI_FFCR_TrigIn_Pos                 8U                                         /*!< TPI FFCR: TrigIn Position */
+#define TPI_FFCR_TrigIn_Msk                (0x1UL << TPI_FFCR_TrigIn_Pos)              /*!< TPI FFCR: TrigIn Mask */
+
 #define TPI_FFCR_FOnMan_Pos                 6U                                         /*!< TPI FFCR: FOnMan Position */
 #define TPI_FFCR_FOnMan_Msk                (0x1UL << TPI_FFCR_FOnMan_Pos)              /*!< TPI FFCR: FOnMan Mask */
 
