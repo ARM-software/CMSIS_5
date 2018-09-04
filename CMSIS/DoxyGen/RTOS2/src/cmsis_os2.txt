@@ -91,10 +91,6 @@ int main (void) {
  
   // System Initialization
   SystemCoreClockUpdate();
-#ifdef RTE_Compiler_EventRecorder
-  // Initialize and start Event Recorder
-  EventRecorderInitialize(EventRecordError, 1U);
-#endif
   // ...
  
   osKernelInitialize();                 // Initialize CMSIS-RTOS
@@ -951,8 +947,10 @@ Name              | \#define                   | Description
 Memory Management | \c OS_EVR_MEMORY_FILTER    | Filter enable for Memory Management events.
 Kernel            | \c OS_EVR_KERNEL_FILTER    | Filter enable for Kernel events.
 Thread            | \c OS_EVR_THREAD_FILTER    | Filter enable for Thread events.
-Timer             | \c OS_EVR_TIMER_FILTER     | Filter enable for Timer events.
+Generic Wait      | \c OS_EVR_WAIT_FILTER      | Filter enable for Generic Wait events.
+Thread Flags      | \c OS_EVR_THFLAGS_FILTER   | Filter enable for Thread Flags events.
 Event Flags       | \c OS_EVR_EVFLAGS_FILTER   | Filter enable for Event Flags events.
+Timer             | \c OS_EVR_TIMER_FILTER     | Filter enable for Timer events.
 Mutex             | \c OS_EVR_MUTEX_FILTER     | Filter enable for Mutex events.
 Semaphore         | \c OS_EVR_SEMAPHORE_FILTER | Filter enable for Semaphore events.
 Memory Pool       | \c OS_EVR_MEMPOOL_FILTER   | Filter enable for Memory Pool events.
@@ -969,15 +967,17 @@ Enable the event generation for specific RTX component groups. This requires the
 
 Name              | \#define                 | Description
 ------------------|--------------------------|----------------------------------------------------------------
-Memory Management | \c OS_EVR_MEMORY         | Enables Memory Management events recording.
-Kernel            | \c OS_EVR_KERNEL         | Enables Kernel events recording.
-Thread            | \c OS_EVR_THREAD         | Enables Thread events recording.
-Timer             | \c OS_EVR_TIMER          | Enables Timer events recording.
-Event Flags       | \c OS_EVR_EVFLAGS        | Enables Event Flags events recording.
-Mutex             | \c OS_EVR_MUTEX          | Enables Mutex events recording.
-Semaphore         | \c OS_EVR_SEMAPHORE      | Enables Semaphore events recording.
-Memory Pool       | \c OS_EVR_MEMPOOL        | Enables Memory Pool events recording.
-Message Queue     | \c OS_EVR_MSGQUEUE       | Enables Message Queue events recording.
+Memory Management | \c OS_EVR_MEMORY         | Enables Memory Management events generation.
+Kernel            | \c OS_EVR_KERNEL         | Enables Kernel events generation.
+Thread            | \c OS_EVR_THREAD         | Enables Thread events generation.
+Generic Wait      | \c OS_EVR_WAIT           | Enables Generic Wait events generation.
+Thread Flags      | \c OS_EVR_THFLAGS        | Enables Thread Flags events generation.
+Event Flags       | \c OS_EVR_EVFLAGS        | Enables Event Flags events generation.
+Timer             | \c OS_EVR_TIMER          | Enables Timer events generation.
+Mutex             | \c OS_EVR_MUTEX          | Enables Mutex events generation.
+Semaphore         | \c OS_EVR_SEMAPHORE      | Enables Semaphore events generation.
+Memory Pool       | \c OS_EVR_MEMPOOL        | Enables Memory Pool events generation.
+Message Queue     | \c OS_EVR_MSGQUEUE       | Enables Message Queue events generation.
 
 \note
 If event generation for a component is disabled, the code that generates the related events is not included. Thus, \ref evtrecConfigGlobIni "filters" for this
@@ -1007,28 +1007,23 @@ to the <b>RTX_Config.h</b> file:
 \c EVR_RTX_THREAD_ERROR_DISABLE, \c EVR_RTX_THREAD_NEW_DISABLE, \c EVR_RTX_THREAD_CREATED_DISABLE,
 \c EVR_RTX_THREAD_GET_NAME_DISABLE, \c EVR_RTX_THREAD_GET_ID_DISABLE, \c EVR_RTX_THREAD_GET_STATE_DISABLE,
 \c EVR_RTX_THREAD_GET_STACK_SIZE_DISABLE, \c EVR_RTX_THREAD_GET_STACK_SPACE_DISABLE, \c EVR_RTX_THREAD_SET_PRIORITY_DISABLE,
-\c EVR_RTX_THREAD_GET_PRIORITY_DISABLE, \c EVR_RTX_THREAD_YIELD_DISABLE, \c EVR_RTX_THREAD_SUSPEND_DISABLE,
-\c EVR_RTX_THREAD_SUSPENDED_DISABLE, \c EVR_RTX_THREAD_RESUME_DISABLE, \c EVR_RTX_THREAD_RESUMED_DISABLE,
-\c EVR_RTX_THREAD_DETACH_DISABLE, \c EVR_RTX_THREAD_DETACHED_DISABLE, \c EVR_RTX_THREAD_JOIN_DISABLE,
-\c EVR_RTX_THREAD_JOIN_PENDING_DISABLE, \c EVR_RTX_THREAD_JOINED_DISABLE, \c EVR_RTX_THREAD_BLOCKED_DISABLE,
-\c EVR_RTX_THREAD_UNBLOCKED_DISABLE, \c EVR_RTX_THREAD_PREEMPTED_DISABLE, \c EVR_RTX_THREAD_SWITCHED_DISABLE,
-\c EVR_RTX_THREAD_EXIT_DISABLE, \c EVR_RTX_THREAD_TERMINATE_DISABLE, \c EVR_RTX_THREAD_DESTROYED_DISABLE,
-\c EVR_RTX_THREAD_GET_COUNT_DISABLE, \c EVR_RTX_THREAD_ENUMERATE_DISABLE
-
-\b Thread \b flag \b events \n
-\c EVR_RTX_THREAD_FLAGS_SET_DISABLE, \c EVR_RTX_THREAD_FLAGS_SET_DONE_DISABLE, \c EVR_RTX_THREAD_FLAGS_CLEAR_DISABLE,
-\c EVR_RTX_THREAD_FLAGS_CLEAR_DONE_DISABLE, \c EVR_RTX_THREAD_FLAGS_GET_DISABLE, \c EVR_RTX_THREAD_FLAGS_WAIT_DISABLE,
-\c EVR_RTX_THREAD_FLAGS_WAIT_PENDING_DISABLE, \c EVR_RTX_THREAD_FLAGS_WAIT_TIMEOUT_DISABLE,
-\c EVR_RTX_THREAD_FLAGS_WAIT_COMPLETED_DISABLE, \c EVR_RTX_THREAD_FLAGS_WAIT_NOT_COMPLETED_DISABLE
+\c EVR_RTX_THREAD_PRIORITY_UPDATED_DISABLE, \c EVR_RTX_THREAD_GET_PRIORITY_DISABLE, \c EVR_RTX_THREAD_YIELD_DISABLE,
+\c EVR_RTX_THREAD_SUSPEND_DISABLE, \c EVR_RTX_THREAD_SUSPENDED_DISABLE, \c EVR_RTX_THREAD_RESUME_DISABLE,
+\c EVR_RTX_THREAD_RESUMED_DISABLE, \c EVR_RTX_THREAD_DETACH_DISABLE, \c EVR_RTX_THREAD_DETACHED_DISABLE,
+\c EVR_RTX_THREAD_JOIN_DISABLE, \c EVR_RTX_THREAD_JOIN_PENDING_DISABLE, \c EVR_RTX_THREAD_JOINED_DISABLE,
+\c EVR_RTX_THREAD_BLOCKED_DISABLE, \c EVR_RTX_THREAD_UNBLOCKED_DISABLE, \c EVR_RTX_THREAD_PREEMPTED_DISABLE,
+\c EVR_RTX_THREAD_SWITCHED_DISABLE, \c EVR_RTX_THREAD_EXIT_DISABLE, \c EVR_RTX_THREAD_TERMINATE_DISABLE,
+\c EVR_RTX_THREAD_DESTROYED_DISABLE, \c EVR_RTX_THREAD_GET_COUNT_DISABLE, \c EVR_RTX_THREAD_ENUMERATE_DISABLE
 
 \b Generic \b wait \b events \n
-\c EVR_RTX_THREAD_DELAY_DISABLE, \c EVR_RTX_THREAD_DELAY_UNTIL_DISABLE, \c EVR_RTX_THREAD_DELAY_COMPLETED_DISABLE
+\c EVR_RTX_DELAY_ERROR_DISABLE, \c EVR_RTX_DELAY_DISABLE, \c EVR_RTX_DELAY_UNTIL_DISABLE,
+\c EVR_RTX_DELAY_STARTED_DISABLE, \c EVR_RTX_DELAY_COMPLETED_DISABLE 
 
-\b Timer \b events \n
-\c EVR_RTX_TIMER_ERROR_DISABLE, \c EVR_RTX_TIMER_CALLBACK_DISABLE, \c EVR_RTX_TIMER_NEW_DISABLE,
-\c EVR_RTX_TIMER_CREATED_DISABLE, \c EVR_RTX_TIMER_GET_NAME_DISABLE, \c EVR_RTX_TIMER_START_DISABLE,
-\c EVR_RTX_TIMER_STARTED_DISABLE, \c EVR_RTX_TIMER_STOP_DISABLE, \c EVR_RTX_TIMER_STOPPED_DISABLE,
-\c EVR_RTX_TIMER_IS_RUNNING_DISABLE, \c EVR_RTX_TIMER_DELETE_DISABLE, \c EVR_RTX_TIMER_DESTROYED_DISABLE
+\b Thread \b flag \b events \n
+\c EVR_RTX_THREAD_FLAGS_ERROR_DISABLE, \c EVR_RTX_THREAD_FLAGS_SET_DISABLE, \c EVR_RTX_THREAD_FLAGS_SET_DONE_DISABLE,
+\c EVR_RTX_THREAD_FLAGS_CLEAR_DISABLE, \c EVR_RTX_THREAD_FLAGS_CLEAR_DONE_DISABLE, \c EVR_RTX_THREAD_FLAGS_GET_DISABLE,
+\c EVR_RTX_THREAD_FLAGS_WAIT_DISABLE, \c EVR_RTX_THREAD_FLAGS_WAIT_PENDING_DISABLE, \c EVR_RTX_THREAD_FLAGS_WAIT_TIMEOUT_DISABLE,
+\c EVR_RTX_THREAD_FLAGS_WAIT_COMPLETED_DISABLE, \c EVR_RTX_THREAD_FLAGS_WAIT_NOT_COMPLETED_DISABLE
 
 \b Event \b flag \b events \n
 \c EVR_RTX_EVENT_FLAGS_ERROR_DISABLE, \c EVR_RTX_EVENT_FLAGS_NEW_DISABLE, \c EVR_RTX_EVENT_FLAGS_CREATED_DISABLE,
@@ -1038,6 +1033,12 @@ to the <b>RTX_Config.h</b> file:
 \c EVR_RTX_EVENT_FLAGS_WAIT_TIMEOUT_DISABLE, \c EVR_RTX_EVENT_FLAGS_WAIT_COMPLETED_DISABLE,
 \c EVR_RTX_EVENT_FLAGS_WAIT_NOT_COMPLETED_DISABLE, \c EVR_RTX_EVENT_FLAGS_DELETE_DISABLE,
 \c EVR_RTX_EVENT_FLAGS_DESTROYED_DISABLE
+
+\b Timer \b events \n
+\c EVR_RTX_TIMER_ERROR_DISABLE, \c EVR_RTX_TIMER_CALLBACK_DISABLE, \c EVR_RTX_TIMER_NEW_DISABLE,
+\c EVR_RTX_TIMER_CREATED_DISABLE, \c EVR_RTX_TIMER_GET_NAME_DISABLE, \c EVR_RTX_TIMER_START_DISABLE,
+\c EVR_RTX_TIMER_STARTED_DISABLE, \c EVR_RTX_TIMER_STOP_DISABLE, \c EVR_RTX_TIMER_STOPPED_DISABLE,
+\c EVR_RTX_TIMER_IS_RUNNING_DISABLE, \c EVR_RTX_TIMER_DELETE_DISABLE, \c EVR_RTX_TIMER_DESTROYED_DISABLE
 
 \b Mutex \b events \n
 \c EVR_RTX_MUTEX_ERROR_DISABLE, \c EVR_RTX_MUTEX_NEW_DISABLE, \c EVR_RTX_MUTEX_CREATED_DISABLE,
