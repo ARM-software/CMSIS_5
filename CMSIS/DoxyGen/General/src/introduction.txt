@@ -194,6 +194,12 @@ In addition, each CMSIS component has its own release history:
       <th>Description</th>
     </tr>
     <tr>
+      <td>5.5.0</td>
+      <td>
+        - CMSIS-Core (Cortex-M) 5.2.0 added Cortex-M35P device support.
+      </td>
+    </tr>
+    <tr>
       <td>5.4.0</td>
       <td>
         - CMSIS-Core (Cortex-M) 5.1.2 Minor fixes and slight enhancements, e.g. beta for Cortex-M1.
