@@ -1527,7 +1527,8 @@
     <event id="0xF100 + 0x01" level="API"    property="KernelInitialize"                    value="" info="osKernelInitialize function was called."/>
     <event id="0xF100 + 0x02" level="Op"     property="KernelInitialized"  tracking="Reset" value="" info="Kernel was initialized."/>
     <event id="0xF100 + 0x03" level="API"    property="KernelGetInfo"                       value="version=%x[val1], id_buf=%x[val2], id_size=%d[val3]" info="osKernelGetInfo function was called."/>
-    <event id="0xF100 + 0x04" level="Op"     property="KernelInfoRetrieved"                 value="version_api=%d[val1/10000000].%d[(val1/10000)%1000].%d[val1%10000], version_kernel=%d[val2/10000000].%d[(val2/10000)%1000].%d[val2%10000], id_buf=%N[val3]" info="Kernel information was retrieved."/>
+    <event id="0xF100 + 0x04" level="Op"     property="KernelInfoRetrieved"                 value="version_api=%d[val1/10000000].%d[(val1/10000)%1000].%d[val1%10000], version_kernel=%d[val2/10000000].%d[(val2/10000)%1000].%d[val2%10000]" info="Kernel information was retrieved."/>
+    <event id="0xF100 + 0x05" level="Detail" property="KernelInfoRetrieved"                 value="id=%t[val1]" info="Kernel ID as ASCII string."/>
     <event id="0xF100 + 0x06" level="API"    property="KernelGetState"                      value="state=%E[val1, rtx_kernel_state:id]" info="osKernelGetState function was called and state was retrieved."/>
     <event id="0xF100 + 0x07" level="API"    property="KernelStart"                         value="" info="osKernelStart function was called."/>
     <event id="0xF100 + 0x08" level="Op"     property="KernelStarted"                       value="" info="Kernel execution was started."/>

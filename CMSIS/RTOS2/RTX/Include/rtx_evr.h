@@ -223,14 +223,14 @@ extern void EvrRtxKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id
 
 /**
   \brief  Event on successful RTOS kernel information retrieve (Op)
-  \param[in]  ver_api       API version.
-  \param[in]  ver_kernel    kernel version.
+  \param[in]  version       pointer to buffer for retrieving version information.
   \param[in]  id_buf        pointer to buffer for retrieving kernel identification string.
+  \param[in]  id_size       size of buffer for kernel identification string.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_INFO_RETRIEVED_DISABLE))
-extern void EvrRtxKernelInfoRetrieved (uint32_t ver_api, uint32_t ver_kernel, char *id_buf);
+extern void EvrRtxKernelInfoRetrieved (const osVersion_t *version, const char *id_buf, uint32_t id_size);
 #else
-#define EvrRtxKernelInfoRetrieved(ver_api, ver_kernel, id_buf)
+#define EvrRtxKernelInfoRetrieved(version, id_buf, id_size)
 #endif
 
 /**

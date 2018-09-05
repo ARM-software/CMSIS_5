@@ -45,6 +45,7 @@
 #define EvtRtxKernelInitialized             EventID(EventLevelOp,     EvtRtxKernelNo, 0x02U)
 #define EvtRtxKernelGetInfo                 EventID(EventLevelAPI,    EvtRtxKernelNo, 0x03U)
 #define EvtRtxKernelInfoRetrieved           EventID(EventLevelOp,     EvtRtxKernelNo, 0x04U)
+#define EvtRtxKernelInfoRetrieved_Detail    EventID(EventLevelDetail, EvtRtxKernelNo, 0x05U)
 #define EvtRtxKernelGetState                EventID(EventLevelAPI,    EvtRtxKernelNo, 0x06U)
 #define EvtRtxKernelStart                   EventID(EventLevelAPI,    EvtRtxKernelNo, 0x07U)
 #define EvtRtxKernelStarted                 EventID(EventLevelOp,     EvtRtxKernelNo, 0x08U)
@@ -349,13 +350,18 @@ __WEAK void EvrRtxKernelGetInfo (osVersion_t *version, char *id_buf, uint32_t id
 #endif
 
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_INFO_RETRIEVED_DISABLE))
-__WEAK void EvrRtxKernelInfoRetrieved (uint32_t ver_api, uint32_t ver_kernel, char *id_buf) {
+__WEAK void EvrRtxKernelInfoRetrieved (const osVersion_t *version, const char *id_buf, uint32_t id_size) {
 #if defined(RTE_Compiler_EventRecorder)
-  (void)EventRecord4(EvtRtxKernelInfoRetrieved, ver_api, ver_kernel, (uint32_t)id_buf, 0U);
+  if (version != NULL) {
+    (void)EventRecord2(EvtRtxKernelInfoRetrieved, version->api, version->kernel);
+  }
+  if (id_buf != NULL) {
+    (void)EventRecordData(EvtRtxKernelInfoRetrieved_Detail, id_buf, id_size);
+  }
 #else
-  (void)ver_api;
-  (void)ver_kernel;
+  (void)version;
   (void)id_buf;
+  (void)id_size;
 #endif
 }
 #endif

@@ -152,14 +152,14 @@ The event \b KernelGetInfo is generated when the function \ref osKernelGetInfo i
 */
 
 /**
-\fn void EvrRtxKernelInfoRetrieved (uint32_t ver_api, uint32_t ver_kernel, char *id_buf)
+\fn void EvrRtxKernelInfoRetrieved (const osVersion_t *version, const char *id_buf, uint32_t id_size)
 \details
 The event \b KernelInfoRetrieved is generated when the function \ref osKernelGetInfo successfully retrieves kernel information.
 
 \b Value in the Event Recorder shows:
   - \b ver_api : API version.
   - \b ver_kernel : kernel version.
-  - \b id_buf : memory address of buffer for retrieving kernel identification string.
+  - \b id : kernel identification string (Detail).
 */
 
 /**
