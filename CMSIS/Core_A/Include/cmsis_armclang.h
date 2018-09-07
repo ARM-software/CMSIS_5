@@ -102,9 +102,6 @@
 #ifndef   __PACKED
   #define __PACKED                               __attribute__((packed))
 #endif
-#ifndef   __SECTION_ZERO_INIT
-  #define __SECTION_ZERO_INIT(name)              __attribute__((section(name)))
-#endif
 
 /* ##########################  Core Instruction Access  ######################### */
 /**
