@@ -87,7 +87,7 @@ arm_status arm_mat_inverse_f64(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  float64_t Xchg, in = 0.0f, in1;                /* Temporary input values  */
+  float64_t Xchg, in = 0.0, in1;                /* Temporary input values  */
   uint32_t i, rowCnt, flag = 0U, j, loopCnt, k, l;      /* loop counters */
   arm_status status;                             /* status of matrix inverse */
 
@@ -155,18 +155,18 @@ arm_status arm_mat_inverse_f64(
       j = numRows - rowCnt;
       while (j > 0U)
       {
-        *pOutT1++ = 0.0f;
+        *pOutT1++ = 0.0;
         j--;
       }
 
       /* Writing all ones in the diagonal of the destination matrix */
-      *pOutT1++ = 1.0f;
+      *pOutT1++ = 1.0;
 
       /* Writing all zeroes in upper triangle of the destination matrix */
       j = rowCnt - 1U;
       while (j > 0U)
       {
-        *pOutT1++ = 0.0f;
+        *pOutT1++ = 0.0;
         j--;
       }
 
@@ -208,7 +208,7 @@ arm_status arm_mat_inverse_f64(
       }
 
       /* Update the status if the matrix is singular */
-      if (maxC == 0.0f)
+      if (maxC == 0.0)
       {
         return ARM_MATH_SINGULAR;
       }
@@ -220,7 +220,7 @@ arm_status arm_mat_inverse_f64(
       k = 1U;
 
       /* Check if the pivot element is the most significant of the column */
-      if ( (in > 0.0f ? in : -in) != maxC)
+      if ( (in > 0.0 ? in : -in) != maxC)
       {
         /* Loop over the number rows present below */
         i = numRows - (l + 1U);
@@ -233,7 +233,7 @@ arm_status arm_mat_inverse_f64(
 
           /* Look for the most significant element to
            * replace in the rows below */
-          if ((*pInT2 > 0.0f ? *pInT2: -*pInT2) == maxC)
+          if ((*pInT2 > 0.0 ? *pInT2: -*pInT2) == maxC)
           {
             /* Loop over number of columns
              * to the right of the pilot element */
@@ -280,7 +280,7 @@ arm_status arm_mat_inverse_f64(
       }
 
       /* Update the status if the matrix is singular */
-      if ((flag != 1U) && (in == 0.0f))
+      if ((flag != 1U) && (in == 0.0))
       {
         return ARM_MATH_SINGULAR;
       }
@@ -416,7 +416,7 @@ arm_status arm_mat_inverse_f64(
 
   /* Run the below code for Cortex-M0 */
 
-  float64_t Xchg, in = 0.0f;                     /* Temporary input values  */
+  float64_t Xchg, in = 0.0;                     /* Temporary input values  */
   uint32_t i, rowCnt, flag = 0U, j, loopCnt, k, l;      /* loop counters */
   arm_status status;                             /* status of matrix inverse */
 
@@ -481,18 +481,18 @@ arm_status arm_mat_inverse_f64(
       j = numRows - rowCnt;
       while (j > 0U)
       {
-        *pOutT1++ = 0.0f;
+        *pOutT1++ = 0.0;
         j--;
       }
 
       /* Writing all ones in the diagonal of the destination matrix */
-      *pOutT1++ = 1.0f;
+      *pOutT1++ = 1.0;
 
       /* Writing all zeroes in upper triangle of the destination matrix */
       j = rowCnt - 1U;
       while (j > 0U)
       {
-        *pOutT1++ = 0.0f;
+        *pOutT1++ = 0.0;
         j--;
       }
 
@@ -529,7 +529,7 @@ arm_status arm_mat_inverse_f64(
       k = 1U;
 
       /* Check if the pivot element is zero */
-      if (*pInT1 == 0.0f)
+      if (*pInT1 == 0.0)
       {
         /* Loop over the number rows present below */
         for (i = (l + 1U); i < numRows; i++)
@@ -540,7 +540,7 @@ arm_status arm_mat_inverse_f64(
 
           /* Check if there is a non zero pivot element to
            * replace in the rows below */
-          if (*pInT2 != 0.0f)
+          if (*pInT2 != 0.0)
           {
             /* Loop over number of columns
              * to the right of the pilot element */
@@ -572,7 +572,7 @@ arm_status arm_mat_inverse_f64(
       }
 
       /* Update the status if the matrix is singular */
-      if ((flag != 1U) && (in == 0.0f))
+      if ((flag != 1U) && (in == 0.0))
       {
         return ARM_MATH_SINGULAR;
       }
@@ -669,12 +669,12 @@ arm_status arm_mat_inverse_f64(
     /* Set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
 
-    if ((flag != 1U) && (in == 0.0f))
+    if ((flag != 1U) && (in == 0.0))
     {
       pIn = pSrc->pData;
       for (i = 0; i < numRows * numCols; i++)
       {
-        if (pIn[i] != 0.0f)
+        if (pIn[i] != 0.0)
             break;
       }
 
