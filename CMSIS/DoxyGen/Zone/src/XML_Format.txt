@@ -611,7 +611,7 @@ The \ref xml_sregion lists a physical memory region, defines logical memory part
   </tr>
   <tr>
     <td>access</td>
-    <td>Access permissions for this alternative mapping.</td>
+    <td>Access permissions for this memory region.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
