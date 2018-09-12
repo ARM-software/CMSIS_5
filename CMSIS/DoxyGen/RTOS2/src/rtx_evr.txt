@@ -671,13 +671,28 @@ The event \b DelayUntil is generated when the function \ref osDelayUntil is call
 /**
 \fn void EvrRtxDelayStarted (uint32_t ticks)
 \details
-The event \b DelayStarted is generated when \ref osDelay or \ref osDelayUntil delay starts.
+The event \b DelayStarted is generated when \ref osDelay delay starts.
+
+\b Value in the Event Recorder shows:
+  - \b ticks : \ref CMSIS_RTOS_TimeOutValue "time ticks" value. 
 */
 
 /**
-\fn void EvrRtxDelayCompleted (void)
+\fn void EvrRtxDelayUntilStarted (uint32_t ticks)
+\details
+The event \b DelayUntilStarted is generated when \ref osDelayUntil delay starts.
+
+\b Value in the Event Recorder shows:
+  - \b ticks : \ref CMSIS_RTOS_TimeOutValue "time ticks" value. 
+*/
+
+/**
+\fn void EvrRtxDelayCompleted (osThreadId_t thread_id)
 \details
 The event \b DelayCompleted is generated when \ref osDelay or \ref osDelayUntil delay expires.
+
+\b Value in the Event Recorder shows:
+  - \b thread_id : thread ID.
 */
 
 /**
@@ -793,13 +808,16 @@ The event \b ThreadFlagsWaitPending is generated when the function \ref osThread
 */
 
 /**
-\fn void EvrRtxThreadFlagsWaitTimeout (void)
+\fn void EvrRtxThreadFlagsWaitTimeout (osThreadId_t thread_id)
 \details
 The event \b ThreadFlagsWaitTimeout is generated when wait for thread flags to become signaled is aborted due to expired wait timeout.
+
+\b Value in the Event Recorder shows:
+  - \b thread_id : thread ID.
 */
 
 /**
-\fn void EvrRtxThreadFlagsWaitCompleted (uint32_t flags, uint32_t options, uint32_t thread_flags)
+\fn void EvrRtxThreadFlagsWaitCompleted (uint32_t flags, uint32_t options, uint32_t thread_flags, osThreadId_t thread_id)
 \details
 The event \b ThreadFlagsWaitCompleted is generated when waiting for thread flags ends because requested flags were signaled.
 
@@ -807,6 +825,7 @@ The event \b ThreadFlagsWaitCompleted is generated when waiting for thread flags
   - \b flags : flags thread was waiting for.
   - \b option : flags options (refer to \ref osThreadFlagsWait "thread flags options").
   - \b thread_flags : thread flags before clearing.
+  - \b thread_id : thread ID.
 */
 
 /**
