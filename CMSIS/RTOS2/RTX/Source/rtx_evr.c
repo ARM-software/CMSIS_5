@@ -115,7 +115,8 @@
 #define EvtRtxDelay                         EventID(EventLevelAPI,    EvtRtxWaitNo, 0x01U)
 #define EvtRtxDelayUntil                    EventID(EventLevelAPI,    EvtRtxWaitNo, 0x02U)
 #define EvtRtxDelayStarted                  EventID(EventLevelOp,     EvtRtxWaitNo, 0x03U)
-#define EvtRtxDelayCompleted                EventID(EventLevelOp,     EvtRtxWaitNo, 0x04U)
+#define EvtRtxDelayUntilStarted             EventID(EventLevelOp,     EvtRtxWaitNo, 0x04U)
+#define EvtRtxDelayCompleted                EventID(EventLevelOp,     EvtRtxWaitNo, 0x05U)
 
 /// Event IDs for "RTX Timer"
 #define EvtRtxTimerError                    EventID(EventLevelError,  EvtRtxTimerNo, 0x00U)
@@ -942,21 +943,24 @@ __WEAK void EvrRtxThreadFlagsWaitPending (uint32_t flags, uint32_t options, uint
 #endif
 
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THFLAGS != 0) && !defined(EVR_RTX_THREAD_FLAGS_WAIT_TIMEOUT_DISABLE))
-__WEAK void EvrRtxThreadFlagsWaitTimeout (void) {
+__WEAK void EvrRtxThreadFlagsWaitTimeout (osThreadId_t thread_id) {
 #if defined(RTE_Compiler_EventRecorder)
-  (void)EventRecord2(EvtRtxThreadFlagsWaitTimeout, 0U, 0U);
+  (void)EventRecord2(EvtRtxThreadFlagsWaitTimeout, (uint32_t)thread_id, 0U);
+#else
+  (void)thread_id;
 #endif
 }
 #endif
 
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THFLAGS != 0) && !defined(EVR_RTX_THREAD_FLAGS_WAIT_COMPLETED_DISABLE))
-__WEAK void EvrRtxThreadFlagsWaitCompleted (uint32_t flags, uint32_t options, uint32_t thread_flags) {
+__WEAK void EvrRtxThreadFlagsWaitCompleted (uint32_t flags, uint32_t options, uint32_t thread_flags, osThreadId_t thread_id) {
 #if defined(RTE_Compiler_EventRecorder)
-  (void)EventRecord4(EvtRtxThreadFlagsWaitCompleted, flags, options, thread_flags, 0U);
+  (void)EventRecord4(EvtRtxThreadFlagsWaitCompleted, flags, options, thread_flags, (uint32_t)thread_id);
 #else
   (void)flags;
   (void)options;
   (void)thread_flags;
+  (void)thread_id;
 #endif
 }
 #endif
@@ -1016,10 +1020,22 @@ __WEAK void EvrRtxDelayStarted (uint32_t ticks) {
 }
 #endif
 
-#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_WAIT != 0) && !defined(EVR_RTX_DELAY_COMPLETED_DISABLE))
-__WEAK void EvrRtxDelayCompleted (void) {
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_WAIT != 0) && !defined(EVR_RTX_DELAY_UNTIL_STARTED_DISABLE))
+__WEAK void EvrRtxDelayUntilStarted (uint32_t ticks) {
 #if defined(RTE_Compiler_EventRecorder)
-  (void)EventRecord2(EvtRtxDelayCompleted, 0U, 0U);
+  (void)EventRecord2(EvtRtxDelayUntilStarted, ticks, 0U);
+#else
+  (void)ticks;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_WAIT != 0) && !defined(EVR_RTX_DELAY_COMPLETED_DISABLE))
+__WEAK void EvrRtxDelayCompleted (osThreadId_t thread_id) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxDelayCompleted, (uint32_t)thread_id, 0U);
+#else
+  (void)thread_id;
 #endif
 }
 #endif

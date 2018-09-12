@@ -351,10 +351,10 @@ void osRtxThreadDelayTick (void) {
     do {
       switch (thread->state) {
         case osRtxThreadWaitingDelay:
-          EvrRtxDelayCompleted();
+          EvrRtxDelayCompleted(thread);
           break;
         case osRtxThreadWaitingThreadFlags:
-          EvrRtxThreadFlagsWaitTimeout();
+          EvrRtxThreadFlagsWaitTimeout(thread);
           break;
         case osRtxThreadWaitingEventFlags:
           EvrRtxEventFlagsWaitTimeout((osEventFlagsId_t)osRtxThreadListRoot(thread));
@@ -574,7 +574,7 @@ static void osRtxThreadPostProcess (os_thread_t *thread) {
     thread_flags = ThreadFlagsCheck(thread, thread->wait_flags, thread->flags_options);
     if (thread_flags != 0U) {
       osRtxThreadWaitExit(thread, thread_flags, FALSE);
-      EvrRtxThreadFlagsWaitCompleted(thread->wait_flags, thread->flags_options, thread_flags);
+      EvrRtxThreadFlagsWaitCompleted(thread->wait_flags, thread->flags_options, thread_flags, thread);
     }
   }
 }
@@ -1453,7 +1453,7 @@ static uint32_t svcRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
         thread_flags = thread_flags0;
       }
       osRtxThreadWaitExit(thread, thread_flags0, TRUE);
-      EvrRtxThreadFlagsWaitCompleted(thread->wait_flags, thread->flags_options, thread_flags0);
+      EvrRtxThreadFlagsWaitCompleted(thread->wait_flags, thread->flags_options, thread_flags0, thread);
     }
   }
 
@@ -1533,7 +1533,7 @@ static uint32_t svcRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_
   // Check Thread Flags
   thread_flags = ThreadFlagsCheck(thread, flags, options);
   if (thread_flags != 0U) {
-    EvrRtxThreadFlagsWaitCompleted(flags, options, thread_flags);
+    EvrRtxThreadFlagsWaitCompleted(flags, options, thread_flags, thread);
   } else {
     // Check if timeout is specified
     if (timeout != 0U) {
@@ -1543,7 +1543,7 @@ static uint32_t svcRtxThreadFlagsWait (uint32_t flags, uint32_t options, uint32_
       thread->flags_options = (uint8_t)options;
       // Suspend current Thread
       if (!osRtxThreadWaitEnter(osRtxThreadWaitingThreadFlags, timeout)) {
-        EvrRtxThreadFlagsWaitTimeout();
+        EvrRtxThreadFlagsWaitTimeout(thread);
       }
       thread_flags = (uint32_t)osErrorTimeout;
     } else {

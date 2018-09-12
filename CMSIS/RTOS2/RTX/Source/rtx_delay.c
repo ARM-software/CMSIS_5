@@ -36,7 +36,7 @@ static osStatus_t svcRtxDelay (uint32_t ticks) {
     if (osRtxThreadWaitEnter(osRtxThreadWaitingDelay, ticks)) {
       EvrRtxDelayStarted(ticks);
     } else {
-      EvrRtxDelayCompleted();
+      EvrRtxDelayCompleted(osRtxThreadGetRunning());
     }
   }
 
@@ -55,9 +55,9 @@ static osStatus_t svcRtxDelayUntil (uint32_t ticks) {
   }
 
   if (osRtxThreadWaitEnter(osRtxThreadWaitingDelay, ticks)) {
-    EvrRtxDelayStarted(ticks);
+    EvrRtxDelayUntilStarted(ticks);
   } else {
-    EvrRtxDelayCompleted();
+    EvrRtxDelayCompleted(osRtxThreadGetRunning());
   }
 
   return osOK;

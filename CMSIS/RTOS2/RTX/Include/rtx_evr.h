@@ -806,11 +806,12 @@ extern void EvrRtxThreadFlagsWaitPending (uint32_t flags, uint32_t options, uint
 
 /**
   \brief  Event on wait timeout for thread flags (Op)
+  \param[in]  thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THFLAGS != 0) && !defined(EVR_RTX_THREAD_FLAGS_WAIT_TIMEOUT_DISABLE))
-extern void EvrRtxThreadFlagsWaitTimeout (void);
+extern void EvrRtxThreadFlagsWaitTimeout (osThreadId_t thread_id);
 #else
-#define EvrRtxThreadFlagsWaitTimeout()
+#define EvrRtxThreadFlagsWaitTimeout(thread_id)
 #endif
 
 /**
@@ -818,11 +819,12 @@ extern void EvrRtxThreadFlagsWaitTimeout (void);
   \param[in]  flags         flags to wait for.
   \param[in]  options       flags options (osFlagsXxxx).
   \param[in]  thread_flags  thread flags before clearing.
+  \param[in]  thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THFLAGS != 0) && !defined(EVR_RTX_THREAD_FLAGS_WAIT_COMPLETED_DISABLE))
-extern void EvrRtxThreadFlagsWaitCompleted (uint32_t flags, uint32_t options, uint32_t thread_flags);
+extern void EvrRtxThreadFlagsWaitCompleted (uint32_t flags, uint32_t options, uint32_t thread_flags, osThreadId_t thread_id);
 #else
-#define EvrRtxThreadFlagsWaitCompleted(flags, options, thread_flags)
+#define EvrRtxThreadFlagsWaitCompleted(flags, options, thread_flags, thread_id)
 #endif
 
 /**
@@ -880,12 +882,23 @@ extern void EvrRtxDelayStarted (uint32_t ticks);
 #endif
 
 /**
+  \brief  Event on delay until specified time started (Op)
+  \param[in]  ticks         \ref CMSIS_RTOS_TimeOutValue "time ticks" value.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_WAIT != 0) && !defined(EVR_RTX_DELAY_UNTIL_STARTED_DISABLE))
+extern void EvrRtxDelayUntilStarted (uint32_t ticks);
+#else
+#define EvrRtxDelayUntilStarted(ticks)
+#endif
+
+/**
   \brief  Event on delay completed (Op)
+  \param[in]  thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
 */
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_WAIT != 0) && !defined(EVR_RTX_DELAY_COMPLETED_DISABLE))
-extern void EvrRtxDelayCompleted (void);
+extern void EvrRtxDelayCompleted (osThreadId_t thread_id);
 #else
-#define EvrRtxDelayCompleted()
+#define EvrRtxDelayCompleted(thread_id)
 #endif
 
 
