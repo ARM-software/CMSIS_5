@@ -99,6 +99,13 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.5.0</td>
+      <td>
+       - Updated generated events (reorganized components).
+       - Updated configuration (Event Recorder).
+      </td>
+    </tr>
+    <tr>
       <td>V5.4.0</td>
       <td>
        - Based on CMSIS-RTOS API V2.1.3.

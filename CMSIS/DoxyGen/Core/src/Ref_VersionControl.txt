@@ -45,6 +45,7 @@ Possible values are:
  - 7 for a Cortex-M7
  - 23 for a Cortex-M23
  - 33 for a Cortex-M33
+ - 35 for a Cortex-M35P
  
 This define is only available for Cortex-M class controllers.
 <b>Code Example:</b>

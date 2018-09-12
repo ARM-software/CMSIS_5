@@ -84,6 +84,7 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
 - new \ref DebugFunctions "debug access functions" and \ref DebugVars "global debug variables" for sequence-based flash download
 - added \ref element_repository "repository" element for specifying origin of public repositories
 - added attributes to \ref element_release "release" element specifying repository tag and url for downloading repository content
+- added new processor Cortex-M35P
     </td>
   </tr>
   <tr>

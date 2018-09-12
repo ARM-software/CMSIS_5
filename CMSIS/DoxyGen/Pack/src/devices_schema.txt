@@ -2165,6 +2165,10 @@ These values can be used in the elements:
     <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m33" target="_blank">Arm Cortex-M33</a> processor based device</td>
   </tr>
   <tr>
+    <td class="XML-Token">Cortex-M35P</td>
+    <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m35p" target="_blank">Arm Cortex-M35P</a> processor based device</td>
+  </tr>
+  <tr>
     <td class="XML-Token">SC000</td>
     <td>SecurCore <a href="http://developer.arm.com/products/processors/cortex-m/sc000-processor" target="_blank">SC000</a> based on technology of Cortex-M0.</td>
   </tr>

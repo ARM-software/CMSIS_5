@@ -8,8 +8,11 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.4.1-dev0">
+    <release version="5.5.0-dev0">
       Active development ...
+      Added Cortex-M35P device support.
+      CMSIS-RTOS2:
+        - RTX 5.5.0 (see revision history for details)
     </release>
     <release version="5.4.0" date="2018-08-01">
       Aligned pack structure with repository.
@@ -458,6 +461,54 @@ class processor based on the Armv8-M mainline architecture with Arm TrustZone se
       </device>
     </family>
 
+    <!-- ******************************  Cortex-M35P  ****************************** -->
+    <family Dfamily="ARM Cortex M35P" Dvendor="ARM:82">
+      <!--book name="Device/ARM/Documents/??_dgug.pdf"       title="?? Device Generic Users Guide"/-->
+      <description>
+The Arm Cortex-M35P is the most configurable of all Cortex-M processors. It is a full featured microcontroller
+class processor based on the Armv8-M mainline architecture with Arm TrustZone security designed for a broad range of secure embedded applications.
+      </description>
+
+      <!-- debug svd="Device/ARM/SVD/ARMCM35P.svd"/ SVD files do not contain any peripheral -->
+      <memory id="IROM1"                                start="0x00000000" size="0x00200000" startup="1" default="1"/>
+      <memory id="IROM2"                                start="0x00200000" size="0x00200000" startup="0" default="0"/>
+      <memory id="IRAM1"                                start="0x20000000" size="0x00020000" init   ="0" default="1"/>
+      <memory id="IRAM2"                                start="0x20200000" size="0x00020000" init   ="0" default="0"/>
+      <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"          default="1"/-->
+
+      <device Dname="ARMCM35P">
+        <processor Dcore="Cortex-M35P" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="NO_TZ" Dendian="Configurable" Dclock="10000000"/>
+        <description>
+          no DSP Instructions, no Floating Point Unit, no TrustZone
+        </description>
+        <compile header="Device/ARM/ARMCM35P/Include/ARMCM35P.h" define="ARMCM35P"/>
+      </device>
+
+      <device Dname="ARMCM35P_TZ">
+        <processor Dcore="Cortex-M35P" DcoreVersion="r0p0" Dfpu="NO_FPU" Dmpu="MPU" Ddsp="NO_DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
+        <description>
+          no DSP Instructions, no Floating Point Unit, TrustZone
+        </description>
+        <compile header="Device/ARM/ARMCM35P/Include/ARMCM35P_TZ.h" define="ARMCM35P_TZ"/>
+      </device>
+
+      <device Dname="ARMCM35P_DSP_FP">
+        <processor Dcore="Cortex-M35P" DcoreVersion="r0p0" Dfpu="SP_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="NO_TZ" Dendian="Configurable" Dclock="10000000"/>
+        <description>
+          DSP Instructions, Single Precision Floating Point Unit, no TrustZone
+        </description>
+        <compile header="Device/ARM/ARMCM35P/Include/ARMCM35P_DSP_FP.h" define="ARMCM35P_DSP_FP"/>
+      </device>
+
+      <device Dname="ARMCM35P_DSP_FP_TZ">
+        <processor Dcore="Cortex-M35P" DcoreVersion="r0p0" Dfpu="SP_FPU" Dmpu="MPU" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
+        <description>
+          DSP Instructions, Single Precision Floating Point Unit, TrustZone
+        </description>
+        <compile header="Device/ARM/ARMCM35P/Include/ARMCM35P_DSP_FP_TZ.h" define="ARMCM35P_DSP_FP_TZ"/>
+      </device>
+    </family>
+
     <!-- ******************************  ARMSC000  ****************************** -->
     <family Dfamily="ARM SC000" Dvendor="ARM:82">
       <description>
@@ -808,6 +859,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <accept Dcore="ARMV8MML"/>
       <accept Dcore="Cortex-M23"/>
       <accept Dcore="Cortex-M33"/>
+      <accept Dcore="Cortex-M35P"/>
     </condition>
     <condition id="ARMv8-M TZ Device">
       <description>Armv8-M architecture based device with TrustZone</description>
@@ -887,6 +939,14 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Cortex-M33 processor based device using Floating Point Unit</description>
       <require Dcore="Cortex-M33" Dfpu="SP_FPU"/>
     </condition>
+    <condition id="CM35P">
+      <description>Cortex-M35P processor based device</description>
+      <require Dcore="Cortex-M35P" Dfpu="NO_FPU"/>
+    </condition>
+    <condition id="CM35P_FP">
+      <description>Cortex-M35P processor based device using Floating Point Unit</description>
+      <require Dcore="Cortex-M35P" Dfpu="SP_FPU"/>
+    </condition>
     <condition id="ARMv8MBL">
       <description>Armv8-M Baseline processor based device</description>
       <require Dcore="ARMV8MBL"/>
@@ -916,6 +976,23 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="CM33_DSP_SP">
       <description>CM33, DSP, SP FPU</description>
       <require Dcore="Cortex-M33" Ddsp="DSP" Dfpu="SP_FPU"/>
+    </condition>
+
+    <condition id="CM35P_NODSP_NOFPU">
+      <description>CM35P, no DSP, no FPU</description>
+      <require Dcore="Cortex-M35P" Ddsp="NO_DSP" Dfpu="NO_FPU"/>
+    </condition>
+    <condition id="CM35P_DSP_NOFPU">
+      <description>CM35P, DSP, no FPU</description>
+      <require Dcore="Cortex-M35P" Ddsp="DSP" Dfpu="NO_FPU"/>
+    </condition>
+    <condition id="CM35P_NODSP_SP">
+      <description>CM35P, no DSP, SP FPU</description>
+      <require Dcore="Cortex-M35P" Ddsp="NO_DSP" Dfpu="SP_FPU"/>
+    </condition>
+    <condition id="CM35P_DSP_SP">
+      <description>CM35P, DSP, SP FPU</description>
+      <require Dcore="Cortex-M35P" Ddsp="DSP" Dfpu="SP_FPU"/>
     </condition>
 
     <condition id="ARMv8MML_NODSP_NOFPU">
@@ -1188,6 +1265,79 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="CM33_DSP_SP_LE_ARMCC">
       <description>Cortex-M33 processor, little endian, DSP, SP FPU, Arm Compiler</description>
       <require condition="CM33_DSP_SP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+
+    <condition id="CM35P_ARMCC">
+      <description>Cortex-M35P processor based device for the Arm Compiler</description>
+      <require condition="CM35P"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM35P_LE_ARMCC">
+      <description>Cortex-M35P processor based device in little endian mode for the Arm Compiler</description>
+      <require condition="CM35P_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_BE_ARMCC">
+      <description>Cortex-M35P processor based device in big endian mode for the Arm Compiler</description>
+      <require condition="CM35P_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM35P_FP_ARMCC">
+      <description>Cortex-M35P processor based device using Floating Point Unit for the Arm Compiler</description>
+      <require condition="CM35P_FP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM35P_FP_LE_ARMCC">
+      <description>Cortex-M35P processor based device using Floating Point Unit in little endian mode for the Arm Compiler</description>
+      <require condition="CM35P_FP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_FP_BE_ARMCC">
+      <description>Cortex-M35P processor based device using Floating Point Unit in big endian mode for the Arm Compiler</description>
+      <require condition="CM35P_FP_ARMCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM35P_NODSP_NOFPU_ARMCC">
+      <description>Cortex-M35P processor, no DSP, no FPU, Arm Compiler</description>
+      <require condition="CM35P_NODSP_NOFPU"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM35P_DSP_NOFPU_ARMCC">
+      <description>Cortex-M35P processor, DSP, no FPU, Arm Compiler</description>
+      <require condition="CM35P_DSP_NOFPU"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM35P_NODSP_SP_ARMCC">
+      <description>Cortex-M35P processor, no DSP, SP FPU, Arm Compiler</description>
+      <require condition="CM35P_NODSP_SP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM35P_DSP_SP_ARMCC">
+      <description>Cortex-M35P processor, DSP, SP FPU, Arm Compiler</description>
+      <require condition="CM35P_DSP_SP"/>
+      <require Tcompiler="ARMCC"/>
+    </condition>
+    <condition id="CM35P_NODSP_NOFPU_LE_ARMCC">
+      <description>Cortex-M35P processor, little endian, no DSP, no FPU, Arm Compiler</description>
+      <require condition="CM35P_NODSP_NOFPU_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_DSP_NOFPU_LE_ARMCC">
+      <description>Cortex-M35P processor, little endian, DSP, no FPU, Arm Compiler</description>
+      <require condition="CM35P_DSP_NOFPU_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_NODSP_SP_LE_ARMCC">
+      <description>Cortex-M35P processor, little endian, no DSP, SP FPU, Arm Compiler</description>
+      <require condition="CM35P_NODSP_SP_ARMCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_DSP_SP_LE_ARMCC">
+      <description>Cortex-M35P processor, little endian, DSP, SP FPU, Arm Compiler</description>
+      <require condition="CM35P_DSP_SP_ARMCC"/>
       <require Dendian="Little-endian"/>
     </condition>
 
@@ -1520,6 +1670,79 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dendian="Little-endian"/>
     </condition>
 
+    <condition id="CM35P_GCC">
+      <description>Cortex-M35P processor based device for the GCC Compiler</description>
+      <require condition="CM35P"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM35P_LE_GCC">
+      <description>Cortex-M35P processor based device in little endian mode for the GCC Compiler</description>
+      <require condition="CM35P_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_BE_GCC">
+      <description>Cortex-M35P processor based device in big endian mode for the GCC Compiler</description>
+      <require condition="CM35P_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM35P_FP_GCC">
+      <description>Cortex-M35P processor based device using Floating Point Unit for the GCC Compiler</description>
+      <require condition="CM35P_FP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM35P_FP_LE_GCC">
+      <description>Cortex-M35P processor based device using Floating Point Unit in little endian mode for the GCC Compiler</description>
+      <require condition="CM35P_FP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_FP_BE_GCC">
+      <description>Cortex-M35P processor based device using Floating Point Unit in big endian mode for the GCC Compiler</description>
+      <require condition="CM35P_FP_GCC"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM35P_NODSP_NOFPU_GCC">
+      <description>CM35P, no DSP, no FPU, GCC Compiler</description>
+      <require condition="CM35P_NODSP_NOFPU"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM35P_DSP_NOFPU_GCC">
+      <description>CM35P, DSP, no FPU, GCC Compiler</description>
+      <require condition="CM35P_DSP_NOFPU"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM35P_NODSP_SP_GCC">
+      <description>CM35P, no DSP, SP FPU, GCC Compiler</description>
+      <require condition="CM35P_NODSP_SP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM35P_DSP_SP_GCC">
+      <description>CM35P, DSP, SP FPU, GCC Compiler</description>
+      <require condition="CM35P_DSP_SP"/>
+      <require Tcompiler="GCC"/>
+    </condition>
+    <condition id="CM35P_NODSP_NOFPU_LE_GCC">
+      <description>CM35P, little endian, no DSP, no FPU, GCC Compiler</description>
+      <require condition="CM35P_NODSP_NOFPU_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_DSP_NOFPU_LE_GCC">
+      <description>CM35P, little endian, DSP, no FPU, GCC Compiler</description>
+      <require condition="CM35P_DSP_NOFPU_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_NODSP_SP_LE_GCC">
+      <description>CM35P, little endian, no DSP, SP FPU, GCC Compiler</description>
+      <require condition="CM35P_NODSP_SP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_DSP_SP_LE_GCC">
+      <description>CM35P, little endian, DSP, SP FPU, GCC Compiler</description>
+      <require condition="CM35P_DSP_SP_GCC"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+
     <condition id="ARMv8MBL_GCC">
       <description>Armv8-M Baseline processor based device for the GCC Compiler</description>
       <require condition="ARMv8MBL"/>
@@ -1849,6 +2072,79 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Dendian="Little-endian"/>
     </condition>
 
+    <condition id="CM35P_IAR">
+      <description>Cortex-M35P processor based device for the IAR Compiler</description>
+      <require condition="CM35P"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM35P_LE_IAR">
+      <description>Cortex-M35P processor based device in little endian mode for the IAR Compiler</description>
+      <require condition="CM35P_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_BE_IAR">
+      <description>Cortex-M35P processor based device in big endian mode for the IAR Compiler</description>
+      <require condition="CM35P_IAR"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM35P_FP_IAR">
+      <description>Cortex-M35P processor based device using Floating Point Unit for the IAR Compiler</description>
+      <require condition="CM35P_FP"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM35P_FP_LE_IAR">
+      <description>Cortex-M35P processor based device using Floating Point Unit in little endian mode for the IAR Compiler</description>
+      <require condition="CM35P_FP_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_FP_BE_IAR">
+      <description>Cortex-M35P processor based device using Floating Point Unit in big endian mode for the IAR Compiler</description>
+      <require condition="CM35P_FP_IAR"/>
+      <require Dendian="Big-endian"/>
+    </condition>
+
+    <condition id="CM35P_NODSP_NOFPU_IAR">
+      <description>CM35P, no DSP, no FPU, IAR Compiler</description>
+      <require condition="CM35P_NODSP_NOFPU"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM35P_DSP_NOFPU_IAR">
+      <description>CM35P, DSP, no FPU, IAR Compiler</description>
+      <require condition="CM35P_DSP_NOFPU"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM35P_NODSP_SP_IAR">
+      <description>CM35P, no DSP, SP FPU, IAR Compiler</description>
+      <require condition="CM35P_NODSP_SP"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM35P_DSP_SP_IAR">
+      <description>CM35P, DSP, SP FPU, IAR Compiler</description>
+      <require condition="CM35P_DSP_SP"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM35P_NODSP_NOFPU_LE_IAR">
+      <description>CM35P, little endian, no DSP, no FPU, IAR Compiler</description>
+      <require condition="CM35P_NODSP_NOFPU_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_DSP_NOFPU_LE_IAR">
+      <description>CM35P, little endian, DSP, no FPU, IAR Compiler</description>
+      <require condition="CM35P_DSP_NOFPU_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_NODSP_SP_LE_IAR">
+      <description>CM35P, little endian, no DSP, SP FPU, IAR Compiler</description>
+      <require condition="CM35P_NODSP_SP_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+    <condition id="CM35P_DSP_SP_LE_IAR">
+      <description>CM35P, little endian, DSP, SP FPU, IAR Compiler</description>
+      <require condition="CM35P_DSP_SP_IAR"/>
+      <require Dendian="Little-endian"/>
+    </condition>
+
     <condition id="ARMv8MBL_IAR">
       <description>Armv8-M Baseline processor based device for the IAR Compiler</description>
       <require condition="ARMv8MBL"/>
@@ -2025,6 +2321,17 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="ARMCM33 CMSIS GCC">
       <description>Generic Arm Cortex-M33 device startup and depends on CMSIS Core requiring GCC</description>
       <require condition="ARMCM33 CMSIS"/>
+      <require condition="GCC"/>
+    </condition>
+
+    <condition id="ARMCM35P CMSIS">
+      <description>Generic Arm Cortex-M35P device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCM35P*"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="ARMCM35P CMSIS GCC">
+      <description>Generic Arm Cortex-M35P device startup and depends on CMSIS Core requiring GCC</description>
+      <require condition="ARMCM35P CMSIS"/>
       <require condition="GCC"/>
     </condition>
 
@@ -2413,6 +2720,36 @@ and 8-bit Java bytecodes in Jazelle state.
       </files>
     </component>
 
+    <!-- Cortex-M35P -->
+    <component Cclass="Device" Cgroup="Startup"                      Cversion="1.1.0" condition="ARMCM35P CMSIS">
+      <description>System and Startup for Generic Arm Cortex-M35P device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="include"      name="Device/ARM/ARMCM35P/Include/"/>
+        <!-- startup / system file -->
+        <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/ARM/startup_ARMCM35P.s"         version="1.0.0" attr="config" condition="ARMCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/GCC/startup_ARMCM35P.S"         version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/GCC/gcc_arm.ld"                 version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM35P/Source/IAR/startup_ARMCM35P.s"         version="1.0.0" attr="config" condition="IAR"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/system_ARMCM35P.c"              version="1.0.0" attr="config"/>
+        <!-- SAU configuration -->
+        <file category="header"       name="Device/ARM/ARMCM35P/Include/Template/partition_ARMCM35P.h" version="1.1.0" attr="config" condition="ARMv8-M TZ Device"/>
+      </files>
+    </component>
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.1.0" condition="ARMCM35P CMSIS GCC">
+      <description>System and Startup for Generic Arm Cortex-M35P device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="include"  name="Device/ARM/ARMCM35P/Include/"/>
+        <!-- startup / system file -->
+        <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/GCC/startup_ARMCM35P.c"         version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM35P/Source/GCC/gcc_arm.ld"                 version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM35P/Source/system_ARMCM35P.c"              version="1.0.0" attr="config"/>
+        <!-- SAU configuration -->
+        <file category="header"       name="Device/ARM/ARMCM35P/Include/Template/partition_ARMCM35P.h" version="1.1.0" attr="config" condition="ARMv8-M TZ Device"/>
+      </files>
+    </component>
+
     <!-- Cortex-SC000 -->
     <component Cclass="Device" Cgroup="Startup"                      Cversion="1.0.1" condition="ARMSC000 CMSIS">
       <description>System and Startup for Generic Arm SC000 device</description>
@@ -2645,6 +2982,10 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="CM33_DSP_NOFPU_LE_ARMCC"        name="CMSIS/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP/Source/ARM"/>
         <file category="library" condition="CM33_NODSP_SP_LE_ARMCC"         name="CMSIS/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
         <file category="library" condition="CM33_DSP_SP_LE_ARMCC"           name="CMSIS/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM35P_NODSP_NOFPU_LE_ARMCC"     name="CMSIS/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM35P_DSP_NOFPU_LE_ARMCC"       name="CMSIS/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM35P_NODSP_SP_LE_ARMCC"        name="CMSIS/Lib/ARM/arm_ARMv8MMLlfsp_math.lib"   src="CMSIS/DSP/Source/ARM"/>
+        <file category="library" condition="CM35P_DSP_SP_LE_ARMCC"          name="CMSIS/Lib/ARM/arm_ARMv8MMLldfsp_math.lib"  src="CMSIS/DSP/Source/ARM"/>
         <file category="library" condition="ARMv8MBL_LE_ARMCC"              name="CMSIS/Lib/ARM/arm_ARMv8MBLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
         <file category="library" condition="ARMv8MML_NODSP_NOFPU_LE_ARMCC"  name="CMSIS/Lib/ARM/arm_ARMv8MMLl_math.lib"      src="CMSIS/DSP/Source/ARM"/>
         <file category="library" condition="ARMv8MML_DSP_NOFPU_LE_ARMCC"    name="CMSIS/Lib/ARM/arm_ARMv8MMLld_math.lib"     src="CMSIS/DSP/Source/ARM"/>
@@ -2668,6 +3009,10 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="CM33_DSP_NOFPU_LE_GCC"          name="CMSIS/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/GCC"/>
         <file category="library" condition="CM33_NODSP_SP_LE_GCC"           name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/GCC"/>
         <file category="library" condition="CM33_DSP_SP_LE_GCC"             name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM35P_NODSP_NOFPU_LE_GCC"       name="CMSIS/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM35P_DSP_NOFPU_LE_GCC"         name="CMSIS/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM35P_NODSP_SP_LE_GCC"          name="CMSIS/Lib/GCC/libarm_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/GCC"/>
+        <file category="library" condition="CM35P_DSP_SP_LE_GCC"            name="CMSIS/Lib/GCC/libarm_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/GCC"/>
         <file category="library" condition="ARMv8MBL_LE_GCC"                name="CMSIS/Lib/GCC/libarm_ARMv8MBLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
         <file category="library" condition="ARMv8MML_NODSP_NOFPU_LE_GCC"    name="CMSIS/Lib/GCC/libarm_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/GCC"/>
         <file category="library" condition="ARMv8MML_DSP_NOFPU_LE_GCC"      name="CMSIS/Lib/GCC/libarm_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/GCC"/>
@@ -2695,18 +3040,20 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="CM7_SP_BE_IAR"            name="CMSIS/Lib/IAR/iar_cortexM7bs_math.a"    src="CMSIS/DSP/Source/IAR"/>
 
         <file category="library" condition="CM23_LE_IAR"              name="CMSIS/Lib/IAR/iar_ARMv8MBLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM33_LE_IAR"              name="CMSIS/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM33_DSP_SP_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="CM33_FP_LE_IAR"           name="CMSIS/Lib/IAR/iar_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM33_NODSP_NOFPU_LE_IAR"        name="CMSIS/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
         <file category="library" condition="CM33_DSP_NOFPU_LE_IAR"    name="CMSIS/Lib/IAR/iar_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM33_NODSP_SP_LE_IAR"           name="CMSIS/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/IAR"/>
         <file category="library" condition="CM33_DSP_SP_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/IAR"/>
-        <!--file category="library" condition="CM33_DSP_DP_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLldfdp_math.a" src="CMSIS/DSP/Source/IAR"/-->
+        <file category="library" condition="CM35P_NODSP_NOFPU_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM35P_DSP_NOFPU_LE_IAR"         name="CMSIS/Lib/IAR/iar_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM35P_NODSP_SP_LE_IAR"          name="CMSIS/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="CM35P_DSP_SP_LE_IAR"            name="CMSIS/Lib/IAR/iar_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/IAR"/>
         <file category="library" condition="ARMv8MBL_LE_IAR"          name="CMSIS/Lib/IAR/iar_ARMv8MBLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="ARMv8MML_LE_IAR"          name="CMSIS/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="ARMv8MML_DSP_SP_LE_IAR"   name="CMSIS/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/IAR"/>
-        <file category="library" condition="ARMv8MML_FP_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="ARMv8MML_NODSP_NOFPU_LE_IAR"    name="CMSIS/Lib/IAR/iar_ARMv8MMLl_math.a"     src="CMSIS/DSP/Source/IAR"/>
         <file category="library" condition="ARMv8MML_DSP_NOFPU_LE_IAR" name="CMSIS/Lib/IAR/iar_ARMv8MMLld_math.a"    src="CMSIS/DSP/Source/IAR"/>
+        <file category="library" condition="ARMv8MML_NODSP_SP_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLlfsp_math.a"  src="CMSIS/DSP/Source/IAR"/>
         <file category="library" condition="ARMv8MML_DSP_SP_LE_IAR"   name="CMSIS/Lib/IAR/iar_ARMv8MMLldfsp_math.a" src="CMSIS/DSP/Source/IAR"/>
+     <!--file category="library" condition="ARMv8MML_DP_NOFPU_LE_IAR"       name="CMSIS/Lib/IAR/iar_ARMv8MMLlfdp_math.a"  src="CMSIS/DSP/Source/IAR"/-->
         <!--file category="library" condition="ARMv8MML_DSP_DP_LE_IAR"   name="CMSIS/Lib/IAR/iar_ARMv8MMLldfdp_math.a" src="CMSIS/DSP/Source/IAR"/-->
 
       </files>
@@ -2875,7 +3222,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-RTOS Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX5" Cversion="5.4.0" Capiversion="1.0.0" condition="RTOS RTX5">
+    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX5" Cversion="5.5.0" Capiversion="1.0.0" condition="RTOS RTX5">
       <description>CMSIS-RTOS RTX5 implementation for Cortex-M, SC000, and SC300</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2891,7 +3238,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-RTOS2 Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.4.0" Capiversion="2.1.3" condition="RTOS2 RTX5 Lib">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.5.0" Capiversion="2.1.3" condition="RTOS2 RTX5 Lib">
       <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and Armv8-M (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2906,11 +3253,11 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.4.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.5.0"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.0.0" select="CMSIS-RTOS2 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.1.0" select="CMSIS-RTOS2 'main' function"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Events.c"    version="2.0.0" select="CMSIS-RTOS2 Events"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MemPool.c"   version="2.0.0" select="CMSIS-RTOS2 Memory Pool"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MsgQueue.c"  version="2.0.0" select="CMSIS-RTOS2 Message Queue"/>
@@ -2936,6 +3283,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="CM23_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM33_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM33_FP_LE_ARMCC"     name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_LE_ARMCC"       name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_FP_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
@@ -2950,6 +3299,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="CM23_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM33_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM33_FP_LE_GCC"       name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_LE_GCC"         name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_FP_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MBL_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
@@ -2963,7 +3314,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="CM7_FP_LE_IAR"        name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM4F.a"     src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library_NS" Cversion="5.4.0" Capiversion="2.1.3" condition="RTOS2 RTX5 NS">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library_NS" Cversion="5.5.0" Capiversion="2.1.3" condition="RTOS2 RTX5 NS">
       <description>CMSIS-RTOS2 RTX5 for Armv8-M Non-Secure Domain (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2979,11 +3330,11 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.4.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.5.0"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.0.0" select="CMSIS-RTOS2 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.1.0" select="CMSIS-RTOS2 'main' function"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Events.c"    version="2.0.0" select="CMSIS-RTOS2 Events"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MemPool.c"   version="2.0.0" select="CMSIS-RTOS2 Memory Pool"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MsgQueue.c"  version="2.0.0" select="CMSIS-RTOS2 Message Queue"/>
@@ -3002,6 +3353,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="CM23_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM33_LE_ARMCC"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM33_FP_LE_ARMCC"     name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_LE_ARMCC"       name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_FP_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MBL_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_LE_ARMCC"    name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_FP_LE_ARMCC" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
@@ -3009,12 +3362,14 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="CM23_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MBN.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM33_LE_GCC"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="CM33_FP_LE_GCC"       name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_LE_GCC"         name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="CM35P_FP_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MBL_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MBN.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_LE_GCC"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
         <file category="library" condition="ARMv8MML_FP_LE_GCC"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.4.0" Capiversion="2.1.3" condition="RTOS2 RTX5">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.5.0" Capiversion="2.1.3" condition="RTOS2 RTX5">
       <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, C300 and Armv8-M (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -3030,11 +3385,11 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.4.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.5.0"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.0.0" select="CMSIS-RTOS2 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.1.0" select="CMSIS-RTOS2 'main' function"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Events.c"    version="2.0.0" select="CMSIS-RTOS2 Events"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MemPool.c"   version="2.0.0" select="CMSIS-RTOS2 Memory Pool"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MsgQueue.c"  version="2.0.0" select="CMSIS-RTOS2 Message Queue"/>
@@ -3071,6 +3426,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl.s"    condition="CM23_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="CM33_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="CM33_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="CM35P_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="CM35P_FP_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl.s"    condition="ARMv8MBL_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml.s"    condition="ARMv8MML_FP_ARMCC"/>
@@ -3085,6 +3442,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S"    condition="CM23_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM33_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="CM33_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="CM35P_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="CM35P_FP_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S"    condition="ARMv8MBL_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S"    condition="ARMv8MML_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp.S" condition="ARMv8MML_FP_GCC"/>
@@ -3099,6 +3458,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s"    condition="CM23_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="CM33_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="CM33_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="CM35P_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="CM35P_FP_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s"    condition="ARMv8MBL_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="ARMv8MML_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s"    condition="ARMv8MML_FP_IAR"/>
@@ -3106,7 +3467,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.4.0" Capiversion="2.1.3" condition="RTOS2 RTX5 v7-A">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.5.0" Capiversion="2.1.3" condition="RTOS2 RTX5 v7-A">
       <description>CMSIS-RTOS2 RTX5 for Armv7-A (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -3122,13 +3483,13 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.4.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.5.0"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/handlers.c"    version="5.1.0"/>
 
         <!-- RTX templates -->
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.0.0" select="CMSIS-RTOS2 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.1.0" select="CMSIS-RTOS2 'main' function"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Events.c"    version="2.0.0" select="CMSIS-RTOS2 Events"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MemPool.c"   version="2.0.0" select="CMSIS-RTOS2 Memory Pool"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MsgQueue.c"  version="2.0.0" select="CMSIS-RTOS2 Message Queue"/>
@@ -3163,7 +3524,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_ca.s"          condition="CA_IAR"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.4.0" Capiversion="2.1.3" condition="RTOS2 RTX5 NS">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.5.0" Capiversion="2.1.3" condition="RTOS2 RTX5 NS">
       <description>CMSIS-RTOS2 RTX5 for Armv8-M Non-Secure Domain (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -3180,11 +3541,11 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header" name="CMSIS/RTOS2/RTX/Include/rtx_os.h"/>
 
         <!-- RTX configuration -->
-        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.4.0"/>
+        <file category="header" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.h"  version="5.5.0"/>
         <file category="source" attr="config"   name="CMSIS/RTOS2/RTX/Config/RTX_Config.c"  version="5.1.0"/>
 
         <!-- RTX templates -->
-        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.0.0" select="CMSIS-RTOS2 'main' function"/>
+        <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/main.c"      version="2.1.0" select="CMSIS-RTOS2 'main' function"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/Events.c"    version="2.0.0" select="CMSIS-RTOS2 Events"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MemPool.c"   version="2.0.0" select="CMSIS-RTOS2 Memory Pool"/>
         <file category="source" attr="template" name="CMSIS/RTOS2/RTX/Template/MsgQueue.c"  version="2.0.0" select="CMSIS-RTOS2 Message Queue"/>
@@ -3214,6 +3575,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl_ns.s"    condition="CM23_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="CM33_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="CM33_FP_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="CM35P_ARMCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="CM35P_FP_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mbl_ns.s"    condition="ARMv8MBL_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="ARMv8MML_ARMCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv8mml_ns.s"    condition="ARMv8MML_FP_ARMCC"/>
@@ -3221,6 +3584,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.S"    condition="CM23_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.S"    condition="CM33_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.S" condition="CM33_FP_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.S"    condition="CM35P_GCC"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.S" condition="CM35P_FP_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl_ns.S"    condition="ARMv8MBL_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_ns.S"    condition="ARMv8MML_GCC"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml_fp_ns.S" condition="ARMv8MML_FP_GCC"/>
@@ -3228,6 +3593,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl_ns.s"    condition="CM23_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="CM33_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="CM33_FP_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="CM35P_IAR"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="CM35P_FP_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl_ns.s"    condition="ARMv8MBL_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="ARMv8MML_IAR"/>
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml_ns.s"    condition="ARMv8MML_FP_IAR"/>
@@ -3261,6 +3628,10 @@ and 8-bit Java bytecodes in Jazelle state.
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_TZ"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_DSP_FP"/>
       <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM33_DSP_FP_TZ"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_TZ"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_DSP_FP"/>
+      <compatibleDevice deviceIndex="0" Dvendor="ARM:82" Dname="ARMCM35P_DSP_FP_TZ"/>
     </board>
 
     <board name="Fixed Virtual Platform" vendor="ARM">

@@ -335,6 +335,7 @@ to configure the priority of an interrupt. It is equipped with the standard Syst
         - \token{CM23}: Arm Cortex-M23
         - \token{CM3}: Arm Cortex-M3
         - \token{CM33}: Arm Cortex-M33
+        - \token{CM35P}: Arm Cortex-M35P
         - \token{SC300}: Arm Secure Core SC300
         - \token{CM4}: Arm Cortex-M4
         - \token{CM7}: Arm Cortex-M7
@@ -377,7 +378,7 @@ to configure the priority of an interrupt. It is equipped with the standard Syst
     </tr>
     <tr>
         <td>fpuPresent </td>
-        <td>Indicate whether the processor is equipped with a hardware floating point unit (FPU). Cortex-M4, Cortex-M7 and Cortex-M33 are the only available Cortex-M processor with an optional FPU. This tag is either set to \token{true} or \token{false}, \token{1} or \token{0}.</td>
+        <td>Indicate whether the processor is equipped with a hardware floating point unit (FPU). Cortex-M4, Cortex-M7, Cortex-M33 and Cortex-M35P are the only available Cortex-M processor with an optional FPU. This tag is either set to \token{true} or \token{false}, \token{1} or \token{0}.</td>
         <td>boolean </td>
         <td>1..1 </td>
     </tr>
@@ -385,6 +386,14 @@ to configure the priority of an interrupt. It is equipped with the standard Syst
         <td>fpuDP </td>
         <td>Indicate whether the processor is equipped with a double precision floating point unit. This element is valid only when \tagem{fpuPresent} is set to \token{true}. Currently, only Cortex-M7 processors can have a double precision floating point unit.</td>
         <td>boolean</td>
+        <td>0..1 </td>
+    </tr>
+    <tr>
+        <td>dspPresent </td>
+        <td>Indicates whether the processor implements the optional SIMD DSP extensions (DSP). Cortex-M33 and Cortex-M35P are the only available Cortex-M processor with an optional DSP extension. For ARMv7M SIMD DSP extensions are
+        a mandatory part of Cortex-M4 and Cortex-M7. This tag is either set to \token{true} or \token{false}, \token{1} or \token{0}.</td>. This element is mandatory for Cortex-M33, Cortex-M35P and future processors with optional
+        SIMD DSP instruction set.
+        <td>boolean </td>
         <td>0..1 </td>
     </tr>
     <tr>

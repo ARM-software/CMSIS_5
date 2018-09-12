@@ -851,7 +851,7 @@ Depending on the context, a device type can be one of the following types:
    be a vendor-specific core type, or an older JTAG ARM core. Current cores are: \n
    "Cortex-A5", "Cortex-A7", "Cortex-A8", "Cortex-A9", "Cortex-A12", "Cortex-A15", "Cortex-A17", "Cortex-A32", "Cortex-A35",
    "Cortex-A53", "Cortex-A57", "Cortex-A72", "Cortex-A73", "Cortex-M0", "Cortex-M0+", "Cortex-M0+_JTAG-AP", "Cortex-M1",
-   "Cortex-M23", "Cortex-M3", "Cortex-M33", "Cortex-M3_JTAG-AP", "Cortex-M4", "Cortex-M7", "Cortex-R4", "Cortex-R5",
+   "Cortex-M23", "Cortex-M3", "Cortex-M33", "Cortex-M35P", "Cortex-M3_JTAG-AP", "Cortex-M4", "Cortex-M7", "Cortex-R4", "Cortex-R5",
    "Cortex-R7", "Cortex-R8", "Cortex-R52", "SC000", "SC100D", "SC200D", "SC300", "ThunderX", "ThunderX-r2", "ARMV8MBL",
    "ARMV8MML", "88FR101", "88FR111", "88FR331", "88SV581x-v7_PJ4", "88SV581x-v7_PJ4_TZ", "ARM1136JF-S",
    "ARM1136JF-S_JTAG-AP", "ARM1156T2F-S", "ARM1156T2F-S_JTAG-AP", "ARM1176JZF-S", "ARM1176JZF-S_JTAG-AP", "ARM11MPCore",
