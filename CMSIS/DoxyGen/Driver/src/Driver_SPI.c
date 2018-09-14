@@ -557,14 +557,14 @@ The following events can be generated:
                                                                     or \ref ARM_SPI_Transfer 
                                                                     to indicate that all the data has been transferred. 
 																	The driver is ready for the next transfer operation. </td>     
-  <td> <i>allways supported</i> </td>
+  <td> <i>always supported</i> </td>
 </tr>
 <tr>
   <td> \ref ARM_SPI_EVENT_DATA_LOST         </td><td>  1  </td><td> Occurs in slave mode when data is requested/sent by master 
                                                                     but send/receive/transfer operation has not been started and 
                                                                     indicates that data is lost. Occurs also in master mode when
                                                                     driver cannot transfer data fast enough.             </td>     
-  <td> <i>allways supported</i> </td>
+  <td> <i>always supported</i> </td>
 </tr>
 <tr>
   <td> \ref ARM_SPI_EVENT_MODE_FAULT        </td><td>  2  </td><td> Occurs in master mode when Slave Select is deactivated and 
