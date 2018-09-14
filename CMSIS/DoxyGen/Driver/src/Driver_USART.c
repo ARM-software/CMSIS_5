@@ -717,17 +717,17 @@ The following events can be generated:
                                                                         was processed by the driver. All the data might have been already transmitted 
 																		or parts of it are still queued in transmit buffers. The driver is ready for the next 
 																		call to \ref ARM_USART_Send; however USART may still transmit data. </td>     
-  <td> <i>allways supported</i> </td>
+  <td> <i>always supported</i> </td>
 </tr>
 <tr>
   <td> \ref ARM_USART_EVENT_RECEIVE_COMPLETE    </td><td>  1  </td><td> Occurs after call to \ref ARM_USART_Receive to indicate that all the data has been 
                                                                         received. The driver is ready for the next call to \ref ARM_USART_Receive. </td>     
-  <td> <i>allways supported</i> </td>
+  <td> <i>always supported</i> </td>
 </tr>
 <tr>
   <td> \ref ARM_USART_EVENT_TRANSFER_COMPLETE   </td><td>  2  </td><td> Occurs after call to \ref ARM_USART_Transfer to indicate that all the data has been 
                                                                         transferred. The driver is ready for the next call to \ref ARM_USART_Transfer. </td>     
-  <td> <i>allways supported</i> </td>
+  <td> <i>always supported</i> </td>
 </tr>
 <tr>
   <td> \ref ARM_USART_EVENT_TX_COMPLETE         </td><td>  3  </td><td> Occurs after call to \ref ARM_USART_Transfer to indicate that all the data has been 
@@ -738,14 +738,14 @@ The following events can be generated:
   <td> \ref ARM_USART_EVENT_TX_UNDERFLOW        </td><td>  4  </td><td> Occurs in synchronous slave mode when data is requested by the master but 
                                                                         send/receive/transfer operation has not been started. 
                                                                         Data field \em  rx_underflow = \token{1} of \ref ARM_USART_STATUS. </td>																		
-  <td> <i>allways supported</i> </td>
+  <td> <i>always supported</i> </td>
 </tr>
 <tr>
   <td> \ref ARM_USART_EVENT_RX_OVERFLOW         </td><td>  5  </td><td> Occurs when data is lost during receive/transfer operation or when data is lost 
                                                                         because receive operation in asynchronous mode or receive/send/transfer operation in 
 																		synchronous slave mode has not been started.
                                                                         Data field \em  rx_overflow = \token{1} of \ref ARM_USART_STATUS. </td>
-  <td> <i>allways supported</i> </td>
+  <td> <i>always supported</i> </td>
 </tr>
 <tr>
   <td> ARM_USART_EVENT_RX_TIMEOUT               </td><td>  6  </td><td> Occurs during receive when idle time is detected between consecutive characters 
@@ -755,17 +755,17 @@ The following events can be generated:
 <tr>
   <td> \ref ARM_USART_EVENT_RX_BREAK            </td><td>  7  </td><td> Occurs when break is detected during receive. 
                                                                         Data field \em  rx_break = \token{1} of \ref ARM_USART_STATUS. </td>     
-  <td> <i>allways supported</i> </td>
+  <td> <i>always supported</i> </td>
 </tr>
 <tr>
   <td> \ref ARM_USART_EVENT_RX_FRAMING_ERROR    </td><td>  8  </td><td> Occurs when framing error is detected during receive. 
                                                                         Data field \em  rx_framing_error = \token{1} of \ref ARM_USART_STATUS. </td>     
-  <td> <i>allways supported</i> </td>
+  <td> <i>always supported</i> </td>
 </tr>
 <tr>
   <td> \ref ARM_USART_EVENT_RX_PARITY_ERROR     </td><td>  9  </td><td> Occurs when parity error is detected during receive.
                                                                         Data field \em  rx_parity_error = \token{1} of \ref ARM_USART_STATUS. </td>     
-  <td> <i>allways supported</i> </td>
+  <td> <i>always supported</i> </td>
 </tr>
 <tr>
   <td> ARM_USART_EVENT_CTS                      </td><td>  10 </td><td> Indicates that CTS modem line state has changed.

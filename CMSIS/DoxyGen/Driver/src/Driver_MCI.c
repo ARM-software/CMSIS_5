@@ -468,10 +468,10 @@ The following values:
 
 Parameter \em voltage                 | Description                   | supported when ARM_MCI_CAPABILITIES
 :-------------------------------------|:------------------------------|-----------------------------------------
-\ref ARM_MCI_POWER_VDD_OFF            | VDD (VCC) turned off          | <i>allways supported</i>
+\ref ARM_MCI_POWER_VDD_OFF            | VDD (VCC) turned off          | <i>always supported</i>
 \ref ARM_MCI_POWER_VDD_3V3            | VDD (VCC) = \token{3.3V}      | data field \em vdd = \token{1}
 \ref ARM_MCI_POWER_VDD_1V8            | VDD (VCC) = \token{1.8V}      | data field \em vdd_1v8 = \token{1} 
-\ref ARM_MCI_POWER_VCCQ_OFF           | eMMC VCCQ turned off          | <i>allways supported</i>
+\ref ARM_MCI_POWER_VCCQ_OFF           | eMMC VCCQ turned off          | <i>always supported</i>
 \ref ARM_MCI_POWER_VCCQ_3V3           | eMMC VCCQ = \token{3.3V}      | data field \em vccq = \token{1}
 \ref ARM_MCI_POWER_VCCQ_1V8           | eMMC VCCQ = \token{1.8V}      | data field \em vccq_1v8 = \token{1}
 \ref ARM_MCI_POWER_VCCQ_1V2           | eMMC VCCQ = \token{1.2V}      | data field \em vccq_1v2 = \token{1}
