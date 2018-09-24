@@ -1,4 +1,8 @@
 /**
+\cond (ARMv8M)
+*/
+
+/**
 \defgroup trustzone_functions TrustZone for Armv8-M
 \brief Functions that related to optional Armv8-M security extension
   @{
@@ -452,4 +456,8 @@ uint32_t TZ_StoreContext_S (TZ_MemoryId_t id);
 
 /** close trustzone_functions
 @}
+*/
+
+/**
+\endcond
 */
