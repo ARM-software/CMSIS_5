@@ -1,1 +1,1 @@
-doxygen core_no8M.dxy
+doxygen core_CM0-7.dxy
