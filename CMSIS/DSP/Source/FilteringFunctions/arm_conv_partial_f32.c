@@ -420,7 +420,14 @@ arm_status arm_conv_partial_f32(
         count += 4U;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        px = pIn1 + count;
+        if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
+        {
+          px = pIn1 + firstIndex - srcBLen + 1 + count;
+        }
+        else
+        {
+          px = pIn1 + count;
+        }
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -473,7 +480,14 @@ arm_status arm_conv_partial_f32(
         count++;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        px = pIn1 + count;
+        if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
+        {
+          px = pIn1 + firstIndex - srcBLen + 1 + count;
+        }
+        else
+        {
+          px = pIn1 + count;
+        }
         py = pSrc2;
 
         /* Decrement the loop counter */
@@ -510,7 +524,14 @@ arm_status arm_conv_partial_f32(
         count++;
 
         /* Update the inputA and inputB pointers for next MAC calculation */
-        px = pIn1 + count;
+        if ((int32_t)firstIndex - (int32_t)srcBLen + 1 > 0)
+        {
+          px = pIn1 + firstIndex - srcBLen + 1 + count;
+        }
+        else
+        {
+          px = pIn1 + count;
+        }
         py = pSrc2;
 
         /* Decrement the loop counter */
