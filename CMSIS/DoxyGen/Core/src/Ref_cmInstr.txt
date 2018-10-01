@@ -350,6 +350,9 @@ void __STRHT(uint16_t value, uint16_t ptr);
 void __STRT(uint32_t value, uint32_t ptr);
 
 
+/**
+\cond (ARMv8M)
+*/
 
 /**
   \brief   Load-Acquire (8 bit)
@@ -465,6 +468,9 @@ uint32_t __STLEXH(uint16_t value, volatile uint16_t *ptr);
  */
 uint32_t __STLEX(uint32_t value, volatile uint32_t *ptr);
 
+/**
+\endcond
+*/
 
 /*@}*/ /* end of group Intrisic_CPU */
 

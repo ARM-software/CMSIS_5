@@ -612,7 +612,7 @@ GENERATE_DEPRECATEDLIST= YES
 # sections, marked by \if <section_label> ... \endif and \cond <section_label>
 # ... \endcond blocks.
 
-ENABLED_SECTIONS       = ARMv8M\
+ENABLED_SECTIONS       = ARMv8M \
                          ARMSC
 
 # The MAX_INITIALIZER_LINES tag determines the maximum number of lines that the

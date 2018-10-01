@@ -681,6 +681,9 @@ void __disable_irq(void);
  */
 void __disable_fault_irq(void);
 
+/**
+\cond (ARMv8M)
+*/
 
 /**
   \brief   Get Process Stack Pointer Limit
@@ -730,6 +733,8 @@ uint32_t __get_MSPLIM(void);
  */
 __set_MSPLIM(uint32_t MainStackPtrLimit);
 
-
+/**
+\endcond
+*/
 
 /** @} */ /** end of Core_Register_gr **/
