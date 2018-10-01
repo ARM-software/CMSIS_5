@@ -231,6 +231,7 @@ The table below lists the folder and device names of the Arm processors.
 	      The device name is ARMCM7 and the name of the \ref device_h_pg is <ARMCM7.h>.
 	  </td>
     </tr>
+\if ARMSC	
     <tr>
       <td>".\Device\ARM\ARMSC000"</td>
       <td>SecurCore SC000</td>
@@ -245,6 +246,7 @@ The table below lists the folder and device names of the Arm processors.
 	      The device name is ARMSC300 and the name of the \ref device_h_pg is <ARMSC300.h>.
 	  </td>
     </tr>
+\endif	
 </table>
 
 \section using_ARM_Lib_sec Create generic Libraries with CMSIS

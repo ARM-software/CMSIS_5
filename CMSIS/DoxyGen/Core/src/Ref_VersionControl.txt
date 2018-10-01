@@ -43,10 +43,12 @@ Possible values are:
  - 3 for a Cortex-M3
  - 4 for a Cortex-M4
  - 7 for a Cortex-M7
+\if ARMv8M
  - 23 for a Cortex-M23
  - 33 for a Cortex-M33
  - 35 for a Cortex-M35P
- 
+\endif 
+
 This define is only available for Cortex-M class controllers.
 <b>Code Example:</b>
 \code
@@ -58,6 +60,11 @@ This define is only available for Cortex-M class controllers.
 \endcode
 */
 #define __CORTEX_M
+
+
+/**
+\cond (ARMSC)
+*/
 
 /**
 \brief Contains the core version for a Cortex Secure Core controller.
@@ -77,6 +84,9 @@ This define is only available for Cortex Secure Core controllers.
 \endcode
 */
 #define __CORTEX_SC
+/**
+\endcond
+*/
 
 /**
 \defgroup   version_control_depricated_gr    Version Control per Core (Depricated)

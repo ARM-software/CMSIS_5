@@ -28,14 +28,19 @@ core_cm0plus.h   | for the Cortex-M0+ processor
 core_cm3.h       | for the Cortex-M3 processor
 core_cm4.h       | for the Cortex-M4 processor
 core_cm7.h       | for the Cortex-M7 processor
+\if ARMv8M
 core_cm23.h      | for the Cortex-M23 processor
 core_cm33.h      | for the Cortex-M33 processor
 core_cm35p.h     | for the Cortex-M35P processor
+\endif 
+\if ARMSC
 core_sc000.h     | for the SecurCore SC000 processor
 core_sc300.h     | for the SecurCore SC300 processor
+\endif
+\if ARMv8M
 core_armv8mbl.h  | for the Armv8-M Baseline processor
 core_armv8mml.h  | for the Armv8-M Mainline processor
-
+\endif
 \section device_examples Device Examples
 
 The CMSIS Software Pack defines several devices that are based on the various processors. The device related CMSIS-Core files are in the directory .\\Device\\ARM
@@ -52,6 +57,7 @@ ARM Cortex-M7      | ARMCM7             | Cortex-M4 based device without floatin
 ARM Cortex-M7      | ARMCM7_FP          | Cortex-M7 based device with single precision floating-point unit (FPU)
 ARM Cortex-M7      | ARMCM7_DP          | Cortex-M7 based device with double precision floating-point unit
 ARM Cortex-M7      | ARMCM7             | Cortex-M7 based device without floating-point hardware
+\if ARMv8M
 ARM Cortex-M23     | ARMCM23            | Cortex-M23 based device without TrustZone
 ARM Cortex-M23     | ARMCM23_TZ         | Cortex-M23 based device with TrustZone
 ARM Cortex-M33     | ARMCM33            | Cortex-M33 based device without TrustZone, SIMD, FPU
@@ -62,8 +68,12 @@ ARM Cortex-M35P    | ARMCM35P           | Cortex-M35P based device without Trust
 ARM Cortex-M35P    | ARMCM35P_TZ        | Cortex-M35P based device with TrustZone, no SIMD, no FPU
 ARM Cortex-M35P    | ARMCM35P_DSP_FP    | Cortex-M35P based device with SIMD, FPU, no TrustZone
 ARM Cortex-M35P    | ARMCM35P_DSP_FP_TZ | Cortex-M35P based device with TrustZone, SIMD, FPU
+\endif
+\if ARMSC
 ARM SC000          | ARM SC000          | SC000 based device
 ARM SC300          | ARM SC300          | SC300 based device
+\endif
+\if ARMv8M
 ARMv8-M Baseline   | ARMv8MBL           | Armv8-M Baseline based device with TrustZone
 ARMv8-M Mainline   | ARMv8MML           | Armv8-M Mainline based device with TrustZone
 ARMv8-M Mainline   | ARMv8MML_DP        | Armv8-M Mainline based device with TrustZone and double precision FPU 
@@ -71,7 +81,7 @@ ARMv8-M Mainline   | ARMv8MML_SP        | Armv8-M Mainline based device with Tru
 ARMv8-M Mainline   | ARMv8MML_DSP       | Armv8-M Mainline based device with TrustZone and SIMD
 ARMv8-M Mainline   | ARMv8MML_DSP_DP    | Armv8-M Mainline based device with TrustZone, SIMD, and double precision FPU 
 ARMv8-M Mainline   | ARMv8MML_DSP_SP    | Armv8-M Mainline based device with TrustZone, SIMD, and single precision FPU 
-
+\endif
 
 \section template_files_sec Template Files
 
@@ -152,7 +162,9 @@ The device configuration of the template files is described in detail on the fol
   - \subpage startup_s_pg
   - \subpage system_c_pg
   - \subpage device_h_pg
+\if ARMv8M
   - \subpage partition_h_pg
+\endif  
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -524,6 +536,7 @@ If these <i>\#defines</i> are missing default values are used.
     </tr>
 </table>
 
+\if ARMSC
 \b core_sc000.h
 <table class="cmtable">
     <tr>
@@ -559,7 +572,9 @@ If these <i>\#defines</i> are missing default values are used.
 		must contain a vendor specific implementation of this function.</td>
     </tr>
 </table>
+\endif 
 
+\if ARMSC
 \b core_sc300.h
 <table class="cmtable">
     <tr>
@@ -595,7 +610,9 @@ If these <i>\#defines</i> are missing default values are used.
 		must contain a vendor specific implementation of this function.</td>
     </tr>
 </table>
+\endif 
 
+\if ARMv8M
 \b core_CM23.h or \b core_ARMv8MBL.h
 <table class="cmtable">
     <tr>
@@ -643,7 +660,9 @@ If these <i>\#defines</i> are missing default values are used.
 		must contain a vendor specific implementation of this function.</td>
     </tr>
 </table>
+\endif
 
+\if ARMv8M
 \b core_CM33.h or \b core_cm35p.h or \b core_ARMv8MML.h
 <table class="cmtable">
     <tr>
@@ -691,6 +710,7 @@ If these <i>\#defines</i> are missing default values are used.
 		must contain a vendor specific implementation of this function.</td>
     </tr>
 </table>
+\endif
 
 \b Example
 
@@ -766,26 +786,31 @@ to verify a minimum version or ensure that the right processor core is used.
 #define __CORTEX_M                (7U)                                 /* Cortex-M Core */
 \endcode
 
+\if ARMSC
 \b core_sc000.h
 \code
 #define __SC000_CMSIS_VERSION_MAIN  (5U)                                   /* [31:16] CMSIS HAL main version */
 #define __SC000_CMSIS_VERSION_SUB   (0U)                                   /* [15:0]  CMSIS HAL sub version */
 #define __SC000_CMSIS_VERSION       ((__SC000_CMSIS_VERSION_MAIN << 16U) | \
                                       __SC000_CMSIS_VERSION_SUB          ) /* CMSIS HAL version number */
- 
+
 #define __CORTEX_SC                 (0U)                                   /* Cortex secure core */
 \endcode
+\endif 
 
+\if ARMSC
 \b core_sc300.h
 \code
 #define __SC300_CMSIS_VERSION_MAIN  (5U)                                   /* [31:16] CMSIS HAL main version */
 #define __SC300_CMSIS_VERSION_SUB   (0U)                                   /* [15:0]  CMSIS HAL sub version */
 #define __SC300_CMSIS_VERSION       ((__SC300_CMSIS_VERSION_MAIN << 16U) | \
                                       __SC300_CMSIS_VERSION_SUB          ) /* CMSIS HAL version number */
- 
+
 #define __CORTEX_SC                 (300U)                                 /* Cortex secure core */
 \endcode
+\endif 
 
+\if ARMv8M
 \b core_ARMv8MBL.h
 \code
 #define __ARMv8MBL_CMSIS_VERSION_MAIN  (5U)                                       /* [31:16] CMSIS HAL main version */
@@ -795,7 +820,9 @@ to verify a minimum version or ensure that the right processor core is used.
  
 #define __CORTEX_M                     (tbd)                                      /* Cortex secure core */
 \endcode
+\endif 
 
+\if ARMv8M
 \b core_ARMv8MML.h
 \code
 #define __ARMv8MML_CMSIS_VERSION_MAIN  (5U)                                       /* [31:16] CMSIS HAL main version */
@@ -805,7 +832,7 @@ to verify a minimum version or ensure that the right processor core is used.
  
 #define __CORTEX_M                     (tbd)                                      /* Cortex secure core */
 \endcode
-
+\endif 
 
 \section device_access Device Peripheral Access Layer
 
@@ -830,7 +857,7 @@ The \ref system_Device_h_sec which is provided as part of the CMSIS specificatio
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page partition_h_pg System Partition Header File partition_<device>.h
+\if ARMv8M \page partition_h_pg System Partition Header File partition_<device>.h
 
 The \ref partition_h_pg contains the initial setup of the TrustZone hardware in an Armv8-M system.
 The function \ref TZ_SAU_Setup is call from \ref SystemInit and uses the settings in this file to 
@@ -1047,7 +1074,8 @@ The following example shows the configuration for a maximum of 64 external inter
 #define NVIC_INIT_ITNS1      0x0000003A
 \endcode
 
-
+\endif
 */
+
 
 */

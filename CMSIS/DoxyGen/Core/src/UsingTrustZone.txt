@@ -1,3 +1,7 @@
+/**
+\cond (ARMv8M)
+*/
+
 /** 
 \page using_TrustZone_pg  Using TrustZone for Armv8-M
 
@@ -140,5 +144,8 @@ The API functions of <b>TZ_context</b> are described in the chapter <a href="Mod
 
 Refer to \ref Example_TrustZone for RTOS examples that provide a template implementation for <b>TZ_context.c</b>.
   
+*/
 
+/**
+\endcond
 */
