@@ -26,7 +26,9 @@ memory management, and message exchange between threads with time limits.
 
 The CMSIS-RTOS2 addresses the following new requirements:
  - Dynamic object creation no longer requires static memory, static memory buffers are now optional.
+\if ARMv8M
  - Support for Armv8-M architecture that provides a secure and non-secure state of code execution.
+\endif 
  - Provisions for message passing in multi-core systems.
  - Full support of C++ run-time environments.
  - C interface which is binary compatible across
