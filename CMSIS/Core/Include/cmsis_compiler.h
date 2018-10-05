@@ -35,9 +35,15 @@
 
 
 /*
- * Arm Compiler 6 (armclang)
+ * Arm Compiler 6.6 LTM (armclang)
  */
-#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) && (__ARMCC_VERSION < 6100100)
+  #include "cmsis_armclang_ltm.h"
+
+  /*
+ * Arm Compiler above 6.10.1 (armclang)
+ */
+#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100)
   #include "cmsis_armclang.h"
 
 
