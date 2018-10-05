@@ -148,7 +148,7 @@ The steps to create a microcontroller application using RTX5 are:
 
 - \ref config_rtx5 "Configure" RTX5 to the application's needs using the \b %RTX_Config.h file.
 
-\section cre_rtx_cortexa Additional requirements for RTX on Cortex-A
+\if ARMCA \section cre_rtx_cortexa Additional requirements for RTX on Cortex-A
 
 Cortex-A based microcontrollers are less unified with respect to the interrupt and timer implementations used compared to 
 M-class devices. Thus RTX requires additional components when an A-class device is used, namely
@@ -164,6 +164,7 @@ The default implementations provided along with CMSIS are
 
 For devices not implementing GIC, PTIM nor GTIM please refer to the according device family pack and select the
 proper implementations.
+\endif 
 
 \section cre_UsingIRQs Using Interrupts on Cortex-M
 
@@ -176,7 +177,7 @@ SysTick | lowest   | Kernel system timer interrupt to generate periodic timer ti
 PendSV  | lowest   | PendSV (request for system-level service) when calling certain RTX functions from \b Handler mode
 SCV     | lowest+1 | Supervisor Call used to enter the RTOS kernel from \b Thread mode
 
-Other device interrupts can be used without limitation. For Arm Cortex-M3/M4/M7/M23/M33/M35P processors, interrupts are never disabled by RTX Kernel.
+Other device interrupts can be used without limitation. For Arm Cortex-M3/M4/M7\if ARMv8M /M23/M33/M35P \endif  processors, interrupts are never disabled by RTX Kernel.
 
 <b>Usage of interrupt priority grouping</b>
 - The interrupt priority grouping should be configured using the CMSIS-Core function NVIC_SetPriorityGrouping before calling the function 
@@ -230,8 +231,7 @@ also reflected in the user code template file "CMSIS-RTOS2 'main' function" supp
 Your application's \c main() should implement at least the following in the given order:
 -# Initialization and configuration of hardware including peripherals, memory, pins, clocks and the interrupt system.
 -# Update the system core clock using the respective
-   <a href=../../Core/html/group__system__init__gr.html>CMSIS-Core (Cortex-M)</a> or 
-   <a href=../../Core_A/html/group__system__init__gr.html>CMSIS-Core (Cortex-A)</a> function.
+   <a href=../../Core/html/group__system__init__gr.html>CMSIS-Core (Cortex-M)</a>  \if ARMCA or <a href=../../Core_A/html/group__system__init__gr.html>CMSIS-Core (Cortex-A)</a> \endif function.
 -# Initialize the CMSIS-RTOS kernel using \ref osKernelInitialize.
 -# Optionally, create a new thread \c app_main, which is used as a main thread using \ref osThreadNew. Alternatively, threads
    can be created in \c main() directly.
@@ -1095,7 +1095,7 @@ a reference for building the RTX5 libraries using a tool-chain of your choice.
 -# From the <b>Project</b> window you find the list of source files required for a complete library build.
 -# Build the library of your choice using \b Project - \b Build \b Target (or press F7).
 
-\image html own_lib_projwin.png "Project with files for Armv8-M Mainline"
+\image html own_lib_projwin.png "Project with files for Arm -M Mainline"
 */
 
 
@@ -1122,8 +1122,11 @@ The following section lists the hardware requirements for RTX v5 on the various 
 RTX assumes a fully function-able processor and uses the following hardware features. It does not implement any confidence test for processor validation which should be provided by an user-supplied software test library.
 
 
-\subsection tpCortexM0_M0P_M23 Cortex-M0/M0+/M23 target processor
+\if ARMv8M \subsection tpCortexM0_M0P_M23 Cortex-M0/M0+/M23 target processor
+\endif
 
+\ifnot ARMv8M \subsection tpCortexM0_M0P_M23 Cortex-M0/M0+ target processor
+\endif
 
 Hardware Requirement       | Description
 :--------------------------|:------------------------------------------------------
@@ -1135,15 +1138,20 @@ Interrupt Control          | The CMSIS-Core functions __disable_irq and __enable
 
 The interface files to the processor hardware are: 
  - <b>%irq_cm0.s</b> defines exception handlers for Cortex-M0/M0+
+\if ARMv8M
  - <b>%irq_armv8mbl_common.s</b> defines exception handlers for Cortex-M23
+\endif 
  - <b>%rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
 
 \note
  - The CMSIS-Core variable \c SystemCoreClock is used to configure the SysTick timer. 
 
-\subsection tpCortexM3_M4_M7_M33_M35P Cortex-M3/M4/M7/M33/M35P target processor
+\if ARMv8M \subsection tpCortexM3_M4_M7_M33_M35P Cortex-M3/M4/M7/M33/M35P target processor
+\endif 
 
+\ifnot ARMv8M \subsection tpCortexM3_M4_M7_M33_M35P Cortex-M3/M4/M7 target processor
+\endif 
 
 Hardware Requirement       | Description
 :--------------------------|:------------------------------------------------------
@@ -1157,14 +1165,17 @@ LDREX, STREX instruction   | Atomic execution avoids the requirement to disable 
 The interface files to the processor hardware are: 
  - <b>%irq_cm3.s</b> defines exception handlers for Cortex-M3 and Cortex-M4/M7 without floating point unit.
  - <b>%irq_cm4f.s</b> defines exception handlers for Cortex-M4/M7 with floating point unit.
+\if ARMv8M 
  - <b>%irq_armv8mml_common.s</b> defines exception handlers for Cortex-M33/M35P
+\endif 
  - <b>%rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
 
 \note
  - The CMSIS-Core variable \c SystemCoreClock is used to configure the SysTick timer. 
 
-\subsection tpCortexA5_A7_A9 Cortex-A5/A7/A9 target processor
+
+\if ARMCA \subsection tpCortexA5_A7_A9 Cortex-A5/A7/A9 target processor
 
 
 Hardware Requirement       | Description
@@ -1183,6 +1194,7 @@ The interface files to the processor hardware are:
 
 \note
  - The CMSIS-Core variable \c SystemCoreClock is used to configure the timer peripheral.
+\endif
 
 \section rMemory Memory Requirements
 RTX requires RAM memory that is accessible with contiguous linear addressing.  When memory is split across multiple memory banks, some systems 
@@ -1281,7 +1293,7 @@ The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provi
 \section libFiles RTX v5 Library Files
 
 The CMSIS-RTOS RTX Library is available pre-compiled for ARMCC and GCC compilers and supports all Cortex-M
-processor variants in every configuration, including Arm Cortex-M23, Cortex-M33 and Cortex-M35P.
+processor variants in every configuration  \if ARMv8M , including Arm Cortex-M23, Cortex-M33 and Cortex-M35P\endif.
 
 <table class="cmtable" summary="CMSIS-RTOS RTX Library Files">
     <tr>
@@ -1300,6 +1312,7 @@ processor variants in every configuration, including Arm Cortex-M23, Cortex-M33 
       <td>Library/ARM/RTX_CM4F.lib</td>
       <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Cortex-M4 and M7 with FPU, little-endian.</td>
     </tr>
+\if ARMv8M	
     <tr>
       <td>Library/ARM/RTX_V8MB.lib</td>
       <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Baseline.</td>
@@ -1324,6 +1337,7 @@ processor variants in every configuration, including Arm Cortex-M23, Cortex-M33 
       <td>Library/ARM/RTX_V8MMN.lib</td>
       <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline, non-secure.</td>
     </tr>
+\endif	
     <tr>
       <td>Library/GCC/libRTX_CM0.a</td>
       <td>CMSIS-RTOS libRTX Library for GCC Compiler, Cortex-M0 and M1, little-endian.</td>
@@ -1336,6 +1350,7 @@ processor variants in every configuration, including Arm Cortex-M23, Cortex-M33 
       <td>Library/GCC/libRTX_CM4F.a</td>
       <td>CMSIS-RTOS libRTX Library for GCC Compiler, Cortex-M4 and M7 with FPU, little-endian.</td>
     </tr>
+\if ARMv8M	
     <tr>
       <td>Library/GCC/libRTX_V8MB.a</td>
       <td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Baseline.</td>
@@ -1360,6 +1375,7 @@ processor variants in every configuration, including Arm Cortex-M23, Cortex-M33 
       <td>Library/GCC/libRTX_V8MMN.a</td>
       <td>CMSIS-RTOS libRTX Library for GCC Compiler, Armv8-M Mainline, non-secure.</td>
     </tr>
+\endif	
 </table>
 
  
@@ -1824,8 +1840,8 @@ The functions that call the Event Recorder are in the module \em rtx_evr.c and t
 \page functionOverview Function Overview
 
 CMSIS-RTOS2 provides multiple API interfaces:
-  - \subpage rtos_api2 is the new C function interface that supports dynamic object creation and Armv8-M (Arm Cortex-M23,
-    Cortex-M33 and Cortex-M35P).
+  - \subpage rtos_api2 is the new C function interface that supports dynamic object creation \if ARMv8M and Armv8-M (Arm Cortex-M23,
+    Cortex-M33 and Cortex-M35P) \endif.
   - <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a> is a C function API that is backward
     compatible with CMSIS-RTOS v1.
   - \subpage rtos_apicpp is a C++ class function API (future extension).
