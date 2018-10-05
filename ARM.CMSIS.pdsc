@@ -2564,7 +2564,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="header"  name="Device/ARM/ARMCM1/Include/ARMCM1.h"/>
         <!-- startup / system file -->
         <file category="sourceAsm"    name="Device/ARM/ARMCM1/Source/ARM/startup_ARMCM1.s" version="1.0.0" attr="config" condition="ARMCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMCM1/Source/GCC/startup_ARMCM1.S" version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceAsm"    name="Device/ARM/ARMCM1/Source/GCC/startup_ARMCM1.S" version="1.0.0" attr="config" condition="GCC"/>
         <file category="linkerScript" name="Device/ARM/ARMCM1/Source/GCC/gcc_arm.ld"       version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCM1/Source/IAR/startup_ARMCM1.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCM1/Source/system_ARMCM1.c"      version="1.0.0" attr="config"/>
