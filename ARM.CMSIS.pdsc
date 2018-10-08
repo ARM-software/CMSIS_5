@@ -3840,11 +3840,11 @@ and 8-bit Java bytecodes in Jazelle state.
       </attributes>
     </example>
 
-    <example name="NN Library CIFAR10" doc="readme_iar.txt" folder="CMSIS/NN/Examples/IAR/iar_nn_examples/cifar10">
+    <example name="NN-example-cifar10" doc="readme_iar.txt" folder="CMSIS/NN/Examples/IAR/iar_nn_examples/NN-example-cifar10">
       <description>Neural Network CIFAR10 example</description>
       <board name="EWARM Simulator" vendor="IAR"/>
       <project>
-        <environment name="iar" load="iar_nnexamples_cifar10/iar_nnexamples_cifar10.ewp"/>
+        <environment name="iar" load="NN-example-cifar10.ewp"/>
       </project>
       <attributes>
         <component Cclass="CMSIS" Cgroup="CORE"/>
@@ -3870,11 +3870,11 @@ and 8-bit Java bytecodes in Jazelle state.
       </attributes>
     </example>
 
-    <example name="NN Library GRU" doc="readme_iar.txt" folder="CMSIS/NN/Examples/IAR/iar_nn_examples/gru">
+    <example name="NN-example-gru" doc="readme_iar.txt" folder="CMSIS/NN/Examples/IAR/iar_nn_examples/NN-example-gru">
       <description>Neural Network GRU example</description>
       <board name="EWARM Simulator" vendor="IAR"/>
       <project>
-        <environment name="iar" load="iar_nnexamples_gru/iar_nnexamples_gru.ewp"/>
+        <environment name="iar" load="NN-example-gru.ewp"/>
       </project>
       <attributes>
         <component Cclass="CMSIS" Cgroup="CORE"/>
