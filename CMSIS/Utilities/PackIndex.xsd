@@ -37,12 +37,10 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <!-- a basic string of letters and numbers plus a dash and underbar, no leading nor trailing spaces and a minimum of 3 characters and a maximum of 32 -->
+  <!-- some strings are used to construct filenames (e.g. package name). Such names can contain only subset of characters and must not contain neither spaces nor dots. -->
   <xs:simpleType name="RestrictedString">
     <xs:restriction base="xs:string">
-      <xs:minLength value="3"/>
-      <xs:maxLength value="32"/>
-      <xs:pattern value="[-_A-Za-z0-9]+"/>
+      <xs:pattern value="[\-_A-Za-z0-9]+"/>
       <xs:pattern value="\S(.*\S)?"></xs:pattern>
     </xs:restriction>
   </xs:simpleType>
