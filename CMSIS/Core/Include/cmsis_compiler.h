@@ -121,8 +121,7 @@
     #define __ALIGNED(x)                           __attribute__((aligned(x)))
   #endif
   #ifndef   __RESTRICT
-    #warning No compiler specific solution for __RESTRICT. __RESTRICT is ignored.
-    #define __RESTRICT
+    #define __RESTRICT                             __restrict
   #endif
 
 
