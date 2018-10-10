@@ -1325,7 +1325,7 @@ __STATIC_FORCEINLINE void __STL(uint32_t value, volatile uint32_t *ptr)
 #define     __QADD8                 __builtin_arm_qadd8
 #define     __SHADD8                __builtin_arm_shadd8
 #define     __UADD8                 __builtin_arm_uadd8
-#define     __UQADD8                __builtin_arm_uadd8
+#define     __UQADD8                __builtin_arm_uqadd8
 #define     __UHADD8                __builtin_arm_uhadd8
 #define     __SSUB8                 __builtin_arm_ssub8
 #define     __QSUB8                 __builtin_arm_qsub8
