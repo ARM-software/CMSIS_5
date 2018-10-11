@@ -1209,7 +1209,7 @@ RTX does not implement any confidence test for memory validation. This should be
 Keil RTX v5 kernel functions are executed in handler mode (using PendSV/SysTick/SVC) and the tables below lists the maximum stack requirements for the Main Stack (MSP) that the user
 should consider. 
 
-The stack for the \ref osKernelStart function is referred as "Startup" and RTX v5 uses 32 bytes (with Arm Compiler). However the should also consider additional stack that
+The stack for the \ref osKernelStart function is referred as "Startup" and RTX v5 uses 32 bytes (with Arm Compiler). However the user should also consider additional stack that
 might be allocated by the 'main' function of the embedded application. The following picture shows a worst-case memory allocation of the Main Stack.
 
 \image html "KernelStackUsage.png" "Main Stack usage of RTX v5 applications"
