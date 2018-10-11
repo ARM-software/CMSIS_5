@@ -1107,6 +1107,7 @@ a reference for building the RTX5 libraries using a tool-chain of your choice.
 The following section contains technical information about RTX v5.
 
  - \subpage pHardwareRequirements lists the resource requirements of the RTX v5 kernel along with hardware dependencies.
+ - \subpage pStackRequirements lists the memory requirements for the main stack when running the RTX v5 kernel. 
  - \subpage pControlBlockSizes provides memory size information for \ref StaticObjectMemory "object-specific control block memory allocation".
  - \subpage pDirectory_Files is an overview of the supplied files that belong to RTX v5
  - \subpage pToolchains details about the compiler support which includes ArmCC (MDK, DS-5), IAR EW-ARM, and GCC.
@@ -1203,6 +1204,35 @@ do not accept multiple load or store operations on this memory blocks.
 RTX does not implement any confidence test for memory validation. This should be implemented by an user-supplied software test library.
 
 
+\page pStackRequirements Stack Requirements
+
+Keil RTX v5 kernel functions are executed in handler mode (using PendSV/SysTick/SVC) and the tables below lists the maximum stack requirements for the Main Stack (MSP) that the user
+should consider. 
+
+The stack for the \ref osKernelStart function is referred as "Startup" and RTX v5 uses 32 bytes (with Arm Compiler). However the should also consider additional stack that
+might be allocated by the 'main' function of the embedded application. The following picture shows a worst-case memory allocation of the Main Stack.
+
+\image html "KernelStackUsage.png" "Main Stack usage of RTX v5 applications"
+
+The stack requirements depend on the compiler and the optimization level.  RTX v5 supports event annotations and this configuration impacts also the stack requirement.
+
+<b>Arm Compiler ARMCC V6.10</b>: Main Stack requirements for PendSV/SysTick/SVC
+
+Optimization         | RTX Kernel  | RTX Kernel + Event Recorder
+:--------------------|:------------|:--------------------------------
+-O1 (Debug)          | 152 bytes   | 280 bytes   
+-Os (Balanced)       | 120 bytes   | 256 bytes
+-Oz (Size)           | 112 bytes   | 248 bytes
+
+<b>Arm Compiler ARMCC V5.06</b>: Main Stack requirements for PendSV/SysTick/SVC
+
+Optimization         | RTX Kernel  | RTX Kernel + Event Recorder
+:--------------------|:------------|:--------------------------------
+-O0 (Debug)          | 176 bytes   | 360 bytes   
+-O1                  | 112 bytes   | 248 bytes
+-O2                  | 112 bytes   | 256 bytes
+-O3                  | 112 bytes   | 248 bytes
+
 
 \page pControlBlockSizes Control Block Sizes
 
@@ -1226,7 +1256,6 @@ Category                      | Control Block Size Attribute      | Size       |
 \ref CMSIS_RTOS_SemaphoreMgmt | \ref osSemaphoreAttr_t::cb_mem    | 16 bytes   | \ref osRtxSemaphoreCbSize
 \ref CMSIS_RTOS_PoolMgmt      | \ref osMemoryPoolAttr_t::cb_mem   | 36 bytes   | \ref osRtxMemoryPoolCbSize
 \ref CMSIS_RTOS_Message       | \ref osMessageQueueAttr_t::cb_mem | 52 bytes   | \ref osRtxMessageQueueCbSize
-
 
 
 \page pDirectory_Files Directory Structure and File Overview
