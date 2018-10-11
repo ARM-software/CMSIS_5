@@ -95,7 +95,7 @@ void Interrupt9_Handler     (void) __attribute__ ((weak, alias("Default_Handler"
   Exception / Interrupt Vector table
  *----------------------------------------------------------------------------*/
 extern const pFunc __Vectors[240];
-       const pFunc __Vectors[240] __attribute__ ((section ("RESET"))) = {
+       const pFunc __Vectors[240] __attribute__((used, section("RESET"))) = {
   (pFunc)(&__initial_sp),                   /*     Initial Stack Pointer */
   Reset_Handler,                            /*     Reset Handler */
   NMI_Handler,                              /* -14 NMI Handler */
