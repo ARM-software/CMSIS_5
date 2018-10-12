@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     core_cm7.h
  * @brief    CMSIS Cortex-M7 Core Peripheral Access Layer Header File
- * @version  V5.2.4
+ * @version  V5.2.5
  * @date     12. Oktober 2018
  ******************************************************************************/
 /*
@@ -2191,7 +2191,6 @@ __STATIC_INLINE uint32_t SCB_GetFPUType(void)
   }
 }
 
-
 /*@} end of CMSIS_Core_FpuFunctions */
 
 
@@ -2449,27 +2448,30 @@ __STATIC_FORCEINLINE void SCB_CleanInvalidateDCache (void)
 
 /**
   \brief   D-Cache Invalidate by address
-  \details Invalidates D-Cache for the given address
-  \param[in]   addr    address (aligned to 32-byte boundary)
+  \details Invalidates D-Cache for the given address.
+           D-Cache is invalidated starting from a 32 byte aligned address in 32 byte granularity.
+           D-Cache memory blocks which are part of given address + given size are invalidated.
+  \param[in]   addr    address
   \param[in]   dsize   size of memory block (in number of bytes)
 */
-__STATIC_FORCEINLINE void SCB_InvalidateDCache_by_Addr (uint32_t *addr, int32_t dsize)
+__STATIC_FORCEINLINE void SCB_InvalidateDCache_by_Addr (void *addr, int32_t dsize)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-     int32_t op_size = dsize;
-    uint32_t op_addr = (uint32_t)addr;
-     int32_t linesize = __SCB_DCACHE_LINE_SIZE;
+    if ( dsize > 0 ) { 
+       int32_t op_size = dsize + (((uint32_t)addr) & (__SCB_DCACHE_LINE_SIZE - 1U));
+      uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_DCACHE_LINE_SIZE - 1U) */;
+    
+      __DSB();
 
-    __DSB();
+      do {
+        SCB->DCIMVAC = op_addr;             /* register accepts only 32byte aligned values, only bits 31..5 are valid */
+        op_addr += __SCB_DCACHE_LINE_SIZE;
+        op_size -= __SCB_DCACHE_LINE_SIZE;
+      } while ( op_size > 0 );
 
-    while (op_size > 0) {
-      SCB->DCIMVAC = op_addr;
-      op_addr += (uint32_t)linesize;
-      op_size -=           linesize;
+      __DSB();
+      __ISB();
     }
-
-    __DSB();
-    __ISB();
   #endif
 }
 
@@ -2477,26 +2479,29 @@ __STATIC_FORCEINLINE void SCB_InvalidateDCache_by_Addr (uint32_t *addr, int32_t 
 /**
   \brief   D-Cache Clean by address
   \details Cleans D-Cache for the given address
-  \param[in]   addr    address (aligned to 32-byte boundary)
+           D-Cache is cleaned starting from a 32 byte aligned address in 32 byte granularity.
+           D-Cache memory blocks which are part of given address + given size are cleaned.
+  \param[in]   addr    address
   \param[in]   dsize   size of memory block (in number of bytes)
 */
 __STATIC_FORCEINLINE void SCB_CleanDCache_by_Addr (uint32_t *addr, int32_t dsize)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-     int32_t op_size = dsize;
-    uint32_t op_addr = (uint32_t) addr;
-     int32_t linesize = __SCB_DCACHE_LINE_SIZE;
+    if ( dsize > 0 ) { 
+       int32_t op_size = dsize + (((uint32_t)addr) & (__SCB_DCACHE_LINE_SIZE - 1U));
+      uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_DCACHE_LINE_SIZE - 1U) */;
+    
+      __DSB();
 
-    __DSB();
+      do {
+        SCB->DCCMVAC = op_addr;             /* register accepts only 32byte aligned values, only bits 31..5 are valid */
+        op_addr += __SCB_DCACHE_LINE_SIZE;
+        op_size -= __SCB_DCACHE_LINE_SIZE;
+      } while ( op_size > 0 );
 
-    while (op_size > 0) {
-      SCB->DCCMVAC = op_addr;
-      op_addr += (uint32_t)linesize;
-      op_size -=           linesize;
+      __DSB();
+      __ISB();
     }
-
-    __DSB();
-    __ISB();
   #endif
 }
 
@@ -2504,29 +2509,31 @@ __STATIC_FORCEINLINE void SCB_CleanDCache_by_Addr (uint32_t *addr, int32_t dsize
 /**
   \brief   D-Cache Clean and Invalidate by address
   \details Cleans and invalidates D_Cache for the given address
+           D-Cache is cleaned and invalidated starting from a 32 byte aligned address in 32 byte granularity.
+           D-Cache memory blocks which are part of given address + given size are cleaned and invalidated.
   \param[in]   addr    address (aligned to 32-byte boundary)
   \param[in]   dsize   size of memory block (in number of bytes)
 */
 __STATIC_FORCEINLINE void SCB_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t dsize)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-     int32_t op_size = dsize;
-    uint32_t op_addr = (uint32_t) addr;
-     int32_t linesize = __SCB_DCACHE_LINE_SIZE;
+    if ( dsize > 0 ) { 
+       int32_t op_size = dsize + (((uint32_t)addr) & (__SCB_DCACHE_LINE_SIZE - 1U));
+      uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_DCACHE_LINE_SIZE - 1U) */;
+    
+      __DSB();
 
-    __DSB();
+      do {
+        SCB->DCCIMVAC = op_addr;            /* register accepts only 32byte aligned values, only bits 31..5 are valid */
+        op_addr +=          __SCB_DCACHE_LINE_SIZE;
+        op_size -=          __SCB_DCACHE_LINE_SIZE;
+      } while ( op_size > 0 );
 
-    while (op_size > 0) {
-      SCB->DCCIMVAC = op_addr;
-      op_addr += (uint32_t)linesize;
-      op_size -=           linesize;
+      __DSB();
+      __ISB();
     }
-
-    __DSB();
-    __ISB();
   #endif
 }
-
 
 /*@} end of CMSIS_Core_CacheFunctions */
 
