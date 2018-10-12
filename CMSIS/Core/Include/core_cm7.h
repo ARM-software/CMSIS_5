@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     core_cm7.h
  * @brief    CMSIS Cortex-M7 Core Peripheral Access Layer Header File
- * @version  V5.2.3
+ * @version  V5.2.4
  * @date     12. Oktober 2018
  ******************************************************************************/
 /*
@@ -2208,6 +2208,7 @@ __STATIC_INLINE uint32_t SCB_GetFPUType(void)
 #define CCSIDR_WAYS(x)         (((x) & SCB_CCSIDR_ASSOCIATIVITY_Msk) >> SCB_CCSIDR_ASSOCIATIVITY_Pos)
 #define CCSIDR_SETS(x)         (((x) & SCB_CCSIDR_NUMSETS_Msk      ) >> SCB_CCSIDR_NUMSETS_Pos      )
 
+#define __SCB_DCACHE_LINE_SIZE  32U /*!< Cortex-M7 cache line size is fixed to 32 bytes (8 words). See also register SCB_CCSIDR */
 
 /**
   \brief   Enable I-Cache
@@ -2457,7 +2458,7 @@ __STATIC_FORCEINLINE void SCB_InvalidateDCache_by_Addr (uint32_t *addr, int32_t 
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
      int32_t op_size = dsize;
     uint32_t op_addr = (uint32_t)addr;
-     int32_t linesize = 32;                /* in Cortex-M7 size of cache line is fixed to 8 words (32 bytes) */
+     int32_t linesize = __SCB_DCACHE_LINE_SIZE;
 
     __DSB();
 
@@ -2484,7 +2485,7 @@ __STATIC_FORCEINLINE void SCB_CleanDCache_by_Addr (uint32_t *addr, int32_t dsize
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
      int32_t op_size = dsize;
     uint32_t op_addr = (uint32_t) addr;
-     int32_t linesize = 32;                /* in Cortex-M7 size of cache line is fixed to 8 words (32 bytes) */
+     int32_t linesize = __SCB_DCACHE_LINE_SIZE;
 
     __DSB();
 
@@ -2511,7 +2512,7 @@ __STATIC_FORCEINLINE void SCB_CleanInvalidateDCache_by_Addr (uint32_t *addr, int
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
      int32_t op_size = dsize;
     uint32_t op_addr = (uint32_t) addr;
-     int32_t linesize = 32;                /* in Cortex-M7 size of cache line is fixed to 8 words (32 bytes) */
+     int32_t linesize = __SCB_DCACHE_LINE_SIZE;
 
     __DSB();
 
