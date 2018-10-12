@@ -1095,7 +1095,7 @@ a reference for building the RTX5 libraries using a tool-chain of your choice.
 -# From the <b>Project</b> window you find the list of source files required for a complete library build.
 -# Build the library of your choice using \b Project - \b Build \b Target (or press F7).
 
-\image html own_lib_projwin.png "Project with files for Arm -M Mainline"
+\image html own_lib_projwin.png "Project with files for Armv8-M Mainline"
 */
 
 
@@ -1120,7 +1120,7 @@ The following section lists the hardware requirements for RTX v5 on the various 
 
 \section tpProcessor Processor Requirements
 
-RTX assumes a fully function-able processor and uses the following hardware features. It does not implement any confidence test for processor validation which should be provided by an user-supplied software test library.
+RTX assumes a fully functionable processor and uses the following hardware features. It does not implement any confidence test for processor validation which should be provided by an user-supplied software test library.
 
 
 \if ARMv8M \subsection tpCortexM0_M0P_M23 Cortex-M0/M0+/M23 target processor
@@ -1146,7 +1146,7 @@ The interface files to the processor hardware are:
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
 
 \note
- - The CMSIS-Core variable \c SystemCoreClock is used to configure the SysTick timer. 
+ - The CMSIS-Core variable \c SystemCoreClock is used by RTX to configure the SysTick timer. 
 
 \if ARMv8M \subsection tpCortexM3_M4_M7_M33_M35P Cortex-M3/M4/M7/M33/M35P target processor
 \endif 
@@ -1173,7 +1173,7 @@ The interface files to the processor hardware are:
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
 
 \note
- - The CMSIS-Core variable \c SystemCoreClock is used to configure the SysTick timer. 
+ - The CMSIS-Core variable \c SystemCoreClock is used by RTX to configure the SysTick timer.
 
 
 \if ARMCA \subsection tpCortexA5_A7_A9 Cortex-A5/A7/A9 target processor
@@ -1194,7 +1194,7 @@ The interface files to the processor hardware are:
  - <b>%irq_ctrl.h</b> is the <a class="el" href="../../Core_A/html/group__irq__ctrl__gr.html">IRQ Controller API</a> that defines the interface functions to the interrupt controller.
 
 \note
- - The CMSIS-Core variable \c SystemCoreClock is used to configure the timer peripheral.
+ - The CMSIS-Core variable \c SystemCoreClock is used by RTX to configure the timer peripheral.
 \endif
 
 \section rMemory Memory Requirements
