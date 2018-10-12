@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_cm7.h
  * @brief    CMSIS Cortex-M7 Core Peripheral Access Layer Header File
- * @version  V5.2.1
- * @date     06. September 2018
+ * @version  V5.2.3
+ * @date     12. Oktober 2018
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -2146,6 +2146,7 @@ __NO_RETURN __STATIC_INLINE void __NVIC_SystemReset(void)
 
 /*@} end of CMSIS_Core_NVICFunctions */
 
+
 /* ##########################  MPU functions  #################################### */
 
 #if defined (__MPU_PRESENT) && (__MPU_PRESENT == 1U)
@@ -2153,6 +2154,7 @@ __NO_RETURN __STATIC_INLINE void __NVIC_SystemReset(void)
 #include "mpu_armv7.h"
 
 #endif
+
 
 /* ##########################  FPU functions  #################################### */
 /**
@@ -2211,9 +2213,11 @@ __STATIC_INLINE uint32_t SCB_GetFPUType(void)
   \brief   Enable I-Cache
   \details Turns on I-Cache
   */
-__STATIC_INLINE void SCB_EnableICache (void)
+__STATIC_FORCEINLINE void SCB_EnableICache (void)
 {
   #if defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    if (SCB->CCR & SCB_CCR_IC_Msk) return;  /* return if ICache is already enabled */
+
     __DSB();
     __ISB();
     SCB->ICIALLU = 0UL;                     /* invalidate I-Cache */
@@ -2230,7 +2234,7 @@ __STATIC_INLINE void SCB_EnableICache (void)
   \brief   Disable I-Cache
   \details Turns off I-Cache
   */
-__STATIC_INLINE void SCB_DisableICache (void)
+__STATIC_FORCEINLINE void SCB_DisableICache (void)
 {
   #if defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
     __DSB();
@@ -2247,7 +2251,7 @@ __STATIC_INLINE void SCB_DisableICache (void)
   \brief   Invalidate I-Cache
   \details Invalidates I-Cache
   */
-__STATIC_INLINE void SCB_InvalidateICache (void)
+__STATIC_FORCEINLINE void SCB_InvalidateICache (void)
 {
   #if defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
     __DSB();
@@ -2263,14 +2267,16 @@ __STATIC_INLINE void SCB_InvalidateICache (void)
   \brief   Enable D-Cache
   \details Turns on D-Cache
   */
-__STATIC_INLINE void SCB_EnableDCache (void)
+__STATIC_FORCEINLINE void SCB_EnableDCache (void)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     uint32_t ccsidr;
     uint32_t sets;
     uint32_t ways;
 
-    SCB->CSSELR = 0U; /*(0U << 1U) | 0U;*/  /* Level 1 data cache */
+    if (SCB->CCR & SCB_CCR_DC_Msk) return;  /* return if DCache is already enabled */
+
+    SCB->CSSELR = 0U;                       /* select Level 1 data cache */
     __DSB();
 
     ccsidr = SCB->CCSIDR;
@@ -2301,14 +2307,14 @@ __STATIC_INLINE void SCB_EnableDCache (void)
   \brief   Disable D-Cache
   \details Turns off D-Cache
   */
-__STATIC_INLINE void SCB_DisableDCache (void)
+__STATIC_FORCEINLINE void SCB_DisableDCache (void)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     uint32_t ccsidr;
     uint32_t sets;
     uint32_t ways;
 
-    SCB->CSSELR = 0U; /*(0U << 1U) | 0U;*/  /* Level 1 data cache */
+    SCB->CSSELR = 0U;                       /* select Level 1 data cache */
     __DSB();
 
     SCB->CCR &= ~(uint32_t)SCB_CCR_DC_Msk;  /* disable D-Cache */
@@ -2339,14 +2345,14 @@ __STATIC_INLINE void SCB_DisableDCache (void)
   \brief   Invalidate D-Cache
   \details Invalidates D-Cache
   */
-__STATIC_INLINE void SCB_InvalidateDCache (void)
+__STATIC_FORCEINLINE void SCB_InvalidateDCache (void)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     uint32_t ccsidr;
     uint32_t sets;
     uint32_t ways;
 
-    SCB->CSSELR = 0U; /*(0U << 1U) | 0U;*/  /* Level 1 data cache */
+    SCB->CSSELR = 0U;                       /* select Level 1 data cache */
     __DSB();
 
     ccsidr = SCB->CCSIDR;
@@ -2374,15 +2380,15 @@ __STATIC_INLINE void SCB_InvalidateDCache (void)
   \brief   Clean D-Cache
   \details Cleans D-Cache
   */
-__STATIC_INLINE void SCB_CleanDCache (void)
+__STATIC_FORCEINLINE void SCB_CleanDCache (void)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     uint32_t ccsidr;
     uint32_t sets;
     uint32_t ways;
 
-     SCB->CSSELR = 0U; /*(0U << 1U) | 0U;*/  /* Level 1 data cache */
-   __DSB();
+    SCB->CSSELR = 0U;                       /* select Level 1 data cache */
+    __DSB();
 
     ccsidr = SCB->CCSIDR;
 
@@ -2409,14 +2415,14 @@ __STATIC_INLINE void SCB_CleanDCache (void)
   \brief   Clean & Invalidate D-Cache
   \details Cleans and Invalidates D-Cache
   */
-__STATIC_INLINE void SCB_CleanInvalidateDCache (void)
+__STATIC_FORCEINLINE void SCB_CleanInvalidateDCache (void)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     uint32_t ccsidr;
     uint32_t sets;
     uint32_t ways;
 
-    SCB->CSSELR = 0U; /*(0U << 1U) | 0U;*/  /* Level 1 data cache */
+    SCB->CSSELR = 0U;                       /* select Level 1 data cache */
     __DSB();
 
     ccsidr = SCB->CCSIDR;
@@ -2446,7 +2452,7 @@ __STATIC_INLINE void SCB_CleanInvalidateDCache (void)
   \param[in]   addr    address (aligned to 32-byte boundary)
   \param[in]   dsize   size of memory block (in number of bytes)
 */
-__STATIC_INLINE void SCB_InvalidateDCache_by_Addr (uint32_t *addr, int32_t dsize)
+__STATIC_FORCEINLINE void SCB_InvalidateDCache_by_Addr (uint32_t *addr, int32_t dsize)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
      int32_t op_size = dsize;
@@ -2473,7 +2479,7 @@ __STATIC_INLINE void SCB_InvalidateDCache_by_Addr (uint32_t *addr, int32_t dsize
   \param[in]   addr    address (aligned to 32-byte boundary)
   \param[in]   dsize   size of memory block (in number of bytes)
 */
-__STATIC_INLINE void SCB_CleanDCache_by_Addr (uint32_t *addr, int32_t dsize)
+__STATIC_FORCEINLINE void SCB_CleanDCache_by_Addr (uint32_t *addr, int32_t dsize)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
      int32_t op_size = dsize;
@@ -2500,7 +2506,7 @@ __STATIC_INLINE void SCB_CleanDCache_by_Addr (uint32_t *addr, int32_t dsize)
   \param[in]   addr    address (aligned to 32-byte boundary)
   \param[in]   dsize   size of memory block (in number of bytes)
 */
-__STATIC_INLINE void SCB_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t dsize)
+__STATIC_FORCEINLINE void SCB_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t dsize)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
      int32_t op_size = dsize;
